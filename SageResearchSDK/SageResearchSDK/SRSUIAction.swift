@@ -33,22 +33,23 @@
 
 import Foundation
 
+/**
+ The `SRSUIAction` protocol can be used to customize the title and image displayed for a 
+ given action of the UI.
+ */
 public protocol SRSUIAction {
         
-    var identifier: String { get }
+    var actionType: SRSUIActionType { get }
     
     var buttonTitle: String? { get }
     
     var buttonIcon: UIImage? { get }
 }
 
-extension SRSUIAction {
-    
-    var actionType: SRSUIActionType {
-        return SRSUIActionType(rawValue: self.identifier)
-    }
-}
-
+/**
+ The `SRSUIActionType` enum describes standard navigation actions that are common to a
+ given UI step. It is extendable using the custom field.
+ */
 public enum SRSUIActionType {
     
     case navigation(Navigation)
@@ -57,11 +58,16 @@ public enum SRSUIActionType {
         case goBackward
         case skip
         case cancel
+        case learnMore
     }
 
     case custom(String)
+}
+
+extension SRSUIActionType: RawRepresentable {
+    public typealias RawValue = String
     
-    public init(rawValue: String) {
+    public init?(rawValue: RawValue) {
         if let subtype = Navigation(rawValue: rawValue) {
             self = .navigation(subtype)
         }
@@ -69,29 +75,21 @@ public enum SRSUIActionType {
             self = .custom(rawValue)
         }
     }
-}
-
-extension SRSUIActionType: Equatable {
-}
-
-public func ==(lhs: SRSUIActionType, rhs: SRSUIActionType) -> Bool {
-    switch (lhs, rhs) {
-    case (.navigation(let lhsValue), .navigation(let rhsValue)):
-        return lhsValue == rhsValue;
-    case (.custom(let lhsValue), .custom(let rhsValue)):
-        return lhsValue == rhsValue;
-    default:
-        return false
+    
+    public var rawValue: String {
+        switch (self) {
+        case .navigation(let value):
+            return value.rawValue
+            
+        case .custom(let value):
+            return value
+        }
     }
 }
 
 extension SRSUIActionType: Hashable {
+
     public var hashValue: Int {
-        switch (self) {
-        case .navigation(let value):
-            return value.hashValue;
-        case .custom(let value):
-            return value.hashValue;
-        }
+        return rawValue.hashValue
     }
 }
