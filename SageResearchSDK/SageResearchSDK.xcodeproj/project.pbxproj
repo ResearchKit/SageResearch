@@ -64,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF2B54F51F688BE700663289 /* Controller Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				FF72B25A1F686E37004C6F15 /* SRSTaskController.swift */,
+			);
+			name = "Controller Protocol";
+			sourceTree = "<group>";
+		};
 		FF72B2271F6859D2004C6F15 = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +95,7 @@
 			children = (
 				FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */,
 				FF72B2551F685F6D004C6F15 /* Model Protocol */,
+				FF2B54F51F688BE700663289 /* Controller Protocol */,
 				FF72B2351F6859D3004C6F15 /* Info.plist */,
 			);
 			path = SageResearchSDK;
@@ -109,7 +118,6 @@
 				FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */,
 				FF72B2561F68646B004C6F15 /* SRSStep.swift */,
 				FF72B2531F685F49004C6F15 /* SRSTask.swift */,
-				FF72B25A1F686E37004C6F15 /* SRSTaskController.swift */,
 				FF72B25C1F687199004C6F15 /* SRSResult.swift */,
 			);
 			name = "Model Protocol";
@@ -446,6 +454,7 @@
 				FF72B2471F6859D3004C6F15 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FF72B2481F6859D3004C6F15 /* Build configuration list for PBXNativeTarget "SageResearchSDKTests" */ = {
 			isa = XCConfigurationList;
@@ -454,6 +463,7 @@
 				FF72B24A1F6859D3004C6F15 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
