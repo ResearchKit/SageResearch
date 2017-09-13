@@ -61,12 +61,12 @@ public protocol SRSFormItem {
     var optional: Bool { get }
     
     /**
-     The data type for the question.
+     Validate the form item to check for any configuration that should throw an error.
      */
-    var dataType: SRSFormDataType { get }
+    func validate() throws
     
     /**
-     UI hint type for the question. This is an optional value to given a hint at how to display the input.
+     Validation run on the
      */
-    var uiHint: SRSUIHintType? { get }
+    func validateResult(_ result: SRSResult) throws -> Bool
 }

@@ -52,40 +52,43 @@ public class SRSResult : NSObject, NSCopying {
      The end date timestamp for the result.
      */
     var endDate = Date()
+
     
     public required init(identifier: String) {
         self.identifier = identifier
-        super.init()
     }
     
     
-    // MARK: NSCopying
+    // MARK: Copying
     
-    public func copy(with zone: NSZone? = nil) -> Any {
+    open func copy(with zone: NSZone? = nil) -> Any {
         let copy = type(of: self).init(identifier: identifier)
         copy.startDate = startDate
         copy.endDate = endDate
         return copy
     }
     
+    
     // MARK: Equality
     
-    override public var hash: Int {
-        return identifier.hashValue ^ startDate.hashValue ^ endDate.hashValue
+    open override var hash: Int {
+        return identifier.hash ^ startDate.hashValue ^ endDate.hashValue
     }
     
-    override public func isEqual(_ object: Any?) -> Bool {
-        guard let castObject = object as? SRSResult else { return false }
-        return castObject.identifier == self.identifier &&
-            castObject.startDate == self.startDate &&
-            castObject.endDate == self.endDate
+    open override func isEqual(_ object: Any?) -> Bool {
+        guard let lhs = object as? SRSResult else { return false }
+        let rhs = self
+        return lhs.identifier == rhs.identifier &&
+            lhs.startDate == rhs.startDate &&
+            lhs.endDate == rhs.endDate
     }
 }
+
 
 /**
  A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
  */
-public class SRSTaskResult : SRSResult {
+public class SRSTaskResult : SRSResult, SRSSchemaInfo {
     
     /**
      A short string that uniquely identifies the associated result schema. If nil, then the `taskIdentifier` is used.
@@ -135,9 +138,9 @@ public class SRSTaskResult : SRSResult {
     }
     
     
-    // MARK: NSCopying
+    // MARK: Copying
     
-    public override func copy(with zone: NSZone? = nil) -> Any {
+    override public func copy(with zone: NSZone?) -> Any {
         let copy = super.copy(with: zone) as! SRSTaskResult
         copy.schemaIdentifier = schemaIdentifier
         copy.schemaRevision = schemaRevision
@@ -147,23 +150,67 @@ public class SRSTaskResult : SRSResult {
         return copy
     }
     
+    
     // MARK: Equality
     
-    override public var hash: Int {
+    open override var hash: Int {
         return super.hash ^
             SRSObjectHash(schemaIdentifier) ^
             schemaRevision ^
             taskRunUUID.hashValue ^
-            stepHistory.reduceHash() ^
-            asyncResults.reduceHash()
+            stepHistory.hashValue ^
+            asyncResults.hashValue
+    }
+
+    open override func isEqual(_ object: Any?) -> Bool {
+        guard let lhs = object as? SRSTaskResult else { return false }
+        let rhs = self
+        return super.isEqual(object) &&
+            SRSObjectEquality(lhs.schemaIdentifier, rhs.schemaIdentifier) &&
+            lhs.schemaRevision == rhs.schemaRevision &&
+            lhs.taskRunUUID == rhs.taskRunUUID &&
+            lhs.stepHistory == rhs.stepHistory &&
+            lhs.asyncResults == rhs.asyncResults
+    }
+}
+
+/**
+ A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
+ */
+public class SRSAnswerResult : SRSResult {
+    
+    /**
+     A short string that includes the answer.
+     */
+    public var answer: Any?
+    
+    /**
+     Any additional information associated with this result such as unit.
+     */
+    public var metadata: [String : Any]?
+    
+    
+    // MARK: Copying
+    
+    override public func copy(with zone: NSZone?) -> Any {
+        let copy = super.copy(with: zone) as! SRSAnswerResult
+        copy.answer = answer
+        copy.metadata = metadata
+        return copy
     }
     
-    override public func isEqual(_ object: Any?) -> Bool {
-        guard let castObject = object as? SRSTaskResult else { return false }
-        return SRSObjectEquality(castObject.schemaIdentifier, self.schemaIdentifier) &&
-            castObject.schemaRevision == self.schemaRevision &&
-            castObject.taskRunUUID == self.taskRunUUID &&
-            castObject.stepHistory == self.stepHistory &&
-            castObject.asyncResults == self.asyncResults
+    
+    // MARK: Equality
+    
+    open override var hashValue: Int {
+        return super.hashValue ^ SRSObjectHash(answer) ^ SRSObjectHash(metadata)
+    }
+    
+    open override func isEqual(_ object: Any?) -> Bool {
+        guard let lhs = object as? SRSAnswerResult else { return false }
+        let rhs = self
+        return super.isEqual(object) &&
+            SRSObjectEquality(lhs.answer, rhs.answer) &&
+            SRSObjectEquality(lhs.metadata, rhs.metadata)
     }
 }

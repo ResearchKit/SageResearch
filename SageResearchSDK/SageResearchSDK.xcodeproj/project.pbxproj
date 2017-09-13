@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		FF2B54FF1F68B60E00663289 /* SRSFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */; };
 		FF2B55011F68BC7C00663289 /* SRSFormDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */; };
-		FF2B55061F690B1F00663289 /* SRSUIHintType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B55051F690B1F00663289 /* SRSUIHintType.swift */; };
 		FF2B55101F69279900663289 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B550F1F69279900663289 /* StaticUtilities.swift */; };
 		FF72B23B1F6859D3004C6F15 /* SageResearchSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF72B2311F6859D3004C6F15 /* SageResearchSDK.framework */; };
 		FF72B2401F6859D3004C6F15 /* SageResearchSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B23F1F6859D3004C6F15 /* SageResearchSDKTests.swift */; };
@@ -35,7 +34,6 @@
 /* Begin PBXFileReference section */
 		FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSFormItem.swift; sourceTree = "<group>"; };
 		FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSFormDataType.swift; sourceTree = "<group>"; };
-		FF2B55051F690B1F00663289 /* SRSUIHintType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSUIHintType.swift; sourceTree = "<group>"; };
 		FF2B550F1F69279900663289 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
 		FF72B2311F6859D3004C6F15 /* SageResearchSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SageResearchSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SageResearchSDK.h; sourceTree = "<group>"; };
@@ -76,7 +74,6 @@
 				FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */,
 				FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */,
 				FF72B25C1F687199004C6F15 /* SRSResult.swift */,
-				FF2B55051F690B1F00663289 /* SRSUIHintType.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -262,7 +259,6 @@
 				FF72B2571F68646B004C6F15 /* SRSStep.swift in Sources */,
 				FF72B25D1F687199004C6F15 /* SRSResult.swift in Sources */,
 				FF72B2541F685F49004C6F15 /* SRSTask.swift in Sources */,
-				FF2B55061F690B1F00663289 /* SRSUIHintType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

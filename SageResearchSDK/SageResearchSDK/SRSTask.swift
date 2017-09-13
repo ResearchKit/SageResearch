@@ -38,17 +38,7 @@ public protocol SRSTaskInfo {
     /**
      A short string that uniquely identifies the task.
      */
-    var taskIdentifier: String { get }
-    
-    /**
-     A short string that uniquely identifies the associated result schema. If nil, then the `taskIdentifier` is used.
-     */
-    var schemaIdentifier: String? { get }
-    
-    /**
-     A revision number associated with the result schema. If `0`, then this is ignored.
-     */
-    var schemaRevision: Int { get }
+    var identifier: String { get }
     
     /**
      The primary text to display for the task in a localized string.
@@ -80,6 +70,20 @@ public protocol SRSTaskInfo {
     func icon(in rect: CGRect) -> UIImage?
 }
 
+public protocol SRSSchemaInfo {
+    
+    /**
+     A short string that uniquely identifies the associated result schema. If nil, then the `taskIdentifier` is used.
+     */
+    var schemaIdentifier: String? { get }
+    
+    /**
+     A revision number associated with the result schema. If `0`, then this is ignored.
+     */
+    var schemaRevision: Int { get }
+    
+}
+
 public protocol SRSTask {
     
     /**
@@ -91,6 +95,11 @@ public protocol SRSTask {
      Additional information about the task.
      */
     var taskInfo: SRSTaskInfo? { get }
+    
+    /**
+     Additional information about the result schema
+     */
+    var schemaInfo: SRSSchemaInfo? { get }
     
     /**
      A list of asyncronous actions to run on the task.

@@ -49,9 +49,9 @@ public func SRSObjectHash(_ obj: Any?) -> Int {
             0
 }
 
-public extension Sequence {
+public extension Sequence where Iterator.Element: Hashable {
     
-    func reduceHash() -> Int {
-        return  self.reduce(0, { $0 ^ SRSObjectHash($1) })
+    public var hashValue: Int {
+        return self.reduce(0, { $0 ^ $1.hashValue })
     }
 }
