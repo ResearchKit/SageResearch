@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF2B54FF1F68B60E00663289 /* SRSFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */; };
+		FF2B55011F68BC7C00663289 /* SRSFormDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */; };
+		FF2B55061F690B1F00663289 /* SRSUIHintType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B55051F690B1F00663289 /* SRSUIHintType.swift */; };
+		FF2B55101F69279900663289 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B550F1F69279900663289 /* StaticUtilities.swift */; };
 		FF72B23B1F6859D3004C6F15 /* SageResearchSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF72B2311F6859D3004C6F15 /* SageResearchSDK.framework */; };
 		FF72B2401F6859D3004C6F15 /* SageResearchSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B23F1F6859D3004C6F15 /* SageResearchSDKTests.swift */; };
 		FF72B2421F6859D3004C6F15 /* SageResearchSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF72B2541F685F49004C6F15 /* SRSTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2531F685F49004C6F15 /* SRSTask.swift */; };
 		FF72B2571F68646B004C6F15 /* SRSStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2561F68646B004C6F15 /* SRSStep.swift */; };
 		FF72B2591F6867F8004C6F15 /* SRSUIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2581F6867F8004C6F15 /* SRSUIAction.swift */; };
-		FF72B25B1F686E37004C6F15 /* SRSTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B25A1F686E37004C6F15 /* SRSTaskController.swift */; };
 		FF72B25D1F687199004C6F15 /* SRSResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B25C1F687199004C6F15 /* SRSResult.swift */; };
 		FF72B25F1F688168004C6F15 /* SRSAsyncAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B25E1F688168004C6F15 /* SRSAsyncAction.swift */; };
 		FF72B2611F68845A004C6F15 /* SRSDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */; };
@@ -30,6 +33,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSFormItem.swift; sourceTree = "<group>"; };
+		FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSFormDataType.swift; sourceTree = "<group>"; };
+		FF2B55051F690B1F00663289 /* SRSUIHintType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSUIHintType.swift; sourceTree = "<group>"; };
+		FF2B550F1F69279900663289 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
 		FF72B2311F6859D3004C6F15 /* SageResearchSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SageResearchSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SageResearchSDK.h; sourceTree = "<group>"; };
 		FF72B2351F6859D3004C6F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,7 +46,6 @@
 		FF72B2531F685F49004C6F15 /* SRSTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSTask.swift; sourceTree = "<group>"; };
 		FF72B2561F68646B004C6F15 /* SRSStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSStep.swift; sourceTree = "<group>"; };
 		FF72B2581F6867F8004C6F15 /* SRSUIAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSUIAction.swift; sourceTree = "<group>"; };
-		FF72B25A1F686E37004C6F15 /* SRSTaskController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSTaskController.swift; sourceTree = "<group>"; };
 		FF72B25C1F687199004C6F15 /* SRSResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSResult.swift; sourceTree = "<group>"; };
 		FF72B25E1F688168004C6F15 /* SRSAsyncAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSAsyncAction.swift; sourceTree = "<group>"; };
 		FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSDeviceType.swift; sourceTree = "<group>"; };
@@ -64,12 +70,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FF2B54F51F688BE700663289 /* Controller Protocol */ = {
+		FF2B54FD1F68AE8000663289 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FF72B25A1F686E37004C6F15 /* SRSTaskController.swift */,
+				FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */,
+				FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */,
+				FF72B25C1F687199004C6F15 /* SRSResult.swift */,
+				FF2B55051F690B1F00663289 /* SRSUIHintType.swift */,
 			);
-			name = "Controller Protocol";
+			name = Model;
+			sourceTree = "<group>";
+		};
+		FF2B55021F69077200663289 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FF2B550F1F69279900663289 /* StaticUtilities.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		FF72B2271F6859D2004C6F15 = {
@@ -95,7 +112,8 @@
 			children = (
 				FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */,
 				FF72B2551F685F6D004C6F15 /* Model Protocol */,
-				FF2B54F51F688BE700663289 /* Controller Protocol */,
+				FF2B54FD1F68AE8000663289 /* Model */,
+				FF2B55021F69077200663289 /* Utilities */,
 				FF72B2351F6859D3004C6F15 /* Info.plist */,
 			);
 			path = SageResearchSDK;
@@ -115,10 +133,9 @@
 			children = (
 				FF72B2581F6867F8004C6F15 /* SRSUIAction.swift */,
 				FF72B25E1F688168004C6F15 /* SRSAsyncAction.swift */,
-				FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */,
 				FF72B2561F68646B004C6F15 /* SRSStep.swift */,
 				FF72B2531F685F49004C6F15 /* SRSTask.swift */,
-				FF72B25C1F687199004C6F15 /* SRSResult.swift */,
+				FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */,
 			);
 			name = "Model Protocol";
 			sourceTree = "<group>";
@@ -236,13 +253,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF2B55011F68BC7C00663289 /* SRSFormDataType.swift in Sources */,
 				FF72B2591F6867F8004C6F15 /* SRSUIAction.swift in Sources */,
-				FF72B25B1F686E37004C6F15 /* SRSTaskController.swift in Sources */,
 				FF72B2611F68845A004C6F15 /* SRSDeviceType.swift in Sources */,
 				FF72B25F1F688168004C6F15 /* SRSAsyncAction.swift in Sources */,
+				FF2B55101F69279900663289 /* StaticUtilities.swift in Sources */,
+				FF2B54FF1F68B60E00663289 /* SRSFormItem.swift in Sources */,
 				FF72B2571F68646B004C6F15 /* SRSStep.swift in Sources */,
 				FF72B25D1F687199004C6F15 /* SRSResult.swift in Sources */,
 				FF72B2541F685F49004C6F15 /* SRSTask.swift in Sources */,
+				FF2B55061F690B1F00663289 /* SRSUIHintType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

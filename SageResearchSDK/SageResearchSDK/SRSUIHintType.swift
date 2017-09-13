@@ -1,5 +1,5 @@
 //
-//  SRSTaskController.swift
+//  SRSUIHintType.swift
 //  SageResearchSDK
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,7 +33,47 @@
 
 import Foundation
 
-public protocol SRSTaskController {
+/**
+ `SRSUIHintType` offers a hint as to how the UI designer would like to see a form input presented.
+ 
+ Not all hint types are valid for all data types or devices.
+ */
+public enum SRSUIHintType {
     
-    var task: SRSTask! { get }
+    case standard(StandardHint)
+    public enum StandardHint: String {
+        case checkBox
+        case list
+        case multilineTextField
+        case picker
+        case radioButton
+        case slider
+        case textField
+        case toggle
+    }
+    
+    case custom(String)
+}
+
+extension SRSUIHintType: RawRepresentable {
+    public typealias RawValue = String
+    
+    public init?(rawValue: RawValue) {
+        if let subtype = StandardHint(rawValue: rawValue) {
+            self = .standard(subtype)
+        }
+        else {
+            self = .custom(rawValue)
+        }
+    }
+    
+    public var rawValue: String {
+        switch (self) {
+        case .standard(let value):
+            return value.rawValue
+            
+        case .custom(let value):
+            return value
+        }
+    }
 }

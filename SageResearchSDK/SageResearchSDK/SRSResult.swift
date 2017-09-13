@@ -33,18 +33,137 @@
 
 import Foundation
 
-public protocol SRSResult {
+/**
+ A result associated with a task, step, or asyncronous action.
+ */
+public class SRSResult : NSObject, NSCopying {
     
-    var identifier: String { get }
+    /**
+     The identifier associated with the task, step, or asyncronous action.
+     */
+    public private(set) var identifier: String
     
-    var startDate: Date { get }
+    /**
+     The start date timestamp for the result.
+     */
+    var startDate = Date()
     
-    var endDate: Date { get }
+    /**
+     The end date timestamp for the result.
+     */
+    var endDate = Date()
+    
+    public required init(identifier: String) {
+        self.identifier = identifier
+        super.init()
+    }
+    
+    
+    // MARK: NSCopying
+    
+    public func copy(with zone: NSZone? = nil) -> Any {
+        let copy = type(of: self).init(identifier: identifier)
+        copy.startDate = startDate
+        copy.endDate = endDate
+        return copy
+    }
+    
+    // MARK: Equality
+    
+    override public var hash: Int {
+        return identifier.hashValue ^ startDate.hashValue ^ endDate.hashValue
+    }
+    
+    override public func isEqual(_ object: Any?) -> Bool {
+        guard let castObject = object as? SRSResult else { return false }
+        return castObject.identifier == self.identifier &&
+            castObject.startDate == self.startDate &&
+            castObject.endDate == self.endDate
+    }
 }
 
-public protocol SRSTaskResult : SRSResult {
+/**
+ A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
+ */
+public class SRSTaskResult : SRSResult {
     
-    var stepHistory: [SRSResult] { get }
+    /**
+     A short string that uniquely identifies the associated result schema. If nil, then the `taskIdentifier` is used.
+     */
+    public var schemaIdentifier: String?
     
-    var asyncResults: [SRSResult] { get }
+    /**
+     A revision number associated with the result schema. If `0`, then this is ignored.
+     */
+    public var schemaRevision: Int = 1
+    
+    /**
+     A unique identifier for this task run.
+     */
+    public var taskRunUUID = UUID()
+    
+    /**
+     A listing of the step history for this task.
+     
+     The listed steps can include duplicate identifiers.
+     */
+    public private(set) var stepHistory: [SRSResult] = []
+    
+    /**
+     A list of all the asyncronous results for this task.
+     */
+    public private(set) var asyncResults: Set<SRSResult> = []
+    
+    /**
+     Append the step history with a step result. This will only keep the last step result with a unique identifier that will be appended to the end of the step history array.
+     */
+    public func appendStepHistory(with result: SRSResult) {
+        if let previousIndex = stepHistory.index(where: { $0.identifier == result.identifier }) {
+            stepHistory.remove(at: previousIndex)
+        }
+        stepHistory.append(result)
+    }
+    
+    /**
+     Insert a result into the asyncronous action results. This will only keep the last result with a unique identifier.
+     */
+    public func insertAsyncResults(with result: SRSResult) {
+        if let previousResult = asyncResults.first(where: { $0.identifier == result.identifier }) {
+            asyncResults.remove(previousResult)
+        }
+        asyncResults.insert(result)
+    }
+    
+    
+    // MARK: NSCopying
+    
+    public override func copy(with zone: NSZone? = nil) -> Any {
+        let copy = super.copy(with: zone) as! SRSTaskResult
+        copy.schemaIdentifier = schemaIdentifier
+        copy.schemaRevision = schemaRevision
+        copy.taskRunUUID = taskRunUUID
+        copy.stepHistory = stepHistory
+        copy.asyncResults = asyncResults
+        return copy
+    }
+    
+    // MARK: Equality
+    
+    override public var hash: Int {
+        return super.hash ^
+            SRSObjectHash(schemaIdentifier) ^
+            schemaRevision ^
+            taskRunUUID.hashValue ^
+            stepHistory.reduceHash() ^
+            asyncResults.reduceHash()
+    }
+    
+    override public func isEqual(_ object: Any?) -> Bool {
+        guard let castObject = object as? SRSTaskResult else { return false }
+        return SRSObjectEquality(castObject.schemaIdentifier, self.schemaIdentifier) &&
+            castObject.schemaRevision == self.schemaRevision &&
+            castObject.taskRunUUID == self.taskRunUUID &&
+            castObject.stepHistory == self.stepHistory &&
+            castObject.asyncResults == self.asyncResults
+    }
 }

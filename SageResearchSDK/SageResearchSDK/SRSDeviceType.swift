@@ -33,19 +33,47 @@
 
 import Foundation
 
+/**
+ `SRSDeviceType` describes various devices. It can be used by a task to vend different steps or async actions based upon what is supported by a given device type.
+ */
 public enum SRSDeviceType {
     
     case standard(StandardDevice)
     public enum StandardDevice : String {
+        
+        /**
+         A computer will have a keyboard and a mouse or touchpad. (Mac)
+        */
+        case computer
+        
+        /**
+         A phone is a handheld device with a touch screen. (iPhone, Android phone)
+        */
         case phone
+
+        /**
+         A tablet is a larger touch screen device. (iPad, Android tablet)
+        */
         case tablet
-        case screen
+        
+        /**
+         A tv is a device that has a larger screen with a remote control. (Apple TV)
+        */
+        case tv
+        
+        /**
+         A watch is a device that is worn on a person's wrist. (Apple Watch)
+        */
         case watch
     }
     
     case custom(String)
+}
+
+extension SRSDeviceType: RawRepresentable {
+    public typealias RawValue = String
     
-    public init(rawValue: String) {
+    public init?(rawValue: RawValue) {
         if let subtype = StandardDevice(rawValue: rawValue) {
             self = .standard(subtype)
         }
@@ -53,29 +81,14 @@ public enum SRSDeviceType {
             self = .custom(rawValue)
         }
     }
-}
-
-extension SRSDeviceType: Equatable {
-}
-
-public func ==(lhs: SRSDeviceType, rhs: SRSDeviceType) -> Bool {
-    switch (lhs, rhs) {
-    case (.standard(let lhsValue), .standard(let rhsValue)):
-        return lhsValue == rhsValue;
-    case (.custom(let lhsValue), .custom(let rhsValue)):
-        return lhsValue == rhsValue;
-    default:
-        return false
-    }
-}
-
-extension SRSDeviceType: Hashable {
-    public var hashValue: Int {
+    
+    public var rawValue: String {
         switch (self) {
         case .standard(let value):
-            return value.hashValue;
+            return value.rawValue
+            
         case .custom(let value):
-            return value.hashValue;
+            return value
         }
     }
 }

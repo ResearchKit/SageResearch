@@ -33,32 +33,113 @@
 
 import Foundation
 
-public protocol SRSTask {
-    
-    var identifier: String { get }
-    
-    var taskInfo: SRSTaskInfo? { get }
-    
-    func step(with identifier: String) -> SRSStep?
-    
-    func stepBefore(_ step: SRSStep?, with result: SRSTaskResult?) -> SRSStep?
-    
-    func stepAfter(_ step: SRSStep?, with result: SRSTaskResult?) -> SRSStep?
-    
-    func asyncActions(for step: SRSStep?, with result: SRSTaskResult?) -> [SRSAsyncAction]?
-    
-    func validate() throws
-}
-
 public protocol SRSTaskInfo {
     
+    /**
+     A short string that uniquely identifies the task.
+     */
+    var taskIdentifier: String { get }
+    
+    /**
+     A short string that uniquely identifies the associated result schema. If nil, then the `taskIdentifier` is used.
+     */
+    var schemaIdentifier: String? { get }
+    
+    /**
+     A revision number associated with the result schema. If `0`, then this is ignored.
+     */
+    var schemaRevision: Int { get }
+    
+    /**
+     The primary text to display for the task in a localized string.
+     */
     var title: String? { get }
     
+    /**
+     Additional detail text to display for the task.
+     */
     var detail: String? { get }
     
-    var icon: UIImage? { get }
-    
-    var estimatedMinutes: Double { get }
-    
+    /**
+     Copyright information for the task.
+     */
     var copyright: String? { get }
+    
+    /**
+     The estimated number of minutes that the task will take. If `0`, then this is ignored.
+     */
+    var estimatedMinutes: Int { get }
+    
+    /**
+     An icon image that can be used for displaying the task.
+     
+     @param rect    The size of the image view used to display the image.
+     
+     @return        The image to display.
+     */
+    func icon(in rect: CGRect) -> UIImage?
+}
+
+public protocol SRSTask {
+    
+    /**
+     A short string that uniquely identifies the task.
+     */
+    var identifier: String { get }
+    
+    /**
+     Additional information about the task.
+     */
+    var taskInfo: SRSTaskInfo? { get }
+    
+    /**
+     A list of asyncronous actions to run on the task.
+     */
+    var asyncActions: [SRSAsyncAction]? { get }
+    
+    /**
+     Returns the step associated with a given identifier.
+     
+     @param identifier  The identifier for the step.
+     
+     @return            The step with this identifier or nil if not found.
+     */
+    func step(with identifier: String) -> SRSStep?
+    
+    /**
+     Return the step to go to before the given step.
+     
+     @param step    The current step.
+     @param result  The current result set for this task.
+     
+     @return        The previous step or nil if the task does not support backward navigation.
+     */
+    func stepBefore(_ step: SRSStep, with result: SRSTaskResult?) -> SRSStep?
+    
+    /**
+     Return the step to go to after completing the given step.
+     
+     @param step    The previous step or nil if this is the first step.
+     @param result  The current result set for this task.
+     
+     @return        The next step to display or nil if this is the end of the task.
+     */
+    func stepAfter(_ step: SRSStep?, with result: SRSTaskResult?) -> SRSStep?
+    
+    /**
+     Return the progress through the task for a given step with the current result.
+     
+     @param step    The current step.
+     @param result  The current result set for this task.
+     
+     @return current        The current progress. This indicates progress within the task.
+     @return total          The total number of steps.
+     @return isEstimated    Whether or not the progress is an estimate (if the task has variable navigation)
+     */
+    func progress(for step: SRSStep, with result: SRSTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)
+    
+    /**
+     Validate the task to check for any model configuration that should throw an error.
+     */
+    func validate() throws
 }

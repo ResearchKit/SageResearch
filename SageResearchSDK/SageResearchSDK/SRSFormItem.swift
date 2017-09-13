@@ -1,5 +1,5 @@
 //
-//  SRSUIAction.swift
+//  SRSFormItem.swift
 //  SageResearchSDK
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,87 +34,39 @@
 import Foundation
 
 /**
- The `SRSUIAction` protocol can be used to customize the title and image displayed for a 
- given action of the UI.
+ `SRSFormItem` is used to describe a form input and includes the data type and a possible hint to how the UI should be displayed.
  */
-public protocol SRSUIAction {
+public protocol SRSFormItem {
     
     /**
-     The action type for this button or gesture.
+     A short string that uniquely identifies the form item within the step. The identifier is reproduced in the results of a step result in the step history of a task result.
      */
-    var actionType: SRSUIActionType { get }
+    var identifier: String { get }
     
     /**
-     The title to display on the button associated with this action.
+     A localized string that displays a short text offering a hint to the user of the data to be entered for this field.
      */
-    var buttonTitle: String? { get }
+    var prompt: String? { get }
     
     /**
-     The icon to display on the button associated with this action.
+     A localized string that displays placeholder information for the form item.
+     
+     You can display placeholder text in a text field or text area to help users understand how to answer the item's question.
      */
-    var buttonIcon: UIImage? { get }
-}
-
-/**
- The `SRSUIActionType` enum describes standard navigation actions that are common to a
- given UI step. It is extendable using the custom field.
- */
-public enum SRSUIActionType {
+    var placeholderText: String? { get }
     
     /**
-     Standard navigation elements that are common to most steps.
+     A Boolean value indicating whether the user can skip the step without providing an answer.
      */
-    case navigation(Navigation)
-    public enum Navigation : String {
-        
-        /**
-         Navigate to the next step.
-         */
-        case goForward
-        
-        /**
-         Navigate to the previous step.
-         */
-        case goBackward
-        
-        /**
-         Skip the step and immediately go forward.
-         */
-        case skip
-        
-        /**
-         Cancel the task.
-         */
-        case cancel
-        
-        /**
-         Display additional information about the step.
-         */
-        case learnMore
-    }
-
-    case custom(String)
-}
-
-extension SRSUIActionType: RawRepresentable {
-    public typealias RawValue = String
+    var optional: Bool { get }
     
-    public init?(rawValue: RawValue) {
-        if let subtype = Navigation(rawValue: rawValue) {
-            self = .navigation(subtype)
-        }
-        else {
-            self = .custom(rawValue)
-        }
-    }
+    /**
+     The data type for the question.
+     */
+    var dataType: SRSFormDataType { get }
     
-    public var rawValue: String {
-        switch (self) {
-        case .navigation(let value):
-            return value.rawValue
-            
-        case .custom(let value):
-            return value
-        }
-    }
+    /**
+     UI hint type for the question. This is an optional value to given a hint at how to display the input.
+     */
+    var uiHint: SRSUIHintType? { get }
 }
