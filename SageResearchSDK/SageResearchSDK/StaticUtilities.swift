@@ -37,10 +37,10 @@ public func SRSObjectEquality(_ objA: Any?, _ objB: Any?) -> Bool {
     if objA == nil && objB == nil {
         return true
     }
-    guard let objA = objA as? NSObject, let objB = objB as? NSObject else {
-        return false
+    if let objA = objA as? NSObject, let objB = objB as? NSObject {
+        return objA == objB
     }
-    return objA == objB
+    return false
 }
 
 public func SRSObjectHash(_ obj: Any?) -> Int {
@@ -51,7 +51,7 @@ public func SRSObjectHash(_ obj: Any?) -> Int {
 
 public extension Sequence where Iterator.Element: Hashable {
     
-    public var hashValue: Int {
+    public var srs_hashValue: Int {
         return self.reduce(0, { $0 ^ $1.hashValue })
     }
 }

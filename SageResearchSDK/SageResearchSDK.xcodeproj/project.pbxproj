@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF1A7A871F6B1174007AB5A6 /* CodableObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */; };
 		FF2B54FF1F68B60E00663289 /* SRSFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */; };
 		FF2B55011F68BC7C00663289 /* SRSFormDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */; };
 		FF2B55101F69279900663289 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B550F1F69279900663289 /* StaticUtilities.swift */; };
 		FF72B23B1F6859D3004C6F15 /* SageResearchSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF72B2311F6859D3004C6F15 /* SageResearchSDK.framework */; };
-		FF72B2401F6859D3004C6F15 /* SageResearchSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B23F1F6859D3004C6F15 /* SageResearchSDKTests.swift */; };
 		FF72B2421F6859D3004C6F15 /* SageResearchSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF72B2541F685F49004C6F15 /* SRSTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2531F685F49004C6F15 /* SRSTask.swift */; };
 		FF72B2571F68646B004C6F15 /* SRSStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2561F68646B004C6F15 /* SRSStep.swift */; };
@@ -32,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableObjectTests.swift; sourceTree = "<group>"; };
 		FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSFormItem.swift; sourceTree = "<group>"; };
 		FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSFormDataType.swift; sourceTree = "<group>"; };
 		FF2B550F1F69279900663289 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
@@ -39,7 +40,6 @@
 		FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SageResearchSDK.h; sourceTree = "<group>"; };
 		FF72B2351F6859D3004C6F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF72B23A1F6859D3004C6F15 /* SageResearchSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SageResearchSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF72B23F1F6859D3004C6F15 /* SageResearchSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SageResearchSDKTests.swift; sourceTree = "<group>"; };
 		FF72B2411F6859D3004C6F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF72B2531F685F49004C6F15 /* SRSTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSTask.swift; sourceTree = "<group>"; };
 		FF72B2561F68646B004C6F15 /* SRSStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSStep.swift; sourceTree = "<group>"; };
@@ -73,7 +73,6 @@
 			children = (
 				FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */,
 				FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */,
-				FF72B25C1F687199004C6F15 /* SRSResult.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -119,7 +118,7 @@
 		FF72B23E1F6859D3004C6F15 /* SageResearchSDKTests */ = {
 			isa = PBXGroup;
 			children = (
-				FF72B23F1F6859D3004C6F15 /* SageResearchSDKTests.swift */,
+				FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */,
 				FF72B2411F6859D3004C6F15 /* Info.plist */,
 			);
 			path = SageResearchSDKTests;
@@ -128,11 +127,12 @@
 		FF72B2551F685F6D004C6F15 /* Model Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				FF72B2581F6867F8004C6F15 /* SRSUIAction.swift */,
 				FF72B25E1F688168004C6F15 /* SRSAsyncAction.swift */,
+				FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */,
+				FF72B25C1F687199004C6F15 /* SRSResult.swift */,
 				FF72B2561F68646B004C6F15 /* SRSStep.swift */,
 				FF72B2531F685F49004C6F15 /* SRSTask.swift */,
-				FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */,
+				FF72B2581F6867F8004C6F15 /* SRSUIAction.swift */,
 			);
 			name = "Model Protocol";
 			sourceTree = "<group>";
@@ -200,12 +200,13 @@
 					FF72B2301F6859D3004C6F15 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 4B822CZK9N;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					FF72B2391F6859D3004C6F15 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 4B822CZK9N;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -266,7 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF72B2401F6859D3004C6F15 /* SageResearchSDKTests.swift in Sources */,
+				FF1A7A871F6B1174007AB5A6 /* CodableObjectTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,7 +401,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -421,7 +423,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SageResearchSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -434,7 +437,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SageResearchSDKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -447,7 +451,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SageResearchSDKTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
