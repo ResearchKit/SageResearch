@@ -1,6 +1,6 @@
 //
 //  CodableObjectTests.swift
-//  SageResearchSDKTests
+//  ResearchSuiteTests
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -32,19 +32,19 @@
 //
 
 import XCTest
-import SageResearchSDK
+import ResearchSuite
 
 /**
 
 // MARK: Example codeable subclasses
 
-class ClassA : SRSCodableObject {
+class ClassA : RSDCodableObject {
 }
 
-class ClassB : SRSCodableObject {
+class ClassB : RSDCodableObject {
 }
 
-class ClassC : SRSCodableObject {
+class ClassC : RSDCodableObject {
     var count: Int = 0
         
     override var hashValue: Int {

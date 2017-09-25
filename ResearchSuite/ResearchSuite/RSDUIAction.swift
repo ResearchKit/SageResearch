@@ -1,6 +1,6 @@
 //
-//  SRSUIAction.swift
-//  SageResearchSDK
+//  RSDUIAction.swift
+//  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -32,17 +32,18 @@
 //
 
 import Foundation
+import UIKit
 
 /**
- The `SRSUIAction` protocol can be used to customize the title and image displayed for a 
+ The `RSDUIAction` protocol can be used to customize the title and image displayed for a 
  given action of the UI.
  */
-public protocol SRSUIAction {
+public protocol RSDUIAction {
     
     /**
      The action type for this button or gesture.
      */
-    var actionType: SRSUIActionType { get }
+    var actionType: RSDUIActionType { get }
     
     /**
      The title to display on the button associated with this action.
@@ -56,10 +57,10 @@ public protocol SRSUIAction {
 }
 
 /**
- The `SRSUIActionType` enum describes standard navigation actions that are common to a
+ The `RSDUIActionType` enum describes standard navigation actions that are common to a
  given UI step. It is extendable using the custom field.
  */
-public enum SRSUIActionType {
+public enum RSDUIActionType {
     
     /**
      Standard navigation elements that are common to most steps.
@@ -96,7 +97,7 @@ public enum SRSUIActionType {
     case custom(String)
 }
 
-extension SRSUIActionType: RawRepresentable {
+extension RSDUIActionType: RawRepresentable {
     public typealias RawValue = String
     
     public init?(rawValue: RawValue) {

@@ -1,6 +1,6 @@
 //
-//  SRSResult.swift
-//  SageResearchSDK
+//  RSDAsyncAction.swift
+//  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -34,65 +34,37 @@
 import Foundation
 
 /**
- A result associated with a task, step, or asyncronous action.
+ `RSDAsyncAction` defines general configuration for an asyncronous background action that should be run in the background. Depending upon the parameters and how the action is setup, this could be something that is run continuously or else is paused or reset based on a timeout interval.
  */
-public protocol SRSResult : NSCopying {
+public protocol RSDAsyncAction {
     
     /**
-     The identifier associated with the task, step, or asyncronous action.
+     A short string that uniquely identifies the asyncronous action within the task. The identifier is reproduced in the results of a async results.
      */
-    var identifier: String { get }
+    var identifier : String { get }
     
     /**
-     The start date timestamp for the result.
+     An identifier marking the step to start the action. If `nil`, then the action will be started when the task is started.
      */
-    var startDate: Date { get }
+    var startStepIdentifier: String? { get }
     
     /**
-     The end date timestamp for the result.
+     An identifier marking the step at which to stop the action. If `nil`, then the action will be stopped when the task is stopped.
      */
-    var endDate: Date { get }
-}
-
-
-/**
- A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
- */
-public protocol SRSTaskResult : SRSResult, SRSSchemaInfo {
+    var stopStepIdentifier: String? { get }
     
     /**
-     A unique identifier for this task run.
+     An identifier marking a step to wait to display until the action is completed. This is only valid for actions that are single result actions and not continuous recorders.
      */
-    var taskRunUUID: UUID { get }
+    var waitStepIdentifier: String? { get }
     
     /**
-     A listing of the step history for this task. The listed step results should *only* include the last result for any given step.
+     A time interval after which the action should be reset. For example, if the action queries a weather service and the user backgrounds the app for more than the reset time, then the weather service should be queried again.
      */
-    var stepHistory: [SRSResult] { get }
+    var resetTimeInterval: TimeInterval { get }
     
     /**
-     A list of all the asyncronous results for this task. The list should include uniquely identified results.
+     A time interval after which the action should be stopped.
      */
-    var asyncResults: [SRSResult]? { get }
-}
-
-/**
- A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
- */
-public protocol SRSAnswerResult : SRSResult {
-    
-    /**
-     The answer for the result.
-     */
-    var value: Any? { get }
-    
-    /**
-     The data type of the answer result.
-     */
-    var dataType: SRSFormDataType { get }
-    
-    /**
-     Any additional information associated with this result such as unit.
-     */
-    var metadata: [String : Any]? { get }
+    var timeoutTimeInterval: TimeInterval { get }
 }

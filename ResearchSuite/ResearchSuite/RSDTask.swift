@@ -1,6 +1,6 @@
 //
-//  SRSTask.swift
-//  SageResearchSDK
+//  RSDTask.swift
+//  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -31,9 +31,9 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import UIKit
 
-public protocol SRSTaskInfo {
+public protocol RSDTaskInfo {
     
     /**
      A short string that uniquely identifies the task.
@@ -70,7 +70,7 @@ public protocol SRSTaskInfo {
     func icon(in rect: CGRect) -> UIImage?
 }
 
-public protocol SRSSchemaInfo {
+public protocol RSDSchemaInfo {
     
     /**
      A short string that uniquely identifies the associated result schema. If nil, then the `taskIdentifier` is used.
@@ -84,7 +84,7 @@ public protocol SRSSchemaInfo {
     
 }
 
-public protocol SRSTask {
+public protocol RSDTask {
     
     /**
      A short string that uniquely identifies the task.
@@ -94,17 +94,17 @@ public protocol SRSTask {
     /**
      Additional information about the task.
      */
-    var taskInfo: SRSTaskInfo? { get }
+    var taskInfo: RSDTaskInfo? { get }
     
     /**
      Additional information about the result schema
      */
-    var schemaInfo: SRSSchemaInfo? { get }
+    var schemaInfo: RSDSchemaInfo? { get }
     
     /**
      A list of asyncronous actions to run on the task.
      */
-    var asyncActions: [SRSAsyncAction]? { get }
+    var asyncActions: [RSDAsyncAction]? { get }
     
     /**
      Returns the step associated with a given identifier.
@@ -113,7 +113,7 @@ public protocol SRSTask {
      
      @return            The step with this identifier or nil if not found.
      */
-    func step(with identifier: String) -> SRSStep?
+    func step(with identifier: String) -> RSDStep?
     
     /**
      Return the step to go to before the given step.
@@ -123,7 +123,7 @@ public protocol SRSTask {
      
      @return        The previous step or nil if the task does not support backward navigation.
      */
-    func stepBefore(_ step: SRSStep, with result: SRSTaskResult?) -> SRSStep?
+    func stepBefore(_ step: RSDStep, with result: RSDTaskResult?) -> RSDStep?
     
     /**
      Return the step to go to after completing the given step.
@@ -133,7 +133,7 @@ public protocol SRSTask {
      
      @return        The next step to display or nil if this is the end of the task.
      */
-    func stepAfter(_ step: SRSStep?, with result: SRSTaskResult?) -> SRSStep?
+    func stepAfter(_ step: RSDStep?, with result: RSDTaskResult?) -> RSDStep?
     
     /**
      Return the progress through the task for a given step with the current result.
@@ -145,7 +145,7 @@ public protocol SRSTask {
      @return total          The total number of steps.
      @return isEstimated    Whether or not the progress is an estimate (if the task has variable navigation)
      */
-    func progress(for step: SRSStep, with result: SRSTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)
+    func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)
     
     /**
      Validate the task to check for any model configuration that should throw an error.

@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		FF1A7A871F6B1174007AB5A6 /* CodableObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */; };
-		FF2B54FF1F68B60E00663289 /* SRSFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */; };
-		FF2B55011F68BC7C00663289 /* SRSFormDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */; };
+		FF2B54FF1F68B60E00663289 /* RSDFormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B54FE1F68B60E00663289 /* RSDFormItem.swift */; };
+		FF2B55011F68BC7C00663289 /* RSDFormDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B55001F68BC7C00663289 /* RSDFormDataType.swift */; };
 		FF2B55101F69279900663289 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2B550F1F69279900663289 /* StaticUtilities.swift */; };
-		FF72B23B1F6859D3004C6F15 /* SageResearchSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF72B2311F6859D3004C6F15 /* SageResearchSDK.framework */; };
-		FF72B2421F6859D3004C6F15 /* SageResearchSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF72B2541F685F49004C6F15 /* SRSTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2531F685F49004C6F15 /* SRSTask.swift */; };
-		FF72B2571F68646B004C6F15 /* SRSStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2561F68646B004C6F15 /* SRSStep.swift */; };
-		FF72B2591F6867F8004C6F15 /* SRSUIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2581F6867F8004C6F15 /* SRSUIAction.swift */; };
-		FF72B25D1F687199004C6F15 /* SRSResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B25C1F687199004C6F15 /* SRSResult.swift */; };
-		FF72B25F1F688168004C6F15 /* SRSAsyncAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B25E1F688168004C6F15 /* SRSAsyncAction.swift */; };
-		FF72B2611F68845A004C6F15 /* SRSDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */; };
+		FF72B23B1F6859D3004C6F15 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF72B2311F6859D3004C6F15 /* ResearchSuite.framework */; };
+		FF72B2421F6859D3004C6F15 /* ResearchSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = FF72B2341F6859D3004C6F15 /* ResearchSuite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FF72B2541F685F49004C6F15 /* RSDTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2531F685F49004C6F15 /* RSDTask.swift */; };
+		FF72B2571F68646B004C6F15 /* RSDStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2561F68646B004C6F15 /* RSDStep.swift */; };
+		FF72B2591F6867F8004C6F15 /* RSDUIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2581F6867F8004C6F15 /* RSDUIAction.swift */; };
+		FF72B25D1F687199004C6F15 /* RSDResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B25C1F687199004C6F15 /* RSDResult.swift */; };
+		FF72B25F1F688168004C6F15 /* RSDAsyncAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B25E1F688168004C6F15 /* RSDAsyncAction.swift */; };
+		FF72B2611F68845A004C6F15 /* RSDDeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,20 +33,20 @@
 
 /* Begin PBXFileReference section */
 		FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableObjectTests.swift; sourceTree = "<group>"; };
-		FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSFormItem.swift; sourceTree = "<group>"; };
-		FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSFormDataType.swift; sourceTree = "<group>"; };
+		FF2B54FE1F68B60E00663289 /* RSDFormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDFormItem.swift; sourceTree = "<group>"; };
+		FF2B55001F68BC7C00663289 /* RSDFormDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDFormDataType.swift; sourceTree = "<group>"; };
 		FF2B550F1F69279900663289 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
-		FF72B2311F6859D3004C6F15 /* SageResearchSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SageResearchSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SageResearchSDK.h; sourceTree = "<group>"; };
+		FF72B2311F6859D3004C6F15 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF72B2341F6859D3004C6F15 /* ResearchSuite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchSuite.h; sourceTree = "<group>"; };
 		FF72B2351F6859D3004C6F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF72B23A1F6859D3004C6F15 /* SageResearchSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SageResearchSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF72B23A1F6859D3004C6F15 /* ResearchSuiteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchSuiteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF72B2411F6859D3004C6F15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF72B2531F685F49004C6F15 /* SRSTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSTask.swift; sourceTree = "<group>"; };
-		FF72B2561F68646B004C6F15 /* SRSStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSStep.swift; sourceTree = "<group>"; };
-		FF72B2581F6867F8004C6F15 /* SRSUIAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSUIAction.swift; sourceTree = "<group>"; };
-		FF72B25C1F687199004C6F15 /* SRSResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSResult.swift; sourceTree = "<group>"; };
-		FF72B25E1F688168004C6F15 /* SRSAsyncAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSAsyncAction.swift; sourceTree = "<group>"; };
-		FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SRSDeviceType.swift; sourceTree = "<group>"; };
+		FF72B2531F685F49004C6F15 /* RSDTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDTask.swift; sourceTree = "<group>"; };
+		FF72B2561F68646B004C6F15 /* RSDStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStep.swift; sourceTree = "<group>"; };
+		FF72B2581F6867F8004C6F15 /* RSDUIAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDUIAction.swift; sourceTree = "<group>"; };
+		FF72B25C1F687199004C6F15 /* RSDResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDResult.swift; sourceTree = "<group>"; };
+		FF72B25E1F688168004C6F15 /* RSDAsyncAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDAsyncAction.swift; sourceTree = "<group>"; };
+		FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDDeviceType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF72B23B1F6859D3004C6F15 /* SageResearchSDK.framework in Frameworks */,
+				FF72B23B1F6859D3004C6F15 /* ResearchSuite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,8 +71,8 @@
 		FF2B54FD1F68AE8000663289 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				FF72B2601F68845A004C6F15 /* SRSDeviceType.swift */,
-				FF2B55001F68BC7C00663289 /* SRSFormDataType.swift */,
+				FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */,
+				FF2B55001F68BC7C00663289 /* RSDFormDataType.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -88,8 +88,8 @@
 		FF72B2271F6859D2004C6F15 = {
 			isa = PBXGroup;
 			children = (
-				FF72B2331F6859D3004C6F15 /* SageResearchSDK */,
-				FF72B23E1F6859D3004C6F15 /* SageResearchSDKTests */,
+				FF72B2331F6859D3004C6F15 /* ResearchSuite */,
+				FF72B23E1F6859D3004C6F15 /* ResearchSuiteTests */,
 				FF72B2321F6859D3004C6F15 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,42 +97,42 @@
 		FF72B2321F6859D3004C6F15 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF72B2311F6859D3004C6F15 /* SageResearchSDK.framework */,
-				FF72B23A1F6859D3004C6F15 /* SageResearchSDKTests.xctest */,
+				FF72B2311F6859D3004C6F15 /* ResearchSuite.framework */,
+				FF72B23A1F6859D3004C6F15 /* ResearchSuiteTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FF72B2331F6859D3004C6F15 /* SageResearchSDK */ = {
+		FF72B2331F6859D3004C6F15 /* ResearchSuite */ = {
 			isa = PBXGroup;
 			children = (
-				FF72B2341F6859D3004C6F15 /* SageResearchSDK.h */,
+				FF72B2341F6859D3004C6F15 /* ResearchSuite.h */,
 				FF72B2551F685F6D004C6F15 /* Model Protocol */,
 				FF2B54FD1F68AE8000663289 /* Model */,
 				FF2B55021F69077200663289 /* Utilities */,
 				FF72B2351F6859D3004C6F15 /* Info.plist */,
 			);
-			path = SageResearchSDK;
+			path = ResearchSuite;
 			sourceTree = "<group>";
 		};
-		FF72B23E1F6859D3004C6F15 /* SageResearchSDKTests */ = {
+		FF72B23E1F6859D3004C6F15 /* ResearchSuiteTests */ = {
 			isa = PBXGroup;
 			children = (
 				FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */,
 				FF72B2411F6859D3004C6F15 /* Info.plist */,
 			);
-			path = SageResearchSDKTests;
+			path = ResearchSuiteTests;
 			sourceTree = "<group>";
 		};
 		FF72B2551F685F6D004C6F15 /* Model Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				FF72B25E1F688168004C6F15 /* SRSAsyncAction.swift */,
-				FF2B54FE1F68B60E00663289 /* SRSFormItem.swift */,
-				FF72B25C1F687199004C6F15 /* SRSResult.swift */,
-				FF72B2561F68646B004C6F15 /* SRSStep.swift */,
-				FF72B2531F685F49004C6F15 /* SRSTask.swift */,
-				FF72B2581F6867F8004C6F15 /* SRSUIAction.swift */,
+				FF72B25E1F688168004C6F15 /* RSDAsyncAction.swift */,
+				FF2B54FE1F68B60E00663289 /* RSDFormItem.swift */,
+				FF72B25C1F687199004C6F15 /* RSDResult.swift */,
+				FF72B2561F68646B004C6F15 /* RSDStep.swift */,
+				FF72B2531F685F49004C6F15 /* RSDTask.swift */,
+				FF72B2581F6867F8004C6F15 /* RSDUIAction.swift */,
 			);
 			name = "Model Protocol";
 			sourceTree = "<group>";
@@ -144,16 +144,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF72B2421F6859D3004C6F15 /* SageResearchSDK.h in Headers */,
+				FF72B2421F6859D3004C6F15 /* ResearchSuite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		FF72B2301F6859D3004C6F15 /* SageResearchSDK */ = {
+		FF72B2301F6859D3004C6F15 /* ResearchSuite */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF72B2451F6859D3004C6F15 /* Build configuration list for PBXNativeTarget "SageResearchSDK" */;
+			buildConfigurationList = FF72B2451F6859D3004C6F15 /* Build configuration list for PBXNativeTarget "ResearchSuite" */;
 			buildPhases = (
 				FF72B22C1F6859D3004C6F15 /* Sources */,
 				FF72B22D1F6859D3004C6F15 /* Frameworks */,
@@ -164,14 +164,14 @@
 			);
 			dependencies = (
 			);
-			name = SageResearchSDK;
+			name = ResearchSuite;
 			productName = SageResearchSDK;
-			productReference = FF72B2311F6859D3004C6F15 /* SageResearchSDK.framework */;
+			productReference = FF72B2311F6859D3004C6F15 /* ResearchSuite.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		FF72B2391F6859D3004C6F15 /* SageResearchSDKTests */ = {
+		FF72B2391F6859D3004C6F15 /* ResearchSuiteTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF72B2481F6859D3004C6F15 /* Build configuration list for PBXNativeTarget "SageResearchSDKTests" */;
+			buildConfigurationList = FF72B2481F6859D3004C6F15 /* Build configuration list for PBXNativeTarget "ResearchSuiteTests" */;
 			buildPhases = (
 				FF72B2361F6859D3004C6F15 /* Sources */,
 				FF72B2371F6859D3004C6F15 /* Frameworks */,
@@ -182,9 +182,9 @@
 			dependencies = (
 				FF72B23D1F6859D3004C6F15 /* PBXTargetDependency */,
 			);
-			name = SageResearchSDKTests;
+			name = ResearchSuiteTests;
 			productName = SageResearchSDKTests;
-			productReference = FF72B23A1F6859D3004C6F15 /* SageResearchSDKTests.xctest */;
+			productReference = FF72B23A1F6859D3004C6F15 /* ResearchSuiteTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -211,7 +211,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FF72B22B1F6859D2004C6F15 /* Build configuration list for PBXProject "SageResearchSDK" */;
+			buildConfigurationList = FF72B22B1F6859D2004C6F15 /* Build configuration list for PBXProject "ResearchSuite" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -223,8 +223,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FF72B2301F6859D3004C6F15 /* SageResearchSDK */,
-				FF72B2391F6859D3004C6F15 /* SageResearchSDKTests */,
+				FF72B2301F6859D3004C6F15 /* ResearchSuite */,
+				FF72B2391F6859D3004C6F15 /* ResearchSuiteTests */,
 			);
 		};
 /* End PBXProject section */
@@ -251,15 +251,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF2B55011F68BC7C00663289 /* SRSFormDataType.swift in Sources */,
-				FF72B2591F6867F8004C6F15 /* SRSUIAction.swift in Sources */,
-				FF72B2611F68845A004C6F15 /* SRSDeviceType.swift in Sources */,
-				FF72B25F1F688168004C6F15 /* SRSAsyncAction.swift in Sources */,
+				FF2B55011F68BC7C00663289 /* RSDFormDataType.swift in Sources */,
+				FF72B2591F6867F8004C6F15 /* RSDUIAction.swift in Sources */,
+				FF72B2611F68845A004C6F15 /* RSDDeviceType.swift in Sources */,
+				FF72B25F1F688168004C6F15 /* RSDAsyncAction.swift in Sources */,
 				FF2B55101F69279900663289 /* StaticUtilities.swift in Sources */,
-				FF2B54FF1F68B60E00663289 /* SRSFormItem.swift in Sources */,
-				FF72B2571F68646B004C6F15 /* SRSStep.swift in Sources */,
-				FF72B25D1F687199004C6F15 /* SRSResult.swift in Sources */,
-				FF72B2541F685F49004C6F15 /* SRSTask.swift in Sources */,
+				FF2B54FF1F68B60E00663289 /* RSDFormItem.swift in Sources */,
+				FF72B2571F68646B004C6F15 /* RSDStep.swift in Sources */,
+				FF72B25D1F687199004C6F15 /* RSDResult.swift in Sources */,
+				FF72B2541F685F49004C6F15 /* RSDTask.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +276,7 @@
 /* Begin PBXTargetDependency section */
 		FF72B23D1F6859D3004C6F15 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FF72B2301F6859D3004C6F15 /* SageResearchSDK */;
+			target = FF72B2301F6859D3004C6F15 /* ResearchSuite */;
 			targetProxy = FF72B23C1F6859D3004C6F15 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -393,11 +393,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SageResearchSDK/Info.plist;
+				INFOPLIST_FILE = ResearchSuite/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SageResearchSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -416,11 +416,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = SageResearchSDK/Info.plist;
+				INFOPLIST_FILE = ResearchSuite/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SageResearchSDK;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -433,9 +433,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = SageResearchSDKTests/Info.plist;
+				INFOPLIST_FILE = ResearchSuiteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SageResearchSDKTests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -447,9 +447,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = SageResearchSDKTests/Info.plist;
+				INFOPLIST_FILE = ResearchSuiteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.SageResearchSDKTests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -459,7 +459,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FF72B22B1F6859D2004C6F15 /* Build configuration list for PBXProject "SageResearchSDK" */ = {
+		FF72B22B1F6859D2004C6F15 /* Build configuration list for PBXProject "ResearchSuite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF72B2431F6859D3004C6F15 /* Debug */,
@@ -468,7 +468,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF72B2451F6859D3004C6F15 /* Build configuration list for PBXNativeTarget "SageResearchSDK" */ = {
+		FF72B2451F6859D3004C6F15 /* Build configuration list for PBXNativeTarget "ResearchSuite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF72B2461F6859D3004C6F15 /* Debug */,
@@ -477,7 +477,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF72B2481F6859D3004C6F15 /* Build configuration list for PBXNativeTarget "SageResearchSDKTests" */ = {
+		FF72B2481F6859D3004C6F15 /* Build configuration list for PBXNativeTarget "ResearchSuiteTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF72B2491F6859D3004C6F15 /* Debug */,

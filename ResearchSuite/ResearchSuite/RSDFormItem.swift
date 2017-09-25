@@ -1,6 +1,6 @@
 //
-//  SRSDeviceType.swift
-//  SageResearchSDK
+//  RSDFormItem.swift
+//  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -34,61 +34,39 @@
 import Foundation
 
 /**
- `SRSDeviceType` describes various devices. It can be used by a task to vend different steps or async actions based upon what is supported by a given device type.
+ `RSDFormItem` is used to describe a form input and includes the data type and a possible hint to how the UI should be displayed.
  */
-public enum SRSDeviceType {
+public protocol RSDFormItem {
     
-    case standard(StandardDevice)
-    public enum StandardDevice : String {
-        
-        /**
-         A computer will have a keyboard and a mouse or touchpad. (Mac)
-        */
-        case computer
-        
-        /**
-         A phone is a handheld device with a touch screen. (iPhone, Android phone)
-        */
-        case phone
-
-        /**
-         A tablet is a larger touch screen device. (iPad, Android tablet)
-        */
-        case tablet
-        
-        /**
-         A tv is a device that has a larger screen with a remote control. (Apple TV)
-        */
-        case tv
-        
-        /**
-         A watch is a device that is worn on a person's wrist. (Apple Watch)
-        */
-        case watch
-    }
+    /**
+     A short string that uniquely identifies the form item within the step. The identifier is reproduced in the results of a step result in the step history of a task result.
+     */
+    var identifier: String { get }
     
-    case custom(String)
-}
-
-extension SRSDeviceType: RawRepresentable {
-    public typealias RawValue = String
+    /**
+     A localized string that displays a short text offering a hint to the user of the data to be entered for this field.
+     */
+    var prompt: String? { get }
     
-    public init?(rawValue: RawValue) {
-        if let subtype = StandardDevice(rawValue: rawValue) {
-            self = .standard(subtype)
-        }
-        else {
-            self = .custom(rawValue)
-        }
-    }
+    /**
+     A localized string that displays placeholder information for the form item.
+     
+     You can display placeholder text in a text field or text area to help users understand how to answer the item's question.
+     */
+    var placeholderText: String? { get }
     
-    public var rawValue: String {
-        switch (self) {
-        case .standard(let value):
-            return value.rawValue
-            
-        case .custom(let value):
-            return value
-        }
-    }
+    /**
+     A Boolean value indicating whether the user can skip the step without providing an answer.
+     */
+    var optional: Bool { get }
+    
+    /**
+     Validate the form item to check for any configuration that should throw an error.
+     */
+    func validate() throws
+    
+    /**
+     Validation run on the
+     */
+    func validateResult(_ result: RSDResult) throws -> Bool
 }
