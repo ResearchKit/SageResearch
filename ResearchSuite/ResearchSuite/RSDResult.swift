@@ -1,6 +1,6 @@
 //
-//  StaticUtilities.swift
-//  SageResearchSDK
+//  RSDResult.swift
+//  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -33,25 +33,66 @@
 
 import Foundation
 
-public func SRSObjectEquality(_ objA: Any?, _ objB: Any?) -> Bool {
-    if objA == nil && objB == nil {
-        return true
-    }
-    if let objA = objA as? NSObject, let objB = objB as? NSObject {
-        return objA == objB
-    }
-    return false
-}
-
-public func SRSObjectHash(_ obj: Any?) -> Int {
-    return  (obj as? NSObject)?.hash ??
-            (obj as? AnyHashable)?.hashValue ??
-            0
-}
-
-public extension Sequence where Iterator.Element: Hashable {
+/**
+ A result associated with a task, step, or asyncronous action.
+ */
+public protocol RSDResult : NSCopying {
     
-    public var srs_hashValue: Int {
-        return self.reduce(0, { $0 ^ $1.hashValue })
-    }
+    /**
+     The identifier associated with the task, step, or asyncronous action.
+     */
+    var identifier: String { get }
+    
+    /**
+     The start date timestamp for the result.
+     */
+    var startDate: Date { get }
+    
+    /**
+     The end date timestamp for the result.
+     */
+    var endDate: Date { get }
+}
+
+
+/**
+ A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
+ */
+public protocol RSDTaskResult : RSDResult, RSDSchemaInfo {
+    
+    /**
+     A unique identifier for this task run.
+     */
+    var taskRunUUID: UUID { get }
+    
+    /**
+     A listing of the step history for this task. The listed step results should *only* include the last result for any given step.
+     */
+    var stepHistory: [RSDResult] { get }
+    
+    /**
+     A list of all the asyncronous results for this task. The list should include uniquely identified results.
+     */
+    var asyncResults: [RSDResult]? { get }
+}
+
+/**
+ A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
+ */
+public protocol RSDAnswerResult : RSDResult {
+    
+    /**
+     The answer for the result.
+     */
+    var value: Any? { get }
+    
+    /**
+     The data type of the answer result.
+     */
+    var dataType: RSDFormDataType { get }
+    
+    /**
+     Any additional information associated with this result such as unit.
+     */
+    var metadata: [String : Any]? { get }
 }

@@ -1,6 +1,6 @@
 //
-//  SRSFormDataType.swift
-//  SageResearchSDK
+//  RSDFormDataType.swift
+//  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -34,9 +34,9 @@
 import Foundation
 
 /**
- `SRSFormDataType` is used to describe the data type for a form input.
+ `RSDFormDataType` is used to describe the data type for a form input.
  */
-public enum SRSFormDataType {
+public enum RSDFormDataType {
     
     /**
      Base data types are basic types that can be defined with only a base type.
@@ -122,7 +122,7 @@ public enum SRSFormDataType {
     }
 }
 
-extension SRSFormDataType: RawRepresentable {
+extension RSDFormDataType: RawRepresentable {
     public typealias RawValue = String
     
     public init?(rawValue: RawValue) {

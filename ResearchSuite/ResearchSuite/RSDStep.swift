@@ -1,6 +1,6 @@
 //
-//  SRSStep.swift
-//  SageResearchSDK
+//  RSDStep.swift
+//  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -34,13 +34,13 @@
 import Foundation
 
 /**
- `SRSStep` is the base protocol for the steps that can compose a task for presentation using a controller appropriate to the device and applicaytion. Each `SRSStep` object represents one logical piece of data entry, information, or activity in a larger task.
+ `RSDStep` is the base protocol for the steps that can compose a task for presentation using a controller appropriate to the device and applicaytion. Each `RSDStep` object represents one logical piece of data entry, information, or activity in a larger task.
  
- There are two base implementations included in this SDK. `SRSTaskStep` is used to define a subgrouping of steps such as a section in a longer survey. `SRSUIStep` is used to define a display step. Depending upon the display device, more than one `SRSUIStep` might be shown on a given page. For example, a section of a survey may display multiple fields on an iPad whereas each question in the survey is shown on a new page for an iPhone.
+ There are two base implementations included in this SDK. `RSDTaskStep` is used to define a subgrouping of steps such as a section in a longer survey. `RSDUIStep` is used to define a display step. Depending upon the display device, more than one `RSDUIStep` might be shown on a given page. For example, a section of a survey may display multiple fields on an iPad whereas each question in the survey is shown on a new page for an iPhone.
  
- A step can be a question, an active test, or a simple instruction. An `SRSStep` subclass is usually paired with an `SRSStepController` that controls the actions of the step.
+ A step can be a question, an active test, or a simple instruction. An `RSDStep` subclass is usually paired with an `RSDStepController` that controls the actions of the step.
  */
-public protocol SRSStep {
+public protocol RSDStep {
     
     /**
      A short string that uniquely identifies the step within the task. The identifier is reproduced in the results of a step history.
@@ -56,17 +56,17 @@ public protocol SRSStep {
 }
 
 /**
- `SRSTaskStep` is used to define a logical subgrouping of steps such as a section in a longer survey or an active step that includes an instruction step, countdown step, and activity step.
+ `RSDTaskStep` is used to define a logical subgrouping of steps such as a section in a longer survey or an active step that includes an instruction step, countdown step, and activity step.
  */
-public protocol SRSTaskStep: SRSStep {
+public protocol RSDTaskStep: RSDStep {
     
     /**
      The task used to define this subgrouping of steps.
      */
-    var subtask: SRSTask { get }
+    var subtask: RSDTask { get }
 }
 
-extension SRSTaskStep {
+extension RSDTaskStep {
     
     public var identifier: String {
         return subtask.identifier
@@ -74,9 +74,9 @@ extension SRSTaskStep {
 }
 
 /**
- `SRSUIStep` is used to define a single "display unit". 
+ `RSDUIStep` is used to define a single "display unit". 
  */
-public protocol SRSUIStep: SRSStep {
+public protocol RSDUIStep: RSDStep {
     
     /**
      The primary text to display for the step in a localized string.
@@ -123,13 +123,13 @@ public protocol SRSUIStep: SRSStep {
     func imageAfter(in rect: CGRect) -> UIImage?
     
     /**
-     Customizable actions to return for a given action type. The `SRSStepController` can use these to customize the display of buttons to the user. If nil, `shouldHideAction()` will be called to determine if the default action should be used or if the action button should be hidden.
+     Customizable actions to return for a given action type. The `RSDStepController` can use these to customize the display of buttons to the user. If nil, `shouldHideAction()` will be called to determine if the default action should be used or if the action button should be hidden.
      
      @param actionType  The action type for the button.
      
      @return            A custom UI action for this button. If nil, the default action will be used.
      */
-    func action(for actionType: SRSUIActionType) -> SRSUIAction?
+    func action(for actionType: RSDUIActionType) -> RSDUIAction?
     
     /**
      Should the action button be hidden?
@@ -138,13 +138,13 @@ public protocol SRSUIStep: SRSStep {
      
      @return            Whether or not the button should be hidden.
      */
-    func shouldHideAction(for actionType: SRSUIActionType) -> Bool
+    func shouldHideAction(for actionType: RSDUIActionType) -> Bool
 }
 
 /**
- For the case where a `SRSUIStep` has action such as "start walking" or "stop walking", the step may also implement the `SBAActiveUIStep` protocol to allow for spoken instruction.
+ For the case where a `RSDUIStep` has action such as "start walking" or "stop walking", the step may also implement the `SBAActiveUIStep` protocol to allow for spoken instruction.
  */
-public protocol SRSActiveUIStep: SRSUIStep {
+public protocol RSDActiveUIStep: RSDUIStep {
     
     /**
      The duration of time to run the step. If `0`, then this value is ignored.
@@ -166,12 +166,12 @@ public protocol SRSActiveUIStep: SRSUIStep {
 /**
  Additional properties used in creating a form input.
  */
-public protocol SRSFormUIStep: SRSUIStep {
+public protocol RSDFormUIStep: RSDUIStep {
     
     /**
      The items array is used to hold a logical subgrouping of form items. If this array holds more than one form item, that form item should describe an input that is uses a logical subgrouping such as blood pressure, height (ft-in), or given/family name.
      */
-    var formItems: [SRSFormItem] { get }
+    var formItems: [RSDFormItem] { get }
 }
 
 

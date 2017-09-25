@@ -1,6 +1,6 @@
 //
-//  SageResearchSDK.h
-//  SageResearchSDK
+//  ResearchSuite.h
+//  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -33,10 +33,10 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for SageResearchSDK.
-FOUNDATION_EXPORT double SageResearchSDKVersionNumber;
+//! Project version number for ResearchSuite.
+FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
 
-//! Project version string for SageResearchSDK.
-FOUNDATION_EXPORT const unsigned char SageResearchSDKVersionString[];
+//! Project version string for ResearchSuite.
+FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
 
 
