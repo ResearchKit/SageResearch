@@ -33,6 +33,9 @@
 
 import UIKit
 
+/**
+ A light-weight reference interface for information about the task. This includes information that can be displayed in a table or collection view.
+ */
 public protocol RSDTaskInfo {
     
     /**
@@ -70,6 +73,9 @@ public protocol RSDTaskInfo {
     func icon(in rect: CGRect) -> UIImage?
 }
 
+/**
+ This is a light-weight interface for schema information used to upload the results of a task.
+ */
 public protocol RSDSchemaInfo {
     
     /**
@@ -84,6 +90,9 @@ public protocol RSDSchemaInfo {
     
 }
 
+/**
+ This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
+ */
 public protocol RSDTask {
     
     /**
@@ -97,7 +106,7 @@ public protocol RSDTask {
     var taskInfo: RSDTaskInfo? { get }
     
     /**
-     Additional information about the result schema
+     Additional information about the result schema.
      */
     var schemaInfo: RSDSchemaInfo? { get }
     
