@@ -123,7 +123,7 @@ public protocol RSDTask {
      
      @return        The previous step or nil if the task does not support backward navigation.
      */
-    func stepBefore(_ step: RSDStep, with result: RSDTaskResult?) -> RSDStep?
+    func step(before step: RSDStep, with result: RSDTaskResult?) -> RSDStep?
     
     /**
      Return the step to go to after completing the given step.
@@ -133,7 +133,7 @@ public protocol RSDTask {
      
      @return        The next step to display or nil if this is the end of the task.
      */
-    func stepAfter(_ step: RSDStep?, with result: RSDTaskResult?) -> RSDStep?
+    func step(after step: RSDStep?, with result: RSDTaskResult?) -> RSDStep?
     
     /**
      Return the progress through the task for a given step with the current result.
@@ -145,7 +145,7 @@ public protocol RSDTask {
      @return total          The total number of steps.
      @return isEstimated    Whether or not the progress is an estimate (if the task has variable navigation)
      */
-    func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)
+    func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: UInt, total: UInt, isEstimated: Bool)?
     
     /**
      Validate the task to check for any model configuration that should throw an error.
