@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */; };
 		FF443E201F7AC21900F43BE7 /* ResearchSuite_UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF443E161F7AC21900F43BE7 /* ResearchSuite_UI.framework */; };
 		FF443E271F7AC21900F43BE7 /* ResearchSuite_UI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuite_UI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -22,6 +23,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF443E161F7AC21900F43BE7 /* ResearchSuite_UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchSuite_UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF443E191F7AC21900F43BE7 /* ResearchSuite_UI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchSuite_UI.h; sourceTree = "<group>"; };
 		FF443E1A1F7AC21900F43BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -34,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,12 +51,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF04722E1F7AC4F90023DAD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FF443E0C1F7AC21900F43BE7 = {
 			isa = PBXGroup;
 			children = (
 				FF443E181F7AC21900F43BE7 /* ResearchSuite-UI */,
 				FF443E231F7AC21900F43BE7 /* ResearchSuite-UITests */,
 				FF443E171F7AC21900F43BE7 /* Products */,
+				FF04722E1F7AC4F90023DAD6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

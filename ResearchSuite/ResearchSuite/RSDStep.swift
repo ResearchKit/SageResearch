@@ -169,9 +169,9 @@ public protocol RSDActiveUIStep: RSDUIStep {
 public protocol RSDFormUIStep: RSDUIStep {
     
     /**
-     The items array is used to hold a logical subgrouping of form items. If this array holds more than one form item, that form item should describe an input that is uses a logical subgrouping such as blood pressure, height (ft-in), or given/family name.
+     The items array is used to hold a logical subgrouping of input fields. If this array holds more than one input field, those fields should describe an input that is uses a logical subgrouping such as blood pressure, height (ft-in), or given/family name.
      */
-    var formItems: [RSDFormItem] { get }
+    var inputFields: [RSDInputField] { get }
 }
 
 

@@ -34,17 +34,24 @@
 import XCTest
 import ResearchSuite
 
-/**
-
 // MARK: Example codeable subclasses
 
-class ClassA : RSDCodableObject {
+class BaseClass : RSDCodableObject {
+    var identifier : String
+    
+    init(identifier: String) {
+        self.identifier = identifier
+        super.init()
+    }
 }
 
-class ClassB : RSDCodableObject {
+class ClassA : BaseClass {
 }
 
-class ClassC : RSDCodableObject {
+class ClassB : BaseClass {
+}
+
+class ClassC : BaseClass {
     var count: Int = 0
         
     override var hashValue: Int {
@@ -101,26 +108,4 @@ class CodableObjectTests: XCTestCase {
         XCTAssertNotEqual(objCat1, objDog1)
     }
     
-    func testDecode() {
-        
-        let jsonA = """
-        {
-         "identifier": "test1",
-         "count": 2
-        }
-        """.data(using: .utf8)!
-        
-        do {
-            let objA1 = try JSONDecoder().decode(ClassC.self, from: jsonA)
-            
-            XCTAssertEqual(objA1.identifier, "test1")
-            XCTAssertEqual(objA1.count, 2)
-        }
-        catch let err {
-            XCTFail("Failed with \(err)")
-        }
-    }
-    
 }
- 
- */

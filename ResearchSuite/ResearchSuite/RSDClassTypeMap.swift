@@ -1,8 +1,8 @@
 //
-//  ResearchSuite.h
+//  SBAClassTypeMap.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,14 +31,19 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for ResearchSuite.
-FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
+extension RSDClassTypeMapError: Error {
+}
 
-//! Project version string for ResearchSuite.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
+extension RSDClassTypeMap {
 
-#import <ResearchSuite/RSDClassTypeMap.h>
-
-
+    public static var shared: RSDClassTypeMap {
+        get {
+            return __shared()
+        }
+        set {
+            __setShared(newValue)
+        }
+    }
+}

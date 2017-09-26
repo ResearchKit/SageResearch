@@ -1,5 +1,5 @@
 //
-//  RSDFormItem.swift
+//  RSDInputField.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,9 +34,9 @@
 import Foundation
 
 /**
- `RSDFormItem` is used to describe a form input and includes the data type and a possible hint to how the UI should be displayed.
+ `RSDInputField` is used to describe a form input and includes the data type and a possible hint to how the UI should be displayed.
  */
-public protocol RSDFormItem {
+public protocol RSDInputField {
     
     /**
      A short string that uniquely identifies the form item within the step. The identifier is reproduced in the results of a step result in the step history of a task result.
@@ -66,7 +66,7 @@ public protocol RSDFormItem {
     func validate() throws
     
     /**
-     Validation run on the
+     Validation run on the result.
      */
-    func validateResult(_ result: RSDResult) throws -> Bool
+    func validateResult(_ result: RSDAnswerResult) throws -> Bool
 }
