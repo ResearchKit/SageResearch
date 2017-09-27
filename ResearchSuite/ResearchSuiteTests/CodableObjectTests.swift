@@ -37,11 +37,19 @@ import ResearchSuite
 // MARK: Example codeable subclasses
 
 class BaseClass : RSDCodableObject {
-    var identifier : String
+    @objc dynamic var identifier : String = UUID().uuidString
     
     init(identifier: String) {
         self.identifier = identifier
         super.init()
+    }
+    
+    required init(dictionaryRepresentation dictionary: [AnyHashable : Any]) {
+        super.init(dictionaryRepresentation: dictionary)
+    }
+    
+    override var dictionaryRepresentationKeys: [RSDKeyMap] {
+        return [RSDKeyMap(rawValue: #keyPath(identifier))!]
     }
 }
 
@@ -52,15 +60,12 @@ class ClassB : BaseClass {
 }
 
 class ClassC : BaseClass {
-    var count: Int = 0
-        
-    override var hashValue: Int {
-        return super.hashValue ^ count
-    }
+    @objc dynamic var count: Int = 0
     
-    override func isEqual(_ object: Any?) -> Bool {
-        guard let castObject = object as? ClassC else { return false }
-        return super.isEqual(object) && castObject.count == count
+    override var dictionaryRepresentationKeys: [RSDKeyMap] {
+        var superKeys = super.dictionaryRepresentationKeys
+        superKeys.append(RSDKeyMap(rawValue: #keyPath(count))!)
+        return superKeys
     }
 }
 
@@ -106,6 +111,23 @@ class CodableObjectTests: XCTestCase {
         XCTAssertEqual(objCat2, objCat2_2)
         XCTAssertNotEqual(objCat1, objCat2)
         XCTAssertNotEqual(objCat1, objDog1)
+    }
+    
+    func testDictionaryRepresentation() {
+        let objCat2 = ClassC(identifier: "cat")
+        objCat2.count = 2
+        
+        let dictionary = objCat2.dictionaryRepresentation() as NSDictionary
+        let expected: NSDictionary = ["identifier" : "cat", "count" :2]
+        XCTAssertEqual(dictionary, expected)
+        
+        guard let copy = objCat2.copy() as? ClassC else {
+            XCTFail("Failed to copy class instance")
+            return
+        }
+        
+        XCTAssertEqual(objCat2.identifier, copy.identifier)
+        XCTAssertEqual(objCat2.count, copy.count)
     }
     
 }

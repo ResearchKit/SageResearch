@@ -1,5 +1,5 @@
 //
-//  RSDJSONObject.swift
+//  RSDJSONValue.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
