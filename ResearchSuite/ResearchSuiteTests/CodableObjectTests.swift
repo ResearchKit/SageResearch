@@ -69,6 +69,14 @@ class ClassC : BaseClass {
     }
 }
 
+struct TestImageWrapperDelegate : RSDImageWrapperDelegate {
+    func fetchImage(for size: CGSize, with imageName: String, callback: @escaping ((UIImage?) -> Void)) {
+        DispatchQueue.main.async {
+            callback(nil)
+        }
+    }
+}
+
 
 // MARK: Tests
 
@@ -76,7 +84,9 @@ class CodableObjectTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        // setup to have an image wrapper delegate set so the image wrapper won't crash
+        RSDImageWrapper.sharedDelegate = TestImageWrapperDelegate()
     }
     
     override func tearDown() {
@@ -128,6 +138,84 @@ class CodableObjectTests: XCTestCase {
         
         XCTAssertEqual(objCat2.identifier, copy.identifier)
         XCTAssertEqual(objCat2.count, copy.count)
+    }
+    
+    // MARK : Model objects
+    
+    func testTaskInfoObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "title": "Hello World!",
+            "detail": "This is a test.",
+            "copyright": "This is a copyright string.",
+            "estimatedMinutes": 5,
+            "icon": "foobar"
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try JSONDecoder().decode(RSDTaskInfoObject.self, from: json)
+        
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.title, "Hello World!")
+            XCTAssertEqual(object.detail, "This is a test.")
+            XCTAssertEqual(object.copyright, "This is a copyright string.")
+            XCTAssertEqual(object.estimatedMinutes, 5)
+            XCTAssertEqual(object.icon?.imageName, "foobar")
+
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["title"] as? String, "Hello World!")
+            XCTAssertEqual(dictionary["detail"] as? String, "This is a test.")
+            XCTAssertEqual(dictionary["copyright"] as? String, "This is a copyright string.")
+            XCTAssertEqual(dictionary["estimatedMinutes"] as? Int, 5)
+            XCTAssertEqual(dictionary["icon"] as? String, "foobar")
+        
+        } catch let err {
+            XCTFail("Failed to decode/encode task info object: \(err)")
+            return
+        }
+    }
+    
+    func testSchemaInfoObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "revision": 5,
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try JSONDecoder().decode(RSDSchemaInfoObject.self, from: json)
+            
+            XCTAssertEqual(object.schemaIdentifier, "foo")
+            XCTAssertEqual(object.schemaRevision, 5)
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["revision"] as? Int, 5)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode task info object: \(err)")
+            return
+        }
     }
     
 }

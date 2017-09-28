@@ -1,0 +1,16 @@
+{
+    "taskInfo" : {
+        "identifier": "foo",
+        "title": "Hello World!",
+        "detail": "This is a test.",
+        "copyright": "This is a copyright string.",
+        "estimatedMinutes": 5,
+        "icon": "foobar"
+    },
+    "schemaInfo" : {
+        "identifier" : "bar",
+        "revision" : 3
+    },
+    
+    
+}
