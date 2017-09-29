@@ -36,4 +36,7 @@ import Foundation
 public enum RSDValidationError : Error {
     case notUniqueIdentifiers
     case invalidImageName
+    case invalidDuration
+    case undefinedClassType
+    case factoryNotFound
 }

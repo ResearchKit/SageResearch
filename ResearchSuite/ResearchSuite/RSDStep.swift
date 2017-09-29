@@ -72,9 +72,9 @@ public protocol RSDSectionStep: RSDStep {
 public protocol RSDTaskStep: RSDStep {
     
     /**
-     The task used to define this subgrouping of steps.
+     The task info used to define this subgrouping of steps.
      */
-    var subtask: RSDTask { get }
+    var subtaskInfo: RSDTaskInfo { get }
 }
 
 /**

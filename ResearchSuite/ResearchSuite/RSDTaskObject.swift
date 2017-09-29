@@ -1,5 +1,5 @@
 //
-//  RSDConditionalStepNavigatorObject.swift
+//  RSDTaskObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,41 +33,49 @@
 
 import Foundation
 
-/**
- `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
- */
-public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, Decodable {
+public struct RSDTaskObject : RSDTask, Decodable {
     
-    public private(set) var steps : [RSDStep]
-    public var conditionalRule : RSDConditionalRule?
+    public private(set) var identifier: String
+    public private(set) var stepNavigator: RSDStepNavigator
+    public private(set) var asyncActions: [RSDAsyncAction]?
     
-    public init(with steps: [RSDStep]) {
-        self.steps = steps
+    public var taskInfo: RSDTaskInfo?
+    public var schemaInfo: RSDSchemaInfo?
+    
+    public init(taskInfo: RSDTaskInfo, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncAction]? = nil) {
+        self.identifier = taskInfo.identifier
+        self.taskInfo = taskInfo
+        self.schemaInfo = schemaInfo
+        self.stepNavigator = stepNavigator
+        self.asyncActions = asyncActions
     }
     
     private enum CodingKeys : String, CodingKey {
-        case steps, conditionalRule
+        case identifier, taskInfo, schemaInfo
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.taskInfo = try container.decodeIfPresent(RSDTaskInfoObject.self, forKey: .taskInfo)
+        self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo)
+        
         let factory = decoder.userInfo[RSDFactory.decoderFactoryKey] as? RSDFactory ?? RSDFactory.shared
-        
-        // Decode the steps
-        var decodedSteps : [RSDStep] = []
-        var stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
-        while !stepsContainer.isAtEnd {
-            let stepDecoder = try stepsContainer.superDecoder()
-            if let step = try factory.decodeStep(from: stepDecoder) {
-                decodedSteps.append(step)
-            }
+        self.stepNavigator = try factory.decodeStepNavigator(decoder: decoder)
+    }
+    
+    public func validate() throws {
+        // Check if the step navigator implements step validation
+        if let stepValidator = stepNavigator as? RSDStepValidator {
+            try stepValidator.stepValidation()
         }
-        self.steps = decodedSteps
         
-        // Decode the conditional rule
-        if container.contains(.conditionalRule) {
-            let crDecoder = try container.superDecoder(forKey: .conditionalRule)
-            self.conditionalRule = try factory.decodeConditionalRule(from: crDecoder)
+        // Check if the async action identifiers are unique
+        if let actionIds = asyncActions?.map({ $0.identifier }) {
+            let uniqueIds = Set(actionIds)
+            if actionIds.count != uniqueIds.count {
+                throw RSDValidationError.notUniqueIdentifiers
+            }
         }
     }
 }

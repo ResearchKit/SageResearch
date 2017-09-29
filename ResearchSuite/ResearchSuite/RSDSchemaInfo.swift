@@ -1,5 +1,5 @@
 //
-//  RSDTaskGroupObject.swift
+//  RSDSchemaInfo.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,34 +34,18 @@
 import Foundation
 
 /**
- `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
+ This is a light-weight interface for schema information used to upload the results of a task.
  */
-public struct RSDTaskGroupObject : RSDTaskGroup, Codable {
+public protocol RSDSchemaInfo {
     
-    public private(set) var identifier: String
-    private let taskInfoObjects: [RSDTaskInfoObject]
-    public var title: String?
-    public var detail: String?
-    public var icon: RSDImageWrapper?
+    /**
+     A short string that uniquely identifies the associated result schema. If nil, then the `taskIdentifier` is used.
+     */
+    var schemaIdentifier: String? { get }
     
-    public var tasks: [RSDTaskInfo] {
-        return self.taskInfoObjects
-    }
+    /**
+     A revision number associated with the result schema. If `0`, then this is ignored.
+     */
+    var schemaRevision: Int { get }
     
-    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case identifier
-        case title
-        case detail
-        case icon
-        case taskInfoObjects = "tasks"
-    }
-    
-    public init(with identifier: String, tasks: [RSDTaskInfoObject]) {
-        self.identifier = identifier
-        self.taskInfoObjects = tasks
-    }
 }

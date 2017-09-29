@@ -1,5 +1,5 @@
 //
-//  RSDTaskGroupObject.swift
+//  RSDTaskInfo.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -32,36 +32,52 @@
 //
 
 import Foundation
+import UIKit
 
 /**
- `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
+ A light-weight reference interface for information about the task. This includes information that can be displayed in a table or collection view.
  */
-public struct RSDTaskGroupObject : RSDTaskGroup, Codable {
+public protocol RSDTaskInfo {
     
-    public private(set) var identifier: String
-    private let taskInfoObjects: [RSDTaskInfoObject]
-    public var title: String?
-    public var detail: String?
-    public var icon: RSDImageWrapper?
+    /**
+     A short string that uniquely identifies the task.
+     */
+    var identifier: String { get }
     
-    public var tasks: [RSDTaskInfo] {
-        return self.taskInfoObjects
-    }
+    /**
+     The primary text to display for the task in a localized string.
+     */
+    var title: String? { get }
     
-    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
-    }
+    /**
+     Additional detail text to display for the task.
+     */
+    var detail: String? { get }
     
-    private enum CodingKeys: String, CodingKey {
-        case identifier
-        case title
-        case detail
-        case icon
-        case taskInfoObjects = "tasks"
-    }
+    /**
+     Copyright information for the task.
+     */
+    var copyright: String? { get }
     
-    public init(with identifier: String, tasks: [RSDTaskInfoObject]) {
-        self.identifier = identifier
-        self.taskInfoObjects = tasks
-    }
+    /**
+     The estimated number of minutes that the task will take. If `0`, then this is ignored.
+     */
+    var estimatedMinutes: Int { get }
+    
+    /**
+     Fetch the task for this task info. Use the given factory to transform the task.
+     
+     @param factory     The factory to use for creating the task and steps.
+     @param callback    The callback with the task or an error if the task failed, run on the main thread.
+     */
+    func fetchTask(with factory: RSDFactory, callback: @escaping ((RSDTask?, Error?) -> Void))
+    
+    /**
+     An icon image that can be used for displaying the task.
+     
+     @param size        The size of the image to return.
+     @param callback    The callback with the image, run on the main thread.
+     */
+    func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
+

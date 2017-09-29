@@ -1,5 +1,5 @@
 //
-//  RSDStepObject.swift
+//  RSDTaskDataSource.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,4 +33,9 @@
 
 import Foundation
 
-
+public protocol RSDTaskDataSource {
+    
+    func taskGroup(with identifier: String) -> RSDTaskGroup?
+    
+    func task(from taskInfo: RSDTaskInfo) -> RSDTask?
+}

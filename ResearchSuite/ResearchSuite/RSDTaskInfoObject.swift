@@ -36,7 +36,7 @@ import Foundation
 /**
  `RSDTaskInfoObject` is a concrete implementation of the `RSDTaskInfo` protocol.
  */
-public struct RSDTaskInfoObject : RSDTaskInfo, RSDIconFetcher, Codable {
+public struct RSDTaskInfoObject : RSDTaskInfo, RSDResourceTransformer, Codable {
 
     public private(set) var identifier: String
     public var title: String?
@@ -44,9 +44,30 @@ public struct RSDTaskInfoObject : RSDTaskInfo, RSDIconFetcher, Codable {
     public var copyright: String?
     public var estimatedMinutes: Int = 0
     public var icon: RSDImageWrapper?
+    
+    public var classType: String?
+    public var resourceName: String?
+    public var resourceBundle: String?
 
     public init(with identifier: String) {
         self.identifier = identifier
+    }
+    
+    public func fetchTask(with factory: RSDFactory, callback: @escaping ((RSDTask?, Error?) -> Void)) {
+        do {
+            let task = try factory.decodeTask(with: self)
+            DispatchQueue.main.async {
+                callback(task, nil)
+            }
+        } catch let err {
+            DispatchQueue.main.async {
+                callback(nil, err)
+            }
+        }
+    }
+    
+    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
+        RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
     }
 }
 

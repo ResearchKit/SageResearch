@@ -1,5 +1,5 @@
 //
-//  RSDTaskGroupObject.swift
+//  RSDStepValidator.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,35 +33,29 @@
 
 import Foundation
 
-/**
- `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
- */
-public struct RSDTaskGroupObject : RSDTaskGroup, Codable {
+public protocol RSDStepValidator {
     
-    public private(set) var identifier: String
-    private let taskInfoObjects: [RSDTaskInfoObject]
-    public var title: String?
-    public var detail: String?
-    public var icon: RSDImageWrapper?
+    /**
+     An ordered list of steps, each with a unique identifier.
+     */
+    var steps : [RSDStep] { get }
+}
+
+extension RSDStepValidator {
     
-    public var tasks: [RSDTaskInfo] {
-        return self.taskInfoObjects
-    }
-    
-    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case identifier
-        case title
-        case detail
-        case icon
-        case taskInfoObjects = "tasks"
-    }
-    
-    public init(with identifier: String, tasks: [RSDTaskInfoObject]) {
-        self.identifier = identifier
-        self.taskInfoObjects = tasks
+    /**
+     Steps must have unique identifiers and each step within the collection must be valid.
+     */
+    public func stepValidation() throws {
+        let stepIds = steps.map { $0.identifier }
+        let uniqueIds = Set(stepIds)
+        guard stepIds.count == uniqueIds.count
+            else {
+                throw RSDValidationError.notUniqueIdentifiers
+        }
+        
+        for step in steps {
+            try step.validate()
+        }
     }
 }

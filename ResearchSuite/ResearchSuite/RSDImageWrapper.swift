@@ -47,22 +47,6 @@ public protocol RSDResizableImage {
     func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
 
-public protocol RSDIconFetcher {
-    var icon: RSDImageWrapper? { get }
-}
-
-extension RSDIconFetcher {
-    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        guard let wrapper = icon else {
-            DispatchQueue.main.async {
-                callback(nil)
-            }
-            return
-        }
-        wrapper.fetchImage(for: size, callback: callback)
-    }
-}
-
 public protocol RSDImageWrapperDelegate {
     
     /**
@@ -82,6 +66,16 @@ public struct RSDImageWrapper : RSDResizableImage {
     public let imageName: String
     
     public static var sharedDelegate: RSDImageWrapperDelegate?
+    
+    public static func fetchImage(image: RSDImageWrapper?, for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
+        guard let wrapper = image else {
+            DispatchQueue.main.async {
+                callback(nil)
+            }
+            return
+        }
+        wrapper.fetchImage(for: size, callback: callback)
+    }
 
     public init?(imageName: String) throws {
         try RSDImageWrapper.validate(imageName: imageName)

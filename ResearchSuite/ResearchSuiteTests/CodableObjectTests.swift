@@ -144,6 +144,9 @@ class CodableObjectTests: XCTestCase {
     
     func testTaskInfoObject_Codable() {
         
+        var taskInfo = RSDTaskInfoObject(with: "bar")
+        taskInfo.title = "yo"
+        
         let json = """
         {
             "identifier": "foo",
@@ -181,7 +184,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(dictionary["icon"] as? String, "foobar")
         
         } catch let err {
-            XCTFail("Failed to decode/encode task info object: \(err)")
+            XCTFail("Failed to decode/encode object: \(err)")
             return
         }
     }
@@ -213,7 +216,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(dictionary["revision"] as? Int, 5)
             
         } catch let err {
-            XCTFail("Failed to decode/encode task info object: \(err)")
+            XCTFail("Failed to decode/encode object: \(err)")
             return
         }
     }
@@ -281,7 +284,119 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual((dictionary["tasks"] as? [[String:Any]])?.count ?? 0, 2)
             
         } catch let err {
-            XCTFail("Failed to decode/encode task info object: \(err)")
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testUIStepObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "title": "Hello World!",
+            "text": "Some text.",
+            "detail": "This is a test.",
+            "footnote": "This is a footnote.",
+            "imageBefore": "before",
+            "imageAfter": "after",
+            "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
+                         "cancel": { "iconName" : "closeX" }
+                        },
+            "shouldHideActions": ["goBackward", "learnMore", "skip"]
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try JSONDecoder().decode(RSDUIStepObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.title, "Hello World!")
+            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.detail, "This is a test.")
+            XCTAssertEqual(object.footnote, "This is a footnote.")
+            XCTAssertEqual(object.imageBefore?.imageName, "before")
+            XCTAssertEqual(object.imageAfter?.imageName, "after")
+            
+            let goForwardAction = object.action(for: .navigation(.goForward))
+            XCTAssertNotNil(goForwardAction)
+            XCTAssertEqual(goForwardAction?.buttonTitle, "Go, Dogs! Go!")
+            
+            let cancelAction = object.action(for: .navigation(.cancel))
+            XCTAssertNotNil(cancelAction)
+            XCTAssertEqual((cancelAction as? RSDUIActionObject)?.iconName, "closeX")
+            
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward)))
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.learnMore)))
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.skip)))
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["title"] as? String, "Hello World!")
+            XCTAssertEqual(dictionary["text"] as? String, "Some text.")
+            XCTAssertEqual(dictionary["detail"] as? String, "This is a test.")
+            XCTAssertEqual(dictionary["imageBefore"] as? String, "before")
+            XCTAssertEqual(dictionary["imageAfter"] as? String, "after")
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testActiveUIStepObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "title": "Hello World!",
+            "text": "Some text.",
+            "duration": 30,
+            "spokenInstructions" : { "0": "Start moving",
+                                     "10": "Keep going",
+                                     "halfway": "Halfway there",
+                                     "end": "Stop moving"}
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try JSONDecoder().decode(RSDActiveUIStepObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.title, "Hello World!")
+            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.duration, 30)
+            
+            XCTAssertEqual(object.spokenInstruction(at: 0), "Start moving")
+            XCTAssertEqual(object.spokenInstruction(at: 10), "Keep going")
+            XCTAssertEqual(object.spokenInstruction(at: 15), "Halfway there")
+            XCTAssertEqual(object.spokenInstruction(at: 30), "Stop moving")
+            XCTAssertEqual(object.spokenInstruction(at: Double.infinity), "Stop moving")
+
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["title"] as? String, "Hello World!")
+            XCTAssertEqual(dictionary["text"] as? String, "Some text.")
+            XCTAssertEqual(dictionary["duration"] as? Double, 30)
+            XCTAssertEqual((dictionary["spokenInstructions"] as? [String: String])?.count ?? 0, 4)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
             return
         }
     }

@@ -31,63 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import UIKit
-
-/**
- A light-weight reference interface for information about the task. This includes information that can be displayed in a table or collection view.
- */
-public protocol RSDTaskInfo {
-    
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
-    
-    /**
-     The primary text to display for the task in a localized string.
-     */
-    var title: String? { get }
-    
-    /**
-     Additional detail text to display for the task.
-     */
-    var detail: String? { get }
-    
-    /**
-     Copyright information for the task.
-     */
-    var copyright: String? { get }
-    
-    /**
-     The estimated number of minutes that the task will take. If `0`, then this is ignored.
-     */
-    var estimatedMinutes: Int { get }
-    
-    /**
-     An icon image that can be used for displaying the task.
-     
-     @param size        The size of the image to return.
-     @param callback    The callback with the image, run on the main thread.
-     */
-    func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
-}
-
-/**
- This is a light-weight interface for schema information used to upload the results of a task.
- */
-public protocol RSDSchemaInfo {
-    
-    /**
-     A short string that uniquely identifies the associated result schema. If nil, then the `taskIdentifier` is used.
-     */
-    var schemaIdentifier: String? { get }
-    
-    /**
-     A revision number associated with the result schema. If `0`, then this is ignored.
-     */
-    var schemaRevision: Int { get }
-    
-}
+import Foundation
 
 /**
  This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.

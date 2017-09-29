@@ -41,11 +41,6 @@ import UIKit
 public protocol RSDUIAction {
     
     /**
-     The action type for this button or gesture.
-     */
-    var actionType: RSDUIActionType { get }
-    
-    /**
      The title to display on the button associated with this action.
      */
     var buttonTitle: String? { get }
@@ -117,5 +112,64 @@ extension RSDUIActionType: RawRepresentable {
         case .custom(let value):
             return value
         }
+    }
+}
+
+extension RSDUIActionType : Equatable {
+    public static func ==(lhs: RSDUIActionType, rhs: RSDUIActionType) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+    public static func ==(lhs: String, rhs: RSDUIActionType) -> Bool {
+        return lhs == rhs.rawValue
+    }
+    public static func ==(lhs: RSDUIActionType, rhs: String) -> Bool {
+        return lhs.rawValue == rhs
+    }
+}
+
+extension RSDUIActionType : Hashable {
+    public var hashValue : Int {
+        return self.rawValue.hashValue
+    }
+}
+
+extension RSDUIActionType : ExpressibleByStringLiteral {
+    public typealias StringLiteralType = String
+    
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)!
+    }
+}
+
+extension RSDUIActionType : CodingKey {
+    public var stringValue: String {
+        return self.rawValue
+    }
+    
+    public init?(stringValue: String) {
+        self.init(rawValue: stringValue)
+    }
+    
+    public var intValue: Int? {
+        return nil
+    }
+    
+    public init?(intValue: Int) {
+        return nil
+    }
+}
+
+extension RSDUIActionType : Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self.init(rawValue: rawValue)!
+    }
+}
+
+extension RSDUIActionType : Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(self.rawValue)
     }
 }

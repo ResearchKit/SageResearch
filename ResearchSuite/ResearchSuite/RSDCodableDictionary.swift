@@ -1,5 +1,5 @@
 //
-//  RSDTaskGroupObject.swift
+//  RSDCodableDictionary.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,34 +34,62 @@
 import Foundation
 
 /**
- `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
+ Work-around for a `Codable Dictionary` that does not use a String as it's key.
+ 
+ See https://stackoverflow.com/questions/44725202/swift-4-decodable-dictionary-with-enum-as-key
+ 
+ Example usage:
+ 
+ ````
+ enum AnEnum : String, CodingKey {
+     case enumValue
+ }
+ 
+ struct AStruct: Codable {
+ 
+     let dictionary: [AnEnum: String]
+ 
+     private enum CodingKeys : CodingKey {
+         case dictionary
+     }
+ 
+     init(from decoder: Decoder) throws {
+         let container = try decoder.container(keyedBy: CodingKeys.self)
+         dictionary = try container.decode(CodableDictionary.self, forKey: .dictionary).decoded
+     }
+ 
+     func encode(to encoder: Encoder) throws {
+         var container = encoder.container(keyedBy: CodingKeys.self)
+         try container.encode(CodableDictionary(dictionary), forKey: .dictionary)
+     }
+ }
+ ````
  */
-public struct RSDTaskGroupObject : RSDTaskGroup, Codable {
+public struct RSDCodableDictionary<Key : Hashable, Value : Codable> : Codable where Key : CodingKey {
     
-    public private(set) var identifier: String
-    private let taskInfoObjects: [RSDTaskInfoObject]
-    public var title: String?
-    public var detail: String?
-    public var icon: RSDImageWrapper?
+    let decoded: [Key: Value]
     
-    public var tasks: [RSDTaskInfo] {
-        return self.taskInfoObjects
+    init(_ decoded: [Key: Value]) {
+        self.decoded = decoded
     }
     
-    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: Key.self)
+        
+        decoded = Dictionary(uniqueKeysWithValues:
+            try container.allKeys.lazy.map {
+                (key: $0, value: try container.decode(Value.self, forKey: $0))
+            }
+        )
     }
     
-    private enum CodingKeys: String, CodingKey {
-        case identifier
-        case title
-        case detail
-        case icon
-        case taskInfoObjects = "tasks"
-    }
-    
-    public init(with identifier: String, tasks: [RSDTaskInfoObject]) {
-        self.identifier = identifier
-        self.taskInfoObjects = tasks
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: Key.self)
+        
+        for (key, value) in decoded {
+            try container.encode(value, forKey: key)
+        }
     }
 }
