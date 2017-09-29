@@ -1,5 +1,5 @@
 //
-//  RSDTaskInfoObject.swift
+//  RSDTaskGroup.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,42 +33,33 @@
 
 import Foundation
 
-/**
- `RSDTaskInfoObject` is a concrete implementation of the `RSDTaskInfo` protocol.
- */
-public struct RSDTaskInfoObject : RSDTaskInfo, RSDIconFetcher, Codable {
-
-    public private(set) var identifier: String
-    public var title: String?
-    public var detail: String?
-    public var copyright: String?
-    public var estimatedMinutes: Int = 0
-    public var icon: RSDImageWrapper?
-
-    public init(with identifier: String) {
-        self.identifier = identifier
-    }
-}
-
-extension RSDTaskInfoObject : RSDTaskGroup {
-    public var tasks: [RSDTaskInfo] {
-        return [self]
-    }
-}
-
-extension RSDTaskInfoObject : Equatable {
-    public static func ==(lhs: RSDTaskInfoObject, rhs: RSDTaskInfoObject) -> Bool {
-        return lhs.identifier == rhs.identifier &&
-            lhs.title == rhs.title &&
-            lhs.detail == rhs.detail &&
-            lhs.copyright == rhs.copyright &&
-            lhs.estimatedMinutes == rhs.estimatedMinutes &&
-            lhs.icon == rhs.icon
-    }
-}
-
-extension RSDTaskInfoObject : Hashable {
-    public var hashValue : Int {
-        return self.identifier.hashValue
-    }
+public protocol RSDTaskGroup {
+    
+    /**
+     A short string that uniquely identifies the task group.
+     */
+    var identifier: String { get }
+    
+    /**
+     A list of the task references included in this group.
+     */
+    var tasks: [RSDTaskInfo] { get }
+    
+    /**
+     The primary text to display for the task group in a localized string.
+     */
+    var title: String? { get }
+    
+    /**
+     Additional detail text to display for the task group in a localized string.
+     */
+    var detail: String? { get }
+    
+    /**
+     An icon image that can be used for displaying the task group.
+     
+     @param size        The size of the image to return.
+     @param callback    The callback with the image, run on the main thread.
+     */
+    func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }

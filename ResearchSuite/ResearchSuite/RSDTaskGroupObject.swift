@@ -1,5 +1,5 @@
 //
-//  RSDTaskInfoObject.swift
+//  RSDTaskGroupObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,41 +34,30 @@
 import Foundation
 
 /**
- `RSDTaskInfoObject` is a concrete implementation of the `RSDTaskInfo` protocol.
+ `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
  */
-public struct RSDTaskInfoObject : RSDTaskInfo, RSDIconFetcher, Codable {
-
+public struct RSDTaskGroupObject : RSDTaskGroup, RSDIconFetcher, Codable {
+    
     public private(set) var identifier: String
+    private let taskInfoObjects: [RSDTaskInfoObject]
     public var title: String?
     public var detail: String?
-    public var copyright: String?
-    public var estimatedMinutes: Int = 0
     public var icon: RSDImageWrapper?
-
-    public init(with identifier: String) {
-        self.identifier = identifier
-    }
-}
-
-extension RSDTaskInfoObject : RSDTaskGroup {
+    
     public var tasks: [RSDTaskInfo] {
-        return [self]
+        return self.taskInfoObjects
     }
-}
-
-extension RSDTaskInfoObject : Equatable {
-    public static func ==(lhs: RSDTaskInfoObject, rhs: RSDTaskInfoObject) -> Bool {
-        return lhs.identifier == rhs.identifier &&
-            lhs.title == rhs.title &&
-            lhs.detail == rhs.detail &&
-            lhs.copyright == rhs.copyright &&
-            lhs.estimatedMinutes == rhs.estimatedMinutes &&
-            lhs.icon == rhs.icon
+    
+    private enum CodingKeys: String, CodingKey {
+        case identifier
+        case title
+        case detail
+        case icon
+        case taskInfoObjects = "tasks"
     }
-}
-
-extension RSDTaskInfoObject : Hashable {
-    public var hashValue : Int {
-        return self.identifier.hashValue
+    
+    public init(with identifier: String, tasks: [RSDTaskInfoObject]) {
+        self.identifier = identifier
+        self.taskInfoObjects = tasks
     }
 }

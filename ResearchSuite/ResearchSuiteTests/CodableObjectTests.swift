@@ -218,4 +218,72 @@ class CodableObjectTests: XCTestCase {
         }
     }
     
+    func testTaskGroupObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foobar.group",
+            "title": "Foo and Bar",
+            "detail": "This is a test of the task group.",
+            "icon": "foobarGroup",
+            "tasks": [
+                {
+                    "identifier": "foo",
+                    "title": "Hello World!",
+                    "detail": "This is a test.",
+                    "copyright": "This is a copyright string.",
+                    "estimatedMinutes": 5,
+                    "icon": "foobar"
+                },
+                {
+                    "identifier": "bar",
+                    "title": "Barbaloot",
+                    "estimatedMinutes": 3,
+                    "icon": "suit"
+                }
+            ]
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try JSONDecoder().decode(RSDTaskGroupObject.self, from: json)
+
+            XCTAssertEqual(object.identifier, "foobar.group")
+            XCTAssertEqual(object.title, "Foo and Bar")
+            XCTAssertEqual(object.detail, "This is a test of the task group.")
+            XCTAssertEqual(object.icon?.imageName, "foobarGroup")
+            XCTAssertEqual(object.tasks.count, 2, "\(object.tasks)")
+            
+            guard let firstTask = object.tasks.first as? RSDTaskInfoObject else {
+                XCTFail("Encoded object is not expected type")
+                return
+            }
+            
+            XCTAssertEqual(firstTask.identifier, "foo")
+            XCTAssertEqual(firstTask.title, "Hello World!")
+            XCTAssertEqual(firstTask.detail, "This is a test.")
+            XCTAssertEqual(firstTask.copyright, "This is a copyright string.")
+            XCTAssertEqual(firstTask.estimatedMinutes, 5)
+            XCTAssertEqual(firstTask.icon?.imageName, "foobar")
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foobar.group")
+            XCTAssertEqual(dictionary["title"] as? String, "Foo and Bar")
+            XCTAssertEqual(dictionary["detail"] as? String, "This is a test of the task group.")
+            XCTAssertEqual(dictionary["icon"] as? String, "foobarGroup")
+            XCTAssertEqual((dictionary["tasks"] as? [[String:Any]])?.count ?? 0, 2)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode task info object: \(err)")
+            return
+        }
+    }
+    
 }

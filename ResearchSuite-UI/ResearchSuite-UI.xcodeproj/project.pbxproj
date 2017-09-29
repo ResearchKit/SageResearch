@@ -10,6 +10,7 @@
 		FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */; };
 		FF443E201F7AC21900F43BE7 /* ResearchSuite_UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF443E161F7AC21900F43BE7 /* ResearchSuite_UI.framework */; };
 		FF443E271F7AC21900F43BE7 /* ResearchSuite_UI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuite_UI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FF74A7E31F7DA4B90064A634 /* RSDTaskListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF74A7E21F7DA4B90064A634 /* RSDTaskListTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		FF443E1A1F7AC21900F43BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF443E1F1F7AC21900F43BE7 /* ResearchSuite-UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ResearchSuite-UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF443E261F7AC21900F43BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF74A7E21F7DA4B90064A634 /* RSDTaskListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskListTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		FF443E181F7AC21900F43BE7 /* ResearchSuite-UI */ = {
 			isa = PBXGroup;
 			children = (
+				FF74A7DD1F7DA2EB0064A634 /* iPhone */,
 				FF443E191F7AC21900F43BE7 /* ResearchSuite_UI.h */,
 				FF443E1A1F7AC21900F43BE7 /* Info.plist */,
 			);
@@ -93,6 +96,14 @@
 				FF443E261F7AC21900F43BE7 /* Info.plist */,
 			);
 			path = "ResearchSuite-UITests";
+			sourceTree = "<group>";
+		};
+		FF74A7DD1F7DA2EB0064A634 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				FF74A7E21F7DA4B90064A634 /* RSDTaskListTableViewController.swift */,
+			);
+			path = iPhone;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +168,7 @@
 				TargetAttributes = {
 					FF443E151F7AC21900F43BE7 = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					FF443E1E1F7AC21900F43BE7 = {
@@ -205,6 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF74A7E31F7DA4B90064A634 /* RSDTaskListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +355,7 @@
 		FF443E2B1F7AC21900F43BE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -356,6 +370,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuite-UI";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -364,6 +379,7 @@
 		FF443E2C1F7AC21900F43BE7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -386,6 +402,7 @@
 		FF443E2E1F7AC21900F43BE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = "ResearchSuite-UITests/Info.plist";
@@ -400,6 +417,7 @@
 		FF443E2F1F7AC21900F43BE7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
 				INFOPLIST_FILE = "ResearchSuite-UITests/Info.plist";
