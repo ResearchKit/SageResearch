@@ -51,7 +51,7 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, D
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let factory = decoder.userInfo[RSDFactory.decoderFactoryKey] as? RSDFactory ?? RSDFactory.shared
+        let factory = decoder.factory
         
         // Decode the steps
         var decodedSteps : [RSDStep] = []

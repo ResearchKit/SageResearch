@@ -42,7 +42,11 @@
 		FF80B12E1F7C12D400582849 /* RSDConditionalStepNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B12D1F7C12D400582849 /* RSDConditionalStepNavigator.swift */; };
 		FF80B1391F7C244200582849 /* RSDIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B1381F7C244200582849 /* RSDIdentifier.swift */; };
 		FF80B13B1F7C3D1D00582849 /* RSDFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */; };
-		FF80B13D1F7C582500582849 /* RSDValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B13C1F7C582500582849 /* RSDValidation.swift */; };
+		FF80B13D1F7C582500582849 /* RSDValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B13C1F7C582500582849 /* RSDValidationError.swift */; };
+		FF87CD861F8413F700084426 /* FactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD851F8413F700084426 /* FactoryTests.swift */; };
+		FF87CD881F84149400084426 /* RSDResourceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD871F84149400084426 /* RSDResourceWrapper.swift */; };
+		FF87CD891F84354A00084426 /* FactoryTest_TaskGroup.json in Resources */ = {isa = PBXBuildFile; fileRef = FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */; };
+		FF87CD8A1F84354E00084426 /* FactoryTest_TaskFoo.json in Resources */ = {isa = PBXBuildFile; fileRef = FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */; };
 		FF8A21511F7CB11800C7B27F /* Array+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8A214F1F7CB11800C7B27F /* Array+Utilities.swift */; };
 		FF8A21541F7CB17D00C7B27F /* SequenceType+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */; };
 		FF8A21561F7CB86B00C7B27F /* RSDStepNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8A21551F7CB86B00C7B27F /* RSDStepNavigator.swift */; };
@@ -89,7 +93,7 @@
 		FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDDeviceType.swift; sourceTree = "<group>"; };
 		FF74A7CC1F7CC7750064A634 /* RSDSchemaInfoObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSchemaInfoObject.swift; sourceTree = "<group>"; };
 		FF74A7CE1F7D63D40064A634 /* RSDImageWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImageWrapper.swift; sourceTree = "<group>"; };
-		FF74A7D91F7D8B7F0064A634 /* FactoryTest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FactoryTest.json; sourceTree = "<group>"; };
+		FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FactoryTest_TaskGroup.json; sourceTree = "<group>"; };
 		FF74A7DB1F7DA2BF0064A634 /* RSDUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIStepObject.swift; sourceTree = "<group>"; };
 		FF74A7E41F7DA5560064A634 /* RSDTaskGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskGroup.swift; sourceTree = "<group>"; };
 		FF74A7E61F7DAB600064A634 /* RSDTaskGroupObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskGroupObject.swift; sourceTree = "<group>"; };
@@ -99,7 +103,10 @@
 		FF80B12D1F7C12D400582849 /* RSDConditionalStepNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDConditionalStepNavigator.swift; sourceTree = "<group>"; };
 		FF80B1381F7C244200582849 /* RSDIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDIdentifier.swift; sourceTree = "<group>"; };
 		FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFactory.swift; sourceTree = "<group>"; };
-		FF80B13C1F7C582500582849 /* RSDValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDValidation.swift; sourceTree = "<group>"; };
+		FF80B13C1F7C582500582849 /* RSDValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDValidationError.swift; sourceTree = "<group>"; };
+		FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FactoryTest_TaskFoo.json; sourceTree = "<group>"; };
+		FF87CD851F8413F700084426 /* FactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryTests.swift; sourceTree = "<group>"; };
+		FF87CD871F84149400084426 /* RSDResourceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceWrapper.swift; sourceTree = "<group>"; };
 		FF8A214F1F7CB11800C7B27F /* Array+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Utilities.swift"; sourceTree = "<group>"; };
 		FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SequenceType+Utilities.swift"; sourceTree = "<group>"; };
 		FF8A21551F7CB86B00C7B27F /* RSDStepNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepNavigator.swift; sourceTree = "<group>"; };
@@ -131,7 +138,7 @@
 				FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */,
 				FF2B55001F68BC7C00663289 /* RSDFormDataType.swift */,
 				FF80B1381F7C244200582849 /* RSDIdentifier.swift */,
-				FF80B13C1F7C582500582849 /* RSDValidation.swift */,
+				FF80B13C1F7C582500582849 /* RSDValidationError.swift */,
 			);
 			name = Enums;
 			sourceTree = "<group>";
@@ -152,6 +159,7 @@
 			children = (
 				FF177D7F1F82E6C300C2D4D7 /* Objective-C Codable */,
 				FF74A7CE1F7D63D40064A634 /* RSDImageWrapper.swift */,
+				FF87CD871F84149400084426 /* RSDResourceWrapper.swift */,
 				FF80B11F1F7B01E200582849 /* RSDJSONValue.swift */,
 			);
 			name = Serialization;
@@ -203,8 +211,9 @@
 		FF72B23E1F6859D3004C6F15 /* ResearchSuiteTests */ = {
 			isa = PBXGroup;
 			children = (
-				FF74A7D91F7D8B7F0064A634 /* FactoryTest.json */,
+				FF87CD821F84110800084426 /* Test files */,
 				FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */,
+				FF87CD851F8413F700084426 /* FactoryTests.swift */,
 				FF72B2411F6859D3004C6F15 /* Info.plist */,
 			);
 			path = ResearchSuiteTests;
@@ -265,6 +274,15 @@
 				FF8A21591F7CBE5600C7B27F /* Task */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		FF87CD821F84110800084426 /* Test files */ = {
+			isa = PBXGroup;
+			children = (
+				FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */,
+				FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */,
+			);
+			path = "Test files";
 			sourceTree = "<group>";
 		};
 		FF8A21591F7CBE5600C7B27F /* Task */ = {
@@ -384,6 +402,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF87CD8A1F84354E00084426 /* FactoryTest_TaskFoo.json in Resources */,
+				FF87CD891F84354A00084426 /* FactoryTest_TaskGroup.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +429,7 @@
 				FF74A7CF1F7D63D50064A634 /* RSDImageWrapper.swift in Sources */,
 				FF1D6D3E1F8311BE00B05349 /* RSDConditionalStepNavigatorObject.swift in Sources */,
 				FF72B2611F68845A004C6F15 /* RSDDeviceType.swift in Sources */,
-				FF80B13D1F7C582500582849 /* RSDValidation.swift in Sources */,
+				FF80B13D1F7C582500582849 /* RSDValidationError.swift in Sources */,
 				FF8A21511F7CB11800C7B27F /* Array+Utilities.swift in Sources */,
 				FF1D6D2E1F82FB2C00B05349 /* RSDTaskInfo.swift in Sources */,
 				FF74A7EA1F7DCFA80064A634 /* RSDTaskDataSource.swift in Sources */,
@@ -425,6 +445,7 @@
 				FF80B1201F7B01E200582849 /* RSDJSONValue.swift in Sources */,
 				FF80B13B1F7C3D1D00582849 /* RSDFactory.swift in Sources */,
 				FF8A21561F7CB86B00C7B27F /* RSDStepNavigator.swift in Sources */,
+				FF87CD881F84149400084426 /* RSDResourceWrapper.swift in Sources */,
 				FF1D6D321F82FEDF00B05349 /* RSDResourceTransformer.swift in Sources */,
 				FF72B25D1F687199004C6F15 /* RSDResult.swift in Sources */,
 				FF80B12E1F7C12D400582849 /* RSDConditionalStepNavigator.swift in Sources */,
@@ -437,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF87CD861F8413F700084426 /* FactoryTests.swift in Sources */,
 				FF1A7A871F6B1174007AB5A6 /* CodableObjectTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

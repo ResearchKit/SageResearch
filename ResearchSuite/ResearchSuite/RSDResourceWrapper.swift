@@ -1,5 +1,5 @@
 //
-//  RSDStepValidator.swift
+//  RSDResourceWrapper.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,29 +33,23 @@
 
 import Foundation
 
-public protocol RSDStepValidator {
+public struct RSDResourceWrapper : RSDResourceTransformer, Codable {
     
-    /**
-     An ordered list of steps, each with a unique identifier.
-     */
-    var steps : [RSDStep] { get }
-}
+    let filename: String
+    let bundleIdentifier: String?
+    
+    public var classType: String?
 
-extension RSDStepValidator {
+    public var resourceName: String? {
+        return filename
+    }
     
-    /**
-     Steps must have unique identifiers and each step within the collection must be valid.
-     */
-    public func stepValidation() throws {
-        let stepIds = steps.map { $0.identifier }
-        let uniqueIds = Set(stepIds)
-        guard stepIds.count == uniqueIds.count
-            else {
-                throw RSDValidationError.notUniqueIdentifiers("Step identifiers: \(stepIds.joined(separator: ","))")
-        }
-        
-        for step in steps {
-            try step.validate()
-        }
+    public var resourceBundle: String? {
+        return bundleIdentifier
+    }
+    
+    public init(filename: String, bundleIdentifier: String?) {
+        self.filename = filename
+        self.bundleIdentifier = bundleIdentifier
     }
 }

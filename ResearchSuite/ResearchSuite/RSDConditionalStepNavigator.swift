@@ -147,7 +147,7 @@ extension RSDConditionalStepNavigator {
         let uniqueIds = Set(stepIds)
         guard stepIds.count == uniqueIds.count
             else {
-                throw RSDValidationError.notUniqueIdentifiers
+                throw RSDValidationError.notUniqueIdentifiers("Step identifiers: \(stepIds.joined(separator: ","))")
         }
         
         for step in steps {

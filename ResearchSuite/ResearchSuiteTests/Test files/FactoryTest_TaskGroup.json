@@ -1,0 +1,25 @@
+{
+    "identifier": "foobar",
+    "title": "Foobarific",
+    "detail": "This is a task group containing foo and bar",
+    "icon": "foobarIcon",
+    "tasks" : [{
+               "identifier": "foo",
+               "schemaRevision" : 2,
+               "title": "Hello Foo!",
+               "detail": "This is a test of foo.",
+               "copyright": "This is a copyright string for foo.",
+               "estimatedMinutes": 5,
+               "icon": "fooIcon",
+               "resourceName": "FactoryTest_TaskFoo",
+               "resourceBundle": "org.sagebase.ResearchSuiteTests"
+               },
+               {
+               "identifier": "bar",
+               "schemaRevision" : 4,
+               "title": "Hello Bar!",
+               "detail": "This is a test of bar.",
+               "estimatedMinutes": 7,
+               "icon": "barIcon"
+               }]
+}

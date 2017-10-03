@@ -1,0 +1,31 @@
+{
+    "identifier": "foo",
+    "steps": [{
+              "identifier": "step1",
+              "type": "instruction",
+              "title": "Step 1",
+              "text": "Some text.",
+              "detail": "This is a test.",
+              "footnote": "This is a footnote.",
+              "imageBefore": "before",
+              "imageAfter": "after",
+              "actions": {"goForward": { "buttonTitle" : "Go, Dogs! Go!" },
+                          "cancel": { "iconName" : "closeX" }},
+              "shouldHideActions": ["goBackward", "learnMore", "skip"]
+              },
+              {
+              "identifier": "step2",
+              "type": "active",
+              "title": "Step 2",
+              "text": "Some text.",
+              "actions": {"goForward": { "buttonTitle" : "You're done" },
+                          "cancel": { "iconName" : "closeX" }},
+              "shouldHideActions": ["goBackward", "learnMore", "skip"],
+              "duration": 30,
+              "spokenInstructions" : {"0": "Start moving",
+                                      "10": "Keep going",
+                                      "halfway": "Halfway there",
+                                      "end": "Stop moving"}
+              }
+    ]
+}

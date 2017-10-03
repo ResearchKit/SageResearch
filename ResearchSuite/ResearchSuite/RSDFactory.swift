@@ -35,6 +35,7 @@ import Foundation
 
 public protocol RSDFactoryDecoder {
     func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable
+    var userInfo: [CodingUserInfoKey : Any] { get set }
 }
 
 extension JSONDecoder : RSDFactoryDecoder {
@@ -43,28 +44,76 @@ extension JSONDecoder : RSDFactoryDecoder {
 extension PropertyListDecoder : RSDFactoryDecoder {
 }
 
+extension Decoder {
+    
+    public var factory: RSDFactory {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.factory.key] as? RSDFactory ?? RSDFactory.shared
+    }
+    
+    public var taskInfo: RSDTaskInfo? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskInfo.key] as? RSDTaskInfo
+    }
+    
+    public var schemaInfo: RSDSchemaInfo? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.schemaInfo.key] as? RSDSchemaInfo
+    }
+}
+
 open class RSDFactory {
     
     public static var shared = RSDFactory()
     
+    public init() {
+    }
+    
     // MARK: Decoding
     
-    public static let decoderFactoryKey = CodingUserInfoKey(rawValue: "RSDFactory")!
+    public enum CodingUserInfoKeys : String {
+        
+        case factory, taskInfo, schemaInfo
+        
+        public var key : CodingUserInfoKey {
+            return CodingUserInfoKey(rawValue: self.rawValue)!
+        }
+    }
     
     open func createJSONDecoder() -> JSONDecoder {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        decoder.userInfo[RSDFactory.decoderFactoryKey] = self
+        decoder.userInfo[CodingUserInfoKeys.factory.key] = self
         return decoder
     }
     
     open func createPropertyListDecoder() -> PropertyListDecoder {
         let decoder = PropertyListDecoder()
-        decoder.userInfo[RSDFactory.decoderFactoryKey] = self
+        decoder.userInfo[CodingUserInfoKeys.factory.key] = self
         return decoder
     }
     
+    open func createDecoder(for resourceType: RSDResourceType, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDFactoryDecoder {
+        var decoder : RSDFactoryDecoder = try {
+            if resourceType == .json {
+                return self.createJSONDecoder()
+            }
+            else if resourceType == .plist {
+                return self.createPropertyListDecoder()
+            }
+            else {
+                let supportedTypes: [RSDResourceType] = [.json, .plist]
+                let supportedTypeList = supportedTypes.map({$0.rawValue}).joined(separator: ",")
+                throw RSDResourceTransformerError.invalidResourceType("ResourceType \(resourceType.rawValue) is not supported by this factory. Supported types: \(supportedTypeList)")
+            }
+            }()
+        if let taskInfo = taskInfo {
+            decoder.userInfo[CodingUserInfoKeys.taskInfo.key] = taskInfo
+        }
+        if let schemaInfo = schemaInfo {
+            decoder.userInfo[CodingUserInfoKeys.schemaInfo.key] = schemaInfo
+        }
+        return decoder
+    }
     
+
     // MARK: Class name factory
     
     private enum ClassTypeKey: String, CodingKey {
@@ -95,12 +144,13 @@ open class RSDFactory {
      
      @return                        The decoded task.
      */
-    open func decodeTask(with resourceTransformer: RSDResourceTransformer) throws -> RSDTask {
+    open func decodeTask(with resourceTransformer: RSDResourceTransformer, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
         let (data, type) = try resourceTransformer.resourceData()
         return try decodeTask(with: data,
                               resourceType: type,
                               className: resourceTransformer.classType,
-                              taskInfo: resourceTransformer as? RSDTaskInfo)
+                              taskInfo: taskInfo,
+                              schemaInfo: schemaInfo)
     }
     
     /**
@@ -113,23 +163,9 @@ open class RSDFactory {
      
      @return                The created task.
      */
-    open func decodeTask(with data: Data, resourceType: RSDResourceType, className: String? = nil, taskInfo: RSDTaskInfo? = nil) throws -> RSDTask {
-        let decoder : RSDFactoryDecoder = try {
-            if resourceType == .json {
-                return self.createJSONDecoder()
-            }
-            else if resourceType == .plist {
-                return self.createPropertyListDecoder()
-            }
-            else {
-                throw RSDResourceTransformerError.invalidResourceType
-            }
-        }()
-        var task = try decoder.decode(RSDTaskObject.self, from: data)
-        if task.taskInfo == nil {
-            task.taskInfo = taskInfo
-        }
-        return task
+    open func decodeTask(with data: Data, resourceType: RSDResourceType, className: String? = nil, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
+        let decoder = try createDecoder(for: resourceType, taskInfo: taskInfo, schemaInfo: schemaInfo)
+        return try decoder.decode(RSDTaskObject.self, from: data)
     }
     
     
@@ -165,7 +201,7 @@ open class RSDFactory {
      */
     open func decodeStep(from decoder: Decoder) throws -> RSDStep? {
         guard let className = try classTypeName(from: decoder) else {
-            throw RSDValidationError.undefinedClassType
+            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a step without a `type` key defining a value for the the class name.")
         }
         return try decodeStep(from: decoder, with: className)
     }
@@ -180,7 +216,7 @@ open class RSDFactory {
      */
     open func decodeStep(from decoder:Decoder, with className: String) throws -> RSDStep? {
         guard let type = StepType(rawValue: className) else {
-            throw RSDValidationError.undefinedClassType
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(className)` as a decodable class type for a step.")
         }
         return try decodeStep(from: decoder, with: type)
     }
@@ -216,7 +252,7 @@ open class RSDFactory {
      */
     open func decodeConditionalRule(from decoder:Decoder) throws -> RSDConditionalRule? {
         guard let className = try classTypeName(from: decoder) else {
-            throw RSDValidationError.undefinedClassType
+            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a conditional rule without a `type` key defining a value for the the class name.")
         }
         return try decodeConditionalRule(from: decoder, with: className)
     }
@@ -233,6 +269,5 @@ open class RSDFactory {
      */
     open func decodeConditionalRule(from decoder:Decoder, with className: String) throws -> RSDConditionalRule? {
         // Base class does not implement the conditional rule
-        throw RSDValidationError.undefinedClassType
-    }
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(className)` as a decodable class type for a conditional rule.")    }
 }

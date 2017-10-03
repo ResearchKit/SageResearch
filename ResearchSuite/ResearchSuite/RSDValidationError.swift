@@ -1,5 +1,5 @@
 //
-//  RSDValidation.swift
+//  RSDValidationError.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,9 +34,39 @@
 import Foundation
 
 public enum RSDValidationError : Error {
-    case notUniqueIdentifiers
-    case invalidImageName
-    case invalidDuration
-    case undefinedClassType
-    case factoryNotFound
+    case notUniqueIdentifiers(String)
+    case invalidImageName(String)
+    case invalidDuration(String)
+    case undefinedClassType(String)
+    
+    /// The domain of the error.
+    public static var errorDomain: String {
+        return "RSDValidationErrorDomain"
+    }
+    
+    /// The error code within the given domain.
+    public var errorCode: Int {
+        switch(self) {
+        case .notUniqueIdentifiers(_):
+            return -1
+        case .invalidImageName(_):
+            return -2
+        case .invalidDuration(_):
+            return -3
+        case .undefinedClassType(_):
+            return -4
+        }
+    }
+    
+    /// The user-info dictionary.
+    public var errorUserInfo: [String : Any] {
+        let description: String
+        switch(self) {
+        case .notUniqueIdentifiers(let str): description = str
+        case .invalidImageName(let str): description = str
+        case .invalidDuration(let str): description = str
+        case .undefinedClassType(let str): description = str
+        }
+        return ["NSDebugDescription": description]
+    }
 }

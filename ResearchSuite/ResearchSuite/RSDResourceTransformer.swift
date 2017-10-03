@@ -54,13 +54,44 @@ public struct RSDResourceType : RawRepresentable, Equatable, Hashable {
     public static let plist = RSDResourceType(rawValue: "plist")!
     public static let html = RSDResourceType(rawValue: "html")!
     public static let pdf = RSDResourceType(rawValue: "pdf")!
-    
 }
 
-public enum RSDResourceTransformerError : Error {
-    case nullResourceName
-    case notFound
-    case invalidResourceType
+public enum RSDResourceTransformerError : Error, CustomNSError {
+    case nullResourceName(String)
+    case bundleNotFound(String)
+    case fileNotFound(String)
+    case invalidResourceType(String)
+    
+    /// The domain of the error.
+    public static var errorDomain: String {
+        return "RSDResourceTransformerErrorDomain"
+    }
+    
+    /// The error code within the given domain.
+    public var errorCode: Int {
+        switch(self) {
+        case .nullResourceName(_):
+            return -1
+        case .bundleNotFound(_):
+            return -2
+        case .fileNotFound(_):
+            return -3
+        case .invalidResourceType(_):
+            return -4
+        }
+    }
+    
+    /// The user-info dictionary.
+    public var errorUserInfo: [String : Any] {
+        let description: String
+        switch(self) {
+        case .nullResourceName(let str): description = str
+        case .bundleNotFound(let str): description = str
+        case .fileNotFound(let str): description = str
+        case .invalidResourceType(let str): description = str
+        }
+        return ["NSDebugDescription": description]
+    }
 }
 
 public protocol RSDResourceTransformer {
@@ -72,21 +103,43 @@ public protocol RSDResourceTransformer {
 extension RSDResourceTransformer {
     
     public func resourceData(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (Data, RSDResourceType) {
-        guard let resourceNamed = self.resourceName else {
-            throw RSDResourceTransformerError.nullResourceName
+        
+        // get the resource name and extention
+        guard let resourceName = self.resourceName else {
+            throw RSDResourceTransformerError.nullResourceName("\(self) does not have a resource name")
         }
-        var resource = resourceNamed
+        var resource = resourceName
         var ext = defaultExtension ?? RSDResourceType.json.rawValue
-        let split = resourceNamed.components(separatedBy: ".")
+        let split = resourceName.components(separatedBy: ".")
         if split.count == 2 {
             ext = split.last!
             resource = split.first!
         }
-        let rBundle = bundle ?? (resourceBundle != nil ? Bundle(identifier: resourceBundle!) : nil) ?? Bundle.main
-        guard let path = rBundle.path(forResource: resource, ofType: ext) else {
-            throw RSDResourceTransformerError.notFound
+        
+        // get the bundle
+        let rBundle: Bundle
+        if bundle != nil {
+            rBundle = bundle!
         }
-        let url = URL(fileURLWithPath: path)
+        else if let bundleIdentifier = resourceBundle {
+            if let bundle = Bundle(identifier: bundleIdentifier) {
+                rBundle = bundle
+            }
+            else {
+                let bundleIds = Bundle.allBundles.mapAndFilter { $0.bundleIdentifier }
+                throw RSDResourceTransformerError.bundleNotFound("\(bundleIdentifier) Not Found. Available identifiers: \(bundleIds.joined(separator: ","))")
+            }
+        }
+        else {
+            rBundle = Bundle.main
+        }
+
+        // get the url
+        guard let url = rBundle.url(forResource: resource, withExtension: ext) else {
+            throw RSDResourceTransformerError.fileNotFound("\(resourceName) not found in \(String(describing: rBundle.bundleIdentifier))")
+        }
+        
+        // get the data
         let data = try Data(contentsOf: url)
         return (data, RSDResourceType(rawValue: ext)!)
     }

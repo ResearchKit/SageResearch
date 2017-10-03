@@ -36,32 +36,68 @@ import Foundation
 /**
  `RSDTaskInfoObject` is a concrete implementation of the `RSDTaskInfo` protocol.
  */
-public struct RSDTaskInfoObject : RSDTaskInfo, RSDResourceTransformer, Codable {
+public struct RSDTaskInfoObject : RSDTaskInfo, RSDResourceTransformer, RSDSchemaInfo, Codable {
+    
+    private enum CodingKeys : String, CodingKey {
+        
+        case identifier
+        case title
+        case detail
+        case copyright
+        case minutes = "estimatedMinutes"
+        case icon
+        
+        case classType
+        case resourceName
+        case resourceBundle
+        
+        case sRevision = "schemaRevision"
+        case sIdentifier = "schemaIdentifier"
+    }
 
+    // MARK: RSDTaskInfo
     public private(set) var identifier: String
     public var title: String?
     public var detail: String?
     public var copyright: String?
-    public var estimatedMinutes: Int = 0
     public var icon: RSDImageWrapper?
     
+    private var minutes: Int?
+    public var estimatedMinutes: Int {
+        return minutes ?? 0
+    }
+    
+    // MARK: RSDResourceTransformer
     public var classType: String?
     public var resourceName: String?
     public var resourceBundle: String?
+    
+    // MARK: RSDSchemaInfo
+    private var sRevision: Int?
+    public var schemaRevision: Int {
+        return sRevision ?? 1
+    }
+
+    private var sIdentifier: String?
+    public var schemaIdentifier: String? {
+        return sIdentifier ?? self.identifier
+    }
 
     public init(with identifier: String) {
         self.identifier = identifier
     }
     
     public func fetchTask(with factory: RSDFactory, callback: @escaping ((RSDTask?, Error?) -> Void)) {
-        do {
-            let task = try factory.decodeTask(with: self)
-            DispatchQueue.main.async {
-                callback(task, nil)
-            }
-        } catch let err {
-            DispatchQueue.main.async {
-                callback(nil, err)
+        DispatchQueue.global().async {
+            do {
+                let task = try factory.decodeTask(with: self, taskInfo: self, schemaInfo: self)
+                DispatchQueue.main.async {
+                    callback(task, nil)
+                }
+            } catch let err {
+                DispatchQueue.main.async {
+                    callback(nil, err)
+                }
             }
         }
     }

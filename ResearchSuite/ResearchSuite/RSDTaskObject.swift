@@ -56,12 +56,17 @@ public struct RSDTaskObject : RSDTask, Decodable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.taskInfo = try container.decodeIfPresent(RSDTaskInfoObject.self, forKey: .taskInfo)
-        self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo)
+        if let taskInfo = try container.decodeIfPresent(RSDTaskInfoObject.self, forKey: .taskInfo) ?? decoder.taskInfo {
+            self.identifier = taskInfo.identifier
+            self.taskInfo = taskInfo
+        }
+        else {
+            self.identifier = try container.decode(String.self, forKey: .identifier)
+        }
+        self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo
+        self.stepNavigator = try decoder.factory.decodeStepNavigator(decoder: decoder)
         
-        let factory = decoder.userInfo[RSDFactory.decoderFactoryKey] as? RSDFactory ?? RSDFactory.shared
-        self.stepNavigator = try factory.decodeStepNavigator(decoder: decoder)
+        // TODO: syoung 10/03/2017 decode async actions
     }
     
     public func validate() throws {
@@ -74,7 +79,7 @@ public struct RSDTaskObject : RSDTask, Decodable {
         if let actionIds = asyncActions?.map({ $0.identifier }) {
             let uniqueIds = Set(actionIds)
             if actionIds.count != uniqueIds.count {
-                throw RSDValidationError.notUniqueIdentifiers
+                throw RSDValidationError.notUniqueIdentifiers("Action identifiers: \(actionIds.joined(separator: ","))")
             }
         }
     }

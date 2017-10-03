@@ -89,7 +89,7 @@ public struct RSDImageWrapper : RSDResizableImage {
             (UIImage(named: imageName) != nil) ||
             (URL(string: imageName) != nil)
             else {
-                throw RSDValidationError.invalidImageName
+                throw RSDValidationError.invalidImageName("Invalid image name: \(imageName)")
         }
     }
     
