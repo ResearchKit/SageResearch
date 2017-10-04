@@ -36,6 +36,4 @@ import Foundation
 public protocol RSDTaskDataSource {
     
     func taskGroup(with identifier: String) -> RSDTaskGroup?
-    
-    func task(from taskInfo: RSDTaskInfo) -> RSDTask?
 }

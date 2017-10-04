@@ -35,6 +35,24 @@ import Foundation
 import UIKit
 
 /**
+ The `RSDUIAction` protocol can be used to customize the title and image displayed for a 
+ given action of the UI.
+ */
+public protocol RSDUIAction {
+    
+    /**
+     The title to display on the button associated with this action.
+     */
+    var buttonTitle: String? { get }
+    
+    /**
+     The icon to display on the button associated with this action.
+     */
+    var buttonIcon: UIImage? { get }
+}
+
+
+/**
  The action handler implements the custom actions of the step.
  */
 public protocol RSDUIActionHandler {
@@ -56,144 +74,4 @@ public protocol RSDUIActionHandler {
      @return            Whether or not the button should be hidden.
      */
     func shouldHideAction(for actionType: RSDUIActionType) -> Bool
-}
-
-/**
- The `RSDUIAction` protocol can be used to customize the title and image displayed for a 
- given action of the UI.
- */
-public protocol RSDUIAction {
-    
-    /**
-     The title to display on the button associated with this action.
-     */
-    var buttonTitle: String? { get }
-    
-    /**
-     The icon to display on the button associated with this action.
-     */
-    var buttonIcon: UIImage? { get }
-}
-
-/**
- The `RSDUIActionType` enum describes standard navigation actions that are common to a
- given UI step. It is extendable using the custom field.
- */
-public enum RSDUIActionType {
-    
-    /**
-     Standard navigation elements that are common to most steps.
-     */
-    case navigation(Navigation)
-    public enum Navigation : String {
-        
-        /**
-         Navigate to the next step.
-         */
-        case goForward
-        
-        /**
-         Navigate to the previous step.
-         */
-        case goBackward
-        
-        /**
-         Skip the step and immediately go forward.
-         */
-        case skip
-        
-        /**
-         Cancel the task.
-         */
-        case cancel
-        
-        /**
-         Display additional information about the step.
-         */
-        case learnMore
-    }
-
-    case custom(String)
-}
-
-extension RSDUIActionType: RawRepresentable {
-    public typealias RawValue = String
-    
-    public init?(rawValue: RawValue) {
-        if let subtype = Navigation(rawValue: rawValue) {
-            self = .navigation(subtype)
-        }
-        else {
-            self = .custom(rawValue)
-        }
-    }
-    
-    public var rawValue: String {
-        switch (self) {
-        case .navigation(let value):
-            return value.rawValue
-            
-        case .custom(let value):
-            return value
-        }
-    }
-}
-
-extension RSDUIActionType : Equatable {
-    public static func ==(lhs: RSDUIActionType, rhs: RSDUIActionType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDUIActionType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDUIActionType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDUIActionType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
-extension RSDUIActionType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)!
-    }
-}
-
-extension RSDUIActionType : CodingKey {
-    public var stringValue: String {
-        return self.rawValue
-    }
-    
-    public init?(stringValue: String) {
-        self.init(rawValue: stringValue)
-    }
-    
-    public var intValue: Int? {
-        return nil
-    }
-    
-    public init?(intValue: Int) {
-        return nil
-    }
-}
-
-extension RSDUIActionType : Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self.init(rawValue: rawValue)!
-    }
-}
-
-extension RSDUIActionType : Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.rawValue)
-    }
 }

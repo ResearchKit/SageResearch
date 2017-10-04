@@ -38,6 +38,7 @@ public enum RSDValidationError : Error {
     case invalidImageName(String)
     case invalidDuration(String)
     case undefinedClassType(String)
+    case invalidType(String)
     
     /// The domain of the error.
     public static var errorDomain: String {
@@ -55,6 +56,8 @@ public enum RSDValidationError : Error {
             return -3
         case .undefinedClassType(_):
             return -4
+        case .invalidType(_):
+            return -5
         }
     }
     
@@ -66,6 +69,7 @@ public enum RSDValidationError : Error {
         case .invalidImageName(let str): description = str
         case .invalidDuration(let str): description = str
         case .undefinedClassType(let str): description = str
+        case .invalidType(let str): description = str
         }
         return ["NSDebugDescription": description]
     }

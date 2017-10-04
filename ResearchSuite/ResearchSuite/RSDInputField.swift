@@ -49,19 +49,29 @@ public protocol RSDInputField {
     var prompt: String? { get }
     
     /**
-     A localized string that displays placeholder information for the form item.
+     A localized string that displays placeholder information for the input field.
      
      You can display placeholder text in a text field or text area to help users understand how to answer the item's question.
      */
     var placeholderText: String? { get }
     
     /**
-     A Boolean value indicating whether the user can skip the step without providing an answer.
+     A Boolean value indicating whether the user can skip the input field without providing an answer.
      */
     var optional: Bool { get }
     
     /**
-     Validate the form item to check for any configuration that should throw an error.
+     The data type for this input field. The data type can have an associated ui hint.
+     */
+    var dataType: RSDFormDataType { get }
+    
+    /**
+     A UI hint for how the study would prefer that the input field is displayed to the user.
+     */
+    var uiHint: RSDFormUIHint? { get }
+    
+    /**
+     Validate the input field to check for any configuration that should throw an error.
      */
     func validate() throws
     
@@ -69,4 +79,112 @@ public protocol RSDInputField {
      Validation run on the result.
      */
     func validateResult(_ result: RSDAnswerResult) throws -> Bool
+}
+
+/**
+ `RSDTextFieldOptions` extends the properties of an `RSDFieldInput` for a text field data type.
+ */
+public protocol RSDTextFieldOptions : RSDInputField {
+    
+    /**
+     The regex used to validate user's input. If set to nil, no validation will be performed.
+     Dictionary key = "validationRegex"
+     
+     @note If the "validationRegex" is defined, then the `invalidMessage` should also be defined.
+     */
+    var validationRegex: String? { get }
+    
+    /**
+     The text presented to the user when invalid input is received.
+     */
+    var invalidMessage: String? { get }
+    
+    /**
+     The maximum length of the text users can enter. When the value of this property is 0, there is no maximum.
+     */
+    var maximumLength: Int { get }
+    
+    /**
+     Auto-capitalization type for the text field.
+     */
+    var autocapitalizationType: UITextAutocapitalizationType { get }
+    
+    /**
+     Keyboard type for the text field.
+     */
+    var keyboardType: UIKeyboardType { get }
+}
+
+/**
+ `RSDDateRange` extends the properties of an `RSDFieldInput` for an timestamp or date data type.
+ */
+public protocol RSDDateRange : RSDInputField {
+    
+    /**
+     The minimum allowed date. When the value of this property is `nil`, there is no minimum.
+     */
+    var minimum: Date? { get }
+    
+    /**
+     The maximum allowed date. When the value of this property is `nil`, there is no maximum.
+     */
+    var maximum: Date? { get }
+    
+    /**
+     Whether or not the UI date picker should allow future dates.
+     */
+    var allowsFuture: Bool { get }
+}
+
+/**
+ `RSDIntegerRange` extends the properties of an `RSDFieldInput` for an integer data type.
+ */
+public protocol RSDIntegerRange : RSDInputField {
+    
+    /**
+     The minimum allowed number. When the value of this property is `nil`, there is no minimum.
+     */
+    var minimum: Int? { get }
+    
+    /**
+     The maximum allowed number. When the value of this property is `nil`, there is no maximum.
+     */
+    var maximum: Int? { get }
+    
+    /**
+     A unit label associated with this property.
+     */
+    var unitLabel: String? { get }
+    
+    /**
+     A step interval to be used for a slider or picker.
+     */
+    var stepInterval: Int { get }
+}
+
+/**
+ `RSDDecimalRange` extends the properties of an `RSDFieldInput` for a decimal or time interval data type.
+ */
+public protocol RSDDecimalRange : RSDInputField {
+    
+    /**
+     The minimum allowed number. When the value of this property is `nil`, there is no minimum.
+     */
+    var minimum: Double? { get }
+    
+    /**
+     The maximum allowed number. When the value of this property is `nil`, there is no maximum.
+     */
+    var maximum: Double? { get }
+    
+    /**
+     A unit label associated with this property. This property is currently not supported for
+     `ORKContinuousScaleAnswerFormat` or `ORKScaleAnswerFormat`.
+     */
+    var unitLabel: String? { get }
+    
+    /**
+     A step interval to be used for a slider or picker.
+     */
+    var stepInterval: Double { get }
 }
