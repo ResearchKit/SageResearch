@@ -49,7 +49,7 @@ public enum RSDFormDataType {
     case collection(CollectionType, BaseType)
     
     /**
-     A measurement is a human-collected measurement. The measurement range indicates the expected size of the human being measured. In US English units, this is required to deterine the expected localization for the measurement. For example, an infant weight would be in lbs/oz whereas an adult weight would be in lbs. Default range is for an adult.
+     A measurement is a human-collected measurement. The measurement range indicates the expected size of the human being measured. In US English units, this is required to deterine the expected localization for the measurement. For example, an infant weight would be in lb/oz whereas an adult weight would be in lb. Default range is for an adult.
      */
     case measurement(MeasurementType, MeasurementRange)
     
@@ -69,7 +69,12 @@ public enum RSDFormDataType {
         /**
          In a date question, the participant can enter a date.
          */
-        case date
+        case dateOnly
+        
+        /**
+         In a date components question, the participant enters a date component such as month/year or hour/minute. A time component data type can map to a `RSDDateRange` to box the allowed range.
+         */
+        case dateComponents
         
         /**
          In a date and time question, the participant can enter a combination of date and time.
@@ -87,33 +92,17 @@ public enum RSDFormDataType {
         case integer
         
         /**
-         In a location question, the participant can enter a location.
-         */
-        case location
-        
-        /**
          In a string question, the participant can enter text.
          */
         case string
         
         /**
-         In a time of day question, the participant can enter a time of day.
-         */
-        case timeOfDay
-        
-        /**
-         In a time interval question, the participant can enter a time span.
+         In a time interval question, the participant can enter a time span such as 4 years or 8 hours. A time interval data type can map to a `RSDDecimalRange` to box the allowed values.
          */
         case timeInterval
-        
     }
     
     public enum CollectionType: String {
-        
-        /**
-         In a dictionary question, the participant can enter key/value pairs.
-         */
-        case dictionary
         
         /**
          In a multiple choice question, the participant can pick one or more options.
@@ -121,7 +110,12 @@ public enum RSDFormDataType {
         case multipleChoice
         
         /**
-         In a multiple component question, the participant can pick one choice from each component.
+         In a single choice question, the participant can pick one item from a list of options.
+         */
+        case singleChoice
+        
+        /**
+         In a multiple component question, the participant can pick one choice from each component or enter a formatted text string such as a phone number.
          */
         case multipleComponent
     }
@@ -172,29 +166,26 @@ public enum RSDFormDataType {
             case .boolean:
                 return [.checkbox, .radioButton, .toggle]
                 
-            case .date, .dateAndTime, .timeOfDay:
+            case .dateOnly, .dateAndTime:
                 return [.picker]
                 
-            case .decimal, .integer, .timeInterval:
+            case .decimal, .integer:
                 return [.picker, .textfield, .slider]
-                
-            case .location:
-                return []
                 
             case .string:
                 return [.textfield, .multipleLine]
+                
+            case .timeInterval, .dateComponents:
+                return [.picker, .textfield]
             }
         
         case .collection(let collectionType, _):
             switch (collectionType) {
-            case .multipleChoice:
+            case .multipleChoice, .singleChoice:
                 return [.checkbox, .combobox, .list, .picker, .radioButton, .slider]
                 
             case .multipleComponent:
                 return [.picker]
-                
-            case .dictionary:
-                return []
             }
         
         case .measurement(let measurement, let range):

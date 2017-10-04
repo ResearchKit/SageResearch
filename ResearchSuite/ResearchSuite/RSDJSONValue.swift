@@ -33,7 +33,7 @@
 
 import Foundation
 
-protocol RSDJSONValue {
+public protocol RSDJSONValue {
     func jsonObject() -> Any
 }
 

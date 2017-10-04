@@ -401,4 +401,255 @@ class CodableObjectTests: XCTestCase {
         }
     }
     
+    func testRSDChoiceObject_Codable_Dictionary_StringValue() {
+        
+        let json = """
+        {
+            "value": "foo",
+            "text": "Some text.",
+            "detail": "A detail about the object",
+            "icon": "fooImage",
+            "isExclusive": true
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try JSONDecoder().decode(RSDChoiceObject<String>.self, from: json)
+            
+            XCTAssertEqual(object.value as? String, "foo")
+            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.detail, "A detail about the object")
+            XCTAssertEqual(object.icon?.imageName, "fooImage")
+            XCTAssertTrue(object.isExclusive)
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["value"] as? String, "foo")
+            XCTAssertEqual(dictionary["text"] as? String, "Some text.")
+            XCTAssertEqual(dictionary["detail"] as? String, "A detail about the object")
+            XCTAssertEqual(dictionary["icon"] as? String, "fooImage")
+            XCTAssertEqual(dictionary["isExclusive"] as? Bool, true)
+
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testRSDChoiceObject_Codable_Dictionary_IntValue() {
+        
+        let json = """
+        {
+            "value": 3,
+            "text": "Some text.",
+            "detail": "A detail about the object",
+            "icon": "fooImage",
+            "isExclusive": true
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            let object = try JSONDecoder().decode(RSDChoiceObject<Int>.self, from: json)
+            
+            XCTAssertEqual(object.value as? Int, 3)
+            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.detail, "A detail about the object")
+            XCTAssertEqual(object.icon?.imageName, "fooImage")
+            XCTAssertTrue(object.isExclusive)
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["value"] as? Int, 3)
+            XCTAssertEqual(dictionary["text"] as? String, "Some text.")
+            XCTAssertEqual(dictionary["detail"] as? String, "A detail about the object")
+            XCTAssertEqual(dictionary["icon"] as? String, "fooImage")
+            XCTAssertEqual(dictionary["isExclusive"] as? Bool, true)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testRSDChoiceObject_Codable_Dictionary_TextValue() {
+        
+        let json = """
+        ["alpha", "beta"]
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            let objects = try JSONDecoder().decode([RSDChoiceObject<String>].self, from: json)
+            
+            XCTAssertEqual(objects.count, 2)
+            XCTAssertEqual(objects.first?.value as? String, "alpha")
+            XCTAssertEqual(objects.last?.value as? String, "beta")
+            
+            guard let object = objects.first else {
+                return
+            }
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["value"] as? String, "alpha")
+            XCTAssertEqual(dictionary["text"] as? String, "alpha")
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testChoiceInputFieldObject_Codable_String() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "dataType": "multipleChoice",
+            "choices" : ["never", "sometimes", "often", "always"]
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try JSONDecoder().decode(RSDChoiceInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .collection(.multipleChoice, .string))
+            XCTAssertFalse(object.optional)
+            XCTAssertFalse(object.allowOther)
+            XCTAssertEqual(object.choices.count, 4)
+            XCTAssertEqual(object.choices.last?.text, "always")
+            XCTAssertEqual(object.choices.last?.value as? String, "always")
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "multipleChoice.string")
+            XCTAssertEqual(dictionary["optional"] as? Bool, false)
+            XCTAssertEqual(dictionary["allowOther"] as? Bool, false)
+            XCTAssertEqual((dictionary["choices"] as? [Any])?.count ?? 0, 4)
+
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testChoiceInputFieldObject_Codable_Int() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "prompt": "Text",
+            "placeholderText": "enter text",
+            "dataType": "singleChoice.integer",
+            "uiHint": "picker",
+            "optional": true,
+            "allowOther": true,
+            "choices" : [{  "value" : 0,
+                            "text" : "never"},
+                         {  "value" : 1,
+                            "text" : "sometimes"},
+                         {  "value" : 2,
+                            "text" : "often"},
+                         {  "value" : 3,
+                            "text" : "always"}]
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try JSONDecoder().decode(RSDChoiceInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.prompt, "Text")
+            XCTAssertEqual(object.placeholderText, "enter text")
+            XCTAssertEqual(object.dataType, .collection(.singleChoice, .integer))
+            XCTAssertEqual(object.uiHint, .standard(.picker))
+            XCTAssertTrue(object.optional)
+            XCTAssertTrue(object.allowOther)
+            XCTAssertEqual(object.choices.count, 4)
+            XCTAssertEqual(object.choices.last?.text, "always")
+            XCTAssertEqual(object.choices.last?.value as? Int, 3)
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["prompt"] as? String, "Text")
+            XCTAssertEqual(dictionary["placeholderText"] as? String, "enter text")
+            XCTAssertEqual(dictionary["dataType"] as? String, "singleChoice.integer")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
+            XCTAssertEqual(dictionary["optional"] as? Bool, true)
+            XCTAssertEqual(dictionary["allowOther"] as? Bool, true)
+            XCTAssertEqual((dictionary["choices"] as? [Any])?.count ?? 0, 4)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testMultipleComponentInputFieldObject_Codable_String() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "dataType": "multipleComponent",
+            "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try JSONDecoder().decode(RSDMultipleComponentInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .collection(.multipleComponent, .string))
+            XCTAssertFalse(object.optional)
+            XCTAssertEqual(object.choices.count, 2)
+            
+            let jsonData = try JSONEncoder().encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "multipleComponent.string")
+            XCTAssertEqual(dictionary["optional"] as? Bool, false)
+            XCTAssertEqual((dictionary["choices"] as? [Any])?.count ?? 0, 2)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
 }
