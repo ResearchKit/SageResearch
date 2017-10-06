@@ -102,9 +102,9 @@ class FactoryTests: XCTestCase {
                 
                 // Investigate the step navigator
                 if let stepNavigator = task.stepNavigator as? RSDConditionalStepNavigatorObject {
-                    XCTAssertEqual(stepNavigator.steps.count, 2)
+                    XCTAssertEqual(stepNavigator.steps.count, 3)
                     XCTAssertNotNil(stepNavigator.steps.first as? RSDUIStepObject)
-                    XCTAssertNotNil(stepNavigator.steps.last as? RSDActiveUIStepObject)
+                    XCTAssertNotNil(stepNavigator.steps.last as? RSDFormUIStepObject)
                 }
                 else {
                     XCTFail("\(task.stepNavigator) not of expected type.")

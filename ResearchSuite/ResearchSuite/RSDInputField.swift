@@ -71,7 +71,7 @@ public protocol RSDInputField {
     var uiHint: RSDFormUIHint? { get }
     
     /**
-     Options for displaying a text field. This is only applicable for certain types of UI hints.
+     Options for displaying a text field. This is only applicable for certain types of UI hints and data types.
      */
     var textFieldOptions: RSDTextFieldOptions? { get }
     
@@ -133,7 +133,7 @@ public protocol RSDChoice : Codable {
 /**
  `RSDChoiceOptions` extends the properties of an `RSDFieldInput` with information required to create a choice selection input field.
  */
-public protocol RSDChoiceOptions : RSDInputField {
+public protocol RSDChoiceInputField : RSDInputField {
     
     /**
      A list of choices for input field.
@@ -149,7 +149,7 @@ public protocol RSDChoiceOptions : RSDInputField {
 /**
  `RSDMultipleComponentOptions` extends the properties of an `RSDFieldInput` with information required to create a multiple component input field.
  */
-public protocol RSDMultipleComponentOptions : RSDInputField {
+public protocol RSDMultipleComponentInputField : RSDInputField {
         
     /**
      A list of choices for input fields that make up the multiple component option set.
@@ -162,71 +162,117 @@ public protocol RSDMultipleComponentOptions : RSDInputField {
     var separator: String? { get }
 }
 
-/**
- `RSDCalendarOptions` extends the properties of an `RSDFieldInput` for an time interval or date components field.
- */
-public protocol RSDCalendarOptions : RSDInputField {
-    
-    /**
-     The components to include in the input field.
-     */
-    var calendarComponents: Set<Calendar.Component> { get }
-}
-
 public protocol RSDRange : Codable {
 }
 
 /**
- `RSDDateRange` extends the properties of an `RSDFieldInput` for an timestamp or date data type.
+ `RSDDateRange` extends the properties of an `RSDFieldInput` for a `date` data type.
  */
-public protocol RSDDateRange {
+public protocol RSDDateRange : RSDRange {
     
     /**
      The minimum allowed date. When the value of this property is `nil`, there is no minimum.
      */
-    var minimumDate: Date? { get }
+    var minDate: Date? { get }
     
     /**
      The maximum allowed date. When the value of this property is `nil`, there is no maximum.
      */
-    var maximumDate: Date? { get }
+    var maxDate: Date? { get }
     
     /**
-     Whether or not the UI should allow future dates.
+     Whether or not the UI should allow future dates. If `nil` or `minDate` is defined then this value is ignored.
      */
-    var allowFuture: Bool { get }
+    var allowFuture: Bool? { get }
     
     /**
-     Whether or not the UI should allow past dates.
+     Whether or not the UI should allow past dates. If `nil` or `maxDate` is defined then this value is ignored.
      */
-    var allowPast: Bool { get }
+    var allowPast: Bool? { get }
+    
+    /**
+     Calendar components that are relevant for this input field.
+     */
+    var calendarComponents: Set<Calendar.Component> { get }
+    
+    /**
+     The date encoder to use for formatting the result. If `nil` then the result, `minDate`, and `maxDate` are assumed to be used for time and date with the default encoding/decoding implementation.
+     */
+    var dateCoder: RSDDateCoder? { get }
+}
+
+extension RSDDateRange {
+    
+    /**
+     The minimum allowed date. This is calculated by using either the `minDate` (if non-nil) or today's date if `allowPast` is non-nil and `false`.
+     */
+    public var minimumDate: Date? {
+        return minDate ?? ((allowPast ?? true) ? nil : Date())
+    }
+    
+    /**
+     The maximum allowed date. This is calculated by using either the `maxDate` (if non-nil) or today's date if `allowFuture` is non-nil and `false`.
+     */
+    public var maximumDate: Date? {
+        return maxDate ?? ((allowFuture ?? true) ? nil : Date())
+    }
 }
 
 /**
- `RSDNumberRange` extends the properties of an `RSDFieldInput` for a `Numeric` data type.
+ `RSDIntegerRange` extends the properties of an `RSDFieldInput` for a `integer` data type.
  */
-public protocol RSDNumberRange {
-    associatedtype Number : Numeric
+public protocol RSDIntegerRange : RSDRange {
     
     /**
      The minimum allowed number. When the value of this property is `nil`, there is no minimum.
      */
-    var minimumValue: Number? { get }
+    var minimumValue: Int? { get }
     
     /**
      The maximum allowed number. When the value of this property is `nil`, there is no maximum.
      */
-    var maximumValue: Number? { get }
-    
-    /**
-     A unit label associated with this property.
-     */
-    var unitLabel: String? { get }
+    var maximumValue: Int? { get }
     
     /**
      A step interval to be used for a slider or picker.
      */
-    var stepInterval: Number { get }
+    var stepInterval: Int? { get }
+    
+    /**
+     A unit label associated with this property.
+     */
+    var unit: String? { get }
+}
+
+/**
+ `RSDDecimalRange` extends the properties of an `RSDFieldInput` for a `decimal` data type.
+ */
+public protocol RSDDecimalRange : RSDRange {
+    
+    /**
+     The minimum allowed number. When the value of this property is `nil`, there is no minimum.
+     */
+    var minimumValue: Double? { get }
+    
+    /**
+     The maximum allowed number. When the value of this property is `nil`, there is no maximum.
+     */
+    var maximumValue: Double? { get }
+    
+    /**
+     A step interval to be used for a slider or picker.
+     */
+    var stepInterval: Double? { get }
+    
+    /**
+     A unit label associated with this property.
+     */
+    var unit: String? { get }
+    
+    /**
+     Optional number formatter to use for formatting the displayed value.
+     */
+    var numberFormatter: NumberFormatter? { get }
 }
 
 /**
@@ -261,4 +307,9 @@ public protocol RSDTextFieldOptions : Codable {
      Keyboard type for the text field.
      */
     var keyboardType: UIKeyboardType { get }
+    
+    /**
+     Is the text field for password entry?
+     */
+    var isSecureTextEntry: Bool { get }
 }

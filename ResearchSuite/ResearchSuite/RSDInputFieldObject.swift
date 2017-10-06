@@ -36,22 +36,21 @@ import Foundation
 open class RSDInputFieldObject : RSDInputField, Codable {
     
     public private(set) var identifier: String
-    public private(set) var prompt: String?
     
     open private(set) var dataType: RSDFormDataType
     open private(set) var uiHint: RSDFormUIHint?
     
+    open var prompt: String?
     open var placeholderText: String?
     open var textFieldOptions: RSDTextFieldOptions?
     open var range: RSDRange?
     open var optional: Bool = false
     
-    public init(identifier: String, dataType: RSDFormDataType, prompt: String? = nil, placeholderText: String? = nil, uiHint: RSDFormUIHint? = nil) {
+    public init(identifier: String, dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String? = nil) {
         self.identifier = identifier
         self.dataType = dataType
-        self.prompt = prompt
-        self.placeholderText = placeholderText
         self.uiHint = uiHint
+        self.prompt = prompt
     }
     
     open func validate() throws {
@@ -64,7 +63,7 @@ open class RSDInputFieldObject : RSDInputField, Codable {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, prompt, placeholderText, dataType, uiHint, optional
+        case identifier, prompt, placeholderText, dataType, uiHint, optional, textFieldOptions, range
     }
     
     open class func dataType(from decoder: Decoder) throws -> RSDFormDataType {
@@ -72,13 +71,68 @@ open class RSDInputFieldObject : RSDInputField, Codable {
         return try container.decode(RSDFormDataType.self, forKey: .dataType)
     }
     
-    public required init(from decoder: Decoder) throws {
-        self.dataType = try type(of: self).dataType(from: decoder)
+    open class func uiHint(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDFormUIHint? {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard let uiHint = try container.decodeIfPresent(RSDFormUIHint.self, forKey: .uiHint) else {
+            return nil
+        }
+        guard let standardType = uiHint.standardType else {
+            return uiHint
+        }
+        guard dataType.validStandardUIHints.contains(standardType) else {
+            throw RSDValidationError.invalidType("\(uiHint) is not a valid uiHint for \(dataType)")
+        }
+        return uiHint
+    }
+    
+    open class func range(from decoder: Decoder, dataType: RSDFormDataType) throws -> RSDRange? {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        switch dataType.baseType {
+        case .integer:
+            return try container.decodeIfPresent(RSDIntegerRangeObject.self, forKey: .range)
+        
+        case .decimal:
+            return try container.decodeIfPresent(RSDDecimalRangeObject.self, forKey: .range)
+        
+        case .date:
+            return try container.decodeIfPresent(RSDDateRangeObject.self, forKey: .range)
+            
+        default:
+            return nil
+        }
+    }
+    
+    open class func textFieldOptions(from decoder: Decoder, dataType: RSDFormDataType) throws -> RSDTextFieldOptionsObject? {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let textFieldOptions = try container.decodeIfPresent(RSDTextFieldOptionsObject.self, forKey: .textFieldOptions) {
+            return textFieldOptions
+        }
+        // If there isn't a text field returned, then set the default for certain types
+        switch dataType.baseType {
+        case .integer:
+            return RSDTextFieldOptionsObject(autocapitalizationType: .none, keyboardType: .numberPad)
+        case .decimal:
+            return RSDTextFieldOptionsObject(autocapitalizationType: .none, keyboardType: .decimalPad)
+        default:
+            return nil
+        }
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        
+        let dataType = try type(of: self).dataType(from: decoder)
+        let uiHint = try type(of: self).uiHint(from: decoder, for: dataType)
+        let range = try type(of: self).range(from: decoder, dataType: dataType)
+        let textFieldOptions = try type(of: self).textFieldOptions(from: decoder, dataType: dataType)
+
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.dataType = dataType
+        self.uiHint = uiHint
+        self.range = range
+        self.textFieldOptions = textFieldOptions
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.prompt = try container.decodeIfPresent(String.self, forKey: .prompt)
         self.placeholderText = try container.decodeIfPresent(String.self, forKey: .placeholderText)
-        self.uiHint = try container.decodeIfPresent(RSDFormUIHint.self, forKey: .uiHint)
         self.optional = try container.decodeIfPresent(Bool.self, forKey: .optional) ?? false
     }
     
@@ -89,6 +143,14 @@ open class RSDInputFieldObject : RSDInputField, Codable {
         if let obj = self.prompt { try container.encode(obj, forKey: .prompt) }
         if let obj = self.placeholderText { try container.encode(obj, forKey: .placeholderText) }
         if let obj = self.uiHint { try container.encode(obj, forKey: .uiHint) }
+        if let range = self.range {
+            let nestedEncoder = container.superEncoder(forKey: .range)
+            try range.encode(to: nestedEncoder)
+        }
+        if let textFieldOptions = self.textFieldOptions {
+            let nestedEncoder = container.superEncoder(forKey: .textFieldOptions)
+            try textFieldOptions.encode(to: nestedEncoder)
+        }
         try container.encode(self.optional, forKey: .optional)
     }
 }

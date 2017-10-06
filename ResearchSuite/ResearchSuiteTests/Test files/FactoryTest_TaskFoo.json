@@ -26,6 +26,26 @@
                                       "10": "Keep going",
                                       "halfway": "Halfway there",
                                       "end": "Stop moving"}
-              }
-    ]
+              },
+              {
+              "identifier": "step3",
+              "type": "form",
+              "title": "Step 3",
+              "text": "Some text.",
+              "inputFields": [
+                              {
+                              "identifier": "foo",
+                              "dataType": "date",
+                              "uiHint": "picker",
+                              "prompt": "Foo",
+                              "range" : { "minimumDate" : "2017-02-20",
+                                          "maximumDate" : "2017-03-20",
+                                          "codingFormat" : "yyyy-MM-dd" }
+                              },
+                              {
+                              "identifier": "bar",
+                              "dataType": "integer",
+                              "prompt": "Bar"
+                              }]
+              }]
 }

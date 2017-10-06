@@ -59,6 +59,11 @@ public enum RSDFormUIHint {
     }
     
     case custom(String)
+    
+    public var standardType: Standard? {
+        guard case .standard(let type) = self else { return nil }
+        return type
+    }
 }
 
 extension RSDFormUIHint: RawRepresentable {

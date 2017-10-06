@@ -33,15 +33,15 @@
 
 import Foundation
 
-open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
+open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField {
     
     public private(set) var choices : [RSDChoice]
     open private(set) var allowOther : Bool
     
-    public init(identifier: String, choices: [RSDChoice], dataType: RSDFormDataType, prompt: String? = nil, placeholderText: String? = nil, uiHint: RSDFormUIHint? = nil, allowOther: Bool = false) {
+    public init(identifier: String, choices: [RSDChoice], dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String?, allowOther: Bool = false) {
         self.choices = choices
         self.allowOther = allowOther
-        super.init(identifier: identifier, dataType: dataType, prompt: prompt, placeholderText: placeholderText, uiHint: uiHint)
+        super.init(identifier: identifier, dataType: dataType, uiHint: uiHint, prompt: prompt)
     }
     
     private enum CodingKeys : String, CodingKey {

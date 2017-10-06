@@ -33,86 +33,15 @@
 
 import Foundation
 
-public protocol RSDFactoryDecoder {
-    func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable
-    var userInfo: [CodingUserInfoKey : Any] { get set }
-}
-
-extension JSONDecoder : RSDFactoryDecoder {
-}
-
-extension PropertyListDecoder : RSDFactoryDecoder {
-}
-
-extension Decoder {
-    
-    public var factory: RSDFactory {
-        return self.userInfo[RSDFactory.CodingUserInfoKeys.factory.key] as? RSDFactory ?? RSDFactory.shared
-    }
-    
-    public var taskInfo: RSDTaskInfo? {
-        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskInfo.key] as? RSDTaskInfo
-    }
-    
-    public var schemaInfo: RSDSchemaInfo? {
-        return self.userInfo[RSDFactory.CodingUserInfoKeys.schemaInfo.key] as? RSDSchemaInfo
-    }
-}
-
+/**
+ `RSDFactory` handles customization of the elements of a task.
+ */
 open class RSDFactory {
     
     public static var shared = RSDFactory()
     
     public init() {
     }
-    
-    // MARK: Decoding
-    
-    public enum CodingUserInfoKeys : String {
-        
-        case factory, taskInfo, schemaInfo
-        
-        public var key : CodingUserInfoKey {
-            return CodingUserInfoKey(rawValue: self.rawValue)!
-        }
-    }
-    
-    open func createJSONDecoder() -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        decoder.userInfo[CodingUserInfoKeys.factory.key] = self
-        return decoder
-    }
-    
-    open func createPropertyListDecoder() -> PropertyListDecoder {
-        let decoder = PropertyListDecoder()
-        decoder.userInfo[CodingUserInfoKeys.factory.key] = self
-        return decoder
-    }
-    
-    open func createDecoder(for resourceType: RSDResourceType, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDFactoryDecoder {
-        var decoder : RSDFactoryDecoder = try {
-            if resourceType == .json {
-                return self.createJSONDecoder()
-            }
-            else if resourceType == .plist {
-                return self.createPropertyListDecoder()
-            }
-            else {
-                let supportedTypes: [RSDResourceType] = [.json, .plist]
-                let supportedTypeList = supportedTypes.map({$0.rawValue}).joined(separator: ",")
-                throw RSDResourceTransformerError.invalidResourceType("ResourceType \(resourceType.rawValue) is not supported by this factory. Supported types: \(supportedTypeList)")
-            }
-            }()
-        if let taskInfo = taskInfo {
-            decoder.userInfo[CodingUserInfoKeys.taskInfo.key] = taskInfo
-        }
-        if let schemaInfo = schemaInfo {
-            decoder.userInfo[CodingUserInfoKeys.schemaInfo.key] = schemaInfo
-        }
-        return decoder
-    }
-    
 
     // MARK: Class name factory
     
@@ -189,7 +118,7 @@ open class RSDFactory {
      Type of steps that can be created by this factory.
      */
     public enum StepType : String {
-        case instruction, active
+        case instruction, active, form
     }
     
     /**
@@ -235,6 +164,47 @@ open class RSDFactory {
             return try RSDUIStepObject(from: decoder)
         case .active:
             return try RSDActiveUIStepObject(from: decoder)
+        case .form:
+            return try RSDFormUIStepObject(from: decoder)
+        }
+    }
+    
+    
+    // MARK: Input field factory
+    
+    /**
+     Decode the input field from this decoder. This method can be overridden to return `nil` if the input field should be skipped.
+     
+     @param decoder     The decoder to use to instatiate the object.
+     
+     @return            The step (if any) created from this decoder.
+     */
+    open func decodeInputField(from decoder: Decoder) throws -> RSDInputField? {
+        let dataType = try RSDInputFieldObject.dataType(from: decoder)
+        return try decodeInputField(from: decoder, with: dataType)
+    }
+    
+    /**
+     Decode the input field from this decoder. This method can be overridden to return `nil` if the input field should be skipped.
+     
+     @param dataType    The data type for this step.
+     @param decoder     The decoder to use to instatiate the object.
+     
+     @return            The step (if any) created from this decoder.
+     */
+    open func decodeInputField(from decoder:Decoder, with dataType: RSDFormDataType) throws -> RSDInputField? {
+        switch dataType {
+        case .collection(let collectionType, _):
+            switch collectionType {
+            case .multipleComponent:
+                return try RSDMultipleComponentInputFieldObject(from: decoder)
+                
+            case .multipleChoice, .singleChoice:
+                return try RSDChoiceInputFieldObject(from: decoder)
+            }
+        
+        default:
+            return try RSDInputFieldObject(from: decoder)
         }
     }
     
@@ -269,5 +239,92 @@ open class RSDFactory {
      */
     open func decodeConditionalRule(from decoder:Decoder, with className: String) throws -> RSDConditionalRule? {
         // Base class does not implement the conditional rule
-            throw RSDValidationError.undefinedClassType("\(self) does not support `\(className)` as a decodable class type for a conditional rule.")    }
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(className)` as a decodable class type for a conditional rule.")
+    }
+    
+    
+    // MARK: Decoding
+    
+    public enum CodingUserInfoKeys : String {
+        
+        case factory, taskInfo, schemaInfo
+        
+        public var key : CodingUserInfoKey {
+            return CodingUserInfoKey(rawValue: self.rawValue)!
+        }
+    }
+    
+    open func createJSONDecoder() -> JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        decoder.userInfo[CodingUserInfoKeys.factory.key] = self
+        return decoder
+    }
+    
+    open func createPropertyListDecoder() -> PropertyListDecoder {
+        let decoder = PropertyListDecoder()
+        decoder.userInfo[CodingUserInfoKeys.factory.key] = self
+        return decoder
+    }
+    
+    /**
+     Create the appropriate decoder from the given resource.
+     
+     @param resourceType    The resource type.
+     @param taskInfo        The task info to pass with the decoder.
+     @param schemaInfo      The schema info to pass with the decoder.
+     
+     @return                The decoder for the given type.
+     */
+    open func createDecoder(for resourceType: RSDResourceType, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDFactoryDecoder {
+        var decoder : RSDFactoryDecoder = try {
+            if resourceType == .json {
+                return self.createJSONDecoder()
+            }
+            else if resourceType == .plist {
+                return self.createPropertyListDecoder()
+            }
+            else {
+                let supportedTypes: [RSDResourceType] = [.json, .plist]
+                let supportedTypeList = supportedTypes.map({$0.rawValue}).joined(separator: ",")
+                throw RSDResourceTransformerError.invalidResourceType("ResourceType \(resourceType.rawValue) is not supported by this factory. Supported types: \(supportedTypeList)")
+            }
+            }()
+        if let taskInfo = taskInfo {
+            decoder.userInfo[CodingUserInfoKeys.taskInfo.key] = taskInfo
+        }
+        if let schemaInfo = schemaInfo {
+            decoder.userInfo[CodingUserInfoKeys.schemaInfo.key] = schemaInfo
+        }
+        return decoder
+    }
+}
+
+/**
+ `JSONDecoder` and `PropertyListDecoder` do not share a common protocol so extend them to be able to create the appropriate decoder and set the userInfo keys as needed.
+ */
+public protocol RSDFactoryDecoder {
+    func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable
+    var userInfo: [CodingUserInfoKey : Any] { get set }
+}
+
+extension JSONDecoder : RSDFactoryDecoder {
+}
+
+extension PropertyListDecoder : RSDFactoryDecoder {
+}
+
+extension Decoder {
+    
+    public var factory: RSDFactory {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.factory.key] as? RSDFactory ?? RSDFactory.shared
+    }
+    
+    public var taskInfo: RSDTaskInfo? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskInfo.key] as? RSDTaskInfo
+    }
+    
+    public var schemaInfo: RSDSchemaInfo? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.schemaInfo.key] as? RSDSchemaInfo
+    }
 }

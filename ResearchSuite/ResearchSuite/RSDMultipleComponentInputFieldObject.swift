@@ -33,16 +33,16 @@
 
 import Foundation
 
-open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultipleComponentOptions {
+open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultipleComponentInputField {
     
     public private(set) var choices : [[RSDChoice]]
     open private(set) var separator: String?
     
-    public init(identifier: String, choices: [[RSDChoice]], baseType: RSDFormDataType.BaseType, separator: String? = nil, prompt: String? = nil, placeholderText: String? = nil, uiHint: RSDFormUIHint? = nil) {
+    public init(identifier: String, choices: [[RSDChoice]], baseType: RSDFormDataType.BaseType, separator: String? = nil, uiHint: RSDFormUIHint? = nil, prompt: String? = nil) {
         self.choices = choices
         self.separator = separator
         let dataType = RSDFormDataType.collection(.multipleComponent, baseType)
-        super.init(identifier: identifier, dataType: dataType, prompt: prompt, placeholderText: placeholderText, uiHint: uiHint)
+        super.init(identifier: identifier, dataType: dataType, uiHint: uiHint, prompt: prompt)
     }
     
     private enum CodingKeys : String, CodingKey {

@@ -56,38 +56,27 @@ public enum RSDFormDataType {
     /**
      Custom data types are undefined in the base SDK.
      */
-    case custom(String)
+    case custom(String, BaseType)
     
     public enum BaseType: String {
 
         /**
-         The Boolean question type asks the participant to enter Yes or No (or the appropriate
-         equivalents).
+         The Boolean question type asks the participant to enter Yes or No (or the appropriate equivalents).
          */
         case boolean
         
         /**
-         In a date question, the participant can enter a date.
+         In a date question, the participant can enter a date, time or combination of the two. A date data type can map to a `RSDDateRange` to box the allowed values.
          */
-        case dateOnly
+        case date
         
         /**
-         In a date components question, the participant enters a date component such as month/year or hour/minute. A time component data type can map to a `RSDDateRange` to box the allowed range.
-         */
-        case dateComponents
-        
-        /**
-         In a date and time question, the participant can enter a combination of date and time.
-         */
-        case dateAndTime
-        
-        /**
-         The decimal question type asks the participant to enter a decimal number.
+         The decimal question type asks the participant to enter a decimal number. A decimal data type can map to a `RSDDecimalRange` to box the allowed values.
          */
         case decimal
         
         /**
-         The integer question type asks the participant to enter an integer number.
+         The integer question type asks the participant to enter an integer number. A decimal data type can map to a `RSDIntegerRange` to box the allowed values.
          */
         case integer
         
@@ -97,9 +86,10 @@ public enum RSDFormDataType {
         case string
         
         /**
-         In a time interval question, the participant can enter a time span such as 4 years or 8 hours. A time interval data type can map to a `RSDDecimalRange` to box the allowed values.
+         In a time interval question, the participant can enter a time span such as "4 years, 3 months" or "8 hours, 5 minutes".
          */
-        case timeInterval
+        // TODO: syoung 10/06/2017 add TimeIntervalRange
+        //case timeInterval
     }
     
     public enum CollectionType: String {
@@ -166,17 +156,14 @@ public enum RSDFormDataType {
             case .boolean:
                 return [.checkbox, .radioButton, .toggle]
                 
-            case .dateOnly, .dateAndTime:
-                return [.picker]
+            case .date:
+                return [.picker, .textfield]
                 
             case .decimal, .integer:
                 return [.picker, .textfield, .slider]
                 
             case .string:
                 return [.textfield, .multipleLine]
-                
-            case .timeInterval, .dateComponents:
-                return [.picker, .textfield]
             }
         
         case .collection(let collectionType, _):
@@ -206,6 +193,28 @@ public enum RSDFormDataType {
             return RSDFormUIHint.Standard.all
         }
     }
+    
+    public var baseType : BaseType {
+        switch self {
+        case .base(let baseType):
+            return baseType
+            
+        case .collection(_, let baseType):
+            return baseType
+            
+        case .measurement(let measurement, _):
+            switch measurement {
+            case .height, .weight:
+                return .decimal
+                
+            case .bloodPressure:
+                return .integer
+            }
+            
+        case .custom(_, let baseType):
+            return baseType
+        }
+    }
 }
 
 extension RSDFormDataType: RawRepresentable {
@@ -224,8 +233,11 @@ extension RSDFormDataType: RawRepresentable {
             let range: MeasurementRange = ((split.count == 2) ? MeasurementRange(rawValue: split[1]) : nil) ?? .adult
             self = .measurement(measurementType, range)
         }
+        else if split.count == 2, let subtype = BaseType(rawValue: split[1]) {
+            self = .custom(split[0], subtype)
+        }
         else {
-            self = .custom(rawValue)
+            self = .custom(rawValue, .string)
         }
     }
     
@@ -240,8 +252,13 @@ extension RSDFormDataType: RawRepresentable {
         case .measurement(let measurement, let range):
             return "\(measurement).\(range)"
             
-        case .custom(let value):
-            return value
+        case .custom(let value, let baseType):
+            if baseType == .string {
+                return value
+            }
+            else {
+                return "\(value).\(baseType.rawValue)"
+            }
         }
     }
 }

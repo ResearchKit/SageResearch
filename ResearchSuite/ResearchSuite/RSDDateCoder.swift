@@ -1,5 +1,5 @@
 //
-//  RSDConditionalStepNavigatorObject.swift
+//  RSDDateCoder.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,41 +34,61 @@
 import Foundation
 
 /**
- `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
+ `RSDDateCoder` is used to handle specifying date encoding/decoding. If the calendar components supported by this formatter only include a subset of all the components then only those components should be displayed in the UI.
  */
-public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, Decodable {
+public protocol RSDDateCoder : Codable {
     
-    public private(set) var steps : [RSDStep]
-    public var conditionalRule : RSDConditionalRule?
+    /**
+     Formatter to use for encoding the date.
+     */
+    var formatter: DateFormatter { get }
     
-    public init(with steps: [RSDStep]) {
-        self.steps = steps
+    /**
+     Calendar components that are included in this encoder.
+     */
+    var calendarComponents: Set<Calendar.Component> { get }
+    
+    /**
+     The calendar used by this encoder when formatting a `DateComponents` object.
+     */
+    var calendar: Calendar { get }
+}
+
+extension RSDDateCoder {
+    
+    /**
+     Use the coder to encode a date as a string.
+     */
+    public func string(from date: Date) -> String? {
+        return formatter.string(from: date)
     }
     
-    private enum CodingKeys : String, CodingKey {
-        case steps, conditionalRule
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let factory = decoder.factory
-        
-        // Decode the steps
-        var decodedSteps : [RSDStep] = []
-        var stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
-        while !stepsContainer.isAtEnd {
-            let stepDecoder = try stepsContainer.superDecoder()
-            if let step = try factory.decodeStep(from: stepDecoder) {
-                decodedSteps.append(step)
-            }
+    /**
+     Use the coder to encode date components as a string.
+     */
+    public func string(from dateComponents: DateComponents) -> String? {
+        guard let date = calendar.date(from: dateComponents)
+            else {
+                return nil
         }
-        self.steps = decodedSteps
-        
-        // Decode the conditional rule
-        if container.contains(.conditionalRule) {
-            let crDecoder = try container.superDecoder(forKey: .conditionalRule)
-            self.conditionalRule = try factory.decodeConditionalRule(from: crDecoder)
-        }
+        return formatter.string(from: date)
     }
     
+    /**
+     Use the coder to decode a date from a string.
+     */
+    public func date(from string: String) -> Date? {
+        return formatter.date(from: string)
+    }
+    
+    /**
+     Use the coder to decode date components from a string.
+     */
+    public func dateComponents(from string: String) -> DateComponents? {
+        guard let date = formatter.date(from: string)
+            else {
+                return nil
+        }
+        return calendar.dateComponents(calendarComponents, from: date)
+    }
 }

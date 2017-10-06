@@ -82,11 +82,24 @@ struct TestImageWrapperDelegate : RSDImageWrapperDelegate {
 
 class CodableObjectTests: XCTestCase {
     
+    var decoder: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }
+    
+    var encoder: JSONEncoder {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        return encoder
+    }
+    
     override func setUp() {
         super.setUp()
         
         // setup to have an image wrapper delegate set so the image wrapper won't crash
         RSDImageWrapper.sharedDelegate = TestImageWrapperDelegate()
+
     }
     
     override func tearDown() {
@@ -160,7 +173,7 @@ class CodableObjectTests: XCTestCase {
         
         do {
             
-            let object = try JSONDecoder().decode(RSDTaskInfoObject.self, from: json)
+            let object = try decoder.decode(RSDTaskInfoObject.self, from: json)
         
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
@@ -169,7 +182,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(object.estimatedMinutes, 5)
             XCTAssertEqual(object.icon?.imageName, "foobar")
 
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -200,12 +213,12 @@ class CodableObjectTests: XCTestCase {
         
         do {
             
-            let object = try JSONDecoder().decode(RSDSchemaInfoObject.self, from: json)
+            let object = try decoder.decode(RSDSchemaInfoObject.self, from: json)
             
             XCTAssertEqual(object.schemaIdentifier, "foo")
             XCTAssertEqual(object.schemaRevision, 5)
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -250,7 +263,7 @@ class CodableObjectTests: XCTestCase {
         
         do {
             
-            let object = try JSONDecoder().decode(RSDTaskGroupObject.self, from: json)
+            let object = try decoder.decode(RSDTaskGroupObject.self, from: json)
 
             XCTAssertEqual(object.identifier, "foobar.group")
             XCTAssertEqual(object.title, "Foo and Bar")
@@ -270,7 +283,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(firstTask.estimatedMinutes, 5)
             XCTAssertEqual(firstTask.icon?.imageName, "foobar")
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -309,7 +322,7 @@ class CodableObjectTests: XCTestCase {
         
         do {
             
-            let object = try JSONDecoder().decode(RSDUIStepObject.self, from: json)
+            let object = try decoder.decode(RSDUIStepObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
@@ -331,7 +344,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.learnMore)))
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.skip)))
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -368,7 +381,7 @@ class CodableObjectTests: XCTestCase {
         
         do {
             
-            let object = try JSONDecoder().decode(RSDActiveUIStepObject.self, from: json)
+            let object = try decoder.decode(RSDActiveUIStepObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
@@ -382,7 +395,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(object.spokenInstruction(at: Double.infinity), "Stop moving")
 
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -395,6 +408,99 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(dictionary["duration"] as? Double, 30)
             XCTAssertEqual((dictionary["spokenInstructions"] as? [String: String])?.count ?? 0, 4)
             
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testFormUIStepObject_Codable() {
+        
+        let json = """
+          {
+          "identifier": "step3",
+          "type": "form",
+          "title": "Step 3",
+          "text": "Some text.",
+          "inputFields": [
+                          {
+                          "identifier": "foo",
+                          "dataType": "date",
+                          "uiHint": "picker",
+                          "prompt": "Foo",
+                          "range" : { "minimumDate" : "2017-02-20",
+                                      "maximumDate" : "2017-03-20",
+                                      "codingFormat" : "yyyy-MM-dd" }
+                          },
+                          {
+                          "identifier": "bar",
+                          "dataType": "integer",
+                          "prompt": "Bar"
+                          },
+                          {
+                           "identifier": "goo",
+                           "dataType": "multipleChoice",
+                           "choices" : ["never", "sometimes", "often", "always"]
+                          }]
+          }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDFormUIStepObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "step3")
+            XCTAssertEqual(object.title, "Step 3")
+            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.inputFields.count, 3)
+            
+            if object.inputFields.count == 3 {
+                XCTAssertEqual(object.inputFields[0].dataType, .base(.date))
+                XCTAssertEqual(object.inputFields[1].dataType, .base(.integer))
+                XCTAssertEqual(object.inputFields[2].dataType, .collection(.multipleChoice, .string))
+                XCTAssertNotNil(object.inputFields[2] as? RSDChoiceInputFieldObject)
+            }
+
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "step3")
+            XCTAssertEqual(dictionary["title"] as? String, "Step 3")
+            XCTAssertEqual(dictionary["text"] as? String, "Some text.")
+            XCTAssertEqual((dictionary["inputFields"] as? [[String : Any]])?.count ?? 0, 3)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testFormUIStepObject_Codable_SingleQuestion() {
+        
+        let json = """
+          {
+          "identifier": "step3",
+          "type": "form",
+          "title": "Step 3",
+          "dataType": "multipleChoice",
+          "choices" : ["never", "sometimes", "often", "always"]
+          }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDFormUIStepObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "step3")
+            XCTAssertEqual(object.title, "Step 3")
+            XCTAssertEqual(object.inputFields.count, 1)
+            XCTAssertEqual(object.inputFields.first?.dataType, .collection(.multipleChoice, .string))
+            XCTAssertNotNil(object.inputFields.first as? RSDChoiceInputFieldObject)
+
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return
@@ -415,7 +521,7 @@ class CodableObjectTests: XCTestCase {
         
         do {
             
-            let object = try JSONDecoder().decode(RSDChoiceObject<String>.self, from: json)
+            let object = try decoder.decode(RSDChoiceObject<String>.self, from: json)
             
             XCTAssertEqual(object.value as? String, "foo")
             XCTAssertEqual(object.text, "Some text.")
@@ -423,7 +529,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(object.icon?.imageName, "fooImage")
             XCTAssertTrue(object.isExclusive)
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -455,7 +561,7 @@ class CodableObjectTests: XCTestCase {
         """.data(using: .utf8)! // our data in native (JSON) format
         
         do {
-            let object = try JSONDecoder().decode(RSDChoiceObject<Int>.self, from: json)
+            let object = try decoder.decode(RSDChoiceObject<Int>.self, from: json)
             
             XCTAssertEqual(object.value as? Int, 3)
             XCTAssertEqual(object.text, "Some text.")
@@ -463,7 +569,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(object.icon?.imageName, "fooImage")
             XCTAssertTrue(object.isExclusive)
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -489,7 +595,7 @@ class CodableObjectTests: XCTestCase {
         """.data(using: .utf8)! // our data in native (JSON) format
         
         do {
-            let objects = try JSONDecoder().decode([RSDChoiceObject<String>].self, from: json)
+            let objects = try decoder.decode([RSDChoiceObject<String>].self, from: json)
             
             XCTAssertEqual(objects.count, 2)
             XCTAssertEqual(objects.first?.value as? String, "alpha")
@@ -499,7 +605,7 @@ class CodableObjectTests: XCTestCase {
                 return
             }
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -527,7 +633,7 @@ class CodableObjectTests: XCTestCase {
         
         do {
             
-            let object = try JSONDecoder().decode(RSDChoiceInputFieldObject.self, from: json)
+            let object = try decoder.decode(RSDChoiceInputFieldObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .collection(.multipleChoice, .string))
@@ -537,7 +643,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(object.choices.last?.text, "always")
             XCTAssertEqual(object.choices.last?.value as? String, "always")
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -580,7 +686,7 @@ class CodableObjectTests: XCTestCase {
         
         do {
             
-            let object = try JSONDecoder().decode(RSDChoiceInputFieldObject.self, from: json)
+            let object = try decoder.decode(RSDChoiceInputFieldObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.prompt, "Text")
@@ -593,7 +699,7 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(object.choices.last?.text, "always")
             XCTAssertEqual(object.choices.last?.value as? Int, 3)
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -627,14 +733,14 @@ class CodableObjectTests: XCTestCase {
         
         do {
             
-            let object = try JSONDecoder().decode(RSDMultipleComponentInputFieldObject.self, from: json)
+            let object = try decoder.decode(RSDMultipleComponentInputFieldObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .collection(.multipleComponent, .string))
             XCTAssertFalse(object.optional)
             XCTAssertEqual(object.choices.count, 2)
             
-            let jsonData = try JSONEncoder().encode(object)
+            let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")
@@ -652,4 +758,294 @@ class CodableObjectTests: XCTestCase {
         }
     }
     
+    func testInputFieldObject_Codable_Integer() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "dataType": "integer",
+            "uiHint": "slider",
+            "range" : { "minimumValue" : -2,
+                        "maximumValue" : 3,
+                        "stepInterval" : 1,
+                        "unit" : "feet" }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .base(.integer))
+            XCTAssertEqual(object.uiHint, .standard(.slider))
+            if let range = object.range as? RSDIntegerRange {
+                XCTAssertEqual(range.minimumValue, -2)
+                XCTAssertEqual(range.maximumValue, 3)
+                XCTAssertEqual(range.stepInterval, 1)
+                XCTAssertEqual(range.unit, "feet")
+            }
+            else{
+                XCTFail("Failed to decode range")
+            }
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "integer")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "slider")
+            
+            if let range = dictionary["range"] as? [String: Any] {
+                XCTAssertEqual(range["minimumValue"] as? Int, -2)
+                XCTAssertEqual(range["maximumValue"] as? Int, 3)
+                XCTAssertEqual(range["stepInterval"] as? Int, 1)
+                XCTAssertEqual(range["unit"] as? String, "feet")
+            }
+            else {
+                XCTFail("Failed to encode range")
+            }
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testInputFieldObject_Codable_Decimal() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "dataType": "decimal",
+            "uiHint": "slider",
+            "range" : { "minimumValue" : -2.5,
+                        "maximumValue" : 3,
+                        "stepInterval" : 0.1,
+                        "unit" : "feet",
+                        "maximumDigits" : 3 }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .base(.decimal))
+            XCTAssertEqual(object.uiHint, .standard(.slider))
+            if let range = object.range as? RSDDecimalRange {
+                XCTAssertEqual(range.minimumValue, -2.5)
+                XCTAssertEqual(range.maximumValue, 3)
+                XCTAssertEqual(range.stepInterval, 0.1)
+                XCTAssertEqual(range.unit, "feet")
+                XCTAssertEqual(range.numberFormatter?.maximumFractionDigits ?? 0, 3)
+            }
+            else{
+                XCTFail("Failed to decode range")
+            }
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "decimal")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "slider")
+            
+            if let range = dictionary["range"] as? [String: Any] {
+                XCTAssertEqual(range["minimumValue"] as? Double, -2.5)
+                XCTAssertEqual(range["maximumValue"] as? Double, 3)
+                XCTAssertEqual(range["stepInterval"] as? Double, 0.1)
+                XCTAssertEqual(range["unit"] as? String, "feet")
+                XCTAssertEqual(range["maximumDigits"] as? Int, 3)
+            }
+            else {
+                XCTFail("Failed to encode range")
+            }
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testInputFieldObject_Codable_Date() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "dataType": "date",
+            "uiHint": "picker",
+            "range" : { "minimumDate" : "2017-02-20",
+                        "maximumDate" : "2017-03-20",
+                        "codingFormat" : "yyyy-MM-dd" }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .base(.date))
+            XCTAssertEqual(object.uiHint, .standard(.picker))
+            if let range = object.range as? RSDDateRange {
+                
+                let calendar = Calendar(identifier: .gregorian)
+                let calendarComponents = range.calendarComponents
+                XCTAssertEqual(calendarComponents, [.year, .month, .day])
+                
+                XCTAssertNotNil(range.minimumDate)
+                if let date = range.minimumDate {
+                    let min = calendar.dateComponents(calendarComponents, from: date)
+                    XCTAssertEqual(min.year, 2017)
+                    XCTAssertEqual(min.month, 2)
+                    XCTAssertEqual(min.day, 20)
+                }
+                
+                XCTAssertNotNil(range.maximumDate)
+                if let date = range.maximumDate {
+                    let max = calendar.dateComponents(calendarComponents, from: date)
+                    XCTAssertEqual(max.year, 2017)
+                    XCTAssertEqual(max.month, 3)
+                    XCTAssertEqual(max.day, 20)
+                }
+            }
+            else{
+                XCTFail("Failed to decode range")
+            }
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "date")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
+            
+            if let range = dictionary["range"] as? [String: Any] {
+                XCTAssertEqual(range["minimumDate"] as? String, "2017-02-20")
+                XCTAssertEqual(range["maximumDate"] as? String, "2017-03-20")
+                XCTAssertEqual(range["codingFormat"] as? String, "yyyy-MM-dd")
+            }
+            else {
+                XCTFail("Failed to encode range")
+            }
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testInputFieldObject_Codable_String() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "dataType": "string",
+            "uiHint": "textfield",
+            "textFieldOptions" : {
+                        "validationRegex" : "[A:C]",
+                        "invalidMessage" : "You know me",
+                        "maximumLength" : 10,
+                        "autocapitalizationType" : "words",
+                        "keyboardType" : "asciiCapable",
+                        "isSecureTextEntry" : true }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .base(.string))
+            XCTAssertEqual(object.uiHint, .standard(.textfield))
+            if let textFieldOptions = object.textFieldOptions  {
+                XCTAssertEqual(textFieldOptions.validationRegex, "[A:C]")
+                XCTAssertEqual(textFieldOptions.invalidMessage, "You know me")
+                XCTAssertEqual(textFieldOptions.maximumLength, 10)
+                XCTAssertEqual(textFieldOptions.autocapitalizationType, .words)
+                XCTAssertEqual(textFieldOptions.keyboardType, .asciiCapable)
+                XCTAssertTrue(textFieldOptions.isSecureTextEntry)
+            }
+            else{
+                XCTFail("Failed to decode textFieldOptions")
+            }
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "string")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "textfield")
+            
+            if let textFieldOptions = dictionary["textFieldOptions"] as? [String: Any] {
+                XCTAssertEqual(textFieldOptions["validationRegex"] as? String, "[A:C]")
+                XCTAssertEqual(textFieldOptions["invalidMessage"] as? String, "You know me")
+                XCTAssertEqual(textFieldOptions["maximumLength"] as? Int, 10)
+                XCTAssertEqual(textFieldOptions["autocapitalizationType"] as? String, "words")
+                XCTAssertEqual(textFieldOptions["keyboardType"] as? String, "asciiCapable")
+            }
+            else {
+                XCTFail("Failed to encode textFieldOptions")
+            }
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testInputFieldObject_Codable_String_DefaultOptions() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "dataType": "string",
+            "uiHint": "textfield",
+            "textFieldOptions" : {}
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .base(.string))
+            XCTAssertEqual(object.uiHint, .standard(.textfield))
+            if let textFieldOptions = object.textFieldOptions  {
+                XCTAssertNil(textFieldOptions.validationRegex)
+                XCTAssertNil(textFieldOptions.invalidMessage)
+                XCTAssertEqual(textFieldOptions.maximumLength, 0)
+                XCTAssertEqual(textFieldOptions.autocapitalizationType, .none)
+                XCTAssertEqual(textFieldOptions.keyboardType, .default)
+                XCTAssertFalse(textFieldOptions.isSecureTextEntry)
+            }
+            else{
+                XCTFail("Failed to decode textFieldOptions")
+            }
+            
+        } catch let err {
+            XCTFail("Failed to decode object: \(err)")
+            return
+        }
+    }
 }
