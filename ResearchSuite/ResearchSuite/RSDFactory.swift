@@ -243,6 +243,40 @@ open class RSDFactory {
     }
     
     
+    // MARK: Async action factory
+    
+    /**
+     Decode an async action configuration from the given decoder. This method can be overridden to return `nil` if the action should be ignored for this platform.
+     
+     Note: syoung 10/03/2017 The base factory does not currently support any async action objects. The factory method is included here for subclassing purposes.
+     
+     @param decoder     The decoder to use to instatiate the object.
+     
+     @return            The configuration (if any) created from this decoder.
+     */
+    open func decodeAsyncActionConfiguration(from decoder:Decoder) throws -> RSDAsyncActionConfiguration? {
+        guard let className = try classTypeName(from: decoder) else {
+            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a conditional rule without a `type` key defining a value for the the class name.")
+        }
+        return try decodeAsyncActionConfiguration(from: decoder, with: className)
+    }
+    
+    /**
+     Decode an async action configuration from the given decoder. This method can be overridden to return `nil` if the action should be ignored for this platform.
+     
+     Note: syoung 10/03/2017 The base factory does not currently support any async action objects. The factory method is included here for subclassing purposes.
+     
+     @param className   The string representing the class name for this conditional rule.
+     @param decoder     The decoder to use to instatiate the object.
+     
+     @return            The configuration (if any) created from this decoder.
+     */
+    open func decodeAsyncActionConfiguration(from decoder:Decoder, with className: String) throws -> RSDAsyncActionConfiguration? {
+        // Base class does not implement the conditional rule
+        throw RSDValidationError.undefinedClassType("\(self) does not support `\(className)` as a decodable class type for an async action.")
+    }
+    
+    
     // MARK: Decoding
     
     public enum CodingUserInfoKeys : String {

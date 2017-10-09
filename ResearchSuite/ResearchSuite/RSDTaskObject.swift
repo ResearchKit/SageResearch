@@ -37,12 +37,12 @@ public struct RSDTaskObject : RSDTask, Decodable {
     
     public private(set) var identifier: String
     public private(set) var stepNavigator: RSDStepNavigator
-    public private(set) var asyncActions: [RSDAsyncAction]?
+    public private(set) var asyncActions: [RSDAsyncActionConfiguration]?
     
     public var taskInfo: RSDTaskInfo?
     public var schemaInfo: RSDSchemaInfo?
     
-    public init(taskInfo: RSDTaskInfo, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncAction]? = nil) {
+    public init(taskInfo: RSDTaskInfo, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
         self.identifier = taskInfo.identifier
         self.taskInfo = taskInfo
         self.schemaInfo = schemaInfo
@@ -51,7 +51,7 @@ public struct RSDTaskObject : RSDTask, Decodable {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, taskInfo, schemaInfo
+        case identifier, taskInfo, schemaInfo, asyncActions
     }
     
     public init(from decoder: Decoder) throws {
@@ -64,9 +64,28 @@ public struct RSDTaskObject : RSDTask, Decodable {
             self.identifier = try container.decode(String.self, forKey: .identifier)
         }
         self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo
-        self.stepNavigator = try decoder.factory.decodeStepNavigator(decoder: decoder)
         
-        // TODO: syoung 10/03/2017 decode async actions
+        let factory = decoder.factory
+        self.stepNavigator = try factory.decodeStepNavigator(decoder: decoder)
+        
+        // Decode the async actions
+        do {
+            var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
+            var decodedActions : [RSDAsyncActionConfiguration] = []
+            while !nestedContainer.isAtEnd {
+                let actionDecoder = try nestedContainer.superDecoder()
+                if let action = try factory.decodeAsyncActionConfiguration(from: actionDecoder) {
+                    decodedActions.append(action)
+                }
+            }
+            self.asyncActions = decodedActions
+        }
+        catch DecodingError.keyNotFound(let codingKey, let context) {
+            if codingKey.stringValue != CodingKeys.asyncActions.stringValue {
+                // Rethrow the error if this isn't looking for an asyncAction nested array
+                throw DecodingError.keyNotFound(codingKey, context)
+            }
+        }
     }
     
     public func validate() throws {
@@ -80,6 +99,15 @@ public struct RSDTaskObject : RSDTask, Decodable {
             let uniqueIds = Set(actionIds)
             if actionIds.count != uniqueIds.count {
                 throw RSDValidationError.notUniqueIdentifiers("Action identifiers: \(actionIds.joined(separator: ","))")
+            }
+            // Loop through the async actions and validate them
+            for asyncAction in asyncActions! {
+                try asyncAction.validate()
+                if let startIdentifier = asyncAction.startStepIdentifier {
+                    guard stepNavigator.step(with: startIdentifier) != nil else {
+                        throw RSDValidationError.identifierNotFound(asyncAction, startIdentifier, "Start step \(startIdentifier) not found for Async Action \(asyncAction.identifier).")
+                    }
+                }
             }
         }
     }

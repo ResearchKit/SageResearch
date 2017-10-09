@@ -1,5 +1,5 @@
 //
-//  RSDAsyncAction.swift
+//  RSDPermissionType.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,37 +34,12 @@
 import Foundation
 
 /**
- `RSDAsyncAction` defines general configuration for an asyncronous background action that should be run in the background. Depending upon the parameters and how the action is setup, this could be something that is run continuously or else is paused or reset based on a timeout interval.
+ `RSDPermissionType` is a generic configuration object with information about a given permission.
  */
-public protocol RSDAsyncAction {
+public protocol RSDPermissionType {
     
     /**
-     A short string that uniquely identifies the asyncronous action within the task. The identifier is reproduced in the results of a async results.
+     An identifier for the permission.
      */
-    var identifier : String { get }
-    
-    /**
-     An identifier marking the step to start the action. If `nil`, then the action will be started when the task is started.
-     */
-    var startStepIdentifier: String? { get }
-    
-    /**
-     An identifier marking the step at which to stop the action. If `nil`, then the action will be stopped when the task is stopped.
-     */
-    var stopStepIdentifier: String? { get }
-    
-    /**
-     An identifier marking a step to wait to display until the action is completed. This is only valid for actions that are single result actions and not continuous recorders.
-     */
-    var waitStepIdentifier: String? { get }
-    
-    /**
-     A time interval after which the action should be reset. For example, if the action queries a weather service and the user backgrounds the app for more than the reset time, then the weather service should be queried again.
-     */
-    var resetTimeInterval: TimeInterval { get }
-    
-    /**
-     A time interval after which the action should be stopped.
-     */
-    var timeoutTimeInterval: TimeInterval { get }
+    var identifier: String { get }
 }

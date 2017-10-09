@@ -61,7 +61,7 @@ public protocol RSDTask {
     /**
      A list of asyncronous actions to run on the task.
      */
-    var asyncActions: [RSDAsyncAction]? { get }
+    var asyncActions: [RSDAsyncActionConfiguration]? { get }
 
     /**
      Validate the task to check for any model configuration that should throw an error.
