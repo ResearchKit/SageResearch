@@ -81,6 +81,11 @@ public protocol RSDInputField {
     var range: RSDRange? { get }
     
     /**
+     A formatter that is appropriate to the data type. If `nil`, the format will be determined by the UI.
+     */
+    var formatter: Formatter? { get }
+    
+    /**
      Validate the input field to check for any configuration that should throw an error.
      */
     func validate() throws
@@ -94,7 +99,7 @@ public protocol RSDInputField {
 /**
  `RSDChoice` is used to describe a choice item for use with a multiple choice or multiple component input field.
  */
-public protocol RSDChoice : Codable {
+public protocol RSDChoice {
     
     /**
      A JSON encodable object to return as the value when this choice is selected.
@@ -162,154 +167,6 @@ public protocol RSDMultipleComponentInputField : RSDInputField {
     var separator: String? { get }
 }
 
-public protocol RSDRange : Codable {
-}
 
-/**
- `RSDDateRange` extends the properties of an `RSDFieldInput` for a `date` data type.
- */
-public protocol RSDDateRange : RSDRange {
-    
-    /**
-     The minimum allowed date. When the value of this property is `nil`, there is no minimum.
-     */
-    var minDate: Date? { get }
-    
-    /**
-     The maximum allowed date. When the value of this property is `nil`, there is no maximum.
-     */
-    var maxDate: Date? { get }
-    
-    /**
-     Whether or not the UI should allow future dates. If `nil` or `minDate` is defined then this value is ignored.
-     */
-    var allowFuture: Bool? { get }
-    
-    /**
-     Whether or not the UI should allow past dates. If `nil` or `maxDate` is defined then this value is ignored.
-     */
-    var allowPast: Bool? { get }
-    
-    /**
-     Calendar components that are relevant for this input field.
-     */
-    var calendarComponents: Set<Calendar.Component> { get }
-    
-    /**
-     The date encoder to use for formatting the result. If `nil` then the result, `minDate`, and `maxDate` are assumed to be used for time and date with the default encoding/decoding implementation.
-     */
-    var dateCoder: RSDDateCoder? { get }
-}
 
-extension RSDDateRange {
-    
-    /**
-     The minimum allowed date. This is calculated by using either the `minDate` (if non-nil) or today's date if `allowPast` is non-nil and `false`.
-     */
-    public var minimumDate: Date? {
-        return minDate ?? ((allowPast ?? true) ? nil : Date())
-    }
-    
-    /**
-     The maximum allowed date. This is calculated by using either the `maxDate` (if non-nil) or today's date if `allowFuture` is non-nil and `false`.
-     */
-    public var maximumDate: Date? {
-        return maxDate ?? ((allowFuture ?? true) ? nil : Date())
-    }
-}
 
-/**
- `RSDIntegerRange` extends the properties of an `RSDFieldInput` for a `integer` data type.
- */
-public protocol RSDIntegerRange : RSDRange {
-    
-    /**
-     The minimum allowed number. When the value of this property is `nil`, there is no minimum.
-     */
-    var minimumValue: Int? { get }
-    
-    /**
-     The maximum allowed number. When the value of this property is `nil`, there is no maximum.
-     */
-    var maximumValue: Int? { get }
-    
-    /**
-     A step interval to be used for a slider or picker.
-     */
-    var stepInterval: Int? { get }
-    
-    /**
-     A unit label associated with this property.
-     */
-    var unit: String? { get }
-}
-
-/**
- `RSDDecimalRange` extends the properties of an `RSDFieldInput` for a `decimal` data type.
- */
-public protocol RSDDecimalRange : RSDRange {
-    
-    /**
-     The minimum allowed number. When the value of this property is `nil`, there is no minimum.
-     */
-    var minimumValue: Double? { get }
-    
-    /**
-     The maximum allowed number. When the value of this property is `nil`, there is no maximum.
-     */
-    var maximumValue: Double? { get }
-    
-    /**
-     A step interval to be used for a slider or picker.
-     */
-    var stepInterval: Double? { get }
-    
-    /**
-     A unit label associated with this property.
-     */
-    var unit: String? { get }
-    
-    /**
-     Optional number formatter to use for formatting the displayed value.
-     */
-    var numberFormatter: NumberFormatter? { get }
-}
-
-/**
- `RSDTextFieldOptions` defines the options for a text field ui hint.
- */
-public protocol RSDTextFieldOptions : Codable {
-    
-    /**
-     The regex used to validate user's input. If set to nil, no validation will be performed.
-     Dictionary key = "validationRegex"
-     
-     @note If the "validationRegex" is defined, then the `invalidMessage` should also be defined.
-     */
-    var validationRegex: String? { get }
-    
-    /**
-     The text presented to the user when invalid input is received.
-     */
-    var invalidMessage: String? { get }
-    
-    /**
-     The maximum length of the text users can enter. When the value of this property is 0, there is no maximum.
-     */
-    var maximumLength: Int { get }
-    
-    /**
-     Auto-capitalization type for the text field.
-     */
-    var autocapitalizationType: UITextAutocapitalizationType { get }
-    
-    /**
-     Keyboard type for the text field.
-     */
-    var keyboardType: UIKeyboardType { get }
-    
-    /**
-     Is the text field for password entry?
-     */
-    var isSecureTextEntry: Bool { get }
-}

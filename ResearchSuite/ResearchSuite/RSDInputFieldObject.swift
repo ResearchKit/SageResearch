@@ -46,6 +46,16 @@ open class RSDInputFieldObject : RSDInputField, Codable {
     open var range: RSDRange?
     open var optional: Bool = false
     
+    private var _formatter: Formatter?
+    open var formatter: Formatter? {
+        get {
+            return _formatter ?? (self.range as? RSDRangeWithFormatter)?.formatter
+        }
+        set {
+            _formatter = newValue
+        }
+    }
+    
     public init(identifier: String, dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String? = nil) {
         self.identifier = identifier
         self.dataType = dataType
@@ -143,13 +153,19 @@ open class RSDInputFieldObject : RSDInputField, Codable {
         if let obj = self.prompt { try container.encode(obj, forKey: .prompt) }
         if let obj = self.placeholderText { try container.encode(obj, forKey: .placeholderText) }
         if let obj = self.uiHint { try container.encode(obj, forKey: .uiHint) }
-        if let range = self.range {
+        if let obj = self.range {
             let nestedEncoder = container.superEncoder(forKey: .range)
-            try range.encode(to: nestedEncoder)
+            guard let encodable = obj as? Encodable else {
+                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "The range does not conform to the Encodable protocol"))
+            }
+            try encodable.encode(to: nestedEncoder)
         }
-        if let textFieldOptions = self.textFieldOptions {
+        if let obj = self.textFieldOptions {
             let nestedEncoder = container.superEncoder(forKey: .textFieldOptions)
-            try textFieldOptions.encode(to: nestedEncoder)
+            guard let encodable = obj as? Encodable else {
+                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "The textFieldOptions does not conform to the Encodable protocol"))
+            }
+            try encodable.encode(to: nestedEncoder)
         }
         try container.encode(self.optional, forKey: .optional)
     }

@@ -98,8 +98,11 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
             let nestedEncoder = nestedContainer.superEncoder()
             var innerContainer = nestedEncoder.unkeyedContainer()
             for choice in nestedChoices {
+                guard let encodable = choice as? Encodable else {
+                    throw EncodingError.invalidValue(choice, EncodingError.Context(codingPath: innerContainer.codingPath, debugDescription: "The choice does not conform to the Encodable protocol"))
+                }
                 let innerEncoder = innerContainer.superEncoder()
-                try choice.encode(to: innerEncoder)
+                try encodable.encode(to: innerEncoder)
             }
         }
     }

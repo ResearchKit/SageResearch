@@ -90,8 +90,11 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
 
         var nestedContainer = container.nestedUnkeyedContainer(forKey: .choices)
         for choice in choices {
+            guard let encodable = choice as? Encodable else {
+                throw EncodingError.invalidValue(choice, EncodingError.Context(codingPath: nestedContainer.codingPath, debugDescription: "The choice does not conform to the Encodable protocol"))
+            }
             let nestedEncoder = nestedContainer.superEncoder()
-            try choice.encode(to: nestedEncoder)
+            try encodable.encode(to: nestedEncoder)
         }
     }
 }

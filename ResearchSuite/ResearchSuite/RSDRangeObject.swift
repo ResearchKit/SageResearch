@@ -33,7 +33,7 @@
 
 import Foundation
 
-public struct RSDDateRangeObject : RSDDateRange {
+public struct RSDDateRangeObject : RSDDateRange, Codable {
     
     public private(set) var minDate: Date?
     public private(set) var maxDate: Date?
@@ -108,7 +108,7 @@ public struct RSDDateRangeObject : RSDDateRange {
     }
 }
 
-public struct RSDIntegerRangeObject : RSDIntegerRange {
+public struct RSDIntegerRangeObject : RSDIntegerRange, Codable {
     
     public private(set) var minimumValue: Int?
     public private(set) var maximumValue: Int?
@@ -123,20 +123,20 @@ public struct RSDIntegerRangeObject : RSDIntegerRange {
     }
 }
 
-public struct RSDDecimalRangeObject : RSDDecimalRange {
+public struct RSDDecimalRangeObject : RSDDecimalRange, RSDRangeWithFormatter, Codable {
     
     public private(set) var minimumValue: Double?
     public private(set) var maximumValue: Double?
     public private(set) var stepInterval: Double?
     public private(set) var unit: String?
-    public private(set) var numberFormatter: NumberFormatter?
+    public private(set) var formatter: Formatter?
     
     public init(minimumValue: Double?, maximumValue: Double?, stepInterval: Double? = nil, unit: String? = nil, numberFormatter: NumberFormatter? = nil) {
         self.minimumValue = minimumValue
         self.maximumValue = maximumValue
         self.stepInterval = stepInterval
         self.unit = unit
-        self.numberFormatter = numberFormatter
+        self.formatter = numberFormatter
     }
     
     private enum CodingKeys : String, CodingKey {
@@ -152,7 +152,7 @@ public struct RSDDecimalRangeObject : RSDDecimalRange {
         if let digits = try container.decodeIfPresent(Int.self, forKey: .maximumDigits) {
             let formatter = NumberFormatter()
             formatter.maximumFractionDigits = digits
-            self.numberFormatter = formatter
+            self.formatter = formatter
         }
     }
     
@@ -162,7 +162,7 @@ public struct RSDDecimalRangeObject : RSDDecimalRange {
         if let obj = self.maximumValue { try container.encode(obj, forKey: .maximumValue) }
         if let obj = self.stepInterval { try container.encode(obj, forKey: .stepInterval) }
         if let obj = self.unit { try container.encode(obj, forKey: .unit) }
-        if let digits = self.numberFormatter?.maximumFractionDigits {
+        if let digits = (self.formatter as? NumberFormatter)?.maximumFractionDigits {
             try container.encode(digits, forKey: .maximumDigits)
         }
     }

@@ -33,7 +33,7 @@
 
 import Foundation
 
-public struct RSDChoiceObject<T : Codable> : RSDChoice {
+public struct RSDChoiceObject<T : Codable> : RSDChoice, Codable {
     public typealias Value = T
     
     private let _value: Value

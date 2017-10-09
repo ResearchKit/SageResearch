@@ -34,7 +34,7 @@
 import Foundation
 
 
-public struct RSDTextFieldOptionsObject : RSDTextFieldOptions {
+public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
     
     public var validationRegex: String?
     public var invalidMessage: String?

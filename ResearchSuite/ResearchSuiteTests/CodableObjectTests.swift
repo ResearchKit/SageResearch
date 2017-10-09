@@ -838,12 +838,12 @@ class CodableObjectTests: XCTestCase {
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.decimal))
             XCTAssertEqual(object.uiHint, .standard(.slider))
-            if let range = object.range as? RSDDecimalRange {
+            if let range = object.range as? RSDDecimalRangeObject {
                 XCTAssertEqual(range.minimumValue, -2.5)
                 XCTAssertEqual(range.maximumValue, 3)
                 XCTAssertEqual(range.stepInterval, 0.1)
                 XCTAssertEqual(range.unit, "feet")
-                XCTAssertEqual(range.numberFormatter?.maximumFractionDigits ?? 0, 3)
+                XCTAssertEqual((range.formatter as? NumberFormatter)?.maximumFractionDigits ?? 0, 3)
             }
             else{
                 XCTFail("Failed to decode range")
