@@ -1,5 +1,5 @@
 //
-//  RSDTaskDataSource.swift
+//  RSDTaskStepObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,20 +33,38 @@
 
 import Foundation
 
-public protocol RSDTaskDataSource {
+
+public struct RSDTaskStepObject: RSDTaskStep, Decodable {
     
-    /**
-     Fetch the task group with the given identifier.
-     */
-    func taskGroup(with identifier: String) -> RSDTaskGroup?
+    public private(set) var identifier: String
+    public private(set) var subtaskInfo: RSDTaskInfo
     
-    /**
-     Fetch the task info with the given identifier.
-     */
-    func taskInfo(with identifier: String) -> RSDTaskInfo?
+    public init(identifier: String, subtaskInfo: RSDTaskInfo) {
+        self.identifier = identifier
+        self.subtaskInfo = subtaskInfo
+    }
     
-    /**
-     Fetch the schema info with the given identifier.
-     */
-    func schemaInfo(with identifier: String) -> RSDSchemaInfo?
+    public func validate() throws {
+    }
+    
+    private enum CodingKeys : String, CodingKey {
+        case identifier, subtaskInfo
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // get the identifier
+        let identifier = try container.decode(String.self, forKey: .identifier)
+        self.identifier = identifier
+        
+        // Look first for a task info defined by the data source and then look it to be defined
+        // within the container.
+        if let taskInfo = decoder.taskDataSource?.taskInfo(with: identifier) {
+            self.subtaskInfo = taskInfo
+        }
+        else {
+            self.subtaskInfo = try container.decode(RSDTaskInfoObject.self, forKey: .subtaskInfo)
+        }
+    }
 }

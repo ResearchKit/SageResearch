@@ -1,5 +1,5 @@
 //
-//  RSDTaskDataSource.swift
+//  RSDSectionStepObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,20 +33,28 @@
 
 import Foundation
 
-public protocol RSDTaskDataSource {
+public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable {
     
-    /**
-     Fetch the task group with the given identifier.
-     */
-    func taskGroup(with identifier: String) -> RSDTaskGroup?
+    public private(set) var identifier: String
+    public private(set) var steps: [RSDStep]
     
-    /**
-     Fetch the task info with the given identifier.
-     */
-    func taskInfo(with identifier: String) -> RSDTaskInfo?
+    public init(identifier: String, steps: [RSDStep]) {
+        self.identifier = identifier
+        self.steps = steps
+    }
     
-    /**
-     Fetch the schema info with the given identifier.
-     */
-    func schemaInfo(with identifier: String) -> RSDSchemaInfo?
+    public func validate() throws {
+        try stepValidation()
+    }
+    
+    private enum CodingKeys : String, CodingKey {
+        case identifier, steps
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.identifier = try container.decode(String.self, forKey: .identifier)
+        let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
+        self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
+    }
 }

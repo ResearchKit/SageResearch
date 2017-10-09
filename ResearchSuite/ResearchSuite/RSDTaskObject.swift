@@ -56,15 +56,28 @@ public struct RSDTaskObject : RSDTask, Decodable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if let taskInfo = try container.decodeIfPresent(RSDTaskInfoObject.self, forKey: .taskInfo) ?? decoder.taskInfo {
-            self.identifier = taskInfo.identifier
+        
+        // Set the identifier and
+        let identifier: String
+        if let taskInfo = try container.decodeIfPresent(RSDTaskInfoObject.self, forKey: .taskInfo) {
+            identifier = taskInfo.identifier
             self.taskInfo = taskInfo
         }
         else {
-            self.identifier = try container.decode(String.self, forKey: .identifier)
+            identifier = try container.decode(String.self, forKey: .identifier)
+            if let taskInfo = decoder.taskInfo, taskInfo.identifier == identifier {
+                self.taskInfo = taskInfo
+            }
+            else {
+                self.taskInfo = decoder.taskDataSource?.taskInfo(with: identifier)
+            }
         }
-        self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo
+        self.identifier = identifier
         
+        // Look for a schema info
+        self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo ?? decoder.taskDataSource?.schemaInfo(with: identifier)
+        
+        // Get the step navigator
         let factory = decoder.factory
         self.stepNavigator = try factory.decodeStepNavigator(decoder: decoder)
         

@@ -42,6 +42,11 @@ open class RSDFactory {
     
     public init() {
     }
+    
+    /**
+     Optional data source for this factory.
+     */
+    public var taskDataSource: RSDTaskDataSource?
 
     // MARK: Class name factory
     
@@ -119,6 +124,25 @@ open class RSDFactory {
      */
     public enum StepType : String {
         case instruction, active, form
+    }
+    
+    /**
+     Convenience method for decoding a list of steps.
+     
+     @param container   The unkeyed container with the steps.
+     
+     @return            An array of the steps.
+     */
+    public func decodeSteps(from container: UnkeyedDecodingContainer) throws -> [RSDStep] {
+        var steps : [RSDStep] = []
+        var stepsContainer = container
+        while !stepsContainer.isAtEnd {
+            let stepDecoder = try stepsContainer.superDecoder()
+            if let step = try decodeStep(from: stepDecoder) {
+                steps.append(step)
+            }
+        }
+        return steps
     }
     
     /**
@@ -281,7 +305,7 @@ open class RSDFactory {
     
     public enum CodingUserInfoKeys : String {
         
-        case factory, taskInfo, schemaInfo
+        case factory, taskInfo, schemaInfo, taskDataSource
         
         public var key : CodingUserInfoKey {
             return CodingUserInfoKey(rawValue: self.rawValue)!
@@ -330,6 +354,9 @@ open class RSDFactory {
         if let schemaInfo = schemaInfo {
             decoder.userInfo[CodingUserInfoKeys.schemaInfo.key] = schemaInfo
         }
+        if let dataSource = self.taskDataSource {
+            decoder.userInfo[CodingUserInfoKeys.taskDataSource.key] = dataSource
+        }
         return decoder
     }
 }
@@ -360,5 +387,9 @@ extension Decoder {
     
     public var schemaInfo: RSDSchemaInfo? {
         return self.userInfo[RSDFactory.CodingUserInfoKeys.schemaInfo.key] as? RSDSchemaInfo
+    }
+    
+    public var taskDataSource: RSDTaskDataSource? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskDataSource.key] as? RSDTaskDataSource
     }
 }

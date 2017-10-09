@@ -102,6 +102,10 @@ public protocol RSDResourceTransformer {
 
 extension RSDResourceTransformer {
     
+    public var estimatedFetchTime: TimeInterval {
+        return 0
+    }
+    
     public func resourceData(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (Data, RSDResourceType) {
         
         // get the resource name and extention

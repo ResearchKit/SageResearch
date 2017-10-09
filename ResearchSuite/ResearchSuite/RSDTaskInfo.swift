@@ -65,6 +65,11 @@ public protocol RSDTaskInfo {
     var estimatedMinutes: Int { get }
     
     /**
+     The estimated time to fetch the task. This can be used by the UI to determine whether or not to display a loading state while fetching the task. If `0` then the task is assumed to be cached on the device.
+     */
+    var estimatedFetchTime: TimeInterval { get }
+    
+    /**
      Fetch the task for this task info. Use the given factory to transform the task.
      
      @param factory     The factory to use for creating the task and steps.

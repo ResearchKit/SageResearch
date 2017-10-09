@@ -54,15 +54,8 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, D
         let factory = decoder.factory
         
         // Decode the steps
-        var decodedSteps : [RSDStep] = []
-        var stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
-        while !stepsContainer.isAtEnd {
-            let stepDecoder = try stepsContainer.superDecoder()
-            if let step = try factory.decodeStep(from: stepDecoder) {
-                decodedSteps.append(step)
-            }
-        }
-        self.steps = decodedSteps
+        let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
+        self.steps = try factory.decodeSteps(from: stepsContainer)
         
         // Decode the conditional rule
         if container.contains(.conditionalRule) {

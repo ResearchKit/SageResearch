@@ -53,6 +53,8 @@
 		FF8A21541F7CB17D00C7B27F /* SequenceType+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */; };
 		FF8A21561F7CB86B00C7B27F /* RSDStepNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8A21551F7CB86B00C7B27F /* RSDStepNavigator.swift */; };
 		FF8A215B1F7CBE8700C7B27F /* RSDTaskInfoObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8A215A1F7CBE8700C7B27F /* RSDTaskInfoObject.swift */; };
+		FF8E5F3F1F8C258200611C23 /* RSDSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E5F3E1F8C258200611C23 /* RSDSectionStepObject.swift */; };
+		FF8E5F411F8C317600611C23 /* RSDTaskStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8E5F401F8C317600611C23 /* RSDTaskStepObject.swift */; };
 		FFB015CA1F8BE62E00AC209B /* RSDRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB015C91F8BE62E00AC209B /* RSDRange.swift */; };
 		FFB015CC1F8BE96A00AC209B /* RSDTextFieldOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB015CB1F8BE96A00AC209B /* RSDTextFieldOptions.swift */; };
 		FFB015D61F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB015D51F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift */; };
@@ -128,6 +130,8 @@
 		FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SequenceType+Utilities.swift"; sourceTree = "<group>"; };
 		FF8A21551F7CB86B00C7B27F /* RSDStepNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepNavigator.swift; sourceTree = "<group>"; };
 		FF8A215A1F7CBE8700C7B27F /* RSDTaskInfoObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskInfoObject.swift; sourceTree = "<group>"; };
+		FF8E5F3E1F8C258200611C23 /* RSDSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSectionStepObject.swift; sourceTree = "<group>"; };
+		FF8E5F401F8C317600611C23 /* RSDTaskStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskStepObject.swift; sourceTree = "<group>"; };
 		FFB015C91F8BE62E00AC209B /* RSDRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRange.swift; sourceTree = "<group>"; };
 		FFB015CB1F8BE96A00AC209B /* RSDTextFieldOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextFieldOptions.swift; sourceTree = "<group>"; };
 		FFB015D51F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPermissionTypeIdentifier.swift; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 				FF0472351F7AD3340023DAD6 /* Enums */,
 				FF74A7E81F7DCE630064A634 /* DataSource */,
 				FF80B12C1F7C0D1300582849 /* Model */,
+				FF8E5F3D1F8C250F00611C23 /* Controller */,
 				FF2B54FD1F68AE8000663289 /* Serialization */,
 				FF2B55021F69077200663289 /* Utilities */,
 			);
@@ -285,6 +290,8 @@
 				FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */,
 				FF74A7DB1F7DA2BF0064A634 /* RSDUIStepObject.swift */,
 				FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */,
+				FF8E5F3E1F8C258200611C23 /* RSDSectionStepObject.swift */,
+				FF8E5F401F8C317600611C23 /* RSDTaskStepObject.swift */,
 			);
 			name = Step;
 			sourceTree = "<group>";
@@ -336,6 +343,13 @@
 				FF177D7A1F82E19600C2D4D7 /* RSDTaskObject.swift */,
 			);
 			name = Task;
+			sourceTree = "<group>";
+		};
+		FF8E5F3D1F8C250F00611C23 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		FFB015CD1F8BF0A900AC209B /* AsyncAction */ = {
@@ -518,10 +532,12 @@
 				FF80B13D1F7C582500582849 /* RSDValidationError.swift in Sources */,
 				FF8A21511F7CB11800C7B27F /* Array+Utilities.swift in Sources */,
 				FF1D6D2E1F82FB2C00B05349 /* RSDTaskInfo.swift in Sources */,
+				FF8E5F3F1F8C258200611C23 /* RSDSectionStepObject.swift in Sources */,
 				FFBA00041F85657C0079A404 /* RSDChoiceObject.swift in Sources */,
 				FF74A7EA1F7DCFA80064A634 /* RSDTaskDataSource.swift in Sources */,
 				FF8A21541F7CB17D00C7B27F /* SequenceType+Utilities.swift in Sources */,
 				FF72B25F1F688168004C6F15 /* RSDAsyncActionConfiguration.swift in Sources */,
+				FF8E5F411F8C317600611C23 /* RSDTaskStepObject.swift in Sources */,
 				FFB6A4B71F85F38800E37752 /* RSDMultipleComponentInputFieldObject.swift in Sources */,
 				FF580BF61F7ED80B009B3EE9 /* Dictionary+Utilities.swift in Sources */,
 				FF0472461F7AD4030023DAD6 /* RSDClassTypeMap.swift in Sources */,
