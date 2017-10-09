@@ -1,6 +1,6 @@
 //
-//  RSDTask.swift
-//  ResearchSuite
+//  ResearchSuite_UI.h
+//  ResearchSuite-UI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -31,40 +31,14 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#import <UIKit/UIKit.h>
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
-    
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
-    
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
-    
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
+//! Project version number for ResearchSuite_UI.
+FOUNDATION_EXPORT double ResearchSuite_UIVersionNumber;
 
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
-}
+//! Project version string for ResearchSuite_UI.
+FOUNDATION_EXPORT const unsigned char ResearchSuite_UIVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <ResearchSuite_UI/PublicHeader.h>
+
+

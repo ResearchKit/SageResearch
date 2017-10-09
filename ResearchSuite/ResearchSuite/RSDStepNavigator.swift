@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDStepNavigator.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,40 +31,51 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
-    
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
-    
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
-    
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
 
+public protocol RSDStepNavigator {
+    
     /**
-     Validate the task to check for any model configuration that should throw an error.
+     Returns the step associated with a given identifier.
+     
+     @param identifier  The identifier for the step.
+     
+     @return            The step with this identifier or nil if not found.
      */
-    func validate() throws
+    func step(with identifier: String) -> RSDStep?
+    
+    /**
+     Return the step to go to before the given step.
+     
+     @param step    The current step.
+     @param result  The current result set for this task.
+     
+     @return        The previous step or nil if the task does not support backward navigation.
+     */
+    func step(before step: RSDStep, with result: RSDTaskResult?) -> RSDStep?
+    
+    /**
+     Return the step to go to after completing the given step.
+     
+     @param step    The previous step or nil if this is the first step.
+     @param result  The current result set for this task.
+     
+     @return        The next step to display or nil if this is the end of the task.
+     */
+    func step(after step: RSDStep?, with result: RSDTaskResult?) -> RSDStep?
+    
+    /**
+     Return the progress through the task for a given step with the current result.
+     
+     @param step    The current step.
+     @param result  The current result set for this task.
+     
+     @return current        The current progress. This indicates progress within the task.
+     @return total          The total number of steps.
+     @return isEstimated    Whether or not the progress is an estimate (if the task has variable navigation)
+     */
+    func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: UInt, total: UInt, isEstimated: Bool)?
+    
 }

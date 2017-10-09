@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDStepValidator.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,38 +33,29 @@
 
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
+public protocol RSDStepValidator {
     
     /**
-     A short string that uniquely identifies the task.
+     An ordered list of steps, each with a unique identifier.
      */
-    var identifier: String { get }
-    
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
-    
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
+    var steps : [RSDStep] { get }
+}
 
+extension RSDStepValidator {
+    
     /**
-     Validate the task to check for any model configuration that should throw an error.
+     Steps must have unique identifiers and each step within the collection must be valid.
      */
-    func validate() throws
+    public func stepValidation() throws {
+        let stepIds = steps.map { $0.identifier }
+        let uniqueIds = Set(stepIds)
+        guard stepIds.count == uniqueIds.count
+            else {
+                throw RSDValidationError.notUniqueIdentifiers("Step identifiers: \(stepIds.joined(separator: ","))")
+        }
+        
+        for step in steps {
+            try step.validate()
+        }
+    }
 }

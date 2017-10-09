@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDDateCoder.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,37 +34,61 @@
 import Foundation
 
 /**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
+ `RSDDateCoder` is used to handle specifying date encoding/decoding. If the calendar components supported by this formatter only include a subset of all the components then only those components should be displayed in the UI.
  */
-public protocol RSDTask {
+public protocol RSDDateCoder : Codable {
     
     /**
-     A short string that uniquely identifies the task.
+     Formatter to use for encoding the date.
      */
-    var identifier: String { get }
+    var formatter: DateFormatter { get }
     
     /**
-     Additional information about the task.
+     Calendar components that are included in this encoder.
      */
-    var taskInfo: RSDTaskInfo? { get }
+    var calendarComponents: Set<Calendar.Component> { get }
     
     /**
-     Additional information about the result schema.
+     The calendar used by this encoder when formatting a `DateComponents` object.
      */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
+    var calendar: Calendar { get }
+}
 
+extension RSDDateCoder {
+    
     /**
-     Validate the task to check for any model configuration that should throw an error.
+     Use the coder to encode a date as a string.
      */
-    func validate() throws
+    public func string(from date: Date) -> String? {
+        return formatter.string(from: date)
+    }
+    
+    /**
+     Use the coder to encode date components as a string.
+     */
+    public func string(from dateComponents: DateComponents) -> String? {
+        guard let date = calendar.date(from: dateComponents)
+            else {
+                return nil
+        }
+        return formatter.string(from: date)
+    }
+    
+    /**
+     Use the coder to decode a date from a string.
+     */
+    public func date(from string: String) -> Date? {
+        return formatter.date(from: string)
+    }
+    
+    /**
+     Use the coder to decode date components from a string.
+     */
+    public func dateComponents(from string: String) -> DateComponents? {
+        guard let date = formatter.date(from: string)
+            else {
+                return nil
+        }
+        return calendar.dateComponents(calendarComponents, from: date)
+    }
 }

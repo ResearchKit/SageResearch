@@ -1,8 +1,8 @@
 //
-//  RSDTask.swift
+//  SBAClassTypeMap.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,38 +33,17 @@
 
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
-    
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
-    
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
-    
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
+extension RSDClassTypeMapError: Error {
+}
 
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
+extension RSDClassTypeMap {
+
+    public static var shared: RSDClassTypeMap {
+        get {
+            return __shared()
+        }
+        set {
+            __setShared(newValue)
+        }
+    }
 }

@@ -76,8 +76,21 @@ public protocol RSDTaskResult : RSDResult, RSDSchemaInfo {
     var asyncResults: [RSDResult]? { get }
 }
 
+
 /**
- A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
+ A collection of results associated with a given step. This can be used where the step has multiple results.
+ */
+public protocol RSDStepCollectionResult : RSDResult {
+    
+    /**
+     A list of multiple results associated with this step.
+     */
+    var stepResults: [RSDResult] { get }
+}
+
+
+/**
+ A result that can be described using a single value.
  */
 public protocol RSDAnswerResult : RSDResult {
     

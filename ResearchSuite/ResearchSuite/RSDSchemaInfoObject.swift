@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDSchemaInfoObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,37 +34,36 @@
 import Foundation
 
 /**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
+ `RSDSchemaInfoObject` is a concrete implementation of the `RSDSchemaInfo` protocol.
  */
-public protocol RSDTask {
+public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable {
+    private let identifier: String
+    private let revision: Int
     
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
+    public var schemaIdentifier: String? {
+        return identifier
+    }
     
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
+    public var schemaRevision: Int {
+        return revision
+    }
     
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
-
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
+    public init(identifier: String, revision: Int) {
+        self.identifier = identifier
+        self.revision = revision
+    }
 }
+
+extension RSDSchemaInfoObject : Equatable {
+    public static func ==(lhs: RSDSchemaInfoObject, rhs: RSDSchemaInfoObject) -> Bool {
+        return lhs.schemaIdentifier == rhs.schemaIdentifier &&
+            lhs.schemaRevision == rhs.schemaRevision
+    }
+}
+
+extension RSDSchemaInfoObject : Hashable {
+    public var hashValue : Int {
+        return (schemaIdentifier?.hashValue ?? 0) ^ schemaRevision
+    }
+}
+

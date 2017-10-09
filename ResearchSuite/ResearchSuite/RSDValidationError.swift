@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDValidationError.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,38 +33,48 @@
 
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
+public enum RSDValidationError : Error {
+    case notUniqueIdentifiers(String)
+    case invalidImageName(String)
+    case invalidDuration(String)
+    case undefinedClassType(String)
+    case invalidType(String)
+    case identifierNotFound(Any, String, String)
     
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
+    /// The domain of the error.
+    public static var errorDomain: String {
+        return "RSDValidationErrorDomain"
+    }
     
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
+    /// The error code within the given domain.
+    public var errorCode: Int {
+        switch(self) {
+        case .notUniqueIdentifiers(_):
+            return -1
+        case .invalidImageName(_):
+            return -2
+        case .invalidDuration(_):
+            return -3
+        case .undefinedClassType(_):
+            return -4
+        case .invalidType(_):
+            return -5
+        case .identifierNotFound(_, _, _):
+            return -6
+        }
+    }
     
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
-
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
+    /// The user-info dictionary.
+    public var errorUserInfo: [String : Any] {
+        let description: String
+        switch(self) {
+        case .notUniqueIdentifiers(let str): description = str
+        case .invalidImageName(let str): description = str
+        case .invalidDuration(let str): description = str
+        case .undefinedClassType(let str): description = str
+        case .invalidType(let str): description = str
+        case .identifierNotFound(_, _, let str): description = str
+        }
+        return ["NSDebugDescription": description]
+    }
 }

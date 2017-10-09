@@ -44,47 +44,41 @@ public enum RSDFormDataType {
     case base(BaseType)
     
     /**
-     Collection data types are some kind of a collection with an optional base type.
+     Collection data types are some kind of a collection with a base type.
      */
-    case collection(CollectionType, BaseType?)
+    case collection(CollectionType, BaseType)
+    
+    /**
+     A measurement is a human-collected measurement. The measurement range indicates the expected size of the human being measured. In US English units, this is required to deterine the expected localization for the measurement. For example, an infant weight would be in lb/oz whereas an adult weight would be in lb. Default range is for an adult.
+     */
+    case measurement(MeasurementType, MeasurementRange)
     
     /**
      Custom data types are undefined in the base SDK.
      */
-    case custom(String)
+    case custom(String, BaseType)
     
     public enum BaseType: String {
 
         /**
-         The Boolean question type asks the participant to enter Yes or No (or the appropriate
-         equivalents).
+         The Boolean question type asks the participant to enter Yes or No (or the appropriate equivalents).
          */
         case boolean
         
         /**
-         In a date question, the participant can enter a date.
+         In a date question, the participant can enter a date, time or combination of the two. A date data type can map to a `RSDDateRange` to box the allowed values.
          */
         case date
         
         /**
-         In a date and time question, the participant can enter a combination of date and time.
-         */
-        case dateAndTime
-        
-        /**
-         The decimal question type asks the participant to enter a decimal number.
+         The decimal question type asks the participant to enter a decimal number. A decimal data type can map to a `RSDDecimalRange` to box the allowed values.
          */
         case decimal
         
         /**
-         The integer question type asks the participant to enter an integer number.
+         The integer question type asks the participant to enter an integer number. A decimal data type can map to a `RSDIntegerRange` to box the allowed values.
          */
         case integer
-        
-        /**
-         In a location question, the participant can enter a location.
-         */
-        case location
         
         /**
          In a string question, the participant can enter text.
@@ -92,23 +86,13 @@ public enum RSDFormDataType {
         case string
         
         /**
-         In a time of day question, the participant can enter a time of day.
+         In a time interval question, the participant can enter a time span such as "4 years, 3 months" or "8 hours, 5 minutes".
          */
-        case timeOfDay
-        
-        /**
-         In a time interval question, the participant can enter a time span.
-         */
-        case timeInterval
-        
+        // TODO: syoung 10/06/2017 add TimeIntervalRange
+        //case timeInterval
     }
     
     public enum CollectionType: String {
-        
-        /**
-         In a dictionary question, the participant can enter key/value pairs.
-         */
-        case dictionary
         
         /**
          In a multiple choice question, the participant can pick one or more options.
@@ -116,9 +100,120 @@ public enum RSDFormDataType {
         case multipleChoice
         
         /**
-         In a multiple component question, the participant can pick one choice from each component.
+         In a single choice question, the participant can pick one item from a list of options.
+         */
+        case singleChoice
+        
+        /**
+         In a multiple component question, the participant can pick one choice from each component or enter a formatted text string such as a phone number.
          */
         case multipleComponent
+    }
+    
+    public enum MeasurementType: String {
+        
+        /**
+         A measurement of height.
+         */
+        case height
+        
+        /**
+         A measurement of weight.
+         */
+        case weight
+        
+        /**
+         A measurement of blood pressure.
+         */
+        case bloodPressure
+    }
+    
+    public enum MeasurementRange: String {
+        
+        /**
+         Measurement units should be ranged for an adult.
+         */
+        case adult
+        
+        /**
+         Measurement units should be ranged for a child.
+         */
+        case child
+        
+        /**
+         Measuremet units should be ranged for an infant.
+         */
+        case infant
+    }
+    
+    /**
+     List of the standard UI hints that are valid for this data type.
+     */
+    public var validStandardUIHints: [RSDFormUIHint.Standard] {
+        switch self {
+        case .base(let baseType):
+            switch baseType {
+            case .boolean:
+                return [.checkbox, .radioButton, .toggle]
+                
+            case .date:
+                return [.picker, .textfield]
+                
+            case .decimal, .integer:
+                return [.picker, .textfield, .slider]
+                
+            case .string:
+                return [.textfield, .multipleLine]
+            }
+        
+        case .collection(let collectionType, _):
+            switch (collectionType) {
+            case .multipleChoice, .singleChoice:
+                return [.checkbox, .combobox, .list, .picker, .radioButton, .slider]
+                
+            case .multipleComponent:
+                return [.picker]
+            }
+        
+        case .measurement(let measurement, let range):
+            switch measurement {
+            case .height:
+                switch range {
+                case .adult:
+                    return [.picker]
+                case .infant, .child:
+                    return [.picker, .textfield]
+                }
+                
+            case .weight, .bloodPressure:
+                return [.picker, .textfield]
+            }
+
+        case .custom(_):
+            return RSDFormUIHint.Standard.all
+        }
+    }
+    
+    public var baseType : BaseType {
+        switch self {
+        case .base(let baseType):
+            return baseType
+            
+        case .collection(_, let baseType):
+            return baseType
+            
+        case .measurement(let measurement, _):
+            switch measurement {
+            case .height, .weight:
+                return .decimal
+                
+            case .bloodPressure:
+                return .integer
+            }
+            
+        case .custom(_, let baseType):
+            return baseType
+        }
     }
 }
 
@@ -131,10 +226,18 @@ extension RSDFormDataType: RawRepresentable {
             self = .base(subtype)
         }
         else if split.count <= 2, let collectionType = CollectionType(rawValue: split[0]) {
-            self = .collection(collectionType, BaseType(rawValue: split[1]))
+            let baseType: BaseType = ((split.count == 2) ? BaseType(rawValue: split[1]) : nil) ?? .string
+            self = .collection(collectionType, baseType)
+        }
+        else if split.count <= 2, let measurementType = MeasurementType(rawValue: split[0]) {
+            let range: MeasurementRange = ((split.count == 2) ? MeasurementRange(rawValue: split[1]) : nil) ?? .adult
+            self = .measurement(measurementType, range)
+        }
+        else if split.count == 2, let subtype = BaseType(rawValue: split[1]) {
+            self = .custom(split[0], subtype)
         }
         else {
-            self = .custom(rawValue)
+            self = .custom(rawValue, .string)
         }
     }
     
@@ -144,14 +247,59 @@ extension RSDFormDataType: RawRepresentable {
             return value.rawValue
             
         case .collection(let collectionType, let baseType):
-            if baseType != nil {
-                return "\(collectionType.rawValue).\(baseType!.rawValue)"
-            } else {
-                return collectionType.rawValue
-            }
+            return "\(collectionType.rawValue).\(baseType.rawValue)"
+        
+        case .measurement(let measurement, let range):
+            return "\(measurement).\(range)"
             
-        case .custom(let value):
-            return value
+        case .custom(let value, let baseType):
+            if baseType == .string {
+                return value
+            }
+            else {
+                return "\(value).\(baseType.rawValue)"
+            }
         }
+    }
+}
+
+extension RSDFormDataType : Equatable {
+    public static func ==(lhs: RSDFormDataType, rhs: RSDFormDataType) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+    public static func ==(lhs: String, rhs: RSDFormDataType) -> Bool {
+        return lhs == rhs.rawValue
+    }
+    public static func ==(lhs: RSDFormDataType, rhs: String) -> Bool {
+        return lhs.rawValue == rhs
+    }
+}
+
+extension RSDFormDataType : Hashable {
+    public var hashValue : Int {
+        return self.rawValue.hashValue
+    }
+}
+
+extension RSDFormDataType : ExpressibleByStringLiteral {
+    public typealias StringLiteralType = String
+    
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)!
+    }
+}
+
+extension RSDFormDataType : Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let rawValue = try container.decode(String.self)
+        self.init(rawValue: rawValue)!
+    }
+}
+
+extension RSDFormDataType : Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(self.rawValue)
     }
 }

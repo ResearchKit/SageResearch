@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDTaskInfo.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -32,11 +32,12 @@
 //
 
 import Foundation
+import UIKit
 
 /**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
+ A light-weight reference interface for information about the task. This includes information that can be displayed in a table or collection view.
  */
-public protocol RSDTask {
+public protocol RSDTaskInfo {
     
     /**
      A short string that uniquely identifies the task.
@@ -44,27 +45,39 @@ public protocol RSDTask {
     var identifier: String { get }
     
     /**
-     Additional information about the task.
+     The primary text to display for the task in a localized string.
      */
-    var taskInfo: RSDTaskInfo? { get }
+    var title: String? { get }
     
     /**
-     Additional information about the result schema.
+     Additional detail text to display for the task.
      */
-    var schemaInfo: RSDSchemaInfo? { get }
+    var detail: String? { get }
     
     /**
-     The step navigator for this task.
+     Copyright information for the task.
      */
-    var stepNavigator: RSDStepNavigator { get }
+    var copyright: String? { get }
     
     /**
-     A list of asyncronous actions to run on the task.
+     The estimated number of minutes that the task will take. If `0`, then this is ignored.
      */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
-
+    var estimatedMinutes: Int { get }
+    
     /**
-     Validate the task to check for any model configuration that should throw an error.
+     Fetch the task for this task info. Use the given factory to transform the task.
+     
+     @param factory     The factory to use for creating the task and steps.
+     @param callback    The callback with the task or an error if the task failed, run on the main thread.
      */
-    func validate() throws
+    func fetchTask(with factory: RSDFactory, callback: @escaping ((RSDTask?, Error?) -> Void))
+    
+    /**
+     An icon image that can be used for displaying the task.
+     
+     @param size        The size of the image to return.
+     @param callback    The callback with the image, run on the main thread.
+     */
+    func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
+

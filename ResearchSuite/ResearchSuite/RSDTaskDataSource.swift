@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDTaskDataSource.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,38 +33,7 @@
 
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
+public protocol RSDTaskDataSource {
     
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
-    
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
-    
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
-
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
+    func taskGroup(with identifier: String) -> RSDTaskGroup?
 }

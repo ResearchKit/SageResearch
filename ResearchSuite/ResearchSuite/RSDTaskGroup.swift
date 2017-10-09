@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDTaskGroup.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,38 +33,33 @@
 
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
+public protocol RSDTaskGroup {
     
     /**
-     A short string that uniquely identifies the task.
+     A short string that uniquely identifies the task group.
      */
     var identifier: String { get }
     
     /**
-     Additional information about the task.
+     A list of the task references included in this group.
      */
-    var taskInfo: RSDTaskInfo? { get }
+    var tasks: [RSDTaskInfo] { get }
     
     /**
-     Additional information about the result schema.
+     The primary text to display for the task group in a localized string.
      */
-    var schemaInfo: RSDSchemaInfo? { get }
+    var title: String? { get }
     
     /**
-     The step navigator for this task.
+     Additional detail text to display for the task group in a localized string.
      */
-    var stepNavigator: RSDStepNavigator { get }
+    var detail: String? { get }
     
     /**
-     A list of asyncronous actions to run on the task.
+     An icon image that can be used for displaying the task group.
+     
+     @param size        The size of the image to return.
+     @param callback    The callback with the image, run on the main thread.
      */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
-
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
+    func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }

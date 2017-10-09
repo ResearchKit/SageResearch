@@ -1,7 +1,4 @@
 //
-//  RSDTask.swift
-//  ResearchSuite
-//
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
@@ -31,40 +28,35 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
-    
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
-    
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
-    
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
 
+public extension Array {
+    
     /**
-     Validate the task to check for any model configuration that should throw an error.
+     Return an `Array` mutated to include the given element.
+     
+     @param newElement  The element to append.
+     
+     @return            An `Array` with the element appended to the end.
      */
-    func validate() throws
+    public func appending(_ newElement: Element) -> [Element] {
+        var mutable = self
+        mutable.append(newElement)
+        return mutable
+    }
+    
+    /**
+     Return an `Array` mutated to include the given elements.
+     
+     @param contents    The elements to append.
+     
+     @return            An `Array` with the elements appended to the end.
+     */
+    public func appending(contentsOf contents: [Element]) -> [Element] {
+        var mutable = self
+        mutable.append(contentsOf: contents)
+        return mutable
+    }
 }

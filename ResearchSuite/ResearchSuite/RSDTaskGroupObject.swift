@@ -1,5 +1,5 @@
 //
-//  RSDFormItem.swift
+//  RSDTaskGroupObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,39 +34,34 @@
 import Foundation
 
 /**
- `RSDFormItem` is used to describe a form input and includes the data type and a possible hint to how the UI should be displayed.
+ `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
  */
-public protocol RSDFormItem {
+public struct RSDTaskGroupObject : RSDTaskGroup, Codable {
     
-    /**
-     A short string that uniquely identifies the form item within the step. The identifier is reproduced in the results of a step result in the step history of a task result.
-     */
-    var identifier: String { get }
+    public private(set) var identifier: String
+    private let taskInfoObjects: [RSDTaskInfoObject]
+    public var title: String?
+    public var detail: String?
+    public var icon: RSDImageWrapper?
     
-    /**
-     A localized string that displays a short text offering a hint to the user of the data to be entered for this field.
-     */
-    var prompt: String? { get }
+    public var tasks: [RSDTaskInfo] {
+        return self.taskInfoObjects
+    }
     
-    /**
-     A localized string that displays placeholder information for the form item.
-     
-     You can display placeholder text in a text field or text area to help users understand how to answer the item's question.
-     */
-    var placeholderText: String? { get }
+    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
+        RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
+    }
     
-    /**
-     A Boolean value indicating whether the user can skip the step without providing an answer.
-     */
-    var optional: Bool { get }
+    private enum CodingKeys: String, CodingKey {
+        case identifier
+        case title
+        case detail
+        case icon
+        case taskInfoObjects = "tasks"
+    }
     
-    /**
-     Validate the form item to check for any configuration that should throw an error.
-     */
-    func validate() throws
-    
-    /**
-     Validation run on the
-     */
-    func validateResult(_ result: RSDResult) throws -> Bool
+    public init(with identifier: String, tasks: [RSDTaskInfoObject]) {
+        self.identifier = identifier
+        self.taskInfoObjects = tasks
+    }
 }

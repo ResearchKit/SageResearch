@@ -41,11 +41,6 @@ import UIKit
 public protocol RSDUIAction {
     
     /**
-     The action type for this button or gesture.
-     */
-    var actionType: RSDUIActionType { get }
-    
-    /**
      The title to display on the button associated with this action.
      */
     var buttonTitle: String? { get }
@@ -56,66 +51,27 @@ public protocol RSDUIAction {
     var buttonIcon: UIImage? { get }
 }
 
+
 /**
- The `RSDUIActionType` enum describes standard navigation actions that are common to a
- given UI step. It is extendable using the custom field.
+ The action handler implements the custom actions of the step.
  */
-public enum RSDUIActionType {
+public protocol RSDUIActionHandler {
     
     /**
-     Standard navigation elements that are common to most steps.
+     Customizable actions to return for a given action type. The `RSDStepController` can use these to customize the display of buttons to the user. If nil, `shouldHideAction()` will be called to determine if the default action should be used or if the action button should be hidden.
+     
+     @param actionType  The action type for the button.
+     
+     @return            A custom UI action for this button. If nil, the default action will be used.
      */
-    case navigation(Navigation)
-    public enum Navigation : String {
-        
-        /**
-         Navigate to the next step.
-         */
-        case goForward
-        
-        /**
-         Navigate to the previous step.
-         */
-        case goBackward
-        
-        /**
-         Skip the step and immediately go forward.
-         */
-        case skip
-        
-        /**
-         Cancel the task.
-         */
-        case cancel
-        
-        /**
-         Display additional information about the step.
-         */
-        case learnMore
-    }
-
-    case custom(String)
-}
-
-extension RSDUIActionType: RawRepresentable {
-    public typealias RawValue = String
+    func action(for actionType: RSDUIActionType) -> RSDUIAction?
     
-    public init?(rawValue: RawValue) {
-        if let subtype = Navigation(rawValue: rawValue) {
-            self = .navigation(subtype)
-        }
-        else {
-            self = .custom(rawValue)
-        }
-    }
-    
-    public var rawValue: String {
-        switch (self) {
-        case .navigation(let value):
-            return value.rawValue
-            
-        case .custom(let value):
-            return value
-        }
-    }
+    /**
+     Should the action button be hidden?
+     
+     @param actionType  The action type for the button.
+     
+     @return            Whether or not the button should be hidden.
+     */
+    func shouldHideAction(for actionType: RSDUIActionType) -> Bool
 }

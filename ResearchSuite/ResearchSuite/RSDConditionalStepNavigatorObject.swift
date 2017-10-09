@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDConditionalStepNavigatorObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,37 +34,41 @@
 import Foundation
 
 /**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
+ `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
  */
-public protocol RSDTask {
+public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, Decodable {
     
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
+    public private(set) var steps : [RSDStep]
+    public var conditionalRule : RSDConditionalRule?
     
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
+    public init(with steps: [RSDStep]) {
+        self.steps = steps
+    }
     
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
+    private enum CodingKeys : String, CodingKey {
+        case steps, conditionalRule
+    }
     
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let factory = decoder.factory
+        
+        // Decode the steps
+        var decodedSteps : [RSDStep] = []
+        var stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
+        while !stepsContainer.isAtEnd {
+            let stepDecoder = try stepsContainer.superDecoder()
+            if let step = try factory.decodeStep(from: stepDecoder) {
+                decodedSteps.append(step)
+            }
+        }
+        self.steps = decodedSteps
+        
+        // Decode the conditional rule
+        if container.contains(.conditionalRule) {
+            let crDecoder = try container.superDecoder(forKey: .conditionalRule)
+            self.conditionalRule = try factory.decodeConditionalRule(from: crDecoder)
+        }
+    }
     
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
-
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
 }

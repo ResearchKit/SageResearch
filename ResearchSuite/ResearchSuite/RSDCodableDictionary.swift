@@ -1,5 +1,5 @@
 //
-//  RSDAsyncAction.swift
+//  RSDCodableDictionary.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,37 +34,62 @@
 import Foundation
 
 /**
- `RSDAsyncAction` defines general configuration for an asyncronous background action that should be run in the background. Depending upon the parameters and how the action is setup, this could be something that is run continuously or else is paused or reset based on a timeout interval.
+ Work-around for a `Codable Dictionary` that does not use a String as it's key.
+ 
+ See https://stackoverflow.com/questions/44725202/swift-4-decodable-dictionary-with-enum-as-key
+ 
+ Example usage:
+ 
+ ````
+ enum AnEnum : String, CodingKey {
+     case enumValue
+ }
+ 
+ struct AStruct: Codable {
+ 
+     let dictionary: [AnEnum: String]
+ 
+     private enum CodingKeys : CodingKey {
+         case dictionary
+     }
+ 
+     init(from decoder: Decoder) throws {
+         let container = try decoder.container(keyedBy: CodingKeys.self)
+         dictionary = try container.decode(CodableDictionary.self, forKey: .dictionary).decoded
+     }
+ 
+     func encode(to encoder: Encoder) throws {
+         var container = encoder.container(keyedBy: CodingKeys.self)
+         try container.encode(CodableDictionary(dictionary), forKey: .dictionary)
+     }
+ }
+ ````
  */
-public protocol RSDAsyncAction {
+public struct RSDCodableDictionary<Key : Hashable, Value : Codable> : Codable where Key : CodingKey {
     
-    /**
-     A short string that uniquely identifies the asyncronous action within the task. The identifier is reproduced in the results of a async results.
-     */
-    var identifier : String { get }
+    let decoded: [Key: Value]
     
-    /**
-     An identifier marking the step to start the action. If `nil`, then the action will be started when the task is started.
-     */
-    var startStepIdentifier: String? { get }
+    init(_ decoded: [Key: Value]) {
+        self.decoded = decoded
+    }
     
-    /**
-     An identifier marking the step at which to stop the action. If `nil`, then the action will be stopped when the task is stopped.
-     */
-    var stopStepIdentifier: String? { get }
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: Key.self)
+        
+        decoded = Dictionary(uniqueKeysWithValues:
+            try container.allKeys.lazy.map {
+                (key: $0, value: try container.decode(Value.self, forKey: $0))
+            }
+        )
+    }
     
-    /**
-     An identifier marking a step to wait to display until the action is completed. This is only valid for actions that are single result actions and not continuous recorders.
-     */
-    var waitStepIdentifier: String? { get }
-    
-    /**
-     A time interval after which the action should be reset. For example, if the action queries a weather service and the user backgrounds the app for more than the reset time, then the weather service should be queried again.
-     */
-    var resetTimeInterval: TimeInterval { get }
-    
-    /**
-     A time interval after which the action should be stopped.
-     */
-    var timeoutTimeInterval: TimeInterval { get }
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: Key.self)
+        
+        for (key, value) in decoded {
+            try container.encode(value, forKey: key)
+        }
+    }
 }

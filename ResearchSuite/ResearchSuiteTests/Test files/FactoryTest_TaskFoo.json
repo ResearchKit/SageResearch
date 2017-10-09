@@ -1,0 +1,51 @@
+{
+    "identifier": "foo",
+    "steps": [{
+              "identifier": "step1",
+              "type": "instruction",
+              "title": "Step 1",
+              "text": "Some text.",
+              "detail": "This is a test.",
+              "footnote": "This is a footnote.",
+              "imageBefore": "before",
+              "imageAfter": "after",
+              "actions": {"goForward": { "buttonTitle" : "Go, Dogs! Go!" },
+                          "cancel": { "iconName" : "closeX" }},
+              "shouldHideActions": ["goBackward", "learnMore", "skip"]
+              },
+              {
+              "identifier": "step2",
+              "type": "active",
+              "title": "Step 2",
+              "text": "Some text.",
+              "actions": {"goForward": { "buttonTitle" : "You're done" },
+                          "cancel": { "iconName" : "closeX" }},
+              "shouldHideActions": ["goBackward", "learnMore", "skip"],
+              "duration": 30,
+              "spokenInstructions" : {"0": "Start moving",
+                                      "10": "Keep going",
+                                      "halfway": "Halfway there",
+                                      "end": "Stop moving"}
+              },
+              {
+              "identifier": "step3",
+              "type": "form",
+              "title": "Step 3",
+              "text": "Some text.",
+              "inputFields": [
+                              {
+                              "identifier": "foo",
+                              "dataType": "date",
+                              "uiHint": "picker",
+                              "prompt": "Foo",
+                              "range" : { "minimumDate" : "2017-02-20",
+                                          "maximumDate" : "2017-03-20",
+                                          "codingFormat" : "yyyy-MM-dd" }
+                              },
+                              {
+                              "identifier": "bar",
+                              "dataType": "integer",
+                              "prompt": "Bar"
+                              }]
+              }]
+}

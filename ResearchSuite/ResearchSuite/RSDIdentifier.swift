@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDIdentifier.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,38 +33,34 @@
 
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
+public struct RSDIdentifier : RawRepresentable {
+    public typealias RawValue = String
     
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
+    public private(set) var rawValue: String
     
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
+    public init?(rawValue: String) {
+        self.rawValue = rawValue
+    }
     
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
+    public static let exit: RSDIdentifier = "exit"
+}
 
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
+extension RSDIdentifier : Equatable {
+    public static func ==(lhs: RSDIdentifier, rhs: RSDIdentifier) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+    public static func ==(lhs: String, rhs: RSDIdentifier) -> Bool {
+        return lhs == rhs.rawValue
+    }
+    public static func ==(lhs: RSDIdentifier, rhs: String) -> Bool {
+        return lhs.rawValue == rhs
+    }
+}
+
+extension RSDIdentifier : ExpressibleByStringLiteral {
+    public typealias StringLiteralType = String
+    
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)!
+    }
 }

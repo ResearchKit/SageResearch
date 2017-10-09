@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDUIActionObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,38 +33,31 @@
 
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
+open class RSDUIActionObject : RSDUIAction, Codable {
     
-    /**
-     A short string that uniquely identifies the task.
-     */
-    var identifier: String { get }
+    public var buttonTitle: String?
+    public var iconName: String?
     
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
+    public var buttonIcon: UIImage? {
+        guard let name = iconName else { return nil }
+        return UIImage(named: name)
+    }
     
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
+    // MARK: Codable implementation (auto synthesized implementation does not work with subclassing)
     
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
+    private enum CodingKeys : String, CodingKey {
+        case  buttonTitle, iconName
+    }
     
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
-
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.buttonTitle = try container.decodeIfPresent(String.self, forKey: .buttonTitle)
+        self.iconName = try container.decodeIfPresent(String.self, forKey: .iconName)
+    }
+    
+    open func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        if let buttonTitle = self.buttonTitle { try container.encode(buttonTitle, forKey: .buttonTitle) }
+        if let iconName = self.iconName { try container.encode(iconName, forKey: .iconName) }
+    }
 }

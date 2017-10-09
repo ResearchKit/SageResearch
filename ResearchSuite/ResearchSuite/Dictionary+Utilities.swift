@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  Dictionary+Utilities.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,38 +33,23 @@
 
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
-public protocol RSDTask {
+extension Dictionary {
     
     /**
-     A short string that uniquely identifies the task.
+     Returns a `Dictionary` containing the results of transforming the keys
+     over `self` where the returned values are the mapped keys.
+     
+     @param  transform  The function used to transform the input keys into the output key
+     
+     @return  A dictionary of key/value pairs.
      */
-    var identifier: String { get }
+    public func mapKeys<T: Hashable>(_ transform: (Key) -> T) -> [T: Value] {
+        var result: [T: Value] = [:]
+        for (key, value) in self {
+            let transformedKey = transform(key)
+            result[transformedKey] = value
+        }
+        return result
+    }
     
-    /**
-     Additional information about the task.
-     */
-    var taskInfo: RSDTaskInfo? { get }
-    
-    /**
-     Additional information about the result schema.
-     */
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /**
-     The step navigator for this task.
-     */
-    var stepNavigator: RSDStepNavigator { get }
-    
-    /**
-     A list of asyncronous actions to run on the task.
-     */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
-
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
-    func validate() throws
 }

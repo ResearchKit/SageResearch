@@ -56,27 +56,31 @@ public protocol RSDStep {
 }
 
 /**
- `RSDTaskStep` is used to define a logical subgrouping of steps such as a section in a longer survey or an active step that includes an instruction step, countdown step, and activity step.
+ `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey or an active step that includes an instruction step, countdown step, and activity step.
+ */
+public protocol RSDSectionStep: RSDStep {
+    
+    /**
+     A list of the steps used to define this subgrouping of steps.
+     */
+    var steps: [RSDStep] { get }
+}
+
+/**
+ `RSDTaskStep` is used to define a task that can be run independently of a larger task that includes it. For example, if the study wants to run a set of activities in a specific order with a seamless presentation to the user.
  */
 public protocol RSDTaskStep: RSDStep {
     
     /**
-     The task used to define this subgrouping of steps.
+     The task info used to define this subgrouping of steps.
      */
-    var subtask: RSDTask { get }
-}
-
-extension RSDTaskStep {
-    
-    public var identifier: String {
-        return subtask.identifier
-    }
+    var subtaskInfo: RSDTaskInfo { get }
 }
 
 /**
  `RSDUIStep` is used to define a single "display unit". 
  */
-public protocol RSDUIStep: RSDStep {
+public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
     
     /**
      The primary text to display for the step in a localized string.
@@ -107,38 +111,18 @@ public protocol RSDUIStep: RSDStep {
     /**
      An image to display before the `title`, `text`, and `detail`. This would be displayed above or to the left of the text, depending upon the orientation of the screen.
      
-     @param rect    The size of the image view used to display the image.
-     
-     @return        The image to display.
+     @param size        The size of the image to return.
+     @param callback    The callback with the image, run on the main thread.
      */
-    func imageBefore(in rect: CGRect) -> UIImage?
+    func imageBefore(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
     
     /**
      An image to display after the `title`, `text`, and `detail`. This would be displayed below or to the right of the text, depending upon the orientation of the screen.
      
-     @param rect    The size of the image view used to display the image.
-     
-     @return        The image to display.
+     @param size        The size of the image to return.
+     @param callback    The callback with the image, run on the main thread.
      */
-    func imageAfter(in rect: CGRect) -> UIImage?
-    
-    /**
-     Customizable actions to return for a given action type. The `RSDStepController` can use these to customize the display of buttons to the user. If nil, `shouldHideAction()` will be called to determine if the default action should be used or if the action button should be hidden.
-     
-     @param actionType  The action type for the button.
-     
-     @return            A custom UI action for this button. If nil, the default action will be used.
-     */
-    func action(for actionType: RSDUIActionType) -> RSDUIAction?
-    
-    /**
-     Should the action button be hidden?
-     
-     @param actionType  The action type for the button.
-     
-     @return            Whether or not the button should be hidden.
-     */
-    func shouldHideAction(for actionType: RSDUIActionType) -> Bool
+    func imageAfter(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
 
 /**
@@ -169,9 +153,9 @@ public protocol RSDActiveUIStep: RSDUIStep {
 public protocol RSDFormUIStep: RSDUIStep {
     
     /**
-     The items array is used to hold a logical subgrouping of form items. If this array holds more than one form item, that form item should describe an input that is uses a logical subgrouping such as blood pressure, height (ft-in), or given/family name.
+     The items array is used to hold a logical subgrouping of input fields. If this array holds more than one input field, those fields should describe an input that is uses a logical subgrouping such as blood pressure, height (ft-in), or given/family name.
      */
-    var formItems: [RSDFormItem] { get }
+    var inputFields: [RSDInputField] { get }
 }
 
 

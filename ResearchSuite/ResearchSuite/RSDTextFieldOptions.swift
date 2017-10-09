@@ -1,5 +1,5 @@
 //
-//  RSDTask.swift
+//  RSDTextFieldOptions.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,37 +34,40 @@
 import Foundation
 
 /**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
+ `RSDTextFieldOptions` defines the options for a text field ui hint.
  */
-public protocol RSDTask {
+public protocol RSDTextFieldOptions {
     
     /**
-     A short string that uniquely identifies the task.
+     The regex used to validate user's input. If set to nil, no validation will be performed.
+     Dictionary key = "validationRegex"
+     
+     @note If the "validationRegex" is defined, then the `invalidMessage` should also be defined.
      */
-    var identifier: String { get }
+    var validationRegex: String? { get }
     
     /**
-     Additional information about the task.
+     The text presented to the user when invalid input is received.
      */
-    var taskInfo: RSDTaskInfo? { get }
+    var invalidMessage: String? { get }
     
     /**
-     Additional information about the result schema.
+     The maximum length of the text users can enter. When the value of this property is 0, there is no maximum.
      */
-    var schemaInfo: RSDSchemaInfo? { get }
+    var maximumLength: Int { get }
     
     /**
-     The step navigator for this task.
+     Auto-capitalization type for the text field.
      */
-    var stepNavigator: RSDStepNavigator { get }
+    var autocapitalizationType: UITextAutocapitalizationType { get }
     
     /**
-     A list of asyncronous actions to run on the task.
+     Keyboard type for the text field.
      */
-    var asyncActions: [RSDAsyncActionConfiguration]? { get }
-
+    var keyboardType: UIKeyboardType { get }
+    
     /**
-     Validate the task to check for any model configuration that should throw an error.
+     Is the text field for password entry?
      */
-    func validate() throws
+    var isSecureTextEntry: Bool { get }
 }
