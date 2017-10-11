@@ -1,5 +1,5 @@
 //
-//  RSDCodableDictionary.swift
+//  RSDAsyncActionController.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,63 +33,70 @@
 
 import Foundation
 
+public typealias RSDAsyncActionCompletionHandler = (RSDAsyncActionController, RSDResult?, Error?) -> Void
+
 /**
- Work-around for a `Codable Dictionary` that does not use a String as it's key.
- 
- See https://stackoverflow.com/questions/44725202/swift-4-decodable-dictionary-with-enum-as-key
- 
- Example usage:
- 
- ````
- enum AnEnum : String, CodingKey {
-     case enumValue
- }
- 
- struct AStruct: Codable {
- 
-     let dictionary: [AnEnum: String]
- 
-     private enum CodingKeys : CodingKey {
-         case dictionary
-     }
- 
-     init(from decoder: Decoder) throws {
-         let container = try decoder.container(keyedBy: CodingKeys.self)
-         dictionary = try container.decode(CodableDictionary.self, forKey: .dictionary).decoded
-     }
- 
-     func encode(to encoder: Encoder) throws {
-         var container = encoder.container(keyedBy: CodingKeys.self)
-         try container.encode(CodableDictionary(dictionary), forKey: .dictionary)
-     }
- }
- ````
+ A controller for an async action configuration.
  */
-public struct RSDCodableDictionary<Key : Hashable, Value : Codable> : Codable where Key : CodingKey {
+public protocol RSDAsyncActionController : class {
     
-    let decoded: [Key: Value]
+    /**
+     Is the action currently running?
+     */
+    var isRunning: Bool { get }
     
-    init(_ decoded: [Key: Value]) {
-        self.decoded = decoded
-    }
+    /**
+     Is the action currently paused?
+     */
+    var isPaused: Bool { get }
     
-    public init(from decoder: Decoder) throws {
-        
-        let container = try decoder.container(keyedBy: Key.self)
-        
-        decoded = Dictionary(uniqueKeysWithValues:
-            try container.allKeys.lazy.map {
-                (key: $0, value: try container.decode(Value.self, forKey: $0))
-            }
-        )
-    }
+    /**
+     Was the action cancelled?
+     */
+    var isCancelled: Bool { get }
     
-    public func encode(to encoder: Encoder) throws {
-        
-        var container = encoder.container(keyedBy: Key.self)
-        
-        for (key, value) in decoded {
-            try container.encode(value, forKey: key)
-        }
-    }
+    /**
+     If the action has completed, what was the result?
+     */
+    var result: RSDResult? { get }
+    
+    /**
+     The configuration used to set up the controller.
+     */
+    var configuration: RSDAsyncActionConfiguration { get }
+    
+    /**
+     A required initializer.
+     
+     @param configuration       The configuration for this controller.
+     @param outputDirectory     An output directory for where to save file results (if applicable)
+     */
+    init(configuration: RSDAsyncActionConfiguration, outputDirectory: URL?)
+    
+    /**
+     Start the asyncronous action with the given completion handler.
+     */
+    func start(_ completion: RSDAsyncActionCompletionHandler)
+    
+    /**
+     Pause the action. Ignored if not applicable.
+     */
+    func pause()
+    
+    /**
+     Resume the action. Ignored if not applicable.
+     */
+    func resume()
+    
+    /**
+     Stop the action.
+     */
+    func stop()
+    
+    /**
+     Cancel the action. If called, the completion handler will be called with a `nil` result.
+     */
+    func cancel()
 }
+
+

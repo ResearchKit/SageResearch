@@ -63,6 +63,10 @@ open class RSDInputFieldObject : RSDInputField, Codable {
         self.prompt = prompt
     }
     
+    open func instantiateResult(with answer: Any?) {
+        
+    }
+    
     open func validate() throws {
         // TODO: syoung 10/04/2017 Implement
     }

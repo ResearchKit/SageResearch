@@ -35,7 +35,8 @@ import Foundation
 
 open class RSDUIStepObject : RSDUIStep, Codable {
     
-    public private(set) var identifier: String
+    public let identifier: String
+    public let type: String
     
     public var title: String?
     public var text: String?
@@ -48,8 +49,15 @@ open class RSDUIStepObject : RSDUIStep, Codable {
     public var actions: [RSDUIActionType : RSDUIActionObject]?
     public var shouldHideActions: [RSDUIActionType]?
     
-    public required init(identifier: String) {
+    public init(identifier: String, type: String? = nil) {
         self.identifier = identifier
+        self.type = type ?? RSDFactory.StepType.instruction.rawValue
+    }
+    
+    // MARK: Result management
+    
+    open func instantiateStepResult() -> RSDResult {
+        return RSDResultObject(identifier: identifier)
     }
     
     // MARK: Image handling
@@ -68,8 +76,8 @@ open class RSDUIStepObject : RSDUIStep, Codable {
         return actions?[actionType]
     }
     
-    open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
-        return shouldHideActions?.contains(actionType) ?? false
+    open func shouldHideAction(for actionType: RSDUIActionType) -> Bool? {
+        return shouldHideActions?.contains(actionType)
     }
     
     // MARK: validation
@@ -81,12 +89,13 @@ open class RSDUIStepObject : RSDUIStep, Codable {
     // MARK: Codable (must implement in base class in order for the overriding classes to work)
     
     private enum CodingKeys: String, CodingKey {
-        case identifier, title, text, detail, footnote, imageBefore, imageAfter, actions, shouldHideActions
+        case identifier, type, title, text, detail, footnote, imageBefore, imageAfter, actions, shouldHideActions
     }
     
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.type = try container.decode(String.self, forKey: .type)
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.text = try container.decodeIfPresent(String.self, forKey: .text)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)

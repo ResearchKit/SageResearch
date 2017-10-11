@@ -50,12 +50,12 @@ open class RSDFactory {
 
     // MARK: Class name factory
     
-    private enum ClassTypeKey: String, CodingKey {
+    private enum TypeKeys: String, CodingKey {
         case type
     }
     
     /**
-     Get a string that will identify the type of class to instantiate for the given decoder.
+     Get a string that will identify the type of object to instantiate for the given decoder.
      
      By default, this will look in the container for the decoder for a key/value pair where the key == "type" and the value is a `String`.
      
@@ -63,8 +63,8 @@ open class RSDFactory {
      
      @return            The string representing this class type (if found).
      */
-    open func classTypeName(from decoder:Decoder) throws -> String? {
-        let container = try decoder.container(keyedBy: ClassTypeKey.self)
+    open func typeName(from decoder:Decoder) throws -> String? {
+        let container = try decoder.container(keyedBy: TypeKeys.self)
         return try container.decodeIfPresent(String.self, forKey: .type)
     }
     
@@ -82,28 +82,42 @@ open class RSDFactory {
         let (data, type) = try resourceTransformer.resourceData()
         return try decodeTask(with: data,
                               resourceType: type,
-                              className: resourceTransformer.classType,
+                              typeName: resourceTransformer.classType,
                               taskInfo: taskInfo,
                               schemaInfo: schemaInfo)
     }
     
     /**
-     Decode an object with top-level data (json or plist) for a given `resourceType`, `className`, and `taskInfo`.
+     Decode an object with top-level data (json or plist) for a given `resourceType`, `typeName`, and `taskInfo`.
      
      @param data            The data to use to decode the object.
      @param resourceType    The type of resource (json or plist).
-     @param className       The class name type key for this task (if any).
+     @param typeName       The class name type key for this task (if any).
      @param taskInfo        The task info used to create this task (if any).
      
      @return                The created task.
      */
-    open func decodeTask(with data: Data, resourceType: RSDResourceType, className: String? = nil, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
+    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskInfo: taskInfo, schemaInfo: schemaInfo)
         return try decoder.decode(RSDTaskObject.self, from: data)
     }
     
     
-    // Mark: Step navigator factory
+    // MARK: Task Info factory
+    
+    /**
+     Decode the task info from this decoder. This method *must* return a task info object. The default implementation will return a `RSDTaskInfoObject`.
+     
+     @param decoder     The decoder to use to instatiate the object.
+     
+     @return            The task info created from this decoder.
+     */
+    open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
+        return try RSDTaskInfoObject(from: decoder)
+    }
+    
+    
+    // MARK: Step navigator factory
     
     /**
      Decode the step navigator from this decoder. This method *must* return a step navigator. The default implementation will return a `RSDConditionalStepNavigatorObject`.
@@ -112,7 +126,7 @@ open class RSDFactory {
      
      @return            The step navigator created from this decoder.
      */
-    open func decodeStepNavigator(decoder: Decoder) throws -> RSDStepNavigator {
+    open func decodeStepNavigator(from decoder: Decoder) throws -> RSDStepNavigator {
         return try RSDConditionalStepNavigatorObject(from: decoder)
     }
     
@@ -122,8 +136,8 @@ open class RSDFactory {
     /**
      Type of steps that can be created by this factory.
      */
-    public enum StepType : String {
-        case instruction, active, form
+    public enum StepType : String, Codable {
+        case instruction, active, form, section, subtask
     }
     
     /**
@@ -153,23 +167,23 @@ open class RSDFactory {
      @return            The step (if any) created from this decoder.
      */
     open func decodeStep(from decoder: Decoder) throws -> RSDStep? {
-        guard let className = try classTypeName(from: decoder) else {
-            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a step without a `type` key defining a value for the the class name.")
+        guard let name = try typeName(from: decoder) else {
+            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a step without a `type` key defining a value for the the type name.")
         }
-        return try decodeStep(from: decoder, with: className)
+        return try decodeStep(from: decoder, with: name)
     }
     
     /**
      Decode the step from this decoder. This method can be overridden to return `nil` if the step should be skipped.
      
-     @param className   The string representing the class name for this step.
+     @param typeName   The string representing the class name for this step.
      @param decoder     The decoder to use to instatiate the object.
      
      @return            The step (if any) created from this decoder.
      */
-    open func decodeStep(from decoder:Decoder, with className: String) throws -> RSDStep? {
-        guard let type = StepType(rawValue: className) else {
-            throw RSDValidationError.undefinedClassType("\(self) does not support `\(className)` as a decodable class type for a step.")
+    open func decodeStep(from decoder:Decoder, with typeName: String) throws -> RSDStep? {
+        guard let type = StepType(rawValue: typeName) else {
+            return try RSDGenericStepObject(from: decoder)
         }
         return try decodeStep(from: decoder, with: type)
     }
@@ -190,6 +204,10 @@ open class RSDFactory {
             return try RSDActiveUIStepObject(from: decoder)
         case .form:
             return try RSDFormUIStepObject(from: decoder)
+        case .section:
+            return try RSDSectionStepObject(from: decoder)
+        case .subtask:
+            return try RSDTaskStepObject(from: decoder)
         }
     }
     
@@ -245,10 +263,10 @@ open class RSDFactory {
      @return            The conditional rule (if any) created from this decoder.
      */
     open func decodeConditionalRule(from decoder:Decoder) throws -> RSDConditionalRule? {
-        guard let className = try classTypeName(from: decoder) else {
+        guard let typeName = try typeName(from: decoder) else {
             throw RSDValidationError.undefinedClassType("\(self) does not support decoding a conditional rule without a `type` key defining a value for the the class name.")
         }
-        return try decodeConditionalRule(from: decoder, with: className)
+        return try decodeConditionalRule(from: decoder, with: typeName)
     }
     
     /**
@@ -256,14 +274,14 @@ open class RSDFactory {
      
      Note: The base factory does not currently support any conditional rule objects. The conditional rule is included here for future implementation of data tracking.
      
-     @param className   The string representing the class name for this conditional rule.
+     @param typeName   The string representing the class name for this conditional rule.
      @param decoder     The decoder to use to instatiate the object.
      
      @return            The conditional rule (if any) created from this decoder.
      */
-    open func decodeConditionalRule(from decoder:Decoder, with className: String) throws -> RSDConditionalRule? {
+    open func decodeConditionalRule(from decoder:Decoder, with typeName: String) throws -> RSDConditionalRule? {
         // Base class does not implement the conditional rule
-            throw RSDValidationError.undefinedClassType("\(self) does not support `\(className)` as a decodable class type for a conditional rule.")
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a conditional rule.")
     }
     
     
@@ -279,10 +297,10 @@ open class RSDFactory {
      @return            The configuration (if any) created from this decoder.
      */
     open func decodeAsyncActionConfiguration(from decoder:Decoder) throws -> RSDAsyncActionConfiguration? {
-        guard let className = try classTypeName(from: decoder) else {
+        guard let typeName = try typeName(from: decoder) else {
             throw RSDValidationError.undefinedClassType("\(self) does not support decoding a conditional rule without a `type` key defining a value for the the class name.")
         }
-        return try decodeAsyncActionConfiguration(from: decoder, with: className)
+        return try decodeAsyncActionConfiguration(from: decoder, with: typeName)
     }
     
     /**
@@ -290,18 +308,87 @@ open class RSDFactory {
      
      Note: syoung 10/03/2017 The base factory does not currently support any async action objects. The factory method is included here for subclassing purposes.
      
-     @param className   The string representing the class name for this conditional rule.
+     @param typeName   The string representing the class name for this conditional rule.
      @param decoder     The decoder to use to instatiate the object.
      
      @return            The configuration (if any) created from this decoder.
      */
-    open func decodeAsyncActionConfiguration(from decoder:Decoder, with className: String) throws -> RSDAsyncActionConfiguration? {
+    open func decodeAsyncActionConfiguration(from decoder:Decoder, with typeName: String) throws -> RSDAsyncActionConfiguration? {
         // Base class does not implement the conditional rule
-        throw RSDValidationError.undefinedClassType("\(self) does not support `\(className)` as a decodable class type for an async action.")
+        throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for an async action.")
     }
     
     
-    // MARK: Decoding
+    // MARK: Result factory
+    
+    /**
+     Type of steps that can be created by this factory.
+     */
+    public enum ResultType : String {
+        case base, answer, collection, task
+    }
+    
+    /**
+     Convenience method for decoding a list of results.
+     
+     @param container   The unkeyed container with the results.
+     
+     @return            An array of the results.
+     */
+    public func decodeResults(from container: UnkeyedDecodingContainer) throws -> [RSDResult] {
+        var results : [RSDResult] = []
+        var mutableContainer = container
+        while !mutableContainer.isAtEnd {
+            let decoder = try mutableContainer.superDecoder()
+            let result = try decodeResult(from: decoder)
+            results.append(result)
+        }
+        return results
+    }
+    
+    /**
+     Decode the result from this decoder.
+     
+     @param decoder     The decoder to use to instatiate the object.
+     
+     @return            The result (if any) created from this decoder.
+     */
+    open func decodeResult(from decoder: Decoder) throws -> RSDResult {
+        guard let typeName = try typeName(from: decoder) else {
+            return try RSDResultObject(from: decoder)
+        }
+        return try decodeResult(from: decoder, with: typeName)
+    }
+    
+    /**
+     Decode the result from this decoder.
+     
+     @param decoder     The decoder to use to instatiate the object.
+     @param typeName   The string representing the class name for this object.
+     
+     @return            The result (if any) created from this decoder.
+     */
+    open func decodeResult(from decoder: Decoder, with typeName: String) throws -> RSDResult {
+        guard let resultType = ResultType(rawValue: typeName) else {
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a result.")
+        }
+        switch resultType {
+        case .base:
+            return try RSDResultObject(from: decoder)
+            
+        case .answer:
+            return try RSDAnswerResultObject(from: decoder)
+            
+        case .collection:
+            return try RSDStepCollectionResultObject(from: decoder)
+            
+        case .task:
+            return try RSDTaskResultObject(from: decoder)
+        }
+    }
+    
+    
+    // MARK: Decoder
     
     public enum CodingUserInfoKeys : String {
         
@@ -311,10 +398,14 @@ open class RSDFactory {
             return CodingUserInfoKey(rawValue: self.rawValue)!
         }
     }
-    
+
     open func createJSONDecoder() -> JSONDecoder {
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
+        decoder.dateDecodingStrategy = .custom({ (decoder) -> Date in
+            let container = try decoder.singleValueContainer()
+            let string = try container.decode(String.self)
+            return try self.decodeDate(from: string, dateFormat: nil, codingPath: decoder.codingPath)
+        })
         decoder.userInfo[CodingUserInfoKeys.factory.key] = self
         return decoder
     }
@@ -359,6 +450,54 @@ open class RSDFactory {
         }
         return decoder
     }
+    
+    open func decodeDate(from string: String, dateFormat: String? = nil) -> Date? {
+        if let format = dateFormat {
+            let formatter = DateFormatter()
+            formatter.dateFormat = format
+            return formatter.date(from: string)
+        } else if let date = RSDClassTypeMap.shared.timestampFormatter.date(from: string) {
+            return date
+        } else if let date = RSDClassTypeMap.shared.dateOnlyFormatter.date(from: string) {
+            return date
+        } else if let date = RSDClassTypeMap.shared.timeOnlyFormatter.date(from: string) {
+            return date
+        } else {
+            return ISO8601DateFormatter().date(from: string)
+        }
+    }
+    
+    internal func decodeDate(from string: String, dateFormat: String?, codingPath: [CodingKey]) throws -> Date {
+        guard let date = decodeDate(from: string, dateFormat: dateFormat) else {
+            let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Could not decode \(string) into a date.")
+            throw DecodingError.typeMismatch(Date.self, context)
+        }
+        return date
+    }
+    
+    // MARK: Encoder
+    
+    open func createJSONEncoder() -> JSONEncoder {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .custom({ (date, encoder) in
+            let string = self.encodedDate(from: date, codingPath: encoder.codingPath)
+            var container = encoder.singleValueContainer()
+            try container.encode(string)
+        })
+        encoder.outputFormatting = .prettyPrinted
+        encoder.userInfo[CodingUserInfoKeys.factory.key] = self
+        return encoder
+    }
+    
+    open func createPropertyListEncoder() -> PropertyListEncoder {
+        let encoder = PropertyListEncoder()
+        encoder.userInfo[CodingUserInfoKeys.factory.key] = self
+        return encoder
+    }
+    
+    open func encodedDate(from date: Date, codingPath: [CodingKey]) -> String {
+        return RSDClassTypeMap.shared.timestampFormatter.string(from: date)
+    }
 }
 
 /**
@@ -376,6 +515,39 @@ extension PropertyListDecoder : RSDFactoryDecoder {
 }
 
 extension Decoder {
+    
+    public var factory: RSDFactory {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.factory.key] as? RSDFactory ?? RSDFactory.shared
+    }
+    
+    public var taskInfo: RSDTaskInfo? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskInfo.key] as? RSDTaskInfo
+    }
+    
+    public var schemaInfo: RSDSchemaInfo? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.schemaInfo.key] as? RSDSchemaInfo
+    }
+    
+    public var taskDataSource: RSDTaskDataSource? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskDataSource.key] as? RSDTaskDataSource
+    }
+}
+
+/**
+ `JSONEncoder` and `PropertyListEncoder` do not share a common protocol so extend them to be able to create the appropriate decoder and set the userInfo keys as needed.
+ */
+public protocol RSDFactoryEncoder {
+    func encode<T>(_ value: T) throws -> Data where T : Encodable
+    var userInfo: [CodingUserInfoKey : Any] { get set }
+}
+
+extension JSONEncoder : RSDFactoryEncoder {
+}
+
+extension PropertyListEncoder : RSDFactoryEncoder {
+}
+
+extension Encoder {
     
     public var factory: RSDFactory {
         return self.userInfo[RSDFactory.CodingUserInfoKeys.factory.key] as? RSDFactory ?? RSDFactory.shared

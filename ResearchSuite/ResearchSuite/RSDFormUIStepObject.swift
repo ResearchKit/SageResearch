@@ -37,14 +37,9 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep {
     
     open private(set) var inputFields: [RSDInputField]
     
-    public required init(identifier: String) {
-        self.inputFields = []
-        super.init(identifier: identifier)
-    }
-    
-    public init(identifier: String, inputFields: [RSDInputField]) {
+    public init(identifier: String, inputFields: [RSDInputField], type: String? = nil) {
         self.inputFields = inputFields
-        super.init(identifier: identifier)
+        super.init(identifier: identifier, type: type ?? RSDFactory.StepType.form.rawValue)
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -57,7 +52,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep {
         // Decode the input fields
         let factory = decoder.factory
         var decodedFields : [RSDInputField] = []
-        do {
+        if container.contains(.inputFields) {
             var nestedContainer = try container.nestedUnkeyedContainer(forKey: .inputFields)
             while !nestedContainer.isAtEnd {
                 let nestedDecoder = try nestedContainer.superDecoder()
@@ -66,17 +61,8 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep {
                 }
             }
         }
-        catch DecodingError.keyNotFound(let codingKey, let context) {
-            if codingKey.stringValue == CodingKeys.inputFields.stringValue {
-                // Look to see if this is a flattened dictionary
-                if let field = try factory.decodeInputField(from: decoder) {
-                    decodedFields.append(field)
-                }
-            }
-            else {
-                // If this isn't while getting the inputFields, then rethrow
-                throw DecodingError.keyNotFound(codingKey, context)
-            }
+        else if let field = try factory.decodeInputField(from: decoder) {
+            decodedFields.append(field)
         }
         self.inputFields = decodedFields
         

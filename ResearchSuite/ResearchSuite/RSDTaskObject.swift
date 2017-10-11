@@ -34,6 +34,8 @@
 import Foundation
 
 public struct RSDTaskObject : RSDTask, Decodable {
+
+    
     
     public private(set) var identifier: String
     public private(set) var stepNavigator: RSDStepNavigator
@@ -79,10 +81,10 @@ public struct RSDTaskObject : RSDTask, Decodable {
         
         // Get the step navigator
         let factory = decoder.factory
-        self.stepNavigator = try factory.decodeStepNavigator(decoder: decoder)
+        self.stepNavigator = try factory.decodeStepNavigator(from: decoder)
         
         // Decode the async actions
-        do {
+        if container.contains(.asyncActions) {
             var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
             var decodedActions : [RSDAsyncActionConfiguration] = []
             while !nestedContainer.isAtEnd {
@@ -93,12 +95,13 @@ public struct RSDTaskObject : RSDTask, Decodable {
             }
             self.asyncActions = decodedActions
         }
-        catch DecodingError.keyNotFound(let codingKey, let context) {
-            if codingKey.stringValue != CodingKeys.asyncActions.stringValue {
-                // Rethrow the error if this isn't looking for an asyncAction nested array
-                throw DecodingError.keyNotFound(codingKey, context)
-            }
-        }
+    }
+    
+    
+    // MARK: RSDTask methods
+    
+    public func instantiateTaskResult() -> RSDTaskResult {
+        return RSDTaskResultObject(identifier: self.identifier, schemaInfo: self.schemaInfo)
     }
     
     public func validate() throws {
@@ -124,4 +127,5 @@ public struct RSDTaskObject : RSDTask, Decodable {
             }
         }
     }
+
 }

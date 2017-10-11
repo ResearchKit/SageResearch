@@ -8,9 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */; };
+		FF25E83B1F96AEAD00BC09A8 /* UIColor+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */; };
+		FF25E83C1F96B39500BC09A8 /* RSDRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */; };
+		FF25E83D1F96B39800BC09A8 /* RSDUnderlinedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */; };
+		FF25E8401F96B5C300BC09A8 /* UIFont+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */; };
 		FF443E201F7AC21900F43BE7 /* ResearchSuite_UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF443E161F7AC21900F43BE7 /* ResearchSuite_UI.framework */; };
 		FF443E271F7AC21900F43BE7 /* ResearchSuite_UI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuite_UI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FF74A7E31F7DA4B90064A634 /* RSDTaskListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF74A7E21F7DA4B90064A634 /* RSDTaskListTableViewController.swift */; };
+		FF4A2D341F9679EC00484338 /* DebugStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */; };
+		FF4A2D351F9679EC00484338 /* DebugStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */; };
+		FF4A2D3A1F96A6F000484338 /* RSDTaskInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D381F96A6ED00484338 /* RSDTaskInfoViewController.swift */; };
+		FF4A2D3B1F96A6F000484338 /* RSDTaskInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D391F96A6ED00484338 /* RSDTaskInfoViewController.xib */; };
+		FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */; };
+		FF5C4C2E1F8C923E00F311BA /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */; };
+		FF7E1D851F8EA7F000B47587 /* RSDStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */; };
+		FF88FD1B1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */; };
+		FF88FD1D1F8D44A400CADB53 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,12 +37,24 @@
 
 /* Begin PBXFileReference section */
 		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnderlinedButton.swift; sourceTree = "<group>"; };
+		FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRoundedButton.swift; sourceTree = "<group>"; };
+		FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BridgeKeyNames.swift"; sourceTree = "<group>"; };
+		FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+BridgeKeyNames.swift"; sourceTree = "<group>"; };
 		FF443E161F7AC21900F43BE7 /* ResearchSuite_UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchSuite_UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF443E191F7AC21900F43BE7 /* ResearchSuite_UI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchSuite_UI.h; sourceTree = "<group>"; };
 		FF443E1A1F7AC21900F43BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF443E1F1F7AC21900F43BE7 /* ResearchSuite-UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ResearchSuite-UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF443E261F7AC21900F43BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF74A7E21F7DA4B90064A634 /* RSDTaskListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskListTableViewController.swift; sourceTree = "<group>"; };
+		FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugStepViewController.swift; sourceTree = "<group>"; };
+		FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugStepViewController.xib; sourceTree = "<group>"; };
+		FF4A2D381F96A6ED00484338 /* RSDTaskInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskInfoViewController.swift; sourceTree = "<group>"; };
+		FF4A2D391F96A6ED00484338 /* RSDTaskInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDTaskInfoViewController.xib; sourceTree = "<group>"; };
+		FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewController.swift; sourceTree = "<group>"; };
+		FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepViewController.swift; sourceTree = "<group>"; };
+		FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Layout.swift"; sourceTree = "<group>"; };
+		FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +85,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FF25E8371F96ACD200BC09A8 /* Color Management */ = {
+			isa = PBXGroup;
+			children = (
+				FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */,
+			);
+			path = "Color Management";
+			sourceTree = "<group>";
+		};
+		FF25E83E1F96B54C00BC09A8 /* Font Management */ = {
+			isa = PBXGroup;
+			children = (
+				FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */,
+			);
+			path = "Font Management";
+			sourceTree = "<group>";
+		};
 		FF443E0C1F7AC21900F43BE7 = {
 			isa = PBXGroup;
 			children = (
@@ -83,9 +123,12 @@
 		FF443E181F7AC21900F43BE7 /* ResearchSuite-UI */ = {
 			isa = PBXGroup;
 			children = (
-				FF74A7DD1F7DA2EB0064A634 /* iPhone */,
 				FF443E191F7AC21900F43BE7 /* ResearchSuite_UI.h */,
 				FF443E1A1F7AC21900F43BE7 /* Info.plist */,
+				FF74A7DD1F7DA2EB0064A634 /* iOS */,
+				FF25E8371F96ACD200BC09A8 /* Color Management */,
+				FF25E83E1F96B54C00BC09A8 /* Font Management */,
+				FFCA18381F8F2605006ADAF3 /* Utilities */,
 			);
 			path = "ResearchSuite-UI";
 			sourceTree = "<group>";
@@ -98,12 +141,53 @@
 			path = "ResearchSuite-UITests";
 			sourceTree = "<group>";
 		};
-		FF74A7DD1F7DA2EB0064A634 /* iPhone */ = {
+		FF4A2D361F9679F400484338 /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
-				FF74A7E21F7DA4B90064A634 /* RSDTaskListTableViewController.swift */,
+				FF4A2D391F96A6ED00484338 /* RSDTaskInfoViewController.xib */,
+				FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */,
 			);
-			path = iPhone;
+			path = Nibs;
+			sourceTree = "<group>";
+		};
+		FF4A2D441F96A90200484338 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */,
+				FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FF5C4C241F8C8D8200F311BA /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */,
+				FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		FF74A7DD1F7DA2EB0064A634 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */,
+				FF4A2D381F96A6ED00484338 /* RSDTaskInfoViewController.swift */,
+				FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */,
+				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
+				FF4A2D361F9679F400484338 /* Nibs */,
+				FF4A2D441F96A90200484338 /* Views */,
+				FF5C4C241F8C8D8200F311BA /* Utilities */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		FFCA18381F8F2605006ADAF3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +284,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF4A2D351F9679EC00484338 /* DebugStepViewController.xib in Resources */,
+				FF4A2D3B1F96A6F000484338 /* RSDTaskInfoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +303,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF74A7E31F7DA4B90064A634 /* RSDTaskListTableViewController.swift in Sources */,
+				FF25E83C1F96B39500BC09A8 /* RSDRoundedButton.swift in Sources */,
+				FF7E1D851F8EA7F000B47587 /* RSDStepViewController.swift in Sources */,
+				FF25E83B1F96AEAD00BC09A8 /* UIColor+BridgeKeyNames.swift in Sources */,
+				FF88FD1D1F8D44A400CADB53 /* StaticUtilities.swift in Sources */,
+				FF5C4C2E1F8C923E00F311BA /* UIView+Layout.swift in Sources */,
+				FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */,
+				FF4A2D3A1F96A6F000484338 /* RSDTaskInfoViewController.swift in Sources */,
+				FF4A2D341F9679EC00484338 /* DebugStepViewController.swift in Sources */,
+				FF88FD1B1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift in Sources */,
+				FF25E83D1F96B39800BC09A8 /* RSDUnderlinedButton.swift in Sources */,
+				FF25E8401F96B5C300BC09A8 /* UIFont+BridgeKeyNames.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

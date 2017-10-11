@@ -62,6 +62,13 @@ public protocol RSDTask {
      A list of asyncronous actions to run on the task.
      */
     var asyncActions: [RSDAsyncActionConfiguration]? { get }
+    
+    /**
+     Instantiate a task result that is appropriate for this task.
+     
+     @return    A task result for this task.
+     */
+    func instantiateTaskResult() -> RSDTaskResult
 
     /**
      Validate the task to check for any model configuration that should throw an error.

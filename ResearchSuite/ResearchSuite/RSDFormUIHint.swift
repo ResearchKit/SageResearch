@@ -66,10 +66,10 @@ public enum RSDFormUIHint {
     }
 }
 
-extension RSDFormUIHint: RawRepresentable {
+extension RSDFormUIHint: RawRepresentable, Codable {
     public typealias RawValue = String
-    
-    public init?(rawValue: RawValue) {
+
+    public init(rawValue: RawValue) {
         if let subtype = Standard(rawValue: rawValue) {
             self = .standard(subtype)
         }
@@ -89,18 +89,6 @@ extension RSDFormUIHint: RawRepresentable {
     }
 }
 
-extension RSDFormUIHint : Equatable {
-    public static func ==(lhs: RSDFormUIHint, rhs: RSDFormUIHint) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDFormUIHint) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDFormUIHint, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
 extension RSDFormUIHint : Hashable {
     public var hashValue : Int {
         return self.rawValue.hashValue
@@ -109,23 +97,9 @@ extension RSDFormUIHint : Hashable {
 
 extension RSDFormUIHint : ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
-    
+
     public init(stringLiteral value: String) {
-        self.init(rawValue: value)!
+        self.init(rawValue: value)
     }
 }
 
-extension RSDFormUIHint : Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self.init(rawValue: rawValue)!
-    }
-}
-
-extension RSDFormUIHint : Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.rawValue)
-    }
-}

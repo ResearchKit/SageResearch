@@ -35,12 +35,18 @@ import Foundation
 
 public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable {
     
-    public private(set) var identifier: String
-    public private(set) var steps: [RSDStep]
+    public let type: String
+    public let identifier: String
+    public let steps: [RSDStep]
     
-    public init(identifier: String, steps: [RSDStep]) {
+    public init(identifier: String, steps: [RSDStep], type: String? = nil) {
         self.identifier = identifier
         self.steps = steps
+        self.type = type ?? RSDFactory.StepType.section.rawValue
+    }
+    
+    public func instantiateStepResult() -> RSDResult {
+        return RSDTaskResultObject(identifier: identifier)
     }
     
     public func validate() throws {
@@ -48,13 +54,49 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, steps
+        case identifier, type, steps
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.type = try container.decode(String.self, forKey: .type)
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
         self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
+    }
+}
+
+/**
+ Extend the 
+ */
+extension RSDSectionStep {
+    
+    public var conditionalRule : RSDConditionalRule? {
+        return nil
+    }
+    
+    public var taskInfo: RSDTaskInfo? {
+        return nil
+    }
+    
+    public var schemaInfo: RSDSchemaInfo? {
+        return nil
+    }
+    
+    public var stepNavigator: RSDStepNavigator {
+        return self
+    }
+    
+    public var asyncActions: [RSDAsyncActionConfiguration]? {
+        return nil
+    }
+    
+    public func instantiateTaskResult() -> RSDTaskResult {
+        let result = self.instantiateStepResult()
+        if let taskResult = result as? RSDTaskResult {
+            assertionFailure("Expected that a section step will return a result that conforms to RSDTaskResult protocol.")
+            return taskResult
+        }
+        return RSDTaskResultObject(identifier: identifier)
     }
 }

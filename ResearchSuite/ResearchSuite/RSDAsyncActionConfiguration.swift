@@ -49,6 +49,11 @@ public protocol RSDAsyncActionConfiguration {
     var startStepIdentifier: String? { get }
     
     /**
+     List of the permissions required for this action.
+     */
+    var permissions: [RSDPermissionType] { get }
+    
+    /**
      Validate the async action to check for any configuration that should throw an error.
      */
     func validate() throws
@@ -63,11 +68,6 @@ public protocol RSDRecorderConfiguration : RSDAsyncActionConfiguration {
      An identifier marking the step at which to stop the action. If `nil`, then the action will be stopped when the task is stopped.
      */
     var stopStepIdentifier: String? { get }
-    
-    /**
-     List of the permissions required for this recorder.
-     */
-    var permissions: [RSDPermissionType] { get }
 }
 
 /**

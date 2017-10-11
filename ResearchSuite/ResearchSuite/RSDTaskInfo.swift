@@ -34,6 +34,13 @@
 import Foundation
 import UIKit
 
+public typealias RSDTaskFetchCompletionHandler = (RSDTaskInfo, RSDTask?, Error?) -> Void
+
+public enum RSDTaskFetchError : Error {
+    case unknown
+    case offline
+}
+
 /**
  A light-weight reference interface for information about the task. This includes information that can be displayed in a table or collection view.
  */
@@ -48,6 +55,11 @@ public protocol RSDTaskInfo {
      The primary text to display for the task in a localized string.
      */
     var title: String? { get }
+    
+    /**
+     The subtitle text to display for the task in a localized string.
+     */
+    var subtitle: String? { get }
     
     /**
      Additional detail text to display for the task.
@@ -75,7 +87,7 @@ public protocol RSDTaskInfo {
      @param factory     The factory to use for creating the task and steps.
      @param callback    The callback with the task or an error if the task failed, run on the main thread.
      */
-    func fetchTask(with factory: RSDFactory, callback: @escaping ((RSDTask?, Error?) -> Void))
+    func fetchTask(with factory: RSDFactory, callback: @escaping RSDTaskFetchCompletionHandler)
     
     /**
      An icon image that can be used for displaying the task.

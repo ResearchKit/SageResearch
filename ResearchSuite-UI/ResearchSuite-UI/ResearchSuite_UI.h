@@ -41,4 +41,4 @@ FOUNDATION_EXPORT const unsigned char ResearchSuite_UIVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <ResearchSuite_UI/PublicHeader.h>
 
-
+#import <ResearchSuite/ResearchSuite.h>

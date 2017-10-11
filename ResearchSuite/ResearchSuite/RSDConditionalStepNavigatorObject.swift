@@ -63,5 +63,4 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, D
             self.conditionalRule = try factory.decodeConditionalRule(from: crDecoder)
         }
     }
-    
 }

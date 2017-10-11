@@ -42,29 +42,31 @@ public struct RSDTaskInfoObject : RSDTaskInfo, RSDResourceTransformer, RSDSchema
         
         case identifier
         case title
+        case subtitle
         case detail
         case copyright
-        case minutes = "estimatedMinutes"
+        case _estimatedMinutes = "estimatedMinutes"
         case icon
         
         case classType
         case resourceName
         case resourceBundle
         
-        case sRevision = "schemaRevision"
-        case sIdentifier = "schemaIdentifier"
+        case _schemaRevision = "schemaRevision"
+        case _schemaIdentifier = "schemaIdentifier"
     }
 
     // MARK: RSDTaskInfo
     public private(set) var identifier: String
     public var title: String?
+    public var subtitle: String?
     public var detail: String?
     public var copyright: String?
     public var icon: RSDImageWrapper?
     
-    private var minutes: Int?
+    private var _estimatedMinutes: Int?
     public var estimatedMinutes: Int {
-        return minutes ?? 0
+        return _estimatedMinutes ?? 0
     }
     
     // MARK: RSDResourceTransformer
@@ -73,30 +75,30 @@ public struct RSDTaskInfoObject : RSDTaskInfo, RSDResourceTransformer, RSDSchema
     public var resourceBundle: String?
     
     // MARK: RSDSchemaInfo
-    private var sRevision: Int?
+    private var _schemaRevision: Int?
     public var schemaRevision: Int {
-        return sRevision ?? 1
+        return _schemaRevision ?? 1
     }
 
-    private var sIdentifier: String?
+    private var _schemaIdentifier: String?
     public var schemaIdentifier: String? {
-        return sIdentifier ?? self.identifier
+        return _schemaIdentifier ?? self.identifier
     }
 
     public init(with identifier: String) {
         self.identifier = identifier
     }
     
-    public func fetchTask(with factory: RSDFactory, callback: @escaping ((RSDTask?, Error?) -> Void)) {
+    public func fetchTask(with factory: RSDFactory, callback: @escaping RSDTaskFetchCompletionHandler) {
         DispatchQueue.global().async {
             do {
                 let task = try factory.decodeTask(with: self, taskInfo: self, schemaInfo: self)
                 DispatchQueue.main.async {
-                    callback(task, nil)
+                    callback(self, task, nil)
                 }
             } catch let err {
                 DispatchQueue.main.async {
-                    callback(nil, err)
+                    callback(self, nil, err)
                 }
             }
         }

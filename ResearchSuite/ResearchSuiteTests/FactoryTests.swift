@@ -92,7 +92,7 @@ class FactoryTests: XCTestCase {
         }
         
         let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
-        taskInfo.fetchTask(with: RSDFactory()) { (task, err) in
+        taskInfo.fetchTask(with: RSDFactory()) { (_, task, err)  in
             if let task = task {
                 
                 // Check identifiers
@@ -102,9 +102,15 @@ class FactoryTests: XCTestCase {
                 
                 // Investigate the step navigator
                 if let stepNavigator = task.stepNavigator as? RSDConditionalStepNavigatorObject {
-                    XCTAssertEqual(stepNavigator.steps.count, 3)
-                    XCTAssertNotNil(stepNavigator.steps.first as? RSDUIStepObject)
-                    XCTAssertNotNil(stepNavigator.steps.last as? RSDFormUIStepObject)
+                    let expectedCount = 5
+                    XCTAssertEqual(stepNavigator.steps.count, expectedCount)
+                    if stepNavigator.steps.count < expectedCount {
+                        XCTAssertNotNil(stepNavigator.steps[0] as? RSDUIStepObject)
+                        XCTAssertNotNil(stepNavigator.steps[1] as? RSDActiveUIStepObject)
+                        XCTAssertNotNil(stepNavigator.steps[2] as? RSDFormUIStepObject)
+                        XCTAssertNotNil(stepNavigator.steps[3] as? RSDSectionStepObject)
+                        XCTAssertNotNil(stepNavigator.steps[3] as? RSDTaskStepObject)
+                    }
                 }
                 else {
                     XCTFail("\(task.stepNavigator) not of expected type.")

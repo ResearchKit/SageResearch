@@ -33,12 +33,12 @@
 
 import Foundation
 
-public struct RSDIdentifier : RawRepresentable {
+public struct RSDIdentifier : RawRepresentable, Codable {
     public typealias RawValue = String
     
     public private(set) var rawValue: String
     
-    public init?(rawValue: String) {
+    public init(rawValue: String) {
         self.rawValue = rawValue
     }
     
@@ -57,10 +57,16 @@ extension RSDIdentifier : Equatable {
     }
 }
 
+extension RSDIdentifier : Hashable {
+    public var hashValue : Int {
+        return self.rawValue.hashValue
+    }
+}
+
 extension RSDIdentifier : ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
     
     public init(stringLiteral value: String) {
-        self.init(rawValue: value)!
+        self.init(rawValue: value)
     }
 }

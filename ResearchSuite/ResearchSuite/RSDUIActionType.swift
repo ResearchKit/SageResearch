@@ -74,10 +74,10 @@ public enum RSDUIActionType {
     case custom(String)
 }
 
-extension RSDUIActionType: RawRepresentable {
+extension RSDUIActionType: RawRepresentable, Codable {
     public typealias RawValue = String
     
-    public init?(rawValue: RawValue) {
+    public init(rawValue: RawValue) {
         if let subtype = Navigation(rawValue: rawValue) {
             self = .navigation(subtype)
         }
@@ -119,39 +119,25 @@ extension RSDUIActionType : ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
     
     public init(stringLiteral value: String) {
-        self.init(rawValue: value)!
+        self.init(rawValue: value)
     }
 }
 
-extension RSDUIActionType : CodingKey {
-    public var stringValue: String {
-        return self.rawValue
-    }
-    
-    public init?(stringValue: String) {
-        self.init(rawValue: stringValue)
-    }
-    
-    public var intValue: Int? {
-        return nil
-    }
-    
-    public init?(intValue: Int) {
-        return nil
-    }
-}
+//extension RSDUIActionType : CodingKey {
+//    public var stringValue: String {
+//        return self.rawValue
+//    }
+//    
+//    public init?(stringValue: String) {
+//        self.init(rawValue: stringValue)
+//    }
+//    
+//    public var intValue: Int? {
+//        return nil
+//    }
+//    
+//    public init?(intValue: Int) {
+//        return nil
+//    }
+//}
 
-extension RSDUIActionType : Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self.init(rawValue: rawValue)!
-    }
-}
-
-extension RSDUIActionType : Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.rawValue)
-    }
-}

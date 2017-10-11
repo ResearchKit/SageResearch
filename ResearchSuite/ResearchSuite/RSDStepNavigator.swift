@@ -31,9 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-
 import Foundation
-
 
 public protocol RSDStepNavigator {
     
@@ -47,6 +45,40 @@ public protocol RSDStepNavigator {
     func step(with identifier: String) -> RSDStep?
     
     /**
+     Should the task exit early from the entire task?
+     
+     @param step    The current step.
+     @param result  The current result set for this task.
+     
+     @return        `true` if the task view controller should exit.
+     */
+    func shouldExit(after step: RSDStep?, with result: RSDTaskResult) -> Bool
+    
+    /**
+     Is there a step after the current step with the given result.
+     
+     Note: the result may not include a result for the current step.
+     
+     @param step    The current step.
+     @param result  The current result set for this task.
+     
+     @return        `true` if the task view controller should show a next button.
+     */
+    func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool
+    
+    /**
+     Is there a step before the current step with the given result.
+     
+     Note: the result may not include a result for the current step.
+     
+     @param step    The current step.
+     @param result  The current result set for this task.
+     
+     @return        `true` if the task view controller should show a back button.
+     */
+    func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool
+    
+    /**
      Return the step to go to before the given step.
      
      @param step    The current step.
@@ -54,7 +86,7 @@ public protocol RSDStepNavigator {
      
      @return        The previous step or nil if the task does not support backward navigation.
      */
-    func step(before step: RSDStep, with result: RSDTaskResult?) -> RSDStep?
+    func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep?
     
     /**
      Return the step to go to after completing the given step.
@@ -64,7 +96,7 @@ public protocol RSDStepNavigator {
      
      @return        The next step to display or nil if this is the end of the task.
      */
-    func step(after step: RSDStep?, with result: RSDTaskResult?) -> RSDStep?
+    func step(after step: RSDStep?, with result: inout RSDTaskResult) -> RSDStep?
     
     /**
      Return the progress through the task for a given step with the current result.

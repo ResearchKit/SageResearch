@@ -33,22 +33,27 @@
 
 import Foundation
 
-
 public struct RSDTaskStepObject: RSDTaskStep, Decodable {
     
-    public private(set) var identifier: String
-    public private(set) var subtaskInfo: RSDTaskInfo
+    public let type: String
+    public let identifier: String
+    public let subtaskInfo: RSDTaskInfo
     
-    public init(identifier: String, subtaskInfo: RSDTaskInfo) {
+    public init(identifier: String, subtaskInfo: RSDTaskInfo, type: String? = nil) {
         self.identifier = identifier
         self.subtaskInfo = subtaskInfo
+        self.type = type ?? RSDFactory.StepType.subtask.rawValue
+    }
+    
+    public func instantiateStepResult() -> RSDResult {
+        return RSDTaskResultObject(identifier: identifier)
     }
     
     public func validate() throws {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, subtaskInfo
+        case identifier, type, subtaskInfo = "taskInfo"
     }
     
     public init(from decoder: Decoder) throws {
@@ -57,6 +62,7 @@ public struct RSDTaskStepObject: RSDTaskStep, Decodable {
         // get the identifier
         let identifier = try container.decode(String.self, forKey: .identifier)
         self.identifier = identifier
+        self.type = try container.decode(String.self, forKey: .type)
         
         // Look first for a task info defined by the data source and then look it to be defined
         // within the container.
@@ -64,7 +70,7 @@ public struct RSDTaskStepObject: RSDTaskStep, Decodable {
             self.subtaskInfo = taskInfo
         }
         else {
-            self.subtaskInfo = try container.decode(RSDTaskInfoObject.self, forKey: .subtaskInfo)
+            self.subtaskInfo = try decoder.factory.decodeTaskInfo(from: decoder)
         }
     }
 }

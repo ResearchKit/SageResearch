@@ -217,7 +217,7 @@ public enum RSDFormDataType {
     }
 }
 
-extension RSDFormDataType: RawRepresentable {
+extension RSDFormDataType: RawRepresentable, Codable {
     public typealias RawValue = String
     
     public init?(rawValue: RawValue) {
@@ -263,18 +263,6 @@ extension RSDFormDataType: RawRepresentable {
     }
 }
 
-extension RSDFormDataType : Equatable {
-    public static func ==(lhs: RSDFormDataType, rhs: RSDFormDataType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDFormDataType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDFormDataType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
 extension RSDFormDataType : Hashable {
     public var hashValue : Int {
         return self.rawValue.hashValue
@@ -286,20 +274,5 @@ extension RSDFormDataType : ExpressibleByStringLiteral {
     
     public init(stringLiteral value: String) {
         self.init(rawValue: value)!
-    }
-}
-
-extension RSDFormDataType : Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self.init(rawValue: rawValue)!
-    }
-}
-
-extension RSDFormDataType : Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.rawValue)
     }
 }

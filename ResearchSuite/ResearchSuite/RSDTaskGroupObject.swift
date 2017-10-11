@@ -36,32 +36,42 @@ import Foundation
 /**
  `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
  */
-public struct RSDTaskGroupObject : RSDTaskGroup, Codable {
+public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
     
     public private(set) var identifier: String
-    private let taskInfoObjects: [RSDTaskInfoObject]
     public var title: String?
     public var detail: String?
     public var icon: RSDImageWrapper?
-    
-    public var tasks: [RSDTaskInfo] {
-        return self.taskInfoObjects
-    }
+    public var tasks: [RSDTaskInfo]
     
     public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
         RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
     }
     
     private enum CodingKeys: String, CodingKey {
-        case identifier
-        case title
-        case detail
-        case icon
-        case taskInfoObjects = "tasks"
+        case identifier, title, detail, icon, tasks
     }
     
-    public init(with identifier: String, tasks: [RSDTaskInfoObject]) {
+    public init(with identifier: String, tasks: [RSDTaskInfo]) {
         self.identifier = identifier
-        self.taskInfoObjects = tasks
+        self.tasks = tasks
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.title = try container.decodeIfPresent(String.self, forKey: .title)
+        self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
+        self.icon = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .icon)
+        
+        let factory = decoder.factory
+        var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .tasks)
+        var decodedTasks : [RSDTaskInfo] = []
+        while !nestedContainer.isAtEnd {
+            let taskDecoder = try nestedContainer.superDecoder()
+            let task = try factory.decodeTaskInfo(from: taskDecoder)
+            decodedTasks.append(task)
+        }
+        self.tasks = decodedTasks
     }
 }

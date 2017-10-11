@@ -65,12 +65,12 @@ public protocol RSDDateRange : RSDRange {
     var maxDate: Date? { get }
     
     /**
-     Whether or not the UI should allow future dates. If `nil` or `minDate` is defined then this value is ignored.
+     Whether or not the UI should allow future dates. If `nil` or `minDate` is defined then this value is ignored. Default is `true`.
      */
     var allowFuture: Bool? { get }
     
     /**
-     Whether or not the UI should allow past dates. If `nil` or `maxDate` is defined then this value is ignored.
+     Whether or not the UI should allow past dates. If `nil` or `maxDate` is defined then this value is ignored. Default is `true`.
      */
     var allowPast: Bool? { get }
     

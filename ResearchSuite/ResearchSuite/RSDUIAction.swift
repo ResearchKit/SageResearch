@@ -71,7 +71,7 @@ public protocol RSDUIActionHandler {
      
      @param actionType  The action type for the button.
      
-     @return            Whether or not the button should be hidden.
+     @return            Whether or not the button should be hidden or `nil` if there is no explicit action.
      */
-    func shouldHideAction(for actionType: RSDUIActionType) -> Bool
+    func shouldHideAction(for actionType: RSDUIActionType) -> Bool?
 }

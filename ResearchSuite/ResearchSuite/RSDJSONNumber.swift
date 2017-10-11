@@ -1,5 +1,5 @@
 //
-//  StaticUtilities.swift
+//  RSDJSONNumber.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,27 +31,85 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+
 import Foundation
 
-public func RSDObjectEquality(_ objA: Any?, _ objB: Any?) -> Bool {
-    if objA == nil && objB == nil {
-        return true
-    }
-    if let objA = objA as? NSObject, let objB = objB as? NSObject {
-        return objA == objB
-    }
-    return false
-}
-
-public func RSDObjectHash(_ obj: Any?) -> Int {
-    return  (obj as? NSObject)?.hash ??
-            (obj as? AnyHashable)?.hashValue ??
-            0
-}
-
-public extension Sequence where Iterator.Element: Hashable {
+public protocol RSDJSONNumber : Codable {
     
-    public var rsd_hashValue: Int {
-        return self.reduce(0, { $0 ^ $1.hashValue })
+    /**
+     Return an NSNumber for use in json encoding
+     */
+    func jsonNumber() -> NSNumber?
+}
+
+extension Int : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension Int8 : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension Int16 : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension Int32 : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension Int64 : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension UInt : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension UInt8 : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension UInt16 : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension UInt32 : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension UInt64 : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension Double : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
+    }
+}
+
+extension Float : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return NSNumber(value: self)
     }
 }

@@ -34,18 +34,30 @@
 import Foundation
 
 public protocol RSDJSONValue {
+    
+    /**
+     Return a JSON type object. Elements may be any one of the JSON types (NSNull, NSNumber, String, Array, [String : Any]).
+     */
     func jsonObject() -> Any
+}
+
+public protocol RSDJSONValueDecoder {
+    func decodeValue(from decoder:Decoder) throws -> RSDJSONValue?
+}
+
+public protocol RSDJSONValueEncoder {
+    func encode(_ value: Any?, to encoder: Encoder) throws
 }
 
 extension NSString : RSDJSONValue {
     public func jsonObject() -> Any {
-        return self.copy()
+        return String(self)
     }
 }
 
 extension String : RSDJSONValue {
     public func jsonObject() -> Any {
-        return self
+        return String(self)
     }
 }
 
@@ -57,31 +69,79 @@ extension NSNumber : RSDJSONValue {
 
 extension Int : RSDJSONValue {
     public func jsonObject() -> Any {
-        return self
+        return NSNumber(value: self)
+    }
+}
+
+extension Int8 : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return NSNumber(value: self)
+    }
+}
+
+extension Int16 : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return NSNumber(value: self)
+    }
+}
+
+extension Int32 : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return NSNumber(value: self)
+    }
+}
+
+extension Int64 : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return NSNumber(value: self)
     }
 }
 
 extension UInt : RSDJSONValue {
     public func jsonObject() -> Any {
-        return self
+        return NSNumber(value: self)
+    }
+}
+
+extension UInt8 : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return NSNumber(value: self)
+    }
+}
+
+extension UInt16 : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return NSNumber(value: self)
+    }
+}
+
+extension UInt32 : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return NSNumber(value: self)
+    }
+}
+
+extension UInt64 : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return NSNumber(value: self)
     }
 }
 
 extension Bool : RSDJSONValue {
     public func jsonObject() -> Any {
-        return self
+        return NSNumber(value: self)
     }
 }
 
 extension Double : RSDJSONValue {
     public func jsonObject() -> Any {
-        return self
+        return NSNumber(value: self)
     }
 }
 
 extension Float : RSDJSONValue {
     public func jsonObject() -> Any {
-        return self
+        return NSNumber(value: self)
     }
 }
 
@@ -91,15 +151,15 @@ extension NSNull : RSDJSONValue {
     }
 }
 
-extension Date : RSDJSONValue {
+extension NSDate : RSDJSONValue {
     public func jsonObject() -> Any {
-        return RSDClassTypeMap.shared.timestampFormatter.string(from: self)
+        return (self as NSDate).jsonObject()
     }
 }
 
-extension NSDate : RSDJSONValue {
+extension Date : RSDJSONValue {
     public func jsonObject() -> Any {
-        return (self as Date).jsonObject()
+        return ISO8601DateFormatter().string(from: self)
     }
 }
 
@@ -148,6 +208,18 @@ extension DateComponents : RSDJSONValue {
 extension NSDateComponents : RSDJSONValue {
     public func jsonObject() -> Any {
         return (self as DateComponents).jsonObject()
+    }
+}
+
+extension Data : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return self.base64EncodedString()
+    }
+}
+
+extension NSData : RSDJSONValue {
+    public func jsonObject() -> Any {
+        return (self as Data).jsonObject()
     }
 }
 
@@ -200,7 +272,8 @@ extension NSDictionary : RSDJSONValue {
     public func jsonObject() -> Any {
         var dictionary : [AnyHashable : Any] = [:]
         for (key, value) in self.enumerated() {
-            dictionary[key] = _convertToJSONValue(from: value)
+            let strKey = "\(key)"
+            dictionary[strKey] = _convertToJSONValue(from: value)
         }
         return dictionary
     }
@@ -227,6 +300,28 @@ extension Array : RSDJSONValue {
 extension Set : RSDJSONValue {
     public func jsonObject() -> Any {
         return Array(self).jsonObject()
+    }
+}
+
+extension NSNull : Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encodeNil()
+    }
+}
+
+extension NSNumber : Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        if self === kCFBooleanTrue as NSNumber {
+            try container.encode(true)
+        } else if self === kCFBooleanFalse as NSNumber {
+            try container.encode(false)
+        } else if NSNumber(value: self.intValue) == self {
+            try container.encode(self.intValue)
+        } else {
+            try container.encode(self.doubleValue)
+        }
     }
 }
 
