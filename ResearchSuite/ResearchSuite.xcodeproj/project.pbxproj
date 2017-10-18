@@ -253,6 +253,19 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		FF2DA6181F96E7C4006F83C4 /* Codable Tests */ = {
+			isa = PBXGroup;
+			children = (
+				FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */,
+				FFDAE9E61F908510001D0CC0 /* CodableInputFieldObjectTests.swift */,
+				FFD243291F9568C70083F458 /* CodableResultObjectTests.swift */,
+				FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */,
+				FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */,
+				FF87CD851F8413F700084426 /* FactoryTests.swift */,
+			);
+			path = "Codable Tests";
+			sourceTree = "<group>";
+		};
 		FF5C4C1B1F8C86FC00F311BA /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,12 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				FF87CD821F84110800084426 /* Test files */,
-				FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */,
-				FFDAE9E61F908510001D0CC0 /* CodableInputFieldObjectTests.swift */,
-				FFD243291F9568C70083F458 /* CodableResultObjectTests.swift */,
-				FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */,
-				FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */,
-				FF87CD851F8413F700084426 /* FactoryTests.swift */,
+				FF2DA6181F96E7C4006F83C4 /* Codable Tests */,
 				FF72B2411F6859D3004C6F15 /* Info.plist */,
 			);
 			path = ResearchSuiteTests;
