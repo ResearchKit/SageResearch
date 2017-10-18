@@ -1,6 +1,6 @@
 //
-//  UIColor+BridgeKeyNames.swift
-//  ResearchSuite-UI
+//  UIColor+StyleGuide.swift
+//  ResearchSuiteTestApp
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -32,50 +32,16 @@
 //
 
 import UIKit
+import ResearchSuite_UI
 
-extension UIFont {
-
-    // MARK: Rounded button
+/// This extension will override the color values set ResearchSuiteUI.
+extension UIColor {
     
-    open class var roundedButtonTitle: UIFont {
-        return UIFont.systemFont(ofSize: 19.0, weight: .semibold)
-    }
-    
-    // MARK: Generic step view controller - header view labels
-
-    open class var headerViewHeaderLabel: UIFont {
-        return UIFont.systemFont(ofSize: 23.0, weight: .regular)
+    @objc open class var primaryTintColor: UIColor? {
+        return UIColor(red: 80.0 / 255.0, green: 107.0 / 255.0, blue: 203.0 / 255.0, alpha: 1.0)
     }
     
-    open class var headerViewDetailsLabel: UIFont {
-        return UIFont.systemFont(ofSize: 17.0, weight: .regular)
-    }
-    
-    open class var headerViewPromptLabel: UIFont {
-        return UIFont.systemFont(ofSize: 15.0, weight: .regular)
-    }
-
-    open class var headerViewStepCountLabel: UIFont {
-        return UIFont.systemFont(ofSize: 14.0, weight: .regular)
-    }
-    
-    // MARK: Generic step view controller - choice cell
-
-    open class var choiceCellLabel: UIFont {
-        return UIFont.systemFont(ofSize: 19.0, weight: .semibold)
-    }
-    
-    // MARK: Generic step view controller - text field cell
-
-    open class var textFieldCellLabel: UIFont {
-        return UIFont.systemFont(ofSize: 15.0, weight: .regular)
-    }
-
-    open class var textFieldCellText: UIFont {
-        return UIFont.systemFont(ofSize: 19.0, weight: .regular)
-    }
-
-    open class var textFieldFeaturedCellText: UIFont {
-        return UIFont.systemFont(ofSize: 33.0, weight: .regular)
+    @objc open class var secondaryTintColor: UIColor? {
+        return UIColor(red: 245.0 / 255.0, green: 135.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
     }
 }

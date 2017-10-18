@@ -85,20 +85,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FF25E8371F96ACD200BC09A8 /* Color Management */ = {
+		FF25E8371F96ACD200BC09A8 /* Styleguide */ = {
 			isa = PBXGroup;
 			children = (
 				FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */,
-			);
-			path = "Color Management";
-			sourceTree = "<group>";
-		};
-		FF25E83E1F96B54C00BC09A8 /* Font Management */ = {
-			isa = PBXGroup;
-			children = (
 				FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */,
 			);
-			path = "Font Management";
+			path = Styleguide;
 			sourceTree = "<group>";
 		};
 		FF443E0C1F7AC21900F43BE7 = {
@@ -126,8 +119,7 @@
 				FF443E191F7AC21900F43BE7 /* ResearchSuite_UI.h */,
 				FF443E1A1F7AC21900F43BE7 /* Info.plist */,
 				FF74A7DD1F7DA2EB0064A634 /* iOS */,
-				FF25E8371F96ACD200BC09A8 /* Color Management */,
-				FF25E83E1F96B54C00BC09A8 /* Font Management */,
+				FF25E8371F96ACD200BC09A8 /* Styleguide */,
 				FFCA18381F8F2605006ADAF3 /* Utilities */,
 			);
 			path = "ResearchSuite-UI";
