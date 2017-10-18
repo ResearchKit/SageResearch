@@ -61,6 +61,7 @@ class CodableStepObjectTests: XCTestCase {
             "footnote": "This is a footnote.",
             "imageBefore": "before",
             "imageAfter": "after",
+            "nextStepIdentifier": "boo",
             "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
                          "cancel": { "iconName" : "closeX" }
                         },
@@ -79,6 +80,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.footnote, "This is a footnote.")
             XCTAssertEqual(object.imageBefore?.imageName, "before")
             XCTAssertEqual(object.imageAfter?.imageName, "after")
+            XCTAssertEqual(object.nextStepIdentifier, "boo")
             
             let goForwardAction = object.action(for: .navigation(.goForward))
             XCTAssertNotNil(goForwardAction)
@@ -88,9 +90,9 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertNotNil(cancelAction)
             XCTAssertEqual((cancelAction as? RSDUIActionObject)?.iconName, "closeX")
             
-            XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward)))
-            XCTAssertTrue(object.shouldHideAction(for: .navigation(.learnMore)))
-            XCTAssertTrue(object.shouldHideAction(for: .navigation(.skip)))
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward)) ?? false)
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.learnMore)) ?? false)
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.skip)) ?? false)
             
             let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
@@ -105,6 +107,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(dictionary["detail"] as? String, "This is a test.")
             XCTAssertEqual(dictionary["imageBefore"] as? String, "before")
             XCTAssertEqual(dictionary["imageAfter"] as? String, "after")
+            XCTAssertEqual(dictionary["nextStepIdentifier"] as? String, "boo")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
