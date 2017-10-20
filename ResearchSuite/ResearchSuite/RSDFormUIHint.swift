@@ -48,6 +48,7 @@ public enum RSDFormUIHint {
         case list           // list
         case multipleLine   // multiple line text field
         case picker         // picker wheel
+        case popover        // Text entry using a modal popover box
         case radioButton    // radio button
         case slider         // slider
         case textfield      // text field
@@ -63,6 +64,11 @@ public enum RSDFormUIHint {
     public var standardType: Standard? {
         guard case .standard(let type) = self else { return nil }
         return type
+    }
+    
+    public static var allStandardHints: Set<RSDFormUIHint> {
+        let all: [RSDFormUIHint] = Standard.all.map { return .standard($0) }
+        return Set(all)
     }
 }
 

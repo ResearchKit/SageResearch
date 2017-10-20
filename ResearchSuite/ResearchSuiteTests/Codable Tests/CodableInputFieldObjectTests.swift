@@ -178,7 +178,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .collection(.multipleChoice, .string))
-            XCTAssertFalse(object.optional)
+            XCTAssertFalse(object.isOptional)
             XCTAssertFalse(object.allowOther)
             XCTAssertEqual(object.choices.count, 4)
             XCTAssertEqual(object.choices.last?.text, "always")
@@ -234,7 +234,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.placeholderText, "enter text")
             XCTAssertEqual(object.dataType, .collection(.singleChoice, .integer))
             XCTAssertEqual(object.uiHint, .standard(.picker))
-            XCTAssertTrue(object.optional)
+            XCTAssertTrue(object.isOptional)
             XCTAssertTrue(object.allowOther)
             XCTAssertEqual(object.choices.count, 4)
             XCTAssertEqual(object.choices.last?.text, "always")
@@ -278,7 +278,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .collection(.multipleComponent, .string))
-            XCTAssertFalse(object.optional)
+            XCTAssertFalse(object.isOptional)
             XCTAssertEqual(object.choices.count, 2)
             
             let jsonData = try encoder.encode(object)
@@ -320,7 +320,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.integer))
             XCTAssertEqual(object.uiHint, .standard(.slider))
-            if let range = object.range as? RSDIntegerRange {
+            if let range = object.range as? RSDDecimalRange {
                 XCTAssertEqual(range.minimumValue, -2)
                 XCTAssertEqual(range.maximumValue, 3)
                 XCTAssertEqual(range.stepInterval, 1)

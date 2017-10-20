@@ -122,6 +122,4 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
             try container.encode(dictionary, forKey: .spokenInstructions)
         }
     }
-    
-
 }

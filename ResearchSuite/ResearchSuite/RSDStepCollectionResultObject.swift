@@ -95,4 +95,17 @@ extension RSDStepCollectionResult {
         inputResults.append(result)
         return previousResult
     }
+    
+    /**
+     Append the result to the end of the input results, replacing the previous instance with the same identifier.
+     
+     @param result  The result to add to the input results.
+     */
+    @discardableResult
+    mutating public func removeInputResult(with identified: String) -> RSDResult? {
+        guard let idx = inputResults.index(where: { $0.identifier == identifier }) else {
+            return nil
+        }
+        return inputResults.remove(at: idx)
+    }
 }

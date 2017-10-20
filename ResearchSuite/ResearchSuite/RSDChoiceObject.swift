@@ -56,8 +56,8 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, Codable {
     
     public init(value: Value, text: String? = nil, iconName: String? = nil, detail: String? = nil, isExclusive: Bool = false) throws {
         _value = value
-        if text == nil && iconName == nil {
-            // If both the text and the icon are nil, then the display text is the value
+        if text == nil && iconName == nil && value is String {
+            // If both the text and the icon are nil, then see if the value is a string and if so, set that as the text.
             self.text = "\(value)"
         }
         else {

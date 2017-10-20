@@ -47,6 +47,9 @@
 		FF80B1391F7C244200582849 /* RSDIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B1381F7C244200582849 /* RSDIdentifier.swift */; };
 		FF80B13B1F7C3D1D00582849 /* RSDFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */; };
 		FF80B13D1F7C582500582849 /* RSDValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B13C1F7C582500582849 /* RSDValidationError.swift */; };
+		FF8335AB1F985F36009FC1A8 /* RSDFormStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8335AA1F985F36009FC1A8 /* RSDFormStepDataSource.swift */; };
+		FF8335AD1F9881A5009FC1A8 /* RSDFormStepDataSourceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8335AC1F9881A5009FC1A8 /* RSDFormStepDataSourceObject.swift */; };
+		FF8335B51F991328009FC1A8 /* RSDPickerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8335B41F991328009FC1A8 /* RSDPickerDataSource.swift */; };
 		FF87CD861F8413F700084426 /* FactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD851F8413F700084426 /* FactoryTests.swift */; };
 		FF87CD881F84149400084426 /* RSDResourceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD871F84149400084426 /* RSDResourceWrapper.swift */; };
 		FF87CD891F84354A00084426 /* FactoryTest_TaskGroup.json in Resources */ = {isa = PBXBuildFile; fileRef = FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */; };
@@ -71,7 +74,9 @@
 		FFB6A4B71F85F38800E37752 /* RSDMultipleComponentInputFieldObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB6A4B61F85F38800E37752 /* RSDMultipleComponentInputFieldObject.swift */; };
 		FFB6A4B91F8607C300E37752 /* RSDRangeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB6A4B81F8607C300E37752 /* RSDRangeObject.swift */; };
 		FFBA00041F85657C0079A404 /* RSDChoiceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBA00031F85657C0079A404 /* RSDChoiceObject.swift */; };
+		FFC7DE5E1F992EA800851C95 /* RSDPickerDataSourceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC7DE5D1F992EA800851C95 /* RSDPickerDataSourceObject.swift */; };
 		FFCA18401F8F326B006ADAF3 /* RSDActiveUIStepCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCA183F1F8F326B006ADAF3 /* RSDActiveUIStepCommand.swift */; };
+		FFCCA7061F9FAD67009BC24C /* RSDInputFieldError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCCA7051F9FAD67009BC24C /* RSDInputFieldError.swift */; };
 		FFD1A28A1F8818A700ECD730 /* RSDDateCoderObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1A2891F8818A700ECD730 /* RSDDateCoderObject.swift */; };
 		FFD1A28C1F882A0100ECD730 /* RSDDateCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD1A28B1F882A0100ECD730 /* RSDDateCoder.swift */; };
 		FFD243261F95544A0083F458 /* RSDJSONNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD243251F95544A0083F458 /* RSDJSONNumber.swift */; };
@@ -85,6 +90,7 @@
 		FFE0DE4C1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */; };
 		FFE0DE4F1F874A8600BB1BDF /* RSDFormUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */; };
 		FFFCBCE21F900449000B55C1 /* RSDStringLiteralOptionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFCBCE11F900449000B55C1 /* RSDStringLiteralOptionSet.swift */; };
+		FFFDB95F1F99D4A500BA1348 /* ResearchSuite.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* ResearchSuite.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +148,9 @@
 		FF80B1381F7C244200582849 /* RSDIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDIdentifier.swift; sourceTree = "<group>"; };
 		FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFactory.swift; sourceTree = "<group>"; };
 		FF80B13C1F7C582500582849 /* RSDValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDValidationError.swift; sourceTree = "<group>"; };
+		FF8335AA1F985F36009FC1A8 /* RSDFormStepDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormStepDataSource.swift; sourceTree = "<group>"; };
+		FF8335AC1F9881A5009FC1A8 /* RSDFormStepDataSourceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormStepDataSourceObject.swift; sourceTree = "<group>"; };
+		FF8335B41F991328009FC1A8 /* RSDPickerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPickerDataSource.swift; sourceTree = "<group>"; };
 		FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FactoryTest_TaskFoo.json; sourceTree = "<group>"; };
 		FF87CD851F8413F700084426 /* FactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryTests.swift; sourceTree = "<group>"; };
 		FF87CD871F84149400084426 /* RSDResourceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceWrapper.swift; sourceTree = "<group>"; };
@@ -165,7 +174,9 @@
 		FFB6A4B61F85F38800E37752 /* RSDMultipleComponentInputFieldObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDMultipleComponentInputFieldObject.swift; sourceTree = "<group>"; };
 		FFB6A4B81F8607C300E37752 /* RSDRangeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRangeObject.swift; sourceTree = "<group>"; };
 		FFBA00031F85657C0079A404 /* RSDChoiceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDChoiceObject.swift; sourceTree = "<group>"; };
+		FFC7DE5D1F992EA800851C95 /* RSDPickerDataSourceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPickerDataSourceObject.swift; sourceTree = "<group>"; };
 		FFCA183F1F8F326B006ADAF3 /* RSDActiveUIStepCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveUIStepCommand.swift; sourceTree = "<group>"; };
+		FFCCA7051F9FAD67009BC24C /* RSDInputFieldError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDInputFieldError.swift; sourceTree = "<group>"; };
 		FFD1A2891F8818A700ECD730 /* RSDDateCoderObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDateCoderObject.swift; sourceTree = "<group>"; };
 		FFD1A28B1F882A0100ECD730 /* RSDDateCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDateCoder.swift; sourceTree = "<group>"; };
 		FFD243251F95544A0083F458 /* RSDJSONNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDJSONNumber.swift; sourceTree = "<group>"; };
@@ -179,6 +190,7 @@
 		FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextFieldOptionsObject.swift; sourceTree = "<group>"; };
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
 		FFFCBCE11F900449000B55C1 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
+		FFFDB9601F99D4A500BA1348 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResearchSuite.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +221,7 @@
 				FF2B55001F68BC7C00663289 /* RSDFormDataType.swift */,
 				FF87CD8B1F844CE400084426 /* RSDFormUIHint.swift */,
 				FF80B1381F7C244200582849 /* RSDIdentifier.swift */,
+				FFCCA7051F9FAD67009BC24C /* RSDInputFieldError.swift */,
 				FFB015D51F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift */,
 				FF87CD8D1F84533B00084426 /* RSDUIActionType.swift */,
 				FF80B13C1F7C582500582849 /* RSDValidationError.swift */,
@@ -321,6 +334,7 @@
 				FF80B12C1F7C0D1300582849 /* Model */,
 				FF8E5F3D1F8C250F00611C23 /* Controller */,
 				FF74A7E81F7DCE630064A634 /* DataSource */,
+				FFFDB9591F99802C00BA1348 /* Localization */,
 				FF2B54FD1F68AE8000663289 /* Serialization */,
 				FF2B55021F69077200663289 /* Utilities */,
 			);
@@ -381,6 +395,8 @@
 			isa = PBXGroup;
 			children = (
 				FF74A7ED1F7DD3590064A634 /* Protocol */,
+				FF8335AC1F9881A5009FC1A8 /* RSDFormStepDataSourceObject.swift */,
+				FFC7DE5D1F992EA800851C95 /* RSDPickerDataSourceObject.swift */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";
@@ -388,6 +404,8 @@
 		FF74A7ED1F7DD3590064A634 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				FF8335AA1F985F36009FC1A8 /* RSDFormStepDataSource.swift */,
+				FF8335B41F991328009FC1A8 /* RSDPickerDataSource.swift */,
 				FF74A7E91F7DCFA80064A634 /* RSDTaskDataSource.swift */,
 			);
 			name = Protocol;
@@ -469,6 +487,14 @@
 				FFBA00031F85657C0079A404 /* RSDChoiceObject.swift */,
 			);
 			name = Choice;
+			sourceTree = "<group>";
+		};
+		FFFDB9591F99802C00BA1348 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				FFFDB9611F99D4A500BA1348 /* ResearchSuite.strings */,
+			);
+			name = Localization;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -569,6 +595,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFFDB95F1F99D4A500BA1348 /* ResearchSuite.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,10 +621,13 @@
 				FF1D6D301F82FC2E00B05349 /* RSDSchemaInfo.swift in Sources */,
 				FF177D7B1F82E19600C2D4D7 /* RSDTaskObject.swift in Sources */,
 				FF74A7DC1F7DA2BF0064A634 /* RSDUIStepObject.swift in Sources */,
+				FF8335AB1F985F36009FC1A8 /* RSDFormStepDataSource.swift in Sources */,
 				FFB6A4AD1F859B0100E37752 /* RSDChoiceInputFieldObject.swift in Sources */,
 				FFD1A28C1F882A0100ECD730 /* RSDDateCoder.swift in Sources */,
 				FFB015D61F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift in Sources */,
 				FF269B721F7E128700C9289E /* RSDUIActionObject.swift in Sources */,
+				FFC7DE5E1F992EA800851C95 /* RSDPickerDataSourceObject.swift in Sources */,
+				FF8335B51F991328009FC1A8 /* RSDPickerDataSource.swift in Sources */,
 				FF80B1391F7C244200582849 /* RSDIdentifier.swift in Sources */,
 				FFB015CA1F8BE62E00AC209B /* RSDRange.swift in Sources */,
 				FF5C4C1D1F8C872500F311BA /* RSDTaskController.swift in Sources */,
@@ -611,6 +641,7 @@
 				FF8E5F471F8C3DA000611C23 /* RSDAsyncActionController.swift in Sources */,
 				FF72B2591F6867F8004C6F15 /* RSDUIAction.swift in Sources */,
 				FF74A7CD1F7CC7750064A634 /* RSDSchemaInfoObject.swift in Sources */,
+				FFCCA7061F9FAD67009BC24C /* RSDInputFieldError.swift in Sources */,
 				FFB6A4B91F8607C300E37752 /* RSDRangeObject.swift in Sources */,
 				FF74A7CF1F7D63D50064A634 /* RSDImageWrapper.swift in Sources */,
 				FF1D6D3E1F8311BE00B05349 /* RSDConditionalStepNavigatorObject.swift in Sources */,
@@ -639,6 +670,7 @@
 				FF72B2571F68646B004C6F15 /* RSDStep.swift in Sources */,
 				FF80B1201F7B01E200582849 /* RSDJSONValue.swift in Sources */,
 				FF80B13B1F7C3D1D00582849 /* RSDFactory.swift in Sources */,
+				FF8335AD1F9881A5009FC1A8 /* RSDFormStepDataSourceObject.swift in Sources */,
 				FF8A21561F7CB86B00C7B27F /* RSDStepNavigator.swift in Sources */,
 				FFB015E01F8C081200AC209B /* RSDPermissionType.swift in Sources */,
 				FFD1A28A1F8818A700ECD730 /* RSDDateCoderObject.swift in Sources */,
@@ -680,6 +712,17 @@
 			targetProxy = FF72B23C1F6859D3004C6F15 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FFFDB9611F99D4A500BA1348 /* ResearchSuite.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FFFDB9601F99D4A500BA1348 /* en */,
+			);
+			name = ResearchSuite.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FF72B2431F6859D3004C6F15 /* Debug */ = {

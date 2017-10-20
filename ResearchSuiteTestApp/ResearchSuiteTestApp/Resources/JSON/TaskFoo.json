@@ -8,11 +8,11 @@
               "detail": "On this screen you should see an image above the text with a picture of an envelop. There is also a short footnote. The button should say 'Go, Dogs! Go!'. Tap it to continue.",
               "footnote": "This is a footnote.",
               "imageBefore": "before",
-                  "actions": {
-                      "goForward": {
-                          "buttonTitle": "Go, Dogs! Go!"
-                      }
+              "actions": {
+                  "goForward": {
+                      "buttonTitle": "Go, Dogs! Go!"
                   }
+              }
               },
               {
               "identifier": "step2",
@@ -80,6 +80,36 @@
                           ]
               },
               {
+              "identifier": "selectOne",
+              "type": "form",
+              "title": "Select one option",
+              "dataType": "singleChoice",
+              "choices": ["Alpha","Beta","Charlie","Delta","Epsilon"]
+              },
+              {
+              "identifier": "selectMultiple",
+              "type": "form",
+              "title": "Select as many as you want",
+              "dataType": "multipleChoice.integer",
+              "choices": [{
+                          "text": "Alpha",
+                          "value": 1,
+                          },
+                          {
+                          "text": "Beta",
+                          "value": 2,
+                          },
+                          {
+                          "text": "Gamma",
+                          "value": 3,
+                          },
+                          {
+                          "text": "None of the above",
+                          "value": 0,
+                          "isExclusive": true
+                          }]
+              },
+              {
               "identifier": "step4",
               "type": "form",
               "title": "Pick some values",
@@ -106,12 +136,9 @@
               "type": "form",
               "title": "Enter a year",
               "text": "Enter a year in the past.",
-              "dataType": "date",
+              "dataType": "year",
               "uiHint": "textfield",
-              "range": {
-                  "allowFuture": false,
-                  "codingFormat": "yyyy"
-                  }
+              "range": { "allowFuture": false }
               }
               ]
 }

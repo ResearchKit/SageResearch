@@ -110,5 +110,5 @@ public protocol RSDAnswerResult : RSDResult {
     /**
      The answer for the result.
      */
-    var value: RSDJSONValue? { get set }
+    var value: Any? { get set }
 }

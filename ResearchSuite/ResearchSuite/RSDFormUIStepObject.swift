@@ -34,7 +34,7 @@
 import Foundation
 
 open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep {
-    
+
     open private(set) var inputFields: [RSDInputField]
     
     public init(identifier: String, inputFields: [RSDInputField], type: String? = nil) {
@@ -81,6 +81,14 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep {
         }
     }
     
+    open override func instantiateStepResult() -> RSDResult {
+        return RSDStepCollectionResultObject(identifier: self.identifier)
+    }
+    
+    public func instantiateDataSource(with taskPath: RSDTaskPath) -> RSDFormStepDataSource {
+        fatalError("Not yet implmented")
+    }
+
     open override func validate() throws {
         try super.validate()
         

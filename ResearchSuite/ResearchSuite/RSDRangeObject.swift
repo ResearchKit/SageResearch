@@ -35,29 +35,24 @@ import Foundation
 
 public struct RSDDateRangeObject : RSDDateRange, Codable {
     
-    public private(set) var minDate: Date?
-    public private(set) var maxDate: Date?
-    public private(set) var allowFuture: Bool?
-    public private(set) var allowPast: Bool?
-    public private(set) var dateCoder: RSDDateCoder?
+    public let minDate: Date?
+    public let maxDate: Date?
+    public let allowFuture: Bool?
+    public let allowPast: Bool?
+    public let minuteInterval: Int?
+    public let dateCoder: RSDDateCoder?
     
-    public var calendarComponents: Set<Calendar.Component> {
-        guard let components = dateCoder?.calendarComponents else {
-            return [.year, .month, .day, .hour, .minute]
-        }
-        return components
-    }
-    
-    public init(minimumDate: Date?, maximumDate: Date?, allowFuture: Bool? = nil, allowPast: Bool? = nil, dateCoder: RSDDateCoder? = nil) {
+    public init(minimumDate: Date?, maximumDate: Date?, allowFuture: Bool? = nil, allowPast: Bool? = nil, minuteInterval: Int? = nil, dateCoder: RSDDateCoder? = nil) {
         self.minDate = minimumDate
         self.maxDate = maximumDate
         self.allowFuture = allowFuture
         self.allowPast = allowPast
+        self.minuteInterval = minuteInterval
         self.dateCoder = dateCoder
     }
     
     private enum CodingKeys : String, CodingKey {
-        case minDate = "minimumDate", maxDate = "maximumDate", allowFuture, allowPast, codingFormat
+        case minDate = "minimumDate", maxDate = "maximumDate", allowFuture, allowPast, minuteInterval, codingFormat
     }
     
     public init(from decoder: Decoder) throws {
@@ -85,6 +80,7 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
         self.maxDate = maxDate
         self.allowPast = try container.decodeIfPresent(Bool.self, forKey: .allowPast)
         self.allowFuture = try container.decodeIfPresent(Bool.self, forKey: .allowFuture)
+        self.minuteInterval = try container.decodeIfPresent(Int.self, forKey: .minuteInterval)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -100,41 +96,43 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
             }
         }
         else {
-            if let obj = minDate { try container.encode(obj, forKey: .minDate) }
-            if let obj = maxDate { try container.encode(obj, forKey: .maxDate) }
+            try container.encodeIfPresent(minDate, forKey: .minDate)
+            try container.encodeIfPresent(maxDate, forKey: .maxDate)
         }
-        if let obj = allowPast { try container.encode(obj, forKey: .allowPast) }
-        if let obj = allowFuture { try container.encode(obj, forKey: .allowFuture) }
+        try container.encodeIfPresent(allowPast, forKey: .allowPast)
+        try container.encodeIfPresent(allowFuture, forKey: .allowFuture)
+        try container.encodeIfPresent(minuteInterval, forKey: .minuteInterval)
     }
 }
 
-public struct RSDIntegerRangeObject : RSDIntegerRange, Codable {
+public struct RSDDecimalRangeObject : RSDDecimalRange, Codable {
     
-    public private(set) var minimumValue: Int?
-    public private(set) var maximumValue: Int?
-    public private(set) var stepInterval: Int?
-    public private(set) var unit: String?
+    public let minimumValue: Decimal?
+    public let maximumValue: Decimal?
+    public let stepInterval: Decimal?
+    public let unit: String?
+    public let formatter: Formatter?
     
-    public init(minimumValue: Int?, maximumValue: Int?, stepInterval: Int? = nil, unit: String? = nil) {
-        self.minimumValue = minimumValue
-        self.maximumValue = maximumValue
+    public init(minimumDecimal: Decimal?, maximumDecimal: Decimal?, stepInterval: Decimal? = nil, unit: String? = nil, numberFormatter: NumberFormatter? = nil) {
+        self.minimumValue = minimumDecimal
+        self.maximumValue = maximumDecimal
         self.stepInterval = stepInterval
         self.unit = unit
+        self.formatter = numberFormatter
     }
-}
+    
+    public init(minimumInt: Int?, maximumInt: Int?, stepInterval: Int? = nil, unit: String? = nil, numberFormatter: NumberFormatter? = nil) {
+        self.minimumValue = (minimumInt == nil) ? nil : Decimal(integerLiteral: minimumInt!)
+        self.maximumValue = (maximumInt == nil) ? nil : Decimal(integerLiteral: maximumInt!)
+        self.stepInterval = (stepInterval == nil) ? nil : Decimal(integerLiteral: stepInterval!)
+        self.unit = unit
+        self.formatter = numberFormatter
+    }
 
-public struct RSDDecimalRangeObject : RSDDecimalRange, RSDRangeWithFormatter, Codable {
-    
-    public private(set) var minimumValue: Double?
-    public private(set) var maximumValue: Double?
-    public private(set) var stepInterval: Double?
-    public private(set) var unit: String?
-    public private(set) var formatter: Formatter?
-    
-    public init(minimumValue: Double?, maximumValue: Double?, stepInterval: Double? = nil, unit: String? = nil, numberFormatter: NumberFormatter? = nil) {
-        self.minimumValue = minimumValue
-        self.maximumValue = maximumValue
-        self.stepInterval = stepInterval
+    public init(minimumDouble: Double?, maximumDouble: Double?, stepInterval: Double? = nil, unit: String? = nil, numberFormatter: NumberFormatter? = nil) {
+        self.minimumValue = (minimumDouble == nil) ? nil : Decimal(floatLiteral: minimumDouble!)
+        self.maximumValue = (maximumDouble == nil) ? nil : Decimal(floatLiteral: maximumDouble!)
+        self.stepInterval = (stepInterval == nil) ? nil : Decimal(floatLiteral: stepInterval!)
         self.unit = unit
         self.formatter = numberFormatter
     }
@@ -145,25 +143,44 @@ public struct RSDDecimalRangeObject : RSDDecimalRange, RSDRangeWithFormatter, Co
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.minimumValue = try container.decodeIfPresent(Double.self, forKey: .minimumValue)
-        self.maximumValue = try container.decodeIfPresent(Double.self, forKey: .maximumValue)
-        self.stepInterval = try container.decodeIfPresent(Double.self, forKey: .stepInterval)
+        let minimumDouble = try container.decodeIfPresent(Double.self, forKey: .minimumValue)
+        let maximumDouble = try container.decodeIfPresent(Double.self, forKey: .maximumValue)
+        let stepInterval = try container.decodeIfPresent(Double.self, forKey: .stepInterval)
+        self.minimumValue = (minimumDouble == nil) ? nil : Decimal(floatLiteral: minimumDouble!)
+        self.maximumValue = (maximumDouble == nil) ? nil : Decimal(floatLiteral: maximumDouble!)
+        self.stepInterval = (stepInterval == nil) ? nil : Decimal(floatLiteral: stepInterval!)
         self.unit = try container.decodeIfPresent(String.self, forKey: .unit)
         if let digits = try container.decodeIfPresent(Int.self, forKey: .maximumDigits) {
-            let formatter = NumberFormatter()
-            formatter.maximumFractionDigits = digits
-            self.formatter = formatter
+            self.formatter = RSDDecimalRangeObject.defaultNumberFormatter(with: digits)
+        } else {
+            self.formatter = nil
         }
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        if let obj = self.minimumValue { try container.encode(obj, forKey: .minimumValue) }
-        if let obj = self.maximumValue { try container.encode(obj, forKey: .maximumValue) }
-        if let obj = self.stepInterval { try container.encode(obj, forKey: .stepInterval) }
-        if let obj = self.unit { try container.encode(obj, forKey: .unit) }
+        if let obj = (self.minimumValue as NSDecimalNumber?)?.doubleValue {
+            try container.encode(obj, forKey: .minimumValue)
+        }
+        if let obj = (self.maximumValue as NSDecimalNumber?)?.doubleValue {
+            try container.encode(obj, forKey: .maximumValue)
+        }
+        if let obj = (self.stepInterval as NSDecimalNumber?)?.doubleValue  {
+            try container.encode(obj, forKey: .stepInterval)
+        }
+        try container.encodeIfPresent(self.unit, forKey: .unit)
         if let digits = (self.formatter as? NumberFormatter)?.maximumFractionDigits {
             try container.encode(digits, forKey: .maximumDigits)
         }
     }
+    
+    static func defaultNumberFormatter(with maximumFractionDigits: Int) -> NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = maximumFractionDigits
+        formatter.generatesDecimalNumbers = true
+        formatter.locale = Locale.current
+        formatter.numberStyle = .decimal
+        return formatter
+    }
+    
 }

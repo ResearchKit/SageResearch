@@ -121,6 +121,16 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
      The footnote is displayed in a smaller font at the bottom of the screen. It is intended to be used in order to include disclaimer, copyright, etc. that is important to display in the step but should not distract from the main purpose of the step.
      */
     var footnote: String? { get }
+    
+    /**
+     Does the step have an image to display before the  `title`, `text`, and `detail`?
+     */
+    var hasImageBefore: Bool { get }
+    
+    /**
+     Does the step have an image to display before the  `title`, `text`, and `detail`?
+     */
+    var hasImageAfter: Bool { get }
 
     /**
      An image to display before the `title`, `text`, and `detail`. This would be displayed above or to the left of the text, depending upon the orientation of the screen.
@@ -146,9 +156,16 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
 public protocol RSDFormUIStep: RSDUIStep {
     
     /**
-     The items array is used to hold a logical subgrouping of input fields. If this array holds more than one input field, those fields should describe an input that is uses a logical subgrouping such as blood pressure, height (ft-in), or given/family name.
+     The items array is used to hold a logical subgrouping of input fields. If this array holds more than one input field, those fields should describe an input that is uses a logical subgrouping such as blood pressure or given/family name.
      */
     var inputFields: [RSDInputField] { get }
+    
+    /**
+     Create a data source for vending the input field types and handling the results.
+     
+     @param taskPath    The taskPath that includes the information about the result to this point.
+     */
+    func instantiateDataSource(with taskPath: RSDTaskPath) -> RSDFormStepDataSource
 }
 
 

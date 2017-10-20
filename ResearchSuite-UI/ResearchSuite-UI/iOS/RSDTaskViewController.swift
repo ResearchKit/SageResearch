@@ -60,7 +60,10 @@ public protocol RSDTaskViewControllerDelegate : class {
     func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor taskInfo: RSDTaskInfo) -> (UIViewController & RSDStepController)?
 }
 
-
+public protocol RSDStepViewControllerVendor : RSDUIStep {
+    
+    func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)
+}
 
 /**
  `RSDTaskViewController` is an implementation of task view controller that is suitable to the iPhone or iPad. To use this view controller, the
@@ -74,10 +77,18 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         if let vc = delegate?.taskViewController(self, viewControllerFor: step) {
             return vc
         }
-        
-        // TODO: Implement step view controller logic for which one to return
-        //return RSDStepViewController(step: step)
-        return DebugStepViewController(step: step)
+        if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskPath) {
+            return vc
+        }
+        return self.vendDefaultViewController(for: step)
+    }
+    
+    open func vendDefaultViewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
+        if RSDGenericStepViewController.doesSupport(step) {
+            return RSDGenericStepViewController(step: step)
+        } else {
+            return DebugStepViewController(step: step)
+        }
     }
     
     open func viewController(for taskInfo: RSDTaskInfo) -> (UIViewController & RSDStepController) {
@@ -115,7 +126,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     public func handleFinishedLoading() {
         // Forward the finished loading message to the RSDTaskInfoUIController (if present)
-        if let vc = (pageViewController as? UIViewController)?.childViewControllers.first as? RSDStepController {
+        if let vc = pageViewController.childViewControllers.first as? RSDStepController {
             vc.didFinishLoading()
         }
     }
@@ -171,19 +182,19 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     // MARK: View management
     
-    public private(set) var pageViewController: RSDPageViewControllerProtocol!
+    public private(set) var pageViewController: (UIViewController & RSDPageViewControllerProtocol)!
     
     /**
      This is a work-around to not being able to hook up child view controllers via the storyboard IBOutlet. The method is called in `viewDidLoad` to see if there is already a view controller of the expected type that is included in the storyboard or nib that was used to create this view controller.
      
      @return    If found, returns a view controller that conforms to `RSDPageViewControllerProtocol`.
      */
-    open func findPageViewController() -> RSDPageViewControllerProtocol? {
+    open func findPageViewController() -> (UIViewController & RSDPageViewControllerProtocol)? {
         guard let vc = self.childViewControllers.first(where: { $0 is RSDPageViewControllerProtocol })
             else {
                 return nil
         }
-        return vc as? RSDPageViewControllerProtocol
+        return vc as? (UIViewController & RSDPageViewControllerProtocol)
     }
     
     /**
@@ -191,7 +202,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
      
      @return    A view controller that conforms to `RSDPageViewControllerProtocol`.
      */
-    open func addPageViewController() -> RSDPageViewControllerProtocol {
+    open func addPageViewController() -> (UIViewController & RSDPageViewControllerProtocol) {
         // Set up the page view controller
         let pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         pageVC.edgesForExtendedLayout = UIRectEdge(rawValue: 0)
@@ -227,17 +238,21 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     // MARK: UIPageViewControllerDataSource
     
+    open var currentStepController: (UIViewController & RSDStepController)? {
+        return pageViewController.childViewControllers.first as? (UIViewController & RSDStepController)
+    }
+    
     /// Respond to a gesture to go back. Always returns `nil` but will call `goBack()` if appropriate.
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard self.hasStepBefore else { return nil }
-        self.goBack()
+        self.currentStepController?.goBack()
         return nil
     }
     
     /// Respond to a gesture to go forward. Always returns `nil` but will call `goForward()` if appropriate.
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard self.hasStepAfter && self.isForwardEnabled else { return nil }
-        self.goForward()
+        guard self.hasStepAfter && (currentStepController?.isForwardEnabled ?? false) else { return nil }
+        self.currentStepController?.goForward()
         return nil
     }
 }

@@ -70,6 +70,12 @@ public enum RSDFormDataType {
          */
         case date
         
+        
+        /**
+         In a year question, the participant can enter a year when an event occured. A year data type can map to an `RSDDateRange` or `RSDDecimalRange` to box the allowed values.
+         */
+        case year
+        
         /**
          The decimal question type asks the participant to enter a decimal number. A decimal data type can map to a `RSDDecimalRange` to box the allowed values.
          */
@@ -154,13 +160,13 @@ public enum RSDFormDataType {
         case .base(let baseType):
             switch baseType {
             case .boolean:
-                return [.checkbox, .radioButton, .toggle]
+                return [.list, .picker, .checkbox, .radioButton, .toggle]
                 
             case .date:
                 return [.picker, .textfield]
                 
-            case .decimal, .integer:
-                return [.picker, .textfield, .slider]
+            case .decimal, .integer, .year:
+                return [.textfield, .slider, .picker]
                 
             case .string:
                 return [.textfield, .multipleLine]
@@ -169,28 +175,34 @@ public enum RSDFormDataType {
         case .collection(let collectionType, _):
             switch (collectionType) {
             case .multipleChoice, .singleChoice:
-                return [.checkbox, .combobox, .list, .picker, .radioButton, .slider]
+                return [.list, .slider, .checkbox, .combobox, .picker, .radioButton]
                 
             case .multipleComponent:
-                return [.picker]
-            }
-        
-        case .measurement(let measurement, let range):
-            switch measurement {
-            case .height:
-                switch range {
-                case .adult:
-                    return [.picker]
-                case .infant, .child:
-                    return [.picker, .textfield]
-                }
-                
-            case .weight, .bloodPressure:
                 return [.picker, .textfield]
             }
+        
+        case .measurement(_, _):
+            return [.picker, .textfield]
 
         case .custom(_):
             return RSDFormUIHint.Standard.all
+        }
+    }
+    
+    public var listSelectionHints : Set<RSDFormUIHint> {
+        switch self {
+        case .collection(let collectionType, _):
+            if collectionType == .multipleComponent {
+                return []
+            } else {
+                return [.standard(.checkbox), .standard(.list), .standard(.radioButton)]
+            }
+            
+        case .base(.boolean):
+            return [.standard(.list)]
+            
+        default:
+            return []
         }
     }
     
@@ -213,6 +225,24 @@ public enum RSDFormDataType {
             
         case .custom(_, let baseType):
             return baseType
+        }
+    }
+    
+    /**
+     Return the default result answer type for this input field.
+     */
+    public func defaultAnswerResultBaseType() -> RSDAnswerResultType.BaseType {
+        switch self.baseType {
+        case .boolean:
+            return .boolean
+        case .date:
+            return .date
+        case .decimal:
+            return .decimal
+        case .integer, .year:
+            return .integer
+        case .string:
+            return .string
         }
     }
 }

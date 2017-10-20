@@ -47,21 +47,21 @@
                     <rect key="frame" x="311" y="20" width="48" height="30"/>
                     <state key="normal" title="Cancel"/>
                     <connections>
-                        <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Rkt-WA-idb"/>
+                        <action selector="cancel" destination="-1" eventType="touchUpInside" id="pKy-Q3-h5f"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mDT-r2-g1w">
                     <rect key="frame" x="311" y="605" width="32" height="30"/>
                     <state key="normal" title="Next"/>
                     <connections>
-                        <action selector="goForward:" destination="-1" eventType="touchUpInside" id="VPE-um-gRT"/>
+                        <action selector="goForward" destination="-1" eventType="touchUpInside" id="9pT-Qw-Fo0"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPO-55-Zgd">
                     <rect key="frame" x="32" y="605" width="34" height="30"/>
                     <state key="normal" title="Back"/>
                     <connections>
-                        <action selector="goBack:" destination="-1" eventType="touchUpInside" id="Dem-Qc-kUa"/>
+                        <action selector="goBack" destination="-1" eventType="touchUpInside" id="cjG-Sw-IM4"/>
                     </connections>
                 </button>
             </subviews>

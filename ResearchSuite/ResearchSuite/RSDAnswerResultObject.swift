@@ -39,7 +39,7 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
     public var startDate: Date = Date()
     public var endDate: Date = Date()
     public let answerType: RSDAnswerResultType
-    public var value: RSDJSONValue?
+    public var value: Any?
     
     public init(identifier: String, answerType: RSDAnswerResultType) {
         self.identifier = identifier

@@ -35,6 +35,8 @@ import UIKit
 
 open class RSDTaskInfoViewController: UIViewController, RSDStepController, UITextViewDelegate {
 
+    
+
     open class var nibName: String {
         return String(describing: RSDTaskInfoViewController.self)
     }
@@ -58,6 +60,10 @@ open class RSDTaskInfoViewController: UIViewController, RSDStepController, UITex
     
     public var taskController: RSDTaskController!
     public var taskInfo: RSDTaskInfo!
+    
+    open var isForwardEnabled: Bool {
+        return taskController.isForwardEnabled
+    }
     
     public init(taskInfo: RSDTaskInfo) {
         super.init(nibName: type(of: self).nibName, bundle: type(of: self).bundle)
@@ -119,7 +125,7 @@ open class RSDTaskInfoViewController: UIViewController, RSDStepController, UITex
         // TODO: add copyright with smaller font syoung 10/17/2017
         
         // Enable start button if the task is loaded
-        self.startButton?.isEnabled = (self.taskController.taskPath.task != nil)
+        self.startButton?.isEnabled = self.isForwardEnabled
     }
     
     open override func viewDidLayoutSubviews() {
@@ -128,10 +134,28 @@ open class RSDTaskInfoViewController: UIViewController, RSDStepController, UITex
     }
     
     @IBAction public func startTapped() {
-        self.taskController.goForward()
+        goForward()
     }
     
     @IBAction public func cancelTapped() {
+        cancel()
+    }
+    
+    public func goForward() {
+        self.taskController.goForward()
+    }
+    
+    public func goBack() {
+        if self.taskController.hasStepBefore {
+            self.taskController.goBack()
+        }
+    }
+    
+    public func skipForward() {
+        self.taskController.goForward()
+    }
+    
+    public func cancel() {
         self.taskController.handleTaskCancelled()
     }
     

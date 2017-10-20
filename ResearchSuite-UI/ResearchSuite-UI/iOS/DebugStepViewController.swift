@@ -56,6 +56,10 @@ class DebugStepViewController: RSDStepViewController {
         
         // Set up the view
         self.identifierLabel.text = self.step.identifier
-        self.titleLabel.text = (self.step as? RSDUIStep)?.title
+        self.titleLabel.text = String(describing: self.step!)
+    }
+    
+    override var isForwardEnabled: Bool {
+        return true
     }
 }

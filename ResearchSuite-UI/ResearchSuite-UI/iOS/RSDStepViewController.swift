@@ -53,8 +53,6 @@ public protocol RSDStepViewControllerProtocol : class {
 
 open class RSDStepViewController : UIViewController, RSDStepController, RSDUIActionHandler, RSDStepViewControllerProtocol {
 
-    
-
     open weak var taskController: RSDTaskController!
     
     open weak var delegate: RSDStepViewControllerDelegate?
@@ -68,6 +66,24 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDUIAct
     public var activeStep: RSDActiveUIStep? {
         return step as? RSDActiveUIStep
     }
+    
+    public var formStep: RSDFormUIStep? {
+        return step as? RSDFormUIStep
+    }
+    
+    open var originalResult: RSDResult? {
+        return taskController.taskPath.previousResults?.last(where: { $0.identifier == self.step.identifier })
+    }
+    
+    lazy open var currentResult: RSDResult = {
+        if let lastResult = taskController.taskPath.result.stepHistory.last, lastResult.identifier == self.step.identifier {
+            return lastResult
+        } else {
+            let result = self.step.instantiateStepResult()
+            taskController.taskPath.appendStepHistory(with: result)
+            return result
+        }
+    }()
     
     public init(step: RSDStep) {
         super.init(nibName: nil, bundle: nil)
@@ -85,6 +101,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDUIAct
     
     // MARK: View appearance handling
     
+    // We use a flag to track whether viewWillDisappear has been called because we run a check on
+    // viewDidAppear to see if we have any textFields in the tableView. This check is done after a delay,
+    // so we need to track if viewWillDisappear was called during the delay
+    public private(set) var isVisible = false
+    public private(set) var isFirstAppearance: Bool = true
+    
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         delegate?.stepViewController(self, willAppear: animated)
@@ -94,8 +116,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDUIAct
     }
     
     open override func viewDidAppear(_ animated: Bool) {
+        isVisible = true
         super.viewDidAppear(animated)
         delegate?.stepViewController(self, didAppear: animated)
+        
+        // setup the result (lazy load) to mark the startDate
+        let _ = currentResult
+        
+        // If this is the first appearance then perform the start commands
         if isFirstAppearance {
             performStartCommands()
         }
@@ -103,6 +131,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDUIAct
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
+        isVisible = false
         super.viewWillDisappear(animated)
         delegate?.stepViewController(self, willDisappear: animated)
     }
@@ -115,65 +144,62 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDUIAct
     
     // MARK: Navigation
     
-    @IBOutlet public weak var cancelButton: UIButton?
-    @IBOutlet public weak var continueButton: UIButton?
-    @IBOutlet public weak var backButton: UIButton?
-    @IBOutlet public weak var skipButton: UIButton?
-    @IBOutlet public weak var learnMoreButton: UIButton?
+    @IBOutlet open weak var cancelButton: UIButton?
+    @IBOutlet open weak var continueButton: UIButton?
+    @IBOutlet open weak var backButton: UIButton?
+    @IBOutlet open weak var skipButton: UIButton?
+    @IBOutlet open weak var learnMoreButton: UIButton?
+    
+    open var isForwardEnabled: Bool {
+        return taskController.isForwardEnabled
+    }
     
     open func didFinishLoading() {
-        // TODO: Implement syoung 10/17/2017
-        // Enable buttons or automatically go forward as appropriate
+        // Enable the continue button
+        continueButton?.isEnabled = true
     }
 
     open func setupNavigation() {
-        self.cancelButton?.isHidden = self.shouldHideAction(for: .navigation(.cancel)) ?? false
-        if let action = self.action(for: .navigation(.cancel)) {
-            cancelButton?.setTitle(action.buttonTitle, for: .normal)
-            cancelButton?.setImage(action.buttonIcon, for: .normal)
+        setupButton(cancelButton, for: .navigation(.cancel))
+        setupButton(continueButton, for: .navigation(.goForward))
+        setupButton(backButton, for: .navigation(.goBackward))
+        setupButton(skipButton, for: .navigation(.skip))
+        setupButton(learnMoreButton, for: .navigation(.learnMore))
+    }
+    
+    open func setupButton(_ button: UIButton?, for actionType: RSDUIActionType) {
+        guard let btn = button else { return }
+        
+        // Set up whether or not the button is visible and it's text/image
+        btn.isHidden = self.shouldHideAction(for: actionType) ?? true
+        if let action = self.action(for: actionType) {
+            btn.setTitle(action.buttonTitle, for: .normal)
+            btn.setImage(action.buttonIcon, for: .normal)
         }
         
-        self.backButton?.isHidden = self.shouldHideAction(for: .navigation(.goBackward)) ?? false
-        if let action = self.action(for: .navigation(.goBackward)) {
-            backButton?.setTitle(action.buttonTitle, for: .normal)
-            backButton?.setImage(action.buttonIcon, for: .normal)
-        }
-        
-        self.continueButton?.isHidden = self.shouldHideAction(for: .navigation(.goForward)) ?? false
-        if let action = self.action(for: .navigation(.goForward)) {
-            continueButton?.setTitle(action.buttonTitle, for: .normal)
-            continueButton?.setImage(action.buttonIcon, for: .normal)
-        }
-        
-        self.skipButton?.isHidden = self.shouldHideAction(for: .navigation(.skip)) ?? true
-        if let action = self.action(for: .navigation(.skip)) {
-            skipButton?.setTitle(action.buttonTitle, for: .normal)
-            skipButton?.setImage(action.buttonIcon, for: .normal)
-        }
-        
-        self.learnMoreButton?.isHidden = self.shouldHideAction(for: .navigation(.learnMore)) ?? true
-        if let action = self.action(for: .navigation(.learnMore)) {
-            learnMoreButton?.setTitle(action.buttonTitle, for: .normal)
-            learnMoreButton?.setImage(action.buttonIcon, for: .normal)
+        // If this is a goForward button, then there is some additional logic around
+        // loading state and whether or not any input fields are optional
+        if actionType == .navigation(.goForward) {
+            btn.isEnabled = isForwardEnabled
         }
     }
     
-    @IBAction open func goForward(_ sender: Any? = nil) {
+    @IBAction open func goForward() {
         performStopCommands()
         self.taskController.goForward()
     }
     
-    @IBAction open func goBack(_ sender: Any? = nil) {
+    @IBAction open func goBack() {
         stop()
         self.taskController.goBack()
     }
     
-    @IBAction open func skipForward(_ sender: Any? = nil) {
+    @IBAction open func skipForward() {
         stop()
         self.taskController.goForward()
     }
     
-    @IBAction open func cancel(_ sender: Any? = nil) {
+    @IBAction open func cancel() {
         stop()
         self.taskController.handleTaskCancelled()
     }
@@ -186,9 +212,22 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDUIAct
             // Allow the step to override the default from the delegate
             return action
         }
-        else {
+        else if let action = self.delegate?.action(for: actionType){
             // If no override by the step then return the action from the delegate
-            return self.delegate?.action(for: actionType)
+           return action
+        }
+        else {
+            // Otherwise, look at the action and show the default based on the type
+            switch actionType {
+            case .navigation(.cancel):
+                return RSDUIActionObject(buttonTitle: Localization.buttonCancel())
+            case .navigation(.goForward):
+                return self.taskController.hasStepAfter ? RSDUIActionObject(buttonTitle: Localization.buttonNext()) : RSDUIActionObject(buttonTitle: Localization.buttonDone())
+            case .navigation(.goBackward):
+                return self.taskController.hasStepBefore ? RSDUIActionObject(buttonTitle: Localization.buttonBack()) : nil
+            default:
+                return nil
+            }
         }
     }
     
@@ -217,7 +256,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDUIAct
     
     // MARK: Active step handling
     
-    public private(set) var isFirstAppearance: Bool = true
     public private(set) var startUptime: TimeInterval?
     private var timer: Timer?
     private var lastInstruction: Int = 0

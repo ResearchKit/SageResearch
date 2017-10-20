@@ -58,7 +58,7 @@ public protocol RSDInputField {
     /**
      A Boolean value indicating whether the user can skip the input field without providing an answer.
      */
-    var optional: Bool { get }
+    var isOptional: Bool { get }
     
     /**
      The data type for this input field. The data type can have an associated ui hint.
@@ -89,11 +89,6 @@ public protocol RSDInputField {
      Validate the input field to check for any configuration that should throw an error.
      */
     func validate() throws
-    
-    /**
-     Validation run on the result.
-     */
-    func validateResult(_ result: RSDAnswerResult) throws -> Bool
 }
 
 /**
@@ -135,15 +130,23 @@ public protocol RSDChoice {
     func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
 
-/**
- `RSDChoiceOptions` extends the properties of an `RSDFieldInput` with information required to create a choice selection input field.
- */
-public protocol RSDChoiceInputField : RSDInputField {
+public protocol RSDChoiceOptions: RSDChoicePickerDataSource {
     
     /**
      A list of choices for input field.
      */
     var choices : [RSDChoice] { get }
+    
+    /**
+     A Boolean value indicating whether the user can skip the input field without providing an answer.
+     */
+    var isOptional: Bool { get }
+}
+
+/**
+ `RSDChoiceOptions` extends the properties of an `RSDFieldInput` with information required to create a choice selection input field.
+ */
+public protocol RSDChoiceInputField : RSDInputField, RSDChoiceOptions {
     
     /**
      Does the choice selection allow entering a custom value
@@ -154,7 +157,7 @@ public protocol RSDChoiceInputField : RSDInputField {
 /**
  `RSDMultipleComponentOptions` extends the properties of an `RSDFieldInput` with information required to create a multiple component input field.
  */
-public protocol RSDMultipleComponentInputField : RSDInputField {
+public protocol RSDMultipleComponentInputField : RSDInputField, RSDChoicePickerDataSource {
         
     /**
      A list of choices for input fields that make up the multiple component option set.

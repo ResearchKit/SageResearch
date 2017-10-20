@@ -43,6 +43,16 @@ open class RSDUIActionObject : RSDUIAction, Codable {
         return UIImage(named: name)
     }
     
+    public init(buttonTitle: String) {
+        self.buttonTitle = buttonTitle
+        self.iconName = nil
+    }
+    
+    public init(iconName: String) {
+        self.buttonTitle = nil
+        self.iconName = iconName
+    }
+    
     // MARK: Codable implementation (auto synthesized implementation does not work with subclassing)
     
     private enum CodingKeys : String, CodingKey {

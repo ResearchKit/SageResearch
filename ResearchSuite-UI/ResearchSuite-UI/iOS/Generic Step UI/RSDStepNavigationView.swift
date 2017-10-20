@@ -49,7 +49,6 @@ open class RSDStepNavigationView: UIView {
     private let kSideMargin: CGFloat = CGFloat(25.0).proportionalToScreenWidth()
     private let kButtonWidth: CGFloat = CGFloat(120.0).proportionalToScreenWidth()
     private let kShadowHeight: CGFloat = 5.0
-    private let showPreviousButton = RSDGenericStepUIConfig.backButtonPosition() == .navigationView
     
     open var previousButton: UIButton!
     open var nextButton: UIButton!
@@ -127,9 +126,7 @@ open class RSDStepNavigationView: UIView {
         shadowView.translatesAutoresizingMaskIntoConstraints = false
         
         // add previous and next buttons
-        if showPreviousButton {
-            self.addSubview(previousButton)
-        }
+        self.addSubview(previousButton)
         self.addSubview(nextButton)
         self.addSubview(shadowView)
         
@@ -142,24 +139,17 @@ open class RSDStepNavigationView: UIView {
         
         NSLayoutConstraint.deactivate(self.constraints)
         
-        if showPreviousButton {
-
-            previousButton.makeWidth(.equal, constants().buttonWidth)
-            previousButton.makeHeight(.equal, RSDRoundedButtonDefaultHeight)
-            
-            previousButton.alignToSuperview([.leading], padding: constants().sideMargin)
-            previousButton.alignToSuperview([.top], padding: constants().topMargin)
-            previousButton.alignToSuperview([.bottom], padding: constants().bottomMargin)
-            
-            // if we have a previousButton, then define width or nextButton
-            nextButton.makeWidth(.equal, constants().buttonWidth)
-            
-        } else {
-            // if we don't have previousButton, align left edge of nextButton to superview left
-            nextButton.alignToSuperview([.leading], padding: constants().sideMargin)
-        }
+        previousButton.makeWidth(.equal, constants().buttonWidth)
+        previousButton.makeHeight(.equal, RSDRoundedButton.defaultHeight)
         
-        nextButton.makeHeight(.equal, RSDRoundedButtonDefaultHeight)
+        previousButton.alignToSuperview([.leading], padding: constants().sideMargin)
+        previousButton.alignToSuperview([.top], padding: constants().topMargin)
+        previousButton.alignToSuperview([.bottom], padding: constants().bottomMargin)
+        
+        // if we have a previousButton, then define width or nextButton
+        nextButton.makeWidth(.equal, constants().buttonWidth)
+        
+        nextButton.makeHeight(.equal, RSDRoundedButton.defaultHeight)
         nextButton.alignToSuperview([.trailing], padding: constants().sideMargin)
         nextButton.alignToSuperview([.top], padding: constants().topMargin)
         nextButton.alignToSuperview([.bottom], padding: constants().bottomMargin)

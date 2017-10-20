@@ -33,14 +33,14 @@
 
 import Foundation
 
-public class RSDTaskPath : Equatable {
+public class RSDTaskPath : NSObject {
     
     public typealias FetchCompletionHandler = (RSDTaskPath, Error?) -> Void
     
     /**
      Identifier for this path segment
      */
-    public private(set) var identifier: String
+    public let identifier: String
     
     /**
      String identifying the full path for this task.
@@ -102,6 +102,7 @@ public class RSDTaskPath : Equatable {
         self.task = task
         self.taskInfo = task.taskInfo
         self.result = task.instantiateTaskResult()
+        super.init()
         commonInit(identifier: task.identifier, parentPath: parentPath)
     }
     
@@ -109,17 +110,14 @@ public class RSDTaskPath : Equatable {
         self.identifier = taskInfo.identifier
         self.taskInfo = taskInfo
         self.result = RSDTaskResultObject(identifier: taskInfo.identifier)  // Create a temporary result
+        super.init()
         commonInit(identifier: taskInfo.identifier, parentPath: parentPath)
     }
     
     private func commonInit(identifier: String, parentPath: RSDTaskPath?) {
         guard let parentPath = parentPath else { return }
         self.parentPath = parentPath
-        self.previousResults = (parentPath.result.stepHistory.first(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
-    }
-    
-    public var description: String {
-        return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
+        self.previousResults = (parentPath.result.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
     }
     
     /**
@@ -192,8 +190,8 @@ public class RSDTaskPath : Equatable {
         }
     }
     
-    public static func ==(lhs: RSDTaskPath, rhs: RSDTaskPath) -> Bool {
-        return lhs.fullPath == rhs.fullPath
+    override public var description: String {
+        return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
     }
 }
 

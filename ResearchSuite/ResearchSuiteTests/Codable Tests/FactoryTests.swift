@@ -122,7 +122,7 @@ class FactoryTests: XCTestCase {
             expect.fulfill()
         }
         
-        waitForExpectations(timeout: 30) { (err) in
+        waitForExpectations(timeout: 10) { (err) in
             print(String(describing: err))
         }
     }

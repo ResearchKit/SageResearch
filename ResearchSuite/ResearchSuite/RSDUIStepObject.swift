@@ -34,6 +34,7 @@
 import Foundation
 
 open class RSDUIStepObject : RSDUIStep, Codable, RSDNavigationRule {
+    
     public let identifier: String
     public let type: String
     
@@ -62,6 +63,14 @@ open class RSDUIStepObject : RSDUIStep, Codable, RSDNavigationRule {
     }
     
     // MARK: Image handling
+    
+    public var hasImageBefore: Bool {
+        return imageBefore != nil
+    }
+    
+    public var hasImageAfter: Bool {
+        return imageAfter != nil
+    }
     
     open func imageBefore(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
         RSDImageWrapper.fetchImage(image: imageBefore, for: size, callback: callback)

@@ -37,5 +37,12 @@ public protocol RSDStepController : class {
     
     weak var taskController: RSDTaskController! { get set }
     
+    var isForwardEnabled: Bool { get }
+    
     func didFinishLoading()
+    
+    func goForward()
+    func goBack()
+    func skipForward()
+    func cancel()
 }

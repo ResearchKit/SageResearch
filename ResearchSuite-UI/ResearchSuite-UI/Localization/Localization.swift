@@ -36,10 +36,10 @@ import UIKit
 open class Localization: NSObject {
     
     public static var allBundles: [Bundle] = {
-        return Bundle.allBundles
+        return [Bundle.main, Bundle(for: Localization.self)]
     }()
         
-    open class func localizedString(_ key: String) -> String {
+    @objc open class func localizedString(_ key: String) -> String {
         // Look in these bundles for a localization for the given key
         for bundle in allBundles {
             let tableName = defaultTableNameForBundle(bundle)
@@ -53,7 +53,7 @@ open class Localization: NSObject {
         return key
     }
     
-    open class func defaultTableNameForBundle(_ bundle: Bundle) -> String? {
+    @objc open class func defaultTableNameForBundle(_ bundle: Bundle) -> String? {
         return bundle.bundleIdentifier?.components(separatedBy: ".").last
     }
     
@@ -134,6 +134,10 @@ open class Localization: NSObject {
     
     open class func buttonNext() -> String {
         return localizedString("BUTTON_NEXT")
+    }
+    
+    open class func buttonBack() -> String {
+        return localizedString("BUTTON_BACK")
     }
     
     open class func buttonGetStarted() -> String {

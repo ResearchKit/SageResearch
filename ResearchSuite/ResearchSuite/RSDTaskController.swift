@@ -296,6 +296,17 @@ extension RSDTaskController {
     }
     
     private func _moveToNextStep() {
+        
+        // Check if the current step is nil, if so, then validate the task
+        if taskPath.currentStep == nil {
+            do {
+                try taskPath.task!.validate()
+            } catch let error {
+                self.handleTaskFailure(with: error)
+                return
+            }
+        }
+        
         // save the previous step and look for a next step
         let previousStep = taskPath.currentStep
         guard let step = taskPath.task!.stepNavigator.step(after: previousStep, with: &taskPath.result)

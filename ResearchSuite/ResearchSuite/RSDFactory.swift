@@ -137,7 +137,12 @@ open class RSDFactory {
      Type of steps that can be created by this factory.
      */
     public enum StepType : String, Codable {
-        case instruction, active, form, section, subtask
+        case active         // RSDActiveUIStep
+        case completion     // RSDUIStep
+        case form           // RSDFormUIStep
+        case instruction    // RSDUIStep
+        case section        // RSDSectionStep
+        case subtask        // RSDTaskStep
     }
     
     /**
@@ -198,7 +203,7 @@ open class RSDFactory {
      */
     open func decodeStep(from decoder:Decoder, with type:StepType) throws -> RSDStep? {
         switch (type) {
-        case .instruction:
+        case .instruction, .completion:
             return try RSDUIStepObject(from: decoder)
         case .active:
             return try RSDActiveUIStepObject(from: decoder)
