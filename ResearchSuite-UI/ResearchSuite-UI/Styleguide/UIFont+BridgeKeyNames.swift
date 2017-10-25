@@ -54,6 +54,10 @@ extension UIFont {
     @objc open class var headerViewPromptLabel: UIFont {
         return UIFont.systemFont(ofSize: 15.0, weight: .regular)
     }
+    
+    @objc open class var footnoteLabel: UIFont {
+        return UIFont.systemFont(ofSize: 15.0, weight: .regular)
+    }
 
     @objc open class var headerViewStepCountLabel: UIFont {
         return UIFont.systemFont(ofSize: 14.0, weight: .regular)

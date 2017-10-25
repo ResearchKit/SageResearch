@@ -93,6 +93,7 @@ open class RSDStepHeaderView: UIView {
         didSet {
             imageView.image = image
             setNeedsUpdateConstraints()
+            updateConstraintsIfNeeded()
         }
     }
     
@@ -140,8 +141,8 @@ open class RSDStepHeaderView: UIView {
     open var headerLabel: UILabel!
     open var detailsLabel: UILabel!
     open var promptLabel: UILabel!
-    open var imageView: UIImageView!
-    
+    open var imageView: UIImageView!    
+    open var hasImage: Bool = false
     
     /**
      Layout constants. Subclasses can override to customize; otherwise the default private
@@ -382,7 +383,7 @@ open class RSDStepHeaderView: UIView {
             return shouldShowProgress && progressView.progress > 0
         }
         else if let imageView = view as? UIImageView {
-            return imageView.image != nil
+            return hasImage || (imageView.image != nil)
         }
         else if let label = view as? UILabel {
             return (label.text?.characters.count ?? 0) > 0

@@ -39,6 +39,11 @@ import Foundation
 public protocol RSDResizableImage {
     
     /**
+     A value that can be used to identify the image as unique.
+     */
+    var identifier: String { get }
+    
+    /**
      Get an image of the appropriate size.
      
      @param size        The size of the image to return.
@@ -64,6 +69,10 @@ public protocol RSDImageWrapperDelegate {
  */
 public struct RSDImageWrapper : RSDResizableImage {
     public let imageName: String
+    
+    public var identifier: String {
+        return imageName
+    }
     
     public static var sharedDelegate: RSDImageWrapperDelegate?
     

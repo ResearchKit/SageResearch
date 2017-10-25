@@ -301,3 +301,124 @@ class RSDStepTextField: UITextField {
     var indexPath: IndexPath?
 }
 
+// MARK: Text label cell
+
+open class RSDTextLabelCell : UITableViewCell {
+    
+    private let kSideMargin = CGFloat(20.0).proportionalToScreenWidth()
+    private let kVertMargin: CGFloat = 10.0
+    private let kMinHeight: CGFloat = 75.0
+    
+    public var label = UILabel()
+    
+    open var labelColor: UIColor {
+        return UIColor.choiceCellLabel
+    }
+    
+    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        commonInit()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+        commonInit()
+    }
+    
+    func commonInit() {
+        
+        self.selectionStyle = .none
+        
+        contentView.addSubview(label)
+        
+        label.accessibilityTraits = UIAccessibilityTraitSummaryElement
+
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (kSideMargin * 2)
+        
+        label.numberOfLines = 0
+        label.font = UIFont.footnoteLabel
+        label.textColor = UIColor.headerViewDetailsLabel
+        label.textAlignment = .left
+        
+        setNeedsUpdateConstraints()
+    }
+    
+    open override func updateConstraints() {
+        
+        NSLayoutConstraint.deactivate(self.constraints)
+        
+        label.alignToSuperview([.leading, .trailing], padding: kSideMargin)
+        label.alignToSuperview([.top], padding: kVertMargin)
+        
+        contentView.makeHeight(.greaterThanOrEqual, kMinHeight)
+        
+        super.updateConstraints()
+    }
+}
+
+// MARK: Image cell
+
+open class RSDImageViewCell : UITableViewCell {
+    
+    private let kVertMargin: CGFloat = 10.0
+    private let kImageViewHeight: CGFloat = CGFloat(150.0).proportionalToScreenWidth()
+
+    public var iconView = UIImageView()
+    
+    private var _loading = false
+    public var imageLoader: RSDResizableImage? {
+        didSet {
+            if !_loading, let loader = imageLoader, iconView.image == nil {
+                _loading = true
+                loader.fetchImage(for: iconView.bounds.size, callback: { [weak self] (img) in
+                    self?.iconView.image = img
+                })
+            }
+        }
+    }
+    
+    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        commonInit()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+        commonInit()
+    }
+    
+    func commonInit() {
+        
+        self.selectionStyle = .none
+        
+        iconView.contentMode = .scaleAspectFit
+        contentView.addSubview(iconView)
+        
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        
+        setNeedsUpdateConstraints()
+    }
+    
+    open override func updateConstraints() {
+        
+        NSLayoutConstraint.deactivate(self.constraints)
+        
+        iconView.alignToSuperview([.top, .bottom], padding: kVertMargin)
+        iconView.alignCenterHorizontal(padding: 0.0)
+        iconView.makeHeight(.equal, kImageViewHeight)
+        
+        super.updateConstraints()
+    }
+}
+

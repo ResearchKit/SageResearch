@@ -160,13 +160,13 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     */
     open class func doesSupport(_ step: RSDStep) -> Bool {
         // Only UI steps are supported
-        guard let uiStep = step as? RSDUIStep else { return false }
+        guard let _ = step as? RSDUIStep else { return false }
         
         // If this is a form step then need to look to see if there is custom handling
         if let formStep = step as? RSDFormUIStep {
             return doesSupportInputFields(in: formStep.inputFields)
         } else {
-            return !uiStep.hasImageAfter // TODO: syoung 10/18/2017 Implement support for showing an image after the text
+            return true
         }
     }
     
@@ -394,6 +394,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     open func setupHeaderView(_ headView: RSDStepHeaderView) {
         
         if uiStep?.hasImageBefore ?? false {
+            headView.hasImage = true
             uiStep!.imageBefore(for: headView.imageView.bounds.size, callback: { [weak self] (img) in
                 self?.headerView?.image = img
             })
@@ -538,8 +539,18 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier)
         
         guard cell == nil,
-            let tableItem = tableData?.tableItem(at: indexPath),
-            let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
+            let tableItem = tableData?.tableItem(at: indexPath)
+            else {
+                return cell
+        }
+        
+        if tableItem is RSDTextTableItem {
+            return RSDTextLabelCell(style: .default, reuseIdentifier: identifier)
+        } else if tableItem is RSDImageTableItem {
+            return RSDImageViewCell(style: .default, reuseIdentifier: identifier)
+        }
+        
+        guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
             let uiHintType = itemGroup.uiHint.standardType
             else {
                 return cell
@@ -593,7 +604,21 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     func configure(cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
 
-        if let textFieldCell = cell as? RSDStepTextFieldCell {
+        if let labelCell = cell as? RSDTextLabelCell {
+            guard let item = tableData?.tableItem(at: indexPath) as? RSDTextTableItem
+                else {
+                    return
+            }
+            labelCell.label.text = item.text
+        }
+        else if let imageCell = cell as? RSDImageViewCell {
+            guard let item = tableData?.tableItem(at: indexPath) as? RSDImageTableItem
+                else {
+                    return
+            }
+            imageCell.imageLoader = item
+        }
+        else if let textFieldCell = cell as? RSDStepTextFieldCell {
             guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup
                 else {
                     return
@@ -682,11 +707,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     }
     
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        /**
-         // TODO: syoung10/23/2017 Remove commented out once sure not using it.
-        let textFieldText: NSString = (textField.text ?? "") as NSString
-        let textAfterUpdate = textFieldText.replacingCharacters(in: range, with: string)
-         */
 
         // Always enable the next button once something has been entered
         (textField.inputAccessoryView as? RSDStepNavigationView)?.nextButton.isEnabled = true
@@ -725,16 +745,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         }
         return itemGroup
     }
-    
-//    open func shouldSaveOnEndEditing(textField: UITextField?) -> Bool {
-//        guard textField != nil, activeTextField != nil, textField! === activeTextField!,
-//            let itemGroup = itemGroup(for: textField),
-//            let standardHint = itemGroup.uiHint.standardType
-//            else {
-//                return false
-//        }
-//        return standardHint == .textfield || standardHint == .combobox
-//    }
     
     @discardableResult
     public func validateAndSave(textField: UITextField) -> Bool {

@@ -146,7 +146,6 @@ open class RSDStepNavigationView: UIView {
         previousButton.alignToSuperview([.top], padding: constants().topMargin)
         previousButton.alignToSuperview([.bottom], padding: constants().bottomMargin)
         
-        // if we have a previousButton, then define width or nextButton
         nextButton.makeWidth(.equal, constants().buttonWidth)
         
         nextButton.makeHeight(.equal, RSDRoundedButton.defaultHeight)

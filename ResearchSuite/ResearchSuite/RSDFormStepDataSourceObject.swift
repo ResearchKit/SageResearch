@@ -179,9 +179,9 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
      @return    The sections for the table.
      */
     private func populateSections() {
-        guard let items = inputFields(), items.count > 0 else { return }
-        
-        for item in items {
+        guard let uiStep = step as? RSDUIStep else { return }
+
+        for item in inputFields() {
             
             // Get the next row index
             let rowIndex: Int = {
@@ -209,14 +209,28 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
                 sections.append(section)
             }
         }
+        
+        // add image below and footnote
+        var items: [RSDTableItem] = []
+        if uiStep.hasImageAfter {
+            items.append(RSDImageTableItem(rowIndex: items.count, step: uiStep, isImageBefore: false))
+        }
+        if let footnote = uiStep.footnote {
+            items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
+        }
+        if items.count > 0 {
+            let itemGroup = RSDTableItemGroup(items: items, beginningRowIndex: 0)
+            let section = RSDTableSection(sectionIndex: sections.count, itemGroups: [itemGroup])
+            sections.append(section)
+        }
     }
     
     /**
      Convenience method for returning the input fields.
      @return    The input fields for the form step.
      */
-    private func inputFields() -> [RSDInputField]? {
-        guard let formStep = self.step as? RSDFormUIStep else { return nil }
+    private func inputFields() -> [RSDInputField] {
+        guard let formStep = self.step as? RSDFormUIStep else { return [] }
         return formStep.inputFields
     }
 }
@@ -270,6 +284,9 @@ public final class RSDTableSection {
         itemGroups.append(itemGroup)
     }
 }
+
+
+// MARK: RSDTableItemGroup
 
 /**
  `RSDTableItemGroup` is a generic table item group object that can be used to display information in a tableview that does not have an associated input field.
@@ -729,6 +746,9 @@ final class RSDMeasurementTableItemGroup : RSDInputFieldTableItemGroup {
     }
 }
 
+
+// MARK: RSDTableItem
+
 /**
  `RSDTableItem` can be used to represent the type of the row to display.
  */
@@ -786,5 +806,38 @@ open class RSDChoiceTableItem : RSDInputFieldTableItem {
         self.choiceIndex = choiceIndex
         self.choice = choice
         super.init(rowIndex: rowIndex, inputField: inputField)
+    }
+}
+
+public class RSDTextTableItem : RSDTableItem {
+    
+    public let text: String
+    
+    public init(rowIndex: Int, text: String) {
+        self.text = text
+        super.init(rowIndex: rowIndex)
+    }
+}
+
+public class RSDImageTableItem : RSDTableItem, RSDResizableImage {
+    private let _step: RSDUIStep
+    private let _isImageBefore: Bool
+    
+    public var identifier: String {
+        return "\(_step.identifier).\(_isImageBefore)"
+    }
+    
+    public init(rowIndex: Int, step: RSDUIStep, isImageBefore: Bool) {
+        _step = step
+        _isImageBefore = isImageBefore
+        super.init(rowIndex: rowIndex)
+    }
+
+    public func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
+        if _isImageBefore {
+            _step.imageBefore(for: size, callback: callback)
+        } else {
+            _step.imageAfter(for: size, callback: callback)
+        }
     }
 }

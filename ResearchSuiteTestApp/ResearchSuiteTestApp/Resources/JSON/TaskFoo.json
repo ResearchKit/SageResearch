@@ -10,7 +10,7 @@
               "imageBefore": "before",
               "actions": {
                   "goForward": {
-                      "buttonTitle": "Go, Dogs! Go!"
+                      "buttonTitle": "Go, Dogs!"
                   }
               }
               },
@@ -23,7 +23,7 @@
               "imageAfter": "phoneinpocketIllustration",
               "actions": {
                       "goForward": {
-                          "buttonTitle": "Start Countdown"
+                          "buttonTitle": "Start"
                       }
                   }
               },

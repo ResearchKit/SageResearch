@@ -156,6 +156,10 @@ extension UIColor {
         return UIColor.lightGray
     }
     
+    @objc open class var footnoteLabel: UIColor {
+        return UIColor.lightGray
+    }
+    
     @objc open class var headerViewProgressBar: UIColor {
         return UIColor(red: 103.0 / 255.0, green: 191.0 / 255.0, blue: 95.0 / 255.0, alpha: 1.0)
     }
