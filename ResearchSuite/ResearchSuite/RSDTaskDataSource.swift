@@ -43,7 +43,7 @@ public protocol RSDTaskDataSource {
     /**
      Fetch the task info with the given identifier.
      */
-    func taskInfo(with identifier: String) -> RSDTaskInfo?
+    func taskInfo(with identifier: String) -> RSDTaskInfoStep?
     
     /**
      Fetch the schema info with the given identifier.

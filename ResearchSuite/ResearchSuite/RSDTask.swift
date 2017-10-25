@@ -46,7 +46,7 @@ public protocol RSDTask : RSDUIActionHandler {
     /**
      Additional information about the task.
      */
-    var taskInfo: RSDTaskInfo? { get }
+    var taskInfo: RSDTaskInfoStep? { get }
     
     /**
      Additional information about the result schema.

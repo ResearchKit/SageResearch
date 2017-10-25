@@ -68,7 +68,7 @@ public protocol RSDTaskController : class {
      
      @return        `true` if the task should be fetched using the protocol extension.
      */
-    func shouldFetchSubtask(for step: RSDTaskStep) -> Bool
+    func shouldFetchSubtask(for step: RSDTaskInfoStep) -> Bool
     
     /**
      Should the protocol extension vend the steps in a section using paging to move to the next step or does this implementation handle section steps using custom logic?
@@ -84,7 +84,7 @@ public protocol RSDTaskController : class {
      
      @param taskInfo    The task info for the task being fetched.
      */
-    func showLoading(for taskInfo: RSDTaskInfo)
+    func showLoading(for taskInfo: RSDTaskInfoStep)
     
     /**
      Fired when the task controller is ready to go forward. This method must invoke the `goForward()` method either to go forward automatically or else go forward after a user action.
@@ -130,7 +130,7 @@ extension RSDTaskController {
     /**
      Convenience method for getting/setting the main entry point for the task controller via the task info.
      */
-    public var topLevelTaskInfo : RSDTaskInfo! {
+    public var topLevelTaskInfo : RSDTaskInfoStep! {
         get {
             return topLevelTaskPath?.taskInfo
         }
@@ -335,9 +335,9 @@ extension RSDTaskController {
         // Set the new current step
         self.taskPath.currentStep = step
         
-        if let subtaskStep = step as? RSDTaskStep, shouldFetchSubtask(for: subtaskStep) {
+        if let subtaskStep = step as? RSDTaskInfoStep, shouldFetchSubtask(for: subtaskStep) {
             // If this is a subtask step, then update the task path and fetch the subtask
-            self.taskPath = RSDTaskPath(taskInfo: subtaskStep.subtaskInfo, parentPath: self.taskPath)
+            self.taskPath = RSDTaskPath(taskInfo: subtaskStep, parentPath: self.taskPath)
             _fetchTaskFromCurrentInfo()
         }
         else if let sectionStep = step as? RSDSectionStep, shouldPageSectionSteps(for: sectionStep) {

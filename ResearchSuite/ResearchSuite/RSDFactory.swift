@@ -78,7 +78,7 @@ open class RSDFactory {
      
      @return                        The decoded task.
      */
-    open func decodeTask(with resourceTransformer: RSDResourceTransformer, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
+    open func decodeTask(with resourceTransformer: RSDResourceTransformer, taskInfo: RSDTaskInfoStep? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
         let (data, type) = try resourceTransformer.resourceData()
         return try decodeTask(with: data,
                               resourceType: type,
@@ -97,7 +97,7 @@ open class RSDFactory {
      
      @return                The created task.
      */
-    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
+    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskInfo: RSDTaskInfoStep? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskInfo: taskInfo, schemaInfo: schemaInfo)
         return try decoder.decode(RSDTaskObject.self, from: data)
     }
@@ -106,14 +106,14 @@ open class RSDFactory {
     // MARK: Task Info factory
     
     /**
-     Decode the task info from this decoder. This method *must* return a task info object. The default implementation will return a `RSDTaskInfoObject`.
+     Decode the task info from this decoder. This method *must* return a task info object. The default implementation will return a `RSDTaskInfoStepObject`.
      
      @param decoder     The decoder to use to instatiate the object.
      
      @return            The task info created from this decoder.
      */
-    open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
-        return try RSDTaskInfoObject(from: decoder)
+    open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfoStep {
+        return try RSDTaskInfoStepObject(from: decoder)
     }
     
     
@@ -156,7 +156,7 @@ open class RSDFactory {
         case form           // RSDFormUIStep
         case instruction    // RSDUIStep
         case section        // RSDSectionStep
-        case subtask        // RSDTaskStep
+        case taskInfo       // RSDTaskInfoStepStep
     }
     
     /**
@@ -225,8 +225,8 @@ open class RSDFactory {
             return try RSDFormUIStepObject(from: decoder)
         case .section:
             return try RSDSectionStepObject(from: decoder)
-        case .subtask:
-            return try RSDTaskStepObject(from: decoder)
+        case .taskInfo:
+            return try RSDTaskInfoStepObject(from: decoder)
         }
     }
     
@@ -444,7 +444,7 @@ open class RSDFactory {
      
      @return                The decoder for the given type.
      */
-    open func createDecoder(for resourceType: RSDResourceType, taskInfo: RSDTaskInfo? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDFactoryDecoder {
+    open func createDecoder(for resourceType: RSDResourceType, taskInfo: RSDTaskInfoStep? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDFactoryDecoder {
         var decoder : RSDFactoryDecoder = try {
             if resourceType == .json {
                 return self.createJSONDecoder()
@@ -539,8 +539,8 @@ extension Decoder {
         return self.userInfo[RSDFactory.CodingUserInfoKeys.factory.key] as? RSDFactory ?? RSDFactory.shared
     }
     
-    public var taskInfo: RSDTaskInfo? {
-        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskInfo.key] as? RSDTaskInfo
+    public var taskInfo: RSDTaskInfoStep? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskInfo.key] as? RSDTaskInfoStep
     }
     
     public var schemaInfo: RSDSchemaInfo? {
@@ -572,8 +572,8 @@ extension Encoder {
         return self.userInfo[RSDFactory.CodingUserInfoKeys.factory.key] as? RSDFactory ?? RSDFactory.shared
     }
     
-    public var taskInfo: RSDTaskInfo? {
-        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskInfo.key] as? RSDTaskInfo
+    public var taskInfo: RSDTaskInfoStep? {
+        return self.userInfo[RSDFactory.CodingUserInfoKeys.taskInfo.key] as? RSDTaskInfoStep
     }
     
     public var schemaInfo: RSDSchemaInfo? {

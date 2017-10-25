@@ -1,5 +1,5 @@
 //
-//  RSDTaskInfoViewController.swift
+//  RSDTaskInfoStepViewController.swift
 //  ResearchSuiteUI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,14 +33,14 @@
 
 import UIKit
 
-open class RSDTaskInfoViewController: UIViewController, RSDStepController, UITextViewDelegate {
+open class RSDTaskInfoStepViewController: UIViewController, RSDStepController, UITextViewDelegate {
 
     open class var nibName: String {
-        return String(describing: RSDTaskInfoViewController.self)
+        return String(describing: RSDTaskInfoStepViewController.self)
     }
     
     open class var bundle: Bundle {
-        return Bundle(for: RSDTaskInfoViewController.self)
+        return Bundle(for: RSDTaskInfoStepViewController.self)
     }
     
     @IBOutlet public var headerView: UIView?
@@ -57,17 +57,18 @@ open class RSDTaskInfoViewController: UIViewController, RSDStepController, UITex
     open var textColor: UIColor = UIColor.appTextDark
     
     public var taskController: RSDTaskController!
-    public var taskInfo: RSDTaskInfo!
+    public var taskInfo: RSDTaskInfoStep!
     
     public var step: RSDStep! {
-        return taskInfo
+        get { return taskInfo }
+        set { taskInfo = newValue as! RSDTaskInfoStep }
     }
     
     open var isForwardEnabled: Bool {
         return taskController.isForwardEnabled
     }
     
-    public init(taskInfo: RSDTaskInfo) {
+    public init(taskInfo: RSDTaskInfoStep) {
         super.init(nibName: type(of: self).nibName, bundle: type(of: self).bundle)
         self.taskInfo = taskInfo
     }

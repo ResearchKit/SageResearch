@@ -1,5 +1,5 @@
 //
-//  RSDTaskInfoObject.swift
+//  RSDTaskInfoStepObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,13 +34,14 @@
 import Foundation
 
 /**
- `RSDTaskInfoObject` is a concrete implementation of the `RSDTaskInfo` protocol.
+ `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
  */
-open class RSDTaskInfoObject : RSDTaskInfo, RSDSchemaInfo, Decodable {
+public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable {
 
     private enum CodingKeys : String, CodingKey {
         
         case identifier
+        case type
         case schemaIdentifier
         case schemaRevision
         case title
@@ -55,7 +56,7 @@ open class RSDTaskInfoObject : RSDTaskInfo, RSDSchemaInfo, Decodable {
     }
 
     public let identifier: String
-    public let type: String = "taskInfo"
+    public let type: String
     
     public var title: String?
     public var subtitle: String?
@@ -79,11 +80,13 @@ open class RSDTaskInfoObject : RSDTaskInfo, RSDSchemaInfo, Decodable {
 
     public init(with identifier: String) {
         self.identifier = identifier
+        self.type = RSDFactory.StepType.taskInfo.rawValue
     }
     
-    public required init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? RSDFactory.StepType.taskInfo.rawValue
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
@@ -126,14 +129,8 @@ open class RSDTaskInfoObject : RSDTaskInfo, RSDSchemaInfo, Decodable {
     }
 }
 
-extension RSDTaskInfoObject : RSDTaskGroup {
-    public var tasks: [RSDTaskInfo] {
-        return [self]
-    }
-}
-
-extension RSDTaskInfoObject : Equatable {
-    public static func ==(lhs: RSDTaskInfoObject, rhs: RSDTaskInfoObject) -> Bool {
+extension RSDTaskInfoStepObject : Equatable {
+    public static func ==(lhs: RSDTaskInfoStepObject, rhs: RSDTaskInfoStepObject) -> Bool {
         return lhs.identifier == rhs.identifier &&
             lhs.title == rhs.title &&
             lhs.detail == rhs.detail &&
@@ -143,8 +140,14 @@ extension RSDTaskInfoObject : Equatable {
     }
 }
 
-extension RSDTaskInfoObject : Hashable {
+extension RSDTaskInfoStepObject : Hashable {
     public var hashValue : Int {
         return self.identifier.hashValue
+    }
+}
+
+extension RSDTaskInfoStepObject : RSDTaskGroup {
+    public var tasks: [RSDTaskInfoStep] {
+        return [self]
     }
 }

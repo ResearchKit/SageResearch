@@ -42,7 +42,7 @@ public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
     public var title: String?
     public var detail: String?
     public var icon: RSDImageWrapper?
-    public var tasks: [RSDTaskInfo]
+    public var tasks: [RSDTaskInfoStep]
     
     public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
         RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
@@ -52,7 +52,7 @@ public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
         case identifier, title, detail, icon, tasks
     }
     
-    public init(with identifier: String, tasks: [RSDTaskInfo]) {
+    public init(with identifier: String, tasks: [RSDTaskInfoStep]) {
         self.identifier = identifier
         self.tasks = tasks
     }
@@ -66,7 +66,7 @@ public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
         
         let factory = decoder.factory
         var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .tasks)
-        var decodedTasks : [RSDTaskInfo] = []
+        var decodedTasks : [RSDTaskInfoStep] = []
         while !nestedContainer.isAtEnd {
             let taskDecoder = try nestedContainer.superDecoder()
             let task = try factory.decodeTaskInfo(from: taskDecoder)

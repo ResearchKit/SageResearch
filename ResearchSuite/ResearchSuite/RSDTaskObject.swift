@@ -42,10 +42,10 @@ public struct RSDTaskObject : RSDTask, Decodable {
     public var isCancelHidden: Bool = false
     public var isBackHidden: Bool = false
     
-    public var taskInfo: RSDTaskInfo?
+    public var taskInfo: RSDTaskInfoStep?
     public var schemaInfo: RSDSchemaInfo?
     
-    public init(taskInfo: RSDTaskInfo, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
+    public init(taskInfo: RSDTaskInfoStep, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
         self.identifier = taskInfo.identifier
         self.taskInfo = taskInfo
         self.schemaInfo = schemaInfo
@@ -62,7 +62,7 @@ public struct RSDTaskObject : RSDTask, Decodable {
         
         // Set the identifier and
         let identifier: String
-        if let taskInfo = try container.decodeIfPresent(RSDTaskInfoObject.self, forKey: .taskInfo) {
+        if let taskInfo = try container.decodeIfPresent(RSDTaskInfoStepObject.self, forKey: .taskInfo) {
             identifier = taskInfo.identifier
             self.taskInfo = taskInfo
         }

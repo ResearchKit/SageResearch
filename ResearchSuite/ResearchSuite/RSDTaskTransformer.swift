@@ -51,14 +51,14 @@ public protocol RSDTaskTransformer {
      @param schemaInfo  The schema info for the task (if applicable).
      @param callback    The callback with the task or an error if the task failed, run on the main thread.
      */
-    func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfo, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
+    func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
 }
 
 public protocol RSDTaskResourceTransformer : RSDTaskTransformer, RSDResourceTransformer {
 }
 
 extension RSDTaskResourceTransformer {
-    public func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfo, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
+    public func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
         DispatchQueue.global().async {
             do {
                 let task = try factory.decodeTask(with: self, taskInfo: taskInfo, schemaInfo: schemaInfo)

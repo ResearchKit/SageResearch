@@ -50,9 +50,10 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     }
 
     @IBAction func runFooTask(_ sender: Any) {
-        var taskInfo = RSDTaskInfoObject(with: "foo")
-        taskInfo.resourceName = "TaskFoo"
+        var taskInfo = RSDTaskInfoStepObject(with: "foo")
+        taskInfo.taskTransformer = RSDTaskResourceTransformerObject(resourceName: "TaskFoo")
         taskInfo.title = "Da Foo"
+        taskInfo.subtitle = "In da house"
         taskInfo.icon = try! RSDImageWrapper(imageName: "activityIcon")
         taskInfo.detail = "This is an example task created by loading the task info from a resource."
         let taskViewController = RSDTaskViewController(taskInfo: taskInfo)
@@ -91,7 +92,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         return nil
     }
     
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor taskInfo: RSDTaskInfo) -> (UIViewController & RSDStepController)? {
+    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor taskInfo: RSDTaskInfoStep) -> (UIViewController & RSDStepController)? {
         return nil
     }
 }

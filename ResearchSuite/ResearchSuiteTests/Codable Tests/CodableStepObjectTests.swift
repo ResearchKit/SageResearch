@@ -301,44 +301,6 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
-    func testTaskStepObject_Decodable() {
-        
-        let json = """
-        {
-            "identifier": "foobar",
-            "type": "subtask",
-            "title": "Hello World!",
-            "detail": "This is a test.",
-            "copyright": "This is a copyright string.",
-            "estimatedMinutes": 5,
-            "icon": "foobar"
-        }
-        """.data(using: .utf8)! // our data in native (JSON) format
-        
-        do {
-            
-            let object = try decoder.decode(RSDTaskStepObject.self, from: json)
-            
-            XCTAssertEqual(object.identifier, "foobar")
-            
-            guard let task = object.subtaskInfo as? RSDTaskInfoObject else {
-                XCTFail("Encoded object is not expected type")
-                return
-            }
-            
-            XCTAssertEqual(task.identifier, "foobar")
-            XCTAssertEqual(task.title, "Hello World!")
-            XCTAssertEqual(task.detail, "This is a test.")
-            XCTAssertEqual(task.copyright, "This is a copyright string.")
-            XCTAssertEqual(task.estimatedMinutes, 5)
-            XCTAssertEqual(task.icon?.imageName, "foobar")
-            
-        } catch let err {
-            XCTFail("Failed to decode/encode object: \(err)")
-            return
-        }
-    }
-    
     func testSectionStepObject_Decodable() {
         let json = """
         {

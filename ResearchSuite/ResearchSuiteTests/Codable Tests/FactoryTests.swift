@@ -60,8 +60,8 @@ class FactoryTests: XCTestCase {
         XCTAssertEqual(taskGroup.icon?.imageName, "foobarIcon")
         XCTAssertEqual(taskGroup.tasks.count, 2)
         
-        guard let fooTaskInfo = taskGroup.tasks.first as? RSDTaskInfoObject,
-            let barTaskInfo = taskGroup.tasks.last as? RSDTaskInfoObject
+        guard let fooTaskInfo = taskGroup.tasks.first as? RSDTaskInfoStepObject,
+            let barTaskInfo = taskGroup.tasks.last as? RSDTaskInfoStepObject
         else {
             XCTFail("Failed to decode task info objects")
             return
@@ -110,7 +110,7 @@ class FactoryTests: XCTestCase {
                         XCTAssertNotNil(stepNavigator.steps[1] as? RSDActiveUIStepObject)
                         XCTAssertNotNil(stepNavigator.steps[2] as? RSDFormUIStepObject)
                         XCTAssertNotNil(stepNavigator.steps[3] as? RSDSectionStepObject)
-                        XCTAssertNotNil(stepNavigator.steps[3] as? RSDTaskStepObject)
+                        XCTAssertNotNil(stepNavigator.steps[3] as? RSDTaskInfoStepObject)
                     }
                 }
                 else {

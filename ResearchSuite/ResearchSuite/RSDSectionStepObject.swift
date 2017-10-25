@@ -87,7 +87,7 @@ extension RSDSectionStep {
         return nil
     }
     
-    public var taskInfo: RSDTaskInfo? {
+    public var taskInfo: RSDTaskInfoStep? {
         return nil
     }
     

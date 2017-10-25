@@ -80,18 +80,6 @@ public protocol RSDSectionStep: RSDStep, RSDTask, RSDConditionalStepNavigator {
 
 
 /**
- `RSDTaskStep` is used to define a task that can be run independently of a larger task that includes it. For example, if the study wants to run a set of activities in a specific order with a seamless presentation to the user.
- */
-public protocol RSDTaskStep: RSDStep {
-    
-    /**
-     The task info used to define this subgrouping of steps.
-     */
-    var subtaskInfo: RSDTaskInfo { get }
-}
-
-
-/**
  `RSDUIStep` is used to define a single "display unit". 
  */
 public protocol RSDUIStep: RSDStep, RSDUIActionHandler {

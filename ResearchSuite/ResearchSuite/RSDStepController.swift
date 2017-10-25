@@ -43,7 +43,7 @@ public protocol RSDStepController : class {
     /**
      A pointer to the step with the model information used to display and run the step. The implementation of the task cotroller should set this pointer before displaying the step controller.
      */
-    var step: RSDStep! { get }
+    var step: RSDStep! { get set }
     
     /**
      Is forward navigation enabled? This property allows the step controller to indicate that forward step is not enabled.

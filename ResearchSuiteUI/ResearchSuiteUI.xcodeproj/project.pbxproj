@@ -24,8 +24,8 @@
 		FF443E271F7AC21900F43BE7 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF4A2D341F9679EC00484338 /* DebugStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */; };
 		FF4A2D351F9679EC00484338 /* DebugStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */; };
-		FF4A2D3A1F96A6F000484338 /* RSDTaskInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D381F96A6ED00484338 /* RSDTaskInfoViewController.swift */; };
-		FF4A2D3B1F96A6F000484338 /* RSDTaskInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D391F96A6ED00484338 /* RSDTaskInfoViewController.xib */; };
+		FF4A2D3A1F96A6F000484338 /* RSDTaskInfoStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */; };
+		FF4A2D3B1F96A6F000484338 /* RSDTaskInfoStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */; };
 		FF58035E1F9E6ADE004346A8 /* UIAlertController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */; };
 		FF5803601F9E7F4A004346A8 /* RSDDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58035F1F9E7F4A004346A8 /* RSDDatePickerView.swift */; };
 		FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */; };
@@ -41,7 +41,7 @@
 			containerPortal = FF443E0D1F7AC21900F43BE7 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FF443E151F7AC21900F43BE7;
-			remoteInfo = "ResearchSuiteUI";
+			remoteInfo = ResearchSuiteUI;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -66,8 +66,8 @@
 		FF443E261F7AC21900F43BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugStepViewController.swift; sourceTree = "<group>"; };
 		FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugStepViewController.xib; sourceTree = "<group>"; };
-		FF4A2D381F96A6ED00484338 /* RSDTaskInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskInfoViewController.swift; sourceTree = "<group>"; };
-		FF4A2D391F96A6ED00484338 /* RSDTaskInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDTaskInfoViewController.xib; sourceTree = "<group>"; };
+		FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskInfoStepViewController.swift; sourceTree = "<group>"; };
+		FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDTaskInfoStepViewController.xib; sourceTree = "<group>"; };
 		FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Utilities.swift"; sourceTree = "<group>"; };
 		FF58035F1F9E7F4A004346A8 /* RSDDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDatePickerView.swift; sourceTree = "<group>"; };
 		FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewController.swift; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 		FF4A2D361F9679F400484338 /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
-				FF4A2D391F96A6ED00484338 /* RSDTaskInfoViewController.xib */,
+				FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */,
 				FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */,
 			);
 			path = Nibs;
@@ -210,7 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */,
-				FF4A2D381F96A6ED00484338 /* RSDTaskInfoViewController.swift */,
+				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
 				FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */,
 				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
 				FF39E5211F972EEE00C366FC /* Generic Step UI */,
@@ -256,7 +256,7 @@
 			dependencies = (
 			);
 			name = ResearchSuiteUI;
-			productName = "ResearchSuiteUI";
+			productName = ResearchSuiteUI;
 			productReference = FF443E161F7AC21900F43BE7 /* ResearchSuiteUI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -274,7 +274,7 @@
 				FF443E221F7AC21900F43BE7 /* PBXTargetDependency */,
 			);
 			name = ResearchSuiteUITests;
-			productName = "ResearchSuiteUITests";
+			productName = ResearchSuiteUITests;
 			productReference = FF443E1F1F7AC21900F43BE7 /* ResearchSuiteUITests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -324,7 +324,7 @@
 			files = (
 				FF39E5361F97392200C366FC /* ResearchSuiteUI.strings in Resources */,
 				FF4A2D351F9679EC00484338 /* DebugStepViewController.xib in Resources */,
-				FF4A2D3B1F96A6F000484338 /* RSDTaskInfoViewController.xib in Resources */,
+				FF4A2D3B1F96A6F000484338 /* RSDTaskInfoStepViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,7 +354,7 @@
 				FF5C4C2E1F8C923E00F311BA /* UIView+Layout.swift in Sources */,
 				FF39E52C1F97302D00C366FC /* RSDGenericStepViewController.swift in Sources */,
 				FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */,
-				FF4A2D3A1F96A6F000484338 /* RSDTaskInfoViewController.swift in Sources */,
+				FF4A2D3A1F96A6F000484338 /* RSDTaskInfoStepViewController.swift in Sources */,
 				FF39E5281F97302D00C366FC /* RSDStepChoiceCell.swift in Sources */,
 				FF5803601F9E7F4A004346A8 /* RSDDatePickerView.swift in Sources */,
 				FF39E52A1F97302D00C366FC /* RSDStepNavigationView.swift in Sources */,
@@ -518,11 +518,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "ResearchSuiteUI/Info.plist";
+				INFOPLIST_FILE = ResearchSuiteUI/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUI";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -542,11 +542,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "ResearchSuiteUI/Info.plist";
+				INFOPLIST_FILE = ResearchSuiteUI/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUI";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -560,9 +560,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = "ResearchSuiteUITests/Info.plist";
+				INFOPLIST_FILE = ResearchSuiteUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -575,9 +575,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = "ResearchSuiteUITests/Info.plist";
+				INFOPLIST_FILE = ResearchSuiteUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

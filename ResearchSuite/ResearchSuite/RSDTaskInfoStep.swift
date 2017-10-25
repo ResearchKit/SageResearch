@@ -1,5 +1,5 @@
 //
-//  RSDTaskInfo.swift
+//  RSDTaskInfoStep.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,7 +34,7 @@
 import Foundation
 import UIKit
 
-public typealias RSDTaskFetchCompletionHandler = (RSDTaskInfo, RSDTask?, Error?) -> Void
+public typealias RSDTaskFetchCompletionHandler = (RSDTaskInfoStep, RSDTask?, Error?) -> Void
 
 public enum RSDTaskFetchError : Error {
     case unknown
@@ -44,7 +44,7 @@ public enum RSDTaskFetchError : Error {
 /**
  A light-weight reference interface for information about the task. This includes information that can be displayed in a table or collection view.
  */
-public protocol RSDTaskInfo {
+public protocol RSDTaskInfoStep : RSDStep {
     
     /**
      A short string that uniquely identifies the task.

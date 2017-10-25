@@ -37,4 +37,10 @@ public struct RSDTaskResourceTransformerObject : RSDTaskResourceTransformer, Cod
     public let resourceName: String
     public let resourceBundle: String?
     public let classType: String?
+    
+    public init(resourceName: String, resourceBundle: String? = nil, classType: String? = nil) {
+        self.resourceName = resourceName
+        self.resourceBundle = resourceBundle
+        self.classType = classType
+    }
 }

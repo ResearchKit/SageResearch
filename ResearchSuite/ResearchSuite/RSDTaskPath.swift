@@ -60,7 +60,7 @@ public class RSDTaskPath : NSObject {
     /**
      The task info object used to load the task.
      */
-    public private(set) var taskInfo: RSDTaskInfo?
+    public private(set) var taskInfo: RSDTaskInfoStep?
     
     /**
      The task that is currently being run.
@@ -106,7 +106,7 @@ public class RSDTaskPath : NSObject {
         commonInit(identifier: task.identifier, parentPath: parentPath)
     }
     
-    public init(taskInfo: RSDTaskInfo, parentPath: RSDTaskPath? = nil) {
+    public init(taskInfo: RSDTaskInfoStep, parentPath: RSDTaskPath? = nil) {
         self.identifier = taskInfo.identifier
         self.taskInfo = taskInfo
         self.result = RSDTaskResultObject(identifier: taskInfo.identifier)  // Create a temporary result

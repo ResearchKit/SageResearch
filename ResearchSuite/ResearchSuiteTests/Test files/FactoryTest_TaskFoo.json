@@ -62,7 +62,7 @@
               },
               {
               "identifier": "step5",
-              "type": "subtask",
+              "type": "taskInfo",
               "title": "Hello World!",
               "detail": "This is a test.",
               "copyright": "This is a copyright string.",

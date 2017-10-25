@@ -56,8 +56,6 @@ public protocol RSDTaskViewControllerDelegate : class {
     func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), didFinishWith reason: RSDTaskFinishReason, error: Error?)
     
     func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor step: RSDStep) -> (UIViewController & RSDStepController)?
-    
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor taskInfo: RSDTaskInfo) -> (UIViewController & RSDStepController)?
 }
 
 /**
@@ -82,6 +80,20 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     open weak var delegate: RSDTaskViewControllerDelegate?
     
+    
+    // MARK: View controller vending
+    
+    open var currentStoryboard: UIStoryboard? {
+        if let storyboardInfo = self.taskPath.taskInfo?.storyboardInfo {
+            return UIStoryboard(name: storyboardInfo.storyboardIdentifier, bundle: storyboardInfo.storyboardBundle)
+        }
+        return self.storyboard
+    }
+    
+    open func viewControllerIdentifier(for step: RSDStep) -> String? {
+        return self.taskPath.taskInfo?.storyboardInfo?.viewControllerIdentifier(for: step)
+    }
+    
     open func viewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
         // Exit early if the delegate, step or storyboard returns a view controller
         if let vc = delegate?.taskViewController(self, viewControllerFor: step) {
@@ -90,8 +102,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskPath) {
             return vc
         }
-        if let vc = self.currentStoryboard?.instantiateViewController(withIdentifier: step.identifier) {
+        if let vcIdentifier = viewControllerIdentifier(for: step),
+            let vc = self.currentStoryboard?.instantiateViewController(withIdentifier: vcIdentifier) {
             if let stepVC = vc as? (UIViewController & RSDStepController) {
+                stepVC.step = step
                 return stepVC
             } else {
                 assertionFailure("View Controller \(vc) does not conform to the RSDStepController protocol.")
@@ -101,21 +115,14 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     open func vendDefaultViewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
-        if RSDGenericStepViewController.doesSupport(step) {
+        if let taskInfo = step as? RSDTaskInfoStep {
+            return RSDTaskInfoStepViewController(taskInfo: taskInfo)
+        } else if RSDGenericStepViewController.doesSupport(step) {
             return RSDGenericStepViewController(step: step)
         } else {
             return DebugStepViewController(step: step)
         }
     }
-    
-    open func viewController(for taskInfo: RSDTaskInfo) -> (UIViewController & RSDStepController) {
-        // Exit early if the delegate returns a view controller
-        if let vc = delegate?.taskViewController(self, viewControllerFor: taskInfo) {
-            return vc
-        }
-        return RSDTaskInfoViewController(taskInfo: taskInfo)
-    }
-    
     
     // MARK: RSDTaskController
     
@@ -127,12 +134,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         return pageViewController.childViewControllers.first as? RSDStepController
     }
     
-    open var currentStoryboard: UIStoryboard? {
-        return self.storyboard
-    }
-    
     /// Default implementation is to always fetch subtasks.
-    open func shouldFetchSubtask(for step: RSDTaskStep) -> Bool {
+    open func shouldFetchSubtask(for step: RSDTaskInfoStep) -> Bool {
         return true
     }
     
@@ -141,7 +144,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         return true
     }
     
-    open func showLoading(for taskInfo: RSDTaskInfo) {
+    open func showLoading(for taskInfo: RSDTaskInfoStep) {
         let vc = viewController(for: taskInfo)
         vc.taskController = self
         let animated = (taskPath.parentPath != nil)
@@ -150,7 +153,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     public func handleFinishedLoading() {
-        // Forward the finished loading message to the RSDTaskInfoUIController (if present)
+        // Forward the finished loading message to the RSDTaskInfoStepUIController (if present)
         self.currentStepController?.didFinishLoading()
     }
     
@@ -197,7 +200,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         self.topLevelTask = task
     }
     
-    public init(taskInfo: RSDTaskInfo) {
+    public init(taskInfo: RSDTaskInfoStep) {
         super.init(nibName: nil, bundle: nil)
         self.topLevelTaskInfo = taskInfo
     }
