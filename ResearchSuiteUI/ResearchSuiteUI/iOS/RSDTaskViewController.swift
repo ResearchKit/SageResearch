@@ -60,9 +60,19 @@ public protocol RSDTaskViewControllerDelegate : class {
     func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor taskInfo: RSDTaskInfo) -> (UIViewController & RSDStepController)?
 }
 
+/**
+ Optional protocol that can be used to get the step view controller from the step rather than from the task view controller or delegate.
+ */
 public protocol RSDStepViewControllerVendor : RSDUIStep {
-    
-    func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)
+
+    /**
+     Returns the view controller vended by the step.
+     
+     @param taskPath    The current task path to use to instantiate the view controller
+     
+     @return            The instantiated view controller or `nil` if there isn't one.
+     */
+    func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)?
 }
 
 /**
@@ -73,7 +83,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open weak var delegate: RSDTaskViewControllerDelegate?
     
     open func viewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
-        // Exit early if the delegate returns a view controller
+        // Exit early if the delegate or step returns a view controller
         if let vc = delegate?.taskViewController(self, viewControllerFor: step) {
             return vc
         }

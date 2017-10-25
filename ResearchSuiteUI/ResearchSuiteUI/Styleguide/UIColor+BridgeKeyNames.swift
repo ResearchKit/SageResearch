@@ -179,7 +179,7 @@ extension UIColor {
     }
     
     @objc open class var choiceCellBackgroundHighlighted: UIColor {
-        return UIColor.lightGray
+        return UIColor(red: 54.0 / 255.0, green: 91.0 / 255.0, blue: 134.0 / 255.0, alpha: 1.0)
     }
 
     @objc open class var choiceCellLabel: UIColor {
@@ -187,7 +187,7 @@ extension UIColor {
     }
     
     @objc open class var choiceCellLabelHighlighted: UIColor {
-        return UIColor.darkGray
+        return UIColor.white
     }
     
     // MARK: Generic step view controller - text field cell

@@ -428,6 +428,11 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
      @param   navView   the RSDStepNavigationView to configure
      */
     open func setupNavigationView(_ navView: RSDStepNavigationView, isAccessoryView: Bool = false) {
+        
+        // Check if the back button should be hidden for this task
+        navView.shouldHideBackButton =
+            self.taskController.taskPath.task?.shouldHideAction(for: .navigation(.goBackward), on: step) ?? false
+        
         navView.backgroundColor = UIColor.appBackgroundLight
         
         // setup the button actions
@@ -438,8 +443,8 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         }
         self.setupButton(navView.nextButton, for: .navigation(.goForward))
 
-        navView.previousButton.addTarget(self, action: #selector(previousHit), for: .touchUpInside)
-        self.setupButton(navView.previousButton, for: .navigation(.goBackward))
+        navView.backButton?.addTarget(self, action: #selector(previousHit), for: .touchUpInside)
+        self.setupButton(navView.backButton, for: .navigation(.goBackward))
     }
     
     // MARK: Actions

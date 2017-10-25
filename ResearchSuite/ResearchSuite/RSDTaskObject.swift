@@ -35,11 +35,12 @@ import Foundation
 
 public struct RSDTaskObject : RSDTask, Decodable {
 
+    public let identifier: String
+    public let stepNavigator: RSDStepNavigator
+    public let asyncActions: [RSDAsyncActionConfiguration]?
     
-    
-    public private(set) var identifier: String
-    public private(set) var stepNavigator: RSDStepNavigator
-    public private(set) var asyncActions: [RSDAsyncActionConfiguration]?
+    public var isCancelHidden: Bool = false
+    public var isBackHidden: Bool = false
     
     public var taskInfo: RSDTaskInfo?
     public var schemaInfo: RSDSchemaInfo?
@@ -53,7 +54,7 @@ public struct RSDTaskObject : RSDTask, Decodable {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, taskInfo, schemaInfo, asyncActions
+        case identifier, taskInfo, schemaInfo, asyncActions, isCancelHidden, isBackHidden
     }
     
     public init(from decoder: Decoder) throws {
@@ -94,7 +95,13 @@ public struct RSDTaskObject : RSDTask, Decodable {
                 }
             }
             self.asyncActions = decodedActions
+        } else {
+            self.asyncActions = nil
         }
+        
+        // ui action handling
+        self.isBackHidden = try container.decodeIfPresent(Bool.self, forKey: .isBackHidden) ?? true
+        self.isCancelHidden = try container.decodeIfPresent(Bool.self, forKey: .isCancelHidden) ?? true
     }
     
     
@@ -127,5 +134,19 @@ public struct RSDTaskObject : RSDTask, Decodable {
             }
         }
     }
-
+    
+    public func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
+        return nil
+    }
+    
+    public func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
+        switch actionType {
+        case .navigation(.cancel):
+            return isCancelHidden ? true : nil
+        case .navigation(.goBackward):
+            return isBackHidden ? true : nil
+        default:
+            return nil
+        }
+    }
 }

@@ -61,17 +61,19 @@ public protocol RSDUIActionHandler {
      Customizable actions to return for a given action type. The `RSDStepController` can use these to customize the display of buttons to the user. If nil, `shouldHideAction()` will be called to determine if the default action should be used or if the action button should be hidden.
      
      @param actionType  The action type for the button.
+     @param step        The step that the action is on.
      
      @return            A custom UI action for this button. If nil, the default action will be used.
      */
-    func action(for actionType: RSDUIActionType) -> RSDUIAction?
+    func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction?
     
     /**
      Should the action button be hidden?
      
      @param actionType  The action type for the button.
+     @param step        The step that the action is on.
      
      @return            Whether or not the button should be hidden or `nil` if there is no explicit action.
      */
-    func shouldHideAction(for actionType: RSDUIActionType) -> Bool?
+    func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool?
 }

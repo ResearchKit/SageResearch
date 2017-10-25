@@ -51,7 +51,7 @@ public protocol RSDStepViewControllerProtocol : class {
     weak var delegate: RSDStepViewControllerDelegate? { get set }
 }
 
-open class RSDStepViewController : UIViewController, RSDStepController, RSDUIActionHandler, RSDStepViewControllerProtocol {
+open class RSDStepViewController : UIViewController, RSDStepController, RSDStepViewControllerProtocol {
 
     open weak var taskController: RSDTaskController!
     
@@ -204,17 +204,20 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDUIAct
         self.taskController.handleTaskCancelled()
     }
     
-    
-    // MARK: RSDUIActionHandler
-    
     open func action(for actionType: RSDUIActionType) -> RSDUIAction? {
-        if let action = (self.step as? RSDUIActionHandler)?.action(for: actionType) {
+        guard step.identifier == self.step.identifier else { return nil }
+        
+        if let action = (self.step as? RSDUIActionHandler)?.action(for: actionType, on: step) {
             // Allow the step to override the default from the delegate
             return action
         }
-        else if let action = self.delegate?.action(for: actionType){
+        else if let action = self.delegate?.action(for: actionType, on: step) {
             // If no override by the step then return the action from the delegate
            return action
+        }
+        else if let action = self.taskController.taskPath.task?.action(for: actionType, on: step) {
+            // Finally check the task for a global action
+            return action
         }
         else {
             // Otherwise, look at the action and show the default based on the type
@@ -232,12 +235,16 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDUIAct
     }
     
     open func shouldHideAction(for actionType: RSDUIActionType) -> Bool? {
-        if let shouldHide = (self.step as? RSDUIActionHandler)?.shouldHideAction(for: actionType) {
+        if let shouldHide = (self.step as? RSDUIActionHandler)?.shouldHideAction(for: actionType, on: step) {
             // Allow the step to override the default from the delegate
             return shouldHide
         }
-        else if let shouldHide = self.delegate?.shouldHideAction(for: actionType) {
+        else if let shouldHide = self.delegate?.shouldHideAction(for: actionType, on: step) {
             // If no override by the step then return the action from the delegate if there is one
+            return shouldHide
+        }
+        else if let shouldHide = self.taskController.taskPath.task?.shouldHideAction(for: actionType, on: step) {
+            // Finally check if the task has any global settings
             return shouldHide
         }
         else {

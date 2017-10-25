@@ -36,7 +36,7 @@ import Foundation
 /**
  This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
  */
-public protocol RSDTask {
+public protocol RSDTask : RSDUIActionHandler {
     
     /**
      A short string that uniquely identifies the task.

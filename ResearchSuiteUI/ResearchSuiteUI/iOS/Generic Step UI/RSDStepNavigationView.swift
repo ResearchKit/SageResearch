@@ -36,7 +36,7 @@ import UIKit
 
 /**
  A custom UIView to be included in an RSDGenericStepViewController. It contains a Next button,
- Previous button, and shadowView. The ViewController is responsible for assigning targets and
+ back button, and shadowView. The ViewController is responsible for assigning targets and
  actions to the buttons.
  
  To customize the view elements, subclasses should override the initializeViews() method. This will allow
@@ -50,7 +50,7 @@ open class RSDStepNavigationView: UIView {
     private let kButtonWidth: CGFloat = CGFloat(120.0).proportionalToScreenWidth()
     private let kShadowHeight: CGFloat = 5.0
     
-    open var previousButton: UIButton!
+    open var backButton: UIButton?
     open var nextButton: UIButton!
     open var shadowView: UIView!
     
@@ -60,16 +60,25 @@ open class RSDStepNavigationView: UIView {
      Causes the drop shadow at the top of the view to be shown or hidden.
      If the value in app configuration is false, that overrides any attempt to set to true
      */
-    private var _shouldShowShadow = false
     open var shouldShowShadow: Bool {
+        get {
+            return _shouldShowShadow
+        }
         set {
             let shadowEnabled = RSDGenericStepUIConfig.shouldShowNavigationViewShadow()
             _shouldShowShadow = shadowEnabled && newValue
             self.shadowView.isHidden = !_shouldShowShadow
             self.clipsToBounds = !_shouldShowShadow
         }
-        get {
-            return _shouldShowShadow
+    }
+    private var _shouldShowShadow = false
+    
+    /**
+     Should the navigation view show the back button
+     */
+    open var shouldHideBackButton: Bool = true {
+        didSet {
+            self.needsUpdateConstraints()
         }
     }
     
@@ -105,7 +114,7 @@ open class RSDStepNavigationView: UIView {
      Create all the view elements. Subclasses can override to provide custom instances.
      */
     open func initializeViews() {
-        previousButton = RSDRoundedButton()
+        backButton = RSDRoundedButton()
         nextButton = RSDRoundedButton()        
         shadowView = RSDShadowGradient()
     }
@@ -117,16 +126,18 @@ open class RSDStepNavigationView: UIView {
         if let nextRounded = nextButton as? RSDRoundedButton {
             nextRounded.corners = buttonCornerRadius
         }
-        if let prevRounded = previousButton as? RSDRoundedButton {
+        if let prevRounded = backButton as? RSDRoundedButton {
             prevRounded.corners = buttonCornerRadius
         }
         
-        previousButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton?.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         shadowView.translatesAutoresizingMaskIntoConstraints = false
         
-        // add previous and next buttons
-        self.addSubview(previousButton)
+        // add back and next buttons
+        if let btn = backButton {
+            self.addSubview(btn)
+        }
         self.addSubview(nextButton)
         self.addSubview(shadowView)
         
@@ -139,14 +150,26 @@ open class RSDStepNavigationView: UIView {
         
         NSLayoutConstraint.deactivate(self.constraints)
         
-        previousButton.makeWidth(.equal, constants().buttonWidth)
-        previousButton.makeHeight(.equal, RSDRoundedButton.defaultHeight)
-        
-        previousButton.alignToSuperview([.leading], padding: constants().sideMargin)
-        previousButton.alignToSuperview([.top], padding: constants().topMargin)
-        previousButton.alignToSuperview([.bottom], padding: constants().bottomMargin)
-        
-        nextButton.makeWidth(.equal, constants().buttonWidth)
+        if shouldHideBackButton {
+            // Remove the back button and set to nil
+            backButton?.removeFromSuperview()
+            backButton = nil
+            
+            // if we don't have backButton, align left edge of nextButton to superview left
+            nextButton.alignToSuperview([.leading], padding: constants().sideMargin)
+        }
+        else {
+
+            backButton?.makeWidth(.equal, constants().buttonWidth)
+            backButton?.makeHeight(.equal, RSDRoundedButton.defaultHeight)
+            
+            backButton?.alignToSuperview([.leading], padding: constants().sideMargin)
+            backButton?.alignToSuperview([.top], padding: constants().topMargin)
+            backButton?.alignToSuperview([.bottom], padding: constants().bottomMargin)
+            
+            // if we have a backButton, then define width or nextButton
+            nextButton.makeWidth(.equal, constants().buttonWidth)
+        }
         
         nextButton.makeHeight(.equal, RSDRoundedButton.defaultHeight)
         nextButton.alignToSuperview([.trailing], padding: constants().sideMargin)

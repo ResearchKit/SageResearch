@@ -64,6 +64,14 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
         self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
     }
+    
+    public func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
+        return nil
+    }
+    
+    public func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
+        return nil
+    }
 }
 
 /**

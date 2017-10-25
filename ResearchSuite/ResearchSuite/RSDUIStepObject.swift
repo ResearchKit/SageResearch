@@ -82,11 +82,11 @@ open class RSDUIStepObject : RSDUIStep, Codable, RSDNavigationRule {
     
     // MARK: action handling
     
-    open func action(for actionType: RSDUIActionType) -> RSDUIAction? {
+    open func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
         return actions?[actionType]
     }
     
-    open func shouldHideAction(for actionType: RSDUIActionType) -> Bool? {
+    open func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
         return shouldHideActions?.contains(actionType)
     }
     

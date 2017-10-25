@@ -1,5 +1,6 @@
 {
     "identifier": "foo",
+    "isBackHidden": true,
     "steps": [{
               "identifier": "step1",
               "type": "instruction",
