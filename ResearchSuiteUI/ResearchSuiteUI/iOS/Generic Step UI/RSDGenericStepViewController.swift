@@ -205,11 +205,11 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             tableView.alignAllToSuperview(padding: 0.0)
         }
         if headerView == nil && shouldShowHeader {
-            headerView = RSDStepHeaderView()
+            headerView = RSDGenericStepUIConfig.instantiateHeaderView()
             tableView.tableHeaderView = headerView
         }
         if navigationView == nil && shouldShowNavigation {
-            navigationView = RSDStepNavigationView()
+            navigationView = RSDGenericStepUIConfig.instantiatNavigationView()
         }
     }
     
@@ -219,7 +219,13 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         // register for keyboard notifications
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
-        // Setup the view
+        // Set up progress
+        if let (current, total, _) = self.progress() {
+            self.stepIndex = Int(current)
+            self.stepCount = Int(total)
+        }
+        
+        // Set up the model and view
         setupModel()
         setupViews()
     }
@@ -351,6 +357,8 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                 header.frame = CGRect(x: 0, y: 0, width: header.frame.size.width, height: headerHeight)
                 tableView?.tableHeaderView = header
             }
+            
+            
         }
         
         if let navView = navigationView {
@@ -572,7 +580,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             fieldCell.selectionStyle = .none
             
             // setup our keyboard accessory view, which is a standard navigationView
-            let navView = RSDStepNavigationView()
+            let navView = RSDGenericStepUIConfig.instantiatNavigationView()
             setupNavigationView(navView, isAccessoryView: true)
             
             // update enabled state of the next button
@@ -939,25 +947,42 @@ public extension UIImage {
     }
 }
 
-@objc open class RSDGenericStepUIConfig: NSObject {
+public class RSDGenericStepUIConfig: NSObject {
+}
+
+extension RSDGenericStepUIConfig {
     
     /**
      Defines whether or not a drop shadow is shown below the top edge of the navigation view. The shadow
      is only shown if content is underlapping the navigation view.
      */
-    @objc open class func shouldShowNavigationViewShadow() -> Bool { return true }
+    @objc open class func shouldShowNavigationViewShadow() -> Bool {
+        return true
+    }
     
     /**
      Defines whether or not the navigation view is always pinned to the bottom of the screen, with content
      scrolling underneath it, or it's embedded in the footerView of the tableView, in which case it
      scrolls with the content.
      */
-    @objc open class func shouldUseStickyNavigationView() -> Bool { return true }
+    @objc open class func shouldUseStickyNavigationView() -> Bool {
+        return true
+    }
     
     /**
      Defines if the progress view, which shows the number of steps completed in a multi-step task,
      should be shown at the top of the screen underneath the navigation bar.
      */
-    @objc open class func shouldShowProgressView() -> Bool { return true }
+    @objc open class func shouldShowProgressView() -> Bool {
+        return true
+    }
+    
+    @objc open class func instantiateHeaderView() -> RSDStepHeaderView {
+        return RSDStepHeaderView()
+    }
+    
+    @objc open class func instantiatNavigationView() -> RSDStepNavigationView {
+        return RSDStepNavigationView()
+    }
 }
 

@@ -108,6 +108,6 @@ public protocol RSDStepNavigator {
      @return total          The total number of steps.
      @return isEstimated    Whether or not the progress is an estimate (if the task has variable navigation)
      */
-    func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: UInt, total: UInt, isEstimated: Bool)?
+    func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)?
     
 }

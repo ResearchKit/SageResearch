@@ -133,6 +133,11 @@ public protocol RSDConditionalStepNavigator : RSDStepNavigator {
      A conditional rule to optionally associate with this step navigator.
      */
     var conditionalRule : RSDConditionalRule? { get }
+    
+    /**
+     A list of step markers to use for calculating progress. If defined, progress is calculated counting only those steps that are included in the progress markers rather than inspecting the step array.
+     */
+    var progressMarkers : [String]? { get }
 }
 
 /**
@@ -235,17 +240,23 @@ extension RSDConditionalStepNavigator {
         return beforeStep
     }
     
-    public func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: UInt, total: UInt, isEstimated: Bool)? {
-        
-        // Look at the total number of steps and the result. This is estimated if the step index does not match
-        // the result step history count.
-        let total = UInt(steps.count)
-        let current = UInt(result?.stepHistory.count ?? 0)
-        let isEstimated: Bool = {
-            guard let stepIndex = steps.index(where: { $0.identifier == step.identifier }) else { return true }
-            return current != stepIndex
-        }()
-        
-        return (current + 1, total, isEstimated)
+    public func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)? {
+        if let markers = self.progressMarkers {
+            if let stepHistory = result?.stepHistory.map({ $0.identifier }), let current = markers.lastIndex(where: { stepHistory.contains($0) }) {
+                return (current, markers.count, false)
+            } else {
+                return (1, markers.count, false)
+            }
+        } else {
+            // Look at the total number of steps and the result. This is estimated if the step index does not match
+            // the result step history count.
+            let total = steps.count
+            let current = result?.stepHistory.count ?? 0
+            let isEstimated: Bool = {
+                guard let stepIndex = steps.index(where: { $0.identifier == step.identifier }) else { return true }
+                return current != stepIndex
+            }()
+            return (current + 1, total, isEstimated)
+        }
     }
 }

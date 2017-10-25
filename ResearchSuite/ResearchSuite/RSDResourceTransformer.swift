@@ -95,9 +95,9 @@ public enum RSDResourceTransformerError : Error, CustomNSError {
 }
 
 public protocol RSDResourceTransformer {
-    var classType: String? { get }
-    var resourceName: String? { get }
+    var resourceName: String { get }
     var resourceBundle: String? { get }
+    var classType: String? { get }
 }
 
 extension RSDResourceTransformer {
@@ -109,9 +109,6 @@ extension RSDResourceTransformer {
     public func resourceData(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (Data, RSDResourceType) {
         
         // get the resource name and extention
-        guard let resourceName = self.resourceName else {
-            throw RSDResourceTransformerError.nullResourceName("\(self) does not have a resource name")
-        }
         var resource = resourceName
         var ext = defaultExtension ?? RSDResourceType.json.rawValue
         let split = resourceName.components(separatedBy: ".")

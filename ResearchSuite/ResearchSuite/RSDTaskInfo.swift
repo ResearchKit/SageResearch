@@ -52,6 +52,11 @@ public protocol RSDTaskInfo {
     var identifier: String { get }
     
     /**
+     The information about the storyboard used to vend the task views.
+     */
+    var storyboardInfo: RSDStoryboardInfo? { get }
+    
+    /**
      The primary text to display for the task in a localized string.
      */
     var title: String? { get }

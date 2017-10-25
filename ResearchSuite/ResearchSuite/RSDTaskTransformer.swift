@@ -1,5 +1,5 @@
 //
-//  RSDResourceWrapper.swift
+//  RSDTaskTransformer.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,24 +33,43 @@
 
 import Foundation
 
-public struct RSDResourceWrapper : RSDResourceTransformer, Codable {
+/**
+ The task transformer is a light-weight protocol for vending a task.
+ */
+public protocol RSDTaskTransformer {
     
-    let filename: String
-    let bundleIdentifier: String?
+    /**
+     The estimated time to fetch the task. This can be used by the UI to determine whether or not to display a loading state while fetching the task. If `0` then the task is assumed to be cached on the device.
+     */
+    var estimatedFetchTime: TimeInterval { get }
     
-    public let classType: String?
+    /**
+     Fetch the task for this task info. Use the given factory to transform the task.
+     
+     @param factory     The factory to use for creating the task and steps.
+     @param taskInfo    The task info for the task (if applicable).
+     @param schemaInfo  The schema info for the task (if applicable).
+     @param callback    The callback with the task or an error if the task failed, run on the main thread.
+     */
+    func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfo, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
+}
 
-    public var resourceName: String {
-        return filename
-    }
-    
-    public var resourceBundle: String? {
-        return bundleIdentifier
-    }
-    
-    public init(filename: String, bundleIdentifier: String?) {
-        self.filename = filename
-        self.bundleIdentifier = bundleIdentifier
-        self.classType = nil
+public protocol RSDTaskResourceTransformer : RSDTaskTransformer, RSDResourceTransformer {
+}
+
+extension RSDTaskResourceTransformer {
+    public func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfo, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
+        DispatchQueue.global().async {
+            do {
+                let task = try factory.decodeTask(with: self, taskInfo: taskInfo, schemaInfo: schemaInfo)
+                DispatchQueue.main.async {
+                    callback(taskInfo, task, nil)
+                }
+            } catch let err {
+                DispatchQueue.main.async {
+                    callback(taskInfo, nil, err)
+                }
+            }
+        }
     }
 }

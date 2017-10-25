@@ -84,7 +84,7 @@ class CodableTaskObjectTests: XCTestCase {
     
     func testTaskInfoObject_Codable() {
         
-        var taskInfo = RSDTaskInfoObject(with: "bar")
+        let taskInfo = RSDTaskInfoObject(with: "bar")
         taskInfo.title = "yo"
         
         let json = """
@@ -108,20 +108,6 @@ class CodableTaskObjectTests: XCTestCase {
             XCTAssertEqual(object.copyright, "This is a copyright string.")
             XCTAssertEqual(object.estimatedMinutes, 5)
             XCTAssertEqual(object.icon?.imageName, "foobar")
-            
-            let jsonData = try encoder.encode(object)
-            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
-                else {
-                    XCTFail("Encoded object is not a dictionary")
-                    return
-            }
-            
-            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["title"] as? String, "Hello World!")
-            XCTAssertEqual(dictionary["detail"] as? String, "This is a test.")
-            XCTAssertEqual(dictionary["copyright"] as? String, "This is a copyright string.")
-            XCTAssertEqual(dictionary["estimatedMinutes"] as? Int, 5)
-            XCTAssertEqual(dictionary["icon"] as? String, "foobar")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")

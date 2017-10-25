@@ -36,76 +36,93 @@ import Foundation
 /**
  `RSDTaskInfoObject` is a concrete implementation of the `RSDTaskInfo` protocol.
  */
-public struct RSDTaskInfoObject : RSDTaskInfo, RSDResourceTransformer, RSDSchemaInfo, Codable {
-    
+open class RSDTaskInfoObject : RSDTaskInfo, RSDSchemaInfo, Decodable {
+
     private enum CodingKeys : String, CodingKey {
         
         case identifier
+        case schemaIdentifier
+        case schemaRevision
         case title
         case subtitle
         case detail
         case copyright
-        case _estimatedMinutes = "estimatedMinutes"
+        case estimatedMinutes
         case icon
         
-        case classType
-        case resourceName
-        case resourceBundle
-        
-        case _schemaRevision = "schemaRevision"
-        case _schemaIdentifier = "schemaIdentifier"
+        case taskTransformer
+        case storyboardInfo
     }
 
-    // MARK: RSDTaskInfo
-    public private(set) var identifier: String
+    public let identifier: String
+    public let type: String = "taskInfo"
+    
     public var title: String?
     public var subtitle: String?
     public var detail: String?
     public var copyright: String?
     public var icon: RSDImageWrapper?
+    public var estimatedMinutes: Int = 0
     
-    private var _estimatedMinutes: Int?
-    public var estimatedMinutes: Int {
-        return _estimatedMinutes ?? 0
-    }
-    
-    // MARK: RSDResourceTransformer
-    public var classType: String?
-    public var resourceName: String?
-    public var resourceBundle: String?
-    
-    // MARK: RSDSchemaInfo
-    private var _schemaRevision: Int?
-    public var schemaRevision: Int {
-        return _schemaRevision ?? 1
-    }
-
     private var _schemaIdentifier: String?
     public var schemaIdentifier: String? {
-        return _schemaIdentifier ?? self.identifier
+        return _schemaIdentifier ?? identifier
+    }
+    public var schemaRevision: Int = 1
+    
+    public var taskTransformer: RSDTaskTransformer!
+    public var storyboardInfo: RSDStoryboardInfo?
+    
+    public var estimatedFetchTime: TimeInterval {
+        return taskTransformer?.estimatedFetchTime ?? 0
     }
 
     public init(with identifier: String) {
         self.identifier = identifier
     }
     
-    public func fetchTask(with factory: RSDFactory, callback: @escaping RSDTaskFetchCompletionHandler) {
-        DispatchQueue.global().async {
-            do {
-                let task = try factory.decodeTask(with: self, taskInfo: self, schemaInfo: self)
-                DispatchQueue.main.async {
-                    callback(self, task, nil)
-                }
-            } catch let err {
-                DispatchQueue.main.async {
-                    callback(self, nil, err)
-                }
-            }
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.title = try container.decodeIfPresent(String.self, forKey: .title)
+        self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
+        self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
+        self.copyright = try container.decodeIfPresent(String.self, forKey: .copyright)
+        self.icon = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .icon)
+        self.estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes) ?? 0
+        self._schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier)
+        self.schemaRevision = try container.decodeIfPresent(Int.self, forKey: .schemaRevision) ?? 1
+        
+        if container.contains(.taskTransformer) {
+            let nestedDecoder = try container.superDecoder(forKey: .taskTransformer)
+            self.taskTransformer = try decoder.factory.decodeTaskTransformer(from: nestedDecoder)
         }
+        
+        self.storyboardInfo = try container.decodeIfPresent(RSDStoryboardInfoObject.self, forKey: .storyboardInfo)
+    }
+    
+    public func fetchTask(with factory: RSDFactory, callback: @escaping RSDTaskFetchCompletionHandler) {
+        guard let transformer = self.taskTransformer else {
+            let message = "Attempting to fetch a task with a nil transformer."
+            assertionFailure(message)
+            DispatchQueue.main.async {
+                callback(self, nil, RSDValidationError.unexpectedNullObject(message))
+            }
+            return
+        }
+        transformer.fetchTask(with: factory, taskInfo: self, schemaInfo: self, callback: callback)
     }
     
     public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
         RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
+    }
+    
+    public func instantiateStepResult() -> RSDResult {
+        return RSDTaskResultObject(identifier: identifier)
+    }
+    
+    public func validate() throws {
+        // do nothing
     }
 }
 

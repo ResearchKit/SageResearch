@@ -92,7 +92,7 @@ open class RSDFactory {
      
      @param data            The data to use to decode the object.
      @param resourceType    The type of resource (json or plist).
-     @param typeName       The class name type key for this task (if any).
+     @param typeName        The class name type key for this task (if any).
      @param taskInfo        The task info used to create this task (if any).
      
      @return                The created task.
@@ -114,6 +114,20 @@ open class RSDFactory {
      */
     open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
         return try RSDTaskInfoObject(from: decoder)
+    }
+    
+    
+    // MARK: Task Transformer factory
+    
+    /**
+     Decode the task transformer from this decoder. This method *must* return a task transformer object. The default implementation will return a `RSDTaskResourceTransformerObject`.
+     
+     @param decoder     The decoder to use to instatiate the object.
+     
+     @return            The object created from this decoder.
+     */
+    open func decodeTaskTransformer(from decoder: Decoder) throws -> RSDTaskTransformer {
+        return try RSDTaskResourceTransformerObject(from: decoder)
     }
     
     

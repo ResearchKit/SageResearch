@@ -35,8 +35,6 @@ import UIKit
 
 open class RSDTaskInfoViewController: UIViewController, RSDStepController, UITextViewDelegate {
 
-    
-
     open class var nibName: String {
         return String(describing: RSDTaskInfoViewController.self)
     }
@@ -60,6 +58,10 @@ open class RSDTaskInfoViewController: UIViewController, RSDStepController, UITex
     
     public var taskController: RSDTaskController!
     public var taskInfo: RSDTaskInfo!
+    
+    public var step: RSDStep! {
+        return taskInfo
+    }
     
     open var isForwardEnabled: Bool {
         return taskController.isForwardEnabled

@@ -82,17 +82,17 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.imageAfter?.imageName, "after")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
             
-            let goForwardAction = object.action(for: .navigation(.goForward))
+            let goForwardAction = object.action(for: .navigation(.goForward), on: object)
             XCTAssertNotNil(goForwardAction)
             XCTAssertEqual(goForwardAction?.buttonTitle, "Go, Dogs! Go!")
             
-            let cancelAction = object.action(for: .navigation(.cancel))
+            let cancelAction = object.action(for: .navigation(.cancel), on: object)
             XCTAssertNotNil(cancelAction)
             XCTAssertEqual((cancelAction as? RSDUIActionObject)?.iconName, "closeX")
             
-            XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward)) ?? false)
-            XCTAssertTrue(object.shouldHideAction(for: .navigation(.learnMore)) ?? false)
-            XCTAssertTrue(object.shouldHideAction(for: .navigation(.skip)) ?? false)
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.learnMore), on: object) ?? false)
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.skip), on: object) ?? false)
             
             let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]

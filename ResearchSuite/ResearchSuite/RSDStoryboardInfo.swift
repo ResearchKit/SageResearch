@@ -1,5 +1,5 @@
 //
-//  RSDResourceWrapper.swift
+//  RSDStoryboardInfo.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,24 +33,20 @@
 
 import Foundation
 
-public struct RSDResourceWrapper : RSDResourceTransformer, Codable {
+public protocol RSDStoryboardInfo {
     
-    let filename: String
-    let bundleIdentifier: String?
+    /**
+     Identifier for the storyboard that vends the task step views.
+     */
+    var storyboardIdentifier: String { get }
     
-    public let classType: String?
-
-    public var resourceName: String {
-        return filename
-    }
+    /**
+     The bundle with the storyboard resource.
+     */
+    var storyboardBundle: Bundle? { get }
     
-    public var resourceBundle: String? {
-        return bundleIdentifier
-    }
-    
-    public init(filename: String, bundleIdentifier: String?) {
-        self.filename = filename
-        self.bundleIdentifier = bundleIdentifier
-        self.classType = nil
-    }
+    /**
+     For a given step, vends the identifier for the view controller for that step. If `nil` then the default view controller will be instantiated by the task controller.
+     */
+    func viewControllerIdentifier(for step: RSDStep) -> String?
 }

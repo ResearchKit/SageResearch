@@ -41,6 +41,7 @@ public enum RSDValidationError : Error {
     case invalidType(String)
     case identifierNotFound(Any, String, String)
     case invalidNavigation(RSDTaskPath, String)
+    case unexpectedNullObject(String)
     
     /// The domain of the error.
     public static var errorDomain: String {
@@ -64,6 +65,8 @@ public enum RSDValidationError : Error {
             return -6
         case .invalidNavigation(_, _):
             return -7
+        case .unexpectedNullObject(_):
+            return -8
         }
     }
     
@@ -78,6 +81,7 @@ public enum RSDValidationError : Error {
         case .invalidType(let str): description = str
         case .identifierNotFound(_, _, let str): description = str
         case .invalidNavigation(_, let str): description = str
+        case .unexpectedNullObject(let str): description = str
         }
         return ["NSDebugDescription": description]
     }

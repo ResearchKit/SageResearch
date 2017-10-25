@@ -57,6 +57,11 @@ public protocol RSDTaskController : class {
     var factory: RSDFactory? { get }
     
     /**
+     Returns the currently active step controller (if any)
+     */
+    var currentStepController: RSDStepController? { get }
+    
+    /**
      Should the protocol extension fetch the subtask from a task info object or does this implementation handle subtask step navigation using custom logic?
      
      @param step   The `RSDTaskStep` for which to fetch the task.

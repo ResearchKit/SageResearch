@@ -1,5 +1,5 @@
 //
-//  RSDResourceWrapper.swift
+//  RSDStoryboardInfoObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,24 +33,41 @@
 
 import Foundation
 
-public struct RSDResourceWrapper : RSDResourceTransformer, Codable {
+public struct RSDStoryboardInfoObject : RSDStoryboardInfo, Codable {
     
-    let filename: String
-    let bundleIdentifier: String?
+    /**
+     Identifier for the storyboard.
+     */
+    public let storyboardIdentifier: String
     
-    public let classType: String?
+    /**
+     Identifier for the bundle. If `nil` then the mainBundle will be assumed.
+     */
+    public let bundleIdentifier: String?
+    
+    /**
+     A mapping that can return a custom step view controller identifier by looking at the `step.identifier` property and if that is not defined then looking at the `step.type` property.
+     */
+    public let viewControllerIdentifierMap: [String : String]?
 
-    public var resourceName: String {
-        return filename
+    public var storyboardBundle: Bundle? {
+        guard let identifier = bundleIdentifier else { return nil }
+        return Bundle(identifier: identifier)
     }
     
-    public var resourceBundle: String? {
-        return bundleIdentifier
+    public func viewControllerIdentifier(for step: RSDStep) -> String? {
+        return viewControllerIdentifierMap?[step.identifier] ?? viewControllerIdentifierMap?[step.type]
     }
     
-    public init(filename: String, bundleIdentifier: String?) {
-        self.filename = filename
+    private enum CodingKeys : String, CodingKey {
+        case storyboardIdentifier = "identifier"
+        case bundleIdentifier = "bundle"
+        case viewControllerIdentifierMap = "viewControllerIdentifierMap"
+    }
+    
+    public init(storyboardIdentifier: String, bundleIdentifier: String?, viewControllerIdentifierMap: [String : String]?) {
+        self.storyboardIdentifier = storyboardIdentifier
         self.bundleIdentifier = bundleIdentifier
-        self.classType = nil
+        self.viewControllerIdentifierMap = viewControllerIdentifierMap
     }
 }

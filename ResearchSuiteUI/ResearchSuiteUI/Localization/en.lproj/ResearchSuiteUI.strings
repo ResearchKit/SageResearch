@@ -56,6 +56,9 @@
 "MORE_THAN_%@_AGO" = "More than %@ ago"; // More than %@ time interval in the past
 "RANGE_%@_AGO" = "%@ ago"; // Range time interval in the past (Ex. '0-30 minutes ago')
 
+/* Progress */
+"CURRENT_STEP_%@_OF_TOTAL_STEPS_%@" = "Step %1$@ of %2$@";  // Text for marking the current steps
+
 /* Default placeholders to request answers in a questionnaire. */
 "PLACEHOLDER_TEXT_OR_NUMBER" = "Tap to answer";
 "NULL_ANSWER" = "Select an answer";

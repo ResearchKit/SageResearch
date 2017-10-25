@@ -39,6 +39,10 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     public let identifier: String
     public let steps: [RSDStep]
     
+    public var progressMarkers: [String]? {
+        return nil
+    }
+    
     public init(identifier: String, steps: [RSDStep], type: String? = nil) {
         self.identifier = identifier
         self.steps = steps

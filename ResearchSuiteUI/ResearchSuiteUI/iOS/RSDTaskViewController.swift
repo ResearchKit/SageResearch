@@ -83,12 +83,19 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open weak var delegate: RSDTaskViewControllerDelegate?
     
     open func viewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
-        // Exit early if the delegate or step returns a view controller
+        // Exit early if the delegate, step or storyboard returns a view controller
         if let vc = delegate?.taskViewController(self, viewControllerFor: step) {
             return vc
         }
         if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskPath) {
             return vc
+        }
+        if let vc = self.currentStoryboard?.instantiateViewController(withIdentifier: step.identifier) {
+            if let stepVC = vc as? (UIViewController & RSDStepController) {
+                return stepVC
+            } else {
+                assertionFailure("View Controller \(vc) does not conform to the RSDStepController protocol.")
+            }
         }
         return self.vendDefaultViewController(for: step)
     }
@@ -116,6 +123,14 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     public var taskPath: RSDTaskPath!
     
+    public var currentStepController: RSDStepController? {
+        return pageViewController.childViewControllers.first as? RSDStepController
+    }
+    
+    open var currentStoryboard: UIStoryboard? {
+        return self.storyboard
+    }
+    
     /// Default implementation is to always fetch subtasks.
     open func shouldFetchSubtask(for step: RSDTaskStep) -> Bool {
         return true
@@ -136,9 +151,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     public func handleFinishedLoading() {
         // Forward the finished loading message to the RSDTaskInfoUIController (if present)
-        if let vc = pageViewController.childViewControllers.first as? RSDStepController {
-            vc.didFinishLoading()
-        }
+        self.currentStepController?.didFinishLoading()
     }
     
     open func hideLoadingIfNeeded() {
@@ -248,8 +261,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     // MARK: UIPageViewControllerDataSource
     
-    open var currentStepController: (UIViewController & RSDStepController)? {
-        return pageViewController.childViewControllers.first as? (UIViewController & RSDStepController)
+    open var currentStepViewController: (UIViewController & RSDStepController)? {
+        return self.currentStepController as? (UIViewController & RSDStepController)
     }
     
     /// Respond to a gesture to go back. Always returns `nil` but will call `goBack()` if appropriate.

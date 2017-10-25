@@ -1,5 +1,5 @@
 //
-//  RSDResourceWrapper.swift
+//  RSDTaskResourceTransformerObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,24 +33,8 @@
 
 import Foundation
 
-public struct RSDResourceWrapper : RSDResourceTransformer, Codable {
-    
-    let filename: String
-    let bundleIdentifier: String?
-    
+public struct RSDTaskResourceTransformerObject : RSDTaskResourceTransformer, Codable {
+    public let resourceName: String
+    public let resourceBundle: String?
     public let classType: String?
-
-    public var resourceName: String {
-        return filename
-    }
-    
-    public var resourceBundle: String? {
-        return bundleIdentifier
-    }
-    
-    public init(filename: String, bundleIdentifier: String?) {
-        self.filename = filename
-        self.bundleIdentifier = bundleIdentifier
-        self.classType = nil
-    }
 }

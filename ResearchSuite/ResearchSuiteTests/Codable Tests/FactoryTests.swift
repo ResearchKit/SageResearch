@@ -74,6 +74,7 @@ class FactoryTests: XCTestCase {
         XCTAssertEqual(fooTaskInfo.estimatedMinutes, 5)
         XCTAssertEqual(fooTaskInfo.icon?.imageName, "fooIcon")
         XCTAssertEqual(fooTaskInfo.schemaRevision, 2)
+        XCTAssertEqual(fooTaskInfo.storyboardInfo?.storyboardIdentifier, "FooStory")
         
         XCTAssertEqual(barTaskInfo.identifier, "bar")
         XCTAssertEqual(barTaskInfo.title, "Hello Bar!")
