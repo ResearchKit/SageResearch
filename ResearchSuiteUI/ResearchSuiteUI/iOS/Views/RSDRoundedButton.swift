@@ -1,6 +1,6 @@
 //
 //  RSDRoundedButton.swift
-//  ResearchSuite-UI
+//  ResearchSuiteUI
 //
 //  Created by Michael L DePhillips on 4/5/17.
 //
@@ -109,11 +109,10 @@ import UIKit
         
         // Add minimum constraint for width
         let desiredWidth = (numberOfButtons == 1) ? RSDRoundedButton.defaultWidthWith1Button : RSDRoundedButton.defaultWidthWith2Buttons;
-        let minWidthConstraint = NSLayoutConstraint(item: self, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .width, multiplier: 1.0, constant: 144)
         let widthConstraint = NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1.0, constant: desiredWidth)
         widthConstraint.priority = UILayoutPriority(rawValue: 950)
         
-        self.addConstraints([heightConstraint, minWidthConstraint, widthConstraint])
+        self.addConstraints([heightConstraint, widthConstraint])
 
         commonInit()
     }

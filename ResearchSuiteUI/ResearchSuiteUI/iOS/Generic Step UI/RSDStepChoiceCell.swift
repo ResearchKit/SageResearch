@@ -1,6 +1,6 @@
 //
 //  RSDStepChoiceCell.swift
-//  ResearchSuite-UI
+//  ResearchSuiteUI
 //
 //  Created by Josh Bruhin on 5/30/17.
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  Localization.swift
-//  ResearchSuite-UI
+//  ResearchSuiteUI
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //

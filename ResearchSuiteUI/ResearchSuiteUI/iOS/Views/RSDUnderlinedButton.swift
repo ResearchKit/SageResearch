@@ -1,6 +1,6 @@
 //
 //  RSDUnderlinedButton.swift
-//  ResearchSuite-UI
+//  ResearchSuiteUI
 //
 //  Created by Michael L DePhillips on 4/7/17.
 //

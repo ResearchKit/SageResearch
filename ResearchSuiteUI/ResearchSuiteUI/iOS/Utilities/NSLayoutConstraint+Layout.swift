@@ -1,7 +1,8 @@
 //
-//  ResearchSuite_UI.h
-//  ResearchSuite-UI
+//  NSLayoutConstraint+setMultiplier.swift
+//  ResearchSuiteUI
 //
+//  Created by Josh Bruhin on 5/26/17.
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
@@ -31,14 +32,37 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
 
-//! Project version number for ResearchSuite_UI.
-FOUNDATION_EXPORT double ResearchSuite_UIVersionNumber;
+import Foundation
+import UIKit
 
-//! Project version string for ResearchSuite_UI.
-FOUNDATION_EXPORT const unsigned char ResearchSuite_UIVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <ResearchSuite_UI/PublicHeader.h>
-
-#import <ResearchSuite/ResearchSuite.h>
+extension NSLayoutConstraint {
+    
+    /**
+     Change the multiplier on a constraint by creating a new constraint with all the same
+     properties and the new multiplier
+     
+     @param multiplier  The new multipler value.
+     @return            A new constraint with the new multiplier value.
+     */
+    func setMultiplier(multiplier:CGFloat) -> NSLayoutConstraint {
+        
+        NSLayoutConstraint.deactivate([self])
+        
+        let newConstraint = NSLayoutConstraint(
+            item: firstItem as Any,
+            attribute: firstAttribute,
+            relatedBy: relation,
+            toItem: secondItem,
+            attribute: secondAttribute,
+            multiplier: multiplier,
+            constant: constant)
+        
+        newConstraint.priority = priority
+        newConstraint.shouldBeArchived = self.shouldBeArchived
+        newConstraint.identifier = self.identifier
+        
+        NSLayoutConstraint.activate([newConstraint])
+        return newConstraint
+    }
+}

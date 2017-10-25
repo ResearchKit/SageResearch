@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import ResearchSuite_UI
+import ResearchSuiteUI
 
 /// This extension will override the color values set ResearchSuiteUI.
 extension UIColor {

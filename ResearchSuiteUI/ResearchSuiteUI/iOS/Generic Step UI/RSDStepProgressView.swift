@@ -1,6 +1,6 @@
 //
 //  RSDStepProgressView.swift
-//  ResearchSuite-UI
+//  ResearchSuiteUI
 //
 //  Created by Josh Bruhin on 5/25/17.
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.

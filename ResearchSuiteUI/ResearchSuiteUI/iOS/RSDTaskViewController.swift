@@ -1,6 +1,6 @@
 //
 //  RSDTaskViewController.swift
-//  ResearchSuite-UI
+//  ResearchSuiteUI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //

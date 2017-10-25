@@ -33,7 +33,7 @@
 
 import UIKit
 import ResearchSuite
-import ResearchSuite_UI
+import ResearchSuiteUI
 
 class ViewController: UIViewController, RSDTaskViewControllerDelegate {
 
