@@ -63,6 +63,11 @@ public class RSDTaskPath : NSObject {
     public private(set) var taskInfo: RSDTaskInfoStep?
     
     /**
+     Current storyboard info (if available)
+     */
+    public var storyboardInfo: RSDStoryboardInfo?
+    
+    /**
      The task that is currently being run.
      */
     public private(set) var task: RSDTask?
@@ -115,6 +120,7 @@ public class RSDTaskPath : NSObject {
     }
     
     private func commonInit(identifier: String, parentPath: RSDTaskPath?) {
+        self.storyboardInfo = self.taskInfo?.storyboardInfo ?? parentPath?.storyboardInfo
         guard let parentPath = parentPath else { return }
         self.parentPath = parentPath
         self.previousResults = (parentPath.result.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory

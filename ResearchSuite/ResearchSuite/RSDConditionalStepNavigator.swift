@@ -252,11 +252,7 @@ extension RSDConditionalStepNavigator {
             // the result step history count.
             let total = steps.count
             let current = result?.stepHistory.count ?? 0
-            let isEstimated: Bool = {
-                guard let stepIndex = steps.index(where: { $0.identifier == step.identifier }) else { return true }
-                return current != stepIndex
-            }()
-            return (current + 1, total, isEstimated)
+            return (current + 1, total, true)
         }
     }
 }

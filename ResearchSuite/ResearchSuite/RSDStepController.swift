@@ -87,11 +87,21 @@ extension RSDStepController {
      */
     public func progress() -> (current: Int, total: Int, isEstimated: Bool)? {
         // In case this gets called before the view has been loaded, check for the optionals
-        guard let taskPath = self.taskController?.taskPath, let currentStep = step
+        guard let path = self.taskController?.taskPath, let currentStep = step
             else {
                 return nil
         }
-        return taskPath.task?.stepNavigator.progress(for: currentStep, with: taskPath.result)
+        
+        // Look up the task chain for a progress that is *not* estimated and return either the top level
+        // progress or the subtask progress if it defines progress using progress markers.
+        var taskPath = path
+        var progress = taskPath.task?.stepNavigator.progress(for: currentStep, with: taskPath.result)
+        while (progress?.isEstimated ?? true) && (taskPath.parentPath != nil) {
+            taskPath = taskPath.parentPath!
+            progress = taskPath.task!.stepNavigator.progress(for: taskPath.currentStep!, with: taskPath.result)
+        }
+
+        return progress
     }
     
 }

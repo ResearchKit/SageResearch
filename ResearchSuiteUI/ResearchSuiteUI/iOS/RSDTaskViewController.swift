@@ -84,14 +84,14 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     // MARK: View controller vending
     
     open var currentStoryboard: UIStoryboard? {
-        if let storyboardInfo = self.taskPath.taskInfo?.storyboardInfo {
+        if let storyboardInfo = self.taskPath.storyboardInfo {
             return UIStoryboard(name: storyboardInfo.storyboardIdentifier, bundle: storyboardInfo.storyboardBundle)
         }
         return self.storyboard
     }
     
     open func viewControllerIdentifier(for step: RSDStep) -> String? {
-        return self.taskPath.taskInfo?.storyboardInfo?.viewControllerIdentifier(for: step)
+        return self.taskPath.storyboardInfo?.viewControllerIdentifier(for: step)
     }
     
     open func viewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
