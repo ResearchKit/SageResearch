@@ -71,15 +71,15 @@
                         <constraint firstAttribute="bottom" secondItem="xFJ-r8-XTd" secondAttribute="bottom" id="zEM-Oy-lk3"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gi-Il-aWq" userLabel="Footer" customClass="RSDGenericStepNavigationView" customModule="ResearchSuiteUI" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="516.5" width="375" height="150.5"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gi-Il-aWq" userLabel="Footer" customClass="RSDNavigationFooterView" customModule="ResearchSuiteUI" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="517" width="375" height="150"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkipHidden" value="NO"/>
                     </userDefinedRuntimeAttributes>
                 </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUp-7F-n7V">
-                    <rect key="frame" x="0.0" y="150" width="375" height="366.5"/>
+                    <rect key="frame" x="0.0" y="150" width="375" height="367"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <attributedString key="attributedText">
                         <fragment>
@@ -101,6 +101,7 @@
                 <constraint firstAttribute="bottom" secondItem="3gi-Il-aWq" secondAttribute="bottom" id="FpX-7q-ExS"/>
                 <constraint firstItem="3gi-Il-aWq" firstAttribute="top" secondItem="bUp-7F-n7V" secondAttribute="bottom" id="L0W-Lv-Lgg"/>
                 <constraint firstItem="8wa-PJ-D5V" firstAttribute="top" secondItem="tHD-0d-JpK" secondAttribute="top" id="Scg-bB-AcZ"/>
+                <constraint firstItem="bUp-7F-n7V" firstAttribute="centerY" secondItem="tHD-0d-JpK" secondAttribute="centerY" id="W0E-gW-VUj"/>
                 <constraint firstItem="bUp-7F-n7V" firstAttribute="top" secondItem="8wa-PJ-D5V" secondAttribute="bottom" id="dbn-zv-Gs7"/>
                 <constraint firstItem="8wa-PJ-D5V" firstAttribute="leading" secondItem="tHD-0d-JpK" secondAttribute="leading" id="iay-X4-i8q"/>
                 <constraint firstAttribute="trailing" secondItem="8wa-PJ-D5V" secondAttribute="trailing" id="nHZ-ZC-ZdK"/>

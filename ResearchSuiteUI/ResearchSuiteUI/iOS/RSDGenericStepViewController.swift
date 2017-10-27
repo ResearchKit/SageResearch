@@ -305,23 +305,37 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     // MARK: View setup
     
-    open override func setupHeader(_ header: RSDNavigationHeaderView) {
+    open override func setupHeader(_ header: RSDNavigationBarView) {
         super.setupHeader(header)
+        guard let stepHeader = header as? RSDStepHeaderView else { return }
+        
+        
+        if (uiStep?.hasImageBefore ?? false), let imageView = stepHeader.imageView {
+            stepHeader.hasImage = true
+            uiStep!.imageBefore(for: imageView.bounds.size, callback: { [weak stepHeader] (img) in
+                stepHeader?.image = img
+            })
+        }
+        
+        // setup label text
+        stepHeader.titleLabel?.text = uiStep?.title
+        stepHeader.textLabel?.text = uiStep?.text
+        stepHeader.detailLabel?.text = uiStep?.detail
         
         if formStep?.inputFields.count ?? 0 > 0 {
             // We have a minimum height for ORKFormSteps because these step usually have just a title and
             // description and the design generally calls for quite a bit of margin above and below the labels.
             // So we set a minimum size
-            header.minumumHeight = constants().formStepMinHeaderHeight
+            stepHeader.minumumHeight = constants().formStepMinHeaderHeight
         }
         
-        if header === tableView.tableHeaderView {
+        if stepHeader === tableView.tableHeaderView {
             // to get the tableView to size the headerView properly, we have to get the headerView height
             // and manually set the frame with that height. Do so only if the header is actually the
             // tableview's header and not a custom header.
-            let headerHeight = header.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-            header.frame = CGRect(x: 0, y: 0, width: header.frame.size.width, height: headerHeight)
-            tableView?.tableHeaderView = header
+            let headerHeight = stepHeader.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            stepHeader.frame = CGRect(x: 0, y: 0, width: tableView!.frame.size.width, height: headerHeight)
+            tableView!.tableHeaderView = stepHeader
         }
     }
         
@@ -396,9 +410,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         activeTextField = nil
         super.cancel()
     }
-    
 
-    
     
     // MARK: UITableView Datasource
     
@@ -814,12 +826,12 @@ extension RSDGenericStepUIConfig {
         return true
     }
     
-    @objc open class func instantiateHeaderView() -> RSDNavigationHeaderView {
-        return RSDGenericStepHeaderView()
+    @objc open class func instantiateHeaderView() -> RSDStepHeaderView {
+        return RSDStepHeaderView()
     }
     
     @objc open class func instantiatNavigationView() -> RSDNavigationFooterView {
-        return RSDGenericStepNavigationView()
+        return RSDNavigationFooterView()
     }
 }
 

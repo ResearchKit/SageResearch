@@ -112,3 +112,16 @@ public protocol RSDAnswerResult : RSDResult {
      */
     var value: Any? { get set }
 }
+
+
+/**
+ A result that holds a pointer to a file url.
+ */
+public protocol RSDFileResult : RSDResult {
+    
+    /**
+     The URL with the path to the file-based result.
+     */
+    var url: URL? { get set }
+}
+

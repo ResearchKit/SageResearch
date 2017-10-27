@@ -144,7 +144,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     // MARK: Navigation
     
-    @IBOutlet open var navigationHeader: RSDNavigationHeaderView?
+    @IBOutlet open var navigationHeader: RSDNavigationBarView?
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
     
     open var continueButton: UIButton? {
@@ -169,27 +169,15 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
-    open func setupHeader(_ header: RSDNavigationHeaderView) {
+    open func setupHeader(_ header: RSDNavigationBarView) {
         setupNavigationView(header)
-            
-        if (uiStep?.hasImageBefore ?? false), let imageView = header.imageView {
-            header.hasImage = true
-            uiStep!.imageBefore(for: imageView.bounds.size, callback: { [weak header] (img) in
-                header?.image = img
-            })
-        }
-        
+
         // setup progress
         if let (stepIndex, stepCount, _) = self.progress() {
             header.progressView?.totalSteps = stepCount
             header.progressView?.currentStep = stepIndex
         }
-            
-        // setup label text
-        header.titleLabel?.text = uiStep?.title
-        header.textLabel?.text = uiStep?.text
-        header.detailLabel?.text = uiStep?.detail
-        
+
         header.setNeedsLayout()
         header.setNeedsUpdateConstraints()
     }

@@ -111,6 +111,10 @@ open class RSDStepProgressView: UIView {
         }
     }
     
+    public var hasProgress: Bool {
+        return self.totalSteps > 0
+    }
+    
     // MARK: View elements
     
     public var stepCountLabel = UILabel()

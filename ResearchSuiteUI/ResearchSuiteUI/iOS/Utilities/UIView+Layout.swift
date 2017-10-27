@@ -58,6 +58,14 @@ public extension CGFloat {
         let ret = (UIScreen.main.bounds.size.height / baseline) * self
         return ret < max ? ret : max
     }
+    
+    func iPadMultiplier(_ multiplier: CGFloat) -> CGFloat {
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
+            return self * multiplier
+        } else {
+            return self
+        }
+    }
 }
 
 extension UIView {
