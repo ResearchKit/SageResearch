@@ -114,6 +114,7 @@ open class RSDStepProgressView: UIView {
     // MARK: View elements
     
     public var stepCountLabel = UILabel()
+    
     private var progressView = UIView()
     private var backgroundView = UIView()
     
@@ -204,21 +205,27 @@ open class RSDStepProgressView: UIView {
         _interactiveContraints.append(contentsOf:
             progressView.makeWidthEqualToSuperview(multiplier: progress))
         
-        if isStepLabelHidden {
-            _interactiveContraints.append(contentsOf:
-                backgroundView.alignToSuperview([.bottom], padding: 0.0))
-        } else {
-            _interactiveContraints.append(contentsOf:
-                stepCountLabel.alignCenterHorizontal(padding: 0))
-            _interactiveContraints.append(contentsOf:
-                stepCountLabel.alignBelow(view: progressView, padding: 5.0))
-            _interactiveContraints.append(contentsOf:
-                stepCountLabel.makeHeight(.greaterThanOrEqual, 0.0))
+        if stepCountLabel.superview == self, !isStepLabelHidden {
+            _interactiveContraints.append(contentsOf: alignStepCountLabel(to: progressView))
             _interactiveContraints.append(contentsOf:
                 stepCountLabel.alignToSuperview([.bottomMargin], padding: 0.0))
+        } else {
+            _interactiveContraints.append(contentsOf:
+                backgroundView.alignToSuperview([.bottom], padding: 0.0))
         }
         
         super.updateConstraints()
+    }
+    
+    open func alignStepCountLabel(to siblingView: UIView) -> [NSLayoutConstraint] {
+        var constraints: [NSLayoutConstraint] = []
+        constraints.append(contentsOf:
+            stepCountLabel.alignCenterHorizontal(padding: 0))
+        constraints.append(contentsOf:
+            stepCountLabel.alignBelow(view: siblingView, padding: 5.0))
+        constraints.append(contentsOf:
+            stepCountLabel.makeHeight(.greaterThanOrEqual, 0.0))
+        return constraints
     }
     
     func progressChanged() {

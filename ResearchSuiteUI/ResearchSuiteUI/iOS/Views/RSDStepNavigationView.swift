@@ -158,6 +158,7 @@ open class RSDGenericStepHeaderView: RSDNavigationHeaderView {
      */
     open var shouldShowProgress = RSDGenericStepUIConfig.shouldShowProgressView() {
         didSet {
+            addProgressViewIfNeeded()
             progressView?.isHidden = !shouldShowProgress
             setNeedsUpdateConstraints()
         }
@@ -206,6 +207,7 @@ open class RSDGenericStepHeaderView: RSDNavigationHeaderView {
         progressView = RSDStepProgressView()
         progressView!.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(progressView!)
+        self.addSubview(progressView!.stepCountLabel)
     }
     
     open func addLearnMoreIfNeeded() {
@@ -293,14 +295,6 @@ open class RSDGenericStepHeaderView: RSDNavigationHeaderView {
         var firstView: UIView? = nil
         var lastView: UIView? = nil
         
-        // progress view
-        if let progressView = progressView, shouldLayout(progressView) {
-            _interactiveContraints.append(contentsOf:
-                progressView.alignToSuperview([.leading, .trailing, .top], padding: 0.0))
-            firstView = progressView
-            lastView = progressView
-        }
-        
         func setupVerticalConstraints(_ nextView: UIView?) {
             if let vw = nextView, shouldLayout(vw) {
                 applyVerticalConstraint(to: vw, lastView: lastView)
@@ -311,6 +305,23 @@ open class RSDGenericStepHeaderView: RSDNavigationHeaderView {
             }
         }
         
+        // progress view
+        if let progressView = progressView, shouldLayout(progressView) {
+            _interactiveContraints.append(contentsOf:
+                progressView.alignToSuperview([.leading, .trailing, .top], padding: 0.0))
+            firstView = progressView
+            lastView = progressView
+            // If the progress view step count label has been moved in the view hierarchy to this view then
+            // need to define constraints relative to *this* view.
+            if progressView.stepCountLabel.superview == self, !progressView.isStepLabelHidden {
+                _interactiveContraints.append(contentsOf:
+                    progressView.alignStepCountLabel(to: progressView))
+                lastView = progressView.stepCountLabel
+            } else {
+                progressView.stepCountLabel.isHidden = true
+            }
+        }
+
         // image view
         setupVerticalConstraints(imageView)
         setupVerticalConstraints(titleLabel)
