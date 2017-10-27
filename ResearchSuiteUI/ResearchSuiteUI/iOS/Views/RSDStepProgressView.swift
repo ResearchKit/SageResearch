@@ -213,11 +213,10 @@ open class RSDStepProgressView: UIView {
         NSLayoutConstraint.deactivate(_interactiveContraints)
         _interactiveContraints.removeAll()
         
-        let progressHeight = (currentStep > 0 && totalSteps > 0) ? progressLineHeight : 0.0
         _interactiveContraints.append(contentsOf:
             backgroundView.alignToSuperview([.leading, .trailing, .top], padding: 0.0))
         _interactiveContraints.append(contentsOf:
-            backgroundView.makeHeight(.equal, progressHeight))
+            backgroundView.makeHeight(.equal, progressLineHeight))
         
         _interactiveContraints.append(contentsOf:
             progressView.alignToSuperview([.leading, .top, .bottom], padding: 0.0))

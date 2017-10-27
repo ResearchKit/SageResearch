@@ -146,8 +146,9 @@ open class RSDNavigationBarView: RSDStepNavigationView {
         progressView = RSDStepProgressView()
         progressView!.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(progressView!)
-        self.addSubview(progressView!.stepCountLabel)
         
+        // Move the step count label to this view so that we can align it to center of *this* view.
+        self.addSubview(progressView!.stepCountLabel)
         progressView!.stepCountLabel.alignToSuperview([.leading, .trailing], padding: kSideMargin)
         progressView!.stepCountLabel.makeHeight(.greaterThanOrEqual, 0.0)
     }
@@ -155,11 +156,14 @@ open class RSDNavigationBarView: RSDStepNavigationView {
     private var _interactiveContraints: [NSLayoutConstraint] = []
     
     open override func updateInteractiveConstraints() {
-
+        super.updateInteractiveConstraints()
+        
         NSLayoutConstraint.deactivate(_interactiveContraints)
         _interactiveContraints.removeAll()
         
         var firstView: UIView!
+        var lastView: UIView?
+    
         if let cancelButton = cancelButton, shouldShowCloseButton, !cancelButton.isHidden {
             _interactiveContraints.append(contentsOf:
                 cancelButton.alignToSuperview([.leading], padding: kHorizontalSpacing))
@@ -168,10 +172,11 @@ open class RSDNavigationBarView: RSDStepNavigationView {
             _interactiveContraints.append(contentsOf:
                 cancelButton.makeHeight(.equal, kButtonHeight))
             firstView = cancelButton
+            lastView = cancelButton
         } 
         
         // progress view
-        if let progressView = progressView, shouldShowProgress, !progressView.hasProgress {
+        if let progressView = progressView, shouldShowProgress {
             if let cancelButton = firstView {
                 progressView.hasRoundedEnds = true
                 _interactiveContraints.append(contentsOf:
@@ -184,6 +189,7 @@ open class RSDNavigationBarView: RSDStepNavigationView {
                 _interactiveContraints.append(contentsOf:
                     progressView.alignToSuperview([.leading, .trailing, .top], padding: 0.0))
                 firstView = progressView
+                lastView = progressView
             }
             
             // If the progress view step count label has been moved in the view hierarchy to this view then
@@ -191,12 +197,16 @@ open class RSDNavigationBarView: RSDStepNavigationView {
             if progressView.stepCountLabel.superview == self, !progressView.isStepLabelHidden {
                 _interactiveContraints.append(contentsOf:
                     progressView.stepCountLabel.align([.top], .equal, to: firstView!, [.bottom], padding: 0.0))
+                lastView = progressView.stepCountLabel
             } else {
                 progressView.stepCountLabel.isHidden = true
             }
         }
-
-        super.updateInteractiveConstraints()
+        
+        if let bottomView = lastView {
+            _interactiveContraints.append(contentsOf:
+                bottomView.align([.bottom], .equal, to: self, [.bottom], padding: 0))
+        }
     }
 }
 
@@ -374,22 +384,16 @@ open class RSDStepHeaderView: RSDNavigationBarView {
     private var _interactiveContraints: [NSLayoutConstraint] = []
     
     open override func updateInteractiveConstraints() {
+        super.updateInteractiveConstraints()
         
         NSLayoutConstraint.deactivate(_interactiveContraints)
         _interactiveContraints.removeAll()
         
-        var firstView: UIView? = nil
-        var lastView: UIView? = nil
+        var firstView: UIView?
+        var lastView: UIView? = boundingView(for: .bottom, relation: .equal)
         
-        if let progressView = progressView, !progressView.isHidden {
-            if progressView.stepCountLabel.superview == self {
-                firstView = progressView.stepCountLabel
-            } else {
-                firstView = progressView
-            }
-        } else if let cancelButton = cancelButton, !cancelButton.isHidden {
-            firstView = cancelButton
-        }
+        // deactivate the last view constraint from the progress/close button nav bar header.
+        lastView?.constraint(for: .bottom, relation: .equal)?.isActive = false
         
         func setupVerticalConstraints(_ nextView: UIView?) {
             if let vw = nextView, shouldLayout(vw) {
@@ -436,8 +440,6 @@ open class RSDStepHeaderView: RSDNavigationBarView {
                 bottomConstraint?.constant -= marginIncrease
             }
         }
-
-        super.updateInteractiveConstraints()
     }
     
     func applyVerticalConstraint(to view: UIView, lastView: UIView?) {
@@ -602,6 +604,7 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
     private var _interactiveContraints: [NSLayoutConstraint] = []
     
     open override func updateInteractiveConstraints() {
+        super.updateInteractiveConstraints()
         
         NSLayoutConstraint.deactivate(_interactiveContraints)
         _interactiveContraints.removeAll()
@@ -649,8 +652,6 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
             _interactiveContraints.append(contentsOf:
                 skipButton!.alignToSuperview([.centerX], padding: 0))
         }
-        
-        super.updateInteractiveConstraints()
     }
     
     open override func updateConstraints() {

@@ -430,6 +430,27 @@ extension UIView {
         return isChild
     }
     
+    open func boundingView(for attribute: NSLayoutAttribute, relation: NSLayoutRelation) -> UIView? {
+        for constraint in constraints {
+            
+            // iOS automatically creates special types of constraints, like for intrinsicContentSize,
+            // and we don't want these. So we make sure we have a 'NSLayoutConstraint' base class.
+            if type(of: constraint) != NSLayoutConstraint.self {
+                continue
+            }
+            
+            // Look to see if the second item is self and if the attibute and relation match the one
+            // we are looking for.
+            if let firstItem = constraint.firstItem,
+                constraint.firstAttribute == attribute,
+                constraint.relation == relation,
+                self.isEqual(constraint.secondItem) {
+                return firstItem as? UIView
+            }
+        }
+        return nil
+    }
+    
     /**
      A convenience method to return a constraint on the view that matches the supplied constraint properties.
      If multiple constraints matching those properties are found, it returns the constraint with the highest priority.
