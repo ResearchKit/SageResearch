@@ -1,0 +1,608 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */; };
+		FF1865B71FA291F600FD0E31 /* UIImage+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */; };
+		FF25E83B1F96AEAD00BC09A8 /* UIColor+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */; };
+		FF25E83C1F96B39500BC09A8 /* RSDRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */; };
+		FF25E83D1F96B39800BC09A8 /* RSDUnderlinedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */; };
+		FF25E8401F96B5C300BC09A8 /* UIFont+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */; };
+		FF39E5281F97302D00C366FC /* RSDStepChoiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */; };
+		FF39E52A1F97302D00C366FC /* RSDStepNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */; };
+		FF39E52B1F97302D00C366FC /* RSDStepProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */; };
+		FF39E52C1F97302D00C366FC /* RSDGenericStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */; };
+		FF39E52F1F97320200C366FC /* RSDShadowGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */; };
+		FF39E5331F97348700C366FC /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5321F97347E00C366FC /* Localization.swift */; };
+		FF39E5361F97392200C366FC /* ResearchSuiteUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF39E5381F97392200C366FC /* ResearchSuiteUI.strings */; };
+		FF443E201F7AC21900F43BE7 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF443E161F7AC21900F43BE7 /* ResearchSuiteUI.framework */; };
+		FF443E271F7AC21900F43BE7 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FF4A2D341F9679EC00484338 /* DebugStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */; };
+		FF4A2D351F9679EC00484338 /* DebugStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */; };
+		FF4A2D3A1F96A6F000484338 /* RSDTaskInfoStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */; };
+		FF4A2D3B1F96A6F000484338 /* RSDTaskInfoStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */; };
+		FF58035E1F9E6ADE004346A8 /* UIAlertController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */; };
+		FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */; };
+		FF5C4C2E1F8C923E00F311BA /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */; };
+		FF7E1D851F8EA7F000B47587 /* RSDStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */; };
+		FF88FD1B1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */; };
+		FF88FD1D1F8D44A400CADB53 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FF443E211F7AC21900F43BE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF443E0D1F7AC21900F43BE7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF443E151F7AC21900F43BE7;
+			remoteInfo = ResearchSuiteUI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utilities.swift"; sourceTree = "<group>"; };
+		FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnderlinedButton.swift; sourceTree = "<group>"; };
+		FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRoundedButton.swift; sourceTree = "<group>"; };
+		FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BridgeKeyNames.swift"; sourceTree = "<group>"; };
+		FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+BridgeKeyNames.swift"; sourceTree = "<group>"; };
+		FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDGenericStepViewController.swift; sourceTree = "<group>"; };
+		FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepChoiceCell.swift; sourceTree = "<group>"; };
+		FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepNavigationView.swift; sourceTree = "<group>"; };
+		FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepProgressView.swift; sourceTree = "<group>"; };
+		FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDShadowGradient.swift; sourceTree = "<group>"; };
+		FF39E5321F97347E00C366FC /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		FF39E5371F97392200C366FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResearchSuiteUI.strings; sourceTree = "<group>"; };
+		FF443E161F7AC21900F43BE7 /* ResearchSuiteUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchSuiteUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchSuiteUI.h; sourceTree = "<group>"; };
+		FF443E1A1F7AC21900F43BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF443E1F1F7AC21900F43BE7 /* ResearchSuiteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchSuiteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF443E261F7AC21900F43BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugStepViewController.swift; sourceTree = "<group>"; };
+		FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugStepViewController.xib; sourceTree = "<group>"; };
+		FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskInfoStepViewController.swift; sourceTree = "<group>"; };
+		FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDTaskInfoStepViewController.xib; sourceTree = "<group>"; };
+		FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Utilities.swift"; sourceTree = "<group>"; };
+		FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewController.swift; sourceTree = "<group>"; };
+		FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepViewController.swift; sourceTree = "<group>"; };
+		FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Layout.swift"; sourceTree = "<group>"; };
+		FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF443E121F7AC21900F43BE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF443E1C1F7AC21900F43BE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF443E201F7AC21900F43BE7 /* ResearchSuiteUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF04722E1F7AC4F90023DAD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF25E8371F96ACD200BC09A8 /* Styleguide */ = {
+			isa = PBXGroup;
+			children = (
+				FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */,
+				FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */,
+			);
+			path = Styleguide;
+			sourceTree = "<group>";
+		};
+		FF39E5301F9732C500C366FC /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				FF39E5321F97347E00C366FC /* Localization.swift */,
+				FF39E5381F97392200C366FC /* ResearchSuiteUI.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		FF443E0C1F7AC21900F43BE7 = {
+			isa = PBXGroup;
+			children = (
+				FF443E181F7AC21900F43BE7 /* ResearchSuiteUI */,
+				FF443E231F7AC21900F43BE7 /* ResearchSuiteUITests */,
+				FF443E171F7AC21900F43BE7 /* Products */,
+				FF04722E1F7AC4F90023DAD6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FF443E171F7AC21900F43BE7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF443E161F7AC21900F43BE7 /* ResearchSuiteUI.framework */,
+				FF443E1F1F7AC21900F43BE7 /* ResearchSuiteUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF443E181F7AC21900F43BE7 /* ResearchSuiteUI */ = {
+			isa = PBXGroup;
+			children = (
+				FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */,
+				FF443E1A1F7AC21900F43BE7 /* Info.plist */,
+				FF74A7DD1F7DA2EB0064A634 /* iOS */,
+				FF25E8371F96ACD200BC09A8 /* Styleguide */,
+				FF39E5301F9732C500C366FC /* Localization */,
+				FFCA18381F8F2605006ADAF3 /* Utilities */,
+			);
+			path = ResearchSuiteUI;
+			sourceTree = "<group>";
+		};
+		FF443E231F7AC21900F43BE7 /* ResearchSuiteUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FF443E261F7AC21900F43BE7 /* Info.plist */,
+			);
+			path = ResearchSuiteUITests;
+			sourceTree = "<group>";
+		};
+		FF4A2D361F9679F400484338 /* Nibs */ = {
+			isa = PBXGroup;
+			children = (
+				FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */,
+				FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */,
+			);
+			path = Nibs;
+			sourceTree = "<group>";
+		};
+		FF4A2D441F96A90200484338 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FF4A2D361F9679F400484338 /* Nibs */,
+				FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */,
+				FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */,
+				FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */,
+				FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */,
+				FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */,
+				FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FF5C4C241F8C8D8200F311BA /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */,
+				FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */,
+				FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */,
+				FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		FF74A7DD1F7DA2EB0064A634 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */,
+				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
+				FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */,
+				FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */,
+				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
+				FF4A2D441F96A90200484338 /* Views */,
+				FF5C4C241F8C8D8200F311BA /* Utilities */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		FFCA18381F8F2605006ADAF3 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		FF443E131F7AC21900F43BE7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF443E271F7AC21900F43BE7 /* ResearchSuiteUI.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		FF443E151F7AC21900F43BE7 /* ResearchSuiteUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF443E2A1F7AC21900F43BE7 /* Build configuration list for PBXNativeTarget "ResearchSuiteUI" */;
+			buildPhases = (
+				FF443E111F7AC21900F43BE7 /* Sources */,
+				FF443E121F7AC21900F43BE7 /* Frameworks */,
+				FF443E131F7AC21900F43BE7 /* Headers */,
+				FF443E141F7AC21900F43BE7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ResearchSuiteUI;
+			productName = ResearchSuiteUI;
+			productReference = FF443E161F7AC21900F43BE7 /* ResearchSuiteUI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FF443E1E1F7AC21900F43BE7 /* ResearchSuiteUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF443E2D1F7AC21900F43BE7 /* Build configuration list for PBXNativeTarget "ResearchSuiteUITests" */;
+			buildPhases = (
+				FF443E1B1F7AC21900F43BE7 /* Sources */,
+				FF443E1C1F7AC21900F43BE7 /* Frameworks */,
+				FF443E1D1F7AC21900F43BE7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF443E221F7AC21900F43BE7 /* PBXTargetDependency */,
+			);
+			name = ResearchSuiteUITests;
+			productName = ResearchSuiteUITests;
+			productReference = FF443E1F1F7AC21900F43BE7 /* ResearchSuiteUITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF443E0D1F7AC21900F43BE7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Sage Bionetworks";
+				TargetAttributes = {
+					FF443E151F7AC21900F43BE7 = {
+						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
+						ProvisioningStyle = Automatic;
+					};
+					FF443E1E1F7AC21900F43BE7 = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = FF443E101F7AC21900F43BE7 /* Build configuration list for PBXProject "ResearchSuiteUI" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FF443E0C1F7AC21900F43BE7;
+			productRefGroup = FF443E171F7AC21900F43BE7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF443E151F7AC21900F43BE7 /* ResearchSuiteUI */,
+				FF443E1E1F7AC21900F43BE7 /* ResearchSuiteUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF443E141F7AC21900F43BE7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF39E5361F97392200C366FC /* ResearchSuiteUI.strings in Resources */,
+				FF4A2D351F9679EC00484338 /* DebugStepViewController.xib in Resources */,
+				FF4A2D3B1F96A6F000484338 /* RSDTaskInfoStepViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF443E1D1F7AC21900F43BE7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF443E111F7AC21900F43BE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF39E5331F97348700C366FC /* Localization.swift in Sources */,
+				FF39E52F1F97320200C366FC /* RSDShadowGradient.swift in Sources */,
+				FF25E83C1F96B39500BC09A8 /* RSDRoundedButton.swift in Sources */,
+				FF58035E1F9E6ADE004346A8 /* UIAlertController+Utilities.swift in Sources */,
+				FF7E1D851F8EA7F000B47587 /* RSDStepViewController.swift in Sources */,
+				FF39E52B1F97302D00C366FC /* RSDStepProgressView.swift in Sources */,
+				FF25E83B1F96AEAD00BC09A8 /* UIColor+BridgeKeyNames.swift in Sources */,
+				FF88FD1D1F8D44A400CADB53 /* StaticUtilities.swift in Sources */,
+				FF5C4C2E1F8C923E00F311BA /* UIView+Layout.swift in Sources */,
+				FF39E52C1F97302D00C366FC /* RSDGenericStepViewController.swift in Sources */,
+				FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */,
+				FF4A2D3A1F96A6F000484338 /* RSDTaskInfoStepViewController.swift in Sources */,
+				FF39E5281F97302D00C366FC /* RSDStepChoiceCell.swift in Sources */,
+				FF39E52A1F97302D00C366FC /* RSDStepNavigationView.swift in Sources */,
+				FF4A2D341F9679EC00484338 /* DebugStepViewController.swift in Sources */,
+				FF88FD1B1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift in Sources */,
+				FF25E83D1F96B39800BC09A8 /* RSDUnderlinedButton.swift in Sources */,
+				FF1865B71FA291F600FD0E31 /* UIImage+Utilities.swift in Sources */,
+				FF25E8401F96B5C300BC09A8 /* UIFont+BridgeKeyNames.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF443E1B1F7AC21900F43BE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FF443E221F7AC21900F43BE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF443E151F7AC21900F43BE7 /* ResearchSuiteUI */;
+			targetProxy = FF443E211F7AC21900F43BE7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FF39E5381F97392200C366FC /* ResearchSuiteUI.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF39E5371F97392200C366FC /* en */,
+			);
+			name = ResearchSuiteUI.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF443E281F7AC21900F43BE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FF443E291F7AC21900F43BE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		FF443E2B1F7AC21900F43BE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ResearchSuiteUI/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteUI;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF443E2C1F7AC21900F43BE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ResearchSuiteUI/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteUI;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FF443E2E1F7AC21900F43BE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				INFOPLIST_FILE = ResearchSuiteUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF443E2F1F7AC21900F43BE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				INFOPLIST_FILE = ResearchSuiteUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF443E101F7AC21900F43BE7 /* Build configuration list for PBXProject "ResearchSuiteUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF443E281F7AC21900F43BE7 /* Debug */,
+				FF443E291F7AC21900F43BE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF443E2A1F7AC21900F43BE7 /* Build configuration list for PBXNativeTarget "ResearchSuiteUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF443E2B1F7AC21900F43BE7 /* Debug */,
+				FF443E2C1F7AC21900F43BE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF443E2D1F7AC21900F43BE7 /* Build configuration list for PBXNativeTarget "ResearchSuiteUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF443E2E1F7AC21900F43BE7 /* Debug */,
+				FF443E2F1F7AC21900F43BE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF443E0D1F7AC21900F43BE7 /* Project object */;
+}

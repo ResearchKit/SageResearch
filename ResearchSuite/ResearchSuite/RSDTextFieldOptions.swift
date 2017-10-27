@@ -47,6 +47,13 @@ public protocol RSDTextFieldOptions {
     var validationRegex: String? { get }
     
     /**
+     A custom regular expression that can be used to validate a string. If this is `nil`, then the regular expression with be created from the `validationRegex`.
+     
+     @note If the "validationRegex" is defined, then the `invalidMessage` should also be defined.
+     */
+    var validationRegularExpression: NSRegularExpression? { get }
+    
+    /**
      The text presented to the user when invalid input is received.
      */
     var invalidMessage: String? { get }
@@ -62,6 +69,16 @@ public protocol RSDTextFieldOptions {
     var autocapitalizationType: UITextAutocapitalizationType { get }
     
     /**
+     Auto-correction type for the text field.
+     */
+    var autocorrectionType: UITextAutocorrectionType { get }
+    
+    /**
+     Spell checking type for the text field.
+     */
+    var spellCheckingType: UITextSpellCheckingType { get }
+    
+    /**
      Keyboard type for the text field.
      */
     var keyboardType: UIKeyboardType { get }
@@ -70,4 +87,22 @@ public protocol RSDTextFieldOptions {
      Is the text field for password entry?
      */
     var isSecureTextEntry: Bool { get }
+}
+
+extension RSDTextFieldOptions {
+    
+    public func regExMatches(_ string: String) throws -> Int? {
+        guard let expression = try _regEx() else { return nil }
+        return expression.numberOfMatches(in: string, options: [], range: NSRange(string.startIndex..., in: string))
+    }
+    
+    private func _regEx() throws -> NSRegularExpression? {
+        if let regEx = validationRegularExpression {
+            return regEx
+        } else if let pattern = self.validationRegex {
+            return try NSRegularExpression(pattern: pattern, options: [])
+        } else {
+            return nil
+        }
+    }
 }

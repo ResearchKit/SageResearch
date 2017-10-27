@@ -133,36 +133,50 @@ public protocol RSDConditionalStepNavigator : RSDStepNavigator {
      A conditional rule to optionally associate with this step navigator.
      */
     var conditionalRule : RSDConditionalRule? { get }
-}
-
-extension RSDConditionalStepNavigator {
-    
-    // MARK: Convenience methods
     
     /**
-     Steps must have unique identifiers and each step within the collection must be valid.
+     A list of step markers to use for calculating progress. If defined, progress is calculated counting only those steps that are included in the progress markers rather than inspecting the step array.
      */
-    public func stepValidation() throws {
-        let stepIds = steps.map { $0.identifier }
-        let uniqueIds = Set(stepIds)
-        guard stepIds.count == uniqueIds.count
-            else {
-                throw RSDValidationError.notUniqueIdentifiers("Step identifiers: \(stepIds.joined(separator: ","))")
-        }
-        
-        for step in steps {
-            try step.validate()
-        }
-    }
-    
-    
-    // MARK: RSDStepNavigator
+    var progressMarkers : [String]? { get }
+}
+
+/**
+ Extend the conditional step navigator to implement the step navigation using the ordered list of steps and the conditional rule.
+ */
+extension RSDConditionalStepNavigator {
     
     public func step(with identifier: String) -> RSDStep? {
         return self.steps.first(where: { $0.identifier == identifier })
     }
     
-    public func step(after step: RSDStep?, with result: RSDTaskResult?) -> RSDStep? {
+    private func _nextStepIdentifier(after previousStep: RSDStep?, with result: RSDTaskResult) -> String? {
+        guard let navigableStep = previousStep as? RSDNavigationRule,
+            let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, conditionalRule: conditionalRule)
+            else {
+                // Check the conditional rule for a next step identifier
+                return conditionalRule?.nextStepIdentifier(after: previousStep, with: result)
+        }
+        // If this is a step that conforms to the RSDNavigationRule protocol and the next step is non-nil,
+        // then return this as the next step identifier
+        return nextStepIdentifier
+    }
+    
+    public func shouldExit(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
+        guard let nextIdentifier = _nextStepIdentifier(after: step, with: result) else { return false }
+        return nextIdentifier == RSDIdentifier.exit
+    }
+    
+    public func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
+        var temp = result
+        return self.step(after: step, with: &temp) != nil
+    }
+
+    public func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool {
+        var temp = result
+        return self.step(before: step, with: &temp) != nil
+    }
+    
+    public func step(after step: RSDStep?, with result: inout RSDTaskResult) -> RSDStep? {
         
         var returnStep: RSDStep?
         var previousStep: RSDStep? = step
@@ -170,19 +184,7 @@ extension RSDConditionalStepNavigator {
         
         repeat {
             
-            let nextStepIdentifier: String? = {
-                guard let navigableStep = previousStep as? RSDNavigationRule,
-                    let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, conditionalRule: conditionalRule)
-                    else {
-                        // Check the conditional rule for a next step identifier
-                        return conditionalRule?.nextStepIdentifier(after: previousStep, with: result)
-                }
-                // If this is a step that conforms to the RSDNavigationRule protocol and the next step is non-nil,
-                // then return this as the next step identifier
-                return nextStepIdentifier
-            }()
-            
-            if let nextIdentifier = nextStepIdentifier {
+            if let nextIdentifier = _nextStepIdentifier(after: previousStep, with: result) {
                 if nextIdentifier == RSDIdentifier.exit {
                     // If the next identifier equals "exit" then exit the task
                     return nil
@@ -196,6 +198,9 @@ extension RSDConditionalStepNavigator {
                 // If we've dropped through without setting the return step to something non-nil
                 // then look for the next step.
                 returnStep = steps.next(after: {$0.identifier == previousIdentifier})
+            }
+            else {
+                returnStep = steps.first
             }
             
             // Check if this is a skipable step
@@ -217,7 +222,7 @@ extension RSDConditionalStepNavigator {
         return returnStep
     }
     
-    public func step(before step: RSDStep, with result: RSDTaskResult?) -> RSDStep? {
+    public func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep? {
         
         // Check if this step does not allow backwards navigation.
         if let navRule = step as? RSDNavigationBackRule, !navRule.allowsBackNavigation(with: result, conditionalRule: conditionalRule) {
@@ -226,7 +231,7 @@ extension RSDConditionalStepNavigator {
         
         // First look in the step history for the step result that matches this one. If not found, then
         // check the list of steps.
-        guard let beforeResult = result?.stepHistory.previous(before: {$0.identifier == step.identifier}),
+        guard let beforeResult = result.stepHistory.previous(before: {$0.identifier == step.identifier}),
             let beforeStep = self.step(with: beforeResult.identifier)
             else {
             return self.steps.previous(before: {$0.identifier == step.identifier})
@@ -235,17 +240,20 @@ extension RSDConditionalStepNavigator {
         return beforeStep
     }
     
-    public func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: UInt, total: UInt, isEstimated: Bool)? {
-        
-        // Look at the total number of steps and the result. This is estimated if the step index does not match
-        // the result step history count.
-        let total = UInt(steps.count)
-        let current = UInt(result?.stepHistory.count ?? 0)
-        let isEstimated: Bool = {
-            guard let stepIndex = steps.index(where: { $0.identifier == step.identifier }) else { return true }
-            return current != stepIndex
-        }()
-        
-        return (current + 1, total, isEstimated)
+    public func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)? {
+        if let markers = self.progressMarkers {
+            if let stepHistory = result?.stepHistory.map({ $0.identifier }), let current = markers.lastIndex(where: { stepHistory.contains($0) }) {
+                return (current, markers.count, false)
+            } else {
+                return (1, markers.count, false)
+            }
+        } else {
+            // Look at the total number of steps and the result.
+            let resultSet = Set(result?.stepHistory.map({ $0.identifier }) ?? [])
+            let stepSet = Set(steps.map({ $0.identifier }))
+            let total = stepSet.union(resultSet).count
+            let current = resultSet.subtracting([step.identifier]).count
+            return (current + 1, total, true)
+        }
     }
 }

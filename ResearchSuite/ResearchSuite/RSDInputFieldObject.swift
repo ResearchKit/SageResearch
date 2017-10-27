@@ -44,7 +44,7 @@ open class RSDInputFieldObject : RSDInputField, Codable {
     open var placeholderText: String?
     open var textFieldOptions: RSDTextFieldOptions?
     open var range: RSDRange?
-    open var optional: Bool = false
+    open var isOptional: Bool = false
     
     private var _formatter: Formatter?
     open var formatter: Formatter? {
@@ -67,13 +67,8 @@ open class RSDInputFieldObject : RSDInputField, Codable {
         // TODO: syoung 10/04/2017 Implement
     }
     
-    open func validateResult(_ result: RSDAnswerResult) throws -> Bool {
-        // TODO: syoung 10/04/2017 Implement
-        return true
-    }
-    
     private enum CodingKeys : String, CodingKey {
-        case identifier, prompt, placeholderText, dataType, uiHint, optional, textFieldOptions, range
+        case identifier, prompt, placeholderText, dataType, uiHint, isOptional = "optional", textFieldOptions, range
     }
     
     open class func dataType(from decoder: Decoder) throws -> RSDFormDataType {
@@ -98,15 +93,20 @@ open class RSDInputFieldObject : RSDInputField, Codable {
     open class func range(from decoder: Decoder, dataType: RSDFormDataType) throws -> RSDRange? {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         switch dataType.baseType {
-        case .integer:
-            return try container.decodeIfPresent(RSDIntegerRangeObject.self, forKey: .range)
-        
-        case .decimal:
+        case .integer, .decimal:
             return try container.decodeIfPresent(RSDDecimalRangeObject.self, forKey: .range)
-        
         case .date:
             return try container.decodeIfPresent(RSDDateRangeObject.self, forKey: .range)
-            
+        case .year:
+            // For a year data type, we first need to check if there is a min/max range set using the date
+            // and if so, return that. The decoder could fail to find any property keys and not fail to
+            // decode because everything in the range is optional.
+            if let dateRange = try container.decodeIfPresent(RSDDateRangeObject.self, forKey: .range),
+                (dateRange.minimumDate != nil || dateRange.maximumDate != nil) {
+                return dateRange
+            } else {
+                return try container.decodeIfPresent(RSDDecimalRangeObject.self, forKey: .range)
+            }
         default:
             return nil
         }
@@ -120,9 +120,9 @@ open class RSDInputFieldObject : RSDInputField, Codable {
         // If there isn't a text field returned, then set the default for certain types
         switch dataType.baseType {
         case .integer:
-            return RSDTextFieldOptionsObject(autocapitalizationType: .none, keyboardType: .numberPad)
+            return RSDTextFieldOptionsObject(keyboardType: .numberPad)
         case .decimal:
-            return RSDTextFieldOptionsObject(autocapitalizationType: .none, keyboardType: .decimalPad)
+            return RSDTextFieldOptionsObject(keyboardType: .decimalPad)
         default:
             return nil
         }
@@ -143,16 +143,16 @@ open class RSDInputFieldObject : RSDInputField, Codable {
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.prompt = try container.decodeIfPresent(String.self, forKey: .prompt)
         self.placeholderText = try container.decodeIfPresent(String.self, forKey: .placeholderText)
-        self.optional = try container.decodeIfPresent(Bool.self, forKey: .optional) ?? false
+        self.isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? false
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.identifier, forKey: .identifier)
         try container.encode(self.dataType, forKey: .dataType)
-        if let obj = self.prompt { try container.encode(obj, forKey: .prompt) }
-        if let obj = self.placeholderText { try container.encode(obj, forKey: .placeholderText) }
-        if let obj = self.uiHint { try container.encode(obj, forKey: .uiHint) }
+        try container.encodeIfPresent(prompt, forKey: .prompt)
+        try container.encodeIfPresent(placeholderText, forKey: .placeholderText)
+        try container.encodeIfPresent(uiHint, forKey: .uiHint)
         if let obj = self.range {
             let nestedEncoder = container.superEncoder(forKey: .range)
             guard let encodable = obj as? Encodable else {
@@ -167,6 +167,6 @@ open class RSDInputFieldObject : RSDInputField, Codable {
             }
             try encodable.encode(to: nestedEncoder)
         }
-        try container.encode(self.optional, forKey: .optional)
+        try container.encode(isOptional, forKey: .isOptional)
     }
 }

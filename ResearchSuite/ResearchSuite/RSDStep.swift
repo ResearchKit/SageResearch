@@ -50,6 +50,18 @@ public protocol RSDStep {
     var identifier: String { get }
     
     /**
+     A String that indicates the type of the result. This is used to decode the step using a `RSDFactory`.
+     */
+    var type: String { get }
+    
+    /**
+     Instantiate a step result that is appropriate for this step.
+     
+     @return    A result for this step.
+     */
+    func instantiateStepResult() -> RSDResult
+    
+    /**
      Validate the step to check for any configuration that should throw an error.
      */
     func validate() throws
@@ -58,7 +70,7 @@ public protocol RSDStep {
 /**
  `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey or an active step that includes an instruction step, countdown step, and activity step.
  */
-public protocol RSDSectionStep: RSDStep {
+public protocol RSDSectionStep: RSDStep, RSDTask, RSDConditionalStepNavigator {
     
     /**
      A list of the steps used to define this subgrouping of steps.
@@ -66,16 +78,6 @@ public protocol RSDSectionStep: RSDStep {
     var steps: [RSDStep] { get }
 }
 
-/**
- `RSDTaskStep` is used to define a task that can be run independently of a larger task that includes it. For example, if the study wants to run a set of activities in a specific order with a seamless presentation to the user.
- */
-public protocol RSDTaskStep: RSDStep {
-    
-    /**
-     The task info used to define this subgrouping of steps.
-     */
-    var subtaskInfo: RSDTaskInfo { get }
-}
 
 /**
  `RSDUIStep` is used to define a single "display unit". 
@@ -107,6 +109,16 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
      The footnote is displayed in a smaller font at the bottom of the screen. It is intended to be used in order to include disclaimer, copyright, etc. that is important to display in the step but should not distract from the main purpose of the step.
      */
     var footnote: String? { get }
+    
+    /**
+     Does the step have an image to display before the `title`, `text`, and `detail`?
+     */
+    var hasImageBefore: Bool { get }
+    
+    /**
+     Does the step have an image to display after the `title`, `text`, and `detail`?
+     */
+    var hasImageAfter: Bool { get }
 
     /**
      An image to display before the `title`, `text`, and `detail`. This would be displayed above or to the left of the text, depending upon the orientation of the screen.
@@ -125,6 +137,26 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
     func imageAfter(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
 
+
+/**
+ Additional properties used in creating a form input.
+ */
+public protocol RSDFormUIStep: RSDUIStep {
+    
+    /**
+     The items array is used to hold a logical subgrouping of input fields. If this array holds more than one input field, those fields should describe an input that is uses a logical subgrouping such as blood pressure or given/family name.
+     */
+    var inputFields: [RSDInputField] { get }
+    
+    /**
+     Create a data source for vending the input field types and handling the results.
+     
+     @param taskPath    The taskPath that includes the information about the result to this point.
+     */
+    func instantiateDataSource(with taskPath: RSDTaskPath) -> RSDFormStepDataSource
+}
+
+
 /**
  For the case where a `RSDUIStep` has action such as "start walking" or "stop walking", the step may also implement the `SBAActiveUIStep` protocol to allow for spoken instruction.
  */
@@ -134,6 +166,11 @@ public protocol RSDActiveUIStep: RSDUIStep {
      The duration of time to run the step. If `0`, then this value is ignored.
      */
     var duration: TimeInterval { get }
+    
+    /**
+     The set of commands to apply to this active step. These indicate actions to fire at the beginning and end of the step such as playing a sound as well as whether or not to automatically start and finish the step.
+     */
+    var commands: RSDActiveUIStepCommand { get }
     
     /**
      Localized text that represents an instructional voice prompt. Instructional speech begins when the step passes the time indicated by the given time.  If `timeInterval` is greater than or equal to `duration` or is equal to `Double.infinity`, then the spoken instruction should be returned for when the step is finished.
@@ -146,16 +183,3 @@ public protocol RSDActiveUIStep: RSDUIStep {
      */
     func spokenInstruction(at timeInterval: TimeInterval) -> String?
 }
-
-/**
- Additional properties used in creating a form input.
- */
-public protocol RSDFormUIStep: RSDUIStep {
-    
-    /**
-     The items array is used to hold a logical subgrouping of input fields. If this array holds more than one input field, those fields should describe an input that is uses a logical subgrouping such as blood pressure, height (ft-in), or given/family name.
-     */
-    var inputFields: [RSDInputField] { get }
-}
-
-

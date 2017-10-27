@@ -39,6 +39,11 @@ import Foundation
 public protocol RSDResizableImage {
     
     /**
+     A value that can be used to identify the image as unique.
+     */
+    var identifier: String { get }
+    
+    /**
      Get an image of the appropriate size.
      
      @param size        The size of the image to return.
@@ -64,6 +69,10 @@ public protocol RSDImageWrapperDelegate {
  */
 public struct RSDImageWrapper : RSDResizableImage {
     public let imageName: String
+    
+    public var identifier: String {
+        return imageName
+    }
     
     public static var sharedDelegate: RSDImageWrapperDelegate?
     
@@ -97,6 +106,11 @@ public struct RSDImageWrapper : RSDResizableImage {
         if let delegate = RSDImageWrapper.sharedDelegate {
             delegate.fetchImage(for: size, with: self.imageName, callback: callback)
         }
+        else if let image = UIImage(named: imageName) {
+            DispatchQueue.main.async {
+                callback(image)
+            }
+        }
         else if let url = URL(string: self.imageName) {
             let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
             let task = URLSession.shared.dataTask(with: request) {(data, _, _) in
@@ -109,7 +123,7 @@ public struct RSDImageWrapper : RSDResizableImage {
         }
         else {
             DispatchQueue.main.async {
-                callback(UIImage(named: self.imageName))
+                callback(nil)
             }
         }
     }

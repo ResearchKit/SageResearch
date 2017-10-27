@@ -37,6 +37,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
 
     public var duration: TimeInterval = 0
     public var spokenInstructions: [TimeInterval : String]?
+    public var commands: RSDActiveUIStepCommand = .defaultCommands
     
     // MARK: spoken instruction handling
     
@@ -51,7 +52,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
             }
         }
         
-        init?(at timeInterval: TimeInterval, duration:TimeInterval) {
+        public init?(at timeInterval: TimeInterval, duration:TimeInterval) {
             if timeInterval == 0 {
                 self = .start
             }
@@ -78,11 +79,11 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     // MARK: Coding (spoken instructions requires special handling and Codable auto-synthesis does not work with subclassing)
     
     private enum CodingKeys: String, CodingKey {
-        case duration, spokenInstructions
+        case duration, commands, spokenInstructions
     }
     
-    public required init(identifier: String) {
-        super.init(identifier: identifier)
+    public override init(identifier: String, type: String? = nil) {
+        super.init(identifier: identifier, type: type ?? RSDFactory.StepType.active.rawValue)
     }
     
     public required init(from decoder: Decoder) throws {
@@ -92,6 +93,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
             self.duration = duration
             stepDuration = duration
         }
+        self.commands = try container.decodeIfPresent(RSDActiveUIStepCommand.self, forKey: .commands) ?? .defaultCommands
         if let dictionary = try container.decodeIfPresent([String : String].self, forKey: .spokenInstructions) {
             
             // Map the json deserialized dictionary into the `spokenInstructions` dictionary.
@@ -114,11 +116,10 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(duration, forKey: .duration)
+        try container.encode(commands, forKey: .commands)
         if let spokenInstructions = self.spokenInstructions {
             let dictionary = spokenInstructions.mapKeys { SpokenInstructionKeys(at: $0, duration: self.duration)?.rawValue ?? "\($0)" }
             try container.encode(dictionary, forKey: .spokenInstructions)
         }
     }
-    
-
 }

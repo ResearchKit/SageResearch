@@ -36,12 +36,17 @@ import Foundation
 /**
  A result associated with a task, step, or asyncronous action.
  */
-public protocol RSDResult : NSCopying {
+public protocol RSDResult : Codable {
     
     /**
      The identifier associated with the task, step, or asyncronous action.
      */
     var identifier: String { get }
+    
+    /**
+     A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
+     */
+    var type: String { get }
     
     /**
      The start date timestamp for the result.
@@ -51,14 +56,24 @@ public protocol RSDResult : NSCopying {
     /**
      The end date timestamp for the result.
      */
-    var endDate: Date { get }
+    var endDate: Date { get set }
 }
 
+/**
+ A collection of results associated with a step that may have more that one result.
+ */
+public protocol RSDStepCollectionResult : RSDResult {
+    
+    /**
+     The list of input results associated with this step. These are generally assumed to be answers to field inputs, but they are not required to implement the `RSDAnswerResult` protocol.
+     */
+    var inputResults: [RSDResult] { get set }
+}
 
 /**
  A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
  */
-public protocol RSDTaskResult : RSDResult, RSDSchemaInfo {
+public protocol RSDTaskResult : RSDResult {
     
     /**
      A unique identifier for this task run.
@@ -66,26 +81,19 @@ public protocol RSDTaskResult : RSDResult, RSDSchemaInfo {
     var taskRunUUID: UUID { get }
     
     /**
-     A listing of the step history for this task. The listed step results should *only* include the last result for any given step.
+     Schema info associated with this task.
      */
-    var stepHistory: [RSDResult] { get }
+    var schemaInfo: RSDSchemaInfo? { get set }
     
+    /**
+     A listing of the step history for this task or section. The listed step results should *only* include the last result for any given step.
+     */
+    var stepHistory: [RSDResult] { get set }
+
     /**
      A list of all the asyncronous results for this task. The list should include uniquely identified results.
      */
-    var asyncResults: [RSDResult]? { get }
-}
-
-
-/**
- A collection of results associated with a given step. This can be used where the step has multiple results.
- */
-public protocol RSDStepCollectionResult : RSDResult {
-    
-    /**
-     A list of multiple results associated with this step.
-     */
-    var stepResults: [RSDResult] { get }
+    var asyncResults: [RSDResult]? { get set }
 }
 
 
@@ -95,17 +103,25 @@ public protocol RSDStepCollectionResult : RSDResult {
 public protocol RSDAnswerResult : RSDResult {
     
     /**
+     The answer type of the answer result. This includes coding information required to encode and decode the value. The value is expected to conform to one of the coding types supported by the answer type.
+     */
+    var answerType: RSDAnswerResultType { get }
+    
+    /**
      The answer for the result.
      */
-    var value: Any? { get }
-    
-    /**
-     The data type of the answer result.
-     */
-    var dataType: RSDFormDataType { get }
-    
-    /**
-     Any additional information associated with this result such as unit.
-     */
-    var metadata: [String : Any]? { get }
+    var value: Any? { get set }
 }
+
+
+/**
+ A result that holds a pointer to a file url.
+ */
+public protocol RSDFileResult : RSDResult {
+    
+    /**
+     The URL with the path to the file-based result.
+     */
+    var url: URL? { get set }
+}
+

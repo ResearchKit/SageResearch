@@ -47,5 +47,26 @@
                               "dataType": "integer",
                               "prompt": "Bar"
                               }]
+              },
+              {
+              "identifier": "step4",
+              "type": "section",
+              "steps": [{
+                        "identifier": "step1",
+                        "type": "instruction"
+                        },
+                        {
+                        "identifier": "step2",
+                        "type": "instruction"
+                        }]
+              },
+              {
+              "identifier": "step5",
+              "type": "taskInfo",
+              "title": "Hello World!",
+              "detail": "This is a test.",
+              "copyright": "This is a copyright string.",
+              "estimatedMinutes": 5,
+              "icon": "foobar"
               }]
 }

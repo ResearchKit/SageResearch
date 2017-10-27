@@ -1,0 +1,148 @@
+{
+    "identifier": "foo",
+    "actions": {
+        "cancel": { "iconName": "closeActivity" }
+    },
+    "shouldHideActions": ["goBackward", "skip"],
+    "steps": [{
+              "identifier": "step1",
+              "type": "instruction",
+              "title": "Step 1",
+              "text": "This is the first step of the Foo task.",
+              "detail": "On this screen you should see an image above the text with a picture of an envelop. There is also a short footnote. The button should say 'Go, Dogs! Go!'. Tap it to continue.",
+              "footnote": "This is a footnote.",
+              "imageBefore": "before",
+              "actions": {
+                  "goForward": {
+                      "buttonTitle": "Go, Dogs!"
+                  }
+              }
+              },
+              {
+              "identifier": "step2",
+              "type": "instruction",
+              "title": "Step 2",
+              "text": "This is the second step in the Foo task.",
+              "detail": "On this screen you should see an image below the text with a picture of a phone in a pocket. The next step after this one is an active step. When it starts, you should hear voice commands.",
+              "imageAfter": "phoneinpocketIllustration",
+              "actions": {
+                      "goForward": {
+                          "buttonTitle": "Start"
+                      }
+                  }
+              },
+              {
+              "identifier": "movingStep",
+              "type": "active",
+              "title": "Active Step",
+              "text": "Some text.",
+              "shouldHideActions": ["goBackward", "goForward"],
+              "duration": 5,
+              "commands": ["playSound", "transitionAutomatically"],
+              "spokenInstructions": {
+                  "0": "Start moving",
+                  "10": "Keep going",
+                  "halfway": "Halfway there",
+                  "end": "Stop moving"
+                  }
+              },
+              {
+              "identifier": "happiness",
+              "type": "form",
+              "title": "How happy are you?",
+              "dataType": "singleChoice.integer",
+              "choices": [{
+                          "text": "delighted",
+                          "detail": "Nothing could be better!",
+                          "value": 1,
+                          "icon": "moodScale1"
+                          },
+                          {
+                          "text": "good",
+                          "detail": "Life is good.",
+                          "value": 2,
+                          "icon": "moodScale2"
+                          },
+                          {
+                          "text": "so-so",
+                          "detail": "Things are okay, I guess.",
+                          "value": 3,
+                          "icon": "moodScale3"
+                          },
+                          {
+                          "text": "sad",
+                          "detail": "I'm feeling a bit down.",
+                          "value": 4,
+                          "icon": "moodScale4"
+                          },
+                          {
+                          "text": "miserable",
+                          "detail": "I cry into my pillow every night.",
+                          "value": 5,
+                          "icon": "moodScale5"
+                          }
+                          ]
+              },
+              {
+              "identifier": "selectOne",
+              "type": "form",
+              "title": "Select one option",
+              "dataType": "singleChoice",
+              "choices": ["Alpha","Beta","Charlie","Delta","Epsilon"]
+              },
+              {
+              "identifier": "selectMultiple",
+              "type": "form",
+              "title": "Select as many as you want",
+              "dataType": "multipleChoice.integer",
+              "choices": [{
+                          "text": "Alpha",
+                          "value": 1,
+                          },
+                          {
+                          "text": "Beta",
+                          "value": 2,
+                          },
+                          {
+                          "text": "Gamma",
+                          "value": 3,
+                          },
+                          {
+                          "text": "None of the above",
+                          "value": 0,
+                          "isExclusive": true
+                          }]
+              },
+              {
+              "identifier": "step4",
+              "type": "form",
+              "title": "Pick some values",
+              "text": "Choose a date in the future and a number",
+              "inputFields": [{
+                              "identifier": "date",
+                              "dataType": "date",
+                              "uiHint": "picker",
+                              "prompt": "Date",
+                              "range": {
+                                  "allowPast": false,
+                                  "codingFormat": "yyyy-MM-dd"
+                                  }
+                              },
+                              {
+                              "identifier": "number",
+                              "dataType": "integer",
+                              "prompt": "Number"
+                              }
+                              ]
+              },
+              {
+              "identifier": "year",
+              "type": "form",
+              "title": "Enter a year",
+              "text": "Enter a year in the past.",
+              "dataType": "year",
+              "uiHint": "textfield",
+              "range": { "allowFuture": false }
+              }
+              ]
+}

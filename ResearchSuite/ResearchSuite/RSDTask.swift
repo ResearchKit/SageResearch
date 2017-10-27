@@ -36,7 +36,7 @@ import Foundation
 /**
  This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
  */
-public protocol RSDTask {
+public protocol RSDTask : RSDUIActionHandler {
     
     /**
      A short string that uniquely identifies the task.
@@ -46,7 +46,7 @@ public protocol RSDTask {
     /**
      Additional information about the task.
      */
-    var taskInfo: RSDTaskInfo? { get }
+    var taskInfo: RSDTaskInfoStep? { get }
     
     /**
      Additional information about the result schema.
@@ -62,6 +62,13 @@ public protocol RSDTask {
      A list of asyncronous actions to run on the task.
      */
     var asyncActions: [RSDAsyncActionConfiguration]? { get }
+    
+    /**
+     Instantiate a task result that is appropriate for this task.
+     
+     @return    A task result for this task.
+     */
+    func instantiateTaskResult() -> RSDTaskResult
 
     /**
      Validate the task to check for any model configuration that should throw an error.

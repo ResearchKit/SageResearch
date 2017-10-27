@@ -33,43 +33,57 @@
 
 import Foundation
 
-public struct RSDTaskObject : RSDTask, Decodable {
+public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
+
+    public let identifier: String
+    public let stepNavigator: RSDStepNavigator
+    public let asyncActions: [RSDAsyncActionConfiguration]?
     
-    public private(set) var identifier: String
-    public private(set) var stepNavigator: RSDStepNavigator
-    public private(set) var asyncActions: [RSDAsyncActionConfiguration]?
-    
-    public var taskInfo: RSDTaskInfo?
+    public var taskInfo: RSDTaskInfoStep?
     public var schemaInfo: RSDSchemaInfo?
     
-    public init(taskInfo: RSDTaskInfo, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
+    public init(taskInfo: RSDTaskInfoStep, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
         self.identifier = taskInfo.identifier
         self.taskInfo = taskInfo
         self.schemaInfo = schemaInfo
         self.stepNavigator = stepNavigator
         self.asyncActions = asyncActions
+        super.init()
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, taskInfo, schemaInfo, asyncActions
+        case identifier, taskInfo, schemaInfo, asyncActions, isCancelHidden, isBackHidden
     }
     
-    public init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if let taskInfo = try container.decodeIfPresent(RSDTaskInfoObject.self, forKey: .taskInfo) ?? decoder.taskInfo {
-            self.identifier = taskInfo.identifier
+        
+        // Set the identifier and
+        let identifier: String
+        if let taskInfo = try container.decodeIfPresent(RSDTaskInfoStepObject.self, forKey: .taskInfo) {
+            identifier = taskInfo.identifier
             self.taskInfo = taskInfo
         }
         else {
-            self.identifier = try container.decode(String.self, forKey: .identifier)
+            identifier = try container.decode(String.self, forKey: .identifier)
+            if let taskInfo = decoder.taskInfo, taskInfo.identifier == identifier {
+                self.taskInfo = taskInfo
+            }
+            else {
+                self.taskInfo = decoder.taskDataSource?.taskInfo(with: identifier)
+            }
         }
-        self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo
+        self.identifier = identifier
         
+        // Look for a schema info
+        self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo ?? decoder.taskDataSource?.schemaInfo(with: identifier)
+        
+        // Get the step navigator
         let factory = decoder.factory
-        self.stepNavigator = try factory.decodeStepNavigator(decoder: decoder)
+        self.stepNavigator = try factory.decodeStepNavigator(from: decoder)
         
         // Decode the async actions
-        do {
+        if container.contains(.asyncActions) {
             var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
             var decodedActions : [RSDAsyncActionConfiguration] = []
             while !nestedContainer.isAtEnd {
@@ -79,13 +93,18 @@ public struct RSDTaskObject : RSDTask, Decodable {
                 }
             }
             self.asyncActions = decodedActions
+        } else {
+            self.asyncActions = nil
         }
-        catch DecodingError.keyNotFound(let codingKey, let context) {
-            if codingKey.stringValue != CodingKeys.asyncActions.stringValue {
-                // Rethrow the error if this isn't looking for an asyncAction nested array
-                throw DecodingError.keyNotFound(codingKey, context)
-            }
-        }
+        
+        try super.init(from: decoder)
+    }
+    
+    
+    // MARK: RSDTask methods
+    
+    public func instantiateTaskResult() -> RSDTaskResult {
+        return RSDTaskResultObject(identifier: self.identifier, schemaInfo: self.schemaInfo)
     }
     
     public func validate() throws {

@@ -38,7 +38,7 @@ public struct RSDResourceType : RawRepresentable, Equatable, Hashable {
     
     public let rawValue: String
     
-    public init?(rawValue: String) {
+    public init(rawValue: String) {
         self.rawValue = rawValue
     }
     
@@ -50,10 +50,10 @@ public struct RSDResourceType : RawRepresentable, Equatable, Hashable {
         return lhs.rawValue == rhs.rawValue
     }
     
-    public static let json = RSDResourceType(rawValue: "json")!
-    public static let plist = RSDResourceType(rawValue: "plist")!
-    public static let html = RSDResourceType(rawValue: "html")!
-    public static let pdf = RSDResourceType(rawValue: "pdf")!
+    public static let json = RSDResourceType(rawValue: "json")
+    public static let plist = RSDResourceType(rawValue: "plist")
+    public static let html = RSDResourceType(rawValue: "html")
+    public static let pdf = RSDResourceType(rawValue: "pdf")
 }
 
 public enum RSDResourceTransformerError : Error, CustomNSError {
@@ -94,20 +94,57 @@ public enum RSDResourceTransformerError : Error, CustomNSError {
     }
 }
 
+/**
+ `RSDResourceConfig` is designed as an overridable resource configuration manager. The functions and properties are intended to be overridable in the app by implementing a custom extension of the function with the same name. This is designed to use app-wins namespace conflict resolution that is typical of obj-c architecture.
+ */
+open class RSDResourceConfig : NSObject {
+}
+
+extension RSDResourceConfig {
+    
+    @objc open class func relativeURL(for resource: Any?) -> URL? {
+        return nil
+    }
+    
+    @objc open class func resourceBundle(for resource: Any?) -> Bundle? {
+        return nil
+    }
+}
+
+/**
+ `RSDResourceTransformer` is a protocol for getting either embedded resources or online resources. The
+ */
 public protocol RSDResourceTransformer {
-    var classType: String? { get }
-    var resourceName: String? { get }
+    
+    /**
+     Either a fully qualified URL string or else a relative reference to either an embedded resource or a relative URL defined globally by overriding the `RSDResourceConfig` class methods.
+     */
+    var resourceName: String { get }
+    
+    /**
+     The bundle identifier for the embedded resource.
+     */
     var resourceBundle: String? { get }
+    
+    /**
+     The classType for converting the resource to an object.
+     */
+    var classType: String? { get }
 }
 
 extension RSDResourceTransformer {
     
-    public func resourceData(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (Data, RSDResourceType) {
+    public var estimatedFetchTime: TimeInterval {
+        return isOnlineResourceURL() ? 60 : 0
+    }
+    
+    public func isOnlineResourceURL() -> Bool {
+        return resourceName.hasPrefix("http") || RSDResourceConfig.relativeURL(for: self) != nil
+    }
+    
+    public func resourceURL(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (URL, RSDResourceType) {
         
         // get the resource name and extention
-        guard let resourceName = self.resourceName else {
-            throw RSDResourceTransformerError.nullResourceName("\(self) does not have a resource name")
-        }
         var resource = resourceName
         var ext = defaultExtension ?? RSDResourceType.json.rawValue
         let split = resourceName.components(separatedBy: ".")
@@ -115,11 +152,20 @@ extension RSDResourceTransformer {
             ext = split.last!
             resource = split.first!
         }
+        let resourceType = RSDResourceType(rawValue: ext)
+        
+        // check if this is either a fully qualified resource and exit early if it is
+        if isOnlineResourceURL(), let url = URL(string: resourceName, relativeTo: RSDResourceConfig.relativeURL(for: self)) {
+            return (url, resourceType)
+        }
         
         // get the bundle
         let rBundle: Bundle
         if bundle != nil {
             rBundle = bundle!
+        }
+        else if let relativeBundle = RSDResourceConfig.resourceBundle(for: self) {
+            rBundle = relativeBundle
         }
         else if let bundleIdentifier = resourceBundle {
             if let bundle = Bundle(identifier: bundleIdentifier) {
@@ -139,8 +185,17 @@ extension RSDResourceTransformer {
             throw RSDResourceTransformerError.fileNotFound("\(resourceName) not found in \(String(describing: rBundle.bundleIdentifier))")
         }
         
+        return (url, resourceType)
+    }
+    
+    
+    public func resourceData(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (Data, RSDResourceType) {
+        
+        // get the url
+        let (url, resourceType) = try resourceURL(ofType: defaultExtension, bundle: bundle)
+        
         // get the data
         let data = try Data(contentsOf: url)
-        return (data, RSDResourceType(rawValue: ext)!)
+        return (data, resourceType)
     }
 }

@@ -33,9 +33,10 @@
 
 import Foundation
 
-open class RSDUIStepObject : RSDUIStep, Codable {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDUIStep, RSDNavigationRule, Codable {
     
-    public private(set) var identifier: String
+    public let identifier: String
+    public let type: String
     
     public var title: String?
     public var text: String?
@@ -45,14 +46,29 @@ open class RSDUIStepObject : RSDUIStep, Codable {
     public var imageBefore: RSDImageWrapper?
     public var imageAfter: RSDImageWrapper?
     
-    public var actions: [RSDUIActionType : RSDUIActionObject]?
-    public var shouldHideActions: [RSDUIActionType]?
+    open var nextStepIdentifier: String?
     
-    public required init(identifier: String) {
+    public init(identifier: String, type: String? = nil) {
         self.identifier = identifier
+        self.type = type ?? RSDFactory.StepType.instruction.rawValue
+        super.init()
+    }
+    
+    // MARK: Result management
+    
+    open func instantiateStepResult() -> RSDResult {
+        return RSDResultObject(identifier: identifier)
     }
     
     // MARK: Image handling
+    
+    public var hasImageBefore: Bool {
+        return imageBefore != nil
+    }
+    
+    public var hasImageAfter: Bool {
+        return imageAfter != nil
+    }
     
     open func imageBefore(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
         RSDImageWrapper.fetchImage(image: imageBefore, for: size, callback: callback)
@@ -62,57 +78,51 @@ open class RSDUIStepObject : RSDUIStep, Codable {
         RSDImageWrapper.fetchImage(image: imageAfter, for: size, callback: callback)
     }
     
-    // MARK: action handling
-    
-    open func action(for actionType: RSDUIActionType) -> RSDUIAction? {
-        return actions?[actionType]
-    }
-    
-    open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
-        return shouldHideActions?.contains(actionType) ?? false
-    }
-    
     // MARK: validation
     
     open func validate() throws {
         // do nothing
     }
     
+    // MARK: navigation
+    
+    open func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?) -> String? {
+        return self.nextStepIdentifier
+    }
+    
     // MARK: Codable (must implement in base class in order for the overriding classes to work)
     
     private enum CodingKeys: String, CodingKey {
-        case identifier, title, text, detail, footnote, imageBefore, imageAfter, actions, shouldHideActions
+        case identifier, type, title, text, detail, footnote, imageBefore, imageAfter, actions, shouldHideActions, nextStepIdentifier
     }
     
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.type = try container.decode(String.self, forKey: .type)
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.text = try container.decodeIfPresent(String.self, forKey: .text)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote)
         self.imageBefore = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageBefore)
         self.imageAfter = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageAfter)
-        if let dictionary = try container.decodeIfPresent([String : RSDUIActionObject].self, forKey: .actions) {
-            self.actions = dictionary.mapKeys { RSDUIActionType(stringLiteral: $0) }
-        }
-        self.shouldHideActions = try container.decodeIfPresent([RSDUIActionType].self, forKey: .shouldHideActions)
+        self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
+        
+        try super.init(from: decoder)
     }
     
-    open func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
-        if let title = self.title { try container.encode(title, forKey: .title) }
-        if let text = self.text { try container.encode(text, forKey: .text) }
-        if let detail = self.detail { try container.encode(detail, forKey: .detail) }
-        if let footnote = self.footnote { try container.encode(footnote, forKey: .footnote) }
-        if let imageBefore = self.imageBefore { try container.encode(imageBefore, forKey: .imageBefore) }
-        if let imageAfter = self.imageAfter { try container.encode(imageAfter, forKey: .imageAfter) }
-        if let actions = self.actions {
-            let dictionary = actions.mapKeys{ $0.rawValue }
-            try container.encode(dictionary, forKey: .actions)
-        }
-        if let shouldHideActions = self.shouldHideActions { try container.encode(shouldHideActions, forKey: .shouldHideActions) }
+        try container.encodeIfPresent(title, forKey: .title)
+        try container.encodeIfPresent(text, forKey: .text)
+        try container.encodeIfPresent(detail, forKey: .detail)
+        try container.encodeIfPresent(footnote, forKey: .footnote)
+        try container.encodeIfPresent(imageBefore, forKey: .imageBefore)
+        try container.encodeIfPresent(imageAfter, forKey: .imageAfter)
+        try container.encodeIfPresent(nextStepIdentifier, forKey: .nextStepIdentifier)
     }
 }
 

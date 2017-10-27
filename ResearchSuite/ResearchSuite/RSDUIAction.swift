@@ -38,7 +38,7 @@ import UIKit
  The `RSDUIAction` protocol can be used to customize the title and image displayed for a 
  given action of the UI.
  */
-public protocol RSDUIAction {
+public protocol RSDUIAction : Codable {
     
     /**
      The title to display on the button associated with this action.
@@ -51,6 +51,22 @@ public protocol RSDUIAction {
     var buttonIcon: UIImage? { get }
 }
 
+/**
+ `RSDWebViewUIAction` implements an extension of the base protocol where the action includes a pointer to a url that can display in a webview. The url can either be fully qualified or optionally point to an embedded resource. The resource bundle is assumed to be the main bundle if the `resourceBundle` property is `nil`.
+ */
+public protocol RSDWebViewUIAction : RSDUIAction {
+    
+    /**
+     The url to load in the webview. If this is not a fully qualified url string, then it is assumed to refer to an embedded resource.
+     */
+    var url: String { get }
+    
+    /**
+     The bundle identifier for the embedded resource.
+     */
+    var resourceBundle: String? { get }
+}
+
 
 /**
  The action handler implements the custom actions of the step.
@@ -61,17 +77,19 @@ public protocol RSDUIActionHandler {
      Customizable actions to return for a given action type. The `RSDStepController` can use these to customize the display of buttons to the user. If nil, `shouldHideAction()` will be called to determine if the default action should be used or if the action button should be hidden.
      
      @param actionType  The action type for the button.
+     @param step        The step that the action is on.
      
      @return            A custom UI action for this button. If nil, the default action will be used.
      */
-    func action(for actionType: RSDUIActionType) -> RSDUIAction?
+    func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction?
     
     /**
      Should the action button be hidden?
      
      @param actionType  The action type for the button.
+     @param step        The step that the action is on.
      
-     @return            Whether or not the button should be hidden.
+     @return            Whether or not the button should be hidden or `nil` if there is no explicit action.
      */
-    func shouldHideAction(for actionType: RSDUIActionType) -> Bool
+    func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool?
 }

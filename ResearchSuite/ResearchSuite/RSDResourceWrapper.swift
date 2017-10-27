@@ -38,9 +38,9 @@ public struct RSDResourceWrapper : RSDResourceTransformer, Codable {
     let filename: String
     let bundleIdentifier: String?
     
-    public var classType: String?
+    public let classType: String?
 
-    public var resourceName: String? {
+    public var resourceName: String {
         return filename
     }
     
@@ -51,5 +51,6 @@ public struct RSDResourceWrapper : RSDResourceTransformer, Codable {
     public init(filename: String, bundleIdentifier: String?) {
         self.filename = filename
         self.bundleIdentifier = bundleIdentifier
+        self.classType = nil
     }
 }

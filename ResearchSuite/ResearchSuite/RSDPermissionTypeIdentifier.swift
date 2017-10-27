@@ -36,7 +36,7 @@ import Foundation
 /**
  `RSDPermissionTypeIdentifier` is an identifier for a permission type.
  */
-public struct RSDPermissionTypeIdentifier: RawRepresentable {
+public struct RSDPermissionTypeIdentifier: RawRepresentable, Codable {
     public typealias RawValue = String
     
     public init(rawValue: RawValue) {
@@ -59,12 +59,7 @@ extension RSDPermissionTypeIdentifier: RSDPermissionType {
     }
 }
 
-extension RSDPermissionTypeIdentifier : Equatable, Hashable {
-    
-    public var hashValue: Int {
-        return rawValue.hashValue
-    }
-    
+extension RSDPermissionTypeIdentifier : Equatable {
     public static func ==(lhs: RSDPermissionTypeIdentifier, rhs: RSDPermissionTypeIdentifier) -> Bool {
         return lhs.rawValue == rhs.rawValue
     }
@@ -76,26 +71,17 @@ extension RSDPermissionTypeIdentifier : Equatable, Hashable {
     }
 }
 
+extension RSDPermissionTypeIdentifier : Hashable {
+    public var hashValue: Int {
+        return rawValue.hashValue
+    }
+}
+
 extension RSDPermissionTypeIdentifier : ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
     
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
-    }
-}
-
-extension RSDPermissionTypeIdentifier : Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self)
-        self.init(rawValue: rawValue)
-    }
-}
-
-extension RSDPermissionTypeIdentifier : Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.rawValue)
     }
 }
 

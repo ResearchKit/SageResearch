@@ -43,6 +43,16 @@ open class RSDUIActionObject : RSDUIAction, Codable {
         return UIImage(named: name)
     }
     
+    public init(buttonTitle: String) {
+        self.buttonTitle = buttonTitle
+        self.iconName = nil
+    }
+    
+    public init(iconName: String) {
+        self.buttonTitle = nil
+        self.iconName = iconName
+    }
+    
     // MARK: Codable implementation (auto synthesized implementation does not work with subclassing)
     
     private enum CodingKeys : String, CodingKey {
@@ -59,5 +69,50 @@ open class RSDUIActionObject : RSDUIAction, Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if let buttonTitle = self.buttonTitle { try container.encode(buttonTitle, forKey: .buttonTitle) }
         if let iconName = self.iconName { try container.encode(iconName, forKey: .iconName) }
+    }
+}
+
+public final class RSDWebViewUIActionObject : RSDUIActionObject, RSDWebViewUIAction, RSDResourceTransformer {
+    public let url: String
+    public let resourceBundle: String?
+    
+    public var resourceName: String {
+        return url
+    }
+    
+    public var classType: String? {
+        return nil
+    }
+    
+    public init(buttonTitle: String, url: String, resourceBundle: String? = nil) {
+        self.url = url
+        self.resourceBundle = resourceBundle
+        super.init(buttonTitle: buttonTitle)
+    }
+    
+    public init(iconName: String, url: String, resourceBundle: String? = nil) {
+        self.url = url
+        self.resourceBundle = resourceBundle
+        super.init(iconName: iconName)
+    }
+    
+    // MARK: Codable implementation (auto synthesized implementation does not work with subclassing)
+    
+    private enum CodingKeys : String, CodingKey {
+        case  url, resourceBundle
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.url = try container.decode(String.self, forKey: .url)
+        self.resourceBundle = try container.decodeIfPresent(String.self, forKey: .resourceBundle)
+        try super.init(from: decoder)
+    }
+    
+    open override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(url, forKey: .url)
+        try container.encodeIfPresent(resourceBundle, forKey: .resourceBundle)
     }
 }

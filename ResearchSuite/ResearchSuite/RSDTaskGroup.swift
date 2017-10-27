@@ -43,7 +43,7 @@ public protocol RSDTaskGroup {
     /**
      A list of the task references included in this group.
      */
-    var tasks: [RSDTaskInfo] { get }
+    var tasks: [RSDTaskInfoStep] { get }
     
     /**
      The primary text to display for the task group in a localized string.

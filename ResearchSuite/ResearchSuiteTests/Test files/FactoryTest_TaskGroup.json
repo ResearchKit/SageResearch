@@ -11,8 +11,10 @@
                "copyright": "This is a copyright string for foo.",
                "estimatedMinutes": 5,
                "icon": "fooIcon",
-               "resourceName": "FactoryTest_TaskFoo",
-               "resourceBundle": "org.sagebase.ResearchSuiteTests"
+               "taskTransformer" : { "resourceName": "FactoryTest_TaskFoo",
+                                     "resourceBundle": "org.sagebase.ResearchSuiteTests" },
+               "storyboardInfo" : { "identifier": "FooStory",
+                                   "viewControllerIdentifierMap": { "instruction" : "InstructionStepViewController" }}
                },
                {
                "identifier": "bar",

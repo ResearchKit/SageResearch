@@ -40,13 +40,14 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, D
     
     public private(set) var steps : [RSDStep]
     public var conditionalRule : RSDConditionalRule?
+    public var progressMarkers : [String]?
     
     public init(with steps: [RSDStep]) {
         self.steps = steps
     }
     
     private enum CodingKeys : String, CodingKey {
-        case steps, conditionalRule
+        case steps, conditionalRule, progressMarkers
     }
     
     public init(from decoder: Decoder) throws {
@@ -54,21 +55,16 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, D
         let factory = decoder.factory
         
         // Decode the steps
-        var decodedSteps : [RSDStep] = []
-        var stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
-        while !stepsContainer.isAtEnd {
-            let stepDecoder = try stepsContainer.superDecoder()
-            if let step = try factory.decodeStep(from: stepDecoder) {
-                decodedSteps.append(step)
-            }
-        }
-        self.steps = decodedSteps
+        let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
+        self.steps = try factory.decodeSteps(from: stepsContainer)
         
         // Decode the conditional rule
         if container.contains(.conditionalRule) {
             let crDecoder = try container.superDecoder(forKey: .conditionalRule)
             self.conditionalRule = try factory.decodeConditionalRule(from: crDecoder)
         }
+        
+        // Decode the markers
+        self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)
     }
-    
 }
