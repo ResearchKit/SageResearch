@@ -111,12 +111,12 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
     var footnote: String? { get }
     
     /**
-     Does the step have an image to display before the  `title`, `text`, and `detail`?
+     Does the step have an image to display before the `title`, `text`, and `detail`?
      */
     var hasImageBefore: Bool { get }
     
     /**
-     Does the step have an image to display before the  `title`, `text`, and `detail`?
+     Does the step have an image to display after the `title`, `text`, and `detail`?
      */
     var hasImageAfter: Bool { get }
 

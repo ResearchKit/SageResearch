@@ -1,5 +1,5 @@
 //
-//  UIColor+BridgeKeyNames.swift
+//  UIFont+BridgeKeyNames.swift
 //  ResearchSuiteUI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -59,8 +59,12 @@ extension UIFont {
         return UIFont.systemFont(ofSize: 15.0, weight: .regular)
     }
 
-    @objc open class var headerViewStepCountLabel: UIFont {
+    @objc open class var stepCountLabel: UIFont {
         return UIFont.systemFont(ofSize: 14.0, weight: .regular)
+    }
+    
+    @objc open class var boldStepCountLabel: UIFont {
+        return UIFont.systemFont(ofSize: 14.0, weight: .bold)
     }
     
     // MARK: Generic step view controller - choice cell

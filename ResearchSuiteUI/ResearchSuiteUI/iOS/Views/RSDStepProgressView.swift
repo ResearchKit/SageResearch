@@ -125,18 +125,26 @@ open class RSDStepProgressView: UIView {
     /**
      The text of the label that is displayed directly under the progress bar
      */
-    open func stringForLabel() -> String? {
+    open func attributedStringForLabel() -> NSAttributedString? {
 
         if currentStep > 0 && totalSteps > 0 {
             let formatter = NumberFormatter()
             formatter.numberStyle = .none
-            let currentString = formatter.string(for: currentStep)
-            let totalString = formatter.string(for: totalSteps)
-            let format = Localization.localizedString("CURRENT_STEP_%@_OF_TOTAL_STEPS_%@")
-            return String.localizedStringWithFormat(format, currentString!, totalString!)
+            let currentString = formatter.string(for: currentStep)!
+            let totalString = formatter.string(for: totalSteps)!
+            let marker = "<CURRENT_STEP>"
             
-//            let attributedString = NSMutableAttributedString(string: "Step 3 of 4")
-//            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "OpenSans-Bold", size: 14.0)!, range: NSRange(location: 5, length: 1))
+            let format = Localization.localizedString("CURRENT_STEP_%@_OF_TOTAL_STEPS_%@")
+            let str = String.localizedStringWithFormat(format, marker, totalString)
+            
+            let mutableString = NSMutableString(string: str)
+            let markerRange = mutableString.range(of: marker)
+            mutableString.replaceCharacters(in: markerRange, with: currentString)
+            let range = NSRange(location: markerRange.location, length: (currentString as NSString).length)
+            let attributedString = NSMutableAttributedString(string: mutableString as String)
+            attributedString.addAttribute(.font, value: UIFont.boldStepCountLabel, range: range)
+            
+            return attributedString
         }
         else {
             return nil
@@ -172,10 +180,10 @@ open class RSDStepProgressView: UIView {
         progressView.translatesAutoresizingMaskIntoConstraints = false
         stepCountLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        stepCountLabel.font = UIFont.headerViewStepCountLabel
+        stepCountLabel.font = UIFont.stepCountLabel
         stepCountLabel.numberOfLines = 1
         stepCountLabel.textAlignment = .center
-        stepCountLabel.text = stringForLabel()
+        stepCountLabel.attributedText = attributedStringForLabel()
         stepCountLabel.isHidden = isStepLabelHidden
         
         setNeedsUpdateConstraints()
@@ -242,7 +250,7 @@ open class RSDStepProgressView: UIView {
                 progressView.setNeedsLayout()
             }
             
-            stepCountLabel.text = stringForLabel()
+            stepCountLabel.attributedText = attributedStringForLabel()
             setNeedsLayout()
         }
     }

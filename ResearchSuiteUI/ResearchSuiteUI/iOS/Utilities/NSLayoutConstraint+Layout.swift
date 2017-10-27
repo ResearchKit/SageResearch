@@ -1,5 +1,5 @@
 //
-//  NSLayoutConstraint+setMultiplier.swift
+//  NSLayoutConstraint+Layout.swift
 //  ResearchSuiteUI
 //
 //  Created by Josh Bruhin on 5/26/17.

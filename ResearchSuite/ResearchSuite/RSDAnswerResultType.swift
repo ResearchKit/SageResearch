@@ -101,7 +101,7 @@ extension RSDAnswerResultType {
                     }
                     return values 
                 } catch DecodingError.typeMismatch(let type, let context) {
-                    // If attempting to get a dictionary fails, then look to see if this is a single String value
+                    // If attempting to get an array fails, then look to see if this is a single String value
                     if sType == .array, let separator = self.sequenceSeparator {
                         let container = try decoder.singleValueContainer()
                         let strings = try container.decode(String.self).components(separatedBy: separator)

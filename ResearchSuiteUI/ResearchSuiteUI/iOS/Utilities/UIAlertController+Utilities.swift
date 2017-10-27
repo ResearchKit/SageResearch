@@ -37,19 +37,19 @@ import UIKit
  * Utility for presenting alerts
  */
 @objc
-public protocol SBAAlertPresenter: NSObjectProtocol {
+public protocol RSDAlertPresenter: NSObjectProtocol {
     func presentModal(_ viewController: UIViewController,
                                     animated: Bool,
                                     completion: (() -> Void)?)
 }
 
-extension UIViewController: SBAAlertPresenter {
+extension UIViewController: RSDAlertPresenter {
     public func presentModal(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
         self.present(viewController, animated: animated, completion: completion)
     }
 }
 
-public extension SBAAlertPresenter {
+public extension RSDAlertPresenter {
     
     public func showAlertWithOk(title: String?, message: String, actionHandler: ((UIAlertAction) -> Void)?) {
         

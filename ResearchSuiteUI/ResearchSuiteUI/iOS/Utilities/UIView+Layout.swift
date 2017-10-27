@@ -1,5 +1,5 @@
 //
-//  UIView+LayoutExtensions.swift
+//  UIView+Layout.swift
 //  ResearchSuiteUI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -369,7 +369,7 @@ extension UIView {
         for constraint in self.constraints {
             
             // iOS automatically creates special types of constraints, like for intrinsicContentSize,
-            // and we don'e want these. So test here for that and skip
+            // and we don't want these. So test here for that and skip.
             if type(of: constraint) != NSLayoutConstraint.self {
                 continue
             }
@@ -382,7 +382,7 @@ extension UIView {
             for constraint in superview.constraints {
                 
                 // iOS automatically creates special types of constraints, like for intrinsicContentSize,
-                // and we don't want to remove these. So test here for that and skip
+                // and we don't want to remove these. So test here for that and skip.
                 if type(of: constraint) != NSLayoutConstraint.self {
                     continue
                 }
@@ -395,14 +395,14 @@ extension UIView {
     }
     
     /**
-     A convenience method to remove all the view's constraints that exist between it and its superview. It does NOT remove constraints between the view and its child views or constraints on itself (such as width and height)
+     A convenience method to remove all the view's constraints that exist between it and its superview. It does NOT remove constraints between the view and its child views or constraints on itself (such as width and height).
      */
     public func removeSuperviewConstraints() {
         guard let superview = superview else { return }
         for constraint in superview.constraints {
             
             // iOS automatically creates special types of constraints, like for intrinsicContentSize,
-            // and we don't want these. So test here for that and skip
+            // and we don't want these. So test here for that and skip.
             if type(of: constraint) != NSLayoutConstraint.self {
                 continue
             }

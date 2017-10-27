@@ -120,7 +120,7 @@ import UIKit
         heightConstraint.priority = UILayoutPriority(rawValue: 950)
         heightConstraint.isActive = true
         
-        // For the width, need to allow the preferred with to be overridden by the
+        // For the width, need to allow the preferred width to be overridden by the containing view.
         self.makeWidth(.lessThanOrEqual, RSDRoundedButton.defaultWidthWith1Button)
         let widthConstraint = self.heightAnchor.constraint(equalToConstant: RSDRoundedButton.defaultWidthWith1Button)
         widthConstraint.priority = UILayoutPriority(rawValue: 750)

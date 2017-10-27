@@ -1,5 +1,5 @@
 //
-//  JSONCodable+Utilities.swift
+//  Codable+Utilities.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.

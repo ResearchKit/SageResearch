@@ -87,10 +87,6 @@ extension UIColor {
         return UIColor.appDarkGrayText
     }
     
-    @objc open class var appTextGreen: UIColor {
-        return UIColor.white
-    }
-    
     
     // MARK: Underlined button - default colors
     

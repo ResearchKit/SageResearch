@@ -323,7 +323,7 @@ open class RSDTableItemGroup {
 }
 
 /**
- `RSDTableItemGroup` is used to represent a single input field.
+ `RSDInputFieldTableItemGroup` is used to represent a single input field.
  */
 open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     

@@ -110,7 +110,7 @@ open class Localization: NSObject {
     }()
     
     
-    // MARK: Common button titles that should keep consistent with ResearchKit
+    // MARK: Common button titles
     
     open class func buttonYes() -> String {
         return localizedString("BOOL_YES")

@@ -244,7 +244,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         super.viewDidLoad()
         
         // Set up the page view controller. By default, this will load a UIPageViewController if it does not
-        // find one amongst it's children.
+        // find one amongst its children.
         self.pageViewController = findPageViewController() ?? addPageViewController()
         self.pageViewController.setViewControllers([UIViewController()], direction: .forward, animated: false, completion: nil)
     }

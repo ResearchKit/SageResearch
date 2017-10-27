@@ -156,7 +156,7 @@ open class RSDFactory {
         case form           // RSDFormUIStep
         case instruction    // RSDUIStep
         case section        // RSDSectionStep
-        case taskInfo       // RSDTaskInfoStepStep
+        case taskInfo       // RSDTaskInfoStep
     }
     
     /**
