@@ -39,27 +39,69 @@ import UIKit
  that is positioned under the progress bar to display current step and number of steps.
  Views should set currentStep and totalSteps to cause progress to be displayed.
  */
+@IBDesignable
 open class RSDStepProgressView: UIView {
-    
-    // These can be used to set the global color for the progress bar
-    // If you want a different individual color per progress view, you will need to subclass
-    open static var progressColor = UIColor.headerViewProgressBar
-    open static var progressBackgroundColor = UIColor.headerViewProgressBackground
-    
+
     /**
-     The current step in the current flow
+     The current step in the current flow.
      */
+    @IBInspectable
     public var currentStep: Int = 0 {
-        didSet { progressChanged() }
+        didSet {
+            progressChanged()
+        }
     }
     
     /**
-     The total number of steps in the current flow
+     The total number of steps in the current flow.
      */
-    public var totalSteps: Int = 0 { didSet { progressChanged() } }
+    @IBInspectable
+    open var totalSteps: Int = 0 {
+        didSet {
+            progressChanged()
+        }
+    }
     
+    /**
+     Should the progress bar display with rounded ends?
+     */
+    @IBInspectable
+    open var hasRoundedEnds: Bool = false {
+        didSet {
+            setNeedsUpdateConstraints()
+        }
+    }
     
-    private let kProgressLineHeight: CGFloat = 8.0
+    /**
+     Should the progress bar display with a light style of progress bar and label for use on a dark background, or with a dark style of progress bar for use on a light background?
+     */
+    @IBInspectable
+    open var usesLightStyle: Bool = false {
+        didSet {
+            setNeedsUpdateConstraints()
+        }
+    }
+    
+    /**
+     Should the step label be hidden?
+     */
+    @IBInspectable
+    open var isStepLabelHidden: Bool = false {
+        didSet {
+            stepCountLabel.isHidden = isStepLabelHidden
+            setNeedsUpdateConstraints()
+        }
+    }
+    
+    /**
+     The height of the actual progress bar
+     */
+    @IBInspectable
+    open var progressLineHeight: CGFloat = 8.0 {
+        didSet {
+            setNeedsUpdateConstraints()
+        }
+    }
     
     public var progress: CGFloat {
         if totalSteps > 0 {
@@ -71,19 +113,9 @@ open class RSDStepProgressView: UIView {
     
     // MARK: View elements
     
-    var progressView = UIView()
-    var backgroundView = UIView()
-    var stepCountLabel = UILabel()
-    
-    
-    // MARK: Available for override
-    
-    /**
-     The height of the actual progress bar
-     */
-    open func progressLineHeight() -> CGFloat {
-        return currentStep > 0 && totalSteps > 0 ? kProgressLineHeight : 0.0
-    }
+    public var stepCountLabel = UILabel()
+    private var progressView = UIView()
+    private var backgroundView = UIView()
     
     /**
      The text of the label that is displayed directly under the progress bar
@@ -97,6 +129,9 @@ open class RSDStepProgressView: UIView {
             let totalString = formatter.string(for: totalSteps)
             let format = Localization.localizedString("CURRENT_STEP_%@_OF_TOTAL_STEPS_%@")
             return String.localizedStringWithFormat(format, currentString!, totalString!)
+            
+//            let attributedString = NSMutableAttributedString(string: "Step 3 of 4")
+//            attributedString.addAttribute(NSFontAttributeName, value: UIFont(name: "OpenSans-Bold", size: 14.0)!, range: NSRange(location: 5, length: 1))
         }
         else {
             return nil
@@ -110,6 +145,11 @@ open class RSDStepProgressView: UIView {
         commonInit()
     }
     
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
@@ -118,40 +158,65 @@ open class RSDStepProgressView: UIView {
     func commonInit() {
         
         self.addSubview(backgroundView)
-        self.addSubview(progressView)
+        backgroundView.addSubview(progressView)
+        backgroundView.clipsToBounds = true
+        
         self.addSubview(stepCountLabel)
         
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         progressView.translatesAutoresizingMaskIntoConstraints = false
         stepCountLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        backgroundView.backgroundColor = type(of: self).progressBackgroundColor
-        progressView.backgroundColor = type(of: self).progressColor
-        
+
         stepCountLabel.font = UIFont.headerViewStepCountLabel
         stepCountLabel.numberOfLines = 1
         stepCountLabel.textAlignment = .center
-        stepCountLabel.textColor = UIColor.headerViewStepCountLabel
         stepCountLabel.text = stringForLabel()
+        stepCountLabel.isHidden = isStepLabelHidden
         
         setNeedsUpdateConstraints()
     }
     
+    private var _interactiveContraints: [NSLayoutConstraint] = []
+    
     open override func updateConstraints() {
         
-        NSLayoutConstraint.deactivate(self.constraints)
+        // Update colors
+        progressView.backgroundColor = UIColor.progressBar
+        if usesLightStyle {
+            backgroundView.backgroundColor = UIColor.progressBarBackgroundLight
+            stepCountLabel.textColor = UIColor.stepCountLabelLight
+        } else {
+            backgroundView.backgroundColor = UIColor.progressBarBackgroundDark
+            stepCountLabel.textColor = UIColor.stepCountLabelDark
+        }
         
-        backgroundView.alignToSuperview([.leading, .trailing, .top], padding: 0.0)
-        backgroundView.makeHeight(.equal, progressLineHeight())
+        NSLayoutConstraint.deactivate(_interactiveContraints)
+        _interactiveContraints.removeAll()
         
-        progressView.alignToSuperview([.leading, .top], padding: 0.0)
-        progressView.makeWidthEqualToSuperview(multiplier: progress)
-        progressView.makeHeight(.equal, progressLineHeight())
+        let progressHeight = (currentStep > 0 && totalSteps > 0) ? progressLineHeight : 0.0
+        _interactiveContraints.append(contentsOf:
+            backgroundView.alignToSuperview([.leading, .trailing, .top], padding: 0.0))
+        _interactiveContraints.append(contentsOf:
+            backgroundView.makeHeight(.equal, progressHeight))
         
-        stepCountLabel.alignToSuperview([.leading, .trailing], padding: 0.0)
-        stepCountLabel.alignBelow(view: progressView, padding: 5.0)
-        stepCountLabel.makeHeight(.greaterThanOrEqual, 0.0)
-        stepCountLabel.alignToSuperview([.bottomMargin], padding: 0.0)
+        _interactiveContraints.append(contentsOf:
+            progressView.alignToSuperview([.leading, .top, .bottom], padding: 0.0))
+        _interactiveContraints.append(contentsOf:
+            progressView.makeWidthEqualToSuperview(multiplier: progress))
+        
+        if isStepLabelHidden {
+            _interactiveContraints.append(contentsOf:
+                backgroundView.alignToSuperview([.bottom], padding: 0.0))
+        } else {
+            _interactiveContraints.append(contentsOf:
+                stepCountLabel.alignCenterHorizontal(padding: 0))
+            _interactiveContraints.append(contentsOf:
+                stepCountLabel.alignBelow(view: progressView, padding: 5.0))
+            _interactiveContraints.append(contentsOf:
+                stepCountLabel.makeHeight(.greaterThanOrEqual, 0.0))
+            _interactiveContraints.append(contentsOf:
+                stepCountLabel.alignToSuperview([.bottomMargin], padding: 0.0))
+        }
         
         super.updateConstraints()
     }
@@ -170,3 +235,5 @@ open class RSDStepProgressView: UIView {
         }
     }
 }
+
+

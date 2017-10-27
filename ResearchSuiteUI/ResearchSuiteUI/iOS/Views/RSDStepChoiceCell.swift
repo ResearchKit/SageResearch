@@ -343,7 +343,7 @@ open class RSDTextLabelCell : UITableViewCell {
         
         label.numberOfLines = 0
         label.font = UIFont.footnoteLabel
-        label.textColor = UIColor.headerViewDetailsLabel
+        label.textColor = UIColor.headerTextLabel
         label.textAlignment = .left
         
         setNeedsUpdateConstraints()

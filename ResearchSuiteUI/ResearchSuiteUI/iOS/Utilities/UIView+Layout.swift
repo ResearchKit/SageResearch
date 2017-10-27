@@ -272,14 +272,17 @@ extension UIView {
      @param relation    The 'NSLayoutRelation' used in the constraint.
      @param width       A 'CGFloat' constant for the width.
      */
-    public func makeWidth(_ relation: NSLayoutRelation, _ width : CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) {
-        self.addConstraint(NSLayoutConstraint(item: self,
+    @discardableResult
+    public func makeWidth(_ relation: NSLayoutRelation, _ width : CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+        let constraint = NSLayoutConstraint(item: self,
                                               attribute: .width,
                                               relatedBy: relation,
                                               toItem: nil,
                                               attribute: .notAnAttribute,
                                               multiplier: 1.0,
-                                              constant: width))
+                                              constant: width)
+        self.addConstraint(constraint)
+        return [constraint]
     }
     
     /**
@@ -288,14 +291,17 @@ extension UIView {
      @param relation    The 'NSLayoutRelation' used in the constraint.
      @param height       A 'CGFloat' constant for the height.
      */
-    public func makeHeight(_ relation: NSLayoutRelation, _ height : CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) {
-        self.addConstraint(NSLayoutConstraint(item: self,
+    @discardableResult
+    public func makeHeight(_ relation: NSLayoutRelation, _ height : CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+        let constraint = NSLayoutConstraint(item: self,
                                               attribute: .height,
                                               relatedBy: relation,
                                               toItem: nil,
                                               attribute: .notAnAttribute,
                                               multiplier: 1.0,
-                                              constant: height))
+                                              constant: height)
+        self.addConstraint(constraint)
+        return [constraint]
     }
     
     /**
@@ -303,20 +309,23 @@ extension UIView {
      
      @param multiplier       A 'CGFloat' constant for the constraint multiplier.
      */
-    public func makeWidthEqualToSuperview(multiplier: CGFloat) {
+    @discardableResult
+    public func makeWidthEqualToSuperview(multiplier: CGFloat) -> [NSLayoutConstraint] {
         
         guard let superview = self.superview else {
             assertionFailure("Trying to set constraints without first setting superview")
-            return
+            return []
         }
         
-        superview.addConstraint(NSLayoutConstraint(item: self,
+        let constraint = NSLayoutConstraint(item: self,
                                                     attribute: .width,
                                                     relatedBy: .equal,
                                                     toItem: superview,
                                                     attribute: .width,
                                                     multiplier: multiplier,
-                                                    constant: 0.0))
+                                                    constant: 0.0)
+        superview.addConstraint(constraint)
+        return [constraint]
     }
     
     /**

@@ -48,20 +48,7 @@ extension UIColor {
     @objc open class var secondaryTintColor: UIColor? {
         return nil
     }
-    
-    /**
-     The green tint color is used for red buttons and checkmarks.
-     */
-    @objc open class var greenTintColor: UIColor {
-        return UIColor(red:0.267, green:0.824, blue:0.306, alpha:1.000)
-    }
-    
-    /**
-     The red tint color is used for red buttons and warnings.
-     */
-    @objc open class var redTintColor: UIColor {
-        return UIColor.red
-    }
+
     
     // MARK: App background - default colors
     
@@ -74,7 +61,7 @@ extension UIColor {
     }
     
     @objc open class var appBackgroundGreen: UIColor {
-        return UIColor.greenTintColor
+        return UIColor.appTintGreen
     }
     
     @objc open class var appCrosshatchLight: UIColor {
@@ -97,7 +84,7 @@ extension UIColor {
     }
     
     @objc open class var appTextDark: UIColor {
-        return UIColor(red: 65.0 / 255.0, green: 72.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
+        return UIColor.appDarkGrayText
     }
     
     @objc open class var appTextGreen: UIColor {
@@ -112,7 +99,7 @@ extension UIColor {
     }
     
     @objc open class var underlinedButtonTextDark: UIColor {
-        return UIColor(red: 33.0 / 255.0, green: 150.0 / 255.0, blue: 243.0 / 255.0, alpha: 1.0)
+        return UIColor.appButtonTintBlue
     }
     
     
@@ -144,38 +131,46 @@ extension UIColor {
     
     // MARK: Generic step view controller - header view
     
-    @objc open class var headerViewHeaderLabel: UIColor {
-        return UIColor.darkGray
+    @objc open class var headerTitleLabel: UIColor {
+        return UIColor.appDarkGrayText
     }
     
-    @objc open class var headerViewDetailsLabel: UIColor {
-        return UIColor.gray
+    @objc open class var headerTextLabel: UIColor {
+        return UIColor.appDarkGrayText
     }
     
-    @objc open class var headerViewPromptLabel: UIColor {
-        return UIColor.lightGray
+    @objc open class var headerDetailLabel: UIColor {
+        return UIColor.appLightGrayText
     }
     
     @objc open class var footnoteLabel: UIColor {
-        return UIColor.lightGray
+        return UIColor.appLightGrayText
     }
     
-    @objc open class var headerViewProgressBar: UIColor {
-        return UIColor(red: 103.0 / 255.0, green: 191.0 / 255.0, blue: 95.0 / 255.0, alpha: 1.0)
+    @objc open class var progressBar: UIColor {
+        return UIColor.appSoftGreen
     }
     
-    @objc open class var headerViewProgressBackground: UIColor {
-        return UIColor.darkGray
+    @objc open class var progressBarBackgroundLight: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var progressBarBackgroundDark: UIColor {
+        return UIColor.appWhiteTwo
     }
 
-    @objc open class var headerViewStepCountLabel: UIColor {
-        return UIColor.darkGray
+    @objc open class var stepCountLabelLight: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var stepCountLabelDark: UIColor {
+        return UIColor.appDarkGrayText
     }
     
     // MARK: Generic step view controller - choice cell
     
     @objc open class var choiceCellBackground: UIColor {
-        return UIColor(white: 250.0 / 255.0, alpha: 1.0)
+        return UIColor.appWhiteThree
     }
     
     @objc open class var choiceCellBackgroundHighlighted: UIColor {
@@ -183,7 +178,7 @@ extension UIColor {
     }
 
     @objc open class var choiceCellLabel: UIColor {
-        return UIColor.darkGray
+        return UIColor.appDarkGrayText
     }
     
     @objc open class var choiceCellLabelHighlighted: UIColor {
@@ -202,5 +197,35 @@ extension UIColor {
 
     @objc open class var textFieldCellLabel: UIColor {
         return UIColor.lightGray
+    }
+    
+    // MARK: Shared style colors
+    
+    @objc open class var appWhiteTwo: UIColor {
+        return UIColor(white: 237.0 / 255.0, alpha: 1.0)
+    }
+    
+    @objc open class var appWhiteThree: UIColor {
+        return UIColor(white: 250.0 / 255.0, alpha: 1.0)
+    }
+    
+    @objc open class var appDarkGrayText: UIColor {
+        return UIColor(red: 65.0 / 255.0, green: 72.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
+    }
+    
+    @objc open class var appLightGrayText: UIColor {
+        return UIColor(red: 141.0 / 255.0, green: 147.0 / 255.0, blue: 161.0 / 255.0, alpha: 1.0)
+    }
+    
+    @objc open class var appButtonTintBlue: UIColor {
+        return UIColor(red: 33.0 / 255.0, green: 150.0 / 255.0, blue: 243.0 / 255.0, alpha: 1.0)
+    }
+    
+    @objc open class var appTintGreen: UIColor {
+        return UIColor(red: 94.0 / 255.0, green: 173.0 / 255.0, blue: 87.0 / 255.0, alpha: 1.0)
+    }
+    
+    @objc open class var appSoftGreen: UIColor {
+        return UIColor(red: 104.0 / 255.0, green: 191.0 / 255.0, blue: 96.0 / 255.0, alpha: 1.0)
     }
 }

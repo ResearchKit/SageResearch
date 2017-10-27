@@ -305,7 +305,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     // MARK: View setup
     
-    open override func setupHeader(_ header: RSDStepHeaderView) {
+    open override func setupHeader(_ header: RSDNavigationHeaderView) {
         super.setupHeader(header)
         
         if formStep?.inputFields.count ?? 0 > 0 {
@@ -591,7 +591,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         // Always enable the next button once something has been entered
-        (textField.inputAccessoryView as? RSDStepNavigationView)?.nextButton.isEnabled = true
+        (textField.inputAccessoryView as? RSDStepNavigationView)?.nextButton?.isEnabled = true
         
         return true
     }
@@ -766,7 +766,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     public func answersDidChange(in section: Int) {
         // update enabled state of next button
-        navigationFooter?.nextButton.isEnabled = self.isForwardEnabled
+        navigationFooter?.nextButton?.isEnabled = self.isForwardEnabled
     }
 }
 
@@ -800,11 +800,11 @@ extension RSDGenericStepUIConfig {
         return true
     }
     
-    @objc open class func instantiateHeaderView() -> RSDStepHeaderView {
-        return RSDStepHeaderView()
+    @objc open class func instantiateHeaderView() -> RSDNavigationHeaderView {
+        return RSDGenericStepHeaderView()
     }
     
-    @objc open class func instantiatNavigationView() -> RSDStepNavigationView {
+    @objc open class func instantiatNavigationView() -> RSDNavigationFooterView {
         return RSDGenericStepNavigationView()
     }
 }

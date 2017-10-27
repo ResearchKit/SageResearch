@@ -144,8 +144,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     // MARK: Navigation
     
-    @IBOutlet open var navigationHeader: RSDStepHeaderView?
-    @IBOutlet open var navigationFooter: RSDStepNavigationView?
+    @IBOutlet open var navigationHeader: RSDNavigationHeaderView?
+    @IBOutlet open var navigationFooter: RSDNavigationFooterView?
     
     open var continueButton: UIButton? {
         return navigationFooter?.nextButton
@@ -165,51 +165,56 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             setupHeader(header)
         }
         if let footer = self.navigationFooter {
-            setupFooter(footer)
+            setupNavigationView(footer)
         }
     }
     
-    open func setupHeader(_ header: RSDStepHeaderView) {
-        setupButton(header.cancelButton, for: .navigation(.cancel))
-        setupButton(header.learnMoreButton, for: .navigation(.learnMore))
+    open func setupHeader(_ header: RSDNavigationHeaderView) {
+        setupNavigationView(header)
             
-        if uiStep?.hasImageBefore ?? false {
+        if (uiStep?.hasImageBefore ?? false), let imageView = header.imageView {
             header.hasImage = true
-            uiStep!.imageBefore(for: header.imageView.bounds.size, callback: { [weak header] (img) in
+            uiStep!.imageBefore(for: imageView.bounds.size, callback: { [weak header] (img) in
                 header?.image = img
             })
         }
         
         // setup progress
         if let (stepIndex, stepCount, _) = self.progress() {
-            header.progressView.totalSteps = stepCount
-            header.progressView.currentStep = stepIndex
+            header.progressView?.totalSteps = stepCount
+            header.progressView?.currentStep = stepIndex
         }
             
         // setup label text
-        header.headerLabel.text = uiStep?.title
-        header.detailsLabel.text = uiStep?.text
-        header.promptLabel.text = uiStep?.detail
+        header.titleLabel?.text = uiStep?.title
+        header.textLabel?.text = uiStep?.text
+        header.detailLabel?.text = uiStep?.detail
         
         header.setNeedsLayout()
         header.setNeedsUpdateConstraints()
     }
     
-    open func setupFooter(_ footer: RSDStepNavigationView) {
+    open func setupFooter(_ footer: RSDNavigationFooterView) {
+        setupNavigationView(footer)
+    }
+    
+    open func setupNavigationView(_ navigationView: RSDStepNavigationView) {
         
         // Check if the back button and skip button should be hidden for this task
         // and if so, then do so globally.
         if let task = self.taskController.taskPath.task, !(step is RSDTaskInfoStep) {
-            footer.isBackHidden = task.shouldHideAction(for: .navigation(.goBackward), on: step) ?? false
-            footer.isSkipHidden = task.shouldHideAction(for: .navigation(.skip), on: step) ?? true
+            navigationView.isBackHidden = task.shouldHideAction(for: .navigation(.goBackward), on: step) ?? false
+            navigationView.isSkipHidden = task.shouldHideAction(for: .navigation(.skip), on: step) ?? true
         }
         
-        setupButton(footer.nextButton, for: .navigation(.goForward))
-        setupButton(footer.backButton, for: .navigation(.goBackward))
-        setupButton(footer.skipButton, for: .navigation(.skip))
+        setupButton(navigationView.cancelButton, for: .navigation(.cancel))
+        setupButton(navigationView.learnMoreButton, for: .navigation(.learnMore))
+        setupButton(navigationView.nextButton, for: .navigation(.goForward))
+        setupButton(navigationView.backButton, for: .navigation(.goBackward))
+        setupButton(navigationView.skipButton, for: .navigation(.skip))
         
-        footer.setNeedsLayout()
-        footer.setNeedsUpdateConstraints()
+        navigationView.setNeedsLayout()
+        navigationView.setNeedsUpdateConstraints()
     }
     
     open func setupButton(_ button: UIButton?, for actionType: RSDUIActionType) {
