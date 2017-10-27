@@ -84,7 +84,7 @@ class CodableTaskObjectTests: XCTestCase {
     
     func testTaskInfoObject_Codable() {
         
-        let taskInfo = RSDTaskInfoStepObject(with: "bar")
+        var taskInfo = RSDTaskInfoStepObject(with: "bar")
         taskInfo.title = "yo"
         
         let json = """

@@ -303,6 +303,23 @@ open class RSDFactory {
             throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a conditional rule.")
     }
     
+    // MARK: UI action factory
+    
+    /**
+     Decode an ui action from the given decoder.
+     
+     @param decoder     The decoder to use to instatiate the object.
+     
+     @return            The UI action created from this decoder.
+     */
+    open func decodeUIAction(from decoder:Decoder) throws -> RSDUIAction {
+        // check if the decoder can be used to decode a web-based action
+        if let webAction = try? RSDWebViewUIActionObject(from: decoder) {
+            return webAction
+        }
+        return try RSDUIActionObject(from: decoder)
+    }
+    
     
     // MARK: Async action factory
     

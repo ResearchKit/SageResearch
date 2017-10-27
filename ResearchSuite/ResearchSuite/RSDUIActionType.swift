@@ -123,21 +123,21 @@ extension RSDUIActionType : ExpressibleByStringLiteral {
     }
 }
 
-//extension RSDUIActionType : CodingKey {
-//    public var stringValue: String {
-//        return self.rawValue
-//    }
-//    
-//    public init?(stringValue: String) {
-//        self.init(rawValue: stringValue)
-//    }
-//    
-//    public var intValue: Int? {
-//        return nil
-//    }
-//    
-//    public init?(intValue: Int) {
-//        return nil
-//    }
-//}
+extension RSDUIActionType : CodingKey {
+    public var stringValue: String {
+        return self.rawValue
+    }
+    
+    public init?(stringValue: String) {
+        self.init(rawValue: stringValue)
+    }
+    
+    public var intValue: Int? {
+        return nil
+    }
+    
+    public init?(intValue: Int) {
+        return nil
+    }
+}
 

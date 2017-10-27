@@ -63,7 +63,9 @@ class CodableStepObjectTests: XCTestCase {
             "imageAfter": "after",
             "nextStepIdentifier": "boo",
             "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
-                         "cancel": { "iconName" : "closeX" }
+                         "cancel": { "iconName" : "closeX" },
+                         "learnMore": { "iconName" : "infoIcon",
+                                        "url" : "fooInfo" }
                         },
             "shouldHideActions": ["goBackward", "learnMore", "skip"]
         }
@@ -89,6 +91,11 @@ class CodableStepObjectTests: XCTestCase {
             let cancelAction = object.action(for: .navigation(.cancel), on: object)
             XCTAssertNotNil(cancelAction)
             XCTAssertEqual((cancelAction as? RSDUIActionObject)?.iconName, "closeX")
+            
+            let learnMoreAction = object.action(for: .navigation(.learnMore), on: object)
+            XCTAssertNotNil(learnMoreAction)
+            XCTAssertEqual((learnMoreAction as? RSDUIActionObject)?.iconName, "infoIcon")
+            XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.url, "fooInfo")
             
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.learnMore), on: object) ?? false)
