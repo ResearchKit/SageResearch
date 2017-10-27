@@ -616,12 +616,12 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         // if we selected an item and this is a single-selection group, then we iterate
         // our other items and de-select them
         var answers: [Any] = []        
-        for (ii, item) in selectableItems.enumerated() {
-            if deselectOthers || (ii == index) {
-                item.selected = (ii == index) && selected
+        for (ii, input) in selectableItems.enumerated() {
+            if deselectOthers || (ii == index) || input.choice.isExclusive {
+                input.selected = (ii == index) && selected
             }
-            if item.selected {
-                answers.append(item.choice.value)
+            if input.selected {
+                answers.append(input.choice.value)
             }
         }
         

@@ -47,11 +47,11 @@ public protocol RSDStepViewControllerDelegate : class, RSDUIActionHandler {
  
  Note: Any implementation should call the delegate methods during view appearance transitions.
  */
-public protocol RSDStepViewControllerProtocol : class {
+public protocol RSDStepViewControllerProtocol : RSDStepController {
     weak var delegate: RSDStepViewControllerDelegate? { get set }
 }
 
-open class RSDStepViewController : UIViewController, RSDStepController, RSDStepViewControllerProtocol {
+open class RSDStepViewController : UIViewController, RSDStepViewControllerProtocol {
 
     open weak var taskController: RSDTaskController!
     
@@ -144,35 +144,124 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDStepV
     
     // MARK: Navigation
     
-    @IBOutlet open weak var cancelButton: UIButton?
-    @IBOutlet open weak var continueButton: UIButton?
-    @IBOutlet open weak var backButton: UIButton?
-    @IBOutlet open weak var skipButton: UIButton?
-    @IBOutlet open weak var learnMoreButton: UIButton?
+    @IBOutlet open var navigationHeader: RSDStepHeaderView?
+    @IBOutlet open var navigationFooter: RSDStepNavigationView?
+    
+    open var continueButton: UIButton? {
+        return navigationFooter?.nextButton
+    }
     
     open var isForwardEnabled: Bool {
         return taskController.isForwardEnabled
     }
     
     open func didFinishLoading() {
-        // Enable the continue button
-        continueButton?.isEnabled = true
+        // Enable the continue button if all done
+        continueButton?.isEnabled = isForwardEnabled
     }
 
     open func setupNavigation() {
-        setupButton(cancelButton, for: .navigation(.cancel))
-        setupButton(continueButton, for: .navigation(.goForward))
-        setupButton(backButton, for: .navigation(.goBackward))
-        setupButton(skipButton, for: .navigation(.skip))
-        setupButton(learnMoreButton, for: .navigation(.learnMore))
+        if let header = self.navigationHeader {
+            setupHeader(header)
+        }
+        if let footer = self.navigationFooter {
+            setupFooter(footer)
+        }
+    }
+    
+    open func setupHeader(_ header: RSDStepHeaderView) {
+        setupButton(header.cancelButton, for: .navigation(.cancel))
+        setupButton(header.learnMoreButton, for: .navigation(.learnMore))
+            
+        if uiStep?.hasImageBefore ?? false {
+            header.hasImage = true
+            uiStep!.imageBefore(for: header.imageView.bounds.size, callback: { [weak header] (img) in
+                header?.image = img
+            })
+        }
+        
+        // setup progress
+        if let (stepIndex, stepCount, _) = self.progress() {
+            header.progressView.totalSteps = stepCount
+            header.progressView.currentStep = stepIndex
+        }
+            
+        // setup label text
+        header.headerLabel.text = uiStep?.title
+        header.detailsLabel.text = uiStep?.text
+        header.promptLabel.text = uiStep?.detail
+        
+        header.setNeedsLayout()
+        header.setNeedsUpdateConstraints()
+    }
+    
+    open func setupFooter(_ footer: RSDStepNavigationView) {
+        
+        // Check if the back button and skip button should be hidden for this task
+        // and if so, then do so globally.
+        if let task = self.taskController.taskPath.task, !(step is RSDTaskInfoStep) {
+            footer.isBackHidden = task.shouldHideAction(for: .navigation(.goBackward), on: step) ?? false
+            footer.isSkipHidden = task.shouldHideAction(for: .navigation(.skip), on: step) ?? true
+        }
+        
+        setupButton(footer.nextButton, for: .navigation(.goForward))
+        setupButton(footer.backButton, for: .navigation(.goBackward))
+        setupButton(footer.skipButton, for: .navigation(.skip))
+        
+        footer.setNeedsLayout()
+        footer.setNeedsUpdateConstraints()
     }
     
     open func setupButton(_ button: UIButton?, for actionType: RSDUIActionType) {
         guard let btn = button else { return }
         
+        // Add an action if not setup already and the action type is recognized
+        if btn.actions(forTarget: nil, forControlEvent: .touchUpInside) == nil {
+            switch actionType {
+            case .navigation(.goForward):
+                btn.addTarget(self, action: #selector(_forwardTapped), for: .touchUpInside)
+            case .navigation(.goBackward):
+                btn.addTarget(self, action: #selector(_backTapped), for: .touchUpInside)
+            case .navigation(.skip):
+                btn.addTarget(self, action: #selector(_skipTapped), for: .touchUpInside)
+            case .navigation(.cancel):
+                btn.addTarget(self, action: #selector(_cancelTapped), for: .touchUpInside)
+            case .navigation(.learnMore):
+                btn.addTarget(self, action: #selector(_learnMoreTapped), for: .touchUpInside)
+            default:
+                break
+            }
+        }
+        
         // Set up whether or not the button is visible and it's text/image
-        btn.isHidden = self.shouldHideAction(for: actionType) ?? true
-        if let action = self.action(for: actionType) {
+        btn.isHidden = self.shouldHideAction(for: actionType)
+        let btnAction: RSDUIAction? = self.action(for: actionType) ?? {
+            // Otherwise, look at the action and show the default based on the type
+            switch actionType {
+            case .navigation(.cancel):
+                return RSDUIActionObject(buttonTitle: Localization.buttonCancel())
+            case .navigation(.goForward):
+                if self.step is RSDTaskInfoStep {
+                    return RSDUIActionObject(buttonTitle: Localization.buttonGetStarted())
+                } else if self.taskController.hasStepAfter {
+                    return RSDUIActionObject(buttonTitle: Localization.buttonNext())
+                } else {
+                    return RSDUIActionObject(buttonTitle: Localization.buttonDone())
+                }                
+            case .navigation(.goBackward):
+                return self.taskController.hasStepBefore ? RSDUIActionObject(buttonTitle: Localization.buttonBack()) : nil
+            case .navigation(.skip):
+                if self.step is RSDTaskInfoStep {
+                    return RSDUIActionObject(buttonTitle: Localization.buttonSkipTask())
+                } else {
+                    return RSDUIActionObject(buttonTitle: Localization.buttonSkip())
+                }
+                
+            default:
+                return nil
+            }
+        }()
+        if let action = btnAction {
             btn.setTitle(action.buttonTitle, for: .normal)
             btn.setImage(action.buttonIcon, for: .normal)
         }
@@ -182,6 +271,26 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDStepV
         if actionType == .navigation(.goForward) {
             btn.isEnabled = isForwardEnabled
         }
+    }
+    
+    @objc private func _forwardTapped() {
+        self.goForward()
+    }
+    
+    @objc private func _backTapped() {
+        self.goBack()
+    }
+    
+    @objc private func _skipTapped() {
+        self.skipForward()
+    }
+    
+    @objc private func _cancelTapped() {
+        self.cancel()
+    }
+    
+    @objc private func _learnMoreTapped() {
+        self.showLearnMore()
     }
     
     @IBAction open func goForward() {
@@ -204,6 +313,10 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDStepV
         self.taskController.handleTaskCancelled()
     }
     
+    @IBAction open func showLearnMore() {
+        // Default implementation does nothing
+    }
+    
     open func action(for actionType: RSDUIActionType) -> RSDUIAction? {
         guard step.identifier == self.step.identifier else { return nil }
         
@@ -220,21 +333,11 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDStepV
             return action
         }
         else {
-            // Otherwise, look at the action and show the default based on the type
-            switch actionType {
-            case .navigation(.cancel):
-                return RSDUIActionObject(buttonTitle: Localization.buttonCancel())
-            case .navigation(.goForward):
-                return self.taskController.hasStepAfter ? RSDUIActionObject(buttonTitle: Localization.buttonNext()) : RSDUIActionObject(buttonTitle: Localization.buttonDone())
-            case .navigation(.goBackward):
-                return self.taskController.hasStepBefore ? RSDUIActionObject(buttonTitle: Localization.buttonBack()) : nil
-            default:
-                return nil
-            }
+            return nil
         }
     }
     
-    open func shouldHideAction(for actionType: RSDUIActionType) -> Bool? {
+    open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
         if let shouldHide = (self.step as? RSDUIActionHandler)?.shouldHideAction(for: actionType, on: step) {
             // Allow the step to override the default from the delegate
             return shouldHide

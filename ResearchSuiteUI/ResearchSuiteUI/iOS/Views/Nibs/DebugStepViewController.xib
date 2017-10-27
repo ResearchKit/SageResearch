@@ -10,11 +10,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DebugStepViewController" customModule="ResearchSuite_UI" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DebugStepViewController" customModule="ResearchSuiteUI" customModuleProvider="target">
             <connections>
-                <outlet property="backButton" destination="PPO-55-Zgd" id="1Bx-hT-HcQ"/>
-                <outlet property="cancelButton" destination="dUV-Zl-jhQ" id="xCJ-jV-ayJ"/>
-                <outlet property="continueButton" destination="mDT-r2-g1w" id="Ntx-Mf-2Vf"/>
                 <outlet property="identifierLabel" destination="e1Q-Yj-xX9" id="Gug-ue-MvI"/>
                 <outlet property="titleLabel" destination="iOO-A6-xJv" id="jTj-ik-ihD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

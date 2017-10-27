@@ -112,7 +112,7 @@ extension UIColor {
     }
     
     @objc open class var underlinedButtonTextDark: UIColor {
-        return UIColor(red: 73.0 / 255.0, green: 91.0 / 255.0, blue: 122.0 / 255.0, alpha: 1.0)
+        return UIColor(red: 33.0 / 255.0, green: 150.0 / 255.0, blue: 243.0 / 255.0, alpha: 1.0)
     }
     
     
@@ -175,7 +175,7 @@ extension UIColor {
     // MARK: Generic step view controller - choice cell
     
     @objc open class var choiceCellBackground: UIColor {
-        return UIColor.white
+        return UIColor(white: 250.0 / 255.0, alpha: 1.0)
     }
     
     @objc open class var choiceCellBackgroundHighlighted: UIColor {

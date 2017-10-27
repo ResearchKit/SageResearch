@@ -369,7 +369,7 @@ open class RSDImageViewCell : UITableViewCell {
     private let kVertMargin: CGFloat = 10.0
     private let kImageViewHeight: CGFloat = CGFloat(150.0).proportionalToScreenWidth()
 
-    public var iconView = UIImageView()
+    @IBOutlet public var iconView: UIImageView!
     
     private var _loading = false
     public var imageLoader: RSDResizableImage? {
@@ -393,32 +393,24 @@ open class RSDImageViewCell : UITableViewCell {
         commonInit()
     }
     
-    open override func awakeFromNib() {
-        super.awakeFromNib()
-        commonInit()
-    }
-    
     func commonInit() {
         
         self.selectionStyle = .none
         
-        iconView.contentMode = .scaleAspectFit
-        contentView.addSubview(iconView)
-        
-        iconView.translatesAutoresizingMaskIntoConstraints = false
-        
-        setNeedsUpdateConstraints()
-    }
-    
-    open override func updateConstraints() {
-        
-        NSLayoutConstraint.deactivate(self.constraints)
-        
-        iconView.alignToSuperview([.top, .bottom], padding: kVertMargin)
-        iconView.alignCenterHorizontal(padding: 0.0)
-        iconView.makeHeight(.equal, kImageViewHeight)
-        
-        super.updateConstraints()
+        if iconView == nil {
+            iconView = UIImageView()
+            iconView.contentMode = .scaleAspectFit
+            contentView.addSubview(iconView)
+            
+            iconView.translatesAutoresizingMaskIntoConstraints = false
+            iconView.alignToSuperview([.top, .bottom], padding: kVertMargin)
+            iconView.alignCenterHorizontal(padding: 0.0)
+            let height = iconView.heightAnchor.constraint(equalToConstant: kImageViewHeight)
+            height.priority = UILayoutPriority(950)
+            height.isActive = true
+            
+            setNeedsUpdateConstraints()
+        }
     }
 }
 

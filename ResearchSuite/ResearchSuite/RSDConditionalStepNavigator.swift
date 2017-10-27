@@ -248,10 +248,11 @@ extension RSDConditionalStepNavigator {
                 return (1, markers.count, false)
             }
         } else {
-            // Look at the total number of steps and the result. This is estimated if the step index does not match
-            // the result step history count.
-            let total = steps.count
-            let current = result?.stepHistory.count ?? 0
+            // Look at the total number of steps and the result.
+            let resultSet = Set(result?.stepHistory.map({ $0.identifier }) ?? [])
+            let stepSet = Set(steps.map({ $0.identifier }))
+            let total = stepSet.union(resultSet).count
+            let current = resultSet.subtracting([step.identifier]).count
             return (current + 1, total, true)
         }
     }

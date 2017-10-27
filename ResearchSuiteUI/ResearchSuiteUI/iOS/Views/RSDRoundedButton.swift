@@ -38,8 +38,8 @@ import UIKit
 @IBDesignable open class RSDRoundedButton : UIButton {
     
     public static let defaultHeight: CGFloat = 52.0
-    public static let defaultWidthWith2Buttons: CGFloat = 144.0
-    public static let defaultWidthWith1Button: CGFloat = 250.0
+    public static let defaultWidthWith2Buttons: CGFloat = CGFloat(144.0).proportionalToScreenWidth(max: 160)
+    public static let defaultWidthWith1Button: CGFloat = CGFloat(280.0).proportionalToScreenWidth(max: 320)
     public static let defaultCornerRadius: CGFloat = 26.0
     
     @IBInspectable open var corners: CGFloat = CGFloat(5) {
@@ -80,16 +80,8 @@ import UIKit
     }
     
     public required init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: RSDRoundedButton.defaultWidthWith1Button, height: RSDRoundedButton.defaultHeight))
-        commonConstraintSetup(1)
-    }
-    
-    public init(numberOfButtons: Int) {
-        super.init(frame: CGRect(x: 0, y: 0, width: RSDRoundedButton.defaultWidthWith2Buttons, height: RSDRoundedButton.defaultHeight))
-        commonConstraintSetup(numberOfButtons)
-    }
-    
-    func commonConstraintSetup(_ numberOfButtons: Int) {
+        let preferredWidth = RSDRoundedButton.defaultWidthWith1Button
+        super.init(frame: CGRect(x: 0, y: 0, width: preferredWidth, height: RSDRoundedButton.defaultHeight))
         
         // setup colors
         self.backgroundColor = UIColor.roundedButtonBackgroundDark
@@ -99,20 +91,7 @@ import UIKit
         // setup text
         self.titleColor = UIColor.roundedButtonTextLight
         setTitleColor(titleColor, for: .normal)
-        
         self.titleFont = UIFont.roundedButtonTitle
-
-        // In many cases, the below constraints will be overriden by the containing view, so we set the priority here to 950
-        // add default constraint for height
-        let heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1.0, constant: RSDRoundedButton.defaultHeight)
-        heightConstraint.priority = UILayoutPriority(rawValue: 950)
-        
-        // Add minimum constraint for width
-        let desiredWidth = (numberOfButtons == 1) ? RSDRoundedButton.defaultWidthWith1Button : RSDRoundedButton.defaultWidthWith2Buttons;
-        let widthConstraint = NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1.0, constant: desiredWidth)
-        widthConstraint.priority = UILayoutPriority(rawValue: 950)
-        
-        self.addConstraints([heightConstraint, widthConstraint])
 
         commonInit()
     }
@@ -122,12 +101,36 @@ import UIKit
         commonInit()
     }
     
-    override open func layoutSubviews() {
-        super.layoutSubviews()
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    override open func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        commonInit()
+        setNeedsDisplay()
+    }
+
+    open func commonInit() {
+        
+        // In many cases, the below constraints will be overriden by the containing view, so we set the priority here to 950
+        // add default constraint for height
+        let heightConstraint = self.heightAnchor.constraint(equalToConstant: RSDRoundedButton.defaultHeight)
+        heightConstraint.priority = UILayoutPriority(rawValue: 950)
+        heightConstraint.isActive = true
+        
+        // For the width, need to allow the preferred with to be overridden by the
+        self.makeWidth(.lessThanOrEqual, RSDRoundedButton.defaultWidthWith1Button)
+        let widthConstraint = self.heightAnchor.constraint(equalToConstant: RSDRoundedButton.defaultWidthWith1Button)
+        widthConstraint.priority = UILayoutPriority(rawValue: 750)
+        widthConstraint.isActive = true
+        
         refreshView()
     }
     
-    open func commonInit() {
+    override open func layoutSubviews() {
+        super.layoutSubviews()
         refreshView()
     }
     
@@ -157,14 +160,5 @@ import UIKit
         layer.shadowPath = shadowPath.cgPath
     }
     
-    override open func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        commonInit()
-        setNeedsDisplay()
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
+
 }

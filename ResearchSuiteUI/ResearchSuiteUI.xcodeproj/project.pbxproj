@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */; };
+		FF1865B71FA291F600FD0E31 /* UIImage+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */; };
 		FF25E83B1F96AEAD00BC09A8 /* UIColor+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */; };
 		FF25E83C1F96B39500BC09A8 /* RSDRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */; };
 		FF25E83D1F96B39800BC09A8 /* RSDUnderlinedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */; };
@@ -27,7 +28,6 @@
 		FF4A2D3A1F96A6F000484338 /* RSDTaskInfoStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */; };
 		FF4A2D3B1F96A6F000484338 /* RSDTaskInfoStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */; };
 		FF58035E1F9E6ADE004346A8 /* UIAlertController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */; };
-		FF5803601F9E7F4A004346A8 /* RSDDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58035F1F9E7F4A004346A8 /* RSDDatePickerView.swift */; };
 		FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */; };
 		FF5C4C2E1F8C923E00F311BA /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */; };
 		FF7E1D851F8EA7F000B47587 /* RSDStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */; };
@@ -47,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utilities.swift"; sourceTree = "<group>"; };
 		FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnderlinedButton.swift; sourceTree = "<group>"; };
 		FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRoundedButton.swift; sourceTree = "<group>"; };
 		FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BridgeKeyNames.swift"; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskInfoStepViewController.swift; sourceTree = "<group>"; };
 		FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDTaskInfoStepViewController.xib; sourceTree = "<group>"; };
 		FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Utilities.swift"; sourceTree = "<group>"; };
-		FF58035F1F9E7F4A004346A8 /* RSDDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDatePickerView.swift; sourceTree = "<group>"; };
 		FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewController.swift; sourceTree = "<group>"; };
 		FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepViewController.swift; sourceTree = "<group>"; };
@@ -119,7 +119,6 @@
 			children = (
 				FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */,
 				FF39E5251F972F8B00C366FC /* RSDStepHeaderView.swift */,
-				FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */,
 				FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */,
 				FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */,
 			);
@@ -191,7 +190,7 @@
 				FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */,
 				FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */,
 				FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */,
-				FF58035F1F9E7F4A004346A8 /* RSDDatePickerView.swift */,
+				FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -200,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */,
+				FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */,
 				FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */,
 				FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */,
 			);
@@ -356,11 +356,11 @@
 				FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */,
 				FF4A2D3A1F96A6F000484338 /* RSDTaskInfoStepViewController.swift in Sources */,
 				FF39E5281F97302D00C366FC /* RSDStepChoiceCell.swift in Sources */,
-				FF5803601F9E7F4A004346A8 /* RSDDatePickerView.swift in Sources */,
 				FF39E52A1F97302D00C366FC /* RSDStepNavigationView.swift in Sources */,
 				FF4A2D341F9679EC00484338 /* DebugStepViewController.swift in Sources */,
 				FF88FD1B1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift in Sources */,
 				FF25E83D1F96B39800BC09A8 /* RSDUnderlinedButton.swift in Sources */,
+				FF1865B71FA291F600FD0E31 /* UIImage+Utilities.swift in Sources */,
 				FF25E8401F96B5C300BC09A8 /* UIFont+BridgeKeyNames.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

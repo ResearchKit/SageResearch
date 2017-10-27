@@ -13,11 +13,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDTaskInfoStepViewController" customModule="ResearchSuiteUI" customModuleProvider="target">
             <connections>
-                <outlet property="cancelButton" destination="nrV-8D-N0Q" id="f7z-UD-5ZG"/>
-                <outlet property="footerView" destination="3gi-Il-aWq" id="39D-I0-BeV"/>
-                <outlet property="headerView" destination="8wa-PJ-D5V" id="GmW-Tl-iJO"/>
+                <outlet property="headerView" destination="8wa-PJ-D5V" id="FkB-Rp-8RX"/>
                 <outlet property="iconImageView" destination="f9b-na-BMG" id="8gM-17-snQ"/>
-                <outlet property="startButton" destination="0Q9-61-D7C" id="9vR-d8-NPK"/>
+                <outlet property="navigationFooter" destination="3gi-Il-aWq" id="px3-3d-SjD"/>
                 <outlet property="subtitleLabel" destination="a2t-gO-JB0" id="39h-OS-B24"/>
                 <outlet property="textView" destination="bUp-7F-n7V" id="is8-Tg-7PS"/>
                 <outlet property="titleLabel" destination="2K0-kA-vug" id="KUA-12-bFb"/>
@@ -30,29 +28,29 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8wa-PJ-D5V" userLabel="Header">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 minutes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2t-gO-JB0">
-                            <rect key="frame" x="120" y="70" width="56" height="15"/>
+                            <rect key="frame" x="120" y="100" width="56" height="15"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activities" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2K0-kA-vug">
-                            <rect key="frame" x="120" y="41" width="70" height="21"/>
+                            <rect key="frame" x="120" y="71" width="70" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f9b-na-BMG" userLabel="Icon">
-                            <rect key="frame" x="18" y="25" width="80" height="80"/>
+                            <rect key="frame" x="18" y="55" width="80" height="80"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="4It-2e-oYb"/>
                                 <constraint firstAttribute="width" secondItem="f9b-na-BMG" secondAttribute="height" multiplier="1:1" id="jCO-oF-Le0"/>
                             </constraints>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFJ-r8-XTd" userLabel="Shadow" customClass="RSDShadowGradient" customModule="ResearchSuiteUI" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="126" width="375" height="4"/>
+                            <rect key="frame" x="0.0" y="146" width="375" height="4"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="4" id="LIL-Rz-zrU"/>
@@ -64,61 +62,24 @@
                         <constraint firstItem="f9b-na-BMG" firstAttribute="leading" secondItem="8wa-PJ-D5V" secondAttribute="leading" constant="18" id="7jp-0G-K2t"/>
                         <constraint firstItem="xFJ-r8-XTd" firstAttribute="leading" secondItem="8wa-PJ-D5V" secondAttribute="leading" id="CKg-z9-FdT"/>
                         <constraint firstItem="a2t-gO-JB0" firstAttribute="top" secondItem="2K0-kA-vug" secondAttribute="bottom" constant="8" id="Cny-pd-N6G"/>
-                        <constraint firstAttribute="height" constant="130" id="Hjd-Sx-H9y"/>
+                        <constraint firstAttribute="height" constant="150" id="Hjd-Sx-H9y"/>
                         <constraint firstItem="2K0-kA-vug" firstAttribute="top" secondItem="f9b-na-BMG" secondAttribute="top" constant="16" id="OAg-aI-j8Q"/>
                         <constraint firstItem="a2t-gO-JB0" firstAttribute="leading" secondItem="2K0-kA-vug" secondAttribute="leading" id="j04-LF-Bat"/>
                         <constraint firstItem="2K0-kA-vug" firstAttribute="leading" secondItem="f9b-na-BMG" secondAttribute="trailing" constant="22" id="j44-ei-pYi"/>
                         <constraint firstAttribute="trailing" secondItem="xFJ-r8-XTd" secondAttribute="trailing" id="wdj-yx-85x"/>
-                        <constraint firstItem="f9b-na-BMG" firstAttribute="centerY" secondItem="8wa-PJ-D5V" secondAttribute="centerY" id="z4j-It-cMs"/>
+                        <constraint firstItem="f9b-na-BMG" firstAttribute="centerY" secondItem="8wa-PJ-D5V" secondAttribute="centerY" constant="20" id="z4j-It-cMs"/>
                         <constraint firstAttribute="bottom" secondItem="xFJ-r8-XTd" secondAttribute="bottom" id="zEM-Oy-lk3"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gi-Il-aWq" userLabel="Footer">
-                    <rect key="frame" x="0.0" y="519" width="375" height="148"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nrV-8D-N0Q" customClass="RSDUnderlinedButton" customModule="ResearchSuiteUI" customModuleProvider="target">
-                            <rect key="frame" x="118" y="83" width="139" height="55"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="55" id="OKg-A3-IPD"/>
-                            </constraints>
-                            <state key="normal" title="I can’t do this now"/>
-                            <connections>
-                                <action selector="cancelTapped" destination="-1" eventType="touchUpInside" id="yd6-0r-oxM"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Q9-61-D7C" customClass="RSDRoundedButton" customModule="ResearchSuiteUI" customModuleProvider="target">
-                            <rect key="frame" x="43" y="24" width="289" height="51"/>
-                            <color key="backgroundColor" red="1" green="0.45415658399999997" blue="0.3903435898" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="51" id="J8r-Se-0Xo"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                            <state key="normal" title="Start">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="corners">
-                                    <real key="value" value="26"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="startTapped" destination="-1" eventType="touchUpInside" id="spI-4i-YUH"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="148" id="3QG-oz-Fx9"/>
-                        <constraint firstItem="0Q9-61-D7C" firstAttribute="leading" secondItem="3gi-Il-aWq" secondAttribute="leading" constant="43" id="4rx-qQ-cZh"/>
-                        <constraint firstItem="nrV-8D-N0Q" firstAttribute="centerX" secondItem="0Q9-61-D7C" secondAttribute="centerX" id="OWt-N4-mWR"/>
-                        <constraint firstItem="nrV-8D-N0Q" firstAttribute="centerX" secondItem="3gi-Il-aWq" secondAttribute="centerX" id="Ot3-rg-4Lw"/>
-                        <constraint firstAttribute="trailing" secondItem="0Q9-61-D7C" secondAttribute="trailing" constant="43" id="aha-fq-Hgg"/>
-                        <constraint firstItem="nrV-8D-N0Q" firstAttribute="top" secondItem="0Q9-61-D7C" secondAttribute="bottom" constant="8" id="fwP-ZI-V0Y"/>
-                        <constraint firstItem="0Q9-61-D7C" firstAttribute="centerX" secondItem="3gi-Il-aWq" secondAttribute="centerX" id="rML-za-yPG"/>
-                        <constraint firstItem="0Q9-61-D7C" firstAttribute="top" secondItem="3gi-Il-aWq" secondAttribute="top" constant="24" id="sdO-oX-Dg1"/>
-                    </constraints>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gi-Il-aWq" userLabel="Footer" customClass="RSDGenericStepNavigationView" customModule="ResearchSuiteUI" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="516.5" width="375" height="150.5"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkipHidden" value="NO"/>
+                    </userDefinedRuntimeAttributes>
                 </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUp-7F-n7V">
-                    <rect key="frame" x="0.0" y="130" width="375" height="389"/>
+                    <rect key="frame" x="0.0" y="150" width="375" height="366.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <attributedString key="attributedText">
                         <fragment>

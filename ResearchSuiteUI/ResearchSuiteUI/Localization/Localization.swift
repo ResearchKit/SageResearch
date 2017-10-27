@@ -140,6 +140,14 @@ open class Localization: NSObject {
         return localizedString("BUTTON_BACK")
     }
     
+    open class func buttonSkip() -> String {
+        return localizedString("BUTTON_SKIP")
+    }
+    
+    open class func buttonSkipTask() -> String {
+        return localizedString("BUTTON_SKIP_TASK")
+    }
+    
     open class func buttonGetStarted() -> String {
         return localizedString("BUTTON_GET_STARTED")
     }

@@ -137,6 +137,7 @@ open class RSDStepHeaderView: UIView {
     
     open var progressView: RSDStepProgressView!
     open var learnMoreButton: UIButton!
+    open var cancelButton: UIButton!
     
     open var headerLabel: UILabel!
     open var detailsLabel: UILabel!

@@ -73,7 +73,8 @@
 "BUTTON_LEARN_MORE" = "Learn more";
 "BUTTON_NEXT" = "Next";
 "BUTTON_BACK" = "Back";
-"BUTTON_SKIP" = "Skip";
+"BUTTON_SKIP" = "Prefer not to answer";
+"BUTTON_SKIP_TASK" = "I can't do this now";
 
 /* Validation Error Messages */
 "VALIDATION_ERROR_TITLE" = "Invalid Answer";

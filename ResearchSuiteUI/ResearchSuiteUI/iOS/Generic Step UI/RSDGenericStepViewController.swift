@@ -75,41 +75,12 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     open var tableData: RSDFormStepDataSource?
     
     @IBOutlet open var tableView: UITableView!
-    @IBOutlet open var headerView: RSDStepHeaderView?
-    @IBOutlet open var navigationView: RSDStepNavigationView?
     
     private var activeTextField: UITextField?
     
     var tableViewInsetBottom: CGFloat {
         get {
             return useStickyNavView ? navigationViewHeight + constants().mainViewBottomMargin : constants().mainViewBottomMargin
-        }
-    }
-
-    lazy var numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = Int(NSDecimalNoScale)
-        formatter.usesGroupingSeparator = true
-        return formatter;
-    }()
-    
-    
-    /**
-     Index of this step in the current flow. Will cause the progressView in the headerView to be updated
-     */
-    public var stepIndex: Int = 0 {
-        didSet {
-            headerView?.progressView.currentStep = stepIndex
-        }
-    }
-    
-    /**
-     Total number of steps in the current flow. Will cause the progressView in the headerView to be updated
-     */
-    public var stepCount: Int = 0 {
-        didSet {
-            headerView?.progressView.totalSteps = stepCount
         }
     }
     
@@ -181,7 +152,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     /**
      Should the view controller tableview include a footer? If `false`, then by default, a `RSDStepNavigationView` will be added in `viewDidLoad()`.
      */
-    open var shouldShowNavigation: Bool = true
+    open var shouldShowFooter: Bool = true
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -190,44 +161,37 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             tableView = UITableView(frame: view.bounds, style: .plain)
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.rowHeight = UITableViewAutomaticDimension
             tableView.sectionHeaderHeight = 0.0
-            tableView.estimatedRowHeight = constants().defaultRowHeight
             tableView.estimatedSectionHeaderHeight = 0.0
             tableView.separatorStyle = .none
-            
             tableView.rowHeight = UITableViewAutomaticDimension
-            tableView.estimatedRowHeight = kEstimatedRowHeight
+            tableView.estimatedRowHeight = constants().defaultRowHeight
             
             view.addSubview(tableView)
             
             tableView.translatesAutoresizingMaskIntoConstraints = false
-            tableView.alignAllToSuperview(padding: 0.0)
+            tableView.alignAllToSuperview(padding: 0)
         }
-        if headerView == nil && shouldShowHeader {
-            headerView = RSDGenericStepUIConfig.instantiateHeaderView()
-            tableView.tableHeaderView = headerView
+        if self.navigationHeader == nil && shouldShowHeader {
+            navigationHeader = RSDGenericStepUIConfig.instantiateHeaderView()
+            tableView.tableHeaderView = navigationHeader
         }
-        if navigationView == nil && shouldShowNavigation {
-            navigationView = RSDGenericStepUIConfig.instantiatNavigationView()
+        if self.navigationFooter == nil && shouldShowFooter {
+            navigationFooter = RSDGenericStepUIConfig.instantiatNavigationView()
         }
     }
     
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Setup the view to require layout
+        self.view.setNeedsLayout()
+        
         // register for keyboard notifications
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-        
-        // Set up progress
-        if let (current, total, _) = self.progress() {
-            self.stepIndex = Int(current)
-            self.stepCount = Int(total)
-        }
-        
+
         // Set up the model and view
         setupModel()
-        setupViews()
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -260,7 +224,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         super.viewDidLayoutSubviews()
         
         // if we have no tableView or navigationView, then nothing to do
-        guard let tableView = tableView, let navigationView = navigationView else {
+        guard let tableView = tableView, let navigationView = self.navigationFooter else {
             return
         }
         
@@ -339,34 +303,25 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         tableData?.delegate = self
     }
     
-    
     // MARK: View setup
     
-    open func setupViews() {
-        if let header = headerView {
-
-            // setup our header view
-            setupHeaderView(header)
-            
-            if header == tableView.tableHeaderView {
-                // to get the tableView to size the headerView properly, we have to get the headerView height
-                // and manually set the frame with that height. Do so only if the header is actually the
-                // tableview's header and not a custom header.
-                
-                let headerHeight = header.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-                header.frame = CGRect(x: 0, y: 0, width: header.frame.size.width, height: headerHeight)
-                tableView?.tableHeaderView = header
-            }
-            
-            
+    open override func setupHeader(_ header: RSDStepHeaderView) {
+        super.setupHeader(header)
+        
+        if formStep?.inputFields.count ?? 0 > 0 {
+            // We have a minimum height for ORKFormSteps because these step usually have just a title and
+            // description and the design generally calls for quite a bit of margin above and below the labels.
+            // So we set a minimum size
+            header.minumumHeight = constants().formStepMinHeaderHeight
         }
         
-        if let navView = navigationView {
-            // setup the navigationView. we don't add it to the view yet because it may have to
-            // be placed as the tableView's footerView or it may be added to the main view and pinned
-            // to the bottom. This depends on the eventual frame size of the tableView, so we need to
-            // wait until viewDidLayoutSubviews() so we know what the height will be
-            setupNavigationView(navView)
+        if header === tableView.tableHeaderView {
+            // to get the tableView to size the headerView properly, we have to get the headerView height
+            // and manually set the frame with that height. Do so only if the header is actually the
+            // tableview's header and not a custom header.
+            let headerHeight = header.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            header.frame = CGRect(x: 0, y: 0, width: header.frame.size.width, height: headerHeight)
+            tableView?.tableHeaderView = header
         }
     }
         
@@ -379,7 +334,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         
         // we only need some bottom margin if we have any table data (rows), otherwise, the bottom
         // margin built into the headerView is enough
-        
         return (tableView.numberOfSections > 0 ? kMainViewBottomMargin : 0.0,
                 kDefaultRowHeight,
                 kFormStepMinHeaderHeight)
@@ -395,74 +349,22 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         return (tableData?.allAnswersValid() ?? true) && super.isForwardEnabled
     }
     
-    /**
-     Populates and configures the internal properties of an RSDStepHeaderView.
-     @param   headView   the RSDStepHeaderView to configure
-     */
-    open func setupHeaderView(_ headView: RSDStepHeaderView) {
-        
-        if uiStep?.hasImageBefore ?? false {
-            headView.hasImage = true
-            uiStep!.imageBefore(for: headView.imageView.bounds.size, callback: { [weak self] (img) in
-                self?.headerView?.image = img
-            })
-        }
-        
-        // setup progress
-        headView.progressView.totalSteps = stepCount
-        headView.progressView.currentStep = stepIndex
-        
-        // setup label text
-        headView.headerLabel.text = uiStep?.title
-        headView.detailsLabel.text = uiStep?.text
-        headView.promptLabel.text = uiStep?.detail
-        
-        // add our action for the learn more
-        headView.learnMoreButton.addTarget(self, action: #selector(showLearnMore), for: .touchUpInside)
-        self.setupButton(headView.learnMoreButton, for: .navigation(.learnMore))
-        
-        // TODO: syoung 10/18/2017 Add cancel button
-
-        if formStep?.inputFields.count ?? 0 > 0 {
-            // We have a minimum height for ORKFormSteps because these step usually have just a title and
-            // description and the design generally calls for quite a bit of margin above and below the labels.
-            // So we set a minimum size
-            headView.minumumHeight = constants().formStepMinHeaderHeight
-        }
-    }
-    
-    /**
-     Populates and configures the internal properties of an RSDStepNavigationView.
-     @param   navView   the RSDStepNavigationView to configure
-     */
-    open func setupNavigationView(_ navView: RSDStepNavigationView, isAccessoryView: Bool = false) {
-        
-        // Check if the back button should be hidden for this task
-        navView.shouldHideBackButton =
-            self.taskController.taskPath.task?.shouldHideAction(for: .navigation(.goBackward), on: step) ?? false
-        
-        navView.backgroundColor = UIColor.appBackgroundLight
-        
-        // setup the button actions
-        if isAccessoryView {
-            navView.nextButton.addTarget(self, action: #selector(nextItemHit), for: .touchUpInside)
-        } else {
-            navView.nextButton.addTarget(self, action: #selector(nextHit), for: .touchUpInside)
-        }
-        self.setupButton(navView.nextButton, for: .navigation(.goForward))
-
-        navView.backButton?.addTarget(self, action: #selector(previousHit), for: .touchUpInside)
-        self.setupButton(navView.backButton, for: .navigation(.goBackward))
-    }
-    
     // MARK: Actions
     
-    @objc open func nextItemHit() {
-        guard let textField = activeTextField,
-            validateAndSave(textField: textField)
+    override open func goForward() {
+        // If there isn't an active text field then just go forward
+        guard let textField = activeTextField else {
+            super.goForward()
+            return
+        }
+
+        // Otherwise validate the textfield and cancel the goForward if invalid
+        guard validateAndSave(textField: textField)
             else {
                 return
         }
+        
+        // If the textfield is valid, check to see if there is another item that is below this one
         if let indexPath = indexPath(for: textField),
             let nextItem = tableData?.nextItem(after: indexPath),
             let nextPath = tableData?.indexPath(for: nextItem) {
@@ -475,31 +377,19 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                 textField.resignFirstResponder()
             }
         } else {
-            goForward()
+            // Finally, continue if this is the last field
+            super.goForward()
         }
     }
     
-    /**
-     The default action for the Next Button in the RSDStepNavigationView.
-     */
-    @objc open func nextHit() {
-        activeTextField = nil
-        goForward()
-    }
-    
-    /**
-     The default action for the Previous Button in the RSDStepNavigationView.
-     */
-    @objc open func previousHit() {
+    override open func goBack() {
         activeTextField = nil
         goBack()
     }
     
-    /**
-     The default action for the Learn More Button in the RSDStepHeaderView.
-     */
-    @objc open func showLearnMore() {
-        // TODO: syoung 10/18/2017 Implement learn more action
+    override open func skipForward() {
+        activeTextField = nil
+        skipForward()
     }
     
     /**
@@ -528,16 +418,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     }
     open func numberOfSections(in tableView: UITableView) -> Int {
         return tableData?.sections.count ?? 0
-    }
-    
-    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // subclass may override
-        return nil
-    }
-    
-    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        // subclass may override
-        return 0.0
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -581,10 +461,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             
             // setup our keyboard accessory view, which is a standard navigationView
             let navView = RSDGenericStepUIConfig.instantiatNavigationView()
-            setupNavigationView(navView, isAccessoryView: true)
-            
-            // update enabled state of the next button
-            navView.nextButton.isEnabled = self.isForwardEnabled
+            setupFooter(navView)
             
             // using auto layout to constrain the navView to fill its superview after adding it to the textfield
             // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
@@ -694,14 +571,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             
             tableView.deselectRow(at: indexPath, animated: true)
         }
-    }
-    
-    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // subclass
-    }
-    
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
     }
     
     
@@ -848,9 +717,9 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     }
     
     open func updateShadows() {
-        guard let navigationView = navigationView else { return }
-        let maxY = tableView.contentSize.height - (tableView.bounds.size.height - navigationView.bounds.size.height)
-        navigationView.shouldShowShadow = tableView.contentOffset.y < maxY
+        guard let footer = self.navigationFooter, useStickyNavView else { return }
+        let maxY = tableView.contentSize.height - (tableView.bounds.size.height - footer.bounds.size.height)
+        footer.shouldShowShadow = (tableView.contentOffset.y < maxY)
     }
 
     
@@ -897,53 +766,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     public func answersDidChange(in section: Int) {
         // update enabled state of next button
-        navigationView?.nextButton.isEnabled = self.isForwardEnabled
-    }
-}
-
-
-public extension CGFloat {
-    
-    /**
-     Occasionally we do want UI elements to be a little bigger or wider on bigger screens,
-     such as with label widths. This can be used to increase values based on screen size. It
-     uses the small screen (320 wide) as a baseline. This is a much simpler alternative to
-     defining a matrix with screen sizes and constants and achieves much the same result
-     */
-    func proportionalToScreenWidth() -> CGFloat {
-        let baselineWidth = CGFloat(320.0)
-        return UIScreen.main.bounds.size.width / baselineWidth * self
-    }
-}
-
-
-public extension UIImage {
-    
-    /**
-     Re-color an image.
-     */
-    func applyColor(_ color: UIColor) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(self.size, false, UIScreen.main.scale)
-        let context = UIGraphicsGetCurrentContext()!
-        
-        color.setFill()
-        
-        context.translateBy(x: 0, y: self.size.height)
-        context.scaleBy(x: 1.0, y: -1.0)
-        
-        context.setBlendMode(CGBlendMode.colorBurn)
-        let rect = CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height)
-        context.draw(self.cgImage!, in: rect)
-        
-        
-        context.setBlendMode(CGBlendMode.sourceIn)
-        context.addRect(rect)
-        context.drawPath(using: CGPathDrawingMode.fill)
-        
-        let coloredImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return coloredImage!
+        navigationFooter?.nextButton.isEnabled = self.isForwardEnabled
     }
 }
 
@@ -982,7 +805,7 @@ extension RSDGenericStepUIConfig {
     }
     
     @objc open class func instantiatNavigationView() -> RSDStepNavigationView {
-        return RSDStepNavigationView()
+        return RSDGenericStepNavigationView()
     }
 }
 

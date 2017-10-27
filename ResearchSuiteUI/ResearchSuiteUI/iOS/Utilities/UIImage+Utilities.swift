@@ -1,5 +1,5 @@
 //
-//  DebugStepViewController.swift
+//  UIImage+Utilities.swift
 //  ResearchSuiteUI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,35 +31,35 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import UIKit
+import Foundation
 
-class DebugStepViewController: RSDStepViewController {
+
+public extension UIImage {
     
-    @IBOutlet var identifierLabel: UILabel!
-    @IBOutlet var titleLabel: UILabel!
-    
-    public override init(step: RSDStep) {
-        super.init(nibName: "DebugStepViewController", bundle: Bundle(for: DebugStepViewController.self))
-        self.step = step
-    }
-    
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    /**
+     Re-color an image.
+     */
+    func applyColor(_ color: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, UIScreen.main.scale)
+        let context = UIGraphicsGetCurrentContext()!
         
-        // Set up the view
-        self.identifierLabel.text = self.step.identifier
-        self.titleLabel.text = String(describing: self.step!)
-    }
-    
-    override var isForwardEnabled: Bool {
-        return true
+        color.setFill()
+        
+        context.translateBy(x: 0, y: self.size.height)
+        context.scaleBy(x: 1.0, y: -1.0)
+        
+        context.setBlendMode(CGBlendMode.colorBurn)
+        let rect = CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height)
+        context.draw(self.cgImage!, in: rect)
+        
+        
+        context.setBlendMode(CGBlendMode.sourceIn)
+        context.addRect(rect)
+        context.drawPath(using: CGPathDrawingMode.fill)
+        
+        let coloredImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return coloredImage!
     }
 }

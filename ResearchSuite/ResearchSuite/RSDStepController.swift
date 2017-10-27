@@ -46,14 +46,14 @@ public protocol RSDStepController : class {
     var step: RSDStep! { get set }
     
     /**
-     Is forward navigation enabled? This property allows the step controller to indicate that forward step is not enabled.
-     */
-    var isForwardEnabled: Bool { get }
-    
-    /**
      Callback from the task controller called on the current step controller when loading is finished and the task is ready to continue.
      */
     func didFinishLoading()
+    
+    /**
+     Is forward navigation enabled? This property allows the step controller to indicate that forward step is not enabled.
+     */
+    var isForwardEnabled: Bool { get }
     
     /**
      Navigate forward.
@@ -103,5 +103,4 @@ extension RSDStepController {
 
         return progress
     }
-    
 }

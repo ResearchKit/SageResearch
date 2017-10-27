@@ -33,7 +33,7 @@
 
 import UIKit
 
-open class RSDTaskInfoStepViewController: UIViewController, RSDStepController, UITextViewDelegate {
+open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDelegate {
 
     open class var nibName: String {
         return String(describing: RSDTaskInfoStepViewController.self)
@@ -47,25 +47,11 @@ open class RSDTaskInfoStepViewController: UIViewController, RSDStepController, U
     @IBOutlet public var titleLabel: UILabel?
     @IBOutlet public var subtitleLabel: UILabel?
     @IBOutlet public var iconImageView: UIImageView?
-    
     @IBOutlet public var textView: UITextView?
     
-    @IBOutlet public var footerView: UIView?
-    @IBOutlet public var startButton: RSDRoundedButton?
-    @IBOutlet public var cancelButton: RSDUnderlinedButton?
-    
-    open var textColor: UIColor = UIColor.appTextDark
-    
-    public var taskController: RSDTaskController!
-    public var taskInfo: RSDTaskInfoStep!
-    
-    public var step: RSDStep! {
-        get { return taskInfo }
-        set { taskInfo = newValue as! RSDTaskInfoStep }
-    }
-    
-    open var isForwardEnabled: Bool {
-        return taskController.isForwardEnabled
+    public var taskInfo: RSDTaskInfoStep! {
+        get { return self.step as! RSDTaskInfoStep }
+        set { self.step = newValue}
     }
     
     public init(taskInfo: RSDTaskInfoStep) {
@@ -86,13 +72,9 @@ open class RSDTaskInfoStepViewController: UIViewController, RSDStepController, U
         
         self.view.backgroundColor = UIColor.appBackgroundLight
         self.textView?.backgroundColor = UIColor.clear
-        self.footerView?.backgroundColor = UIColor.appBackgroundLight
         
-        self.startButton?.shadowColor = UIColor.roundedButtonBackgroundDark
-        self.startButton?.shadowColor = UIColor.roundedButtonShadowDark
-        self.startButton?.titleColor = UIColor.roundedButtonTextLight
-        
-        self.cancelButton?.textColor = UIColor.underlinedButtonTextDark
+        self.navigationFooter?.backgroundColor = UIColor.appBackgroundLight
+        self.navigationFooter?.tintColor = UIColor.underlinedButtonTextDark
         
         self.textView?.textColor = UIColor.appTextDark
         self.textView?.textContainerInset = UIEdgeInsets(top: 39, left: 43, bottom: 20, right: 43)
@@ -126,44 +108,26 @@ open class RSDTaskInfoStepViewController: UIViewController, RSDStepController, U
         // Set up the step text
         self.textView?.text = taskInfo.detail
         // TODO: add copyright with smaller font syoung 10/17/2017
-        
-        // Enable start button if the task is loaded
-        self.startButton?.isEnabled = self.isForwardEnabled
+    }
+    
+    /// Override the skip forward action to cancel the task
+    open override func skipForward() {
+        // TODO: syoung 10/26/2017 Refine the logic for skipping a task.
+        self.cancel()
+    }
+    
+    open override func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
+        if actionType == .navigation(.skip) {
+            return false
+        }
+        else {
+            return super.shouldHideAction(for: actionType)
+        }
     }
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.updateShadows()
-    }
-    
-    @IBAction public func startTapped() {
-        goForward()
-    }
-    
-    @IBAction public func cancelTapped() {
-        cancel()
-    }
-    
-    public func goForward() {
-        self.taskController.goForward()
-    }
-    
-    public func goBack() {
-        if self.taskController.hasStepBefore {
-            self.taskController.goBack()
-        }
-    }
-    
-    public func skipForward() {
-        self.taskController.goForward()
-    }
-    
-    public func cancel() {
-        self.taskController.handleTaskCancelled()
-    }
-    
-    public func didFinishLoading() {
-        self.startButton?.isEnabled = true
     }
     
     // MARK: Add shadows to scroll content "under" the header and footer
@@ -192,15 +156,7 @@ open class RSDTaskInfoStepViewController: UIViewController, RSDStepController, U
     
     private var shouldShowFooterShadow: Bool = false {
         didSet {
-            if shouldShowFooterShadow {
-                footerView?.layer.shadowOffset = CGSize(width: 0, height: 1)
-                footerView?.layer.shadowRadius = 3.0
-                footerView?.layer.shadowColor = UIColor.black.cgColor
-                footerView?.layer.shadowOpacity = 0.8
-            }
-            else {
-                footerView?.layer.shadowOpacity = 0.0
-            }
+            self.navigationFooter?.shouldShowShadow = shouldShowFooterShadow
         }
     }
 }

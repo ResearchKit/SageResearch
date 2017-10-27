@@ -38,15 +38,6 @@ import UIKit
 @IBDesignable open class RSDUnderlinedButton : UIButton {
     
     /**
-     * The color of the link button
-     */
-    @IBInspectable open var textColor : UIColor = UIColor.underlinedButtonTextDark {
-        didSet {
-            refreshView()
-        }
-    }
-    
-    /**
      * The font used for the text button
      */
     @IBInspectable open var textFont : UIFont = UIFont.systemFont(ofSize: 17) {
@@ -76,6 +67,11 @@ import UIKit
         refreshView()
     }
     
+    open override func tintColorDidChange() {
+        super.tintColorDidChange()
+        refreshView()
+    }
+    
     func refreshView() {
         // Forces refresh of current title to be attributed
         setTitle(self.currentTitle, for: .normal)
@@ -92,7 +88,7 @@ import UIKit
         if let titleUnwrapped = title {
             let attributes: [NSAttributedStringKey : Any] = [
                 .font : textFont,
-                .foregroundColor : textColor,
+                .foregroundColor : self.tintColor,
                 .underlineStyle : NSUnderlineStyle.styleSingle.rawValue
             ]
             return NSAttributedString(string: titleUnwrapped, attributes: attributes)
