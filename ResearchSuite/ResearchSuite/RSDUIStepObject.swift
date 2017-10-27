@@ -33,7 +33,7 @@
 
 import Foundation
 
-open class RSDUIStepObject : RSDUIStep, Codable, RSDNavigationRule {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDUIStep, RSDNavigationRule, Codable {
     
     public let identifier: String
     public let type: String
@@ -46,14 +46,12 @@ open class RSDUIStepObject : RSDUIStep, Codable, RSDNavigationRule {
     public var imageBefore: RSDImageWrapper?
     public var imageAfter: RSDImageWrapper?
     
-    public var actions: [RSDUIActionType : RSDUIAction]?
-    public var shouldHideActions: [RSDUIActionType]?
-    
     open var nextStepIdentifier: String?
     
     public init(identifier: String, type: String? = nil) {
         self.identifier = identifier
         self.type = type ?? RSDFactory.StepType.instruction.rawValue
+        super.init()
     }
     
     // MARK: Result management
@@ -78,16 +76,6 @@ open class RSDUIStepObject : RSDUIStep, Codable, RSDNavigationRule {
     
     open func imageAfter(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
         RSDImageWrapper.fetchImage(image: imageAfter, for: size, callback: callback)
-    }
-    
-    // MARK: action handling
-    
-    open func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
-        return actions?[actionType]
-    }
-    
-    open func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
-        return shouldHideActions?.contains(actionType)
     }
     
     // MARK: validation
@@ -118,23 +106,14 @@ open class RSDUIStepObject : RSDUIStep, Codable, RSDNavigationRule {
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote)
         self.imageBefore = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageBefore)
         self.imageAfter = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageAfter)
-        self.shouldHideActions = try container.decodeIfPresent([RSDUIActionType].self, forKey: .shouldHideActions)
         self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
         
-        if container.contains(.actions) {
-            let nestedDecoder = try container.superDecoder(forKey: .actions)
-            let nestedContainer = try nestedDecoder.container(keyedBy: AnyCodingKey.self)
-            var actions: [RSDUIActionType : RSDUIAction] = [:]
-            for key in nestedContainer.allKeys {
-                let objectDecoder = try nestedContainer.superDecoder(forKey: key)
-                let action = try decoder.factory.decodeUIAction(from: objectDecoder)
-                actions[RSDUIActionType(rawValue: key.stringValue)] = action
-            }
-            self.actions = actions
-        }
+        try super.init(from: decoder)
     }
     
-    open func encode(to encoder: Encoder) throws {
+    open override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
         try container.encodeIfPresent(title, forKey: .title)
@@ -143,14 +122,6 @@ open class RSDUIStepObject : RSDUIStep, Codable, RSDNavigationRule {
         try container.encodeIfPresent(footnote, forKey: .footnote)
         try container.encodeIfPresent(imageBefore, forKey: .imageBefore)
         try container.encodeIfPresent(imageAfter, forKey: .imageAfter)
-        if let actions = self.actions {
-            var nestedContainer = container.nestedContainer(keyedBy: RSDUIActionType.self, forKey: .actions)
-            for (key, action) in actions {
-                let objectEncoder = nestedContainer.superEncoder(forKey: key)
-                try action.encode(to: objectEncoder)
-            }
-        }
-        try container.encodeIfPresent(shouldHideActions, forKey: .shouldHideActions)
         try container.encodeIfPresent(nextStepIdentifier, forKey: .nextStepIdentifier)
     }
 }

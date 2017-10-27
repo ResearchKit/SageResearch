@@ -156,6 +156,17 @@ open class RSDGenericStepHeaderView: RSDNavigationHeaderView {
     /**
      Causes the progress view to be shown or hidden. Default is the value from UI config.
      */
+    open var shouldShowCloseButton = RSDGenericStepUIConfig.shouldShowCloseButton() {
+        didSet {
+            addCloseButtonIfNeeded()
+            cancelButton?.isHidden = !shouldShowCloseButton
+            setNeedsUpdateConstraints()
+        }
+    }
+    
+    /**
+     Causes the progress view to be shown or hidden. Default is the value from UI config.
+     */
     open var shouldShowProgress = RSDGenericStepUIConfig.shouldShowProgressView() {
         didSet {
             addProgressViewIfNeeded()
@@ -202,12 +213,22 @@ open class RSDGenericStepHeaderView: RSDNavigationHeaderView {
         commonInit()
     }
     
+    open func addCloseButtonIfNeeded() {
+        guard cancelButton == nil && shouldShowCloseButton else { return }
+        cancelButton = UIButton()
+        cancelButton!.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(cancelButton!)
+    }
+    
     open func addProgressViewIfNeeded() {
         guard progressView == nil && shouldShowProgress else { return }
         progressView = RSDStepProgressView()
         progressView!.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(progressView!)
         self.addSubview(progressView!.stepCountLabel)
+        
+        progressView!.stepCountLabel.alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
+        progressView!.stepCountLabel.makeHeight(.greaterThanOrEqual, 0.0)
     }
     
     open func addLearnMoreIfNeeded() {
@@ -266,6 +287,7 @@ open class RSDGenericStepHeaderView: RSDNavigationHeaderView {
     
     fileprivate func commonInit() {
         
+        addCloseButtonIfNeeded()
         addProgressViewIfNeeded()
         addLearnMoreIfNeeded()
         addImageViewIfNeeded()
@@ -305,17 +327,40 @@ open class RSDGenericStepHeaderView: RSDNavigationHeaderView {
             }
         }
         
+        if let cancelButton = cancelButton, shouldShowCloseButton {
+            _interactiveContraints.append(contentsOf:
+                cancelButton.alignToSuperview([.leading], padding: 16.0))
+            _interactiveContraints.append(contentsOf:
+                cancelButton.alignToSuperview([.top], padding: 12.0))
+            _interactiveContraints.append(contentsOf:
+                cancelButton.makeHeight(.equal, 32))
+            firstView = cancelButton
+            lastView = cancelButton
+        }
+        
         // progress view
         if let progressView = progressView, shouldLayout(progressView) {
-            _interactiveContraints.append(contentsOf:
-                progressView.alignToSuperview([.leading, .trailing, .top], padding: 0.0))
-            firstView = progressView
-            lastView = progressView
+            if let cancelButton = firstView {
+                progressView.hasRoundedEnds = true
+                let hPadding: CGFloat = 16.0
+                _interactiveContraints.append(contentsOf:
+                    progressView.align([.leading], .equal, to: cancelButton, [.trailing], padding: hPadding))
+                _interactiveContraints.append(contentsOf:
+                    progressView.alignToSuperview([.trailing], padding: hPadding))
+                _interactiveContraints.append(contentsOf:
+                    progressView.align([.centerY], .equal, to: cancelButton, [.centerY], padding: 0.0))
+            } else {
+                _interactiveContraints.append(contentsOf:
+                    progressView.alignToSuperview([.leading, .trailing, .top], padding: 0.0))
+                firstView = progressView
+                lastView = progressView
+            }
+
             // If the progress view step count label has been moved in the view hierarchy to this view then
             // need to define constraints relative to *this* view.
             if progressView.stepCountLabel.superview == self, !progressView.isStepLabelHidden {
                 _interactiveContraints.append(contentsOf:
-                    progressView.alignStepCountLabel(to: progressView))
+                    progressView.stepCountLabel.align([.top], .equal, to: firstView!, [.bottom], padding: 0.0))
                 lastView = progressView.stepCountLabel
             } else {
                 progressView.stepCountLabel.isHidden = true
@@ -387,6 +432,9 @@ open class RSDGenericStepHeaderView: RSDNavigationHeaderView {
         }
         else if let label = view as? UILabel {
             return (label.text?.characters.count ?? 0) > 0
+        }
+        else if let underlineButton = view as? RSDUnderlinedButton {
+            return (underlineButton.title(for: .normal)?.characters.count ?? 0) > 0
         }
         else if let button = view as? UIButton {
             return !button.isHidden

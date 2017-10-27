@@ -1,6 +1,9 @@
 {
     "identifier": "foo",
-    "isBackHidden": true,
+    "actions": {
+        "cancel": { "iconName": "closeActivity" }
+    },
+    "shouldHideActions": ["goBackward", "skip"],
     "steps": [{
               "identifier": "step1",
               "type": "instruction",

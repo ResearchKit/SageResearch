@@ -33,14 +33,11 @@
 
 import Foundation
 
-public struct RSDTaskObject : RSDTask, Decodable {
+public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
 
     public let identifier: String
     public let stepNavigator: RSDStepNavigator
     public let asyncActions: [RSDAsyncActionConfiguration]?
-    
-    public var isCancelHidden: Bool = false
-    public var isBackHidden: Bool = false
     
     public var taskInfo: RSDTaskInfoStep?
     public var schemaInfo: RSDSchemaInfo?
@@ -51,13 +48,14 @@ public struct RSDTaskObject : RSDTask, Decodable {
         self.schemaInfo = schemaInfo
         self.stepNavigator = stepNavigator
         self.asyncActions = asyncActions
+        super.init()
     }
     
     private enum CodingKeys : String, CodingKey {
         case identifier, taskInfo, schemaInfo, asyncActions, isCancelHidden, isBackHidden
     }
     
-    public init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Set the identifier and
@@ -99,9 +97,7 @@ public struct RSDTaskObject : RSDTask, Decodable {
             self.asyncActions = nil
         }
         
-        // ui action handling
-        self.isBackHidden = try container.decodeIfPresent(Bool.self, forKey: .isBackHidden) ?? true
-        self.isCancelHidden = try container.decodeIfPresent(Bool.self, forKey: .isCancelHidden) ?? true
+        try super.init(from: decoder)
     }
     
     
@@ -132,21 +128,6 @@ public struct RSDTaskObject : RSDTask, Decodable {
                     }
                 }
             }
-        }
-    }
-    
-    public func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
-        return nil
-    }
-    
-    public func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
-        switch actionType {
-        case .navigation(.cancel):
-            return isCancelHidden ? true : nil
-        case .navigation(.goBackward):
-            return isBackHidden ? true : nil
-        default:
-            return nil
         }
     }
 }

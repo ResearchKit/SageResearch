@@ -384,31 +384,20 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     override open func goBack() {
         activeTextField = nil
-        goBack()
+        super.goBack()
     }
     
     override open func skipForward() {
         activeTextField = nil
-        skipForward()
+        super.skipForward()
     }
     
-    /**
-     The 'RSDStepTextFieldCell' to use. Override to provide a custom instances of this class.
-     @param     reuseIdentifier     A String representing the reuse identifier of the cell
-     @return                        The 'RSDStepTextFieldCell' class to use
-     */
-    open func textFieldCell(reuseIdentifier: String) -> RSDStepTextFieldCell {
-        
-        // if we have just one form item, like for 'externalID' or 'yourAge', we use the 'featured'
-        // textField cell, which centers the field in the view and uses a large font. Otherwise, we
-        // use the base class
-        if formStep?.inputFields.count ?? 0 > 1 {
-            return RSDStepTextFieldCell(style: .default, reuseIdentifier: reuseIdentifier)
-        }
-        else {
-            return RSDStepTextFieldFeaturedCell(style: .default, reuseIdentifier: reuseIdentifier)
-        }
+    override open func cancel() {
+        activeTextField = nil
+        super.cancel()
     }
+    
+
     
     
     // MARK: UITableView Datasource
@@ -541,6 +530,24 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             
             choiceCell.choiceValueLabel.text = tableItem.choice.text
             choiceCell.isSelected = tableItem.selected
+        }
+    }
+    
+    /**
+     The 'RSDStepTextFieldCell' to use. Override to provide a custom instances of this class.
+     @param     reuseIdentifier     A String representing the reuse identifier of the cell
+     @return                        The 'RSDStepTextFieldCell' class to use
+     */
+    open func textFieldCell(reuseIdentifier: String) -> RSDStepTextFieldCell {
+        
+        // if we have just one form item, like for 'externalID' or 'yourAge', we use the 'featured'
+        // textField cell, which centers the field in the view and uses a large font. Otherwise, we
+        // use the base class
+        if formStep?.inputFields.count ?? 0 > 1 {
+            return RSDStepTextFieldCell(style: .default, reuseIdentifier: reuseIdentifier)
+        }
+        else {
+            return RSDStepTextFieldFeaturedCell(style: .default, reuseIdentifier: reuseIdentifier)
         }
     }
     
@@ -794,9 +801,16 @@ extension RSDGenericStepUIConfig {
     
     /**
      Defines if the progress view, which shows the number of steps completed in a multi-step task,
-     should be shown at the top of the screen underneath the navigation bar.
+     should be shown at the top of the screen.
      */
     @objc open class func shouldShowProgressView() -> Bool {
+        return true
+    }
+    
+    /**
+     Defines if the close button should be shown at the top of the screen.
+     */
+    @objc open class func shouldShowCloseButton() -> Bool {
         return true
     }
     
