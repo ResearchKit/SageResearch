@@ -45,11 +45,13 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
     }
     
     open func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
-        return actions?[actionType]
+        guard let action = actions?[actionType] else { return nil }
+        return action
     }
     
     open func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
-        return shouldHideActions?.contains(actionType)
+        guard let shouldHide = shouldHideActions?.contains(actionType), shouldHide else { return nil }
+        return shouldHide
     }
     
     // MARK: Codable (must implement in base class in order for the overriding classes to work)

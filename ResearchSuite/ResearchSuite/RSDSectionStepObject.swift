@@ -105,10 +105,10 @@ extension RSDSectionStep {
     
     public func instantiateTaskResult() -> RSDTaskResult {
         let result = self.instantiateStepResult()
-        if let taskResult = result as? RSDTaskResult {
+        guard let taskResult = result as? RSDTaskResult else {
             assertionFailure("Expected that a section step will return a result that conforms to RSDTaskResult protocol.")
-            return taskResult
+            return RSDTaskResultObject(identifier: identifier)
         }
-        return RSDTaskResultObject(identifier: identifier)
+        return taskResult
     }
 }

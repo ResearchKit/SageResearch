@@ -242,11 +242,10 @@ extension RSDConditionalStepNavigator {
     
     public func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)? {
         if let markers = self.progressMarkers {
-            if let stepHistory = result?.stepHistory.map({ $0.identifier }), let current = markers.lastIndex(where: { stepHistory.contains($0) }) {
-                return (current, markers.count, false)
-            } else {
-                return (1, markers.count, false)
+            guard let stepHistory = result?.stepHistory.map({ $0.identifier }), let current = markers.lastIndex(where: { stepHistory.contains($0) }) else {
+                return nil
             }
+            return (current + 1, markers.count, false)
         } else {
             // Look at the total number of steps and the result.
             let resultSet = Set(result?.stepHistory.map({ $0.identifier }) ?? [])

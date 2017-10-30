@@ -78,6 +78,17 @@ public class RSDTaskPath : NSObject, NSCopying {
     public private(set) var task: RSDTask?
     
     /**
+     Convenience method for accessing the top-level task path.
+     */
+    public var topLevelTaskPath: RSDTaskPath {
+        var taskPath = self
+        while let path = taskPath.parentPath {
+            taskPath = path
+        }
+        return taskPath
+    }
+    
+    /**
      The result associated with this task.
      */
     public var result: RSDTaskResult

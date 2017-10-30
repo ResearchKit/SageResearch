@@ -393,7 +393,9 @@ open class RSDStepHeaderView: RSDNavigationBarView {
         var lastView: UIView? = rsd_boundingView(for: .bottom, relation: .equal)
         
         // deactivate the last view constraint from the progress/close button nav bar header.
-        lastView?.rsd_constraint(for: .bottom, relation: .equal)?.isActive = false
+        if let constraint = lastView?.rsd_constraint(for: .bottom, relation: .equal) {
+            NSLayoutConstraint.deactivate([constraint])
+        }
         
         func setupVerticalConstraints(_ nextView: UIView?) {
             if let vw = nextView, shouldLayout(vw) {

@@ -147,6 +147,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     open func showLoading(for taskInfo: RSDTaskInfoStep) {
+        // If loading a resource for a subtask, then do not should the loading step
+        if self.taskPath.parentPath != nil, taskInfo.estimatedFetchTime == 0 {
+            return
+        }
+        
+        // Show the loading step
         let vc = viewController(for: taskInfo)
         vc.taskController = self
         let animated = (taskPath.parentPath != nil)
@@ -156,7 +162,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     open func handleFinishedLoading() {
         // Forward the finished loading message to the RSDTaskInfoStepUIController (if present)
-        self.currentStepController?.didFinishLoading()
+        // Otherwise, just go forward.
+        if let _ = self.currentStepController?.step as? RSDTaskInfoStep {
+            self.currentStepController?.didFinishLoading()
+        } else {
+            self.goForward()
+        }
     }
     
     open func hideLoadingIfNeeded() {

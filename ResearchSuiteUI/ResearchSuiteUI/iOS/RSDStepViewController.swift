@@ -176,6 +176,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         if let (stepIndex, stepCount, _) = self.progress() {
             header.progressView?.totalSteps = stepCount
             header.progressView?.currentStep = stepIndex
+        } else {
+            header.shouldShowProgress = false
         }
 
         header.setNeedsLayout()
@@ -190,7 +192,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         
         // Check if the back button and skip button should be hidden for this task
         // and if so, then do so globally.
-        if let task = self.taskController.taskPath.task, !(step is RSDTaskInfoStep) {
+        if let task = self.taskController.topLevelTask, !(step is RSDTaskInfoStep) {
             navigationView.isBackHidden = task.shouldHideAction(for: .navigation(.goBackward), on: step) ?? false
             navigationView.isSkipHidden = task.shouldHideAction(for: .navigation(.skip), on: step) ?? true
         }
@@ -321,7 +323,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             // If no override by the step then return the action from the delegate
            return action
         }
-        else if let action = self.taskController.taskPath.task?.action(for: actionType, on: step) {
+        else if let action = recursiveTaskAction(for: actionType) {
             // Finally check the task for a global action
             return action
         }
@@ -330,8 +332,19 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    private func recursiveTaskAction(for actionType: RSDUIActionType) -> RSDUIAction? {
+        var taskPath = self.taskController.taskPath
+        repeat {
+            if let action = taskPath?.task?.action(for: actionType, on: step) {
+                return action
+            }
+            taskPath = taskPath?.parentPath
+        } while (taskPath != nil)
+        return nil
+    }
+    
     open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
-        if let shouldHide = (self.step as? RSDUIActionHandler)?.shouldHideAction(for: actionType, on: step) {
+        if let shouldHide = (self.step as? RSDUIStep)?.shouldHideAction(for: actionType, on: step) {
             // Allow the step to override the default from the delegate
             return shouldHide
         }
@@ -339,7 +352,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             // If no override by the step then return the action from the delegate if there is one
             return shouldHide
         }
-        else if let shouldHide = self.taskController.taskPath.task?.shouldHideAction(for: actionType, on: step) {
+        else if let shouldHide = recursiveTaskShouldHideAction(for: actionType) {
             // Finally check if the task has any global settings
             return shouldHide
         }
@@ -354,6 +367,17 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
                 return self.action(for: actionType) != nil
             }
         }
+    }
+    
+    private func recursiveTaskShouldHideAction(for actionType: RSDUIActionType) -> Bool? {
+        var taskPath = self.taskController.taskPath
+        repeat {
+            if let shouldHide = taskPath?.task?.shouldHideAction(for: actionType, on: step) {
+                return shouldHide
+            }
+            taskPath = taskPath?.parentPath
+        } while (taskPath != nil)
+        return nil
     }
     
     
