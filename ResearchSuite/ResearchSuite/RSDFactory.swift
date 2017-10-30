@@ -361,7 +361,7 @@ open class RSDFactory {
      Type of steps that can be created by this factory.
      */
     public enum ResultType : String {
-        case base, answer, collection, task
+        case base, answer, collection, task, file
     }
     
     /**
@@ -411,15 +411,14 @@ open class RSDFactory {
         switch resultType {
         case .base:
             return try RSDResultObject(from: decoder)
-            
         case .answer:
             return try RSDAnswerResultObject(from: decoder)
-            
         case .collection:
             return try RSDStepCollectionResultObject(from: decoder)
-            
         case .task:
             return try RSDTaskResultObject(from: decoder)
+        case .file:
+            return try RSDFileResultObject(from: decoder)
         }
     }
     
