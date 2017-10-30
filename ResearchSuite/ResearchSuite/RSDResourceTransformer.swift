@@ -172,7 +172,7 @@ extension RSDResourceTransformer {
                 rBundle = bundle
             }
             else {
-                let bundleIds = Bundle.allBundles.mapAndFilter { $0.bundleIdentifier }
+                let bundleIds = Bundle.allBundles.rsd_mapAndFilter { $0.bundleIdentifier }
                 throw RSDResourceTransformerError.bundleNotFound("\(bundleIdentifier) Not Found. Available identifiers: \(bundleIds.joined(separator: ","))")
             }
         }

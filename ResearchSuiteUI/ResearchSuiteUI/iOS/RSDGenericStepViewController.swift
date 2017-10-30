@@ -170,7 +170,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             view.addSubview(tableView)
             
             tableView.translatesAutoresizingMaskIntoConstraints = false
-            tableView.alignAllToSuperview(padding: 0)
+            tableView.rsd_alignAllToSuperview(padding: 0)
         }
         if self.navigationHeader == nil && shouldShowHeader {
             navigationHeader = RSDGenericStepUIConfig.instantiateHeaderView()
@@ -252,7 +252,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             navigationView.translatesAutoresizingMaskIntoConstraints = false
             
             view.addSubview(navigationView)
-            navigationView.alignToSuperview([.leading, .trailing, .bottom], padding: 0.0)
+            navigationView.rsd_alignToSuperview([.leading, .trailing, .bottom], padding: 0.0)
             
             // we also need to add an invisible view as the table's footerview so we don't get
             // a bunch of empty rows
@@ -717,7 +717,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     open func showValidationError(title: String?, message: String?, context: RSDInputFieldError.Context?, at indexPath: IndexPath) {
         let invalidMessage = (tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup)?.textFieldOptions?.invalidMessage
-        self.showAlertWithOk(title: nil,
+        self.presentAlertWithOk(title: nil,
                              message: invalidMessage ?? message ?? Localization.localizedString("VALIDATION_ERROR_GENERIC"),
                              actionHandler: nil)
     }

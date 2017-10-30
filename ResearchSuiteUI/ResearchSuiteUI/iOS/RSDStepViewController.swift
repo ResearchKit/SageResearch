@@ -72,7 +72,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open var originalResult: RSDResult? {
-        return taskController.taskPath.previousResults?.last(where: { $0.identifier == self.step.identifier })
+        return taskController.taskPath.previousResults?.rsd_last(where: { $0.identifier == self.step.identifier })
     }
     
     lazy open var currentResult: RSDResult = {

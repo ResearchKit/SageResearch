@@ -33,7 +33,10 @@
 
 import UIKit
 
-public extension CGFloat {
+public protocol RSDCGFloatExtension {
+}
+
+extension CGFloat : RSDCGFloatExtension {
     
     /**
      Occasionally we do want UI elements to be a little bigger or wider on bigger screens,
@@ -41,7 +44,7 @@ public extension CGFloat {
      uses the small screen (320 wide) as a baseline. This is a much simpler alternative to
      defining a matrix with screen sizes and constants and achieves much the same result
      */
-    func proportionalToScreenWidth(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
+    func rsd_proportionalToScreenWidth(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
         let baseline = CGFloat(320.0)
         let ret = (UIScreen.main.bounds.size.width / baseline) * self
         return ret < max ? ret : max
@@ -53,13 +56,13 @@ public extension CGFloat {
      (568 high) as a baseline. This is a much simpler alternative to defining a matrix
      with screen sizes and constants and achieves much the same result
      */
-    func proportionalToScreenHeight(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
+    func rsd_proportionalToScreenHeight(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
         let baseline = CGFloat(568.0)
         let ret = (UIScreen.main.bounds.size.height / baseline) * self
         return ret < max ? ret : max
     }
     
-    func iPadMultiplier(_ multiplier: CGFloat) -> CGFloat {
+    func rsd_iPadMultiplier(_ multiplier: CGFloat) -> CGFloat {
         if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
             return self * multiplier
         } else {
@@ -79,9 +82,9 @@ extension UIView {
      @param padding     The padding (or inset) to be applied to each constraint.
      */
     @discardableResult
-    public func alignAll(_ relation: NSLayoutRelation, to view: UIView!, padding: CGFloat) -> [NSLayoutConstraint] {
+    public func rsd_alignAll(_ relation: NSLayoutRelation, to view: UIView!, padding: CGFloat) -> [NSLayoutConstraint] {
         let attributes: [NSLayoutAttribute] = [.leading, .top, .trailing, .bottom]
-        return align(attributes, relation, to: view, attributes, padding: padding)
+        return rsd_align(attributes, relation, to: view, attributes, padding: padding)
     }
     
     /**
@@ -93,9 +96,9 @@ extension UIView {
      @param padding     The padding (or inset) to be applied to each constraint.
      */
     @discardableResult
-    public func alignAllMargins(_ relation: NSLayoutRelation, to view: UIView!, padding: CGFloat) -> [NSLayoutConstraint] {
+    public func rsd_alignAllMargins(_ relation: NSLayoutRelation, to view: UIView!, padding: CGFloat) -> [NSLayoutConstraint] {
         let attributes: [NSLayoutAttribute] = [.leadingMargin, .topMargin, .trailingMargin, .bottomMargin]
-        return align(attributes, relation, to: view, attributes, padding: padding)
+        return rsd_align(attributes, relation, to: view, attributes, padding: padding)
     }
 
     /**
@@ -105,8 +108,8 @@ extension UIView {
      @param padding     The padding (or inset) to be applied to the constraint.
      */
     @discardableResult
-    public func alignToSuperview(_ attributes: [NSLayoutAttribute], padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
-        return align(attributes, .equal, to: self.superview, attributes, padding: padding, priority: priority)
+    public func rsd_alignToSuperview(_ attributes: [NSLayoutAttribute], padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+        return rsd_align(attributes, .equal, to: self.superview, attributes, padding: padding, priority: priority)
     }
 
     /**
@@ -116,8 +119,8 @@ extension UIView {
      @param padding     The padding (or inset) to be applied to each constraint.
      */
     @discardableResult
-    public func alignAllToSuperview(padding: CGFloat) -> [NSLayoutConstraint] {
-        return alignAll(.equal, to: self.superview, padding: padding)
+    public func rsd_alignAllToSuperview(padding: CGFloat) -> [NSLayoutConstraint] {
+        return rsd_alignAll(.equal, to: self.superview, padding: padding)
     }
     
     /**
@@ -127,8 +130,8 @@ extension UIView {
      @param padding     The padding (or inset) to be applied to each constraint.
      */
     @discardableResult
-    public func alignAllMarginsToSuperview(padding: CGFloat) -> [NSLayoutConstraint] {
-        return alignAllMargins(.equal, to: self.superview, padding: padding)
+    public func rsd_alignAllMarginsToSuperview(padding: CGFloat) -> [NSLayoutConstraint] {
+        return rsd_alignAllMargins(.equal, to: self.superview, padding: padding)
     }
 
     /**
@@ -138,8 +141,8 @@ extension UIView {
      @param padding     The padding (or inset) to be applied to the constraint.
      */
     @discardableResult
-    public func alignBelow(view: UIView, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
-        return align([.top], .equal, to: view, [.bottom], padding: padding, priority: priority)
+    public func rsd_alignBelow(view: UIView, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+        return rsd_align([.top], .equal, to: view, [.bottom], padding: padding, priority: priority)
     }
 
     /**
@@ -149,8 +152,8 @@ extension UIView {
      @param padding     The padding (or inset) to be applied to the constraint.
      */
     @discardableResult
-    public func alignAbove(view: UIView, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
-        return align([.bottom], .equal, to: view, [.top], padding: padding, priority: priority)
+    public func rsd_alignAbove(view: UIView, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+        return rsd_align([.bottom], .equal, to: view, [.top], padding: padding, priority: priority)
     }
 
     /**
@@ -160,8 +163,8 @@ extension UIView {
      @param padding     The padding (or inset) to be applied to the constraint.
      */
     @discardableResult
-    public func alignLeftOf(view: UIView, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
-        return align([.trailing], .equal, to: view, [.leading], padding: padding, priority: priority)
+    public func rsd_alignLeftOf(view: UIView, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+        return rsd_align([.trailing], .equal, to: view, [.leading], padding: padding, priority: priority)
     }
 
     /**
@@ -171,8 +174,8 @@ extension UIView {
      @param padding     The padding (or inset) to be applied to the constraint.
      */
     @discardableResult
-    public func alignRightOf(view: UIView, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
-        return align([.leading], .equal, to: view, [.trailing], padding: padding, priority: priority)
+    public func rsd_alignRightOf(view: UIView, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+        return rsd_align([.leading], .equal, to: view, [.trailing], padding: padding, priority: priority)
     }
     
     /**
@@ -187,7 +190,7 @@ extension UIView {
      @param priority        The layout priority of the constraint. By default, this is `1000`.
      */
     @discardableResult
-    public func align(_ attributes: [NSLayoutAttribute]!, _ relation: NSLayoutRelation, to view:UIView!, _ toAttributes: [NSLayoutAttribute]!, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+    public func rsd_align(_ attributes: [NSLayoutAttribute]!, _ relation: NSLayoutRelation, to view:UIView!, _ toAttributes: [NSLayoutAttribute]!, padding: CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
         
         guard let superview = self.superview else {
             assertionFailure("Trying to set constraints without first setting superview")
@@ -231,7 +234,7 @@ extension UIView {
      @param padding     The padding (or offset from center) to be applied to the constraint.
      */
     @discardableResult
-    public func alignCenterVertical(padding: CGFloat) -> [NSLayoutConstraint] {
+    public func rsd_alignCenterVertical(padding: CGFloat) -> [NSLayoutConstraint] {
         
         guard let superview = self.superview else {
             assertionFailure("Trying to set constraints without first setting superview")
@@ -256,7 +259,7 @@ extension UIView {
      @param padding     The padding (or offset from center) to be applied to the constraint.
      */
     @discardableResult
-    public func alignCenterHorizontal(padding: CGFloat) -> [NSLayoutConstraint] {
+    public func rsd_alignCenterHorizontal(padding: CGFloat) -> [NSLayoutConstraint] {
         
         guard let superview = self.superview else {
             assertionFailure("Trying to set constraints without first setting superview")
@@ -281,7 +284,7 @@ extension UIView {
      @param width       A 'CGFloat' constant for the width.
      */
     @discardableResult
-    public func makeWidth(_ relation: NSLayoutRelation, _ width : CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+    public func rsd_makeWidth(_ relation: NSLayoutRelation, _ width : CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
         let constraint = NSLayoutConstraint(item: self,
                                               attribute: .width,
                                               relatedBy: relation,
@@ -300,7 +303,7 @@ extension UIView {
      @param height       A 'CGFloat' constant for the height.
      */
     @discardableResult
-    public func makeHeight(_ relation: NSLayoutRelation, _ height : CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
+    public func rsd_makeHeight(_ relation: NSLayoutRelation, _ height : CGFloat, priority: UILayoutPriority = UILayoutPriority(1000.0)) -> [NSLayoutConstraint] {
         let constraint = NSLayoutConstraint(item: self,
                                               attribute: .height,
                                               relatedBy: relation,
@@ -318,7 +321,7 @@ extension UIView {
      @param multiplier       A 'CGFloat' constant for the constraint multiplier.
      */
     @discardableResult
-    public func makeWidthEqualToSuperview(multiplier: CGFloat) -> [NSLayoutConstraint] {
+    public func rsd_makeWidthEqualToSuperview(multiplier: CGFloat) -> [NSLayoutConstraint] {
         
         guard let superview = self.superview else {
             assertionFailure("Trying to set constraints without first setting superview")
@@ -342,7 +345,7 @@ extension UIView {
      @param multiplier       A 'CGFloat' constant for the constraint multiplier.
      */
     @discardableResult
-    public func makeWidthEqualToView(_ view: UIView) -> [NSLayoutConstraint] {
+    public func rsd_makeWidthEqualToView(_ view: UIView) -> [NSLayoutConstraint] {
         
         guard let superview = self.superview else {
             assertionFailure("Trying to set constraints without first setting superview")
@@ -365,7 +368,7 @@ extension UIView {
      A convenience method to remove all the view's constraints that exist between it and its superview
      or its superview's other child views. It does NOT remove constraints between the view and its child views.
      */
-    public func removeSiblingAndAncestorConstraints() {
+    public func rsd_removeSiblingAndAncestorConstraints() {
         for constraint in self.constraints {
             
             // iOS automatically creates special types of constraints, like for intrinsicContentSize,
@@ -397,7 +400,7 @@ extension UIView {
     /**
      A convenience method to remove all the view's constraints that exist between it and its superview. It does NOT remove constraints between the view and its child views or constraints on itself (such as width and height).
      */
-    public func removeSuperviewConstraints() {
+    public func rsd_removeSuperviewConstraints() {
         guard let superview = superview else { return }
         for constraint in superview.constraints {
             
@@ -430,7 +433,7 @@ extension UIView {
         return isChild
     }
     
-    open func boundingView(for attribute: NSLayoutAttribute, relation: NSLayoutRelation) -> UIView? {
+    open func rsd_boundingView(for attribute: NSLayoutAttribute, relation: NSLayoutRelation) -> UIView? {
         for constraint in constraints {
             
             // iOS automatically creates special types of constraints, like for intrinsicContentSize,
@@ -460,7 +463,7 @@ extension UIView {
      
      @return            The 'NSLayoutConstraint' matching the supplied constraint properties, if any.
      */
-    open func constraint(for attribute: NSLayoutAttribute, relation: NSLayoutRelation) -> NSLayoutConstraint? {
+    open func rsd_constraint(for attribute: NSLayoutAttribute, relation: NSLayoutRelation) -> NSLayoutConstraint? {
         
         var theConstraints = Array<NSLayoutConstraint>()
         

@@ -31,34 +31,10 @@
 
 import Foundation
 
+public protocol RSDArrayExtension {
+}
 
-public extension Array {
-    
-    /**
-     Return an `Array` mutated to include the given element.
-     
-     @param newElement  The element to append.
-     
-     @return            An `Array` with the element appended to the end.
-     */
-    public func appending(_ newElement: Element) -> [Element] {
-        var mutable = self
-        mutable.append(newElement)
-        return mutable
-    }
-    
-    /**
-     Return an `Array` mutated to include the given elements.
-     
-     @param contents    The elements to append.
-     
-     @return            An `Array` with the elements appended to the end.
-     */
-    public func appending(contentsOf contents: [Element]) -> [Element] {
-        var mutable = self
-        mutable.append(contentsOf: contents)
-        return mutable
-    }
+extension Array : RSDArrayExtension {
     
     /**
      Find the last element in the `Sequence` that matches the given criterion.

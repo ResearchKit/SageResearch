@@ -123,7 +123,7 @@ public class RSDTaskPath : NSObject {
         self.storyboardInfo = self.taskInfo?.storyboardInfo ?? parentPath?.storyboardInfo
         guard let parentPath = parentPath else { return }
         self.parentPath = parentPath
-        self.previousResults = (parentPath.result.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
+        self.previousResults = (parentPath.result.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
     }
     
     /**

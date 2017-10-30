@@ -235,7 +235,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         self.addChildViewController(pageVC)
         pageVC.view.frame = self.view.bounds
         self.view.addSubview(pageVC.view)
-        pageVC.view.alignAllToSuperview(padding: 0)
+        pageVC.view.rsd_alignAllToSuperview(padding: 0)
         pageVC.didMove(toParentViewController: self)
         return pageVC
     }

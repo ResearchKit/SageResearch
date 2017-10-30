@@ -197,7 +197,7 @@ extension RSDConditionalStepNavigator {
             else if let previousIdentifier = previousStep?.identifier {
                 // If we've dropped through without setting the return step to something non-nil
                 // then look for the next step.
-                returnStep = steps.next(after: {$0.identifier == previousIdentifier})
+                returnStep = steps.rsd_next(after: {$0.identifier == previousIdentifier})
             }
             else {
                 returnStep = steps.first
@@ -231,10 +231,10 @@ extension RSDConditionalStepNavigator {
         
         // First look in the step history for the step result that matches this one. If not found, then
         // check the list of steps.
-        guard let beforeResult = result.stepHistory.previous(before: {$0.identifier == step.identifier}),
+        guard let beforeResult = result.stepHistory.rsd_previous(before: {$0.identifier == step.identifier}),
             let beforeStep = self.step(with: beforeResult.identifier)
             else {
-            return self.steps.previous(before: {$0.identifier == step.identifier})
+            return self.steps.rsd_previous(before: {$0.identifier == step.identifier})
         }
         
         return beforeStep

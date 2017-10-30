@@ -39,7 +39,7 @@ public extension UIImage {
     /**
      Re-color an image.
      */
-    func applyColor(_ color: UIColor) -> UIImage {
+    func rsd_applyColor(_ color: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, UIScreen.main.scale)
         let context = UIGraphicsGetCurrentContext()!
         
