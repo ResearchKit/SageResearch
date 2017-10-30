@@ -33,14 +33,19 @@
 
 import Foundation
 
-public class RSDTaskPath : NSObject {
-    
+public class RSDTaskPath : NSObject, NSCopying {
+
     public typealias FetchCompletionHandler = (RSDTaskPath, Error?) -> Void
     
     /**
      Identifier for this path segment
      */
     public let identifier: String
+    
+    /**
+     Identifier for this task that can be mapped back to a nofification. This may be the same as the task identifier, or it might be that a task is scheduled multiple times per day, and the app needs to track what the scheduled timing is for the task.
+     */
+    public var scheduleIdentifier: String?
     
     /**
      String identifying the full path for this task.
@@ -73,6 +78,17 @@ public class RSDTaskPath : NSObject {
     public private(set) var task: RSDTask?
     
     /**
+     Convenience method for accessing the top-level task path.
+     */
+    public var topLevelTaskPath: RSDTaskPath {
+        var taskPath = self
+        while let path = taskPath.parentPath {
+            taskPath = path
+        }
+        return taskPath
+    }
+    
+    /**
      The result associated with this task.
      */
     public var result: RSDTaskResult
@@ -85,7 +101,17 @@ public class RSDTaskPath : NSObject {
     /**
      The current step. If `nil` then the task has not been started.
      */
-    public var currentStep: RSDStep?
+    open var currentStep: RSDStep?
+ 
+    /**
+     This is a flag that can be used to mark whether or not the task is ready to be saved.
+     */
+    public var isCompleted: Bool = false
+    
+    /**
+     This is a flag that can be used to mark when a task was exited early.
+     */
+    public var didExitEarly: Bool = false
     
     /**
      Mutable array of the current actions attached to this task.
@@ -123,7 +149,7 @@ public class RSDTaskPath : NSObject {
         self.storyboardInfo = self.taskInfo?.storyboardInfo ?? parentPath?.storyboardInfo
         guard let parentPath = parentPath else { return }
         self.parentPath = parentPath
-        self.previousResults = (parentPath.result.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
+        self.previousResults = (parentPath.result.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
     }
     
     /**
@@ -198,6 +224,34 @@ public class RSDTaskPath : NSObject {
     
     override public var description: String {
         return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
+    }
+    
+    
+    // Copying
+    
+    public required init(with identifier: String, result: RSDTaskResult, taskInfo: RSDTaskInfoStep?, task: RSDTask?) {
+        guard taskInfo != nil || task != nil else {
+            fatalError("Cannot initializa a task path with both a nil task info and nil task.")
+        }
+        self.identifier = identifier
+        self.result = result
+        self.taskInfo = taskInfo
+        self.task = task
+        super.init()
+    }
+    
+    public func copy(with zone: NSZone? = nil) -> Any {
+        let result = (self.result as? NSCopying)?.copy(with: nil) as? RSDTaskResult ?? self.result
+        let taskInfo = (self.taskInfo as? NSCopying)?.copy(with: nil) as? RSDTaskInfoStep ?? self.taskInfo
+        let task = (self.task as? NSCopying)?.copy(with: nil) as? RSDTask ?? self.task
+
+        let copy = type(of: self).init(with: self.identifier, result: result, taskInfo: taskInfo, task: task)
+        copy.scheduleIdentifier = self.scheduleIdentifier
+        copy.storyboardInfo = (self.storyboardInfo as? NSCopying)?.copy(with: nil) as? RSDStoryboardInfo ?? self.storyboardInfo
+        copy.previousResults = self.previousResults?.map({ ($0 as? NSCopying)?.copy(with: nil) as? RSDResult ?? $0 })
+        copy.parentPath = self.parentPath?.copy() as? RSDTaskPath
+        copy.isCompleted = self.isCompleted
+        return copy
     }
 }
 

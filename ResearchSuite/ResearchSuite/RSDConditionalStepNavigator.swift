@@ -197,7 +197,7 @@ extension RSDConditionalStepNavigator {
             else if let previousIdentifier = previousStep?.identifier {
                 // If we've dropped through without setting the return step to something non-nil
                 // then look for the next step.
-                returnStep = steps.next(after: {$0.identifier == previousIdentifier})
+                returnStep = steps.rsd_next(after: {$0.identifier == previousIdentifier})
             }
             else {
                 returnStep = steps.first
@@ -231,10 +231,10 @@ extension RSDConditionalStepNavigator {
         
         // First look in the step history for the step result that matches this one. If not found, then
         // check the list of steps.
-        guard let beforeResult = result.stepHistory.previous(before: {$0.identifier == step.identifier}),
+        guard let beforeResult = result.stepHistory.rsd_previous(before: {$0.identifier == step.identifier}),
             let beforeStep = self.step(with: beforeResult.identifier)
             else {
-            return self.steps.previous(before: {$0.identifier == step.identifier})
+            return self.steps.rsd_previous(before: {$0.identifier == step.identifier})
         }
         
         return beforeStep
@@ -242,11 +242,10 @@ extension RSDConditionalStepNavigator {
     
     public func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)? {
         if let markers = self.progressMarkers {
-            if let stepHistory = result?.stepHistory.map({ $0.identifier }), let current = markers.lastIndex(where: { stepHistory.contains($0) }) {
-                return (current, markers.count, false)
-            } else {
-                return (1, markers.count, false)
+            guard let stepHistory = result?.stepHistory.map({ $0.identifier }), let current = markers.lastIndex(where: { stepHistory.contains($0) }) else {
+                return nil
             }
+            return (current + 1, markers.count, false)
         } else {
             // Look at the total number of steps and the result.
             let resultSet = Set(result?.stepHistory.map({ $0.identifier }) ?? [])

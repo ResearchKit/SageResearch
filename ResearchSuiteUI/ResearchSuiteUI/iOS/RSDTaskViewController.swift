@@ -56,6 +56,8 @@ public protocol RSDTaskViewControllerDelegate : class {
     func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), didFinishWith reason: RSDTaskFinishReason, error: Error?)
     
     func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor step: RSDStep) -> (UIViewController & RSDStepController)?
+    
+    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), readyToSave taskPath: RSDTaskPath)
 }
 
 /**
@@ -145,6 +147,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     open func showLoading(for taskInfo: RSDTaskInfoStep) {
+        // If loading a resource for a subtask, then do not should the loading step
+        if self.taskPath.parentPath != nil, taskInfo.estimatedFetchTime == 0 {
+            return
+        }
+        
+        // Show the loading step
         let vc = viewController(for: taskInfo)
         vc.taskController = self
         let animated = (taskPath.parentPath != nil)
@@ -152,9 +160,14 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         pageViewController.setViewControllers([vc], direction: direction, animated: animated, completion: nil)
     }
     
-    public func handleFinishedLoading() {
+    open func handleFinishedLoading() {
         // Forward the finished loading message to the RSDTaskInfoStepUIController (if present)
-        self.currentStepController?.didFinishLoading()
+        // Otherwise, just go forward.
+        if let _ = self.currentStepController?.step as? RSDTaskInfoStep {
+            self.currentStepController?.didFinishLoading()
+        } else {
+            self.goForward()
+        }
     }
     
     open func hideLoadingIfNeeded() {
@@ -176,14 +189,17 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         delegate?.taskViewController(self, didFinishWith: .failed, error: error)
     }
     
-    public func handleTaskCompleted() {
+    open func handleTaskCompleted() {
         delegate?.taskViewController(self, didFinishWith: .completed, error: nil)
     }
     
-    public func handleTaskCancelled() {
+    open func handleTaskCancelled() {
         delegate?.taskViewController(self, didFinishWith: .cancelled, error: nil)
     }
 
+    open func handleTaskResultReady(with taskPath: RSDTaskPath) {
+        delegate?.taskViewController(self, readyToSave: taskPath)
+    }
     
     // MARK: Initializers
     
@@ -235,7 +251,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         self.addChildViewController(pageVC)
         pageVC.view.frame = self.view.bounds
         self.view.addSubview(pageVC.view)
-        pageVC.view.alignAllToSuperview(padding: 0)
+        pageVC.view.rsd_alignAllToSuperview(padding: 0)
         pageVC.didMove(toParentViewController: self)
         return pageVC
     }

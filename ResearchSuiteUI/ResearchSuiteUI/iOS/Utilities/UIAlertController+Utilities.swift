@@ -51,13 +51,13 @@ extension UIViewController: RSDAlertPresenter {
 
 public extension RSDAlertPresenter {
     
-    public func showAlertWithOk(title: String?, message: String, actionHandler: ((UIAlertAction) -> Void)?) {
+    public func presentAlertWithOk(title: String?, message: String, actionHandler: ((UIAlertAction) -> Void)?) {
         
         let okAction = UIAlertAction(title:Localization.buttonOK(), style: .default, handler: actionHandler)
-        showAlertWithActions(title: title, message: message, animated: true, actions: [okAction])
+        presentAlertWithActions(title: title, message: message, animated: true, actions: [okAction])
     }
     
-    public func showAlertWithYesNo(title: String?, message: String, actionHandler: @escaping ((Bool) -> Void)) {
+    public func presentAlertWithYesNo(title: String?, message: String, actionHandler: @escaping ((Bool) -> Void)) {
         
         let noAction = UIAlertAction(title: Localization.buttonNo(), style: .default, handler: { _ in
             actionHandler(false)
@@ -66,10 +66,10 @@ public extension RSDAlertPresenter {
             actionHandler(true)
         })
         
-        showAlertWithActions(title: title, message: message, animated: true, actions: [noAction, yesAction])
+        presentAlertWithActions(title: title, message: message, animated: true, actions: [noAction, yesAction])
     }
     
-    public func showAlertWithActions(title: String?, message: String, animated: Bool, actions: [UIAlertAction]) {
+    public func presentAlertWithActions(title: String?, message: String, animated: Bool, actions: [UIAlertAction]) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         for action in actions {
             alert.addAction(action)

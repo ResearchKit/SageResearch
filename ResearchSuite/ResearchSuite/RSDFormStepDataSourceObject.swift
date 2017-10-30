@@ -67,7 +67,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     }
     
     open func collectionResult() -> RSDStepCollectionResult {
-        if let collectionResult = taskPath.result.stepHistory.last(where: { $0.identifier == step.identifier }) as? RSDStepCollectionResult {
+        if let collectionResult = taskPath.result.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) as? RSDStepCollectionResult {
             return collectionResult
         }
         else {
@@ -155,7 +155,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
      @return    A dictionary of results mapped to the result identifier.
      */
     private func populateInitialResults() {
-        guard let previousResult = self.taskPath.previousResults?.last(where: { $0.identifier == self.step.identifier }) else {
+        guard let previousResult = self.taskPath.previousResults?.rsd_last(where: { $0.identifier == self.step.identifier }) else {
             return
         }
         let results: [RSDResult] = (previousResult as? RSDStepCollectionResult)?.inputResults ?? [previousResult]

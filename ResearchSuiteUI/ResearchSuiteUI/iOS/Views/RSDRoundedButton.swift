@@ -38,8 +38,8 @@ import UIKit
 @IBDesignable open class RSDRoundedButton : UIButton {
     
     public static let defaultHeight: CGFloat = 52.0
-    public static let defaultWidthWith2Buttons: CGFloat = CGFloat(144.0).proportionalToScreenWidth(max: 160)
-    public static let defaultWidthWith1Button: CGFloat = CGFloat(280.0).proportionalToScreenWidth(max: 320)
+    public static let defaultWidthWith2Buttons: CGFloat = CGFloat(144.0).rsd_proportionalToScreenWidth(max: 160)
+    public static let defaultWidthWith1Button: CGFloat = CGFloat(280.0).rsd_proportionalToScreenWidth(max: 320)
     public static let defaultCornerRadius: CGFloat = 26.0
     
     @IBInspectable open var corners: CGFloat = CGFloat(5) {
@@ -121,7 +121,7 @@ import UIKit
         heightConstraint.isActive = true
         
         // For the width, need to allow the preferred width to be overridden by the containing view.
-        self.makeWidth(.lessThanOrEqual, RSDRoundedButton.defaultWidthWith1Button)
+        self.rsd_makeWidth(.lessThanOrEqual, RSDRoundedButton.defaultWidthWith1Button)
         let widthConstraint = self.heightAnchor.constraint(equalToConstant: RSDRoundedButton.defaultWidthWith1Button)
         widthConstraint.priority = UILayoutPriority(rawValue: 750)
         widthConstraint.isActive = true

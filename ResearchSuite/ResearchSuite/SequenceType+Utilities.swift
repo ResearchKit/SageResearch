@@ -32,7 +32,7 @@
 import Foundation
 
 
-public extension Sequence {
+extension Sequence {
     
     /**
     Returns an `Array` containing the results of mapping and filtering `transform`
@@ -42,7 +42,7 @@ public extension Sequence {
      
     @return     An array of the transformed elements.
     */
-    public func mapAndFilter<T>(_ transform: (Self.Iterator.Element) throws -> T?) rethrows -> [T] {
+    public func rsd_mapAndFilter<T>(_ transform: (Self.Iterator.Element) throws -> T?) rethrows -> [T] {
         var result = [T]()
         for element in self {
             if let t = try transform(element) {
@@ -60,7 +60,7 @@ public extension Sequence {
      
      @return  A dictionary of key/value pairs.
      */
-    public func filteredDictionary<Hashable, T>(_ transform: (Self.Iterator.Element) throws -> (Hashable, T)?) rethrows -> [Hashable: T] {
+    public func rsd_filteredDictionary<Hashable, T>(_ transform: (Self.Iterator.Element) throws -> (Hashable, T)?) rethrows -> [Hashable: T] {
         var result = [Hashable:T]()
         for element in self {
             if let (key, t) = try transform(element) {
@@ -77,7 +77,7 @@ public extension Sequence {
      
      @return  The element that matches the pattern, searching in reverse.
     */
-    public func last(where evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
+    public func rsd_last(where evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
         for element in self.reversed() {
             if try evaluate(element) {
                 return element
@@ -93,7 +93,7 @@ public extension Sequence {
      
      @return  The next element after the one that matchs the pattern.
      */
-    public func next(after evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
+    public func rsd_next(after evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
         var found = false
         for element in self {
             if found {
@@ -111,7 +111,7 @@ public extension Sequence {
      
      @return  The previous element before the one that matchs the pattern.
      */
-    public func previous(before evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
+    public func rsd_previous(before evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
         var found = false
         for element in self.reversed() {
             if found {

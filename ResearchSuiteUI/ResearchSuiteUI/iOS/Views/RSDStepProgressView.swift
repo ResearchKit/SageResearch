@@ -214,27 +214,27 @@ open class RSDStepProgressView: UIView {
         _interactiveContraints.removeAll()
         
         _interactiveContraints.append(contentsOf:
-            backgroundView.alignToSuperview([.leading, .trailing, .top], padding: 0.0))
+            backgroundView.rsd_alignToSuperview([.leading, .trailing, .top], padding: 0.0))
         _interactiveContraints.append(contentsOf:
-            backgroundView.makeHeight(.equal, progressLineHeight))
+            backgroundView.rsd_makeHeight(.equal, progressLineHeight))
         
         _interactiveContraints.append(contentsOf:
-            progressView.alignToSuperview([.leading, .top, .bottom], padding: 0.0))
+            progressView.rsd_alignToSuperview([.leading, .top, .bottom], padding: 0.0))
         _interactiveContraints.append(contentsOf:
-            progressView.makeWidthEqualToSuperview(multiplier: progress))
+            progressView.rsd_makeWidthEqualToSuperview(multiplier: progress))
         
         if stepCountLabel.superview == self, !isStepLabelHidden {
             _interactiveContraints.append(contentsOf:
-                stepCountLabel.alignToSuperview([.bottomMargin], padding: 0.0))
+                stepCountLabel.rsd_alignToSuperview([.bottomMargin], padding: 0.0))
             _interactiveContraints.append(contentsOf:
-                stepCountLabel.alignCenterHorizontal(padding: 0))
+                stepCountLabel.rsd_alignCenterHorizontal(padding: 0))
             _interactiveContraints.append(contentsOf:
-                stepCountLabel.alignBelow(view: progressView, padding: 5.0))
+                stepCountLabel.rsd_alignBelow(view: progressView, padding: 5.0))
             _interactiveContraints.append(contentsOf:
-                stepCountLabel.makeHeight(.greaterThanOrEqual, 0.0))
+                stepCountLabel.rsd_makeHeight(.greaterThanOrEqual, 0.0))
         } else {
             _interactiveContraints.append(contentsOf:
-                backgroundView.alignToSuperview([.bottom], padding: 5.0))
+                backgroundView.rsd_alignToSuperview([.bottom], padding: 5.0))
         }
         
         super.updateConstraints()
@@ -244,8 +244,8 @@ open class RSDStepProgressView: UIView {
         
         if currentStep > 0 && totalSteps > 0 {
             
-            if let widthConstraint = progressView.constraint(for: .width, relation: .equal) {
-                _ = widthConstraint.setMultiplier(multiplier: progress)
+            if let widthConstraint = progressView.rsd_constraint(for: .width, relation: .equal) {
+                _ = widthConstraint.rsd_setMultiplier(multiplier: progress)
                 progressView.setNeedsLayout()
             }
             

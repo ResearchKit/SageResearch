@@ -33,7 +33,10 @@
 
 import Foundation
 
-extension Dictionary {
+public protocol RSDDictionaryExtension {
+}
+
+extension Dictionary : RSDDictionaryExtension {
     
     /**
      Returns a `Dictionary` containing the results of transforming the keys

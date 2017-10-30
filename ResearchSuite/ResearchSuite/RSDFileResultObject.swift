@@ -1,6 +1,6 @@
 //
-//  UIImage+Utilities.swift
-//  ResearchSuiteUI
+//  RSDFileResultObject.swift
+//  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -33,33 +33,15 @@
 
 import Foundation
 
-
-public extension UIImage {
+public struct RSDFileResultObject : RSDFileResult, Codable {
+    public let type: String
+    public let identifier: String
+    public var startDate: Date = Date()
+    public var endDate: Date = Date()
+    public var url: URL?
     
-    /**
-     Re-color an image.
-     */
-    func rsd_applyColor(_ color: UIColor) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(self.size, false, UIScreen.main.scale)
-        let context = UIGraphicsGetCurrentContext()!
-        
-        color.setFill()
-        
-        context.translateBy(x: 0, y: self.size.height)
-        context.scaleBy(x: 1.0, y: -1.0)
-        
-        context.setBlendMode(CGBlendMode.colorBurn)
-        let rect = CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height)
-        context.draw(self.cgImage!, in: rect)
-        
-        
-        context.setBlendMode(CGBlendMode.sourceIn)
-        context.addRect(rect)
-        context.drawPath(using: CGPathDrawingMode.fill)
-        
-        let coloredImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return coloredImage!
+    public init(identifier: String, type: String = RSDFactory.ResultType.file.rawValue) {
+        self.identifier = identifier
+        self.type = type
     }
 }

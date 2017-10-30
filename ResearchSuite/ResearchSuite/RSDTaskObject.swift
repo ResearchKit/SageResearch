@@ -59,20 +59,24 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Set the identifier and
+        let taskInfo: RSDTaskInfoStep?
         let identifier: String
-        if let taskInfo = try container.decodeIfPresent(RSDTaskInfoStepObject.self, forKey: .taskInfo) {
-            identifier = taskInfo.identifier
-            self.taskInfo = taskInfo
+        if let info = try container.decodeIfPresent(RSDTaskInfoStepObject.self, forKey: .taskInfo) {
+            taskInfo = info
+            identifier = info.identifier
         }
         else {
-            identifier = try container.decode(String.self, forKey: .identifier)
-            if let taskInfo = decoder.taskInfo, taskInfo.identifier == identifier {
-                self.taskInfo = taskInfo
+            if let info = decoder.taskInfo {
+                taskInfo = info
+                identifier = info.identifier
             }
             else {
-                self.taskInfo = decoder.taskDataSource?.taskInfo(with: identifier)
+                identifier = try container.decode(String.self, forKey: .identifier)
+                taskInfo = decoder.taskDataSource?.taskInfo(with: identifier)
             }
         }
+        
+        self.taskInfo = taskInfo
         self.identifier = identifier
         
         // Look for a schema info

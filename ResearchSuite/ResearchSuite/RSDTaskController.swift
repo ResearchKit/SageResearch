@@ -118,6 +118,11 @@ public protocol RSDTaskController : class {
     func handleTaskCompleted()
     
     /**
+     This method is called when a task result is "ready" for upload, save, archive, etc. This method will be called when either (a) the task is ready to dismiss or (b) when the task is displaying the *last* completion step.
+     */
+    func handleTaskResultReady(with taskPath: RSDTaskPath)
+    
+    /**
      The user has tapped the cancel button.
      */
     func handleTaskCancelled()
@@ -135,6 +140,10 @@ extension RSDTaskController {
             return topLevelTaskPath?.taskInfo
         }
         set {
+            guard taskPath == nil else {
+                assertionFailure("Cannot replace the task info on the task path once it is set.")
+                return
+            }
             self.taskPath = RSDTaskPath(taskInfo: newValue)
         }
     }
@@ -147,6 +156,10 @@ extension RSDTaskController {
             return topLevelTaskPath?.task
         }
         set {
+            guard taskPath == nil else {
+                assertionFailure("Cannot replace the task on the task path once it is set.")
+                return
+            }
             self.taskPath = RSDTaskPath(task: newValue)
         }
     }
@@ -316,17 +329,30 @@ extension RSDTaskController {
         let previousStep = taskPath.currentStep
         guard let step = taskPath.task!.stepNavigator.step(after: previousStep, with: &taskPath.result)
             else {
-                // Update the end date for the task result
-                self.taskPath.result.endDate = Date()
+                // Update the end date for the task result but only if the last step is *not*
+                // a completion step, in which case the true end date will already be set.
+                if !self.taskPath.isCompleted  {
+                    _handleTaskReady(with: self.taskPath)
+                }
                 
-                if taskPath.task!.stepNavigator.shouldExit(after: previousStep, with: taskPath.result),
-                    let parent = taskPath.parentPath {
+                let shouldExit = taskPath.task!.stepNavigator.shouldExit(after: previousStep, with: taskPath.result)
+                if !shouldExit, let parent = taskPath.parentPath {
                     // If the parent path is non-nil then go back up to the parent
                     parent.appendStepHistory(with: taskPath.result)
                     self.taskPath = parent
                     _moveToNextStep()
                 }
                 else {
+                    // move up the parent chain
+                    var path = taskPath!
+                    while path.parentPath != nil {
+                        path = path.parentPath!
+                    }
+                    self.taskPath = path
+                    self.taskPath.didExitEarly = shouldExit
+                    if !taskPath.isCompleted {
+                        _handleTaskReady(with: taskPath)
+                    }
                     handleTaskCompleted()
                 }
                 return
@@ -349,7 +375,23 @@ extension RSDTaskController {
             // then update the path and navigate forward.
             let isFirstStep = self.taskPath.currentStep == nil && self.taskPath.parentPath == nil
             let direction: RSDStepDirection = isFirstStep ? .none : .forward
+            if step.type == RSDFactory.StepType.completion.rawValue &&
+                 !taskPath.task!.stepNavigator.hasStep(after: step, with: taskPath.result) {
+                // If this is a completion step and the user cannot go back and change previous answers,
+                // then do *not* use it to mark the end of the task. Instead, mark *now* as the end date.
+                _handleTaskReady(with: self.taskPath)
+            }
             _move(to: step, from: previousStep, direction: direction)
+        }
+    }
+    
+    private func _handleTaskReady(with taskPath: RSDTaskPath) {
+        // Mark the task end date and isCompleted
+        taskPath.result.endDate = Date()
+        taskPath.isCompleted = true
+        if taskPath.parentPath == nil {
+            // ONLY send the message to save the results if this is the end of the task
+            self.handleTaskResultReady(with: taskPath.copy() as! RSDTaskPath)
         }
     }
     
@@ -364,6 +406,7 @@ extension RSDTaskController {
                 }
                 return
         }
+        self.taskPath.isCompleted = false
         self.taskPath.removeStepHistory(from: previousStep.identifier)
         self.taskPath.currentStep = step
         _move(to: step, from: previousStep, direction: .reverse)

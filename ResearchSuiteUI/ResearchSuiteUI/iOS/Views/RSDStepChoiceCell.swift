@@ -39,7 +39,7 @@ import UIKit
 open class RSDStepChoiceCell: UITableViewCell {
     
     private let kShadowHeight: CGFloat = 5.0
-    private let kSideMargin = CGFloat(20.0).proportionalToScreenWidth()
+    private let kSideMargin = CGFloat(20.0).rsd_proportionalToScreenWidth()
     private let kVertMargin: CGFloat = 10.0
     private let kMinHeight: CGFloat = 75.0
 
@@ -110,14 +110,14 @@ open class RSDStepChoiceCell: UITableViewCell {
         
         NSLayoutConstraint.deactivate(self.constraints)
         
-        choiceValueLabel.alignToSuperview([.leading, .trailing], padding: kSideMargin)
-        choiceValueLabel.alignToSuperview([.top], padding: kVertMargin)
+        choiceValueLabel.rsd_alignToSuperview([.leading, .trailing], padding: kSideMargin)
+        choiceValueLabel.rsd_alignToSuperview([.top], padding: kVertMargin)
         
-        shadowView.makeHeight(.equal, kShadowHeight)
-        shadowView.alignToSuperview([.leading, .trailing, .bottom], padding: 0.0)
-        shadowView.alignBelow(view: choiceValueLabel, padding: kVertMargin)
+        shadowView.rsd_makeHeight(.equal, kShadowHeight)
+        shadowView.rsd_alignToSuperview([.leading, .trailing, .bottom], padding: 0.0)
+        shadowView.rsd_alignBelow(view: choiceValueLabel, padding: kVertMargin)
         
-        contentView.makeHeight(.greaterThanOrEqual, kMinHeight)
+        contentView.rsd_makeHeight(.greaterThanOrEqual, kMinHeight)
 
         super.updateConstraints()
     }
@@ -129,7 +129,7 @@ open class RSDStepTextFieldCell: UITableViewCell {
     
     private let kVerticalMargin: CGFloat = 10.0
     private let kVerticalPadding: CGFloat = 7.0
-    private let kSideMargin = CGFloat(25.0).proportionalToScreenWidth()
+    private let kSideMargin = CGFloat(25.0).rsd_proportionalToScreenWidth()
     
     public var textField: UITextField!
     open var fieldLabel: UILabel!
@@ -228,22 +228,22 @@ open class RSDStepTextFieldCell: UITableViewCell {
         
         NSLayoutConstraint.deactivate(self.constraints)
         
-        textField.removeSiblingAndAncestorConstraints()
-        ruleView.removeSiblingAndAncestorConstraints()
+        textField.rsd_removeSiblingAndAncestorConstraints()
+        ruleView.rsd_removeSiblingAndAncestorConstraints()
         
-        fieldLabel.alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
-        fieldLabel.alignToSuperview([.top], padding: constants().verticalMargin)
+        fieldLabel.rsd_alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
+        fieldLabel.rsd_alignToSuperview([.top], padding: constants().verticalMargin)
         
-        textField.alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
-        textField.alignBelow(view: fieldLabel, padding: constants().verticalPadding)
+        textField.rsd_alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
+        textField.rsd_alignBelow(view: fieldLabel, padding: constants().verticalPadding)
         
-        ruleView.alignBelow(view: textField, padding: constants().verticalPadding)
-        ruleView.makeHeight(.equal, 1.0)
+        ruleView.rsd_alignBelow(view: textField, padding: constants().verticalPadding)
+        ruleView.rsd_makeHeight(.equal, 1.0)
         
         // align left and right edges of ruleView to the textField
-        ruleView.align([.leading, .trailing], .equal, to: textField, [.leading, .trailing], padding: 0.0)
+        ruleView.rsd_align([.leading, .trailing], .equal, to: textField, [.leading, .trailing], padding: 0.0)
         
-        ruleView.alignToSuperview([.bottom], padding: constants().verticalMargin)
+        ruleView.rsd_alignToSuperview([.bottom], padding: constants().verticalMargin)
 
         super.updateConstraints()
     }
@@ -272,28 +272,28 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
         
         super.updateConstraints()
         
-        textField.removeSiblingAndAncestorConstraints()
-        ruleView.removeSiblingAndAncestorConstraints()
+        textField.rsd_removeSiblingAndAncestorConstraints()
+        ruleView.rsd_removeSiblingAndAncestorConstraints()
         
         // if we have a defined textField width, we use that and center the text field and ruleView horizontally.
         // Otherwise, we pin left and right edges to the superview with some side margin
         
         if kTextFieldWidth > 0 {
             
-            textField.makeWidth(.equal, kTextFieldWidth)
-            textField.alignCenterHorizontal(padding: 0.0)
+            textField.rsd_makeWidth(.equal, kTextFieldWidth)
+            textField.rsd_alignCenterHorizontal(padding: 0.0)
         } else {
             
-            textField.alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
+            textField.rsd_alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
         }
         
-        textField.alignToSuperview([.top], padding: constants().verticalMargin)
+        textField.rsd_alignToSuperview([.top], padding: constants().verticalMargin)
         
-        ruleView.alignBelow(view: textField, padding: constants().verticalPadding)
-        ruleView.makeHeight(.equal, 1.0)
+        ruleView.rsd_alignBelow(view: textField, padding: constants().verticalPadding)
+        ruleView.rsd_makeHeight(.equal, 1.0)
         
         // align left and right edges of ruleView to the textField
-        ruleView.align([.leading, .trailing], .equal, to: textField, [.leading, .trailing], padding: 0.0)
+        ruleView.rsd_align([.leading, .trailing], .equal, to: textField, [.leading, .trailing], padding: 0.0)
     }
 }
 
@@ -305,7 +305,7 @@ class RSDStepTextField: UITextField {
 
 open class RSDTextLabelCell : UITableViewCell {
     
-    private let kSideMargin = CGFloat(20.0).proportionalToScreenWidth()
+    private let kSideMargin = CGFloat(20.0).rsd_proportionalToScreenWidth()
     private let kVertMargin: CGFloat = 10.0
     private let kMinHeight: CGFloat = 75.0
     
@@ -353,10 +353,10 @@ open class RSDTextLabelCell : UITableViewCell {
         
         NSLayoutConstraint.deactivate(self.constraints)
         
-        label.alignToSuperview([.leading, .trailing], padding: kSideMargin)
-        label.alignToSuperview([.top], padding: kVertMargin)
+        label.rsd_alignToSuperview([.leading, .trailing], padding: kSideMargin)
+        label.rsd_alignToSuperview([.top], padding: kVertMargin)
         
-        contentView.makeHeight(.greaterThanOrEqual, kMinHeight)
+        contentView.rsd_makeHeight(.greaterThanOrEqual, kMinHeight)
         
         super.updateConstraints()
     }
@@ -367,7 +367,7 @@ open class RSDTextLabelCell : UITableViewCell {
 open class RSDImageViewCell : UITableViewCell {
     
     private let kVertMargin: CGFloat = 10.0
-    private let kImageViewHeight: CGFloat = CGFloat(150.0).proportionalToScreenWidth()
+    private let kImageViewHeight: CGFloat = CGFloat(150.0).rsd_proportionalToScreenWidth()
 
     @IBOutlet public var iconView: UIImageView!
     
@@ -403,8 +403,8 @@ open class RSDImageViewCell : UITableViewCell {
             contentView.addSubview(iconView)
             
             iconView.translatesAutoresizingMaskIntoConstraints = false
-            iconView.alignToSuperview([.top, .bottom], padding: kVertMargin)
-            iconView.alignCenterHorizontal(padding: 0.0)
+            iconView.rsd_alignToSuperview([.top, .bottom], padding: kVertMargin)
+            iconView.rsd_alignCenterHorizontal(padding: 0.0)
             let height = iconView.heightAnchor.constraint(equalToConstant: kImageViewHeight)
             height.priority = UILayoutPriority(950)
             height.isActive = true
