@@ -96,6 +96,7 @@
 		FFE0DE4F1F874A8600BB1BDF /* RSDFormUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */; };
 		FFFCBCE21F900449000B55C1 /* RSDStringLiteralOptionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFCBCE11F900449000B55C1 /* RSDStringLiteralOptionSet.swift */; };
 		FFFDB95F1F99D4A500BA1348 /* ResearchSuite.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* ResearchSuite.strings */; };
+		FFFF727F1FA7FEC900ADDF51 /* RSDAnimatedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFF727E1FA7FEC900ADDF51 /* RSDAnimatedImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +202,7 @@
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
 		FFFCBCE11F900449000B55C1 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
 		FFFDB9601F99D4A500BA1348 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResearchSuite.strings; sourceTree = "<group>"; };
+		FFFF727E1FA7FEC900ADDF51 /* RSDAnimatedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAnimatedImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				FFCA183F1F8F326B006ADAF3 /* RSDActiveUIStepCommand.swift */,
+				FFFF727E1FA7FEC900ADDF51 /* RSDAnimatedImage.swift */,
 				FFDAE9EC1F9132EC001D0CC0 /* RSDAnswerResultType.swift */,
 				FF72B2601F68845A004C6F15 /* RSDDeviceType.swift */,
 				FF2B55001F68BC7C00663289 /* RSDFormDataType.swift */,
@@ -668,6 +671,7 @@
 				FFB015CC1F8BE96A00AC209B /* RSDTextFieldOptions.swift in Sources */,
 				FF80B13D1F7C582500582849 /* RSDValidationError.swift in Sources */,
 				FF8A21511F7CB11800C7B27F /* Array+Utilities.swift in Sources */,
+				FFFF727F1FA7FEC900ADDF51 /* RSDAnimatedImage.swift in Sources */,
 				FF1D6D2E1F82FB2C00B05349 /* RSDTaskInfoStep.swift in Sources */,
 				FF427CE81FA3B247005A5AD2 /* RSDUIActionHandlerObject.swift in Sources */,
 				FF8E5F3F1F8C258200611C23 /* RSDSectionStepObject.swift in Sources */,

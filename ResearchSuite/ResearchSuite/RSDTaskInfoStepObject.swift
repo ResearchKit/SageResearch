@@ -36,7 +36,7 @@ import Foundation
 /**
  `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
  */
-public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable {
+public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDAnimatedImageStep, RSDSchemaInfo, Decodable {
 
     private enum CodingKeys : String, CodingKey {
         
@@ -50,6 +50,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
         case copyright
         case estimatedMinutes
         case icon
+        case animatedImage
         
         case taskTransformer
         case storyboardInfo
@@ -63,6 +64,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
     public var detail: String?
     public var copyright: String?
     public var icon: RSDImageWrapper?
+    public var animatedImage: RSDAnimatedImage?
     public var estimatedMinutes: Int = 0
     
     private var _schemaIdentifier: String?
@@ -95,7 +97,8 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
         self.estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes) ?? 0
         self._schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier)
         self.schemaRevision = try container.decodeIfPresent(Int.self, forKey: .schemaRevision) ?? 1
-        
+        self.animatedImage = try container.decodeIfPresent(RSDAnimatedImage.self, forKey: .animatedImage)
+
         if container.contains(.taskTransformer) {
             let nestedDecoder = try container.superDecoder(forKey: .taskTransformer)
             self.taskTransformer = try decoder.factory.decodeTaskTransformer(from: nestedDecoder)

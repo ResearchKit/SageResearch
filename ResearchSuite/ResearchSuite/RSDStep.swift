@@ -137,6 +137,11 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
     func imageAfter(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
 
+public protocol RSDAnimatedImageStep : RSDStep {
+    
+    var animatedImage: RSDAnimatedImage? { get }
+}
+
 
 /**
  Additional properties used in creating a form input.

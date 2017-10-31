@@ -33,7 +33,7 @@
 
 import Foundation
 
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDUIStep, RSDNavigationRule, Codable {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageStep, RSDUIStep, RSDNavigationRule, Codable {
     
     public let identifier: String
     public let type: String
@@ -45,6 +45,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDUIStep, RSDNavigationR
     
     public var imageBefore: RSDImageWrapper?
     public var imageAfter: RSDImageWrapper?
+    public var animatedImage: RSDAnimatedImage?
     
     open var nextStepIdentifier: String?
     
@@ -93,7 +94,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDUIStep, RSDNavigationR
     // MARK: Codable (must implement in base class in order for the overriding classes to work)
     
     private enum CodingKeys: String, CodingKey {
-        case identifier, type, title, text, detail, footnote, imageBefore, imageAfter, actions, shouldHideActions, nextStepIdentifier
+        case identifier, type, title, text, detail, footnote, imageBefore, imageAfter, animatedImage, actions, shouldHideActions, nextStepIdentifier
     }
     
     public required init(from decoder: Decoder) throws {
@@ -107,6 +108,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDUIStep, RSDNavigationR
         self.imageBefore = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageBefore)
         self.imageAfter = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageAfter)
         self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
+        self.animatedImage = try container.decodeIfPresent(RSDAnimatedImage.self, forKey: .animatedImage)
         
         try super.init(from: decoder)
     }
@@ -123,6 +125,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDUIStep, RSDNavigationR
         try container.encodeIfPresent(imageBefore, forKey: .imageBefore)
         try container.encodeIfPresent(imageAfter, forKey: .imageAfter)
         try container.encodeIfPresent(nextStepIdentifier, forKey: .nextStepIdentifier)
+        try container.encodeIfPresent(animatedImage, forKey: .animatedImage)
     }
 }
 
