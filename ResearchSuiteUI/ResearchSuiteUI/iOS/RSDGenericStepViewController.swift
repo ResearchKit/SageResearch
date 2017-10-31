@@ -160,7 +160,9 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.view.backgroundColor = UIColor.white
+        
         if tableView == nil {
             tableView = UITableView(frame: view.bounds, style: .plain)
             tableView.delegate = self
@@ -312,6 +314,10 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     open override func setupHeader(_ header: RSDNavigationBarView) {
         super.setupHeader(header)
         guard let stepHeader = header as? RSDStepHeaderView else { return }
+        
+        if let colorTheme = (step as? RSDThemeColorUIStep), let backgroundColor = self.color(named: colorTheme.backgroundColorName) {
+            self.tableView.backgroundColor = backgroundColor
+        }
         
         if formStep?.inputFields.count ?? 0 > 0 {
             // We have a minimum height for ORKFormSteps because these step usually have just a title and

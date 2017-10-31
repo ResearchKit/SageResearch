@@ -70,6 +70,25 @@ open class RSDFactory {
     
     
     // MARK: Task factory
+    
+    /**
+     Use the resource transformer to get a data object to decode into a task.
+     
+     @param resourceTransformer     The resource transformer.
+     
+     @return                        The decoded task.
+     */
+    open func decodeTask(with taskInfo: RSDTaskInfoStepObject) throws -> RSDTask {
+        guard let resourceTransformer = taskInfo.taskTransformer as? RSDTaskResourceTransformer else {
+            throw RSDValidationError.invalidType("Cannot get embedded resource.")
+        }
+        let (data, type) = try resourceTransformer.resourceData()
+        return try decodeTask(with: data,
+                              resourceType: type,
+                              typeName: resourceTransformer.classType,
+                              taskInfo: taskInfo,
+                              schemaInfo: nil)
+    }
 
     /**
      Use the resource transformer to get a data object to decode into a task.

@@ -33,7 +33,7 @@
 
 import Foundation
 
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, RSDImageUIStep, RSDNavigationRule, Codable {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, RSDImageUIStep, RSDThemeColorUIStep, RSDNavigationRule, Codable {
     
     public let identifier: String
     public let type: String
@@ -42,6 +42,10 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, R
     public var text: String?
     public var detail: String?
     public var footnote: String?
+    
+    public var backgroundColorName: String?
+    public var foregroundColorName: String?
+    public var usesLightStyle: Bool = false
     
     public var imageBefore: RSDImageWrapper?
     public var imageAfter: RSDImageWrapper?
@@ -97,7 +101,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, R
     // MARK: Codable (must implement in base class in order for the overriding classes to work)
     
     private enum CodingKeys: String, CodingKey {
-        case identifier, type, title, text, detail, footnote, imageBefore, imageAfter, animatedImage, actions, shouldHideActions, nextStepIdentifier, viewInfo
+        case identifier, type, title, text, detail, footnote, backgroundColorName, foregroundColorName, usesLightStyle, imageBefore, imageAfter, animatedImage, actions, shouldHideActions, nextStepIdentifier, viewInfo
     }
     
     public required init(from decoder: Decoder) throws {
@@ -108,6 +112,11 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, R
         self.text = try container.decodeIfPresent(String.self, forKey: .text)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote)
+        
+        self.backgroundColorName = try container.decodeIfPresent(String.self, forKey: .backgroundColorName)
+        self.foregroundColorName = try container.decodeIfPresent(String.self, forKey: .foregroundColorName)
+        self.usesLightStyle = try container.decodeIfPresent(Bool.self, forKey: .usesLightStyle) ?? false
+        
         self.imageBefore = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageBefore)
         self.imageAfter = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageAfter)
         self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
@@ -126,10 +135,17 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, R
         try container.encodeIfPresent(text, forKey: .text)
         try container.encodeIfPresent(detail, forKey: .detail)
         try container.encodeIfPresent(footnote, forKey: .footnote)
+        
+        try container.encodeIfPresent(backgroundColorName, forKey: .backgroundColorName)
+        try container.encodeIfPresent(foregroundColorName, forKey: .foregroundColorName)
+        try container.encodeIfPresent(usesLightStyle, forKey: .usesLightStyle)
+        
         try container.encodeIfPresent(imageBefore, forKey: .imageBefore)
         try container.encodeIfPresent(imageAfter, forKey: .imageAfter)
-        try container.encodeIfPresent(nextStepIdentifier, forKey: .nextStepIdentifier)
         try container.encodeIfPresent(animatedImage, forKey: .animatedImage)
+        
+        try container.encodeIfPresent(nextStepIdentifier, forKey: .nextStepIdentifier)
+
         try container.encodeIfPresent(viewInfo, forKey: .viewInfo)
     }
 }

@@ -93,6 +93,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             return vc
         }
         if let viewInfo = (step as? RSDUIStep)?.viewInfo, let vc = instantiateViewController(with: viewInfo) {
+            vc.step = step
             return vc
         }
         return self.vendDefaultViewController(for: step)

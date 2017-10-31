@@ -109,11 +109,30 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
      The footnote is displayed in a smaller font at the bottom of the screen. It is intended to be used in order to include disclaimer, copyright, etc. that is important to display in the step but should not distract from the main purpose of the step.
      */
     var footnote: String? { get }
+
     
     /**
      The view info used to create a custom step.
      */
     var viewInfo: RSDUIViewInfo? { get }
+}
+
+public protocol RSDThemeColorUIStep : RSDUIStep {
+    
+    /**
+     A named color for the background for this step.
+     */
+    var backgroundColorName: String? { get }
+    
+    /**
+     A named color for the background for this step.
+     */
+    var foregroundColorName: String? { get }
+    
+    /**
+     Hint for whether or not the view uses light style for things like the progress bar.
+     */
+    var usesLightStyle: Bool { get }
 }
 
 /**
