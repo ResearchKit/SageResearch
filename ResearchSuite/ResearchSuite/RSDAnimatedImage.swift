@@ -38,16 +38,31 @@ public struct RSDAnimatedImage : Codable {
     public let imageNames: [String]
     public let bundleIdentifier: String?
     public let animationDuration: TimeInterval
-    public let width: CGFloat?
-    public let height: CGFloat?
+    
+    private let backgroundColorName: String?
+    private let width: CGFloat?
+    private let height: CGFloat?
     
     public var size: CGSize? {
         guard let ww = width, let hh = height else { return nil }
         return CGSize(width: ww, height: hh)
     }
     
+    public var bundle: Bundle? {
+        guard let name = bundleIdentifier else { return nil }
+        return Bundle(identifier: name)
+    }
+    
+    public func backgroundColor(compatibleWith traitCollection: UITraitCollection? = nil) -> UIColor? {
+        guard let name = backgroundColorName else { return nil }
+        if #available(iOS 11.0, *) {
+            return UIColor(named: name, in: bundle, compatibleWith: traitCollection)
+        } else {
+            return nil
+        }
+    }
+
     public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [UIImage] {
-        let bundle: Bundle? = (bundleIdentifier != nil) ? Bundle(identifier: bundleIdentifier!) : nil
         return imageNames.rsd_mapAndFilter {
             UIImage(named: $0, in: bundle, compatibleWith: traitCollection)
         }
@@ -59,5 +74,6 @@ public struct RSDAnimatedImage : Codable {
         self.animationDuration = animationDuration
         self.width = size.width
         self.height = size.height
+        self.backgroundColorName = nil
     }
 }

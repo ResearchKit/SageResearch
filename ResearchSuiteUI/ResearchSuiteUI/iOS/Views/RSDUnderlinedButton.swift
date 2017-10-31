@@ -2,8 +2,6 @@
 //  RSDUnderlinedButton.swift
 //  ResearchSuiteUI
 //
-//  Created by Michael L DePhillips on 4/7/17.
-//
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,

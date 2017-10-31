@@ -71,7 +71,7 @@
                         <constraint firstAttribute="bottom" secondItem="xFJ-r8-XTd" secondAttribute="bottom" id="zEM-Oy-lk3"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gi-Il-aWq" userLabel="Footer" customClass="RSDNavigationFooterView" customModule="ResearchSuiteUI" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gi-Il-aWq" userLabel="Footer" customClass="RSDGenericNavigationFooterView" customModule="ResearchSuiteUI" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="517" width="375" height="150"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>

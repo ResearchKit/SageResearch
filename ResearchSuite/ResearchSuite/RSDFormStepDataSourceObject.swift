@@ -212,8 +212,8 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         
         // add image below and footnote
         var items: [RSDTableItem] = []
-        if uiStep.hasImageAfter {
-            items.append(RSDImageTableItem(rowIndex: items.count, step: uiStep, isImageBefore: false))
+        if let imageStep = uiStep as? RSDImageUIStep, imageStep.hasImageAfter {
+            items.append(RSDImageTableItem(rowIndex: items.count, step: imageStep, isImageBefore: false))
         }
         if let footnote = uiStep.footnote {
             items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
@@ -820,14 +820,14 @@ public class RSDTextTableItem : RSDTableItem {
 }
 
 public class RSDImageTableItem : RSDTableItem, RSDResizableImage {
-    private let _step: RSDUIStep
+    private let _step: RSDImageUIStep
     private let _isImageBefore: Bool
     
     public var identifier: String {
         return "\(_step.identifier).\(_isImageBefore)"
     }
     
-    public init(rowIndex: Int, step: RSDUIStep, isImageBefore: Bool) {
+    public init(rowIndex: Int, step: RSDImageUIStep, isImageBefore: Bool) {
         _step = step
         _isImageBefore = isImageBefore
         super.init(rowIndex: rowIndex)

@@ -67,8 +67,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         return step as? RSDActiveUIStep
     }
     
-    public var formStep: RSDFormUIStep? {
-        return step as? RSDFormUIStep
+    public var imageStep: RSDImageUIStep? {
+        return step as? RSDImageUIStep
     }
     
     open var originalResult: RSDResult? {
@@ -142,8 +142,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     
-    // MARK: Navigation
+    // MARK: Navigation and Layout
     
+    @IBOutlet open var statusBackgroundView: UIView?
     @IBOutlet open var navigationHeader: RSDNavigationBarView?
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
     
@@ -178,6 +179,36 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             header.progressView?.currentStep = stepIndex
         } else {
             header.shouldShowProgress = false
+        }
+        
+        if let stepHeader = header as? RSDStepHeaderView {
+        
+            if (imageStep?.hasImageBefore ?? false), let imageView = stepHeader.imageView {
+                stepHeader.hasImage = true
+                imageStep!.imageBefore(for: imageView.bounds.size, callback: { [weak stepHeader] (img) in
+                    stepHeader?.image = img
+                })
+            } else if let animatedImage = (step as? RSDAnimatedImageUIStep)?.animatedImage {
+                stepHeader.hasImage = true
+                if let backgroundColor = animatedImage.backgroundColor(compatibleWith: self.traitCollection) {
+                    stepHeader.imageView?.superview?.backgroundColor = backgroundColor
+                    self.statusBackgroundView?.backgroundColor = backgroundColor
+                }
+                let images = animatedImage.images(compatibleWith: self.traitCollection)
+                if images.count > 1 {
+                    stepHeader.imageView?.animationDuration = animatedImage.animationDuration
+                    stepHeader.imageView?.animationImages = images
+                    stepHeader.imageView?.startAnimating()
+                }
+                else if let image = images.first {
+                    stepHeader.imageView?.image = image
+                }
+            }
+            
+            // setup label text
+            stepHeader.titleLabel?.text = uiStep?.title
+            stepHeader.textLabel?.text = uiStep?.text
+            stepHeader.detailLabel?.text = uiStep?.detail
         }
 
         header.setNeedsLayout()
@@ -344,7 +375,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
-        if let shouldHide = (self.step as? RSDUIStep)?.shouldHideAction(for: actionType, on: step) {
+        if let shouldHide = uiStep?.shouldHideAction(for: actionType, on: step) {
             // Allow the step to override the default from the delegate
             return shouldHide
         }

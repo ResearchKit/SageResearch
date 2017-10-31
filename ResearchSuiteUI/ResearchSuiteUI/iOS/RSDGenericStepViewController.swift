@@ -84,6 +84,10 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         }
     }
     
+    public var formStep: RSDFormUIStep? {
+        return step as? RSDFormUIStep
+    }
+    
     /**
      Class method to determine if this view controller class supports the provided step's form input fields. This will vary
      based on the `RSDFormDataType` and `RSDFormUIHint' for each of the input fields in the step.
@@ -177,7 +181,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             tableView.tableHeaderView = navigationHeader
         }
         if self.navigationFooter == nil && shouldShowFooter {
-            navigationFooter = RSDGenericStepUIConfig.instantiatNavigationView()
+            navigationFooter = RSDGenericStepUIConfig.instantiateNavigationView()
         }
     }
     
@@ -308,19 +312,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     open override func setupHeader(_ header: RSDNavigationBarView) {
         super.setupHeader(header)
         guard let stepHeader = header as? RSDStepHeaderView else { return }
-        
-        
-        if (uiStep?.hasImageBefore ?? false), let imageView = stepHeader.imageView {
-            stepHeader.hasImage = true
-            uiStep!.imageBefore(for: imageView.bounds.size, callback: { [weak stepHeader] (img) in
-                stepHeader?.image = img
-            })
-        }
-        
-        // setup label text
-        stepHeader.titleLabel?.text = uiStep?.title
-        stepHeader.textLabel?.text = uiStep?.text
-        stepHeader.detailLabel?.text = uiStep?.detail
         
         if formStep?.inputFields.count ?? 0 > 0 {
             // We have a minimum height for ORKFormSteps because these step usually have just a title and
@@ -461,18 +452,21 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             fieldCell.selectionStyle = .none
             
             // setup our keyboard accessory view, which is a standard navigationView
-            let navView = RSDGenericStepUIConfig.instantiatNavigationView()
-            setupFooter(navView)
-            
-            // using auto layout to constrain the navView to fill its superview after adding it to the textfield
-            // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
-            // navView and manually set its frame before assigning it to the text field
-            
-            let navHeight = navView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-            let navWidth = UIScreen.main.bounds.size.width
-            navView.frame = CGRect(x: 0, y: 0, width: navWidth, height: navHeight)
-            
-            fieldCell.textField.inputAccessoryView = navView
+            if let footer = self.navigationFooter {
+                
+                let navView = type(of: footer).init()
+                setupFooter(navView)
+                
+                // using auto layout to constrain the navView to fill its superview after adding it to the textfield
+                // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
+                // navView and manually set its frame before assigning it to the text field
+                
+                let navHeight = navView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+                let navWidth = UIScreen.main.bounds.size.width
+                navView.frame = CGRect(x: 0, y: 0, width: navWidth, height: navHeight)
+                
+                fieldCell.textField.inputAccessoryView = navView
+            }
             
             // use the keyboard properties defined for this step
             if let textAnswerFormat = itemGroup.textFieldOptions {
@@ -493,7 +487,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         }
     }
     
-    func configure(cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
+    open func configure(cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
 
         if let labelCell = cell as? RSDTextLabelCell {
             guard let item = tableData?.tableItem(at: indexPath) as? RSDTextTableItem
@@ -827,11 +821,11 @@ extension RSDGenericStepUIConfig {
     }
     
     @objc open class func instantiateHeaderView() -> RSDStepHeaderView {
-        return RSDStepHeaderView()
+        return RSDGenericStepHeaderView()
     }
     
-    @objc open class func instantiatNavigationView() -> RSDNavigationFooterView {
-        return RSDNavigationFooterView()
+    @objc open class func instantiateNavigationView() -> RSDNavigationFooterView {
+        return RSDGenericNavigationFooterView()
     }
 }
 

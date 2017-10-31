@@ -111,6 +111,17 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
     var footnote: String? { get }
     
     /**
+     The view info used to create a custom step.
+     */
+    var viewInfo: RSDUIViewInfo? { get }
+}
+
+/**
+ Extends the UI step to include static images before and/or after.
+ */
+public protocol RSDImageUIStep : RSDUIStep {
+    
+    /**
      Does the step have an image to display before the `title`, `text`, and `detail`?
      */
     var hasImageBefore: Bool { get }
@@ -119,7 +130,7 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
      Does the step have an image to display after the `title`, `text`, and `detail`?
      */
     var hasImageAfter: Bool { get }
-
+    
     /**
      An image to display before the `title`, `text`, and `detail`. This would be displayed above or to the left of the text, depending upon the orientation of the screen.
      
@@ -137,8 +148,13 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
     func imageAfter(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
 
-public protocol RSDAnimatedImageStep : RSDStep {
+/**
+ Extends the UI step to include an animated image.
+ */
+public protocol RSDAnimatedImageUIStep : RSDUIStep {
     
+    /**
+     */
     var animatedImage: RSDAnimatedImage? { get }
 }
 

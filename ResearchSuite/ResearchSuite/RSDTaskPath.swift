@@ -68,11 +68,6 @@ public class RSDTaskPath : NSObject, NSCopying {
     public private(set) var taskInfo: RSDTaskInfoStep?
     
     /**
-     Current storyboard info (if available)
-     */
-    public var storyboardInfo: RSDStoryboardInfo?
-    
-    /**
      The task that is currently being run.
      */
     public private(set) var task: RSDTask?
@@ -146,7 +141,6 @@ public class RSDTaskPath : NSObject, NSCopying {
     }
     
     private func commonInit(identifier: String, parentPath: RSDTaskPath?) {
-        self.storyboardInfo = self.taskInfo?.storyboardInfo ?? parentPath?.storyboardInfo
         guard let parentPath = parentPath else { return }
         self.parentPath = parentPath
         self.previousResults = (parentPath.result.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
@@ -247,7 +241,6 @@ public class RSDTaskPath : NSObject, NSCopying {
 
         let copy = type(of: self).init(with: self.identifier, result: result, taskInfo: taskInfo, task: task)
         copy.scheduleIdentifier = self.scheduleIdentifier
-        copy.storyboardInfo = (self.storyboardInfo as? NSCopying)?.copy(with: nil) as? RSDStoryboardInfo ?? self.storyboardInfo
         copy.previousResults = self.previousResults?.map({ ($0 as? NSCopying)?.copy(with: nil) as? RSDResult ?? $0 })
         copy.parentPath = self.parentPath?.copy() as? RSDTaskPath
         copy.isCompleted = self.isCompleted

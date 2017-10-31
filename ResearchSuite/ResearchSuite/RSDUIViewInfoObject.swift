@@ -1,5 +1,5 @@
 //
-//  RSDStoryboardInfo.swift
+//  RSDUIViewInfoObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,20 +33,15 @@
 
 import Foundation
 
-public protocol RSDStoryboardInfo {
+public struct RSDUIViewInfoObject: RSDUIViewInfo, Codable {
     
-    /**
-     Identifier for the storyboard that vends the task step views.
-     */
-    var storyboardIdentifier: String { get }
+    public let viewIdentifier: String
+    public let bundleIdentifier: String?
+    public let storyboardIdentifier: String?
     
-    /**
-     The bundle with the storyboard resource.
-     */
-    var storyboardBundle: Bundle? { get }
-    
-    /**
-     For a given step, vends the identifier for the view controller for that step. If `nil` then the default view controller will be instantiated by the task controller.
-     */
-    func viewControllerIdentifier(for step: RSDStep) -> String?
+    public init(viewIdentifier: String, bundleIdentifier: String? = nil, storyboardIdentifier: String? = nil) {
+        self.viewIdentifier = viewIdentifier
+        self.bundleIdentifier = bundleIdentifier
+        self.storyboardIdentifier = storyboardIdentifier
+    }
 }
