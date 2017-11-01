@@ -36,7 +36,7 @@ import Foundation
 /**
  `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
  */
-public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable {
+public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDAnimatedImageUIStep, RSDSchemaInfo, Decodable {
 
     private enum CodingKeys : String, CodingKey {
         
@@ -50,9 +50,9 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
         case copyright
         case estimatedMinutes
         case icon
-        
+        case animatedImage
+        case viewInfo
         case taskTransformer
-        case storyboardInfo
     }
 
     public let identifier: String
@@ -63,6 +63,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
     public var detail: String?
     public var copyright: String?
     public var icon: RSDImageWrapper?
+    public var animatedImage: RSDAnimatedImage?
     public var estimatedMinutes: Int = 0
     
     private var _schemaIdentifier: String?
@@ -72,10 +73,19 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
     public var schemaRevision: Int = 1
     
     public var taskTransformer: RSDTaskTransformer!
-    public var storyboardInfo: RSDStoryboardInfo?
+    
+    public var viewInfo: RSDUIViewInfo?
     
     public var estimatedFetchTime: TimeInterval {
         return taskTransformer?.estimatedFetchTime ?? 0
+    }
+    
+    public var text: String? {
+        return subtitle
+    }
+    
+    public var footnote: String? {
+        return copyright
     }
 
     public init(with identifier: String) {
@@ -95,13 +105,13 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
         self.estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes) ?? 0
         self._schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier)
         self.schemaRevision = try container.decodeIfPresent(Int.self, forKey: .schemaRevision) ?? 1
-        
+        self.animatedImage = try container.decodeIfPresent(RSDAnimatedImage.self, forKey: .animatedImage)
+        self.viewInfo = try container.decodeIfPresent(RSDUIViewInfoObject.self, forKey: .viewInfo)
+
         if container.contains(.taskTransformer) {
             let nestedDecoder = try container.superDecoder(forKey: .taskTransformer)
             self.taskTransformer = try decoder.factory.decodeTaskTransformer(from: nestedDecoder)
         }
-        
-        self.storyboardInfo = try container.decodeIfPresent(RSDStoryboardInfoObject.self, forKey: .storyboardInfo)
     }
     
     public func fetchTask(with factory: RSDFactory, callback: @escaping RSDTaskFetchCompletionHandler) {
@@ -126,6 +136,14 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
     
     public func validate() throws {
         // do nothing
+    }
+    
+    public func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
+        return nil
+    }
+    
+    public func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
+        return nil
     }
 }
 

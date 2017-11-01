@@ -1,5 +1,5 @@
 //
-//  RSDStoryboardInfoObject.swift
+//  RSDUIViewInfo.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,41 +33,28 @@
 
 import Foundation
 
-public struct RSDStoryboardInfoObject : RSDStoryboardInfo, Codable {
+public protocol RSDUIViewInfo {
     
     /**
-     Identifier for the storyboard.
+     The storyboard view controller identifier or the nib name for this view controller.
      */
-    public let storyboardIdentifier: String
+    var viewIdentifier: String { get }
     
     /**
-     Identifier for the bundle. If `nil` then the mainBundle will be assumed.
+     Optional bundle identifier. If nil, the main bundle is assumed.
      */
-    public let bundleIdentifier: String?
+    var bundleIdentifier: String? { get }
     
     /**
-     A mapping that can return a custom step view controller identifier by looking at the `step.identifier` property and if that is not defined then looking at the `step.type` property.
+     If the storyboard identifier is non-nil then the view is assumed to be accessible within the storyboard via the `viewIdentifier`.
      */
-    public let viewControllerIdentifierMap: [String : String]?
+    var storyboardIdentifier: String? { get }
+}
 
-    public var storyboardBundle: Bundle? {
+extension RSDUIViewInfo {
+    
+    public var bundle: Bundle? {
         guard let identifier = bundleIdentifier else { return nil }
         return Bundle(identifier: identifier)
-    }
-    
-    public func viewControllerIdentifier(for step: RSDStep) -> String? {
-        return viewControllerIdentifierMap?[step.identifier] ?? viewControllerIdentifierMap?[step.type]
-    }
-    
-    private enum CodingKeys : String, CodingKey {
-        case storyboardIdentifier = "identifier"
-        case bundleIdentifier = "bundle"
-        case viewControllerIdentifierMap = "viewControllerIdentifierMap"
-    }
-    
-    public init(storyboardIdentifier: String, bundleIdentifier: String?, viewControllerIdentifierMap: [String : String]?) {
-        self.storyboardIdentifier = storyboardIdentifier
-        self.bundleIdentifier = bundleIdentifier
-        self.viewControllerIdentifierMap = viewControllerIdentifierMap
     }
 }

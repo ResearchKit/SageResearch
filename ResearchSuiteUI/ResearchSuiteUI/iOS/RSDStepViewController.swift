@@ -67,8 +67,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         return step as? RSDActiveUIStep
     }
     
-    public var formStep: RSDFormUIStep? {
-        return step as? RSDFormUIStep
+    public var imageStep: RSDImageUIStep? {
+        return step as? RSDImageUIStep
     }
     
     open var originalResult: RSDResult? {
@@ -142,8 +142,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     
-    // MARK: Navigation
+    // MARK: Navigation and Layout
     
+    @IBOutlet open var statusBackgroundView: UIView?
     @IBOutlet open var navigationHeader: RSDNavigationBarView?
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
     
@@ -179,6 +180,43 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         } else {
             header.shouldShowProgress = false
         }
+        
+        if let stepHeader = header as? RSDStepHeaderView {
+        
+            if (imageStep?.hasImageBefore ?? false), let imageView = stepHeader.imageView {
+                stepHeader.hasImage = true
+                imageStep!.imageBefore(for: imageView.bounds.size, callback: { [weak stepHeader] (img) in
+                    stepHeader?.image = img
+                })
+            } else if let animatedImage = (step as? RSDAnimatedImageUIStep)?.animatedImage {
+                stepHeader.hasImage = true
+                if let backgroundColor = animatedImage.backgroundColor(compatibleWith: self.traitCollection) {
+                    stepHeader.imageView?.superview?.backgroundColor = backgroundColor
+                    self.statusBackgroundView?.backgroundColor = backgroundColor
+                }
+                let images = animatedImage.images(compatibleWith: self.traitCollection)
+                if images.count > 1 {
+                    stepHeader.imageView?.animationDuration = animatedImage.animationDuration
+                    stepHeader.imageView?.animationImages = images
+                    stepHeader.imageView?.startAnimating()
+                }
+                else if let image = images.first {
+                    stepHeader.imageView?.image = image
+                }
+            }
+            
+            // setup label text
+            stepHeader.titleLabel?.text = uiStep?.title
+            stepHeader.textLabel?.text = uiStep?.text
+            stepHeader.detailLabel?.text = uiStep?.detail
+            
+            if let colorTheme = (step as? RSDThemeColorUIStep),
+                let foregroundColor = self.color(named: colorTheme.foregroundColorName) {
+                stepHeader.titleLabel?.textColor = foregroundColor
+                stepHeader.textLabel?.textColor = foregroundColor
+                stepHeader.detailLabel?.textColor = foregroundColor
+            }
+        }
 
         header.setNeedsLayout()
         header.setNeedsUpdateConstraints()
@@ -189,7 +227,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open func setupNavigationView(_ navigationView: RSDStepNavigationView) {
-        
+
         // Check if the back button and skip button should be hidden for this task
         // and if so, then do so globally.
         if let task = self.taskController.topLevelTask, !(step is RSDTaskInfoStep) {
@@ -202,6 +240,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         setupButton(navigationView.nextButton, for: .navigation(.goForward))
         setupButton(navigationView.backButton, for: .navigation(.goBackward))
         setupButton(navigationView.skipButton, for: .navigation(.skip))
+        
+        if let colorTheme = (step as? RSDThemeColorUIStep), let backgroundColor = self.color(named: colorTheme.backgroundColorName) {
+            self.view.backgroundColor = backgroundColor
+            navigationView.backgroundColor = backgroundColor
+        }
         
         navigationView.setNeedsLayout()
         navigationView.setNeedsUpdateConstraints()
@@ -261,11 +304,22 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             btn.setImage(action.buttonIcon, for: .normal)
         }
         
+        if let roundedButton = btn as? RSDRoundedButton, let colorTheme = (step as? RSDThemeColorUIStep), colorTheme.usesLightStyle {
+            roundedButton.backgroundColor = UIColor.roundedButtonBackgroundLight
+            roundedButton.shadowColor = UIColor.roundedButtonShadowLight
+            roundedButton.titleColor = color(named: colorTheme.backgroundColorName) ?? UIColor.roundedButtonTextLight
+        }
+        
         // If this is a goForward button, then there is some additional logic around
         // loading state and whether or not any input fields are optional
         if actionType == .navigation(.goForward) {
             btn.isEnabled = isForwardEnabled
         }
+    }
+    
+    open func color(named name: String?) -> UIColor? {
+        guard #available(iOS 11.0, *), let colorName = name else { return nil }
+        return UIColor(named: colorName, in: nil, compatibleWith: self.traitCollection)
     }
     
     @objc private func _forwardTapped() {
@@ -344,7 +398,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
-        if let shouldHide = (self.step as? RSDUIStep)?.shouldHideAction(for: actionType, on: step) {
+        if let shouldHide = uiStep?.shouldHideAction(for: actionType, on: step) {
             // Allow the step to override the default from the delegate
             return shouldHide
         }

@@ -2,7 +2,6 @@
 //  RSDStepProgressView.swift
 //  ResearchSuiteUI
 //
-//  Created by Josh Bruhin on 5/25/17.
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
@@ -82,16 +81,7 @@ open class RSDStepProgressView: UIView {
         }
     }
     
-    /**
-     Should the step label be hidden?
-     */
-    @IBInspectable
-    open var isStepLabelHidden: Bool = false {
-        didSet {
-            stepCountLabel.isHidden = isStepLabelHidden
-            setNeedsUpdateConstraints()
-        }
-    }
+
     
     /**
      The height of the actual progress bar
@@ -117,7 +107,7 @@ open class RSDStepProgressView: UIView {
     
     // MARK: View elements
     
-    public var stepCountLabel = UILabel()
+    public var stepCountLabel: UILabel?
     
     private var progressView = UIView()
     private var backgroundView = UIView()
@@ -173,19 +163,9 @@ open class RSDStepProgressView: UIView {
         self.addSubview(backgroundView)
         backgroundView.addSubview(progressView)
         backgroundView.clipsToBounds = true
-        
-        self.addSubview(stepCountLabel)
-        
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        stepCountLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        stepCountLabel.font = UIFont.stepCountLabel
-        stepCountLabel.numberOfLines = 1
-        stepCountLabel.textAlignment = .center
-        stepCountLabel.attributedText = attributedStringForLabel()
-        stepCountLabel.isHidden = isStepLabelHidden
-        
         setNeedsUpdateConstraints()
     }
     
@@ -197,10 +177,10 @@ open class RSDStepProgressView: UIView {
         progressView.backgroundColor = UIColor.progressBar
         if usesLightStyle {
             backgroundView.backgroundColor = UIColor.progressBarBackgroundLight
-            stepCountLabel.textColor = UIColor.stepCountLabelLight
+            stepCountLabel?.textColor = UIColor.stepCountLabelLight
         } else {
             backgroundView.backgroundColor = UIColor.progressBarBackgroundDark
-            stepCountLabel.textColor = UIColor.stepCountLabelDark
+            stepCountLabel?.textColor = UIColor.stepCountLabelDark
         }
         
         // Round the ends
@@ -214,7 +194,7 @@ open class RSDStepProgressView: UIView {
         _interactiveContraints.removeAll()
         
         _interactiveContraints.append(contentsOf:
-            backgroundView.rsd_alignToSuperview([.leading, .trailing, .top], padding: 0.0))
+            backgroundView.rsd_alignToSuperview([.leading, .trailing, .top, .bottom], padding: 0.0))
         _interactiveContraints.append(contentsOf:
             backgroundView.rsd_makeHeight(.equal, progressLineHeight))
         
@@ -222,20 +202,6 @@ open class RSDStepProgressView: UIView {
             progressView.rsd_alignToSuperview([.leading, .top, .bottom], padding: 0.0))
         _interactiveContraints.append(contentsOf:
             progressView.rsd_makeWidthEqualToSuperview(multiplier: progress))
-        
-        if stepCountLabel.superview == self, !isStepLabelHidden {
-            _interactiveContraints.append(contentsOf:
-                stepCountLabel.rsd_alignToSuperview([.bottomMargin], padding: 0.0))
-            _interactiveContraints.append(contentsOf:
-                stepCountLabel.rsd_alignCenterHorizontal(padding: 0))
-            _interactiveContraints.append(contentsOf:
-                stepCountLabel.rsd_alignBelow(view: progressView, padding: 5.0))
-            _interactiveContraints.append(contentsOf:
-                stepCountLabel.rsd_makeHeight(.greaterThanOrEqual, 0.0))
-        } else {
-            _interactiveContraints.append(contentsOf:
-                backgroundView.rsd_alignToSuperview([.bottom], padding: 5.0))
-        }
         
         super.updateConstraints()
     }
@@ -249,7 +215,7 @@ open class RSDStepProgressView: UIView {
                 progressView.setNeedsLayout()
             }
             
-            stepCountLabel.attributedText = attributedStringForLabel()
+            stepCountLabel?.attributedText = attributedStringForLabel()
             setNeedsLayout()
         }
     }

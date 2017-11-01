@@ -2,7 +2,6 @@
 //  RSDStepNavigationView.swift
 //  ResearchSuiteUI
 //
-//  Created by Josh Bruhin on 5/23/17.
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
@@ -81,12 +80,13 @@ open class RSDStepNavigationView: UIView {
 @IBDesignable
 open class RSDNavigationBarView: RSDStepNavigationView {
     
-    private let kSideMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenWidth()
-    private let kHorizontalSpacing: CGFloat = CGFloat(16.0).rsd_iPadMultiplier(2)
-    private let kButtonHeight: CGFloat = CGFloat(32.0).rsd_iPadMultiplier(1.5)
-    private let kButtonToTop: CGFloat = CGFloat(12.0).rsd_iPadMultiplier(2)
+    public let kSideMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenWidth()
+    public let kHorizontalSpacing: CGFloat = CGFloat(16.0).rsd_iPadMultiplier(2)
+    public let kButtonHeight: CGFloat = CGFloat(32.0).rsd_iPadMultiplier(1.5)
+    public let kButtonToTop: CGFloat = CGFloat(12.0).rsd_iPadMultiplier(2)
     
     @IBOutlet open var progressView: RSDStepProgressView?
+    @IBOutlet open var stepCountLabel: UILabel?
     
     /**
      Causes the progress view to be shown or hidden. Default is the value from UI config.
@@ -110,28 +110,14 @@ open class RSDNavigationBarView: RSDStepNavigationView {
         }
     }
     
-    public init() {
-        super.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.appBackgroundLight
-        commonInit()
-    }
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
-    private func commonInit() {
-        
-        addCloseButtonIfNeeded()
-        addProgressViewIfNeeded()
-        
-        setNeedsUpdateConstraints()
+    /**
+     Should the step label be hidden?
+     */
+    @IBInspectable open var isStepLabelHidden: Bool = false {
+        didSet {
+            stepCountLabel?.isHidden = isStepLabelHidden
+            setNeedsUpdateConstraints()
+        }
     }
     
     open func addCloseButtonIfNeeded() {
@@ -142,71 +128,28 @@ open class RSDNavigationBarView: RSDStepNavigationView {
     }
     
     open func addProgressViewIfNeeded() {
+        
         guard progressView == nil && shouldShowProgress else { return }
+        
         progressView = RSDStepProgressView()
         progressView!.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(progressView!)
         
+        stepCountLabel = UILabel()
+        stepCountLabel!.translatesAutoresizingMaskIntoConstraints = false
+        stepCountLabel!.font = UIFont.stepCountLabel
+        stepCountLabel!.numberOfLines = 1
+        stepCountLabel!.textAlignment = .center
+        stepCountLabel!.attributedText = progressView!.attributedStringForLabel()
+        stepCountLabel!.isHidden = isStepLabelHidden
+        
         // Move the step count label to this view so that we can align it to center of *this* view.
-        self.addSubview(progressView!.stepCountLabel)
-        progressView!.stepCountLabel.rsd_alignToSuperview([.leading, .trailing], padding: kSideMargin)
-        progressView!.stepCountLabel.rsd_makeHeight(.greaterThanOrEqual, 0.0)
-    }
-    
-    private var _interactiveContraints: [NSLayoutConstraint] = []
-    
-    open override func updateInteractiveConstraints() {
-        super.updateInteractiveConstraints()
+        self.addSubview(stepCountLabel!)
+        stepCountLabel!.rsd_alignToSuperview([.leading, .trailing], padding: kSideMargin)
+        stepCountLabel!.rsd_makeHeight(.greaterThanOrEqual, 0.0)
         
-        NSLayoutConstraint.deactivate(_interactiveContraints)
-        _interactiveContraints.removeAll()
-        
-        var firstView: UIView!
-        var lastView: UIView?
-    
-        if let cancelButton = cancelButton, shouldShowCloseButton, !cancelButton.isHidden {
-            _interactiveContraints.append(contentsOf:
-                cancelButton.rsd_alignToSuperview([.leading], padding: kHorizontalSpacing))
-            _interactiveContraints.append(contentsOf:
-                cancelButton.rsd_alignToSuperview([.top], padding: kButtonToTop))
-            _interactiveContraints.append(contentsOf:
-                cancelButton.rsd_makeHeight(.equal, kButtonHeight))
-            firstView = cancelButton
-            lastView = cancelButton
-        } 
-        
-        // progress view
-        if let progressView = progressView, shouldShowProgress {
-            if let cancelButton = firstView {
-                progressView.hasRoundedEnds = true
-                _interactiveContraints.append(contentsOf:
-                    progressView.rsd_align([.leading], .equal, to: cancelButton, [.trailing], padding: kHorizontalSpacing))
-                _interactiveContraints.append(contentsOf:
-                    progressView.rsd_alignToSuperview([.trailing], padding: kHorizontalSpacing))
-                _interactiveContraints.append(contentsOf:
-                    progressView.rsd_align([.centerY], .equal, to: cancelButton, [.centerY], padding: 0.0))
-            } else {
-                _interactiveContraints.append(contentsOf:
-                    progressView.rsd_alignToSuperview([.leading, .trailing, .top], padding: 0.0))
-                firstView = progressView
-                lastView = progressView
-            }
-            
-            // If the progress view step count label has been moved in the view hierarchy to this view then
-            // need to define constraints relative to *this* view.
-            if progressView.stepCountLabel.superview == self, !progressView.isStepLabelHidden {
-                _interactiveContraints.append(contentsOf:
-                    progressView.stepCountLabel.rsd_align([.top], .equal, to: firstView!, [.bottom], padding: 0.0))
-                lastView = progressView.stepCountLabel
-            } else {
-                progressView.stepCountLabel.isHidden = true
-            }
-        }
-        
-        if let bottomView = lastView {
-            _interactiveContraints.append(contentsOf:
-                bottomView.rsd_align([.bottom], .equal, to: self, [.bottom], padding: 0))
-        }
+        // Add pointer to the progress label
+        progressView?.stepCountLabel = stepCountLabel
     }
 }
 
@@ -257,9 +200,8 @@ open class RSDStepHeaderView: RSDNavigationBarView {
             setNeedsUpdateConstraints()
         }
     }
-    
+
     private let kTopMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
-    private let kSideMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenWidth()
     private let kVerticalSpacing: CGFloat = CGFloat(20.0).rsd_proportionalToScreenHeight()
     private let kBottomMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
     private let kPromptBottomMargin: CGFloat = CGFloat(10.0).rsd_proportionalToScreenHeight()
@@ -290,8 +232,12 @@ open class RSDStepHeaderView: RSDNavigationBarView {
                 kImageViewHeight,
                 kLabelMaxLayoutWidth)
     }
+}
 
-    public override init() {
+@IBDesignable
+open class RSDGenericStepHeaderView: RSDStepHeaderView {
+    
+    public init() {
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.appBackgroundLight
         commonInit()
@@ -309,6 +255,8 @@ open class RSDStepHeaderView: RSDNavigationBarView {
     
     private func commonInit() {
         
+        addCloseButtonIfNeeded()
+        addProgressViewIfNeeded()
         addLearnMoreIfNeeded()
         addImageViewIfNeeded()
         addTitleLabelIfNeeded()
@@ -390,11 +338,44 @@ open class RSDStepHeaderView: RSDNavigationBarView {
         _interactiveContraints.removeAll()
         
         var firstView: UIView?
-        var lastView: UIView? = rsd_boundingView(for: .bottom, relation: .equal)
+        var lastView: UIView?
+        var topView: UIView?
         
-        // deactivate the last view constraint from the progress/close button nav bar header.
-        if let constraint = lastView?.rsd_constraint(for: .bottom, relation: .equal) {
-            NSLayoutConstraint.deactivate([constraint])
+        if let cancelButton = cancelButton, shouldShowCloseButton, !cancelButton.isHidden {
+            _interactiveContraints.append(contentsOf:
+                cancelButton.rsd_alignToSuperview([.leading], padding: kHorizontalSpacing))
+            _interactiveContraints.append(contentsOf:
+                cancelButton.rsd_alignToSuperview([.top], padding: kButtonToTop))
+            _interactiveContraints.append(contentsOf:
+                cancelButton.rsd_makeHeight(.equal, kButtonHeight))
+            topView = cancelButton
+            lastView = cancelButton
+        }
+        
+        // progress view
+        if let progressView = progressView, shouldShowProgress {
+            if let cancelButton = firstView {
+                progressView.hasRoundedEnds = true
+                _interactiveContraints.append(contentsOf:
+                    progressView.rsd_align([.leading], .equal, to: cancelButton, [.trailing], padding: kHorizontalSpacing))
+                _interactiveContraints.append(contentsOf:
+                    progressView.rsd_alignToSuperview([.trailing], padding: kHorizontalSpacing))
+                _interactiveContraints.append(contentsOf:
+                    progressView.rsd_align([.centerY], .equal, to: cancelButton, [.centerY], padding: 0.0))
+            } else {
+                _interactiveContraints.append(contentsOf:
+                    progressView.rsd_alignToSuperview([.leading, .trailing, .top], padding: 0.0))
+                topView = progressView
+                lastView = progressView
+            }
+            
+            // If the progress view step count label has been moved in the view hierarchy to this view then
+            // need to define constraints relative to *this* view.
+            if let stepCountLabel = stepCountLabel, !isStepLabelHidden {
+                _interactiveContraints.append(contentsOf:
+                    stepCountLabel.rsd_align([.top], .equal, to: topView!, [.bottom], padding: 0.0))
+                lastView = progressView.stepCountLabel
+            }
         }
         
         func setupVerticalConstraints(_ nextView: UIView?) {
@@ -488,7 +469,7 @@ open class RSDStepHeaderView: RSDNavigationBarView {
 @IBDesignable
 open class RSDNavigationFooterView: RSDStepNavigationView {
     
-    @IBOutlet open var shadowView: RSDShadowGradient!
+    @IBOutlet open var shadowView: RSDShadowGradient?
     
     /**
      Causes the drop shadow at the top of the view to be shown or hidden.
@@ -507,6 +488,22 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
     }
     private var _shouldShowShadow = false
     
+    public required init() {
+        super.init(frame: CGRect.zero)
+    }
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}
+
+@IBDesignable
+open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
+
     private let kTopMargin = CGFloat(16.0).rsd_proportionalToScreenHeight(max: 24.0)
     private let kBottomMargin = CGFloat(20.0).rsd_proportionalToScreenHeight(max: 40.0)
     private let kHorizontalPadding = CGFloat(20.0).rsd_proportionalToScreenWidth()
@@ -515,7 +512,7 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
     private let kTwoButtonSideMargin = CGFloat(10.0).rsd_proportionalToScreenWidth()
     private let kShadowHeight = CGFloat(5.0)
     
-    public init() {
+    public required init() {
         super.init(frame: CGRect.zero)
         self.backgroundColor = UIColor.appBackgroundLight
         commonInit()
@@ -593,14 +590,14 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
         guard shadowView == nil else { return }
         
         shadowView = RSDShadowGradient()
-        shadowView.translatesAutoresizingMaskIntoConstraints = false
-        shadowView.heightAnchor.constraint(equalToConstant: constants().shadowHeight).isActive = true
+        shadowView!.translatesAutoresizingMaskIntoConstraints = false
+        shadowView!.heightAnchor.constraint(equalToConstant: constants().shadowHeight).isActive = true
         
-        self.addSubview(shadowView)
+        self.addSubview(shadowView!)
         
-        shadowView.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
-        shadowView.rsd_alignToSuperview([.top], padding:  -1 * constants().shadowHeight)
-        shadowView.isHidden = !shouldShowShadow
+        shadowView!.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
+        shadowView!.rsd_alignToSuperview([.top], padding:  -1 * constants().shadowHeight)
+        shadowView!.isHidden = !shouldShowShadow
     }
     
     private var _interactiveContraints: [NSLayoutConstraint] = []

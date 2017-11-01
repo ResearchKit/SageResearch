@@ -109,6 +109,35 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
      The footnote is displayed in a smaller font at the bottom of the screen. It is intended to be used in order to include disclaimer, copyright, etc. that is important to display in the step but should not distract from the main purpose of the step.
      */
     var footnote: String? { get }
+
+    /**
+     The view info used to create a custom step.
+     */
+    var viewInfo: RSDUIViewInfo? { get }
+}
+
+public protocol RSDThemeColorUIStep : RSDUIStep {
+    
+    /**
+     A named color for the background for this step.
+     */
+    var backgroundColorName: String? { get }
+    
+    /**
+     A named color for the foreground for this step.
+     */
+    var foregroundColorName: String? { get }
+    
+    /**
+     Hint for whether or not the view uses light style for things like the progress bar.
+     */
+    var usesLightStyle: Bool { get }
+}
+
+/**
+ Extends the UI step to include static images before and/or after.
+ */
+public protocol RSDImageUIStep : RSDUIStep {
     
     /**
      Does the step have an image to display before the `title`, `text`, and `detail`?
@@ -119,7 +148,7 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
      Does the step have an image to display after the `title`, `text`, and `detail`?
      */
     var hasImageAfter: Bool { get }
-
+    
     /**
      An image to display before the `title`, `text`, and `detail`. This would be displayed above or to the left of the text, depending upon the orientation of the screen.
      
@@ -135,6 +164,16 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
      @param callback    The callback with the image, run on the main thread.
      */
     func imageAfter(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
+}
+
+/**
+ Extends the UI step to include an animated image.
+ */
+public protocol RSDAnimatedImageUIStep : RSDUIStep {
+    
+    /**
+     */
+    var animatedImage: RSDAnimatedImage? { get }
 }
 
 

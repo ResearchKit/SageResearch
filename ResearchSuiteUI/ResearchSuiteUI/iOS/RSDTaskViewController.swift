@@ -82,19 +82,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     open weak var delegate: RSDTaskViewControllerDelegate?
     
-    
     // MARK: View controller vending
-    
-    open var currentStoryboard: UIStoryboard? {
-        if let storyboardInfo = self.taskPath.storyboardInfo {
-            return UIStoryboard(name: storyboardInfo.storyboardIdentifier, bundle: storyboardInfo.storyboardBundle)
-        }
-        return self.storyboard
-    }
-    
-    open func viewControllerIdentifier(for step: RSDStep) -> String? {
-        return self.taskPath.storyboardInfo?.viewControllerIdentifier(for: step)
-    }
     
     open func viewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
         // Exit early if the delegate, step or storyboard returns a view controller
@@ -104,16 +92,21 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskPath) {
             return vc
         }
-        if let vcIdentifier = viewControllerIdentifier(for: step),
-            let vc = self.currentStoryboard?.instantiateViewController(withIdentifier: vcIdentifier) {
-            if let stepVC = vc as? (UIViewController & RSDStepController) {
-                stepVC.step = step
-                return stepVC
-            } else {
-                assertionFailure("View Controller \(vc) does not conform to the RSDStepController protocol.")
-            }
+        if let viewInfo = (step as? RSDUIStep)?.viewInfo, let vc = instantiateViewController(with: viewInfo) {
+            vc.step = step
+            return vc
         }
         return self.vendDefaultViewController(for: step)
+    }
+    
+    open func instantiateViewController(with viewInfo: RSDUIViewInfo)  -> (UIViewController & RSDStepController)? {
+        if let storyboardIdentifier = viewInfo.storyboardIdentifier {
+            let storyboard = UIStoryboard(name: storyboardIdentifier, bundle: viewInfo.bundle)
+            return storyboard.instantiateViewController(withIdentifier: viewInfo.viewIdentifier) as? (UIViewController & RSDStepController)
+        }
+        else {
+            return RSDStepViewController(nibName: viewInfo.viewIdentifier, bundle: viewInfo.bundle)
+        }
     }
     
     open func vendDefaultViewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
