@@ -354,7 +354,7 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
         
         // progress view
         if let progressView = progressView, shouldShowProgress {
-            if let cancelButton = firstView {
+            if let cancelButton = topView {
                 progressView.hasRoundedEnds = true
                 _interactiveContraints.append(contentsOf:
                     progressView.rsd_align([.leading], .equal, to: cancelButton, [.trailing], padding: kHorizontalSpacing))
@@ -372,8 +372,9 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
             // If the progress view step count label has been moved in the view hierarchy to this view then
             // need to define constraints relative to *this* view.
             if let stepCountLabel = stepCountLabel, !isStepLabelHidden {
+                let padding: CGFloat = (topView == cancelButton) ? 0.0 : 5.0
                 _interactiveContraints.append(contentsOf:
-                    stepCountLabel.rsd_align([.top], .equal, to: topView!, [.bottom], padding: 0.0))
+                    stepCountLabel.rsd_align([.top], .equal, to: topView!, [.bottom], padding: padding))
                 lastView = progressView.stepCountLabel
             }
         }
