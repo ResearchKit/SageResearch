@@ -110,7 +110,6 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
      */
     var footnote: String? { get }
 
-    
     /**
      The view info used to create a custom step.
      */

@@ -146,7 +146,10 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, R
         
         try container.encodeIfPresent(nextStepIdentifier, forKey: .nextStepIdentifier)
 
-        try container.encodeIfPresent(viewInfo, forKey: .viewInfo)
+        if let obj = self.viewInfo, let encodable = obj as? Encodable {
+            let nestedEncoder = container.superEncoder(forKey: .viewInfo)
+            try encodable.encode(to: nestedEncoder)
+        }
     }
 }
 
