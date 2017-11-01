@@ -212,8 +212,8 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         
         // add image below and footnote
         var items: [RSDTableItem] = []
-        if let imageStep = uiStep as? RSDImageUIStep, imageStep.hasImageAfter {
-            items.append(RSDImageTableItem(rowIndex: items.count, step: imageStep, isImageBefore: false))
+        if let imageTheme = (uiStep as? RSDThemedUIStep)?.imageTheme, imageTheme.placementType == .iconAfter {
+            items.append(RSDImageTableItem(rowIndex: items.count, imageTheme: imageTheme))
         }
         if let footnote = uiStep.footnote {
             items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
@@ -819,25 +819,15 @@ public class RSDTextTableItem : RSDTableItem {
     }
 }
 
-public class RSDImageTableItem : RSDTableItem, RSDResizableImage {
-    private let _step: RSDImageUIStep
-    private let _isImageBefore: Bool
+public class RSDImageTableItem : RSDTableItem {
+    public let imageTheme: RSDImageThemeElement
     
     public var identifier: String {
-        return "\(_step.identifier).\(_isImageBefore)"
+        return "image.\(imageTheme.placementType?.rawValue ?? "above")"
     }
     
-    public init(rowIndex: Int, step: RSDImageUIStep, isImageBefore: Bool) {
-        _step = step
-        _isImageBefore = isImageBefore
+    public init(rowIndex: Int, imageTheme: RSDImageThemeElement) {
+        self.imageTheme = imageTheme
         super.init(rowIndex: rowIndex)
-    }
-
-    public func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        if _isImageBefore {
-            _step.imageBefore(for: size, callback: callback)
-        } else {
-            _step.imageAfter(for: size, callback: callback)
-        }
     }
 }

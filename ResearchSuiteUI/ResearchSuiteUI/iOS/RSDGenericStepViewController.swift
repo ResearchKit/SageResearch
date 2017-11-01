@@ -315,7 +315,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         super.setupHeader(header)
         guard let stepHeader = header as? RSDStepHeaderView else { return }
         
-        if let colorTheme = (step as? RSDThemeColorUIStep), let backgroundColor = self.color(named: colorTheme.backgroundColorName) {
+        if let colorTheme = (step as? RSDThemedUIStep)?.colorTheme, let backgroundColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection) {
             self.tableView.backgroundColor = backgroundColor
         }
         
@@ -507,7 +507,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                 else {
                     return
             }
-            imageCell.imageLoader = item
+            imageCell.imageLoader = item.imageTheme
         }
         else if let textFieldCell = cell as? RSDStepTextFieldCell {
             guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup

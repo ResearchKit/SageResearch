@@ -1,5 +1,5 @@
 //
-//  RSDTaskResourceTransformerObject.swift
+//  RSDViewThemeElementObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,14 +33,15 @@
 
 import Foundation
 
-public struct RSDTaskResourceTransformerObject : RSDTaskResourceTransformer, Codable {
-    public let resourceName: String
-    public let resourceBundle: String?
-    public let classType: String?
+public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundleInfo, Codable {
     
-    public init(resourceName: String, resourceBundle: String? = nil, classType: String? = nil) {
-        self.resourceName = resourceName
-        self.resourceBundle = resourceBundle
-        self.classType = classType
+    public let viewIdentifier: String
+    public let bundleIdentifier: String?
+    public let storyboardIdentifier: String?
+    
+    public init(viewIdentifier: String, bundleIdentifier: String? = nil, storyboardIdentifier: String? = nil) {
+        self.viewIdentifier = viewIdentifier
+        self.bundleIdentifier = bundleIdentifier
+        self.storyboardIdentifier = storyboardIdentifier
     }
 }

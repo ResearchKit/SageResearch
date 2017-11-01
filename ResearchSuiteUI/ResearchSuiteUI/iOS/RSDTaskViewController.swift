@@ -58,6 +58,8 @@ public protocol RSDTaskViewControllerDelegate : class {
     func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor step: RSDStep) -> (UIViewController & RSDStepController)?
     
     func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), readyToSave taskPath: RSDTaskPath)
+    
+    func taskViewControllerShouldAutomaticallyForward(_ taskViewController: (UIViewController & RSDTaskController)) -> Bool
 }
 
 /**
@@ -92,20 +94,20 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskPath) {
             return vc
         }
-        if let viewInfo = (step as? RSDUIStep)?.viewInfo, let vc = instantiateViewController(with: viewInfo) {
+        if let viewTheme = (step as? RSDThemedUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme) {
             vc.step = step
             return vc
         }
         return self.vendDefaultViewController(for: step)
     }
     
-    open func instantiateViewController(with viewInfo: RSDUIViewInfo)  -> (UIViewController & RSDStepController)? {
-        if let storyboardIdentifier = viewInfo.storyboardIdentifier {
-            let storyboard = UIStoryboard(name: storyboardIdentifier, bundle: viewInfo.bundle)
-            return storyboard.instantiateViewController(withIdentifier: viewInfo.viewIdentifier) as? (UIViewController & RSDStepController)
+    open func instantiateViewController(with viewTheme: RSDViewThemeElement)  -> (UIViewController & RSDStepController)? {
+        if let storyboardIdentifier = viewTheme.storyboardIdentifier {
+            let storyboard = UIStoryboard(name: storyboardIdentifier, bundle: viewTheme.bundle)
+            return storyboard.instantiateViewController(withIdentifier: viewTheme.viewIdentifier) as? (UIViewController & RSDStepController)
         }
         else {
-            return RSDStepViewController(nibName: viewInfo.viewIdentifier, bundle: viewInfo.bundle)
+            return RSDStepViewController(nibName: viewTheme.viewIdentifier, bundle: viewTheme.bundle)
         }
     }
     
@@ -140,8 +142,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     open func showLoading(for taskInfo: RSDTaskInfoStep) {
-        // If loading a resource for a subtask, then do not should the loading step
-        if self.taskPath.parentPath != nil, taskInfo.estimatedFetchTime == 0 {
+        // If loading a resource for a subtask or delegate overrides then do not should the loading step
+        let shouldAutoForward: Bool = self.delegate?.taskViewControllerShouldAutomaticallyForward(self) ?? (self.taskPath.parentPath != nil)
+        if shouldAutoForward, taskInfo.estimatedFetchTime == 0 {
             return
         }
         

@@ -33,26 +33,19 @@
 
 import Foundation
 
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, RSDImageUIStep, RSDThemeColorUIStep, RSDNavigationRule, Codable {
-    
-    public let identifier: String
-    public let type: String
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavigationRule, Decodable, RSDMutableStep {
+
+    public private(set) var identifier: String
+    public private(set) var type: String
     
     public var title: String?
     public var text: String?
     public var detail: String?
     public var footnote: String?
     
-    public var backgroundColorName: String?
-    public var foregroundColorName: String?
-    public var usesLightStyle: Bool = false
-    
-    public var imageBefore: RSDImageWrapper?
-    public var imageAfter: RSDImageWrapper?
-    
-    public var animatedImage: RSDAnimatedImage?
-    
-    public var viewInfo: RSDUIViewInfo?
+    public var viewTheme: RSDViewThemeElement?
+    public var colorTheme: RSDColorThemeElement?
+    public var imageTheme: RSDImageThemeElement?
     
     open var nextStepIdentifier: String?
     
@@ -66,24 +59,6 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, R
     
     open func instantiateStepResult() -> RSDResult {
         return RSDResultObject(identifier: identifier)
-    }
-    
-    // MARK: Image handling
-    
-    public var hasImageBefore: Bool {
-        return imageBefore != nil
-    }
-    
-    public var hasImageAfter: Bool {
-        return imageAfter != nil
-    }
-    
-    open func imageBefore(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        RSDImageWrapper.fetchImage(image: imageBefore, for: size, callback: callback)
-    }
-    
-    open func imageAfter(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        RSDImageWrapper.fetchImage(image: imageAfter, for: size, callback: callback)
     }
     
     // MARK: validation
@@ -101,55 +76,40 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDAnimatedImageUIStep, R
     // MARK: Codable (must implement in base class in order for the overriding classes to work)
     
     private enum CodingKeys: String, CodingKey {
-        case identifier, type, title, text, detail, footnote, backgroundColorName, foregroundColorName, usesLightStyle, imageBefore, imageAfter, animatedImage, actions, shouldHideActions, nextStepIdentifier, viewInfo
+        case identifier, replacementIdentifier, type, title, text, detail, footnote, actions, shouldHideActions, nextStepIdentifier, viewTheme, colorTheme, image
     }
     
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.type = try container.decode(String.self, forKey: .type)
+        
+        self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
+        
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.text = try container.decodeIfPresent(String.self, forKey: .text)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote)
         
-        self.backgroundColorName = try container.decodeIfPresent(String.self, forKey: .backgroundColorName)
-        self.foregroundColorName = try container.decodeIfPresent(String.self, forKey: .foregroundColorName)
-        self.usesLightStyle = try container.decodeIfPresent(Bool.self, forKey: .usesLightStyle) ?? false
-        
-        self.imageBefore = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageBefore)
-        self.imageAfter = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .imageAfter)
-        self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
-        self.animatedImage = try container.decodeIfPresent(RSDAnimatedImage.self, forKey: .animatedImage)
-        self.viewInfo = try container.decodeIfPresent(RSDUIViewInfoObject.self, forKey: .viewInfo)
+        self.viewTheme = try container.decodeIfPresent(RSDViewThemeElementObject.self, forKey: .viewTheme)
+        self.colorTheme = try container.decodeIfPresent(RSDColorThemeElementObject.self, forKey: .colorTheme)
+        if container.contains(.image) {
+            let nestedDecoder = try container.superDecoder(forKey: .image)
+            if let imageWrapper = try? RSDImageWrapper(from: nestedDecoder) {
+                self.imageTheme = imageWrapper
+            } else {
+                self.imageTheme = try RSDAnimatedImageThemeElementObject(from: nestedDecoder)
+            }
+        }
         
         try super.init(from: decoder)
     }
     
-    open override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-        
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(identifier, forKey: .identifier)
-        try container.encodeIfPresent(title, forKey: .title)
-        try container.encodeIfPresent(text, forKey: .text)
-        try container.encodeIfPresent(detail, forKey: .detail)
-        try container.encodeIfPresent(footnote, forKey: .footnote)
-        
-        try container.encodeIfPresent(backgroundColorName, forKey: .backgroundColorName)
-        try container.encodeIfPresent(foregroundColorName, forKey: .foregroundColorName)
-        try container.encodeIfPresent(usesLightStyle, forKey: .usesLightStyle)
-        
-        try container.encodeIfPresent(imageBefore, forKey: .imageBefore)
-        try container.encodeIfPresent(imageAfter, forKey: .imageAfter)
-        try container.encodeIfPresent(animatedImage, forKey: .animatedImage)
-        
-        try container.encodeIfPresent(nextStepIdentifier, forKey: .nextStepIdentifier)
-
-        if let obj = self.viewInfo, let encodable = obj as? Encodable {
-            let nestedEncoder = container.superEncoder(forKey: .viewInfo)
-            try encodable.encode(to: nestedEncoder)
-        }
+    open func replace(from step: RSDGenericStep) throws {
+        self.title = step.userInfo?[CodingKeys.title.stringValue] as? String ?? self.title
+        self.text = step.userInfo?[CodingKeys.text.stringValue] as? String ?? self.text
+        self.detail = step.userInfo?[CodingKeys.detail.stringValue] as? String ?? self.detail
+        self.footnote = step.userInfo?[CodingKeys.footnote.stringValue] as? String ?? self.footnote
     }
 }
 

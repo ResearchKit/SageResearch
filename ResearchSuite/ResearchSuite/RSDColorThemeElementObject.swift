@@ -1,5 +1,5 @@
 //
-//  RSDGenericStepObject.swift
+//  RSDColorThemeElementObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,37 +33,46 @@
 
 import Foundation
 
-public struct RSDGenericStepObject : RSDGenericStep, Decodable {
+public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBundleInfo, Codable {
+    private let _backgroundColorName: String?
+    private let _foregroundColorName: String?
+    private let _usesLightStyle: Bool?
     
-    public let identifier: String
-    public let type: String
-    
-    public var userInfo: [String : Any]?
-    
-    public init(identifier: String, type: String) {
-        self.identifier = identifier
-        self.type = type
+    public let bundleIdentifier: String?
+
+    private enum CodingKeys: String, CodingKey {
+        case _backgroundColorName = "backgroundColor"
+        case _foregroundColorName = "foregroundColor"
+        case _usesLightStyle = "usesLightStyle"
+        case bundleIdentifier
     }
     
-    private enum CodingKeys : String, CodingKey {
-        case identifier, type
+    public var usesLightStyle: Bool {
+        return _usesLightStyle ?? false
+    }
+
+    public func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
+        guard let name = _backgroundColorName else { return nil }
+        if #available(iOS 11.0, *) {
+            return UIColor(named: name, in: bundle, compatibleWith: traitCollection)
+        } else {
+            return nil
+        }
     }
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "generic"
-        
-        // Store any additional information to a user info dictionary
-        let genericContainer = try decoder.container(keyedBy: AnyCodingKey.self)
-        self.userInfo = try genericContainer.decode(Dictionary<String, Any>.self)
+    public func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
+        guard let name = _foregroundColorName else { return nil }
+        if #available(iOS 11.0, *) {
+            return UIColor(named: name, in: bundle, compatibleWith: traitCollection)
+        } else {
+            return nil
+        }
     }
     
-    public func instantiateStepResult() -> RSDResult {
-        return RSDResultObject(identifier: identifier, type: type)
-    }
-    
-    public func validate() throws {
-        // do nothing
+    public init(usesLightStyle: Bool = false, backgroundColorName: String?, foregroundColorName: String? = nil, bundleIdentifier: String? = nil) {
+        self._usesLightStyle = usesLightStyle
+        self._backgroundColorName = backgroundColorName
+        self._foregroundColorName = foregroundColorName
+        self.bundleIdentifier = bundleIdentifier
     }
 }
