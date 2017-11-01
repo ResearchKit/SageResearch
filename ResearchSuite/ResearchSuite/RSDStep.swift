@@ -125,7 +125,7 @@ public protocol RSDThemeColorUIStep : RSDUIStep {
     var backgroundColorName: String? { get }
     
     /**
-     A named color for the background for this step.
+     A named color for the foreground for this step.
      */
     var foregroundColorName: String? { get }
     

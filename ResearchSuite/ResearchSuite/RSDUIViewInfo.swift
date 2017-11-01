@@ -41,7 +41,7 @@ public protocol RSDUIViewInfo {
     var viewIdentifier: String { get }
     
     /**
-     Optional pointer to the bundle identifier. If nil, the main bundle is assumed.
+     Optional bundle identifier. If nil, the main bundle is assumed.
      */
     var bundleIdentifier: String? { get }
     
@@ -57,5 +57,4 @@ extension RSDUIViewInfo {
         guard let identifier = bundleIdentifier else { return nil }
         return Bundle(identifier: identifier)
     }
-    
 }
