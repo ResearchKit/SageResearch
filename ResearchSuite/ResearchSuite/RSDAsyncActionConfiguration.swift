@@ -59,6 +59,14 @@ public protocol RSDAsyncActionConfiguration {
     func validate() throws
 }
 
+public protocol RSDAsyncActionControllerVendor : RSDAsyncActionConfiguration {
+    
+    /**
+     Instantiate a controller appropriate to this configuration.
+     */
+    func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController?
+}
+
 /**
  `RSDRecorderConfiguration` is used to configure a recorder. For example, recording accelerometer data or video.
  */
@@ -68,6 +76,11 @@ public protocol RSDRecorderConfiguration : RSDAsyncActionConfiguration {
      An identifier marking the step at which to stop the action. If `nil`, then the action will be stopped when the task is stopped.
      */
     var stopStepIdentifier: String? { get }
+    
+    /**
+     Whether or not the recorder requires background audio.
+     */
+    var requiresBackgroundAudio: Bool { get }
 }
 
 /**

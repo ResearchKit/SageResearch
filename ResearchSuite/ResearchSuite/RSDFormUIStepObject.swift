@@ -83,7 +83,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep {
 //    }
     
     open override func instantiateStepResult() -> RSDResult {
-        return RSDStepCollectionResultObject(identifier: self.identifier)
+        return RSDCollectionResultObject(identifier: self.identifier)
     }
 
     open override func validate() throws {

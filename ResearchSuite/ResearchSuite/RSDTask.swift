@@ -75,3 +75,28 @@ public protocol RSDTask : RSDUIActionHandler {
      */
     func validate() throws
 }
+
+extension RSDTask {
+    
+    public func asyncActionsToStart(at step: RSDStep, isFirstStep: Bool) -> [RSDAsyncActionConfiguration] {
+        guard let actions = self.asyncActions else { return [] }
+        return actions.filter {
+            ($0.startStepIdentifier == step.identifier) || ($0.startStepIdentifier == nil && isFirstStep)
+        }
+    }
+    
+    public func asyncActionsToStop(after step: RSDStep?) -> [RSDAsyncActionConfiguration] {
+        guard let actions = self.asyncActions else { return [] }
+        return actions.filter {
+            guard let recorder = $0 as? RSDRecorderConfiguration else { return false }
+            if recorder.stopStepIdentifier == nil && step == nil {
+                return true
+            } else if let stopIdentifier = recorder.stopStepIdentifier,
+                let stepIdentifier = step?.identifier {
+                return stopIdentifier == stepIdentifier
+            } else {
+                return false
+            }
+        }
+    }
+}

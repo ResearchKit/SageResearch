@@ -1008,7 +1008,7 @@ class CodableResultObjectTests: XCTestCase {
     }
     
     func testStepCollectionResultObject_Codable() {
-        var stepResult = RSDStepCollectionResultObject(identifier: "foo")
+        var stepResult = RSDCollectionResultObject(identifier: "foo")
         var answerResult1 = RSDAnswerResultObject(identifier: "input1", answerType: RSDAnswerResultType(baseType: .boolean))
         answerResult1.value = true
         var answerResult2 = RSDAnswerResultObject(identifier: "input2", answerType: RSDAnswerResultType(baseType: .integer))
@@ -1035,7 +1035,7 @@ class CodableResultObjectTests: XCTestCase {
                 XCTFail("Failed to encode the input results.")
             }
             
-            let object = try decoder.decode(RSDStepCollectionResultObject.self, from: jsonData)
+            let object = try decoder.decode(RSDCollectionResultObject.self, from: jsonData)
             
             XCTAssertEqual(object.identifier, stepResult.identifier)
             XCTAssertEqual(object.startDate.timeIntervalSinceNow, stepResult.startDate.timeIntervalSinceNow, accuracy: 1)

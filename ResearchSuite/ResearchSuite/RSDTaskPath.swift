@@ -123,6 +123,27 @@ public class RSDTaskPath : NSObject, NSCopying {
      */
     public private(set) var isLoading: Bool = false
     
+    /**
+     URL for the output directory to use for file results.
+     */
+    lazy public var outputDirectory: URL! = {
+        guard parentPath == nil else { return parentPath!.outputDirectory }
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
+        let path = (paths.last! as NSString).appendingPathComponent(result.taskRunUUID.uuidString)
+        if !FileManager.default.fileExists(atPath: path) {
+            do {
+                try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [ .protectionKey : FileProtectionType.completeUntilFirstUserAuthentication ])
+            } catch let error as NSError {
+                print ("Error creating file: \(error)")
+                return nil
+            }
+        }
+        
+        let outputDirectory = URL(fileURLWithPath: path, isDirectory: true)
+        return outputDirectory
+    }()
+    
     public init(task: RSDTask, parentPath: RSDTaskPath? = nil) {
         self.identifier = task.identifier
         self.task = task

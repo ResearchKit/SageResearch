@@ -86,6 +86,8 @@ extension RSDStepController {
      @return isEstimated    Whether or not the progress is an estimate (if the task has variable navigation)
      */
     public func progress() -> (current: Int, total: Int, isEstimated: Bool)? {
+        // TODO: syoung 11/06/2017 FIXME!!! This isn't returning the correct progress for subsections.
+        
         // In case this gets called before the view has been loaded, check for the optionals
         guard let path = self.taskController?.taskPath, let currentStep = step
             else {

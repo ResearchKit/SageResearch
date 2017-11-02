@@ -584,6 +584,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         if let pauseTime = pauseUptime, let startTime = startUptime {
             startUptime = ProcessInfo.processInfo.systemUptime - pauseTime + startTime
         }
+        pauseUptime = nil
         _startTimer()
     }
     

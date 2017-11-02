@@ -60,9 +60,9 @@ public protocol RSDResult : Codable {
 }
 
 /**
- A collection of results associated with a step that may have more that one result.
+ A collection of results associated with a step or async action that may have more that one result.
  */
-public protocol RSDStepCollectionResult : RSDResult {
+public protocol RSDCollectionResult : RSDResult {
     
     /**
      The list of input results associated with this step. These are generally assumed to be answers to field inputs, but they are not required to implement the `RSDAnswerResult` protocol.
@@ -122,6 +122,11 @@ public protocol RSDFileResult : RSDResult {
     /**
      The URL with the path to the file-based result.
      */
-    var url: URL? { get set }
+    var url: URL? { get }
+    
+    /**
+     The system clock uptime when the recorder was started (if applicable).
+     */
+    var startUptime: TimeInterval? { get }
 }
 

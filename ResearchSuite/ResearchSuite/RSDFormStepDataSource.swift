@@ -71,7 +71,7 @@ public protocol RSDFormStepDataSource : class {
     /**
      This method is used to vend the appropriate step answer result collection.
      */
-    func collectionResult() -> RSDStepCollectionResult
+    func collectionResult() -> RSDCollectionResult
 }
 
 extension RSDFormStepDataSource {
