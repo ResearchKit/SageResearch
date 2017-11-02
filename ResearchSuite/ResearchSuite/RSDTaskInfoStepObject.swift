@@ -36,7 +36,7 @@ import Foundation
 /**
  `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
  */
-public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDAnimatedImageUIStep, RSDSchemaInfo, Decodable {
+public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable {
 
     private enum CodingKeys : String, CodingKey {
         
@@ -50,8 +50,6 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDAnimatedImageUIStep, R
         case copyright
         case estimatedMinutes
         case icon
-        case animatedImage
-        case viewInfo
         case taskTransformer
     }
 
@@ -63,7 +61,6 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDAnimatedImageUIStep, R
     public var detail: String?
     public var copyright: String?
     public var icon: RSDImageWrapper?
-    public var animatedImage: RSDAnimatedImage?
     public var estimatedMinutes: Int = 0
     
     private var _schemaIdentifier: String?
@@ -74,14 +71,12 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDAnimatedImageUIStep, R
     
     public var taskTransformer: RSDTaskTransformer!
     
-    public var viewInfo: RSDUIViewInfo?
-    
     public var estimatedFetchTime: TimeInterval {
         return taskTransformer?.estimatedFetchTime ?? 0
     }
     
     public var text: String? {
-        return subtitle
+        return nil
     }
     
     public var footnote: String? {
@@ -105,8 +100,6 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDAnimatedImageUIStep, R
         self.estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes) ?? 0
         self._schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier)
         self.schemaRevision = try container.decodeIfPresent(Int.self, forKey: .schemaRevision) ?? 1
-        self.animatedImage = try container.decodeIfPresent(RSDAnimatedImage.self, forKey: .animatedImage)
-        self.viewInfo = try container.decodeIfPresent(RSDUIViewInfoObject.self, forKey: .viewInfo)
 
         if container.contains(.taskTransformer) {
             let nestedDecoder = try container.superDecoder(forKey: .taskTransformer)

@@ -68,25 +68,22 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep {
         
         try super.init(from: decoder)
     }
-    
-    open override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        var nestedContainer = container.nestedUnkeyedContainer(forKey: .inputFields)
-        for inputField in inputFields {
-            if let field = inputField as? Encodable {
-                let nestedEncoder = nestedContainer.superEncoder()
-                try field.encode(to: nestedEncoder)
-            }
-        }
-    }
+
+//    TODO: syoung 11/01/2017 Implement encoding if we ever decide we need to support it.
+//    open override func encode(to encoder: Encoder) throws {
+//        try super.encode(to: encoder)
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//        var nestedContainer = container.nestedUnkeyedContainer(forKey: .inputFields)
+//        for inputField in inputFields {
+//            if let field = inputField as? Encodable {
+//                let nestedEncoder = nestedContainer.superEncoder()
+//                try field.encode(to: nestedEncoder)
+//            }
+//        }
+//    }
     
     open override func instantiateStepResult() -> RSDResult {
         return RSDStepCollectionResultObject(identifier: self.identifier)
-    }
-    
-    public func instantiateDataSource(with taskPath: RSDTaskPath) -> RSDFormStepDataSource {
-        fatalError("Not yet implmented")
     }
 
     open override func validate() throws {

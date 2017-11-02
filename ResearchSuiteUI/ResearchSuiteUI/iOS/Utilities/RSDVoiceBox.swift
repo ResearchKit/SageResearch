@@ -1,6 +1,6 @@
 //
-//  RSDTaskResourceTransformerObject.swift
-//  ResearchSuite
+//  RSDVoiceBox.swift
+//  ResearchSuiteUI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -31,16 +31,54 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import AVFoundation
 
-public struct RSDTaskResourceTransformerObject : RSDTaskResourceTransformer, Codable {
-    public let resourceName: String
-    public let resourceBundle: String?
-    public let classType: String?
+public protocol RSDVoiceBox {
+    var isSpeaking: Bool { get }
+    func speak(text: String)
+    func stopTalking()
+}
+
+open class RSDSpeechSynthesizer : NSObject, RSDVoiceBox, AVSpeechSynthesizerDelegate {
+
+    public static var sharedVoiceBox: RSDVoiceBox = RSDSpeechSynthesizer()
+
+    let speechSynthesizer = AVSpeechSynthesizer()
     
-    public init(resourceName: String, resourceBundle: String? = nil, classType: String? = nil) {
-        self.resourceName = resourceName
-        self.resourceBundle = resourceBundle
-        self.classType = classType
+    public override init() {
+        super.init()
+        self.speechSynthesizer.delegate = self
+    }
+    
+    deinit {
+        speechSynthesizer.stopSpeaking(at: .immediate)
+        speechSynthesizer.delegate = nil
+    }
+    
+    public var isSpeaking: Bool {
+        return speechSynthesizer.isSpeaking
+    }
+
+    public func speak(text: String) {
+        if speechSynthesizer.isSpeaking {
+            stopTalking()
+        }
+        
+        if UIAccessibilityIsVoiceOverRunning() {
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, text)
+            return
+        }
+        
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+        speechSynthesizer.speak(utterance)
+    }
+
+    public func stopTalking() {
+        speechSynthesizer.stopSpeaking(at: .word)
+    }
+    
+    open func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        // Do nothing
     }
 }

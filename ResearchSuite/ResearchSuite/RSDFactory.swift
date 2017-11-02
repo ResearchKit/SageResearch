@@ -120,14 +120,28 @@ open class RSDFactory {
     // MARK: Task Transformer factory
     
     /**
-     Decode the task transformer from this decoder. This method *must* return a task transformer object. The default implementation will return a `RSDTaskResourceTransformerObject`.
+     Decode the task transformer from this decoder. This method *must* return a task transformer object. The default implementation will return a `RSDResourceTransformerObject`.
      
      @param decoder     The decoder to use to instatiate the object.
      
      @return            The object created from this decoder.
      */
     open func decodeTaskTransformer(from decoder: Decoder) throws -> RSDTaskTransformer {
-        return try RSDTaskResourceTransformerObject(from: decoder)
+        return try RSDResourceTransformerObject(from: decoder)
+    }
+    
+    
+    // MARK: Section Step Transformer factory
+    
+    /**
+     Decode the section step transformer from this decoder. This method *must* return a section step transformer object. The default implementation will return a `RSDResourceTransformerObject`.
+     
+     @param decoder     The decoder to use to instatiate the object.
+     
+     @return            The object created from this decoder.
+     */
+    open func decodeSectionStepTransformer(from decoder: Decoder) throws -> RSDSectionStepTransformer {
+        return try RSDResourceTransformerObject(from: decoder)
     }
     
     
@@ -156,6 +170,7 @@ open class RSDFactory {
         case form           // RSDFormUIStep
         case instruction    // RSDUIStep
         case section        // RSDSectionStep
+        case transform      // RSDSectionStep created using a RSDTransformerStep
         case taskInfo       // RSDTaskInfoStep
     }
     
@@ -187,7 +202,7 @@ open class RSDFactory {
      */
     open func decodeStep(from decoder: Decoder) throws -> RSDStep? {
         guard let name = try typeName(from: decoder) else {
-            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a step without a `type` key defining a value for the the type name.")
+            return try RSDGenericStepObject(from: decoder)
         }
         return try decodeStep(from: decoder, with: name)
     }
@@ -227,7 +242,45 @@ open class RSDFactory {
             return try RSDSectionStepObject(from: decoder)
         case .taskInfo:
             return try RSDTaskInfoStepObject(from: decoder)
+        case .transform:
+            return try self.decodeTransformableStep(from: decoder)
         }
+    }
+    
+    /**
+     Decode the step into a transfrom step. By default, this will create a `RSDTransformerStepObject`.
+     @param decoder     The decoder to use to instatiate the object.
+     @return            The step transform created from this decoder.
+     */
+    open func transformStep(from decoder: Decoder) throws -> RSDTransformerStep {
+        return try RSDTransformerStepObject(from: decoder)
+    }
+    
+    /**
+     Decode the transformable step. By default, this will create a `RSDSectionStepObject`.
+     @param decoder     The decoder to use to instatiate the object.
+     @return            The section step created from transforming this decoder.
+     */
+    open func decodeTransformableStep(from decoder: Decoder) throws -> RSDStep {
+        
+        // Get the transformer and it's steps
+        let transform = try self.transformStep(from: decoder)
+        var steps: [RSDStep] = try transform.sectionTransformer.transformSteps(with: self)
+        
+        // Replace any values as needed
+        if let replacementSteps = transform.replacementSteps {
+            steps = try steps.map({ (inputStep) -> RSDStep in
+                guard let replacementStep = replacementSteps.first(where: { $0.identifier == inputStep.identifier }),
+                    let copyableStep = inputStep as? RSDMutableStep
+                    else {
+                        return inputStep
+                }
+                try copyableStep.replace(from: replacementStep)
+                return copyableStep
+            })
+        }
+        
+        return RSDSectionStepObject(identifier: transform.identifier, steps: steps)
     }
     
     

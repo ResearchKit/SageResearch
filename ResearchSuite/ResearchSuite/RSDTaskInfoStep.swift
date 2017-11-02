@@ -42,7 +42,7 @@ public enum RSDTaskFetchError : Error {
 }
 
 /**
- A light-weight reference interface for information about the task. This includes information that can be displayed in a table or collection view.
+ A lightweight reference interface for information about the task. This includes information that can be displayed in a table or collection view.
  */
 public protocol RSDTaskInfoStep : RSDStep {
     

@@ -26,6 +26,9 @@
 		FF4A2D351F9679EC00484338 /* DebugStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */; };
 		FF4A2D3A1F96A6F000484338 /* RSDTaskInfoStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */; };
 		FF4A2D3B1F96A6F000484338 /* RSDTaskInfoStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */; };
+		FF55C4371FAB1732004EDB59 /* RSDVoiceBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF55C4361FAB1732004EDB59 /* RSDVoiceBox.swift */; };
+		FF55C4391FAB861C004EDB59 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF55C4381FAB861C004EDB59 /* AudioToolbox.framework */; };
+		FF55C43B1FAB8897004EDB59 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF55C43A1FAB8897004EDB59 /* AVFoundation.framework */; };
 		FF58035E1F9E6ADE004346A8 /* UIAlertController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */; };
 		FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */; };
 		FF5C4C2E1F8C923E00F311BA /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */; };
@@ -67,6 +70,9 @@
 		FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugStepViewController.xib; sourceTree = "<group>"; };
 		FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskInfoStepViewController.swift; sourceTree = "<group>"; };
 		FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDTaskInfoStepViewController.xib; sourceTree = "<group>"; };
+		FF55C4361FAB1732004EDB59 /* RSDVoiceBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDVoiceBox.swift; sourceTree = "<group>"; };
+		FF55C4381FAB861C004EDB59 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		FF55C43A1FAB8897004EDB59 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Utilities.swift"; sourceTree = "<group>"; };
 		FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewController.swift; sourceTree = "<group>"; };
 		FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
@@ -80,6 +86,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF55C43B1FAB8897004EDB59 /* AVFoundation.framework in Frameworks */,
+				FF55C4391FAB861C004EDB59 /* AudioToolbox.framework in Frameworks */,
 				FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +106,8 @@
 		FF04722E1F7AC4F90023DAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF55C43A1FAB8897004EDB59 /* AVFoundation.framework */,
+				FF55C4381FAB861C004EDB59 /* AudioToolbox.framework */,
 				FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */,
 			);
 			name = Frameworks;
@@ -188,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */,
+				FF55C4361FAB1732004EDB59 /* RSDVoiceBox.swift */,
 				FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */,
 				FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */,
 				FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */,
@@ -335,6 +346,7 @@
 				FF39E52F1F97320200C366FC /* RSDShadowGradient.swift in Sources */,
 				FF25E83C1F96B39500BC09A8 /* RSDRoundedButton.swift in Sources */,
 				FF58035E1F9E6ADE004346A8 /* UIAlertController+Utilities.swift in Sources */,
+				FF55C4371FAB1732004EDB59 /* RSDVoiceBox.swift in Sources */,
 				FF7E1D851F8EA7F000B47587 /* RSDStepViewController.swift in Sources */,
 				FF39E52B1F97302D00C366FC /* RSDStepProgressView.swift in Sources */,
 				FF25E83B1F96AEAD00BC09A8 /* UIColor+BridgeKeyNames.swift in Sources */,

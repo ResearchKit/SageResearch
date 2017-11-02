@@ -1,5 +1,5 @@
 //
-//  RSDUIViewInfo.swift
+//  RSDTransformerStepObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,28 +33,39 @@
 
 import Foundation
 
-public protocol RSDUIViewInfo {
-    
-    /**
-     The storyboard view controller identifier or the nib name for this view controller.
-     */
-    var viewIdentifier: String { get }
-    
-    /**
-     Optional bundle identifier. If nil, the main bundle is assumed.
-     */
-    var bundleIdentifier: String? { get }
-    
-    /**
-     If the storyboard identifier is non-nil then the view is assumed to be accessible within the storyboard via the `viewIdentifier`.
-     */
-    var storyboardIdentifier: String? { get }
-}
+public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
 
-extension RSDUIViewInfo {
+    public let identifier: String
+    public let type: String
+    public var replacementSteps: [RSDGenericStep]?
+    public var sectionTransformer: RSDSectionStepTransformer!
     
-    public var bundle: Bundle? {
-        guard let identifier = bundleIdentifier else { return nil }
-        return Bundle(identifier: identifier)
+    public init(identifier: String, type: String? = nil) {
+        self.identifier = identifier
+        self.type = type ?? RSDFactory.StepType.section.rawValue
+    }
+    
+    private enum CodingKeys : String, CodingKey {
+        case identifier, type, replacementSteps, sectionTransformer
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? RSDFactory.StepType.section.rawValue
+        if container.contains(.replacementSteps) {
+            self.replacementSteps = try container.decode([RSDGenericStepObject].self, forKey: .replacementSteps)
+        }
+        if container.contains(.sectionTransformer) {
+            let nestedDecoder = try container.superDecoder(forKey: .sectionTransformer)
+            self.sectionTransformer = try decoder.factory.decodeSectionStepTransformer(from: nestedDecoder)
+        }
+    }
+    
+    public func instantiateStepResult() -> RSDResult {
+        return RSDTaskResultObject(identifier: identifier)
+    }
+    
+    public func validate() throws {
     }
 }

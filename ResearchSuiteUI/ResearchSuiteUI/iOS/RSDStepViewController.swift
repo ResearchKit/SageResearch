@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AudioToolbox
 
 public protocol RSDStepViewControllerDelegate : class, RSDUIActionHandler {
     
@@ -63,12 +64,12 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         return step as? RSDUIStep
     }
     
-    public var activeStep: RSDActiveUIStep? {
-        return step as? RSDActiveUIStep
+    public var themedStep: RSDThemedUIStep? {
+        return step as? RSDThemedUIStep
     }
     
-    public var imageStep: RSDImageUIStep? {
-        return step as? RSDImageUIStep
+    public var activeStep: RSDActiveUIStep? {
+        return step as? RSDActiveUIStep
     }
     
     open var originalResult: RSDResult? {
@@ -112,6 +113,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         delegate?.stepViewController(self, willAppear: animated)
         if isFirstAppearance {
             setupNavigation()
+            setupBackgroundColorTheme()
         }
     }
     
@@ -170,6 +172,24 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    open func setupBackgroundColorTheme() {
+        guard let colorTheme = themedStep?.colorTheme,
+            let backgroundColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection)
+            else {
+                return
+        }
+        
+        self.statusBackgroundView?.backgroundColor = backgroundColor
+        if self.hasTopBackgroundImage() {
+            (self.navigationHeader as? RSDStepHeaderView)?.imageView?.superview?.backgroundColor = backgroundColor
+        }
+        else {
+            self.navigationHeader?.backgroundColor = backgroundColor
+            self.view.backgroundColor = backgroundColor
+            self.navigationFooter?.backgroundColor = backgroundColor
+        }
+    }
+    
     open func setupHeader(_ header: RSDNavigationBarView) {
         setupNavigationView(header)
 
@@ -177,31 +197,35 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         if let (stepIndex, stepCount, _) = self.progress() {
             header.progressView?.totalSteps = stepCount
             header.progressView?.currentStep = stepIndex
+            if let colorTheme = themedStep?.colorTheme {
+                header.progressView?.usesLightStyle = colorTheme.usesLightStyle
+            }
+            header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
         } else {
             header.shouldShowProgress = false
         }
         
         if let stepHeader = header as? RSDStepHeaderView {
-        
-            if (imageStep?.hasImageBefore ?? false), let imageView = stepHeader.imageView {
-                stepHeader.hasImage = true
-                imageStep!.imageBefore(for: imageView.bounds.size, callback: { [weak stepHeader] (img) in
-                    stepHeader?.image = img
-                })
-            } else if let animatedImage = (step as? RSDAnimatedImageUIStep)?.animatedImage {
-                stepHeader.hasImage = true
-                if let backgroundColor = animatedImage.backgroundColor(compatibleWith: self.traitCollection) {
-                    stepHeader.imageView?.superview?.backgroundColor = backgroundColor
-                    self.statusBackgroundView?.backgroundColor = backgroundColor
-                }
-                let images = animatedImage.images(compatibleWith: self.traitCollection)
-                if images.count > 1 {
-                    stepHeader.imageView?.animationDuration = animatedImage.animationDuration
-                    stepHeader.imageView?.animationImages = images
-                    stepHeader.imageView?.startAnimating()
-                }
-                else if let image = images.first {
-                    stepHeader.imageView?.image = image
+            
+            if let imageTheme = self.themedStep?.imageTheme, let imageView = stepHeader.imageView {
+                let placement = imageTheme.placementType ?? .iconBefore
+                if placement == .topBackground || placement == .iconBefore {
+                    stepHeader.hasImage = true
+                    if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
+                        let images = animatedImage.images(compatibleWith: self.traitCollection)
+                        if images.count > 1 {
+                            stepHeader.imageView?.animationDuration = animatedImage.animationDuration
+                            stepHeader.imageView?.animationImages = images
+                            stepHeader.imageView?.startAnimating()
+                        }
+                        else if let image = images.first {
+                            stepHeader.imageView?.image = image
+                        }
+                    } else {
+                        imageTheme.fetchImage(for: imageView.bounds.size, callback: { [weak stepHeader] (img) in
+                            stepHeader?.image = img
+                        })
+                    }
                 }
             }
             
@@ -210,8 +234,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             stepHeader.textLabel?.text = uiStep?.text
             stepHeader.detailLabel?.text = uiStep?.detail
             
-            if let colorTheme = (step as? RSDThemeColorUIStep),
-                let foregroundColor = self.color(named: colorTheme.foregroundColorName) {
+            if let colorTheme = themedStep?.colorTheme,
+                let foregroundColor = colorTheme.foregroundColor(compatibleWith: self.traitCollection),
+                !self.hasTopBackgroundImage() {
                 stepHeader.titleLabel?.textColor = foregroundColor
                 stepHeader.textLabel?.textColor = foregroundColor
                 stepHeader.detailLabel?.textColor = foregroundColor
@@ -222,34 +247,42 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         header.setNeedsUpdateConstraints()
     }
     
+    open func hasTopBackgroundImage() -> Bool {
+        if let imageTheme = self.themedStep?.imageTheme, let placement = imageTheme.placementType {
+            return placement == .topBackground
+        } else {
+            return false
+        }
+    }
+    
     open func setupFooter(_ footer: RSDNavigationFooterView) {
         setupNavigationView(footer)
     }
     
+    open func shouldUseGlobalButtonVisibility() -> Bool {
+        return !(step is RSDTaskInfoStep)
+    }
+    
     open func setupNavigationView(_ navigationView: RSDStepNavigationView) {
-
+        
         // Check if the back button and skip button should be hidden for this task
         // and if so, then do so globally.
-        if let task = self.taskController.topLevelTask, !(step is RSDTaskInfoStep) {
+        // TODO: syoung 11/01/2017 Stop doing this hack and figure out the button visibility properly.
+        if let task = self.taskController.topLevelTask, shouldUseGlobalButtonVisibility() {
             navigationView.isBackHidden = task.shouldHideAction(for: .navigation(.goBackward), on: step) ?? false
             navigationView.isSkipHidden = task.shouldHideAction(for: .navigation(.skip), on: step) ?? true
         }
-        
+
         setupButton(navigationView.cancelButton, for: .navigation(.cancel))
         setupButton(navigationView.learnMoreButton, for: .navigation(.learnMore))
         setupButton(navigationView.nextButton, for: .navigation(.goForward))
         setupButton(navigationView.backButton, for: .navigation(.goBackward))
         setupButton(navigationView.skipButton, for: .navigation(.skip))
         
-        if let colorTheme = (step as? RSDThemeColorUIStep), let backgroundColor = self.color(named: colorTheme.backgroundColorName) {
-            self.view.backgroundColor = backgroundColor
-            navigationView.backgroundColor = backgroundColor
-        }
-        
         navigationView.setNeedsLayout()
         navigationView.setNeedsUpdateConstraints()
     }
-    
+
     open func setupButton(_ button: UIButton?, for actionType: RSDUIActionType) {
         guard let btn = button else { return }
         
@@ -304,10 +337,10 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             btn.setImage(action.buttonIcon, for: .normal)
         }
         
-        if let roundedButton = btn as? RSDRoundedButton, let colorTheme = (step as? RSDThemeColorUIStep), colorTheme.usesLightStyle {
+        if let roundedButton = btn as? RSDRoundedButton, let colorTheme = themedStep?.colorTheme, colorTheme.usesLightStyle, !self.hasTopBackgroundImage() {
             roundedButton.backgroundColor = UIColor.roundedButtonBackgroundLight
             roundedButton.shadowColor = UIColor.roundedButtonShadowLight
-            roundedButton.titleColor = color(named: colorTheme.backgroundColorName) ?? UIColor.roundedButtonTextLight
+            roundedButton.titleColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection) ?? UIColor.roundedButtonTextLight
         }
         
         // If this is a goForward button, then there is some additional logic around
@@ -406,7 +439,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             // If no override by the step then return the action from the delegate if there is one
             return shouldHide
         }
-        else if let shouldHide = recursiveTaskShouldHideAction(for: actionType) {
+        else if let shouldHide = recursiveTaskShouldHideAction(for: actionType), self.action(for: actionType) == nil {
             // Finally check if the task has any global settings
             return shouldHide
         }
@@ -418,7 +451,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             case .navigation(.goBackward):
                 return !self.taskController.hasStepBefore
             default:
-                return self.action(for: actionType) != nil
+                return self.action(for: actionType) == nil
             }
         }
     }
@@ -437,7 +470,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     // MARK: Active step handling
     
+    open var countdown: Int = 0
+    
+    public private(set) var pauseUptime: TimeInterval?
     public private(set) var startUptime: TimeInterval?
+    
     private var timer: Timer?
     private var lastInstruction: Int = 0
     
@@ -452,6 +489,10 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             if commands.contains(.startTimerAutomatically) {
                 start()
             }
+        }
+        
+        if let stepDuration = self.activeStep?.duration {
+            countdown = Int(stepDuration)
         }
         
         if let instruction = self.activeStep?.spokenInstruction(at: 0) {
@@ -477,22 +518,42 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         stop()
     }
     
+    lazy public var soundURL: URL? = {
+        return URL(string: "/System/Library/Audio/UISounds/short_low_high.caf")
+    }()
+    
     open func playSound() {
-        // TODO: Implement syoung 10/17/2017
+        if let url = self.soundURL {
+            var soundId: SystemSoundID = 0
+            let status = AudioServicesCreateSystemSoundID(url as CFURL, &soundId)
+            if status == kAudioServicesNoError {
+                AudioServicesAddSystemSoundCompletion(soundId, nil, nil, { (soundId, clientData) -> Void in
+                    AudioServicesDisposeSystemSoundID(soundId)
+                }, nil)
+                AudioServicesPlaySystemSound(soundId)
+            } else {
+                debugPrint("Failed to create the ping sound.")
+            }
+        }
     }
     
     open func vibrateDevice() {
-        // TODO: Implement syoung 10/17/2017
+        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
     }
     
     open func speak(instruction: String, timeInterval: TimeInterval) {
-        // TODO: Implement syoung 10/17/2017
+        RSDSpeechSynthesizer.sharedVoiceBox.speak(text: instruction)
     }
     
     open func start() {
+        _startTimer()
+    }
+    
+    private func _startTimer() {
         if startUptime == nil {
             startUptime = ProcessInfo.processInfo.systemUptime
         }
+        pauseUptime = nil
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
             self?.timerFired()
@@ -500,8 +561,26 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open func stop() {
+        _stopTimer()
+    }
+
+    private func _stopTimer() {
         timer?.invalidate()
         timer = nil
+    }
+    
+    open func pause() {
+        if pauseUptime == nil {
+            pauseUptime = ProcessInfo.processInfo.systemUptime
+        }
+        _stopTimer()
+    }
+    
+    open func resume() {
+        if let pauseTime = pauseUptime, let startTime = startUptime {
+            startUptime = ProcessInfo.processInfo.systemUptime - pauseTime + startTime
+        }
+        _startTimer()
     }
     
     open func timerFired() {
@@ -511,13 +590,20 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         if let stepDuration = self.activeStep?.duration, stepDuration > 0,
             let commands = self.activeStep?.commands, commands.contains(.continueOnFinish),
             duration > stepDuration {
+            
             // Look to see if this step should end and if so, go forward
             goForward()
         }
         else {
-            // Otherwise, look for any spoekn instructions since last fire
+            
+            // Otherwise, look for any spoken instructions since last fire
             let nextInstruction = Int(duration)
             if nextInstruction > lastInstruction {
+                
+                if let stepDuration = self.activeStep?.duration {
+                    countdown = Int(stepDuration) - nextInstruction
+                }
+                
                 for ii in (lastInstruction + 1)...nextInstruction {
                     let timeInterval = TimeInterval(ii)
                     if let instruction = self.activeStep?.spokenInstruction(at: timeInterval) {

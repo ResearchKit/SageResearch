@@ -33,7 +33,7 @@
 
 import Foundation
 
-public struct RSDGenericStepObject : RSDStep, Decodable {
+public struct RSDGenericStepObject : RSDGenericStep, Decodable {
     
     public let identifier: String
     public let type: String
@@ -52,7 +52,7 @@ public struct RSDGenericStepObject : RSDStep, Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "generic"
         
         // Store any additional information to a user info dictionary
         let genericContainer = try decoder.container(keyedBy: AnyCodingKey.self)

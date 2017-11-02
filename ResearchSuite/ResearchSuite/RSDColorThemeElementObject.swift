@@ -1,5 +1,5 @@
 //
-//  RSDTaskTransformer.swift
+//  RSDColorThemeElementObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,43 +33,46 @@
 
 import Foundation
 
-/**
- The task transformer is a lightweight protocol for vending a task.
- */
-public protocol RSDTaskTransformer {
+public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBundleInfo, Codable {
+    private let _backgroundColorName: String?
+    private let _foregroundColorName: String?
+    private let _usesLightStyle: Bool?
     
-    /**
-     The estimated time to fetch the task. This can be used by the UI to determine whether or not to display a loading state while fetching the task. If `0` then the task is assumed to be cached on the device.
-     */
-    var estimatedFetchTime: TimeInterval { get }
+    public let bundleIdentifier: String?
+
+    private enum CodingKeys: String, CodingKey {
+        case _backgroundColorName = "backgroundColor"
+        case _foregroundColorName = "foregroundColor"
+        case _usesLightStyle = "usesLightStyle"
+        case bundleIdentifier
+    }
     
-    /**
-     Fetch the task for this task info. Use the given factory to transform the task.
-     
-     @param factory     The factory to use for creating the task and steps.
-     @param taskInfo    The task info for the task (if applicable).
-     @param schemaInfo  The schema info for the task (if applicable).
-     @param callback    The callback with the task or an error if the task failed, run on the main thread.
-     */
-    func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
-}
+    public var usesLightStyle: Bool {
+        return _usesLightStyle ?? false
+    }
 
-public protocol RSDTaskResourceTransformer : RSDTaskTransformer, RSDResourceTransformer {
-}
-
-extension RSDTaskResourceTransformer {
-    public func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
-        DispatchQueue.global().async {
-            do {
-                let task = try factory.decodeTask(with: self, taskInfo: taskInfo, schemaInfo: schemaInfo)
-                DispatchQueue.main.async {
-                    callback(taskInfo, task, nil)
-                }
-            } catch let err {
-                DispatchQueue.main.async {
-                    callback(taskInfo, nil, err)
-                }
-            }
+    public func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
+        guard let name = _backgroundColorName else { return nil }
+        if #available(iOS 11.0, *) {
+            return UIColor(named: name, in: bundle, compatibleWith: traitCollection)
+        } else {
+            return nil
         }
+    }
+    
+    public func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
+        guard let name = _foregroundColorName else { return nil }
+        if #available(iOS 11.0, *) {
+            return UIColor(named: name, in: bundle, compatibleWith: traitCollection)
+        } else {
+            return nil
+        }
+    }
+    
+    public init(usesLightStyle: Bool = false, backgroundColorName: String?, foregroundColorName: String? = nil, bundleIdentifier: String? = nil) {
+        self._usesLightStyle = usesLightStyle
+        self._backgroundColorName = backgroundColorName
+        self._foregroundColorName = foregroundColorName
+        self.bundleIdentifier = bundleIdentifier
     }
 }

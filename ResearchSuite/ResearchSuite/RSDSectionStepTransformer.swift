@@ -1,5 +1,5 @@
 //
-//  RSDAnimatedImage.swift
+//  RSDSectionStepTransformer.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,47 +33,47 @@
 
 import Foundation
 
-public struct RSDAnimatedImage : Codable {
-    
-    public let imageNames: [String]
-    public let bundleIdentifier: String?
-    public let animationDuration: TimeInterval
-    
-    private let backgroundColorName: String?
-    private let width: CGFloat?
-    private let height: CGFloat?
-    
-    public var size: CGSize? {
-        guard let ww = width, let hh = height else { return nil }
-        return CGSize(width: ww, height: hh)
-    }
-    
-    public var bundle: Bundle? {
-        guard let name = bundleIdentifier else { return nil }
-        return Bundle(identifier: name)
-    }
-    
-    public func backgroundColor(compatibleWith traitCollection: UITraitCollection? = nil) -> UIColor? {
-        guard let name = backgroundColorName else { return nil }
-        if #available(iOS 11.0, *) {
-            return UIColor(named: name, in: bundle, compatibleWith: traitCollection)
-        } else {
-            return nil
-        }
-    }
 
-    public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [UIImage] {
-        return imageNames.rsd_mapAndFilter {
-            UIImage(named: $0, in: bundle, compatibleWith: traitCollection)
-        }
+/**
+ The section step transformer is a lightweight protocol for vending the steps in a section.
+ */
+public protocol RSDSectionStepTransformer {
+    
+    /**
+     Fetch the steps for this section.
+     
+     @param factory     The factory to use for creating the task and steps.
+
+     @return            The steps for this section.
+     */
+    func transformSteps(with factory: RSDFactory) throws -> [RSDStep]
+}
+
+public protocol RSDSectionStepResourceTransformer : RSDSectionStepTransformer, RSDResourceTransformer {
+}
+
+extension RSDSectionStepResourceTransformer {
+    
+    public func transformSteps(with factory: RSDFactory) throws -> [RSDStep] {
+        let (data, resourceType) = try self.resourceData()
+        let decoder = try factory.createDecoder(for: resourceType)
+        let stepDecoder = try decoder.decode(_StepsDecoder.self, from: data)
+        return stepDecoder.steps
+    }
+}
+
+fileprivate struct _StepsDecoder: Decodable {
+    
+    let steps: [RSDStep]
+    
+    private enum CodingKeys : String, CodingKey {
+        case steps
     }
     
-    public init(imageNames: [String], bundleIdentifier: String?, animationDuration: TimeInterval, size: CGSize) {
-        self.imageNames = imageNames
-        self.bundleIdentifier = bundleIdentifier
-        self.animationDuration = animationDuration
-        self.width = size.width
-        self.height = size.height
-        self.backgroundColorName = nil
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
+        self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
     }
+    
 }

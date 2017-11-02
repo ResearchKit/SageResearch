@@ -34,7 +34,7 @@
 import Foundation
 
 /**
- This is a light-weight interface for schema information used to upload the results of a task.
+ This is a lightweight interface for schema information used to upload the results of a task.
  */
 public protocol RSDSchemaInfo {
     

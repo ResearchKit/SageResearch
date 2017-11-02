@@ -7,8 +7,7 @@
               "text": "Some text.",
               "detail": "This is a test.",
               "footnote": "This is a footnote.",
-              "imageBefore": "before",
-              "imageAfter": "after",
+              "image": "before",
               "actions": {"goForward": { "buttonTitle" : "Go, Dogs! Go!" },
                           "cancel": { "iconName" : "closeX" }},
               "shouldHideActions": ["goBackward", "learnMore", "skip"]

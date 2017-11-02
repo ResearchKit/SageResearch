@@ -1,5 +1,5 @@
 //
-//  RSDTaskTransformer.swift
+//  RSDViewThemeElementObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,43 +33,15 @@
 
 import Foundation
 
-/**
- The task transformer is a lightweight protocol for vending a task.
- */
-public protocol RSDTaskTransformer {
+public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundleInfo, Codable {
     
-    /**
-     The estimated time to fetch the task. This can be used by the UI to determine whether or not to display a loading state while fetching the task. If `0` then the task is assumed to be cached on the device.
-     */
-    var estimatedFetchTime: TimeInterval { get }
+    public let viewIdentifier: String
+    public let bundleIdentifier: String?
+    public let storyboardIdentifier: String?
     
-    /**
-     Fetch the task for this task info. Use the given factory to transform the task.
-     
-     @param factory     The factory to use for creating the task and steps.
-     @param taskInfo    The task info for the task (if applicable).
-     @param schemaInfo  The schema info for the task (if applicable).
-     @param callback    The callback with the task or an error if the task failed, run on the main thread.
-     */
-    func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
-}
-
-public protocol RSDTaskResourceTransformer : RSDTaskTransformer, RSDResourceTransformer {
-}
-
-extension RSDTaskResourceTransformer {
-    public func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
-        DispatchQueue.global().async {
-            do {
-                let task = try factory.decodeTask(with: self, taskInfo: taskInfo, schemaInfo: schemaInfo)
-                DispatchQueue.main.async {
-                    callback(taskInfo, task, nil)
-                }
-            } catch let err {
-                DispatchQueue.main.async {
-                    callback(taskInfo, nil, err)
-                }
-            }
-        }
+    public init(viewIdentifier: String, bundleIdentifier: String? = nil, storyboardIdentifier: String? = nil) {
+        self.viewIdentifier = viewIdentifier
+        self.bundleIdentifier = bundleIdentifier
+        self.storyboardIdentifier = storyboardIdentifier
     }
 }

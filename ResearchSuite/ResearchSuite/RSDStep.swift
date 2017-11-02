@@ -67,6 +67,19 @@ public protocol RSDStep {
     func validate() throws
 }
 
+
+/**
+ A step with key/value pairs decoded from a dictionary. This is the default step returned by the factory for an unrecoginized type.
+ */
+public protocol RSDGenericStep : RSDStep {
+    
+    /**
+     The decoded dictionary.
+     */
+    var userInfo: [String : Any]? { get }
+}
+
+
 /**
  `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey or an active step that includes an instruction step, countdown step, and activity step.
  */
@@ -110,70 +123,40 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
      */
     var footnote: String? { get }
 
+}
+
+
+/**
+ A step that supports copying information from a dictionary into this step.
+ */
+public protocol RSDMutableStep: class, RSDStep {
+    
+    /**
+     A step to merge with this step that carries replacement info. This step will look at the replacement info in the generic step and replace properties on self as appropriate.
+     */
+    func replace(from step: RSDGenericStep) throws
+}
+
+
+/**
+ A UI step that supports theme customization of the color and/or images used.
+ */
+public protocol RSDThemedUIStep : RSDUIStep {
+    
     /**
      The view info used to create a custom step.
      */
-    var viewInfo: RSDUIViewInfo? { get }
-}
-
-public protocol RSDThemeColorUIStep : RSDUIStep {
+    var viewTheme: RSDViewThemeElement? { get }
     
     /**
-     A named color for the background for this step.
+     The color theme (if any).
      */
-    var backgroundColorName: String? { get }
+    var colorTheme: RSDColorThemeElement? { get }
     
     /**
-     A named color for the foreground for this step.
+     The image theme (if any).
      */
-    var foregroundColorName: String? { get }
-    
-    /**
-     Hint for whether or not the view uses light style for things like the progress bar.
-     */
-    var usesLightStyle: Bool { get }
-}
-
-/**
- Extends the UI step to include static images before and/or after.
- */
-public protocol RSDImageUIStep : RSDUIStep {
-    
-    /**
-     Does the step have an image to display before the `title`, `text`, and `detail`?
-     */
-    var hasImageBefore: Bool { get }
-    
-    /**
-     Does the step have an image to display after the `title`, `text`, and `detail`?
-     */
-    var hasImageAfter: Bool { get }
-    
-    /**
-     An image to display before the `title`, `text`, and `detail`. This would be displayed above or to the left of the text, depending upon the orientation of the screen.
-     
-     @param size        The size of the image to return.
-     @param callback    The callback with the image, run on the main thread.
-     */
-    func imageBefore(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
-    
-    /**
-     An image to display after the `title`, `text`, and `detail`. This would be displayed below or to the right of the text, depending upon the orientation of the screen.
-     
-     @param size        The size of the image to return.
-     @param callback    The callback with the image, run on the main thread.
-     */
-    func imageAfter(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
-}
-
-/**
- Extends the UI step to include an animated image.
- */
-public protocol RSDAnimatedImageUIStep : RSDUIStep {
-    
-    /**
-     */
-    var animatedImage: RSDAnimatedImage? { get }
+    var imageTheme: RSDImageThemeElement? { get }
 }
 
 
@@ -186,13 +169,6 @@ public protocol RSDFormUIStep: RSDUIStep {
      The items array is used to hold a logical subgrouping of input fields. If this array holds more than one input field, those fields should describe an input that is uses a logical subgrouping such as blood pressure or given/family name.
      */
     var inputFields: [RSDInputField] { get }
-    
-    /**
-     Create a data source for vending the input field types and handling the results.
-     
-     @param taskPath    The taskPath that includes the information about the result to this point.
-     */
-    func instantiateDataSource(with taskPath: RSDTaskPath) -> RSDFormStepDataSource
 }
 
 
@@ -221,4 +197,20 @@ public protocol RSDActiveUIStep: RSDUIStep {
      @return                The localized instruction to speak.
      */
     func spokenInstruction(at timeInterval: TimeInterval) -> String?
+}
+
+/**
+ The transformer step is used in decoding a step with replacement properties for some or all of the steps in a section that is defined using a different resource.
+ */
+public protocol RSDTransformerStep: RSDStep {
+    
+    /**
+     A list of steps keyed by identifier with replacement values for the properties in the step.
+     */
+    var replacementSteps: [RSDGenericStep]? { get }
+    
+    /**
+     The transformer for the section steps.
+     */
+    var sectionTransformer: RSDSectionStepTransformer! { get }
 }
