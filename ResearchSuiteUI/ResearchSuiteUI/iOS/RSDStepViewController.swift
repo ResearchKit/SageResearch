@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import AudioToolbox
 
 public protocol RSDStepViewControllerDelegate : class, RSDUIActionHandler {
     
@@ -517,16 +518,24 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         stop()
     }
     
+    lazy public var soundURL: URL? = {
+        return URL(string: "/System/Library/Audio/UISounds/short_low_high.caf")
+    }()
+    
     open func playSound() {
-        // TODO: Implement syoung 10/17/2017
+        if let url = self.soundURL {
+            var mySound: SystemSoundID = 0
+            AudioServicesCreateSystemSoundID(url as CFURL, &mySound)
+            AudioServicesPlaySystemSound(mySound);
+        }
     }
     
     open func vibrateDevice() {
-        // TODO: Implement syoung 10/17/2017
+        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
     }
     
     open func speak(instruction: String, timeInterval: TimeInterval) {
-        // TODO: Implement syoung 10/17/2017
+        RSDSpeechSynthesizer.sharedVoiceBox.speak(text: instruction)
     }
     
     open func start() {
