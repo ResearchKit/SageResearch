@@ -142,9 +142,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     open func showLoading(for taskInfo: RSDTaskInfoStep) {
-        // If loading a resource for a subtask or delegate overrides then do not should the loading step
+        // If loading a resource for a subtask or delegate overrides then do not show the loading step
         let shouldAutoForward: Bool = self.delegate?.taskViewControllerShouldAutomaticallyForward(self) ?? (self.taskPath.parentPath != nil)
         if shouldAutoForward, taskInfo.estimatedFetchTime == 0 {
+            // TODO: syoung 11/02/2017 Add a standard non-step loading view.
             return
         }
         

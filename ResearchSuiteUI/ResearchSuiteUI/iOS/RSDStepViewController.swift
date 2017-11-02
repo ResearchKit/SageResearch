@@ -524,9 +524,16 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     open func playSound() {
         if let url = self.soundURL {
-            var mySound: SystemSoundID = 0
-            AudioServicesCreateSystemSoundID(url as CFURL, &mySound)
-            AudioServicesPlaySystemSound(mySound);
+            var soundId: SystemSoundID = 0
+            let status = AudioServicesCreateSystemSoundID(url as CFURL, &soundId)
+            if status == kAudioServicesNoError {
+                AudioServicesAddSystemSoundCompletion(soundId, nil, nil, { (soundId, clientData) -> Void in
+                    AudioServicesDisposeSystemSoundID(soundId)
+                }, nil)
+                AudioServicesPlaySystemSound(soundId)
+            } else {
+                debugPrint("Failed to create the ping sound.")
+            }
         }
     }
     

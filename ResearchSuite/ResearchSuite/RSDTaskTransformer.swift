@@ -34,7 +34,7 @@
 import Foundation
 
 /**
- The task transformer is a light-weight protocol for vending a task.
+ The task transformer is a lightweight protocol for vending a task.
  */
 public protocol RSDTaskTransformer {
     

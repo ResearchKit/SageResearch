@@ -35,7 +35,7 @@ import Foundation
 
 
 /**
- The section step transformer is a light-weight protocol for vending the steps in a section.
+ The section step transformer is a lightweight protocol for vending the steps in a section.
  */
 public protocol RSDSectionStepTransformer {
     
