@@ -469,7 +469,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     // MARK: Active step handling
     
+    open var countdown: Int = 0
+    
+    public private(set) var pauseUptime: TimeInterval?
     public private(set) var startUptime: TimeInterval?
+    
     private var timer: Timer?
     private var lastInstruction: Int = 0
     
@@ -484,6 +488,10 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             if commands.contains(.startTimerAutomatically) {
                 start()
             }
+        }
+        
+        if let stepDuration = self.activeStep?.duration {
+            countdown = Int(stepDuration)
         }
         
         if let instruction = self.activeStep?.spokenInstruction(at: 0) {
@@ -522,9 +530,14 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open func start() {
+        _startTimer()
+    }
+    
+    private func _startTimer() {
         if startUptime == nil {
             startUptime = ProcessInfo.processInfo.systemUptime
         }
+        pauseUptime = nil
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
             self?.timerFired()
@@ -532,8 +545,26 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open func stop() {
+        _stopTimer()
+    }
+
+    private func _stopTimer() {
         timer?.invalidate()
         timer = nil
+    }
+    
+    open func pause() {
+        if pauseUptime == nil {
+            pauseUptime = ProcessInfo.processInfo.systemUptime
+        }
+        _stopTimer()
+    }
+    
+    open func resume() {
+        if let pauseTime = pauseUptime, let startTime = startUptime {
+            startUptime = ProcessInfo.processInfo.systemUptime - pauseTime + startTime
+        }
+        _startTimer()
     }
     
     open func timerFired() {
@@ -543,13 +574,20 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         if let stepDuration = self.activeStep?.duration, stepDuration > 0,
             let commands = self.activeStep?.commands, commands.contains(.continueOnFinish),
             duration > stepDuration {
+            
             // Look to see if this step should end and if so, go forward
             goForward()
         }
         else {
-            // Otherwise, look for any spoekn instructions since last fire
+            
+            // Otherwise, look for any spoken instructions since last fire
             let nextInstruction = Int(duration)
             if nextInstruction > lastInstruction {
+                
+                if let stepDuration = self.activeStep?.duration {
+                    countdown = Int(stepDuration) - nextInstruction
+                }
+                
                 for ii in (lastInstruction + 1)...nextInstruction {
                     let timeInterval = TimeInterval(ii)
                     if let instruction = self.activeStep?.spokenInstruction(at: timeInterval) {
