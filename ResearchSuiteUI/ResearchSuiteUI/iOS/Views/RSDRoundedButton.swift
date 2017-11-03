@@ -81,21 +81,20 @@ import UIKit
         let preferredWidth = RSDRoundedButton.defaultWidthWith1Button
         super.init(frame: CGRect(x: 0, y: 0, width: preferredWidth, height: RSDRoundedButton.defaultHeight))
         
-        // setup colors
-        self.backgroundColor = UIColor.roundedButtonBackgroundDark
-        self.shadowColor = UIColor.roundedButtonShadowDark
-        self.corners = RSDRoundedButton.defaultCornerRadius
+        setupDefaults()
         
-        // setup text
-        self.titleColor = UIColor.roundedButtonTextLight
-        setTitleColor(titleColor, for: .normal)
-        self.titleFont = UIFont.roundedButtonTitle
+        // For the width, need to allow the preferred width to be overridden by the containing view.
+        self.rsd_makeWidth(.lessThanOrEqual, RSDRoundedButton.defaultWidthWith1Button)
+        let widthConstraint = self.heightAnchor.constraint(equalToConstant: RSDRoundedButton.defaultWidthWith1Button)
+        widthConstraint.priority = UILayoutPriority(rawValue: 750)
+        widthConstraint.isActive = true
 
         commonInit()
     }
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
+        setupDefaults()
         commonInit()
     }
     
@@ -106,8 +105,21 @@ import UIKit
     
     override open func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
-        commonInit()
+        refreshView()
         setNeedsDisplay()
+    }
+    
+    open func setupDefaults() {
+        // setup colors
+        self.backgroundColor = UIColor.roundedButtonBackgroundDark
+        self.shadowColor = UIColor.roundedButtonShadowDark
+        self.corners = RSDRoundedButton.defaultCornerRadius
+        
+        // setup text
+        self.titleColor = UIColor.roundedButtonTextLight
+        setTitleColor(titleColor, for: .normal)
+        self.titleFont = UIFont.roundedButtonTitle
+        titleLabel?.font = titleFont
     }
 
     open func commonInit() {
@@ -117,12 +129,6 @@ import UIKit
         let heightConstraint = self.heightAnchor.constraint(equalToConstant: RSDRoundedButton.defaultHeight)
         heightConstraint.priority = UILayoutPriority(rawValue: 950)
         heightConstraint.isActive = true
-        
-        // For the width, need to allow the preferred width to be overridden by the containing view.
-        self.rsd_makeWidth(.lessThanOrEqual, RSDRoundedButton.defaultWidthWith1Button)
-        let widthConstraint = self.heightAnchor.constraint(equalToConstant: RSDRoundedButton.defaultWidthWith1Button)
-        widthConstraint.priority = UILayoutPriority(rawValue: 750)
-        widthConstraint.isActive = true
         
         refreshView()
     }

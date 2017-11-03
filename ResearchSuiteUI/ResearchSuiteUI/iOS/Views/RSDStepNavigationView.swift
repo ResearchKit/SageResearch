@@ -506,10 +506,10 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
 open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
 
     private let kTopMargin = CGFloat(16.0).rsd_proportionalToScreenHeight(max: 24.0)
-    private let kBottomMargin = CGFloat(20.0).rsd_proportionalToScreenHeight(max: 40.0)
-    private let kHorizontalPadding = CGFloat(20.0).rsd_proportionalToScreenWidth()
-    private let kVerticalPadding = CGFloat(20.0).rsd_proportionalToScreenHeight(max: 30.0)
-    private let kOneButtonSideMargin = CGFloat(20.0).rsd_proportionalToScreenWidth()
+    private let kBottomMargin = CGFloat(18.0)
+    private let kHorizontalPadding = CGFloat(20.0)
+    private let kVerticalPadding = CGFloat(18.0)
+    private let kOneButtonSideMargin = CGFloat(24.0)
     private let kTwoButtonSideMargin = CGFloat(10.0).rsd_proportionalToScreenWidth()
     private let kShadowHeight = CGFloat(5.0)
     
@@ -527,6 +527,12 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
+    }
+    
+    override open func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        commonInit()
+        setNeedsDisplay()
     }
     
     private func commonInit() {
