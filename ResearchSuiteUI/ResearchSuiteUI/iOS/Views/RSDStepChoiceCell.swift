@@ -49,11 +49,11 @@ open class RSDStepChoiceCell: UITableViewCell {
     }
     
     open var bgColor: UIColor {
-        return isSelected ? UIColor.choiceCellBackgroundHighlighted : UIColor.choiceCellBackground
+        return isSelected ? UIColor.rsd_choiceCellBackgroundHighlighted : UIColor.rsd_choiceCellBackground
     }
     
     open var labelColor: UIColor {
-        return isSelected ? UIColor.choiceCellLabelHighlighted : UIColor.choiceCellLabel
+        return isSelected ? UIColor.rsd_choiceCellLabelHighlighted : UIColor.rsd_choiceCellLabel
     }
     
     open let shadowView: UIView = {
@@ -163,7 +163,7 @@ open class RSDStepTextFieldCell: UITableViewCell {
 
         // configure our field label
         fieldLabel.font = UIFont.textFieldCellLabel
-        fieldLabel.textColor = UIColor.textFieldCellLabel
+        fieldLabel.textColor = UIColor.rsd_textFieldCellLabel
         fieldLabel.numberOfLines = 1
         fieldLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (2 * constants().sideMargin)
         
@@ -173,10 +173,10 @@ open class RSDStepTextFieldCell: UITableViewCell {
         
         // override defaults
         textField.font = UIFont.textFieldCellText
-        textField.textColor = UIColor.textFieldCellText
+        textField.textColor = UIColor.rsd_textFieldCellText
         textField.textAlignment = .left
         
-        ruleView.backgroundColor = UIColor.textFieldCellBorder
+        ruleView.backgroundColor = UIColor.rsd_textFieldCellBorder
     }
     
     /**
@@ -311,7 +311,7 @@ open class RSDTextLabelCell : UITableViewCell {
     public var label = UILabel()
     
     open var labelColor: UIColor {
-        return UIColor.choiceCellLabel
+        return UIColor.rsd_choiceCellLabel
     }
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -342,7 +342,7 @@ open class RSDTextLabelCell : UITableViewCell {
         
         label.numberOfLines = 0
         label.font = UIFont.footnoteLabel
-        label.textColor = UIColor.headerTextLabel
+        label.textColor = UIColor.rsd_headerTextLabel
         label.textAlignment = .left
         
         setNeedsUpdateConstraints()

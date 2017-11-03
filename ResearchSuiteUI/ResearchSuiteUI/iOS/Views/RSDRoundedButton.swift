@@ -47,7 +47,7 @@ import UIKit
         }
     }
 
-    @IBInspectable open var shadowColor: UIColor = UIColor.roundedButtonShadowDark {
+    @IBInspectable open var shadowColor: UIColor = UIColor.rsd_roundedButtonShadowDark {
         didSet {
             refreshView()
             setNeedsDisplay()
@@ -111,12 +111,12 @@ import UIKit
     
     open func setupDefaults() {
         // setup colors
-        self.backgroundColor = UIColor.roundedButtonBackgroundDark
-        self.shadowColor = UIColor.roundedButtonShadowDark
+        self.backgroundColor = UIColor.rsd_roundedButtonBackgroundDark
+        self.shadowColor = UIColor.rsd_roundedButtonShadowDark
         self.corners = RSDRoundedButton.defaultCornerRadius
         
         // setup text
-        self.titleColor = UIColor.roundedButtonTextLight
+        self.titleColor = UIColor.rsd_roundedButtonTextLight
         setTitleColor(titleColor, for: .normal)
         self.titleFont = UIFont.roundedButtonTitle
         titleLabel?.font = titleFont
