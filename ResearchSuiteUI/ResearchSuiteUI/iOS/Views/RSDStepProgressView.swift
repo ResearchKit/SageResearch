@@ -174,13 +174,13 @@ open class RSDStepProgressView: UIView {
     open override func updateConstraints() {
         
         // Update colors
-        progressView.backgroundColor = UIColor.progressBar
+        progressView.backgroundColor = UIColor.rsd_progressBar
         if usesLightStyle {
-            backgroundView.backgroundColor = UIColor.progressBarBackgroundLight
-            stepCountLabel?.textColor = UIColor.stepCountLabelLight
+            backgroundView.backgroundColor = UIColor.rsd_progressBarBackgroundLight
+            stepCountLabel?.textColor = UIColor.rsd_stepCountLabelLight
         } else {
-            backgroundView.backgroundColor = UIColor.progressBarBackgroundDark
-            stepCountLabel?.textColor = UIColor.stepCountLabelDark
+            backgroundView.backgroundColor = UIColor.rsd_progressBarBackgroundDark
+            stepCountLabel?.textColor = UIColor.rsd_stepCountLabelDark
         }
         
         // Round the ends

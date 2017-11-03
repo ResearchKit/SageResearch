@@ -305,19 +305,19 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
     
     open func addTitleLabelIfNeeded() {
         guard titleLabel == nil else { return }
-        titleLabel = addLabel(font: UIFont.headerViewHeaderLabel, color: UIColor.headerTitleLabel)
+        titleLabel = addLabel(font: UIFont.headerViewHeaderLabel, color: UIColor.rsd_headerTitleLabel)
         titleLabel!.accessibilityTraits = UIAccessibilityTraitHeader
     }
     
     open func addTextLabelIfNeeded() {
         guard textLabel == nil else { return }
-        textLabel = addLabel(font: UIFont.headerViewDetailsLabel, color: UIColor.headerTextLabel)
+        textLabel = addLabel(font: UIFont.headerViewDetailsLabel, color: UIColor.rsd_headerTextLabel)
         textLabel!.accessibilityTraits = UIAccessibilityTraitSummaryElement
     }
     
     open func addDetailLabelIfNeeded() {
         guard detailLabel == nil else { return }
-        detailLabel = addLabel(font: UIFont.headerViewPromptLabel, color: UIColor.headerDetailLabel)
+        detailLabel = addLabel(font: UIFont.headerViewPromptLabel, color: UIColor.rsd_headerDetailLabel)
     }
     
     open override func layoutSubviews() {

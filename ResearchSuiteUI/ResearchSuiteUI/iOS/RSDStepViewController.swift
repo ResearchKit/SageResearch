@@ -338,9 +338,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
         
         if let roundedButton = btn as? RSDRoundedButton, let colorTheme = themedStep?.colorTheme, colorTheme.usesLightStyle, !self.hasTopBackgroundImage() {
-            roundedButton.backgroundColor = UIColor.roundedButtonBackgroundLight
-            roundedButton.shadowColor = UIColor.roundedButtonShadowLight
-            roundedButton.titleColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection) ?? UIColor.roundedButtonTextLight
+            roundedButton.backgroundColor = UIColor.rsd_roundedButtonBackgroundLight
+            roundedButton.shadowColor = UIColor.rsd_roundedButtonShadowLight
+            roundedButton.titleColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection) ?? UIColor.rsd_roundedButtonTextLight
         }
         
         // If this is a goForward button, then there is some additional logic around

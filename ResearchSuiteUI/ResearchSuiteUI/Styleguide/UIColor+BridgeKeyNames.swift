@@ -60,20 +60,12 @@ extension UIColor {
         return UIColor.primaryTintColor ?? UIColor(red: 65.0 / 255.0, green: 72.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
     }
     
-    @objc open class var appBackgroundGreen: UIColor {
-        return UIColor.appTintGreen
-    }
-    
     @objc open class var appCrosshatchLight: UIColor {
         return UIColor.appBackgroundLight.withAlphaComponent(0.3)
     }
     
     @objc open class var appCrosshatchDark: UIColor {
         return UIColor.appBackgroundDark.withAlphaComponent(0.3)
-    }
-    
-    @objc open class var appCrosshatchGreen: UIColor {
-        return UIColor.appBackgroundGreen.withAlphaComponent(0.3)
     }
     
     
@@ -90,109 +82,109 @@ extension UIColor {
     
     // MARK: Underlined button - default colors
     
-    @objc open class var underlinedButtonTextLight: UIColor {
+    @objc open class var rsd_underlinedButtonTextLight: UIColor {
         return UIColor.white
     }
     
-    @objc open class var underlinedButtonTextDark: UIColor {
+    @objc open class var rsd_underlinedButtonTextDark: UIColor {
         return UIColor.appButtonTintBlue
     }
     
     
     // MARK: Rounded button - default colors
     
-    @objc open class var roundedButtonBackgroundDark: UIColor {
+    @objc open class var rsd_roundedButtonBackgroundDark: UIColor {
         return UIColor(red: 1.0, green: 136.0 / 255.0, blue: 117.0 / 255.0, alpha: 1.0)
     }
     
-    @objc open class var roundedButtonShadowDark: UIColor {
+    @objc open class var rsd_roundedButtonShadowDark: UIColor {
         return UIColor(red: 242.0 / 255.0, green: 128.0 / 255.0, blue: 111.0 / 255.0, alpha: 1.0)
     }
     
-    @objc open class var roundedButtonTextLight: UIColor {
+    @objc open class var rsd_roundedButtonTextLight: UIColor {
         return UIColor.white
     }
     
-    @objc open class var roundedButtonBackgroundLight: UIColor {
+    @objc open class var rsd_roundedButtonBackgroundLight: UIColor {
         return UIColor.white
     }
     
-    @objc open class var roundedButtonShadowLight: UIColor {
+    @objc open class var rsd_roundedButtonShadowLight: UIColor {
         return UIColor(white: 245.0 / 255.0, alpha: 1.0)
     }
     
-    @objc open class var roundedButtonTextDark: UIColor {
+    @objc open class var rsd_roundedButtonTextDark: UIColor {
         return UIColor.appBackgroundDark
     }
     
     // MARK: Generic step view controller - header view
     
-    @objc open class var headerTitleLabel: UIColor {
+    @objc open class var rsd_headerTitleLabel: UIColor {
         return UIColor.appDarkGrayText
     }
     
-    @objc open class var headerTextLabel: UIColor {
+    @objc open class var rsd_headerTextLabel: UIColor {
         return UIColor.appDarkGrayText
     }
     
-    @objc open class var headerDetailLabel: UIColor {
+    @objc open class var rsd_headerDetailLabel: UIColor {
         return UIColor.appLightGrayText
     }
     
-    @objc open class var footnoteLabel: UIColor {
+    @objc open class var rsd_footnoteLabel: UIColor {
         return UIColor.appLightGrayText
     }
     
-    @objc open class var progressBar: UIColor {
+    @objc open class var rsd_progressBar: UIColor {
         return UIColor.appSoftGreen
     }
     
-    @objc open class var progressBarBackgroundLight: UIColor {
+    @objc open class var rsd_progressBarBackgroundLight: UIColor {
         return UIColor.white
     }
     
-    @objc open class var progressBarBackgroundDark: UIColor {
+    @objc open class var rsd_progressBarBackgroundDark: UIColor {
         return UIColor.appWhiteTwo
     }
 
-    @objc open class var stepCountLabelLight: UIColor {
+    @objc open class var rsd_stepCountLabelLight: UIColor {
         return UIColor.white
     }
     
-    @objc open class var stepCountLabelDark: UIColor {
+    @objc open class var rsd_stepCountLabelDark: UIColor {
         return UIColor.appDarkGrayText
     }
     
     // MARK: Generic step view controller - choice cell
     
-    @objc open class var choiceCellBackground: UIColor {
+    @objc open class var rsd_choiceCellBackground: UIColor {
         return UIColor.appWhiteThree
     }
     
-    @objc open class var choiceCellBackgroundHighlighted: UIColor {
+    @objc open class var rsd_choiceCellBackgroundHighlighted: UIColor {
         return UIColor(red: 54.0 / 255.0, green: 91.0 / 255.0, blue: 134.0 / 255.0, alpha: 1.0)
     }
 
-    @objc open class var choiceCellLabel: UIColor {
+    @objc open class var rsd_choiceCellLabel: UIColor {
         return UIColor.appDarkGrayText
     }
     
-    @objc open class var choiceCellLabelHighlighted: UIColor {
+    @objc open class var rsd_choiceCellLabelHighlighted: UIColor {
         return UIColor.white
     }
     
     // MARK: Generic step view controller - text field cell
     
-    @objc open class var textFieldCellText: UIColor {
-        return UIColor.darkGray
+    @objc open class var rsd_textFieldCellText: UIColor {
+        return UIColor.appDarkGrayText
     }
     
-    @objc open class var textFieldCellBorder: UIColor {
-        return UIColor.darkGray
+    @objc open class var rsd_textFieldCellBorder: UIColor {
+        return UIColor.appDarkGrayText
     }
 
-    @objc open class var textFieldCellLabel: UIColor {
-        return UIColor.lightGray
+    @objc open class var rsd_textFieldCellLabel: UIColor {
+        return UIColor.appLightGrayText
     }
     
     // MARK: Shared style colors
