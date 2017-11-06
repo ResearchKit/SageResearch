@@ -1,0 +1,137 @@
+//
+//  RSDActiveStepViewController.swift
+//  ResearchSuiteUI
+//
+//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+//
+// 1.  Redistributions of source code must retain the above copyright notice, this
+// list of conditions and the following disclaimer.
+//
+// 2.  Redistributions in binary form must reproduce the above copyright notice,
+// this list of conditions and the following disclaimer in the documentation and/or
+// other materials provided with the distribution.
+//
+// 3.  Neither the name of the copyright holder(s) nor the names of any contributors
+// may be used to endorse or promote products derived from this software without
+// specific prior written permission. No license is granted to the trademarks of
+// the copyright holders even if such marks are included in this software.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+
+import UIKit
+
+open class RSDActiveStepViewController: RSDStepViewController {
+
+    @IBOutlet open var countdownLabel: UILabel?
+    @IBOutlet open var instructionLabel: UILabel?
+    @IBOutlet open var countdownDial: RSDCountdownDial?
+    @IBOutlet open var progressLabel: UILabel?
+    @IBOutlet open var unitLabel: UILabel?
+
+    /**
+     Formatter for the countdown label.
+     */
+    lazy open var countdownFormatter : DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = [ .pad ]
+        return formatter
+    }()
+    
+    open override var countdown: Int {
+        didSet {
+            countdownLabel?.text = countdownFormatter.string(from: TimeInterval(countdown))
+        }
+    }
+
+    open override func speak(instruction: String, timeInterval: TimeInterval) {
+        super.speak(instruction: instruction, timeInterval: timeInterval)
+        instructionLabel?.text = instruction
+    }
+
+    open override func start() {
+        super.start()
+        startProgressAnimation()
+    }
+    
+    private func startProgressAnimation() {
+        guard self.isVisible, let stepDuration = self.activeStep?.duration, let uptime = self.startUptime
+            else {
+                return
+        }
+        
+        // Animate in 60 second intervals. This will result in a smoother animation
+        // while for a long-running step it will result in callbacks at intervals that
+        // allow for any drift.
+        let maxInterval = stepDuration > 60.0 ? 10.0 : stepDuration
+        let duration = ProcessInfo.processInfo.systemUptime - uptime
+        let animationDuration = max(min(stepDuration - duration, maxInterval), 0.0)
+        guard animationDuration > 0.0 else { return }
+        
+        let nextDuration = duration + animationDuration
+        let nextProgress = CGFloat(nextDuration / stepDuration)
+        self.countdownDial?.setDialPosition(nextProgress, animationDuration: animationDuration)
+        if nextProgress < 1.0 {
+            _fireNextProgressAnimation(with: Int(animationDuration * 1000))
+        }
+    }
+    
+    private func _fireNextProgressAnimation(with milliseconds: Int) {
+        let delay = DispatchTime.now() + .milliseconds(milliseconds)
+        DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
+            self?.startProgressAnimation()
+        }
+    }
+    
+    // MARK: View appearance
+    
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Nil out the values used to display the labels in interface builder.
+        // These may be updated during viewWillAppear, but depending upon the model
+        // it might display the view controller before these are changed (if changed at all)
+        self.instructionLabel?.text = nil
+        self.countdownLabel?.text = nil
+        self.countdownDial?.dialPosition = 0.0
+        self.progressLabel?.text = nil
+        self.unitLabel?.text = nil
+    }
+    
+    // MARK: Initialization
+    
+    open class var nibName: String {
+        return String(describing: RSDActiveStepViewController.self)
+    }
+    
+    open class var bundle: Bundle {
+        return Bundle(for: RSDActiveStepViewController.self)
+    }
+    
+    public override init(step: RSDStep) {
+        super.init(nibName: type(of: self).nibName, bundle: type(of: self).bundle)
+        self.step = step
+    }
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+}

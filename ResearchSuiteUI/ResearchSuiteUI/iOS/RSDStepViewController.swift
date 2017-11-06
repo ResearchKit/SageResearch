@@ -445,11 +445,14 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
         else {
             // Otherwise, look at the action and show the button based on the type
+            let transitionAutomatically = activeStep?.commands.contains(.transitionAutomatically) ?? false
             switch actionType {
-            case .navigation(.cancel), .navigation(.goForward):
+            case .navigation(.cancel):
                 return false
+            case .navigation(.goForward):
+                return transitionAutomatically
             case .navigation(.goBackward):
-                return !self.taskController.hasStepBefore
+                return !self.taskController.hasStepBefore || transitionAutomatically
             default:
                 return self.action(for: actionType) == nil
             }
@@ -479,6 +482,15 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     private var lastInstruction: Int = 0
     
     open func performStartCommands() {
+        
+        if let stepDuration = self.activeStep?.duration {
+            countdown = Int(stepDuration)
+        }
+        
+        if let instruction = self.activeStep?.spokenInstruction(at: 0) {
+            speak(instruction: instruction, timeInterval: 0)
+        }
+        
         if let commands = self.activeStep?.commands {
             if commands.contains(.playSoundOnStart) {
                 playSound()
@@ -489,14 +501,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             if commands.contains(.startTimerAutomatically) {
                 start()
             }
-        }
-        
-        if let stepDuration = self.activeStep?.duration {
-            countdown = Int(stepDuration)
-        }
-        
-        if let instruction = self.activeStep?.spokenInstruction(at: 0) {
-            speak(instruction: instruction, timeInterval: 0)
         }
     }
     
