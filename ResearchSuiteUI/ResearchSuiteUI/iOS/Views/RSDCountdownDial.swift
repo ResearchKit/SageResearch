@@ -44,14 +44,16 @@ open class RSDProgressIndicator: UIView {
         get { return _progress }
         set {
             _progress = max(min(newValue, 1.0), 0.0)
-            progressLayer?.removeAllAnimations()
-            progressLayer?.strokeEnd = _progress
+            if let progressLayer = self.progressLayer {
+                progressLayer.removeAllAnimations()
+                progressLayer.strokeEnd = _progress
+            }
         }
     }
     private var _progress: CGFloat = 0.3
     
     open func setProgressPosition(_ newValue: CGFloat, animationDuration: TimeInterval) {
-        guard progressLayer != nil else {
+        guard let progressLayer = self.progressLayer else {
             self.progress = newValue
             return
         }
@@ -90,14 +92,14 @@ public final class RSDCountdownDial: RSDProgressIndicator {
     }
     
     @IBInspectable
-    public var ringWidth: CGFloat = 6 {
+    public var ringWidth: CGFloat = 4 {
         didSet {
             ringLayer?.lineWidth = ringWidth
         }
     }
     
     @IBInspectable
-    public var dialWidth: CGFloat = 24 {
+    public var dialWidth: CGFloat = 18 {
         didSet {
             dialLayer?.lineWidth = dialWidth
         }
@@ -157,6 +159,9 @@ public final class RSDCountdownDial: RSDProgressIndicator {
     }
     
     private func _updateLayerProperties() {
+        
+        layer.masksToBounds = false
+        backgroundColor = UIColor.clear
         
         ringLayer?.lineWidth = ringWidth
         ringLayer?.strokeColor = ringColor.cgColor

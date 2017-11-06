@@ -91,8 +91,9 @@ open class RSDActiveStepViewController: RSDStepViewController {
     }
     
     private func _startProgressAnimation() {
-        guard self.isVisible, pauseUptime == nil, let stepDuration = self.activeStep?.duration, let uptime = self.startUptime
+        guard pauseUptime == nil, let stepDuration = self.activeStep?.duration, let uptime = self.startUptime
             else {
+                debugPrint("Start progress animation called before uptime validated.")
                 return
         }
         
@@ -109,7 +110,10 @@ open class RSDActiveStepViewController: RSDStepViewController {
         // The animation duration is either the time remaining or the max interval
         // (if the time remaining is more that the total step duration.
         let animationDuration = max(min(stepDuration - duration, maxInterval), 0.0)
-        guard animationDuration > 0.0 else { return }
+        guard animationDuration > 0.0 else {
+            debugPrint("Animation duration is less than or equal to zero.")
+            return
+        }
         
         // Set the progress to the value at the end of the
         let nextDuration = duration + animationDuration
