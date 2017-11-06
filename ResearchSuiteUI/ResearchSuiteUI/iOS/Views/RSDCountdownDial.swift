@@ -33,22 +33,26 @@
 
 import UIKit
 
+/**
+ `RSDProgressIndicator` is an animatable abstract view that marks progress. Override the `progressLayer` property to show progress using a shape layer. See `RSDCountdownDial` for an example implementation.
+ */
 @IBDesignable
-public final class RSDCountdownDial: UIView {
+open class RSDProgressIndicator: UIView {
     
     @IBInspectable
-    public var dialPosition: CGFloat {
-        get { return _dialPosition }
+    open var progress: CGFloat {
+        get { return _progress }
         set {
-            _dialPosition = max(min(newValue, 1.0), 0.0)
-            dialLayer?.strokeEnd = _dialPosition
+            _progress = max(min(newValue, 1.0), 0.0)
+            progressLayer?.removeAllAnimations()
+            progressLayer?.strokeEnd = _progress
         }
     }
-    private var _dialPosition: CGFloat = 0.3
+    private var _progress: CGFloat = 0.3
     
-    public func setDialPosition(_ newValue: CGFloat, animationDuration: TimeInterval) {
-        guard dialLayer != nil else {
-            self.dialPosition = newValue
+    open func setProgressPosition(_ newValue: CGFloat, animationDuration: TimeInterval) {
+        guard progressLayer != nil else {
+            self.progress = newValue
             return
         }
         
@@ -59,13 +63,24 @@ public final class RSDCountdownDial: UIView {
         
         // Animate from previous position to new position
         let position = max(min(newValue, 1.0), 0.0)
-        animation.fromValue = _dialPosition
+        animation.fromValue = _progress
         animation.toValue = position
-        self.dialPosition = position
         
-        dialLayer.removeAllAnimations()
-        dialLayer.add(animation, forKey: "animateCircle")
+        self.progress = position
+        progressLayer.add(animation, forKey: "animateCircle")
     }
+    
+    // Override to implement progress layer
+    open var progressLayer: CAShapeLayer! {
+        return nil
+    }
+}
+
+/**
+ `RSDCountdownDial` shows a circular dial indicator.
+ */
+@IBDesignable
+public final class RSDCountdownDial: RSDProgressIndicator {
     
     @IBInspectable
     public var ringColor: UIColor = UIColor.rsd_dialRing {
@@ -113,6 +128,11 @@ public final class RSDCountdownDial: UIView {
     
     // MARK: Draw the dial
     
+    // Override to implement progress layer
+    public override var progressLayer: CAShapeLayer! {
+        return dialLayer
+    }
+    
     private var ringLayer: CAShapeLayer!
     private var dialLayer: CAShapeLayer!
     
@@ -142,7 +162,7 @@ public final class RSDCountdownDial: UIView {
         ringLayer?.strokeColor = ringColor.cgColor
         ringLayer?.fillColor = UIColor.clear.cgColor
         
-        dialLayer?.strokeEnd = max(min(dialPosition, 1.0), 0.0)
+        dialLayer?.strokeEnd = progress
         dialLayer?.lineWidth = dialWidth
         dialLayer?.strokeColor = tintColor.cgColor
         dialLayer?.fillColor = UIColor.clear.cgColor

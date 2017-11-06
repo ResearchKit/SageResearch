@@ -37,7 +37,7 @@ open class RSDActiveStepViewController: RSDStepViewController {
 
     @IBOutlet open var countdownLabel: UILabel?
     @IBOutlet open var instructionLabel: UILabel?
-    @IBOutlet open var countdownDial: RSDCountdownDial?
+    @IBOutlet open var countdownDial: RSDProgressIndicator?
     @IBOutlet open var progressLabel: UILabel?
     @IBOutlet open var unitLabel: UILabel?
 
@@ -65,26 +65,56 @@ open class RSDActiveStepViewController: RSDStepViewController {
 
     open override func start() {
         super.start()
-        startProgressAnimation()
+        _startProgressAnimation()
     }
     
-    private func startProgressAnimation() {
-        guard self.isVisible, let stepDuration = self.activeStep?.duration, let uptime = self.startUptime
+    override open func pause() {
+        super.pause()
+        _pauseProgress()
+    }
+    
+    override open func resume() {
+        super.resume()
+        _startProgressAnimation()
+    }
+    
+    
+    // MARK: Dial progress indicator
+    
+    private func _pauseProgress() {
+        guard let stepDuration = self.activeStep?.duration, let uptime = self.startUptime
+            else {
+                return
+        }
+        let duration = ProcessInfo.processInfo.systemUptime - uptime
+        self.countdownDial?.progress = CGFloat(duration / stepDuration)
+    }
+    
+    private func _startProgressAnimation() {
+        guard self.isVisible, pauseUptime == nil, let stepDuration = self.activeStep?.duration, let uptime = self.startUptime
             else {
                 return
         }
         
-        // Animate in 60 second intervals. This will result in a smoother animation
-        // while for a long-running step it will result in callbacks at intervals that
-        // allow for any drift.
-        let maxInterval = stepDuration > 60.0 ? 10.0 : stepDuration
+        // calculate how much time has already passed since the step timer
+        // was started.
         let duration = ProcessInfo.processInfo.systemUptime - uptime
+        
+        // For shorter duration intervals,the animation will run more smoothly if it
+        // is only fired once. For longer running steps, use a shorter interval to
+        // mask the stutter while still accounting for animation timing drift and
+        // pause intervals.
+        let maxInterval = stepDuration > 60.0 ? 10.0 : stepDuration
+        
+        // The animation duration is either the time remaining or the max interval
+        // (if the time remaining is more that the total step duration.
         let animationDuration = max(min(stepDuration - duration, maxInterval), 0.0)
         guard animationDuration > 0.0 else { return }
         
+        // Set the progress to the value at the end of the
         let nextDuration = duration + animationDuration
         let nextProgress = CGFloat(nextDuration / stepDuration)
-        self.countdownDial?.setDialPosition(nextProgress, animationDuration: animationDuration)
+        self.countdownDial?.setProgressPosition(nextProgress, animationDuration: animationDuration)
         if nextProgress < 1.0 {
             _fireNextProgressAnimation(with: Int(animationDuration * 1000))
         }
@@ -93,7 +123,7 @@ open class RSDActiveStepViewController: RSDStepViewController {
     private func _fireNextProgressAnimation(with milliseconds: Int) {
         let delay = DispatchTime.now() + .milliseconds(milliseconds)
         DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
-            self?.startProgressAnimation()
+            self?._startProgressAnimation()
         }
     }
     
@@ -107,7 +137,7 @@ open class RSDActiveStepViewController: RSDStepViewController {
         // it might display the view controller before these are changed (if changed at all)
         self.instructionLabel?.text = nil
         self.countdownLabel?.text = nil
-        self.countdownDial?.dialPosition = 0.0
+        self.countdownDial?.progress = 0.0
         self.progressLabel?.text = nil
         self.unitLabel?.text = nil
     }
