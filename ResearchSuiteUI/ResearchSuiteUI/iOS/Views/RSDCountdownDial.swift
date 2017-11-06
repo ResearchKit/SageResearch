@@ -90,14 +90,14 @@ public final class RSDCountdownDial: RSDProgressIndicator {
     }
     
     @IBInspectable
-    public var ringWidth: CGFloat = 6 {
+    public var ringWidth: CGFloat = 4 {
         didSet {
             ringLayer?.lineWidth = ringWidth
         }
     }
     
     @IBInspectable
-    public var dialWidth: CGFloat = 24 {
+    public var dialWidth: CGFloat = 18 {
         didSet {
             dialLayer?.lineWidth = dialWidth
         }
@@ -157,6 +157,9 @@ public final class RSDCountdownDial: RSDProgressIndicator {
     }
     
     private func _updateLayerProperties() {
+        
+        layer.masksToBounds = false
+        backgroundColor = UIColor.clear
         
         ringLayer?.lineWidth = ringWidth
         ringLayer?.strokeColor = ringColor.cgColor
