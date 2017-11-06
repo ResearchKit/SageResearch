@@ -114,9 +114,27 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open func vendDefaultViewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
         if let taskInfo = step as? RSDTaskInfoStep {
             return RSDTaskInfoStepViewController(taskInfo: taskInfo)
-        } else if RSDGenericStepViewController.doesSupport(step) {
+        }
+        else if let activeStep = step as? RSDActiveUIStep,
+            activeStep.duration > 0,
+            activeStep.commands.contains(.transitionAutomatically) {
+            // If this is an active step with automatic transitions and a duration, then use the most appropriate
+            // countdown step view controller.
+            if activeStep.duration < 10 {
+                // Assume this is a countdown counter if the step duration is less than 10 seconds.
+                return RSDCountdownStepViewController(step: step)
+            } else {
+                // Otherwise, assume that this is an active step that should display a dial.
+                return RSDActiveStepViewController(step: step)
+            }
+        }
+        else if RSDGenericStepViewController.doesSupport(step) {
+            // If this step *can* be displayed using the generic step view controller, then default to that
+            // rather than the using the debug step.
             return RSDGenericStepViewController(step: step)
-        } else {
+        }
+        else {
+            // If no default is set the use the debug controller
             return DebugStepViewController(step: step)
         }
     }

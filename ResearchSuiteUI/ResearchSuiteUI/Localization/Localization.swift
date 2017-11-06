@@ -112,47 +112,55 @@ open class Localization: NSObject {
     
     // MARK: Common button titles
     
-    open class func buttonYes() -> String {
+    @objc open class func buttonYes() -> String {
         return localizedString("BOOL_YES")
     }
     
-    open class func buttonNo() -> String {
+    @objc open class func buttonNo() -> String {
         return localizedString("BOOL_NO")
     }
     
-    open class func buttonOK() -> String {
+    @objc open class func buttonOK() -> String {
         return localizedString("BUTTON_OK")
     }
     
-    open class func buttonCancel() -> String {
+    @objc open class func buttonCancel() -> String {
         return localizedString("BUTTON_CANCEL")
     }
     
-    open class func buttonDone() -> String {
+    @objc open class func buttonDone() -> String {
         return localizedString("BUTTON_DONE")
     }
     
-    open class func buttonNext() -> String {
+    @objc open class func buttonNext() -> String {
         return localizedString("BUTTON_NEXT")
     }
     
-    open class func buttonBack() -> String {
+    @objc open class func buttonBack() -> String {
         return localizedString("BUTTON_BACK")
     }
     
-    open class func buttonSkip() -> String {
+    @objc open class func buttonSkip() -> String {
         return localizedString("BUTTON_SKIP")
     }
     
-    open class func buttonSkipTask() -> String {
+    @objc open class func buttonSkipTask() -> String {
         return localizedString("BUTTON_SKIP_TASK")
     }
     
-    open class func buttonGetStarted() -> String {
+    @objc open class func buttonGetStarted() -> String {
         return localizedString("BUTTON_GET_STARTED")
     }
     
-    open class func buttonLearnMore() -> String {
+    @objc open class func buttonLearnMore() -> String {
         return localizedString("BUTTON_LEARN_MORE")
+    }
+    
+    @objc open class func buttonPause() -> String {
+        return localizedString("BUTTON_PAUSE")
+    }
+    
+    @objc open class func buttonResume() -> String {
+        return localizedString("BUTTON_RESUME")
     }
 }

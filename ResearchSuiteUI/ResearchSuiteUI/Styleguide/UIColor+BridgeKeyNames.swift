@@ -117,6 +117,12 @@ extension UIColor {
         return UIColor.appBackgroundDark
     }
     
+    // MARK: Dial colors
+    
+    @objc open class var rsd_dialRing : UIColor {
+        return UIColor(red: 225.0 / 255.0, green: 229.0 / 255.0, blue: 230.0 / 255.0, alpha: 1)
+    }
+    
     // MARK: Generic step view controller - header view
     
     @objc open class var rsd_headerTitleLabel: UIColor {

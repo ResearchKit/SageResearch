@@ -75,6 +75,8 @@
 "BUTTON_BACK" = "Back";
 "BUTTON_SKIP" = "Prefer not to answer";
 "BUTTON_SKIP_TASK" = "I can't do this now";
+"BUTTON_PAUSE" = "Pause";
+"BUTTON_RESUME" = "Resume";
 
 /* Validation Error Messages */
 "VALIDATION_ERROR_TITLE" = "Invalid Answer";
