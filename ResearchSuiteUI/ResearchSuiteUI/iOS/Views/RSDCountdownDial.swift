@@ -44,14 +44,16 @@ open class RSDProgressIndicator: UIView {
         get { return _progress }
         set {
             _progress = max(min(newValue, 1.0), 0.0)
-            progressLayer?.removeAllAnimations()
-            progressLayer?.strokeEnd = _progress
+            if let progressLayer = self.progressLayer {
+                progressLayer.removeAllAnimations()
+                progressLayer.strokeEnd = _progress
+            }
         }
     }
     private var _progress: CGFloat = 0.3
     
     open func setProgressPosition(_ newValue: CGFloat, animationDuration: TimeInterval) {
-        guard progressLayer != nil else {
+        guard let progressLayer = self.progressLayer else {
             self.progress = newValue
             return
         }

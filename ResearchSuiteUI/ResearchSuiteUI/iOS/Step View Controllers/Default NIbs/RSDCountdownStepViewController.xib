@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
@@ -82,8 +81,8 @@
                                 <constraint firstItem="LaD-KT-cpv" firstAttribute="top" secondItem="qef-96-GMe" secondAttribute="top" id="nWb-AP-mCH"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Vo-ap-GH7">
-                            <rect key="frame" x="153.5" y="101" width="67.5" height="26.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start in" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Vo-ap-GH7">
+                            <rect key="frame" x="24" y="101" width="327" height="26.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                             <color key="textColor" name="textLightGray"/>
                             <nil key="highlightedColor"/>
@@ -91,10 +90,11 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="8Vo-ap-GH7" secondAttribute="bottom" constant="77" id="H6n-Ae-h2n"/>
+                        <constraint firstAttribute="trailing" secondItem="8Vo-ap-GH7" secondAttribute="trailing" constant="24" id="KJD-jw-SUG"/>
                         <constraint firstItem="qef-96-GMe" firstAttribute="leading" secondItem="d6T-5w-AqF" secondAttribute="leading" id="UOr-3c-xMY"/>
+                        <constraint firstItem="8Vo-ap-GH7" firstAttribute="leading" secondItem="d6T-5w-AqF" secondAttribute="leading" constant="24" id="WRw-3B-WpT"/>
                         <constraint firstAttribute="trailing" secondItem="qef-96-GMe" secondAttribute="trailing" id="dzd-N7-HnZ"/>
                         <constraint firstItem="8Vo-ap-GH7" firstAttribute="top" secondItem="qef-96-GMe" secondAttribute="bottom" constant="56" id="eBe-yY-4EF"/>
-                        <constraint firstItem="8Vo-ap-GH7" firstAttribute="centerX" secondItem="d6T-5w-AqF" secondAttribute="centerX" id="oFH-jV-lOd"/>
                         <constraint firstItem="qef-96-GMe" firstAttribute="top" secondItem="d6T-5w-AqF" secondAttribute="top" id="qKQ-J6-I1r"/>
                     </constraints>
                     <connections>
@@ -166,9 +166,6 @@
         <image name="closeActivity" width="32" height="32"/>
         <namedColor name="buttonTintBlue">
             <color red="0.12941176470588237" green="0.58823529411764708" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="buttonTintBlue">
-            <color red="0.12941176469999999" green="0.58823529409999997" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="textDarkGray">
             <color red="0.25490196078431371" green="0.28235294117647058" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
