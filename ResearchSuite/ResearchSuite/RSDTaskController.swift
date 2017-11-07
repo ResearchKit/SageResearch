@@ -44,7 +44,7 @@ public enum RSDStepDirection : Int {
  
  To start a task, create an instance of a view controller that conforms to this protocol and set either the `topLevelTask` or the `topLevelTaskInfo`.
  */
-public protocol RSDTaskController : class {
+public protocol RSDTaskController : class, NSObjectProtocol {
     
     /**
      A mutable path object used to track the current state of a running task.

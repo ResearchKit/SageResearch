@@ -33,7 +33,7 @@
 
 import Foundation
 
-public protocol RSDStepController : class {
+public protocol RSDStepController : class, NSObjectProtocol {
     
     /**
      Pointer back to the task controller that is displaying the step controller. The implementation of the task controller should set this pointer before displaying the step controller.

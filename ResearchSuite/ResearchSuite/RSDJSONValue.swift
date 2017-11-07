@@ -185,12 +185,12 @@ extension DateComponents : RSDJSONValue {
                 formatString = "yyyy"
             }
             if let month = month, month > 0 {
-                if formatString.characters.count > 0 {
+                if formatString.count > 0 {
                     formatString.append("-")
                 }
                 formatString.append("MM")
                 if let day = day, day > 0 {
-                    if formatString.characters.count > 0 {
+                    if formatString.count > 0 {
                         formatString.append("-")
                     }
                     formatString.append("dd")
