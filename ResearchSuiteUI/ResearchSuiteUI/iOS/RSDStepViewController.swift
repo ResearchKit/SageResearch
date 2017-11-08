@@ -377,7 +377,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     @IBAction open func goForward() {
         performStopCommands()
-        self.taskController.goForward()
+        _speakEndCommand {
+            self.taskController.goForward()
+        }
     }
     
     @IBAction open func goBack() {
@@ -475,8 +477,16 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     open var countdown: Int = 0
     
+    /**
+     Should this step start the timer? By default, this will return true for active steps. However, if you are running your app in the background, then you will need to set up a secondary means of keeping the app from going into background and no longer responding to voice commands. You can do so by playing music or by firing the timer method whenever you get a GPS location update.
+     */
+    open var usesTimer: Bool {
+        return self.activeStep != nil
+    }
+    
     public private(set) var pauseUptime: TimeInterval?
     public private(set) var startUptime: TimeInterval?
+    public private(set) var completedUptime: TimeInterval?
     
     private var timer: Timer?
     private var lastInstruction: Int = 0
@@ -488,7 +498,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
         
         if let instruction = self.activeStep?.spokenInstruction(at: 0) {
-            speak(instruction: instruction, timeInterval: 0)
+            speak(instruction: instruction, timeInterval: 0, completion: nil)
         }
         
         if let commands = self.activeStep?.commands {
@@ -504,6 +514,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /**
+     Perform the stop commands. The
+     */
     open func performStopCommands() {
         if let commands = self.activeStep?.commands {
             if commands.contains(.playSoundOnFinish) {
@@ -514,39 +527,30 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             }
         }
         
-        if let instruction = self.activeStep?.spokenInstruction(at: Double.infinity) {
-            speak(instruction: instruction, timeInterval: Double.infinity)
-        }
-        
         // Always run the stop command
         stop()
     }
     
-    lazy public var soundURL: URL? = {
-        return URL(string: "/System/Library/Audio/UISounds/short_low_high.caf")
-    }()
-    
-    open func playSound() {
-        if let url = self.soundURL {
-            var soundId: SystemSoundID = 0
-            let status = AudioServicesCreateSystemSoundID(url as CFURL, &soundId)
-            if status == kAudioServicesNoError {
-                AudioServicesAddSystemSoundCompletion(soundId, nil, nil, { (soundId, clientData) -> Void in
-                    AudioServicesDisposeSystemSoundID(soundId)
-                }, nil)
-                AudioServicesPlaySystemSound(soundId)
-            } else {
-                debugPrint("Failed to create the ping sound.")
-            }
+    private func _speakEndCommand(_ completion: @escaping (() -> Void)) {
+        if let instruction = self.activeStep?.spokenInstruction(at: Double.infinity) {
+            speak(instruction: instruction, timeInterval: Double.infinity, completion: { (_) in
+                completion()
+            })
+        } else {
+            completion()
         }
+    }
+    
+    open func playSound(_ sound: RSDSound = .short_low_high) {
+        RSDAudioSoundPlayer.shared.playSound(sound)
     }
     
     open func vibrateDevice() {
         AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
     }
     
-    open func speak(instruction: String, timeInterval: TimeInterval) {
-        RSDSpeechSynthesizer.sharedVoiceBox.speak(text: instruction)
+    open func speak(instruction: String, timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
+        RSDSpeechSynthesizer.shared.speak(text: instruction, completion: completion)
     }
     
     open func start() {
@@ -559,9 +563,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
         pauseUptime = nil
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
-            self?.timerFired()
-        })
+        if usesTimer {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
+                self?.timerFired()
+            })
+        }
     }
     
     open func stop() {
@@ -589,7 +595,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open func timerFired() {
-        guard let uptime = startUptime else { return }
+        guard let uptime = startUptime, completedUptime == nil else { return }
         let duration = ProcessInfo.processInfo.systemUptime - uptime
         
         if let stepDuration = self.activeStep?.duration, stepDuration > 0,
@@ -597,7 +603,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             duration > stepDuration {
             
             // Look to see if this step should end and if so, go forward
-            goForward()
+            stepCompleted()
         }
         else {
             
@@ -612,11 +618,55 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
                 for ii in (lastInstruction + 1)...nextInstruction {
                     let timeInterval = TimeInterval(ii)
                     if let instruction = self.activeStep?.spokenInstruction(at: timeInterval) {
-                        speak(instruction: instruction, timeInterval: timeInterval)
+                        speak(instruction: instruction, timeInterval: timeInterval, completion: nil)
                     }
                 }
                 lastInstruction = nextInstruction
             }
         }
+    }
+    
+    private var _activeObserver: Any?
+    private var _hasCalledGoForward: Bool = false
+    
+    private func stepCompleted() {
+        guard completedUptime == nil else { return }
+        completedUptime = ProcessInfo.processInfo.systemUptime
+        if UIApplication.shared.applicationState == .active {
+            _goForwardOnActive()
+        } else {
+            _playAlarm()
+            _activeObserver = NotificationCenter.default.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: OperationQueue.main, using: { [weak self] (_) in
+                self?._goForwardOnActive()
+            })
+        }
+    }
+    
+    private func _goForwardOnActive() {
+        guard !_hasCalledGoForward else { return }
+        _hasCalledGoForward = true
+        
+        if let observer = _activeObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        goForward()
+    }
+    
+    private func _playAlarm() {
+        guard !_hasCalledGoForward, UIApplication.shared.applicationState != .active else { return }
+        
+        // play sound and vibrate to let the user know that the step is over
+        playCompletedAlert()
+        
+        // Fire again after a delay
+        let delay = DispatchTime.now() + .seconds(2)
+        DispatchQueue.main.asyncAfter(deadline: delay, execute: { [weak self] in
+            self?._playAlarm()
+        })
+    }
+    
+    open func playCompletedAlert() {
+        vibrateDevice()
+        playSound(.alarm)
     }
 }

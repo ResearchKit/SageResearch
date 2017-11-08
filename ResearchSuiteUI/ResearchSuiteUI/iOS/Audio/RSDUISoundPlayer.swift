@@ -1,5 +1,5 @@
 //
-//  RSDVoiceBox.swift
+//  RSDUISoundPlayer.swift
 //  ResearchSuiteUI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,54 +31,45 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import AVFoundation
+import Foundation
+import AudioToolbox
 
-public protocol RSDVoiceBox {
-    var isSpeaking: Bool { get }
-    func speak(text: String)
-    func stopTalking()
+public struct RSDSound {
+    public let url: URL?
+    
+    public init(name: String) {
+        self.url = URL(string: "/System/Library/Audio/UISounds/\(name).caf")
+    }
+    
+    public init(url: URL) {
+        self.url = url
+    }
+    
+    public static let alarm = RSDSound(name: "alarm")
+    public static let short_low_high = RSDSound(name: "short_low_high")
+    public static let short_double_high = RSDSound(name: "short_double_high")
+    public static let short_double_low = RSDSound(name: "alarm")
 }
 
-open class RSDSpeechSynthesizer : NSObject, RSDVoiceBox, AVSpeechSynthesizerDelegate {
+public protocol RSDSoundPlayer {
+    func playSound(_ sound: RSDSound)
+}
 
-    public static var sharedVoiceBox: RSDVoiceBox = RSDSpeechSynthesizer()
+public class RSDAudioSoundPlayer : NSObject, RSDSoundPlayer {
 
-    let speechSynthesizer = AVSpeechSynthesizer()
-    
-    public override init() {
-        super.init()
-        self.speechSynthesizer.delegate = self
-    }
-    
-    deinit {
-        speechSynthesizer.stopSpeaking(at: .immediate)
-        speechSynthesizer.delegate = nil
-    }
-    
-    public var isSpeaking: Bool {
-        return speechSynthesizer.isSpeaking
-    }
+    public static var shared: RSDSoundPlayer = RSDAudioSoundPlayer()
 
-    public func speak(text: String) {
-        if speechSynthesizer.isSpeaking {
-            stopTalking()
-        }
-        
-        if UIAccessibilityIsVoiceOverRunning() {
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, text)
+    public func playSound(_ sound: RSDSound) {
+        guard let url = sound.url else { return }
+        var soundId: SystemSoundID = 0
+        let status = AudioServicesCreateSystemSoundID(url as CFURL, &soundId)
+        guard status == kAudioServicesNoError else {
+            debugPrint("Failed to create the ping sound for \(url)")
             return
         }
-        
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        speechSynthesizer.speak(utterance)
-    }
-
-    public func stopTalking() {
-        speechSynthesizer.stopSpeaking(at: .word)
-    }
-    
-    open func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        // Do nothing
+        AudioServicesAddSystemSoundCompletion(soundId, nil, nil, { (soundId, clientData) -> Void in
+            AudioServicesDisposeSystemSoundID(soundId)
+        }, nil)
+        AudioServicesPlaySystemSound(soundId)
     }
 }
