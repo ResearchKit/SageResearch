@@ -514,9 +514,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
-    /**
-     Perform the stop commands. The
-     */
     open func performStopCommands() {
         if let commands = self.activeStep?.commands {
             if commands.contains(.playSoundOnFinish) {

@@ -34,12 +34,12 @@
 import Foundation
 
 /**
- A result associated with a task, step, or asyncronous action.
+ A result associated with a task, step, or asynchronous action.
  */
 public protocol RSDResult : Codable {
     
     /**
-     The identifier associated with the task, step, or asyncronous action.
+     The identifier associated with the task, step, or asynchronous action.
      */
     var identifier: String { get }
     
@@ -71,7 +71,7 @@ public protocol RSDCollectionResult : RSDResult {
 }
 
 /**
- A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asyncronous results.
+ A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asynchronous results.
  */
 public protocol RSDTaskResult : RSDResult {
     
@@ -91,7 +91,7 @@ public protocol RSDTaskResult : RSDResult {
     var stepHistory: [RSDResult] { get set }
 
     /**
-     A list of all the asyncronous results for this task. The list should include uniquely identified results.
+     A list of all the asynchronous results for this task. The list should include uniquely identified results.
      */
     var asyncResults: [RSDResult]? { get set }
 }

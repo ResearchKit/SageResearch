@@ -352,13 +352,11 @@ extension RSDTaskController {
             // and call this method again after they have been stopped. Use the hasPreviousEarlyExit
             // flag to indicate that this is the second go-around and don't check the controllers the
             // second time.
-            DispatchQueue.global().async {
-                self.stopAsyncActions(for: controllers, completion: { [weak self] in
-                    DispatchQueue.main.async {
-                        self?._moveToNextStep(hasPreviousEarlyExit: true)
-                    }
-                })
-            }
+            self.stopAsyncActions(for: controllers, completion: { [weak self] in
+                DispatchQueue.main.async {
+                    self?._moveToNextStep(hasPreviousEarlyExit: true)
+                }
+            })
             return
         }
         
@@ -407,11 +405,9 @@ extension RSDTaskController {
             // and call this method again after they have been started. Use the hasPreviousEarlyExit
             // flag to indicate that this is the second go-around and don't check the controllers the
             // second time.
-            DispatchQueue.global().async {
-                self.startAsyncActions(with: asyncActions) { [weak self] in
-                    DispatchQueue.main.async {
-                        self?._moveToNextStepPart2(previousStep: previousStep, step: step, isTaskComplete: isTaskComplete, hasPreviousEarlyExit: true)
-                    }
+            self.startAsyncActions(with: asyncActions) { [weak self] in
+                DispatchQueue.main.async {
+                    self?._moveToNextStepPart2(previousStep: previousStep, step: step, isTaskComplete: isTaskComplete, hasPreviousEarlyExit: true)
                 }
             }
             return

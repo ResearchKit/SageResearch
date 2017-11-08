@@ -1,5 +1,5 @@
 //
-//  RSDRecorder.swift
+//  RSDSampleRecorder.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -81,7 +81,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     // MARK: State management
     
     public let isSimulator: Bool = {
-        #if arch(i386) || arch(x86_64)
+        #if (arch(i386) || arch(x86_64)) && !os(OSX)
             return true
         #else
             return false
@@ -89,15 +89,14 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }()
     
     open var isRunning: Bool {
-        return startUptime != nil
+        return logger != nil
     }
     
     open private(set) var isPaused: Bool = false
-    
-    public private(set) var isCancelled: Bool = false
+    open private(set) var isCancelled: Bool = false
     
     public private(set) var collectionResult: RSDCollectionResultObject
-    public private(set) var startUptime: TimeInterval?
+    public private(set) var startUptime: TimeInterval = ProcessInfo.processInfo.systemUptime
     public private(set) var startDate: Date = Date()
     public private(set) var currentStepIdentifier: String = ""
     public private(set) var currentStepPath: String = ""
@@ -126,12 +125,12 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         self.loggerQueue.async {
             do {
                 try self._startLogger(at: taskPath)
-                if !self.isCancelled {
-                    DispatchQueue.global().async {
+                DispatchQueue.main.async {
+                    if !self.isCancelled {
                         self.startRecorder(completion)
+                    } else {
+                        completion?(self, nil, RSDRecorderError.cancelled)
                     }
-                } else {
-                    self.callOnMainThread(nil, RSDRecorderError.cancelled, completion)
                 }
             } catch let error {
                 self.callOnMainThread(nil, error, completion)
@@ -146,10 +145,11 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }
     
     /**
-     This method is called during startup after the logger is setup to start the recorder. The base class implementation will immediately call the completion handler. If an overriding class needs to do any initialization to start the recorder, then override this method. If the override calls the completion handler then DO NOT call super. This method is called on the global background thread queue.
+     This method is called during startup after the logger is setup to start the recorder. The base class implementation will immediately call the completion handler. If an overriding class needs to do any initialization to start the recorder, then override this method. If the override calls the completion handler then DO NOT call super. This method is called on the main thread queue.
      */
     open func startRecorder(_ completion: RSDAsyncActionCompletionHandler?) {
-        completion?(self, self.result, nil)
+        // In case the override doesn't move this back to the main thread, call completion on next run loop.
+        callOnMainThread(self.result, nil, completion)
     }
     
     open func pause() {
@@ -172,17 +172,18 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
             } catch let err {
                 error = err
             }
-            DispatchQueue.global().async {
+            DispatchQueue.main.async {
                 self.stopRecorder(loggerError: error, completion)
             }
         }
     }
     
     /**
-     This method is called during finish after the logger is closed. The base class implementation will immediately call the completion handler. If an overriding class needs to do any actions to stop the recorder, then override this method. If the override calls the completion handler then DO NOT call super. Otherwise, super will call the completion with the logger error as the input to the completion handler. This method is called on the global background thread queue.
+     This method is called during finish after the logger is closed. The base class implementation will immediately call the completion handler. If an overriding class needs to do any actions to stop the recorder, then override this method. If the override calls the completion handler then DO NOT call super. Otherwise, super will call the completion with the logger error as the input to the completion handler. This method is called on the main thread queue.
      */
     open func stopRecorder(loggerError: Error?, _ completion: RSDAsyncActionCompletionHandler?) {
-        completion?(self, self.result, loggerError)
+        // In case the override doesn't move this back to the main thread, call completion on next run loop.
+        callOnMainThread(self.result, loggerError, completion)
     }
     
     open func didFail(with error: Error) {
@@ -253,12 +254,11 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     private func _startLogger(at taskPath: RSDTaskPath?) throws {
         logger = try RSDRecordSampleLogger(identifier: self.configuration.identifier, outputDirectory: outputDirectory)
         updateMarker(step: taskPath?.currentStep, taskPath: taskPath)
-        let marker = instantiateMarker(uptime: startUptime!, date: startDate, stepPath: currentStepPath)
+        let marker = instantiateMarker(uptime: startUptime, date: startDate, stepPath: currentStepPath)
         try logger!.writeSample(marker)
     }
     
     private func _stopLogger() throws {
-        startUptime = nil
         guard let aLogger = logger else {
             return
         }

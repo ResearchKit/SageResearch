@@ -79,7 +79,7 @@ public protocol RSDAsyncActionController : class {
     var configuration: RSDAsyncActionConfiguration { get }
     
     /**
-     Start the asyncronous action with the given completion handler. Note: The handler may be called on a background thread.
+     Start the asynchronous action with the given completion handler. Note: The handler may be called on a background thread.
      */
     func start(at taskPath: RSDTaskPath?, completion: RSDAsyncActionCompletionHandler?)
     

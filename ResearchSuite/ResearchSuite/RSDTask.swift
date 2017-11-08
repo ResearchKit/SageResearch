@@ -59,7 +59,7 @@ public protocol RSDTask : RSDUIActionHandler {
     var stepNavigator: RSDStepNavigator { get }
     
     /**
-     A list of asyncronous actions to run on the task.
+     A list of asynchronous actions to run on the task.
      */
     var asyncActions: [RSDAsyncActionConfiguration]? { get }
     
