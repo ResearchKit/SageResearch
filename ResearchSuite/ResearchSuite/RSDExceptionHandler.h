@@ -1,5 +1,5 @@
 //
-//  ResearchSuite.h
+//  RSDExceptionHandler.h
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,15 +31,23 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-//! Project version number for ResearchSuite.
-FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
+NS_ASSUME_NONNULL_BEGIN
 
-//! Project version string for ResearchSuite.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
+/**
+ `RSDExceptionHandler` is a work-around for Swift not supporting exception handling. There are cases (such as out-of-memory) when it is desirable to exit a function gracefully rather than crashing the app. This class allows for writing Swift methods that convert the `NSException` to an `NSError`.
+ */
+@interface RSDExceptionHandler : NSObject
 
-#import <ResearchSuite/RSDClassTypeMap.h>
-#import <Researchsuite/RSDExceptionHandler.h>
++ (BOOL)tryBlock:(void (^)(void))tryBlock error:(NSError * __autoreleasing *)error;
 
+@end
 
+@interface NSError (RSDExceptionHandler)
+
+- (NSExceptionName _Nullable)exceptionName;
+
+@end
+
+NS_ASSUME_NONNULL_END

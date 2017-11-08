@@ -278,6 +278,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     open func handleTaskFailure(with error: Error) {
         _stopAudioSession()
+        cancelAllAsyncActions()
         delegate?.taskViewController(self, didFinishWith: .failed, error: error)
     }
     
@@ -288,6 +289,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     open func handleTaskCancelled() {
         _stopAudioSession()
+        cancelAllAsyncActions()
         delegate?.taskViewController(self, didFinishWith: .cancelled, error: nil)
     }
 
@@ -380,6 +382,13 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             }
         }
     }
+    
+    public func cancelAllAsyncActions() {
+        for controller in self.currentAsyncControllers {
+           controller.cancel()
+        }
+    }
+    
     
     // MARK: Initializers
     

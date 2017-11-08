@@ -1,5 +1,5 @@
 //
-//  ResearchSuite.h
+//  RSDExceptionHandler.m
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,15 +31,34 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#import "RSDExceptionHandler.h"
 #import <UIKit/UIKit.h>
 
-//! Project version number for ResearchSuite.
-FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
+@implementation RSDExceptionHandler
 
-//! Project version string for ResearchSuite.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
++ (BOOL)tryBlock:(void (^)(void))tryBlock error:(NSError **)error {
+    
+    @try {
+        tryBlock();
+    }
+    @catch (NSException *exception) {
+        if (error) {
+            NSMutableDictionary *userInfo = [exception.userInfo mutableCopy] ?: [NSMutableDictionary new];
+            userInfo[@"NSExceptionName"] = exception.name;
+            *error = [NSError errorWithDomain:@"RSDExceptionHandlerDomain" code:-1 userInfo:userInfo];
+        }
+        return NO;
+    }
 
-#import <ResearchSuite/RSDClassTypeMap.h>
-#import <Researchsuite/RSDExceptionHandler.h>
+    return YES;
+}
 
+@end
 
+@implementation NSError (RSDExceptionHandler)
+
+- (NSExceptionName)exceptionName {
+    return self.userInfo[@"NSExceptionName"];
+}
+
+@end

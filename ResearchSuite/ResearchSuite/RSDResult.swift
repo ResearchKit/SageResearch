@@ -96,6 +96,13 @@ public protocol RSDTaskResult : RSDResult {
     var asyncResults: [RSDResult]? { get set }
 }
 
+extension RSDTaskResult {
+    
+    public func findResult(for step: RSDStep) -> RSDResult? {
+        return self.stepHistory.first(where: { $0.identifier == step.identifier })
+    }
+}
+
 
 /**
  A result that can be described using a single value.

@@ -52,7 +52,7 @@ public class RSDTaskPath : NSObject, NSCopying {
      */
     public var fullPath: String {
         let prefix = parentPath?.fullPath ?? ""
-        return "\(prefix)\\\(identifier)"
+        return prefix + "\\" + identifier
     }
     
     /**
