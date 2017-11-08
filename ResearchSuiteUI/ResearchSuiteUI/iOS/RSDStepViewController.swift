@@ -478,7 +478,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     open var countdown: Int = 0
     
     /**
-     Should this step start the timer? By default, this will return true for active steps. However, if you are running your app in the background, then you will need to set up a secondary means of keeping the app from going into background and no longer responding to voice commands. You can do so by playing music or by firing the timer method whenever you get a GPS location update.
+     Should this step start the timer? By default, this will return true for active steps. However, if you are running your app in the background, then you will need to set up a secondary means of keeping the app from suspending when the user locks the screen. You can do so by playing music or by using background GPS location updates.
+     
+     Note: The speech synthesizer does not work when the app is in background mode, but sounds and vibrations will still fire if the AVAudioSession is set up to do so.
      */
     open var usesTimer: Bool {
         return self.activeStep != nil

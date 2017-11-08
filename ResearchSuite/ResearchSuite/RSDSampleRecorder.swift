@@ -88,12 +88,12 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         #endif
     }()
     
-    open var isRunning: Bool {
+    @objc dynamic open var isRunning: Bool {
         return logger != nil
     }
     
-    open private(set) var isPaused: Bool = false
-    open private(set) var isCancelled: Bool = false
+    @objc dynamic open private(set) var isPaused: Bool = false
+    @objc dynamic open private(set) var isCancelled: Bool = false
     
     public private(set) var collectionResult: RSDCollectionResultObject
     public private(set) var startUptime: TimeInterval = ProcessInfo.processInfo.systemUptime
