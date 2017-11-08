@@ -25,6 +25,8 @@
 		FF2DD5031FA1101700ECD614 /* RSDResourceTransformerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2DD5021FA1101700ECD614 /* RSDResourceTransformerObject.swift */; };
 		FF2DD5051FA114F200ECD614 /* RSDTaskTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2DD5041FA114F200ECD614 /* RSDTaskTransformer.swift */; };
 		FF427CE81FA3B247005A5AD2 /* RSDUIActionHandlerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF427CE71FA3B247005A5AD2 /* RSDUIActionHandlerObject.swift */; };
+		FF44D6B81FB238190034FE3E /* StepControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44D6B71FB238190034FE3E /* StepControllerTests.swift */; };
+		FF44D6BA1FB238660034FE3E /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF44D6B91FB238660034FE3E /* NavigationTests.swift */; };
 		FF580BF41F7E3764009B3EE9 /* RSDActiveUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */; };
 		FF580BF61F7ED80B009B3EE9 /* Dictionary+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */; };
 		FF5C4C1D1F8C872500F311BA /* RSDTaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C1C1F8C872500F311BA /* RSDTaskController.swift */; };
@@ -131,6 +133,8 @@
 		FF2DD5021FA1101700ECD614 /* RSDResourceTransformerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceTransformerObject.swift; sourceTree = "<group>"; };
 		FF2DD5041FA114F200ECD614 /* RSDTaskTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskTransformer.swift; sourceTree = "<group>"; };
 		FF427CE71FA3B247005A5AD2 /* RSDUIActionHandlerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionHandlerObject.swift; sourceTree = "<group>"; };
+		FF44D6B71FB238190034FE3E /* StepControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepControllerTests.swift; sourceTree = "<group>"; };
+		FF44D6B91FB238660034FE3E /* NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
 		FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveUIStepObject.swift; sourceTree = "<group>"; };
 		FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FF5C4C1C1F8C872500F311BA /* RSDTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskController.swift; sourceTree = "<group>"; };
@@ -300,6 +304,8 @@
 		FF2DA6191F96E813006F83C4 /* Navigation Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FF44D6B91FB238660034FE3E /* NavigationTests.swift */,
+				FF44D6B71FB238190034FE3E /* StepControllerTests.swift */,
 			);
 			path = "Navigation Tests";
 			sourceTree = "<group>";
@@ -740,6 +746,8 @@
 			files = (
 				FFD2432A1F9568C70083F458 /* CodableResultObjectTests.swift in Sources */,
 				FFDAE9E31F9082E4001D0CC0 /* CodableTaskObjectTests.swift in Sources */,
+				FF44D6B81FB238190034FE3E /* StepControllerTests.swift in Sources */,
+				FF44D6BA1FB238660034FE3E /* NavigationTests.swift in Sources */,
 				FF87CD861F8413F700084426 /* FactoryTests.swift in Sources */,
 				FF1A7A871F6B1174007AB5A6 /* CodableObjectTests.swift in Sources */,
 				FFDAE9E71F908510001D0CC0 /* CodableInputFieldObjectTests.swift in Sources */,
