@@ -49,12 +49,12 @@ open class RSDCountdownStepViewController: RSDStepViewController {
     
     @IBAction open func pauseTimer() {
         if self.pauseUptime == nil {
+            self.pauseButton?.setTitle(Localization.buttonResume(), for: .normal)
             self.pause()
-            self.pauseButton?.setTitle(Localization.buttonPause(), for: .normal)
         }
         else {
+            self.pauseButton?.setTitle(Localization.buttonPause(), for: .normal)
             self.resume()
-            self.pauseButton?.setTitle(Localization.buttonResume(), for: .normal)
         }
     }
     

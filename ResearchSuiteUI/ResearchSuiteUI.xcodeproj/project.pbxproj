@@ -27,11 +27,10 @@
 		FF4A2D3A1F96A6F000484338 /* RSDTaskInfoStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */; };
 		FF4A2D3B1F96A6F000484338 /* RSDTaskInfoStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */; };
 		FF55C4371FAB1732004EDB59 /* RSDVoiceBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF55C4361FAB1732004EDB59 /* RSDVoiceBox.swift */; };
-		FF55C4391FAB861C004EDB59 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF55C4381FAB861C004EDB59 /* AudioToolbox.framework */; };
-		FF55C43B1FAB8897004EDB59 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF55C43A1FAB8897004EDB59 /* AVFoundation.framework */; };
 		FF58035E1F9E6ADE004346A8 /* UIAlertController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */; };
 		FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */; };
 		FF5C4C2E1F8C923E00F311BA /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */; };
+		FF6D1C111FB27D0E0087DDE6 /* RSDUISoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6D1C101FB27D0E0087DDE6 /* RSDUISoundPlayer.swift */; };
 		FF7E1D851F8EA7F000B47587 /* RSDStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */; };
 		FF88FD1B1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */; };
 		FF88FD1D1F8D44A400CADB53 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */; };
@@ -84,7 +83,10 @@
 		FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Utilities.swift"; sourceTree = "<group>"; };
 		FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewController.swift; sourceTree = "<group>"; };
 		FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		FF6D1C101FB27D0E0087DDE6 /* RSDUISoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUISoundPlayer.swift; sourceTree = "<group>"; };
 		FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepViewController.swift; sourceTree = "<group>"; };
+		FF816B021FAC2C0000E9F808 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FF816B041FAC2C1A00E9F808 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Layout.swift"; sourceTree = "<group>"; };
 		FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
 		FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCrosshatchView.swift; sourceTree = "<group>"; };
@@ -102,8 +104,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF55C43B1FAB8897004EDB59 /* AVFoundation.framework in Frameworks */,
-				FF55C4391FAB861C004EDB59 /* AudioToolbox.framework in Frameworks */,
 				FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -122,6 +122,8 @@
 		FF04722E1F7AC4F90023DAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF816B041FAC2C1A00E9F808 /* CoreMotion.framework */,
+				FF816B021FAC2C0000E9F808 /* CoreLocation.framework */,
 				FF55C43A1FAB8897004EDB59 /* AVFoundation.framework */,
 				FF55C4381FAB861C004EDB59 /* AudioToolbox.framework */,
 				FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */,
@@ -208,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */,
-				FF55C4361FAB1732004EDB59 /* RSDVoiceBox.swift */,
 				FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */,
 				FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */,
 				FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */,
@@ -216,11 +217,21 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		FF6D1C0F1FB27CD00087DDE6 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				FF55C4361FAB1732004EDB59 /* RSDVoiceBox.swift */,
+				FF6D1C101FB27D0E0087DDE6 /* RSDUISoundPlayer.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		FF74A7DD1F7DA2EB0064A634 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
 				FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */,
 				FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */,
+				FF6D1C0F1FB27CD00087DDE6 /* Audio */,
 				FFDD780E1FAE96760024BDD1 /* Step View Controllers */,
 				FF4A2D441F96A90200484338 /* Views */,
 				FF5C4C241F8C8D8200F311BA /* Utilities */,
@@ -402,6 +413,7 @@
 				FF25E83D1F96B39800BC09A8 /* RSDUnderlinedButton.swift in Sources */,
 				FF1865B71FA291F600FD0E31 /* UIImage+Utilities.swift in Sources */,
 				FF25E8401F96B5C300BC09A8 /* UIFont+BridgeKeyNames.swift in Sources */,
+				FF6D1C111FB27D0E0087DDE6 /* RSDUISoundPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

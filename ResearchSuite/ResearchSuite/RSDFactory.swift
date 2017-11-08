@@ -99,7 +99,9 @@ open class RSDFactory {
      */
     open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskInfo: RSDTaskInfoStep? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskInfo: taskInfo, schemaInfo: schemaInfo)
-        return try decoder.decode(RSDTaskObject.self, from: data)
+        let task = try decoder.decode(RSDTaskObject.self, from: data)
+        try task.validate()
+        return task
     }
     
     
@@ -204,7 +206,9 @@ open class RSDFactory {
         guard let name = try typeName(from: decoder) else {
             return try RSDGenericStepObject(from: decoder)
         }
-        return try decodeStep(from: decoder, with: name)
+        let step = try decodeStep(from: decoder, with: name)
+        try step?.validate()
+        return step
     }
     
     /**
@@ -263,7 +267,7 @@ open class RSDFactory {
      */
     open func decodeTransformableStep(from decoder: Decoder) throws -> RSDStep {
         
-        // Get the transformer and it's steps
+        // Get the transformer and its steps
         let transform = try self.transformStep(from: decoder)
         var steps: [RSDStep] = try transform.sectionTransformer.transformSteps(with: self)
         
@@ -295,7 +299,9 @@ open class RSDFactory {
      */
     open func decodeInputField(from decoder: Decoder) throws -> RSDInputField? {
         let dataType = try RSDInputFieldObject.dataType(from: decoder)
-        return try decodeInputField(from: decoder, with: dataType)
+        let inputField = try decodeInputField(from: decoder, with: dataType)
+        try inputField?.validate()
+        return inputField
     }
     
     /**
@@ -387,9 +393,11 @@ open class RSDFactory {
      */
     open func decodeAsyncActionConfiguration(from decoder:Decoder) throws -> RSDAsyncActionConfiguration? {
         guard let typeName = try typeName(from: decoder) else {
-            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a conditional rule without a `type` key defining a value for the the class name.")
+            throw RSDValidationError.undefinedClassType("\(self) does not support decoding an async action without a `type` key defining a value for the the class name.")
         }
-        return try decodeAsyncActionConfiguration(from: decoder, with: typeName)
+        let config = try decodeAsyncActionConfiguration(from: decoder, with: typeName)
+        try config?.validate()
+        return config
     }
     
     /**
@@ -403,6 +411,12 @@ open class RSDFactory {
      @return            The configuration (if any) created from this decoder.
      */
     open func decodeAsyncActionConfiguration(from decoder:Decoder, with typeName: String) throws -> RSDAsyncActionConfiguration? {
+        
+        // Look to see if there is a standard permission to map to this config.
+        if let _ = RSDStandardPermissionType(rawValue: typeName) {
+            return try RSDStandardAsyncActionConfiguration(from: decoder)
+        }
+        
         // Base class does not implement the conditional rule
         throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for an async action.")
     }
@@ -467,7 +481,7 @@ open class RSDFactory {
         case .answer:
             return try RSDAnswerResultObject(from: decoder)
         case .collection:
-            return try RSDStepCollectionResultObject(from: decoder)
+            return try RSDCollectionResultObject(from: decoder)
         case .task:
             return try RSDTaskResultObject(from: decoder)
         case .file:

@@ -1,5 +1,5 @@
 //
-//  RSDPermissionType.swift
+//  RSDStandardAsyncActionConfiguration.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,30 +33,29 @@
 
 import Foundation
 
-/**
- `RSDPermissionType` is a generic configuration object with information about a given permission.
- */
-public protocol RSDPermissionType {
-    
-    /**
-     An identifier for the permission.
-     */
-    var identifier: String { get }
-}
+public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Codable {
 
-public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
-    case coremotion
-    case location
-    case microphone
-    case camera
-    case photoLibrary
-    case backgroundAudio
+    public let identifier: String
+    public let type: RSDStandardPermissionType
+    public let startStepIdentifier: String?
+    public var stopStepIdentifier: String?
     
-    public var identifier: String {
-        return rawValue
+    public init(identifier: String, type: RSDStandardPermissionType, startStepIdentifier: String?, stopStepIdentifier: String?) {
+        self.identifier = identifier
+        self.type = type
+        self.startStepIdentifier = startStepIdentifier
+        self.stopStepIdentifier = stopStepIdentifier
+    }
+    
+    public var permissions: [RSDPermissionType] {
+        return [type]
+    }
+    
+    public var requiresBackgroundAudio: Bool {
+        return type == .backgroundAudio || type == .coremotion || type == .location
     }
     
     public func validate() throws {
-        
+        try type.validate()
     }
 }

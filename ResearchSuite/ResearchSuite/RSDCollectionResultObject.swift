@@ -1,5 +1,5 @@
 //
-//  RSDStepCollectionResultObject.swift
+//  RSDCollectionResultObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,7 +33,7 @@
 
 import Foundation
 
-public struct RSDStepCollectionResultObject : RSDStepCollectionResult, Codable {
+public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
     public let type: String
     public let identifier: String
     public var startDate: Date = Date()
@@ -79,7 +79,7 @@ public struct RSDStepCollectionResultObject : RSDStepCollectionResult, Codable {
 /**
  Convenience methods on the protocol for appending the history or async results while keeping the identifiers unique.
  */
-extension RSDStepCollectionResult {
+extension RSDCollectionResult {
     
     /**
      Append the result to the end of the input results, replacing the previous instance with the same identifier.

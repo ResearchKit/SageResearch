@@ -451,10 +451,10 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
             return hasImage || (imageView.image != nil)
         }
         else if let label = view as? UILabel {
-            return (label.text?.characters.count ?? 0) > 0
+            return (label.text?.count ?? 0) > 0
         }
         else if let underlineButton = view as? RSDUnderlinedButton {
-            return (underlineButton.title(for: .normal)?.characters.count ?? 0) > 0
+            return (underlineButton.title(for: .normal)?.count ?? 0) > 0
         }
         else if let button = view as? UIButton {
             return !button.isHidden

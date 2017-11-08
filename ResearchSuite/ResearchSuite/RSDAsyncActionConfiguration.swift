@@ -34,12 +34,12 @@
 import Foundation
 
 /**
- `RSDAsyncAction` defines general configuration for an asyncronous background action that should be run in the background. Depending upon the parameters and how the action is setup, this could be something that is run continuously or else is paused or reset based on a timeout interval.
+ `RSDAsyncAction` defines general configuration for an asynchronous background action that should be run in the background. Depending upon the parameters and how the action is setup, this could be something that is run continuously or else is paused or reset based on a timeout interval.
  */
 public protocol RSDAsyncActionConfiguration {
     
     /**
-     A short string that uniquely identifies the asyncronous action within the task. The identifier is reproduced in the results of a async results.
+     A short string that uniquely identifies the asynchronous action within the task. The identifier is reproduced in the results of a async results.
      */
     var identifier : String { get }
     
@@ -59,6 +59,14 @@ public protocol RSDAsyncActionConfiguration {
     func validate() throws
 }
 
+public protocol RSDAsyncActionControllerVendor : RSDAsyncActionConfiguration {
+    
+    /**
+     Instantiate a controller appropriate to this configuration.
+     */
+    func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController?
+}
+
 /**
  `RSDRecorderConfiguration` is used to configure a recorder. For example, recording accelerometer data or video.
  */
@@ -68,10 +76,15 @@ public protocol RSDRecorderConfiguration : RSDAsyncActionConfiguration {
      An identifier marking the step at which to stop the action. If `nil`, then the action will be stopped when the task is stopped.
      */
     var stopStepIdentifier: String? { get }
+    
+    /**
+     Whether or not the recorder requires background audio.
+     */
+    var requiresBackgroundAudio: Bool { get }
 }
 
 /**
- `RSDRequestConfiguration` is used to start an asyncronous service such as a url request or fetching from core data.
+ `RSDRequestConfiguration` is used to start an asynchronous service such as a url request or fetching from core data.
  */
 public protocol RSDRequestConfiguration : RSDAsyncActionConfiguration {
     
