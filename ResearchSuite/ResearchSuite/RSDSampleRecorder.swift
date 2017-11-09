@@ -33,11 +33,27 @@
 
 import Foundation
 
-
 public protocol RSDSampleRecord : Codable {
+    
+    /**
+     The clock uptime. See `ProcessInfo.processInfo.systemUptime`.
+     */
     var uptime: TimeInterval { get }
-    var date: Date { get }
+    
+    /**
+     An identifier marking the current step.
+     */
     var stepPath: String { get }
+    
+    /**
+     The date timestamp when the measurement was taken (if available).
+     */
+    var date: Date? { get }
+    
+    /**
+     Relative time to when the recorder was started.
+     */
+    var timestamp: TimeInterval { get }
 }
 
 public protocol RSDSampleRecordType {
@@ -46,13 +62,15 @@ public protocol RSDSampleRecordType {
 
 public struct RSDRecordMarker : RSDSampleRecord {
     public let uptime: TimeInterval
-    public let date: Date
     public let stepPath: String
+    public let date: Date?
+    public let timestamp: TimeInterval
     
-    public init(uptime: TimeInterval, date: Date, stepPath: String) {
+    public init(uptime: TimeInterval, timestamp: TimeInterval, date: Date, stepPath: String) {
         self.uptime = uptime
-        self.date = date
+        self.timestamp = timestamp
         self.stepPath = stepPath
+        self.date = date
     }
 }
 
@@ -215,13 +233,13 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     public let loggerQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.Recorder.\(UUID())")
     
     open func instantiateMarker(uptime: TimeInterval, date: Date, stepPath: String) -> RSDSampleRecord {
-        return RSDRecordMarker(uptime: uptime, date: date, stepPath: stepPath)
+        return RSDRecordMarker(uptime: uptime, timestamp: uptime - self.startUptime, date: date, stepPath: stepPath)
     }
     
     open func updateMarker(step: RSDStep?, taskPath: RSDTaskPath?) {
         currentStepIdentifier = step?.identifier ?? ""
         let path = taskPath?.fullPath ?? ""
-        currentStepPath = "\(path)\\\(currentStepIdentifier)"
+        currentStepPath = path + "\\" + currentStepIdentifier
     }
     
     public final func writeSample(_ sample: RSDSampleRecord) {
@@ -281,6 +299,10 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
  */
 public class RSDRecordSampleLogger {
     
+    public enum RSDRecordSampleLoggerError : Error {
+        case stringEncodingFailed(String)
+    }
+    
     /**
      Is the root element in the json file a dictionary?
      */
@@ -290,6 +312,11 @@ public class RSDRecordSampleLogger {
      The url to the file.
      */
     public let url: URL
+    
+    /**
+     Open file handle for writing to the logger
+     */
+    private let fileHandle: FileHandle
     
     /**
      Number of samples written to the file.
@@ -336,11 +363,11 @@ public class RSDRecordSampleLogger {
             """
         } else {
             // Otherwise, just open the array
-            startText = "["
+            startText = "[\n"
         }
+        try startText.write(to: url, atomically: false, encoding: .utf8)
         
-        // Write the start text to the file
-        try startText.write(to: url, atomically: true, encoding: .utf8)
+        self.fileHandle = try FileHandle(forWritingTo: url)
     }
     
     public func writeSamples(_ samples: [RSDSampleRecord]) throws {
@@ -352,20 +379,35 @@ public class RSDRecordSampleLogger {
     public func writeSample(_ sample: RSDSampleRecord) throws {
         if sampleCount > 0 {
             // If this is not the first sample then write a period and line feed
-            let separator = ",\n"
-            try separator.write(to: url, atomically: true, encoding: .utf8)
+            try write(",\n")
         }
         let jsonEncoder = RSDFactory.shared.createJSONEncoder()
         let wrapper = _EncodableSampleWrapper(record: sample)
         let data = try jsonEncoder.encode(wrapper)
-        try data.write(to: url, options: .atomicWrite)
+        try write(data)
         sampleCount += 1
+    }
+    
+    private func write(_ string: String) throws {
+        guard let data = string.data(using: .utf8) else {
+            throw RSDRecordSampleLoggerError.stringEncodingFailed(string)
+        }
+        try write(data)
+    }
+    
+    private func write(_ data: Data) throws {
+        // Write the opening
+        try RSDExceptionHandler.try {
+            self.fileHandle.seekToEndOfFile()
+            self.fileHandle.write(data)
+        }
     }
     
     public func close() throws {
         // Write the json closure to the file
-        let endText = isRootDictionary ? "}]" : "]"
-        try endText.write(to: url, atomically: true, encoding: .utf8)
+        let endText = isRootDictionary ? "}]" : "\n]"
+        try write(endText)
+        self.fileHandle.closeFile()
     }
 }
 

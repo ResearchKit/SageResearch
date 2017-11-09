@@ -102,6 +102,8 @@
 		FFDAE9ED1F9132EC001D0CC0 /* RSDAnswerResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9EC1F9132EC001D0CC0 /* RSDAnswerResultType.swift */; };
 		FFE0DE4C1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */; };
 		FFE0DE4F1F874A8600BB1BDF /* RSDFormUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */; };
+		FFF159E01FB4D7A60061BA93 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FFF159E11FB4D7A60061BA93 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
 		FFFCBCE21F900449000B55C1 /* RSDStringLiteralOptionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFCBCE11F900449000B55C1 /* RSDStringLiteralOptionSet.swift */; };
 		FFFDB95F1F99D4A500BA1348 /* ResearchSuite.strings in Resources */ = {isa = PBXBuildFile; fileRef = FFFDB9611F99D4A500BA1348 /* ResearchSuite.strings */; };
 /* End PBXBuildFile section */
@@ -215,6 +217,8 @@
 		FFDAE9EC1F9132EC001D0CC0 /* RSDAnswerResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAnswerResultType.swift; sourceTree = "<group>"; };
 		FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextFieldOptionsObject.swift; sourceTree = "<group>"; };
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
+		FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDExceptionHandler.h; sourceTree = "<group>"; };
+		FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDExceptionHandler.m; sourceTree = "<group>"; };
 		FFFCBCE11F900449000B55C1 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
 		FFFDB9601F99D4A500BA1348 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResearchSuite.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -288,6 +292,8 @@
 				FF8A214F1F7CB11800C7B27F /* Array+Utilities.swift */,
 				FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */,
 				FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */,
+				FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */,
+				FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -303,15 +309,6 @@
 				FF87CD851F8413F700084426 /* FactoryTests.swift */,
 			);
 			path = "Codable Tests";
-			sourceTree = "<group>";
-		};
-		FF2DA6191F96E813006F83C4 /* Navigation Tests */ = {
-			isa = PBXGroup;
-			children = (
-				FF44D6B91FB238660034FE3E /* NavigationTests.swift */,
-				FF44D6B71FB238190034FE3E /* StepControllerTests.swift */,
-			);
-			path = "Navigation Tests";
 			sourceTree = "<group>";
 		};
 		FF5C4C1B1F8C86FC00F311BA /* Protocol */ = {
@@ -342,6 +339,7 @@
 				FF72B2331F6859D3004C6F15 /* ResearchSuite */,
 				FF72B23E1F6859D3004C6F15 /* ResearchSuiteTests */,
 				FF72B2321F6859D3004C6F15 /* Products */,
+				FFE138731FB2DC79009A32BC /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -535,6 +533,15 @@
 			name = Choice;
 			sourceTree = "<group>";
 		};
+		FFE138731FB2DC79009A32BC /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				FF44D6B71FB238190034FE3E /* StepControllerTests.swift */,
+				FF44D6B91FB238660034FE3E /* NavigationTests.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		FFFDB9591F99802C00BA1348 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +557,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFF159E01FB4D7A60061BA93 /* RSDExceptionHandler.h in Headers */,
 				FF72B2421F6859D3004C6F15 /* ResearchSuite.h in Headers */,
 				FF0472471F7AD9560023DAD6 /* RSDClassTypeMap.h in Headers */,
 			);
@@ -739,6 +747,7 @@
 				FFE0DE4C1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift in Sources */,
 				FF78FC861FA7A5F500B8D42C /* RSDFileResultObject.swift in Sources */,
 				FFDAE9ED1F9132EC001D0CC0 /* RSDAnswerResultType.swift in Sources */,
+				FFF159E11FB4D7A60061BA93 /* RSDExceptionHandler.m in Sources */,
 				FF80B12E1F7C12D400582849 /* RSDConditionalStepNavigator.swift in Sources */,
 				FF5C4C321F8C9DC100F311BA /* RSDResultObject.swift in Sources */,
 				FF177D7D1F82E4F600C2D4D7 /* RSDStepValidator.swift in Sources */,

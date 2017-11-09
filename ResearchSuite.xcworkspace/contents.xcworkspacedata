@@ -5,7 +5,7 @@
       location = "group:ResearchSuiteTestApp/ResearchSuiteTestApp.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI.xcodeproj">
+      location = "group:ResearchSuiteUI/ResearchSuiteUI.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:ResearchSuite/ResearchSuite.xcodeproj">
