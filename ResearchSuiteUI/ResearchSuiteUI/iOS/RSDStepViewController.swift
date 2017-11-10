@@ -168,7 +168,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             setupHeader(header)
         }
         if let footer = self.navigationFooter {
-            setupNavigationView(footer)
+            setupNavigationView(footer, isFooter: true)
         }
     }
     
@@ -191,7 +191,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open func setupHeader(_ header: RSDNavigationBarView) {
-        setupNavigationView(header)
+        setupNavigationView(header, isFooter: false)
 
         // setup progress
         if let (stepIndex, stepCount, _) = self.progress() {
@@ -199,6 +199,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             header.progressView?.currentStep = stepIndex
             if let colorTheme = themedStep?.colorTheme {
                 header.progressView?.usesLightStyle = colorTheme.usesLightStyle
+                header.stepCountLabel?.textColor = colorTheme.usesLightStyle ? UIColor.rsd_stepCountLabelLight : UIColor.rsd_stepCountLabelDark
             }
             header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
         } else {
@@ -235,8 +236,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             stepHeader.detailLabel?.text = uiStep?.detail
             
             if let colorTheme = themedStep?.colorTheme,
-                let foregroundColor = colorTheme.foregroundColor(compatibleWith: self.traitCollection),
-                !self.hasTopBackgroundImage() {
+                let foregroundColor = colorTheme.foregroundColor(compatibleWith: self.traitCollection) {
                 stepHeader.titleLabel?.textColor = foregroundColor
                 stepHeader.textLabel?.textColor = foregroundColor
                 stepHeader.detailLabel?.textColor = foregroundColor
@@ -256,14 +256,14 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     open func setupFooter(_ footer: RSDNavigationFooterView) {
-        setupNavigationView(footer)
+        setupNavigationView(footer, isFooter: true)
     }
     
     open func shouldUseGlobalButtonVisibility() -> Bool {
         return !(step is RSDTaskInfoStep)
     }
     
-    open func setupNavigationView(_ navigationView: RSDStepNavigationView) {
+    open func setupNavigationView(_ navigationView: RSDStepNavigationView, isFooter: Bool) {
         
         // Check if the back button and skip button should be hidden for this task
         // and if so, then do so globally.
@@ -273,17 +273,27 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             navigationView.isSkipHidden = task.shouldHideAction(for: .navigation(.skip), on: step) ?? true
         }
 
-        setupButton(navigationView.cancelButton, for: .navigation(.cancel))
-        setupButton(navigationView.learnMoreButton, for: .navigation(.learnMore))
-        setupButton(navigationView.nextButton, for: .navigation(.goForward))
-        setupButton(navigationView.backButton, for: .navigation(.goBackward))
-        setupButton(navigationView.skipButton, for: .navigation(.skip))
+        setupButton(navigationView.cancelButton, for: .navigation(.cancel), isFooter: isFooter)
+        setupButton(navigationView.learnMoreButton, for: .navigation(.learnMore), isFooter: isFooter)
+        setupButton(navigationView.nextButton, for: .navigation(.goForward), isFooter: isFooter)
+        setupButton(navigationView.backButton, for: .navigation(.goBackward), isFooter: isFooter)
+        setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
+        
+        if let usesLightStyle = usesLightStyle(isFooter: isFooter) {
+            navigationView.tintColor = usesLightStyle ? UIColor.rsd_underlinedButtonTextLight : UIColor.rsd_underlinedButtonTextDark
+        }
         
         navigationView.setNeedsLayout()
         navigationView.setNeedsUpdateConstraints()
     }
+    
+    open func usesLightStyle(isFooter: Bool) -> Bool? {
+        guard let colorTheme = themedStep?.colorTheme else { return nil }
+        let hasTopBackgroundImage = self.hasTopBackgroundImage()
+        return colorTheme.usesLightStyle && (!isFooter || !hasTopBackgroundImage)
+    }
 
-    open func setupButton(_ button: UIButton?, for actionType: RSDUIActionType) {
+    open func setupButton(_ button: UIButton?, for actionType: RSDUIActionType, isFooter: Bool) {
         guard let btn = button else { return }
         
         // Add an action if not setup already and the action type is recognized
@@ -337,12 +347,12 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             btn.setImage(action.buttonIcon, for: .normal)
         }
         
-        if let roundedButton = btn as? RSDRoundedButton, let colorTheme = themedStep?.colorTheme, colorTheme.usesLightStyle, !self.hasTopBackgroundImage() {
+        if let roundedButton = btn as? RSDRoundedButton, let colorTheme = themedStep?.colorTheme, (usesLightStyle(isFooter: isFooter) ?? false) {
             roundedButton.backgroundColor = UIColor.rsd_roundedButtonBackgroundLight
             roundedButton.shadowColor = UIColor.rsd_roundedButtonShadowLight
             roundedButton.titleColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection) ?? UIColor.rsd_roundedButtonTextLight
         }
-        
+
         // If this is a goForward button, then there is some additional logic around
         // loading state and whether or not any input fields are optional
         if actionType == .navigation(.goForward) {
