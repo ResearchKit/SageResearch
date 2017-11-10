@@ -486,12 +486,19 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         return self.activeStep != nil
     }
     
+    /**
+     Time interval for firing a repeating timer.
+     */
+    open var timerInterval: TimeInterval {
+        return 1
+    }
+    
     public private(set) var pauseUptime: TimeInterval?
     public private(set) var startUptime: TimeInterval?
     public private(set) var completedUptime: TimeInterval?
     
     private var timer: Timer?
-    private var lastInstruction: Int = 0
+    private var lastInstruction: Int = -1
     
     open func performStartCommands() {
         
@@ -499,9 +506,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             countdown = Int(stepDuration)
         }
         
-        if let instruction = self.activeStep?.spokenInstruction(at: 0) {
-            speak(instruction: instruction, timeInterval: 0, completion: nil)
-        }
+        // Speak the start command
+        speakInstruction(at: 0)
         
         if let commands = self.activeStep?.commands {
             if commands.contains(.playSoundOnStart) {
@@ -532,7 +538,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     private func _speakEndCommand(_ completion: @escaping (() -> Void)) {
         if let instruction = self.activeStep?.spokenInstruction(at: Double.infinity) {
-            speak(instruction: instruction, timeInterval: Double.infinity, completion: { (_) in
+            speakInstruction(instruction, at: Double.infinity, completion: { (_) in
                 completion()
             })
         } else {
@@ -548,8 +554,21 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
     }
     
-    open func speak(instruction: String, timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
+    open func speakInstruction(_ instruction: String, at timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
         RSDSpeechSynthesizer.shared.speak(text: instruction, completion: completion)
+    }
+    
+    open func speakInstruction(at duration: TimeInterval) {
+        let nextInstruction = Int(duration)
+        if nextInstruction > lastInstruction {
+            for ii in (lastInstruction + 1)...nextInstruction {
+                let timeInterval = TimeInterval(ii)
+                if let instruction = self.activeStep?.spokenInstruction(at: timeInterval) {
+                    speakInstruction(instruction, at: timeInterval, completion: nil)
+                }
+            }
+            lastInstruction = nextInstruction
+        }
     }
     
     open func start() {
@@ -563,7 +582,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         pauseUptime = nil
         timer?.invalidate()
         if usesTimer {
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
+            timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true, block: { [weak self] (_) in
                 self?.timerFired()
             })
         }
@@ -606,22 +625,13 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
         else {
             
-            // Otherwise, look for any spoken instructions since last fire
-            let nextInstruction = Int(duration)
-            if nextInstruction > lastInstruction {
-                
-                if let stepDuration = self.activeStep?.duration {
-                    countdown = Int(stepDuration) - nextInstruction
-                }
-                
-                for ii in (lastInstruction + 1)...nextInstruction {
-                    let timeInterval = TimeInterval(ii)
-                    if let instruction = self.activeStep?.spokenInstruction(at: timeInterval) {
-                        speak(instruction: instruction, timeInterval: timeInterval, completion: nil)
-                    }
-                }
-                lastInstruction = nextInstruction
+            // Update the countdown
+            if let stepDuration = self.activeStep?.duration {
+                countdown = Int(stepDuration - duration)
             }
+            
+            // Otherwise, look for any spoken instructions since last fire
+            speakInstruction(at: duration)
         }
     }
     

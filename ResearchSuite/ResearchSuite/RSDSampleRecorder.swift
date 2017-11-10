@@ -269,8 +269,17 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         }
     }
     
+    open func createFileURL() throws -> URL {
+        return try RSDFileResultUtility.createFileURL(identifier: configuration.identifier, ext: "json", outputDirectory: outputDirectory)
+    }
+    
+    open var usesRootDictionary: Bool {
+        return false
+    }
+    
     private func _startLogger(at taskPath: RSDTaskPath?) throws {
-        logger = try RSDRecordSampleLogger(identifier: self.configuration.identifier, outputDirectory: outputDirectory)
+        let url = try createFileURL()
+        logger = try RSDRecordSampleLogger(url: url, isRootDictionary: usesRootDictionary)
         updateMarker(step: taskPath?.currentStep, taskPath: taskPath)
         let marker = instantiateMarker(uptime: startUptime, date: startDate, stepPath: currentStepPath)
         try logger!.writeSample(marker)
@@ -291,6 +300,39 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         fileResult.url = aLogger.url
         fileResult.startUptime = self.startUptime
         self.appendResults(fileResult)
+    }
+}
+
+/**
+ `RSDFileResultUtility` is a utility for naming temporary files used to save task results.
+ */
+public class RSDFileResultUtility {
+    
+    /**
+     Convenience method for creating a file URL to use as the location to save data.
+     */
+    public static func createFileURL(identifier: String, ext: String, outputDirectory: URL) throws -> URL {
+        
+        // Scrub non-alphanumeric characters from the identifer
+        var characterSet = CharacterSet.alphanumerics
+        characterSet.invert()
+        var scrubbedIdentifier = identifier
+        while let range = scrubbedIdentifier.rangeOfCharacter(from: characterSet) {
+            scrubbedIdentifier.removeSubrange(range)
+        }
+        scrubbedIdentifier = String(scrubbedIdentifier.prefix(12))
+        let directory = scrubbedIdentifier.count > 0 ? scrubbedIdentifier : "temp"
+        
+        // create the directory if needed
+        let dirURL = outputDirectory.appendingPathComponent(directory, isDirectory: true)
+        try FileManager.default.createDirectory(at: dirURL, withIntermediateDirectories: true, attributes: nil)
+        
+        // Use the first 8 characters of a UUID string for the filename
+        let uuid = UUID().uuidString
+        let filename = String(uuid.prefix(8))
+        let url = dirURL.appendingPathComponent(filename, isDirectory: false).appendingPathExtension(ext)
+        
+        return url
     }
 }
 
@@ -322,30 +364,6 @@ public class RSDRecordSampleLogger {
      Number of samples written to the file.
      */
     public private(set) var sampleCount: Int = 0
-    
-    public convenience init(identifier: String, outputDirectory: URL, isRootDictionary: Bool = false) throws {
-        
-        // Scrub non-alphanumeric characters from the identifer
-        var characterSet = CharacterSet.alphanumerics
-        characterSet.invert()
-        var scrubbedIdentifier = identifier
-        while let range = scrubbedIdentifier.rangeOfCharacter(from: characterSet) {
-            scrubbedIdentifier.removeSubrange(range)
-        }
-        scrubbedIdentifier = String(scrubbedIdentifier.prefix(12))
-        let directory = scrubbedIdentifier.count > 0 ? scrubbedIdentifier : "temp"
-        
-        // create the directory if needed
-        let dirURL = outputDirectory.appendingPathComponent(directory, isDirectory: true)
-        try FileManager.default.createDirectory(at: dirURL, withIntermediateDirectories: true, attributes: nil)
-
-        // Use the first 8 characters of a UUID string for the filename
-        let uuid = UUID().uuidString
-        let filename = String(uuid.prefix(8))
-        let url = dirURL.appendingPathComponent(filename, isDirectory: false).appendingPathExtension("json")
-        
-        try self.init(url: url, isRootDictionary: isRootDictionary)
-    }
     
     public init(url: URL, isRootDictionary: Bool) throws {
         self.url = url

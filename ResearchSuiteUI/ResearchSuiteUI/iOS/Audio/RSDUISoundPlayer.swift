@@ -49,6 +49,7 @@ public struct RSDSound {
     public static let short_low_high = RSDSound(name: "short_low_high")
     public static let short_double_high = RSDSound(name: "short_double_high")
     public static let short_double_low = RSDSound(name: "alarm")
+    public static let photoShutter = RSDSound(name: "photoShutter")
 }
 
 public protocol RSDSoundPlayer {

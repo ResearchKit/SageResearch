@@ -58,9 +58,9 @@ open class RSDActiveStepViewController: RSDStepViewController {
         }
     }
 
-    open override func speak(instruction: String, timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
+    open override func speakInstruction(_ instruction: String, at timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
         instructionLabel?.text = instruction
-        super.speak(instruction: instruction, timeInterval: timeInterval, completion: completion)
+        super.speakInstruction(instruction, at: timeInterval, completion: completion)
     }
 
     open override func start() {
