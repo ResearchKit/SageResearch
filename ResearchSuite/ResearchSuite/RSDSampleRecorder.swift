@@ -239,7 +239,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     open func updateMarker(step: RSDStep?, taskPath: RSDTaskPath?) {
         currentStepIdentifier = step?.identifier ?? ""
         let path = taskPath?.fullPath ?? ""
-        currentStepPath = path + "\\" + currentStepIdentifier
+        currentStepPath = path + "/" + currentStepIdentifier
     }
     
     public final func writeSample(_ sample: RSDSampleRecord) {
