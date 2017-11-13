@@ -43,12 +43,12 @@ public protocol RSDSampleRecord : Codable {
     /**
      An identifier marking the current step.
      */
-    var stepPath: String { get }
+    var step_path: String { get }
     
     /**
      The date timestamp when the measurement was taken (if available).
      */
-    var date: Date? { get }
+    var timestamp_date: Date? { get }
     
     /**
      Relative time to when the recorder was started.
@@ -62,15 +62,15 @@ public protocol RSDSampleRecordType {
 
 public struct RSDRecordMarker : RSDSampleRecord {
     public let uptime: TimeInterval
-    public let stepPath: String
-    public let date: Date?
+    public let step_path: String
+    public let timestamp_date: Date?
     public let timestamp: TimeInterval
     
     public init(uptime: TimeInterval, timestamp: TimeInterval, date: Date, stepPath: String) {
         self.uptime = uptime
         self.timestamp = timestamp
-        self.stepPath = stepPath
-        self.date = date
+        self.step_path = stepPath
+        self.timestamp_date = date
     }
 }
 
