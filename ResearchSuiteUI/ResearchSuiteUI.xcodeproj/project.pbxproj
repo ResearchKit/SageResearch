@@ -20,6 +20,8 @@
 		FF39E52F1F97320200C366FC /* RSDShadowGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */; };
 		FF39E5331F97348700C366FC /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5321F97347E00C366FC /* Localization.swift */; };
 		FF39E5361F97392200C366FC /* ResearchSuiteUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF39E5381F97392200C366FC /* ResearchSuiteUI.strings */; };
+		FF4044081FBAAD22000EF2A0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF55C4381FAB861C004EDB59 /* AudioToolbox.framework */; };
+		FF4044091FBAAD2D000EF2A0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF55C43A1FAB8897004EDB59 /* AVFoundation.framework */; };
 		FF443E201F7AC21900F43BE7 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF443E161F7AC21900F43BE7 /* ResearchSuiteUI.framework */; };
 		FF443E271F7AC21900F43BE7 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF4A2D341F9679EC00484338 /* DebugStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */; };
@@ -104,6 +106,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF4044091FBAAD2D000EF2A0 /* AVFoundation.framework in Frameworks */,
+				FF4044081FBAAD22000EF2A0 /* AudioToolbox.framework in Frameworks */,
 				FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
