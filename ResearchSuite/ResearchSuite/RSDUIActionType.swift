@@ -72,6 +72,14 @@ public enum RSDUIActionType {
     }
     
     case custom(String)
+    
+    public var customAction: String? {
+        if case .custom(let str) = self {
+            return str
+        } else {
+            return nil
+        }
+    }
 }
 
 extension RSDUIActionType: RawRepresentable, Codable {

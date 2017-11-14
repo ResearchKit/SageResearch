@@ -72,6 +72,40 @@ open class RSDUIActionObject : RSDUIAction, Codable {
     }
 }
 
+public final class RSDSkipToUIActionObject : RSDUIActionObject, RSDSkipToUIAction {
+    
+    public let skipToIdentifier: String
+    
+    public init(buttonTitle: String, skipToIdentifier: String) {
+        self.skipToIdentifier = skipToIdentifier
+        super.init(buttonTitle: buttonTitle)
+    }
+    
+    public init(iconName: String, skipToIdentifier: String) {
+        self.skipToIdentifier = skipToIdentifier
+        super.init(iconName: iconName)
+    }
+    
+    // MARK: Codable implementation (auto synthesized implementation does not work with subclassing)
+    
+    private enum CodingKeys : String, CodingKey {
+        case skipToIdentifier
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.skipToIdentifier = try container.decode(String.self, forKey: .skipToIdentifier)
+        try super.init(from: decoder)
+    }
+    
+    open override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(skipToIdentifier, forKey: .skipToIdentifier)
+    }
+    
+}
+
 public final class RSDWebViewUIActionObject : RSDUIActionObject, RSDWebViewUIAction, RSDResourceTransformer {
     public let url: String
     public let resourceBundle: String?

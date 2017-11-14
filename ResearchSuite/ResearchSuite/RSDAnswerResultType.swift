@@ -40,6 +40,14 @@ public struct RSDAnswerResultType : Codable, Hashable, Equatable {
     public private(set) var unit: String?
     public private(set) var sequenceSeparator: String?
     
+    public static let boolean = RSDAnswerResultType(baseType: .boolean)
+    public static let data = RSDAnswerResultType(baseType: .data)
+    public static let date = RSDAnswerResultType(baseType: .date)
+    public static let decimal = RSDAnswerResultType(baseType: .decimal)
+    public static let integer = RSDAnswerResultType(baseType: .integer)
+    public static let string = RSDAnswerResultType(baseType: .string)
+    public static let timeInterval = RSDAnswerResultType(baseType: .timeInterval)
+    
     public init(baseType: BaseType, sequenceType: SequenceType? = nil, dateFormat: String? = nil, unit: String? = nil, sequenceSeparator: String? = nil) {
         self.baseType = baseType
         self.sequenceType = sequenceType

@@ -48,10 +48,10 @@ struct AnyCodingKey: CodingKey {
     }
 }
 
-public protocol RSDKeyedDecodingContainerExtension {
+public protocol RSDDecodingContainerExtension {
 }
 
-extension KeyedDecodingContainer : RSDKeyedDecodingContainerExtension {
+extension KeyedDecodingContainer : RSDDecodingContainerExtension {
     
     func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
         let container = try self.nestedContainer(keyedBy: AnyCodingKey.self, forKey: key)

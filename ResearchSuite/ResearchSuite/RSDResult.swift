@@ -62,7 +62,7 @@ public protocol RSDResult : Codable {
 /**
  A collection of results associated with a step or async action that may have more that one result.
  */
-public protocol RSDCollectionResult : RSDResult {
+public protocol RSDCollectionResult : RSDResult, RSDAnswerResultFinder {
     
     /**
      The list of input results associated with this step. These are generally assumed to be answers to field inputs, but they are not required to implement the `RSDAnswerResult` protocol.
@@ -70,10 +70,21 @@ public protocol RSDCollectionResult : RSDResult {
     var inputResults: [RSDResult] { get set }
 }
 
+extension RSDCollectionResult {
+    
+    public func findResult(with identifier: String) -> RSDResult? {
+        return self.inputResults.first(where: { $0.identifier == identifier })
+    }
+    
+    public func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
+        return self.findResult(with: identifier) as? RSDAnswerResult
+    }
+}
+
 /**
  A result associated with a task. This object includes a step history, task run UUID, schema identifier, and asynchronous results.
  */
-public protocol RSDTaskResult : RSDResult {
+public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder {
     
     /**
      A unique identifier for this task run.
@@ -96,28 +107,24 @@ public protocol RSDTaskResult : RSDResult {
     var asyncResults: [RSDResult]? { get set }
 }
 
-extension RSDTaskResult {
+extension RSDTaskResult  {
     
     public func findResult(for step: RSDStep) -> RSDResult? {
         return self.stepHistory.first(where: { $0.identifier == step.identifier })
     }
-}
-
-
-/**
- A result that can be described using a single value.
- */
-public protocol RSDAnswerResult : RSDResult {
     
-    /**
-     The answer type of the answer result. This includes coding information required to encode and decode the value. The value is expected to conform to one of the coding types supported by the answer type.
-     */
-    var answerType: RSDAnswerResultType { get }
+    public func findResult(with identifier: String) -> RSDResult? {
+        return self.stepHistory.first(where: { $0.identifier == identifier })
+    }
     
-    /**
-     The answer for the result.
-     */
-    var value: Any? { get set }
+    public func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
+        for result in stepHistory {
+            if let answerResult = (result as? RSDAnswerResultFinder)?.findAnswerResult(with: identifier) {
+                return answerResult
+            }
+        }
+        return nil
+    }
 }
 
 
@@ -136,4 +143,39 @@ public protocol RSDFileResult : RSDResult {
      */
     var startUptime: TimeInterval? { get }
 }
+
+
+/**
+ A result that can be described using a single value.
+ */
+public protocol RSDAnswerResult : RSDResult, RSDAnswerResultFinder {
+    
+    /**
+     The answer type of the answer result. This includes coding information required to encode and decode the value. The value is expected to conform to one of the coding types supported by the answer type.
+     */
+    var answerType: RSDAnswerResultType { get }
+    
+    /**
+     The answer for the result.
+     */
+    var value: Any? { get set }
+}
+
+public protocol RSDAnswerResultFinder {
+    
+    /**
+     Inspect this result and find the answer result with the given identifier.
+     */
+    func findAnswerResult(with identifier:String ) -> RSDAnswerResult?
+}
+
+extension RSDAnswerResult {
+    
+    public func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
+        return self.identifier == identifier ? self : nil
+    }
+}
+
+
+
 

@@ -84,27 +84,28 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         try super.init(from: decoder)
     }
     
-    override open func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        if let obj = separator {
-            try container.encode(obj, forKey: .separator)
-            
-        }
-        
-        var nestedContainer = container.nestedUnkeyedContainer(forKey: .choices)
-        for nestedChoices in choices {
-            let nestedEncoder = nestedContainer.superEncoder()
-            var innerContainer = nestedEncoder.unkeyedContainer()
-            for choice in nestedChoices {
-                guard let encodable = choice as? Encodable else {
-                    throw EncodingError.invalidValue(choice, EncodingError.Context(codingPath: innerContainer.codingPath, debugDescription: "The choice does not conform to the Encodable protocol"))
-                }
-                let innerEncoder = innerContainer.superEncoder()
-                try encodable.encode(to: innerEncoder)
-            }
-        }
-    }
+// TODO: syoung 11/14/2017 Implement Encodable protocol for the survey rules if there is a need to make this encodable.
+//    override open func encode(to encoder: Encoder) throws {
+//        try super.encode(to: encoder)
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//
+//        if let obj = separator {
+//            try container.encode(obj, forKey: .separator)
+//
+//        }
+//
+//        var nestedContainer = container.nestedUnkeyedContainer(forKey: .choices)
+//        for nestedChoices in choices {
+//            let nestedEncoder = nestedContainer.superEncoder()
+//            var innerContainer = nestedEncoder.unkeyedContainer()
+//            for choice in nestedChoices {
+//                guard let encodable = choice as? Encodable else {
+//                    throw EncodingError.invalidValue(choice, EncodingError.Context(codingPath: innerContainer.codingPath, debugDescription: "The choice does not conform to the Encodable protocol"))
+//                }
+//                let innerEncoder = innerContainer.superEncoder()
+//                try encodable.encode(to: innerEncoder)
+//            }
+//        }
+//    }
 }
 

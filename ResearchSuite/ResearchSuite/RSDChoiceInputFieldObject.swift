@@ -83,18 +83,19 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
         try super.init(from: decoder)
     }
     
-    override open func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(allowOther, forKey: .allowOther)
-
-        var nestedContainer = container.nestedUnkeyedContainer(forKey: .choices)
-        for choice in choices {
-            guard let encodable = choice as? Encodable else {
-                throw EncodingError.invalidValue(choice, EncodingError.Context(codingPath: nestedContainer.codingPath, debugDescription: "The choice does not conform to the Encodable protocol"))
-            }
-            let nestedEncoder = nestedContainer.superEncoder()
-            try encodable.encode(to: nestedEncoder)
-        }
-    }
+// TODO: syoung 11/14/2017 Implement Encodable protocol for the survey rules if there is a need to make this encodable.
+//    override open func encode(to encoder: Encoder) throws {
+//        try super.encode(to: encoder)
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//        try container.encode(allowOther, forKey: .allowOther)
+//
+//        var nestedContainer = container.nestedUnkeyedContainer(forKey: .choices)
+//        for choice in choices {
+//            guard let encodable = choice as? Encodable else {
+//                throw EncodingError.invalidValue(choice, EncodingError.Context(codingPath: nestedContainer.codingPath, debugDescription: "The choice does not conform to the Encodable protocol"))
+//            }
+//            let nestedEncoder = nestedContainer.superEncoder()
+//            try encodable.encode(to: nestedEncoder)
+//        }
+//    }
 }

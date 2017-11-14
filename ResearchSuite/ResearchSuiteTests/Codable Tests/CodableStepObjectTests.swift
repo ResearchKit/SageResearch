@@ -64,9 +64,11 @@ class CodableStepObjectTests: XCTestCase {
             "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
                          "cancel": { "iconName" : "closeX" },
                          "learnMore": { "iconName" : "infoIcon",
-                                        "url" : "fooInfo" }
+                                        "url" : "fooInfo" },
+                         "skip": { "buttonTitle" : "not applicable",
+                                    "skipToIdentifier": "boo"}
                         },
-            "shouldHideActions": ["goBackward", "learnMore", "skip"]
+            "shouldHideActions": ["goBackward", "skip"]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -95,9 +97,12 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual((learnMoreAction as? RSDUIActionObject)?.iconName, "infoIcon")
             XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.url, "fooInfo")
             
+            let skipAction = object.action(for: .navigation(.skip), on: object)
+            XCTAssertNotNil(skipAction)
+            XCTAssertEqual((skipAction as? RSDUIActionObject)?.buttonTitle, "not applicable")
+            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.skipToIdentifier, "boo")
+            
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
-            XCTAssertTrue(object.shouldHideAction(for: .navigation(.learnMore), on: object) ?? false)
-            XCTAssertTrue(object.shouldHideAction(for: .navigation(.skip), on: object) ?? false)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")

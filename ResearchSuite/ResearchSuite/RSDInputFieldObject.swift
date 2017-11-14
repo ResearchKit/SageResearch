@@ -33,7 +33,7 @@
 
 import Foundation
 
-open class RSDInputFieldObject : RSDInputField, Codable {
+open class RSDInputFieldObject : RSDSurveyInputField, Decodable {
     
     public private(set) var identifier: String
     
@@ -45,6 +45,8 @@ open class RSDInputFieldObject : RSDInputField, Codable {
     open var textFieldOptions: RSDTextFieldOptions?
     open var range: RSDRange?
     open var isOptional: Bool = false
+    
+    open var surveyRules: [RSDSurveyRule]?
     
     private var _formatter: Formatter?
     open var formatter: Formatter? {
@@ -68,7 +70,7 @@ open class RSDInputFieldObject : RSDInputField, Codable {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, prompt, placeholderText, dataType, uiHint, isOptional = "optional", textFieldOptions, range
+        case identifier, prompt, placeholderText, dataType, uiHint, isOptional = "optional", textFieldOptions, range, surveyRules
     }
     
     open class func dataType(from decoder: Decoder) throws -> RSDFormDataType {
@@ -144,29 +146,62 @@ open class RSDInputFieldObject : RSDInputField, Codable {
         self.prompt = try container.decodeIfPresent(String.self, forKey: .prompt)
         self.placeholderText = try container.decodeIfPresent(String.self, forKey: .placeholderText)
         self.isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? false
+        
+        if container.contains(.surveyRules) {
+            switch dataType.baseType {
+            case .boolean:
+                self.surveyRules = try container.decode([RSDComparableSurveyRuleObject<Bool>].self, forKey: .surveyRules)
+            case .string:
+                self.surveyRules = try container.decode([RSDComparableSurveyRuleObject<String>].self, forKey: .surveyRules)
+            case .date:
+                self.surveyRules = try container.decode([RSDComparableSurveyRuleObject<Date>].self, forKey: .surveyRules)
+            case .decimal:
+                self.surveyRules = try container.decode([RSDComparableSurveyRuleObject<Double>].self, forKey: .surveyRules)
+            case .integer, .year:
+                self.surveyRules = try container.decode([RSDComparableSurveyRuleObject<Int>].self, forKey: .surveyRules)
+            }
+        } else {
+            let rule: RSDSurveyRule?
+            switch dataType.baseType {
+            case .boolean:
+                rule = try? RSDComparableSurveyRuleObject<Bool>(from: decoder)
+            case .string:
+                rule = try? RSDComparableSurveyRuleObject<String>(from: decoder)
+            case .date:
+                rule = try? RSDComparableSurveyRuleObject<Date>(from: decoder)
+            case .decimal:
+                rule = try? RSDComparableSurveyRuleObject<Double>(from: decoder)
+            case .integer, .year:
+                rule = try? RSDComparableSurveyRuleObject<Int>(from: decoder)
+            }
+            if rule != nil {
+                self.surveyRules = [rule!]
+            }
+        }
     }
     
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.identifier, forKey: .identifier)
-        try container.encode(self.dataType, forKey: .dataType)
-        try container.encodeIfPresent(prompt, forKey: .prompt)
-        try container.encodeIfPresent(placeholderText, forKey: .placeholderText)
-        try container.encodeIfPresent(uiHint, forKey: .uiHint)
-        if let obj = self.range {
-            let nestedEncoder = container.superEncoder(forKey: .range)
-            guard let encodable = obj as? Encodable else {
-                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "The range does not conform to the Encodable protocol"))
-            }
-            try encodable.encode(to: nestedEncoder)
-        }
-        if let obj = self.textFieldOptions {
-            let nestedEncoder = container.superEncoder(forKey: .textFieldOptions)
-            guard let encodable = obj as? Encodable else {
-                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "The textFieldOptions does not conform to the Encodable protocol"))
-            }
-            try encodable.encode(to: nestedEncoder)
-        }
-        try container.encode(isOptional, forKey: .isOptional)
-    }
+// TODO: syoung 11/14/2017 Implement Encodable protocol for the survey rules if there is a need to make this encodable.
+//    public func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//        try container.encode(self.identifier, forKey: .identifier)
+//        try container.encode(self.dataType, forKey: .dataType)
+//        try container.encodeIfPresent(prompt, forKey: .prompt)
+//        try container.encodeIfPresent(placeholderText, forKey: .placeholderText)
+//        try container.encodeIfPresent(uiHint, forKey: .uiHint)
+//        if let obj = self.range {
+//            let nestedEncoder = container.superEncoder(forKey: .range)
+//            guard let encodable = obj as? Encodable else {
+//                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "The range does not conform to the Encodable protocol"))
+//            }
+//            try encodable.encode(to: nestedEncoder)
+//        }
+//        if let obj = self.textFieldOptions {
+//            let nestedEncoder = container.superEncoder(forKey: .textFieldOptions)
+//            guard let encodable = obj as? Encodable else {
+//                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "The textFieldOptions does not conform to the Encodable protocol"))
+//            }
+//            try encodable.encode(to: nestedEncoder)
+//        }
+//        try container.encode(isOptional, forKey: .isOptional)
+//    }
 }

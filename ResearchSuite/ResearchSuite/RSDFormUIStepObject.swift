@@ -33,9 +33,21 @@
 
 import Foundation
 
-open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep {
+open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNavigationStep {
 
     open private(set) var inputFields: [RSDInputField]
+    
+    open var skipToIfNil: String? {
+        guard let skipAction = self.action(for: .navigation(.skip), on: self) as? RSDSkipToUIAction
+            else {
+                return nil
+        }
+        return skipAction.skipToIdentifier
+    }
+    
+    open override func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
+        return self.evaluateSurveyRules(with: result, isPeeking: isPeeking) ?? self.nextStepIdentifier
+    }
     
     public init(identifier: String, inputFields: [RSDInputField], type: String? = nil) {
         self.inputFields = inputFields
@@ -68,19 +80,6 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep {
         
         try super.init(from: decoder)
     }
-
-//    TODO: syoung 11/01/2017 Implement encoding if we ever decide we need to support it.
-//    open override func encode(to encoder: Encoder) throws {
-//        try super.encode(to: encoder)
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        var nestedContainer = container.nestedUnkeyedContainer(forKey: .inputFields)
-//        for inputField in inputFields {
-//            if let field = inputField as? Encodable {
-//                let nestedEncoder = nestedContainer.superEncoder()
-//                try field.encode(to: nestedEncoder)
-//            }
-//        }
-//    }
     
     open override func instantiateStepResult() -> RSDResult {
         return RSDCollectionResultObject(identifier: self.identifier)

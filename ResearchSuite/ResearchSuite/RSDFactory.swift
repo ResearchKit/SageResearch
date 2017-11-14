@@ -371,10 +371,15 @@ open class RSDFactory {
      
      @return            The UI action created from this decoder.
      */
-    open func decodeUIAction(from decoder:Decoder) throws -> RSDUIAction {
+    open func decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
         // check if the decoder can be used to decode a web-based action
-        if let webAction = try? RSDWebViewUIActionObject(from: decoder) {
+        if actionType == .navigation(.learnMore) || actionType.customAction != nil,
+            let webAction = try? RSDWebViewUIActionObject(from: decoder) {
             return webAction
+        }
+        // check if the decoder can be used to decode a web-based action
+        if actionType == .navigation(.skip), let skipAction = try? RSDSkipToUIActionObject(from: decoder) {
+            return skipAction
         }
         return try RSDUIActionObject(from: decoder)
     }

@@ -67,6 +67,17 @@ public protocol RSDWebViewUIAction : RSDUIAction {
     var resourceBundle: String? { get }
 }
 
+/**
+ `RSDSkipToUIAction` implements an extension of the base protocol where the action includes a identifier for a step to skip to if this action is called.
+ */
+public protocol RSDSkipToUIAction : RSDUIAction {
+    
+    /**
+     The identifier for the step to if the action is called.
+     */
+    var skipToIdentifier: String { get }
+}
+
 
 /**
  The action handler implements the custom actions of the step.
