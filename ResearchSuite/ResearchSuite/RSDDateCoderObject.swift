@@ -38,29 +38,33 @@ import Foundation
  */
 public struct RSDDateCoderObject : RSDDateCoder {
     
-    public private(set) var formatter: DateFormatter
-    public private(set) var calendarComponents: Set<Calendar.Component>
-    public private(set) var calendar: Calendar
+    public let resultFormatter: DateFormatter
+    public let inputFormatter: DateFormatter
+    public let calendarComponents: Set<Calendar.Component>
+    public let calendar: Calendar
     
     public init() {
-        let (formatter, components, calendar) = RSDDateCoderObject.getProperties(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")!
-        self.formatter = formatter
-        self.calendar = calendar
+        let (inputFormatter, resultFormatter, components, calendar) = RSDDateCoderObject.getProperties(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")!
+        self.resultFormatter = resultFormatter
+        self.inputFormatter = inputFormatter
         self.calendarComponents = components
+        self.calendar = calendar
     }
     
     public init?(format: String) {
-        guard let (formatter, components, calendar) = RSDDateCoderObject.getProperties(format: format)
+        guard let (inputFormatter, resultFormatter, components, calendar) = RSDDateCoderObject.getProperties(format: format)
             else {
                 return nil
         }
-        self.formatter = formatter
-        self.calendar = calendar
+        self.resultFormatter = resultFormatter
+        self.inputFormatter = inputFormatter
         self.calendarComponents = components
+        self.calendar = calendar
     }
     
-    public init(formatter: DateFormatter, calendarComponents: Set<Calendar.Component>, calendar: Calendar) {
-        self.formatter = formatter
+    public init(resultFormatter: DateFormatter, inputFormatter: DateFormatter, calendarComponents: Set<Calendar.Component>, calendar: Calendar) {
+        self.resultFormatter = resultFormatter
+        self.inputFormatter = inputFormatter
         self.calendarComponents = calendarComponents
         self.calendar = calendar
     }
@@ -68,31 +72,44 @@ public struct RSDDateCoderObject : RSDDateCoder {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let format = try container.decode(String.self)
-        guard let (formatter, components, calendar) = RSDDateCoderObject.getProperties(format: format)
+        guard let (inputFormatter, resultFormatter, components, calendar) = RSDDateCoderObject.getProperties(format: format)
             else {
                 throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to get the calendar components from the decoded format \(format)"))
         }
-        self.formatter = formatter
+        self.resultFormatter = resultFormatter
+        self.inputFormatter = inputFormatter
         self.calendarComponents = components
         self.calendar = calendar
     }
     
-    fileprivate static func getProperties(format: String) -> (DateFormatter, Set<Calendar.Component>, Calendar)? {
+    fileprivate static func getProperties(format: String) -> (inputFormatter: DateFormatter, resultFormatter: DateFormatter, Set<Calendar.Component>, Calendar)? {
         let calendar = Calendar(identifier: .gregorian)
         let components = calendar.calendarComponents(from: format)
         guard components.count > 0 else {
             return nil
         }
-        let formatter = DateFormatter()
-        formatter.dateFormat = format
-        formatter.locale = Locale(identifier: "en_US_POSIX")
         
-        return (formatter, components, calendar)
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = format
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        let resultFormatter: DateFormatter
+        let hasDateComponents = components.intersection([.year, .month, .day]).count > 0
+        let hasTimeComponents = components.intersection([.hour, .minute, .second]).count > 0
+        if hasDateComponents && hasTimeComponents {
+            resultFormatter = RSDClassTypeMap.shared.timestampFormatter
+        } else if hasTimeComponents {
+            resultFormatter = RSDClassTypeMap.shared.timeOnlyFormatter
+        } else {
+            resultFormatter = RSDClassTypeMap.shared.dateOnlyFormatter
+        }
+        
+        return (inputFormatter, resultFormatter, components, calendar)
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        try container.encode(self.formatter.dateFormat)
+        try container.encode(self.inputFormatter.dateFormat)
     }
 }
 
