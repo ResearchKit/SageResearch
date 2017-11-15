@@ -83,7 +83,6 @@
 		FF87CD891F84354A00084426 /* FactoryTest_TaskGroup.json in Resources */ = {isa = PBXBuildFile; fileRef = FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */; };
 		FF87CD8A1F84354E00084426 /* FactoryTest_TaskFoo.json in Resources */ = {isa = PBXBuildFile; fileRef = FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */; };
 		FF87CD8C1F844CE400084426 /* RSDFormUIHint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD8B1F844CE400084426 /* RSDFormUIHint.swift */; };
-		FF87CD8E1F84533C00084426 /* RSDUIActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD8D1F84533B00084426 /* RSDUIActionType.swift */; };
 		FF8827E91F8DE8CD00CEFDF0 /* RSDTaskResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8827E81F8DE8CD00CEFDF0 /* RSDTaskResultObject.swift */; };
 		FF8A21511F7CB11800C7B27F /* Array+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8A214F1F7CB11800C7B27F /* Array+Utilities.swift */; };
 		FF8A21541F7CB17D00C7B27F /* SequenceType+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */; };
@@ -203,7 +202,6 @@
 		FF87CD851F8413F700084426 /* FactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryTests.swift; sourceTree = "<group>"; };
 		FF87CD871F84149400084426 /* RSDResourceWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceWrapper.swift; sourceTree = "<group>"; };
 		FF87CD8B1F844CE400084426 /* RSDFormUIHint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIHint.swift; sourceTree = "<group>"; };
-		FF87CD8D1F84533B00084426 /* RSDUIActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionType.swift; sourceTree = "<group>"; };
 		FF8827E81F8DE8CD00CEFDF0 /* RSDTaskResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskResultObject.swift; sourceTree = "<group>"; };
 		FF8A214F1F7CB11800C7B27F /* Array+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Utilities.swift"; sourceTree = "<group>"; };
 		FF8A21531F7CB17D00C7B27F /* SequenceType+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SequenceType+Utilities.swift"; sourceTree = "<group>"; };
@@ -277,7 +275,6 @@
 				FF80B1381F7C244200582849 /* RSDIdentifier.swift */,
 				FFCCA7051F9FAD67009BC24C /* RSDInputFieldError.swift */,
 				FF8E5F441F8C36F400611C23 /* RSDTaskPath.swift */,
-				FF87CD8D1F84533B00084426 /* RSDUIActionType.swift */,
 				FF80B13C1F7C582500582849 /* RSDValidationError.swift */,
 			);
 			name = Common;
@@ -311,6 +308,7 @@
 				FF74A7CE1F7D63D40064A634 /* RSDImageWrapper.swift */,
 				FFD1A2891F8818A700ECD730 /* RSDDateCoderObject.swift */,
 				FF87CD871F84149400084426 /* RSDResourceWrapper.swift */,
+				FF2DD5021FA1101700ECD614 /* RSDResourceTransformerObject.swift */,
 				FF80B11F1F7B01E200582849 /* RSDJSONValue.swift */,
 				FFFCBCE11F900449000B55C1 /* RSDStringLiteralOptionSet.swift */,
 				FF1561FA1F940E8A0036998E /* Codable+Utilities.swift */,
@@ -482,7 +480,6 @@
 			isa = PBXGroup;
 			children = (
 				FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */,
-				FF2DD5021FA1101700ECD614 /* RSDResourceTransformerObject.swift */,
 				FF72B2551F685F6D004C6F15 /* Protocol */,
 				FFB015CD1F8BF0A900AC209B /* AsyncAction */,
 				FF5C4C301F8C9D9600F311BA /* Result */,
@@ -713,7 +710,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF87CD8E1F84533C00084426 /* RSDUIActionType.swift in Sources */,
 				FF8A215B1F7CBE8700C7B27F /* RSDTaskInfoStepObject.swift in Sources */,
 				FF2DD5051FA114F200ECD614 /* RSDTaskTransformer.swift in Sources */,
 				FF1561FB1F940E8A0036998E /* Codable+Utilities.swift in Sources */,

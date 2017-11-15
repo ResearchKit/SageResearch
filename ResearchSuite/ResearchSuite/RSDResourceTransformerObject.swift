@@ -33,6 +33,9 @@
 
 import Foundation
 
+/// `RSDResourceTransformerObject` is a concrete implementation of a codable resource
+/// transformer. The transformer can be used to create an object decoded from an
+/// embedded resource.
 public struct RSDResourceTransformerObject : Codable {
     public let resourceName: String
     public let resourceBundle: String?

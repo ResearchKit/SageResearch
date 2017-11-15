@@ -33,119 +33,107 @@
 
 import Foundation
 
-/**
- Define the navigation rule as a protocol to allow for protocol-oriented extention (multiple inheritance).
- Currently defined usage is to allow the SBANavigableOrderedTask to check if a step has a navigation rule.
- */
+/// Define the navigation rule as a protocol to allow for protocol-oriented extention (multiple inheritance).
+/// Currently defined usage is to allow the `RSDConditionalStepNavigator` to check if a step has a navigation
+/// rule and apply as necessary.
 public protocol RSDNavigationRule : RSDStep {
     
-    /**
-     Identifier for the next step to navigate to based on the current task result and the conditional rule associated with this task.
-     
-     @param result              The current task result.
-     @param conditionalRule     The conditional rule associated with this task.
-     @param isPeeking           Is this navigation rule being called on a result for a step that is navigating forward or is it a step navigator that is peeking at the next step to setup UI display? If peeking at the next step then this parameter will be `true`.
-     
-     @return                    The identifier of the next step.
-     */
+    /// Identifier for the next step to navigate to based on the current task result and the conditional
+    /// rule associated with this task.
+    ///
+    /// - parameters:
+    ///     - result:           The current task result.
+    ///     - conditionalRule:  The conditional rule associated with this task.
+    ///     - isPeeking:        Is this navigation rule being called on a result for a step that is navigating
+    ///                         forward or is it a step navigator that is peeking at the next step to setup UI
+    ///                         display? If peeking at the next step then this parameter will be `true`.
+    /// - returns: The identifier of the next step.
     func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?, isPeeking: Bool) -> String?
 }
 
-/**
- A navigation skip rule applies to this step to allow that step to be skipped.
- */
+/// A navigation skip rule applies to this step to allow that step to be skipped.
 public protocol RSDNavigationSkipRule : RSDStep {
     
-    /**
-     Should this step be skipped based on the current task result and the conditional rule associated with this task?
-     
-     @param result              The current task result.
-     @param conditionalRule     The conditional rule associated with this task.
-     
-     @return                    `true` if the step should be skipped, otherwise `no`.
-     */
-    func shouldSkipStep(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?) -> Bool
+    /// Should this step be skipped based on the current task result and the conditional rule associated with
+    /// this task?
+    ///
+    /// - parameters:
+    ///     - result:           The current task result.
+    ///     - conditionalRule:  The conditional rule associated with this task.
+    ///     - isPeeking:        Is this navigation rule being called on a result for a step that is navigating
+    ///                         forward or is it a step navigator that is peeking at the next step to setup UI
+    ///                         display? If peeking at the next step then this parameter will be `true`.
+    /// - returns: `true` if the step should be skipped, otherwise `no`.
+    func shouldSkipStep(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?, isPeeking: Bool) -> Bool
 }
 
-/**
- A navigation back rule applies to this step to block backward navigation.
- */
+/// A navigation back rule applies to this step to block backward navigation.
 public protocol RSDNavigationBackRule : RSDStep {
     
-    /**
-     Should this step show a back button to allow backward navigation?
-     
-     @param result              The current task result.
-     @param conditionalRule     The conditional rule associated with this task.
-     
-     @return                    `true` if the backward navigation is allowed, otherwise `no`.
-     */
+    /// Should this step show a back button to allow backward navigation?
+    ///
+    /// - parameters:
+    ///     - result:           The current task result.
+    ///     - conditionalRule:  The conditional rule associated with this task.
+    /// - returns: `true` if the backward navigation is allowed, otherwise `no`.
     func allowsBackNavigation(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?) -> Bool
 }
 
-/**
- A conditional rule is appended to the navigable task to check a secondary source for whether or not the
- step should be displayed.
- */
+/// A conditional rule is appended to the navigable task to check a secondary source for whether or not the
+/// step should be displayed.
+///
+/// - note: `ResearchSuite does not currently implement any conditional rule objects. The conditional rule is
+///         included here for future implementation of data tracking across runs of a task. (syoung 10/03/2017)
 public protocol RSDConditionalRule {
     
-    /**
-     Should the given step be skipped, based on the current result set?
-
-     @param step                The step about to be displayed.
-     @param result              The current task result.
-     
-     @return                    `true` if the step should be skipped, otherwise `no`.
-     */
+    /// Should the given step be skipped, based on the current result set?
+    ///
+    /// - parameters:
+    ///     - step:     The step about to be displayed.
+    ///     - result:   The current task result.
+    /// - returns: `true` if the step should be skipped, otherwise `no`.
     func shouldSkip(step: RSDStep, with result: RSDTaskResult?) -> Bool
     
-    /**
-     Asks the conditional rule what the next identifier is for the step to display after the previous step.
-     
-     @param step        The step that just finished.
-     @param result      The current task result.
-     
-     @return            The identifier of the next step.
-     */
+    /// Asks the conditional rule what the next identifier is for the step to display after the previous step.
+    ///
+    /// - parameters:
+    ///     - step:     The step that just finished.
+    ///     - result:   The current task result.
+    /// - returns: The identifier of the next step.
     func nextStepIdentifier(after step: RSDStep?, with result: RSDTaskResult?) -> String?
     
-    /**
-     Allows the conditional rule to mutate or replace the step that the navigation rules determine should be the return step.
-     
-     @param step    The step that navigation has opted to return.
-     @param result  The current task result.
-     
-     @return        The actual step to move to. If no action, then `step` should be returned.
-     */
+    /// Allows the conditional rule to mutate or replace the step that the navigation rules determine should be
+    /// the return step.
+    ///
+    /// - parameters:
+    ///     - step:     The step that navigation has opted to return.
+    ///     - result:   The current task result.
+    /// - returns: The actual step to move to. If no action, then `step` should be returned.
     func replacementStep(for step:RSDStep?, with result: RSDTaskResult?) -> RSDStep?
 }
 
-/**
- Implementation of a step navigator that will apply conditions and navigation based on the steps, navigation rules and conditional rules associated with this navigator.
- */
-public protocol RSDConditionalStepNavigator : RSDStepNavigator {
+/// Implementation of a step navigator that will apply conditions and navigation based on the steps, navigation rules
+/// and conditional rules associated with this navigator.
+public protocol RSDConditionalStepNavigator : RSDStepNavigator, RSDStepValidator {
     
-    /**
-     An ordered list of steps to run for this task.
-     */
+    /// An ordered list of steps to run for this task.
     var steps : [RSDStep] { get }
     
-    /**
-     A conditional rule to optionally associate with this step navigator.
-     */
+    /// A conditional rule to optionally associate with this step navigator.
     var conditionalRule : RSDConditionalRule? { get }
     
-    /**
-     A list of step markers to use for calculating progress. If defined, progress is calculated counting only those steps that are included in the progress markers rather than inspecting the step array.
-     */
+    /// A list of step markers to use for calculating progress. If defined, progress is calculated counting only
+    /// those steps that are included in the progress markers rather than inspecting the step array.
     var progressMarkers : [String]? { get }
 }
 
-/**
- Extend the conditional step navigator to implement the step navigation using the ordered list of steps and the conditional rule.
- */
+/// Extend the conditional step navigator to implement the step navigation using the ordered list of steps and the
+/// conditional rule.
 extension RSDConditionalStepNavigator {
     
+    /// Returns the step associated with a given identifier.
+    /// - parameter identifier:  The identifier for the step.
+    /// - returns: The step with this identifier or nil if not found.
     public func step(with identifier: String) -> RSDStep? {
         return self.steps.first(where: { $0.identifier == identifier })
     }
@@ -162,6 +150,12 @@ extension RSDConditionalStepNavigator {
         return nextStepIdentifier
     }
     
+    /// Should the task exit early from the entire task?
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: `true` if the task view controller should exit.
     public func shouldExit(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
         guard let nextIdentifier = _nextStepIdentifier(after: step, with: result, isPeeking: false)
             else {
@@ -170,16 +164,38 @@ extension RSDConditionalStepNavigator {
         return nextIdentifier == RSDIdentifier.exit
     }
     
+    /// Is there a step after the current step with the given result.
+    ///
+    /// - note: the result may not include a result for the current step.
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: `true` if the task view controller should show a next button.
     public func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
         var temp = result
         return _step(after: step, with: &temp, isPeeking: true) != nil
     }
 
+    /// Is there a step before the current step with the given result.
+    ///
+    /// - note: the result may not include a result for the current step.
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: `true` if the task view controller should show a back button.
     public func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool {
         var temp = result
         return self.step(before: step, with: &temp) != nil
     }
     
+    /// Return the step to go to after completing the given step.
+    ///
+    /// - parameters:
+    ///     - step:    The previous step or nil if this is the first step.
+    ///     - result:  The current result set for this task.
+    /// - returns: The next step to display or nil if this is the end of the task.
     public func step(after step: RSDStep?, with result: inout RSDTaskResult) -> RSDStep? {
         return _step(after: step, with: &result, isPeeking: false)
     }
@@ -214,7 +230,7 @@ extension RSDConditionalStepNavigator {
             // Check if this is a skipable step
             shouldSkip = (returnStep != nil) && (conditionalRule?.shouldSkip(step: returnStep!, with: result) ?? false)
             if !shouldSkip, let navigationSkipStep = returnStep as? RSDNavigationSkipRule {
-                shouldSkip = navigationSkipStep.shouldSkipStep(with: result, conditionalRule: conditionalRule)
+                shouldSkip = navigationSkipStep.shouldSkipStep(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking)
             }
             if (shouldSkip) {
                 previousStep = returnStep
@@ -230,6 +246,12 @@ extension RSDConditionalStepNavigator {
         return returnStep
     }
     
+    /// Return the step to go to before the given step.
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: The previous step or nil if the task does not support backward navigation.
     public func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep? {
         
         // Check if this step does not allow backwards navigation.
@@ -248,6 +270,15 @@ extension RSDConditionalStepNavigator {
         return beforeStep
     }
     
+    /// Return the progress through the task for a given step with the current result.
+    ///
+    /// - parameters:
+    ///     - step:         The current step.
+    ///     - result:       The current result set for this task.
+    /// - returns:
+    ///     - current:      The current progress. This indicates progress within the task.
+    ///     - total:        The total number of steps.
+    ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation)
     public func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)? {
         if let markers = self.progressMarkers {
             // Get the list of steps that have been shown and add the step under test in case this is

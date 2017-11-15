@@ -33,31 +33,39 @@
 
 import Foundation
 
-/**
- The task transformer is a lightweight protocol for vending a task.
- */
+/// `RSDTaskTransformer` The task transformer is a lightweight protocol for vending a task. This can be used by
+/// an `RSDTaskInfoStep` to fetch a task or depending upon the design of the application, it could be used to
+/// fetch a task that is loaded from a table or collection view before presenting the task.
 public protocol RSDTaskTransformer {
     
-    /**
-     The estimated time to fetch the task. This can be used by the UI to determine whether or not to display a loading state while fetching the task. If `0` then the task is assumed to be cached on the device.
-     */
+    /// The estimated time to fetch the task. This can be used by the UI to determine whether or not to
+    /// display a loading state while fetching the task. If `0` then the task is assumed to be cached on the device.
     var estimatedFetchTime: TimeInterval { get }
     
-    /**
-     Fetch the task for this task info. Use the given factory to transform the task.
-     
-     @param factory     The factory to use for creating the task and steps.
-     @param taskInfo    The task info for the task (if applicable).
-     @param schemaInfo  The schema info for the task (if applicable).
-     @param callback    The callback with the task or an error if the task failed, run on the main thread.
-     */
+    /// Fetch the task for this task info. Use the given factory to transform the task.
+    ///
+    /// - parameters:
+    ///     - factory:     The factory to use for creating the task and steps.
+    ///     - taskInfo:    The task info for the task (if applicable).
+    ///     - schemaInfo:  The schema info for the task (if applicable).
+    ///     - callback:    The callback with the task or an error if the task failed, run on the main thread.
     func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
 }
 
+/// `RSDTaskResourceTransformer` is an implementation of a `RSDTaskTransformer` that uses a `RSDResourceTransformer`
+/// to support transforming a resource either using an online URL or an embedded file.
 public protocol RSDTaskResourceTransformer : RSDTaskTransformer, RSDResourceTransformer {
 }
 
 extension RSDTaskResourceTransformer {
+    
+    /// Fetch the task for this task info. Use the given factory to transform the task.
+    ///
+    /// - parameters:
+    ///     - factory:     The factory to use for creating the task and steps.
+    ///     - taskInfo:    The task info for the task (if applicable).
+    ///     - schemaInfo:  The schema info for the task (if applicable).
+    ///     - callback:    The callback with the task or an error if the task failed, run on the main thread.
     public func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
         DispatchQueue.global().async {
             do {

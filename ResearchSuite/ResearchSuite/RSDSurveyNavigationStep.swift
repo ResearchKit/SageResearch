@@ -33,32 +33,49 @@
 
 import Foundation
 
-/**
- `RSDSurveyNavigationStep` evaluates `RSDSurveyRule` objects that are associated with each input field to determine if the step navigation should skip to another step.
- */
+/// `RSDSurveyNavigationStep` evaluates `RSDSurveyRule` objects that are associated with each input field to determine
+/// if the step navigation should skip to another step.
 public protocol RSDSurveyNavigationStep : RSDNavigationRule {
     
-    /**
-     Identifier to skip to if all input fields have nil answers.
-     */
+    /// Identifier to skip to if all input fields have nil answers.
     var skipToIfNil: String? { get }
     
-    /**
-     The input fields to test as a part of this navigation.
-     */
+    /// The input fields to test as a part of this navigation.
     var inputFields: [RSDInputField] { get }
 }
 
+/// `RSDSurveyInputField` extends the `RSDInputField` protocol to also support an array of `RSDSurveyRule` objects.
+/// These rules are evaluated on the `RSDAnswerResult` given for this input field and if they evaluate to `true`
+/// then they are used to return the next identifier.
 public protocol RSDSurveyInputField : RSDInputField {
 
-    /**
-     A list of survey rules associated with this input field.
-     */
+    /// A list of survey rules associated with this input field.
     var surveyRules: [RSDSurveyRule]? { get }
 }
 
 extension RSDSurveyNavigationStep {
 
+    /// Evaluate the survey rules for the given task result and return the next identifier.
+    ///
+    /// This method inspects all the survey rules and will return a value under the following
+    /// conditions:
+    ///
+    ///   * If all the results are `nil` and `isPeeking` equals `false`, then it will return
+    ///     the value of `skipToIfNil`
+    ///   * If one and only one skip identifier is returned by the evaluated survey rules.
+    ///
+    /// - note: `RSDSurveyNavigationStep` extends `RSDNavigationRule` but does not implement the
+    ///         `nextStepIdentifier()` method because that will allow for additional customization
+    ///         by the step that is implementing this protocol.
+    ///
+    /// - seealso: `RSDFormUIStepObject` for an example implementation.
+    ///
+    /// - parameters:
+    ///     - result:       The task result to evaluate.
+    ///     - isPeeking:    Is this navigation rule being called on a result for a step that is navigating
+    ///                     forward or is it a step navigator that is peeking at the next step to setup UI
+    ///                     display? If peeking at the next step then this parameter will be `true`.
+    /// - returns: The identifier for the step to skip to if the rules are `true`.
     public func evaluateSurveyRules(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
         // Do not apply rules when the navigation is only peaking
         guard !isPeeking else { return nil }

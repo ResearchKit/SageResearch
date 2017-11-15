@@ -78,37 +78,4 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     }
 }
 
-/**
- Extend the 
- */
-extension RSDSectionStep {
-    
-    public var conditionalRule : RSDConditionalRule? {
-        return nil
-    }
-    
-    public var taskInfo: RSDTaskInfoStep? {
-        return nil
-    }
-    
-    public var schemaInfo: RSDSchemaInfo? {
-        return nil
-    }
-    
-    public var stepNavigator: RSDStepNavigator {
-        return self
-    }
-    
-    public var asyncActions: [RSDAsyncActionConfiguration]? {
-        return nil
-    }
-    
-    public func instantiateTaskResult() -> RSDTaskResult {
-        let result = self.instantiateStepResult()
-        guard let taskResult = result as? RSDTaskResult else {
-            assertionFailure("Expected that a section step will return a result that conforms to RSDTaskResult protocol.")
-            return RSDTaskResultObject(identifier: identifier)
-        }
-        return taskResult
-    }
-}
+

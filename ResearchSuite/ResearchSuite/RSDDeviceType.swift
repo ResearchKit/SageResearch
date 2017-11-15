@@ -66,7 +66,7 @@ public enum RSDDeviceType {
     case custom(String)
 }
 
-extension RSDDeviceType: RawRepresentable {
+extension RSDDeviceType: RawRepresentable, Codable {
     public typealias RawValue = String
     
     public init?(rawValue: RawValue) {

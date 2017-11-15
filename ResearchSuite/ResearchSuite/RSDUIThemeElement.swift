@@ -33,101 +33,102 @@
 
 import Foundation
 
+/// `RSDUIThemeElement` is used to tell the application UI view controllers how to style a given step.
 public protocol RSDUIThemeElement {
     
-    /**
-     The resource bundle to use for fetching the theme elements.
-     */
+    /// The resource bundle to use for fetching the theme elements.
     var bundle: Bundle? { get }
 }
 
+/// `RSDDecodableBundleInfo` is a convenienceprotocol for getting a bundle from a bundle identifier.
 public protocol RSDDecodableBundleInfo {
+    
+    /// The bundle identifier.
     var bundleIdentifier : String? { get }
 }
 
 extension RSDDecodableBundleInfo {
+    
+    /// The bundle returned for the given `bundleIdentifier`.
     public var bundle: Bundle? {
         guard let identifier = bundleIdentifier else { return nil }
         return Bundle(identifier: identifier)
     }
 }
 
+/// `RSDViewThemeElement` tells the UI where to find the view controller to use when instantiating the
+/// `RSDStepController`.
 public protocol RSDViewThemeElement : RSDUIThemeElement {
     
-    /**
-     The storyboard view controller identifier or the nib name for this view controller.
-     */
+    /// The storyboard view controller identifier or the nib name for this view controller.
     var viewIdentifier: String { get }
     
-    /**
-     If the storyboard identifier is non-nil then the view is assumed to be accessible within the storyboard via the `viewIdentifier`.
-     */
+    /// If the storyboard identifier is non-nil then the view is assumed to be accessible within the storyboard
+    /// via the `viewIdentifier`.
     var storyboardIdentifier: String? { get }
 }
 
+/// `RSDColorThemeElement` tells the UI what the background color and foreground color are for a given view as
+/// well as whether or not the foreground elements should use "light style".
 public protocol RSDColorThemeElement : RSDUIThemeElement {
     
-    /**
-     The background color for this step. If undefined then the background color appropriate to the light style will be used.
-     */
+    /// The background color for this step. If undefined then the background color appropriate to the light
+    /// style will be used.
     func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor?
     
-    /**
-     The foreground color for this step. If undefined then the foreground color appropriate to the light style will be used.
-     */
+    /// The foreground color for this step. If undefined then the foreground color appropriate to the light
+    /// style will be used.
     func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor?
     
-    /**
-     Hint for whether or not the view uses light style for things like the progress bar and navigation buttons.
-     */
+    /// Hint for whether or not the view uses light style for things like the progress bar and navigation buttons.
     var usesLightStyle: Bool { get }
 }
 
+/// A hint as to where the UI should place an image.
 public enum RSDImagePlacementType : String, Codable {
+    
+    /// Smaller presentation of an icon image before the content.
     case iconBefore
+    
+    /// Smaller presentation of an icon image after the content.
     case iconAfter
+    
+    /// Fullsize in the background.
     case fullsizeBackground
+    
+    /// Top half of the background.
     case topBackground
 }
 
-/**
- Extends the UI step to include static images.
- */
+/// `RSDImageThemeElement` extends the UI step to include an image.
 public protocol RSDImageThemeElement : RSDUIThemeElement, RSDResizableImage {
     
-    /**
-     The preferred placement of the image. Default placement is `iconBefore` if undefined.
-     */
+    /// The preferred placement of the image. Default placement is `iconBefore` if undefined.
     var placementType: RSDImagePlacementType? { get }
     
-    /**
-     The image size. If undefined then default sizing will be used.
-     */
+    /// The image size. If undefined then default sizing will be used.
     var size: CGSize? { get }
 }
 
+/// `RSDFetchableImageThemeElement` defines an image that can be fetched asynchronously.
 public protocol RSDFetchableImageThemeElement : RSDImageThemeElement {
     
-    /**
-     A method for fetching the image.
-     
-     @param size        The size of the image to return.
-     @param callback    The callback with the image, run on the main thread.
-     */
+    /// A method for fetching the image.
+    ///
+    /// - parameters:
+    ///     - size:        The size of the image to return.
+    ///     - callback:    The callback with the image, run on the main thread.
     func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
 
+/// `RSDAnimatedImageThemeElement` defines a series of images that can be animated.
 public protocol RSDAnimatedImageThemeElement : RSDImageThemeElement {
     
-    /**
-     The animation duration.
-     */
+    /// The animation duration.
     var animationDuration: TimeInterval { get }
     
-    /**
-     The animated images to display.
-     @param traitCollection     The trait collection
-     @return                    The images for this step.
-     */
+    /// The animated images to display.
+    /// - parameter traitCollection: The trait collection
+    /// - returns: The images for this step.
     func images(compatibleWith traitCollection: UITraitCollection?) -> [UIImage]
 }

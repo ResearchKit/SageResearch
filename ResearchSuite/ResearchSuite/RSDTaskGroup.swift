@@ -33,33 +33,27 @@
 
 import Foundation
 
+/// `RSDTaskGroup` defines a subgrouping of tasks.  This is used in UI presentations where
+/// the researchers wish to tie a group of activities and surveys together but allow the
+/// user to perform them non-sequentially or with a break between the activities.
 public protocol RSDTaskGroup {
     
-    /**
-     A short string that uniquely identifies the task group.
-     */
+    /// A short string that uniquely identifies the task group.
     var identifier: String { get }
     
-    /**
-     A list of the task references included in this group.
-     */
+    /// A list of the task references included in this group.
     var tasks: [RSDTaskInfoStep] { get }
     
-    /**
-     The primary text to display for the task group in a localized string.
-     */
+    /// The primary text to display for the task group in a localized string.
     var title: String? { get }
     
-    /**
-     Additional detail text to display for the task group in a localized string.
-     */
+    /// Additional detail text to display for the task group in a localized string.
     var detail: String? { get }
     
-    /**
-     An icon image that can be used for displaying the task group.
-     
-     @param size        The size of the image to return.
-     @param callback    The callback with the image, run on the main thread.
-     */
+    /// An icon image that can be used for displaying the task group.
+    ///
+    /// - parameters:
+    ///     - size:        The size of the image to return.
+    ///     - callback:    The callback with the image, run on the main thread.
     func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }

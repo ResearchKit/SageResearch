@@ -33,51 +33,47 @@
 
 import Foundation
 
-/**
- This is the interface for running a task. It includes information about how to calculate progress, validation, and the order of display for the steps.
- */
+/// `RSDTask` is the interface for running a task. It includes information about how to calculate progress,
+/// validation, and the order of display for the steps.
+///
+/// - seealso: `RSDTaskController` and `RSDTaskInfoStep`
 public protocol RSDTask : RSDUIActionHandler {
     
-    /**
-     A short string that uniquely identifies the task.
-     */
+    /// A short string that uniquely identifies the task.
     var identifier: String { get }
     
-    /**
-     Additional information about the task.
-     */
+    /// Additional information about the task.
     var taskInfo: RSDTaskInfoStep? { get }
     
-    /**
-     Additional information about the result schema.
-     */
+    /// Additional information about the result schema.
     var schemaInfo: RSDSchemaInfo? { get }
     
-    /**
-     The step navigator for this task.
-     */
+    /// The step navigator for this task.
     var stepNavigator: RSDStepNavigator { get }
     
-    /**
-     A list of asynchronous actions to run on the task.
-     */
+    /// A list of asynchronous actions to run on the task.
     var asyncActions: [RSDAsyncActionConfiguration]? { get }
     
-    /**
-     Instantiate a task result that is appropriate for this task.
-     
-     @return    A task result for this task.
-     */
+    /// Instantiate a task result that is appropriate for this task.
+    ///
+    /// - returns: A task result for this task.
     func instantiateTaskResult() -> RSDTaskResult
 
-    /**
-     Validate the task to check for any model configuration that should throw an error.
-     */
+    /// Validate the task to check for any model configuration that should throw an error.
+    /// - throws: An error appropriate to the failed validation.
     func validate() throws
 }
 
 extension RSDTask {
     
+    /// Filter the `asyncActions` and return only those actions to start with this step. This will return the
+    /// configurations where the `startStepIdentifier` matches the current step as well as configurations
+    /// where the `startStepIdentifier` is `nil` if and only if `isFirstStep` equals `true`.
+    ///
+    /// - parameters:
+    ///     - step:         The step that is about to be displayed.
+    ///     - isFirstStep:  `true` if this is the first step in the task, otherwise `false`.
+    /// - returns: The array of async actions to start.
     public func asyncActionsToStart(at step: RSDStep, isFirstStep: Bool) -> [RSDAsyncActionConfiguration] {
         guard let actions = self.asyncActions else { return [] }
         return actions.filter {
@@ -85,6 +81,12 @@ extension RSDTask {
         }
     }
     
+    /// Filter the `asyncActions` and return only those actions to stop after this step. This will return the
+    /// configurations that conform to the `RSDRecorderConfiguration` protocol and where the `stopStepIdentifier`
+    /// the `stopStepIdentifier` matches the given step.
+    ///
+    /// - parameter step: The step that is about to end.
+    /// - returns: The array of async actions to stop.
     public func asyncActionsToStop(after step: RSDStep?) -> [RSDAsyncActionConfiguration] {
         guard let actions = self.asyncActions else { return [] }
         return actions.filter {

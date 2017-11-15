@@ -33,27 +33,37 @@
 
 import Foundation
 
-
-/**
- The section step transformer is a lightweight protocol for vending the steps in a section.
- */
+/// `RSDSectionStepTransformer` is a lightweight protocol for vending the steps in a section.
+/// This object is used to allow accessing an `RSDSectionStep` for use in multiple tasks or
+/// multiple times within a task.
+///
+/// For example, for a task where the user is going to run for 12 minutes, the researchers may wish
+/// to record the user's heart rate both before and after the run. The heart rate can be defined in
+/// a seperate file or model object and the transformer is used as a placeholder that can fetch and
+/// replace itself with a section of steps that are used to capture the user's heartrate.
+///
+/// - seealso: `RSDSectionStep`, `RSDTransformerStepObject` and `RSDFactory`
 public protocol RSDSectionStepTransformer {
     
-    /**
-     Fetch the steps for this section.
-     
-     @param factory     The factory to use for creating the task and steps.
-
-     @return            The steps for this section.
-     */
+    /// Fetch the steps for this section.
+    ///
+    /// - parameter factory: The factory to use for creating the task and steps.
+    /// - returns: The steps for this section.
     func transformSteps(with factory: RSDFactory) throws -> [RSDStep]
 }
 
+/// `RSDSectionStepResourceTransformer` is an implementation of a `RSDSectionStepTransformer` that uses
+/// a `RSDResourceTransformer` to support transforming the section from one resource for inclusion
+/// in another task defined using a different resource.
 public protocol RSDSectionStepResourceTransformer : RSDSectionStepTransformer, RSDResourceTransformer {
 }
 
 extension RSDSectionStepResourceTransformer {
     
+    /// Fetch the steps for this section.
+    ///
+    /// - parameter factory: The factory to use for creating the task and steps.
+    /// - returns: The steps for this section.
     public func transformSteps(with factory: RSDFactory) throws -> [RSDStep] {
         let (data, resourceType) = try self.resourceData()
         let decoder = try factory.createDecoder(for: resourceType)

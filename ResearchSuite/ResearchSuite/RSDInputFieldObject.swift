@@ -66,7 +66,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Decodable {
     }
     
     open func validate() throws {
-        // TODO: syoung 10/04/2017 Implement
+        // TODO: syoung 10/04/2017 Implement 
     }
     
     private enum CodingKeys : String, CodingKey {
@@ -96,7 +96,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         switch dataType.baseType {
         case .integer, .decimal:
-            return try container.decodeIfPresent(RSDDecimalRangeObject.self, forKey: .range)
+            return try container.decodeIfPresent(RSDNumberRangeObject.self, forKey: .range)
         case .date:
             return try container.decodeIfPresent(RSDDateRangeObject.self, forKey: .range)
         case .year:
@@ -107,7 +107,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Decodable {
                 (dateRange.minimumDate != nil || dateRange.maximumDate != nil) {
                 return dateRange
             } else {
-                return try container.decodeIfPresent(RSDDecimalRangeObject.self, forKey: .range)
+                return try container.decodeIfPresent(RSDNumberRangeObject.self, forKey: .range)
             }
         default:
             return nil

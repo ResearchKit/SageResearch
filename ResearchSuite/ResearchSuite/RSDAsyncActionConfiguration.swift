@@ -33,73 +33,77 @@
 
 import Foundation
 
-/**
- `RSDAsyncAction` defines general configuration for an asynchronous background action that should be run in the background. Depending upon the parameters and how the action is setup, this could be something that is run continuously or else is paused or reset based on a timeout interval.
- */
+/// `RSDAsyncAction` defines general configuration for an asynchronous background action that should be run
+/// in the background. Depending upon the parameters and how the action is setup, this could be something that
+/// is run continuously or else is paused or reset based on a timeout interval.
+///
+/// The configuration is intended to be a serializable object and does not call services, record data or
+/// anything else. It does include a step identifier that can be used to let the `RSDTaskController` know when
+/// to trigger the async action.
+///
+/// - seealso: `RSDTaskController` and `RSDAsyncActionController`.
+///
 public protocol RSDAsyncActionConfiguration {
     
-    /**
-     A short string that uniquely identifies the asynchronous action within the task. The identifier is reproduced in the results of a async results.
-     */
+    /// A short string that uniquely identifies the asynchronous action within the task. The identifier is
+    /// reproduced in the results of a async results.
     var identifier : String { get }
     
-    /**
-     An identifier marking the step to start the action. If `nil`, then the action will be started when the task is started.
-     */
+    /// An identifier marking the step to start the action. If `nil`, then the action will be started when
+    /// the task is started.
     var startStepIdentifier: String? { get }
     
-    /**
-     List of the permissions required for this action.
-     */
+    /// List of the permissions required for this action.
     var permissions: [RSDPermissionType] { get }
     
-    /**
-     Validate the async action to check for any configuration that should throw an error.
-     */
+    /// Validate the async action to check for any configuration that should throw an error.
     func validate() throws
 }
 
+/// `RSDAsyncActionControllerVendor` is an extension of the configuration protocol for configurations that
+/// know how to vend a new controller.
+///
 public protocol RSDAsyncActionControllerVendor : RSDAsyncActionConfiguration {
     
-    /**
-     Instantiate a controller appropriate to this configuration.
-     */
+    /// Instantiate a controller appropriate to this configuration.
+    /// - parameter taskPath: The current task path to use to initialize the controller.
+    /// - returns: An async action controller or nil if the async action is not supported on this device.
     func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController?
 }
 
-/**
- `RSDRecorderConfiguration` is used to configure a recorder. For example, recording accelerometer data or video.
- */
+/// `RSDRecorderConfiguration` is used to configure a recorder. For example, recording accelerometer data
+/// or video.
+///
+/// - seealso: `RSDSampleRecorder`
+///
 public protocol RSDRecorderConfiguration : RSDAsyncActionConfiguration {
     
-    /**
-     An identifier marking the step at which to stop the action. If `nil`, then the action will be stopped when the task is stopped.
-     */
+    /// An identifier marking the step at which to stop the action. If `nil`, then the action will be
+    /// stopped when the task is stopped.
     var stopStepIdentifier: String? { get }
     
-    /**
-     Whether or not the recorder requires background audio.
-     */
+    /// Whether or not the recorder requires background audio.
     var requiresBackgroundAudio: Bool { get }
 }
 
-/**
- `RSDRequestConfiguration` is used to start an asynchronous service such as a url request or fetching from core data.
- */
+/// `RSDRequestConfiguration` is used to start an asynchronous service such as a url request or fetching
+/// from core data.
+///
+/// - note: This configuration type is stubbed out for future work. This is not currently implemented in
+///         either `RSDTaskController` or `RSDTaskViewController`. (syoung 11/15/2017)
+///
 public protocol RSDRequestConfiguration : RSDAsyncActionConfiguration {
     
-    /**
-     An identifier marking a step to wait to display until the action is completed. This is only valid for actions that are single result actions and not continuous recorders.
-     */
+    /// An identifier marking a step to wait to display until the action is completed. This is only valid
+    /// for actions that are single result actions and not continuous recorders.
     var waitStepIdentifier: String? { get }
     
-    /**
-     A time interval after which the action should be reset. For example, if the action queries a weather service and the user backgrounds the app for more than the reset time, then the weather service should be queried again. If `0`, then the action will never reset.
-     */
+    /// A time interval after which the action should be reset. For example, if the action queries a
+    /// weather service and the user backgrounds the app for more than the reset time, then the weather
+    /// service should be queried again. If `0`, then the action will never reset.
     var resetTimeInterval: TimeInterval { get }
     
-    /**
-     A time interval after which the action should be cancelled. If `0`, then the action will not timeout and will wait indefinitely. This is not recommended UI.
-     */
+    /// A time interval after which the action should be cancelled. If `0`, then the action will not
+    /// timeout and will wait indefinitely. This is not recommended UI.
     var timeoutTimeInterval: TimeInterval { get }
 }
