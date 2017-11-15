@@ -37,8 +37,6 @@ import ResearchSuiteUI
 
 class ViewController: UIViewController, RSDTaskViewControllerDelegate {
 
-    
-
     @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
