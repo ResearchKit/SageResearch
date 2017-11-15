@@ -6,6 +6,20 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		FF1446C11FBCF42600389F77 /* Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = FF1446C41FBCF42600389F77 /* Build configuration list for PBXAggregateTarget "Documentation" */;
+			buildPhases = (
+				FF1446C51FBCF42E00389F77 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Documentation;
+			productName = Documentation;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		FF04722F1F7AC4F90023DAD6 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */; };
 		FF1865B71FA291F600FD0E31 /* UIImage+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */; };
@@ -335,6 +349,10 @@
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
+					FF1446C11FBCF42600389F77 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
 					FF443E151F7AC21900F43BE7 = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0900;
@@ -360,6 +378,7 @@
 			targets = (
 				FF443E151F7AC21900F43BE7 /* ResearchSuiteUI */,
 				FF443E1E1F7AC21900F43BE7 /* ResearchSuiteUITests */,
+				FF1446C11FBCF42600389F77 /* Documentation */,
 			);
 		};
 /* End PBXProject section */
@@ -387,6 +406,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FF1446C51FBCF42E00389F77 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "RSD_DOC_DIR=\"${PROJECT_DIR}/Documentation/\"\nRSD_PROJECT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}/\"\n\n#jazzy Xcode script\n# Start constants\ncompany=\"Sage Bionetworks\"\ncompanyID=\"org.sagebase\"\ncompanyURL=\"https://developer.sagebridge.org\"\ngithubURL=\"https://github.com/Sage-Bionetworks/ResearchSuite-AppleOS.git\"\n\ntarget=\"iphone\"\n#target=\"macosx\"\noutputPath=\"${RSD_DOC_DIR}\"\n# End constants\njazzy \\\n--clean \\\n--min-acl public \\\n--author \"${company}\" \\\n--author_url ${companyURL} \\\n--github_url ${githubURL} \\\n--output ${outputPath}";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FF443E111F7AC21900F43BE7 /* Sources */ = {
@@ -450,6 +485,24 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		FF1446C21FBCF42600389F77 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FF1446C31FBCF42600389F77 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		FF443E281F7AC21900F43BE7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -643,6 +696,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FF1446C41FBCF42600389F77 /* Build configuration list for PBXAggregateTarget "Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF1446C21FBCF42600389F77 /* Debug */,
+				FF1446C31FBCF42600389F77 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FF443E101F7AC21900F43BE7 /* Build configuration list for PBXProject "ResearchSuiteUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
