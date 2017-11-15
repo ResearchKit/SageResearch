@@ -1,0 +1,3036 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 36,
+      "symbol": "Localization",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 38,
+      "symbol": "Localization.allBundles",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 42,
+      "symbol": "Localization.localizedString(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 56,
+      "symbol": "Localization.defaultTableNameForBundle(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 60,
+      "symbol": "Localization.localizedStringWithFormatKey(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 66,
+      "symbol": "Localization.localizedJoin(textList:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 89,
+      "symbol": "Localization.localizedBundleString(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 96,
+      "symbol": "Localization.localizedAppName",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 115,
+      "symbol": "Localization.buttonYes()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 119,
+      "symbol": "Localization.buttonNo()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 123,
+      "symbol": "Localization.buttonOK()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 127,
+      "symbol": "Localization.buttonCancel()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 131,
+      "symbol": "Localization.buttonDone()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 135,
+      "symbol": "Localization.buttonNext()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 139,
+      "symbol": "Localization.buttonBack()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 143,
+      "symbol": "Localization.buttonSkip()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 147,
+      "symbol": "Localization.buttonSkipTask()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 151,
+      "symbol": "Localization.buttonGetStarted()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 155,
+      "symbol": "Localization.buttonLearnMore()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 159,
+      "symbol": "Localization.buttonPause()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Localization/Localization.swift",
+      "line": 163,
+      "symbol": "Localization.buttonResume()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 55,
+      "symbol": "UIColor.appBackgroundLight",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 59,
+      "symbol": "UIColor.appBackgroundDark",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 63,
+      "symbol": "UIColor.appCrosshatchLight",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 67,
+      "symbol": "UIColor.appCrosshatchDark",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 74,
+      "symbol": "UIColor.appTextLight",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 78,
+      "symbol": "UIColor.appTextDark",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 85,
+      "symbol": "UIColor.rsd_underlinedButtonTextLight",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 89,
+      "symbol": "UIColor.rsd_underlinedButtonTextDark",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 96,
+      "symbol": "UIColor.rsd_roundedButtonBackgroundDark",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 100,
+      "symbol": "UIColor.rsd_roundedButtonShadowDark",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 104,
+      "symbol": "UIColor.rsd_roundedButtonTextLight",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 108,
+      "symbol": "UIColor.rsd_roundedButtonBackgroundLight",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 112,
+      "symbol": "UIColor.rsd_roundedButtonShadowLight",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 116,
+      "symbol": "UIColor.rsd_roundedButtonTextDark",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 122,
+      "symbol": "UIColor.rsd_dialRing",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 128,
+      "symbol": "UIColor.rsd_headerTitleLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 132,
+      "symbol": "UIColor.rsd_headerTextLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 136,
+      "symbol": "UIColor.rsd_headerDetailLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 140,
+      "symbol": "UIColor.rsd_footnoteLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 144,
+      "symbol": "UIColor.rsd_progressBar",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 148,
+      "symbol": "UIColor.rsd_progressBarBackgroundLight",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 152,
+      "symbol": "UIColor.rsd_progressBarBackgroundDark",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 156,
+      "symbol": "UIColor.rsd_stepCountLabelLight",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 160,
+      "symbol": "UIColor.rsd_stepCountLabelDark",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 166,
+      "symbol": "UIColor.rsd_choiceCellBackground",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 170,
+      "symbol": "UIColor.rsd_choiceCellBackgroundHighlighted",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 174,
+      "symbol": "UIColor.rsd_choiceCellLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 178,
+      "symbol": "UIColor.rsd_choiceCellLabelHighlighted",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 184,
+      "symbol": "UIColor.rsd_textFieldCellText",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 188,
+      "symbol": "UIColor.rsd_textFieldCellBorder",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 192,
+      "symbol": "UIColor.rsd_textFieldCellLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 198,
+      "symbol": "UIColor.appWhiteTwo",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 202,
+      "symbol": "UIColor.appWhiteThree",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 206,
+      "symbol": "UIColor.appDarkGrayText",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 210,
+      "symbol": "UIColor.appLightGrayText",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 214,
+      "symbol": "UIColor.appButtonTintBlue",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 218,
+      "symbol": "UIColor.appTintGreen",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "line": 222,
+      "symbol": "UIColor.appSoftGreen",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 40,
+      "symbol": "UIFont.roundedButtonTitle",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 46,
+      "symbol": "UIFont.headerViewHeaderLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 50,
+      "symbol": "UIFont.headerViewDetailsLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 54,
+      "symbol": "UIFont.headerViewPromptLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 58,
+      "symbol": "UIFont.footnoteLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 62,
+      "symbol": "UIFont.stepCountLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 66,
+      "symbol": "UIFont.boldStepCountLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 72,
+      "symbol": "UIFont.choiceCellLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 78,
+      "symbol": "UIFont.textFieldCellLabel",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 82,
+      "symbol": "UIFont.textFieldCellText",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 86,
+      "symbol": "UIFont.textFieldFeaturedCellText",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Utilities/StaticUtilities.swift",
+      "line": 36,
+      "symbol": "RSDObjectEquality(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/Utilities/StaticUtilities.swift",
+      "line": 46,
+      "symbol": "RSDObjectHash(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 37,
+      "symbol": "RSDSound",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 38,
+      "symbol": "RSDSound.url",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 40,
+      "symbol": "RSDSound.init(name:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 44,
+      "symbol": "RSDSound.init(url:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 48,
+      "symbol": "RSDSound.alarm",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 49,
+      "symbol": "RSDSound.short_low_high",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 50,
+      "symbol": "RSDSound.short_double_high",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 51,
+      "symbol": "RSDSound.short_double_low",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 52,
+      "symbol": "RSDSound.photoShutter",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 55,
+      "symbol": "RSDSoundPlayer",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 56,
+      "symbol": "RSDSoundPlayer.playSound(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 59,
+      "symbol": "RSDAudioSoundPlayer",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 61,
+      "symbol": "RSDAudioSoundPlayer.shared",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDUISoundPlayer.swift",
+      "line": 63,
+      "symbol": "RSDAudioSoundPlayer.playSound(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 38,
+      "symbol": "RSDVoiceBox",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 39,
+      "symbol": "RSDVoiceBox.isSpeaking",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 40,
+      "symbol": "RSDVoiceBox.speak(text:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 41,
+      "symbol": "RSDVoiceBox.stopTalking()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 44,
+      "symbol": "RSDSpeechSynthesizer",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 46,
+      "symbol": "RSDSpeechSynthesizer.shared",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 52,
+      "symbol": "RSDSpeechSynthesizer.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 62,
+      "symbol": "RSDSpeechSynthesizer.isSpeaking",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 66,
+      "symbol": "RSDSpeechSynthesizer.speak(text:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 82,
+      "symbol": "RSDSpeechSynthesizer.stopTalking()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 86,
+      "symbol": "RSDSpeechSynthesizer.speechSynthesizer(_:didFinish:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 92,
+      "symbol": "RSDSpeechSynthesizer.speechSynthesizer(_:didCancel:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 37,
+      "symbol": "RSDStepViewControllerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 39,
+      "symbol": "RSDStepViewControllerDelegate.stepViewController(_:willAppear:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 40,
+      "symbol": "RSDStepViewControllerDelegate.stepViewController(_:didAppear:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 41,
+      "symbol": "RSDStepViewControllerDelegate.stepViewController(_:willDisappear:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 42,
+      "symbol": "RSDStepViewControllerDelegate.stepViewController(_:didDisappear:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 52,
+      "symbol": "RSDStepViewControllerProtocol.delegate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 55,
+      "symbol": "RSDStepViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 57,
+      "symbol": "RSDStepViewController.taskController",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 59,
+      "symbol": "RSDStepViewController.delegate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 61,
+      "symbol": "RSDStepViewController.step",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 63,
+      "symbol": "RSDStepViewController.uiStep",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 67,
+      "symbol": "RSDStepViewController.themedStep",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 71,
+      "symbol": "RSDStepViewController.activeStep",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 75,
+      "symbol": "RSDStepViewController.originalResult",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 79,
+      "symbol": "RSDStepViewController.currentResult",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 89,
+      "symbol": "RSDStepViewController.init(step:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 94,
+      "symbol": "RSDStepViewController.init(nibName:bundle:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 98,
+      "symbol": "RSDStepViewController.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 108,
+      "symbol": "RSDStepViewController.isVisible",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 109,
+      "symbol": "RSDStepViewController.isFirstAppearance",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 111,
+      "symbol": "RSDStepViewController.viewWillAppear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 120,
+      "symbol": "RSDStepViewController.viewDidAppear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 135,
+      "symbol": "RSDStepViewController.viewWillDisappear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 141,
+      "symbol": "RSDStepViewController.viewDidDisappear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 149,
+      "symbol": "RSDStepViewController.statusBackgroundView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 150,
+      "symbol": "RSDStepViewController.navigationHeader",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 151,
+      "symbol": "RSDStepViewController.navigationFooter",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 153,
+      "symbol": "RSDStepViewController.continueButton",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 157,
+      "symbol": "RSDStepViewController.isForwardEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 161,
+      "symbol": "RSDStepViewController.didFinishLoading()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 166,
+      "symbol": "RSDStepViewController.setupNavigation()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 175,
+      "symbol": "RSDStepViewController.setupBackgroundColorTheme()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 193,
+      "symbol": "RSDStepViewController.setupHeader(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 250,
+      "symbol": "RSDStepViewController.hasTopBackgroundImage()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 258,
+      "symbol": "RSDStepViewController.setupFooter(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 262,
+      "symbol": "RSDStepViewController.shouldUseGlobalButtonVisibility()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 266,
+      "symbol": "RSDStepViewController.setupNavigationView(_:isFooter:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 290,
+      "symbol": "RSDStepViewController.usesLightStyle(isFooter:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 296,
+      "symbol": "RSDStepViewController.setupButton(_:for:isFooter:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 363,
+      "symbol": "RSDStepViewController.color(named:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 388,
+      "symbol": "RSDStepViewController.goForward()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 395,
+      "symbol": "RSDStepViewController.goBack()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 400,
+      "symbol": "RSDStepViewController.skipForward()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 405,
+      "symbol": "RSDStepViewController.cancel()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 410,
+      "symbol": "RSDStepViewController.showLearnMore()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 414,
+      "symbol": "RSDStepViewController.action(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 445,
+      "symbol": "RSDStepViewController.shouldHideAction(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 488,
+      "symbol": "RSDStepViewController.countdown",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 506,
+      "symbol": "RSDStepViewController.pauseUptime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 507,
+      "symbol": "RSDStepViewController.startUptime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 508,
+      "symbol": "RSDStepViewController.completedUptime",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 513,
+      "symbol": "RSDStepViewController.performStartCommands()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 535,
+      "symbol": "RSDStepViewController.performStopCommands()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 559,
+      "symbol": "RSDStepViewController.playSound(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 563,
+      "symbol": "RSDStepViewController.vibrateDevice()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 567,
+      "symbol": "RSDStepViewController.speakInstruction(_:at:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 571,
+      "symbol": "RSDStepViewController.speakInstruction(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 584,
+      "symbol": "RSDStepViewController.start()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 601,
+      "symbol": "RSDStepViewController.stop()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 610,
+      "symbol": "RSDStepViewController.pause()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 617,
+      "symbol": "RSDStepViewController.resume()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 625,
+      "symbol": "RSDStepViewController.timerFired()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDStepViewController.swift",
+      "line": 687,
+      "symbol": "RSDStepViewController.playCompletedAlert()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 41,
+      "symbol": "RSDPageViewControllerProtocol.setViewControllers(_:direction:animated:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 45,
+      "symbol": "UIPageViewController.setViewControllers(_:direction:animated:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 51,
+      "symbol": "RSDTaskFinishReason",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 52,
+      "symbol": "RSDTaskFinishReason.cancelled",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 52,
+      "symbol": "RSDTaskFinishReason.completed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 52,
+      "symbol": "RSDTaskFinishReason.failed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 55,
+      "symbol": "RSDTaskViewControllerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 57,
+      "symbol": "RSDTaskViewControllerDelegate.taskViewController(_:didFinishWith:error:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 59,
+      "symbol": "RSDTaskViewControllerDelegate.taskViewController(_:viewControllerFor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 61,
+      "symbol": "RSDTaskViewControllerDelegate.taskViewController(_:asyncActionControllerFor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 63,
+      "symbol": "RSDTaskViewControllerDelegate.taskViewController(_:readyToSave:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 65,
+      "symbol": "RSDTaskViewControllerDelegate.taskViewControllerShouldAutomaticallyForward(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 88,
+      "symbol": "RSDTaskViewController.delegate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 92,
+      "symbol": "RSDTaskViewController.viewController(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 107,
+      "symbol": "RSDTaskViewController.instantiateViewController(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 117,
+      "symbol": "RSDTaskViewController.vendDefaultViewController(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 147,
+      "symbol": "RSDTaskViewController.idleTimerDisabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 148,
+      "symbol": "RSDTaskViewController.audioSession",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 150,
+      "symbol": "RSDTaskViewController.asyncActionController(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 160,
+      "symbol": "RSDTaskViewController.vendDefaultAsyncActionController(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 164,
+      "symbol": "RSDTaskViewController.asyncActionController(_:didFailWith:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 214,
+      "symbol": "RSDTaskViewController.factory",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 216,
+      "symbol": "RSDTaskViewController.taskPath",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 218,
+      "symbol": "RSDTaskViewController.currentAsyncControllers",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 220,
+      "symbol": "RSDTaskViewController.currentStepController",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 234,
+      "symbol": "RSDTaskViewController.showLoading(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 250,
+      "symbol": "RSDTaskViewController.handleFinishedLoading()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 260,
+      "symbol": "RSDTaskViewController.showLoadingView()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 264,
+      "symbol": "RSDTaskViewController.hideLoadingIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 268,
+      "symbol": "RSDTaskViewController.navigate(to:from:direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 279,
+      "symbol": "RSDTaskViewController.handleTaskFailure(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 285,
+      "symbol": "RSDTaskViewController.handleTaskCompleted()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 290,
+      "symbol": "RSDTaskViewController.handleTaskCancelled()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 296,
+      "symbol": "RSDTaskViewController.handleTaskResultReady(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 300,
+      "symbol": "RSDTaskViewController.startAsyncActions(with:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 333,
+      "symbol": "RSDTaskViewController.stopAsyncActions(for:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 386,
+      "symbol": "RSDTaskViewController.cancelAllAsyncActions()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 395,
+      "symbol": "RSDTaskViewController.init(nibName:bundle:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 399,
+      "symbol": "RSDTaskViewController.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 403,
+      "symbol": "RSDTaskViewController.init(task:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 408,
+      "symbol": "RSDTaskViewController.init(taskInfo:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 415,
+      "symbol": "RSDTaskViewController.pageViewController",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 447,
+      "symbol": "RSDTaskViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 456,
+      "symbol": "RSDTaskViewController.didReceiveMemoryWarning()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 461,
+      "symbol": "RSDTaskViewController.viewWillAppear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "line": 471,
+      "symbol": "RSDTaskViewController.currentStepViewController",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 36,
+      "symbol": "RSDActiveStepViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 38,
+      "symbol": "RSDActiveStepViewController.countdownLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 39,
+      "symbol": "RSDActiveStepViewController.instructionLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 40,
+      "symbol": "RSDActiveStepViewController.countdownDial",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 41,
+      "symbol": "RSDActiveStepViewController.progressLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 42,
+      "symbol": "RSDActiveStepViewController.unitLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 55,
+      "symbol": "RSDActiveStepViewController.countdown",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 61,
+      "symbol": "RSDActiveStepViewController.speakInstruction(_:at:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 66,
+      "symbol": "RSDActiveStepViewController.start()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 71,
+      "symbol": "RSDActiveStepViewController.pause()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 76,
+      "symbol": "RSDActiveStepViewController.resume()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 136,
+      "symbol": "RSDActiveStepViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 151,
+      "symbol": "RSDActiveStepViewController.nibName",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 155,
+      "symbol": "RSDActiveStepViewController.bundle",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 159,
+      "symbol": "RSDActiveStepViewController.init(step:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 164,
+      "symbol": "RSDActiveStepViewController.init(nibName:bundle:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 168,
+      "symbol": "RSDActiveStepViewController.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDCountdownStepViewController.swift",
+      "line": 41,
+      "symbol": "RSDCountdownStepViewController.countdownLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDCountdownStepViewController.swift",
+      "line": 42,
+      "symbol": "RSDCountdownStepViewController.pauseButton",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDCountdownStepViewController.swift",
+      "line": 44,
+      "symbol": "RSDCountdownStepViewController.countdown",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDCountdownStepViewController.swift",
+      "line": 50,
+      "symbol": "RSDCountdownStepViewController.pauseTimer()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDCountdownStepViewController.swift",
+      "line": 63,
+      "symbol": "RSDCountdownStepViewController.nibName",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDCountdownStepViewController.swift",
+      "line": 67,
+      "symbol": "RSDCountdownStepViewController.bundle",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDCountdownStepViewController.swift",
+      "line": 71,
+      "symbol": "RSDCountdownStepViewController.init(step:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDCountdownStepViewController.swift",
+      "line": 76,
+      "symbol": "RSDCountdownStepViewController.init(nibName:bundle:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDCountdownStepViewController.swift",
+      "line": 80,
+      "symbol": "RSDCountdownStepViewController.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": null,
+      "symbol": "RSDGenericStepUIConfig",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 75,
+      "symbol": "RSDGenericStepViewController.tableData",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 77,
+      "symbol": "RSDGenericStepViewController.tableView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 87,
+      "symbol": "RSDGenericStepViewController.formStep",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 161,
+      "symbol": "RSDGenericStepViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 190,
+      "symbol": "RSDGenericStepViewController.viewWillAppear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 203,
+      "symbol": "RSDGenericStepViewController.viewDidAppear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 219,
+      "symbol": "RSDGenericStepViewController.viewWillDisappear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 229,
+      "symbol": "RSDGenericStepViewController.viewDidLayoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 299,
+      "symbol": "RSDGenericStepViewController.supportedUIHints",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 314,
+      "symbol": "RSDGenericStepViewController.setupHeader(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 365,
+      "symbol": "RSDGenericStepViewController.goForward()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 396,
+      "symbol": "RSDGenericStepViewController.goBack()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 401,
+      "symbol": "RSDGenericStepViewController.skipForward()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 406,
+      "symbol": "RSDGenericStepViewController.cancel()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 414,
+      "symbol": "RSDGenericStepViewController.tableView(_:numberOfRowsInSection:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 417,
+      "symbol": "RSDGenericStepViewController.numberOfSections(in:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 421,
+      "symbol": "RSDGenericStepViewController.tableView(_:cellForRowAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 428,
+      "symbol": "RSDGenericStepViewController.dequeueCell(in:at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 496,
+      "symbol": "RSDGenericStepViewController.configure(cell:in:at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 569,
+      "symbol": "RSDGenericStepViewController.tableView(_:didSelectRowAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 598,
+      "symbol": "RSDGenericStepViewController.textFieldDidBeginEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 603,
+      "symbol": "RSDGenericStepViewController.textFieldShouldReturn(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 610,
+      "symbol": "RSDGenericStepViewController.textField(_:shouldChangeCharactersIn:replacementString:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 618,
+      "symbol": "RSDGenericStepViewController.textFieldDidEndEditing(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 631,
+      "symbol": "RSDGenericStepViewController.indexPath(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 640,
+      "symbol": "RSDGenericStepViewController.itemGroup(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 651,
+      "symbol": "RSDGenericStepViewController.validateAndSave(textField:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 663,
+      "symbol": "RSDGenericStepViewController.saveAnswer(textField:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 672,
+      "symbol": "RSDGenericStepViewController.saveAnswer(newValue:at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 718,
+      "symbol": "RSDGenericStepViewController.showValidationError(title:message:context:at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 734,
+      "symbol": "RSDGenericStepViewController.scrollViewDidScroll(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 738,
+      "symbol": "RSDGenericStepViewController.updateShadows()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 786,
+      "symbol": "RSDGenericStepViewController.answersDidChange(in:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 792,
+      "symbol": "RSDGenericStepUIConfig",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 829,
+      "symbol": "RSDGenericStepUIConfig.instantiateHeaderView()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDGenericStepViewController.swift",
+      "line": 833,
+      "symbol": "RSDGenericStepUIConfig.instantiateNavigationView()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 36,
+      "symbol": "RSDTaskInfoStepViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 38,
+      "symbol": "RSDTaskInfoStepViewController.nibName",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 42,
+      "symbol": "RSDTaskInfoStepViewController.bundle",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 46,
+      "symbol": "RSDTaskInfoStepViewController.headerView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 47,
+      "symbol": "RSDTaskInfoStepViewController.titleLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 48,
+      "symbol": "RSDTaskInfoStepViewController.subtitleLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 49,
+      "symbol": "RSDTaskInfoStepViewController.iconImageView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 50,
+      "symbol": "RSDTaskInfoStepViewController.textView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 52,
+      "symbol": "RSDTaskInfoStepViewController.taskInfo",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 57,
+      "symbol": "RSDTaskInfoStepViewController.init(taskInfo:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 62,
+      "symbol": "RSDTaskInfoStepViewController.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 66,
+      "symbol": "RSDTaskInfoStepViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 96,
+      "symbol": "RSDTaskInfoStepViewController.viewWillAppear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 119,
+      "symbol": "RSDTaskInfoStepViewController.shouldHideAction(for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 128,
+      "symbol": "RSDTaskInfoStepViewController.viewDidLayoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 135,
+      "symbol": "RSDTaskInfoStepViewController.scrollViewDidScroll(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 139,
+      "symbol": "RSDTaskInfoStepViewController.scrollViewDidEndDragging(_:willDecelerate:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 145,
+      "symbol": "RSDTaskInfoStepViewController.scrollViewDidEndDecelerating(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTaskInfoStepViewController.swift",
+      "line": 149,
+      "symbol": "RSDTaskInfoStepViewController.updateShadows()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Utilities/UIAlertController+Utilities.swift",
+      "line": 41,
+      "symbol": "RSDAlertPresenter.presentModal(_:animated:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Utilities/UIAlertController+Utilities.swift",
+      "line": 47,
+      "symbol": "UIViewController.presentModal(_:animated:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Utilities/UIAlertController+Utilities.swift",
+      "line": 54,
+      "symbol": "RSDAlertPresenter.presentAlertWithOk(title:message:actionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Utilities/UIAlertController+Utilities.swift",
+      "line": 60,
+      "symbol": "RSDAlertPresenter.presentAlertWithYesNo(title:message:actionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Utilities/UIAlertController+Utilities.swift",
+      "line": 72,
+      "symbol": "RSDAlertPresenter.presentAlertWithActions(title:message:animated:actions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Utilities/UIView+Layout.swift",
+      "line": 36,
+      "symbol": "RSDCGFloatExtension",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Utilities/UIView+Layout.swift",
+      "line": 436,
+      "symbol": "UIView.rsd_boundingView(for:relation:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 43,
+      "symbol": "RSDProgressIndicator.progress",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 55,
+      "symbol": "RSDProgressIndicator.setProgressPosition(_:animationDuration:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 76,
+      "symbol": "RSDProgressIndicator.progressLayer",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 88,
+      "symbol": "RSDCountdownDial.ringColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 95,
+      "symbol": "RSDCountdownDial.ringWidth",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 102,
+      "symbol": "RSDCountdownDial.dialWidth",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 108,
+      "symbol": "RSDCountdownDial.tintColorDidChange()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 115,
+      "symbol": "RSDCountdownDial.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 120,
+      "symbol": "RSDCountdownDial.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 134,
+      "symbol": "RSDCountdownDial.progressLayer",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 141,
+      "symbol": "RSDCountdownDial.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "line": 36,
+      "symbol": "RSDCrosshatchView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "line": 49,
+      "symbol": "RSDCrosshatchView.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "line": 59,
+      "symbol": "RSDCrosshatchView.prepareForInterfaceBuilder()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "line": 64,
+      "symbol": "RSDCrosshatchView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "line": 69,
+      "symbol": "RSDCrosshatchView.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "line": 101,
+      "symbol": "RSDCrosshatchView.layoutSublayers(of:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 36,
+      "symbol": "RSDRoundedButton",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 38,
+      "symbol": "RSDRoundedButton.defaultHeight",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 39,
+      "symbol": "RSDRoundedButton.defaultWidthWith2Buttons",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 40,
+      "symbol": "RSDRoundedButton.defaultWidthWith1Button",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 41,
+      "symbol": "RSDRoundedButton.defaultCornerRadius",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 43,
+      "symbol": "RSDRoundedButton.corners",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 50,
+      "symbol": "RSDRoundedButton.shadowColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 57,
+      "symbol": "RSDRoundedButton.isEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 65,
+      "symbol": "RSDRoundedButton.isInTransition",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 67,
+      "symbol": "RSDRoundedButton.titleFont",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 74,
+      "symbol": "RSDRoundedButton.titleColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 80,
+      "symbol": "RSDRoundedButton.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 95,
+      "symbol": "RSDRoundedButton.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 101,
+      "symbol": "RSDRoundedButton.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 106,
+      "symbol": "RSDRoundedButton.prepareForInterfaceBuilder()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 112,
+      "symbol": "RSDRoundedButton.setupDefaults()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 125,
+      "symbol": "RSDRoundedButton.commonInit()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "line": 136,
+      "symbol": "RSDRoundedButton.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "line": 36,
+      "symbol": "RSDShadowGradient",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "line": 67,
+      "symbol": "RSDShadowGradient.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "line": 77,
+      "symbol": "RSDShadowGradient.prepareForInterfaceBuilder()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "line": 82,
+      "symbol": "RSDShadowGradient.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "line": 87,
+      "symbol": "RSDShadowGradient.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "line": 106,
+      "symbol": "RSDShadowGradient.layoutSublayers(of:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 38,
+      "symbol": "RSDStepChoiceCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 47,
+      "symbol": "RSDStepChoiceCell.shadowAlpha",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 51,
+      "symbol": "RSDStepChoiceCell.bgColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 55,
+      "symbol": "RSDStepChoiceCell.labelColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 59,
+      "symbol": "RSDStepChoiceCell.shadowView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 65,
+      "symbol": "RSDStepChoiceCell.isSelected",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 73,
+      "symbol": "RSDStepChoiceCell.init(style:reuseIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 78,
+      "symbol": "RSDStepChoiceCell.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 83,
+      "symbol": "RSDStepChoiceCell.awakeFromNib()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 108,
+      "symbol": "RSDStepChoiceCell.updateConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 127,
+      "symbol": "RSDStepTextFieldCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 133,
+      "symbol": "RSDStepTextFieldCell.textField",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 134,
+      "symbol": "RSDStepTextFieldCell.fieldLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 135,
+      "symbol": "RSDStepTextFieldCell.ruleView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 193,
+      "symbol": "RSDStepTextFieldCell.init(style:reuseIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 198,
+      "symbol": "RSDStepTextFieldCell.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 203,
+      "symbol": "RSDStepTextFieldCell.awakeFromNib()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 226,
+      "symbol": "RSDStepTextFieldCell.updateConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 251,
+      "symbol": "RSDStepTextFieldFeaturedCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 270,
+      "symbol": "RSDStepTextFieldFeaturedCell.updateConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 305,
+      "symbol": "RSDTextLabelCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 311,
+      "symbol": "RSDTextLabelCell.label",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 313,
+      "symbol": "RSDTextLabelCell.labelColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 317,
+      "symbol": "RSDTextLabelCell.init(style:reuseIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 322,
+      "symbol": "RSDTextLabelCell.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 327,
+      "symbol": "RSDTextLabelCell.awakeFromNib()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 351,
+      "symbol": "RSDTextLabelCell.updateConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 366,
+      "symbol": "RSDImageViewCell",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 371,
+      "symbol": "RSDImageViewCell.iconView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 374,
+      "symbol": "RSDImageViewCell.imageLoader",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 385,
+      "symbol": "RSDImageViewCell.init(style:reuseIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "line": 390,
+      "symbol": "RSDImageViewCell.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 44,
+      "symbol": "RSDStepNavigationView.nextButton",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 45,
+      "symbol": "RSDStepNavigationView.backButton",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 46,
+      "symbol": "RSDStepNavigationView.skipButton",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 47,
+      "symbol": "RSDStepNavigationView.learnMoreButton",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 48,
+      "symbol": "RSDStepNavigationView.cancelButton",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 70,
+      "symbol": "RSDStepNavigationView.updateInteractiveConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 74,
+      "symbol": "RSDStepNavigationView.updateConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 81,
+      "symbol": "RSDNavigationBarView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 83,
+      "symbol": "RSDNavigationBarView.kSideMargin",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 84,
+      "symbol": "RSDNavigationBarView.kHorizontalSpacing",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 85,
+      "symbol": "RSDNavigationBarView.kButtonHeight",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 86,
+      "symbol": "RSDNavigationBarView.kButtonToTop",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 88,
+      "symbol": "RSDNavigationBarView.progressView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 89,
+      "symbol": "RSDNavigationBarView.stepCountLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 123,
+      "symbol": "RSDNavigationBarView.addCloseButtonIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 130,
+      "symbol": "RSDNavigationBarView.addProgressViewIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 178,
+      "symbol": "RSDStepHeaderView.imageView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 179,
+      "symbol": "RSDStepHeaderView.titleLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 180,
+      "symbol": "RSDStepHeaderView.textLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 181,
+      "symbol": "RSDStepHeaderView.detailLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 183,
+      "symbol": "RSDStepHeaderView.hasImage",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 185,
+      "symbol": "RSDStepHeaderView.image",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 238,
+      "symbol": "RSDGenericStepHeaderView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 240,
+      "symbol": "RSDGenericStepHeaderView.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 246,
+      "symbol": "RSDGenericStepHeaderView.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 251,
+      "symbol": "RSDGenericStepHeaderView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 269,
+      "symbol": "RSDGenericStepHeaderView.addLearnMoreIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 278,
+      "symbol": "RSDGenericStepHeaderView.addImageViewIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 290,
+      "symbol": "RSDGenericStepHeaderView.addLabel(font:color:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 306,
+      "symbol": "RSDGenericStepHeaderView.addTitleLabelIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 312,
+      "symbol": "RSDGenericStepHeaderView.addTextLabelIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 318,
+      "symbol": "RSDGenericStepHeaderView.addDetailLabelIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 323,
+      "symbol": "RSDGenericStepHeaderView.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 334,
+      "symbol": "RSDGenericStepHeaderView.updateInteractiveConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 473,
+      "symbol": "RSDNavigationFooterView.shadowView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 492,
+      "symbol": "RSDNavigationFooterView.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 496,
+      "symbol": "RSDNavigationFooterView.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 500,
+      "symbol": "RSDNavigationFooterView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 506,
+      "symbol": "RSDGenericNavigationFooterView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 516,
+      "symbol": "RSDGenericNavigationFooterView.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 522,
+      "symbol": "RSDGenericNavigationFooterView.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 527,
+      "symbol": "RSDGenericNavigationFooterView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 532,
+      "symbol": "RSDGenericNavigationFooterView.prepareForInterfaceBuilder()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 567,
+      "symbol": "RSDGenericNavigationFooterView.addNavigationButton()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 575,
+      "symbol": "RSDGenericNavigationFooterView.addBackButtonIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 581,
+      "symbol": "RSDGenericNavigationFooterView.addNextButtonIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 587,
+      "symbol": "RSDGenericNavigationFooterView.addSkipButtonIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 596,
+      "symbol": "RSDGenericNavigationFooterView.addShadowIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 612,
+      "symbol": "RSDGenericNavigationFooterView.updateInteractiveConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "line": 663,
+      "symbol": "RSDGenericNavigationFooterView.updateConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "line": 96,
+      "symbol": "RSDStepProgressView.progress",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "line": 104,
+      "symbol": "RSDStepProgressView.hasProgress",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "line": 110,
+      "symbol": "RSDStepProgressView.stepCountLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "line": 146,
+      "symbol": "RSDStepProgressView.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "line": 151,
+      "symbol": "RSDStepProgressView.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "line": 156,
+      "symbol": "RSDStepProgressView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "line": 174,
+      "symbol": "RSDStepProgressView.updateConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "line": 36,
+      "symbol": "RSDUnderlinedButton",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "line": 47,
+      "symbol": "RSDUnderlinedButton.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "line": 52,
+      "symbol": "RSDUnderlinedButton.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "line": 57,
+      "symbol": "RSDUnderlinedButton.prepareForInterfaceBuilder()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "line": 63,
+      "symbol": "RSDUnderlinedButton.commonInit()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "line": 68,
+      "symbol": "RSDUnderlinedButton.tintColorDidChange()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "line": 79,
+      "symbol": "RSDUnderlinedButton.setTitle(_:for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/syoung/Documents/AppleCode/ResearchSuite-AppleOS/ResearchSuiteUI"
+}
