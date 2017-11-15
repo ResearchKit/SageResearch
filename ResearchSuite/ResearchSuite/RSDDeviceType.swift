@@ -33,40 +33,36 @@
 
 import Foundation
 
-/**
- `RSDDeviceType` describes various devices. It can be used by a task to vend different steps or async actions based upon what is supported by a given device type.
- */
+/// `RSDDeviceType` describes various devices. It can be used by a task to vend different steps or async
+/// actions based upon what is supported by a given device type.
+///
+/// - note: This is not currently used and may be deprecated.
+///
 public enum RSDDeviceType {
     
+    /// A standard device type.
     case standard(StandardDevice)
+    
+    /// Standard device types.
     public enum StandardDevice : String {
         
-        /**
-         A computer will have a keyboard and a mouse or touchpad. (Mac)
-        */
+        /// A computer will have a keyboard and a mouse or touchpad. (Mac)
         case computer
         
-        /**
-         A phone is a handheld device with a touch screen. (iPhone, Android phone)
-        */
+        /// A phone is a handheld device with a touch screen. (iPhone, Android phone)
         case phone
 
-        /**
-         A tablet is a larger touch screen device. (iPad, Android tablet)
-        */
+        /// A tablet is a larger touch screen device. (iPad, Android tablet)
         case tablet
         
-        /**
-         A tv is a device that has a larger screen with a remote control. (Apple TV)
-        */
+        /// A tv is a device that has a larger screen with a remote control. (Apple TV)
         case tv
         
-        /**
-         A watch is a device that is worn on a person's wrist. (Apple Watch)
-        */
+        /// A watch is a device that is worn on a person's wrist. (Apple Watch)
         case watch
     }
     
+    /// Custom-defined type.
     case custom(String)
 }
 

@@ -33,21 +33,46 @@
 
 import Foundation
 
+/// `RSDInputFieldError` is used by the `RSDFormStepDataSource` when validating a user-entered answer
+/// for a given input field.
+///
+/// - seealso: `RSDInputField` and `RSDFormStepDataSource`
 public enum RSDInputFieldError: Error {
+    
+    /// The context for the error.
     public struct Context {
+        /// The identifier for the `RSDInputField`.
         let identifier: String?
+        /// The value being validated.
         let value: Any?
+        /// The expected answer result type.
         let answerResult: RSDAnswerResultType
+        /// A debug description for the error.
         let debugDescription: String
     }
     
+    /// The value entered cannot be converted to the expected answer type.
     case invalidType(Context)
+    
+    /// The formatter could not convert the value entered to the expected answer type.
     case invalidFormatter(Formatter, Context)
+    
+    /// The value entered does not match the regex for this field.
     case invalidRegex(String?, Context)
+    
+    /// The text value entered exceeds the maximum allowed length.
     case exceedsMaxLength(Int, Context)
+    
+    /// The numeric value entered is less than the minimum allowed value.
     case lessThanMinimumValue(Decimal, Context)
+    
+    /// The numeric value entered is greater than the maximum allowed value.
     case greaterThanMaximumValue(Decimal, Context)
+    
+    /// The date entered is less than the minimum allowed date.
     case lessThanMinimumDate(Date, Context)
+    
+    /// The date entered is greater than the maximum allowed date.
     case greaterThanMaximumDate(Date, Context)
     
     /// The domain of the error.
@@ -73,6 +98,7 @@ public enum RSDInputFieldError: Error {
         }
     }
     
+    /// The context for the error.
     public var context: Context {
         switch(self) {
         case .invalidType(let context):

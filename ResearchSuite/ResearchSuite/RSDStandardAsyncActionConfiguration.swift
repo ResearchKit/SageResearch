@@ -52,10 +52,10 @@ public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Co
     }
     
     public var requiresBackgroundAudio: Bool {
-        return type == .backgroundAudio || type == .coremotion || type == .location
+        return type == .coremotion || type == .location
     }
     
     public func validate() throws {
-        try type.validate()
+        // Do nothing
     }
 }

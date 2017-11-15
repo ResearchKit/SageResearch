@@ -33,13 +33,93 @@
 
 import Foundation
 
-public struct RSDAnswerResultType : Codable, Hashable, Equatable {
+///
+/// `RSDAnswerResultType` is a `Codable` struct that can be used to describe how to encode and decode an `RSDAnswerResult`.
+/// It carries information about the type of the value and how to encode it. This struct serves a different purpose from
+/// the `RSDFormDataType` because it only carries information required to store a result and *not* additional information
+/// about presentation style.
+///
+/// - seealso: `RSDAnswerResult` and `RSDFormDataType`
+///
+public struct RSDAnswerResultType : Codable {
+    
+    /// The base type of the answer result. This is used to indicate what the type is of the
+    /// value being stored. The value stored in the `RSDAnswerResult` should be convertable
+    /// to one of these base types.
+    public enum BaseType : String, Codable {
+        /// Bool
+        case boolean
+        /// Data
+        case data
+        /// Date
+        case date
+        /// Double
+        case decimal
+        /// Int
+        case integer
+        /// String
+        case string
+        /// TimeInterval
+        case timeInterval
+    }
+    
+    /// The sequence type of the answer result. This is used to represent a multiple-choice
+    /// answer array or a key/value dictionary.
+    public enum SequenceType : String, Codable {
+        /// Array
+        case array
+        /// Dictionary
+        case dictionary
+    }
+    
+    /// The base type for the answer.
     public let baseType: BaseType
+    
+    /// The sequence type (if any) for the answer.
     public private(set) var sequenceType: SequenceType?
+    
+    /// The date format that should be used to encode the answer.
     public private(set) var dateFormat: String?
+    
+    /// The unit (if any) to store with the answer for localized measurement conversion.
     public private(set) var unit: String?
+    
+    /// The sequence separator to use when storing a multiple component answer as a string.
+    ///
+    /// For example, blood pressure might be represented using an array with two fields
+    /// but is stored as a single string value of "120/90". In this case, "/" would be the
+    /// separator.
     public private(set) var sequenceSeparator: String?
     
+    /// Static type for a `RSDAnswerResultType` with a `Bool` base type.
+    public static let boolean = RSDAnswerResultType(baseType: .boolean)
+    
+    /// Static type for a `RSDAnswerResultType` with a `Data` base type.
+    public static let data = RSDAnswerResultType(baseType: .data)
+    
+    /// Static type for a `RSDAnswerResultType` with a `Date` base type.
+    public static let date = RSDAnswerResultType(baseType: .date)
+    
+    /// Static type for a `RSDAnswerResultType` with a `Double` or `Decimal` base type.
+    public static let decimal = RSDAnswerResultType(baseType: .decimal)
+    
+    /// Static type for a `RSDAnswerResultType` with an `Int` base type.
+    public static let integer = RSDAnswerResultType(baseType: .integer)
+    
+    /// Static type for a `RSDAnswerResultType` with a `String` base type.
+    public static let string = RSDAnswerResultType(baseType: .string)
+    
+    /// Static type for a `RSDAnswerResultType` with a `TimeInterval` base type.
+    public static let timeInterval = RSDAnswerResultType(baseType: .timeInterval)
+    
+    /// The initializer for the `RSDAnswerResultType`.
+    ///
+    /// - parameters:
+    ///     - baseType: The base type for the answer. Required.
+    ///     - sequenceType: The sequence type (if any) for the answer. Default is `nil`.
+    ///     - dateFormat: The date format that should be used to encode the answer. Default is `nil`.
+    ///     - unit: The unit (if any) to store with the answer for localized measurement conversion. Default is `nil`.
+    ///     - sequenceSeparator: The sequence separator to use when storing a multiple component answer as a string. Default is `nil`.
     public init(baseType: BaseType, sequenceType: SequenceType? = nil, dateFormat: String? = nil, unit: String? = nil, sequenceSeparator: String? = nil) {
         self.baseType = baseType
         self.sequenceType = sequenceType
@@ -47,42 +127,16 @@ public struct RSDAnswerResultType : Codable, Hashable, Equatable {
         self.unit = unit
         self.sequenceSeparator = sequenceSeparator
     }
-    
-    public var measurementUnit: Unit? {
-        guard let symbol = self.unit else { return nil }
-        return Unit(symbol: symbol)
-    }
-    
-    public enum BaseType : String, Codable {
-        case boolean        // Bool
-        case data           // Data
-        case date           // Date
-        case decimal        // Double
-        case integer        // Int
-        case string         // String
-        case timeInterval   // TimeInterval
-    }
-    
-    public enum SequenceType : String, Codable {
-        case array          // Array
-        case dictionary     // Dictionary
-    }
-    
-    public var description: String {
-        return "\(baseType)|\(String(describing:sequenceType))|\(String(describing:dateFormat))|\(String(describing:unit))|\(String(describing:sequenceSeparator))"
-    }
-    
-    public var hashValue: Int {
-        return description.hashValue
-    }
-    
-    public static func ==(lhs: RSDAnswerResultType, rhs: RSDAnswerResultType) -> Bool {
-        return lhs.description == rhs.description
-    }
 }
 
-extension RSDAnswerResultType {
+// MARK: Value Decoding
+extension RSDAnswerResultType : RSDJSONValueDecoder {
     
+    /// Decode a `RSDJSONValue` from the given decoder.
+    ///
+    /// - parameter decoder: The decoder that holds the value.
+    /// - returns: The decoded value or `nil` if the value is not present.
+    /// - throws: `DecodingError` if the encountered stored value cannot be decoded.
     public func decodeValue(from decoder:Decoder) throws -> RSDJSONValue? {
         // Look to see if the decoded value is nil and exit early if that is the case.
         if let nilContainer = try? decoder.singleValueContainer(), nilContainer.decodeNil() {
@@ -208,8 +262,21 @@ extension RSDAnswerResultType {
     }
 }
 
+// MARK: Value Encoding
 extension RSDAnswerResultType : RSDJSONValueEncoder {
     
+    /// A convenience property for getting the measurement `Unit` from the `unit` string.
+    public var measurementUnit: Unit? {
+        guard let symbol = self.unit else { return nil }
+        return Unit(symbol: symbol)
+    }
+    
+    /// Encode a value to the given encoder.
+    ///
+    /// - parameters:
+    ///     - value: The value to encode.
+    ///     - encoder: The encoder to mutate.
+    /// - throws: `EncodingError` if the value cannot be encoded.
     public func encode(_ value: Any?, to encoder: Encoder) throws {
         guard let obj = value else {
             var container = encoder.singleValueContainer()
@@ -344,5 +411,21 @@ extension RSDAnswerResultType : RSDJSONValueEncoder {
                 return nil
             }
         }
+    }
+}
+
+// MARK: Equatable and Hashable
+extension RSDAnswerResultType : Hashable, Equatable {
+    
+    public var description: String {
+        return "\(baseType)|\(String(describing:sequenceType))|\(String(describing:dateFormat))|\(String(describing:unit))|\(String(describing:sequenceSeparator))"
+    }
+    
+    public var hashValue: Int {
+        return description.hashValue
+    }
+    
+    public static func ==(lhs: RSDAnswerResultType, rhs: RSDAnswerResultType) -> Bool {
+        return lhs.description == rhs.description
     }
 }

@@ -44,10 +44,11 @@ public protocol RSDNavigationRule : RSDStep {
      
      @param result              The current task result.
      @param conditionalRule     The conditional rule associated with this task.
+     @param isPeeking           Is this navigation rule being called on a result for a step that is navigating forward or is it a step navigator that is peeking at the next step to setup UI display? If peeking at the next step then this parameter will be `true`.
      
      @return                    The identifier of the next step.
      */
-    func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?) -> String?
+    func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?, isPeeking: Bool) -> String?
 }
 
 /**
@@ -149,9 +150,9 @@ extension RSDConditionalStepNavigator {
         return self.steps.first(where: { $0.identifier == identifier })
     }
     
-    private func _nextStepIdentifier(after previousStep: RSDStep?, with result: RSDTaskResult) -> String? {
+    private func _nextStepIdentifier(after previousStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
         guard let navigableStep = previousStep as? RSDNavigationRule,
-            let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, conditionalRule: conditionalRule)
+            let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking)
             else {
                 // Check the conditional rule for a next step identifier
                 return conditionalRule?.nextStepIdentifier(after: previousStep, with: result)
@@ -162,13 +163,16 @@ extension RSDConditionalStepNavigator {
     }
     
     public func shouldExit(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
-        guard let nextIdentifier = _nextStepIdentifier(after: step, with: result) else { return false }
+        guard let nextIdentifier = _nextStepIdentifier(after: step, with: result, isPeeking: false)
+            else {
+                return false
+        }
         return nextIdentifier == RSDIdentifier.exit
     }
     
     public func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
         var temp = result
-        return self.step(after: step, with: &temp) != nil
+        return _step(after: step, with: &temp, isPeeking: true) != nil
     }
 
     public func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool {
@@ -177,6 +181,10 @@ extension RSDConditionalStepNavigator {
     }
     
     public func step(after step: RSDStep?, with result: inout RSDTaskResult) -> RSDStep? {
+        return _step(after: step, with: &result, isPeeking: false)
+    }
+    
+    private func _step(after step: RSDStep?, with result: inout RSDTaskResult, isPeeking: Bool) -> RSDStep? {
         
         var returnStep: RSDStep?
         var previousStep: RSDStep? = step
@@ -184,7 +192,7 @@ extension RSDConditionalStepNavigator {
         
         repeat {
             
-            if let nextIdentifier = _nextStepIdentifier(after: previousStep, with: result) {
+            if let nextIdentifier = _nextStepIdentifier(after: previousStep, with: result, isPeeking: isPeeking) {
                 if nextIdentifier == RSDIdentifier.exit {
                     // If the next identifier equals "exit" then exit the task
                     return nil

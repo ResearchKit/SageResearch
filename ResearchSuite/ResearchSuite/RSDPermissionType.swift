@@ -33,30 +33,50 @@
 
 import Foundation
 
-/**
- `RSDPermissionType` is a generic configuration object with information about a given permission.
- */
+/// `RSDPermissionType` is a generic configuration object with information about a given permission.
+/// The permission type can be used by the app to handle gracefully requesting authorization from
+/// the user for access to sensors and hardware required by the app.
 public protocol RSDPermissionType {
     
-    /**
-     An identifier for the permission.
-     */
+    /// An identifier for the permission.
     var identifier: String { get }
 }
 
+/// Standard permission types
 public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
-    case coremotion
-    case location
-    case microphone
-    case camera
-    case photoLibrary
-    case backgroundAudio
     
+    /// “Privacy - Camera Usage Description”
+    /// Specifies the reason for your app to access the device’s camera.
+    /// - seealso: `NSCameraUsageDescription`
+    case camera
+    
+    /// “Privacy - Motion Usage Description”
+    /// Specifies the reason for your app to access the device’s accelerometer.
+    /// - seealso: `NSMotionUsageDescription`
+    case coremotion
+    
+    /// “Privacy - Location When In Use Usage Description”
+    /// Specifies the reason for your app to access the user’s location information while your app is in use.
+    /// - seealso: `NSLocationWhenInUseUsageDescription`
+    case locationWhenInUse
+    
+    /// “Privacy - Location Always Usage Description”
+    /// Specifies the reason for your app to access the user’s location information at all times.
+    /// - seealso: `NSLocationAlwaysUsageDescription`
+    case location
+    
+    /// “Privacy - Microphone Usage Description”
+    /// Specifies the reason for your app to access any of the device’s microphones.
+    /// - seealso: `NSMicrophoneUsageDescription`
+    case microphone
+    
+    /// “Privacy - Photo Library Usage Description”
+    /// Specifies the reason for your app to access the user’s photo library.
+    /// - seealso: `NSPhotoLibraryUsageDescription`
+    case photoLibrary
+    
+    /// An identifier for the permission.
     public var identifier: String {
         return rawValue
-    }
-    
-    public func validate() throws {
-        
     }
 }

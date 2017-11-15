@@ -33,6 +33,11 @@
 
 import Foundation
 
+/// `RSDIdentifier` is intended to allow a developer to define constants for the identifiers
+/// that are used to define the tasks, steps, input fields, and async actions associated with
+/// a given task or task group.
+///
+/// - note: The base implementation includes "exit"
 public struct RSDIdentifier : RawRepresentable, Codable {
     public typealias RawValue = String
     

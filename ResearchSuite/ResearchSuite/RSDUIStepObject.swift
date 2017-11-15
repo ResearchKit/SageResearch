@@ -69,7 +69,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     
     // MARK: navigation
     
-    open func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?) -> String? {
+    open func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
         return self.nextStepIdentifier
     }
     

@@ -1,5 +1,5 @@
 //
-//  RSDPermissionTypeIdentifier.swift
+//  RSDSurveyNavigationStep.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -34,54 +34,54 @@
 import Foundation
 
 /**
- `RSDPermissionTypeIdentifier` is an identifier for a permission type.
+ `RSDSurveyNavigationStep` evaluates `RSDSurveyRule` objects that are associated with each input field to determine if the step navigation should skip to another step.
  */
-public struct RSDPermissionTypeIdentifier: RawRepresentable, Codable {
-    public typealias RawValue = String
+public protocol RSDSurveyNavigationStep : RSDNavigationRule {
     
-    public init(rawValue: RawValue) {
-        self.rawValue = rawValue
-    }
+    /**
+     Identifier to skip to if all input fields have nil answers.
+     */
+    var skipToIfNil: String? { get }
     
-    public private(set) var rawValue: RawValue
-    
-    public static let camera: RSDPermissionTypeIdentifier =  "camera"
-    public static let coremotion: RSDPermissionTypeIdentifier =  "coremotion"
-    public static let location: RSDPermissionTypeIdentifier =  "location"
-    public static let microphone: RSDPermissionTypeIdentifier =  "microphone"
-    public static let photoLibrary: RSDPermissionTypeIdentifier =  "photoLibrary"
+    /**
+     The input fields to test as a part of this navigation.
+     */
+    var inputFields: [RSDInputField] { get }
 }
 
-extension RSDPermissionTypeIdentifier: RSDPermissionType {
-    
-    public var identifier : String {
-        return self.rawValue
+public protocol RSDSurveyInputField : RSDInputField {
+
+    /**
+     A list of survey rules associated with this input field.
+     */
+    var surveyRules: [RSDSurveyRule]? { get }
+}
+
+extension RSDSurveyNavigationStep {
+
+    public func evaluateSurveyRules(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
+        // Do not apply rules when the navigation is only peaking
+        guard !isPeeking else { return nil }
+        
+        // If the result is nil then return the skipToNil value
+        guard let finder = result else { return skipToIfNil }
+
+        var allAnswersNil = true
+        var skipIdentifiers = Set<String>()
+        for inputField in inputFields {
+            let answerResult = finder.findAnswerResult(with: inputField.identifier)
+            allAnswersNil = allAnswersNil && (answerResult?.value == nil)
+            if let surveyInput = inputField as? RSDSurveyInputField,
+                let rules = surveyInput.surveyRules {
+                let skipTos = rules.rsd_mapAndFilter{ $0.evaluateRule(with: answerResult) }
+                skipIdentifiers.formUnion(skipTos)
+            }
+        }
+
+        return skipIdentifiers.count == 1 ? skipIdentifiers.first : (allAnswersNil ? skipToIfNil : nil)
     }
 }
 
-extension RSDPermissionTypeIdentifier : Equatable {
-    public static func ==(lhs: RSDPermissionTypeIdentifier, rhs: RSDPermissionTypeIdentifier) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDPermissionTypeIdentifier) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDPermissionTypeIdentifier, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
 
-extension RSDPermissionTypeIdentifier : Hashable {
-    public var hashValue: Int {
-        return rawValue.hashValue
-    }
-}
 
-extension RSDPermissionTypeIdentifier : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
-    }
-}
 

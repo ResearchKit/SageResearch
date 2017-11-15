@@ -33,128 +33,107 @@
 
 import Foundation
 
-/**
- `RSDFormDataType` is used to describe the data type for a form input.
- */
+/// `RSDFormDataType` is used to describe the data type for a form input. This is different from the
+/// `RSDAnswerResultType` which is a struct that can be used to encode and decode the input field
+/// answer value. This describes the type of information required by the input field.
+///
+/// - seealso: `RSDInputField` and `RSDFormUIHint`.
+///
 public enum RSDFormDataType {
     
-    /**
-     Base data types are basic types that can be defined with only a base type.
-     */
+    /// Base data types are basic types that can be defined with only a base type.
     case base(BaseType)
     
-    /**
-     Collection data types are some kind of a collection with a base type.
-     */
+    /// Collection data types are some kind of a collection with a base type.
     case collection(CollectionType, BaseType)
     
-    /**
-     A measurement is a human-collected measurement. The measurement range indicates the expected size of the human being measured. In US English units, this is required to deterine the expected localization for the measurement. For example, an infant weight would be in lb/oz whereas an adult weight would be in lb. Default range is for an adult.
-     */
+    /// A measurement is a human-data measurement. The measurement range indicates the expected size
+    /// of the human being measured. In US English units, this is required to determine the expected
+    /// localization for the measurement.
+    ///
+    /// For example, an infant weight would be in lb/oz whereas an adult weight would be in lb.
+    /// Default range is for an adult.
     case measurement(MeasurementType, MeasurementRange)
     
-    /**
-     Custom data types are undefined in the base SDK.
-     */
+    /// Custom data types are undefined in the base SDK.
     case custom(String, BaseType)
     
+    /// The base type of the form input field. This is used to indicate what the type is of the
+    /// value being prompted and will affect the choice of allowed formatters.
     public enum BaseType: String {
 
-        /**
-         The Boolean question type asks the participant to enter Yes or No (or the appropriate equivalents).
-         */
+        /// The Boolean question type asks the participant to enter Yes or No (or the appropriate equivalents).
         case boolean
         
-        /**
-         In a date question, the participant can enter a date, time or combination of the two. A date data type can map to a `RSDDateRange` to box the allowed values.
-         */
+        /// In a date question, the participant can enter a date, time, or combination of the two. A date data
+        /// type can map to a `RSDDateRange` to box the allowed values.
         case date
         
-        
-        /**
-         In a year question, the participant can enter a year when an event occured. A year data type can map to an `RSDDateRange` or `RSDDecimalRange` to box the allowed values.
-         */
+        /// In a year question, the participant can enter a year when an event occured. A year data type can map
+        /// to an `RSDDateRange` or `RSDDecimalRange` to box the allowed values.
         case year
         
-        /**
-         The decimal question type asks the participant to enter a decimal number. A decimal data type can map to a `RSDDecimalRange` to box the allowed values.
-         */
+        /// The decimal question type asks the participant to enter a decimal number. A decimal data type can
+        /// map to a `RSDDecimalRange` to box the allowed values.
         case decimal
         
-        /**
-         The integer question type asks the participant to enter an integer number. A decimal data type can map to a `RSDIntegerRange` to box the allowed values.
-         */
+        /// The integer question type asks the participant to enter an integer number. An integer data type can
+        /// map to a `RSDDecimalRange` to box the allowed values, but will store the value as an `Int`.
         case integer
         
-        /**
-         In a string question, the participant can enter text.
-         */
+        /// In a string question, the participant can enter text.
         case string
         
-        /**
-         In a time interval question, the participant can enter a time span such as "4 years, 3 months" or "8 hours, 5 minutes".
-         */
+        /// In a time interval question, the participant can enter a time span such as "4 years, 3 months" or
+        /// "8 hours, 5 minutes".
         // TODO: syoung 10/06/2017 add TimeIntervalRange
         //case timeInterval
     }
     
+    /// The collection type for the input field. The supported types are for choice-style questions or
+    /// multiple component questions where the user selected from one or more fields to build a single
+    /// answer result.
     public enum CollectionType: String {
         
-        /**
-         In a multiple choice question, the participant can pick one or more options.
-         */
+        /// In a multiple choice question, the participant can pick one or more options.
         case multipleChoice
         
-        /**
-         In a single choice question, the participant can pick one item from a list of options.
-         */
+        /// In a single choice question, the participant can pick one item from a list of options.
         case singleChoice
         
-        /**
-         In a multiple component question, the participant can pick one choice from each component or enter a formatted text string such as a phone number.
-         */
+        /// In a multiple component question, the participant can pick one choice from each component
+        /// or enter a formatted text string such as a phone number.
         case multipleComponent
     }
     
+    /// A measurement type is a human-data measurement such as height or weight.
     public enum MeasurementType: String {
         
-        /**
-         A measurement of height.
-         */
+        /// A measurement of height.
         case height
         
-        /**
-         A measurement of weight.
-         */
+        /// A measurement of weight.
         case weight
         
-        /**
-         A measurement of blood pressure.
-         */
+        /// A measurement of blood pressure.
         case bloodPressure
     }
     
+    /// The measurement range is used to determine units that are appropriate to the
+    /// size of the person.
     public enum MeasurementRange: String {
         
-        /**
-         Measurement units should be ranged for an adult.
-         */
+        /// Measurement units should be ranged for an adult.
         case adult
         
-        /**
-         Measurement units should be ranged for a child.
-         */
+        /// Measurement units should be ranged for a child.
         case child
         
-        /**
-         Measuremet units should be ranged for an infant.
-         */
+        /// Measuremet units should be ranged for an infant.
         case infant
     }
     
-    /**
-     List of the standard UI hints that are valid for this data type.
-     */
+    /// List of the standard UI hints that are valid for this data type.
     public var validStandardUIHints: [RSDFormUIHint.Standard] {
         switch self {
         case .base(let baseType):
@@ -189,6 +168,7 @@ public enum RSDFormDataType {
         }
     }
     
+    /// The set of ui hints that can display using a list format such as a scrolling list.
     public var listSelectionHints : Set<RSDFormUIHint> {
         switch self {
         case .collection(let collectionType, _):
@@ -206,6 +186,7 @@ public enum RSDFormDataType {
         }
     }
     
+    /// The `BaseType` for this form type. All data types have a base type, though some carry additional information.
     public var baseType : BaseType {
         switch self {
         case .base(let baseType):
@@ -227,10 +208,10 @@ public enum RSDFormDataType {
             return baseType
         }
     }
-    
-    /**
-     Return the default result answer type for this input field.
-     */
+
+    /// Maps the base type of the `RSDFormDataType` to the base type of the `RSDAnswerResultType`.
+    ///
+    /// - returns: the default result answer type for this input field.
     public func defaultAnswerResultBaseType() -> RSDAnswerResultType.BaseType {
         switch self.baseType {
         case .boolean:

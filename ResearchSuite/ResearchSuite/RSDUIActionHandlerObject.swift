@@ -69,8 +69,9 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
             var actions: [RSDUIActionType : RSDUIAction] = [:]
             for key in nestedContainer.allKeys {
                 let objectDecoder = try nestedContainer.superDecoder(forKey: key)
-                let action = try decoder.factory.decodeUIAction(from: objectDecoder)
-                actions[RSDUIActionType(rawValue: key.stringValue)] = action
+                let actionType = RSDUIActionType(rawValue: key.stringValue)
+                let action = try decoder.factory.decodeUIAction(from: objectDecoder, for: actionType)
+                actions[actionType] = action
             }
             self.actions = actions
         }
