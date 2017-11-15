@@ -39,7 +39,7 @@ import Foundation
 ///
 public enum RSDValidationError : Error {
     
-    /// Attempting to load a section, task or input form with non-unique identifiers.
+    /// Attempting to load a section, task, or input form with non-unique identifiers.
     case notUniqueIdentifiers(String)
     
     /// The image could not be found in the resource bundle.

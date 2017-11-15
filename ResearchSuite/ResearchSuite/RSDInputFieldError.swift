@@ -41,7 +41,7 @@ public enum RSDInputFieldError: Error {
     
     /// The context for the error.
     public struct Context {
-        /// The indentifier for the `RSDInputField`.
+        /// The identifier for the `RSDInputField`.
         let identifier: String?
         /// The value being validated.
         let value: Any?

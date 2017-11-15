@@ -48,7 +48,7 @@ public enum RSDFormDataType {
     case collection(CollectionType, BaseType)
     
     /// A measurement is a human-data measurement. The measurement range indicates the expected size
-    /// of the human being measured. In US English units, this is required to deterine the expected
+    /// of the human being measured. In US English units, this is required to determine the expected
     /// localization for the measurement.
     ///
     /// For example, an infant weight would be in lb/oz whereas an adult weight would be in lb.
@@ -59,13 +59,13 @@ public enum RSDFormDataType {
     case custom(String, BaseType)
     
     /// The base type of the form input field. This is used to indicate what the type is of the
-    /// value being prompted and will effect the choice of allowed formatters.
+    /// value being prompted and will affect the choice of allowed formatters.
     public enum BaseType: String {
 
         /// The Boolean question type asks the participant to enter Yes or No (or the appropriate equivalents).
         case boolean
         
-        /// In a date question, the participant can enter a date, time or combination of the two. A date data
+        /// In a date question, the participant can enter a date, time, or combination of the two. A date data
         /// type can map to a `RSDDateRange` to box the allowed values.
         case date
         
@@ -106,7 +106,7 @@ public enum RSDFormDataType {
         case multipleComponent
     }
     
-    /// A measurement type is a human-data measurement such as hieght or weight.
+    /// A measurement type is a human-data measurement such as height or weight.
     public enum MeasurementType: String {
         
         /// A measurement of height.

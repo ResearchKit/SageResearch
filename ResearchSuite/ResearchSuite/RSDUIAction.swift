@@ -68,12 +68,12 @@ public protocol RSDWebViewUIAction : RSDUIAction {
 }
 
 /**
- `RSDSkipToUIAction` implements an extension of the base protocol where the action includes a identifier for a step to skip to if this action is called.
+ `RSDSkipToUIAction` implements an extension of the base protocol where the action includes an identifier for a step to skip to if this action is called.
  */
 public protocol RSDSkipToUIAction : RSDUIAction {
     
     /**
-     The identifier for the step to if the action is called.
+     The identifier for the step to skip to if the action is called.
      */
     var skipToIdentifier: String { get }
 }
