@@ -33,39 +33,59 @@
 
 import Foundation
 
-/**
- The `RSDFormUIHint` enum is a key word that can be used to describe the preferred UI for a form input field.  Not all ui hints are applicable to all data types.
- */
+/// The `RSDFormUIHint` enum is a key word that can be used to describe the preferred UI for a form input field.
+/// This is intended as a "hint" that the designers and developers can use to indicate the preferred input style
+/// for an input field. Not all ui hints are applicable to all data types or devices, and therefore the ui hint
+/// may be ignored by the application displaying the input field to the user.
+///
 public enum RSDFormUIHint {
     
-    /**
-     Standard ui hints
-     */
+    /// Standard ui hints.
     case standard(Standard)
+    
+    /// A list of standard presentations for an input field.
+    ///
+    /// - note: The standard ui hints are not all currently supported by `ResearchSuiteUI`.
     public enum Standard : String {
-        case checkbox       // list with a checkbox next to each item
-        case combobox       // drop-down with a textfield for "other"
-        case list           // list
-        case multipleLine   // multiple line text field
-        case picker         // picker wheel
-        case popover        // Text entry using a modal popover box
-        case radioButton    // radio button
-        case slider         // slider
-        case textfield      // text field
-        case toggle         // toggle/segmented button
         
+        /// list with a checkbox next to each item
+        case checkbox
+        /// drop-down with a textfield for "other"
+        case combobox
+        /// list
+        case list
+        /// multiple line text field
+        case multipleLine
+        /// picker wheel
+        case picker
+        /// Text entry using a modal popover box
+        case popover
+        /// radio button
+        case radioButton
+        /// slider
+        case slider
+        /// text field
+        case textfield
+        /// toggle (segmented) button
+        case toggle
+        
+        /// List of all the standard ui hints
         public static var all: [Standard] {
             return [.checkbox, .combobox, .list, .multipleLine, .picker, .radioButton, .slider, .textfield, .toggle]
         }
     }
     
+    /// A custom ui hint that a developer can use to specify a ui hint that is not included
+    /// in the standard set.
     case custom(String)
     
+    /// The standard type for this ui hint, if applicable.
     public var standardType: Standard? {
         guard case .standard(let type) = self else { return nil }
         return type
     }
     
+    /// A list of all the `RSDFormUIHint` values that are standard hints.
     public static var allStandardHints: Set<RSDFormUIHint> {
         let all: [RSDFormUIHint] = Standard.all.map { return .standard($0) }
         return Set(all)

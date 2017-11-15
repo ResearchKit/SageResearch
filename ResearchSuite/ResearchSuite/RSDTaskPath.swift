@@ -33,48 +33,40 @@
 
 import Foundation
 
-public class RSDTaskPath : NSObject, NSCopying {
+/// `RSDTaskPath` is used to keep track of the current state of a running task.
+///
+/// - seeAlso: `RSDTaskController`
+///
+public final class RSDTaskPath : NSObject, NSCopying {
 
     public typealias FetchCompletionHandler = (RSDTaskPath, Error?) -> Void
     
-    /**
-     Identifier for this path segment
-     */
+    /// Identifier for this path segment
     public let identifier: String
     
-    /**
-     Identifier for this task that can be mapped back to a nofification. This may be the same as the task identifier, or it might be that a task is scheduled multiple times per day, and the app needs to track what the scheduled timing is for the task.
-     */
+    /// Identifier for this task that can be mapped back to a notification. This may be the same
+    /// as the task identifier, or it might be that a task is scheduled multiple times per day,
+    /// and the app needs to track what the scheduled timing is for the task.
     public var scheduleIdentifier: String?
     
-    /**
-     String identifying the full path for this task.
-     */
+    //// String identifying the full path for this task.
     public var fullPath: String {
         let prefix = parentPath?.fullPath ?? ""
         return prefix + "/" + identifier
     }
     
-    /**
-     String representing the current order of steps to this point in the task.
-     */
+    /// String representing the current order of steps to this point in the task.
     public var stepPath: String {
         return self.result.stepHistory.map( {$0.identifier }).joined(separator: ", ")
     }
     
-    /**
-     The task info object used to load the task.
-     */
+    /// The task info object used to load the task.
     public private(set) var taskInfo: RSDTaskInfoStep?
     
-    /**
-     The task that is currently being run.
-     */
+    /// The task that is currently being run.
     public private(set) var task: RSDTask?
     
-    /**
-     Convenience method for accessing the top-level task path.
-     */
+    /// Convenience method for accessing the top-level task path.
     public var topLevelTaskPath: RSDTaskPath {
         var taskPath = self
         while let path = taskPath.parentPath {
@@ -83,49 +75,32 @@ public class RSDTaskPath : NSObject, NSCopying {
         return taskPath
     }
     
-    /**
-     The result associated with this task.
-     */
+    /// The result associated with this task.
     public var result: RSDTaskResult
     
-    /**
-     A listing of step results that were removed from the task result. These results can be accessed by a step view controller to load a result that was previously selected.
-     */
+    /// A listing of step results that were removed from the task result. These results can be accessed
+    /// by a step view controller to load a result that was previously selected.
     public private(set) var previousResults: [RSDResult]?
     
-    /**
-     The current step. If `nil` then the task has not been started.
-     */
+    /// The current step. If `nil` then the task has not been started.
     open var currentStep: RSDStep?
  
-    /**
-     This is a flag that can be used to mark whether or not the task is ready to be saved.
-     */
+    /// This is a flag that can be used to mark whether or not the task is ready to be saved.
     public var isCompleted: Bool = false
     
-    /**
-     This is a flag that can be used to mark when a task was exited early.
-     */
+    /// This is a flag that can be used to mark when a task was exited early.
     public var didExitEarly: Bool = false
     
-    /**
-     Mutable array of the current actions attached to this task.
-     */
+    /// Mutable array of the current actions attached to this task.
     public var currentActions: [RSDAsyncActionController] = []
     
-    /**
-     A pointer to a parent path if this is subtask step.
-     */
+    /// A pointer to a parent path if this is subtask step.
     public private(set) var parentPath: RSDTaskPath?
     
-    /**
-     Flag for tracking whether or not the `task` is loading from the `taskInfo`.
-     */
+    /// Flag for tracking whether or not the `task` is loading from the `taskInfo`.
     public private(set) var isLoading: Bool = false
     
-    /**
-     URL for the output directory to use for file results.
-     */
+    /// URL for the output directory to use for file results.
     lazy public var outputDirectory: URL! = {
         guard parentPath == nil else { return parentPath!.outputDirectory }
         
@@ -144,6 +119,10 @@ public class RSDTaskPath : NSObject, NSCopying {
         return outputDirectory
     }()
     
+    /// Initialize the task path with a task.
+    /// - parameters:
+    ///     - task: The task to set for this path segment.
+    ///     - parentPath: A pointer to the parent task path. Default is `nil`.
     public init(task: RSDTask, parentPath: RSDTaskPath? = nil) {
         self.identifier = task.identifier
         self.task = task
@@ -153,6 +132,10 @@ public class RSDTaskPath : NSObject, NSCopying {
         commonInit(identifier: task.identifier, parentPath: parentPath)
     }
     
+    /// Initialize the task path with a task.
+    /// - parameters:
+    ///     - taskInfo: The task info to set for this path segment.
+    ///     - parentPath: A pointer to the parent task path. Default is `nil`.
     public init(taskInfo: RSDTaskInfoStep, parentPath: RSDTaskPath? = nil) {
         self.identifier = taskInfo.identifier
         self.taskInfo = taskInfo
@@ -167,9 +150,11 @@ public class RSDTaskPath : NSObject, NSCopying {
         self.previousResults = (parentPath.result.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
     }
     
-    /**
-     Fetch the task associated with this path. This
-     */
+    /// Fetch the task associated with this path. This method loads the task and sets up the
+    /// task result once finished.
+    /// - parameters:
+    ///     - factory: The factory to use to decode the task.
+    ///     - completion: The callback handler to call when the task is loaded.
     public func fetchTask(with factory:RSDFactory, completion: @escaping FetchCompletionHandler) {
         guard !self.isLoading && self.task == nil else {
             debugPrint("\(self.description): Already loading task.")
@@ -185,39 +170,38 @@ public class RSDTaskPath : NSObject, NSCopying {
             strongSelf.isLoading = false
             if task != nil {
                 strongSelf.task = task
+                let previousResult = strongSelf.result
                 strongSelf.result = task!.instantiateTaskResult()
+                if previousResult.asyncResults?.count ?? 0 > 0 {
+                    var results = strongSelf.result.asyncResults ?? []
+                    results.append(contentsOf: previousResult.asyncResults!)
+                    strongSelf.result.asyncResults = results
+                }
             }
             completion(strongSelf, error)
         }
     }
     
-    /**
-     Convenience method for encoding a result. This is a work-around for a limitation of the encoder where it cannot encode an object without a Type for the object.
-     
-     @param encoder     The factory top-level encoder.
-     
-     @return            The encoded result.
-     */
+    /// Convenience method for encoding a result. This is a work-around for a limitation of the encoder
+    /// where it cannot encode an object without a Type for the object.
+    /// - parameter encoder: The factory top-level encoder.
+    /// - returns: The encoded result.
     public func encodeResult(to encoder: RSDFactoryEncoder) throws -> Data {
         let encodable = _EncodableResultWrapper(taskResult: self.result)
         return try encoder.encode(encodable)
     }
     
-    /**
-     Append the result to the end of the step history, replacing the previous instance with the same identifier and adding the previous instance to the previous results.
-     
-     @param newResult  The result to add to the step history.
-     */
+    /// Append the result to the end of the step history, replacing the previous instance with the same
+    /// identifier and adding the previous instance to the previous results.
+    /// - parameter newResult:  The result to add to the step history.
     public func appendStepHistory(with newResult: RSDResult) {
         guard let previousResult = result.appendStepHistory(with: newResult) else { return }
         _appendPreviousResults(previousResult)
     }
     
-    /**
-     Remove results from the step history from the result with the given identifier to the end of the array. Add these results to the previous results set.
-     
-     @param stepIdentifier  The identifier of the result associated with the given step.
-     */
+    /// Remove results from the step history from the result with the given identifier to the end of the
+    /// array. Add these results to the previous results set.
+    /// - parameter stepIdentifier:  The identifier of the result associated with the given step.
     public func removeStepHistory(from stepIdentifier: String) {
         guard let previous = result.removeStepHistory(from: stepIdentifier) else { return }
         for previousResult in previous {

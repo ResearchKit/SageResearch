@@ -33,14 +33,31 @@
 
 import Foundation
 
+/// `RSDValidationError` errors are thrown during validation of a task, step, etc.
+/// Usually this happens during the decoding of the task or when the task is first
+/// started.
+///
 public enum RSDValidationError : Error {
+    
+    /// Attempting to load a section, task or input form with non-unique identifiers.
     case notUniqueIdentifiers(String)
+    
+    /// The image could not be found in the resource bundle.
     case invalidImageName(String)
+    
+    /// The given duration is invalid.
     case invalidDuration(String)
+    
+    /// The factory cannot decode an object because the class type is undefined.
     case undefinedClassType(String)
+    
+    /// Unsupported data type.
     case invalidType(String)
+    
+    /// Expected identifier was not found.
     case identifierNotFound(Any, String, String)
-    case invalidNavigation(RSDTaskPath, String)
+    
+    /// A forced optional unwrapped with a nil value.
     case unexpectedNullObject(String)
     
     /// The domain of the error.
@@ -63,10 +80,8 @@ public enum RSDValidationError : Error {
             return -5
         case .identifierNotFound(_, _, _):
             return -6
-        case .invalidNavigation(_, _):
-            return -7
         case .unexpectedNullObject(_):
-            return -8
+            return -7
         }
     }
     
@@ -80,7 +95,6 @@ public enum RSDValidationError : Error {
         case .undefinedClassType(let str): description = str
         case .invalidType(let str): description = str
         case .identifierNotFound(_, _, let str): description = str
-        case .invalidNavigation(_, let str): description = str
         case .unexpectedNullObject(let str): description = str
         }
         return ["NSDebugDescription": description]

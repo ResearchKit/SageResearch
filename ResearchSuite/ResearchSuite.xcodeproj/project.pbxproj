@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		FF8DA0571FBBC91500DFABAB /* Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = FF8DA05A1FBBC91600DFABAB /* Build configuration list for PBXAggregateTarget "Documentation" */;
+			buildPhases = (
+				FF8DA05B1FBBC91C00DFABAB /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Documentation;
+			productName = Documentation;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		FF0472451F7AD4030023DAD6 /* RSDClassTypeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0472431F7AD4020023DAD6 /* RSDClassTypeMap.m */; };
 		FF0472461F7AD4030023DAD6 /* RSDClassTypeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0472441F7AD4030023DAD6 /* RSDClassTypeMap.swift */; };
@@ -81,7 +95,6 @@
 		FF9D7F671FA8E0FE008506DB /* RSDViewThemeElementObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */; };
 		FFB015CA1F8BE62E00AC209B /* RSDRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB015C91F8BE62E00AC209B /* RSDRange.swift */; };
 		FFB015CC1F8BE96A00AC209B /* RSDTextFieldOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB015CB1F8BE96A00AC209B /* RSDTextFieldOptions.swift */; };
-		FFB015D61F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB015D51F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift */; };
 		FFB015E01F8C081200AC209B /* RSDPermissionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB015DF1F8C081200AC209B /* RSDPermissionType.swift */; };
 		FFB6A4AB1F85941F00E37752 /* RSDInputFieldObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB6A4AA1F85941F00E37752 /* RSDInputFieldObject.swift */; };
 		FFB6A4AD1F859B0100E37752 /* RSDChoiceInputFieldObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB6A4AC1F859B0100E37752 /* RSDChoiceInputFieldObject.swift */; };
@@ -202,7 +215,6 @@
 		FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDViewThemeElementObject.swift; sourceTree = "<group>"; };
 		FFB015C91F8BE62E00AC209B /* RSDRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRange.swift; sourceTree = "<group>"; };
 		FFB015CB1F8BE96A00AC209B /* RSDTextFieldOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextFieldOptions.swift; sourceTree = "<group>"; };
-		FFB015D51F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPermissionTypeIdentifier.swift; sourceTree = "<group>"; };
 		FFB015DF1F8C081200AC209B /* RSDPermissionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPermissionType.swift; sourceTree = "<group>"; };
 		FFB6A4AA1F85941F00E37752 /* RSDInputFieldObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDInputFieldObject.swift; sourceTree = "<group>"; };
 		FFB6A4AC1F859B0100E37752 /* RSDChoiceInputFieldObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDChoiceInputFieldObject.swift; sourceTree = "<group>"; };
@@ -264,10 +276,9 @@
 				FF87CD8B1F844CE400084426 /* RSDFormUIHint.swift */,
 				FF80B1381F7C244200582849 /* RSDIdentifier.swift */,
 				FFCCA7051F9FAD67009BC24C /* RSDInputFieldError.swift */,
-				FFB015D51F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift */,
+				FF8E5F441F8C36F400611C23 /* RSDTaskPath.swift */,
 				FF87CD8D1F84533B00084426 /* RSDUIActionType.swift */,
 				FF80B13C1F7C582500582849 /* RSDValidationError.swift */,
-				FF8E5F441F8C36F400611C23 /* RSDTaskPath.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -297,8 +308,8 @@
 			isa = PBXGroup;
 			children = (
 				FF177D7F1F82E6C300C2D4D7 /* Objective-C Codable */,
-				FFD1A2891F8818A700ECD730 /* RSDDateCoderObject.swift */,
 				FF74A7CE1F7D63D40064A634 /* RSDImageWrapper.swift */,
+				FFD1A2891F8818A700ECD730 /* RSDDateCoderObject.swift */,
 				FF87CD871F84149400084426 /* RSDResourceWrapper.swift */,
 				FF80B11F1F7B01E200582849 /* RSDJSONValue.swift */,
 				FFFCBCE11F900449000B55C1 /* RSDStringLiteralOptionSet.swift */,
@@ -635,6 +646,11 @@
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
+					FF8DA0571FBBC91500DFABAB = {
+						CreatedOnToolsVersion = 9.1;
+						DevelopmentTeam = 4B822CZK9N;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = FF72B22B1F6859D2004C6F15 /* Build configuration list for PBXProject "ResearchSuite" */;
@@ -651,6 +667,7 @@
 			targets = (
 				FF72B2301F6859D3004C6F15 /* ResearchSuite */,
 				FF72B2391F6859D3004C6F15 /* ResearchSuiteTests */,
+				FF8DA0571FBBC91500DFABAB /* Documentation */,
 			);
 		};
 /* End PBXProject section */
@@ -675,6 +692,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		FF8DA05B1FBBC91C00DFABAB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "RSD_DOC_DIR=\"${PROJECT_DIR}/Documentation/\"\nRSD_PROJECT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}/\"\n\n#jazzy Xcode script\n# Start constants\ncompany=\"Sage Bionetworks\"\ncompanyID=\"org.sagebase\"\ncompanyURL=\"https://developer.sagebridge.org\"\ngithubURL=\"https://github.com/Sage-Bionetworks/ResearchSuite-AppleOS.git\"\n\ntarget=\"iphone\"\n#target=\"macosx\"\noutputPath=\"${RSD_DOC_DIR}\"\n# End constants\njazzy \\\n--clean \\\n--min-acl public \\\n--author \"${company}\" \\\n--author_url ${companyURL} \\\n--github_url ${githubURL} \\\n--output ${outputPath}\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		FF72B22C1F6859D3004C6F15 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -690,7 +723,6 @@
 				FF8335AB1F985F36009FC1A8 /* RSDFormStepDataSource.swift in Sources */,
 				FFB6A4AD1F859B0100E37752 /* RSDChoiceInputFieldObject.swift in Sources */,
 				FFD1A28C1F882A0100ECD730 /* RSDDateCoder.swift in Sources */,
-				FFB015D61F8BFE6400AC209B /* RSDPermissionTypeIdentifier.swift in Sources */,
 				FF269B721F7E128700C9289E /* RSDUIActionObject.swift in Sources */,
 				FFC7DE5E1F992EA800851C95 /* RSDPickerDataSourceObject.swift in Sources */,
 				FF8335B51F991328009FC1A8 /* RSDPickerDataSource.swift in Sources */,
@@ -983,6 +1015,24 @@
 			};
 			name = Release;
 		};
+		FF8DA0581FBBC91600DFABAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FF8DA0591FBBC91600DFABAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1009,6 +1059,15 @@
 			buildConfigurations = (
 				FF72B2491F6859D3004C6F15 /* Debug */,
 				FF72B24A1F6859D3004C6F15 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF8DA05A1FBBC91600DFABAB /* Build configuration list for PBXAggregateTarget "Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF8DA0581FBBC91600DFABAB /* Debug */,
+				FF8DA0591FBBC91600DFABAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

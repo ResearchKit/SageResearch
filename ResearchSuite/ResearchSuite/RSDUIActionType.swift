@@ -33,46 +33,37 @@
 
 import Foundation
 
-/**
- The `RSDUIActionType` enum describes standard navigation actions that are common to a
- given UI step. It is extendable using the custom field.
- */
+/// The `RSDUIActionType` enum describes standard navigation actions that are common to a
+/// given UI step. It is extendable using the custom field.
+///
 public enum RSDUIActionType {
     
-    /**
-     Standard navigation elements that are common to most steps.
-     */
+    /// Standard navigation elements that are common to most steps.
     case navigation(Navigation)
+    
+    /// Standard navigation elements that are common to most steps.
     public enum Navigation : String {
         
-        /**
-         Navigate to the next step.
-         */
+        /// Navigate to the next step.
         case goForward
         
-        /**
-         Navigate to the previous step.
-         */
+        /// Navigate to the previous step.
         case goBackward
         
-        /**
-         Skip the step and immediately go forward.
-         */
+        /// Skip the step and immediately go forward.
         case skip
         
-        /**
-         Cancel the task.
-         */
+        /// Cancel the task.
         case cancel
         
-        /**
-         Display additional information about the step.
-         */
+        /// Display additional information about the step.
         case learnMore
     }
     
+    /// A custom action on the step. Must be handled by the app.
     case custom(String)
     
+    /// The string for the custom action (if applicable).
     public var customAction: String? {
         if case .custom(let str) = self {
             return str
