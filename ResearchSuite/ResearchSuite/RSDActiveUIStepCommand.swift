@@ -36,7 +36,7 @@ import Foundation
 /// `RSDActiveUIStepCommand` is an `OptionSet` for certain commonly used commands that are used at the
 /// beginning and end of an active step.
 ///
-/// - seeAlso: `RSDActiveUIStep`
+/// - seealso: `RSDActiveUIStep`
 ///
 public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     
@@ -48,7 +48,7 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     
     /// Required initializer for a `RawRepresentable`.
     ///
-    /// - Parameter rawValue: The raw value for this command.
+    /// - parameter rawValue: The raw value for this command.
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
@@ -66,9 +66,10 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     
     /// Creates a new instance by decoding from the given decoder.
     ///
-    /// This initializer throws an error if reading from the decoder fails, or if the data read is corrupted or otherwise invalid.
+    /// This initializer throws an error if reading from the decoder fails, or if the data read
+    /// is corrupted or otherwise invalid.
     ///
-    /// - Parameter decoder: The decoder to read data from.
+    /// - parameter decoder: The decoder to read data from.
     public init(from decoder: Decoder) throws {
         // Register the commands included in the base struct to add them to the mapping
         let _: RSDActiveUIStepCommand = [.playSound,
@@ -85,7 +86,7 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     
     /// A convenience method for mapping a `rawValue` to a `String`.
     ///
-    /// - Parameters:
+    /// - parameters:
     ///     - rawValue: The raw value for this command.
     ///     - forKey: The string representation.
     public static func set(rawValue: RawValue, forKey: String) {

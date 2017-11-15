@@ -39,7 +39,7 @@ import Foundation
 /// the `RSDFormDataType` because it only carries information required to store a result and *not* additional information
 /// about presentation style.
 ///
-/// - seeAlso: `RSDAnswerResult` and `RSDFormDataType`
+/// - seealso: `RSDAnswerResult` and `RSDFormDataType`
 ///
 public struct RSDAnswerResultType : Codable {
     

@@ -47,32 +47,32 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
     
     /// “Privacy - Camera Usage Description”
     /// Specifies the reason for your app to access the device’s camera.
-    /// - seeAlso: `NSCameraUsageDescription`
+    /// - seealso: `NSCameraUsageDescription`
     case camera
     
     /// “Privacy - Motion Usage Description”
     /// Specifies the reason for your app to access the device’s accelerometer.
-    /// - seeAlso: `NSMotionUsageDescription`
+    /// - seealso: `NSMotionUsageDescription`
     case coremotion
     
     /// “Privacy - Location When In Use Usage Description”
     /// Specifies the reason for your app to access the user’s location information while your app is in use.
-    /// - seeAlso: `NSLocationWhenInUseUsageDescription`
+    /// - seealso: `NSLocationWhenInUseUsageDescription`
     case locationWhenInUse
     
     /// “Privacy - Location Always Usage Description”
     /// Specifies the reason for your app to access the user’s location information at all times.
-    /// - seeAlso: `NSLocationAlwaysUsageDescription`
+    /// - seealso: `NSLocationAlwaysUsageDescription`
     case location
     
     /// “Privacy - Microphone Usage Description”
     /// Specifies the reason for your app to access any of the device’s microphones.
-    /// - seeAlso: `NSMicrophoneUsageDescription`
+    /// - seealso: `NSMicrophoneUsageDescription`
     case microphone
     
     /// “Privacy - Photo Library Usage Description”
     /// Specifies the reason for your app to access the user’s photo library.
-    /// - seeAlso: `NSPhotoLibraryUsageDescription`
+    /// - seealso: `NSPhotoLibraryUsageDescription`
     case photoLibrary
     
     /// An identifier for the permission.

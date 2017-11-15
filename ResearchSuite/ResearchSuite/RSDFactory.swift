@@ -33,19 +33,19 @@
 
 import Foundation
 
-/**
- `RSDFactory` handles customization of the elements of a task.
- */
+/// `RSDFactory` handles customization of decoding the elements of a task. Applications should
+/// override this factory to add custom elements required to run their task modules.
 open class RSDFactory {
     
+    /// Singleton for the shared factory. If a factory is not passed in when creating tasks
+    /// then this will be used.
     public static var shared = RSDFactory()
     
+    // Initializer
     public init() {
     }
     
-    /**
-     Optional data source for this factory.
-     */
+    /// Optional data source for this factory.
     public var taskDataSource: RSDTaskDataSource?
 
     // MARK: Class name factory
@@ -54,15 +54,13 @@ open class RSDFactory {
         case type
     }
     
-    /**
-     Get a string that will identify the type of object to instantiate for the given decoder.
-     
-     By default, this will look in the container for the decoder for a key/value pair where the key == "type" and the value is a `String`.
-     
-     @param decoder     The decoder to inspect.
-     
-     @return            The string representing this class type (if found).
-     */
+    /// Get a string that will identify the type of object to instantiate for the given decoder.
+    ///
+    /// By default, this will look in the container for the decoder for a key/value pair where
+    /// the key == "type" and the value is a `String`.
+    /// - parameter decoder: The decoder to inspect.
+    /// - returns: The string representing this class type (if found).
+    /// - throws: `DecodingError` if the type name cannot be decoded.
     open func typeName(from decoder:Decoder) throws -> String? {
         let container = try decoder.container(keyedBy: TypeKeys.self)
         return try container.decodeIfPresent(String.self, forKey: .type)

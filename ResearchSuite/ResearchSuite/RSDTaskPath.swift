@@ -35,7 +35,7 @@ import Foundation
 
 /// `RSDTaskPath` is used to keep track of the current state of a running task.
 ///
-/// - seeAlso: `RSDTaskController`
+/// - seealso: `RSDTaskController`
 ///
 public final class RSDTaskPath : NSObject, NSCopying {
 

@@ -37,7 +37,7 @@ import Foundation
 /// `RSDAnswerResultType` which is a struct that can be used to encode and decode the input field
 /// answer value. This describes the type of information required by the input field.
 ///
-/// - seeAlso: `RSDInputField` and `RSDFormUIHint`.
+/// - seealso: `RSDInputField` and `RSDFormUIHint`.
 ///
 public enum RSDFormDataType {
     

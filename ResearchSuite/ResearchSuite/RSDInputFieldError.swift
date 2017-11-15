@@ -36,7 +36,7 @@ import Foundation
 /// `RSDInputFieldError` is used by the `RSDFormStepDataSource` when validating a user-entered answer
 /// for a given input field.
 ///
-/// - seeAlso: `RSDInputField` and `RSDFormStepDataSource`
+/// - seealso: `RSDInputField` and `RSDFormStepDataSource`
 public enum RSDInputFieldError: Error {
     
     /// The context for the error.
