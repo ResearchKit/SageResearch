@@ -589,9 +589,9 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         let aType: RSDAnswerResultType = answerType ?? {
             let baseType: RSDAnswerResultType.BaseType = inputField.dataType.defaultAnswerResultBaseType()
             let sequenceType: RSDAnswerResultType.SequenceType? = singleSelection ? nil : .array
-            let dateFormat: String? = (inputField.range as? RSDDateRange)?.dateCoder?.formatter.dateFormat
+            let dateFormatter: DateFormatter? = (inputField.range as? RSDDateRange)?.dateCoder?.resultFormatter
             let unit: String? = (inputField.range as? RSDDecimalRange)?.unit
-            return RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: dateFormat, unit: unit, sequenceSeparator: nil)
+            return RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: nil)
         }()
         
         super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: aType, defaultAnswer: defaultAnswer, textFieldOptions: textFieldOptions, items: items, formatter: formatter, pickerSource: choicePicker)
@@ -640,13 +640,13 @@ final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
         
         var pickerSource: RSDPickerDataSource? = inputField as? RSDPickerDataSource
         var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
-        var dateFormat: String?
+        var dateFormatter: DateFormatter?
         
         if let dateRange = inputField.range as? RSDDateRange {
             let (src, fmt) = dateRange.dataSource()
             pickerSource = pickerSource ?? src
             formatter = formatter ?? fmt
-            dateFormat = dateRange.dateCoder?.formatter.dateFormat
+            dateFormatter = dateRange.dateCoder?.resultFormatter
         } else {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .short
@@ -655,7 +655,7 @@ final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
             pickerSource = pickerSource ?? RSDDatePickerDataSourceObject(datePickerMode: .dateAndTime, minimumDate: nil, maximumDate: nil, minuteInterval: nil, dateFormatter: dateFormatter)
         }
         
-        let answerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, dateFormat: dateFormat, unit: nil, sequenceSeparator: nil)
+        let answerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, dateFormat: dateFormatter?.dateFormat, unit: nil, sequenceSeparator: nil)
         super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, defaultAnswer: nil, textFieldOptions: nil, items: nil, formatter: formatter, pickerSource: pickerSource)
     }
 }
@@ -698,9 +698,9 @@ final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
     public init(beginningRowIndex: Int, inputField: RSDMultipleComponentInputField, uiHint: RSDFormUIHint) {
         
         let baseType: RSDAnswerResultType.BaseType = inputField.dataType.defaultAnswerResultBaseType()
-        let dateFormat: String? = (inputField.range as? RSDDateRange)?.dateCoder?.formatter.dateFormat
+        let dateFormatter: DateFormatter? = (inputField.range as? RSDDateRange)?.dateCoder?.resultFormatter
         let unit: String? = (inputField.range as? RSDDecimalRange)?.unit
-        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: .array, dateFormat: dateFormat, unit: unit, sequenceSeparator: inputField.separator)
+        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: .array, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: inputField.separator)
         
         super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, defaultAnswer: nil, textFieldOptions: nil, items: nil, formatter: nil, pickerSource: inputField)
     }

@@ -76,13 +76,32 @@ public struct RSDAnswerResultType : Codable {
     public let baseType: BaseType
     
     /// The sequence type (if any) for the answer.
-    public private(set) var sequenceType: SequenceType?
+    public let sequenceType: SequenceType?
     
-    /// The date format that should be used to encode the answer.
-    public private(set) var dateFormat: String?
+    /// The date format that should be used to encode and decode the answer.
+    public let dateFormat: String?
+    
+    /// The date formatter locale identifier that should be used to encode and decode the answer.
+    /// If nil, the default Locale will be set to "en_US_POSIX".
+    public var dateLocaleIdentifier: String?
     
     /// The unit (if any) to store with the answer for localized measurement conversion.
-    public private(set) var unit: String?
+    public let unit: String?
+    
+    /// A convenience property for getting the measurement `Unit` from the `unit` string.
+    public var measurementUnit: Unit? {
+        guard let symbol = self.unit else { return nil }
+        return Unit(symbol: symbol)
+    }
+    
+    /// A conveniece property for accessing the formatter used to encode and decode a date.
+    public var dateFormatter: DateFormatter? {
+        guard let dateFormat = self.dateFormat else { return nil }
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        formatter.locale = Locale(identifier: dateLocaleIdentifier ?? "en_US_POSIX")
+        return formatter
+    }
     
     /// The sequence separator to use when storing a multiple component answer as a string.
     ///
@@ -203,7 +222,7 @@ extension RSDAnswerResultType : RSDJSONValueDecoder {
             return string
             
         case .date:
-            return try decoder.factory.decodeDate(from: string, dateFormat: self.dateFormat, codingPath: decoder.codingPath)
+            return try decoder.factory.decodeDate(from: string, formatter: self.dateFormatter, codingPath: decoder.codingPath)
             
         case .timeInterval:
             return (string as NSString).doubleValue
@@ -230,9 +249,9 @@ extension RSDAnswerResultType : RSDJSONValueDecoder {
             return try container.decode(String.self)
             
         case .date:
-            if let format = self.dateFormat {
+            if self.dateFormat != nil {
                 let string = try container.decode(String.self)
-                return try decoder.factory.decodeDate(from: string, dateFormat: format, codingPath: decoder.codingPath)
+                return try decoder.factory.decodeDate(from: string, formatter: dateFormatter, codingPath: decoder.codingPath)
             }
             else {
                 return try container.decode(Date.self)
@@ -264,12 +283,6 @@ extension RSDAnswerResultType : RSDJSONValueDecoder {
 
 // MARK: Value Encoding
 extension RSDAnswerResultType : RSDJSONValueEncoder {
-    
-    /// A convenience property for getting the measurement `Unit` from the `unit` string.
-    public var measurementUnit: Unit? {
-        guard let symbol = self.unit else { return nil }
-        return Unit(symbol: symbol)
-    }
     
     /// Encode a value to the given encoder.
     ///

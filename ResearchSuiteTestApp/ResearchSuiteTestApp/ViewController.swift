@@ -37,6 +37,8 @@ import ResearchSuiteUI
 
 class ViewController: UIViewController, RSDTaskViewControllerDelegate {
 
+    
+
     @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
@@ -51,7 +53,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
 
     @IBAction func runFooTask(_ sender: Any) {
         var taskInfo = RSDTaskInfoStepObject(with: "foo")
-        taskInfo.taskTransformer = RSDTaskResourceTransformerObject(resourceName: "TaskFoo")
+        taskInfo.taskTransformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
         taskInfo.title = "Da Foo"
         taskInfo.subtitle = "In da house"
         taskInfo.icon = try! RSDImageWrapper(imageName: "activityIcon")
@@ -94,6 +96,18 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     
     func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor taskInfo: RSDTaskInfoStep) -> (UIViewController & RSDStepController)? {
         return nil
+    }
+    
+    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+        return nil
+    }
+    
+    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), readyToSave taskPath: RSDTaskPath) {
+        // do nothing
+    }
+    
+    func taskViewControllerShouldAutomaticallyForward(_ taskViewController: (UIViewController & RSDTaskController)) -> Bool {
+        return false
     }
 }
 
