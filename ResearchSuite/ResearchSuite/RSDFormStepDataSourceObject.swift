@@ -680,7 +680,11 @@ final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
         let baseType: RSDAnswerResultType.BaseType = (inputField.dataType.baseType == .decimal) ? .decimal : .integer
         let digits = (baseType == .decimal) ? 3 : 0
         let numberFormatter = (formatter as? NumberFormatter) ?? RSDDecimalRangeObject.defaultNumberFormatter(with: digits)
+        if inputField.dataType.baseType == .year {
+            numberFormatter.groupingSeparator = ""
+        }
         formatter = formatter ?? numberFormatter
+
         
         if pickerSource == nil, let range = range, let min = range.minimumValue, let max = range.maximumValue {
             pickerSource = RSDDecimalPickerDataSourceObject(minimum: min, maximum: max, stepInterval: range.stepInterval, numberFormatter: numberFormatter)
