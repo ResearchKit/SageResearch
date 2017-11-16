@@ -130,12 +130,20 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             performStartCommands()
         }
         isFirstAppearance = false
+        
+        if let commands = self.activeStep?.commands, commands.contains(.shouldDisableIdleTimer) {
+            UIApplication.shared.isIdleTimerDisabled = true
+        }
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         isVisible = false
         super.viewWillDisappear(animated)
         delegate?.stepViewController(self, willDisappear: animated)
+        
+        if let commands = self.activeStep?.commands, commands.contains(.shouldDisableIdleTimer) {
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
     }
     
     open override func viewDidDisappear(_ animated: Bool) {
