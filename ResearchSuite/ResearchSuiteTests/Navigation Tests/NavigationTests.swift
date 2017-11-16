@@ -195,8 +195,8 @@ class TestTaskController: NSObject, RSDTaskController {
     var factory: RSDFactory?
     var currentStepController: RSDStepController?
     
-    var shouldFetchSubtask: Bool = false
-    var shouldPageSectionSteps: Bool = false
+    var shouldFetchSubtask: Bool = true
+    var shouldPageSectionSteps: Bool = true
     
     var currentAsyncControllers: [RSDAsyncActionController] = []
     
