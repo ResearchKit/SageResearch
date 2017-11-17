@@ -33,11 +33,11 @@
 
 import Foundation
 
-/// `RSDAsyncAction` defines general configuration for an asynchronous background action that should be run
-/// in the background. Depending upon the parameters and how the action is setup, this could be something that
-/// is run continuously or else is paused or reset based on a timeout interval.
+/// `RSDAsyncActionConfiguration` defines general configuration for an asynchronous background action that
+/// should be run in the background. Depending upon the parameters and how the action is set up, this could
+/// be something that is run continuously or else is paused or reset based on a timeout interval.
 ///
-/// The configuration is intended to be a serializable object and does not call services, record data or
+/// The configuration is intended to be a serializable object and does not call services, record data, or
 /// anything else. It does include a step identifier that can be used to let the `RSDTaskController` know when
 /// to trigger the async action.
 ///
@@ -45,8 +45,8 @@ import Foundation
 ///
 public protocol RSDAsyncActionConfiguration {
     
-    /// A short string that uniquely identifies the asynchronous action within the task. The identifier is
-    /// reproduced in the results of a async results.
+    /// A short string that uniquely identifies the asynchronous action within the task. If started asynchronously,
+    /// then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.
     var identifier : String { get }
     
     /// An identifier marking the step to start the action. If `nil`, then the action will be started when

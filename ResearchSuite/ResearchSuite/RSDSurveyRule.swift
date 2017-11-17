@@ -97,7 +97,7 @@ extension RSDComparableSurveyRule {
     /// For a given result (if any), what is the step that the survey should go to next?
     ///
     /// For the `RSDComparableSurveyRule`, this will evaluate the result using the `ruleOperator`
-    /// and the `matchingAnswer` and return the `skipIdentifier` if the rule evalutes to `true`.
+    /// and the `matchingAnswer` and return the `skipIdentifier` if the rule evaluates to `true`.
     ///
     /// - parameter results: The result to evaluate.
     /// - returns: The identifier to skip to if the result evaluates to `true`.

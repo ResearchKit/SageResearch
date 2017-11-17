@@ -34,7 +34,7 @@
 import Foundation
 
 /// `RSDStep` is the base protocol for the steps that can compose a task for presentation using a controller appropriate
-/// to the device and applicaytion. Each `RSDStep` object represents one logical piece of data entry, information, or
+/// to the device and application. Each `RSDStep` object represents one logical piece of data entry, information, or
 /// activity in a larger task.
 ///
 /// Implementations included in this SDK include:
@@ -114,7 +114,7 @@ extension RSDSectionStep {
     
     /// A section step returns a task result for both the step result and the task result
     /// This method will throw an assert if the implementation of the section step does not
-    /// return a `RSDTaskResult` as it's type.
+    /// return a `RSDTaskResult` as its type.
     public func instantiateTaskResult() -> RSDTaskResult {
         let result = self.instantiateStepResult()
         guard let taskResult = result as? RSDTaskResult else {
@@ -135,8 +135,8 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
     
     /// Additional text to display for the step in a localized string.
     ///
-    /// The additional text is displayed in a smaller font below `title`. If you need to display a long question,
-    /// it can work well to keep the title short and put the additional content in the `text` property.
+    /// The additional text is often displayed in a smaller font below `title`. If you need to display a long
+    /// question, it can work well to keep the title short and put the additional content in the `text` property.
     var text: String? { get }
     
     /// Additional detailed explanation for the step.
@@ -146,9 +146,9 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
     
     /// Additional text to display for the step in a localized string at the bottom of the view.
     ///
-    /// The footnote is displayed in a smaller font at the bottom of the screen. It is intended to be used in order to
-    /// include disclaimer, copyright, etc. that is important to display in the step but should not distract from the
-    /// main purpose of the step.
+    /// The footnote is intended to be displayed in a smaller font at the bottom of the screen. It is intended to be
+    /// used in order to include disclaimer, copyright, etc. that is important to display in the step but should not
+    /// distract from the main purpose of the step.
     var footnote: String? { get }
 }
 
@@ -179,14 +179,14 @@ public protocol RSDThemedUIStep : RSDUIStep {
 /// `RSDFormUIStep` implements additional properties used in creating a form input.
 public protocol RSDFormUIStep: RSDUIStep {
     
-    /// The items array is used to hold a logical subgrouping of input fields. If this array holds more
+    /// The `inputFields` array is used to hold a logical subgrouping of input fields. If this array holds more
     /// than one input field, those fields should describe an input that is uses a logical subgrouping
     /// such as birth month/year or given/family name.
     var inputFields: [RSDInputField] { get }
 }
 
-/// `SBAActiveUIStep` extends the `RSDUIStep` to include a duration and commands. This is used for the case where an
-/// `RSDUIStep` has an action such as "start walking" or "stop walking", the step may also implement the `SBAActiveUIStep`
+/// `RSDActiveUIStep` extends the `RSDUIStep` to include a duration and commands. This is used for the case where an
+/// `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also implement the `RSDActiveUIStep`
 /// protocol to allow for spoken instruction.
 public protocol RSDActiveUIStep: RSDUIStep {
     
@@ -199,7 +199,7 @@ public protocol RSDActiveUIStep: RSDUIStep {
     
     /// Localized text that represents an instructional voice prompt. Instructional speech begins when the step
     /// passes the time indicated by the given time.  If `timeInterval` is greater than or equal to `duration`
-    /// or is equal to `Double.infinity`, then the spoken instruction should be returned for when the step is finished.
+    /// or is equal to `Double.infinity`, then the spoken instruction returned should be for when the step is finished.
     ///
     /// - parameter timeInterval: The time interval at which to speak the instruction.
     /// - returns: The localized instruction to speak or `nil` if there isn't an instruction.

@@ -40,7 +40,7 @@ public protocol RSDUIThemeElement {
     var bundle: Bundle? { get }
 }
 
-/// `RSDDecodableBundleInfo` is a convenienceprotocol for getting a bundle from a bundle identifier.
+/// `RSDDecodableBundleInfo` is a convenience protocol for getting a bundle from a bundle identifier.
 public protocol RSDDecodableBundleInfo {
     
     /// The bundle identifier.

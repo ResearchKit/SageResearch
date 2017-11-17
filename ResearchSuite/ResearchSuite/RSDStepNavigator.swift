@@ -62,22 +62,32 @@ public protocol RSDStepNavigator {
     /// - returns: `true` if the task view controller should show a next button.
     func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool
     
-    /// Is there a step before the current step with the given result.
+    /// Given the current task result, is there a step after the current step?
     ///
-    /// - note: the result may not include a result for the current step.
+    /// This method is checked when first displaying a step to determine if the UI should display
+    /// this as the last step. By default, the UI defined in ResearchSuiteUI will change the text
+    /// on the continue button from "Next" to "Done", unless customized.
+    ///
+    /// - note: the task result may or may not include a result for the given step.
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: `true` if the task view controller should show a next button.
+    func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool
+    
+    /// Given the current task result, is there a step before the current step?
+    ///
+    /// This method is checked when first displaying a step to determine if the UI should display
+    /// this as the first step. By default, the UI defined in ResearchSuiteUI will hide the "Back"
+    /// button if there is no step before the given step.
+    ///
+    /// - note: the task result may or may not include a result for the given step.
     ///
     /// - parameters:
     ///     - step:    The current step.
     ///     - result:  The current result set for this task.
     /// - returns: `true` if the task view controller should show a back button.
-    func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool
-    
-    /// Return the step to go to after completing the given step.
-    ///
-    /// - parameters:
-    ///     - step:    The previous step or nil if this is the first step.
-    ///     - result:  The current result set for this task.
-    /// - returns: The next step to display or nil if this is the end of the task.
     func step(after step: RSDStep?, with result: inout RSDTaskResult) -> RSDStep?
     
     /// Return the step to go to before the given step.
@@ -85,7 +95,7 @@ public protocol RSDStepNavigator {
     /// - parameters:
     ///     - step:    The current step.
     ///     - result:  The current result set for this task.
-    /// - returns: The previous step or nil if the task does not support backward navigation.
+    /// - returns: The previous step or nil if the task does not support backward navigation or this is the first step.
     func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep?
     
     /// Return the progress through the task for a given step with the current result.

@@ -83,7 +83,7 @@ extension RSDTask {
     
     /// Filter the `asyncActions` and return only those actions to stop after this step. This will return the
     /// configurations that conform to the `RSDRecorderConfiguration` protocol and where the `stopStepIdentifier`
-    /// the `stopStepIdentifier` matches the given step.
+    /// matches the given step.
     ///
     /// - parameter step: The step that is about to end.
     /// - returns: The array of async actions to stop.

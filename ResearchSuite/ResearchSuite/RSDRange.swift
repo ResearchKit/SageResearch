@@ -37,30 +37,35 @@ import Foundation
 public protocol RSDRange {
 }
 
-/// `RSDRangeWithFormatter` is an optional extention of the range that can be used to extend the range
-/// to include a formatter.
+/// `RSDRangeWithFormatter` is an optional extension of the range that can be used to extend the range
+/// to include a formatter appropriate to the UI. For example, this could be used to describe a number
+/// range that displays currency.
 public protocol RSDRangeWithFormatter : RSDRange {
     
     /// A formatter that is appropriate to the data type. If `nil`, the format will be determined by the UI.
+    /// This is the formatter used to display a previously entered answer to the user or to convert an answer
+    /// entered in a text field into the appropriate value type.
+    ///
+    /// - seealso: `RSDAnswerResultType.BaseType` and `RSDFormStepDataSource`
     var formatter: Formatter? { get }
 }
 
-/// `RSDDateRange` defines the range values appropriate for a `date` data type.
+/// `RSDDateRange` defines the range of values appropriate for a `date` data type.
 public protocol RSDDateRange : RSDRange {
     
-    /// The minimum allowed date. When the value of this property is `nil`, then the `allowPast` property
-    /// is used to optionally set the minimum date to now.
+    /// The minimum allowed date. When the value of this property is `nil`, then the `allowPast`
+    /// property is checked for `nil`, otherwise `allowPast` is ignored.
     var minDate: Date? { get }
     
     /// The maximum allowed date. When the value of this property is `nil`, then the `allowFuture`
-    /// property is used to optionally set the maximum date to now.
+    /// property is checked for `nil`, otherwise `allowFuture` is ignored.
     var maxDate: Date? { get }
     
-    /// Whether or not the UI should allow future dates. If `nil` or `minDate` is defined then this value
+    /// Whether or not the UI should allow future dates. If `nil` or if `minDate` is defined then this value
     /// is ignored. Default is `true`.
     var allowFuture: Bool? { get }
     
-    /// Whether or not the UI should allow past dates. If `nil` or `maxDate` is defined then this value
+    /// Whether or not the UI should allow past dates. If `nil` or if `maxDate` is defined then this value
     /// is ignored. Default is `true`.
     var allowPast: Bool? { get }
     
@@ -79,19 +84,21 @@ public protocol RSDDateRange : RSDRange {
 extension RSDDateRange {
     
     /// The minimum allowed date. This is calculated by using either the `minDate` (if non-nil) or today's
-    /// date if `allowPast` is non-nil and `false`.
+    /// date if `allowPast` is non-nil and `false`. If both `minDate` and `allowPast` are `nil` then this
+    /// property will return `nil`.
     public var minimumDate: Date? {
         return minDate ?? ((allowPast ?? true) ? nil : Date())
     }
     
     /// The maximum allowed date. This is calculated by using either the `maxDate` (if non-nil) or today's
-    /// date if `allowFuture` is non-nil and `false`.
+    /// date if `allowFuture` is non-nil and `false`. If both `maxDate` and `allowFuture` are `nil` then this
+    /// property will return `nil`.
     public var maximumDate: Date? {
         return maxDate ?? ((allowFuture ?? true) ? nil : Date())
     }
 }
 
-/// `RSDNumberRange` extends the properties of an `RSDFieldInput` for a `decimal` or `integer` data type.
+/// `RSDNumberRange` extends the properties of an `RSDInputField` for a `decimal` or `integer` data type.
 public protocol RSDNumberRange : RSDRange {
     
     /// The minimum allowed number. When the value of this property is `nil`, there is no minimum.
@@ -103,6 +110,11 @@ public protocol RSDNumberRange : RSDRange {
     /// A step interval to be used for a slider or picker.
     var stepInterval: Decimal? { get }
     
-    /// A unit label associated with this property.
+    /// A unit label associated with this property. The unit should *not* be localized. Instead, this
+    /// value is used to determine the unit for measurements converted to the unit expected by the researcher.
+    ///
+    /// For example, if a measurement of distance is displayed and/or returned by the user in feet, but the
+    /// researcher expects the returned value in meters then the unit here would be "m" and the formatter
+    /// would be a `LengthFormatter` that uses the current locale with a `unitStyle` of `.long`.
     var unit: String? { get }
 }

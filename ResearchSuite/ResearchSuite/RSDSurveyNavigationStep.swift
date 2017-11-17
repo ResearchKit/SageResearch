@@ -73,7 +73,7 @@ extension RSDSurveyNavigationStep {
     /// - parameters:
     ///     - result:       The task result to evaluate.
     ///     - isPeeking:    Is this navigation rule being called on a result for a step that is navigating
-    ///                     forward or is it a step navigator that is peeking at the next step to setup UI
+    ///                     forward or is it a step navigator that is peeking at the next step to set up UI
     ///                     display? If peeking at the next step then this parameter will be `true`.
     /// - returns: The identifier for the step to skip to if the rules are `true`.
     public func evaluateSurveyRules(with result: RSDTaskResult?, isPeeking: Bool) -> String? {

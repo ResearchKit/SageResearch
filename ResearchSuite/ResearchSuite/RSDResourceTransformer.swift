@@ -101,7 +101,7 @@ extension RSDResourceTransformer {
     /// - throws: `RSDResourceTransformerError` if the file cannot be found.
     public func resourceURL(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (url: URL, resourceType: RSDResourceType) {
         
-        // get the resource name and extention
+        // get the resource name and extension
         var resource = resourceName
         var ext = defaultExtension ?? RSDResourceType.json.rawValue
         let split = resourceName.components(separatedBy: ".")

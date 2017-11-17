@@ -102,7 +102,7 @@ public enum RSDFormDataType {
         case singleChoice
         
         /// In a multiple component question, the participant can pick one choice from each component
-        /// or enter a formatted text string such as a phone number.
+        /// or enter a formatted text string such as a phone number or blood pressure.
         case multipleComponent
     }
     

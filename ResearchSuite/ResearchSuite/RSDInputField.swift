@@ -65,11 +65,15 @@ public protocol RSDInputField {
     /// Options for displaying a text field. This is only applicable for certain types of UI hints and data types.
     var textFieldOptions: RSDTextFieldOptions? { get }
     
-    /// A range used by dates and numbers for setting up a picker wheel, slider or providing text field
+    /// A range used by dates and numbers for setting up a picker wheel, slider, or providing text field
     /// input validation.
     var range: RSDRange? { get }
     
     /// A formatter that is appropriate to the data type. If `nil`, the format will be determined by the UI.
+    /// This is the formatter used to display a previously entered answer to the user or to convert an answer
+    /// entered in a text field into the appropriate value type.
+    ///
+    /// - seealso: `RSDAnswerResultType.BaseType` and `RSDFormStepDataSource`
     var formatter: Formatter? { get }
     
     /// Validate the input field to check for any configuration that should throw an error.
@@ -107,28 +111,35 @@ public protocol RSDChoice {
 /// - seealso: `RSDChoiceInputField` and `RSDFormStepDataSource`
 public protocol RSDChoiceOptions: RSDChoicePickerDataSource {
     
-    /// A list of choices for input field.
+    /// A list of choices for the input field.
     var choices : [RSDChoice] { get }
     
     /// A Boolean value indicating whether the user can skip the input field without providing an answer.
     var isOptional: Bool { get }
 }
 
-/// `RSDChoiceOptions` extends the properties of an `RSDFieldInput` with information required to create a
-/// choice selection input field.
+/// `RSDChoiceOptions` extends the properties of `RSDInputField` with information required to create a
+/// multiple or single choice question.
 public protocol RSDChoiceInputField : RSDInputField, RSDChoiceOptions {
     
-    /// Does the choice selection allow entering a custom value
+    /// Does the choice selection allow entering a custom value?
     var allowOther : Bool { get }
 }
 
-/// `RSDMultipleComponentOptions` extends the properties of an `RSDFieldInput` with information
+/// `RSDMultipleComponentInputField` extends the properties of `RSDInputField` with information
 /// required to create a multiple component input field.
+///
+/// - note: This type of input field was originally designed for entering values such as blood pressure
+///         or height (US English). It is included here because the code was developed and there may be
+///         a use-case for it in the future. (syoung 11/16/2017)
+///
+/// - seealso: `RSDFormDataType.CollectionType.multipleComponent`
 public protocol RSDMultipleComponentInputField : RSDInputField, RSDChoicePickerDataSource {
         
     /// A list of choices for input fields that make up the multiple component option set.
     var choices : [[RSDChoice]] { get }
     
     /// If this is a multiple component input field, the UI can optionally define a separator.
+    /// For example, blood pressure would have a separator of "/".
     var separator: String? { get }
 }
