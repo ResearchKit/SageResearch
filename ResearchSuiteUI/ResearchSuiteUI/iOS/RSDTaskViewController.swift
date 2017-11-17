@@ -123,7 +123,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             activeStep.commands.contains(.transitionAutomatically) {
             // If this is an active step with automatic transitions and a duration, then use the most appropriate
             // countdown step view controller.
-            if activeStep.duration < 10 {
+            if activeStep.type == RSDFactory.StepType.countdown.rawValue {
                 // Assume this is a countdown counter if the step duration is less than 10 seconds.
                 return RSDCountdownStepViewController(step: step)
             } else {
