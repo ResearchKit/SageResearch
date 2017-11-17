@@ -75,6 +75,8 @@ class TaskControllerTests: XCTestCase {
         let direction = taskController.navigate_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.reverse)
+        
+        XCTAssertEqual(taskController.taskPath.stepPath, "stepA, stepB, stepC")
     }
     
     func testNavigation_BackFrom5Z() {
@@ -106,6 +108,8 @@ class TaskControllerTests: XCTestCase {
         let direction = taskController.navigate_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.reverse)
+        
+        XCTAssertEqual(taskController.taskPath.stepPath, "stepX, stepY")
     }
     
     func testNavigation_BackFrom3() {
@@ -137,6 +141,20 @@ class TaskControllerTests: XCTestCase {
         let direction = taskController.navigate_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.reverse)
+        
+        XCTAssertEqual(taskController.taskPath.stepPath, "introduction, step1, step2")
+        
+        let currentResult = taskController.taskPath.result.stepHistory.last
+        XCTAssertNotNil(currentResult)
+        XCTAssertEqual(currentResult?.identifier, "step2")
+        
+        let previousResult2 = taskController.taskPath.previousResults?.first(where: { $0.identifier == "step2" })
+        XCTAssertNotNil(previousResult2)
+        XCTAssertEqual((previousResult2 as? RSDAnswerResult)?.value as? String, "step2")
+
+        let previousResult3 = taskController.taskPath.previousResults?.first(where: { $0.identifier == "step3" })
+        XCTAssertNotNil(previousResult3)
+        XCTAssertEqual((previousResult3 as? RSDAnswerResult)?.value as? String, "step3")
     }
     
     
@@ -169,6 +187,8 @@ class TaskControllerTests: XCTestCase {
         let direction = taskController.navigate_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.forward)
+        
+        XCTAssertEqual(taskController.taskPath.stepPath, "stepX, stepY")
     }
     
     func testNavigation_ForwardFrom5Z() {
@@ -200,6 +220,8 @@ class TaskControllerTests: XCTestCase {
         let direction = taskController.navigate_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.forward)
+        
+        XCTAssertEqual(taskController.taskPath.stepPath, "stepA")
     }
     
     func testNavigation_ForwardFrom2() {
@@ -231,5 +253,7 @@ class TaskControllerTests: XCTestCase {
         let direction = taskController.navigate_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.forward)
+        
+        XCTAssertEqual(taskController.taskPath.stepPath, "introduction, step1, step2, step3")
     }
 }
