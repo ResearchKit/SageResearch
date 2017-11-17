@@ -695,8 +695,8 @@ class SurveyRuleTests: XCTestCase {
     
     // Helper methods
     
-    func createRule<Value : Codable>(_ skipIdentifier: String?, _ expectedAnswer: Value, _ ruleOperator:RSDSurveyRuleOperator) -> RSDComparableSurveyRuleObject<Value> {
-        return RSDComparableSurveyRuleObject<Value>(skipIdentifier: skipIdentifier, expectedAnswer: expectedAnswer, ruleOperator: ruleOperator)
+    func createRule<Value : Codable>(_ skipIdentifier: String?, _ matchingValue: Value, _ ruleOperator:RSDSurveyRuleOperator) -> RSDComparableSurveyRuleObject<Value> {
+        return RSDComparableSurveyRuleObject<Value>(skipToIdentifier: skipIdentifier, matchingValue: matchingValue, ruleOperator: ruleOperator)
     }
     
     func createTaskResult(answerType: RSDAnswerResultType, value: Any?) -> RSDTaskResultObject {

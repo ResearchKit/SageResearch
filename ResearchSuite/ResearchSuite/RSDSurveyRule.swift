@@ -81,8 +81,8 @@ public enum RSDSurveyRuleOperator: String, Codable {
 public protocol RSDComparableSurveyRule : RSDSurveyRule {
     
     /// Optional skip identifier for this rule. If available, this will be used as the skip identifier,
-    /// otherwise the skipIdentifier will be assumed to be `RSDIdentifier.exit`
-    var skipIdentifier: String? { get }
+    /// otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit`
+    var skipToIdentifier: String? { get }
     
     /// Expected answer for the rule. If `nil`, then the operator must be .skip or this will return a nil value.
     var matchingAnswer: Any? { get }
@@ -104,7 +104,7 @@ extension RSDComparableSurveyRule {
     public func evaluateRule(with result: RSDResult?) -> String? {
         
         let op: RSDSurveyRuleOperator = self.ruleOperator ?? ((self.matchingAnswer == nil) ? .skip : .equal)
-        let skipTo: String = skipIdentifier ?? RSDIdentifier.exit.rawValue
+        let skipTo: String = skipToIdentifier ?? RSDIdentifier.exit.rawValue
         
         // If this is the skip operation then the values aren't equal *unless* it's nil
         guard let answerResult = result as? RSDAnswerResult, let value = answerResult.value

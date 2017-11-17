@@ -37,39 +37,39 @@ import Foundation
 public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRule, Decodable {
     public typealias Value = T
     
-    public let skipIdentifier: String?
-    public let expectedAnswer: Value?
+    public let skipToIdentifier: String?
     public let ruleOperator: RSDSurveyRuleOperator?
+    public let matchingValue: Value?
     
     public var matchingAnswer: Any? {
-        return expectedAnswer
+        return matchingValue
     }
     
-    public init(skipIdentifier: String?, expectedAnswer: Value?, ruleOperator: RSDSurveyRuleOperator?) {
-        self.skipIdentifier = skipIdentifier
-        self.expectedAnswer = expectedAnswer
+    public init(skipToIdentifier: String?, matchingValue: Value?, ruleOperator: RSDSurveyRuleOperator?) {
+        self.skipToIdentifier = skipToIdentifier
+        self.matchingValue = matchingValue
         self.ruleOperator = ruleOperator
     }
     
     private enum CodingKeys: String, CodingKey {
-        case skipIdentifier, expectedAnswer, ruleOperator
+        case skipToIdentifier, matchingValue = "matchingAnswer", ruleOperator
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let skipIdentifier = try container.decodeIfPresent(String.self, forKey: .skipIdentifier)
-        let expectedAnswer = try container.decodeIfPresent(Value.self, forKey: .expectedAnswer)
+        let skipToIdentifier = try container.decodeIfPresent(String.self, forKey: .skipToIdentifier)
+        let matchingValue = try container.decodeIfPresent(Value.self, forKey: .matchingValue)
         let ruleOperator = try container.decodeIfPresent(RSDSurveyRuleOperator.self, forKey: .ruleOperator)
-        if (skipIdentifier == nil) && (expectedAnswer == nil) && (ruleOperator == nil) {
+        if (skipToIdentifier == nil) && (matchingValue == nil) && (ruleOperator == nil) {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "All the values are nil. While each value in the comparable rule is optional, a comparable rule that does not include *any* values is invalid.")
             throw DecodingError.valueNotFound(Value.self, context)
         }
-        else if (expectedAnswer == nil) && (ruleOperator != .skip) {
+        else if (matchingValue == nil) && (ruleOperator != .skip) {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "The expected answer is nil and the rule operator is not skip. This is an invalid combination.")
             throw DecodingError.valueNotFound(Value.self, context)
         }
-        self.skipIdentifier = skipIdentifier
-        self.expectedAnswer = expectedAnswer
+        self.skipToIdentifier = skipToIdentifier
+        self.matchingValue = matchingValue
         self.ruleOperator = ruleOperator
     }
 }

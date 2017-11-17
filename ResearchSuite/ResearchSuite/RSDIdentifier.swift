@@ -48,6 +48,7 @@ public struct RSDIdentifier : RawRepresentable, Codable {
     }
     
     public static let exit: RSDIdentifier = "exit"
+    public static let nextSection: RSDIdentifier = "nextSection"
 }
 
 extension RSDIdentifier : Equatable {
