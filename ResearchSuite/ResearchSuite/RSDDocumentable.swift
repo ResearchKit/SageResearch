@@ -1,5 +1,5 @@
 //
-//  RSDGenericStepObject.swift
+//  RSDDocumentable.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,37 +33,6 @@
 
 import Foundation
 
-public struct RSDGenericStepObject : RSDGenericStep, Decodable {
-    
-    public let identifier: String
-    public let type: RSDStepType
-    
-    public var userInfo: [String : Any]?
-    
-    public init(identifier: String, type: RSDStepType) {
-        self.identifier = identifier
-        self.type = type
-    }
-    
-    private enum CodingKeys : String, CodingKey {
-        case identifier, type
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decodeIfPresent(RSDStepType.self, forKey: .type) ?? "unknown"
-        
-        // Store any additional information to a user info dictionary
-        let genericContainer = try decoder.container(keyedBy: AnyCodingKey.self)
-        self.userInfo = try genericContainer.decode(Dictionary<String, Any>.self)
-    }
-    
-    public func instantiateStepResult() -> RSDResult {
-        return RSDResultObject(identifier: identifier, type: RSDResultType(rawValue: type.rawValue))
-    }
-    
-    public func validate() throws {
-        // do nothing
-    }
+protocol RSDDocumentableEnum : RawRepresentable {
+    static func allCodingKeys() -> Set<String>
 }

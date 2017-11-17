@@ -34,14 +34,14 @@
 import Foundation
 
 public struct RSDFileResultObject : RSDFileResult, Codable {
-    public let type: String
+    public let type: RSDResultType
     public let identifier: String
     public var startDate: Date = Date()
     public var endDate: Date = Date()
     public var startUptime: TimeInterval?
     public var url: URL?
     
-    public init(identifier: String, type: String = RSDFactory.ResultType.file.rawValue) {
+    public init(identifier: String, type: RSDResultType = .file) {
         self.identifier = identifier
         self.type = type
     }

@@ -54,7 +54,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
     }
 
     public let identifier: String
-    public let type: String
+    public let type: RSDStepType
     
     public var title: String?
     public var subtitle: String?
@@ -85,13 +85,13 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
 
     public init(with identifier: String) {
         self.identifier = identifier
-        self.type = RSDFactory.StepType.taskInfo.rawValue
+        self.type = .taskInfo
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? RSDFactory.StepType.taskInfo.rawValue
+        self.type = try container.decodeIfPresent(RSDStepType.self, forKey: .type) ?? .taskInfo
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)

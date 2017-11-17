@@ -35,7 +35,7 @@ import Foundation
 
 public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable {
     
-    public let type: String
+    public let type: RSDStepType
     public let identifier: String
     public let steps: [RSDStep]
     
@@ -43,10 +43,10 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
         return nil
     }
     
-    public init(identifier: String, steps: [RSDStep], type: String? = nil) {
+    public init(identifier: String, steps: [RSDStep], type: RSDStepType? = nil) {
         self.identifier = identifier
         self.steps = steps
-        self.type = type ?? RSDFactory.StepType.section.rawValue
+        self.type = type ?? .section
     }
     
     public func instantiateStepResult() -> RSDResult {
@@ -64,7 +64,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.decode(RSDStepType.self, forKey: .type)
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
         self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
     }

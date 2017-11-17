@@ -131,7 +131,7 @@ class FactoryTests: XCTestCase {
     // MARK: Helper methods
     
     func getTaskGroup(resourceName: String) -> RSDTaskGroupObject? {
-        let wrapper = RSDResourceWrapper(filename: resourceName, bundleIdentifier: "org.sagebase.ResearchSuiteTests")
+        let wrapper = TestResourceWrapper(filename: resourceName, bundleIdentifier: "org.sagebase.ResearchSuiteTests")
         do {
             let (data, _) = try wrapper.resourceData()
             let jsonDecoder = JSONDecoder()

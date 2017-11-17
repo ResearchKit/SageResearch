@@ -91,13 +91,13 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         if let uiHint = inputField.uiHint, supportedHints.contains(uiHint) {
             return uiHint
         }
-        let standardType: RSDFormUIHint.Standard?
+        let standardType: RSDFormUIHint?
         if let choiceInput = inputField as? RSDChoiceInputField, choiceInput.hasImages {
-            standardType = supportedHints.contains(.standard(.slider)) ? .slider : nil
+            standardType = supportedHints.contains(.slider) ? .slider : nil
         } else {
-            standardType = inputField.dataType.validStandardUIHints.first(where:{ supportedHints.contains(.standard($0)) })
+            standardType = inputField.dataType.validStandardUIHints.first(where:{ supportedHints.contains($0) })
         }
-        return .standard(standardType ?? .textfield)
+        return standardType ?? .textfield
     }
     
     /**
@@ -113,15 +113,10 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
             return true
         }
         switch uiHint {
-        case .custom(_):
+        case .picker, .textfield, .toggle, .checkbox, .radioButton:
+            return false
+        default:
             return true
-        case .standard(let standardType):
-            switch standardType {
-            case .picker, .textfield, .toggle, .checkbox, .radioButton:
-                return false
-            default:
-                return true
-            }
         }
     }
     

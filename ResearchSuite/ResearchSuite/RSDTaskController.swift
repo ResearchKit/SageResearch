@@ -343,7 +343,7 @@ extension RSDTaskController {
         let previousStep = taskPath.currentStep
         let nextStep = taskPath.task!.stepNavigator.step(after: previousStep, with: &taskPath.result)
         let isTaskComplete = (nextStep == nil) ||
-            ((nextStep!.type == RSDFactory.StepType.completion.rawValue) &&
+            ((nextStep!.type == RSDStepType.completion.rawValue) &&
                 !taskPath.task!.stepNavigator.hasStep(after: nextStep!, with: taskPath.result))
         
         if !hasPreviousEarlyExit, let stopStep = previousStep,

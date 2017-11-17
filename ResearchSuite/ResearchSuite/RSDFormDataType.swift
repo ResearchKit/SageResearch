@@ -134,7 +134,7 @@ public enum RSDFormDataType {
     }
     
     /// List of the standard UI hints that are valid for this data type.
-    public var validStandardUIHints: [RSDFormUIHint.Standard] {
+    public var validStandardUIHints: Set<RSDFormUIHint> {
         switch self {
         case .base(let baseType):
             switch baseType {
@@ -164,7 +164,7 @@ public enum RSDFormDataType {
             return [.picker, .textfield]
 
         case .custom(_):
-            return RSDFormUIHint.Standard.all
+            return RSDFormUIHint.allStandardHints
         }
     }
     
@@ -175,11 +175,11 @@ public enum RSDFormDataType {
             if collectionType == .multipleComponent {
                 return []
             } else {
-                return [.standard(.checkbox), .standard(.list), .standard(.radioButton)]
+                return [.checkbox, .list, .radioButton]
             }
             
         case .base(.boolean):
-            return [.standard(.list)]
+            return [.list]
             
         default:
             return []

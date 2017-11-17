@@ -1,5 +1,5 @@
 //
-//  RSDFormUIHint.swift
+//  RSDStepType.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,12 +33,9 @@
 
 import Foundation
 
-/// The `RSDFormUIHint` enum is a key word that can be used to describe the preferred UI for a form input field.
-/// This is intended as a "hint" that the designers and developers can use to indicate the preferred input style
-/// for an input field. Not all ui hints are applicable to all data types or devices, and therefore the ui hint
-/// may be ignored by the application displaying the input field to the user.
-///
-public struct RSDFormUIHint : RawRepresentable, Codable {
+/// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
+/// the UI.
+public struct RSDStepType : RawRepresentable, Codable {
     public typealias RawValue = String
     
     public private(set) var rawValue: String
@@ -47,70 +44,53 @@ public struct RSDFormUIHint : RawRepresentable, Codable {
         self.rawValue = rawValue
     }
     
-    /// list with a checkbox next to each item
-    public static let checkbox: RSDFormUIHint = "checkbox"
+    /// Defaults to creating a `RSDActiveUIStep`.
+    public static let active: RSDStepType = "active"
     
-    /// drop-down with a textfield for "other"
-    public static let combobox: RSDFormUIHint = "combobox"
+    /// Defaults to creating a `RSDUIStep` used to mark task completion.
+    public static let completion: RSDStepType = "completion"
     
-    /// list
-    public static let list: RSDFormUIHint = "list"
+    /// Defaults to creating a `RSDActiveUIStep` used as a countdown to an active step.
+    public static let countdown: RSDStepType = "countdown"
     
-    /// multiple line text field
-    public static let multipleLine: RSDFormUIHint = "multipleLine"
+    /// Defaults to creating a `RSDFormUIStep`.
+    public static let form: RSDStepType = "form"
     
-    /// picker wheel
-    public static let picker: RSDFormUIHint = "picker"
+    /// Defaults to creating a `RSDUIStep`.
+    public static let instruction: RSDStepType = "instruction"
     
-    /// Text entry using a modal popover box
-    public static let popover: RSDFormUIHint = "popover"
+    /// Defaults to creating a `RSDSectionStep`
+    public static let section: RSDStepType = "section"
     
-    /// radio button
-    public static let radioButton: RSDFormUIHint = "radioButton"
+    /// Defaults to creating a `RSDSectionStep` created using a `RSDTransformerStep`
+    public static let transform: RSDStepType = "transform"
     
-    /// slider
-    public static let slider: RSDFormUIHint = "slider"
-    
-    /// text field
-    public static let textfield: RSDFormUIHint = "textfield"
-    
-    /// toggle (segmented) button
-    public static let toggle: RSDFormUIHint = "toggle"
-
-    /// The standard type for this ui hint, if applicable.
-    public var standardType: RSDFormUIHint? {
-        return RSDFormUIHint.allStandardHints.contains(self) ? self : nil
-    }
-    
-    /// A list of all the `RSDFormUIHint` values that are standard hints.
-    public static var allStandardHints: Set<RSDFormUIHint> {
-        return [.checkbox, .combobox, .list, .multipleLine, .picker, .radioButton, .slider, .textfield, .toggle]
-    }
+    /// Defaults to creating a `RSDTaskInfoStep`.
+    public static let taskInfo: RSDStepType = "taskInfo"
 }
 
-extension RSDFormUIHint : Equatable {
-    public static func ==(lhs: RSDFormUIHint, rhs: RSDFormUIHint) -> Bool {
+extension RSDStepType : Equatable {
+    public static func ==(lhs: RSDStepType, rhs: RSDStepType) -> Bool {
         return lhs.rawValue == rhs.rawValue
     }
-    public static func ==(lhs: String, rhs: RSDFormUIHint) -> Bool {
+    public static func ==(lhs: String, rhs: RSDStepType) -> Bool {
         return lhs == rhs.rawValue
     }
-    public static func ==(lhs: RSDFormUIHint, rhs: String) -> Bool {
+    public static func ==(lhs: RSDStepType, rhs: String) -> Bool {
         return lhs.rawValue == rhs
     }
 }
 
-extension RSDFormUIHint : Hashable {
+extension RSDStepType : Hashable {
     public var hashValue : Int {
         return self.rawValue.hashValue
     }
 }
 
-extension RSDFormUIHint : ExpressibleByStringLiteral {
+extension RSDStepType : ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
-
+    
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }
 }
-

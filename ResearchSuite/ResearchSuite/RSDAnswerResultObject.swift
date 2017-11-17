@@ -34,7 +34,7 @@
 import Foundation
 
 public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
-    public let type: String
+    public let type: RSDResultType
     public let identifier: String
     public var startDate: Date = Date()
     public var endDate: Date = Date()
@@ -44,7 +44,7 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
     public init(identifier: String, answerType: RSDAnswerResultType) {
         self.identifier = identifier
         self.answerType = answerType
-        self.type = RSDFactory.ResultType.answer.rawValue
+        self.type = .answer
     }
     
     private enum CodingKeys : String, CodingKey {
@@ -56,7 +56,7 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.decode(RSDResultType.self, forKey: .type)
         
         let answerType = try container.decode(RSDAnswerResultType.self, forKey: .answerType)
         self.answerType = answerType

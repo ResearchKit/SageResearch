@@ -34,12 +34,12 @@
 import Foundation
 
 public struct RSDResultObject : RSDResult, Codable {
-    public let type: String
+    public let type: RSDResultType
     public let identifier: String
     public var startDate: Date = Date()
     public var endDate: Date = Date()
     
-    public init(identifier: String, type: String = RSDFactory.ResultType.base.rawValue) {
+    public init(identifier: String, type: RSDResultType = .base) {
         self.identifier = identifier
         self.type = type
     }

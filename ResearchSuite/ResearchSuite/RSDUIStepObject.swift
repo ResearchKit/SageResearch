@@ -36,7 +36,7 @@ import Foundation
 open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavigationRule, Decodable, RSDMutableStep {
 
     public private(set) var identifier: String
-    public private(set) var type: String
+    public private(set) var type: RSDStepType
     
     public var title: String?
     public var text: String?
@@ -49,9 +49,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     
     open var nextStepIdentifier: String?
     
-    public init(identifier: String, type: String? = nil) {
+    public init(identifier: String, type: RSDStepType? = nil) {
         self.identifier = identifier
-        self.type = type ?? RSDFactory.StepType.instruction.rawValue
+        self.type = type ?? .instruction
         super.init()
     }
     
@@ -82,7 +82,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.decode(RSDStepType.self, forKey: .type)
         
         self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
         

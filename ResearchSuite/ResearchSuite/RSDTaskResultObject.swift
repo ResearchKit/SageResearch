@@ -34,7 +34,7 @@
 import Foundation
 
 public struct RSDTaskResultObject : RSDTaskResult, Codable {
-    public let type: String
+    public let type: RSDResultType
     public let identifier: String
     public let taskRunUUID: UUID
     
@@ -49,7 +49,7 @@ public struct RSDTaskResultObject : RSDTaskResult, Codable {
         self.identifier = identifier
         self.schemaInfo = schemaInfo
         self.taskRunUUID = UUID()
-        self.type = RSDFactory.ResultType.task.rawValue
+        self.type = .task
     }
     
     private enum CodingKeys : String, CodingKey {
@@ -59,7 +59,7 @@ public struct RSDTaskResultObject : RSDTaskResult, Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.decode(RSDResultType.self, forKey: .type)
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
         self.taskRunUUID = try container.decode(UUID.self, forKey: .taskRunUUID)

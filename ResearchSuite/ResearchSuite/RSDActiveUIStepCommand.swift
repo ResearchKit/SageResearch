@@ -71,11 +71,7 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     ///
     /// - parameter decoder: The decoder to read data from.
     public init(from decoder: Decoder) throws {
-        // Register the commands included in the base struct to add them to the mapping
-        let _: RSDActiveUIStepCommand = [.playSound,
-                                         .vibrate,
-                                         .transitionAutomatically,
-                                         .shouldDisableIdleTimer]
+        let _ = RSDActiveUIStepCommand.allCodingKeys()
         
         // Then call the initializer with the string mappings
         try self.init(from: decoder, stringMapping: RSDActiveUIStepCommand.stringMapping)
@@ -126,4 +122,16 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     
     /// The default commands for a step.
     public static let defaultCommands: RSDActiveUIStepCommand = []
+}
+
+extension RSDActiveUIStepCommand : RSDDocumentableEnum {
+    
+    static func allCodingKeys() -> Set<String> {
+        // Register the commands included in the base struct to add them to the mapping
+        let _: RSDActiveUIStepCommand = [.playSound,
+                                         .vibrate,
+                                         .transitionAutomatically,
+                                         .shouldDisableIdleTimer]
+        return Set(self.stringMapping.map{ $0.key })
+    }
 }

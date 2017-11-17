@@ -38,53 +38,53 @@ import Foundation
 ///
 /// - note: This is not currently used and may be deprecated.
 ///
-public enum RSDDeviceType {
-    
-    /// A standard device type.
-    case standard(StandardDevice)
-    
-    /// Standard device types.
-    public enum StandardDevice : String {
-        
-        /// A computer will have a keyboard and a mouse or touchpad. (Mac)
-        case computer
-        
-        /// A phone is a handheld device with a touch screen. (iPhone, Android phone)
-        case phone
-
-        /// A tablet is a larger touch screen device. (iPad, Android tablet)
-        case tablet
-        
-        /// A tv is a device that has a larger screen with a remote control. (Apple TV)
-        case tv
-        
-        /// A watch is a device that is worn on a person's wrist. (Apple Watch)
-        case watch
-    }
-    
-    /// Custom-defined type.
-    case custom(String)
-}
-
-extension RSDDeviceType: RawRepresentable, Codable {
+public struct RSDDeviceType : RawRepresentable, Codable {
     public typealias RawValue = String
     
-    public init?(rawValue: RawValue) {
-        if let subtype = StandardDevice(rawValue: rawValue) {
-            self = .standard(subtype)
-        }
-        else {
-            self = .custom(rawValue)
-        }
+    public private(set) var rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
     }
     
-    public var rawValue: String {
-        switch (self) {
-        case .standard(let value):
-            return value.rawValue
-            
-        case .custom(let value):
-            return value
-        }
+    /// A computer will have a keyboard and a mouse or touchpad. (Mac)
+    public static let computer: RSDDeviceType = "computer"
+    
+    /// A phone is a handheld device with a touch screen. (iPhone, Android phone)
+    public static let phone: RSDDeviceType = "phone"
+    
+    /// A tablet is a larger touch screen device. (iPad, Android tablet)
+    public static let tablet: RSDDeviceType = "tablet"
+    
+    /// A tv is a device that has a larger screen with a remote control. (Apple TV)
+    public static let tv: RSDDeviceType = "tv"
+    
+    /// A watch is a device that is worn on a person's wrist. (Apple Watch)
+    public static let watch: RSDDeviceType = "watch"
+}
+
+extension RSDDeviceType : Equatable {
+    public static func ==(lhs: RSDDeviceType, rhs: RSDDeviceType) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+    public static func ==(lhs: String, rhs: RSDDeviceType) -> Bool {
+        return lhs == rhs.rawValue
+    }
+    public static func ==(lhs: RSDDeviceType, rhs: String) -> Bool {
+        return lhs.rawValue == rhs
+    }
+}
+
+extension RSDDeviceType : Hashable {
+    public var hashValue : Int {
+        return self.rawValue.hashValue
+    }
+}
+
+extension RSDDeviceType : ExpressibleByStringLiteral {
+    public typealias StringLiteralType = String
+    
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
     }
 }

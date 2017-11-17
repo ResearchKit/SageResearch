@@ -56,9 +56,9 @@ public protocol RSDStep {
     /// it can make sense to make the identifier human readable.
     var identifier: String { get }
     
-    /// A String that indicates the type of the step. This is used to decode the step using a `RSDFactory`. It can also
-    /// be used to customize the UI.
-    var type: String { get }
+    /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
+    /// the UI.
+    var type: RSDStepType { get }
     
     /// Instantiate a step result that is appropriate for this step.
     /// - returns: A result for this step.

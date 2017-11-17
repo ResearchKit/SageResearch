@@ -49,9 +49,9 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
         return self.evaluateSurveyRules(with: result, isPeeking: isPeeking) ?? self.nextStepIdentifier
     }
     
-    public init(identifier: String, inputFields: [RSDInputField], type: String? = nil) {
+    public init(identifier: String, inputFields: [RSDInputField], type: RSDStepType? = nil) {
         self.inputFields = inputFields
-        super.init(identifier: identifier, type: type ?? RSDFactory.StepType.form.rawValue)
+        super.init(identifier: identifier, type: type ?? .form)
     }
     
     private enum CodingKeys: String, CodingKey {

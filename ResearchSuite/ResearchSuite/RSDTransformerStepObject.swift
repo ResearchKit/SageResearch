@@ -36,13 +36,13 @@ import Foundation
 public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
 
     public let identifier: String
-    public let type: String
+    public let type: RSDStepType
     public var replacementSteps: [RSDGenericStep]?
     public var sectionTransformer: RSDSectionStepTransformer!
     
-    public init(identifier: String, type: String? = nil) {
+    public init(identifier: String, type: RSDStepType? = nil) {
         self.identifier = identifier
-        self.type = type ?? RSDFactory.StepType.section.rawValue
+        self.type = type ?? .section
     }
     
     private enum CodingKeys : String, CodingKey {
@@ -52,7 +52,7 @@ public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? RSDFactory.StepType.section.rawValue
+        self.type = try container.decodeIfPresent(RSDStepType.self, forKey: .type) ?? .section
         if container.contains(.replacementSteps) {
             self.replacementSteps = try container.decode([RSDGenericStepObject].self, forKey: .replacementSteps)
         }

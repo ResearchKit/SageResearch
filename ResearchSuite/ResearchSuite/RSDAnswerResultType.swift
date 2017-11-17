@@ -47,6 +47,7 @@ public struct RSDAnswerResultType : Codable {
     /// value being stored. The value stored in the `RSDAnswerResult` should be convertable
     /// to one of these base types.
     public enum BaseType : String, Codable {
+        
         /// Bool
         case boolean
         /// Data
@@ -61,6 +62,10 @@ public struct RSDAnswerResultType : Codable {
         case string
         /// TimeInterval
         case timeInterval
+        
+        public static func allTypes() -> [BaseType] {
+            return [.boolean, .data, .date, .decimal, .integer, .string, .timeInterval]
+        }
     }
     
     /// The sequence type of the answer result. This is used to represent a multiple-choice
@@ -70,6 +75,10 @@ public struct RSDAnswerResultType : Codable {
         case array
         /// Dictionary
         case dictionary
+        
+        public static func allTypes() -> [SequenceType] {
+            return [.array, .dictionary]
+        }
     }
     
     /// The base type for the answer.
@@ -440,5 +449,17 @@ extension RSDAnswerResultType : Hashable, Equatable {
     
     public static func ==(lhs: RSDAnswerResultType, rhs: RSDAnswerResultType) -> Bool {
         return lhs.description == rhs.description
+    }
+}
+
+extension RSDAnswerResultType.BaseType : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return Set(self.allTypes().map{ $0.rawValue })
+    }
+}
+
+extension RSDAnswerResultType.SequenceType : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return Set(self.allTypes().map{ $0.rawValue })
     }
 }

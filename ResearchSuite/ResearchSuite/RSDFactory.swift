@@ -154,34 +154,7 @@ open class RSDFactory {
     
 
     // MARK: Step factory
-    
-    /// Type of steps that can be created by this factory.
-    public enum StepType : String, Codable {
-        /// Defaults to creating a `RSDActiveUIStep`.
-        case active
-        
-        /// Defaults to creating a `RSDUIStep` used to mark task completion.
-        case completion
-        
-        /// Defaults to creating a `RSDActiveUIStep` used as a countdown to an active step.
-        case countdown
-        
-        /// Defaults to creating a `RSDFormUIStep`.
-        case form
-        
-        /// Defaults to creating a `RSDUIStep`.
-        case instruction
-        
-        /// Defaults to creating a `RSDSectionStep`
-        case section
-        
-        /// Defaults to creating a `RSDSectionStep` created using a `RSDTransformerStep`
-        case transform
-        
-        /// Defaults to creating a `RSDTaskInfoStep`.
-        case taskInfo
-    }
-    
+
     /// Convenience method for decoding a list of steps.
     ///
     /// - parameter container: The unkeyed container with the steps.
@@ -212,24 +185,9 @@ open class RSDFactory {
         guard let name = try typeName(from: decoder) else {
             return try RSDGenericStepObject(from: decoder)
         }
-        let step = try decodeStep(from: decoder, with: name)
+        let step = try decodeStep(from: decoder, with: RSDStepType(rawValue: name))
         try step?.validate()
         return step
-    }
-    
-    /// Decode the step from this decoder. This method can be overridden to return `nil`
-    /// if the step should be skipped.
-    ///
-    /// - parameters:
-    ///     - typeName:     The string representing the class name for this step.
-    ///     - decoder:      The decoder to use to instatiate the object.
-    /// - returns: The step (if any) created from this decoder.
-    /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeStep(from decoder:Decoder, with typeName: String) throws -> RSDStep? {
-        guard let type = StepType(rawValue: typeName) else {
-            return try RSDGenericStepObject(from: decoder)
-        }
-        return try decodeStep(from: decoder, with: type)
     }
     
     /// Decode the step from this decoder. This method can be overridden to return `nil`
@@ -240,7 +198,7 @@ open class RSDFactory {
     ///     - decoder:     The decoder to use to instatiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeStep(from decoder:Decoder, with type:StepType) throws -> RSDStep? {
+    open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
         switch (type) {
         case .instruction, .completion:
             return try RSDUIStepObject(from: decoder)
@@ -254,6 +212,8 @@ open class RSDFactory {
             return try RSDTaskInfoStepObject(from: decoder)
         case .transform:
             return try self.decodeTransformableStep(from: decoder)
+        default:
+            return try RSDGenericStepObject(from: decoder)
         }
     }
     
@@ -435,25 +395,6 @@ open class RSDFactory {
     
     // MARK: Result factory
     
-    /// Type of results that can be created by this factory.
-    public enum ResultType : String {
-        
-        /// Defaults to creating a `RSDResult`.
-        case base
-        
-        /// Defaults to creating a `RSDAnswerResult`.
-        case answer
-        
-        /// Defaults to creating a `RSDCollectionResult`.
-        case collection
-        
-        /// Defaults to creating a `RSDTaskResult`.
-        case task
-        
-        /// Defaults to creating a `RSDFileResult`.
-        case file
-    }
-    
     /// Convenience method for decoding a list of results.
     ///
     /// - parameter container: The unkeyed container with the results.
@@ -479,7 +420,7 @@ open class RSDFactory {
         guard let typeName = try typeName(from: decoder) else {
             return try RSDResultObject(from: decoder)
         }
-        return try decodeResult(from: decoder, with: typeName)
+        return try decodeResult(from: decoder, with: RSDResultType(rawValue: typeName))
     }
     
     /// Decode the result from this decoder.
@@ -489,10 +430,8 @@ open class RSDFactory {
     ///     - decoder:      The decoder to use to instatiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeResult(from decoder: Decoder, with typeName: String) throws -> RSDResult {
-        guard let resultType = ResultType(rawValue: typeName) else {
-            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a result.")
-        }
+    open func decodeResult(from decoder: Decoder, with resultType: RSDResultType) throws -> RSDResult {
+
         switch resultType {
         case .base:
             return try RSDResultObject(from: decoder)
@@ -504,6 +443,8 @@ open class RSDFactory {
             return try RSDTaskResultObject(from: decoder)
         case .file:
             return try RSDFileResultObject(from: decoder)
+        default:
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a result.")
         }
     }
     

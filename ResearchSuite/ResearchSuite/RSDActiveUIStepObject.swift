@@ -82,8 +82,8 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         case duration, commands, spokenInstructions
     }
     
-    public override init(identifier: String, type: String? = nil) {
-        super.init(identifier: identifier, type: type ?? RSDFactory.StepType.active.rawValue)
+    public override init(identifier: String, type: RSDStepType? = nil) {
+        super.init(identifier: identifier, type: type ?? .active)
     }
     
     public required init(from decoder: Decoder) throws {

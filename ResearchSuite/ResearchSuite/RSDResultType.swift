@@ -1,5 +1,5 @@
 //
-//  RSDResourceWrapper.swift
+//  RSDResultType.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -30,27 +30,57 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-
 import Foundation
 
-public struct RSDResourceWrapper : RSDResourceTransformer, Codable {
+/// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate
+/// result type.
+public struct RSDResultType : RawRepresentable, Codable {
+    public typealias RawValue = String
     
-    let filename: String
-    let bundleIdentifier: String?
+    public private(set) var rawValue: String
     
-    public let classType: String?
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+    
+    /// Defaults to creating a `RSDResult`.
+    public static let base: RSDResultType = "base"
+    
+    /// Defaults to creating a `RSDAnswerResult`.
+    public static let answer: RSDResultType = "answer"
+    
+    /// Defaults to creating a `RSDCollectionResult`.
+    public static let collection: RSDResultType = "collection"
+    
+    /// Defaults to creating a `RSDTaskResult`.
+    public static let task: RSDResultType = "task"
+    
+    /// Defaults to creating a `RSDFileResult`.
+    public static let file: RSDResultType = "file"
+}
 
-    public var resourceName: String {
-        return filename
+extension RSDResultType : Equatable {
+    public static func ==(lhs: RSDResultType, rhs: RSDResultType) -> Bool {
+        return lhs.rawValue == rhs.rawValue
     }
-    
-    public var resourceBundle: String? {
-        return bundleIdentifier
+    public static func ==(lhs: String, rhs: RSDResultType) -> Bool {
+        return lhs == rhs.rawValue
     }
+    public static func ==(lhs: RSDResultType, rhs: String) -> Bool {
+        return lhs.rawValue == rhs
+    }
+}
+
+extension RSDResultType : Hashable {
+    public var hashValue : Int {
+        return self.rawValue.hashValue
+    }
+}
+
+extension RSDResultType : ExpressibleByStringLiteral {
+    public typealias StringLiteralType = String
     
-    public init(filename: String, bundleIdentifier: String?) {
-        self.filename = filename
-        self.bundleIdentifier = bundleIdentifier
-        self.classType = nil
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
     }
 }

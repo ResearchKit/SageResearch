@@ -34,7 +34,7 @@
 import Foundation
 
 public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
-    public let type: String
+    public let type: RSDResultType
     public let identifier: String
     public var startDate: Date = Date()
     public var endDate: Date = Date()
@@ -42,7 +42,7 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
     
     public init(identifier: String) {
         self.identifier = identifier
-        self.type = RSDFactory.ResultType.collection.rawValue
+        self.type = .collection
         self.inputResults = []
     }
     
@@ -55,7 +55,7 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.decode(RSDResultType.self, forKey: .type)
         
         let resultsContainer = try container.nestedUnkeyedContainer(forKey: .inputResults)
         self.inputResults = try decoder.factory.decodeResults(from: resultsContainer)

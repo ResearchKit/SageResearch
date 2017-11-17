@@ -34,6 +34,28 @@
 import XCTest
 import ResearchSuite
 
+struct TestResourceWrapper : RSDResourceTransformer, Codable {
+    
+    let filename: String
+    let bundleIdentifier: String?
+    
+    public let classType: String?
+    
+    public var resourceName: String {
+        return filename
+    }
+    
+    public var resourceBundle: String? {
+        return bundleIdentifier
+    }
+    
+    public init(filename: String, bundleIdentifier: String?) {
+        self.filename = filename
+        self.bundleIdentifier = bundleIdentifier
+        self.classType = nil
+    }
+}
+
 struct TestImageWrapperDelegate : RSDImageWrapperDelegate {
     func fetchImage(for size: CGSize, with imageName: String, callback: @escaping ((UIImage?) -> Void)) {
         DispatchQueue.main.async {
