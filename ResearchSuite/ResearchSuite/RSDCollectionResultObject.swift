@@ -75,37 +75,3 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
         }
     }
 }
-
-/**
- Convenience methods on the protocol for appending the history or async results while keeping the identifiers unique.
- */
-extension RSDCollectionResult {
-    
-    /**
-     Append the result to the end of the input results, replacing the previous instance with the same identifier.
-     
-     @param result  The result to add to the input results.
-     */
-    @discardableResult
-    mutating public func appendInputResults(with result: RSDResult) -> RSDResult? {
-        var previousResult: RSDResult?
-        if let idx = inputResults.index(where: { $0.identifier == result.identifier }) {
-            previousResult = inputResults.remove(at: idx)
-        }
-        inputResults.append(result)
-        return previousResult
-    }
-    
-    /**
-     Append the result to the end of the input results, replacing the previous instance with the same identifier.
-     
-     @param result  The result to add to the input results.
-     */
-    @discardableResult
-    mutating public func removeInputResult(with identified: String) -> RSDResult? {
-        guard let idx = inputResults.index(where: { $0.identifier == identifier }) else {
-            return nil
-        }
-        return inputResults.remove(at: idx)
-    }
-}

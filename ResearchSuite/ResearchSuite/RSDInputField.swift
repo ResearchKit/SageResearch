@@ -33,143 +33,113 @@
 
 import Foundation
 
-/**
- `RSDInputField` is used to describe a form input and includes the data type and a possible hint to how the UI should be displayed.
- */
+/// `RSDInputField` is used to describe a form input and includes the data type and a possible hint to how the UI
+/// should be displayed.
+///
+/// - seealso: `RSDFormUIStep`
 public protocol RSDInputField {
     
-    /**
-     A short string that uniquely identifies the form item within the step. The identifier is reproduced in the results of a step result in the step history of a task result.
-     */
+    /// A short string that uniquely identifies the form item within the step. The identifier is reproduced in the
+    /// results of a step result in the step history of a task result.
     var identifier: String { get }
     
-    /**
-     A localized string that displays a short text offering a hint to the user of the data to be entered for this field.
-     */
+    /// A localized string that displays a short text offering a hint to the user of the data to be entered for
+    /// this field.
     var prompt: String? { get }
     
-    /**
-     A localized string that displays placeholder information for the input field.
-     
-     You can display placeholder text in a text field or text area to help users understand how to answer the item's question.
-     */
+    /// A localized string that displays placeholder information for the input field.
+    ///
+    /// You can display placeholder text in a text field or text area to help users understand how to answer
+    /// the item's question.
     var placeholderText: String? { get }
     
-    /**
-     A Boolean value indicating whether the user can skip the input field without providing an answer.
-     */
+    /// A Boolean value indicating whether the user can skip the input field without providing an answer.
     var isOptional: Bool { get }
     
-    /**
-     The data type for this input field. The data type can have an associated ui hint.
-     */
+    /// The data type for this input field. The data type can have an associated ui hint.
     var dataType: RSDFormDataType { get }
     
-    /**
-     A UI hint for how the study would prefer that the input field is displayed to the user.
-     */
+    /// A UI hint for how the study would prefer that the input field is displayed to the user.
     var uiHint: RSDFormUIHint? { get }
     
-    /**
-     Options for displaying a text field. This is only applicable for certain types of UI hints and data types.
-     */
+    /// Options for displaying a text field. This is only applicable for certain types of UI hints and data types.
     var textFieldOptions: RSDTextFieldOptions? { get }
     
-    /**
-     A range used by dates and numbers for setting up a picker wheel, slider or providing text field input validation.
-     */
+    /// A range used by dates and numbers for setting up a picker wheel, slider, or providing text field
+    /// input validation.
     var range: RSDRange? { get }
     
-    /**
-     A formatter that is appropriate to the data type. If `nil`, the format will be determined by the UI.
-     */
+    /// A formatter that is appropriate to the data type. If `nil`, the format will be determined by the UI.
+    /// This is the formatter used to display a previously entered answer to the user or to convert an answer
+    /// entered in a text field into the appropriate value type.
+    ///
+    /// - seealso: `RSDAnswerResultType.BaseType` and `RSDFormStepDataSource`
     var formatter: Formatter? { get }
     
-    /**
-     Validate the input field to check for any configuration that should throw an error.
-     */
+    /// Validate the input field to check for any configuration that should throw an error.
     func validate() throws
 }
 
-/**
- `RSDChoice` is used to describe a choice item for use with a multiple choice or multiple component input field.
- */
+/// `RSDChoice` is used to describe a choice item for use with a multiple choice or multiple component input field.
 public protocol RSDChoice {
     
-    /**
-     A JSON encodable object to return as the value when this choice is selected.
-     */
+    /// A JSON encodable object to return as the value when this choice is selected.
     var value: Codable { get }
     
-    /**
-     Localized text string to display for the choice.
-     */
+    /// Localized text string to display for the choice.
     var text: String? { get }
     
-    /**
-     Additional detail text.
-     */
+    /// Additional detail text.
     var detail: String? { get }
     
-    /**
-     For a multiple choice option, is this choice mutually exclusive? For example, "none of the above".
-     */
+    /// For a multiple choice option, is this choice mutually exclusive? For example, "none of the above".
     var isExclusive: Bool { get }
     
-    /**
-     Whether or not this choice has an image associated with it that should be returned by the fetch icon method.
-     */
+    /// Whether or not this choice has an image associated with it that should be returned by the fetch icon method.
     var hasIcon: Bool { get }
     
-    /**
-     An icon image that can be used for displaying the choice.
-     
-     @param size        The size of the image to return.
-     @param callback    The callback with the image, run on the main thread.
-     */
+    /// An icon image that can be used for displaying the choice.
+    ///
+    /// - parameters:
+    ///     - size:        The size of the image to return.
+    ///     - callback:    The callback with the image, run on the main thread.
     func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
 }
 
+/// `RSDChoiceOptions` is a data source protocol that can be used to set up a picker or list of choices.
+///
+/// - seealso: `RSDChoiceInputField` and `RSDFormStepDataSource`
 public protocol RSDChoiceOptions: RSDChoicePickerDataSource {
     
-    /**
-     A list of choices for input field.
-     */
+    /// A list of choices for the input field.
     var choices : [RSDChoice] { get }
     
-    /**
-     A Boolean value indicating whether the user can skip the input field without providing an answer.
-     */
+    /// A Boolean value indicating whether the user can skip the input field without providing an answer.
     var isOptional: Bool { get }
 }
 
-/**
- `RSDChoiceOptions` extends the properties of an `RSDFieldInput` with information required to create a choice selection input field.
- */
+/// `RSDChoiceOptions` extends the properties of `RSDInputField` with information required to create a
+/// multiple or single choice question.
 public protocol RSDChoiceInputField : RSDInputField, RSDChoiceOptions {
     
-    /**
-     Does the choice selection allow entering a custom value
-     */
+    /// Does the choice selection allow entering a custom value?
     var allowOther : Bool { get }
 }
 
-/**
- `RSDMultipleComponentOptions` extends the properties of an `RSDFieldInput` with information required to create a multiple component input field.
- */
+/// `RSDMultipleComponentInputField` extends the properties of `RSDInputField` with information
+/// required to create a multiple component input field.
+///
+/// - note: This type of input field was originally designed for entering values such as blood pressure
+///         or height (US English). It is included here because the code was developed and there may be
+///         a use-case for it in the future. (syoung 11/16/2017)
+///
+/// - seealso: `RSDFormDataType.CollectionType.multipleComponent`
 public protocol RSDMultipleComponentInputField : RSDInputField, RSDChoicePickerDataSource {
         
-    /**
-     A list of choices for input fields that make up the multiple component option set.
-     */
+    /// A list of choices for input fields that make up the multiple component option set.
     var choices : [[RSDChoice]] { get }
     
-    /**
-     If this is a multiple component input field, the UI can optionally define a separator.
-     */
+    /// If this is a multiple component input field, the UI can optionally define a separator.
+    /// For example, blood pressure would have a separator of "/".
     var separator: String? { get }
 }
-
-
-
-

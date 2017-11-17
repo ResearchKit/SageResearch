@@ -105,7 +105,7 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     }
 }
 
-public struct RSDDecimalRangeObject : RSDDecimalRange, Codable {
+public struct RSDNumberRangeObject : RSDNumberRange, Codable {
     
     public let minimumValue: Decimal?
     public let maximumValue: Decimal?
@@ -151,7 +151,7 @@ public struct RSDDecimalRangeObject : RSDDecimalRange, Codable {
         self.stepInterval = (stepInterval == nil) ? nil : Decimal(floatLiteral: stepInterval!)
         self.unit = try container.decodeIfPresent(String.self, forKey: .unit)
         if let digits = try container.decodeIfPresent(Int.self, forKey: .maximumDigits) {
-            self.formatter = RSDDecimalRangeObject.defaultNumberFormatter(with: digits)
+            self.formatter = RSDNumberRangeObject.defaultNumberFormatter(with: digits)
         } else {
             self.formatter = nil
         }

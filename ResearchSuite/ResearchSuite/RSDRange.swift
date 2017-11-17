@@ -33,102 +33,88 @@
 
 import Foundation
 
-/**
- `RSDRange` defines range constraints that are appropriate for a given data type.
- */
+/// `RSDRange` defines range constraints that are appropriate for a given data type.
 public protocol RSDRange {
 }
 
-/**
- `RSDRangeWithFormatter` is an optional extention of the range that can be used to extend the range to include a formatter.
- */
+/// `RSDRangeWithFormatter` is an optional extension of the range that can be used to extend the range
+/// to include a formatter appropriate to the UI. For example, this could be used to describe a number
+/// range that displays currency.
 public protocol RSDRangeWithFormatter : RSDRange {
     
-    /**
-     A formatter that is appropriate to the data type. If `nil`, the format will be determined by the UI.
-     */
+    /// A formatter that is appropriate to the data type. If `nil`, the format will be determined by the UI.
+    /// This is the formatter used to display a previously entered answer to the user or to convert an answer
+    /// entered in a text field into the appropriate value type.
+    ///
+    /// - seealso: `RSDAnswerResultType.BaseType` and `RSDFormStepDataSource`
     var formatter: Formatter? { get }
 }
-/**
- `RSDDateRange` defines the range values appropriate for a `date` data type.
- */
+
+/// `RSDDateRange` defines the range of values appropriate for a `date` data type.
 public protocol RSDDateRange : RSDRange {
     
-    /**
-     The minimum allowed date. When the value of this property is `nil`, then the `allowPast` property is used to optionally set the minimum date to now.
-     */
+    /// The minimum allowed date. When the value of this property is `nil`, then the `allowPast`
+    /// property is checked for `nil`, otherwise `allowPast` is ignored.
     var minDate: Date? { get }
     
-    /**
-     The maximum allowed date. When the value of this property is `nil`, then the `allowFuture` property is used to optionally set the maximum date to now.
-     */
+    /// The maximum allowed date. When the value of this property is `nil`, then the `allowFuture`
+    /// property is checked for `nil`, otherwise `allowFuture` is ignored.
     var maxDate: Date? { get }
     
-    /**
-     Whether or not the UI should allow future dates. If `nil` or `minDate` is defined then this value is ignored. Default is `true`.
-     */
+    /// Whether or not the UI should allow future dates. If `nil` or if `minDate` is defined then this value
+    /// is ignored. Default is `true`.
     var allowFuture: Bool? { get }
     
-    /**
-     Whether or not the UI should allow past dates. If `nil` or `maxDate` is defined then this value is ignored. Default is `true`.
-     */
+    /// Whether or not the UI should allow past dates. If `nil` or if `maxDate` is defined then this value
+    /// is ignored. Default is `true`.
     var allowPast: Bool? { get }
     
-    /**
-     The minute interval to allow for a time picker. A time picker will default to 1 minute if this is `nil` or if the number is outside the allowable range of 1 to 30 minutes.
-     */
+    /// The minute interval to allow for a time picker. A time picker will default to 1 minute if this
+    /// is `nil` or if the number is outside the allowable range of 1 to 30 minutes.
     var minuteInterval: Int? { get }
     
-    /**
-     Calendar components that are relevant for this input field.
-     */
+    /// Calendar components that are relevant for this input field.
     var calendarComponents: Set<Calendar.Component> { get }
     
-    /**
-     The date encoder to use for formatting the result. If `nil` then the result, `minDate`, and `maxDate` are assumed to be used for time and date with the default encoding/decoding implementation.
-     */
+    /// The date encoder to use for formatting the result. If `nil` then the result, `minDate`, and
+    /// `maxDate` are assumed to be used for time and date with the default coding implementation.
     var dateCoder: RSDDateCoder? { get }
 }
 
 extension RSDDateRange {
     
-    /**
-     The minimum allowed date. This is calculated by using either the `minDate` (if non-nil) or today's date if `allowPast` is non-nil and `false`.
-     */
+    /// The minimum allowed date. This is calculated by using either the `minDate` (if non-nil) or today's
+    /// date if `allowPast` is non-nil and `false`. If both `minDate` and `allowPast` are `nil` then this
+    /// property will return `nil`.
     public var minimumDate: Date? {
         return minDate ?? ((allowPast ?? true) ? nil : Date())
     }
     
-    /**
-     The maximum allowed date. This is calculated by using either the `maxDate` (if non-nil) or today's date if `allowFuture` is non-nil and `false`.
-     */
+    /// The maximum allowed date. This is calculated by using either the `maxDate` (if non-nil) or today's
+    /// date if `allowFuture` is non-nil and `false`. If both `maxDate` and `allowFuture` are `nil` then this
+    /// property will return `nil`.
     public var maximumDate: Date? {
         return maxDate ?? ((allowFuture ?? true) ? nil : Date())
     }
 }
 
-/**
- `RSDDecimalRange` extends the properties of an `RSDFieldInput` for a `decimal` or `integer` data type.
- */
-public protocol RSDDecimalRange : RSDRange {
+/// `RSDNumberRange` extends the properties of an `RSDInputField` for a `decimal` or `integer` data type.
+public protocol RSDNumberRange : RSDRange {
     
-    /**
-     The minimum allowed number. When the value of this property is `nil`, there is no minimum.
-     */
+    /// The minimum allowed number. When the value of this property is `nil`, there is no minimum.
     var minimumValue: Decimal? { get }
     
-    /**
-     The maximum allowed number. When the value of this property is `nil`, there is no maximum.
-     */
+    /// The maximum allowed number. When the value of this property is `nil`, there is no maximum.
     var maximumValue: Decimal? { get }
     
-    /**
-     A step interval to be used for a slider or picker.
-     */
+    /// A step interval to be used for a slider or picker.
     var stepInterval: Decimal? { get }
     
-    /**
-     A unit label associated with this property.
-     */
+    /// A unit label associated with this property. The unit should *not* be localized. Instead, this
+    /// value is used to determine the unit for measurements converted to the unit expected by the researcher.
+    ///
+    /// For example, if a measurement of distance is displayed and/or returned by the user in feet, but the
+    /// researcher expects the returned value in meters then the unit here would be "m" and the formatter
+    /// would be a `LengthFormatter` that uses the current locale with a `unitStyle` of `.long`.
     var unit: String? { get }
 }

@@ -300,7 +300,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.integer))
             XCTAssertEqual(object.uiHint, .standard(.slider))
-            if let range = object.range as? RSDDecimalRange {
+            if let range = object.range as? RSDNumberRange {
                 XCTAssertEqual(range.minimumValue, -2)
                 XCTAssertEqual(range.maximumValue, 3)
                 XCTAssertEqual(range.stepInterval, 1)
@@ -354,7 +354,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.decimal))
             XCTAssertEqual(object.uiHint, .standard(.slider))
-            if let range = object.range as? RSDDecimalRangeObject {
+            if let range = object.range as? RSDNumberRangeObject {
                 XCTAssertEqual(range.minimumValue, -2.5)
                 XCTAssertEqual(range.maximumValue, 3)
                 XCTAssertEqual(range.stepInterval, 0.1)

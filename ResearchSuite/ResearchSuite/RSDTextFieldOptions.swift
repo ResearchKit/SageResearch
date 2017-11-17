@@ -33,64 +33,50 @@
 
 import Foundation
 
-/**
- `RSDTextFieldOptions` defines the options for a text field ui hint.
- */
+/// `RSDTextFieldOptions` defines the options for a text field.
+///
+/// - seealso: `RSDInputField` and `RSDFormStepDataSource`
 public protocol RSDTextFieldOptions {
     
-    /**
-     The regex used to validate user's input. If set to nil, no validation will be performed.
-     Dictionary key = "validationRegex"
-     
-     @note If the "validationRegex" is defined, then the `invalidMessage` should also be defined.
-     */
+    /// The regex used to validate user's input. If set to nil, no validation will be performed.
+    ///
+    /// - note: If the "validationRegex" is defined, then the `invalidMessage` should also be defined.
     var validationRegex: String? { get }
     
-    /**
-     A custom regular expression that can be used to validate a string. If this is `nil`, then the regular expression with be created from the `validationRegex`.
-     
-     @note If the "validationRegex" is defined, then the `invalidMessage` should also be defined.
-     */
+    /// A localized custom regular expression that can be used to validate a string. If this is `nil`,
+    /// then the regular expression with be created from the `validationRegex`.
+    ///
+    /// - note: If the "validationRegex" is defined, then the `invalidMessage` should also be defined.
     var validationRegularExpression: NSRegularExpression? { get }
     
-    /**
-     The text presented to the user when invalid input is received.
-     */
+    /// The text presented to the user when invalid input is received.
     var invalidMessage: String? { get }
     
-    /**
-     The maximum length of the text users can enter. When the value of this property is 0, there is no maximum.
-     */
+    /// The maximum length of the text users can enter. When the value of this property is 0, there
+    /// is no maximum.
     var maximumLength: Int { get }
     
-    /**
-     Auto-capitalization type for the text field.
-     */
+    /// Auto-capitalization type for the text field.
     var autocapitalizationType: UITextAutocapitalizationType { get }
     
-    /**
-     Auto-correction type for the text field.
-     */
+    /// Auto-correction type for the text field.
     var autocorrectionType: UITextAutocorrectionType { get }
     
-    /**
-     Spell checking type for the text field.
-     */
+    /// Spell checking type for the text field.
     var spellCheckingType: UITextSpellCheckingType { get }
     
-    /**
-     Keyboard type for the text field.
-     */
+    /// Keyboard type for the text field.
     var keyboardType: UIKeyboardType { get }
     
-    /**
-     Is the text field for password entry?
-     */
+    /// Is the text field for password entry?
     var isSecureTextEntry: Bool { get }
 }
 
 extension RSDTextFieldOptions {
     
+    /// Method for evaluating a string against the `validationRegex` for a match.
+    /// - paramater string: The string to evaluate.
+    /// - returns: The number of matches found.
     public func regExMatches(_ string: String) throws -> Int? {
         guard let expression = try _regEx() else { return nil }
         return expression.numberOfMatches(in: string, options: [], range: NSRange(string.startIndex..., in: string))

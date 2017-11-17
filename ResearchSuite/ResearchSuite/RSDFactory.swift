@@ -635,9 +635,16 @@ open class RSDFactory {
 /// Extension of CodingUserInfoKey to add keys used by the Codable objects in this framework.
 extension CodingUserInfoKey {
     
+    /// The key for the factory to use when coding.
     public static let factory = CodingUserInfoKey(rawValue: "RSDFactory.factory")!
+    
+    /// The key for the task info to use when coding.
     public static let taskInfo = CodingUserInfoKey(rawValue: "RSDFactory.taskInfo")!
+    
+    /// The key for the schema info to use when coding.
     public static let schemaInfo = CodingUserInfoKey(rawValue: "RSDFactory.schemaInfo")!
+    
+    /// The key for the task data source to use when coding.
     public static let taskDataSource = CodingUserInfoKey(rawValue: "RSDFactory.taskDataSource")!
 }
 
@@ -658,18 +665,22 @@ extension PropertyListDecoder : RSDFactoryDecoder {
 /// in this framework.
 extension Decoder {
     
+    /// The factory to use when decoding.
     public var factory: RSDFactory {
         return self.userInfo[.factory] as? RSDFactory ?? RSDFactory.shared
     }
     
+    /// The task info to use when decoding if there isn't a local task info defined on the object.
     public var taskInfo: RSDTaskInfoStep? {
         return self.userInfo[.taskInfo] as? RSDTaskInfoStep
     }
     
+    /// The schema info to use when decoding if there isn't a local task info defined on the object.
     public var schemaInfo: RSDSchemaInfo? {
         return self.userInfo[.schemaInfo] as? RSDSchemaInfo
     }
     
+    /// The task data source to use when decoding.
     public var taskDataSource: RSDTaskDataSource? {
         return self.userInfo[.taskDataSource] as? RSDTaskDataSource
     }
@@ -692,18 +703,22 @@ extension PropertyListEncoder : RSDFactoryEncoder {
 /// in this framework.
 extension Encoder {
     
+    /// The factory to use when encoding.
     public var factory: RSDFactory {
         return self.userInfo[.factory] as? RSDFactory ?? RSDFactory.shared
     }
     
+    /// The task info to use when encoding.
     public var taskInfo: RSDTaskInfoStep? {
         return self.userInfo[.taskInfo] as? RSDTaskInfoStep
     }
     
+    /// The schema info to use when encoding.
     public var schemaInfo: RSDSchemaInfo? {
         return self.userInfo[.schemaInfo] as? RSDSchemaInfo
     }
     
+    /// The task data source to use when encoding.
     public var taskDataSource: RSDTaskDataSource? {
         return self.userInfo[.taskDataSource] as? RSDTaskDataSource
     }

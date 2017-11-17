@@ -333,7 +333,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     public let defaultAnswer: Any
     public let textFieldOptions: RSDTextFieldOptions?
     
-    open fileprivate(set) var numberRange: RSDDecimalRange?
+    open fileprivate(set) var numberRange: RSDNumberRange?
     open private(set) var formatter: Formatter?
     open private(set) var pickerSource: RSDPickerDataSource?
     
@@ -590,7 +590,7 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
             let baseType: RSDAnswerResultType.BaseType = inputField.dataType.defaultAnswerResultBaseType()
             let sequenceType: RSDAnswerResultType.SequenceType? = singleSelection ? nil : .array
             let dateFormatter: DateFormatter? = (inputField.range as? RSDDateRange)?.dateCoder?.resultFormatter
-            let unit: String? = (inputField.range as? RSDDecimalRange)?.unit
+            let unit: String? = (inputField.range as? RSDNumberRange)?.unit
             return RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: nil)
         }()
         
@@ -666,20 +666,20 @@ final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
         
         var pickerSource: RSDPickerDataSource? = inputField as? RSDPickerDataSource
         var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
-        var range: RSDDecimalRange? = (inputField.range as? RSDDecimalRange)
+        var range: RSDNumberRange? = (inputField.range as? RSDNumberRange)
         
         if inputField.dataType.baseType == .year, let dateRange = inputField.range as? RSDDateRange {
             let calendar = Calendar(identifier: .gregorian)
             let min: Int? = (dateRange.minimumDate != nil) ? calendar.component(.year, from: dateRange.minimumDate!) : nil
             let max: Int? = (dateRange.maximumDate != nil) ? calendar.component(.year, from: dateRange.maximumDate!) : nil
             if min != nil || max != nil {
-                range = RSDDecimalRangeObject(minimumInt: min, maximumInt: max)
+                range = RSDNumberRangeObject(minimumInt: min, maximumInt: max)
             }
         }
 
         let baseType: RSDAnswerResultType.BaseType = (inputField.dataType.baseType == .decimal) ? .decimal : .integer
         let digits = (baseType == .decimal) ? 3 : 0
-        let numberFormatter = (formatter as? NumberFormatter) ?? RSDDecimalRangeObject.defaultNumberFormatter(with: digits)
+        let numberFormatter = (formatter as? NumberFormatter) ?? RSDNumberRangeObject.defaultNumberFormatter(with: digits)
         if inputField.dataType.baseType == .year {
             numberFormatter.groupingSeparator = ""
         }
@@ -703,7 +703,7 @@ final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
         
         let baseType: RSDAnswerResultType.BaseType = inputField.dataType.defaultAnswerResultBaseType()
         let dateFormatter: DateFormatter? = (inputField.range as? RSDDateRange)?.dateCoder?.resultFormatter
-        let unit: String? = (inputField.range as? RSDDecimalRange)?.unit
+        let unit: String? = (inputField.range as? RSDNumberRange)?.unit
         let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: .array, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: inputField.separator)
         
         super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, defaultAnswer: nil, textFieldOptions: nil, items: nil, formatter: nil, pickerSource: inputField)

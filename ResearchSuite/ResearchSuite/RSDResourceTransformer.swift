@@ -33,118 +33,75 @@
 
 import Foundation
 
-public struct RSDResourceType : RawRepresentable, Equatable, Hashable {
-    public typealias RawValue = String
-    
-    public let rawValue: String
-    
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-    
-    public var hashValue: Int {
-        return rawValue.hashValue
-    }
-    
-    public static func ==(lhs: RSDResourceType, rhs: RSDResourceType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    
-    public static let json = RSDResourceType(rawValue: "json")
-    public static let plist = RSDResourceType(rawValue: "plist")
-    public static let html = RSDResourceType(rawValue: "html")
-    public static let pdf = RSDResourceType(rawValue: "pdf")
-}
-
-public enum RSDResourceTransformerError : Error, CustomNSError {
-    case nullResourceName(String)
-    case bundleNotFound(String)
-    case fileNotFound(String)
-    case invalidResourceType(String)
-    
-    /// The domain of the error.
-    public static var errorDomain: String {
-        return "RSDResourceTransformerErrorDomain"
-    }
-    
-    /// The error code within the given domain.
-    public var errorCode: Int {
-        switch(self) {
-        case .nullResourceName(_):
-            return -1
-        case .bundleNotFound(_):
-            return -2
-        case .fileNotFound(_):
-            return -3
-        case .invalidResourceType(_):
-            return -4
-        }
-    }
-    
-    /// The user-info dictionary.
-    public var errorUserInfo: [String : Any] {
-        let description: String
-        switch(self) {
-        case .nullResourceName(let str): description = str
-        case .bundleNotFound(let str): description = str
-        case .fileNotFound(let str): description = str
-        case .invalidResourceType(let str): description = str
-        }
-        return ["NSDebugDescription": description]
-    }
-}
-
-/**
- `RSDResourceConfig` is designed as an overridable resource configuration manager. The functions and properties are intended to be overridable in the app by implementing a custom extension of the function with the same name. This is designed to use app-wins namespace conflict resolution that is typical of obj-c architecture.
- */
+/// `RSDResourceConfig` is designed as an overridable resource configuration manager. The functions and properties
+/// are intended to be overridable in the app by implementing a custom extension of the function with the same name.
+/// This is designed to use app-wins namespace conflict resolution that is typical of obj-c architecture.
 open class RSDResourceConfig : NSObject {
 }
 
 extension RSDResourceConfig {
     
+    /// Queries the resource config for the relative URL for a given resource object. Default return is `nil`.
+    ///
+    /// - parameter resource: The resource object.
+    /// - returns: The relative URL to apply to the resource object.
     @objc open class func relativeURL(for resource: Any?) -> URL? {
         return nil
     }
     
+    /// Queries the resource config for the bundle for a given resource object. Default return is `nil`.
+    ///
+    /// - parameter resource: The resource object.
+    /// - returns: The bundle to use to get the resource object.
     @objc open class func resourceBundle(for resource: Any?) -> Bundle? {
         return nil
     }
 }
 
-/**
- `RSDResourceTransformer` is a protocol for getting either embedded resources or online resources. The
- */
+/// `RSDResourceTransformer` is a protocol for getting either embedded resources or online resources.
+///
+/// - seealso: `RSDSectionStepResourceTransformer` and `RSDTaskResourceTransformer`
+///
 public protocol RSDResourceTransformer {
     
-    /**
-     Either a fully qualified URL string or else a relative reference to either an embedded resource or a relative URL defined globally by overriding the `RSDResourceConfig` class methods.
-     */
+    /// Either a fully qualified URL string or else a relative reference to either an embedded resource or a
+    /// relative URL defined globally by overriding the `RSDResourceConfig` class methods.
     var resourceName: String { get }
     
-    /**
-     The bundle identifier for the embedded resource.
-     */
+    /// The bundle identifier for the embedded resource.
     var resourceBundle: String? { get }
     
-    /**
-     The classType for converting the resource to an object.
-     */
+    /// The classType for converting the resource to an object.
     var classType: String? { get }
 }
 
 extension RSDResourceTransformer {
     
+    /// The estimated time required to fetch the resource.
     public var estimatedFetchTime: TimeInterval {
         return isOnlineResourceURL() ? 60 : 0
     }
     
+    /// Whether or not the resource is an online URL or from an embedded resource bundle.
+    /// - returns: `true` if the resource is an online URL or `false` if it is an embedded resource.
     public func isOnlineResourceURL() -> Bool {
         return resourceName.hasPrefix("http") || RSDResourceConfig.relativeURL(for: self) != nil
     }
     
-    public func resourceURL(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (URL, RSDResourceType) {
+    /// Get the URL for a given resource. This can return either a URL to an online resource or a URL
+    /// for an embedded resource.
+    ///
+    /// - parameters:
+    ///     - defaultExtension: The default extension for the URL. If `nil` then the `resourceName` will be inspected
+    ///                         for a file extension. If that is `nil` then "json" will be assumed.
+    ///     - bundle: The bundle to use for fetching the resource. If `nil` then the `RSDResourceConfig` will be used.
+    /// - returns:
+    ///     - url: The returned URL for this resource.
+    ///     - resourceType: The resource type.
+    /// - throws: `RSDResourceTransformerError` if the file cannot be found.
+    public func resourceURL(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (url: URL, resourceType: RSDResourceType) {
         
-        // get the resource name and extention
+        // get the resource name and extension
         var resource = resourceName
         var ext = defaultExtension ?? RSDResourceType.json.rawValue
         let split = resourceName.components(separatedBy: ".")
@@ -188,8 +145,17 @@ extension RSDResourceTransformer {
         return (url, resourceType)
     }
     
-    
-    public func resourceData(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (Data, RSDResourceType) {
+    /// Get the `Data` for a given resource. This is used to get data from an embedded resource.
+    ///
+    /// - parameters:
+    ///     - defaultExtension: The default extension for the URL. If `nil` then the `resourceName` will be inspected
+    ///                         for a file extension. If that is `nil` then "json" will be assumed.
+    ///     - bundle: The bundle to use for fetching the resource. If `nil` then the `RSDResourceConfig` will be used.
+    /// - returns:
+    ///     - data: The returned Data for this resource.
+    ///     - resourceType: The resource type.
+    /// - throws: `RSDResourceTransformerError` if the file cannot be found.
+    public func resourceData(ofType defaultExtension: String? = nil, bundle: Bundle? = nil) throws -> (data: Data, resourceType: RSDResourceType) {
         
         // get the url
         let (url, resourceType) = try resourceURL(ofType: defaultExtension, bundle: bundle)
@@ -197,5 +163,84 @@ extension RSDResourceTransformer {
         // get the data
         let data = try Data(contentsOf: url)
         return (data, resourceType)
+    }
+}
+
+/// `RSDResourceType` is an extendable struct for describing the type of a resource.
+/// By default, these values will map to the file extension.
+public struct RSDResourceType : RawRepresentable, Equatable, Hashable, Codable {
+    public typealias RawValue = String
+    
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+    
+    public var hashValue: Int {
+        return rawValue.hashValue
+    }
+    
+    public static func ==(lhs: RSDResourceType, rhs: RSDResourceType) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+    
+    /// JSON file.
+    public static let json = RSDResourceType(rawValue: "json")
+    
+    /// PList file.
+    public static let plist = RSDResourceType(rawValue: "plist")
+    
+    /// HTML file.
+    public static let html = RSDResourceType(rawValue: "html")
+    
+    /// PDF file.
+    public static let pdf = RSDResourceType(rawValue: "pdf")
+    
+    /// PNG image file.
+    public static let png = RSDResourceType(rawValue: "png")
+    
+    /// JPEG image file.
+    public static let jpeg = RSDResourceType(rawValue: "jpeg")
+}
+
+/// `RSDResourceTransformerError` is used to support throwing errors when attempting to transform a resource.
+public enum RSDResourceTransformerError : Error, CustomNSError {
+    
+    /// The bundle could not be found.
+    case bundleNotFound(String)
+    
+    /// File not found in the expected bundle.
+    case fileNotFound(String)
+    
+    /// The resource type is not supported.
+    case invalidResourceType(String)
+    
+    /// The domain of the error.
+    public static var errorDomain: String {
+        return "RSDResourceTransformerErrorDomain"
+    }
+    
+    /// The error code within the given domain.
+    public var errorCode: Int {
+        switch(self) {
+        case .bundleNotFound(_):
+            return -2
+        case .fileNotFound(_):
+            return -3
+        case .invalidResourceType(_):
+            return -4
+        }
+    }
+    
+    /// The user-info dictionary.
+    public var errorUserInfo: [String : Any] {
+        let description: String
+        switch(self) {
+        case .bundleNotFound(let str): description = str
+        case .fileNotFound(let str): description = str
+        case .invalidResourceType(let str): description = str
+        }
+        return ["NSDebugDescription": description]
     }
 }

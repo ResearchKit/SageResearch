@@ -70,15 +70,15 @@ public enum RSDFormDataType {
         case date
         
         /// In a year question, the participant can enter a year when an event occured. A year data type can map
-        /// to an `RSDDateRange` or `RSDDecimalRange` to box the allowed values.
+        /// to an `RSDDateRange` or `RSDNumberRange` to box the allowed values.
         case year
         
         /// The decimal question type asks the participant to enter a decimal number. A decimal data type can
-        /// map to a `RSDDecimalRange` to box the allowed values.
+        /// map to a `RSDNumberRange` to box the allowed values.
         case decimal
         
         /// The integer question type asks the participant to enter an integer number. An integer data type can
-        /// map to a `RSDDecimalRange` to box the allowed values, but will store the value as an `Int`.
+        /// map to a `RSDNumberRange` to box the allowed values, but will store the value as an `Int`.
         case integer
         
         /// In a string question, the participant can enter text.
@@ -102,7 +102,7 @@ public enum RSDFormDataType {
         case singleChoice
         
         /// In a multiple component question, the participant can pick one choice from each component
-        /// or enter a formatted text string such as a phone number.
+        /// or enter a formatted text string such as a phone number or blood pressure.
         case multipleComponent
     }
     

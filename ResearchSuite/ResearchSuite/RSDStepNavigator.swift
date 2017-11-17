@@ -33,81 +33,79 @@
 
 import Foundation
 
+/// `RSDStepNavigator` is the model object used by the `RSDTaskController` to determine the order of
+/// presentation of the steps in a task.
+///
+/// - seealso: `RSDTask`, `RSDTaskController`, and `RSDConditionalStepNavigator`
 public protocol RSDStepNavigator {
     
-    /**
-     Returns the step associated with a given identifier.
-     
-     @param identifier  The identifier for the step.
-     
-     @return            The step with this identifier or nil if not found.
-     */
+    /// Returns the step associated with a given identifier.
+    /// - parameter identifier:  The identifier for the step.
+    /// - returns: The step with this identifier or nil if not found.
     func step(with identifier: String) -> RSDStep?
     
-    /**
-     Should the task exit early from the entire task?
-     
-     @param step    The current step.
-     @param result  The current result set for this task.
-     
-     @return        `true` if the task view controller should exit.
-     */
+    /// Should the task exit early from the entire task?
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: `true` if the task view controller should exit.
     func shouldExit(after step: RSDStep?, with result: RSDTaskResult) -> Bool
     
-    /**
-     Is there a step after the current step with the given result.
-     
-     Note: the result may not include a result for the current step.
-     
-     @param step    The current step.
-     @param result  The current result set for this task.
-     
-     @return        `true` if the task view controller should show a next button.
-     */
+    /// Is there a step after the current step with the given result.
+    ///
+    /// - note: the result may not include a result for the current step.
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: `true` if the task view controller should show a next button.
     func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool
     
-    /**
-     Is there a step before the current step with the given result.
-     
-     Note: the result may not include a result for the current step.
-     
-     @param step    The current step.
-     @param result  The current result set for this task.
-     
-     @return        `true` if the task view controller should show a back button.
-     */
+    /// Given the current task result, is there a step after the current step?
+    ///
+    /// This method is checked when first displaying a step to determine if the UI should display
+    /// this as the last step. By default, the UI defined in ResearchSuiteUI will change the text
+    /// on the continue button from "Next" to "Done", unless customized.
+    ///
+    /// - note: the task result may or may not include a result for the given step.
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: `true` if the task view controller should show a next button.
     func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool
     
-    /**
-     Return the step to go to before the given step.
-     
-     @param step    The current step.
-     @param result  The current result set for this task.
-     
-     @return        The previous step or nil if the task does not support backward navigation.
-     */
-    func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep?
-    
-    /**
-     Return the step to go to after completing the given step.
-     
-     @param step    The previous step or nil if this is the first step.
-     @param result  The current result set for this task.
-     
-     @return        The next step to display or nil if this is the end of the task.
-     */
+    /// Given the current task result, is there a step before the current step?
+    ///
+    /// This method is checked when first displaying a step to determine if the UI should display
+    /// this as the first step. By default, the UI defined in ResearchSuiteUI will hide the "Back"
+    /// button if there is no step before the given step.
+    ///
+    /// - note: the task result may or may not include a result for the given step.
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: `true` if the task view controller should show a back button.
     func step(after step: RSDStep?, with result: inout RSDTaskResult) -> RSDStep?
     
-    /**
-     Return the progress through the task for a given step with the current result.
-     
-     @param step    The current step.
-     @param result  The current result set for this task.
-     
-     @return current        The current progress. This indicates progress within the task.
-     @return total          The total number of steps.
-     @return isEstimated    Whether or not the progress is an estimate (if the task has variable navigation)
-     */
-    func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)?
+    /// Return the step to go to before the given step.
+    ///
+    /// - parameters:
+    ///     - step:    The current step.
+    ///     - result:  The current result set for this task.
+    /// - returns: The previous step or nil if the task does not support backward navigation or this is the first step.
+    func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep?
     
+    /// Return the progress through the task for a given step with the current result.
+    ///
+    /// - parameters:
+    ///     - step:         The current step.
+    ///     - result:       The current result set for this task.
+    /// - returns:
+    ///     - current:      The current progress. This indicates progress within the task.
+    ///     - total:        The total number of steps.
+    ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation)
+    func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)?
 }
