@@ -209,7 +209,7 @@ class CodableInputFieldObjectTests: XCTestCase {
                             "text" : "often"},
                          {  "value" : 3,
                             "text" : "always"}],
-            "expectedAnswer": 0
+            "matchingAnswer": 0
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -229,7 +229,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.choices.last?.value as? Int, 3)
             
             if let surveyRules = object.surveyRules, let rule = surveyRules.first as? RSDComparableSurveyRule {
-                XCTAssertNil(rule.skipIdentifier)
+                XCTAssertNil(rule.skipToIdentifier)
                 XCTAssertNil(rule.ruleOperator)
                 XCTAssertEqual(rule.matchingAnswer as? Int, 0)
             } else {
@@ -280,14 +280,14 @@ class CodableInputFieldObjectTests: XCTestCase {
                         "unit" : "feet" },
             "surveyRules" : [
                             {
-                            "skipIdentifier": "lessThan",
+                            "skipToIdentifier": "lessThan",
                             "ruleOperator": "lt",
-                            "expectedAnswer": 0
+                            "matchingAnswer": 0
                             },
                             {
-                            "skipIdentifier": "greaterThan",
+                            "skipToIdentifier": "greaterThan",
                             "ruleOperator": "gt",
-                            "expectedAnswer": 1
+                            "matchingAnswer": 1
                             }
                             ]
         }
@@ -314,11 +314,11 @@ class CodableInputFieldObjectTests: XCTestCase {
                 let firstRule = surveyRules.first as? RSDComparableSurveyRule,
                 let lastRule = surveyRules.last as? RSDComparableSurveyRule {
                 
-                XCTAssertEqual(firstRule.skipIdentifier, "lessThan")
+                XCTAssertEqual(firstRule.skipToIdentifier, "lessThan")
                 XCTAssertEqual(firstRule.ruleOperator, .lessThan)
                 XCTAssertEqual(firstRule.matchingAnswer as? Int, 0)
                 
-                XCTAssertEqual(lastRule.skipIdentifier, "greaterThan")
+                XCTAssertEqual(lastRule.skipToIdentifier, "greaterThan")
                 XCTAssertEqual(lastRule.ruleOperator, .greaterThan)
                 XCTAssertEqual(lastRule.matchingAnswer as? Int, 1)
                 
