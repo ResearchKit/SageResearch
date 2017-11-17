@@ -448,8 +448,8 @@ extension RSDTaskController {
     }
     
     private func _moveToPreviousStep() {
-        guard let previousStep = taskPath.currentStep,
-            let step = taskPath.task!.stepNavigator.step(before: previousStep, with: &taskPath.result)
+        guard let currentStep = taskPath.currentStep,
+            let step = taskPath.task!.stepNavigator.step(before: currentStep, with: &taskPath.result)
             else {
                 if let parent = taskPath.parentPath {
                     // If the parent path is non-nil then go back up to the parent
@@ -458,13 +458,35 @@ extension RSDTaskController {
                 }
                 return
         }
-        self.taskPath.isCompleted = false
-        self.taskPath.removeStepHistory(from: previousStep.identifier)
-        self.taskPath.currentStep = step
-        _move(to: step, from: previousStep, direction: .reverse)
+        _moveBack(to: step, from: currentStep)
+    }
+    
+    private func _moveBack(to step: RSDStep, from currentStep: RSDStep) {
+
+        var isSubtask = false
+        if let subtaskStep = step as? RSDTaskInfoStep, shouldFetchSubtask(for: subtaskStep) {
+            isSubtask = true
+        } else if let sectionStep = step as? RSDSectionStep, shouldPageSectionSteps(for: sectionStep) {
+            isSubtask = true
+        }
+        
+        if isSubtask, let childPath = self.taskPath.childPaths[step.identifier] {
+            if let lastStep = childPath.currentStep {
+                self.taskPath = childPath
+                _moveBack(to: lastStep, from: currentStep)
+            } else if let lastStep = taskPath.task!.stepNavigator.step(before: step, with: &taskPath.result) {
+                _moveBack(to: lastStep, from: currentStep)
+            } else {
+                assertionFailure("Trying to move back to nil step.")
+            }
+        } else {
+            self.taskPath.removeStepHistory(from: step.identifier)
+            _move(to: step, from: currentStep, direction: .reverse)
+        }
     }
     
     private func _move(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection) {
+        self.taskPath.currentStep = step
         for controller in self.currentAsyncControllers {
             // let any controllers know that the step has changed
             controller.moveTo(step: step, taskPath: self.taskPath)

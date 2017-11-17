@@ -83,7 +83,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     public private(set) var previousResults: [RSDResult]?
     
     /// The current step. If `nil` then the task has not been started.
-    open var currentStep: RSDStep?
+    public var currentStep: RSDStep?
  
     /// This is a flag that can be used to mark whether or not the task is ready to be saved.
     public var isCompleted: Bool = false
@@ -91,11 +91,11 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// This is a flag that can be used to mark when a task was exited early.
     public var didExitEarly: Bool = false
     
-    /// Mutable array of the current actions attached to this task.
-    public var currentActions: [RSDAsyncActionController] = []
-    
     /// A pointer to a parent path if this is subtask step.
     public private(set) var parentPath: RSDTaskPath?
+    
+    /// A pointer to the path sections visited
+    public private(set) var childPaths: [String : RSDTaskPath] = [:]
     
     /// Flag for tracking whether or not the `task` is loading from the `taskInfo`.
     public private(set) var isLoading: Bool = false
@@ -146,6 +146,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     
     private func commonInit(identifier: String, parentPath: RSDTaskPath?) {
         guard let parentPath = parentPath else { return }
+        parentPath.childPaths[identifier] = self
         self.parentPath = parentPath
         self.previousResults = (parentPath.result.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
     }

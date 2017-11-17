@@ -357,7 +357,19 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
      @return    A Bool indicating if next button should be enabled
      */
     override open var isForwardEnabled: Bool {
-        return (tableData?.allAnswersValid() ?? true) && super.isForwardEnabled
+        if !super.isForwardEnabled {
+            // If super has forward disabled then return false
+            return false
+        } else if let allAnswersValid = tableData?.allAnswersValid() {
+            // Else if the tabledata has been set up then go with that answer
+            return allAnswersValid
+        } else if let inputFields = self.formStep?.inputFields, inputFields.count > 0 {
+            // are all the input fields optional?
+            return inputFields.reduce(true, { $0 && $1.isOptional })
+        } else {
+            // All checks pass. forward is enabled.
+            return true
+        }
     }
     
     // MARK: Actions

@@ -53,7 +53,8 @@ struct TestStep : RSDStep {
     }
     
     func instantiateStepResult() -> RSDResult {
-        return result ?? RSDResultObject(identifier: identifier)
+        guard result == nil else { return result! }
+        return RSDAnswerResultObject(identifier: identifier, answerType: .string)
     }
     
     func validate() throws {
@@ -195,8 +196,8 @@ class TestTaskController: NSObject, RSDTaskController {
     var factory: RSDFactory?
     var currentStepController: RSDStepController?
     
-    var shouldFetchSubtask: Bool = false
-    var shouldPageSectionSteps: Bool = false
+    var shouldFetchSubtask: Bool = true
+    var shouldPageSectionSteps: Bool = true
     
     var currentAsyncControllers: [RSDAsyncActionController] = []
     
@@ -284,7 +285,15 @@ class TestTaskController: NSObject, RSDTaskController {
                     self.taskPath = RSDTaskPath(task: sectionStep, parentPath: self.taskPath)
                     nextStep = nil
                 } else {
-                    taskPath.appendStepHistory(with: nextStep!.instantiateStepResult())
+                    let stepResult = nextStep!.instantiateStepResult()
+                    if let answerResult = stepResult as? RSDAnswerResultObject,
+                        answerResult.value == nil, answerResult.answerType == .string {
+                        var aResult = answerResult
+                        aResult.value = nextStep!.identifier
+                        taskPath.appendStepHistory(with: aResult)
+                    } else {
+                        taskPath.appendStepHistory(with: stepResult)
+                    }
                 }
             }
         }
