@@ -160,8 +160,11 @@ open class RSDFactory {
         /// Defaults to creating a `RSDActiveUIStep`.
         case active
         
-        /// Defaults to creating a `RSDUIStep`.
+        /// Defaults to creating a `RSDUIStep` used to mark task completion.
         case completion
+        
+        /// Defaults to creating a `RSDActiveUIStep` used as a countdown to an active step.
+        case countdown
         
         /// Defaults to creating a `RSDFormUIStep`.
         case form
@@ -241,7 +244,7 @@ open class RSDFactory {
         switch (type) {
         case .instruction, .completion:
             return try RSDUIStepObject(from: decoder)
-        case .active:
+        case .active, .countdown:
             return try RSDActiveUIStepObject(from: decoder)
         case .form:
             return try RSDFormUIStepObject(from: decoder)

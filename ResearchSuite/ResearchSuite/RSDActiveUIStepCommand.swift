@@ -74,7 +74,8 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
         // Register the commands included in the base struct to add them to the mapping
         let _: RSDActiveUIStepCommand = [.playSound,
                                          .vibrate,
-                                         .transitionAutomatically]
+                                         .transitionAutomatically,
+                                         .shouldDisableIdleTimer]
         
         // Then call the initializer with the string mappings
         try self.init(from: decoder, stringMapping: RSDActiveUIStepCommand.stringMapping)
