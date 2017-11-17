@@ -291,7 +291,7 @@ extension RSDAnswerResultType : RSDJSONValueEncoder {
     ///     - encoder: The encoder to mutate.
     /// - throws: `EncodingError` if the value cannot be encoded.
     public func encode(_ value: Any?, to encoder: Encoder) throws {
-        guard let obj = value else {
+        guard let obj = value, !(obj is NSNull) else {
             var container = encoder.singleValueContainer()
             try container.encodeNil()
             return
