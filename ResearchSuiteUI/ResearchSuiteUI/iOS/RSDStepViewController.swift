@@ -130,12 +130,20 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             performStartCommands()
         }
         isFirstAppearance = false
+        
+        if let commands = self.activeStep?.commands, commands.contains(.shouldDisableIdleTimer) {
+            UIApplication.shared.isIdleTimerDisabled = true
+        }
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         isVisible = false
         super.viewWillDisappear(animated)
         delegate?.stepViewController(self, willDisappear: animated)
+        
+        if let commands = self.activeStep?.commands, commands.contains(.shouldDisableIdleTimer) {
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
     }
     
     open override func viewDidDisappear(_ animated: Bool) {
@@ -259,20 +267,20 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         setupNavigationView(footer, isFooter: true)
     }
     
+    @available(*, deprecated)
     open func shouldUseGlobalButtonVisibility() -> Bool {
-        return !(step is RSDTaskInfoStep)
+        return false
     }
     
     open func setupNavigationView(_ navigationView: RSDStepNavigationView, isFooter: Bool) {
         
         // Check if the back button and skip button should be hidden for this task
-        // and if so, then do so globally.
-        // TODO: syoung 11/01/2017 Stop doing this hack and figure out the button visibility properly.
-        if let task = self.taskController.topLevelTask, shouldUseGlobalButtonVisibility() {
-            navigationView.isBackHidden = task.shouldHideAction(for: .navigation(.goBackward), on: step) ?? false
-            navigationView.isSkipHidden = task.shouldHideAction(for: .navigation(.skip), on: step) ?? true
-        }
-
+        // and if so, then do so at this level. Otherwise, the button doesn't layout properly.
+        let backHiddened = self.shouldHideAction(for: .navigation(.goBackward))
+        navigationView.isBackHidden = backHiddened
+        let skipHidden = self.shouldHideAction(for: .navigation(.skip))
+        navigationView.isSkipHidden = skipHidden
+        
         setupButton(navigationView.cancelButton, for: .navigation(.cancel), isFooter: isFooter)
         setupButton(navigationView.learnMoreButton, for: .navigation(.learnMore), isFooter: isFooter)
         setupButton(navigationView.nextButton, for: .navigation(.goForward), isFooter: isFooter)

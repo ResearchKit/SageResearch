@@ -120,6 +120,9 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     /// Start the count down timer automatically when the step starts and transition automatically when the step finishes.
     public static let transitionAutomatically = RSDActiveUIStepCommand([.startTimerAutomatically, .continueOnFinish], codingKey: "transitionAutomatically")
     
+    /// Disable the idle timer if included.
+    public static let shouldDisableIdleTimer = RSDActiveUIStepCommand(1 << 6, codingKey: "shouldDisableIdleTimer")
+    
     /// The default commands for a step.
     public static let defaultCommands: RSDActiveUIStepCommand = []
 }
