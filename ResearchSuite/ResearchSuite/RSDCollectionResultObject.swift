@@ -33,13 +33,30 @@
 
 import Foundation
 
+/// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
+/// may have more that one result.
 public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
-    public let type: RSDResultType
+    
+    /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
+    
+    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
+    public let type: RSDResultType
+    
+    /// The start date timestamp for the result.
     public var startDate: Date = Date()
+    
+    /// The end date timestamp for the result.
     public var endDate: Date = Date()
+    
+    /// The list of input results associated with this step. These are generally assumed to be answers to
+    /// field inputs, but they are not required to implement the `RSDAnswerResult` protocol.
     public var inputResults: [RSDResult]
     
+    /// Default initializer for this object.
+    ///
+    /// - parameters:
+    ///     - identifier: The identifier string.
     public init(identifier: String) {
         self.identifier = identifier
         self.type = .collection
@@ -50,6 +67,11 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
         case identifier, type, startDate, endDate, inputResults
     }
     
+    /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
+    /// with the decoder to decode the `inputResults`.
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
@@ -61,6 +83,9 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
         self.inputResults = try decoder.factory.decodeResults(from: resultsContainer)
     }
     
+    /// Encode the result to the given encoder.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
@@ -73,5 +98,39 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
             let nestedEncoder = nestedContainer.superEncoder()
             try result.encode(to: nestedEncoder)
         }
+    }
+}
+
+extension RSDCollectionResultObject : RSDDocumentableDecodableObject {
+    
+    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .inputResults]
+        return codingKeys.map {
+            switch $0 {
+            case .identifier:
+                return ($0, String.self, "The identifier associated with the task, step, or asynchronous action.")
+            case .type:
+                return ($0, RSDResultType.self, "A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.")
+            case .startDate:
+                return ($0, Date.self, "The start date timestamp for the result.")
+            case .endDate:
+                return ($0, Date.self, "The end date timestamp for the result.")
+            case .inputResults:
+                return ($0, [RSDResult].self, "The list of input results associated with this step.")
+            }
+        }
+    }
+    
+    static func exampleResult() -> RSDCollectionResultObject {
+        var result = RSDCollectionResultObject(identifier: "formStep")
+        result.startDate = RSDClassTypeMap.shared.timestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        result.endDate = result.startDate.addingTimeInterval(5 * 60)
+        result.inputResults = RSDAnswerResultObject.answerResultExamples()
+        return result
+    }
+    
+    static func examples() -> [Encodable] {
+        let result = exampleResult()
+        return [result]
     }
 }

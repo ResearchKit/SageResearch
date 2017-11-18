@@ -36,7 +36,7 @@ import Foundation
 /**
  `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
  */
-public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable {
+public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbeddedIconVendor, Decodable {
 
     private enum CodingKeys : String, CodingKey {
         
@@ -117,10 +117,6 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, Decodable 
             return
         }
         transformer.fetchTask(with: factory, taskInfo: self, schemaInfo: self, callback: callback)
-    }
-    
-    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
     }
     
     public func instantiateStepResult() -> RSDResult {

@@ -49,6 +49,10 @@ public struct RSDIdentifier : RawRepresentable, Codable {
     
     public static let exit: RSDIdentifier = "exit"
     public static let nextSection: RSDIdentifier = "nextSection"
+    
+    public static func allGlobalIdentifiers() -> [RSDIdentifier] {
+        return [.exit, .nextSection]
+    }
 }
 
 extension RSDIdentifier : Equatable {
@@ -74,5 +78,11 @@ extension RSDIdentifier : ExpressibleByStringLiteral {
     
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
+    }
+}
+
+extension RSDIdentifier : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return Set(allGlobalIdentifiers().map{ $0.rawValue })
     }
 }

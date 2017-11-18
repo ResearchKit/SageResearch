@@ -36,17 +36,13 @@ import Foundation
 /**
  `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
  */
-public struct RSDTaskGroupObject : RSDTaskGroup, Decodable {
+public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
     
-    public private(set) var identifier: String
+    public let identifier: String
     public var title: String?
     public var detail: String?
     public var icon: RSDImageWrapper?
     public var tasks: [RSDTaskInfoStep]
-    
-    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
-    }
     
     private enum CodingKeys: String, CodingKey {
         case identifier, title, detail, icon, tasks

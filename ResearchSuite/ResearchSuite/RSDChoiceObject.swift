@@ -33,7 +33,7 @@
 
 import Foundation
 
-public struct RSDChoiceObject<T : Codable> : RSDChoice, Codable {
+public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDEmbeddedIconVendor, Codable {
     public typealias Value = T
     
     private let _value: Value
@@ -41,17 +41,13 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, Codable {
         return _value
     }
     
-    public private(set) var text: String?
-    public private(set) var detail: String?
-    public private(set) var icon: RSDImageWrapper?
-    public private(set) var isExclusive: Bool
+    public let text: String?
+    public let detail: String?
+    public let icon: RSDImageWrapper?
+    public let isExclusive: Bool
     
     public var hasIcon: Bool {
         return icon != nil
-    }
-    
-    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        RSDImageWrapper.fetchImage(image: icon, for: size, callback: callback)
     }
     
     public init(value: Value, text: String? = nil, iconName: String? = nil, detail: String? = nil, isExclusive: Bool = false) throws {
@@ -64,9 +60,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, Codable {
             self.text = text
         }
         self.detail = detail
-        if iconName != nil {
-            self.icon = try RSDImageWrapper(imageName: iconName!)
-        }
+        self.icon = (iconName != nil) ? try RSDImageWrapper(imageName: iconName!) : nil
         self.isExclusive = isExclusive
     }
     
@@ -80,6 +74,8 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, Codable {
         
         var value: Value
         var text: String?
+        var detail: String?
+        var icon: RSDImageWrapper?
         var isExclusive = false
         
         do {
@@ -111,15 +107,17 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, Codable {
         
         _value = value
         self.text = text
+        self.detail = detail
+        self.icon = icon
         self.isExclusive = isExclusive
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(_value, forKey: .value)
-        if let obj = text { try container.encode(obj, forKey: .text) }
-        if let obj = detail { try container.encode(obj, forKey: .detail) }
-        if let obj = icon { try container.encode(obj, forKey: .icon) }
-        if isExclusive { try container.encode(isExclusive, forKey: .isExclusive) }
+        try container.encodeIfPresent(text, forKey: .text)
+        try container.encodeIfPresent(detail, forKey: .detail)
+        try container.encodeIfPresent(icon, forKey: .icon)
+        try container.encode(isExclusive, forKey: .isExclusive)
     }
 }

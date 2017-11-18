@@ -61,6 +61,17 @@ public struct RSDDeviceType : RawRepresentable, Codable {
     
     /// A watch is a device that is worn on a person's wrist. (Apple Watch)
     public static let watch: RSDDeviceType = "watch"
+    
+    /// List of all the standard types
+    public static func allStandardTypes() -> [RSDDeviceType] {
+        return [.computer, .phone, .tablet, .tv, .watch]
+    }
+}
+
+extension RSDDeviceType : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return Set(allStandardTypes().map{ $0.rawValue })
+    }
 }
 
 extension RSDDeviceType : Equatable {

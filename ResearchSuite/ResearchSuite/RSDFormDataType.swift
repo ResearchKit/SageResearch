@@ -88,6 +88,10 @@ public enum RSDFormDataType {
         /// "8 hours, 5 minutes".
         // TODO: syoung 10/06/2017 add TimeIntervalRange
         //case timeInterval
+        
+        public static func allTypes() -> [BaseType] {
+            return [.boolean, .date, .decimal, .integer, .string, .year]
+        }
     }
     
     /// The collection type for the input field. The supported types are for choice-style questions or
@@ -104,6 +108,10 @@ public enum RSDFormDataType {
         /// In a multiple component question, the participant can pick one choice from each component
         /// or enter a formatted text string such as a phone number or blood pressure.
         case multipleComponent
+        
+        public static func allTypes() -> [CollectionType] {
+            return [.multipleChoice, .singleChoice, .multipleComponent]
+        }
     }
     
     /// A measurement type is a human-data measurement such as height or weight.
@@ -117,6 +125,10 @@ public enum RSDFormDataType {
         
         /// A measurement of blood pressure.
         case bloodPressure
+        
+        public static func allTypes() -> [MeasurementType] {
+            return [.height, .weight, .bloodPressure]
+        }
     }
     
     /// The measurement range is used to determine units that are appropriate to the
@@ -131,6 +143,10 @@ public enum RSDFormDataType {
         
         /// Measuremet units should be ranged for an infant.
         case infant
+        
+        public static func allTypes() -> [MeasurementRange] {
+            return [.adult, .child, .infant]
+        }
     }
     
     /// List of the standard UI hints that are valid for this data type.
@@ -226,6 +242,19 @@ public enum RSDFormDataType {
             return .string
         }
     }
+    
+    /// List of all the standard types
+    public static func allStandardTypes() -> [RSDFormDataType] {
+        let baseTypes = BaseType.allTypes()
+        let allBase: [RSDFormDataType] = baseTypes.map { .base($0) }
+        let allCollection: [RSDFormDataType] = CollectionType.allTypes().map { (collectionType) -> [RSDFormDataType] in
+            return baseTypes.map { .collection(collectionType, $0)}
+            }.flatMap { $0 }
+        let allMeasurement: [RSDFormDataType] = MeasurementType.allTypes().map { (measurementType) -> [RSDFormDataType] in
+            return MeasurementRange.allTypes().map { .measurement(measurementType, $0) }
+        }.flatMap { $0 }
+        return [allBase, allCollection, allMeasurement].flatMap { $0 }
+    }
 }
 
 extension RSDFormDataType: RawRepresentable, Codable {
@@ -285,5 +314,11 @@ extension RSDFormDataType : ExpressibleByStringLiteral {
     
     public init(stringLiteral value: String) {
         self.init(rawValue: value)!
+    }
+}
+
+extension RSDFormDataType : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return Set(allStandardTypes().map{ $0.rawValue })
     }
 }

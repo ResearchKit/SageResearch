@@ -124,7 +124,7 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     public static let defaultCommands: RSDActiveUIStepCommand = []
 }
 
-extension RSDActiveUIStepCommand : RSDDocumentableEnum {
+extension RSDActiveUIStepCommand : RSDDocumentableOptionSet {
     
     static func allCodingKeys() -> Set<String> {
         // Register the commands included in the base struct to add them to the mapping

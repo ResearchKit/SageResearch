@@ -33,13 +33,53 @@
 
 import Foundation
 
+/// `RSDStandardAsyncActionConfiguration` is a concrete implementation of `RSDRecorderConfiguration` that can be used to
+/// decode an async configuration for a recorder.
+///
+/// - note: There is no implementations of the recorders included in this framework. That is to allow this framework to
+///         stand alone without requiring any embedded frameworks that may be unused by a given application. For example,
+///         there are numerous different uses for the `CoreMotion` framework. One task module will use this framework
+///         to gather background information about tremor, while another will use it to measure response time. Since
+///         the use-case will differ with the task and when it is most appropriate to request permissions will differ
+///         with the task, it is unnecessarily restrictive to enforce constraits generally. (syoung 11/20/2017)
 public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Codable {
 
+    /// A short string that uniquely identifies the asynchronous action within the task. If started asynchronously,
+    /// then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.
     public let identifier: String
+    
+    /// The standard permission type associated with this configuration.
     public let type: RSDStandardPermissionType
+    
+    /// An identifier marking the step to start the action. If `nil`, then the action will be started when
+    /// the task is started.
     public let startStepIdentifier: String?
+    
+    /// An identifier marking the step at which to stop the action. If `nil`, then the action will be
+    /// stopped when the task is stopped.
     public var stopStepIdentifier: String?
     
+    private enum CodingKeys: String, CodingKey {
+        case identifier, type, startStepIdentifier, stopStepIdentifier
+    }
+    
+    /// List of the permissions required for this action.
+    public var permissions: [RSDPermissionType] {
+        return [type]
+    }
+    
+    /// Whether or not the recorder requires background audio.
+    public var requiresBackgroundAudio: Bool {
+        return type == .motion || type == .location
+    }
+    
+    /// Default initializer.
+    ///
+    /// - parameters:
+    ///     - identifier: The identifier for this recorder.
+    ///     - type: The permission type associated with this recorder.
+    ///     - startStepIdentifier: The start step identifier (if any).
+    ///     - stopStepIdentifier: The stop step identifier (if any).
     public init(identifier: String, type: RSDStandardPermissionType, startStepIdentifier: String?, stopStepIdentifier: String?) {
         self.identifier = identifier
         self.type = type
@@ -47,15 +87,33 @@ public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Co
         self.stopStepIdentifier = stopStepIdentifier
     }
     
-    public var permissions: [RSDPermissionType] {
-        return [type]
-    }
-    
-    public var requiresBackgroundAudio: Bool {
-        return type == .motion || type == .location
-    }
-    
+    /// Validate the async action to check for any configuration that should throw an error. This method does nothing
+    /// but is required by the `RSDAsyncActionConfiguration` protocol.
     public func validate() throws {
         // Do nothing
+    }
+}
+
+extension RSDStandardAsyncActionConfiguration : RSDDocumentableDecodableObject {
+    
+    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startStepIdentifier, .stopStepIdentifier]
+        return codingKeys.map {
+            switch $0 {
+            case .identifier:
+                return ($0, String.self, "A short string that uniquely identifies the asynchronous action within the task. If started asynchronously, then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.")
+            case .type:
+                return ($0, RSDStandardPermissionType.self, "The standard permission type associated with this configuration.")
+            case .startStepIdentifier:
+                return ($0, String.self, "An identifier marking the step to start the action. If `nil`, then the action will be started when the task is started.")
+            case .stopStepIdentifier:
+                return ($0, String.self, "An identifier marking the step at which to stop the action. If `nil`, then the action will be stopped when the task is stopped.")
+            }
+        }
+    }
+    
+    static func examples() -> [Encodable] {
+        let types = RSDStandardPermissionType.allStandardTypes()
+        return types.map { RSDStandardAsyncActionConfiguration(identifier: $0.rawValue, type: $0, startStepIdentifier: "\($0.rawValue)StartStep", stopStepIdentifier: "\($0.rawValue)StopStep") }
     }
 }

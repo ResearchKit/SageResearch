@@ -33,14 +33,33 @@
 
 import Foundation
 
+/// `RSDAnswerResultObject` is a concrete implementation of a result that can be described using a single value.
 public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
-    public let type: RSDResultType
+
+    /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
+    
+    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
+    public let type: RSDResultType
+    
+    /// The start date timestamp for the result.
     public var startDate: Date = Date()
+    
+    /// The end date timestamp for the result.
     public var endDate: Date = Date()
+    
+    /// The answer type of the answer result. This includes coding information required to encode and
+    /// decode the value. The value is expected to conform to one of the coding types supported by the answer type.
     public let answerType: RSDAnswerResultType
+    
+    /// The answer for the result.
     public var value: Any?
     
+    /// Default initializer for this object.
+    ///
+    /// - parameters:
+    ///     - identifier: The identifier string.
+    ///     - answerType: The answer type of the answer result.
     public init(identifier: String, answerType: RSDAnswerResultType) {
         self.identifier = identifier
         self.answerType = answerType
@@ -51,6 +70,9 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
         case identifier, type, startDate, endDate, answerType, value
     }
     
+    /// Initialize from a `Decoder`.
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
@@ -66,6 +88,9 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
         }
     }
     
+    /// Encode the result to the given encoder.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
@@ -78,5 +103,44 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
             let nestedEncoder = container.superEncoder(forKey: .value)
             try answerType.encode(obj, to: nestedEncoder)
         }
+    }
+}
+
+extension RSDAnswerResultObject : RSDDocumentableDecodableObject {
+    
+    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .answerType, .value]
+        return codingKeys.map {
+            switch $0 {
+            case .identifier:
+                return ($0, String.self, "The identifier associated with the task, step, or asynchronous action.")
+            case .type:
+                return ($0, RSDResultType.self, "A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.")
+            case .startDate:
+                return ($0, Date.self, "The start date timestamp for the result.")
+            case .endDate:
+                return ($0, Date.self, "The end date timestamp for the result.")
+            case .answerType:
+                return ($0, RSDAnswerResultType.self, "The answer type of the answer result. This includes coding information required to encode and decode the value. The value is expected to conform to one of the coding types supported by the answer type.")
+            case .value:
+                return ($0, Any.self, "The answer for the result.")
+            }
+        }
+    }
+    
+    static func answerResultExamples() -> [RSDAnswerResultObject] {
+        let typeAndValue = RSDAnswerResultType.examplesWithValues()
+        let date = RSDClassTypeMap.shared.timestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        return typeAndValue.enumerated().map { (index, object) -> RSDAnswerResultObject in
+            var result = RSDAnswerResultObject(identifier: "question\(index+1)", answerType: object.answerType)
+            result.startDate = date
+            result.endDate = date
+            result.value = object.value
+            return result
+        }
+    }
+    
+    static func examples() -> [Encodable] {
+        return answerResultExamples()
     }
 }

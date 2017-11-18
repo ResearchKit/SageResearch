@@ -77,4 +77,15 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
     public var identifier: String {
         return rawValue
     }
+    
+    /// List of all the standard types
+    public static func allStandardTypes() -> [RSDStandardPermissionType] {
+        return [.camera, .locationWhenInUse, .location, .microphone, .motion, .photoLibrary]
+    }
+}
+
+extension RSDStandardPermissionType : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return Set(allStandardTypes().map{ $0.rawValue })
+    }
 }

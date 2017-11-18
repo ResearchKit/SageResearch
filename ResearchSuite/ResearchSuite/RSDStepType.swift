@@ -67,6 +67,11 @@ public struct RSDStepType : RawRepresentable, Codable {
     
     /// Defaults to creating a `RSDTaskInfoStep`.
     public static let taskInfo: RSDStepType = "taskInfo"
+    
+    /// List of all the standard types
+    public static func allStandardTypes() -> [RSDStepType] {
+        return [.active, .completion, .countdown, .form, .instruction, .section, .transform, .taskInfo]
+    }
 }
 
 extension RSDStepType : Equatable {
@@ -92,5 +97,11 @@ extension RSDStepType : ExpressibleByStringLiteral {
     
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
+    }
+}
+
+extension RSDStepType : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return Set(allStandardTypes().map{ $0.rawValue })
     }
 }

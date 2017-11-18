@@ -33,16 +33,39 @@
 
 import Foundation
 
-/**
- `RSDDateCoderObject` provides a concrete implementation of a date coder.
- */
-public struct RSDDateCoderObject : RSDDateCoder {
+/// `RSDDateCoderObject` provides a concrete implementation of a `RSDDateCoder`. The date coder is used by
+/// the `RSDDateRangeObject` to encode and decode the `minDate` and `maxDate` properties as well as to get
+/// which components of a date should be stored in the answer for a given `RSDInputField`.
+///
+/// This coder uses ISO 8601 format to determine which calendar components to request from the user and to
+/// store from the input result. The `calendar` is Gregorian and the `resultFormatter` is determined from
+/// the `calendarComponents` using the shared `RSDFactory` or the factory associated with the decoder if
+/// instantiated using a `Decoder`. The locale for the date formatters is "en_US_POSIX" by default.
+///
+public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
+    public typealias RawValue = String
     
+    /// The input format used to represent the formatters and calendar components.
+    public var rawValue: String {
+        return inputFormatter.dateFormat
+    }
+    
+    /// The formatter to use when storing the result.
+    /// - note: For an `RSDAnswerResult`, only the `dateFormat` is saved to the encoded
+    ///         `RSDAnswerResultType.dateFormat` property.
     public let resultFormatter: DateFormatter
+    
+    /// The formatter used to determine the appropriate date components (by parsing the `dateFormat` string)
+    /// and the formatter used to parse out a `minDate` and `maxDate` for a decoded `RSDDateRangeObject`.
     public let inputFormatter: DateFormatter
+    
+    /// The components to request from the user and to store.
     public let calendarComponents: Set<Calendar.Component>
+    
+    /// The calendar used by the associated input field. Default = "Gregorian".
     public let calendar: Calendar
     
+    /// The default initializer initializes the date coder as a timestamp.
     public init() {
         let (inputFormatter, resultFormatter, components, calendar) = RSDDateCoderObject.getProperties(format: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")!
         self.resultFormatter = resultFormatter
@@ -51,8 +74,9 @@ public struct RSDDateCoderObject : RSDDateCoder {
         self.calendar = calendar
     }
     
-    public init?(format: String) {
-        guard let (inputFormatter, resultFormatter, components, calendar) = RSDDateCoderObject.getProperties(format: format)
+    /// Initialize the date coder using the `rawValue` which is the input date format.
+    public init?(rawValue: String) {
+        guard let (inputFormatter, resultFormatter, components, calendar) = RSDDateCoderObject.getProperties(format: rawValue)
             else {
                 return nil
         }
@@ -62,17 +86,13 @@ public struct RSDDateCoderObject : RSDDateCoder {
         self.calendar = calendar
     }
     
-    public init(resultFormatter: DateFormatter, inputFormatter: DateFormatter, calendarComponents: Set<Calendar.Component>, calendar: Calendar) {
-        self.resultFormatter = resultFormatter
-        self.inputFormatter = inputFormatter
-        self.calendarComponents = calendarComponents
-        self.calendar = calendar
-    }
-    
+    /// Initialize the date coder using a decoder. The decoder is assumed to have a `SingleValueDecodingContainer`
+    /// with the `rawValue` that can be used to decode this instance.
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let format = try container.decode(String.self)
-        guard let (inputFormatter, resultFormatter, components, calendar) = RSDDateCoderObject.getProperties(format: format)
+        guard let (inputFormatter, resultFormatter, components, calendar) =
+            RSDDateCoderObject.getProperties(format: format, factory: decoder.factory)
             else {
                 throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Failed to get the calendar components from the decoded format \(format)"))
         }
@@ -82,9 +102,9 @@ public struct RSDDateCoderObject : RSDDateCoder {
         self.calendar = calendar
     }
     
-    fileprivate static func getProperties(format: String) -> (inputFormatter: DateFormatter, resultFormatter: DateFormatter, Set<Calendar.Component>, Calendar)? {
+    fileprivate static func getProperties(format: String, factory: RSDFactory = RSDFactory.shared) -> (inputFormatter: DateFormatter, resultFormatter: DateFormatter, Set<Calendar.Component>, Calendar)? {
         let calendar = Calendar(identifier: .gregorian)
-        let components = calendar.calendarComponents(from: format)
+        let components = calendarComponents(from: format)
         guard components.count > 0 else {
             return nil
         }
@@ -93,28 +113,30 @@ public struct RSDDateCoderObject : RSDDateCoder {
         inputFormatter.dateFormat = format
         inputFormatter.locale = Locale(identifier: "en_US_POSIX")
         
-        let resultFormatter: DateFormatter
-        let hasDateComponents = components.intersection([.year, .month, .day]).count > 0
-        let hasTimeComponents = components.intersection([.hour, .minute, .second]).count > 0
-        if hasDateComponents && hasTimeComponents {
-            resultFormatter = RSDClassTypeMap.shared.timestampFormatter
-        } else if hasTimeComponents {
-            resultFormatter = RSDClassTypeMap.shared.timeOnlyFormatter
-        } else {
-            resultFormatter = RSDClassTypeMap.shared.dateOnlyFormatter
-        }
+        let resultFormatter = factory.dateResultFormatter(from: components)
         
         return (inputFormatter, resultFormatter, components, calendar)
     }
     
+    /// Encode the `rawValue` to a `SingleValueEncodingContainer`.
+    /// - parameter encoder: The encoder to encode the `rawValue` to.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(self.inputFormatter.dateFormat)
     }
-}
 
-extension Calendar {
-    public func calendarComponents(from format: String) -> Set<Calendar.Component> {
+    /// The is a static method used to parse the ISO 8601 date format for the calendar components that are
+    /// relavent to this instance. This method inspects the given string for the components where:
+    ///     - "yyyy": `year`
+    ///     - "MM": `month`
+    ///     - "dd": `day`
+    ///     - "HH": `hour`
+    ///     - "mm": `minute`
+    ///     - "ss": `second`
+    ///     - "ss.SSS": `nanosecond`
+    ///
+    /// - parameter format: The string to parse.
+    public static func calendarComponents(from format: String) -> Set<Calendar.Component> {
         var components: Set<Calendar.Component> = []
         if format.range(of: "yyyy") != nil {
             components.insert(.year)
@@ -138,5 +160,11 @@ extension Calendar {
             components.insert(.nanosecond)
         }
         return components
+    }
+}
+
+extension RSDDateCoderObject : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return ["yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", "yyyy-MM", "yyyy-MM-dd", "--MM-dd", "MM-dd", "HH:mm:ss", "HH:mm"]
     }
 }

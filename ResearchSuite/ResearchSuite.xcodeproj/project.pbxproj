@@ -119,6 +119,7 @@
 		FFDAE9EB1F91324A001D0CC0 /* RSDAnswerResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9EA1F91324A001D0CC0 /* RSDAnswerResultObject.swift */; };
 		FFDAE9ED1F9132EC001D0CC0 /* RSDAnswerResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9EC1F9132EC001D0CC0 /* RSDAnswerResultType.swift */; };
 		FFDFF5C21FBFBA71009713E8 /* RSDDocumentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */; };
+		FFDFF5C51FC38150009713E8 /* ExampleDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDFF5C41FC38150009713E8 /* ExampleDecodableTests.swift */; };
 		FFE0DE4C1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */; };
 		FFE0DE4F1F874A8600BB1BDF /* RSDFormUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */; };
 		FFF159E01FB4D7A60061BA93 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -240,6 +241,7 @@
 		FFDAE9EA1F91324A001D0CC0 /* RSDAnswerResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAnswerResultObject.swift; sourceTree = "<group>"; };
 		FFDAE9EC1F9132EC001D0CC0 /* RSDAnswerResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAnswerResultType.swift; sourceTree = "<group>"; };
 		FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDocumentable.swift; sourceTree = "<group>"; };
+		FFDFF5C41FC38150009713E8 /* ExampleDecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleDecodableTests.swift; sourceTree = "<group>"; };
 		FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextFieldOptionsObject.swift; sourceTree = "<group>"; };
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
 		FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDExceptionHandler.h; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */,
 				FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */,
 				FF87CD851F8413F700084426 /* FactoryTests.swift */,
+				FFDFF5C41FC38150009713E8 /* ExampleDecodableTests.swift */,
 			);
 			path = "Codable Tests";
 			sourceTree = "<group>";
@@ -835,6 +838,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFD2432A1F9568C70083F458 /* CodableResultObjectTests.swift in Sources */,
+				FFDFF5C51FC38150009713E8 /* ExampleDecodableTests.swift in Sources */,
 				FF2ACF431FBB86870018D87F /* NavigationTests.swift in Sources */,
 				FFDAE9E31F9082E4001D0CC0 /* CodableTaskObjectTests.swift in Sources */,
 				FF2ACF441FBB86870018D87F /* StepControllerTests.swift in Sources */,

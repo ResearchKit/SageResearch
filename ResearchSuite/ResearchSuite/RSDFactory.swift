@@ -114,6 +114,35 @@ open class RSDFactory {
     }
     
     
+    // MARK: Schema Info factory
+    
+    /// Decode the schema info from this decoder. This method *must* return a schema info object.
+    /// The default implementation will return a `RSDSchemaInfoObject`.
+    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - returns: The schema info created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeSchemaInfo(from decoder: Decoder) throws -> RSDSchemaInfo {
+        return try RSDSchemaInfoObject(from: decoder)
+    }
+    
+    /// Encode the schma info from the given task result to the given encoder. This allows a subclass
+    /// of the factory to encode additional schema information to the schema info defined by the
+    /// `RSDSchemaInfo` protocol.
+    ///
+    /// - parameters:
+    ///     - taskResult: The task result being encoded.
+    ///     - encoder: The nested encoder to encode the schema info to.
+    open func encodeSchemaInfo(from taskResult: RSDTaskResult, to encoder: Encoder) throws {
+        if let schema = taskResult.schemaInfo, let encodableSchema = schema as? Encodable {
+            try encodableSchema.encode(to: encoder)
+        } else {
+            let encodableSchema = RSDSchemaInfoObject(identifier: taskResult.schemaInfo?.schemaIdentifier ?? taskResult.identifier,
+                                                      revision: taskResult.schemaInfo?.schemaRevision ?? 1)
+            try encodableSchema.encode(to: encoder)
+        }
+    }
+    
+    
     // MARK: Task Transformer factory
     
     /// Decode the task transformer from this decoder. This method *must* return a task transformer
@@ -449,6 +478,36 @@ open class RSDFactory {
     }
     
     
+    // MARK: Date Result Format
+    
+    /// Get the date result formatter to use for the given calendar components. By default, this will
+    /// return the formatter from the shared `RSDClassTypeMap` that is most appropriate to the included
+    /// components.
+    ///
+    /// If only date components (year, month, day) are included then this method returns
+    /// `RSDClassTypeMap.shared.dateOnlyFormatter`.
+    ///
+    /// If only time components (hour, minute, second) are included then this method returns
+    /// `RSDClassTypeMap.shared.timeOnlyFormatter`.
+    ///
+    /// If both date and time components are included then this method returns
+    /// `RSDClassTypeMap.shared.dateOnlyFormatter`.
+    ///
+    /// - parameter calendarComponents: The calendar components to include.
+    /// - returns: The appropriate date formatter
+    open func dateResultFormatter(from calendarComponents: Set<Calendar.Component>) -> DateFormatter {
+        let hasDateComponents = calendarComponents.intersection([.year, .month, .day]).count > 0
+        let hasTimeComponents = calendarComponents.intersection([.hour, .minute, .second]).count > 0
+        if hasDateComponents && hasTimeComponents {
+            return RSDClassTypeMap.shared.timestampFormatter
+        } else if hasTimeComponents {
+            return RSDClassTypeMap.shared.timeOnlyFormatter
+        } else {
+            return RSDClassTypeMap.shared.dateOnlyFormatter
+        }
+    }
+    
+
     // MARK: Decoder
 
     /// Create a `JSONDecoder` with this factory assigned in the user info keys as the factory

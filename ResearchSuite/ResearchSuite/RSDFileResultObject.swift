@@ -33,16 +33,75 @@
 
 import Foundation
 
+/// `RSDFileResultObject` is a concrete implementation of a result that holds a pointer to a file url.
 public struct RSDFileResultObject : RSDFileResult, Codable {
-    public let type: RSDResultType
+    
+    /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
+    
+    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
+    public let type: RSDResultType
+    
+    /// The start date timestamp for the result.
     public var startDate: Date = Date()
+    
+    /// The end date timestamp for the result.
     public var endDate: Date = Date()
+    
+    /// The system clock uptime when the recorder was started (if applicable).
     public var startUptime: TimeInterval?
+    
+    /// The URL with the path to the file-based result.
     public var url: URL?
     
+    private enum CodingKeys : String, CodingKey {
+        case identifier, type, startDate, endDate, startUptime, url
+    }
+    
+    /// Default initializer for this object.
+    ///
+    /// - parameters:
+    ///     - identifier: The identifier string.
+    ///     - type: The `RSDResultType` for this result. Default = `.file`.
     public init(identifier: String, type: RSDResultType = .file) {
         self.identifier = identifier
         self.type = type
+    }
+}
+
+extension RSDFileResultObject : RSDDocumentableDecodableObject {
+    
+    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .startUptime, .url]
+        return codingKeys.map {
+            switch $0 {
+            case .identifier:
+                return ($0, String.self, "The identifier associated with the task, step, or asynchronous action.")
+            case .type:
+                return ($0, RSDResultType.self, "A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.")
+            case .startDate:
+                return ($0, Date.self, "The start date timestamp for the result.")
+            case .endDate:
+                return ($0, Date.self, "The end date timestamp for the result.")
+            case .startUptime:
+                return ($0, TimeInterval.self, "The system clock uptime when the recorder was started (if applicable).")
+            case .url:
+                return ($0, URL.self, "The URL with the path to the file-based result.")
+            }
+        }
+    }
+    
+    static func exampleResult() -> RSDFileResultObject {
+        var fileResult = RSDFileResultObject(identifier: "fileResult")
+        fileResult.startDate = RSDClassTypeMap.shared.timestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        fileResult.endDate = fileResult.startDate.addingTimeInterval(5 * 60)
+        fileResult.startUptime = 1234.567
+        fileResult.url = URL(fileURLWithPath: "temp.json")
+        return fileResult
+    }
+    
+    static func examples() -> [Encodable] {
+        let fileResult = exampleResult()
+        return [fileResult]
     }
 }

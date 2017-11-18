@@ -57,6 +57,11 @@ public struct RSDResultType : RawRepresentable, Codable {
     
     /// Defaults to creating a `RSDFileResult`.
     public static let file: RSDResultType = "file"
+    
+    /// List of all the standard types
+    public static func allStandardTypes() -> [RSDResultType] {
+        return [.base, .answer, .collection, .task, .file]
+    }
 }
 
 extension RSDResultType : Equatable {
@@ -82,5 +87,11 @@ extension RSDResultType : ExpressibleByStringLiteral {
     
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
+    }
+}
+
+extension RSDResultType : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return Set(allStandardTypes().map{ $0.rawValue })
     }
 }

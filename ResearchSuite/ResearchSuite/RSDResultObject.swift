@@ -33,14 +33,58 @@
 
 import Foundation
 
+/// `RSDResultObject` is a concrete implementation of the base result associated with a task, step, or asynchronous action.
 public struct RSDResultObject : RSDResult, Codable {
-    public let type: RSDResultType
+
+    /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
+    
+    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
+    public let type: RSDResultType
+    
+    /// The start date timestamp for the result.
     public var startDate: Date = Date()
+    
+    /// The end date timestamp for the result.
     public var endDate: Date = Date()
     
+    private enum CodingKeys : String, CodingKey {
+        case identifier, type, startDate, endDate
+    }
+    
+    /// Default initializer for this object.
+    ///
+    /// - parameters:
+    ///     - identifier: The identifier string.
+    ///     - type: The `RSDResultType` for this result. Default = `.base`.
     public init(identifier: String, type: RSDResultType = .base) {
         self.identifier = identifier
         self.type = type
+    }
+}
+
+extension RSDResultObject : RSDDocumentableDecodableObject {
+    
+    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate]
+        return codingKeys.map {
+            switch $0 {
+            case .identifier:
+                return ($0, String.self, "The identifier associated with the task, step, or asynchronous action.")
+            case .type:
+                return ($0, RSDResultType.self, "A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.")
+            case .startDate:
+                return ($0, Date.self, "The start date timestamp for the result.")
+            case .endDate:
+                return ($0, Date.self, "The end date timestamp for the result.")
+            }
+        }
+    }
+    
+    static func examples() -> [Encodable] {
+        var result = RSDResultObject(identifier: "step1")
+        result.startDate = RSDClassTypeMap.shared.timestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        result.endDate = result.startDate.addingTimeInterval(5 * 60)
+        return [result]
     }
 }
