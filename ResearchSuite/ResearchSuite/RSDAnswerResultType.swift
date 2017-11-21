@@ -373,7 +373,7 @@ extension RSDAnswerResultType : RSDJSONValueEncoder {
             return nil
         }
         if let date = encodable as? Date {
-            return encoder.factory.encodedDate(from: date, codingPath: encoder.codingPath)
+            return encoder.factory.encodeString(from: date, codingPath: encoder.codingPath)
         }
         else {
             return "\(encodable)"
@@ -426,7 +426,7 @@ extension RSDAnswerResultType : RSDJSONValueEncoder {
                 formatter.dateFormat = format
                 return formatter.string(from: date)
             } else if baseType == .string {
-                return RSDClassTypeMap.shared.timestampFormatter.string(from: date)
+                return encoder.factory.encodeString(from: date, codingPath: encoder.codingPath)
             } else {
                 return date
             }
@@ -474,7 +474,7 @@ extension RSDAnswerResultType.SequenceType : RSDDocumentableEnum {
     }
 }
 
-extension RSDAnswerResultType : RSDDocumentableDecodableObject {
+extension RSDAnswerResultType : RSDDocumentableCodableObject {
 
     static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
         let codingKeys: [CodingKeys] = [.baseType, .sequenceType, .dateFormat, .dateLocaleIdentifier, .unit, .sequenceSeparator]
@@ -520,9 +520,9 @@ extension RSDAnswerResultType : RSDDocumentableDecodableObject {
                     examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), data))
                     
                 case .date:
-                    let dateFormats = [RSDClassTypeMap.shared.timestampFormatter.dateFormat,
-                                       RSDClassTypeMap.shared.timestampFormatter.dateFormat,
-                                       RSDClassTypeMap.shared.dateOnlyFormatter.dateFormat]
+                    let dateFormats = [RSDFactory.shared.timestampFormatter.dateFormat,
+                                       RSDFactory.shared.timeOnlyFormatter.dateFormat,
+                                       RSDFactory.shared.dateOnlyFormatter.dateFormat]
                     let date = Date(timeIntervalSince1970: 200000)
                     examples.append((RSDAnswerResultType.date, date))
                     for dateFormat in dateFormats {

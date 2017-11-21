@@ -69,7 +69,7 @@ public struct RSDFileResultObject : RSDFileResult, Codable {
     }
 }
 
-extension RSDFileResultObject : RSDDocumentableDecodableObject {
+extension RSDFileResultObject : RSDDocumentableCodableObject {
     
     static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
         let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .startUptime, .url]
@@ -93,7 +93,7 @@ extension RSDFileResultObject : RSDDocumentableDecodableObject {
     
     static func exampleResult() -> RSDFileResultObject {
         var fileResult = RSDFileResultObject(identifier: "fileResult")
-        fileResult.startDate = RSDClassTypeMap.shared.timestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        fileResult.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         fileResult.endDate = fileResult.startDate.addingTimeInterval(5 * 60)
         fileResult.startUptime = 1234.567
         fileResult.url = URL(fileURLWithPath: "temp.json")

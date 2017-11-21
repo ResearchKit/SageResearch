@@ -54,9 +54,10 @@ public struct RSDDocumentCreator {
     
     let allStringLiterals: [RSDDocumentableStringLiteral.Type] = [
         RSDImageWrapper.self,
+        RSDChoiceObject<String>.self,
         ]
 
-    let allDecodableObjects: [RSDDocumentableDecodableObject.Type] = [
+    let allCodableObjects: [RSDDocumentableCodableObject.Type] = [
         RSDAnswerResultType.self,
         RSDResourceTransformerObject.self,
         RSDStandardAsyncActionConfiguration.self,
@@ -64,7 +65,21 @@ public struct RSDDocumentCreator {
         RSDAnswerResultObject.self,
         RSDFileResultObject.self,
         RSDCollectionResultObject.self,
-        RSDTaskResultObject.self
+        RSDTaskResultObject.self,
+        RSDColorThemeElementObject.self,
+        RSDFetchableImageThemeElementObject.self,
+        RSDAnimatedImageThemeElementObject.self,
+        RSDViewThemeElementObject.self,
+        RSDUIActionObject.self,
+        RSDSkipToUIActionObject.self,
+        RSDWebViewUIActionObject.self,
+        ]
+    
+    let allDecodableObjects: [RSDDocumentableDecodableObject.Type] = [
+        RSDChoiceObject<String>.self,
+        RSDChoiceObject<Int>.self,
+        RSDChoiceObject<Bool>.self,
+        RSDChoiceObject<Double>.self,
         ]
 }
 
@@ -99,7 +114,7 @@ protocol RSDDocumentableStringLiteral : RSDDocumentable, Codable {
 
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up
 /// testing of `Codable` objects and for use in documenting them.
-protocol RSDDocumentableDecodableObject : RSDDocumentable, Decodable {
+protocol RSDDocumentableCodableObject : RSDDocumentable, Codable {
     
     /// An mapping of all the `Decodable` properties to their CodingKey along with a description for
     /// the property.
@@ -107,4 +122,16 @@ protocol RSDDocumentableDecodableObject : RSDDocumentable, Decodable {
     
     /// An array of encodable objects to use as the set of examples for decoding this object.
     static func examples() -> [Encodable]
+}
+
+/// This is an internal protocol (accessible by test but not externally) that can be used to set up
+/// testing of `Codable` objects and for use in documenting them.
+protocol RSDDocumentableDecodableObject : RSDDocumentable, Decodable {
+    
+    /// An mapping of all the `Decodable` properties to their CodingKey along with a description for
+    /// the property.
+    static func codingMap() -> Array<(CodingKey, Any.Type, String)>
+    
+    /// An array of encodable objects to use as the set of examples for decoding this object.
+    static func examples() -> [[String : RSDJSONValue]]
 }

@@ -484,27 +484,40 @@ open class RSDFactory {
     /// return the formatter from the shared `RSDClassTypeMap` that is most appropriate to the included
     /// components.
     ///
-    /// If only date components (year, month, day) are included then this method returns
-    /// `RSDClassTypeMap.shared.dateOnlyFormatter`.
-    ///
-    /// If only time components (hour, minute, second) are included then this method returns
-    /// `RSDClassTypeMap.shared.timeOnlyFormatter`.
-    ///
-    /// If both date and time components are included then this method returns
-    /// `RSDClassTypeMap.shared.dateOnlyFormatter`.
+    /// | Returned Formatter | Description                                                         |
+    /// |--------------------|:-------------------------------------------------------------------:|
+    /// |`dateOnlyFormatter` | If only date components (year, month, day) are included.            |
+    /// |`timeOnlyFormatter` | If only time components (hour, minute, second) are included.        |
+    /// |`timestampFormatter`| If both date and time components are included.                      |
     ///
     /// - parameter calendarComponents: The calendar components to include.
-    /// - returns: The appropriate date formatter
+    /// - returns: The appropriate date formatter.
     open func dateResultFormatter(from calendarComponents: Set<Calendar.Component>) -> DateFormatter {
         let hasDateComponents = calendarComponents.intersection([.year, .month, .day]).count > 0
         let hasTimeComponents = calendarComponents.intersection([.hour, .minute, .second]).count > 0
         if hasDateComponents && hasTimeComponents {
-            return RSDClassTypeMap.shared.timestampFormatter
+            return timestampFormatter
         } else if hasTimeComponents {
-            return RSDClassTypeMap.shared.timeOnlyFormatter
+            return timeOnlyFormatter
         } else {
-            return RSDClassTypeMap.shared.dateOnlyFormatter
+            return dateOnlyFormatter
         }
+    }
+    
+    /// `DateFormatter` to use for coding data-only strings. Default = `RSDClassTypeMap.shared.dateOnlyFormatter`.
+    open var dateOnlyFormatter: DateFormatter {
+        return RSDClassTypeMap.shared.dateOnlyFormatter
+    }
+    
+    /// `DateFormatter` to use for coding time-only strings. Default = `RSDClassTypeMap.shared.timeOnlyFormatter`.
+    open var timeOnlyFormatter: DateFormatter {
+        return RSDClassTypeMap.shared.timeOnlyFormatter
+    }
+    
+    /// `DateFormatter` to use for coding timestamp strings that include both date and time components.
+    /// Default = `RSDClassTypeMap.shared.timestampFormatter`.
+    open var timestampFormatter: DateFormatter {
+        return RSDClassTypeMap.shared.timestampFormatter
     }
     
 
@@ -585,11 +598,11 @@ open class RSDFactory {
     open func decodeDate(from string: String, formatter: DateFormatter? = nil) -> Date? {
         if formatter != nil {
             return formatter!.date(from: string)
-        } else if let date = RSDClassTypeMap.shared.timestampFormatter.date(from: string) {
+        } else if let date = timestampFormatter.date(from: string) {
             return date
-        } else if let date = RSDClassTypeMap.shared.dateOnlyFormatter.date(from: string) {
+        } else if let date = dateOnlyFormatter.date(from: string) {
             return date
-        } else if let date = RSDClassTypeMap.shared.timeOnlyFormatter.date(from: string) {
+        } else if let date = timeOnlyFormatter.date(from: string) {
             return date
         } else {
             return ISO8601DateFormatter().date(from: string)
@@ -611,7 +624,7 @@ open class RSDFactory {
     open func createJSONEncoder() -> JSONEncoder {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .custom({ (date, encoder) in
-            let string = self.encodedDate(from: date, codingPath: encoder.codingPath)
+            let string = self.encodeString(from: date, codingPath: encoder.codingPath)
             var container = encoder.singleValueContainer()
             try container.encode(string)
         })
@@ -628,10 +641,10 @@ open class RSDFactory {
         return encoder
     }
     
-    /// Overridable method for encoding a date to a string. By default, this method
-    /// uses the `RSDClassTypeMap.shared.timestampFormatter` as the date formatter.
-    open func encodedDate(from date: Date, codingPath: [CodingKey]) -> String {
-        return RSDClassTypeMap.shared.timestampFormatter.string(from: date)
+    /// Overridable method for encoding a date to a string. By default, this method uses the `timestampFormatter`
+    /// as the date formatter.
+    open func encodeString(from date: Date, codingPath: [CodingKey]) -> String {
+        return timestampFormatter.string(from: date)
     }
 }
 

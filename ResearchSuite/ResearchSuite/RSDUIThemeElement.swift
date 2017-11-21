@@ -98,10 +98,21 @@ public enum RSDImagePlacementType : String, Codable {
     
     /// Top half of the background.
     case topBackground
+    
+    /// Return all the types defined in this enum.
+    public static func allTypes() -> [RSDImagePlacementType] {
+        return [.iconBefore, .iconAfter, .fullsizeBackground, .topBackground]
+    }
+}
+
+extension RSDImagePlacementType : RSDDocumentableEnum {
+    static func allCodingKeys() -> Set<String> {
+        return Set(allTypes().map { $0.rawValue })
+    }
 }
 
 /// `RSDImageThemeElement` extends the UI step to include an image.
-public protocol RSDImageThemeElement : RSDUIThemeElement, RSDResizableImage {
+public protocol RSDImageThemeElement : RSDUIThemeElement {
     
     /// The preferred placement of the image. Default placement is `iconBefore` if undefined.
     var placementType: RSDImagePlacementType? { get }

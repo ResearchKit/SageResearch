@@ -63,7 +63,7 @@ public struct RSDResultObject : RSDResult, Codable {
     }
 }
 
-extension RSDResultObject : RSDDocumentableDecodableObject {
+extension RSDResultObject : RSDDocumentableCodableObject {
     
     static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
         let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate]
@@ -83,7 +83,7 @@ extension RSDResultObject : RSDDocumentableDecodableObject {
     
     static func examples() -> [Encodable] {
         var result = RSDResultObject(identifier: "step1")
-        result.startDate = RSDClassTypeMap.shared.timestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        result.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         result.endDate = result.startDate.addingTimeInterval(5 * 60)
         return [result]
     }

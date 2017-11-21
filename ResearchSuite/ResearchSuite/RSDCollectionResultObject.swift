@@ -101,7 +101,7 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
     }
 }
 
-extension RSDCollectionResultObject : RSDDocumentableDecodableObject {
+extension RSDCollectionResultObject : RSDDocumentableCodableObject {
     
     static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
         let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .inputResults]
@@ -123,7 +123,7 @@ extension RSDCollectionResultObject : RSDDocumentableDecodableObject {
     
     static func exampleResult() -> RSDCollectionResultObject {
         var result = RSDCollectionResultObject(identifier: "formStep")
-        result.startDate = RSDClassTypeMap.shared.timestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        result.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         result.endDate = result.startDate.addingTimeInterval(5 * 60)
         result.inputResults = RSDAnswerResultObject.answerResultExamples()
         return result

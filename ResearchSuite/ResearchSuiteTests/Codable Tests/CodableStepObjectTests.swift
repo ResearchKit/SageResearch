@@ -94,12 +94,12 @@ class CodableStepObjectTests: XCTestCase {
             
             let learnMoreAction = object.action(for: .navigation(.learnMore), on: object)
             XCTAssertNotNil(learnMoreAction)
-            XCTAssertEqual((learnMoreAction as? RSDUIActionObject)?.iconName, "infoIcon")
+            XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.iconName, "infoIcon")
             XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.url, "fooInfo")
             
             let skipAction = object.action(for: .navigation(.skip), on: object)
             XCTAssertNotNil(skipAction)
-            XCTAssertEqual((skipAction as? RSDUIActionObject)?.buttonTitle, "not applicable")
+            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.buttonTitle, "not applicable")
             XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.skipToIdentifier, "boo")
             
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)

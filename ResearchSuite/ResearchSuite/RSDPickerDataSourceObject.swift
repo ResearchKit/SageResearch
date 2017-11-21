@@ -57,11 +57,11 @@ extension RSDMultipleComponentInputField {
     public func selectedAnswer(for selection: [Int : Int]) -> Any {
         var selectedChoices: [Any] = []
         for ii in 0..<Int(self.choices.count) {
-            guard let row = selection[ii], row < self.choices[ii].count
+            guard let row = selection[ii], row < self.choices[ii].count, let value = self.choices[ii][row].value
                 else {
                     return NSNull()
             }
-            selectedChoices.append(self.choices[ii][row].value)
+            selectedChoices.append(value)
         }
         return selectedChoices
     }
@@ -87,8 +87,13 @@ extension RSDChoiceOptions {
     
     // returns the selected choice
     public func selectedAnswer(for selection: [Int : Int]) -> Any {
-        guard let row = selection[0], let choice = self.choice(forRow: row, forComponent: 0) else { return NSNull() }
-        return choice.value
+        guard let row = selection[0],
+            let choice = self.choice(forRow: row, forComponent: 0),
+            let value = choice.value
+            else {
+                return NSNull()
+        }
+        return value
     }
     
     public var hasImages: Bool {

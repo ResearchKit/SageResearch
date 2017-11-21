@@ -33,35 +33,45 @@
 
 import Foundation
 
+/// `RSDChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses `RSDInputFieldObject`
+/// to include a list of choices for a multiple choice or single choice input field.
 open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField {
     
-    public private(set) var choices : [RSDChoice]
-    open private(set) var allowOther : Bool
+    /// A list of choices for the input field.
+    public let choices : [RSDChoice]
     
-    public init(identifier: String, choices: [RSDChoice], dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String?, allowOther: Bool = false) {
+    /// Default initializer.
+    ///
+    /// - parameters:
+    ///     - identifier: A short string that uniquely identifies the form item within the step.
+    ///     - choices: A list of choices for the input field.
+    ///     - dataType: The data type for this input field. The data type can have an associated ui hint.
+    ///     - uiHint: A UI hint for how the study would prefer that the input field is displayed to the user.
+    ///     - prompt: A localized string that displays a short text offering a hint to the user of the data to be entered for
+    ///               this field.
+    public init(identifier: String, choices: [RSDChoice], dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String?) {
         self.choices = choices
-        self.allowOther = allowOther
         super.init(identifier: identifier, dataType: dataType, uiHint: uiHint, prompt: prompt)
     }
     
     private enum CodingKeys : String, CodingKey {
-        case choices, allowOther
+        case choices
     }
     
+    /// Initialize from a `Decoder`. This method uses the `RSDFormDataType.BaseType` associated with this input field to
+    /// decode a list of `RSDChoiceObject` objects with the appropriate `Value` type.
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError` if there is a decoding error.
     public required init(from decoder: Decoder) throws {
         
         // Get the base data type
         let dataType = try type(of: self).dataType(from: decoder)
-        guard case .collection(let collectionType, let basetype) = dataType,
-            (collectionType == .multipleChoice || collectionType == .singleChoice)
-            else {
-                throw RSDValidationError.invalidType("The data type \(dataType) for the choice input is not supported")
-        }
         
         // decode the choices
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let choices: [RSDChoice]
-        switch basetype {
+        switch dataType.baseType {
         case .boolean:
             choices = try container.decode([RSDChoiceObject<Bool>].self, forKey: .choices)
             
@@ -76,9 +86,6 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
         }
         self.choices = choices
         
-        // decode whether or not to allow other
-        self.allowOther = try container.decodeIfPresent(Bool.self, forKey: .allowOther) ?? false
-        
         // call super
         try super.init(from: decoder)
     }
@@ -87,7 +94,6 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
 //    override open func encode(to encoder: Encoder) throws {
 //        try super.encode(to: encoder)
 //        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(allowOther, forKey: .allowOther)
 //
 //        var nestedContainer = container.nestedUnkeyedContainer(forKey: .choices)
 //        for choice in choices {

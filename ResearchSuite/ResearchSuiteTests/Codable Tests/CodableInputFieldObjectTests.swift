@@ -179,7 +179,6 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .collection(.multipleChoice, .string))
             XCTAssertFalse(object.isOptional)
-            XCTAssertFalse(object.allowOther)
             XCTAssertEqual(object.choices.count, 4)
             XCTAssertEqual(object.choices.last?.text, "always")
             XCTAssertEqual(object.choices.last?.value as? String, "always")
@@ -200,7 +199,6 @@ class CodableInputFieldObjectTests: XCTestCase {
             "dataType": "singleChoice.integer",
             "uiHint": "picker",
             "optional": true,
-            "allowOther": true,
             "choices" : [{  "value" : 0,
                             "text" : "never"},
                          {  "value" : 1,
@@ -223,7 +221,6 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.dataType, .collection(.singleChoice, .integer))
             XCTAssertEqual(object.uiHint, .picker)
             XCTAssertTrue(object.isOptional)
-            XCTAssertTrue(object.allowOther)
             XCTAssertEqual(object.choices.count, 4)
             XCTAssertEqual(object.choices.last?.text, "always")
             XCTAssertEqual(object.choices.last?.value as? Int, 3)

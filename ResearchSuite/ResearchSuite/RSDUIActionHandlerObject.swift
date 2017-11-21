@@ -33,24 +33,45 @@
 
 import Foundation
 
-/**
- `RSDUIActionHandlerObject` is intended as an abstract implementation of the action handler that implements the `Codable` protocol.
- */
+/// `RSDUIActionHandlerObject` is intended as an abstract implementation of the action handler that implements
+/// the `Codable` protocol.
 open class RSDUIActionHandlerObject : RSDUIActionHandler {
     
+    /// A mapping dictionary of action type to action.
     public var actions: [RSDUIActionType : RSDUIAction]?
+    
+    /// A list of action types that should be hidden by default.
     public var shouldHideActions: [RSDUIActionType]?
     
+    /// Base class initializer.
     public init() {
     }
     
+    /// Customizable actions to return for a given action type. The `RSDStepController` can use these to
+    /// customize the display of buttons to the user. If nil, `shouldHideAction()` will be called to
+    /// determine if the default action should be used or if the action button should be hidden.
+    ///
+    /// - parameters:
+    ///     - actionType:  The action type for the button.
+    ///     - step:        The step that the action is on.
+    /// - returns: A custom UI action for this button. If nil, the default action will be used.
     open func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
         guard let action = actions?[actionType] else { return nil }
         return action
     }
     
+    /// Should the action button be hidden? This implementation will check the `shouldHideActions` array
+    /// and return `true` if found. Otherwise, this implementation will return `nil`.
+    ///
+    /// - parameters:
+    ///     - actionType:  The action type for the button.
+    ///     - step:        The step that the action is on.
+    /// - returns: Whether or not the button should be hidden or `nil` if there is no explicit action.
     open func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
-        guard let shouldHide = shouldHideActions?.contains(actionType), shouldHide else { return nil }
+        guard let shouldHide = shouldHideActions?.contains(actionType), shouldHide
+            else {
+                return nil
+        }
         return shouldHide
     }
     
@@ -60,6 +81,11 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
         case actions, shouldHideActions
     }
     
+    /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
+    /// with the decoder to decode the `actions`.
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.shouldHideActions = try container.decodeIfPresent([RSDUIActionType].self, forKey: .shouldHideActions)
@@ -77,7 +103,9 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
         }
     }
     
-    /// Define the encoder, but do not require protocol conformance of subclasses
+    /// Define the encoder, but do not require protocol conformance of subclasses.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if let actions = self.actions {

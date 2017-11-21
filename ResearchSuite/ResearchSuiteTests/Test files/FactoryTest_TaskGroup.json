@@ -12,7 +12,7 @@
                "estimatedMinutes": 5,
                "icon": "fooIcon",
                "taskTransformer" : { "resourceName": "FactoryTest_TaskFoo",
-                                     "resourceBundle": "org.sagebase.ResearchSuiteTests" },
+                                     "bundleIdentifier": "org.sagebase.ResearchSuiteTests" },
                "viewInfo" : {  "viewIdentifier": "FooView",
                                "storyboardIdentifier": "FooStory"}
                },

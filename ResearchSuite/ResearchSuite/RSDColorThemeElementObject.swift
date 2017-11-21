@@ -33,6 +33,8 @@
 
 import Foundation
 
+/// `RSDColorThemeElementObject` tells the UI what the background color and foreground color are for a given view as
+/// well as whether or not the foreground elements should use "light style".
 public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBundleInfo, Codable {
     private let _backgroundColorName: String?
     private let _foregroundColorName: String?
@@ -47,32 +49,70 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
         case bundleIdentifier
     }
     
+    /// Hint for whether or not the view uses light style for things like the progress bar and navigation buttons.
     public var usesLightStyle: Bool {
         return _usesLightStyle ?? false
     }
-
+    
+    /// The background color for this step.
     public func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
         guard let name = _backgroundColorName else { return nil }
-        if #available(iOS 11.0, *) {
-            return UIColor(named: name, in: bundle, compatibleWith: traitCollection)
-        } else {
-            return nil
-        }
+        return UIColor.rsd_color(named: name, in: bundle, compatibleWith: traitCollection)
     }
     
+    /// The foreground color for this step.
     public func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
         guard let name = _foregroundColorName else { return nil }
-        if #available(iOS 11.0, *) {
-            return UIColor(named: name, in: bundle, compatibleWith: traitCollection)
-        } else {
-            return nil
-        }
+        return UIColor.rsd_color(named: name, in: bundle, compatibleWith: traitCollection)
     }
     
+    /// Default initializer.
+    ///
+    /// - note: The color names used by this `Codable` object can be defined as either:
+    /// 1. HEX-code values.
+    /// 2. Using a Color Asset if targeting devices that support this feature. For example, iOS 11 and above.
+    ///     See https://developer.apple.com/documentation/uikit/uicolor/2877380-init for more information.
+    /// 3. A mapping file called "ColorInfo.plist" that includes key/value pairs where the `key` is the name included
+    ///     here and the `value` is a HEX-code color.
+    ///
+    /// - parameters:
+    ///     - usesLightStyle: Hint for whether or not the view uses light style for things like the progress bar. Default = `false`.
+    ///     - backgroundColorName: The name of the background color. Default = `nil`.
+    ///     - foregroundColorName: The name of the foreground color. Default = `nil`.
+    ///     - bundleIdentifier: The bundle identifier for where to find the color asset or plist mapping file. Default = `nil`.
     public init(usesLightStyle: Bool = false, backgroundColorName: String?, foregroundColorName: String? = nil, bundleIdentifier: String? = nil) {
         self._usesLightStyle = usesLightStyle
         self._backgroundColorName = backgroundColorName
         self._foregroundColorName = foregroundColorName
         self.bundleIdentifier = bundleIdentifier
+    }
+}
+
+extension RSDColorThemeElementObject : RSDDocumentableCodableObject {
+    
+    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+        let codingKeys: [CodingKeys] = [._backgroundColorName, ._foregroundColorName, ._usesLightStyle, .bundleIdentifier]
+        return codingKeys.map {
+            switch $0 {
+            case ._backgroundColorName:
+                return ($0, String.self, "The name of the background color. Default = `nil`.")
+            case ._foregroundColorName:
+                return ($0, String.self, "The name of the foreground color. Default = `nil`.")
+            case ._usesLightStyle:
+                return ($0, Bool.self, "Hint for whether or not the view uses light style for things like the progress bar. Default = `false`.")
+            case .bundleIdentifier:
+                return ($0, String.self, "The bundle identifier for where to find the color asset or plist mapping file. Default = `nil`.")
+            }
+        }
+    }
+    
+    static func colorThemeExamples() -> [RSDColorThemeElementObject] {
+        let colorThemeA = RSDColorThemeElementObject(usesLightStyle: true, backgroundColorName: "blueBlack")
+        let colorThemeB = RSDColorThemeElementObject(usesLightStyle: false, backgroundColorName: nil, foregroundColorName: "mintGreen", bundleIdentifier: "org.example.SharedCodeBundle")
+        return [colorThemeA, colorThemeB]
+    }
+    
+    static func examples() -> [Encodable] {
+        return colorThemeExamples()
     }
 }

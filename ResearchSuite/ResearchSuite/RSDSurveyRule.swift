@@ -185,7 +185,15 @@ extension RSDComparableSurveyRule {
         case .string:
             return "\(answerValue)" as NSString
         case .date:
-            return (answerValue as? NSDate) ?? ((answerValue as? NSString)?.dateValue as NSDate?)
+            if let date = answerValue as? NSDate {
+                return date
+            } else if let dateString = answerValue as? String,
+                let date = RSDFactory.shared.decodeDate(from: dateString) {
+                return date as NSDate
+            } else {
+                assertionFailure("Failed to convert \(answerValue) to a date.")
+                return nil
+            }
         case .data:
             assertionFailure("data base type is unsupported")
             return nil

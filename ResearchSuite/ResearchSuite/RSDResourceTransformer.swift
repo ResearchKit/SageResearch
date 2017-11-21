@@ -62,14 +62,11 @@ extension RSDResourceConfig {
 ///
 /// - seealso: `RSDSectionStepResourceTransformer` and `RSDTaskResourceTransformer`
 ///
-public protocol RSDResourceTransformer {
+public protocol RSDResourceTransformer: RSDDecodableBundleInfo {
     
     /// Either a fully qualified URL string or else a relative reference to either an embedded resource or a
     /// relative URL defined globally by overriding the `RSDResourceConfig` class methods.
     var resourceName: String { get }
-    
-    /// The bundle identifier for the embedded resource.
-    var resourceBundle: String? { get }
     
     /// The classType for converting the resource to an object.
     var classType: String? { get }
@@ -124,7 +121,7 @@ extension RSDResourceTransformer {
         else if let relativeBundle = RSDResourceConfig.resourceBundle(for: self) {
             rBundle = relativeBundle
         }
-        else if let bundleIdentifier = resourceBundle {
+        else if let bundleIdentifier = bundleIdentifier {
             if let bundle = Bundle(identifier: bundleIdentifier) {
                 rBundle = bundle
             }

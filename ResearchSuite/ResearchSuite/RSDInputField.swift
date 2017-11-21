@@ -83,8 +83,9 @@ public protocol RSDInputField {
 /// `RSDChoice` is used to describe a choice item for use with a multiple choice or multiple component input field.
 public protocol RSDChoice {
     
-    /// A JSON encodable object to return as the value when this choice is selected.
-    var value: Codable { get }
+    /// A JSON encodable object to return as the value when this choice is selected. A `nil` value indicates that
+    /// the user has selected to skip the question or "prefers not to answer".
+    var value: Codable? { get }
     
     /// Localized text string to display for the choice.
     var text: String? { get }
@@ -118,12 +119,9 @@ public protocol RSDChoiceOptions: RSDChoicePickerDataSource {
     var isOptional: Bool { get }
 }
 
-/// `RSDChoiceOptions` extends the properties of `RSDInputField` with information required to create a
+/// `RSDChoiceInputField` extends the properties of `RSDInputField` with information required to create a
 /// multiple or single choice question.
 public protocol RSDChoiceInputField : RSDInputField, RSDChoiceOptions {
-    
-    /// Does the choice selection allow entering a custom value?
-    var allowOther : Bool { get }
 }
 
 /// `RSDMultipleComponentInputField` extends the properties of `RSDInputField` with information

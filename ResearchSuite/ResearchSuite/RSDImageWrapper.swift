@@ -33,20 +33,6 @@
 
 import Foundation
 
-/// `RSDResizableImage` is a protocol for vending an image of the appropriate size for the given rect.
-public protocol RSDResizableImage {
-    
-    /// A value that can be used to identify the image as unique.
-    var identifier: String { get }
-    
-    /// Get an image of the appropriate size.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the image, run on the main thread.
-    func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
-}
-
 /// `RSDEmbeddedIconVendor` is a convenience protocol for fetching an codable image using an optional
 /// `RSDImageWrapper`. This protocol implements an extension method to fetch the icon.
 public protocol RSDEmbeddedIconVendor {
@@ -90,15 +76,10 @@ public protocol RSDImageWrapperDelegate {
 /// `RSDImageWrapper` vends an image. It does not handle image caching. If your app using a custom image caching,
 /// then you will need to use the shared delegate to implement this. The image wrapper is designed to allow coding of
 /// images using an `imageName` property as a key for accessing the image.
-public struct RSDImageWrapper : RSDResizableImage {
+public struct RSDImageWrapper {
     
     /// The name of the image to be fetched.
     public let imageName: String
-    
-    /// A value that can be used to identify the image as unique.
-    public var identifier: String {
-        return imageName
-    }
     
     /// The `sharedDelegate` is a singleton delegate that can be used to customize the rules for fetching
     /// an image using the `RSDImageWrapper`. If defined and attached to the `RSDImageWrapper` using the

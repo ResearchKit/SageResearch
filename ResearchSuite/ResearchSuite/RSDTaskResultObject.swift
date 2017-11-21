@@ -135,7 +135,7 @@ public struct RSDTaskResultObject : RSDTaskResult, Codable {
     }
 }
 
-extension RSDTaskResultObject : RSDDocumentableDecodableObject {
+extension RSDTaskResultObject : RSDDocumentableCodableObject {
     
     static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
         let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .taskRunUUID, .schemaInfo, .stepHistory, .asyncResults]
@@ -167,7 +167,7 @@ extension RSDTaskResultObject : RSDDocumentableDecodableObject {
         result.schemaInfo = RSDSchemaInfoObject(identifier: "example schema", revision: 3)
         
         var introStepResult = RSDResultObject(identifier: "introduction")
-        introStepResult.startDate = RSDClassTypeMap.shared.timestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        introStepResult.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         introStepResult.endDate = introStepResult.startDate.addingTimeInterval(20)
         var collectionResult = RSDCollectionResultObject.exampleResult()
         collectionResult.startDate = introStepResult.endDate

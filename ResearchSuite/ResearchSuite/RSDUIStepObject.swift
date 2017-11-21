@@ -95,8 +95,10 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
         self.colorTheme = try container.decodeIfPresent(RSDColorThemeElementObject.self, forKey: .colorTheme)
         if container.contains(.image) {
             let nestedDecoder = try container.superDecoder(forKey: .image)
-            if let imageWrapper = try? RSDImageWrapper(from: nestedDecoder) {
-                self.imageTheme = imageWrapper
+            if let image = try? RSDImageWrapper(from: nestedDecoder) {
+                self.imageTheme = image
+            } else if let image = try? RSDFetchableImageThemeElementObject(from: nestedDecoder) {
+                self.imageTheme = image
             } else {
                 self.imageTheme = try RSDAnimatedImageThemeElementObject(from: nestedDecoder)
             }

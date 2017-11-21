@@ -153,13 +153,13 @@ extension NSNull : RSDJSONValue {
 
 extension NSDate : RSDJSONValue {
     public func jsonObject() -> Any {
-        return (self as NSDate).jsonObject()
+        return (self as Date).jsonObject()
     }
 }
 
 extension Date : RSDJSONValue {
     public func jsonObject() -> Any {
-        return ISO8601DateFormatter().string(from: self)
+        return RSDFactory.shared.timestampFormatter.string(from: self)
     }
 }
 
@@ -172,11 +172,11 @@ extension DateComponents : RSDJSONValue {
     
     public func defaultFormatter() -> DateFormatter {
         if ((year == nil) || (year == 0)) && ((month == nil) || (month == 0)) && ((day == nil) || (day == 0)) {
-            return RSDClassTypeMap.shared.timeOnlyFormatter
+            return RSDFactory.shared.timeOnlyFormatter
         }
         else if ((hour == nil) || (hour == 0)) && ((minute == nil) || (minute == 0)) {
             if let year = year, year > 0, let month = month, month > 0, let day = day, day > 0 {
-                return RSDClassTypeMap.shared.dateOnlyFormatter
+                return RSDFactory.shared.dateOnlyFormatter
             }
             
             // Build the format string if not all components are included
@@ -199,7 +199,7 @@ extension DateComponents : RSDJSONValue {
             formatter.dateFormat = formatString
             return formatter
         }
-        return RSDClassTypeMap.shared.timestampFormatter
+        return RSDFactory.shared.timestampFormatter
     }
 }
 

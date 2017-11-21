@@ -94,7 +94,7 @@ public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Co
     }
 }
 
-extension RSDStandardAsyncActionConfiguration : RSDDocumentableDecodableObject {
+extension RSDStandardAsyncActionConfiguration : RSDDocumentableCodableObject {
     
     static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
         let codingKeys: [CodingKeys] = [.identifier, .type, .startStepIdentifier, .stopStepIdentifier]

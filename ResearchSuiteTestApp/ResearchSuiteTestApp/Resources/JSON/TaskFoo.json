@@ -11,7 +11,7 @@
               "text": "This is the first step of the Foo task.",
               "detail": "On this screen you should see an image above the text with a picture of an envelop. There is also a short footnote. The button should say 'Go, Dogs! Go!'. Tap it to continue.",
               "footnote": "This is a footnote.",
-              "imageBefore": "before",
+              "image": "before",
               "actions": {
                   "goForward": {
                       "buttonTitle": "Go, Dogs!"
@@ -24,7 +24,7 @@
               "title": "Step 2",
               "text": "This is the second step in the Foo task.",
               "detail": "On this screen you should see an image below the text with a picture of a phone in a pocket. The next step after this one is an active step. When it starts, you should hear voice commands.",
-              "imageAfter": "phoneinpocketIllustration",
+              "image": { "imageName": "phoneinpocketIllustration", "placementType": "iconAfter" },
               "actions": {
                       "goForward": {
                           "buttonTitle": "Start"

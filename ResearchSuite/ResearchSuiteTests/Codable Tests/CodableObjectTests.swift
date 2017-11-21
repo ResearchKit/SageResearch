@@ -36,21 +36,12 @@ import ResearchSuite
 
 struct TestResourceWrapper : RSDResourceTransformer, Codable {
     
-    let filename: String
+    let resourceName: String
     let bundleIdentifier: String?
-    
-    public let classType: String?
-    
-    public var resourceName: String {
-        return filename
-    }
-    
-    public var resourceBundle: String? {
-        return bundleIdentifier
-    }
-    
-    public init(filename: String, bundleIdentifier: String?) {
-        self.filename = filename
+    let classType: String?
+
+    public init(resourceName: String, bundleIdentifier: String?) {
+        self.resourceName = resourceName
         self.bundleIdentifier = bundleIdentifier
         self.classType = nil
     }

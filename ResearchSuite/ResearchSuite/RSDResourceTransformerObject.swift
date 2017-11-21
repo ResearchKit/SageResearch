@@ -42,25 +42,25 @@ public struct RSDResourceTransformerObject : Codable {
     public let resourceName: String
     
     /// The bundle identifier for the embedded resource.
-    public let resourceBundle: String?
+    public let bundleIdentifier: String?
     
     /// The classType for converting the resource to an object. This is a hint that subclasses of `RsDFactory` can
     /// use to determine the type of object to instantiate.
     public let classType: String?
     
     private enum CodingKeys: String, CodingKey {
-        case resourceName, resourceBundle, classType
+        case resourceName, bundleIdentifier, classType
     }
     
     /// Default initializer for creating the object.
     ///
     /// - parameters:
     ///     - resourceName: The name of the resource.
-    ///     - resourceBundle: The bundle identifier for the embedded resource.
+    ///     - bundleIdentifier: The bundle identifier for the embedded resource.
     ///     - classType: The classType for converting the resource to an object.
-    public init(resourceName: String, resourceBundle: String? = nil, classType: String? = nil) {
+    public init(resourceName: String, bundleIdentifier: String? = nil, classType: String? = nil) {
         self.resourceName = resourceName
-        self.resourceBundle = resourceBundle
+        self.bundleIdentifier = bundleIdentifier
         self.classType = classType
     }
 }
@@ -71,15 +71,15 @@ extension RSDResourceTransformerObject : RSDTaskResourceTransformer {
 extension RSDResourceTransformerObject : RSDSectionStepResourceTransformer {
 }
 
-extension RSDResourceTransformerObject : RSDDocumentableDecodableObject {
+extension RSDResourceTransformerObject : RSDDocumentableCodableObject {
     
     static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
-        let codingKeys: [CodingKeys] = [.resourceName, .resourceBundle, .classType]
+        let codingKeys: [CodingKeys] = [.resourceName, .bundleIdentifier, .classType]
         return codingKeys.map {
             switch $0 {
             case .resourceName:
                 return ($0, String.self, "Either a fully qualified URL string or else a relative reference to either an embedded resource or a relative URL defined globally by overriding the `RSDResourceConfig` class methods.")
-            case .resourceBundle:
+            case .bundleIdentifier:
                 return ($0, String.self, "The bundle identifier for the embedded resource.")
             case .classType:
                 return ($0, String.self, "The classType for converting the resource to an object. This is a hint that subclasses of `RsDFactory` can use to determine the type of object to instantiate.")
@@ -88,7 +88,7 @@ extension RSDResourceTransformerObject : RSDDocumentableDecodableObject {
     }
 
     static func examples() -> [Encodable] {
-        let exampleA = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", resourceBundle: "org.sagebase.ResearchSuiteTests", classType: "RSDTaskObject")
+        let exampleA = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: "org.sagebase.ResearchSuiteTests", classType: "RSDTaskObject")
         let exampleB = RSDResourceTransformerObject(resourceName: "TaskBar")
         return [exampleA, exampleB]
     }

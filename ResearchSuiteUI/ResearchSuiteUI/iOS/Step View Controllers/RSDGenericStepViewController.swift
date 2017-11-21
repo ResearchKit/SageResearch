@@ -297,7 +297,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     // MARK: Model setup
     
     open class var supportedUIHints: Set<RSDFormUIHint> {
-        return [.standard(.list), .standard(.textfield), .standard(.picker)]
+        return [.list, .textfield, .picker]
     }
     
     /**

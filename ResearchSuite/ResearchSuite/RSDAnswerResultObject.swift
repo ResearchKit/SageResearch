@@ -106,7 +106,7 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
     }
 }
 
-extension RSDAnswerResultObject : RSDDocumentableDecodableObject {
+extension RSDAnswerResultObject : RSDDocumentableCodableObject {
     
     static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
         let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .answerType, .value]
@@ -130,7 +130,7 @@ extension RSDAnswerResultObject : RSDDocumentableDecodableObject {
     
     static func answerResultExamples() -> [RSDAnswerResultObject] {
         let typeAndValue = RSDAnswerResultType.examplesWithValues()
-        let date = RSDClassTypeMap.shared.timestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        let date = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         return typeAndValue.enumerated().map { (index, object) -> RSDAnswerResultObject in
             var result = RSDAnswerResultObject(identifier: "question\(index+1)", answerType: object.answerType)
             result.startDate = date
