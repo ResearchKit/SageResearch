@@ -73,6 +73,30 @@ extension RSDResourceTransformerObject : RSDSectionStepResourceTransformer {
 
 extension RSDResourceTransformerObject : RSDDocumentableCodableObject {
     
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.resourceName, .bundleIdentifier, .classType]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .resourceName:
+                if idx != 0 { return false }
+            case .bundleIdentifier:
+                if idx != 1 { return false }
+            case .classType:
+                if idx != 2 { return false }
+            }
+        }
+        return keys.count == 3
+    }
+    
     static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
         let codingKeys: [CodingKeys] = [.resourceName, .bundleIdentifier, .classType]
         return codingKeys.map {

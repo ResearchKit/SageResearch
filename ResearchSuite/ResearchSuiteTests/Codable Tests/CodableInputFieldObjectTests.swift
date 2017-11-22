@@ -183,6 +183,18 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.choices.last?.text, "always")
             XCTAssertEqual(object.choices.last?.value as? String, "always")
             
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "multipleChoice.string")
+            XCTAssertEqual(dictionary["optional"] as? Bool, false)
+            XCTAssertEqual((dictionary["choices"] as? [Any])?.count ?? 0, 4)
+            
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return
@@ -233,6 +245,28 @@ class CodableInputFieldObjectTests: XCTestCase {
                 XCTFail("Failed to decode inline survey rule.")
             }
             
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["prompt"] as? String, "Text")
+            XCTAssertEqual(dictionary["placeholderText"] as? String, "enter text")
+            XCTAssertEqual(dictionary["dataType"] as? String, "singleChoice.integer")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
+            XCTAssertEqual(dictionary["optional"] as? Bool, true)
+            XCTAssertEqual((dictionary["choices"] as? [Any])?.count ?? 0, 4)
+
+            if let surveyRules = dictionary["surveyRules"] as? [[String: Any]],
+                let firstRule = surveyRules.first {
+                XCTAssertEqual(firstRule["matchingAnswer"] as? Int, 0)
+            } else {
+                XCTFail("Failed to encode surveyRules")
+            }
+            
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return
@@ -257,6 +291,18 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.dataType, .collection(.multipleComponent, .string))
             XCTAssertFalse(object.isOptional)
             XCTAssertEqual(object.choices.count, 2)
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "multipleComponent.string")
+            XCTAssertEqual(dictionary["optional"] as? Bool, false)
+            XCTAssertEqual((dictionary["choices"] as? [Any])?.count ?? 0, 2)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -323,6 +369,40 @@ class CodableInputFieldObjectTests: XCTestCase {
                 XCTFail("Failed to decode inline survey rule.")
             }
             
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "integer")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "slider")
+            
+            if let range = dictionary["range"] as? [String: Any] {
+                XCTAssertEqual(range["minimumValue"] as? Int, -2)
+                XCTAssertEqual(range["maximumValue"] as? Int, 3)
+                XCTAssertEqual(range["stepInterval"] as? Int, 1)
+                XCTAssertEqual(range["unit"] as? String, "feet")
+            }
+            else {
+                XCTFail("Failed to encode range")
+            }
+            
+            if let surveyRules = dictionary["surveyRules"] as? [[String: Any]],
+                let firstRule = surveyRules.first,
+                let lastRule = surveyRules.last {
+                XCTAssertEqual(firstRule["skipToIdentifier"] as? String, "lessThan")
+                XCTAssertEqual(firstRule["ruleOperator"] as? String, "lt")
+                XCTAssertEqual(firstRule["matchingAnswer"] as? Int, 0)
+                XCTAssertEqual(lastRule["skipToIdentifier"] as? String, "greaterThan")
+                XCTAssertEqual(lastRule["ruleOperator"] as? String, "gt")
+                XCTAssertEqual(lastRule["matchingAnswer"] as? Int, 1)
+            } else {
+                XCTFail("Failed to encode surveyRules")
+            }
+            
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return
@@ -360,6 +440,28 @@ class CodableInputFieldObjectTests: XCTestCase {
             }
             else{
                 XCTFail("Failed to decode range")
+            }
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "decimal")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "slider")
+            
+            if let range = dictionary["range"] as? [String: Any] {
+                XCTAssertEqual(range["minimumValue"] as? Double, -2.5)
+                XCTAssertEqual(range["maximumValue"] as? Double, 3)
+                XCTAssertEqual(range["stepInterval"] as? Double, 0.1)
+                XCTAssertEqual(range["unit"] as? String, "feet")
+                XCTAssertEqual(range["maximumDigits"] as? Int, 3)
+            }
+            else {
+                XCTFail("Failed to encode range")
             }
             
         } catch let err {
@@ -414,6 +516,26 @@ class CodableInputFieldObjectTests: XCTestCase {
                 XCTFail("Failed to decode range")
             }
             
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "date")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
+            
+            if let range = dictionary["range"] as? [String: Any] {
+                XCTAssertEqual(range["minimumDate"] as? String, "2017-02-20")
+                XCTAssertEqual(range["maximumDate"] as? String, "2017-03-20")
+                XCTAssertEqual(range["codingFormat"] as? String, "yyyy-MM-dd")
+            }
+            else {
+                XCTFail("Failed to encode range")
+            }
+            
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return
@@ -454,6 +576,28 @@ class CodableInputFieldObjectTests: XCTestCase {
             }
             else{
                 XCTFail("Failed to decode textFieldOptions")
+            }
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "string")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "textfield")
+            
+            if let textFieldOptions = dictionary["textFieldOptions"] as? [String: Any] {
+                XCTAssertEqual(textFieldOptions["validationRegex"] as? String, "[A:C]")
+                XCTAssertEqual(textFieldOptions["invalidMessage"] as? String, "You know me")
+                XCTAssertEqual(textFieldOptions["maximumLength"] as? Int, 10)
+                XCTAssertEqual(textFieldOptions["autocapitalizationType"] as? String, "words")
+                XCTAssertEqual(textFieldOptions["keyboardType"] as? String, "asciiCapable")
+            }
+            else {
+                XCTFail("Failed to encode textFieldOptions")
             }
             
         } catch let err {

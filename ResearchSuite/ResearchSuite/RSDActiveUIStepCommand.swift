@@ -126,12 +126,12 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
 
 extension RSDActiveUIStepCommand : RSDDocumentableOptionSet {
     
-    static func allCodingKeys() -> Set<String> {
+    static func allCodingKeys() -> [String] {
         // Register the commands included in the base struct to add them to the mapping
         let _: RSDActiveUIStepCommand = [.playSound,
                                          .vibrate,
                                          .transitionAutomatically,
                                          .shouldDisableIdleTimer]
-        return Set(self.stringMapping.map{ $0.key })
+        return self.stringMapping.map{ $0.key }
     }
 }

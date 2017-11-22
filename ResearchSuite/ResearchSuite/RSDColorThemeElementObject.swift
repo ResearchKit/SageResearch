@@ -90,20 +90,30 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
 
 extension RSDColorThemeElementObject : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [._backgroundColorName, ._foregroundColorName, ._usesLightStyle, .bundleIdentifier]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case ._backgroundColorName:
-                return ($0, String.self, "The name of the background color. Default = `nil`.")
+                if idx != 0 { return false }
             case ._foregroundColorName:
-                return ($0, String.self, "The name of the foreground color. Default = `nil`.")
+                if idx != 1 { return false }
             case ._usesLightStyle:
-                return ($0, Bool.self, "Hint for whether or not the view uses light style for things like the progress bar. Default = `false`.")
+                if idx != 2 { return false }
             case .bundleIdentifier:
-                return ($0, String.self, "The bundle identifier for where to find the color asset or plist mapping file. Default = `nil`.")
+                if idx != 3 { return false }
             }
         }
+        return keys.count == 4
     }
     
     static func colorThemeExamples() -> [RSDColorThemeElementObject] {

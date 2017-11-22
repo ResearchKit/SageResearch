@@ -49,6 +49,9 @@ class ExampleDecodableTests: XCTestCase {
         let documentCreator = RSDDocumentCreator()
         for objectType in documentCreator.allCodableObjects {
             
+            let validKeys = objectType.validateAllKeysIncluded()
+            XCTAssertTrue(validKeys)
+            
             let encoder = RSDFactory.shared.createJSONEncoder()
             let decoder = RSDFactory.shared.createJSONDecoder()
             
@@ -69,6 +72,9 @@ class ExampleDecodableTests: XCTestCase {
     func testAllDecodableObjects() {
         let documentCreator = RSDDocumentCreator()
         for objectType in documentCreator.allDecodableObjects {
+            
+            let validKeys = objectType.validateAllKeysIncluded()
+            XCTAssertTrue(validKeys)
             
             let decoder = RSDFactory.shared.createJSONDecoder()
             
@@ -100,8 +106,14 @@ class ExampleDecodableTests: XCTestCase {
                 _DecodableArrayWrapper._unboxType = objectType
                 let decodedObject = try decoder.decode(_DecodableArrayWrapper.self, from: encodedObject)
                 XCTAssertEqual(decodedObject.items.count, examples.count)
-                if let value = decodedObject.items.first {
+                for (idx, value) in decodedObject.items.enumerated() {
                     XCTAssertTrue(type(of: value) == objectType)
+                    if let obj = value as? RSDDocumentableStringLiteral, idx < examples.count {
+                        let expectedValue = examples[idx]
+                        XCTAssertEqual(obj.stringValue, expectedValue)
+                    } else {
+                        XCTFail("Failed to decode to expected type for \(value)")
+                    }
                 }
             } catch let err {
                 XCTFail("Failed to encode/decode \(examples) for \(objectType). \(err)")
@@ -123,8 +135,14 @@ class ExampleDecodableTests: XCTestCase {
                 _DecodableArrayWrapper._unboxType = objectType
                 let decodedObject = try decoder.decode(_DecodableArrayWrapper.self, from: encodedObject)
                 XCTAssertEqual(decodedObject.items.count, examples.count)
-                if let value = decodedObject.items.first {
+                for (idx, value) in decodedObject.items.enumerated() {
                     XCTAssertTrue(type(of: value) == objectType)
+                    if let obj = value as? RSDDocumentableEnum, idx < examples.count {
+                        let expectedValue = examples[idx]
+                        XCTAssertEqual(obj.stringValue, expectedValue)
+                    } else {
+                        XCTFail("Failed to decode to expected type for \(value)")
+                    }
                 }
             } catch let err {
                 XCTFail("Failed to encode/decode \(examples) for \(objectType). \(err)")

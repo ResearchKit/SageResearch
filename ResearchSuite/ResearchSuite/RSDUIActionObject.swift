@@ -190,18 +190,28 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
 
 extension RSDUIActionObject : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.buttonTitle, .iconName, .bundleIdentifier]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .buttonTitle:
-                return ($0, String.self, "The title to display on the button associated with this action.")
+                if idx != 0 { return false }
             case .iconName:
-                return ($0, String.self, "The name of the image to display on the button associated with this action.")
+                if idx != 1 { return false }
             case .bundleIdentifier:
-                return ($0, String.self, "The bundle identifier for the image resource bundle. Default = `nil`.")
+                if idx != 2 { return false }
             }
         }
+        return keys.count == 3
     }
     
     static func actionExamples() -> [RSDUIActionObject] {
@@ -217,20 +227,30 @@ extension RSDUIActionObject : RSDDocumentableCodableObject {
 
 extension RSDSkipToUIActionObject : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.buttonTitle, .iconName, .bundleIdentifier, .skipToIdentifier]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .buttonTitle:
-                return ($0, String.self, "The title to display on the button associated with this action.")
+                if idx != 0 { return false }
             case .iconName:
-                return ($0, String.self, "The name of the image to display on the button associated with this action.")
+                if idx != 1 { return false }
             case .bundleIdentifier:
-                return ($0, String.self, "The bundle identifier for the image resource bundle. Default = `nil`.")
+                if idx != 2 { return false }
             case .skipToIdentifier:
-                return ($0, String.self, "The identifier for the step to skip to if the action is called.")
+                if idx != 3 { return false }
             }
         }
+        return keys.count == 4
     }
     
     static func actionExamples() -> [RSDSkipToUIActionObject] {
@@ -246,20 +266,30 @@ extension RSDSkipToUIActionObject : RSDDocumentableCodableObject {
 
 extension RSDWebViewUIActionObject : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.buttonTitle, .iconName, .bundleIdentifier, .url]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .buttonTitle:
-                return ($0, String.self, "The title to display on the button associated with this action.")
+                if idx != 0 { return false }
             case .iconName:
-                return ($0, String.self, "The name of the image to display on the button associated with this action.")
+                if idx != 1 { return false }
             case .bundleIdentifier:
-                return ($0, String.self, "The bundle identifier for the image resource bundle. Default = `nil`.")
+                if idx != 2 { return false }
             case .url:
-                return ($0, String.self, "The url to load in the webview. If this is not a fully qualified url string, then it is assumed to refer to an embedded resource.")
+                if idx != 3 { return false }
             }
         }
+        return keys.count == 4
     }
     
     static func actionExamples() -> [RSDWebViewUIActionObject] {

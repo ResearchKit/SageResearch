@@ -463,37 +463,46 @@ extension RSDAnswerResultType : Hashable, Equatable {
 }
 
 extension RSDAnswerResultType.BaseType : RSDDocumentableEnum {
-    static func allCodingKeys() -> Set<String> {
-        return Set(self.allTypes().map{ $0.rawValue })
+    static func allCodingKeys() -> [String] {
+        return self.allTypes().map{ $0.rawValue }
     }
 }
 
 extension RSDAnswerResultType.SequenceType : RSDDocumentableEnum {
-    static func allCodingKeys() -> Set<String> {
-        return Set(self.allTypes().map{ $0.rawValue })
+    static func allCodingKeys() -> [String] {
+        return self.allTypes().map{ $0.rawValue }
     }
 }
 
 extension RSDAnswerResultType : RSDDocumentableCodableObject {
 
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
-        let codingKeys: [CodingKeys] = [.baseType, .sequenceType, .dateFormat, .dateLocaleIdentifier, .unit, .sequenceSeparator]
-        return codingKeys.map {
-            switch $0 {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        return [.baseType, .sequenceType, .dateFormat, .dateLocaleIdentifier, .unit, .sequenceSeparator]
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .baseType:
-                return ($0, BaseType.self, "The base type for the answer.")
+                if idx != 0 { return false }
             case .sequenceType:
-                return ($0, SequenceType.self, "The sequence type (if any) for the answer.")
+                if idx != 1 { return false }
             case .dateFormat:
-                return ($0, String.self, "The date format to use for encoding and decoding a `BaseType.date` answer.")
+                if idx != 2 { return false }
             case .dateLocaleIdentifier:
-                return ($0, String.self, "The locale identifier to use for encoding and decoding a `BaseType.date` answer. By default, this value is '\(defaultDateLocaleIdentifier)'")
+                if idx != 3 { return false }
             case .unit:
-                return ($0, String.self, "The unit symbol for converting measurements between the unit used for encoding and decoding and the unit appropriate to the user's Locale.")
+                if idx != 4 { return false }
             case .sequenceSeparator:
-                return ($0, String.self, "The sequence separator used to convert an encoded string to or from an array.")
+                if idx != 5 { return false }
             }
         }
+        return keys.count == 6
     }
     
     static func examples() -> [Encodable] {

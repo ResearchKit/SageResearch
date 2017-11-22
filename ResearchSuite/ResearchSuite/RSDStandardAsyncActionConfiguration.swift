@@ -96,20 +96,30 @@ public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Co
 
 extension RSDStandardAsyncActionConfiguration : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.identifier, .type, .startStepIdentifier, .stopStepIdentifier]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .identifier:
-                return ($0, String.self, "A short string that uniquely identifies the asynchronous action within the task. If started asynchronously, then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.")
+                if idx != 0 { return false }
             case .type:
-                return ($0, RSDStandardPermissionType.self, "The standard permission type associated with this configuration.")
+                if idx != 1 { return false }
             case .startStepIdentifier:
-                return ($0, String.self, "An identifier marking the step to start the action. If `nil`, then the action will be started when the task is started.")
+                if idx != 2 { return false }
             case .stopStepIdentifier:
-                return ($0, String.self, "An identifier marking the step at which to stop the action. If `nil`, then the action will be stopped when the task is stopped.")
+                if idx != 3 { return false }
             }
         }
+        return keys.count == 4
     }
     
     static func examples() -> [Encodable] {

@@ -164,7 +164,7 @@ public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
 }
 
 extension RSDDateCoderObject : RSDDocumentableEnum {
-    static func allCodingKeys() -> Set<String> {
+    static func allCodingKeys() -> [String] {
         return ["yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", "yyyy-MM", "yyyy-MM-dd", "--MM-dd", "MM-dd", "HH:mm:ss", "HH:mm"]
     }
 }

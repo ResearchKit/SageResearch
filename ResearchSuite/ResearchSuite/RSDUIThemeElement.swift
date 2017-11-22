@@ -106,8 +106,8 @@ public enum RSDImagePlacementType : String, Codable {
 }
 
 extension RSDImagePlacementType : RSDDocumentableEnum {
-    static func allCodingKeys() -> Set<String> {
-        return Set(allTypes().map { $0.rawValue })
+    static func allCodingKeys() -> [String] {
+        return allTypes().map { $0.rawValue }
     }
 }
 

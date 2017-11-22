@@ -269,7 +269,7 @@ fileprivate func _convertToJSONValue(from object: Any) -> Any {
 extension NSDictionary : RSDJSONValue {
     public func jsonObject() -> Any {
         var dictionary : [AnyHashable : Any] = [:]
-        for (key, value) in self.enumerated() {
+        for (key, value) in self {
             let strKey = "\(key)"
             dictionary[strKey] = _convertToJSONValue(from: value)
         }

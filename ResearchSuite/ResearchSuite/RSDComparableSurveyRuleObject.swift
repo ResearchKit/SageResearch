@@ -33,18 +33,33 @@
 
 import Foundation
 
-
-public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRule, Decodable {
+/// `RSDComparableSurveyRuleObject` is a survey rule that matches an expected result to the answer and vends a skip
+/// identifier if the match is evaluated to `true`.
+public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRule, Codable {
     public typealias Value = T
     
+    /// Optional skip identifier for this rule. If available, this will be used as the skip identifier,
+    /// otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit`
     public let skipToIdentifier: String?
-    public let ruleOperator: RSDSurveyRuleOperator?
-    public let matchingValue: Value?
     
+    /// The rule operator to apply. If `nil`, `.equal` will be assumed unless the `expectedAnswer` is also nil,
+    /// in which case `.skip` will be assumed.
+    public let ruleOperator: RSDSurveyRuleOperator?
+    
+    /// Expected answer for the rule. If `nil`, then the operator must be .skip or this will return a nil value.
     public var matchingAnswer: Any? {
         return matchingValue
     }
     
+    // Value-typed matching answer.
+    public let matchingValue: Value?
+    
+    /// Default initializer.
+    ///
+    /// - parameters:
+    ///     - skipToIdentifier: Skip identifier for this rule.
+    ///     - matchingValue: Value-typed matching answer.
+    ///     - ruleOperator: The rule operator to apply.
     public init(skipToIdentifier: String?, matchingValue: Value?, ruleOperator: RSDSurveyRuleOperator?) {
         self.skipToIdentifier = skipToIdentifier
         self.matchingValue = matchingValue
@@ -55,6 +70,11 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
         case skipToIdentifier, matchingValue = "matchingAnswer", ruleOperator
     }
     
+    /// Initialize from a `Decoder`. This method will decode the values and also check that the combination of
+    /// inputs is valid.
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError` if there is a decoding error.
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let skipToIdentifier = try container.decodeIfPresent(String.self, forKey: .skipToIdentifier)
@@ -73,3 +93,57 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
         self.ruleOperator = ruleOperator
     }
 }
+
+extension RSDComparableSurveyRuleObject : RSDDocumentableDecodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.skipToIdentifier, .matchingValue, .ruleOperator]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .skipToIdentifier:
+                if idx != 0 { return false }
+            case .matchingValue:
+                if idx != 1 { return false }
+            case .ruleOperator:
+                if idx != 2 { return false }
+            }
+        }
+        return keys.count == 3
+    }
+    
+    static func examples() -> [[String : RSDJSONValue]] {
+        if Value.self == Bool.self {
+            return [ ["skipToIdentifier" : "nextSection", "matchingAnswer" : true] ]
+        }
+        else if Value.self == String.self {
+            return [ ["skipToIdentifier" : "nextSection", "matchingAnswer" : "foo"],
+                     ["matchingAnswer" : "bar", "ruleOperator" : "ne"]]
+        }
+        else if Value.self == Date.self {
+            return [ ["skipToIdentifier" : "nextSection",
+                      "matchingAnswer" : "2017-10-16T22:28:09.000-07:00",
+                      "ruleOperator" : "lt"]]
+        }
+        else if Value.self == Double.self {
+            return [ ["skipToIdentifier" : "nextSection",
+                      "matchingAnswer" : 10.7,
+                      "ruleOperator" : "gt"]]
+        }
+        else if Value.self == Int.self {
+            return [ ["skipToIdentifier" : "nextSection",
+                      "matchingAnswer" : 10,
+                      "ruleOperator" : "ne"]]
+        }
+        return []
+    }
+}
+

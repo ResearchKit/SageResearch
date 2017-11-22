@@ -137,28 +137,38 @@ public struct RSDTaskResultObject : RSDTaskResult, Codable {
 
 extension RSDTaskResultObject : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .taskRunUUID, .schemaInfo, .stepHistory, .asyncResults]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .identifier:
-                return ($0, String.self, "The identifier associated with the task, step, or asynchronous action.")
+                if idx != 0 { return false }
             case .type:
-                return ($0, RSDResultType.self, "A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.")
+                if idx != 1 { return false }
             case .startDate:
-                return ($0, Date.self, "The start date timestamp for the result.")
+                if idx != 2 { return false }
             case .endDate:
-                return ($0, Date.self, "The end date timestamp for the result.")
+                if idx != 3 { return false }
             case .taskRunUUID:
-                return ($0, UUID.self, "A unique identifier for this task run.")
+                if idx != 4 { return false }
             case .schemaInfo:
-                return ($0, RSDSchemaInfo.self, "Schema info associated with this task.")
+                if idx != 5 { return false }
             case .stepHistory:
-                return ($0, [RSDResult].self, "A listing of the step history for this task or section. The listed step results should *only* include the last result for any given step.")
+                if idx != 6 { return false }
             case .asyncResults:
-                return ($0, [RSDResult].self, "A list of all the asynchronous results for this task. The list should include uniquely identified results.")
+                if idx != 7 { return false }
             }
         }
+        return keys.count == 8
     }
     
     static func exampleResult() -> RSDTaskResultObject {

@@ -34,12 +34,14 @@
 import Foundation
 
 /// `RSDInputField` is used to describe a form input and includes the data type and a possible hint to how the UI
-/// should be displayed.
+/// should be displayed. The ResearchSuite framework uses `RSDFormUIStep` to represent questions to ask the user.
+/// Each question must have at least one associated input field. An input field is validated when its owning step
+/// is validated.
 ///
 /// - seealso: `RSDFormUIStep`
 public protocol RSDInputField {
     
-    /// A short string that uniquely identifies the form item within the step. The identifier is reproduced in the
+    /// A short string that uniquely identifies the input field within the step. The identifier is reproduced in the
     /// results of a step result in the step history of a task result.
     var identifier: String { get }
     

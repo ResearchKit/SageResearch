@@ -69,8 +69,8 @@ public struct RSDDeviceType : RawRepresentable, Codable {
 }
 
 extension RSDDeviceType : RSDDocumentableEnum {
-    static func allCodingKeys() -> Set<String> {
-        return Set(allStandardTypes().map{ $0.rawValue })
+    static func allCodingKeys() -> [String] {
+        return allStandardTypes().map{ $0.rawValue }
     }
 }
 

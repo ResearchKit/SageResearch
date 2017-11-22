@@ -155,23 +155,33 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDEmbeddedIconVendor, C
 }
 
 extension RSDChoiceObject : RSDDocumentableDecodableObject {
+
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.value, .text, .detail, .icon, .isExclusive]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .value:
-                return ($0, Codable.self, "A JSON encodable object to return as the value when this choice is selected.")
+                if idx != 0 { return false }
             case .text:
-                return ($0, String.self, "Localized text string to display for the choice.")
+                if idx != 1 { return false }
             case .detail:
-                return ($0, String.self, "Additional detail text.")
+                if idx != 2 { return false }
             case .icon:
-                return ($0, RSDImageWrapper.self, "The optional `RSDImageWrapper` with the pointer to the image.")
+                if idx != 3 { return false }
             case .isExclusive:
-                return ($0, Bool.self, "For a multiple choice option, is this choice mutually exclusive?")
+                if idx != 4 { return false }
             }
         }
+        return keys.count == 5
     }
     
     static func exampleDictionary() -> [String : RSDJSONValue]? {
@@ -194,6 +204,11 @@ extension RSDChoiceObject : RSDDocumentableDecodableObject {
 }
 
 extension RSDChoiceObject : RSDDocumentableStringLiteral {
+    
+    var stringValue: String {
+        return self._value as? String ?? ""
+    }
+    
     static func examples() -> [String] {
         return ["Blue Dogs"]
     }

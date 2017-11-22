@@ -66,19 +66,28 @@ public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundle
 
 extension RSDViewThemeElementObject : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.viewIdentifier, .bundleIdentifier, .storyboardIdentifier]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .viewIdentifier:
-                return ($0, String.self, "The storyboard view controller identifier or the nib name for this view controller.")
+                if idx != 0 { return false }
             case .bundleIdentifier:
-                return ($0, String.self, "The bundle identifier for the nib or storyboard. Default = `nil`.")
+                if idx != 1 { return false }
             case .storyboardIdentifier:
-                return ($0, String.self, "The storyboard identifier. Default = `nil`.")
-
+                if idx != 2 { return false }
             }
         }
+        return keys.count == 3
     }
     
     static func viewThemeExamples() -> [RSDViewThemeElementObject] {

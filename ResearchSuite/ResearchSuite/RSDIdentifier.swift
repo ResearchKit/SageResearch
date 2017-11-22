@@ -82,7 +82,7 @@ extension RSDIdentifier : ExpressibleByStringLiteral {
 }
 
 extension RSDIdentifier : RSDDocumentableEnum {
-    static func allCodingKeys() -> Set<String> {
-        return Set(allGlobalIdentifiers().map{ $0.rawValue })
+    static func allCodingKeys() -> [String] {
+        return allGlobalIdentifiers().map{ $0.rawValue }
     }
 }

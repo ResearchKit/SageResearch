@@ -33,11 +33,27 @@
 
 import Foundation
 
+/// `RSDMultipleComponentInputFieldObject` extends the properties of `RSDInputFieldObject` with information
+/// required to create a multiple component input field.
 open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultipleComponentInputField {
     
-    public private(set) var choices : [[RSDChoice]]
+    /// A list of choices for input fields that make up the multiple component option set.
+    public let choices : [[RSDChoice]]
+    
+    /// If this is a multiple component input field, the UI can optionally define a separator.
+    /// For example, blood pressure would have a separator of "/".
     open private(set) var separator: String?
     
+    /// Default initializer.
+    ///
+    /// - parameters:
+    ///     - identifier: A short string that uniquely identifies the input field within the step.
+    ///     - choices: A list of choices for input fields that make up the multiple component option set.
+    ///     - baseType: The base type for this input field.
+    ///     - separator: A separator to display between the components.
+    ///     - uiHint: A UI hint for how the study would prefer that the input field is displayed to the user.
+    ///     - prompt: A localized string that displays a short text offering a hint to the user of the data to be entered for
+    ///               this field.
     public init(identifier: String, choices: [[RSDChoice]], baseType: RSDFormDataType.BaseType, separator: String? = nil, uiHint: RSDFormUIHint? = nil, prompt: String? = nil) {
         self.choices = choices
         self.separator = separator
@@ -49,29 +65,32 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         case choices, separator
     }
     
+    /// Initialize from a `Decoder`. This method uses the `RSDFormDataType.BaseType` associated with this input field to
+    /// decode a list of `RSDChoiceObject` objects with the appropriate `Value` type.
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError` if there is a decoding error.
     public required init(from decoder: Decoder) throws {
         
         // Get the base data type
         let dataType = try type(of: self).dataType(from: decoder)
-        guard case .collection(let collectionType, let basetype) = dataType,
-            collectionType == .multipleComponent
-            else {
-                throw RSDValidationError.invalidType("The data type \(dataType) for the multiple component input is not supported")
-        }
         
         // decode the choices
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let choices: [[RSDChoice]]
-        switch basetype {
+        switch dataType.baseType {
         case .boolean:
             choices = try container.decode([[RSDChoiceObject<Bool>]].self, forKey: .choices)
-            
-        case .integer:
+        case .integer, .year:
             choices = try container.decode([[RSDChoiceObject<Int>]].self, forKey: .choices)
-            
+        case .date:
+            if let intChoices = try? container.decode([[RSDChoiceObject<Int>]].self, forKey: .choices) {
+                choices = intChoices
+            } else {
+                choices = try container.decode([[RSDChoiceObject<Int>]].self, forKey: .choices)
+            }
         case .decimal:
             choices = try container.decode([[RSDChoiceObject<Double>]].self, forKey: .choices)
-            
         default:
             choices = try container.decode([[RSDChoiceObject<String>]].self, forKey: .choices)
         }
@@ -84,28 +103,30 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         try super.init(from: decoder)
     }
     
-// TODO: syoung 11/14/2017 Implement Encodable protocol for the survey rules if there is a need to make this encodable.
-//    override open func encode(to encoder: Encoder) throws {
-//        try super.encode(to: encoder)
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//
-//        if let obj = separator {
-//            try container.encode(obj, forKey: .separator)
-//
-//        }
-//
-//        var nestedContainer = container.nestedUnkeyedContainer(forKey: .choices)
-//        for nestedChoices in choices {
-//            let nestedEncoder = nestedContainer.superEncoder()
-//            var innerContainer = nestedEncoder.unkeyedContainer()
-//            for choice in nestedChoices {
-//                guard let encodable = choice as? Encodable else {
-//                    throw EncodingError.invalidValue(choice, EncodingError.Context(codingPath: innerContainer.codingPath, debugDescription: "The choice does not conform to the Encodable protocol"))
-//                }
-//                let innerEncoder = innerContainer.superEncoder()
-//                try encodable.encode(to: innerEncoder)
-//            }
-//        }
-//    }
+    /// Encode the result to the given encoder.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
+    override open func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        if let obj = separator {
+            try container.encode(obj, forKey: .separator)
+
+        }
+
+        var nestedContainer = container.nestedUnkeyedContainer(forKey: .choices)
+        for nestedChoices in choices {
+            let nestedEncoder = nestedContainer.superEncoder()
+            var innerContainer = nestedEncoder.unkeyedContainer()
+            for choice in nestedChoices {
+                guard let encodable = choice as? Encodable else {
+                    throw EncodingError.invalidValue(choice, EncodingError.Context(codingPath: innerContainer.codingPath, debugDescription: "The choice does not conform to the Encodable protocol"))
+                }
+                let innerEncoder = innerContainer.superEncoder()
+                try encodable.encode(to: innerEncoder)
+            }
+        }
+    }
 }
 

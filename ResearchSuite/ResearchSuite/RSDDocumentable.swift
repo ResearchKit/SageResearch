@@ -46,6 +46,11 @@ public struct RSDDocumentCreator {
         RSDResultType.self,
         RSDStepType.self,
         RSDDateCoderObject.self,
+        RSDSurveyRuleOperator.self,
+        UITextAutocapitalizationType.self,
+        UITextAutocorrectionType.self,
+        UITextSpellCheckingType.self,
+        UIKeyboardType.self,
         ]
     
     let allOptionSets: [RSDDocumentableOptionSet.Type] = [
@@ -73,6 +78,9 @@ public struct RSDDocumentCreator {
         RSDUIActionObject.self,
         RSDSkipToUIActionObject.self,
         RSDWebViewUIActionObject.self,
+        RSDDateRangeObject.self,
+        RSDNumberRangeObject.self,
+        RSDTextFieldOptionsObject.self,
         ]
     
     let allDecodableObjects: [RSDDocumentableDecodableObject.Type] = [
@@ -80,6 +88,11 @@ public struct RSDDocumentCreator {
         RSDChoiceObject<Int>.self,
         RSDChoiceObject<Bool>.self,
         RSDChoiceObject<Double>.self,
+        RSDComparableSurveyRuleObject<Bool>.self,
+        RSDComparableSurveyRuleObject<String>.self,
+        RSDComparableSurveyRuleObject<Date>.self,
+        RSDComparableSurveyRuleObject<Double>.self,
+        RSDComparableSurveyRuleObject<Int>.self,
         ]
 }
 
@@ -89,9 +102,12 @@ protocol RSDDocumentable {
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up
 /// testing of `Codable` enum objects used by this framework.
 protocol RSDDocumentableEnum : RSDDocumentable, Codable {
+    
+    /// Not all of the enums have a `rawValue` of a `String` but they should all be codable using a string value.
+    var stringValue: String { get }
 
     /// All the coding keys supported by this framework for defining this enum using a JSON dictionary.
-    static func allCodingKeys() -> Set<String>
+    static func allCodingKeys() -> [String]
 }
 
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up
@@ -100,7 +116,7 @@ protocol RSDDocumentableEnum : RSDDocumentable, Codable {
 protocol RSDDocumentableOptionSet : RSDDocumentable, Codable {
     
     /// All the coding keys supported by this framework for defining this option set using a JSON dictionary.
-    static func allCodingKeys() -> Set<String>
+    static func allCodingKeys() -> [String]
 }
 
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up
@@ -108,29 +124,37 @@ protocol RSDDocumentableOptionSet : RSDDocumentable, Codable {
 /// - seealso: `ExpressibleByStringLiteral`
 protocol RSDDocumentableStringLiteral : RSDDocumentable, Codable {
     
+    /// Not all of the string literals have a `rawValue` of a `String` but they should all be codable using a string value.
+    var stringValue: String { get }
+    
     /// An array of encodable objects to use as the set of examples for decoding this object.
     static func examples() -> [String]
 }
 
+extension RawRepresentable where Self.RawValue == String {
+    public var stringValue: String { return rawValue }
+}
+
+protocol RSDDocumentableObject : RSDDocumentable {
+    
+    /// A list of `CodingKey` values for all the `Decodable` properties on this object.
+    static func codingKeys() -> [CodingKey]
+    
+    /// Method called during testing to validate that all the coding keys are included.
+    static func validateAllKeysIncluded() -> Bool
+}
+
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up
 /// testing of `Codable` objects and for use in documenting them.
-protocol RSDDocumentableCodableObject : RSDDocumentable, Codable {
-    
-    /// An mapping of all the `Decodable` properties to their CodingKey along with a description for
-    /// the property.
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)>
-    
+protocol RSDDocumentableCodableObject : RSDDocumentableObject, Codable {
+
     /// An array of encodable objects to use as the set of examples for decoding this object.
     static func examples() -> [Encodable]
 }
 
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up
 /// testing of `Codable` objects and for use in documenting them.
-protocol RSDDocumentableDecodableObject : RSDDocumentable, Decodable {
-    
-    /// An mapping of all the `Decodable` properties to their CodingKey along with a description for
-    /// the property.
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)>
+protocol RSDDocumentableDecodableObject : RSDDocumentableObject, Decodable {
     
     /// An array of encodable objects to use as the set of examples for decoding this object.
     static func examples() -> [[String : RSDJSONValue]]

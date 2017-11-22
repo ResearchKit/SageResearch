@@ -74,6 +74,10 @@ public enum RSDSurveyRuleOperator: String, Codable {
     /// will evaluate to `true` and return the `skipIdentifier` because neither `2` nor `4` are in the set
     /// defined by the `matchingAnswer`.
     case otherThan          = "ot"
+    
+    public static func allRuleOperators() -> [RSDSurveyRuleOperator] {
+        return [.skip, .equal, .notEqual, .lessThan, .greaterThan, .lessThanEqual, .greaterThanEqual, .otherThan]
+    }
 }
 
 /// `RSDComparableSurveyRule` is a survey rule that matches an expected result to the answer and vends a skip
@@ -200,5 +204,11 @@ extension RSDComparableSurveyRule {
         default:
             return (answerValue as? NSNumber) ?? (answerValue as? RSDJSONNumber)?.jsonNumber()
         }
+    }
+}
+
+extension RSDSurveyRuleOperator : RSDDocumentableEnum {
+    static func allCodingKeys() -> [String] {
+        return allRuleOperators().map { $0.rawValue }
     }
 }

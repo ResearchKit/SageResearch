@@ -198,20 +198,30 @@ struct RSDSizeWrapper : Codable {
 
 extension RSDFetchableImageThemeElementObject : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.imageName, .bundleIdentifier, .placementType, ._size]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .imageName:
-                return ($0, String.self, "The name of the image.")
+                if idx != 0 { return false }
             case .bundleIdentifier:
-                return ($0, String.self, "The bundle identifier for the image. Default = `nil`.")
+                if idx != 1 { return false }
             case .placementType:
-                return ($0, RSDImagePlacementType.self, "The preferred placement of the image. Default = `nil`.")
+                if idx != 2 { return false }
             case ._size:
-                return ($0, RSDSizeWrapper.self, "The size of the image. Default = `nil`.")
+                if idx != 3 { return false }
             }
         }
+        return keys.count == 4
     }
     
     static func imageThemeExamples() -> [RSDFetchableImageThemeElementObject] {
@@ -227,22 +237,32 @@ extension RSDFetchableImageThemeElementObject : RSDDocumentableCodableObject {
 
 extension RSDAnimatedImageThemeElementObject : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.imageNames, .animationDuration, .bundleIdentifier, .placementType, ._size]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .imageNames:
-                return ($0, [String].self, "The names of the images.")
+                if idx != 0 { return false }
             case .animationDuration:
-                return ($0, TimeInterval.self, "The animation duration.")
+                if idx != 1 { return false }
             case .bundleIdentifier:
-                return ($0, String.self, "The bundle identifier for the image. Default = `nil`.")
+                if idx != 2 { return false }
             case .placementType:
-                return ($0, RSDImagePlacementType.self, "The preferred placement of the image. Default = `nil`.")
+                if idx != 3 { return false }
             case ._size:
-                return ($0, RSDSizeWrapper.self, "The size of the image. Default = `nil`.")
+                if idx != 4 { return false }
             }
         }
+        return keys.count == 5
     }
     
     static func imageThemeExamples() -> [RSDAnimatedImageThemeElementObject] {

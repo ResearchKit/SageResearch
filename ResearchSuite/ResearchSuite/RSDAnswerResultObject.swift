@@ -108,24 +108,34 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
 
 extension RSDAnswerResultObject : RSDDocumentableCodableObject {
     
-    static func codingMap() -> Array<(CodingKey, Any.Type, String)> {
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
         let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .answerType, .value]
-        return codingKeys.map {
-            switch $0 {
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
             case .identifier:
-                return ($0, String.self, "The identifier associated with the task, step, or asynchronous action.")
+                if idx != 0 { return false }
             case .type:
-                return ($0, RSDResultType.self, "A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.")
+                if idx != 1 { return false }
             case .startDate:
-                return ($0, Date.self, "The start date timestamp for the result.")
+                if idx != 2 { return false }
             case .endDate:
-                return ($0, Date.self, "The end date timestamp for the result.")
+                if idx != 3 { return false }
             case .answerType:
-                return ($0, RSDAnswerResultType.self, "The answer type of the answer result. This includes coding information required to encode and decode the value. The value is expected to conform to one of the coding types supported by the answer type.")
+                if idx != 4 { return false }
             case .value:
-                return ($0, Any.self, "The answer for the result.")
+                if idx != 5 { return false }
             }
         }
+        return keys.count == 6
     }
     
     static func answerResultExamples() -> [RSDAnswerResultObject] {

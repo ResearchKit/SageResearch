@@ -318,7 +318,7 @@ extension RSDFormDataType : ExpressibleByStringLiteral {
 }
 
 extension RSDFormDataType : RSDDocumentableEnum {
-    static func allCodingKeys() -> Set<String> {
-        return Set(allStandardTypes().map{ $0.rawValue })
+    static func allCodingKeys() -> [String] {
+        return allStandardTypes().map{ $0.rawValue }
     }
 }
