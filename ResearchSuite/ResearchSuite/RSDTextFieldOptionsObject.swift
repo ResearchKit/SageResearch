@@ -38,65 +38,33 @@ import Foundation
 /// - seealso: `RSDInputField` and `RSDFormStepDataSource`
 public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
 
-    /// The regex used to validate user's input. If set to nil, no validation will be performed.
-    ///
-    /// - note: If the "validationRegex" is defined, then the `invalidMessage` should also be defined.
-    public var validationRegex: String?
+    /// A text validator that can be used to validate a string.
+    public var textValidator: RSDTextValidator?
     
-    /// The localizaed text presented to the user when invalid input is received.
+    /// The text presented to the user when invalid input is received.
     public var invalidMessage: String?
-    
-    /// This struct does not support custom regex
-    public var validationRegularExpression: NSRegularExpression? {
-        return nil
-    }
     
     /// The maximum length of the text users can enter. When the value of this property is 0, there
     /// is no maximum.
-    public var maximumLength: Int {
-        return _maximumLength ?? 0
-    }
-    private let _maximumLength: Int?
+    public var maximumLength: Int = 0
     
     /// Auto-capitalization type for the text field.
-    public var autocapitalizationType: UITextAutocapitalizationType {
-        return _autocapitalizationType ?? .none
-    }
-    private let _autocapitalizationType: UITextAutocapitalizationType?
+    public var autocapitalizationType: UITextAutocapitalizationType = .none
 
     /// Auto-correction type for the text field.
-    public var autocorrectionType: UITextAutocorrectionType {
-        return _autocorrectionType ?? .no
-    }
-    public let _autocorrectionType: UITextAutocorrectionType?
+    public var autocorrectionType: UITextAutocorrectionType = .no
     
     /// Spell checking type for the text field.
-    public var spellCheckingType: UITextSpellCheckingType {
-        return _spellCheckingType ?? .no
-    }
-    public let _spellCheckingType: UITextSpellCheckingType?
+    public var spellCheckingType: UITextSpellCheckingType = .no
     
     /// Keyboard type for the text field.
-    public var keyboardType: UIKeyboardType {
-        return _keyboardType ?? .default
-    }
-    private let _keyboardType: UIKeyboardType?
+    public var keyboardType: UIKeyboardType = .default
     
     /// Is the text field for password entry?
-    public var isSecureTextEntry: Bool {
-        return _isSecureTextEntry ?? false
-    }
-    private let _isSecureTextEntry: Bool?
+    public var isSecureTextEntry: Bool = false
     
     private enum CodingKeys : String, CodingKey {
-        case validationRegex
-        case invalidMessage
-        case _maximumLength = "maximumLength"
-        case _autocapitalizationType = "autocapitalizationType"
-        case _keyboardType = "keyboardType"
-        case _isSecureTextEntry = "isSecureTextEntry"
-        case _autocorrectionType = "autocorrectionType"
-        case _spellCheckingType = "spellCheckingType"
+        case textValidator, invalidMessage, maximumLength, isSecureTextEntry, autocapitalizationType, autocorrectionType, spellCheckingType, keyboardType
     }
     
     /// Default initializer.
@@ -108,12 +76,52 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
     ///     - spellCheckingType: Spell checking type for the text field.
     ///     - autocorrectionType: Auto-correction type for the text field.
     public init(keyboardType: UIKeyboardType = .default, autocapitalizationType: UITextAutocapitalizationType = .none, isSecureTextEntry: Bool = false, maximumLength: Int = 0, spellCheckingType: UITextSpellCheckingType = .no, autocorrectionType: UITextAutocorrectionType = .no) {
-        self._maximumLength = maximumLength
-        self._autocapitalizationType = autocapitalizationType
-        self._keyboardType = keyboardType
-        self._isSecureTextEntry = isSecureTextEntry
-        self._spellCheckingType = spellCheckingType
-        self._autocorrectionType = autocorrectionType
+        self.maximumLength = maximumLength
+        self.autocapitalizationType = autocapitalizationType
+        self.keyboardType = keyboardType
+        self.isSecureTextEntry = isSecureTextEntry
+        self.spellCheckingType = spellCheckingType
+        self.autocorrectionType = autocorrectionType
+    }
+    
+    /// Initialize from a `Decoder`.
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.invalidMessage = try container.decodeIfPresent(String.self, forKey: .invalidMessage)
+        self.maximumLength = try container.decodeIfPresent(Int.self, forKey: .maximumLength) ?? 0
+        self.autocapitalizationType = try container.decodeIfPresent(UITextAutocapitalizationType.self, forKey: .autocapitalizationType) ?? .none
+        self.keyboardType = try container.decodeIfPresent(UIKeyboardType.self, forKey: .keyboardType) ?? .default
+        self.isSecureTextEntry = try container.decodeIfPresent(Bool.self, forKey: .isSecureTextEntry) ?? false
+        self.spellCheckingType = try container.decodeIfPresent(UITextSpellCheckingType.self, forKey: .spellCheckingType) ?? .no
+        self.autocorrectionType = try container.decodeIfPresent(UITextAutocorrectionType.self, forKey: .autocorrectionType) ?? .no
+        if container.contains(.textValidator) {
+            let nestedDecoder = try container.superDecoder(forKey: .textValidator)
+            self.textValidator = try decoder.factory.decodeTextValidator(from: nestedDecoder)
+        }
+    }
+    
+    /// Encode the result to the given encoder. This will encode the text options as a dictionary.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(invalidMessage, forKey: .invalidMessage)
+        try container.encode(maximumLength, forKey: .maximumLength)
+        try container.encode(autocapitalizationType, forKey: .autocapitalizationType)
+        try container.encode(keyboardType, forKey: .keyboardType)
+        try container.encode(isSecureTextEntry, forKey: .isSecureTextEntry)
+        try container.encode(spellCheckingType, forKey: .spellCheckingType)
+        try container.encode(autocorrectionType, forKey: .autocorrectionType)
+        if let obj = self.textValidator {
+            let nestedEncoder = container.superEncoder(forKey: .textValidator)
+            guard let encodable = obj as? Encodable else {
+                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "The reg ex validator does not conform to the Encodable protocol"))
+            }
+            try encodable.encode(to: nestedEncoder)
+        }
     }
 }
 
@@ -124,7 +132,7 @@ extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.validationRegex, .invalidMessage, ._maximumLength, ._autocapitalizationType, ._keyboardType, ._autocorrectionType, ._spellCheckingType, ._isSecureTextEntry]
+        let codingKeys: [CodingKeys] = [.textValidator, .invalidMessage, .maximumLength, .isSecureTextEntry, .autocapitalizationType, .autocorrectionType, .spellCheckingType, .keyboardType]
         return codingKeys
     }
     
@@ -132,21 +140,21 @@ extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
         let keys: [CodingKeys] = allCodingKeys()
         for (idx, key) in keys.enumerated() {
             switch key {
-            case .validationRegex:
+            case .textValidator:
                 if idx != 0 { return false }
             case .invalidMessage:
                 if idx != 1 { return false }
-            case ._maximumLength:
+            case .maximumLength:
                 if idx != 2 { return false }
-            case ._autocapitalizationType:
+            case .isSecureTextEntry:
                 if idx != 3 { return false }
-            case ._keyboardType:
+            case .autocapitalizationType:
                 if idx != 4 { return false }
-            case ._autocorrectionType:
+            case .autocorrectionType:
                 if idx != 5 { return false }
-            case ._spellCheckingType:
+            case .spellCheckingType:
                 if idx != 6 { return false }
-            case ._isSecureTextEntry:
+            case .keyboardType:
                 if idx != 7 { return false }
             }
         }
@@ -156,7 +164,7 @@ extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
     static func examples() -> [Encodable] {
         let exampleA = RSDTextFieldOptionsObject(keyboardType: .asciiCapable, autocapitalizationType: .allCharacters, isSecureTextEntry: true, maximumLength: 16, spellCheckingType: .no, autocorrectionType: .no)
         var exampleB = RSDTextFieldOptionsObject(keyboardType: .numberPad)
-        exampleB.validationRegex = "^[0-9]*$"
+        exampleB.textValidator = try! RSDRegExValidatorObject(regExPattern: "^[0-9]*$")
         exampleB.invalidMessage = "This input field only allows entering numbers."
         return [exampleA, exampleB]
     }

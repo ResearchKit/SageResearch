@@ -441,7 +441,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
                 
             case .string:
                 if let string = answer as? String {
-                    if let count = try self.textFieldOptions?.regExMatches(string), count == 0 {
+                    if let validator = self.textFieldOptions?.textValidator, let isValid = try? validator.isValid(string), !isValid {
                         let debugDescription = self.textFieldOptions?.invalidMessage ?? "Invalid regex"
                         let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: debugDescription)
                         throw RSDInputFieldError.invalidRegex(self.textFieldOptions?.invalidMessage, context)

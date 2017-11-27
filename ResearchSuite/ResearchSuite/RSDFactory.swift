@@ -304,7 +304,7 @@ open class RSDFactory {
     /// - parameters:
     ///     - dataType:     The data type for this step.
     ///     - decoder:      The decoder to use to instatiate the object.
-    /// - returns: The step (if any) created from this decoder.
+    /// - returns: The input field (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeInputField(from decoder:Decoder, with dataType: RSDFormDataType) throws -> RSDInputField? {
         switch dataType {
@@ -322,6 +322,19 @@ open class RSDFactory {
         }
     }
     
+    
+    // MARK: Regular Expression Validator factory
+    
+    /// Decode the text validator from this decoder. The default implementation will instantiate a
+    /// `RSDRegExValidatorObject` from the decoder.
+    ///
+    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - returns: The text validator created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeTextValidator(from decoder: Decoder) throws -> RSDTextValidator? {
+        return try RSDRegExValidatorObject(from: decoder)
+    }
+
     
     // MARK: Conditional rule factory
     

@@ -60,6 +60,7 @@ public struct RSDDocumentCreator {
     let allStringLiterals: [RSDDocumentableStringLiteral.Type] = [
         RSDImageWrapper.self,
         RSDChoiceObject<String>.self,
+        RSDRegExValidatorObject.self,
         ]
 
     let allCodableObjects: [RSDDocumentableCodableObject.Type] = [

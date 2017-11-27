@@ -550,7 +550,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             "dataType": "string",
             "uiHint": "textfield",
             "textFieldOptions" : {
-                        "validationRegex" : "[A:C]",
+                        "textValidator" : "[A:C]",
                         "invalidMessage" : "You know me",
                         "maximumLength" : 10,
                         "autocapitalizationType" : "words",
@@ -567,7 +567,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.dataType, .base(.string))
             XCTAssertEqual(object.uiHint, .textfield)
             if let textFieldOptions = object.textFieldOptions  {
-                XCTAssertEqual(textFieldOptions.validationRegex, "[A:C]")
+                XCTAssertEqual((textFieldOptions.textValidator as? RSDRegExValidatorObject)?.regExPattern, "[A:C]")
                 XCTAssertEqual(textFieldOptions.invalidMessage, "You know me")
                 XCTAssertEqual(textFieldOptions.maximumLength, 10)
                 XCTAssertEqual(textFieldOptions.autocapitalizationType, .words)
@@ -590,7 +590,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(dictionary["uiHint"] as? String, "textfield")
             
             if let textFieldOptions = dictionary["textFieldOptions"] as? [String: Any] {
-                XCTAssertEqual(textFieldOptions["validationRegex"] as? String, "[A:C]")
+                XCTAssertEqual(textFieldOptions["textValidator"] as? String, "[A:C]")
                 XCTAssertEqual(textFieldOptions["invalidMessage"] as? String, "You know me")
                 XCTAssertEqual(textFieldOptions["maximumLength"] as? Int, 10)
                 XCTAssertEqual(textFieldOptions["autocapitalizationType"] as? String, "words")
@@ -625,7 +625,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.dataType, .base(.string))
             XCTAssertEqual(object.uiHint, .textfield)
             if let textFieldOptions = object.textFieldOptions  {
-                XCTAssertNil(textFieldOptions.validationRegex)
+                XCTAssertNil(textFieldOptions.textValidator)
                 XCTAssertNil(textFieldOptions.invalidMessage)
                 XCTAssertEqual(textFieldOptions.maximumLength, 0)
                 XCTAssertEqual(textFieldOptions.autocapitalizationType, .none)
