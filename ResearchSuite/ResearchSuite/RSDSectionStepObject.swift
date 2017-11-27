@@ -33,49 +33,143 @@
 
 import Foundation
 
+/// `RSDSectionStepObject` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
+/// step that includes an instruction step, countdown step, and activity step.
 public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable {
     
-    public let type: RSDStepType
+    /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
+    /// of a step history.
     public let identifier: String
+    
+    /// The type of the step.
+    public let type: RSDStepType
+    
+    /// A list of the steps used to define this subgrouping of steps.
     public let steps: [RSDStep]
     
-    public var progressMarkers: [String]? {
-        return nil
-    }
+    /// A list of step markers to use for calculating progress.
+    public var progressMarkers: [String]?
     
+    /// Default initializer.
+    /// - parameters:
+    ///     - identifier: A short string that uniquely identifies the step.
+    ///     - steps: The steps included in this section.
+    ///     - type: The type of the step. Default = `RSDStepType.section`
     public init(identifier: String, steps: [RSDStep], type: RSDStepType? = nil) {
         self.identifier = identifier
         self.steps = steps
         self.type = type ?? .section
     }
     
+    /// Instantiate a step result that is appropriate for this step. The default for this struct is a `RSDTaskResultObject`.
+    /// - returns: A result for this step.
     public func instantiateStepResult() -> RSDResult {
         return RSDTaskResultObject(identifier: identifier)
     }
     
+    /// Validate the steps in this section. The steps are valid if their identifiers are unique and if each step is valid.
     public func validate() throws {
         try stepValidation()
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, steps
+        case identifier, type, steps, progressMarkers
     }
     
+    /// Initialize from a `Decoder`. This implementation will query the `RSDFactory` attached to the decoder for the
+    /// appropriate implementation for each step in the array.
+    ///
+    /// - example:
+    ///
+    ///     ```
+    ///         // Example JSON dictionary that includes two instruction steps.
+    ///         let json = """
+    ///            {
+    ///                "identifier": "foobar",
+    ///                "type": "section",
+    ///                "steps": [
+    ///                    {
+    ///                        "identifier": "step1",
+    ///                        "type": "instruction",
+    ///                        "title": "Step 1"
+    ///                    },
+    ///                    {
+    ///                        "identifier": "step2",
+    ///                        "type": "instruction",
+    ///                        "title": "Step 2"
+    ///                    },
+    ///                ]
+    ///            }
+    ///            """.data(using: .utf8)! // our data in native (JSON) format
+    ///     ```
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.type = try container.decode(RSDStepType.self, forKey: .type)
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
         self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
+        self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)
     }
     
+    /// Required implementation for `RSDTask`. This method always returns `nil`.
     public func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
         return nil
     }
     
+    /// Required implementation for `RSDTask`. This method always returns `nil`.
     public func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
         return nil
     }
 }
 
-
+extension RSDSectionStepObject : RSDDocumentableDecodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .steps, .progressMarkers]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .identifier:
+                if idx != 0 { return false }
+            case .type:
+                if idx != 1 { return false }
+            case .steps:
+                if idx != 2 { return false }
+            case .progressMarkers:
+                if idx != 3 { return false }
+            }
+        }
+        return keys.count == 4
+    }
+    
+    static func examples() -> [[String : RSDJSONValue]] {
+        let jsonA: [String : RSDJSONValue] = [
+                "identifier": "foobar",
+                "type": "section",
+                "steps": [
+                    [
+                        "identifier": "step1",
+                        "type": "instruction",
+                        "title": "Step 1"
+                    ],
+                    [
+                        "identifier": "step2",
+                        "type": "instruction",
+                        "title": "Step 2"
+                    ],
+                ]
+            ]
+        return [jsonA]
+    }
+}

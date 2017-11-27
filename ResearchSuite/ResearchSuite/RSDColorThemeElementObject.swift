@@ -36,9 +36,9 @@ import Foundation
 /// `RSDColorThemeElementObject` tells the UI what the background color and foreground color are for a given view as
 /// well as whether or not the foreground elements should use "light style".
 public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBundleInfo, Codable {
-    private let _backgroundColorName: String?
-    private let _foregroundColorName: String?
-    private let _usesLightStyle: Bool?
+    let _backgroundColorName: String?
+    let _foregroundColorName: String?
+    let _usesLightStyle: Bool?
     
     public let bundleIdentifier: String?
 

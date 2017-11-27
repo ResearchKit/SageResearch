@@ -84,6 +84,24 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
     /// with the decoder to decode the `actions`.
     ///
+    /// - example:
+    ///
+    ///     ```
+    ///         // Example JSON for the `actions` coding.
+    ///         let json = """
+    ///            {
+    ///                "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
+    ///                             "cancel": { "iconName" : "closeX" },
+    ///                             "learnMore": { "iconName" : "infoIcon",
+    ///                                            "url" : "fooInfo" },
+    ///                             "skip": { "buttonTitle" : "not applicable",
+    ///                                        "skipToIdentifier": "boo"}
+    ///                            },
+    ///                "shouldHideActions": ["goBackward"]
+    ///            }
+    ///            """.data(using: .utf8)! // our data in native (JSON) format
+    ///     ```
+    ///
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - throws: `DecodingError`
     public required init(from decoder: Decoder) throws {
@@ -116,5 +134,27 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
             }
         }
         try container.encodeIfPresent(shouldHideActions, forKey: .shouldHideActions)
+    }
+    
+    class func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.actions, .shouldHideActions]
+        return codingKeys
+    }
+    
+    class func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .actions:
+                if idx != 0 { return false }
+            case .shouldHideActions:
+                if idx != 1 { return false }
+            }
+        }
+        return keys.count == 2
     }
 }

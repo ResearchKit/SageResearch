@@ -74,7 +74,7 @@ public protocol RSDStep {
 public protocol RSDGenericStep : RSDStep {
     
     /// The decoded dictionary.
-    var userInfo: [String : Any]? { get }
+    var userInfo: [String : Any] { get }
 }
 
 /// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
@@ -169,10 +169,10 @@ public protocol RSDThemedUIStep : RSDUIStep {
     /// The view info used to create a custom step.
     var viewTheme: RSDViewThemeElement? { get }
     
-    /// The color theme (if any).
+    /// The color theme.
     var colorTheme: RSDColorThemeElement? { get }
     
-    /// The image theme (if any).
+    /// The image theme.
     var imageTheme: RSDImageThemeElement? { get }
 }
 

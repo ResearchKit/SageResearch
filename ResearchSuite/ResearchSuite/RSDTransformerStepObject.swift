@@ -33,22 +33,52 @@
 
 import Foundation
 
+/// `RSDTransformerStepObject` is used in decoding a step with replacement properties for some or all of the steps in a
+/// section that is defined using a different resource. The factory will convert this step into an appropriate
+/// `RSDSectionStep` from the decoded object.
 public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
 
+    /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
+    /// of a step history.
     public let identifier: String
+    
+    /// The type of the step.
     public let type: RSDStepType
+    
+    /// A list of steps keyed by identifier with replacement values for the properties in the step.
     public var replacementSteps: [RSDGenericStep]?
+    
+    /// The transformer for the section steps.
     public var sectionTransformer: RSDSectionStepTransformer!
-    
-    public init(identifier: String, type: RSDStepType? = nil) {
-        self.identifier = identifier
-        self.type = type ?? .section
-    }
-    
+        
     private enum CodingKeys : String, CodingKey {
         case identifier, type, replacementSteps, sectionTransformer
     }
     
+    /// Initialize from a `Decoder`. 
+    ///
+    /// - example:
+    ///
+    ///     ```
+    ///         // Example JSON dictionary that includes a transformation step. The section is created from the
+    ///         // resource and then the values in the `replacementSteps` are used to mutate that step.
+    ///         let json = """
+    ///            {
+    ///             "identifier"         : "heartRate.before",
+    ///             "type"               : "transform",
+    ///             "replacementSteps"   : [{   "identifier"   : "instruction",
+    ///                                         "title"        : "This is a replacement title for the instruction.",
+    ///                                         "text"         : "This is some replacement text." },
+    ///                                     {   "identifier"   : "feedback",
+    ///                                         "text"         : "Your pre run heart rate is" }
+    ///                                     ],
+    ///            "sectionTransformer"    : { "resourceName": "HeartrateStep.json"}
+    ///            }
+    ///         """.data(using: .utf8)! // our data in native (JSON) format
+    ///     ```
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
@@ -62,10 +92,56 @@ public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
         }
     }
     
+    /// Required method. Returns the default for a section step.
     public func instantiateStepResult() -> RSDResult {
         return RSDTaskResultObject(identifier: identifier)
     }
     
+    /// Required method. Does nothing.
     public func validate() throws {
+    }
+}
+
+extension RSDTransformerStepObject : RSDDocumentableDecodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .replacementSteps, .sectionTransformer]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .identifier:
+                if idx != 0 { return false }
+            case .type:
+                if idx != 1 { return false }
+            case .replacementSteps:
+                if idx != 2 { return false }
+            case .sectionTransformer:
+                if idx != 3 { return false }
+            }
+        }
+        return keys.count == 4
+    }
+    
+    static func examples() -> [[String : RSDJSONValue]] {
+        let jsonA: [String : RSDJSONValue] = [
+                     "identifier"         : "heartRate.before",
+                     "type"               : "transform",
+                     "replacementSteps"   : [[   "identifier"   : "instruction",
+                                                 "title"        : "This is a replacement title for the instruction.",
+                                                 "text"         : "This is some replacement text." ],
+                                             [   "identifier"   : "feedback",
+                                                 "text"         : "Your pre run heart rate is" ]
+                                             ],
+                    "sectionTransformer"    : [ "resourceName" : "HeartrateStep.json"]
+                    ]
+        return [jsonA]
     }
 }

@@ -33,10 +33,24 @@
 
 import Foundation
 
+/// `RSDFormUIStepObject` is a concrete implementation of the `RSDFormUIStep` and `RSDSurveyNavigationStep`
+/// protocols. It is a subclass of `RSDUIStepObject` and can be used to display a navigable survey.
 open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNavigationStep {
 
+    /// The `inputFields` array is used to hold a logical subgrouping of input fields.
     open private(set) var inputFields: [RSDInputField]
+
+    /// Default initializer.
+    /// - parameters:
+    ///     - identifier: A short string that uniquely identifies the step.
+    ///     - inputFields: The input fields used to create this step.
+    ///     - type: The type of the step. Default = `RSDStepType.form`
+    public init(identifier: String, inputFields: [RSDInputField], type: RSDStepType? = nil) {
+        self.inputFields = inputFields
+        super.init(identifier: identifier, type: type ?? .form)
+    }
     
+    /// Identifier to skip to if all input fields have nil answers.
     open var skipToIfNil: String? {
         guard let skipAction = self.action(for: .navigation(.skip), on: self) as? RSDSkipToUIAction
             else {
@@ -45,19 +59,83 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
         return skipAction.skipToIdentifier
     }
     
+    /// Identifier for the next step to navigate to based on the current task result.
+    ///
+    /// - note: The conditional rule is ignored by this implementation of the navigation rule. Instead, this will
+    ///         evaluate any survey rules and the direct navigation rule inherited from `RSDUIStepObject`.
+    ///
+    /// - parameters:
+    ///     - result:           The current task result.
+    ///     - conditionalRule:  The conditional rule associated with this task. (Ignored)
+    ///     - isPeeking:        Is this navigation rule being called on a result for a step that is navigating
+    ///                         forward or is it a step navigator that is peeking at the next step to set up UI
+    ///                         display? If peeking at the next step then this parameter will be `true`.
+    /// - returns: The identifier of the next step.
     open override func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
         return self.evaluateSurveyRules(with: result, isPeeking: isPeeking) ?? self.nextStepIdentifier
-    }
-    
-    public init(identifier: String, inputFields: [RSDInputField], type: RSDStepType? = nil) {
-        self.inputFields = inputFields
-        super.init(identifier: identifier, type: type ?? .form)
     }
     
     private enum CodingKeys: String, CodingKey {
         case inputFields
     }
     
+    /// Initialize from a `Decoder`. This implementation will query the `RSDFactory` attached to the decoder for the
+    /// appropriate implementation for each input field in the array.
+    ///
+    /// - note: This method will also check for both an array of input fields and in order to support existing serialization
+    ///         methods defined prior to the developement of the Swift 4 `Decodable` protocol, it will also recognize a single
+    ///         input field defined inline as a single question.
+    ///
+    /// - example:
+    ///
+    ///     ```
+    ///         // Example JSON dictionary that includes a date, integer, and multiple choice question defined
+    ///         // in an array of dictionaries keyed to "inputFields".
+    ///         let json = """
+    ///             {
+    ///             "identifier": "step3",
+    ///             "type": "form",
+    ///             "title": "Step 3",
+    ///             "text": "Some text.",
+    ///             "inputFields": [
+    ///                             {
+    ///                             "identifier": "foo",
+    ///                             "dataType": "date",
+    ///                             "uiHint": "picker",
+    ///                             "prompt": "Foo",
+    ///                             "range" : { "minimumDate" : "2017-02-20",
+    ///                                         "maximumDate" : "2017-03-20",
+    ///                                         "codingFormat" : "yyyy-MM-dd" }
+    ///                             },
+    ///                             {
+    ///                             "identifier": "bar",
+    ///                             "dataType": "integer",
+    ///                             "prompt": "Bar"
+    ///                             },
+    ///                             {
+    ///                             "identifier": "goo",
+    ///                             "dataType": "multipleChoice",
+    ///                             "choices" : ["never", "sometimes", "often", "always"]
+    ///                             }
+    ///                            ]
+    ///             }
+    ///         """.data(using: .utf8)! // our data in native (JSON) format
+    ///
+    ///         // Example JSON dictionary that includes a multiple choice question where the input field properties are
+    ///         // defined inline and *not* using an array.
+    ///         let json = """
+    ///             {
+    ///             "identifier": "step3",
+    ///             "type": "form",
+    ///             "title": "Step 3",
+    ///             "dataType": "multipleChoice",
+    ///             "choices" : ["never", "sometimes", "often", "always"]
+    ///             }
+    ///         """.data(using: .utf8)! // our data in native (JSON) format
+    ///     ```
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -81,10 +159,16 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
         try super.init(from: decoder)
     }
     
+    /// Instantiate a step result that is appropriate for this step. The default for this class is a `RSDCollectionResultObject`.
+    /// - returns: A result for this step.
     open override func instantiateStepResult() -> RSDResult {
         return RSDCollectionResultObject(identifier: self.identifier)
     }
 
+    /// Validate the step to check for any configuration that should throw an error. This class will check that the input
+    /// fields have unique identifiers and will call the `validate()` method on each input field.
+    ///
+    /// - throws: An error if validation fails.
     open override func validate() throws {
         try super.validate()
         
@@ -99,5 +183,72 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
         for inputField in inputFields {
             try inputField.validate()
         }
+    }
+    
+    
+    // Overrides must be defined in the base implementation
+    
+    override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        let thisKeys: [CodingKey] = allCodingKeys()
+        keys.append(contentsOf: thisKeys)
+        return keys
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.inputFields]
+        return codingKeys
+    }
+    
+    override class func validateAllKeysIncluded() -> Bool {
+        guard super.validateAllKeysIncluded() else { return false }
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .inputFields:
+                if idx != 0 { return false }
+            }
+        }
+        return keys.count == 1
+    }
+    
+    override class func examples() -> [[String : RSDJSONValue]] {
+        let jsonA: [String : RSDJSONValue] = [
+             "identifier": "step3",
+             "type": "form",
+             "title": "Step 3",
+             "text": "Some text.",
+             "inputFields": [
+                             [
+                             "identifier": "foo",
+                             "dataType": "date",
+                             "uiHint": "picker",
+                             "prompt": "Foo",
+                             "range" : [ "minimumDate" : "2017-02-20",
+                                         "maximumDate" : "2017-03-20",
+                                         "codingFormat" : "yyyy-MM-dd" ]
+                             ],
+                             [
+                             "identifier": "bar",
+                             "dataType": "integer",
+                             "prompt": "Bar"
+                             ],
+                             [
+                             "identifier": "goo",
+                             "dataType": "multipleChoice",
+                             "choices" : ["never", "sometimes", "often", "always"]
+                             ]
+                            ]
+             ]
+        
+        let jsonB: [String : RSDJSONValue] = [
+             "identifier": "step3",
+             "type": "form",
+             "title": "Step 3",
+             "dataType": "multipleChoice",
+             "choices" : ["never", "sometimes", "often", "always"]
+             ]
+        
+        return [jsonA, jsonB]
     }
 }

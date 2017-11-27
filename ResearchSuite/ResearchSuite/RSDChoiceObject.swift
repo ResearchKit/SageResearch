@@ -96,6 +96,8 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDEmbeddedIconVendor, C
     /// decoder will decode a single `String` value and set that value as both the `value` property and
     /// the `text` property.
     ///
+    /// - seealso: `RSDChoiceInputFieldObject`
+    ///
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {

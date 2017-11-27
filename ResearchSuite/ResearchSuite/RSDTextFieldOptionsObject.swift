@@ -46,22 +46,22 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
     
     /// The maximum length of the text users can enter. When the value of this property is 0, there
     /// is no maximum.
-    public var maximumLength: Int = 0
+    public var maximumLength: Int
     
     /// Auto-capitalization type for the text field.
-    public var autocapitalizationType: UITextAutocapitalizationType = .none
+    public var autocapitalizationType: UITextAutocapitalizationType
 
     /// Auto-correction type for the text field.
-    public var autocorrectionType: UITextAutocorrectionType = .no
+    public var autocorrectionType: UITextAutocorrectionType
     
     /// Spell checking type for the text field.
-    public var spellCheckingType: UITextSpellCheckingType = .no
+    public var spellCheckingType: UITextSpellCheckingType
     
     /// Keyboard type for the text field.
-    public var keyboardType: UIKeyboardType = .default
+    public var keyboardType: UIKeyboardType
     
     /// Is the text field for password entry?
-    public var isSecureTextEntry: Bool = false
+    public var isSecureTextEntry: Bool
     
     private enum CodingKeys : String, CodingKey {
         case textValidator, invalidMessage, maximumLength, isSecureTextEntry, autocapitalizationType, autocorrectionType, spellCheckingType, keyboardType
@@ -84,19 +84,45 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
         self.autocorrectionType = autocorrectionType
     }
     
-    /// Initialize from a `Decoder`.
+    /// Initialize from a `Decoder`. The decoder uses string value keywords for all the `Int` base enums defined by this
+    /// struct where the keywords listed in the table below.
+    ///
+    /// | Property                 | Keywords                                                           |
+    /// |--------------------------|:------------------------------------------------------------------:|
+    /// | `keyboardType`           | [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
+    ///                                "numberPad", "phonePad", "namePhonePad", "emailAddress",
+    ///                                "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]   |
+    /// | `autocapitalizationType` | ["none", "words", "sentences", "allCharacters"]                    |
+    /// | `spellCheckingType`      | ["default", "no", "yes"]                                           |
+    /// | `autocorrectionType`     | ["default", "no", "yes"]                                           |
+    ///
+    /// - example:
+    ///
+    ///     ```
+    ///            let json = """
+    ///                {
+    ///                "textValidator" : "[A:C]",
+    ///                "invalidMessage" : "You know me",
+    ///                "maximumLength" : 10,
+    ///                "autocapitalizationType" : "words",
+    ///                "keyboardType" : "asciiCapable",
+    ///                "isSecureTextEntry" : true
+    ///                }
+    ///            """.data(using: .utf8)! // our data in native (JSON) format
+    ///     ```
     ///
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
+        let defaultValues = RSDTextFieldOptionsObject()
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.invalidMessage = try container.decodeIfPresent(String.self, forKey: .invalidMessage)
-        self.maximumLength = try container.decodeIfPresent(Int.self, forKey: .maximumLength) ?? 0
-        self.autocapitalizationType = try container.decodeIfPresent(UITextAutocapitalizationType.self, forKey: .autocapitalizationType) ?? .none
-        self.keyboardType = try container.decodeIfPresent(UIKeyboardType.self, forKey: .keyboardType) ?? .default
+        self.maximumLength = try container.decodeIfPresent(Int.self, forKey: .maximumLength) ?? defaultValues.maximumLength
+        self.autocapitalizationType = try container.decodeIfPresent(UITextAutocapitalizationType.self, forKey: .autocapitalizationType) ?? defaultValues.autocapitalizationType
+        self.keyboardType = try container.decodeIfPresent(UIKeyboardType.self, forKey: .keyboardType) ?? defaultValues.keyboardType
         self.isSecureTextEntry = try container.decodeIfPresent(Bool.self, forKey: .isSecureTextEntry) ?? false
-        self.spellCheckingType = try container.decodeIfPresent(UITextSpellCheckingType.self, forKey: .spellCheckingType) ?? .no
-        self.autocorrectionType = try container.decodeIfPresent(UITextAutocorrectionType.self, forKey: .autocorrectionType) ?? .no
+        self.spellCheckingType = try container.decodeIfPresent(UITextSpellCheckingType.self, forKey: .spellCheckingType) ?? defaultValues.spellCheckingType
+        self.autocorrectionType = try container.decodeIfPresent(UITextAutocorrectionType.self, forKey: .autocorrectionType) ?? defaultValues.autocorrectionType
         if container.contains(.textValidator) {
             let nestedDecoder = try container.superDecoder(forKey: .textValidator)
             self.textValidator = try decoder.factory.decodeTextValidator(from: nestedDecoder)

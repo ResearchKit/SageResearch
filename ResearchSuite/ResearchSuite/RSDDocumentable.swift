@@ -94,6 +94,12 @@ public struct RSDDocumentCreator {
         RSDComparableSurveyRuleObject<Date>.self,
         RSDComparableSurveyRuleObject<Double>.self,
         RSDComparableSurveyRuleObject<Int>.self,
+        RSDUIStepObject.self,
+        RSDActiveUIStepObject.self,
+        RSDFormUIStepObject.self,
+        RSDSectionStepObject.self,
+        RSDTransformerStepObject.self,
+        RSDInputFieldObject.self,
         ]
 }
 

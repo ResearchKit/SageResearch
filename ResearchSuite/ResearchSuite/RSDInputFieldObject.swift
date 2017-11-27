@@ -363,4 +363,115 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
             }
         }
     }
+    
+    
+    // Overrides must be defined in the base implementation
+    
+    class func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.identifier, .prompt, .placeholderText, .dataType, .uiHint, .isOptional, .textFieldOptions, .range, .surveyRules]
+        return codingKeys
+    }
+    
+    class func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .identifier:
+                if idx != 0 { return false }
+            case .prompt:
+                if idx != 1 { return false }
+            case .placeholderText:
+                if idx != 2 { return false }
+            case .dataType:
+                if idx != 3 { return false }
+            case .uiHint:
+                if idx != 4 { return false }
+            case .isOptional:
+                if idx != 5 { return false }
+            case .textFieldOptions:
+                if idx != 6 { return false }
+            case .range:
+                if idx != 7 { return false }
+            case .surveyRules:
+                if idx != 8 { return false }
+            }
+        }
+        return keys.count == 9
+    }
+    
+    class func examples() -> [[String : RSDJSONValue]] {
+        
+        let baseTypes = RSDFormDataType.BaseType.allTypes()
+        let examples = baseTypes.map { (baseType) -> [String : RSDJSONValue] in
+            switch baseType {
+            case .boolean:
+                return [ "identifier" : "booleanExample",
+                         "prompt" : "This is a boolean input field",
+                         "dataType" : "boolean",
+                         "uiHint" : "toggle",
+                         "optional" : true]
+            
+            case .date:
+                return [ "identifier" : "dateExample",
+                         "prompt" : "This is a date input field",
+                         "dataType" : "date",
+                         "uiHint" : "picker",
+                         "placeholderText" : "enter a date",
+                         "range" : [ "minimumDate" : "2017-02-20",
+                                     "maximumDate" : "2017-03-20",
+                                     "codingFormat" : "yyyy-MM-dd"]]
+            case .decimal:
+                return [ "identifier" : "decimalExample",
+                         "prompt" : "This is a decimal input field",
+                         "dataType" : "decimal",
+                         "uiHint" : "slider",
+                         "placeholderText" : "select a numer",
+                         "range" : [ "minimumValue" : -2.5,
+                                     "maximumValue" : 3,
+                                     "stepInterval" : 0.1,
+                                     "unit" : "feet",
+                                     "formatter" : ["maximumDigits" : 3]],
+                         "surveyRules" : [["skipToIdentifier": "lessThan",
+                                           "ruleOperator": "lt",
+                                           "matchingAnswer": 0],
+                                          ["skipToIdentifier": "greaterThan",
+                                           "ruleOperator": "gt",
+                                           "matchingAnswer": 0]]]
+            case .integer:
+                return [ "identifier" : "integerExample",
+                         "prompt" : "This is a integer input field",
+                         "dataType" : "integer",
+                         "uiHint" : "popover",
+                         "placeholderText" : "select a numer",
+                         "range" : [ "minimumValue" : -10,
+                                     "maximumValue" : 10,
+                                     "stepInterval" : 2],
+                         "matchingAnswer" : 0]
+                
+            case .year:
+                return [ "identifier" : "yearExample",
+                         "prompt" : "This is a year input field",
+                         "dataType" : "year",
+                         "uiHint" : "textfield",
+                         "placeholderText" : "birth year",
+                         "range" : [ "allowFuture" : false]]
+            
+            case .string:
+                return [ "identifier" : "stringExample",
+                         "prompt" : "This is a string input field",
+                         "dataType" : "string",
+                         "placeholderText" : "enter some text",
+                         "textFieldOptions" : [ "keyboardType" : "asciiCapable"]]
+            }
+        }
+
+        return examples
+    }
+}
+
+extension RSDInputFieldObject : RSDDocumentableDecodableObject {
 }

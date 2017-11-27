@@ -91,7 +91,7 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
             }
         case .decimal:
             choices = try container.decode([[RSDChoiceObject<Double>]].self, forKey: .choices)
-        default:
+        case .string:
             choices = try container.decode([[RSDChoiceObject<String>]].self, forKey: .choices)
         }
         self.choices = choices

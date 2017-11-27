@@ -32,7 +32,7 @@
 //
 
 import XCTest
-import ResearchSuite
+@testable import ResearchSuite
 
 class CodableStepObjectTests: XCTestCase {
     
@@ -68,7 +68,8 @@ class CodableStepObjectTests: XCTestCase {
                          "skip": { "buttonTitle" : "not applicable",
                                     "skipToIdentifier": "boo"}
                         },
-            "shouldHideActions": ["goBackward", "skip"]
+            "shouldHideActions": ["goBackward", "skip"],
+
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -110,6 +111,91 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    func testUIStepObjectWithThemes_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "instruction",
+            "title": "Hello World!",
+            "text": "Some text.",
+            "detail": "This is a test.",
+            "footnote": "This is a footnote.",
+            "nextStepIdentifier": "boo",
+            "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
+                         "cancel": { "iconName" : "closeX" },
+                         "learnMore": { "iconName" : "infoIcon",
+                                        "url" : "fooInfo" },
+                         "skip": { "buttonTitle" : "not applicable",
+                                    "skipToIdentifier": "boo"}
+                        },
+            "shouldHideActions": ["goBackward"],
+            "image"  : {    "imageNames" : ["foo1", "foo2", "foo3", "foo4"],
+                            "placementType" : "topBackground",
+                            "animationDuration" : 2,
+                               },
+            "colorTheme"     : { "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true },
+            "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
+                                 "storyboardIdentifier": "ActiveTaskSteps" }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDUIStepObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.title, "Hello World!")
+            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.detail, "This is a test.")
+            XCTAssertEqual(object.footnote, "This is a footnote.")
+            XCTAssertEqual(object.nextStepIdentifier, "boo")
+            
+            let goForwardAction = object.action(for: .navigation(.goForward), on: object)
+            XCTAssertNotNil(goForwardAction)
+            XCTAssertEqual(goForwardAction?.buttonTitle, "Go, Dogs! Go!")
+            
+            let cancelAction = object.action(for: .navigation(.cancel), on: object)
+            XCTAssertNotNil(cancelAction)
+            XCTAssertEqual((cancelAction as? RSDUIActionObject)?.iconName, "closeX")
+            
+            let learnMoreAction = object.action(for: .navigation(.learnMore), on: object)
+            XCTAssertNotNil(learnMoreAction)
+            XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.iconName, "infoIcon")
+            XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.url, "fooInfo")
+            
+            let skipAction = object.action(for: .navigation(.skip), on: object)
+            XCTAssertNotNil(skipAction)
+            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.buttonTitle, "not applicable")
+            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.skipToIdentifier, "boo")
+            
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
+            
+            if let images = object.imageTheme as? RSDAnimatedImageThemeElementObject {
+                XCTAssertEqual(images.animationDuration, 2)
+                XCTAssertEqual(images.imageNames, ["foo1", "foo2", "foo3", "foo4"])
+                XCTAssertEqual(images.placementType, .topBackground)
+            } else {
+                XCTFail("Failed to decode images")
+            }
+            
+            if let color = object.colorTheme as? RSDColorThemeElementObject {
+                XCTAssertTrue(color.usesLightStyle)
+                XCTAssertEqual(color._backgroundColorName, "sky")
+                XCTAssertEqual(color._foregroundColorName, "cream")
+            } else {
+                XCTFail("Failed to decode color theme")
+            }
+            
+            XCTAssertEqual(object.viewTheme?.storyboardIdentifier, "ActiveTaskSteps")
+            XCTAssertEqual(object.viewTheme?.viewIdentifier, "ActiveInstruction")
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
     func testActiveUIStepObject_Codable() {
         
         let json = """
@@ -120,7 +206,7 @@ class CodableStepObjectTests: XCTestCase {
             "text": "Some text.",
             "duration": 30,
             "commands": ["playSoundOnStart", "vibrateOnFinish"],
-            "spokenInstructions" : { "0": "Start moving",
+            "spokenInstructions" : { "start": "Start moving",
                                      "10": "Keep going",
                                      "halfway": "Halfway there",
                                      "end": "Stop moving"}
@@ -325,16 +411,15 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.identifier, "foobar")
             
             XCTAssertEqual(object.identifier, "foobar")
-            XCTAssertEqual(object.userInfo?["title"] as? String, "Hello World!")
-            XCTAssertEqual(object.userInfo?["detail"] as? String, "This is a test.")
-            XCTAssertEqual(object.userInfo?["copyright"] as? String, "This is a copyright string.")
-            XCTAssertEqual(object.userInfo?["estimatedMinutes"] as? Int, 5)
-            XCTAssertEqual(object.userInfo?["icon"] as? String, "foobar")
+            XCTAssertEqual(object.userInfo["title"] as? String, "Hello World!")
+            XCTAssertEqual(object.userInfo["detail"] as? String, "This is a test.")
+            XCTAssertEqual(object.userInfo["copyright"] as? String, "This is a copyright string.")
+            XCTAssertEqual(object.userInfo["estimatedMinutes"] as? Int, 5)
+            XCTAssertEqual(object.userInfo["icon"] as? String, "foobar")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return
         }
     }
-    
 }
