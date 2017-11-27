@@ -264,7 +264,7 @@ public struct RSDNumberRangeObject : RSDNumberRange, Codable {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case minimumValue, maximumValue, stepInterval, unit, maximumDigits
+        case minimumValue, maximumValue, stepInterval, unit, formatter
     }
     
     /// Initialize from a `Decoder`.
@@ -280,8 +280,9 @@ public struct RSDNumberRangeObject : RSDNumberRange, Codable {
         self.maximumValue = (maximumDouble == nil) ? nil : Decimal(floatLiteral: maximumDouble!)
         self.stepInterval = (stepInterval == nil) ? nil : Decimal(floatLiteral: stepInterval!)
         self.unit = try container.decodeIfPresent(String.self, forKey: .unit)
-        if let digits = try container.decodeIfPresent(Int.self, forKey: .maximumDigits) {
-            self.formatter = RSDNumberRangeObject.defaultNumberFormatter(with: digits)
+        if container.contains(.formatter) {
+            let nestedDecoder = try container.superDecoder(forKey: .formatter)
+            self.formatter = try decoder.factory.decodeNumberFormatter(from: nestedDecoder)
         } else {
             self.formatter = nil
         }
@@ -302,22 +303,17 @@ public struct RSDNumberRangeObject : RSDNumberRange, Codable {
             try container.encode(obj, forKey: .stepInterval)
         }
         try container.encodeIfPresent(self.unit, forKey: .unit)
-        if let digits = (self.formatter as? NumberFormatter)?.maximumFractionDigits {
-            try container.encode(digits, forKey: .maximumDigits)
+        
+        if let obj = self.formatter {
+            let nestedEncoder = container.superEncoder(forKey: .formatter)
+            guard let encodable = obj as? Encodable else {
+                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "The object does not conform to the Encodable protocol"))
+            }
+            try encodable.encode(to: nestedEncoder)
         }
     }
     
-    /// Convenience function for getting the default number formatter with the given `maximumFractionDigits`.
-    /// - parameter maximumFractionDigits: The number of decimal places to include.
-    /// - returns: A number formatter.
-    static func defaultNumberFormatter(with maximumFractionDigits: Int) -> NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = maximumFractionDigits
-        formatter.generatesDecimalNumbers = true
-        formatter.locale = Locale.current
-        formatter.numberStyle = .decimal
-        return formatter
-    }
+
 }
 
 extension RSDNumberRangeObject : RSDDocumentableCodableObject {
@@ -327,7 +323,7 @@ extension RSDNumberRangeObject : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.minimumValue, .maximumValue, .stepInterval, .unit, .maximumDigits]
+        let codingKeys: [CodingKeys] = [.minimumValue, .maximumValue, .stepInterval, .unit, .formatter]
         return codingKeys
     }
     
@@ -343,7 +339,7 @@ extension RSDNumberRangeObject : RSDDocumentableCodableObject {
                 if idx != 2 { return false }
             case .unit:
                 if idx != 3 { return false }
-            case .maximumDigits:
+            case .formatter:
                 if idx != 4 { return false }
             }
         }
@@ -351,7 +347,7 @@ extension RSDNumberRangeObject : RSDDocumentableCodableObject {
     }
     
     static func numberRangeExamples() -> [RSDNumberRangeObject] {
-        let exampleA = RSDNumberRangeObject(minimumDouble: 1.23, maximumDouble: 567.89, stepInterval: 0.01, unit: "m", formatter: RSDNumberRangeObject.defaultNumberFormatter(with: 2))
+        let exampleA = RSDNumberRangeObject(minimumDouble: 1.23, maximumDouble: 567.89, stepInterval: 0.01, unit: "m", formatter: NumberFormatter.defaultNumberFormatter(with: 2))
         let exampleB = RSDNumberRangeObject(minimumInt: -5, maximumInt: 10)
         return [exampleA, exampleB]
     }

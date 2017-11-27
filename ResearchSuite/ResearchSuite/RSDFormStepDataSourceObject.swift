@@ -674,7 +674,7 @@ final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
 
         let baseType: RSDAnswerResultType.BaseType = (inputField.dataType.baseType == .decimal) ? .decimal : .integer
         let digits = (baseType == .decimal) ? 3 : 0
-        let numberFormatter = (formatter as? NumberFormatter) ?? RSDNumberRangeObject.defaultNumberFormatter(with: digits)
+        let numberFormatter = (formatter as? NumberFormatter) ?? NumberFormatter.defaultNumberFormatter(with: digits)
         if inputField.dataType.baseType == .year {
             numberFormatter.groupingSeparator = ""
         }

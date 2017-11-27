@@ -420,7 +420,8 @@ class CodableInputFieldObjectTests: XCTestCase {
                         "maximumValue" : 3,
                         "stepInterval" : 0.1,
                         "unit" : "feet",
-                        "maximumDigits" : 3 }
+                        "formatter" : {"maximumDigits" : 3 }
+                       }
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -458,7 +459,11 @@ class CodableInputFieldObjectTests: XCTestCase {
                 XCTAssertEqual(range["maximumValue"] as? Double, 3)
                 XCTAssertEqual(range["stepInterval"] as? Double, 0.1)
                 XCTAssertEqual(range["unit"] as? String, "feet")
-                XCTAssertEqual(range["maximumDigits"] as? Int, 3)
+                if let formatter = range["formatter"] as? [String: Any] {
+                    XCTAssertEqual(formatter["maximumDigits"] as? Int, 3)
+                } else {
+                    XCTFail("Failed to encode the formatter.")
+                }
             }
             else {
                 XCTFail("Failed to encode range")

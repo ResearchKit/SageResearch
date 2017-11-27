@@ -97,6 +97,8 @@ public struct RSDDocumentCreator {
         ]
 }
 
+/// This is an internal protocol (accessible by test but not externally) that can be used to set up
+/// testing of `Decodable` objects used by this framework.
 protocol RSDDocumentable {
 }
 

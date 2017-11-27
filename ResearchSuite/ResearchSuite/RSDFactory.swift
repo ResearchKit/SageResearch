@@ -323,7 +323,7 @@ open class RSDFactory {
     }
     
     
-    // MARK: Regular Expression Validator factory
+    // MARK: Text Validator factory
     
     /// Decode the text validator from this decoder. The default implementation will instantiate a
     /// `RSDRegExValidatorObject` from the decoder.
@@ -333,6 +333,19 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTextValidator(from decoder: Decoder) throws -> RSDTextValidator? {
         return try RSDRegExValidatorObject(from: decoder)
+    }
+    
+    
+    // MARK: Formatter factory
+    
+    /// Decode a number formatter from this decoder. The default implementation will instantiate a  `NumberFormatter`
+    /// from the decoder using the convenience method defined in an extension in this framework.
+    ///
+    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - returns: The number formatter created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeNumberFormatter(from decoder: Decoder) throws -> NumberFormatter {
+        return try NumberFormatter(from: decoder)
     }
 
     

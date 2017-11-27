@@ -36,7 +36,7 @@ import UIKit
 open class Localization: NSObject {
     
     public static var allBundles: [Bundle] = {
-        return [Bundle.main, Bundle(for: Localization.self)]
+        return [Bundle.main, Bundle(for: Localization.self), Bundle(for: RSDFactory.self)]
     }()
         
     @objc open class func localizedString(_ key: String) -> String {
