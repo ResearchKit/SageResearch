@@ -33,80 +33,54 @@
 
 import Foundation
 
+/// `RSDAsyncActionControllerDelegate` is the delegate protocol for `RSDAsyncActionController`.
 public protocol RSDAsyncActionControllerDelegate : class {
     
-    /**
-     Method called when the controller fails. The delegate is responsible for handling the failure.
-     */
+    /// Method called when the controller fails. The delegate is responsible for handling the failure.
     func asyncActionController(_ controller: RSDAsyncActionController, didFailWith error: Error)
 }
 
+/// The completion handler for starting and stopping an async action.
 public typealias RSDAsyncActionCompletionHandler = (RSDAsyncActionController, RSDResult?, Error?) -> Void
 
-/**
- A controller for an async action configuration.
- */
+/// A controller for an async action configuration.
 public protocol RSDAsyncActionController : class {
     
-    /**
-     Delegate callback for handling action completed.
-     */
+    /// Delegate callback for handling action completed or failed.
     weak var delegate: RSDAsyncActionControllerDelegate? { get set }
     
-    /**
-     Is the action currently running?
-     */
+    /// Is the action currently running?
     var isRunning: Bool { get }
     
-    /**
-     Is the action currently paused?
-     */
+    /// Is the action currently paused?
     var isPaused: Bool { get }
     
-    /**
-     Was the action cancelled?
-     */
+    /// Was the action cancelled?
     var isCancelled: Bool { get }
     
-    /**
-     Results for this action controller.
-     */
+    /// Results for this action controller.
     var result: RSDResult? { get }
     
-    /**
-     The configuration used to set up the controller.
-     */
+    /// The configuration used to set up the controller.
     var configuration: RSDAsyncActionConfiguration { get }
     
-    /**
-     Start the asynchronous action with the given completion handler. Note: The handler may be called on a background thread.
-     */
-    func start(at taskPath: RSDTaskPath?, completion: RSDAsyncActionCompletionHandler?)
+    /// Start the asynchronous action with the given completion handler.
+    /// - note: The handler may be called on a background thread.
+    func start(at taskPath: RSDTaskPath, completion: RSDAsyncActionCompletionHandler?)
     
-    /**
-     Pause the action. Ignored if not applicable.
-     */
+    /// Pause the action. Ignored if not applicable.
     func pause()
     
-    /**
-     Resume the action. Ignored if not applicable.
-     */
+    /// Resume the action. Ignored if not applicable.
     func resume()
     
-    /**
-     Stop the action with the given completion handler. Note: The handler may be called on a background thread.
-     */
+    /// Stop the action with the given completion handler.
+    /// - note: The handler may be called on a background thread.
     func stop(_ completion: RSDAsyncActionCompletionHandler?)
     
-    /**
-     Cancel the action. If called, the completion handler will be called with a `nil` result.
-     */
+    /// Cancel the action.
     func cancel()
     
-    /**
-     Let the controller know that the task has moved to the given step.
-     */
+    /// Let the controller know that the task has moved to the given step.
     func moveTo(step: RSDStep, taskPath: RSDTaskPath)
 }
-
-

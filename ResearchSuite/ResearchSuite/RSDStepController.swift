@@ -33,60 +33,48 @@
 
 import Foundation
 
+/// `RSDStepController` handles default implementations for running a step in a task.
 public protocol RSDStepController : class, NSObjectProtocol {
     
-    /**
-     Pointer back to the task controller that is displaying the step controller. The implementation of the task controller should set this pointer before displaying the step controller.
-     */
+    /// Pointer back to the task controller that is displaying the step controller. The implementation
+    /// of the task controller should set this pointer before displaying the step controller.
     weak var taskController: RSDTaskController! { get set }
     
-    /**
-     A pointer to the step with the model information used to display and run the step. The implementation of the task cotroller should set this pointer before displaying the step controller.
-     */
+    /// A pointer to the step with the model information used to display and run the step. The
+    /// implementation of the task controller should set this pointer before displaying the step controller.
     var step: RSDStep! { get set }
     
-    /**
-     Callback from the task controller called on the current step controller when loading is finished and the task is ready to continue.
-     */
+    /// Callback from the task controller called on the current step controller when loading is finished
+    /// and the task is ready to continue.
     func didFinishLoading()
     
-    /**
-     Is forward navigation enabled? This property allows the step controller to indicate that forward step is not enabled.
-     */
+    /// Is forward navigation enabled? This property allows the step controller to indicate that forward
+    /// step is not enabled.
     var isForwardEnabled: Bool { get }
     
-    /**
-     Navigate forward.
-     */
+    /// Navigate forward.
     func goForward()
     
-    /**
-     Navigate back.
-     */
+    /// Navigate back.
     func goBack()
     
-    /**
-     Navigate forward by skipping the step.
-     */
+    /// Navigate forward by skipping the step.
     func skipForward()
     
-    /**
-     Cancel the task.
-     */
+    /// Cancel the task.
     func cancel()
 }
 
 extension RSDStepController {
     
-    /**
-     Conveniece method for getting the progress through the task for the current step with the current result.
-     
-     @return current        The current progress. This indicates progress within the task.
-     @return total          The total number of steps.
-     @return isEstimated    Whether or not the progress is an estimate (if the task has variable navigation)
-     */
+    /// Conveniece method for getting the progress through the task for the current step with
+    /// the current result.
+    ///
+    /// - returns:
+    ///     - current: The current progress. This indicates progress within the task.
+    ///     - total: The total number of steps.
+    ///     - isEstimated: Whether or not the progress is an estimate (if the task has variable navigation)
     public func progress() -> (current: Int, total: Int, isEstimated: Bool)? {
-        // TODO: syoung 11/06/2017 FIXME!!! This isn't returning the correct progress for subsections.
         
         // In case this gets called before the view has been loaded, check for the optionals
         guard let path = self.taskController?.taskPath, let currentStep = step
