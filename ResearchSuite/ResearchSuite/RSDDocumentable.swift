@@ -100,6 +100,12 @@ public struct RSDDocumentCreator {
         RSDSectionStepObject.self,
         RSDTransformerStepObject.self,
         RSDInputFieldObject.self,
+        RSDChoiceInputFieldObject.self,
+        RSDSchemaInfoObject.self,
+        RSDConditionalStepNavigatorObject.self,
+        RSDTaskGroupObject.self,
+        RSDTaskInfoStepObject.self,
+        RSDTaskObject.self,
         ]
 }
 

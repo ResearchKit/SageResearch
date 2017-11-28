@@ -107,7 +107,15 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, prompt, placeholderText, dataType, uiHint, isOptional = "optional", textFieldOptions, range, surveyRules
+        case identifier
+        case prompt
+        case placeholderText
+        case dataType
+        case uiHint
+        case isOptional = "optional"
+        case textFieldOptions
+        case range
+        case surveyRules
     }
     
     /// Overridable class function for decoding the data type from the decoder. The default implementation will key to

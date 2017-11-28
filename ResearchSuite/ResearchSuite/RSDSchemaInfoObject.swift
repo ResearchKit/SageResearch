@@ -33,21 +33,29 @@
 
 import Foundation
 
-/**
- `RSDSchemaInfoObject` is a concrete implementation of the `RSDSchemaInfo` protocol.
- */
+/// `RSDSchemaInfoObject` is a concrete implementation of the `RSDSchemaInfo` protocol.
 public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable {
     private let identifier: String
     private let revision: Int
     
+    /// A short string that uniquely identifies the associated result schema.
     public var schemaIdentifier: String? {
         return identifier
     }
     
+    /// A revision number associated with the result schema.
     public var schemaRevision: Int {
         return revision
     }
     
+    private enum CodingKeys: String, CodingKey {
+        case identifier, revision
+    }
+    
+    /// Default initializer.
+    /// - parameters:
+    ///     - identifier: A short string that uniquely identifies the associated result schema.
+    ///     - revision: A revision number associated with the result schema.
     public init(identifier: String, revision: Int) {
         self.identifier = identifier
         self.revision = revision
@@ -64,6 +72,38 @@ extension RSDSchemaInfoObject : Equatable {
 extension RSDSchemaInfoObject : Hashable {
     public var hashValue : Int {
         return (schemaIdentifier?.hashValue ?? 0) ^ schemaRevision
+    }
+}
+
+extension RSDSchemaInfoObject : RSDDocumentableDecodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.identifier, .revision]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .identifier:
+                if idx != 0 { return false }
+            case .revision:
+                if idx != 1 { return false }
+            }
+        }
+        return keys.count == 2
+    }
+    
+    static func examples() -> [[String : RSDJSONValue]] {
+        let json: [String : RSDJSONValue] = [
+            "identifier": "foo",
+            "revision": 3 ]
+        return [json]
     }
 }
 

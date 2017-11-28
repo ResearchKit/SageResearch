@@ -202,4 +202,110 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
             try encodable.encode(to: nestedEncoder)
         }
     }
+    
+    // Overrides must be defined in the base implementation
+    
+    override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        let thisKeys: [CodingKey] = allCodingKeys()
+        keys.append(contentsOf: thisKeys)
+        return keys
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.choices]
+        return codingKeys
+    }
+    
+    override class func validateAllKeysIncluded() -> Bool {
+        guard super.validateAllKeysIncluded() else { return false }
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .choices:
+                if idx != 0 { return false }
+            }
+        }
+        return keys.count == 1
+    }
+    
+    override class func examples() -> [[String : RSDJSONValue]] {
+        let jsonA: [String : RSDJSONValue] = [
+                "identifier": "foo",
+                "type": "form",
+                "prompt": "Choose a number",
+                "dataType": "singleChoice.decimal",
+                "uiHint": "picker",
+                "choices" : [[  "value" : 0,
+                                "text" : "0"],
+                             [  "value" : 1.2,
+                                "text" : "1.2"],
+                             [  "value" : 3.1425,
+                                "text" : "pi",
+                                "detail" : "Is the magic number" ],
+                             [  "text" : "None of the above",
+                                "isExclusive" : true ]],
+                "matchingAnswer": 0
+            ]
+        
+        let jsonB: [String : RSDJSONValue] = [
+              "identifier": "step3",
+              "type": "form",
+              "title": "Step 3",
+              "dataType": "multipleChoice",
+              "choices" : ["alpha", "beta", "charlie", "delta"]
+              ]
+        
+        let jsonC: [String : RSDJSONValue] = [
+            "identifier": "happiness",
+            "type": "form",
+            "title": "How happy are you?",
+            "dataType": "singleChoice.integer",
+            "choices": [[
+                        "text": "delighted",
+                        "detail": "Nothing could be better!",
+                        "value": 1,
+                        "icon": "moodScale1"
+                        ],
+                        [
+                        "text": "good",
+                        "detail": "Life is good.",
+                        "value": 2,
+                        "icon": "moodScale2"
+                        ],
+                        [
+                        "text": "so-so",
+                        "detail": "Things are okay, I guess.",
+                        "value": 3,
+                        "icon": "moodScale3"
+                        ],
+                        [
+                        "text": "sad",
+                        "detail": "I'm feeling a bit down.",
+                        "value": 4,
+                        "icon": "moodScale4"
+                        ],
+                        [
+                        "text": "miserable",
+                        "detail": "I cry into my pillow every night.",
+                        "value": 5,
+                        "icon": "moodScale5"
+                        ]]
+            ]
+        
+        let jsonD: [String : RSDJSONValue] = [
+                "identifier": "heightLimit",
+                "type": "form",
+                "prompt": "Are you tall?",
+                "dataType": "singleChoice.boolean",
+                "choices" : [[  "value" : true,
+                                "text" : "Yes"],
+                             [  "value" : false,
+                                "text" : "No"],
+                             [  "text" : "I don't know",
+                                "isExclusive" : true ]],
+            ]
+        
+        return [jsonA, jsonB, jsonC, jsonD]
+    }
 }

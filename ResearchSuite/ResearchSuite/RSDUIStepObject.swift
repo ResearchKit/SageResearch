@@ -119,7 +119,16 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     }
         
     private enum CodingKeys: String, CodingKey {
-        case identifier, type, title, text, detail, footnote, nextStepIdentifier, viewTheme, colorTheme, imageTheme = "image"
+        case identifier
+        case type
+        case title
+        case text
+        case detail
+        case footnote
+        case nextStepIdentifier
+        case viewTheme
+        case colorTheme
+        case imageTheme = "image"
     }
     
     /// Initialize from a `Decoder`.
