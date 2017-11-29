@@ -3,13 +3,13 @@
     "actions": {
         "cancel": { "iconName": "closeActivity" }
     },
-    "shouldHideActions": ["goBackward", "skip"],
+    "shouldHideActions": ["skip"],
     "steps": [{
               "identifier": "step1",
               "type": "instruction",
               "title": "Step 1",
               "text": "This is the first step of the Foo task.",
-              "detail": "On this screen you should see an image above the text with a picture of an envelop. There is also a short footnote. The button should say 'Go, Dogs! Go!'. Tap it to continue.",
+              "detail": "On this screen you should see an image above the text with a picture of an envelop. There is also a short footnote. The button should say 'Go, Dogs!'. Tap it to continue.",
               "footnote": "This is a footnote.",
               "image": "before",
               "actions": {
@@ -32,16 +32,23 @@
                   }
               },
               {
+              "identifier": "countdownStep",
+              "type": "countdown",
+              "title": "It's the Final Countdown",
+              "text": "Some text.",
+              "duration": 5,
+              "commands": ["vibrate", "transitionAutomatically"],
+              },
+              {
               "identifier": "movingStep",
               "type": "active",
               "title": "Active Step",
               "text": "Some text.",
-              "shouldHideActions": ["goBackward", "goForward"],
-              "duration": 5,
+              "duration": 20,
               "commands": ["playSound", "transitionAutomatically"],
               "spokenInstructions": {
                   "0": "Start moving",
-                  "10": "Keep going",
+                  "5": "Keep going",
                   "halfway": "Halfway there",
                   "end": "Stop moving"
                   }
