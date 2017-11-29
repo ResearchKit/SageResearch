@@ -168,7 +168,7 @@ public struct RSDAnswerResultType : Codable {
 }
 
 // MARK: Value Decoding
-extension RSDAnswerResultType : RSDJSONValueDecoder {
+extension RSDAnswerResultType {
     
     /// Decode a `RSDJSONValue` from the given decoder.
     ///
@@ -301,7 +301,7 @@ extension RSDAnswerResultType : RSDJSONValueDecoder {
 }
 
 // MARK: Value Encoding
-extension RSDAnswerResultType : RSDJSONValueEncoder {
+extension RSDAnswerResultType {
     
     /// Encode a value to the given encoder.
     ///

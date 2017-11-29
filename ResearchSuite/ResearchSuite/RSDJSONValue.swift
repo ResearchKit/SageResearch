@@ -33,22 +33,19 @@
 
 import Foundation
 
+/// Protocol for converting an object to a dictionary representation. This is included for reverse-compatiblility to
+/// older implementations that are not Swift 4 `Codable` and instead use a dictionary representation.
 public protocol RSDDictionaryRepresentable {
-    func dictionaryRepresentation() -> [String : Any]
+    
+    /// Return the dictionary representation for this object.
+    func dictionaryRepresentation() -> [AnyHashable : Any]
 }
 
+/// Protocol for converting objects to JSON serializable objects
 public protocol RSDJSONValue {
     
     /// Return a JSON type object. Elements may be any one of the JSON types (NSNull, NSNumber, String, Array, [String : Any]).
     func jsonObject() -> Any
-}
-
-public protocol RSDJSONValueDecoder {
-    func decodeValue(from decoder:Decoder) throws -> RSDJSONValue?
-}
-
-public protocol RSDJSONValueEncoder {
-    func encode(_ value: Any?, to encoder: Encoder) throws
 }
 
 extension NSString : RSDJSONValue {
