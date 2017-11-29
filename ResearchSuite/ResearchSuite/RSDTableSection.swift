@@ -1,5 +1,5 @@
 //
-//  RSDTaskDataSource.swift
+//  RSDTableSection.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,16 +33,28 @@
 
 import Foundation
 
-/// `RSDTaskDataSource` is a data source that can be used by the factory to get info that should be included
-/// with a task result or used to display subgroups of a task.
-public protocol RSDTaskDataSource {
+/// Defines a section in a table. A table is made up of sections, groups and items. For most group types,
+/// there is one cell per group. The exception would be where the ui hint is for a list where each value
+/// is displayed in a selectable list.
+open class RSDTableSection {
     
-    /// Fetch the task group with the given identifier.
-    func taskGroup(with identifier: String) -> RSDTaskGroup?
+    /// The list of items included in this section.
+    open private(set) var itemGroups: [RSDTableItemGroup] = []
     
-    /// Fetch the task info with the given identifier.
-    func taskInfo(with identifier: String) -> RSDTaskInfoStep?
+    /// The table section index.
+    open private(set) var index: Int
     
-    /// Fetch the schema info with the given identifier.
-    func schemaInfo(with identifier: String) -> RSDSchemaInfo?
+    /// The title for this section.
+    public var title: String?
+    
+    /// Returns the total count of all Items in this section.
+    // - returns: The total number of RSDGenericStepTableItems in this section
+    open func rowCount() -> Int {
+        return itemGroups.reduce(0, {$0 + $1.items.count})
+    }
+    
+    public init(sectionIndex: Int, itemGroups: [RSDTableItemGroup]) {
+        self.index = sectionIndex
+        self.itemGroups = itemGroups
+    }
 }

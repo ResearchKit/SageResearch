@@ -33,91 +33,99 @@
 
 import Foundation
 
-
+/// Extension of the `RSDMultipleComponentInputField` protocol to implement the `RSDChoicePickerDataSource` protocol.
 extension RSDMultipleComponentInputField {
     
-    // returns the number of 'columns' to display.
+    /// Returns the number of 'columns' to display.
     public var numberOfComponents: Int {
         return self.choices.count
     }
     
-    // returns the # of rows in each component
+    /// Returns the # of rows in each component.
+    /// - parameter component: The component (or column) of the picker.
+    /// - returns: The number of rows in the given component.
     public func numberOfRows(in component: Int) -> Int {
         guard component < self.choices.count else { return 0 }
         return self.choices[component].count
     }
     
-    // returns the choice for this row/component
+    /// Returns the choice for this row/component. If this is returns `nil` then this is the "skip" choice.
+    /// - parameters:
+    ///     - row: The row for the selected component.
+    ///     - component: The component (or column) of the picker.
     public func choice(forRow row: Int, forComponent component: Int) -> RSDChoice? {
         guard component < self.choices.count, row < self.choices[component].count else { return nil }
         return self.choices[component][row]
     }
-    
-    // returns the selected choices
-    public func selectedAnswer(for selection: [Int : Int]) -> Any {
-        var selectedChoices: [Any] = []
-        for ii in 0..<Int(self.choices.count) {
-            guard let row = selection[ii], row < self.choices[ii].count, let value = self.choices[ii][row].value
-                else {
-                    return NSNull()
-            }
-            selectedChoices.append(value)
-        }
-        return selectedChoices
-    }
 }
 
+/// Extension of the `RSDChoiceOptions` protocol to implement the `RSDChoicePickerDataSource` protocol.
 extension RSDChoiceOptions {
     
-    // returns the number of 'columns' to display.
+    /// Returns the number of 'columns' to display.
     public var numberOfComponents: Int {
         return 1
     }
     
-    // returns the # of rows in each component
+    /// Returns the # of rows in each component.
+    /// - parameter component: The component (or column) of the picker.
+    /// - returns: The number of rows in the given component.
     public func numberOfRows(in component: Int) -> Int {
         return self.choices.count
     }
     
-    // returns the choice for this row/component
+    /// Returns the choice for this row/component. If this is returns `nil` then this is the "skip" choice.
+    /// - parameters:
+    ///     - row: The row for the selected component.
+    ///     - component: The component (or column) of the picker.
     public func choice(forRow row: Int, forComponent component: Int) -> RSDChoice? {
         guard component < 1, row < self.choices.count else { return nil }
         return self.choices[row]
     }
-    
-    // returns the selected choice
-    public func selectedAnswer(for selection: [Int : Int]) -> Any {
-        guard let row = selection[0],
-            let choice = self.choice(forRow: row, forComponent: 0),
-            let value = choice.value
-            else {
-                return NSNull()
-        }
-        return value
-    }
-    
-    public var hasImages: Bool {
-        for choice in choices {
-            if choice.hasIcon {
-                return true
-            }
-        }
-        return false
-    }
 }
 
+/// A simple struct that can be used to implement the `RSDChoiceOptions` protocol.
 public struct RSDChoiceOptionsObject : RSDChoiceOptions {
+    
+    /// A list of choices for the input field.
     public let choices: [RSDChoice]
+    
+    /// A Boolean value indicating whether the user can skip the input field without providing an answer.
     public let isOptional: Bool
+    
+    /// Default initializer. Auto-synthesized init is not public.
+    public init(choices: [RSDChoice], isOptional: Bool) {
+        self.choices = choices
+        self.isOptional = isOptional
+    }
 }
 
-public struct RSDDecimalPickerDataSourceObject : RSDDecimalPickerDataSource {
+/// A simple struct that can be used to implement the `RSDNumberPickerDataSource` protocol.
+public struct RSDNumberPickerDataSourceObject : RSDNumberPickerDataSource {
+    
+    /// Returns the minimum number allowed.
     public let minimum: Decimal
+    
+    /// Returns the maximum number allowed.
     public let maximum: Decimal
+
+    /// Returns the step interval to use. If `nil`, then the step interval will default to advance by 1.
     public let stepInterval: Decimal?
+
+    /// Returns the number formatter to use to format the displayed value and to parse the result.
     public let numberFormatter: NumberFormatter
+    
+    /// Default initializer. Auto-synthesized init is not public.
+    public init(minimum: Decimal, maximum: Decimal, stepInterval: Decimal?, numberFormatter: NumberFormatter) {
+        self.minimum = minimum
+        self.maximum = maximum
+        self.stepInterval = stepInterval
+        self.numberFormatter = numberFormatter
+    }
 }
 
+/// A concrete implementation of `RSDChoicePickerDataSource` for a measurement.
+/// TODO: Implement syoung 11/28/2017
 public struct RSDMeasurementPickerDataSourceObject : RSDChoicePickerDataSource {
     public let dataType: RSDFormDataType
     public let unit: String?
@@ -137,31 +145,66 @@ public struct RSDMeasurementPickerDataSourceObject : RSDChoicePickerDataSource {
     public func choice(forRow row: Int, forComponent component: Int) -> RSDChoice? {
         fatalError("Not yet implemented")
     }
+}
+
+/// A simple struct that can be used to implement the `RSDDatePickerDataSource` protocol.
+public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
     
-    // returns the selected choice
-    public func selectedAnswer(for selection: [Int : Int]) -> Any {
-        fatalError("Not yet implemented")
+    /// The type of UI picker to display for dates and times.
+    public let datePickerMode: RSDDatePickerMode
+
+    /// Specify the minimum date range. Default = `nil`. When `minimumDate` > `maximumDate`, the values are ignored.
+    public let minimumDate: Date?
+
+    /// Specify the maximum date range. Default = `nil`. When `minimumDate` > `maximumDate`, the values are ignored.
+    public let maximumDate: Date?
+
+    /// display minutes wheel with interval. interval must be evenly divided into 60. default is 1. min is 1, max is 30
+    public let minuteInterval: Int?
+
+    /// The date formatter for displaying the date in a text field or label
+    public let dateFormatter: DateFormatter
+    
+    /// Default initializer. Auto-synthesized init is not public.
+    public init(datePickerMode: RSDDatePickerMode, minimumDate: Date?, maximumDate: Date?, minuteInterval: Int?, dateFormatter: DateFormatter) {
+        self.datePickerMode = datePickerMode
+        self.minimumDate = minimumDate
+        self.maximumDate = maximumDate
+        self.minuteInterval = minuteInterval
+        self.dateFormatter = dateFormatter
     }
 }
 
-public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
-    public let datePickerMode: RSDDatePickerMode
-    public let minimumDate: Date?
-    public let maximumDate: Date?
-    public let minuteInterval: Int?
-    public let dateFormatter: DateFormatter
-}
-
+/// A simple struct that can be used to implement the `RSDDateComponentPickerDataSource` protocol.
 public struct RSDDateComponentPickerDataSourceObject : RSDDateComponentPickerDataSource {
+    /// The calendar to use for the date components
     public let calendar: Calendar
+
+    /// The components to include in the picker
     public let calendarComponents: Set<Calendar.Component>
+
+    /// The minimum year if the year is included, otherwise this value is ignored.
     public let minimumYear: Int?
+
+    /// The maximum year if the year is included, otherwise this value is ignored.
     public let maximumYear: Int?
+
+    /// The date components formatter for displaying the date components in a text field or label
     public let dateComponentsFormatter: DateComponentsFormatter
+    
+    /// Default initializer. Auto-synthesized init is not public.
+    public init(calendar: Calendar, calendarComponents: Set<Calendar.Component>, minimumYear: Int?, maximumYear: Int?, dateComponentsFormatter: DateComponentsFormatter) {
+        self.calendar = calendar
+        self.calendarComponents = calendarComponents
+        self.minimumYear = minimumYear
+        self.maximumYear = maximumYear
+        self.dateComponentsFormatter = dateComponentsFormatter
+    }
 }
 
 extension NSCalendar.Unit {
     
+    /// Convenience initializer for converting from a `Calendar.Component` set to an `NSCalendar.Unit`
     public init(calendarComponents: Set<Calendar.Component>) {
         self = calendarComponents.reduce(NSCalendar.Unit(rawValue: 0), { (input, component) -> NSCalendar.Unit in
             switch component {
@@ -202,8 +245,10 @@ extension NSCalendar.Unit {
     }
 }
 
+/// Extension of `RSDDateRange` for setting up calendar components and a data source.
 extension RSDDateRange {
     
+    /// The calendar components to include for this date range.
     public var calendarComponents: Set<Calendar.Component> {
         guard let components = dateCoder?.calendarComponents else {
             return [.year, .month, .day, .hour, .minute]
@@ -211,6 +256,8 @@ extension RSDDateRange {
         return components
     }
     
+    /// Get the picker data source and formatter for this date range.
+    /// - returns: Tuple for the picker data source and formatter.
     public func dataSource() -> (RSDPickerDataSource, Formatter)  {
         let dateComponents : Set<Calendar.Component> = [.year, .month, .day]
         let timeComponents : Set<Calendar.Component> = [.hour, .minute]
@@ -250,5 +297,3 @@ extension RSDDateRange {
         }
     }
 }
-
-

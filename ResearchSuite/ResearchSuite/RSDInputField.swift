@@ -126,6 +126,19 @@ public protocol RSDChoiceOptions: RSDChoicePickerDataSource {
 public protocol RSDChoiceInputField : RSDInputField, RSDChoiceOptions {
 }
 
+extension RSDChoiceInputField {
+    
+    /// Convenience property for whether or not the choice input field has associated images
+    public var hasImages: Bool {
+        for choice in choices {
+            if choice.hasIcon {
+                return true
+            }
+        }
+        return false
+    }
+}
+
 /// `RSDMultipleComponentInputField` extends the properties of `RSDInputField` with information
 /// required to create a multiple component input field.
 ///
