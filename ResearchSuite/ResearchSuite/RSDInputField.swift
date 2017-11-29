@@ -107,6 +107,11 @@ public protocol RSDChoice {
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
     func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
+    
+    /// Is the choice value equal to the given result?
+    /// - parameter result: An result to test for equality.
+    /// - returns: `true` if the values are equal.
+    func isEqualToResult(_ result: RSDResult?) -> Bool
 }
 
 /// `RSDChoiceOptions` is a data source protocol that can be used to set up a picker or list of choices.

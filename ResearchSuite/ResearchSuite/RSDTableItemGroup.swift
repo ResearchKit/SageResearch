@@ -129,22 +129,36 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     
     /// Save an answer for this ItemGroup. This is used only for those questions that have single answers,
     // such as text and numeric answers, as opposed to booleans or text choice answers.
-    public var answer: Any {
+    open var answer: Any {
         return _answer ?? defaultAnswer
     }
     fileprivate var _answer: Any?
     
     /// The text string to display as the answer.
-    public var answerText: String? {
+    open var answerText: String? {
         return (_answer as? String) ?? formatter?.string(for: _answer)
     }
     
     /// Set the new answer value. This will throw an error if the value isn't valid. Otherwise, it will
     /// set the answer.
     /// - parameter newValue: The new value for the answer.
-    /// - returns: `true` if the answer was changed, otherwise false.
-    public func setAnswer(_ newValue: Any?) throws {
+    /// - throws: `RSDInputFieldError` if the answer is invalid.
+    public final func setAnswer(_ newValue: Any?) throws {
         _answer = try validatedAnswer(newValue)
+    }
+    
+    /// Set the new answer value from a previous result. This will throw an error if the result isn't valid.
+    /// Otherwise, it will set the answer.
+    /// - parameter result: The result that *may have a previous answer.
+    /// - throws: `RSDInputFieldError` if the answer is invalid.
+    open func setAnswer(from result: RSDResult) throws {
+        guard let answerResult = result as? RSDAnswerResult,
+            answerResult.answerType == answerType
+            else {
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Result answer type for \(result) not expected type.")
+                throw RSDInputFieldError.invalidType(context)
+        }
+        try self.setAnswer(answerResult.value)
     }
     
     /// Determine if the current answer is valid. Also checks the case where answer is required but one has
@@ -187,7 +201,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
                         let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: debugDescription)
                         throw RSDInputFieldError.invalidRegex(self.textFieldOptions?.invalidMessage, context)
                     }
-                    else if let maxLen = self.textFieldOptions?.maximumLength, string.count > maxLen {
+                    else if let maxLen = self.textFieldOptions?.maximumLength, maxLen > 0, string.count > maxLen {
                         let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Exceeds max length of \(maxLen)")
                         throw RSDInputFieldError.exceedsMaxLength(maxLen, context)
                     }
@@ -299,7 +313,7 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
                 singleSelection = false
             }
             items = choicePicker.choices.enumerated().map { (index, choice) -> RSDTableItem in
-                RSDChoiceTableItem(rowIndex: beginningRowIndex + index, inputField: inputField, choice: choice, choiceIndex: index)
+                RSDChoiceTableItem(rowIndex: beginningRowIndex + index, inputField: inputField, choice: choice)
             }
         }
         self.singleSelection = singleSelection
@@ -314,6 +328,16 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
             }()
         
         super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: aType, defaultAnswer: defaultAnswer, textFieldOptions: textFieldOptions, items: items, formatter: formatter, pickerSource: choicePicker)
+    }
+    
+    override open func setAnswer(from result: RSDResult) throws {
+        try super.setAnswer(from: result)
+        
+        // Set all the previously selected items as selected
+        guard let selectableItems = self.items as? [RSDChoiceTableItem] else { return }
+        for input in selectableItems {
+            input.selected = input.choice.isEqualToResult(result)
+        }
     }
     
     /// Select or de-select an item (answer) at a specific indexPath. This is used for text choice and boolean answers.

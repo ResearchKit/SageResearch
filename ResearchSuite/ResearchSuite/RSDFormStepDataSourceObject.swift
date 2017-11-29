@@ -174,15 +174,13 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         }
         let results: [RSDResult] = (previousResult as? RSDCollectionResult)?.inputResults ?? [previousResult]
         for result in results {
-            if let itemGroup = itemGroup(with: result.identifier) as? RSDInputFieldTableItemGroup,
-                let answerResult = result as? RSDAnswerResult,
-                answerResult.answerType == itemGroup.answerType {
-                
+            if let itemGroup = itemGroup(with: result.identifier) as? RSDInputFieldTableItemGroup {
                 do {
-                    try itemGroup.setAnswer(answerResult.value)
+                    try itemGroup.setAnswer(from: result)
                     initialResults[result.identifier] = result
-                } catch {
+                } catch let err {
                     // ignore error but do not save the result
+                    debugPrint("Failed to restore answer from result. \(err)")
                 }
             }
         }

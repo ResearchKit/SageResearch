@@ -82,18 +82,22 @@ public enum RSDSurveyRuleOperator: String, Codable {
 
 /// `RSDComparableSurveyRule` is a survey rule that matches an expected result to the answer and vends a skip
 /// identifier if the match is evaluated to `true`.
-public protocol RSDComparableSurveyRule : RSDSurveyRule {
+public protocol RSDComparableSurveyRule : RSDSurveyRule, RSDComparable {
     
     /// Optional skip identifier for this rule. If available, this will be used as the skip identifier,
     /// otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit`
     var skipToIdentifier: String? { get }
     
-    /// Expected answer for the rule. If `nil`, then the operator must be .skip or this will return a nil value.
-    var matchingAnswer: Any? { get }
-    
     /// The rule operator to apply. If `nil`, `.equal` will be assumed unless the `expectedAnswer` is also nil,
     /// in which case `.skip` will be assumed.
     var ruleOperator: RSDSurveyRuleOperator? { get }
+}
+
+/// `RSDComparable` can be used to compare a stored result to a matching value.
+public protocol RSDComparable {
+    
+    /// Expected answer for the rule. If `nil`, then the operator must be .skip or this will return a nil value.
+    var matchingAnswer: Any? { get }
 }
 
 extension RSDComparableSurveyRule {
@@ -110,25 +114,41 @@ extension RSDComparableSurveyRule {
         let op: RSDSurveyRuleOperator = self.ruleOperator ?? ((self.matchingAnswer == nil) ? .skip : .equal)
         let skipTo: String = skipToIdentifier ?? RSDIdentifier.exit.rawValue
         
+        return isMatching(to: result, op: op) ? skipTo : nil
+    }
+}
+
+extension RSDComparable {
+    
+    /// Is the choice value equal to the given result?
+    /// - parameter result: An result to test for equality.
+    /// - returns: `true` if the values are equal.
+    public func isEqualToResult(_ result: RSDResult?) -> Bool {
+        let op: RSDSurveyRuleOperator = (self.matchingAnswer == nil) ? .skip : .equal
+        return isMatching(to: result, op: op)
+    }
+    
+    func isMatching(to result: RSDResult?, op: RSDSurveyRuleOperator) -> Bool {
+        
         // If this is the skip operation then the values aren't equal *unless* it's nil
         guard let answerResult = result as? RSDAnswerResult, let value = answerResult.value
             else {
-                return op == .skip ? skipTo : nil
+                return op == .skip ? true : false
         }
         if op == .skip {
-            return nil
+            return false
         }
         
         guard let predicate = rulePredicate(with: answerResult.answerType, op: op),
             let cValue = convertValue(for: value, with: answerResult.answerType)
             else {
-                return nil
+                return false
         }
         
         if predicate.evaluate(with: cValue) {
-            return skipTo
+            return true
         } else {
-            return nil
+            return false
         }
     }
     

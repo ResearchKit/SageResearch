@@ -13,44 +13,9 @@
               "footnote": "This is a footnote.",
               "image": "before",
               "actions": {
-                  "goForward": {
-                      "buttonTitle": "Go, Dogs!"
-                  }
-              }
-              },
-              {
-              "identifier": "step2",
-              "type": "instruction",
-              "title": "Step 2",
-              "text": "This is the second step in the Foo task.",
-              "detail": "On this screen you should see an image below the text with a picture of a phone in a pocket. The next step after this one is an active step. When it starts, you should hear voice commands.",
-              "image": { "imageName": "phoneinpocketIllustration", "placementType": "iconAfter" },
-              "actions": {
                       "goForward": {
-                          "buttonTitle": "Start"
+                          "buttonTitle": "Go, Dogs!"
                       }
-                  }
-              },
-              {
-              "identifier": "countdownStep",
-              "type": "countdown",
-              "title": "It's the Final Countdown",
-              "text": "Some text.",
-              "duration": 5,
-              "commands": ["vibrate", "transitionAutomatically"],
-              },
-              {
-              "identifier": "movingStep",
-              "type": "active",
-              "title": "Active Step",
-              "text": "Some text.",
-              "duration": 20,
-              "commands": ["playSound", "transitionAutomatically"],
-              "spokenInstructions": {
-                  "0": "Start moving",
-                  "5": "Keep going",
-                  "halfway": "Halfway there",
-                  "end": "Stop moving"
                   }
               },
               {
@@ -150,6 +115,37 @@
               "dataType": "year",
               "uiHint": "textfield",
               "range": { "allowFuture": false }
+              },
+              {
+              "identifier": "step2",
+              "type": "instruction",
+              "title": "Step 2",
+              "text": "This is the second step in the Foo task.",
+              "detail": "On this screen you should see an image below the text with a picture of a phone in a pocket. The next step after this one is an active step. When it starts, you should hear voice commands.",
+              "image": { "imageName": "phoneinpocketIllustration", "placementType": "iconAfter" },
+              "actions": { "goForward": { "buttonTitle": "Start" } }
+              },
+              {
+              "identifier": "countdownStep",
+              "type": "countdown",
+              "title": "It's the Final Countdown",
+              "text": "Some text.",
+              "duration": 5,
+              "commands": ["vibrate", "transitionAutomatically"],
+              },
+              {
+              "identifier": "movingStep",
+              "type": "active",
+              "title": "Active Step",
+              "text": "Some text.",
+              "duration": 20,
+              "commands": ["playSound", "transitionAutomatically"],
+              "spokenInstructions": {
+                  "0": "Start moving",
+                  "5": "Keep going",
+                  "halfway": "Halfway there",
+                  "end": "Stop moving"
+                  }
               }
               ]
 }

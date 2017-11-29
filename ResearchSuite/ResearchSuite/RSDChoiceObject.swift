@@ -36,7 +36,8 @@ import Foundation
 /// `RSDChoiceObject` is a concrete implementation of `RSDChoice` that can be used to
 /// track a multiple choice, single choice, or multiple component input field where each
 /// choice in the input field maps to a specific value.
-public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDEmbeddedIconVendor, Codable {
+public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbeddedIconVendor, Codable {
+
     public typealias Value = T
     
     /// A JSON encodable object to return as the value when this choice is selected.
@@ -62,6 +63,11 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDEmbeddedIconVendor, C
     /// The optional `RSDImageWrapper` with the pointer to the image.
     public let icon: RSDImageWrapper?
     
+    /// Expected answer for the rule. In this case, it is the `value` associated with this choice.
+    public var matchingAnswer: Any? {
+        return _value
+    }
+    
     /// Default initializer.
     ///
     /// - parameters:
@@ -84,6 +90,8 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDEmbeddedIconVendor, C
         self.icon = (iconName != nil) ? try RSDImageWrapper(imageName: iconName!) : nil
         self.isExclusive = isExclusive
     }
+    
+
     
     // MARK: Codable
     

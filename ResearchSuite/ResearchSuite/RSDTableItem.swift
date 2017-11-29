@@ -68,9 +68,6 @@ open class RSDChoiceTableItem : RSDInputFieldTableItem {
     /// The choice for a single or multiple choice input field.
     open private(set) var choice: RSDChoice
     
-    /// The index of the choice in the array of choices.
-    public let choiceIndex: Int
-    
     /// Whether or not the choice is currently selected.
     public var selected: Bool = false
     
@@ -79,9 +76,7 @@ open class RSDChoiceTableItem : RSDInputFieldTableItem {
     ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides
     ///     - inputField:    The RSDInputField representing this tableItem.
     ///     - choice:        The choice for a single or multiple choice input field.
-    ///     - choiceIndex:   The index of this item relative to all the choices in this ItemGroup.
-    public init(rowIndex: Int, inputField: RSDInputField, choice: RSDChoice, choiceIndex: Int) {
-        self.choiceIndex = choiceIndex
+    public init(rowIndex: Int, inputField: RSDInputField, choice: RSDChoice) {
         self.choice = choice
         super.init(rowIndex: rowIndex, inputField: inputField)
     }
