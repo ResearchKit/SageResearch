@@ -54,15 +54,27 @@ extension UIColor {
     ///     - bundle: The bundle with either the Color asset (iOS 11) or the "ColorInfo.plist" file (iOS 10)
     ///     - traitCollection: The trait collection (if supported)
     /// - returns: The color created.
-    open class func rsd_color(named name: String, in bundle: Bundle?, compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
+    #if os(watchOS)
+    open class func rsd_color(named name: String, in bundle: Bundle?) -> UIColor? {
         if let color = UIColor(hexString: name) {
             return color
-        } else if #available(iOS 11.0, *), let color = UIColor(named: name, in: bundle, compatibleWith: traitCollection) {
+        } else if #available(watchOS 4.0, *), let color = UIColor(named: name) {
             return color
         } else {
             return RSDColorInfo(name: "ColorInfo", bundle: bundle).color(for: name)
         }
     }
+    #else
+    open class func rsd_color(named name: String, in bundle: Bundle?, compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
+        if let color = UIColor(hexString: name) {
+            return color
+        } else if #available(iOS 11.0, tvOS 11.0, macOS 10.12, *), let color = UIColor(named: name, in: bundle, compatibleWith: traitCollection) {
+            return color
+        } else {
+            return RSDColorInfo(name: "ColorInfo", bundle: bundle).color(for: name)
+        }
+    }
+    #endif
     
     /// Initialize a `UIColor` with a hex string.
     /// - parameter hexString:  An RGB color defined using a hex code.

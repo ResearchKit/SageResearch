@@ -104,7 +104,11 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
     public func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        let fetchedImage = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+        #if os(watchOS)
+            let fetchedImage = UIImage(named: imageName)
+        #else
+            let fetchedImage = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+        #endif
         DispatchQueue.main.async {
             callback(fetchedImage)
         }
@@ -161,11 +165,19 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// The animated images to display.
     /// - parameter traitCollection: The trait collection.
     /// - returns: The images for this step.
+    #if os(watchOS)
+    public func images() -> [UIImage] {
+        return imageNames.rsd_mapAndFilter {
+            UIImage(named: $0)
+        }
+    }
+    #else
     public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [UIImage] {
         return imageNames.rsd_mapAndFilter {
             UIImage(named: $0, in: bundle, compatibleWith: traitCollection)
         }
     }
+    #endif
     
     /// A method for fetching the image.
     ///

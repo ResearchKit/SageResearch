@@ -52,16 +52,16 @@ public protocol RSDTextFieldOptions {
     var isSecureTextEntry: Bool { get }
     
     /// Auto-capitalization type for the text field.
-    var autocapitalizationType: UITextAutocapitalizationType { get }
+    var autocapitalizationType: RSDTextAutocapitalizationType { get }
     
     /// Auto-correction type for the text field.
-    var autocorrectionType: UITextAutocorrectionType { get }
+    var autocorrectionType: RSDTextAutocorrectionType { get }
     
     /// Spell checking type for the text field.
-    var spellCheckingType: UITextSpellCheckingType { get }
+    var spellCheckingType: RSDTextSpellCheckingType { get }
     
     /// Keyboard type for the text field.
-    var keyboardType: UIKeyboardType { get }
+    var keyboardType: RSDKeyboardType { get }
 }
 
 public protocol RSDTextValidator {

@@ -47,10 +47,10 @@ public struct RSDDocumentCreator {
         RSDStepType.self,
         RSDDateCoderObject.self,
         RSDSurveyRuleOperator.self,
-        UITextAutocapitalizationType.self,
-        UITextAutocorrectionType.self,
-        UITextSpellCheckingType.self,
-        UIKeyboardType.self,
+        RSDTextAutocapitalizationType.self,
+        RSDTextAutocorrectionType.self,
+        RSDTextSpellCheckingType.self,
+        RSDKeyboardType.self,
         ]
     
     let allOptionSets: [RSDDocumentableOptionSet.Type] = [

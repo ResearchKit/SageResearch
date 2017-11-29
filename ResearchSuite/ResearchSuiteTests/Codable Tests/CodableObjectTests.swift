@@ -34,6 +34,12 @@
 import XCTest
 import ResearchSuite
 
+class BundleWrapper {
+    class var bundleIdentifier: String? {
+        return Bundle(for: BundleWrapper.self).bundleIdentifier
+    }
+}
+
 struct TestResourceWrapper : RSDResourceTransformer, Codable {
     
     let resourceName: String

@@ -103,11 +103,15 @@ public struct RSDImageWrapper {
         // an image with it.
         guard sharedDelegate == nil else { return }
         guard UIImage(named: imageName) == nil else { return }
-        guard let bundle = RSDResourceConfig.resourceBundle(for: imageName),
-            let _ = UIImage(named: imageName, in: bundle, compatibleWith: nil)
-            else {
-                throw RSDValidationError.invalidImageName("Invalid image name: \(imageName)")
-        }
+        #if os(watchOS)
+            throw RSDValidationError.invalidImageName("Invalid image name: \(imageName). Cannot use images on the watch that are not included in the main bundle.")
+        #else
+            guard let bundle = RSDResourceConfig.resourceBundle(for: imageName),
+                let _ = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+                else {
+                    throw RSDValidationError.invalidImageName("Invalid image name: \(imageName)")
+            }
+        #endif
     }
     
     /// Fetch the image.

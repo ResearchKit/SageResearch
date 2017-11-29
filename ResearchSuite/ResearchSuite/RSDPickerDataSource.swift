@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import UIKit
+
 
 /// `RSDPickerDataSource` includes information that can be used to build a picker UI element.
 public protocol RSDPickerDataSource {

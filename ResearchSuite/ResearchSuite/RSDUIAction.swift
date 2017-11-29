@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import UIKit
+
 
 /// The `RSDUIAction` protocol can be used to customize the title and image displayed for a
 /// given action of the UI.

@@ -74,11 +74,21 @@ public protocol RSDColorThemeElement : RSDUIThemeElement {
     
     /// The background color for this step. If undefined then the background color appropriate to the light
     /// style will be used.
+    /// - returns: The color or `nil` if undefined
+    #if os(watchOS)
+    func backgroundColor() -> UIColor?
+    #else
     func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor?
+    #endif
     
     /// The foreground color for this step. If undefined then the foreground color appropriate to the light
     /// style will be used.
+    /// - returns: The color or `nil` if undefined
+    #if os(watchOS)
+    func foregroundColor() -> UIColor?
+    #else
     func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor?
+    #endif
     
     /// Hint for whether or not the view uses light style for things like the progress bar and navigation buttons.
     var usesLightStyle: Bool { get }
@@ -139,7 +149,10 @@ public protocol RSDAnimatedImageThemeElement : RSDImageThemeElement {
     var animationDuration: TimeInterval { get }
     
     /// The animated images to display.
-    /// - parameter traitCollection: The trait collection
     /// - returns: The images for this step.
+    #if os(watchOS)
+    func images() -> [UIImage]
+    #else
     func images(compatibleWith traitCollection: UITraitCollection?) -> [UIImage]
+    #endif
 }
