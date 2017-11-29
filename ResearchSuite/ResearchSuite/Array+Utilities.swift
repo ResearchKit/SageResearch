@@ -36,13 +36,9 @@ public protocol RSDArrayExtension {
 
 extension Array : RSDArrayExtension {
     
-    /**
-     Find the last element in the `Sequence` that matches the given criterion.
-     
-     @param  evaluate   The function to use to evaluate the search pattern.
-     
-     @return  The element that matches the pattern, searching in reverse.
-     */
+    /// Find the last element in the `Array` that matches the given criterion.
+    /// - parameter evaluate: The function to use to evaluate the search pattern.
+    /// - returns: The element that matches the pattern, searching in reverse.
     public func lastIndex(where evaluate: (Element) throws -> Bool) rethrows -> Index? {
         for (index, element) in self.reversed().enumerated() {
             if try evaluate(element) {

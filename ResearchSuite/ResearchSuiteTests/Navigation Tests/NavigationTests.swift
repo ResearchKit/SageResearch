@@ -161,7 +161,7 @@ class TestAsyncActionController: NSObject, RSDAsyncActionController {
         super.init()
     }
     
-    func start(at taskPath: RSDTaskPath?, completion: RSDAsyncActionCompletionHandler?) {
+    func start(at taskPath: RSDTaskPath, completion: RSDAsyncActionCompletionHandler?) {
         isRunning = true
         completion?(self, nil, nil)
     }

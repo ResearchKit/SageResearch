@@ -21,9 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		FF0472451F7AD4030023DAD6 /* RSDClassTypeMap.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0472431F7AD4020023DAD6 /* RSDClassTypeMap.m */; };
-		FF0472461F7AD4030023DAD6 /* RSDClassTypeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0472441F7AD4030023DAD6 /* RSDClassTypeMap.swift */; };
-		FF0472471F7AD9560023DAD6 /* RSDClassTypeMap.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0472421F7AD4010023DAD6 /* RSDClassTypeMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF0920BF1FCE310500C9E031 /* RSDTableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0920BE1FCE310500C9E031 /* RSDTableSection.swift */; };
 		FF0920C11FCE37AD00C9E031 /* RSDTableItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0920C01FCE37AD00C9E031 /* RSDTableItemGroup.swift */; };
 		FF0920C31FCE3F0300C9E031 /* RSDTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0920C21FCE3F0300C9E031 /* RSDTableItem.swift */; };
@@ -72,7 +69,6 @@
 		FF74A7EA1F7DCFA80064A634 /* RSDTaskDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF74A7E91F7DCFA80064A634 /* RSDTaskDataSource.swift */; };
 		FF78FC861FA7A5F500B8D42C /* RSDFileResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF78FC851FA7A5F500B8D42C /* RSDFileResultObject.swift */; };
 		FF80B1201F7B01E200582849 /* RSDJSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B11F1F7B01E200582849 /* RSDJSONValue.swift */; };
-		FF80B1221F7B13E300582849 /* RSDCodableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B1211F7B13E300582849 /* RSDCodableObject.swift */; };
 		FF80B12E1F7C12D400582849 /* RSDConditionalStepNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B12D1F7C12D400582849 /* RSDConditionalStepNavigator.swift */; };
 		FF80B1391F7C244200582849 /* RSDIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B1381F7C244200582849 /* RSDIdentifier.swift */; };
 		FF80B13B1F7C3D1D00582849 /* RSDFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */; };
@@ -145,9 +141,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FF0472421F7AD4010023DAD6 /* RSDClassTypeMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDClassTypeMap.h; sourceTree = "<group>"; };
-		FF0472431F7AD4020023DAD6 /* RSDClassTypeMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDClassTypeMap.m; sourceTree = "<group>"; };
-		FF0472441F7AD4030023DAD6 /* RSDClassTypeMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDClassTypeMap.swift; sourceTree = "<group>"; };
 		FF0920BE1FCE310500C9E031 /* RSDTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableSection.swift; sourceTree = "<group>"; };
 		FF0920C01FCE37AD00C9E031 /* RSDTableItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableItemGroup.swift; sourceTree = "<group>"; };
 		FF0920C21FCE3F0300C9E031 /* RSDTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableItem.swift; sourceTree = "<group>"; };
@@ -200,7 +193,6 @@
 		FF74A7E91F7DCFA80064A634 /* RSDTaskDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskDataSource.swift; sourceTree = "<group>"; };
 		FF78FC851FA7A5F500B8D42C /* RSDFileResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileResultObject.swift; sourceTree = "<group>"; };
 		FF80B11F1F7B01E200582849 /* RSDJSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDJSONValue.swift; sourceTree = "<group>"; };
-		FF80B1211F7B13E300582849 /* RSDCodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCodableObject.swift; sourceTree = "<group>"; };
 		FF80B12D1F7C12D400582849 /* RSDConditionalStepNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDConditionalStepNavigator.swift; sourceTree = "<group>"; };
 		FF80B1381F7C244200582849 /* RSDIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDIdentifier.swift; sourceTree = "<group>"; };
 		FF80B13A1F7C3D1D00582849 /* RSDFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFactory.swift; sourceTree = "<group>"; };
@@ -293,17 +285,6 @@
 			name = Objects;
 			sourceTree = "<group>";
 		};
-		FF177D7F1F82E6C300C2D4D7 /* Objective-C Codable */ = {
-			isa = PBXGroup;
-			children = (
-				FF0472421F7AD4010023DAD6 /* RSDClassTypeMap.h */,
-				FF0472431F7AD4020023DAD6 /* RSDClassTypeMap.m */,
-				FF0472441F7AD4030023DAD6 /* RSDClassTypeMap.swift */,
-				FF80B1211F7B13E300582849 /* RSDCodableObject.swift */,
-			);
-			name = "Objective-C Codable";
-			sourceTree = "<group>";
-		};
 		FF2ACF401FBB86870018D87F /* Navigation Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -318,7 +299,6 @@
 		FF2B54FD1F68AE8000663289 /* Serialization */ = {
 			isa = PBXGroup;
 			children = (
-				FF177D7F1F82E6C300C2D4D7 /* Objective-C Codable */,
 				FF1561FA1F940E8A0036998E /* Codable+Utilities.swift */,
 				FF2948721FCCBC71002BD221 /* NumberFormatter+Codable.swift */,
 				FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */,
@@ -633,7 +613,6 @@
 			files = (
 				FFF159E01FB4D7A60061BA93 /* RSDExceptionHandler.h in Headers */,
 				FF72B2421F6859D3004C6F15 /* ResearchSuite.h in Headers */,
-				FF0472471F7AD9560023DAD6 /* RSDClassTypeMap.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,14 +763,12 @@
 				FFB015CA1F8BE62E00AC209B /* RSDRange.swift in Sources */,
 				FF5C4C1D1F8C872500F311BA /* RSDTaskController.swift in Sources */,
 				FF63E83D1FBAE5C80060DD98 /* RSDComparableSurveyRuleObject.swift in Sources */,
-				FF80B1221F7B13E300582849 /* RSDCodableObject.swift in Sources */,
 				FFBD07361FAA3E4B000CB34F /* RSDSectionStepTransformer.swift in Sources */,
 				FF1561F91F91AF580036998E /* RSDCollectionResultObject.swift in Sources */,
 				FFCA18401F8F326B006ADAF3 /* RSDActiveUIStepCommand.swift in Sources */,
 				FF580BF41F7E3764009B3EE9 /* RSDActiveUIStepObject.swift in Sources */,
 				FF2B55011F68BC7C00663289 /* RSDFormDataType.swift in Sources */,
 				FFBD073D1FAA5B96000CB34F /* RSDColorThemeElementObject.swift in Sources */,
-				FF0472451F7AD4030023DAD6 /* RSDClassTypeMap.m in Sources */,
 				FF9D7F671FA8E0FE008506DB /* RSDViewThemeElementObject.swift in Sources */,
 				FFE0DE4F1F874A8600BB1BDF /* RSDFormUIStepObject.swift in Sources */,
 				FFBD073A1FAA53DD000CB34F /* RSDUIThemeElement.swift in Sources */,
@@ -821,7 +798,6 @@
 				FF72B25F1F688168004C6F15 /* RSDAsyncActionConfiguration.swift in Sources */,
 				FFB6A4B71F85F38800E37752 /* RSDMultipleComponentInputFieldObject.swift in Sources */,
 				FF580BF61F7ED80B009B3EE9 /* Dictionary+Utilities.swift in Sources */,
-				FF0472461F7AD4030023DAD6 /* RSDClassTypeMap.swift in Sources */,
 				FFD38DE71FBF805F004203D8 /* RSDStepType.swift in Sources */,
 				FF55C43D1FAB8BB7004EDB59 /* RSDStandardAsyncActionConfiguration.swift in Sources */,
 				FF74A7E71F7DAB600064A634 /* RSDTaskGroupObject.swift in Sources */,

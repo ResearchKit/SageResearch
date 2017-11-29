@@ -506,9 +506,7 @@ open class RSDFactory {
     
     // MARK: Date Result Format
     
-    /// Get the date result formatter to use for the given calendar components. By default, this will
-    /// return the formatter from the shared `RSDClassTypeMap` that is most appropriate to the included
-    /// components.
+    /// Get the date result formatter to use for the given calendar components.
     ///
     /// | Returned Formatter | Description                                                         |
     /// |--------------------|:-------------------------------------------------------------------:|
@@ -530,20 +528,20 @@ open class RSDFactory {
         }
     }
     
-    /// `DateFormatter` to use for coding data-only strings. Default = `RSDClassTypeMap.shared.dateOnlyFormatter`.
+    /// `DateFormatter` to use for coding data-only strings. Default = `rsd_ISO8601DateOnlyFormatter`.
     open var dateOnlyFormatter: DateFormatter {
-        return RSDClassTypeMap.shared.dateOnlyFormatter
+        return rsd_ISO8601DateOnlyFormatter
     }
     
-    /// `DateFormatter` to use for coding time-only strings. Default = `RSDClassTypeMap.shared.timeOnlyFormatter`.
+    /// `DateFormatter` to use for coding time-only strings. Default = `rsd_ISO8601TimeOnlyFormatter`.
     open var timeOnlyFormatter: DateFormatter {
-        return RSDClassTypeMap.shared.timeOnlyFormatter
+        return rsd_ISO8601TimeOnlyFormatter
     }
     
     /// `DateFormatter` to use for coding timestamp strings that include both date and time components.
-    /// Default = `RSDClassTypeMap.shared.timestampFormatter`.
+    /// Default = `rsd_ISO8601TimestampFormatter`.
     open var timestampFormatter: DateFormatter {
-        return RSDClassTypeMap.shared.timestampFormatter
+        return rsd_ISO8601TimestampFormatter
     }
     
 
@@ -607,12 +605,7 @@ open class RSDFactory {
     }
     
     /// Decode a date from a string. This method is used during object decoding and is defined
-    /// as `open` so that subclass factories can define their own formatters. The default
-    /// implementation uses the formatters defined in the obj-c `RSDClassTypeMap` singleton.
-    ///
-    /// `RSDClassTypeMap` is included in this framework to allow support for older code that
-    /// was developed using KVO deserialization prior to the implementation of the Swift 4
-    /// `Codable` protocol.
+    /// as `open` so that subclass factories can define their own formatters. 
     ///
     /// - parameters:
     ///     - string:       The string to use in decoding the date.

@@ -33,11 +33,13 @@
 
 import Foundation
 
+public protocol RSDDictionaryRepresentable {
+    func dictionaryRepresentation() -> [String : Any]
+}
+
 public protocol RSDJSONValue {
     
-    /**
-     Return a JSON type object. Elements may be any one of the JSON types (NSNull, NSNumber, String, Array, [String : Any]).
-     */
+    /// Return a JSON type object. Elements may be any one of the JSON types (NSNull, NSNumber, String, Array, [String : Any]).
     func jsonObject() -> Any
 }
 

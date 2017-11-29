@@ -39,7 +39,6 @@ FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
 //! Project version string for ResearchSuite.
 FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
 
-#import <ResearchSuite/RSDClassTypeMap.h>
 #import <Researchsuite/RSDExceptionHandler.h>
 
 
