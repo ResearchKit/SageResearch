@@ -47,6 +47,7 @@
 		FF5C4C231F8C8B9100F311BA /* RSDTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */; };
 		FF5C4C2E1F8C923E00F311BA /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */; };
 		FF6D1C111FB27D0E0087DDE6 /* RSDUISoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6D1C101FB27D0E0087DDE6 /* RSDUISoundPlayer.swift */; };
+		FF6D6C7F1FD0AD84002B514A /* RSDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6D6C7E1FD0AD84002B514A /* RSDWebViewController.swift */; };
 		FF7E1D851F8EA7F000B47587 /* RSDStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */; };
 		FF88FD1B1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */; };
 		FF88FD1D1F8D44A400CADB53 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */; };
@@ -100,6 +101,7 @@
 		FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewController.swift; sourceTree = "<group>"; };
 		FF5C4C2D1F8C8E0000F311BA /* UIView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		FF6D1C101FB27D0E0087DDE6 /* RSDUISoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUISoundPlayer.swift; sourceTree = "<group>"; };
+		FF6D6C7E1FD0AD84002B514A /* RSDWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDWebViewController.swift; sourceTree = "<group>"; };
 		FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepViewController.swift; sourceTree = "<group>"; };
 		FF816B021FAC2C0000E9F808 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		FF816B041FAC2C1A00E9F808 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -244,6 +246,14 @@
 			path = Audio;
 			sourceTree = "<group>";
 		};
+		FF6D6C7D1FD0AD33002B514A /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FF6D6C7E1FD0AD84002B514A /* RSDWebViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
 		FF74A7DD1F7DA2EB0064A634 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,6 +262,7 @@
 				FF6D1C0F1FB27CD00087DDE6 /* Audio */,
 				FFDD780E1FAE96760024BDD1 /* Step View Controllers */,
 				FF4A2D441F96A90200484338 /* Views */,
+				FF6D6C7D1FD0AD33002B514A /* View Controllers */,
 				FF5C4C241F8C8D8200F311BA /* Utilities */,
 			);
 			path = iOS;
@@ -452,6 +463,7 @@
 				FF25E83D1F96B39800BC09A8 /* RSDUnderlinedButton.swift in Sources */,
 				FF1865B71FA291F600FD0E31 /* UIImage+Utilities.swift in Sources */,
 				FF25E8401F96B5C300BC09A8 /* UIFont+BridgeKeyNames.swift in Sources */,
+				FF6D6C7F1FD0AD84002B514A /* RSDWebViewController.swift in Sources */,
 				FF6D1C111FB27D0E0087DDE6 /* RSDUISoundPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
