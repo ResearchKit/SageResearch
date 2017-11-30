@@ -25,25 +25,25 @@
 		FF633D6E1FCE7A6000CF2267 /* FactoryTest_TaskFoo.json in Resources */ = {isa = PBXBuildFile; fileRef = FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */; };
 		FF633D6F1FCE7A6200CF2267 /* FactoryTest_TaskGroup.json in Resources */ = {isa = PBXBuildFile; fileRef = FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */; };
 		FF633D701FCE7A6200CF2267 /* FactoryTest_TaskFoo.json in Resources */ = {isa = PBXBuildFile; fileRef = FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */; };
-		FF633D731FCE7A6900CF2267 /* CodableObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */; };
+		FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */; };
 		FF633D741FCE7A6900CF2267 /* CodableInputFieldObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9E61F908510001D0CC0 /* CodableInputFieldObjectTests.swift */; };
 		FF633D751FCE7A6900CF2267 /* CodableResultObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD243291F9568C70083F458 /* CodableResultObjectTests.swift */; };
 		FF633D761FCE7A6900CF2267 /* CodableStepObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */; };
 		FF633D771FCE7A6900CF2267 /* CodableTaskObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */; };
 		FF633D781FCE7A6900CF2267 /* FactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD851F8413F700084426 /* FactoryTests.swift */; };
 		FF633D791FCE7A6900CF2267 /* ExampleDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDFF5C41FC38150009713E8 /* ExampleDecodableTests.swift */; };
-		FF633D7A1FCE7A6A00CF2267 /* CodableObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */; };
+		FF633D7A1FCE7A6A00CF2267 /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */; };
 		FF633D7B1FCE7A6A00CF2267 /* CodableInputFieldObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9E61F908510001D0CC0 /* CodableInputFieldObjectTests.swift */; };
 		FF633D7C1FCE7A6A00CF2267 /* CodableResultObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD243291F9568C70083F458 /* CodableResultObjectTests.swift */; };
 		FF633D7D1FCE7A6A00CF2267 /* CodableStepObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */; };
 		FF633D7E1FCE7A6A00CF2267 /* CodableTaskObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */; };
 		FF633D7F1FCE7A6A00CF2267 /* FactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD851F8413F700084426 /* FactoryTests.swift */; };
 		FF633D801FCE7A6A00CF2267 /* ExampleDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDFF5C41FC38150009713E8 /* ExampleDecodableTests.swift */; };
-		FF633D881FCE7A7300CF2267 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF411FBB86870018D87F /* NavigationTests.swift */; };
+		FF633D881FCE7A7300CF2267 /* NavigationTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF411FBB86870018D87F /* NavigationTestObjects.swift */; };
 		FF633D891FCE7A7300CF2267 /* StepControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF421FBB86870018D87F /* StepControllerTests.swift */; };
 		FF633D8A1FCE7A7300CF2267 /* SurveyRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF451FBB8C790018D87F /* SurveyRuleTests.swift */; };
 		FF633D8B1FCE7A7300CF2267 /* TaskControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */; };
-		FF633D901FCE7A7400CF2267 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF411FBB86870018D87F /* NavigationTests.swift */; };
+		FF633D901FCE7A7400CF2267 /* NavigationTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF411FBB86870018D87F /* NavigationTestObjects.swift */; };
 		FF633D911FCE7A7400CF2267 /* StepControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF421FBB86870018D87F /* StepControllerTests.swift */; };
 		FF633D921FCE7A7400CF2267 /* SurveyRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF451FBB8C790018D87F /* SurveyRuleTests.swift */; };
 		FF633D931FCE7A7400CF2267 /* TaskControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */; };
@@ -355,7 +355,7 @@
 		FF1561FA1F940E8A0036998E /* Codable+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Utilities.swift"; sourceTree = "<group>"; };
 		FF177D7A1F82E19600C2D4D7 /* RSDTaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskObject.swift; sourceTree = "<group>"; };
 		FF177D7C1F82E4F600C2D4D7 /* RSDStepValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepValidator.swift; sourceTree = "<group>"; };
-		FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableObjectTests.swift; sourceTree = "<group>"; };
+		FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTestObjects.swift; sourceTree = "<group>"; };
 		FF1D6D2D1F82FB2C00B05349 /* RSDTaskInfoStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskInfoStep.swift; sourceTree = "<group>"; };
 		FF1D6D2F1F82FC2E00B05349 /* RSDSchemaInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSchemaInfo.swift; sourceTree = "<group>"; };
 		FF1D6D311F82FEDF00B05349 /* RSDResourceTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceTransformer.swift; sourceTree = "<group>"; };
@@ -363,7 +363,7 @@
 		FF269B711F7E128700C9289E /* RSDUIActionObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionObject.swift; sourceTree = "<group>"; };
 		FF2872571FCCA99E00809A84 /* RSDRegExValidatorObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRegExValidatorObject.swift; sourceTree = "<group>"; };
 		FF2948721FCCBC71002BD221 /* NumberFormatter+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberFormatter+Codable.swift"; sourceTree = "<group>"; };
-		FF2ACF411FBB86870018D87F /* NavigationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
+		FF2ACF411FBB86870018D87F /* NavigationTestObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTestObjects.swift; sourceTree = "<group>"; };
 		FF2ACF421FBB86870018D87F /* StepControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepControllerTests.swift; sourceTree = "<group>"; };
 		FF2ACF451FBB8C790018D87F /* SurveyRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyRuleTests.swift; sourceTree = "<group>"; };
 		FF2B54FE1F68B60E00663289 /* RSDInputField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDInputField.swift; sourceTree = "<group>"; };
@@ -523,7 +523,7 @@
 		FF2ACF401FBB86870018D87F /* Navigation Tests */ = {
 			isa = PBXGroup;
 			children = (
-				FF2ACF411FBB86870018D87F /* NavigationTests.swift */,
+				FF2ACF411FBB86870018D87F /* NavigationTestObjects.swift */,
 				FF2ACF421FBB86870018D87F /* StepControllerTests.swift */,
 				FF2ACF451FBB8C790018D87F /* SurveyRuleTests.swift */,
 				FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */,
@@ -561,7 +561,7 @@
 		FF2DA6181F96E7C4006F83C4 /* Codable Tests */ = {
 			isa = PBXGroup;
 			children = (
-				FF1A7A861F6B1174007AB5A6 /* CodableObjectTests.swift */,
+				FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */,
 				FFDAE9E61F908510001D0CC0 /* CodableInputFieldObjectTests.swift */,
 				FFD243291F9568C70083F458 /* CodableResultObjectTests.swift */,
 				FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */,
@@ -1196,10 +1196,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF633D751FCE7A6900CF2267 /* CodableResultObjectTests.swift in Sources */,
-				FF633D731FCE7A6900CF2267 /* CodableObjectTests.swift in Sources */,
+				FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */,
 				FF633D741FCE7A6900CF2267 /* CodableInputFieldObjectTests.swift in Sources */,
 				FF633D891FCE7A7300CF2267 /* StepControllerTests.swift in Sources */,
-				FF633D881FCE7A7300CF2267 /* NavigationTests.swift in Sources */,
+				FF633D881FCE7A7300CF2267 /* NavigationTestObjects.swift in Sources */,
 				FF633D771FCE7A6900CF2267 /* CodableTaskObjectTests.swift in Sources */,
 				FF633D781FCE7A6900CF2267 /* FactoryTests.swift in Sources */,
 				FF633D8A1FCE7A7300CF2267 /* SurveyRuleTests.swift in Sources */,
@@ -1408,10 +1408,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF633D7C1FCE7A6A00CF2267 /* CodableResultObjectTests.swift in Sources */,
-				FF633D7A1FCE7A6A00CF2267 /* CodableObjectTests.swift in Sources */,
+				FF633D7A1FCE7A6A00CF2267 /* CodableTestObjects.swift in Sources */,
 				FF633D7B1FCE7A6A00CF2267 /* CodableInputFieldObjectTests.swift in Sources */,
 				FF633D911FCE7A7400CF2267 /* StepControllerTests.swift in Sources */,
-				FF633D901FCE7A7400CF2267 /* NavigationTests.swift in Sources */,
+				FF633D901FCE7A7400CF2267 /* NavigationTestObjects.swift in Sources */,
 				FF633D7E1FCE7A6A00CF2267 /* CodableTaskObjectTests.swift in Sources */,
 				FF633D7F1FCE7A6A00CF2267 /* FactoryTests.swift in Sources */,
 				FF633D921FCE7A7400CF2267 /* SurveyRuleTests.swift in Sources */,

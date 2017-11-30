@@ -428,6 +428,8 @@ extension RSDTaskController {
     
     private func _moveBack(to step: RSDStep, from currentStep: RSDStep) {
 
+        // This is a subtask step if it is either a task info step or a section step and the
+        // task controller is setup to page those steps.
         var isSubtask = false
         if let subtaskStep = step as? RSDTaskInfoStep, shouldFetchSubtask(for: subtaskStep) {
             isSubtask = true
@@ -435,8 +437,13 @@ extension RSDTaskController {
             isSubtask = true
         }
         
+        // remove the step from the step history for this path segment
+        self.taskPath.removeStepHistory(from: step.identifier)
+        
+        // Check if this is a subtask and go back within the subtask
         if isSubtask, let childPath = self.taskPath.childPaths[step.identifier] {
             if let lastStep = childPath.currentStep {
+                self.taskPath.currentStep = step
                 self.taskPath = childPath
                 _moveBack(to: lastStep, from: currentStep)
             } else if let lastStep = taskPath.task!.stepNavigator.step(before: step, with: &taskPath.result) {
@@ -445,7 +452,6 @@ extension RSDTaskController {
                 assertionFailure("Trying to move back to nil step.")
             }
         } else {
-            self.taskPath.removeStepHistory(from: step.identifier)
             _move(to: step, from: currentStep, direction: .reverse)
         }
     }

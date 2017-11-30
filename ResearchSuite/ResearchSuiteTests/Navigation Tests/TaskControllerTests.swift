@@ -77,6 +77,11 @@ class TaskControllerTests: XCTestCase {
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.reverse)
         
         XCTAssertEqual(taskController.taskPath.stepPath, "stepA, stepB, stepC")
+        
+        // check that the path parent has the correct current step
+        let currentParentStep = taskController.taskPath?.parentPath?.currentStep
+        XCTAssertNotNil(currentParentStep)
+        XCTAssertEqual(currentParentStep?.identifier, "step4")
     }
     
     func testNavigation_BackFrom5Z() {
@@ -110,6 +115,11 @@ class TaskControllerTests: XCTestCase {
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.reverse)
         
         XCTAssertEqual(taskController.taskPath.stepPath, "stepX, stepY")
+        
+        // check that the path parent has the correct current step
+        let currentParentStep = taskController.taskPath?.parentPath?.currentStep
+        XCTAssertNotNil(currentParentStep)
+        XCTAssertEqual(currentParentStep?.identifier, "step5")
     }
     
     func testNavigation_BackFrom3() {
@@ -189,6 +199,11 @@ class TaskControllerTests: XCTestCase {
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.forward)
         
         XCTAssertEqual(taskController.taskPath.stepPath, "stepX, stepY")
+        
+        // check that the path parent has the correct current step
+        let currentParentStep = taskController.taskPath?.parentPath?.currentStep
+        XCTAssertNotNil(currentParentStep)
+        XCTAssertEqual(currentParentStep?.identifier, "step5")
     }
     
     func testNavigation_ForwardFrom5Z() {
@@ -222,6 +237,11 @@ class TaskControllerTests: XCTestCase {
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.forward)
         
         XCTAssertEqual(taskController.taskPath.stepPath, "stepA")
+        
+        // check that the path parent has the correct current step
+        let currentParentStep = taskController.taskPath?.parentPath?.currentStep
+        XCTAssertNotNil(currentParentStep)
+        XCTAssertEqual(currentParentStep?.identifier, "step6")
     }
     
     func testNavigation_ForwardFrom2() {
