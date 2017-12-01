@@ -33,36 +33,63 @@
 
 import Foundation
 
+/// `RSDGenericStepObject` is a step with key/value pairs decoded from a dictionary. This is the default step returned by
+/// `RSDFactory` for an unrecoginized type.
+///
+/// This step is intended for use as a placeholder step for decoding a step that may be defined using a customized subtype
+/// or for replacing properties on an `RSDMutableStep`.
+///
 public struct RSDGenericStepObject : RSDGenericStep, Decodable {
     
+    /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
+    /// of a step history.
     public let identifier: String
-    public let type: String
     
-    public var userInfo: [String : Any]?
+    /// The type of the step. 
+    public let type: RSDStepType
     
-    public init(identifier: String, type: String) {
-        self.identifier = identifier
-        self.type = type
-    }
+    /// The decoded dictionary.
+    public let userInfo: [String : Any]
     
     private enum CodingKeys : String, CodingKey {
         case identifier, type
     }
     
+    /// Initialize from a `Decoder`.
+    ///
+    /// - example:
+    ///
+    ///     ```
+    ///        // Example JSON dictionary that includes two property keys for "title" and "text". These values
+    ///        // will be added to the `userInfo` dictionary.
+    ///        let json = """
+    ///          {
+    ///          "identifier": "step3",
+    ///          "title": "Step 3",
+    ///          "text": "Some text.",
+    ///          }
+    ///        """.data(using: .utf8)! // our data in native (JSON) format
+    ///     ```
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "generic"
+        self.type = try container.decodeIfPresent(RSDStepType.self, forKey: .type) ?? "unknown"
         
         // Store any additional information to a user info dictionary
         let genericContainer = try decoder.container(keyedBy: AnyCodingKey.self)
         self.userInfo = try genericContainer.decode(Dictionary<String, Any>.self)
     }
     
+    /// Instantiate a step result that is appropriate for this step. Default implementation will return a `RSDResultObject`.
+    /// - returns: A result for this step.
     public func instantiateStepResult() -> RSDResult {
-        return RSDResultObject(identifier: identifier, type: type)
+        return RSDResultObject(identifier: identifier, type: RSDResultType(rawValue: type.rawValue))
     }
     
+    /// Required method. This implementation has no validation.
     public func validate() throws {
         // do nothing
     }

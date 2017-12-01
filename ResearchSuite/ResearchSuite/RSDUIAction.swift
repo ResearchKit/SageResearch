@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import UIKit
+
 
 /// The `RSDUIAction` protocol can be used to customize the title and image displayed for a
 /// given action of the UI.
@@ -49,20 +49,19 @@ public protocol RSDUIAction : Codable {
 
 /// `RSDWebViewUIAction` implements an extension of the base protocol where the action includes a pointer
 /// to a url that can display in a webview. The url can either be fully qualified or optionally point to
-/// an embedded resource. The resource bundle is assumed to be the main bundle if the `resourceBundle`
+/// an embedded resource. The resource bundle is assumed to be the main bundle if the `bundleIdentifier`
 /// property is `nil`.
-public protocol RSDWebViewUIAction : RSDUIAction {
+public protocol RSDWebViewUIAction : RSDUIAction, RSDResourceTransformer {
     
     /// The url to load in the webview. If this is not a fully qualified url string, then it is assumed to refer
     /// to an embedded resource.
     var url: String { get }
-    
-    /// The bundle identifier for the embedded resource.
-    var resourceBundle: String? { get }
 }
 
 /// `RSDSkipToUIAction` implements an extension of the base protocol where the action includes an identifier for
-/// a step to skip to if this action is called.
+/// a step to skip to if this action is called. This is used by the `RSDConditionalStepNavigator` to navigate
+/// based on a `nil` result.
+/// - seealso: `RSDSurveyNavigationStep`
 public protocol RSDSkipToUIAction : RSDUIAction {
     
     /// The identifier for the step to skip to if the action is called.

@@ -33,14 +33,68 @@
 
 import Foundation
 
+/// `RSDResultObject` is a concrete implementation of the base result associated with a task, step, or asynchronous action.
 public struct RSDResultObject : RSDResult, Codable {
-    public let type: String
+
+    /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
+    
+    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
+    public let type: RSDResultType
+    
+    /// The start date timestamp for the result.
     public var startDate: Date = Date()
+    
+    /// The end date timestamp for the result.
     public var endDate: Date = Date()
     
-    public init(identifier: String, type: String = RSDFactory.ResultType.base.rawValue) {
+    private enum CodingKeys : String, CodingKey {
+        case identifier, type, startDate, endDate
+    }
+    
+    /// Default initializer for this object.
+    ///
+    /// - parameters:
+    ///     - identifier: The identifier string.
+    ///     - type: The `RSDResultType` for this result. Default = `.base`.
+    public init(identifier: String, type: RSDResultType = .base) {
         self.identifier = identifier
         self.type = type
+    }
+}
+
+extension RSDResultObject : RSDDocumentableCodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .identifier:
+                if idx != 0 { return false }
+            case .type:
+                if idx != 1 { return false }
+            case .startDate:
+                if idx != 2 { return false }
+            case .endDate:
+                if idx != 3 { return false }
+            }
+        }
+        return keys.count == 4
+    }
+    
+    static func examples() -> [Encodable] {
+        var result = RSDResultObject(identifier: "step1")
+        result.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        result.endDate = result.startDate.addingTimeInterval(5 * 60)
+        return [result]
     }
 }

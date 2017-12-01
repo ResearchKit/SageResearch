@@ -33,20 +33,16 @@
 
 import Foundation
 
+/// `RSDTaskDataSource` is a data source that can be used by the factory to get info that should be included
+/// with a task result or used to display subgroups of a task.
 public protocol RSDTaskDataSource {
     
-    /**
-     Fetch the task group with the given identifier.
-     */
+    /// Fetch the task group with the given identifier.
     func taskGroup(with identifier: String) -> RSDTaskGroup?
     
-    /**
-     Fetch the task info with the given identifier.
-     */
+    /// Fetch the task info with the given identifier.
     func taskInfo(with identifier: String) -> RSDTaskInfoStep?
     
-    /**
-     Fetch the schema info with the given identifier.
-     */
+    /// Fetch the schema info with the given identifier.
     func schemaInfo(with identifier: String) -> RSDSchemaInfo?
 }

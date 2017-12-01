@@ -85,11 +85,9 @@ class FactoryTests: XCTestCase {
     }
     
     func testFetchTask() {
-        guard let taskGroup = getTaskGroup(resourceName: "FactoryTest_TaskGroup"),
-            let taskInfo = taskGroup.tasks.first else {
-            XCTFail("Failed to get task group")
-            return
-        }
+
+        var taskInfo = RSDTaskInfoStepObject(with: "foo")
+        taskInfo.taskTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: BundleWrapper.bundleIdentifier!, classType: nil)
         
         let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
         taskInfo.fetchTask(with: RSDFactory()) { (_, task, err)  in
@@ -131,7 +129,11 @@ class FactoryTests: XCTestCase {
     // MARK: Helper methods
     
     func getTaskGroup(resourceName: String) -> RSDTaskGroupObject? {
-        let wrapper = RSDResourceWrapper(filename: resourceName, bundleIdentifier: "org.sagebase.ResearchSuiteTests")
+        guard let bundleIdentifier = BundleWrapper.bundleIdentifier else {
+            XCTFail("Failed to get bundle identifier")
+            return nil
+        }
+        let wrapper = TestResourceWrapper(resourceName: resourceName, bundleIdentifier: bundleIdentifier)
         do {
             let (data, _) = try wrapper.resourceData()
             let jsonDecoder = JSONDecoder()

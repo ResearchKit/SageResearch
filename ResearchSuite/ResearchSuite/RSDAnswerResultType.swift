@@ -47,6 +47,7 @@ public struct RSDAnswerResultType : Codable {
     /// value being stored. The value stored in the `RSDAnswerResult` should be convertable
     /// to one of these base types.
     public enum BaseType : String, Codable {
+        
         /// Bool
         case boolean
         /// Data
@@ -61,15 +62,26 @@ public struct RSDAnswerResultType : Codable {
         case string
         /// TimeInterval
         case timeInterval
+        
+        /// List of all the base types
+        public static func allTypes() -> [BaseType] {
+            return [.boolean, .data, .date, .decimal, .integer, .string, .timeInterval]
+        }
     }
     
     /// The sequence type of the answer result. This is used to represent a multiple-choice
     /// answer array or a key/value dictionary.
     public enum SequenceType : String, Codable {
+        
         /// Array
         case array
         /// Dictionary
         case dictionary
+        
+        /// List of all the sequence types
+        public static func allTypes() -> [SequenceType] {
+            return [.array, .dictionary]
+        }
     }
     
     /// The base type for the answer.
@@ -89,6 +101,7 @@ public struct RSDAnswerResultType : Codable {
     public let unit: String?
     
     /// A convenience property for getting the measurement `Unit` from the `unit` string.
+    /// - seealso: https://developer.apple.com/documentation/foundation/units_and_measurement
     public var measurementUnit: Unit? {
         guard let symbol = self.unit else { return nil }
         return Unit(symbol: symbol)
@@ -99,9 +112,11 @@ public struct RSDAnswerResultType : Codable {
         guard let dateFormat = self.dateFormat else { return nil }
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat
-        formatter.locale = Locale(identifier: dateLocaleIdentifier ?? "en_US_POSIX")
+        formatter.locale = Locale(identifier: dateLocaleIdentifier ?? RSDAnswerResultType.defaultDateLocaleIdentifier)
         return formatter
     }
+    
+    private static let defaultDateLocaleIdentifier = "en_US_POSIX"
     
     /// The sequence separator to use when storing a multiple component answer as a string.
     ///
@@ -109,6 +124,10 @@ public struct RSDAnswerResultType : Codable {
     /// but is stored as a single string value of "120/90". In this case, "/" would be the
     /// separator.
     public private(set) var sequenceSeparator: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case baseType, sequenceType, dateFormat, dateLocaleIdentifier, unit, sequenceSeparator
+    }
     
     /// Static type for a `RSDAnswerResultType` with a `Bool` base type.
     public static let boolean = RSDAnswerResultType(baseType: .boolean)
@@ -149,7 +168,7 @@ public struct RSDAnswerResultType : Codable {
 }
 
 // MARK: Value Decoding
-extension RSDAnswerResultType : RSDJSONValueDecoder {
+extension RSDAnswerResultType {
     
     /// Decode a `RSDJSONValue` from the given decoder.
     ///
@@ -282,7 +301,7 @@ extension RSDAnswerResultType : RSDJSONValueDecoder {
 }
 
 // MARK: Value Encoding
-extension RSDAnswerResultType : RSDJSONValueEncoder {
+extension RSDAnswerResultType {
     
     /// Encode a value to the given encoder.
     ///
@@ -354,7 +373,7 @@ extension RSDAnswerResultType : RSDJSONValueEncoder {
             return nil
         }
         if let date = encodable as? Date {
-            return encoder.factory.encodedDate(from: date, codingPath: encoder.codingPath)
+            return encoder.factory.encodeString(from: date, codingPath: encoder.codingPath)
         }
         else {
             return "\(encodable)"
@@ -407,7 +426,7 @@ extension RSDAnswerResultType : RSDJSONValueEncoder {
                 formatter.dateFormat = format
                 return formatter.string(from: date)
             } else if baseType == .string {
-                return RSDClassTypeMap.shared.timestampFormatter.string(from: date)
+                return encoder.factory.encodeString(from: date, codingPath: encoder.codingPath)
             } else {
                 return date
             }
@@ -442,3 +461,165 @@ extension RSDAnswerResultType : Hashable, Equatable {
         return lhs.description == rhs.description
     }
 }
+
+extension RSDAnswerResultType.BaseType : RSDDocumentableEnum {
+    static func allCodingKeys() -> [String] {
+        return self.allTypes().map{ $0.rawValue }
+    }
+}
+
+extension RSDAnswerResultType.SequenceType : RSDDocumentableEnum {
+    static func allCodingKeys() -> [String] {
+        return self.allTypes().map{ $0.rawValue }
+    }
+}
+
+extension RSDAnswerResultType : RSDDocumentableCodableObject {
+
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        return [.baseType, .sequenceType, .dateFormat, .dateLocaleIdentifier, .unit, .sequenceSeparator]
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .baseType:
+                if idx != 0 { return false }
+            case .sequenceType:
+                if idx != 1 { return false }
+            case .dateFormat:
+                if idx != 2 { return false }
+            case .dateLocaleIdentifier:
+                if idx != 3 { return false }
+            case .unit:
+                if idx != 4 { return false }
+            case .sequenceSeparator:
+                if idx != 5 { return false }
+            }
+        }
+        return keys.count == 6
+    }
+    
+    static func examples() -> [Encodable] {
+        let examples = examplesWithValues()
+        return examples.map{ $0.answerType }
+    }
+
+    static func examplesWithValues() -> [(answerType: RSDAnswerResultType, value: Any)] {
+        var examples: [(RSDAnswerResultType, Any)] = []
+
+        let sequenceTypes = SequenceType.allTypes()
+        
+        func addExamples(sequenceType: SequenceType?) {
+            let baseTypes = BaseType.allTypes()
+            for baseType in baseTypes {
+                switch baseType {
+                case .boolean:
+                    if sequenceType == nil {
+                        examples.append((RSDAnswerResultType.boolean, true))
+                    }
+                    
+                case .data:
+                    let data = Data(base64Encoded: "A4B8")!
+                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), data))
+                    
+                case .date:
+                    let dateFormats = [RSDFactory.shared.timestampFormatter.dateFormat,
+                                       RSDFactory.shared.timeOnlyFormatter.dateFormat,
+                                       RSDFactory.shared.dateOnlyFormatter.dateFormat]
+                    let date = Date(timeIntervalSince1970: 200000)
+                    examples.append((RSDAnswerResultType.date, date))
+                    for dateFormat in dateFormats {
+                        var answerType = RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: dateFormat)
+                        answerType.dateLocaleIdentifier = RSDAnswerResultType.defaultDateLocaleIdentifier
+                        examples.append((answerType, date))
+                    }
+                
+                case .decimal:
+                    let value: Any = {
+                        if sequenceType == nil {
+                            return Double.pi
+                        } else {
+                            switch sequenceType! {
+                            case .array:
+                                return [123.45, 345.67]
+                            case .dictionary:
+                                return ["pi": Double.pi]
+                            }
+                        }
+                    }()
+                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
+                    if sequenceType == nil {
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: "kg", sequenceSeparator: nil), 54.4311))
+                    }
+                    if sequenceType == .array {
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: "m", sequenceSeparator: ","), [1234.56, 9876.54]))
+                    }
+                    
+                case .integer:
+                    let value: Any = {
+                        if sequenceType == nil {
+                            return 1
+                        } else {
+                            switch sequenceType! {
+                            case .array:
+                                return [1, 2, 3]
+                            case .dictionary:
+                                return ["one": 1, "two": 2]
+                            }
+                        }
+                    }()
+                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
+                    if sequenceType == nil {
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: "hr", sequenceSeparator: nil), 2))
+                    }
+                    if sequenceType == .array {
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: nil, sequenceSeparator: "-"), [206, 555, 1212]))
+                    }
+                    
+                case .string:
+                    let value: Any = {
+                        if sequenceType == nil {
+                            return "alpha"
+                        } else {
+                            switch sequenceType! {
+                            case .array:
+                                return ["alpha", "beta", "charlie"]
+                            case .dictionary:
+                                return ["one": "alpha", "two": "beta"]
+                            }
+                        }
+                    }()
+                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
+                    if sequenceType == .array {
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: nil, sequenceSeparator: "/"), ["and","or"]))
+                    }
+                    
+                case .timeInterval:
+                    let value: Any = {
+                        if sequenceType == nil {
+                            return 120.0
+                        } else {
+                            switch sequenceType! {
+                            case .array:
+                                return [123.45, 345.67]
+                            case .dictionary:
+                                return ["timestamp": 0.123]
+                            }
+                        }
+                    }()
+                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
+                }
+            }
+        }
+        
+        return examples
+    }
+}
+
+

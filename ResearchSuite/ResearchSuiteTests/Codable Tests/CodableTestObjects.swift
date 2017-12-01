@@ -1,6 +1,6 @@
 //
-//  RSDResourceWrapper.swift
-//  ResearchSuite
+//  CodableObjectTests.swift
+//  ResearchSuiteTests
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -31,26 +31,40 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import XCTest
+import ResearchSuite
 
-public struct RSDResourceWrapper : RSDResourceTransformer, Codable {
+class BundleWrapper {
+    class var bundleIdentifier: String? {
+        return Bundle(for: BundleWrapper.self).bundleIdentifier
+    }
+}
+
+struct TestResourceWrapper : RSDResourceTransformer, Codable {
     
-    let filename: String
+    let resourceName: String
     let bundleIdentifier: String?
-    
-    public let classType: String?
+    let classType: String?
 
-    public var resourceName: String {
-        return filename
-    }
-    
-    public var resourceBundle: String? {
-        return bundleIdentifier
-    }
-    
-    public init(filename: String, bundleIdentifier: String?) {
-        self.filename = filename
+    public init(resourceName: String, bundleIdentifier: String?) {
+        self.resourceName = resourceName
         self.bundleIdentifier = bundleIdentifier
         self.classType = nil
     }
+}
+
+struct TestImageWrapperDelegate : RSDImageWrapperDelegate {
+    func fetchImage(for size: CGSize, with imageName: String, callback: @escaping ((UIImage?) -> Void)) {
+        DispatchQueue.main.async {
+            callback(nil)
+        }
+    }
+}
+
+var decoder: JSONDecoder {
+    return RSDFactory.shared.createJSONDecoder()
+}
+
+var encoder: JSONEncoder {
+    return RSDFactory.shared.createJSONEncoder()
 }

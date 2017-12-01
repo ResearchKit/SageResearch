@@ -114,6 +114,35 @@ open class RSDFactory {
     }
     
     
+    // MARK: Schema Info factory
+    
+    /// Decode the schema info from this decoder. This method *must* return a schema info object.
+    /// The default implementation will return a `RSDSchemaInfoObject`.
+    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - returns: The schema info created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeSchemaInfo(from decoder: Decoder) throws -> RSDSchemaInfo {
+        return try RSDSchemaInfoObject(from: decoder)
+    }
+    
+    /// Encode the schema info from the given task result to the given encoder. This allows a subclass
+    /// of the factory to encode additional schema information to the schema info defined by the
+    /// `RSDSchemaInfo` protocol.
+    ///
+    /// - parameters:
+    ///     - taskResult: The task result being encoded.
+    ///     - encoder: The nested encoder to encode the schema info to.
+    open func encodeSchemaInfo(from taskResult: RSDTaskResult, to encoder: Encoder) throws {
+        if let schema = taskResult.schemaInfo, let encodableSchema = schema as? Encodable {
+            try encodableSchema.encode(to: encoder)
+        } else {
+            let encodableSchema = RSDSchemaInfoObject(identifier: taskResult.schemaInfo?.schemaIdentifier ?? taskResult.identifier,
+                                                      revision: taskResult.schemaInfo?.schemaRevision ?? 1)
+            try encodableSchema.encode(to: encoder)
+        }
+    }
+    
+    
     // MARK: Task Transformer factory
     
     /// Decode the task transformer from this decoder. This method *must* return a task transformer
@@ -154,34 +183,7 @@ open class RSDFactory {
     
 
     // MARK: Step factory
-    
-    /// Type of steps that can be created by this factory.
-    public enum StepType : String, Codable {
-        /// Defaults to creating a `RSDActiveUIStep`.
-        case active
-        
-        /// Defaults to creating a `RSDUIStep` used to mark task completion.
-        case completion
-        
-        /// Defaults to creating a `RSDActiveUIStep` used as a countdown to an active step.
-        case countdown
-        
-        /// Defaults to creating a `RSDFormUIStep`.
-        case form
-        
-        /// Defaults to creating a `RSDUIStep`.
-        case instruction
-        
-        /// Defaults to creating a `RSDSectionStep`
-        case section
-        
-        /// Defaults to creating a `RSDSectionStep` created using a `RSDTransformerStep`
-        case transform
-        
-        /// Defaults to creating a `RSDTaskInfoStep`.
-        case taskInfo
-    }
-    
+
     /// Convenience method for decoding a list of steps.
     ///
     /// - parameter container: The unkeyed container with the steps.
@@ -212,24 +214,9 @@ open class RSDFactory {
         guard let name = try typeName(from: decoder) else {
             return try RSDGenericStepObject(from: decoder)
         }
-        let step = try decodeStep(from: decoder, with: name)
+        let step = try decodeStep(from: decoder, with: RSDStepType(rawValue: name))
         try step?.validate()
         return step
-    }
-    
-    /// Decode the step from this decoder. This method can be overridden to return `nil`
-    /// if the step should be skipped.
-    ///
-    /// - parameters:
-    ///     - typeName:     The string representing the class name for this step.
-    ///     - decoder:      The decoder to use to instatiate the object.
-    /// - returns: The step (if any) created from this decoder.
-    /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeStep(from decoder:Decoder, with typeName: String) throws -> RSDStep? {
-        guard let type = StepType(rawValue: typeName) else {
-            return try RSDGenericStepObject(from: decoder)
-        }
-        return try decodeStep(from: decoder, with: type)
     }
     
     /// Decode the step from this decoder. This method can be overridden to return `nil`
@@ -240,7 +227,7 @@ open class RSDFactory {
     ///     - decoder:     The decoder to use to instatiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeStep(from decoder:Decoder, with type:StepType) throws -> RSDStep? {
+    open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
         switch (type) {
         case .instruction, .completion:
             return try RSDUIStepObject(from: decoder)
@@ -254,6 +241,8 @@ open class RSDFactory {
             return try RSDTaskInfoStepObject(from: decoder)
         case .transform:
             return try self.decodeTransformableStep(from: decoder)
+        default:
+            return try RSDGenericStepObject(from: decoder)
         }
     }
     
@@ -315,7 +304,7 @@ open class RSDFactory {
     /// - parameters:
     ///     - dataType:     The data type for this step.
     ///     - decoder:      The decoder to use to instatiate the object.
-    /// - returns: The step (if any) created from this decoder.
+    /// - returns: The input field (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeInputField(from decoder:Decoder, with dataType: RSDFormDataType) throws -> RSDInputField? {
         switch dataType {
@@ -333,6 +322,32 @@ open class RSDFactory {
         }
     }
     
+    
+    // MARK: Text Validator factory
+    
+    /// Decode the text validator from this decoder. The default implementation will instantiate a
+    /// `RSDRegExValidatorObject` from the decoder.
+    ///
+    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - returns: The text validator created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeTextValidator(from decoder: Decoder) throws -> RSDTextValidator? {
+        return try RSDRegExValidatorObject(from: decoder)
+    }
+    
+    
+    // MARK: Formatter factory
+    
+    /// Decode a number formatter from this decoder. The default implementation will instantiate a  `NumberFormatter`
+    /// from the decoder using the convenience method defined in an extension in this framework.
+    ///
+    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - returns: The number formatter created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeNumberFormatter(from decoder: Decoder) throws -> NumberFormatter {
+        return try NumberFormatter(from: decoder)
+    }
+
     
     // MARK: Conditional rule factory
     
@@ -435,25 +450,6 @@ open class RSDFactory {
     
     // MARK: Result factory
     
-    /// Type of results that can be created by this factory.
-    public enum ResultType : String {
-        
-        /// Defaults to creating a `RSDResult`.
-        case base
-        
-        /// Defaults to creating a `RSDAnswerResult`.
-        case answer
-        
-        /// Defaults to creating a `RSDCollectionResult`.
-        case collection
-        
-        /// Defaults to creating a `RSDTaskResult`.
-        case task
-        
-        /// Defaults to creating a `RSDFileResult`.
-        case file
-    }
-    
     /// Convenience method for decoding a list of results.
     ///
     /// - parameter container: The unkeyed container with the results.
@@ -479,7 +475,7 @@ open class RSDFactory {
         guard let typeName = try typeName(from: decoder) else {
             return try RSDResultObject(from: decoder)
         }
-        return try decodeResult(from: decoder, with: typeName)
+        return try decodeResult(from: decoder, with: RSDResultType(rawValue: typeName))
     }
     
     /// Decode the result from this decoder.
@@ -489,10 +485,8 @@ open class RSDFactory {
     ///     - decoder:      The decoder to use to instatiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeResult(from decoder: Decoder, with typeName: String) throws -> RSDResult {
-        guard let resultType = ResultType(rawValue: typeName) else {
-            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a result.")
-        }
+    open func decodeResult(from decoder: Decoder, with resultType: RSDResultType) throws -> RSDResult {
+
         switch resultType {
         case .base:
             return try RSDResultObject(from: decoder)
@@ -504,10 +498,53 @@ open class RSDFactory {
             return try RSDTaskResultObject(from: decoder)
         case .file:
             return try RSDFileResultObject(from: decoder)
+        default:
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a result.")
         }
     }
     
     
+    // MARK: Date Result Format
+    
+    /// Get the date result formatter to use for the given calendar components.
+    ///
+    /// | Returned Formatter | Description                                                         |
+    /// |--------------------|:-------------------------------------------------------------------:|
+    /// |`dateOnlyFormatter` | If only date components (year, month, day) are included.            |
+    /// |`timeOnlyFormatter` | If only time components (hour, minute, second) are included.        |
+    /// |`timestampFormatter`| If both date and time components are included.                      |
+    ///
+    /// - parameter calendarComponents: The calendar components to include.
+    /// - returns: The appropriate date formatter.
+    open func dateResultFormatter(from calendarComponents: Set<Calendar.Component>) -> DateFormatter {
+        let hasDateComponents = calendarComponents.intersection([.year, .month, .day]).count > 0
+        let hasTimeComponents = calendarComponents.intersection([.hour, .minute, .second]).count > 0
+        if hasDateComponents && hasTimeComponents {
+            return timestampFormatter
+        } else if hasTimeComponents {
+            return timeOnlyFormatter
+        } else {
+            return dateOnlyFormatter
+        }
+    }
+    
+    /// `DateFormatter` to use for coding date-only strings. Default = `rsd_ISO8601DateOnlyFormatter`.
+    open var dateOnlyFormatter: DateFormatter {
+        return rsd_ISO8601DateOnlyFormatter
+    }
+    
+    /// `DateFormatter` to use for coding time-only strings. Default = `rsd_ISO8601TimeOnlyFormatter`.
+    open var timeOnlyFormatter: DateFormatter {
+        return rsd_ISO8601TimeOnlyFormatter
+    }
+    
+    /// `DateFormatter` to use for coding timestamp strings that include both date and time components.
+    /// Default = `rsd_ISO8601TimestampFormatter`.
+    open var timestampFormatter: DateFormatter {
+        return rsd_ISO8601TimestampFormatter
+    }
+    
+
     // MARK: Decoder
 
     /// Create a `JSONDecoder` with this factory assigned in the user info keys as the factory
@@ -568,12 +605,7 @@ open class RSDFactory {
     }
     
     /// Decode a date from a string. This method is used during object decoding and is defined
-    /// as `open` so that subclass factories can define their own formatters. The default
-    /// implementation uses the formatters defined in the obj-c `RSDClassTypeMap` singleton.
-    ///
-    /// `RSDClassTypeMap` is included in this framework to allow support for older code that
-    /// was developed using KVO deserialization prior to the implementation of the Swift 4
-    /// `Codable` protocol.
+    /// as `open` so that subclass factories can define their own formatters. 
     ///
     /// - parameters:
     ///     - string:       The string to use in decoding the date.
@@ -585,11 +617,11 @@ open class RSDFactory {
     open func decodeDate(from string: String, formatter: DateFormatter? = nil) -> Date? {
         if formatter != nil {
             return formatter!.date(from: string)
-        } else if let date = RSDClassTypeMap.shared.timestampFormatter.date(from: string) {
+        } else if let date = timestampFormatter.date(from: string) {
             return date
-        } else if let date = RSDClassTypeMap.shared.dateOnlyFormatter.date(from: string) {
+        } else if let date = dateOnlyFormatter.date(from: string) {
             return date
-        } else if let date = RSDClassTypeMap.shared.timeOnlyFormatter.date(from: string) {
+        } else if let date = timeOnlyFormatter.date(from: string) {
             return date
         } else {
             return ISO8601DateFormatter().date(from: string)
@@ -611,7 +643,7 @@ open class RSDFactory {
     open func createJSONEncoder() -> JSONEncoder {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .custom({ (date, encoder) in
-            let string = self.encodedDate(from: date, codingPath: encoder.codingPath)
+            let string = self.encodeString(from: date, codingPath: encoder.codingPath)
             var container = encoder.singleValueContainer()
             try container.encode(string)
         })
@@ -628,10 +660,10 @@ open class RSDFactory {
         return encoder
     }
     
-    /// Overridable method for encoding a date to a string. By default, this method
-    /// uses the `RSDClassTypeMap.shared.timestampFormatter` as the date formatter.
-    open func encodedDate(from date: Date, codingPath: [CodingKey]) -> String {
-        return RSDClassTypeMap.shared.timestampFormatter.string(from: date)
+    /// Overridable method for encoding a date to a string. By default, this method uses the `timestampFormatter`
+    /// as the date formatter.
+    open func encodeString(from date: Date, codingPath: [CodingKey]) -> String {
+        return timestampFormatter.string(from: date)
     }
 }
 

@@ -38,14 +38,10 @@ public protocol RSDDictionaryExtension {
 
 extension Dictionary : RSDDictionaryExtension {
     
-    /**
-     Returns a `Dictionary` containing the results of transforming the keys
-     over `self` where the returned values are the mapped keys.
-     
-     @param  transform  The function used to transform the input keys into the output key
-     
-     @return  A dictionary of key/value pairs.
-     */
+    /// Returns a `Dictionary` containing the results of transforming the keys
+    /// over `self` where the returned values are the mapped keys.
+    /// - parameter transform: The function used to transform the input keys into the output key
+    /// - returns: A dictionary of key/value pairs.
     public func mapKeys<T: Hashable>(_ transform: (Key) -> T) -> [T: Value] {
         var result: [T: Value] = [:]
         for (key, value) in self {
@@ -54,5 +50,4 @@ extension Dictionary : RSDDictionaryExtension {
         }
         return result
     }
-    
 }

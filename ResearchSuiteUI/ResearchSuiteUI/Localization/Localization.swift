@@ -36,10 +36,14 @@ import UIKit
 open class Localization: NSObject {
     
     public static var allBundles: [Bundle] = {
-        return [Bundle.main, Bundle(for: Localization.self)]
+        return [Bundle.main, Bundle(for: Localization.self), Bundle(for: RSDFactory.self)]
+    }()
+    
+    public static var allTargetSuffixes: [String] = {
+        return ["-iOS", "-tvOS", "-watchOS", "-macOS"]
     }()
         
-    @objc open class func localizedString(_ key: String) -> String {
+    public static func localizedString(_ key: String) -> String {
         // Look in these bundles for a localization for the given key
         for bundle in allBundles {
             let tableName = defaultTableNameForBundle(bundle)
@@ -47,6 +51,19 @@ open class Localization: NSObject {
             if bundleStr != key {
                 // If something is found here then return
                 return bundleStr
+            }
+            if let tableName = tableName {
+                // Otherwise, look in the a resource that is shared between targets.
+                for suffix in allTargetSuffixes {
+                    if let range = tableName.range(of: suffix) {
+                        let sharedName = String(tableName.prefix(upTo: range.lowerBound))
+                        let sharedStr = NSLocalizedString(key, tableName: sharedName, bundle: bundle, value: key, comment: "")
+                        if sharedStr != key {
+                            // If something is found here then return
+                            return sharedStr
+                        }
+                    }
+                }
             }
         }
         // Fallback to the key

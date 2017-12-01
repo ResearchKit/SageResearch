@@ -33,28 +33,21 @@
 
 import Foundation
 
-/// `RSDPermissionType` is a generic configuration object with information about a given permission.
-/// The permission type can be used by the app to handle gracefully requesting authorization from
-/// the user for access to sensors and hardware required by the app.
-public protocol RSDPermissionType {
-    
-    /// An identifier for the permission.
-    var identifier: String { get }
-}
-
-/// Standard permission types
+/// Standard permission types.
+///
+/// - note: This framework intentionally does not include any direct reference to Health Kit.
+///         First, including Health Kit in applications that do not use that SDK makes it
+///         confusing and difficult for researchers to set up the app. Second, the goal of
+///         this framework is to include a model that is platform-agnostic and can be used
+///         independently of the device. (syoung 11/1/7/2017)
+///
 public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
     
     /// “Privacy - Camera Usage Description”
     /// Specifies the reason for your app to access the device’s camera.
     /// - seealso: `NSCameraUsageDescription`
     case camera
-    
-    /// “Privacy - Motion Usage Description”
-    /// Specifies the reason for your app to access the device’s accelerometer.
-    /// - seealso: `NSMotionUsageDescription`
-    case coremotion
-    
+
     /// “Privacy - Location When In Use Usage Description”
     /// Specifies the reason for your app to access the user’s location information while your app is in use.
     /// - seealso: `NSLocationWhenInUseUsageDescription`
@@ -70,6 +63,11 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
     /// - seealso: `NSMicrophoneUsageDescription`
     case microphone
     
+    /// “Privacy - Motion Usage Description”
+    /// Specifies the reason for your app to access the device’s accelerometer.
+    /// - seealso: `NSMotionUsageDescription`
+    case motion
+    
     /// “Privacy - Photo Library Usage Description”
     /// Specifies the reason for your app to access the user’s photo library.
     /// - seealso: `NSPhotoLibraryUsageDescription`
@@ -78,5 +76,16 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
     /// An identifier for the permission.
     public var identifier: String {
         return rawValue
+    }
+    
+    /// List of all the standard types.
+    public static func allStandardTypes() -> [RSDStandardPermissionType] {
+        return [.camera, .locationWhenInUse, .location, .microphone, .motion, .photoLibrary]
+    }
+}
+
+extension RSDStandardPermissionType : RSDDocumentableEnum {
+    static func allCodingKeys() -> [String] {
+        return allStandardTypes().map{ $0.rawValue }
     }
 }

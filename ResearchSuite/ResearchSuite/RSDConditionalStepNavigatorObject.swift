@@ -33,15 +33,20 @@
 
 import Foundation
 
-/**
- `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
- */
+/// `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
 public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, Decodable {
     
-    public private(set) var steps : [RSDStep]
+    /// An ordered list of steps to run for this task.
+    public let steps : [RSDStep]
+    
+    /// A conditional rule to optionally associate with this step navigator.
     public var conditionalRule : RSDConditionalRule?
+    
+    /// A list of step markers to use for calculating progress.
     public var progressMarkers : [String]?
     
+    /// Default initializer.
+    /// - parameter steps: An ordered list of steps to run for this task.
     public init(with steps: [RSDStep]) {
         self.steps = steps
     }
@@ -50,6 +55,36 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, D
         case steps, conditionalRule, progressMarkers
     }
     
+    /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
+    /// with the decoder to decode the `steps` and the `conditionalRule`.
+    ///
+    /// - example:
+    ///
+    ///     ```
+    ///         let json = """
+    ///            {
+    ///                "progressMarkers": ["step1", "step2", "step3"],
+    ///                "steps": [
+    ///                           { "identifier" : "step1",
+    ///                             "type" : "instruction",
+    ///                             "title" : "Step 1" },
+    ///                           { "identifier" : "step2",
+    ///                             "type" : "instruction",
+    ///                             "title" : "Step 2" },
+    ///                           { "identifier" : "step2b",
+    ///                             "type" : "instruction",
+    ///                             "title" : "Step 2b" },
+    ///                           { "identifier" : "step3",
+    ///                             "type" : "instruction",
+    ///                             "title" : "Step 3" }
+    ///                         ],
+    ///                "conditionalRule" : {"type" : "medicationTracker"}
+    ///            }
+    ///            """.data(using: .utf8)! // our data in native (JSON) format
+    ///     ```
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let factory = decoder.factory
@@ -66,5 +101,53 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, D
         
         // Decode the markers
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)
+    }
+}
+
+extension RSDConditionalStepNavigatorObject : RSDDocumentableDecodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.steps, .conditionalRule, .progressMarkers]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .steps:
+                if idx != 0 { return false }
+            case .conditionalRule:
+                if idx != 1 { return false }
+            case .progressMarkers:
+                if idx != 2 { return false }
+            }
+        }
+        return keys.count == 3
+    }
+    
+    static func examples() -> [[String : RSDJSONValue]] {
+        let json: [String : RSDJSONValue] = [
+                        "progressMarkers": ["step1", "step2", "step3"],
+                        "steps": [
+                                   [ "identifier" : "step1",
+                                     "type" : "instruction",
+                                     "title" : "Step 1" ],
+                                   [ "identifier" : "step2",
+                                     "type" : "instruction",
+                                     "title" : "Step 2" ],
+                                   [ "identifier" : "step2b",
+                                     "type" : "instruction",
+                                     "title" : "Step 2b" ],
+                                   [ "identifier" : "step3",
+                                     "type" : "instruction",
+                                     "title" : "Step 3" ]
+                                 ]
+                    ]
+        return [json]
     }
 }

@@ -38,80 +38,65 @@ import Foundation
 /// for an input field. Not all ui hints are applicable to all data types or devices, and therefore the ui hint
 /// may be ignored by the application displaying the input field to the user.
 ///
-public enum RSDFormUIHint {
+public struct RSDFormUIHint : RawRepresentable, Codable {
+    public typealias RawValue = String
     
-    /// Standard ui hints.
-    case standard(Standard)
+    public private(set) var rawValue: String
     
-    /// A list of standard presentations for an input field.
-    ///
-    /// - note: The standard ui hints are not all currently supported by `ResearchSuiteUI`.
-    public enum Standard : String {
-        
-        /// list with a checkbox next to each item
-        case checkbox
-        /// drop-down with a textfield for "other"
-        case combobox
-        /// list
-        case list
-        /// multiple line text field
-        case multipleLine
-        /// picker wheel
-        case picker
-        /// Text entry using a modal popover box
-        case popover
-        /// radio button
-        case radioButton
-        /// slider
-        case slider
-        /// text field
-        case textfield
-        /// toggle (segmented) button
-        case toggle
-        
-        /// List of all the standard ui hints
-        public static var all: [Standard] {
-            return [.checkbox, .combobox, .list, .multipleLine, .picker, .radioButton, .slider, .textfield, .toggle]
-        }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
     }
     
-    /// A custom ui hint that a developer can use to specify a ui hint that is not included
-    /// in the standard set.
-    case custom(String)
+    /// list with a checkbox next to each item
+    public static let checkbox: RSDFormUIHint = "checkbox"
     
+    /// drop-down with a textfield for "other"
+    public static let combobox: RSDFormUIHint = "combobox"
+    
+    /// list
+    public static let list: RSDFormUIHint = "list"
+    
+    /// multiple line text field
+    public static let multipleLine: RSDFormUIHint = "multipleLine"
+    
+    /// picker wheel
+    public static let picker: RSDFormUIHint = "picker"
+    
+    /// Text entry using a modal popover box
+    public static let popover: RSDFormUIHint = "popover"
+    
+    /// radio button
+    public static let radioButton: RSDFormUIHint = "radioButton"
+    
+    /// slider
+    public static let slider: RSDFormUIHint = "slider"
+    
+    /// text field
+    public static let textfield: RSDFormUIHint = "textfield"
+    
+    /// toggle (segmented) button
+    public static let toggle: RSDFormUIHint = "toggle"
+
     /// The standard type for this ui hint, if applicable.
-    public var standardType: Standard? {
-        guard case .standard(let type) = self else { return nil }
-        return type
+    public var standardType: RSDFormUIHint? {
+        return RSDFormUIHint.allStandardHints.contains(self) ? self : nil
     }
     
     /// A list of all the `RSDFormUIHint` values that are standard hints.
     public static var allStandardHints: Set<RSDFormUIHint> {
-        let all: [RSDFormUIHint] = Standard.all.map { return .standard($0) }
-        return Set(all)
+        return [.checkbox, .combobox, .list, .multipleLine, .picker, .radioButton, .slider, .textfield, .toggle]
     }
 }
 
-extension RSDFormUIHint: RawRepresentable, Codable {
-    public typealias RawValue = String
-
-    public init(rawValue: RawValue) {
-        if let subtype = Standard(rawValue: rawValue) {
-            self = .standard(subtype)
-        }
-        else {
-            self = .custom(rawValue)
-        }
+extension RSDFormUIHint : Equatable {
+    public static func ==(lhs: RSDFormUIHint, rhs: RSDFormUIHint) -> Bool {
+        return lhs.rawValue == rhs.rawValue
     }
-    
-    public var rawValue: String {
-        switch (self) {
-        case .standard(let value):
-            return value.rawValue
-            
-        case .custom(let value):
-            return value
-        }
+    public static func ==(lhs: String, rhs: RSDFormUIHint) -> Bool {
+        return lhs == rhs.rawValue
+    }
+    public static func ==(lhs: RSDFormUIHint, rhs: String) -> Bool {
+        return lhs.rawValue == rhs
     }
 }
 
@@ -126,6 +111,12 @@ extension RSDFormUIHint : ExpressibleByStringLiteral {
 
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
+    }
+}
+
+extension RSDFormUIHint : RSDDocumentableEnum {
+    static func allCodingKeys() -> [String] {
+        return allStandardHints.map{ $0.rawValue }
     }
 }
 

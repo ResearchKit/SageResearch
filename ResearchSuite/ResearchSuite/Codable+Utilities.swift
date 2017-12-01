@@ -33,6 +33,8 @@
 
 import Foundation
 
+/// Internally defined method for converting a decoding container to a dictionary
+/// where any key in the dictionary is accessible.
 struct AnyCodingKey: CodingKey {
     public let stringValue: String
     public let intValue: Int?
@@ -48,16 +50,17 @@ struct AnyCodingKey: CodingKey {
     }
 }
 
-public protocol RSDDecodingContainerExtension {
-}
-
-extension KeyedDecodingContainer : RSDDecodingContainerExtension {
+/// Extension of the keyed decoding container for decoding to any dictionary. These methods are defined internally
+/// to avoid possible namespace clashes.
+extension KeyedDecodingContainer {
     
+    /// Decode `Dictionary<String, Any>` for the given key.
     func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
         let container = try self.nestedContainer(keyedBy: AnyCodingKey.self, forKey: key)
         return try container.decode(type)
     }
     
+    /// Decode `Dictionary<String, Any>` for the given key if the dictionary is present for that key.
     func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
         guard contains(key) else {
             return nil
@@ -65,11 +68,13 @@ extension KeyedDecodingContainer : RSDDecodingContainerExtension {
         return try decode(type, forKey: key)
     }
     
+    /// Decode `Array<Any>` for the given key.
     func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
         var container = try self.nestedUnkeyedContainer(forKey: key)
         return try container.decode(type)
     }
     
+    /// Decode `Array<Any>` for the given key if the array is present for that key.
     func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
         guard contains(key) else {
             return nil
@@ -77,6 +82,7 @@ extension KeyedDecodingContainer : RSDDecodingContainerExtension {
         return try decode(type, forKey: key)
     }
     
+    /// Decode this container as a `Dictionary<String, Any>`.
     func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
         var dictionary = Dictionary<String, Any>()
         
@@ -104,8 +110,11 @@ extension KeyedDecodingContainer : RSDDecodingContainerExtension {
     }
 }
 
+/// Extension of the unkeyed decoding container for decoding to any array. These methods are defined internally
+/// to avoid possible namespace clashes.
 extension UnkeyedDecodingContainer {
     
+    /// For the elements in the unkeyed contain, decode all the elements.
     mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
         var array: [Any] = []
         while isAtEnd == false {
@@ -124,10 +133,5 @@ extension UnkeyedDecodingContainer {
             }
         }
         return array
-    }
-    
-    mutating func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
-        let nestedContainer = try self.nestedContainer(keyedBy: AnyCodingKey.self)
-        return try nestedContainer.decode(type)
     }
 }

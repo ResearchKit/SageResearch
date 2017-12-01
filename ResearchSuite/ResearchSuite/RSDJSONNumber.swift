@@ -31,14 +31,12 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-
 import Foundation
 
+/// `RSDJSONNumber` implements converting a Swift number to an Objective-C `NSNumber`.
 public protocol RSDJSONNumber : Codable {
     
-    /**
-     Return an NSNumber for use in json encoding
-     */
+    /// Return an NSNumber for use in json encoding
     func jsonNumber() -> NSNumber?
 }
 

@@ -33,16 +33,33 @@
 
 import Foundation
 
+/// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
+/// may have more that one result.
 public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
-    public let type: String
+    
+    /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
+    
+    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
+    public let type: RSDResultType
+    
+    /// The start date timestamp for the result.
     public var startDate: Date = Date()
+    
+    /// The end date timestamp for the result.
     public var endDate: Date = Date()
+    
+    /// The list of input results associated with this step. These are generally assumed to be answers to
+    /// field inputs, but they are not required to implement the `RSDAnswerResult` protocol.
     public var inputResults: [RSDResult]
     
+    /// Default initializer for this object.
+    ///
+    /// - parameters:
+    ///     - identifier: The identifier string.
     public init(identifier: String) {
         self.identifier = identifier
-        self.type = RSDFactory.ResultType.collection.rawValue
+        self.type = .collection
         self.inputResults = []
     }
     
@@ -50,17 +67,25 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
         case identifier, type, startDate, endDate, inputResults
     }
     
+    /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
+    /// with the decoder to decode the `inputResults`.
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
-        self.type = try container.decode(String.self, forKey: .type)
+        self.type = try container.decode(RSDResultType.self, forKey: .type)
         
         let resultsContainer = try container.nestedUnkeyedContainer(forKey: .inputResults)
         self.inputResults = try decoder.factory.decodeResults(from: resultsContainer)
     }
     
+    /// Encode the result to the given encoder.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(identifier, forKey: .identifier)
@@ -73,5 +98,49 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
             let nestedEncoder = nestedContainer.superEncoder()
             try result.encode(to: nestedEncoder)
         }
+    }
+}
+
+extension RSDCollectionResultObject : RSDDocumentableCodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .inputResults]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .identifier:
+                if idx != 0 { return false }
+            case .type:
+                if idx != 1 { return false }
+            case .startDate:
+                if idx != 2 { return false }
+            case .endDate:
+                if idx != 3 { return false }
+            case .inputResults:
+                if idx != 4 { return false }
+            }
+        }
+        return keys.count == 5
+    }
+    
+    static func exampleResult() -> RSDCollectionResultObject {
+        var result = RSDCollectionResultObject(identifier: "formStep")
+        result.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        result.endDate = result.startDate.addingTimeInterval(5 * 60)
+        result.inputResults = RSDAnswerResultObject.answerResultExamples()
+        return result
+    }
+    
+    static func examples() -> [Encodable] {
+        let result = exampleResult()
+        return [result]
     }
 }

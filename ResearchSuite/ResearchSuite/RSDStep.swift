@@ -56,9 +56,9 @@ public protocol RSDStep {
     /// it can make sense to make the identifier human readable.
     var identifier: String { get }
     
-    /// A String that indicates the type of the step. This is used to decode the step using a `RSDFactory`. It can also
-    /// be used to customize the UI.
-    var type: String { get }
+    /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
+    /// the UI.
+    var type: RSDStepType { get }
     
     /// Instantiate a step result that is appropriate for this step.
     /// - returns: A result for this step.
@@ -74,7 +74,7 @@ public protocol RSDStep {
 public protocol RSDGenericStep : RSDStep {
     
     /// The decoded dictionary.
-    var userInfo: [String : Any]? { get }
+    var userInfo: [String : Any] { get }
 }
 
 /// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
@@ -169,10 +169,10 @@ public protocol RSDThemedUIStep : RSDUIStep {
     /// The view info used to create a custom step.
     var viewTheme: RSDViewThemeElement? { get }
     
-    /// The color theme (if any).
+    /// The color theme.
     var colorTheme: RSDColorThemeElement? { get }
     
-    /// The image theme (if any).
+    /// The image theme.
     var imageTheme: RSDImageThemeElement? { get }
 }
 

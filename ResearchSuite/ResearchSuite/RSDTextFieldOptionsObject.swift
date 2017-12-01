@@ -33,270 +33,279 @@
 
 import Foundation
 
-
+/// `RSDTextFieldOptionsObject` defines the options for a text field.
+///
+/// - seealso: `RSDInputField` and `RSDFormStepDataSource`
 public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
 
-    public var validationRegex: String?
+    /// A text validator that can be used to validate a string.
+    public var textValidator: RSDTextValidator?
+    
+    /// The text presented to the user when invalid input is received.
     public var invalidMessage: String?
     
-    public var validationRegularExpression: NSRegularExpression? {
-        return nil  // This struct does not support custom regex
-    }
+    /// The maximum length of the text users can enter. When the value of this property is 0, there
+    /// is no maximum.
+    public var maximumLength: Int
     
-    private let _maximumLength: Int?
-    public var maximumLength: Int {
-        return _maximumLength ?? 0
-    }
+    /// Auto-capitalization type for the text field.
+    public var autocapitalizationType: RSDTextAutocapitalizationType
+
+    /// Auto-correction type for the text field.
+    public var autocorrectionType: RSDTextAutocorrectionType
     
-    private let _autocapitalizationType: UITextAutocapitalizationType?
-    public var autocapitalizationType: UITextAutocapitalizationType {
-        return _autocapitalizationType ?? .none
-    }
+    /// Spell checking type for the text field.
+    public var spellCheckingType: RSDTextSpellCheckingType
     
-    public let _autocorrectionType: UITextAutocorrectionType?
-    public var autocorrectionType: UITextAutocorrectionType {
-        return _autocorrectionType ?? .no
-    }
+    /// Keyboard type for the text field.
+    public var keyboardType: RSDKeyboardType
     
-    public let _spellCheckingType: UITextSpellCheckingType?
-    public var spellCheckingType: UITextSpellCheckingType {
-        return _spellCheckingType ?? .no
-    }
-    
-    private let _keyboardType: UIKeyboardType?
-    public var keyboardType: UIKeyboardType {
-        return _keyboardType ?? .default
-    }
-    
-    private let _isSecureTextEntry: Bool?
-    public var isSecureTextEntry: Bool {
-        return _isSecureTextEntry ?? false
-    }
+    /// Is the text field for password entry?
+    public var isSecureTextEntry: Bool
     
     private enum CodingKeys : String, CodingKey {
-        case validationRegex
-        case invalidMessage
-        case _maximumLength = "maximumLength"
-        case _autocapitalizationType = "autocapitalizationType"
-        case _keyboardType = "keyboardType"
-        case _isSecureTextEntry = "isSecureTextEntry"
-        case _autocorrectionType = "autocorrectionType"
-        case _spellCheckingType = "spellCheckingType"
+        case textValidator, invalidMessage, maximumLength, isSecureTextEntry, autocapitalizationType, autocorrectionType, spellCheckingType, keyboardType
     }
     
-    public init(keyboardType: UIKeyboardType = .default, autocapitalizationType: UITextAutocapitalizationType = .none, isSecureTextEntry: Bool = false, maximumLength: Int = 0, spellCheckingType: UITextSpellCheckingType = .no, autocorrectionType: UITextAutocorrectionType = .no) {
-        self._maximumLength = maximumLength
-        self._autocapitalizationType = autocapitalizationType
-        self._keyboardType = keyboardType
-        self._isSecureTextEntry = isSecureTextEntry
-        self._spellCheckingType = spellCheckingType
-        self._autocorrectionType = autocorrectionType
+    /// Default initializer.
+    ///
+    /// - parameters:
+    ///     - keyboardType: Keyboard type for the text field.
+    ///     - autocapitalizationType: Auto-capitalization type for the text field.
+    ///     - isSecureTextEntry: Is the text field for password entry?
+    ///     - spellCheckingType: Spell checking type for the text field.
+    ///     - autocorrectionType: Auto-correction type for the text field.
+    public init(keyboardType: RSDKeyboardType = .default, autocapitalizationType: RSDTextAutocapitalizationType = .none, isSecureTextEntry: Bool = false, maximumLength: Int = 0, spellCheckingType: RSDTextSpellCheckingType = .no, autocorrectionType: RSDTextAutocorrectionType = .no) {
+        self.maximumLength = maximumLength
+        self.autocapitalizationType = autocapitalizationType
+        self.keyboardType = keyboardType
+        self.isSecureTextEntry = isSecureTextEntry
+        self.spellCheckingType = spellCheckingType
+        self.autocorrectionType = autocorrectionType
+    }
+    
+    /// Initialize from a `Decoder`. The decoder uses string value keywords for all the `Int` base enums defined by this
+    /// struct where the keywords listed in the table below.
+    ///
+    /// | Property                 | Keywords                                                           |
+    /// |--------------------------|:------------------------------------------------------------------:|
+    /// | `keyboardType`           | [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
+    ///                                "numberPad", "phonePad", "namePhonePad", "emailAddress",
+    ///                                "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]   |
+    /// | `autocapitalizationType` | ["none", "words", "sentences", "allCharacters"]                    |
+    /// | `spellCheckingType`      | ["default", "no", "yes"]                                           |
+    /// | `autocorrectionType`     | ["default", "no", "yes"]                                           |
+    ///
+    /// - example:
+    ///
+    ///     ```
+    ///            let json = """
+    ///                {
+    ///                "textValidator" : "[A:C]",
+    ///                "invalidMessage" : "You know me",
+    ///                "maximumLength" : 10,
+    ///                "autocapitalizationType" : "words",
+    ///                "keyboardType" : "asciiCapable",
+    ///                "isSecureTextEntry" : true
+    ///                }
+    ///            """.data(using: .utf8)! // our data in native (JSON) format
+    ///     ```
+    ///
+    /// - parameter decoder: The decoder to use to decode this instance.
+    /// - throws: `DecodingError`
+    public init(from decoder: Decoder) throws {
+        let defaultValues = RSDTextFieldOptionsObject()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.invalidMessage = try container.decodeIfPresent(String.self, forKey: .invalidMessage)
+        self.maximumLength = try container.decodeIfPresent(Int.self, forKey: .maximumLength) ?? defaultValues.maximumLength
+        self.autocapitalizationType = try container.decodeIfPresent(RSDTextAutocapitalizationType.self, forKey: .autocapitalizationType) ?? defaultValues.autocapitalizationType
+        self.keyboardType = try container.decodeIfPresent(RSDKeyboardType.self, forKey: .keyboardType) ?? defaultValues.keyboardType
+        self.isSecureTextEntry = try container.decodeIfPresent(Bool.self, forKey: .isSecureTextEntry) ?? false
+        self.spellCheckingType = try container.decodeIfPresent(RSDTextSpellCheckingType.self, forKey: .spellCheckingType) ?? defaultValues.spellCheckingType
+        self.autocorrectionType = try container.decodeIfPresent(RSDTextAutocorrectionType.self, forKey: .autocorrectionType) ?? defaultValues.autocorrectionType
+        if container.contains(.textValidator) {
+            let nestedDecoder = try container.superDecoder(forKey: .textValidator)
+            self.textValidator = try decoder.factory.decodeTextValidator(from: nestedDecoder)
+        }
+    }
+    
+    /// Encode the result to the given encoder. This will encode the text options as a dictionary.
+    /// - parameter encoder: The encoder to use to encode this instance.
+    /// - throws: `EncodingError`
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(invalidMessage, forKey: .invalidMessage)
+        try container.encode(maximumLength, forKey: .maximumLength)
+        try container.encode(autocapitalizationType, forKey: .autocapitalizationType)
+        try container.encode(keyboardType, forKey: .keyboardType)
+        try container.encode(isSecureTextEntry, forKey: .isSecureTextEntry)
+        try container.encode(spellCheckingType, forKey: .spellCheckingType)
+        try container.encode(autocorrectionType, forKey: .autocorrectionType)
+        if let obj = self.textValidator {
+            let nestedEncoder = container.superEncoder(forKey: .textValidator)
+            guard let encodable = obj as? Encodable else {
+                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "The reg ex validator does not conform to the Encodable protocol"))
+            }
+            try encodable.encode(to: nestedEncoder)
+        }
     }
 }
 
-fileprivate let _RSDTextAutocapitalizationType : [String] = [   "none",
-                                                                "words",
-                                                                "sentences",
-                                                                "allCharacters"]
-
-extension UITextAutocapitalizationType {
+extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
     
-    /**
-     Initializer that uses an `identifier` string.
-     
-     @param identifier    The identifier to convert
-     @return              An `UITextAutocapitalizationType`. Default = `.none`
-     */
-    public init(identifier: String) {
-        guard let idx = _RSDTextAutocapitalizationType.index(of: identifier),
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.textValidator, .invalidMessage, .maximumLength, .isSecureTextEntry, .autocapitalizationType, .autocorrectionType, .spellCheckingType, .keyboardType]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .textValidator:
+                if idx != 0 { return false }
+            case .invalidMessage:
+                if idx != 1 { return false }
+            case .maximumLength:
+                if idx != 2 { return false }
+            case .isSecureTextEntry:
+                if idx != 3 { return false }
+            case .autocapitalizationType:
+                if idx != 4 { return false }
+            case .autocorrectionType:
+                if idx != 5 { return false }
+            case .spellCheckingType:
+                if idx != 6 { return false }
+            case .keyboardType:
+                if idx != 7 { return false }
+            }
+        }
+        return keys.count == 8
+    }
+    
+    static func examples() -> [Encodable] {
+        let exampleA = RSDTextFieldOptionsObject(keyboardType: .asciiCapable, autocapitalizationType: .allCharacters, isSecureTextEntry: true, maximumLength: 16, spellCheckingType: .no, autocorrectionType: .no)
+        var exampleB = RSDTextFieldOptionsObject(keyboardType: .numberPad)
+        exampleB.textValidator = try! RSDRegExValidatorObject(regExPattern: "^[0-9]*$")
+        exampleB.invalidMessage = "This input field only allows entering numbers."
+        return [exampleA, exampleB]
+    }
+}
+
+/// `Codable` enum for the auto-capitalization type for an input text field.
+/// - keywords: ["none", "words", "sentences", "allCharacters"]
+public enum RSDTextAutocapitalizationType : String, Codable {
+    case none, words, sentences, allCharacters
+    
+    static func allTypes() -> [RSDTextAutocapitalizationType] {
+        return [.none, .words, .sentences, .allCharacters]
+    }
+
+    /// Return the `UITextAutocapitalizationType` that maps to this enum.
+    #if os(iOS) || os(tvOS) || os(OSX)
+    public func textAutocapitalizationType() -> UITextAutocapitalizationType {
+        guard let idx = RSDTextAutocapitalizationType.allTypes().index(of: self),
             let type = UITextAutocapitalizationType(rawValue: Int(idx))
             else {
-                self = .none
-                return
+                return .none
         }
-        self = type
+        return type
     }
+    #endif
+}
+
+extension RSDTextAutocapitalizationType : RSDDocumentableEnum {
+    static func allCodingKeys() -> [String] {
+        return allTypes().map { $0.rawValue }
+    }
+}
+
+/// `Codable` enum for the auto-capitalization type for an input text field.
+/// - keywords: ["default", "no", yes"]
+public enum RSDTextAutocorrectionType : String, Codable {
+    case `default`, no, yes
     
-    /**
-     String identifier for this enum value.
-     */
-    public var identifier: String {
-        let idx = self.rawValue
-        guard idx >= 0 && idx < _RSDTextAutocapitalizationType.count else {
-            return _RSDTextAutocapitalizationType[0]
-        }
-        return _RSDTextAutocapitalizationType[idx]
+    static func allTypes() -> [RSDTextAutocorrectionType] {
+        return [.default, .no, .yes]
     }
-}
 
-extension UITextAutocapitalizationType : Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let identifier = try container.decode(String.self)
-        self.init(identifier: identifier)
-    }
-}
-
-extension UITextAutocapitalizationType : Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.identifier)
-    }
-}
-
-fileprivate let _RSDTextAutocorrectionType : [String] = [   "default",
-                                                                "no",
-                                                                "yes"]
-
-extension UITextAutocorrectionType {
-    
-    /**
-     Initializer that uses an `identifier` string.
-     
-     @param identifier    The identifier to convert
-     @return              An `UITextAutocapitalizationType`. Default = `.none`
-     */
-    public init(identifier: String) {
-        guard let idx = _RSDTextAutocorrectionType.index(of: identifier),
+    /// Return the `UITextAutocorrectionType` that maps to this enum.
+    #if os(iOS) || os(tvOS) || os(OSX)
+    public func textAutocorrectionType() -> UITextAutocorrectionType {
+        guard let idx = RSDTextAutocorrectionType.allTypes().index(of: self),
             let type = UITextAutocorrectionType(rawValue: Int(idx))
             else {
-                self = .default
-                return
+                return .default
         }
-        self = type
+        return type
     }
+    #endif
+}
+
+extension RSDTextAutocorrectionType : RSDDocumentableEnum {
+    static func allCodingKeys() -> [String] {
+        return allTypes().map { $0.rawValue }
+    }
+}
+
+/// `Codable` enum for the spell checking type for an input text field.
+/// - keywords: ["default", "no", yes"]
+public enum RSDTextSpellCheckingType  : String, Codable {
+    case `default`, no, yes
     
-    /**
-     String identifier for this enum value.
-     */
-    public var identifier: String {
-        let idx = self.rawValue
-        guard idx >= 0 && idx < _RSDTextAutocorrectionType.count else {
-            return _RSDTextAutocorrectionType[0]
-        }
-        return _RSDTextAutocorrectionType[idx]
+    static func allTypes() -> [RSDTextSpellCheckingType] {
+        return [.default, .no, .yes]
     }
-}
 
-extension UITextAutocorrectionType : Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let identifier = try container.decode(String.self)
-        self.init(identifier: identifier)
-    }
-}
-
-extension UITextAutocorrectionType : Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.identifier)
-    }
-}
-
-fileprivate let _RSDTextSpellCheckingType : [String] = [   "default",
-                                                            "no",
-                                                            "yes"]
-
-extension UITextSpellCheckingType {
-    
-    /**
-     Initializer that uses an `identifier` string.
-     
-     @param identifier    The identifier to convert
-     @return              An `UITextAutocapitalizationType`. Default = `.none`
-     */
-    public init(identifier: String) {
-        guard let idx = _RSDTextSpellCheckingType.index(of: identifier),
+    /// Return the `UITextSpellCheckingType` that maps to this enum.
+    #if os(iOS) || os(tvOS) || os(OSX)
+    public func textSpellCheckingType() -> UITextSpellCheckingType {
+        guard let idx = RSDTextSpellCheckingType.allTypes().index(of: self),
             let type = UITextSpellCheckingType(rawValue: Int(idx))
             else {
-                self = .default
-                return
+                return .default
         }
-        self = type
+        return type
     }
-    
-    /**
-     String identifier for this enum value.
-     */
-    public var identifier: String {
-        let idx = self.rawValue
-        guard idx >= 0 && idx < _RSDTextSpellCheckingType.count else {
-            return _RSDTextSpellCheckingType[0]
-        }
-        return _RSDTextSpellCheckingType[idx]
+    #endif
+}
+
+extension RSDTextSpellCheckingType : RSDDocumentableEnum {
+    static func allCodingKeys() -> [String] {
+        return allTypes().map { $0.rawValue }
     }
 }
 
-extension UITextSpellCheckingType : Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let identifier = try container.decode(String.self)
-        self.init(identifier: identifier)
+/// `Codable` enum for the spell checking type for an input text field.
+/// - keywords: [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
+///               "numberPad", "phonePad", "namePhonePad", "emailAddress",
+///               "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]
+public enum RSDKeyboardType  : String, Codable {
+    case `default`, asciiCapable, numbersAndPunctuation, URL, numberPad, phonePad, namePhonePad, emailAddress, decimalPad, twitter, webSearch, asciiCapableNumberPad
+
+    static func allTypes() -> [RSDKeyboardType] {
+        return [.default, .asciiCapable, .numbersAndPunctuation, .URL, .numberPad, .phonePad, .namePhonePad, .emailAddress, .decimalPad, .twitter, .webSearch, .asciiCapableNumberPad]
     }
-}
 
-extension UITextSpellCheckingType : Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.identifier)
-    }
-}
-
-fileprivate let _RSDKeyboardType : [String] = [ "default",
-                                                "asciiCapable",
-                                                "numbersAndPunctuation",
-                                                "URL",
-                                                "numberPad",
-                                                "phonePad",
-                                                "namePhonePad",
-                                                "emailAddress",
-                                                "decimalPad",
-                                                "twitter",
-                                                "webSearch",
-                                                "asciiCapableNumberPad"]
-
-extension UIKeyboardType {
-    
-    /**
-     Initializer that uses an `identifier` string.
-     
-     @param identifier    The identifier to convert
-     @return              An `UIKeyboardType`. Default = `.default`
-     */
-    public init(identifier: String) {
-        guard let idx = _RSDKeyboardType.index(of: identifier),
+    /// Return the `UIKeyboardType` that maps to this enum.
+    #if os(iOS) || os(tvOS) || os(OSX)
+    public func keyboardType() -> UIKeyboardType {
+        guard let idx = RSDKeyboardType.allTypes().index(of: self),
             let type = UIKeyboardType(rawValue: Int(idx))
             else {
-                self = .default
-                return
+                return .default
         }
-        self = type
+        return type
     }
-    
-    /**
-     String identifier for this enum value.
-     */
-    public var identifier: String {
-        let idx = self.rawValue
-        guard idx >= 0 && idx < _RSDKeyboardType.count else {
-            return _RSDKeyboardType[0]
-        }
-        return _RSDKeyboardType[idx]
-    }
+    #endif
 }
 
-extension UIKeyboardType : Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let identifier = try container.decode(String.self)
-        self.init(identifier: identifier)
+extension RSDKeyboardType : RSDDocumentableEnum {
+    static func allCodingKeys() -> [String] {
+        return allTypes().map { $0.rawValue }
     }
 }
-
-extension UIKeyboardType : Encodable {
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(self.identifier)
-    }
-}
-

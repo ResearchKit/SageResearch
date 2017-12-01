@@ -34,12 +34,14 @@
 import Foundation
 
 /// `RSDInputField` is used to describe a form input and includes the data type and a possible hint to how the UI
-/// should be displayed.
+/// should be displayed. The ResearchSuite framework uses `RSDFormUIStep` to represent questions to ask the user.
+/// Each question must have at least one associated input field. An input field is validated when its owning step
+/// is validated.
 ///
 /// - seealso: `RSDFormUIStep`
 public protocol RSDInputField {
     
-    /// A short string that uniquely identifies the form item within the step. The identifier is reproduced in the
+    /// A short string that uniquely identifies the input field within the step. The identifier is reproduced in the
     /// results of a step result in the step history of a task result.
     var identifier: String { get }
     
@@ -83,8 +85,9 @@ public protocol RSDInputField {
 /// `RSDChoice` is used to describe a choice item for use with a multiple choice or multiple component input field.
 public protocol RSDChoice {
     
-    /// A JSON encodable object to return as the value when this choice is selected.
-    var value: Codable { get }
+    /// A JSON encodable object to return as the value when this choice is selected. A `nil` value indicates that
+    /// the user has selected to skip the question or "prefers not to answer".
+    var value: Codable? { get }
     
     /// Localized text string to display for the choice.
     var text: String? { get }
@@ -104,6 +107,11 @@ public protocol RSDChoice {
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
     func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
+    
+    /// Is the choice value equal to the given result?
+    /// - parameter result: A result to test for equality.
+    /// - returns: `true` if the values are equal.
+    func isEqualToResult(_ result: RSDResult?) -> Bool
 }
 
 /// `RSDChoiceOptions` is a data source protocol that can be used to set up a picker or list of choices.
@@ -118,12 +126,22 @@ public protocol RSDChoiceOptions: RSDChoicePickerDataSource {
     var isOptional: Bool { get }
 }
 
-/// `RSDChoiceOptions` extends the properties of `RSDInputField` with information required to create a
+/// `RSDChoiceInputField` extends the properties of `RSDInputField` with information required to create a
 /// multiple or single choice question.
 public protocol RSDChoiceInputField : RSDInputField, RSDChoiceOptions {
+}
+
+extension RSDChoiceInputField {
     
-    /// Does the choice selection allow entering a custom value?
-    var allowOther : Bool { get }
+    /// Convenience property for whether or not the choice input field has associated images
+    public var hasImages: Bool {
+        for choice in choices {
+            if choice.hasIcon {
+                return true
+            }
+        }
+        return false
+    }
 }
 
 /// `RSDMultipleComponentInputField` extends the properties of `RSDInputField` with information

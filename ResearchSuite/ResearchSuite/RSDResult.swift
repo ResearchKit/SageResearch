@@ -45,7 +45,7 @@ public protocol RSDResult : Codable {
     var identifier: String { get }
     
     /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    var type: String { get }
+    var type: RSDResultType { get }
     
     /// The start date timestamp for the result.
     var startDate: Date { get }

@@ -73,9 +73,6 @@ public protocol RSDDateRange : RSDRange {
     /// is `nil` or if the number is outside the allowable range of 1 to 30 minutes.
     var minuteInterval: Int? { get }
     
-    /// Calendar components that are relevant for this input field.
-    var calendarComponents: Set<Calendar.Component> { get }
-    
     /// The date encoder to use for formatting the result. If `nil` then the result, `minDate`, and
     /// `maxDate` are assumed to be used for time and date with the default coding implementation.
     var dateCoder: RSDDateCoder? { get }

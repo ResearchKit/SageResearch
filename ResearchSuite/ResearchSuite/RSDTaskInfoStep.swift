@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import UIKit
+
 
 /// A completion handler for fetching a task using the task info `fetchTask()` method.
 public typealias RSDTaskFetchCompletionHandler = (RSDTaskInfoStep, RSDTask?, Error?) -> Void

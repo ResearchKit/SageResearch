@@ -33,15 +33,70 @@
 
 import Foundation
 
+/// `RSDViewThemeElementObject` tells the UI where to find the view controller to use when instantiating the
+/// `RSDStepController`.
 public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundleInfo, Codable {
     
+    /// The storyboard view controller identifier or the nib name for this view controller.
     public let viewIdentifier: String
+    
+    /// The bundle identifier for the nib or storyboard.
     public let bundleIdentifier: String?
+    
+    /// If the storyboard identifier is non-nil then the view is assumed to be accessible within the storyboard
+    /// via the `viewIdentifier`.
     public let storyboardIdentifier: String?
     
+    private enum CodingKeys: String, CodingKey {
+        case viewIdentifier, bundleIdentifier, storyboardIdentifier
+    }
+    
+    /// Default initializer.
+    ///
+    /// - parameters:
+    ///     - viewIdentifier: The storyboard view controller identifier or the nib name for this view controller.
+    ///     - bundleIdentifier: The bundle identifier for the nib or storyboard. Default = `nil`.
+    ///     - storyboardIdentifier: The storyboard identifier. Default = `nil`.
     public init(viewIdentifier: String, bundleIdentifier: String? = nil, storyboardIdentifier: String? = nil) {
         self.viewIdentifier = viewIdentifier
         self.bundleIdentifier = bundleIdentifier
         self.storyboardIdentifier = storyboardIdentifier
+    }
+}
+
+extension RSDViewThemeElementObject : RSDDocumentableCodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.viewIdentifier, .bundleIdentifier, .storyboardIdentifier]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .viewIdentifier:
+                if idx != 0 { return false }
+            case .bundleIdentifier:
+                if idx != 1 { return false }
+            case .storyboardIdentifier:
+                if idx != 2 { return false }
+            }
+        }
+        return keys.count == 3
+    }
+    
+    static func viewThemeExamples() -> [RSDViewThemeElementObject] {
+        let viewThemeA = RSDViewThemeElementObject(viewIdentifier: "FooStepNibIdentifier", bundleIdentifier: "org.example.SharedResources")
+        let viewThemeB = RSDViewThemeElementObject(viewIdentifier: "FooStepViewIdentifier", bundleIdentifier: nil, storyboardIdentifier: "FooBarStoryboard")
+        return [viewThemeA, viewThemeB]
+    }
+    
+    static func examples() -> [Encodable] {
+        return viewThemeExamples()
     }
 }

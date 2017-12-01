@@ -371,13 +371,23 @@ open class RSDImageViewCell : UITableViewCell {
     @IBOutlet public var iconView: UIImageView!
     
     private var _loading = false
-    public var imageLoader: RSDResizableImage? {
+    public var imageLoader: RSDImageThemeElement? {
         didSet {
             if !_loading, let loader = imageLoader, iconView.image == nil {
                 _loading = true
-                loader.fetchImage(for: iconView.bounds.size, callback: { [weak self] (img) in
-                    self?.iconView.image = img
-                })
+                if let animatedVendor = loader as? RSDAnimatedImageThemeElement {
+                    DispatchQueue.main.async {
+                        self.iconView.animationImages = animatedVendor.images(compatibleWith: nil)
+                        self.iconView.animationDuration = animatedVendor.animationDuration
+                        self.iconView.startAnimating()
+                    }
+                } else if let fetchLoader = loader as? RSDFetchableImageThemeElement {
+                    fetchLoader.fetchImage(for: iconView.bounds.size, callback: { [weak self] (img) in
+                        self?.iconView.image = img
+                    })
+                } else {
+                    assertionFailure("Unknown image theme class. \(loader)")
+                }
             }
         }
     }

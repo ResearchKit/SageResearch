@@ -36,7 +36,7 @@ import ResearchSuite
 
 struct TestStep : RSDStep {
     let identifier: String
-    var type: String = RSDFactory.StepType.instruction.rawValue
+    var type: RSDStepType = .instruction
     var result: RSDResult?
     var validationError: Error?
     
@@ -161,7 +161,7 @@ class TestAsyncActionController: NSObject, RSDAsyncActionController {
         super.init()
     }
     
-    func start(at taskPath: RSDTaskPath?, completion: RSDAsyncActionCompletionHandler?) {
+    func start(at taskPath: RSDTaskPath, completion: RSDAsyncActionCompletionHandler?) {
         isRunning = true
         completion?(self, nil, nil)
     }

@@ -39,6 +39,7 @@ import Foundation
 ///
 public final class RSDTaskPath : NSObject, NSCopying {
 
+    /// The completion handler for a fetched task.
     public typealias FetchCompletionHandler = (RSDTaskPath, Error?) -> Void
     
     /// Identifier for this path segment
@@ -100,7 +101,24 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// Flag for tracking whether or not the `task` is loading from the `taskInfo`.
     public private(set) var isLoading: Bool = false
     
-    /// URL for the output directory to use for file results.
+    /// File URL for the directory in which to store generated data files. Asyncronous actions with
+    /// recorders (and potentially steps) can save data to files during the progress of the task.
+    /// This property specifies where such data should be written.
+    ///
+    /// If no output directory is specified, this property will use lazy initialization to create a
+    /// directory in the 'Application Support Directory' with a subpath of the `taskRunUUID` if this
+    /// property is called.
+    ///
+    /// In general, set this property after instantiating the task view controller and before
+    /// presenting it in order to override the default location.
+    ///
+    /// Before presenting the view controller, set the `outputDirectory` property to specify a
+    /// path where files should be written when an `ORKFileResult` object must be returned for
+    /// a step.
+    ///
+    /// - note: The calling application is responsible for deleting this directory once the files
+    /// are processed by uploading them to a server or cloud service. Otherwise, since the the default
+    /// behavior is to save to application support, the app will slowly grow and take more memory.
     lazy public var outputDirectory: URL! = {
         guard parentPath == nil else { return parentPath!.outputDirectory }
         
@@ -222,14 +240,14 @@ public final class RSDTaskPath : NSObject, NSCopying {
         }
     }
     
+    /// The description of the path.
     override public var description: String {
         return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
     }
     
+    // NSCopying
     
-    // Copying
-    
-    public required init(with identifier: String, result: RSDTaskResult, taskInfo: RSDTaskInfoStep?, task: RSDTask?) {
+    private init(with identifier: String, result: RSDTaskResult, taskInfo: RSDTaskInfoStep?, task: RSDTask?) {
         guard taskInfo != nil || task != nil else {
             fatalError("Cannot initializa a task path with both a nil task info and nil task.")
         }
@@ -240,6 +258,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
         super.init()
     }
     
+    /// Implementation for copying a task path.
     public func copy(with zone: NSZone? = nil) -> Any {
         let result = (self.result as? NSCopying)?.copy(with: nil) as? RSDTaskResult ?? self.result
         let taskInfo = (self.taskInfo as? NSCopying)?.copy(with: nil) as? RSDTaskInfoStep ?? self.taskInfo
@@ -254,6 +273,8 @@ public final class RSDTaskPath : NSObject, NSCopying {
     }
 }
 
+/// The wrapper is required b/c `JSONEncoder` does not implement the `Encoder` protocol.
+/// Instead, it uses a private wrapper to box the encoded object.
 fileprivate struct _EncodableResultWrapper: Encodable {
     let taskResult: RSDTaskResult
     

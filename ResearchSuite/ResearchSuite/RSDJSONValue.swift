@@ -33,20 +33,19 @@
 
 import Foundation
 
+/// Protocol for converting an object to a dictionary representation. This is included for reverse-compatiblility to
+/// older implementations that are not Swift 4 `Codable` and instead use a dictionary representation.
+public protocol RSDDictionaryRepresentable {
+    
+    /// Return the dictionary representation for this object.
+    func dictionaryRepresentation() -> [AnyHashable : Any]
+}
+
+/// Protocol for converting objects to JSON serializable objects
 public protocol RSDJSONValue {
     
-    /**
-     Return a JSON type object. Elements may be any one of the JSON types (NSNull, NSNumber, String, Array, [String : Any]).
-     */
+    /// Return a JSON type object. Elements may be any one of the JSON types (NSNull, NSNumber, String, Array, [String : Any]).
     func jsonObject() -> Any
-}
-
-public protocol RSDJSONValueDecoder {
-    func decodeValue(from decoder:Decoder) throws -> RSDJSONValue?
-}
-
-public protocol RSDJSONValueEncoder {
-    func encode(_ value: Any?, to encoder: Encoder) throws
 }
 
 extension NSString : RSDJSONValue {
@@ -153,13 +152,13 @@ extension NSNull : RSDJSONValue {
 
 extension NSDate : RSDJSONValue {
     public func jsonObject() -> Any {
-        return (self as NSDate).jsonObject()
+        return (self as Date).jsonObject()
     }
 }
 
 extension Date : RSDJSONValue {
     public func jsonObject() -> Any {
-        return ISO8601DateFormatter().string(from: self)
+        return RSDFactory.shared.timestampFormatter.string(from: self)
     }
 }
 
@@ -172,11 +171,11 @@ extension DateComponents : RSDJSONValue {
     
     public func defaultFormatter() -> DateFormatter {
         if ((year == nil) || (year == 0)) && ((month == nil) || (month == 0)) && ((day == nil) || (day == 0)) {
-            return RSDClassTypeMap.shared.timeOnlyFormatter
+            return RSDFactory.shared.timeOnlyFormatter
         }
         else if ((hour == nil) || (hour == 0)) && ((minute == nil) || (minute == 0)) {
             if let year = year, year > 0, let month = month, month > 0, let day = day, day > 0 {
-                return RSDClassTypeMap.shared.dateOnlyFormatter
+                return RSDFactory.shared.dateOnlyFormatter
             }
             
             // Build the format string if not all components are included
@@ -199,7 +198,7 @@ extension DateComponents : RSDJSONValue {
             formatter.dateFormat = formatString
             return formatter
         }
-        return RSDClassTypeMap.shared.timestampFormatter
+        return RSDFactory.shared.timestampFormatter
     }
 }
 
@@ -269,7 +268,7 @@ fileprivate func _convertToJSONValue(from object: Any) -> Any {
 extension NSDictionary : RSDJSONValue {
     public func jsonObject() -> Any {
         var dictionary : [AnyHashable : Any] = [:]
-        for (key, value) in self.enumerated() {
+        for (key, value) in self {
             let strKey = "\(key)"
             dictionary[strKey] = _convertToJSONValue(from: value)
         }

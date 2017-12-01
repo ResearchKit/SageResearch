@@ -33,54 +33,67 @@
 
 import Foundation
 
-/**
- RSDFormStepDataSource: the internal model for a table view controller. It provides the UITableViewDataSource,
- manages and stores answers provided thru user input, and provides an RSDResult with those answers upon request.
- 
- It also provides several convenience methods for saving or selecting answers, checking if all answers are valid,
- and retrieving specific model objects that may be needed by the ViewController.
- 
- The tableView data source is comprised of 3 objects:
- 
- 1) RSDTableSection - An object representing a section in the tableView. It has one or more RSDTableItemGroup objects.
- 
- 2) RSDTableItemGroup - An object representing a specific question supplied by RSDStep as an input field.  Upon init(), the ItemGroup will create one or more RSDTableItem objects representing the answer options for the RSDInputField. The ItemGroup is responsible for storing/computing the answers for its RSDInputField.
- 
- 3) RSDTableItem - An object representing a specific answer option from the ItemGroup (RSDInputField), such as a Yes or No choice in a boolean question or a string or number that's entered thru a text field. There will be one TableItem for each indexPath in the tableView.
- */
-
-public protocol RSDFormStepDataSourceDelegate {
+/// Delegate for the data source.
+public protocol RSDFormStepDataSourceDelegate: class, NSObjectProtocol {
+    
+    /// Called when the answers tracked by the data source change.
+    /// - parameter section: The section that changed.
     func answersDidChange(in section: Int)
 }
 
+/// `RSDFormStepDataSource`: the internal model for a table view controller. It provides the UITableViewDataSource,
+/// manages and stores answers provided thru user input, and provides an RSDResult with those answers upon request.
+///
+/// It also provides several convenience methods for saving or selecting answers, checking if all answers are valid,
+/// and retrieving specific model objects that may be needed by the ViewController.
+///
+/// The tableView data source is comprised of 3 objects:
+///
+/// 1. `RSDTableSection`: An object representing a section in the tableView. It has one or more RSDTableItemGroup objects.
+///
+/// 2. `RSDTableItemGroup`: An object representing a specific question supplied by `RSDStep` as an input field.
+///     Upon init(), the ItemGroup will create one or more `RSDTableItem` objects representing the answer options
+///     for the `RSDInputField`. The ItemGroup is responsible for storing/computing the answers for its `RSDInputField`.
+///
+/// 3. `RSDTableItem`: An object representing a specific answer option from the ItemGroup (RSDInputField), such as a
+///     Yes or No choice in a boolean question or a string or number that's entered thru a text field. There will be one
+///     TableItem for each indexPath in the tableView.
+///
 public protocol RSDFormStepDataSource : class {
     
-    var delegate: RSDFormStepDataSourceDelegate? { get set }
+    /// The delegate associated with this data source.
+    weak var delegate: RSDFormStepDataSourceDelegate? { get set }
     
+    /// The step associated with this data source.
     var step: RSDStep { get }
+    
+    /// The UI hints supported by this data source.
     var supportedHints: Set<RSDFormUIHint> { get }
+    
+    /// The current task path.
     var taskPath: RSDTaskPath { get }
+    
+    /// The table sections for this data source.
     var sections: [RSDTableSection] { get }
+    
+    /// The initial result when the data source was first displayed.
     var initialResults: [String : RSDResult] { get }
     
-    /**
-     This method is used to create an appropriate answer result for a given item group.
-     */
+    /// This method is used to create an appropriate answer result for a given item group.
+    /// - parameter itemGroup: The item group.
+    /// - returns: The instantiated answer result (if applicable)
     func instantiateAnswerResult(for itemGroup: RSDInputFieldTableItemGroup) -> RSDAnswerResult?
     
-    /**
-     This method is used to vend the appropriate step answer result collection.
-     */
+    /// This method is used to vend the appropriate step answer result collection.
+    /// - returns: The associated collection result.
     func collectionResult() -> RSDCollectionResult
 }
 
 extension RSDFormStepDataSource {
     
-    /**
-     Retrieve the 'RSDTableItemGroup' with a specific RSDInputField identifier.
-     @param   identifier   The identifier of the RSDInputField assigned to the ItemGroup.
-     @return               The requested RSDTableItemGroup, or nil if it cannot be found.
-     */
+    /// Retrieve the `RSDTableItemGroup` with a specific `RSDInputField` identifier.
+    /// - parameter identifier: The identifier of the `RSDInputField` assigned to the item group.
+    /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
     public func itemGroup(with identifier: String) -> RSDTableItemGroup? {
         for section in sections {
             for itemGroup in section.itemGroups {
@@ -92,11 +105,9 @@ extension RSDFormStepDataSource {
         return nil
     }
     
-    /**
-     Retrieve the 'RSDTableItemGroup' for a specific IndexPath.
-     @param   indexPath   The IndexPath that represents the ItemGroup in the tableView.
-     @return              The requested RSDTableItemGroup, or nil if it cannot be found.
-     */
+    /// Retrieve the 'RSDTableItemGroup' for a specific IndexPath.
+    /// - parameter indexPath: The index path that represents the item group in the table view.
+    /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
     public func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
         let section = sections[indexPath.section]
         for itemGroup in section.itemGroups {
@@ -107,11 +118,9 @@ extension RSDFormStepDataSource {
         return nil
     }
     
-    /**
-     Retrieve the next item group after the current one at the given index path.
-     @param   indexPath     The IndexPath that represents the ItemGroup in the tableView.
-     @return                The next ItemGroup or `nil` if this was the last item.
-     */
+    /// Retrieve the next item group after the current one at the given index path.
+    /// - parameter indexPath: The index path that represents the item group in the table view.
+    /// - returns: The next `RSDTableItemGroup` or `nil` if this was the last item.
     public func nextItem(after indexPath: IndexPath) -> RSDTableItemGroup? {
         let section = sections[indexPath.section]
         guard let itemGroup = itemGroup(at: indexPath),
@@ -129,11 +138,9 @@ extension RSDFormStepDataSource {
         }
     }
     
-    /**
-     Retrieve the index path that points at the given ItemGroup.
-     @param   indexPath     The IndexPath that represents the ItemGroup in the tableView.
-     @return                The next ItemGroup or `nil` if this was the last item.
-     */
+    /// Retrieve the index path that points at the given item group.
+    /// - parameter itemGroup: The item group.
+    /// - returns: The index path for the given item group or `nil` if not found.
     public func indexPath(for itemGroup: RSDTableItemGroup) -> IndexPath? {
         for (sectionIdx, section) in sections.enumerated() {
             var row: Int = 0
@@ -147,11 +154,11 @@ extension RSDFormStepDataSource {
         return nil
     }
     
-    /**
-     Save an answer for a specific IndexPath.
-     @param   answer      The object to be save as the answer
-     @param   indexPath   The IndexPath that represents the TableItemGroup in the tableView
-     */
+    /// Save an answer for a specific IndexPath.
+    /// - parameters:
+    ///     - answer:      The object to be save as the answer.
+    ///     - indexPath:   The `IndexPath` that represents the `RSDTableItem` in the table view.
+    /// - throws: `RSDInputFieldError` if the answer is invalid.
     public func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
         guard let itemGroup = self.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup else {
             return
@@ -161,10 +168,9 @@ extension RSDFormStepDataSource {
         _answerDidChange(for: itemGroup, at: indexPath)
     }
     
-    /**
-     Select or deselect the answer option for a specific IndexPath.
-     @param   indexPath   The IndexPath that represents the TableItemGroup in the tableView
-     */
+    /// Select or deselect the answer option for a specific IndexPath.
+    /// - parameter indexPath: The `IndexPath` that represents the `RSDTableItem` in the  table view.
+    /// - throws: `RSDInputFieldError` if the selection is invalid.
     public func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws {
         guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
             return
@@ -191,10 +197,8 @@ extension RSDFormStepDataSource {
         }
     }
     
-    /**
-     Determine if all answers are valid. Also checks the case where answers are required but one has not been provided.
-     @return    A Bool indicating if all answers are valid
-     */
+    /// Determine if all answers are valid. Also checks the case where answers are required but one has not been provided.
+    /// - returns: A `Bool` indicating if all answers are valid.
     public func allAnswersValid() -> Bool {
         for section in sections {
             for itemGroup in section.itemGroups {
@@ -206,11 +210,9 @@ extension RSDFormStepDataSource {
         return true
     }
     
-    /**
-     Retrieve the 'RSDTableItem' for a specific IndexPath.
-     @param   indexPath   The IndexPath that represents the TableItem in the tableView.
-     @return              The requested RSDTableItem, or nil if it cannot be found.
-     */
+    /// Retrieve the `RSDTableItem` for a specific `IndexPath`.
+    /// - parameter indexPath: The `IndexPath` that represents the table item in the table view.
+    /// - returns: The requested `RSDTableItem`, or nil if it cannot be found.
     public func tableItem(at indexPath: IndexPath) -> RSDTableItem? {
         if let itemGroup = itemGroup(at: indexPath) {
             let index = indexPath.row - itemGroup.beginningRowIndex

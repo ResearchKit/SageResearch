@@ -33,16 +33,85 @@
 
 import Foundation
 
+/// `RSDFileResultObject` is a concrete implementation of a result that holds a pointer to a file url.
 public struct RSDFileResultObject : RSDFileResult, Codable {
-    public let type: String
+    
+    /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
+    
+    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
+    public let type: RSDResultType
+    
+    /// The start date timestamp for the result.
     public var startDate: Date = Date()
+    
+    /// The end date timestamp for the result.
     public var endDate: Date = Date()
+    
+    /// The system clock uptime when the recorder was started (if applicable).
     public var startUptime: TimeInterval?
+    
+    /// The URL with the path to the file-based result.
     public var url: URL?
     
-    public init(identifier: String, type: String = RSDFactory.ResultType.file.rawValue) {
+    private enum CodingKeys : String, CodingKey {
+        case identifier, type, startDate, endDate, startUptime, url
+    }
+    
+    /// Default initializer for this object.
+    ///
+    /// - parameters:
+    ///     - identifier: The identifier string.
+    ///     - type: The `RSDResultType` for this result. Default = `.file`.
+    public init(identifier: String, type: RSDResultType = .file) {
         self.identifier = identifier
         self.type = type
+    }
+}
+
+extension RSDFileResultObject : RSDDocumentableCodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .startUptime, .url]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .identifier:
+                if idx != 0 { return false }
+            case .type:
+                if idx != 1 { return false }
+            case .startDate:
+                if idx != 2 { return false }
+            case .endDate:
+                if idx != 3 { return false }
+            case .startUptime:
+                if idx != 4 { return false }
+            case .url:
+                if idx != 5 { return false }
+            }
+        }
+        return keys.count == 6
+    }
+    
+    static func exampleResult() -> RSDFileResultObject {
+        var fileResult = RSDFileResultObject(identifier: "fileResult")
+        fileResult.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+        fileResult.endDate = fileResult.startDate.addingTimeInterval(5 * 60)
+        fileResult.startUptime = 1234.567
+        fileResult.url = URL(fileURLWithPath: "temp.json")
+        return fileResult
+    }
+    
+    static func examples() -> [Encodable] {
+        let fileResult = exampleResult()
+        return [fileResult]
     }
 }

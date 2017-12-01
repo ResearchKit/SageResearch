@@ -52,7 +52,7 @@ class SurveyRuleTests: XCTestCase {
         
         let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
         let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
-        let skipAction = RSDSkipToUIActionObject(buttonTitle: "Prefer not to answer", skipToIdentifier: "bar")
+        let skipAction = RSDSkipToUIActionObject(skipToIdentifier: "bar", buttonTitle: "Prefer not to answer")
         
         let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
         step.actions = [.navigation(.skip) : skipAction]
@@ -75,7 +75,7 @@ class SurveyRuleTests: XCTestCase {
         
         let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
         let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
-        let skipAction = RSDSkipToUIActionObject(buttonTitle: "Prefer not to answer", skipToIdentifier: "bar")
+        let skipAction = RSDSkipToUIActionObject(skipToIdentifier: "bar", buttonTitle: "Prefer not to answer")
         
         let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
         step.actions = [.navigation(.skip) : skipAction]

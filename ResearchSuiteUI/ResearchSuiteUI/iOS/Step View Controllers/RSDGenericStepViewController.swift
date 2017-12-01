@@ -297,7 +297,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     // MARK: Model setup
     
     open class var supportedUIHints: Set<RSDFormUIHint> {
-        return [.standard(.list), .standard(.textfield), .standard(.picker)]
+        return [.list, .textfield, .picker]
     }
     
     /**
@@ -488,11 +488,11 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             
             // use the keyboard properties defined for this step
             if let textAnswerFormat = itemGroup.textFieldOptions {
-                fieldCell.textField.keyboardType = textAnswerFormat.keyboardType
+                fieldCell.textField.keyboardType = textAnswerFormat.keyboardType.keyboardType()
                 fieldCell.textField.isSecureTextEntry = textAnswerFormat.isSecureTextEntry
-                fieldCell.textField.autocapitalizationType = textAnswerFormat.autocapitalizationType
-                fieldCell.textField.autocorrectionType = textAnswerFormat.autocorrectionType
-                fieldCell.textField.spellCheckingType = textAnswerFormat.spellCheckingType
+                fieldCell.textField.autocapitalizationType = textAnswerFormat.autocapitalizationType.textAutocapitalizationType()
+                fieldCell.textField.autocorrectionType = textAnswerFormat.autocorrectionType.textAutocorrectionType()
+                fieldCell.textField.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
             }
             
             // TODO: syoung 10/23/2017 Add support for picker views

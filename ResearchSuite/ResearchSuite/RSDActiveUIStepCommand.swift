@@ -72,10 +72,7 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     /// - parameter decoder: The decoder to read data from.
     public init(from decoder: Decoder) throws {
         // Register the commands included in the base struct to add them to the mapping
-        let _: RSDActiveUIStepCommand = [.playSound,
-                                         .vibrate,
-                                         .transitionAutomatically,
-                                         .shouldDisableIdleTimer]
+        let _ = RSDActiveUIStepCommand.allCodingKeys()
         
         // Then call the initializer with the string mappings
         try self.init(from: decoder, stringMapping: RSDActiveUIStepCommand.stringMapping)
@@ -83,6 +80,20 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     
     /// A mapping of an option to a string value. This is used to allow `Codable` protocol
     /// conformance using human-readable strings rather than `Binary` flags.
+    ///
+    /// - seealso: The following is a list of the Codable keys defined in this framework.
+    ///
+    ///     `playSoundOnStart`
+    ///     `playSoundOnFinish`
+    ///     `playSound`
+    ///     `vibrateOnStart`
+    ///     `vibrateOnFinish`
+    ///     `vibrate`
+    ///     `startTimerAutomatically`
+    ///     `continueOnFinish`
+    ///     `transitionAutomatically`
+    ///     `shouldDisableIdleTimer`
+    ///
     public private(set) static var stringMapping: [String : Int] = [:]
     
     /// A convenience method for mapping a `rawValue` to a `String`.
@@ -126,4 +137,16 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     
     /// The default commands for a step.
     public static let defaultCommands: RSDActiveUIStepCommand = []
+}
+
+extension RSDActiveUIStepCommand : RSDDocumentableOptionSet {
+    
+    static func allCodingKeys() -> [String] {
+        // Register the commands included in the base struct to add them to the mapping
+        let _: RSDActiveUIStepCommand = [.playSound,
+                                         .vibrate,
+                                         .transitionAutomatically,
+                                         .shouldDisableIdleTimer]
+        return self.stringMapping.map{ $0.key }
+    }
 }
