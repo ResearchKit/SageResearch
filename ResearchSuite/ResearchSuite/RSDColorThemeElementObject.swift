@@ -70,12 +70,12 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     /// The foreground color for this step.
     #if os(watchOS)
     public func foregroundColor() -> UIColor? {
-        guard let name = _backgroundColorName else { return nil }
+        guard let name = _foregroundColorName else { return nil }
         return UIColor.rsd_color(named: name, in: bundle)
     }
     #else
     public func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
-        guard let name = _backgroundColorName else { return nil }
+        guard let name = _foregroundColorName else { return nil }
         return UIColor.rsd_color(named: name, in: bundle, compatibleWith: traitCollection)
     }
     #endif
