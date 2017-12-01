@@ -131,17 +131,17 @@ public struct RSDMeasurementPickerDataSourceObject : RSDChoicePickerDataSource {
     public let unit: String?
     public let formatter: Formatter?
     
-    // returns the number of 'columns' to display.
+    // Returns the number of 'columns' to display.
     public var numberOfComponents: Int {
         fatalError("Not yet implemented")
     }
     
-    // returns the # of rows in each component
+    // Returns the # of rows in each component.
     public func numberOfRows(in component: Int) -> Int {
         fatalError("Not yet implemented")
     }
     
-    // returns the choice for this row/component
+    // Returns the choice for this row/component.
     public func choice(forRow row: Int, forComponent component: Int) -> RSDChoice? {
         fatalError("Not yet implemented")
     }
@@ -159,10 +159,11 @@ public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
     /// Specify the maximum date range. Default = `nil`. When `minimumDate` > `maximumDate`, the values are ignored.
     public let maximumDate: Date?
 
-    /// display minutes wheel with interval. interval must be evenly divided into 60. default is 1. min is 1, max is 30
+    /// The minute interval to display in a picker wheel or list of choices. The interval must be evenly divided into 60.
+    /// For example, `5` is valid but `7` is not. Default is `1`, minimum is `1`, maximum is `30`.
     public let minuteInterval: Int?
 
-    /// The date formatter for displaying the date in a text field or label
+    /// The date formatter for displaying the date in a text field or label.
     public let dateFormatter: DateFormatter
     
     /// Default initializer. Auto-synthesized init is not public.
@@ -177,10 +178,10 @@ public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
 
 /// A simple struct that can be used to implement the `RSDDateComponentPickerDataSource` protocol.
 public struct RSDDateComponentPickerDataSourceObject : RSDDateComponentPickerDataSource {
-    /// The calendar to use for the date components
+    /// The calendar to use for the date components.
     public let calendar: Calendar
 
-    /// The components to include in the picker
+    /// The components to include in the picker.
     public let calendarComponents: Set<Calendar.Component>
 
     /// The minimum year if the year is included, otherwise this value is ignored.
@@ -189,7 +190,7 @@ public struct RSDDateComponentPickerDataSourceObject : RSDDateComponentPickerDat
     /// The maximum year if the year is included, otherwise this value is ignored.
     public let maximumYear: Int?
 
-    /// The date components formatter for displaying the date components in a text field or label
+    /// The date components formatter for displaying the date components in a text field or label.
     public let dateComponentsFormatter: DateComponentsFormatter
     
     /// Default initializer. Auto-synthesized init is not public.

@@ -59,16 +59,16 @@ public struct RSDStepType : RawRepresentable, Codable {
     /// Defaults to creating a `RSDUIStep`.
     public static let instruction: RSDStepType = "instruction"
     
-    /// Defaults to creating a `RSDSectionStep`
+    /// Defaults to creating a `RSDSectionStep`.
     public static let section: RSDStepType = "section"
     
-    /// Defaults to creating a `RSDSectionStep` created using a `RSDTransformerStep`
+    /// Defaults to creating a `RSDSectionStep` created using a `RSDTransformerStep`.
     public static let transform: RSDStepType = "transform"
     
     /// Defaults to creating a `RSDTaskInfoStep`.
     public static let taskInfo: RSDStepType = "taskInfo"
     
-    /// List of all the standard types
+    /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStepType] {
         return [.active, .completion, .countdown, .form, .instruction, .section, .transform, .taskInfo]
     }

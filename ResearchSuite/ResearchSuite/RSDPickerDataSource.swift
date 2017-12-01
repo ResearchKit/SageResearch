@@ -65,7 +65,8 @@ public protocol RSDDatePickerDataSource : RSDPickerDataSource {
     /// Specify the maximum date range. Default = `nil`. When `minimumDate` > `maximumDate`, the values are ignored.
     var maximumDate: Date? { get }
     
-    /// display minutes wheel with interval. interval must be evenly divided into 60. default is 1. min is 1, max is 30
+    /// The minute interval to display in a picker wheel or list of choices. The interval must be evenly divided into 60.
+    /// For example, `5` is valid but `7` is not. Default is `1`, minimum is `1`, maximum is `30`.
     var minuteInterval: Int? { get }
     
     /// The date formatter for displaying the date in a text field or label
@@ -75,10 +76,10 @@ public protocol RSDDatePickerDataSource : RSDPickerDataSource {
 /// A picker data source for selecting date components.
 public protocol RSDDateComponentPickerDataSource : RSDPickerDataSource {
     
-    /// The calendar to use for the date components
+    /// The calendar to use for the date components.
     var calendar: Calendar { get }
     
-    /// The components to include in the picker
+    /// The components to include in the picker.
     var calendarComponents: Set<Calendar.Component> { get }
     
     /// The minimum year if the year is included, otherwise this value is ignored.
@@ -87,7 +88,7 @@ public protocol RSDDateComponentPickerDataSource : RSDPickerDataSource {
     /// The maximum year if the year is included, otherwise this value is ignored.
     var maximumYear: Int? { get }
     
-    /// The date components formatter for displaying the date components in a text field or label
+    /// The date components formatter for displaying the date components in a text field or label.
     var dateComponentsFormatter: DateComponentsFormatter { get }
 }
 

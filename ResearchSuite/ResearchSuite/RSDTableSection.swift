@@ -48,11 +48,15 @@ open class RSDTableSection {
     public var title: String?
     
     /// Returns the total count of all Items in this section.
-    // - returns: The total number of RSDGenericStepTableItems in this section
+    /// - returns: The total number of `RSDTableItems` in this section.
     open func rowCount() -> Int {
         return itemGroups.reduce(0, {$0 + $1.items.count})
     }
     
+    /// Default initializer.
+    /// - parameters:
+    ///     - sectionIndex: The table section index for this item.
+    ///     - itemGroups: The item groups in this section.
     public init(sectionIndex: Int, itemGroups: [RSDTableItemGroup]) {
         self.index = sectionIndex
         self.itemGroups = itemGroups

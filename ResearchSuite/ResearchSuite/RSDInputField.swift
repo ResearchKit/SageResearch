@@ -109,7 +109,7 @@ public protocol RSDChoice {
     func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
     
     /// Is the choice value equal to the given result?
-    /// - parameter result: An result to test for equality.
+    /// - parameter result: A result to test for equality.
     /// - returns: `true` if the values are equal.
     func isEqualToResult(_ result: RSDResult?) -> Bool
 }

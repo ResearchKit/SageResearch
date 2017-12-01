@@ -103,7 +103,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     
     // MARK: validation
     
-    /// Required method. The base class implmentation does nothing.
+    /// Required method. The base class implementation does nothing.
     open func validate() throws {
         // do nothing
     }

@@ -37,13 +37,15 @@ extension UIColor {
     
     /// Get the color associated with the given coding key.
     ///
-    /// This will first check to see if the string is a HEX-coded string and initialize the string using the
+    /// 1. This will first check to see if the string is a HEX-coded string and initialize the string using the
     /// `UIColor.init?(hexString:)` initializer.
     ///
-    /// If this is not a hex color, then if this is an iOS 11 implementation, the asset catalog for the given
-    /// bundle will be checked using the `UIColor.init?(named:, in:, compatibleWith:)` initializer.
+    /// 2. If this is not a hex color, then for:
+    /// *   iOS 11 or tvOS 11 - The asset catalog for the given bundle will be checked using the
+    ///     `UIColor.init?(named:, in:, compatibleWith:)` initializer.
+    /// *   watchOS 4 - The asset catalog for the main bundle will be checked using the `UIColor.init?(named:)` initializer.
     ///
-    /// Finally, the method will look for a file imbedded in the given bundle named "ColorInfo.plist".
+    /// 3. Finally, the method will look for a file imbedded in the given bundle named "ColorInfo.plist".
     /// This allows the app to define a mapping of colors in a single place using a plist with key/value pairs.
     /// The mapping is expected to include key/value pairs where the value is a hex-coded string. The plist
     /// method is slower (because the file must be openned and inspected) so it is only recommended for applications
@@ -51,8 +53,8 @@ extension UIColor {
     ///
     /// - parameters:
     ///     - name: The name of the color. Either a HEX-code or a custom-defined key.
-    ///     - bundle: The bundle with either the Color asset (iOS 11) or the "ColorInfo.plist" file (iOS 10)
-    ///     - traitCollection: The trait collection (if supported)
+    ///     - bundle: The bundle with either the Color asset (iOS/tvOS 11) or the "ColorInfo.plist" file (all versions).
+    ///     - traitCollection: The trait collection to use (if supported).
     /// - returns: The color created.
     #if os(watchOS)
     open class func rsd_color(named name: String, in bundle: Bundle?) -> UIColor? {
@@ -68,7 +70,7 @@ extension UIColor {
     open class func rsd_color(named name: String, in bundle: Bundle?, compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
         if let color = UIColor(hexString: name) {
             return color
-        } else if #available(iOS 11.0, tvOS 11.0, macOS 10.12, *), let color = UIColor(named: name, in: bundle, compatibleWith: traitCollection) {
+        } else if #available(iOS 11.0, tvOS 11.0, *), let color = UIColor(named: name, in: bundle, compatibleWith: traitCollection) {
             return color
         } else {
             return RSDColorInfo(name: "ColorInfo", bundle: bundle).color(for: name)

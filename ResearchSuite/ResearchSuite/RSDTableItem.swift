@@ -73,7 +73,7 @@ open class RSDChoiceTableItem : RSDInputFieldTableItem {
     
     /// Initialize a new RSDChoiceTableItem.
     /// parameters:
-    ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides
+    ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides.
     ///     - inputField:    The RSDInputField representing this tableItem.
     ///     - choice:        The choice for a single or multiple choice input field.
     public init(rowIndex: Int, inputField: RSDInputField, choice: RSDChoice) {

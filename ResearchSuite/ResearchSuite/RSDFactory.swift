@@ -125,7 +125,7 @@ open class RSDFactory {
         return try RSDSchemaInfoObject(from: decoder)
     }
     
-    /// Encode the schma info from the given task result to the given encoder. This allows a subclass
+    /// Encode the schema info from the given task result to the given encoder. This allows a subclass
     /// of the factory to encode additional schema information to the schema info defined by the
     /// `RSDSchemaInfo` protocol.
     ///
@@ -528,7 +528,7 @@ open class RSDFactory {
         }
     }
     
-    /// `DateFormatter` to use for coding data-only strings. Default = `rsd_ISO8601DateOnlyFormatter`.
+    /// `DateFormatter` to use for coding date-only strings. Default = `rsd_ISO8601DateOnlyFormatter`.
     open var dateOnlyFormatter: DateFormatter {
         return rsd_ISO8601DateOnlyFormatter
     }

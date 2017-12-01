@@ -149,7 +149,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     
     /// Set the new answer value from a previous result. This will throw an error if the result isn't valid.
     /// Otherwise, it will set the answer.
-    /// - parameter result: The result that *may have a previous answer.
+    /// - parameter result: The result that *may* have a previous answer.
     /// - throws: `RSDInputFieldError` if the answer is invalid.
     open func setAnswer(from result: RSDResult) throws {
         guard let answerResult = result as? RSDAnswerResult,
@@ -163,7 +163,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     
     /// Determine if the current answer is valid. Also checks the case where answer is required but one has
     /// not been provided.
-    /// - returns: A Bool indicating if answer is valid
+    /// - returns: A `Bool` indicating if answer is valid.
     open override var isAnswerValid: Bool {
         // if answer is NOT optional and it equals Null, then it's invalid
         return inputField.isOptional || !(answer is NSNull)
@@ -342,21 +342,21 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Select or de-select an item (answer) at a specific indexPath. This is used for text choice and boolean answers.
     /// - parameters:
-    ///     - selected:   A bool indicating if item should be selected
-    ///     - indexPath:  The IndexPath of the item
+    ///     - selected:   A `Bool` indicating if the item should be selected.
+    ///     - indexPath:  The IndexPath of the item.
     open func select(_ item: RSDChoiceTableItem, indexPath: IndexPath) throws {
         guard let selectableItems = self.items as? [RSDChoiceTableItem] else {
             let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: nil, answerResult: answerType, debugDescription: "This input field does not support selection.")
             throw RSDInputFieldError.invalidType(context)
         }
         
-        // to get index of our item, add our beginningRowIndex to indexPath.row
+        // To get the index of our item, add our `beginningRowIndex` to `indexPath.row`.
         let deselectOthers = singleSelection || item.choice.isExclusive
         let index =  indexPath.row - beginningRowIndex
         let selected = !item.selected
         
-        // if we selected an item and this is a single-selection group, then we iterate
-        // our other items and de-select them
+        // If we selected an item and this is a single-selection group, then we iterate
+        // our other items and de-select them.
         var answers: [Any] = []
         for (ii, input) in selectableItems.enumerated() {
             if deselectOthers || (ii == index) || input.choice.isExclusive || (input.choice.value == nil) {
@@ -367,7 +367,7 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
             }
         }
         
-        // Set the answer array bypassing validation
+        // Set the answer array bypassing validation.
         if singleSelection {
             _answer = answers.first
         } else {

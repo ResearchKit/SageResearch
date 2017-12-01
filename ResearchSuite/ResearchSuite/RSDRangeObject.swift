@@ -231,7 +231,7 @@ public struct RSDNumberRangeObject : RSDNumberRange, Codable {
         self.formatter = formatter
     }
     
-    /// Default initializer for an `Int` range. This is used to initialize the range for a `Int` type.
+    /// Default initializer for an `Int` range. This is used to initialize the range for an `Int` type.
     ///
     /// - parameters:
     ///     - minimumInt: The minimum allowed number.

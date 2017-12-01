@@ -74,7 +74,7 @@ public protocol RSDColorThemeElement : RSDUIThemeElement {
     
     /// The background color for this step. If undefined then the background color appropriate to the light
     /// style will be used.
-    /// - returns: The color or `nil` if undefined
+    /// - returns: The color or `nil` if undefined.
     #if os(watchOS)
     func backgroundColor() -> UIColor?
     #else
@@ -83,7 +83,7 @@ public protocol RSDColorThemeElement : RSDUIThemeElement {
     
     /// The foreground color for this step. If undefined then the foreground color appropriate to the light
     /// style will be used.
-    /// - returns: The color or `nil` if undefined
+    /// - returns: The color or `nil` if undefined.
     #if os(watchOS)
     func foregroundColor() -> UIColor?
     #else

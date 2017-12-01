@@ -39,7 +39,7 @@ import Foundation
 ///         First, including Health Kit in applications that do not use that SDK makes it
 ///         confusing and difficult for researchers to set up the app. Second, the goal of
 ///         this framework is to include a model that is platform-agnostic and can be used
-///         independantly of the device. (syoung 11/1/7/2017)
+///         independently of the device. (syoung 11/1/7/2017)
 ///
 public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
     
@@ -78,7 +78,7 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
         return rawValue
     }
     
-    /// List of all the standard types
+    /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStandardPermissionType] {
         return [.camera, .locationWhenInUse, .location, .microphone, .motion, .photoLibrary]
     }

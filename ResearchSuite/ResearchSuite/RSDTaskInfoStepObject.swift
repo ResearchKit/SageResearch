@@ -87,7 +87,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
     /// The task transformer for vending a task.
     public var taskTransformer: RSDTaskTransformer!
     
-    /// The estimated fetch time is determined by the task transformer
+    /// The estimated fetch time is determined by the task transformer.
     public var estimatedFetchTime: TimeInterval {
         return taskTransformer?.estimatedFetchTime ?? 0
     }

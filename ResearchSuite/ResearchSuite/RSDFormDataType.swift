@@ -243,7 +243,7 @@ public enum RSDFormDataType {
         }
     }
     
-    /// List of all the standard types
+    /// List of all the standard types.
     public static func allStandardTypes() -> [RSDFormDataType] {
         let baseTypes = BaseType.allTypes()
         let allBase: [RSDFormDataType] = baseTypes.map { .base($0) }

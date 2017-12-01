@@ -121,7 +121,7 @@ extension RSDComparableSurveyRule {
 extension RSDComparable {
     
     /// Is the choice value equal to the given result?
-    /// - parameter result: An result to test for equality.
+    /// - parameter result: A result to test for equality.
     /// - returns: `true` if the values are equal.
     public func isEqualToResult(_ result: RSDResult?) -> Bool {
         let op: RSDSurveyRuleOperator = (self.matchingAnswer == nil) ? .skip : .equal

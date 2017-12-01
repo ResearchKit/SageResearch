@@ -53,7 +53,7 @@ public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundle
     
     /// Default initializer.
     ///
-    /// - paramaters:
+    /// - parameters:
     ///     - viewIdentifier: The storyboard view controller identifier or the nib name for this view controller.
     ///     - bundleIdentifier: The bundle identifier for the nib or storyboard. Default = `nil`.
     ///     - storyboardIdentifier: The storyboard identifier. Default = `nil`.

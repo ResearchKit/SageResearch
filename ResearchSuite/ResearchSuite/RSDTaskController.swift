@@ -53,7 +53,7 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     /// from a plist or json.
     var factory: RSDFactory? { get }
     
-    /// Returns the currently active step controller (if any)
+    /// Returns the currently active step controller (if any).
     var currentStepController: RSDStepController? { get }
     
     /// Returns a list of the async action controllers that are currently active.
