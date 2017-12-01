@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */; };
 		FFF2D9411FCF415E007258F8 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2D9381FCF415E007258F8 /* ResearchSuiteUI.framework */; };
 		FFF2D9781FCF41F8007258F8 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFF2D9791FCF41FA007258F8 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -108,6 +109,7 @@
 		FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepViewController.swift; sourceTree = "<group>"; };
 		FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Layout.swift"; sourceTree = "<group>"; };
 		FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
+		FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDWebViewController.swift; sourceTree = "<group>"; };
 		FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCrosshatchView.swift; sourceTree = "<group>"; };
 		FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownDial.swift; sourceTree = "<group>"; };
 		FFDD780F1FAE96C70024BDD1 /* RSDCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownStepViewController.swift; sourceTree = "<group>"; };
@@ -271,9 +273,18 @@
 				FF6D1C0F1FB27CD00087DDE6 /* Audio */,
 				FFDD780E1FAE96760024BDD1 /* Step View Controllers */,
 				FF4A2D441F96A90200484338 /* Views */,
+				FFA0E4271FD1163C00C36AE7 /* View Controllers */,
 				FF5C4C241F8C8D8200F311BA /* Utilities */,
 			);
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		FFA0E4271FD1163C00C36AE7 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		FFCA18381F8F2605006ADAF3 /* Utilities */ = {
@@ -404,6 +415,7 @@
 				TargetAttributes = {
 					FF1446C11FBCF42600389F77 = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 					FFF2D9371FCF415E007258F8 = {
@@ -516,6 +528,7 @@
 				FFF2D98B1FCF4527007258F8 /* RSDActiveStepViewController.swift in Sources */,
 				FFF2D9821FCF4504007258F8 /* RSDTaskViewController.swift in Sources */,
 				FFF2D9851FCF4509007258F8 /* RSDUISoundPlayer.swift in Sources */,
+				FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */,
 				FFF2D9841FCF4509007258F8 /* RSDVoiceBox.swift in Sources */,
 				FFF2D9961FCF4530007258F8 /* RSDCountdownDial.swift in Sources */,
 				FFF2D9921FCF4530007258F8 /* RSDUnderlinedButton.swift in Sources */,
@@ -566,18 +579,25 @@
 		FF1446C21FBCF42600389F77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		FF1446C31FBCF42600389F77 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
