@@ -1089,7 +1089,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "RSD_DOC_DIR=\"${PROJECT_DIR}/Documentation/\"\nRSD_PROJECT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}/\"\n\n#jazzy Xcode script\n# Start constants\ncompany=\"Sage Bionetworks\"\ncompanyID=\"org.sagebase\"\ncompanyURL=\"https://developer.sagebridge.org\"\ngithubURL=\"https://github.com/Sage-Bionetworks/ResearchSuite-AppleOS.git\"\n\ntarget=\"iphone\"\n#target=\"macosx\"\noutputPath=\"${RSD_DOC_DIR}\"\n# End constants\njazzy \\\n--clean \\\n--min-acl public \\\n--author \"${company}\" \\\n--author_url ${companyURL} \\\n--github_url ${githubURL} \\\n--xcodebuild-arguments -scheme,\"${PROJECT_NAME} (iOS)\" \\\n--module ${PROJECT_NAME} \\\n--output ${outputPath}\n";
+			shellScript = "RSD_DOC_DIR=\"${PROJECT_DIR}/../Documentation/${PROJECT_NAME}\"\nRSD_PROJECT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}/\"\n\n#jazzy Xcode script\n# Start constants\ncompany=\"Sage Bionetworks\"\ncompanyID=\"org.sagebase\"\ncompanyURL=\"https://developer.sagebridge.org\"\ngithubURL=\"https://github.com/Sage-Bionetworks/ResearchSuite-AppleOS.git\"\n\ntarget=\"iphone\"\n#target=\"macosx\"\noutputPath=\"${RSD_DOC_DIR}\"\n# End constants\njazzy \\\n--clean \\\n--min-acl public \\\n--author \"${company}\" \\\n--author_url ${companyURL} \\\n--github_url ${githubURL} \\\n--xcodebuild-arguments -scheme,\"${PROJECT_NAME} (iOS)\" \\\n--module ${PROJECT_NAME} \\\n--output ${outputPath}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
