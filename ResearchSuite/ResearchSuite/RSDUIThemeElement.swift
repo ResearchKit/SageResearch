@@ -72,21 +72,39 @@ public protocol RSDViewThemeElement : RSDUIThemeElement {
 /// well as whether or not the foreground elements should use "light style".
 public protocol RSDColorThemeElement : RSDUIThemeElement {
     
+
+    #if os(watchOS)
+    /// **Available** for watchOS.
+    ///
     /// The background color for this step. If undefined then the background color appropriate to the light
     /// style will be used.
     /// - returns: The color or `nil` if undefined.
-    #if os(watchOS)
     func backgroundColor() -> UIColor?
     #else
+    
+    /// **Available** for iOS and tvOS.
+    ///
+    /// The background color for this step. If undefined then the background color appropriate to the light
+    /// style will be used.
+    /// - returns: The color or `nil` if undefined.
     func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor?
     #endif
     
+
+    #if os(watchOS)
+    /// **Available** for watchOS.
+    ///
     /// The foreground color for this step. If undefined then the foreground color appropriate to the light
     /// style will be used.
     /// - returns: The color or `nil` if undefined.
-    #if os(watchOS)
     func foregroundColor() -> UIColor?
     #else
+    
+    /// **Available** for iOS and tvOS.
+    ///
+    /// The foreground color for this step. If undefined then the foreground color appropriate to the light
+    /// style will be used.
+    /// - returns: The color or `nil` if undefined.
     func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor?
     #endif
     
@@ -148,11 +166,19 @@ public protocol RSDAnimatedImageThemeElement : RSDImageThemeElement {
     /// The animation duration.
     var animationDuration: TimeInterval { get }
     
+
+    #if os(watchOS)
+    /// **Available** for watchOS.
+    ///
     /// The animated images to display.
     /// - returns: The images for this step.
-    #if os(watchOS)
     func images() -> [UIImage]
     #else
+    
+    /// **Available** for iOS and tvOS.
+    ///
+    /// The animated images to display.
+    /// - returns: The images for this step.
     func images(compatibleWith traitCollection: UITraitCollection?) -> [UIImage]
     #endif
 }

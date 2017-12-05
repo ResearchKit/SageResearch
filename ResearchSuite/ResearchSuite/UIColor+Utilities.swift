@@ -37,7 +37,7 @@ extension UIColor {
     
     #if os(watchOS)
     
-    /// **Available** for watchOS 4.0 and above.
+    /// **Available** for watchOS.
     ///
     /// Get the color associated with the given coding key.
     ///
@@ -60,7 +60,7 @@ extension UIColor {
     open class func rsd_color(named name: String, in bundle: Bundle?) -> UIColor? {
         if let color = UIColor(hexString: name) {
             return color
-        } else if let color = UIColor(named: name) {
+        } else if #available(watchOSApplicationExtension 4.0, *), let color = UIColor(named: name) {
             return color
         } else {
             return RSDColorInfo(name: "ColorInfo", bundle: bundle).color(for: name)
@@ -90,7 +90,7 @@ extension UIColor {
     ///     - bundle: The bundle with either the Color asset (iOS/tvOS 11) or the "ColorInfo.plist" file (all versions).
     ///     - traitCollection: The trait collection to use (if supported).
     /// - returns: The color created.
-    @available(iOS 10.3, tvOS 10.0, *)
+    @available(iOS 10.3, tvOS 10.2, *)
     open class func rsd_color(named name: String, in bundle: Bundle?, compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
         if let color = UIColor(hexString: name) {
             return color

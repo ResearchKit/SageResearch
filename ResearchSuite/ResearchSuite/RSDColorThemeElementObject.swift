@@ -56,24 +56,46 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     
     /// The background color for this step.
     #if os(watchOS)
+    /// **Available** for watchOS.
+    ///
+    /// The background color for this step. If undefined then the background color appropriate to the light
+    /// style will be used.
+    /// - returns: The color or `nil` if undefined.
     public func backgroundColor() -> UIColor? {
         guard let name = _backgroundColorName else { return nil }
         return UIColor.rsd_color(named: name, in: bundle)
     }
     #else
+    
+    /// **Available** for iOS and tvOS.
+    ///
+    /// The background color for this step. If undefined then the background color appropriate to the light
+    /// style will be used.
+    /// - returns: The color or `nil` if undefined.
     public func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
         guard let name = _backgroundColorName else { return nil }
         return UIColor.rsd_color(named: name, in: bundle, compatibleWith: traitCollection)
     }
     #endif
     
-    /// The foreground color for this step.
     #if os(watchOS)
+    
+    /// **Available** for watchOS.
+    ///
+    /// The foreground color for this step. If undefined then the foreground color appropriate to the light
+    /// style will be used.
+    /// - returns: The color or `nil` if undefined.
     public func foregroundColor() -> UIColor? {
         guard let name = _foregroundColorName else { return nil }
         return UIColor.rsd_color(named: name, in: bundle)
     }
     #else
+    
+    /// **Available** for iOS and tvOS.
+    ///
+    /// The foreground color for this step. If undefined then the foreground color appropriate to the light
+    /// style will be used.
+    /// - returns: The color or `nil` if undefined.
     public func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
         guard let name = _foregroundColorName else { return nil }
         return UIColor.rsd_color(named: name, in: bundle, compatibleWith: traitCollection)
