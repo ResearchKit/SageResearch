@@ -35,9 +35,72 @@ import Foundation
 
 /// The direction of navigation for the steps.
 public enum RSDStepDirection : Int {
+    /// go back
     case reverse = -1
+    /// initial step
     case none = 0
+    /// go forward
     case forward = 1
+}
+
+// The `RSDTaskFinishReason` value indicates why the task controller has finished the task.
+public enum RSDTaskFinishReason : Int {
+    /// The task was canceled by the participant or the developer, and the participant asked to save the current result.
+    case saved
+    /// The task was canceled by the participant or the developer, and the participant asked to discard the current result.
+    case discarded
+    /// The task has completed successfully, because all steps have been completed.
+    case completed
+    /// An error was detected during the current step.
+    case failed
+    /// For a task with navigation, the participant or the developer elected to exit the task early.
+    case earlyExit
+}
+
+/// `RSDTaskControllerDelegate` is responsible for processing the results of the task, providing some input into
+/// how the controller behaves, and providing additional content as needed. It's primary purpose is to handle
+/// processing the results of running the task.
+public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
+    
+    /// Tells the delegate that the task has finished.
+    ///
+    /// The task controller should call this method when an unrecoverable error occurs, when the user has canceled
+    /// the task (with or without saving), or when the user completes the last step in the task.
+    ///
+    /// In most circumstances, the receiver should dismiss the task view controller in response to this method, and
+    /// may also need to collect and process the results of the task.
+    ///
+    /// - parameters:
+    ///     - taskController:   The `RSDTaskController` instance that is returning the result.
+    ///     - reason:           An `RSDTaskFinishReason` value indicating how the user chose to complete the task.
+    ///     - error:            If failure occurred, an `NSError` object indicating the reason for the failure.
+    ///                         The value of this parameter is `nil` if `reason` does not indicate failure.
+    func taskController(_ taskController: (RSDTaskController), didFinishWith reason: RSDTaskFinishReason, error: Error?)
+    
+    /// Tells the delegate that the task is ready to save.
+    ///
+    /// The task controller should call this method when the task has completed all steps that add information to
+    /// the result set. This may be called on the last step *or* prior to the last step if that step is a completion
+    /// step or else a step used to display the results of a task. This allows the developers to mark the end timestamp
+    /// for when a task ended rather than for when the participant dismissed the task.
+    ///
+    /// - parameters:
+    ///     - taskController:   The `RSDTaskController` instance that is returning the result.
+    ///     - taskPath:         The task path with the results for this task run.
+    func taskController(_ taskController: (RSDTaskController), readyToSave taskPath: RSDTaskPath)
+    
+    /// Requests the `RSDAsyncActionController` for a given `RSDAsyncActionConfiguration`.
+    ///
+    /// The task controller should call this method when the task controller determines that an async action should be
+    /// started. If this method returns `nil` then the task controller should check if the `configuration` conforms to
+    /// the `RSDAsyncActionControllerVendor` protocol and vend the controller returned by the `instantiateController()`
+    /// method if applicable.
+    ///
+    /// - parameters:
+    ///     - taskController:   The `RSDTaskController` instance that is returning the result.
+    ///     - configuration:    The `RSDAsyncActionConfiguration` to be started.
+    /// - returns: An `RSDAsyncActionController` if available.
+    func taskController(_ taskController: (RSDTaskController), asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController?
 }
 
 /// `RSDTaskController` handles default implementations for running a task.

@@ -34,10 +34,21 @@
 import UIKit
 import AVFoundation
 
-/**
- `RSDPageViewControllerProtocol` allows replacing the `UIPageViewController` in the base class with a different view controller implementation. It is assumed that the implementation is for a view controller appropriate to the current device.
- */
+/// `RSDPageViewControllerProtocol` allows replacing the `UIPageViewController` in the base class with a different
+/// view controller implementation. It is assumed that the implementation is for a view controller appropriate to
+/// the current device.
 public protocol RSDPageViewControllerProtocol {
+    
+    /// Set the view controllers.
+    ///
+    /// - note: The default implementation of `RSDTaskViewController` will use a page view controller
+    /// and will present one view at a time.
+    ///
+    /// - parameters:
+    ///     - viewControllers: The view controllers to add to page view.
+    ///     - direction: The direction of navigation.
+    ///     - animated: Whether or not adding the child view controllers should be animated.
+    ///     - completion: The animation completion handler.
     func setViewControllers(_ viewControllers: [UIViewController]?, direction: RSDStepDirection, animated: Bool, completion: ((Bool) -> Swift.Void)?)
 }
 
@@ -48,62 +59,117 @@ extension UIPageViewController : RSDPageViewControllerProtocol {
     }
 }
 
-public enum RSDTaskFinishReason : Int {
-    case completed, cancelled, failed
+/// `RSDOptionalTaskViewControllerDelegate` is a delegate protocol defined as `@objc` to allow the methods to be optionally
+/// implemented. As such, these methods cannot take Swift protocols as their paramenters.
+@objc
+public protocol RSDOptionalTaskViewControllerDelegate : class, NSObjectProtocol {
+    
+    /// Asks the delegate for a custom view controller for the specified step.
+    ///
+    /// If this method is implemented, the task view controller calls it to obtain a step view controller for the step.
+    ///
+    /// In most circumstances, the task view controller can determine which view controller to instantiate for a step.
+    /// However, if you want to provide a specific view controller instance, you can call this method to do so.
+    ///
+    /// The delegate should provide a step view controller implementation for any custom step that does not implement
+    /// either the `RSDStepViewControllerVendor` protocol or the `RSDThemedUIStep` protocol where the `viewTheme` is
+    /// non-nil.
+    ///
+    /// - parameters:
+    ///     - taskViewController: The calling `(UIViewController & RSDTaskController)` instance.
+    ///     - step: The step for which a view controller is requested. This will be an object that conforms to
+    ///             the `RSDStep` protocol.
+    /// - returns: A custom view controller, or `nil` to request the default step controller for this step.
+    @objc optional
+    func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController?
+    
+    
+    /// Asks the delegate whether or not the task should show a view controller for the  `RSDTaskInfoStep`
+    /// while the initial task is being fetched.
+    ///
+    /// If defined, then:
+    ///     * If this function returns `true` then a view controller specific to the `RSDTaskInfoStep` will be displayed.
+    ///     * If this function returns `false` then `showLoadingView()` will be called and the task will automatically
+    ///       forward to the first step once the task is fetched.
+    ///
+    /// If not defined, then:
+    ///     * If and only if the task is a subtask where `estimatedFetchTime == 0`, then `showLoadingView()` will be called
+    ///       and the task will automatically forward to the first step once the task is fetched.
+    ///
+    /// - parameters:
+    ///     - taskViewController: The calling `(UIViewController & RSDTaskController)` instance.
+    ///     - step: The step for which a view controller is requested. This will be an object that conforms to
+    ///             the `RSDTaskInfoStep` protocol.
+    /// - returns: A `Bool` value indicating whether or not the task controller should show the task info step.
+    @objc optional
+    func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool
 }
 
-public protocol RSDTaskViewControllerDelegate : class, NSObjectProtocol {
-    
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), didFinishWith reason: RSDTaskFinishReason, error: Error?)
-    
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor step: RSDStep) -> (UIViewController & RSDStepController)?
-    
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController?
-    
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), readyToSave taskPath: RSDTaskPath)
-    
-    func taskViewControllerShouldAutomaticallyForward(_ taskViewController: (UIViewController & RSDTaskController)) -> Bool
+/// `RSDTaskViewControllerDelegate` is an extension of the `RSDTaskControllerDelegate` protocol that also
+/// implements optional methods defined by `RSDOptionalTaskViewControllerDelegate`.
+public protocol RSDTaskViewControllerDelegate : RSDOptionalTaskViewControllerDelegate, RSDTaskControllerDelegate {
 }
 
-/**
- Optional protocol that can be used to get the step view controller from the step rather than from the task view controller or delegate.
- */
+/// Optional protocol that can be used to get the step view controller from the step rather than from the
+/// task view controller or delegate.
 public protocol RSDStepViewControllerVendor : RSDUIStep {
 
-    /**
-     Returns the view controller vended by the step.
-     
-     @param taskPath    The current task path to use to instantiate the view controller
-     
-     @return            The instantiated view controller or `nil` if there isn't one.
-     */
+    /// Returns the view controller vended by the step.
+    /// - parameter taskPath: The current task path to use to instantiate the view controller
+    /// - returns: The instantiated view controller or `nil` if there isn't one.
     func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)?
 }
 
-/**
- `RSDTaskViewController` is an implementation of task view controller that is suitable to the iPhone or iPad. To use this view controller, the
- */
+/// `RSDTaskViewController` is the default implementation of task view controller that is suitable to the iPhone or iPad.
+/// The default implementation will display a series of steps using a `UIPageViewController`. This controller will also handle
+/// starting and stoping async actions and vending the appropriate step view controller for each step.
 open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, RSDAsyncActionControllerDelegate {
 
+    /// The delegate for the task view controller.
+    ///
+    /// - precondition: The delegate must support completion. When the task view controller completes its task, it is
+    /// the delegate's responsibility to dismiss it.
+    /// - seealso: `RSDTaskControllerDelegate.taskViewController(:,didFinishWith reason:,error:)`.
     open weak var delegate: RSDTaskViewControllerDelegate?
     
     // MARK: View controller vending
     
+    /// Main entry for vending an appropriate step view controller for a given step.
+    ///
+    /// This method will look for a step view controller in the following order:
+    /// 1. Call the delegate method `taskViewController(:, viewControllerFor step:)` and return the view controller
+    ///    supplied by that method. This will throw an exception if the delegate does not return a view controller
+    ///    that conforms to the `RSDStepController` protocol and inherits from `UIViewController`.
+    /// 2. If the given step implements the `RSDStepViewControllerVendor` protocol and returns a non-nil instance of
+    ///    a view controller, then that will be returned.
+    /// 3. If the given step implements the `RSDThemedUIStep` protocol and returns a `viewTheme`, then call
+    ///    `instantiateViewController(with viewTheme:)` to instantiate a view controller for this step.
+    /// 4. If none of the functions listed above returns a view controller then return the view controller instantiated
+    ///    by calling `vendDefaultViewController(for step:)`.
+    ///
+    /// - parameter step: The step to display.
+    /// - returns: The view controller to use when displaying a given step.
     open func viewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
         // Exit early if the delegate, step or storyboard returns a view controller
-        if let vc = delegate?.taskViewController(self, viewControllerFor: step) {
-            return vc
+        if let vc = delegate?.taskViewController?(self, viewControllerFor: step) {
+            return vc as! (UIViewController & RSDStepController)
         }
         if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskPath) {
             return vc
         }
         if let viewTheme = (step as? RSDThemedUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme) {
-            vc.step = step
+            if vc.step == nil {
+                vc.step = step
+            }
             return vc
         }
         return self.vendDefaultViewController(for: step)
     }
     
+    /// Instantiate a step view controller using the given view theme element.
+    /// - parameters:
+    ///     - viewTheme: The view theme element with the nib or storyboard identifier.
+    /// - returns: A view controller instantiated with the given view theme element.
     open func instantiateViewController(with viewTheme: RSDViewThemeElement) -> (UIViewController & RSDStepController)? {
         if let storyboardIdentifier = viewTheme.storyboardIdentifier {
             let storyboard = UIStoryboard(name: storyboardIdentifier, bundle: viewTheme.bundle)
@@ -114,6 +180,21 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         }
     }
     
+    /// This is the default factory method for vending a view controller appropriate to a given step.
+    /// This method is the fall-through for `viewController(for step:)`.
+    ///
+    /// The view controller vended is a drop-through with the following conditions:
+    /// 1. If the step implements the `RSDTaskInfoStep` protocol then instantiate a `RSDTaskInfoStepViewController`.
+    /// 2. If the step implements the `RSDActiveUIStep` protocol, and the `duration > 0`, and the
+    ///    step includes the command for `RSDActiveUIStepCommand.transitionAutomatically`, then:
+    ///    * if the `step.type == .countdown` then instantiate a `RSDCountdownStepViewController`.
+    ///    * else instantiate a `RSDActiveStepViewController`.
+    /// 3. If `RSDGenericStepViewController.doesSupport()` returns `true` then instantiate a `RSDGenericStepViewController`
+    /// 4. Otherwise, instantiate a `DebugStepViewController` to be used during development as a placeholder.
+    ///
+    /// - parameter step: The step to display.
+    /// - returns: The base class implementation of a step view controller or `DebugStepViewController`
+    ///            if undefined.
     open func vendDefaultViewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
         if let taskInfo = step as? RSDTaskInfoStep {
             return RSDTaskInfoStepViewController(taskInfo: taskInfo)
@@ -145,8 +226,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     public private(set) var idleTimerDisabled: Bool = false
     public private(set) var audioSession: AVAudioSession?
     
-    public func asyncActionController(for configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        if let controller = self.delegate?.taskViewController(self, asyncActionControllerFor: configuration) {
+    open func asyncActionController(for configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+        if let controller = self.delegate?.taskController(self, asyncActionControllerFor: configuration) {
             return controller
         } else if let vender = configuration as? RSDAsyncActionControllerVendor {
             return vender.instantiateController(with: self.taskPath)
@@ -159,10 +240,29 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         return nil
     }
     
+    /// Handle failure of the async action controller.
     open func asyncActionController(_ controller: RSDAsyncActionController, didFailWith error: Error) {
         DispatchQueue.main.async {
             self._removeAsyncActionController(controller)
             // TODO: syoung 11/06/2017 Handle recording the failure.
+        }
+    }
+    
+    open func shouldContinueOnFailure(with controller: RSDAsyncActionController, error: Error) -> Bool {
+        return true
+    }
+    
+    private func _startAsyncActionController(_ controller: RSDAsyncActionController) {
+        self._addAsyncActionController(controller)
+        controller.start(at: self.taskPath) { [weak self] (controller, result, error) in
+            DispatchQueue.main.async {
+                // TODO: syoung 11/02/2017 handle errors (Add a result to the result set?)
+                // TODO: syoung 11/02/2017 Handle action controllers that are not recorders and might return a result on start.
+                if error != nil || !controller.isRunning {
+                    debugPrint("Failed to start recorder \(controller.configuration.identifier). \(String(describing: error))")
+                    self?._removeAsyncActionController(controller)
+                }
+            }
         }
     }
     
@@ -207,7 +307,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     
-    // MARK: RSDTaskController
+    // MARK: `RSDTaskController` protocol implementation
     
     open var factory: RSDFactory?
     
@@ -230,9 +330,16 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     }
     
     open func showLoading(for taskInfo: RSDTaskInfoStep) {
-        // If loading a resource for a subtask or delegate overrides then do not show the loading step
-        let shouldAutoForward: Bool = self.delegate?.taskViewControllerShouldAutomaticallyForward(self) ?? (self.taskPath.parentPath != nil)
-        if shouldAutoForward, taskInfo.estimatedFetchTime == 0 {
+        // If loading a resource for a subtask or delegate overrides then do not show the task info.
+        // Instead, show the loading screen and return
+        let showLoading: Bool = {
+            if let autoForward = self.delegate?.taskViewController?(self, shouldShowTaskInfoFor: taskInfo) {
+                return !autoForward
+            } else {
+                return (self.taskPath.parentPath != nil) && (taskInfo.estimatedFetchTime == 0)
+            }
+        }()
+        if showLoading {
             self.showLoadingView()
             return
         }
@@ -277,55 +384,92 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open func handleTaskFailure(with error: Error) {
         _stopAudioSession()
         cancelAllAsyncActions()
-        delegate?.taskViewController(self, didFinishWith: .failed, error: error)
+        delegate?.taskController(self, didFinishWith: .failed, error: error)
     }
     
     open func handleTaskCompleted() {
         _stopAudioSession()
-        delegate?.taskViewController(self, didFinishWith: .completed, error: nil)
+        delegate?.taskController(self, didFinishWith: .completed, error: nil)
     }
     
     open func handleTaskCancelled() {
+        // TODO: syoung 12/04/2017 Confirm exit if this is not the first step.
         _stopAudioSession()
         cancelAllAsyncActions()
-        delegate?.taskViewController(self, didFinishWith: .cancelled, error: nil)
+        delegate?.taskController(self, didFinishWith: .discarded, error: nil)
     }
 
     open func handleTaskResultReady(with taskPath: RSDTaskPath) {
-        delegate?.taskViewController(self, readyToSave: taskPath)
+        delegate?.taskController(self, readyToSave: taskPath)
     }
     
+    /// Instantiate the appropriate controller for each configuration, request any authorizations and start the controller.
+    /// Then call the completion once forward navigation can continue.
     public func startAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (() -> Void)) {
-       
-        // TODO: syoung 11/06/2017 Handle requesting permissions. This must be done by requesting each permission serially.
-        // Otherwise, if you just ask for them all at once then some of them get swallowed.  For now, in order to keep
-        // making progress on CRF, just assume that all permissionswere requested before we get to this point.
-
-        // Start each controller
-        for configuration in configurations {
+        
+        // Get the controller for each configuration
+        let controllers = configurations.rsd_mapAndFilter { (configuration) -> RSDAsyncActionController? in
             guard let asyncController = self.asyncActionController(for: configuration) else {
                 debugPrint("Did not create controller for async config \(configuration)")
-                continue
+                return nil
             }
             if asyncController.delegate == nil {
                 asyncController.delegate = self
             }
-            asyncController.start(at: self.taskPath) { [weak self] (controller, result, error) in
-                DispatchQueue.main.async {
-                    // TODO: syoung 11/02/2017 handle errors (Add a result to the result set?)
-                    // TODO: syoung 11/02/2017 Handle action controllers that are not recorders and might return a result on start.
-                    if error == nil, controller.isRunning {
-                        self?._addAsyncActionController(controller)
-                    } else {
-                        debugPrint("Failed to start recorder \(controller.configuration.identifier). \(String(describing: error))")
+            return asyncController
+        }
+
+        // Handle requesting permissions. This must be done by requesting each permission serially. Otherwise, if you just
+        // ask for them all at once then some of them get swallowed.
+        DispatchQueue.main.async  {
+            
+            // Recursively step thorough each controller and request any authorizations required for that controller.
+            var index: Int = 0
+            
+            func enumerateRequest() {
+                
+                // When each controller has been started then return
+                guard index < controllers.count else {
+                    completion()
+                    return
+                }
+                
+                // Get the next controller in the list.
+                let asyncController = controllers[index]
+                index += 1
+                
+                // Request permission
+                asyncController.requestPermissions(on: self) { [weak self] (controller, _, error) in
+                    DispatchQueue.main.async {  // Completion should be called on main but... just in case.
+                        guard let strongSelf = self else {
+                            // If the task view controller is disposed, then the task has finished.
+                            return
+                        }
+                        
+                        // If there was an error, pass on the failure message. Otherwise, start the controller
+                        if let err = error {
+                            debugPrint("Failed to start recorder \(controller.configuration.identifier). \(err)")
+                            strongSelf.asyncActionController(controller, didFailWith: err)
+                        } else {
+                            strongSelf._startAsyncActionController(controller)
+                        }
+                    
+                        // If there wasn't an error, or if the controller should continue on failure to start
+                        // the async action, then start the next controller. Otherwise, the completion is swallowed
+                        // because calling the completion will normally result in continuing to the next step.
+                        // If the default implementation of `shouldContinueOnFailure` is overriden to return `true`
+                        // then either that method *or* `asyncActionController(didFailWith error:)` should finish
+                        // the task with an error.
+                        if error == nil || strongSelf.shouldContinueOnFailure(with: controller, error: error!) {
+                            enumerateRequest()
+                        }
                     }
                 }
             }
+            
+            // Call the serialized enumerator to start the first controller.
+            enumerateRequest()
         }
-        
-        // Call the completion.
-        // TODO: syoung 11/06/2017 As part of permission handling, will need to implement async callback
-        completion()
     }
     
     public func stopAsyncActions(for controllers: [RSDAsyncActionController], completion: @escaping (() -> Void)) {

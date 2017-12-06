@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// The `RSDSampleRecord` defines the properties that are included with all JSON logging samples.
 /// By defining a protocol, the logger can include markers for step transitions and the records
@@ -200,7 +201,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// subclasses should implement logic required to start a recorder by overriding the `startRecorder()`
     /// method. This is done to ensure that the logging file was successfully created before attempting to
     /// record any data to that file.
-    public final func start(at taskPath: RSDTaskPath, completion: RSDAsyncActionCompletionHandler?) {
+    public final func start(at taskPath: RSDTaskPath, _ completion: RSDAsyncActionCompletionHandler?) {
         guard !self.isRunning else {
             self.callOnMainThread(nil, RSDRecorderError.alreadyRunning, completion)
             return
@@ -280,6 +281,37 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         updateMarker(step: step, taskPath: taskPath)
         writeMarkers()
     }
+    
+    #if os(watchOS)
+    
+    /// **Available** for watchOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. The base class implementation will immediately call the completion handler.
+    ///
+    /// - remark: Override to implement custom permission handling.
+    /// - seealso: `RSDAsyncActionController.requestPermissions()`
+    /// - parameters:
+    ///     - completion: The completion handler.
+    open func requestPermissions(_ completion: RSDAsyncActionCompletionHandler) {
+        completion(self, self.result, nil)
+    }
+    
+    #else
+    /// **Available** for iOS and tvOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. The base class implementation will immediately call the completion handler.
+    ///
+    /// - remark: Override to implement custom permission handling.
+    /// - seealso: `RSDAsyncActionController.requestPermissions(on:)`
+    /// - parameters:
+    ///     - viewController: The view controler that should be used to present any modal dialogs.
+    ///     - completion: The completion handler.
+    open func requestPermissions(on viewController: UIViewController, _ completion: RSDAsyncActionCompletionHandler) {
+        completion(self, self.result, nil)
+    }
+    #endif
     
     // MARK: State management
     

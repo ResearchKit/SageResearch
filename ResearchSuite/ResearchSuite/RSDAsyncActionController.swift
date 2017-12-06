@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// `RSDAsyncActionControllerDelegate` is the delegate protocol for `RSDAsyncActionController`.
 public protocol RSDAsyncActionControllerDelegate : class {
@@ -64,9 +65,58 @@ public protocol RSDAsyncActionController : class {
     /// The configuration used to set up the controller.
     var configuration: RSDAsyncActionConfiguration { get }
     
+    #if os(watchOS)
+    
+    /// **Available** for watchOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. This method is intended to allow the controller to request any permissions associated with
+    /// this controller *before* the step change happens.
+    ///
+    /// On an Apple watch, authorization handling is managed by using a handshake request that requires opening
+    /// the paired phone and responding to the authorization on the phone. This is a cumbersome UX that must be
+    /// handled using the app delegate so it is recommended that the architecture for apps that use the watch
+    /// include authorization handling though the iPhone app prior to running a task on the watch.
+    ///
+    /// - remark: The controller should call the completion handler with an `Error` if authorization failed.
+    /// Whether or not the completion handler includes a non-nil result that includes the authorization status,
+    /// is up to the developers and researchers using this controller as a tool for gathering information for
+    /// their study.
+    ///
+    /// - parameters:
+    ///     - completion: The completion handler.
+    func requestPermissions(_ completion: RSDAsyncActionCompletionHandler)
+    
+    #else
+    /// **Available** for iOS and tvOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. This method is intended to allow the controller to request any permissions associated with
+    /// this controller *before* the step change happens.
+    ///
+    /// It is the responsibility of the controller to manage the display of any alerts that are not controlled
+    /// by the OS. The `viewController` parameter is the view controler that should be used to present any modal
+    /// dialogs.
+    ///
+    /// - note: The calling view controller or application delegate should block any UI presentation changes
+    /// until *after* the completion handler is called to ensure that any modals presented by the async
+    /// controller or the OS aren't swallowed by other UI events.
+    ///
+    /// - remark: The controller should call the completion handler with an `Error` if authorization failed.
+    /// Whether or not the completion handler includes a non-nil result that includes the authorization status,
+    /// is up to the developers and researchers using this controller as a tool for gathering information for
+    /// their study.
+    ///
+    /// - parameters:
+    ///     - viewController: The view controler that should be used to present any modal dialogs.
+    ///     - completion: The completion handler.
+    func requestPermissions(on viewController: UIViewController, _ completion: RSDAsyncActionCompletionHandler)
+    #endif
+    
     /// Start the asynchronous action with the given completion handler.
     /// - note: The handler may be called on a background thread.
-    func start(at taskPath: RSDTaskPath, completion: RSDAsyncActionCompletionHandler?)
+    /// - parameter taskPath: The current state of the task.
+    func start(at taskPath: RSDTaskPath, _ completion: RSDAsyncActionCompletionHandler?)
     
     /// Pause the action. Ignored if not applicable.
     func pause()
@@ -81,6 +131,9 @@ public protocol RSDAsyncActionController : class {
     /// Cancel the action.
     func cancel()
     
-    /// Let the controller know that the task has moved to the given step.
+    /// Let the controller know that the task will move to the given step.
+    /// - parameters:
+    ///     - step: The step that will be presented.
+    ///     - taskPath: The current state of the task.
     func moveTo(step: RSDStep, taskPath: RSDTaskPath)
 }
