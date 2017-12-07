@@ -62,11 +62,9 @@
 		FFF2D99F1FCF4F40007258F8 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2D9A01FCF4F40007258F8 /* ResearchSuite.framework */; };
 		FFF2D9A11FCF4FC6007258F8 /* UIColor+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */; };
 		FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */; };
-		FFF2D9A31FCF4FC6007258F8 /* DefaultColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFF9D4C21FAFEDF800767C3B /* DefaultColors.xcassets */; };
 		FFF2D9A41FCF4FC6007258F8 /* DefaultImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFF9D4C41FAFEF5400767C3B /* DefaultImages.xcassets */; };
 		FFF2D9A51FCF4FC7007258F8 /* UIColor+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */; };
 		FFF2D9A61FCF4FC7007258F8 /* UIFont+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */; };
-		FFF2D9A71FCF4FC7007258F8 /* DefaultColors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFF9D4C21FAFEDF800767C3B /* DefaultColors.xcassets */; };
 		FFF2D9A81FCF4FC7007258F8 /* DefaultImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFF9D4C41FAFEF5400767C3B /* DefaultImages.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -123,7 +121,6 @@
 		FFF2D9701FCF41BF007258F8 /* ResearchSuiteUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchSuiteUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFF2D9731FCF41BF007258F8 /* Info-watchOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-watchOS.plist"; sourceTree = "<group>"; };
 		FFF2D9A01FCF4F40007258F8 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFF9D4C21FAFEDF800767C3B /* DefaultColors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DefaultColors.xcassets; sourceTree = "<group>"; };
 		FFF9D4C41FAFEF5400767C3B /* DefaultImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DefaultImages.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,7 +170,6 @@
 			children = (
 				FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */,
 				FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */,
-				FFF9D4C21FAFEDF800767C3B /* DefaultColors.xcassets */,
 				FFF9D4C41FAFEF5400767C3B /* DefaultImages.xcassets */,
 			);
 			path = Styleguide;
@@ -461,7 +457,6 @@
 				FFF2D9861FCF451C007258F8 /* DebugStepViewController.xib in Resources */,
 				FFF2D9871FCF451C007258F8 /* RSDActiveStepViewController.xib in Resources */,
 				FFF2D9A41FCF4FC6007258F8 /* DefaultImages.xcassets in Resources */,
-				FFF2D9A31FCF4FC6007258F8 /* DefaultColors.xcassets in Resources */,
 				FFF2D9891FCF451C007258F8 /* RSDTaskInfoStepViewController.xib in Resources */,
 				FFF2D97F1FCF44AD007258F8 /* ResearchSuiteUI.strings in Resources */,
 			);
@@ -480,7 +475,6 @@
 			files = (
 				FFF2D9801FCF44AE007258F8 /* ResearchSuiteUI.strings in Resources */,
 				FFF2D9A81FCF4FC7007258F8 /* DefaultImages.xcassets in Resources */,
-				FFF2D9A71FCF4FC7007258F8 /* DefaultColors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

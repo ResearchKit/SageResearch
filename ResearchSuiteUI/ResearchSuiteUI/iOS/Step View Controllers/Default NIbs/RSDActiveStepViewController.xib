@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -33,7 +33,6 @@
                                 <constraint firstAttribute="width" secondItem="fZz-7R-1np" secondAttribute="height" multiplier="1:1" id="4q2-pl-Tvc"/>
                                 <constraint firstAttribute="width" constant="32" id="Veo-yL-Kx9"/>
                             </constraints>
-                            <color key="tintColor" name="buttonTintBlue"/>
                             <state key="normal" image="closeActivity"/>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BSx-xc-6wX" customClass="RSDStepProgressView" customModule="ResearchSuiteUI">
@@ -59,11 +58,10 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1 of 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32C-Qh-Lno">
                             <rect key="frame" x="149.5" y="28" width="76" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" name="textDarkGray"/>
+                            <color key="textColor" red="0.19607843137254902" green="0.21568627450980393" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="tintColor" name="buttonTintBlue"/>
                     <constraints>
                         <constraint firstItem="fZz-7R-1np" firstAttribute="leading" secondItem="IXI-K0-Z04" secondAttribute="leading" constant="16" id="9XH-0h-tES"/>
                         <constraint firstAttribute="bottom" secondItem="32C-Qh-Lno" secondAttribute="bottom" id="AML-Lf-9K3"/>
@@ -81,7 +79,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instruction Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VoM-5m-u1N">
                             <rect key="frame" x="108" y="73.5" width="158.5" height="26.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                            <color key="textColor" name="textLightGray"/>
+                            <color key="textColor" red="0.47843137254901957" green="0.50196078431372548" blue="0.56470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -101,6 +99,7 @@
                 </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="tintColor" red="0.11764705882352941" green="0.50196078431372548" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="NWt-B1-Ycq" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="33a-0w-hYD"/>
                 <constraint firstItem="IXI-K0-Z04" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="K1N-pF-FvJ"/>
@@ -118,14 +117,5 @@
     </objects>
     <resources>
         <image name="closeActivity" width="32" height="32"/>
-        <namedColor name="buttonTintBlue">
-            <color red="0.12941176469999999" green="0.58823529409999997" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="textDarkGray">
-            <color red="0.25490196078431371" green="0.28235294117647058" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="textLightGray">
-            <color red="0.55294117647058827" green="0.57647058823529407" blue="0.63137254901960782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
 </document>
