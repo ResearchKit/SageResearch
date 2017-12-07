@@ -152,7 +152,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// - note: This property is implemented as `@objc dynamic` so that step view controllers can use KVO
     ///         to listen for changes.
     @objc dynamic open var isRunning: Bool {
-        return logger != nil
+        return loggers.count > 0
     }
     
     /// Is the action currently paused?
@@ -275,11 +275,10 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     
     /// Let the controller know that the task has moved to the given step. This method is called by the task
     /// controller when the task transitions to a new step. The default implementation will update the
-    /// `currentStepIdentifier` and `currentStepPath`, then it will add a marker to the logging file.
+    /// `currentStepIdentifier` and `currentStepPath`, then it will add a marker to the logging files.
     open func moveTo(step: RSDStep, taskPath: RSDTaskPath) {
         updateMarker(step: step, taskPath: taskPath)
-        let marker = instantiateMarker(uptime: ProcessInfo.processInfo.systemUptime, date: Date(), stepPath: currentStepPath)
-        writeSample(marker)
+        writeMarkers()
     }
     
     // MARK: State management
@@ -365,14 +364,42 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     
     // MARK: Logger handling
     
-    /// The logger used to record samples to a file.
-    public private(set) var logger: RSDRecordSampleLogger?
+    /// The serial queue used for writing samples to the log files. To ensure that write failures due to memory
+    /// warnings do not get thrown by multiple threads, a single logging queue is used for writing to all the
+    /// open log files.
+    public let loggerQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.Recorder.\(UUID())")
+    
+    /// The loggers used to record samples to a file.
+    public private(set) var loggers: [String : RSDDataLogger] = [:]
+    
+    /// The list of identifiers for the loggers. For each unique identifier in this list, the recorder
+    /// will open a file for recording record samples. This allows a single recorder to handle data from
+    /// multiple sensors.
+    ///
+    /// For example, if the application requires recording both raw accelerometer data and the device
+    /// motion data, these can be recordeded to different sample files by defining a unique identifier
+    /// for each sensor recording, while using a single `CMMotionManager` as recommended by Apple.
+    open var loggerIdentifiers : Set<String> {
+        return [defaultLoggerIdentifier]
+    }
+    
+    /// The default logger identifier to call if the `writeSample()` method is called without a logger
+    /// identifier.
+    open var defaultLoggerIdentifier : String {
+        return configuration.identifier
+    }
     
     /// File URL for the directory in which to store generated data files.
     public let outputDirectory: URL
     
-    /// The queue used for writing samples to the log file.
-    private let loggerQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.Recorder.\(UUID())")
+    /// Should the logger use a dictionary as the root element?
+    ///
+    /// If `true` then the logger will open the file with the samples included in an array with the key
+    /// of "items". If `false` then the file will use an array as the root elemenent and the samples will
+    /// be added to that array.
+    open var usesRootDictionary: Bool {
+        return (self.configuration as? RSDJSONRecorderConfiguration)?.usesRootDictionary ?? false
+    }
     
     /// Instatiate a marker for recording step transitions as well as start and stop points.
     /// The default implementation will instantiate a `RSDRecordMarker`.
@@ -381,8 +408,9 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     ///     - uptime: The system clock time.
     ///     - date: The timestamp date.
     ///     - stepPath: The step path.
+    ///     - loggerIdentifier: The identifier for the logger for which to create the marker.
     /// - returns: A sample to add to the log file that can be used as a step transition marker.
-    open func instantiateMarker(uptime: TimeInterval, date: Date, stepPath: String) -> RSDSampleRecord {
+    open func instantiateMarker(uptime: TimeInterval, date: Date, stepPath: String, loggerIdentifier:String) -> RSDSampleRecord {
         return RSDRecordMarker(uptime: uptime, timestamp: uptime - self.startUptime, date: date, stepPath: stepPath)
     }
     
@@ -394,14 +422,18 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     open func updateMarker(step: RSDStep?, taskPath: RSDTaskPath) {
         currentStepIdentifier = step?.identifier ?? ""
         let path = taskPath.fullPath
-        currentStepPath = path + "/" + currentStepIdentifier
+        currentStepPath = (path as NSString).appendingPathComponent(currentStepIdentifier)
     }
     
     /// Write a sample to the logger.
-    /// - parameter sample: The sample to add to the logging file.
-    public final func writeSample(_ sample: RSDSampleRecord) {
+    /// - parameters:
+    ///     - sample: sample: The sample to add to the logging file.
+    ///     - loggerIdentifier: The identifier for the logger for which to create the marker. If nil, then the
+    ///                         `defaultLoggerIdentifier` will be used.
+    public final func writeSample(_ sample: RSDSampleRecord, loggerIdentifier:String? = nil) {
         self.loggerQueue.async {
-            guard let logger = self.logger else { return }
+            let identifier = loggerIdentifier ?? self.defaultLoggerIdentifier
+            guard let logger = self.loggers[identifier] as? RSDRecordSampleLogger else { return }
             do {
                 try logger.writeSample(sample)
             } catch let err {
@@ -413,11 +445,15 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }
     
     /// Write multiple samples to the logger.
-    /// - parameter samples: The samples to add to the logging file.
-    public final func writeSamples(_ samples: [RSDSampleRecord]) {
+    /// - parameters:
+    ///     - samples: The samples to add to the logging file.
+    ///     - loggerIdentifier: The identifier for the logger for which to create the marker. If nil, then the
+    ///                         `defaultLoggerIdentifier` will be used.
+    public final func writeSamples(_ samples: [RSDSampleRecord], loggerIdentifier:String? = nil) {
         self.loggerQueue.async {
             // Check that the logger hasn't been closed and nil'd
-            guard let logger = self.logger else { return }
+            let identifier = loggerIdentifier ?? self.defaultLoggerIdentifier
+            guard let logger = self.loggers[identifier] as? RSDRecordSampleLogger else { return }
             do {
                 try logger.writeSamples(samples)
             } catch let err {
@@ -428,130 +464,86 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         }
     }
     
-    /// Create the file URL for the filepath to which the logger should write samples. By default, the file
-    /// will create a URL with the `configuration.identifier` in the `outputDirectory`.
-    /// - returns: The URL for the file location.
-    open func createFileURL() throws -> URL {
-        return try RSDFileResultUtility.createFileURL(identifier: configuration.identifier, ext: "json", outputDirectory: outputDirectory)
+    /// Instantiate the logger file for the given identifier.
+    ///
+    /// By default, the file will be created using the `RSDFileResultUtility.createFileURL()` utility method to create
+    /// a URL in the `outputDirectory`. A `RSDRecordSampleLogger` is returned by default.
+    ///
+    /// - parameter identifier: The unique identifier for the logger.
+    /// - returns: A new instance of a `RSDDataLogger`.
+    /// - throws: An error if opening the log file failed.
+    open func instantiateLogger(with identifier: String) throws -> RSDDataLogger? {
+        let url = try RSDFileResultUtility.createFileURL(identifier: identifier, ext: "json", outputDirectory: outputDirectory)
+        return try RSDRecordSampleLogger(identifier: identifier, url: url, usesRootDictionary: self.usesRootDictionary)
     }
     
-    /// Should the logger use a dictionary as the root element?
-    ///
-    /// If `true` then the logger will open the file with the samples included in an array with the key
-    /// of "items". If `false` then the file will use an array as the root elemenent and the samples will
-    /// be added to that array. Default = `false`
-    ///
-    /// - example:
-    ///
-    /// If the log file uses a dictionary as the root element then
-    /// ```
-    ///    {
-    ///    "startDate" : \(Date().jsonObject()),
-    ///    "items"     : [
-    ///                     {
-    ///                     "uptime": 1234.56,
-    ///                     "stepPath": "/Foo Task/sectionA/step1",
-    ///                     "timestampDate": "2017-10-16T22:28:09.000-07:00",
-    ///                     "timestamp": 0
-    ///                     },
-    ///                     // ... more samples ... //
-    ///                 ]
-    ///     }
-    /// ```
-    ///
-    /// If the log file uses an array as the root element then
-    /// ```
-    ///    [
-    ///     {
-    ///     "uptime": 1234.56,
-    ///     "stepPath": "/Foo Task/sectionA/step1",
-    ///     "timestampDate": "2017-10-16T22:28:09.000-07:00",
-    ///     "timestamp": 0
-    ///     },
-    ///     // ... more samples ... //
-    ///     ]
-    /// ```
-    ///
-    open var usesRootDictionary: Bool {
-        return false
+    /// Write a marker to each logging file.
+    private func writeMarkers() {
+        let uptime = ProcessInfo.processInfo.systemUptime
+        let date = Date()
+        let stepPath = self.currentStepPath
+        self.loggerQueue.async {
+            do {
+                for (identifier, dataLogger) in self.loggers {
+                    guard let logger = dataLogger as? RSDRecordSampleLogger else { continue }
+                    let marker = self.instantiateMarker(uptime: uptime, date: date, stepPath: stepPath, loggerIdentifier: identifier)
+                    try logger.writeSample(marker)
+                }
+            } catch let err {
+                DispatchQueue.global().async {
+                    self.didFail(with: err)
+                }
+            }
+        }
     }
     
+    /// Open log files. This method should be called on the `loggerQueue`.
     private func _startLogger(at taskPath: RSDTaskPath) throws {
-        let url = try createFileURL()
-        logger = try RSDRecordSampleLogger(url: url, usesRootDictionary: usesRootDictionary)
         updateMarker(step: taskPath.currentStep, taskPath: taskPath)
-        let marker = instantiateMarker(uptime: startUptime, date: startDate, stepPath: currentStepPath)
-        try logger!.writeSample(marker)
+        for identifier in self.loggerIdentifiers {
+            guard let dataLogger = try instantiateLogger(with: identifier) else {
+                continue
+            }
+            loggers[identifier] = dataLogger
+            if let logger = dataLogger as? RSDRecordSampleLogger {
+                let marker = instantiateMarker(uptime: startUptime, date: startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
+                try logger.writeSample(marker)
+            }
+        }
     }
     
+    /// Close log files. This method should be called on the `loggerQueue`.
     private func _stopLogger() throws {
-        guard let aLogger = logger else {
-            return
+        var error: Error?
+        for (_, logger) in self.loggers {
+            do {
+                try logger.close()
+                
+                // Create and add the result
+                var fileResult = RSDFileResultObject(identifier: self.configuration.identifier)
+                fileResult.startDate = self.startDate
+                fileResult.endDate = Date()
+                fileResult.url = logger.url
+                fileResult.startUptime = self.startUptime
+                self.appendResults(fileResult)
+            }
+            catch let err {
+                error = err
+            }
         }
-        // Nil out the logger before closing in case closing throws an error
-        logger = nil
-        try aLogger.close()
         
-        // Create and add the result
-        var fileResult = RSDFileResultObject(identifier: self.configuration.identifier)
-        fileResult.startDate = self.startDate
-        fileResult.endDate = Date()
-        fileResult.url = aLogger.url
-        fileResult.startUptime = self.startUptime
-        self.appendResults(fileResult)
-    }
-}
-
-/// `RSDFileResultUtility` is a utility for naming temporary files used to save task results.
-public class RSDFileResultUtility {
-    
-    /// Convenience method for creating a file URL to use as the location to save data.
-    ///
-    /// This utility will create a directory from the identifier by scrubbing the identifier string of
-    /// any non-alphanumeric characters and then using the first 12 characters of the resulting string.
-    /// If the resulting string is empty then "temp" will be used. The method then creates the directory
-    /// if needed.
-    ///
-    /// Next, a UUID is created and the first 8 characters of the UUID are used as the filename.
-    ///
-    /// The purpose of using this method is two-fold. First, it uses a directory that is simplier for
-    /// developers to find while developing a recorder. Second, it limits the length of the file path
-    /// components to avoid issues with length limits in the stored filename if the name is stored to
-    /// a database.
-    ///
-    /// - parameters:
-    ///     - identifier: The identifier string for the step or configuration that will use the file.
-    ///     - ext: The file extension.
-    ///     - outputDirectory: File URL for the directory in which to store generated data files.
-    /// - returns: Scrubbed URL for the given identifier.
-    /// - throws: An exception if the file directory cannot be created.
-    public static func createFileURL(identifier: String, ext: String, outputDirectory: URL) throws -> URL {
+        // Close all the loggers
+        loggers = [:]
         
-        // Scrub non-alphanumeric characters from the identifer
-        var characterSet = CharacterSet.alphanumerics
-        characterSet.invert()
-        var scrubbedIdentifier = identifier
-        while let range = scrubbedIdentifier.rangeOfCharacter(from: characterSet) {
-            scrubbedIdentifier.removeSubrange(range)
+        // throw the last caught error if there was one
+        if error != nil {
+            throw error!
         }
-        scrubbedIdentifier = String(scrubbedIdentifier.prefix(12))
-        let directory = scrubbedIdentifier.count > 0 ? scrubbedIdentifier : "temp"
-        
-        // create the directory if needed
-        let dirURL = outputDirectory.appendingPathComponent(directory, isDirectory: true)
-        try FileManager.default.createDirectory(at: dirURL, withIntermediateDirectories: true, attributes: nil)
-        
-        // Use the first 8 characters of a UUID string for the filename
-        let uuid = UUID().uuidString
-        let filename = String(uuid.prefix(8))
-        let url = dirURL.appendingPathComponent(filename, isDirectory: false).appendingPathExtension(ext)
-        
-        return url
     }
 }
 
 /// `RSDRecordSampleLogger` is used to write samples encoded as json dictionary objects to a logging file.
-public class RSDRecordSampleLogger {
+public class RSDRecordSampleLogger : RSDDataLogger {
     
     /// Errors that can be thrown by the logger.
     public enum RSDRecordSampleLoggerError : Error {
@@ -563,23 +555,14 @@ public class RSDRecordSampleLogger {
     /// - seealso: `RSDSampleRecorder.usesRootDictionary`
     public let usesRootDictionary: Bool
     
-    /// The url to the file.
-    public let url: URL
-    
-    /// Open file handle for writing to the logger
-    private let fileHandle: FileHandle
-    
-    /// Number of samples written to the file.
-    public private(set) var sampleCount: Int = 0
-    
     /// Default initializer. The initializer will automatically open the file and write the
     /// JSON root element and start the sample array.
     ///
     /// - parameters:
+    ///     - identifier: A unique identifier for the logger.
     ///     - url: The url to the file.
     ///     - usesRootDictionary: Is the root element in the json file a dictionary?
-    public init(url: URL, usesRootDictionary: Bool) throws {
-        self.url = url
+    public init(identifier: String, url: URL, usesRootDictionary: Bool) throws {
         self.usesRootDictionary = usesRootDictionary
         
         let startText: String
@@ -596,9 +579,11 @@ public class RSDRecordSampleLogger {
             // Otherwise, just open the array
             startText = "[\n"
         }
-        try startText.write(to: url, atomically: false, encoding: .utf8)
+        guard let data = startText.data(using: .utf8) else {
+            throw RSDRecordSampleLoggerError.stringEncodingFailed(startText)
+        }
         
-        self.fileHandle = try FileHandle(forWritingTo: url)
+        try super.init(identifier: identifier, url: url, initialData: data)
     }
     
     /// Write multiple samples to the logger.
@@ -622,7 +607,6 @@ public class RSDRecordSampleLogger {
         let wrapper = _EncodableSampleWrapper(record: sample)
         let data = try jsonEncoder.encode(wrapper)
         try write(data)
-        sampleCount += 1
     }
     
     /// Close the file. This will write the end tag for the root element and then close the file handle.
@@ -630,7 +614,7 @@ public class RSDRecordSampleLogger {
     /// the error will be rethrown.
     ///
     /// - throws: Error thrown when attempting to write the closing tag.
-    public func close() throws {
+    public override func close() throws {
         // Write the json closure to the file
         let endText = usesRootDictionary ? "}]" : "\n]"
         var writeError: Error?
@@ -639,7 +623,8 @@ public class RSDRecordSampleLogger {
         } catch let err {
             writeError = err
         }
-        self.fileHandle.closeFile()
+        try super.close()
+        // If there was an error writing the closure, then rethrow that error *after* closing the file
         if let error = writeError {
             throw error
         }
@@ -650,13 +635,6 @@ public class RSDRecordSampleLogger {
             throw RSDRecordSampleLoggerError.stringEncodingFailed(string)
         }
         try write(data)
-    }
-    
-    private func write(_ data: Data) throws {
-        try RSDExceptionHandler.try {
-            self.fileHandle.seekToEndOfFile()
-            self.fileHandle.write(data)
-        }
     }
 }
 
