@@ -116,9 +116,9 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// a step.
     ///
     /// - note: The calling application is responsible for deleting this directory once the files
-    /// are processed by uploading them to a server or cloud service. These files are **not**
-    /// encrypted so depending upon the application, there is a risk of exposing PII data stored
-    /// in these files.
+    /// are processed by encrypting them locally. The encrypted files can then be stored for upload
+    /// to a server or cloud service. These files are **not** encrypted so depending upon the
+    /// application, there is a risk of exposing PII data stored in these files.
     lazy public var outputDirectory: URL! = {
         guard parentPath == nil else { return parentPath!.outputDirectory }
         let path = (NSTemporaryDirectory() as NSString).appendingPathComponent(result.taskRunUUID.uuidString)

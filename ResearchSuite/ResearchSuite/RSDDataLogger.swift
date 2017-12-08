@@ -44,7 +44,7 @@ open class RSDDataLogger {
     /// The url to the file.
     public let url: URL
     
-    /// Open file handle for writing to the logger
+    /// Open file handle for writing to the logger.
     private let fileHandle: FileHandle
     
     /// Number of samples written to the file.
