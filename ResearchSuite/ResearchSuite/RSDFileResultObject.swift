@@ -54,8 +54,11 @@ public struct RSDFileResultObject : RSDFileResult, Codable {
     /// The URL with the path to the file-based result.
     public var url: URL?
     
+    /// The MIME content type of the result.
+    public var contentType: String?
+    
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, startDate, endDate, startUptime, url
+        case identifier, type, startDate, endDate, startUptime, url, contentType
     }
     
     /// Default initializer for this object.
@@ -76,7 +79,7 @@ extension RSDFileResultObject : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .startUptime, .url]
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .startUptime, .url, .contentType]
         return codingKeys
     }
     
@@ -96,9 +99,11 @@ extension RSDFileResultObject : RSDDocumentableCodableObject {
                 if idx != 4 { return false }
             case .url:
                 if idx != 5 { return false }
+            case .contentType:
+                if idx != 6 { return false }
             }
         }
-        return keys.count == 6
+        return keys.count == 7
     }
     
     static func exampleResult() -> RSDFileResultObject {

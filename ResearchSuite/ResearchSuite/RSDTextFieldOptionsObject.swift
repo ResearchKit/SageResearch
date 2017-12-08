@@ -206,7 +206,7 @@ public enum RSDTextAutocapitalizationType : String, Codable {
     }
 
     /// Return the `UITextAutocapitalizationType` that maps to this enum.
-    #if os(iOS) || os(tvOS) || os(OSX)
+    #if !os(watchOS)
     public func textAutocapitalizationType() -> UITextAutocapitalizationType {
         guard let idx = RSDTextAutocapitalizationType.allTypes().index(of: self),
             let type = UITextAutocapitalizationType(rawValue: Int(idx))
@@ -234,7 +234,7 @@ public enum RSDTextAutocorrectionType : String, Codable {
     }
 
     /// Return the `UITextAutocorrectionType` that maps to this enum.
-    #if os(iOS) || os(tvOS) || os(OSX)
+    #if !os(watchOS)
     public func textAutocorrectionType() -> UITextAutocorrectionType {
         guard let idx = RSDTextAutocorrectionType.allTypes().index(of: self),
             let type = UITextAutocorrectionType(rawValue: Int(idx))
@@ -262,7 +262,7 @@ public enum RSDTextSpellCheckingType  : String, Codable {
     }
 
     /// Return the `UITextSpellCheckingType` that maps to this enum.
-    #if os(iOS) || os(tvOS) || os(OSX)
+    #if !os(watchOS)
     public func textSpellCheckingType() -> UITextSpellCheckingType {
         guard let idx = RSDTextSpellCheckingType.allTypes().index(of: self),
             let type = UITextSpellCheckingType(rawValue: Int(idx))
@@ -292,7 +292,7 @@ public enum RSDKeyboardType  : String, Codable {
     }
 
     /// Return the `UIKeyboardType` that maps to this enum.
-    #if os(iOS) || os(tvOS) || os(OSX)
+    #if !os(watchOS)
     public func keyboardType() -> UIKeyboardType {
         guard let idx = RSDKeyboardType.allTypes().index(of: self),
             let type = UIKeyboardType(rawValue: Int(idx))

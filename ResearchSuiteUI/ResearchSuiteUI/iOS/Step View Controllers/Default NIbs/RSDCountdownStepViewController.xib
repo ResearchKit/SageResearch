@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,7 +36,6 @@
                                         <constraint firstAttribute="width" secondItem="LaD-KT-cpv" secondAttribute="height" multiplier="1:1" id="CPk-aR-Jfm"/>
                                         <constraint firstAttribute="width" constant="32" id="uWg-uB-X4t"/>
                                     </constraints>
-                                    <color key="tintColor" name="buttonTintBlue"/>
                                     <state key="normal" image="closeActivity"/>
                                     <connections>
                                         <action selector="cancel" destination="-1" eventType="touchUpInside" id="Ntc-yQ-Svi"/>
@@ -65,11 +64,10 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1 of 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FdT-WA-Sq6">
                                     <rect key="frame" x="149.5" y="28" width="76" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" name="textDarkGray"/>
+                                    <color key="textColor" red="0.19607843137254902" green="0.21568627450980393" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="tintColor" name="buttonTintBlue"/>
                             <constraints>
                                 <constraint firstItem="FdT-WA-Sq6" firstAttribute="centerX" secondItem="qef-96-GMe" secondAttribute="centerX" id="3Fu-AY-hxZ"/>
                                 <constraint firstItem="LaD-KT-cpv" firstAttribute="leading" secondItem="qef-96-GMe" secondAttribute="leading" constant="16" id="3MC-VY-Mny"/>
@@ -84,7 +82,7 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start in" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Vo-ap-GH7">
                             <rect key="frame" x="24" y="101" width="327" height="26.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                            <color key="textColor" name="textLightGray"/>
+                            <color key="textColor" red="0.47843137254901957" green="0.50196078431372548" blue="0.56470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -105,11 +103,10 @@
                     </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFQ-JA-Sc8" userLabel="Footer">
-                    <rect key="frame" x="0.0" y="584.5" width="375" height="82.5"/>
+                    <rect key="frame" x="0.0" y="587" width="375" height="80"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TqA-Ca-ZKl" customClass="RSDUnderlinedButton" customModule="ResearchSuiteUI">
-                            <rect key="frame" x="163.5" y="0.0" width="47" height="32.5"/>
-                            <color key="tintColor" name="buttonTintBlue"/>
+                            <rect key="frame" x="166" y="0.0" width="42" height="30"/>
                             <state key="normal" title="Pause"/>
                             <connections>
                                 <action selector="pauseTimer" destination="-1" eventType="touchUpInside" id="Hf3-Ox-f5K"/>
@@ -124,15 +121,15 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ye0-7C-vxz">
-                    <rect key="frame" x="0.0" y="410" width="375" height="174"/>
+                    <rect key="frame" x="0.0" y="411.5" width="375" height="175"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n20-fF-k86">
-                    <rect key="frame" x="0.0" y="236.5" width="375" height="174"/>
+                    <rect key="frame" x="0.0" y="236.5" width="375" height="175.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Af7-QE-ZV6">
-                            <rect key="frame" x="149.5" y="9.5" width="75.5" height="155.5"/>
+                            <rect key="frame" x="149.5" y="10" width="75.5" height="155.5"/>
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="130"/>
-                            <color key="textColor" name="textGreen"/>
+                            <color key="textColor" red="0.35686274509803922" green="0.6705882352941176" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -143,6 +140,7 @@
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="tintColor" red="0.11764705882352941" green="0.50196078431372548" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="ye0-7C-vxz" firstAttribute="height" secondItem="n20-fF-k86" secondAttribute="height" id="20w-GI-1Ci"/>
                 <constraint firstItem="n20-fF-k86" firstAttribute="top" secondItem="d6T-5w-AqF" secondAttribute="bottom" id="Gwf-jz-Flr"/>
@@ -164,17 +162,5 @@
     </objects>
     <resources>
         <image name="closeActivity" width="32" height="32"/>
-        <namedColor name="buttonTintBlue">
-            <color red="0.12941176470588237" green="0.58823529411764708" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="textDarkGray">
-            <color red="0.25490196078431371" green="0.28235294117647058" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="textGreen">
-            <color red="0.41960784309999999" green="0.71372549019999998" blue="0.41176470590000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="textLightGray">
-            <color red="0.55294117647058827" green="0.57647058823529407" blue="0.63137254901960782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
 </document>

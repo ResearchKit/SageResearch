@@ -162,16 +162,24 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
         self.placementType = placementType
     }
     
-    /// The animated images to display.
-    /// - parameter traitCollection: The trait collection.
-    /// - returns: The images for this step.
+
     #if os(watchOS)
+    /// **Available** for watchOS.
+    ///
+    /// The animated images to display.
+    /// - returns: The images for this step.
     public func images() -> [UIImage] {
         return imageNames.rsd_mapAndFilter {
             UIImage(named: $0)
         }
     }
     #else
+    
+    /// **Available** for iOS and tvOS.
+    ///
+    /// The animated images to display.
+    /// - parameter traitCollection: The trait collection.
+    /// - returns: The images for this step.
     public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [UIImage] {
         return imageNames.rsd_mapAndFilter {
             UIImage(named: $0, in: bundle, compatibleWith: traitCollection)

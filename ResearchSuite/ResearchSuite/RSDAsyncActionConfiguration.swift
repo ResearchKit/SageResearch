@@ -82,9 +82,6 @@ public protocol RSDAsyncActionControllerVendor : RSDAsyncActionConfiguration {
 
 /// `RSDRecorderConfiguration` is used to configure a recorder. For example, recording accelerometer data
 /// or video.
-///
-/// - seealso: `RSDSampleRecorder`
-///
 public protocol RSDRecorderConfiguration : RSDAsyncActionConfiguration {
     
     /// An identifier marking the step at which to stop the action. If `nil`, then the action will be
@@ -93,6 +90,50 @@ public protocol RSDRecorderConfiguration : RSDAsyncActionConfiguration {
     
     /// Whether or not the recorder requires background audio.
     var requiresBackgroundAudio: Bool { get }
+}
+
+/// `RSDJSONRecorderConfigureation` is used to configure a recorder to record JSON samples.
+/// - seealso: `RSDSampleRecorder`
+public protocol RSDJSONRecorderConfiguration : RSDRecorderConfiguration {
+    
+    /// Should the logger use a dictionary as the root element?
+    ///
+    /// If `true` then the logger will open the file with the samples included in an array with the key
+    /// of "items". If `false` then the file will use an array as the root elemenent and the samples will
+    /// be added to that array. Default = `false`
+    ///
+    /// - example:
+    ///
+    /// If the log file uses a dictionary as the root element then
+    /// ```
+    ///    {
+    ///    "startDate" : "2017-10-16T22:28:09.000-07:00",
+    ///    "items"     : [
+    ///                     {
+    ///                     "uptime": 1234.56,
+    ///                     "stepPath": "/Foo Task/sectionA/step1",
+    ///                     "timestampDate": "2017-10-16T22:28:09.000-07:00",
+    ///                     "timestamp": 0
+    ///                     },
+    ///                     // ... more samples ... //
+    ///                 ]
+    ///     }
+    /// ```
+    ///
+    /// If the log file uses an array as the root element then
+    /// ```
+    ///    [
+    ///     {
+    ///     "uptime": 1234.56,
+    ///     "stepPath": "/Foo Task/sectionA/step1",
+    ///     "timestampDate": "2017-10-16T22:28:09.000-07:00",
+    ///     "timestamp": 0
+    ///     },
+    ///     // ... more samples ... //
+    ///     ]
+    /// ```
+    ///
+    var usesRootDictionary: Bool { get }
 }
 
 /// `RSDRequestConfiguration` is used to start an asynchronous service such as a url request or fetching

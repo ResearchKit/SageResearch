@@ -53,7 +53,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     //// String identifying the full path for this task.
     public var fullPath: String {
         let prefix = parentPath?.fullPath ?? ""
-        return prefix + "/" + identifier
+        return (prefix as NSString).appendingPathComponent(identifier)
     }
     
     /// String representing the current order of steps to this point in the task.
@@ -106,8 +106,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// This property specifies where such data should be written.
     ///
     /// If no output directory is specified, this property will use lazy initialization to create a
-    /// directory in the 'Application Support Directory' with a subpath of the `taskRunUUID` if this
-    /// property is called.
+    /// directory in the `NSTemporaryDirectory()` with a subpath of the `taskRunUUID`.
     ///
     /// In general, set this property after instantiating the task view controller and before
     /// presenting it in order to override the default location.
@@ -117,13 +116,12 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// a step.
     ///
     /// - note: The calling application is responsible for deleting this directory once the files
-    /// are processed by uploading them to a server or cloud service. Otherwise, since the the default
-    /// behavior is to save to application support, the app will slowly grow and take more memory.
+    /// are processed by encrypting them locally. The encrypted files can then be stored for upload
+    /// to a server or cloud service. These files are **not** encrypted so depending upon the
+    /// application, there is a risk of exposing PII data stored in these files.
     lazy public var outputDirectory: URL! = {
         guard parentPath == nil else { return parentPath!.outputDirectory }
-        
-        let paths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
-        let path = (paths.last! as NSString).appendingPathComponent(result.taskRunUUID.uuidString)
+        let path = (NSTemporaryDirectory() as NSString).appendingPathComponent(result.taskRunUUID.uuidString)
         if !FileManager.default.fileExists(atPath: path) {
             do {
                 try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [ .protectionKey : FileProtectionType.completeUntilFirstUserAuthentication ])
