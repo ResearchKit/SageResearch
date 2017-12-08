@@ -203,6 +203,10 @@ public protocol RSDFileResult : RSDResult {
     /// The URL with the path to the file-based result.
     var url: URL? { get }
     
+    /// The MIME content type of the result.
+    /// - example: `"application/json"`
+    var contentType: String? { get }
+    
     /// The system clock uptime when the recorder was started (if applicable).
     var startUptime: TimeInterval? { get }
 }
