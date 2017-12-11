@@ -140,7 +140,7 @@ public protocol RSDJSONRecorderConfiguration : RSDRecorderConfiguration {
 /// from core data.
 ///
 /// - note: This configuration type is stubbed out for future work. This is not currently implemented in
-///         either `RSDTaskController` or `RSDTaskViewController`. (syoung 11/15/2017)
+/// either `RSDTaskController` or `RSDTaskViewController`. (syoung 11/15/2017)
 ///
 public protocol RSDRequestConfiguration : RSDAsyncActionConfiguration {
     

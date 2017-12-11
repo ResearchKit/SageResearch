@@ -107,11 +107,6 @@ extension RSDSectionStep {
         return self
     }
     
-    /// Async actions are `nil` for a section step.
-    public var asyncActions: [RSDAsyncActionConfiguration]? {
-        return nil
-    }
-    
     /// A section step returns a task result for both the step result and the task result
     /// This method will throw an assert if the implementation of the section step does not
     /// return a `RSDTaskResult` as its type.

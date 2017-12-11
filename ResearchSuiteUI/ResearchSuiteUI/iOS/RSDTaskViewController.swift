@@ -132,6 +132,26 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// - seealso: `RSDTaskControllerDelegate.taskViewController(:,didFinishWith reason:,error:)`.
     open weak var delegate: RSDTaskViewControllerDelegate?
     
+    // MARK: Initializers
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public init(task: RSDTask) {
+        super.init(nibName: nil, bundle: nil)
+        self.topLevelTask = task
+    }
+    
+    public init(taskInfo: RSDTaskInfoStep) {
+        super.init(nibName: nil, bundle: nil)
+        self.topLevelTaskInfo = taskInfo
+    }
+    
     // MARK: View controller vending
     
     /// Main entry for vending an appropriate step view controller for a given step.
@@ -251,69 +271,17 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open func shouldContinueOnFailure(with controller: RSDAsyncActionController, error: Error) -> Bool {
         return true
     }
-    
-    private func _startAsyncActionController(_ controller: RSDAsyncActionController) {
-        self._addAsyncActionController(controller)
-        controller.start(at: self.taskPath) { [weak self] (controller, result, error) in
-            DispatchQueue.main.async {
-                // TODO: syoung 11/02/2017 handle errors (Add a result to the result set?)
-                // TODO: syoung 11/02/2017 Handle action controllers that are not recorders and might return a result on start.
-                if error != nil || !controller.isRunning {
-                    debugPrint("Failed to start recorder \(controller.configuration.identifier). \(String(describing: error))")
-                    self?._removeAsyncActionController(controller)
-                }
-            }
-        }
-    }
-    
-    private func _addAsyncActionController(_ controller: RSDAsyncActionController) {
-        self.currentAsyncControllers.append(controller)
-        if let recorder = controller.configuration as? RSDRecorderConfiguration {
-            if recorder.requiresBackgroundAudio && audioSession == nil {
-                let session = AVAudioSession()
-                audioSession = session
-            }
-        }
-    }
-    
-    private func _removeAsyncActionController(_ controller: RSDAsyncActionController) {
-        guard let idx = self.currentAsyncControllers.index(where: { $0.configuration.identifier == controller.configuration.identifier })
-            else {
-                return
-        }
-        self.currentAsyncControllers.remove(at: idx)
-    }
-    
-    private func _startBackgroundAudioSession() {
-        guard audioSession == nil else { return }
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(AVAudioSessionCategoryPlayback)
-            try session.setActive(true)
-            audioSession = session
-        }
-        catch let err {
-            debugPrint("Failed to start AV session. \(err)")
-        }
-    }
-    
-    private func _stopAudioSession() {
-        do {
-            try audioSession?.setActive(false)
-            audioSession = nil
-        } catch let err {
-            debugPrint("Failed to stop AV session. \(err)")
-        }
-    }
-    
-    
+
+
     // MARK: `RSDTaskController` protocol implementation
     
     open var factory: RSDFactory?
     
     public var taskPath: RSDTaskPath!
     
-    public private(set) var currentAsyncControllers: [RSDAsyncActionController] = []
+    public var currentAsyncControllers: [RSDAsyncActionController] {
+        return _asyncControllers.allObjects as! [RSDAsyncActionController]
+    }
     
     public var currentStepController: RSDStepController? {
         return pageViewController.childViewControllers.first as? RSDStepController
@@ -370,7 +338,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         // TODO: syoung 10/11/2017 Implement
     }
     
-    open func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection) {
+    public func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
         let vc = viewController(for: step)
         // Set the step view controller delegate if appropriate
         if let stepDelegate = delegate as? RSDStepViewControllerDelegate,
@@ -378,7 +346,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             stepVC.delegate = stepDelegate
         }
         vc.taskController = self
-        pageViewController.setViewControllers([vc], direction: direction, animated: true, completion: nil)
+        pageViewController.setViewControllers([vc], direction: direction, animated: true, completion: completion)
     }
     
     open func handleTaskFailure(with error: Error) {
@@ -403,104 +371,96 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         delegate?.taskController(self, readyToSave: taskPath)
     }
     
-    /// Instantiate the appropriate controller for each configuration, request any authorizations and start the controller.
-    /// Then call the completion once forward navigation can continue.
-    public func startAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (() -> Void)) {
-        
+    public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncActionController]) -> Void)) {
         // Get the controller for each configuration
         let controllers = configurations.rsd_mapAndFilter { (configuration) -> RSDAsyncActionController? in
             guard let asyncController = self.asyncActionController(for: configuration) else {
                 debugPrint("Did not create controller for async config \(configuration)")
                 return nil
             }
-            if asyncController.delegate == nil {
-                asyncController.delegate = self
-            }
             return asyncController
         }
-
-        // Handle requesting permissions. This must be done by requesting each permission serially. Otherwise, if you just
-        // ask for them all at once then some of them get swallowed.
-        DispatchQueue.main.async  {
-            
-            // Recursively step thorough each controller and request any authorizations required for that controller.
-            var index: Int = 0
-            
-            func enumerateRequest() {
-                
-                // When each controller has been started then return
-                guard index < controllers.count else {
-                    completion()
-                    return
-                }
-                
-                // Get the next controller in the list.
-                let asyncController = controllers[index]
-                index += 1
-                
-                // Request permission
-                asyncController.requestPermissions(on: self) { [weak self] (controller, _, error) in
-                    DispatchQueue.main.async {  // Completion should be called on main but... just in case.
-                        guard let strongSelf = self else {
-                            // If the task view controller is disposed, then the task has finished.
-                            return
-                        }
-                        
-                        // If there was an error, pass on the failure message. Otherwise, start the controller
-                        if let err = error {
-                            debugPrint("Failed to start recorder \(controller.configuration.identifier). \(err)")
-                            strongSelf.asyncActionController(controller, didFailWith: err)
-                        } else {
-                            strongSelf._startAsyncActionController(controller)
-                        }
-                    
-                        // If there wasn't an error, or if the controller should continue on failure to start
-                        // the async action, then start the next controller. Otherwise, the completion is swallowed
-                        // because calling the completion will normally result in continuing to the next step.
-                        // If the default implementation of `shouldContinueOnFailure` is overriden to return `true`
-                        // then either that method *or* `asyncActionController(didFailWith error:)` should finish
-                        // the task with an error.
-                        if error == nil || strongSelf.shouldContinueOnFailure(with: controller, error: error!) {
-                            enumerateRequest()
-                        }
-                    }
-                }
-            }
-            
-            // Call the serialized enumerator to start the first controller.
-            enumerateRequest()
+        DispatchQueue.main.async {
+            self._addAsyncActionControllersIfNeeded(controllers)
+            completion(controllers)
         }
     }
-    
-    public func stopAsyncActions(for controllers: [RSDAsyncActionController], completion: @escaping (() -> Void)) {
+
+    public func startAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
+
+        // Return if nothing to start
+        guard controllers.count > 0 else {
+            DispatchQueue.main.async  {
+                completion()
+            }
+            return
+        }
         
+        // Add the controllers if needed
+        self._addAsyncActionControllersIfNeeded(controllers)
+
         // Start on the main queue
         DispatchQueue.main.async {
             
             // Show the loading view while stoping controllers.
-            self.showLoadingView()
-            
-            // Remove the controllers from the list
-            for controller in controllers {
-                self._removeAsyncActionController(controller)
+            if showLoading {
+                self.showLoadingView()
             }
             
-            // After removing the controllers and showing a loading view on the main queue
-            // move to a background queue to stop each and wait for all the results (or a timeout)
-            // before continuing.
+            // After showing a loading view on the main queue, move to a background queue to stop each and wait for all the
+            // results (or a timeout) before continuing.
+            DispatchQueue.global().async {
+                
+                // Create a dispatch group
+                let dispatchGroup = DispatchGroup()
+                
+                // Stop each controller and add the result
+                for controller in controllers {
+                    guard controller.status == RSDAsyncActionStatus.idle else { continue }
+                    dispatchGroup.enter()
+                    self._startAsyncActionControllerPart1(for: controller, completion: {
+                        dispatchGroup.leave()
+                    })
+                }
+                
+                let timeout = DispatchTime.now() + .milliseconds(2 * 60 * 1000)
+                let waitResult = dispatchGroup.wait(timeout: timeout)
+                if waitResult == .timedOut {
+                    assertionFailure("Failed to stop all recorders.")
+                }
+                DispatchQueue.main.async {
+                    self.hideLoadingIfNeeded()
+                    completion()
+                }
+            }
+        }
+    }
+    
+    public func stopAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
+    
+        // Start on the main queue
+        DispatchQueue.main.async {
+            
+            // Show the loading view while stoping controllers.
+            if showLoading {
+                self.showLoadingView()
+            }
+            
+            // After showing a loading view on the main queue, move to a background queue to stop each and wait for all the
+            // results (or a timeout) before continuing.
             DispatchQueue.global().async {
             
                 // Create a dispatch group
                 let dispatchGroup = DispatchGroup()
                 
                 // Stop each controller and add the result
-                var results: [RSDResult] = []
                 for controller in controllers {
-                    if (controller.isRunning) {
+                    if (controller.status <= RSDAsyncActionStatus.running) {
                         dispatchGroup.enter()
-                        controller.stop({ (_, result, error) in
-                            if result != nil {
-                                results.append(result!)
+                        controller.stop({ (controller, result, error) in
+                            self._removeAsyncActionController(controller)
+                            if let asyncResult = result {
+                                controller.taskPath.appendAsyncResult(with: asyncResult)
                             }
                             // TODO: syoung 11/02/2017 handle errors (Add a result to the result set?)
                             dispatchGroup.leave()
@@ -514,10 +474,6 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
                     assertionFailure("Failed to stop all recorders.")
                 }
                 DispatchQueue.main.async {
-                    // Add the results and call the completion
-                    for result in results {
-                        self.taskPath.result.appendAsyncResult(with: result)
-                    }
                     self.hideLoadingIfNeeded()
                     completion()
                 }
@@ -530,27 +486,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
            controller.cancel()
         }
     }
+
     
-    
-    // MARK: Initializers
-    
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    public init(task: RSDTask) {
-        super.init(nibName: nil, bundle: nil)
-        self.topLevelTask = task
-    }
-    
-    public init(taskInfo: RSDTaskInfoStep) {
-        super.init(nibName: nil, bundle: nil)
-        self.topLevelTaskInfo = taskInfo
-    }
+
     
     // MARK: View management
     
@@ -607,7 +545,6 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         self.startTaskIfNeeded()
     }
     
-    
     // MARK: UIPageViewControllerDataSource
     
     open var currentStepViewController: (UIViewController & RSDStepController)? {
@@ -626,5 +563,94 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         guard self.hasStepAfter && (currentStepController?.isForwardEnabled ?? false) else { return nil }
         self.currentStepController?.goForward()
         return nil
+    }
+    
+    
+    // MARK: Async action management
+    
+    private let controllerQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.Controllers.\(UUID())")
+    private var _asyncControllers = NSMutableSet()
+    
+    private func _startAsyncActionControllerPart1(for controller: RSDAsyncActionController, completion: @escaping (() -> Void)) {
+        DispatchQueue.main.async {
+            if controller.delegate == nil {
+                controller.delegate = self
+            }
+            controller.requestPermissions(on: self, { [weak self] (controller, _, error) in
+                DispatchQueue.main.async {
+                    guard let strongSelf = self, error == nil, controller.status < .starting else {
+                        // TODO: syoung 12/12/2017 Record failure to result set?
+                        self?._removeAsyncActionController(controller)
+                        completion()
+                        return
+                    }
+                    strongSelf._startAsyncActionControllerPart2(controller, completion: completion)
+                }
+            })
+        }
+    }
+    
+    private func _startAsyncActionControllerPart2(_ controller: RSDAsyncActionController, completion: @escaping (() -> Void)) {
+        controller.start() { [weak self] (controller, result, error) in
+            let success = (error == nil) && (controller.status <= .running)
+            if !success {
+                debugPrint("Failed to start recorder \(controller.configuration.identifier). status=\(controller.status) error=\(String(describing: error)) ")
+                // TODO: syoung 11/02/2017 handle errors (Add a result to the result set?)
+                self?._removeAsyncActionController(controller)
+            }
+            
+            // TODO: syoung 11/02/2017 Handle action controllers that are not recorders and might return a result on start.
+
+            DispatchQueue.main.async {
+                if success {
+                    self?._startBackgroundAudioSessionIfNeeded(for: controller)
+                }
+                completion()
+            }
+        }
+    }
+    
+    private func _addAsyncActionControllersIfNeeded(_ controllers: [RSDAsyncActionController]) {
+        controllerQueue.sync {
+            _asyncControllers.addObjects(from: controllers)
+        }
+    }
+    
+    private func _removeAsyncActionController(_ controller: RSDAsyncActionController) {
+        controllerQueue.sync {
+            _asyncControllers.remove(controller)
+        }
+    }
+    
+    private func _startBackgroundAudioSessionIfNeeded(for controller: RSDAsyncActionController) {
+        guard let recorder = controller.configuration as? RSDRecorderConfiguration, recorder.requiresBackgroundAudio
+            else {
+                return
+        }
+        startBackgroundAudioSessionIfNeeded()
+    }
+    
+    public func startBackgroundAudioSessionIfNeeded() {
+        guard audioSession == nil else { return }
+        
+        // Start the background audio session
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(AVAudioSessionCategoryPlayback)
+            try session.setActive(true)
+            audioSession = session
+        }
+        catch let err {
+            debugPrint("Failed to start AV session. \(err)")
+        }
+    }
+    
+    private func _stopAudioSession() {
+        do {
+            try audioSession?.setActive(false)
+            audioSession = nil
+        } catch let err {
+            debugPrint("Failed to stop AV session. \(err)")
+        }
     }
 }
