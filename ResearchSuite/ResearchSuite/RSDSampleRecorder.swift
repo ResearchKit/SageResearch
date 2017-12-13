@@ -126,13 +126,14 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         /// Returned when the recorder has already been started.
         case alreadyRunning
         
-        /// Returned when the recorder that has been cancelled, failed or finished.
+        /// Returned when the recorder that has been cancelled, failed, or finished.
         case finished
     }
     
     /// Default initializer.
     /// - parameters:
     ///     - configuration: The configuration used to set up the controller.
+    ///     - taskPath:
     ///     - outputDirectory: File URL for the directory in which to store generated data files.
     public init(configuration: RSDAsyncActionConfiguration, taskPath: RSDTaskPath, outputDirectory: URL) {
         self.configuration = configuration
@@ -149,7 +150,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// The configuration used to set up the controller.
     public let configuration: RSDAsyncActionConfiguration
     
-    /// The associated task path to which the result should be attached
+    /// The associated task path to which the result should be attached.
     public let taskPath: RSDTaskPath
     
     /// The status of the recorder.
@@ -431,7 +432,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     
     /// Synchronously update the status. If called from a background thread, then this call will block until
     /// the main thread is available. The status is only changed on the main thread to ensure that KVO observers
-    /// are on the main thread and also to ensure that the status is changed syncronously.
+    /// are on the main thread and also to ensure that the status is changed synchronously.
     private func _syncUpdateStatus(_ newStatus: RSDAsyncActionStatus, error: Error? = nil) {
         // Status transitions are sequential so do not change the status if the new status is not greater than
         // the current status

@@ -117,7 +117,7 @@ public protocol RSDAsyncActionController : class, NSObjectProtocol {
     /// The configuration used to set up the controller.
     var configuration: RSDAsyncActionConfiguration { get }
     
-    /// The associated task path to which the result should be attached
+    /// The associated task path to which the result should be attached.
     var taskPath: RSDTaskPath { get }
     
     #if os(watchOS)

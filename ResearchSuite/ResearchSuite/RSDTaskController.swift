@@ -175,7 +175,7 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     func handleTaskCancelled()
     
     /// Add async action controllers to the shared queue for the given configuations. It is up to the task
-    /// controller to how to create the controllers and how to manage adding them to the `currentStepController`
+    /// controller to decide how to create the controllers and how to manage adding them to the `currentStepController`
     /// array.
     ///
     /// The async actions should *not* be started. Instead they should be returned with `idle` status.
@@ -384,7 +384,7 @@ extension RSDTaskController {
             }
         }
         
-        // store the previous steo and get the next step
+        // store the previous step and get the next step
         let previousStep = taskPath.currentStep
         let nextStep = taskPath.task!.stepNavigator.step(after: previousStep, with: &taskPath.result)
 
@@ -394,27 +394,22 @@ extension RSDTaskController {
             return
         }
         
-        _moveToNextStepPart2(previousStep: previousStep, step: step)
-    }
-    
-    private func _moveToNextStepPart2(previousStep: RSDStep?, step: RSDStep) {
         let isFirstSubtaskStep = self.taskPath.currentStep == nil
         if let asyncActions = _asyncActionsToStart(at: step, isFirstStep: isFirstSubtaskStep) {
             // If there are action controllers to start then add them to the queue and get controllers
-            // before transitioning to the next step. Use the hasPreviousEarlyExit flag to indicate that
-            // this is the second go-around and don't check the controllers the second time.
+            // before transitioning to the next step. 
             self.addAsyncActions(with: asyncActions, completion: { [weak self] (_) in
                 DispatchQueue.main.async {
-                    self?._moveToNextStepPart3(previousStep: previousStep, step: step)
+                    self?._moveToNextStepPart2(previousStep: previousStep, step: step)
                 }
             })
             return
         }
         
-        _moveToNextStepPart3(previousStep: previousStep, step: step)
+        _moveToNextStepPart2(previousStep: previousStep, step: step)
     }
     
-    private func _moveToNextStepPart3(previousStep: RSDStep?, step: RSDStep) {
+    private func _moveToNextStepPart2(previousStep: RSDStep?, step: RSDStep) {
         
         if let subtaskStep = step as? RSDTaskInfoStep, shouldFetchSubtask(for: subtaskStep) {
             // If this is a subtask step, then update the task path and fetch the subtask
