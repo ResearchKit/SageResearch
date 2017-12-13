@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// `RSDAsyncActionControllerDelegate` is the delegate protocol for `RSDAsyncActionController`.
 public protocol RSDAsyncActionControllerDelegate : class {
@@ -40,23 +41,75 @@ public protocol RSDAsyncActionControllerDelegate : class {
     func asyncActionController(_ controller: RSDAsyncActionController, didFailWith error: Error)
 }
 
+/// `RSDAsyncActionStatus` is an enum used to track the status of a `RSDAsyncActionController`.
+@objc
+public enum RSDAsyncActionStatus : Int {
+    
+    /// Initial state before the controller has been started.
+    case idle = 0
+    
+    /// Status if the controller is currently requesting authorization. Once in this state and until the controller
+    /// is `starting`, the UI should be blocked from any view transitions.
+    case requestingPermission
+    
+    /// Status if the controller has granted permission, but not yet been started.
+    case permissionGranted
+    
+    /// The controller is starting up. This is the state once `RSDAsyncActionController.start()` has been called
+    /// but before the recorder or request is running.
+    case starting
+    
+    /// The action is running. For `RSDRecorderConfiguration` controllers, this means that the recording is open.
+    /// For `RSDRequestConfiguration` controllers, this means that the request is in-flight.
+    case running
+    
+    /// Waiting for in-flight buffers to be appended and ready to close.
+    case waitingToStop
+    
+    /// Cleaning up by closing any buffers or file handles and processing any results that are returned by this
+    /// controller.
+    case processingResults
+    
+    /// Stopping any sensor managers. The controller should move to this state **after** any results are processed.
+    /// - note: Once in this state, the async action should **not** be changing the results associated with this action.
+    case stopping
+    
+    /// The controller is finished running and ready to `dealloc`.
+    case finished
+    
+    /// The recorder or request was cancelled and any results may be invalid.
+    case cancelled
+    
+    /// The recorder or request failed and any results may be invalid.
+    case failed
+}
+
+extension RSDAsyncActionStatus : Comparable {
+    public static func <(lhs: RSDAsyncActionStatus, rhs: RSDAsyncActionStatus) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+}
+
 /// The completion handler for starting and stopping an async action.
 public typealias RSDAsyncActionCompletionHandler = (RSDAsyncActionController, RSDResult?, Error?) -> Void
 
 /// A controller for an async action configuration.
-public protocol RSDAsyncActionController : class {
+public protocol RSDAsyncActionController : class, NSObjectProtocol {
     
     /// Delegate callback for handling action completed or failed.
     weak var delegate: RSDAsyncActionControllerDelegate? { get set }
     
-    /// Is the action currently running?
-    var isRunning: Bool { get }
+    /// The status of the controller.
+    var status: RSDAsyncActionStatus { get }
     
     /// Is the action currently paused?
     var isPaused: Bool { get }
     
-    /// Was the action cancelled?
-    var isCancelled: Bool { get }
+    /// The last error on the action controller.
+    /// - note: Under certain circumstances, getting an error will not result in a terminal failure of the controller.
+    /// For example, if a controller is both processing motion and camera sensors and only the motion sensors failed
+    /// but using them is a secondary action.
+    var error: Error? { get }
     
     /// Results for this action controller.
     var result: RSDResult? { get }
@@ -64,9 +117,61 @@ public protocol RSDAsyncActionController : class {
     /// The configuration used to set up the controller.
     var configuration: RSDAsyncActionConfiguration { get }
     
+    /// The associated task path to which the result should be attached.
+    var taskPath: RSDTaskPath { get }
+    
+    #if os(watchOS)
+    
+    /// **Available** for watchOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. This method is intended to allow the controller to request any permissions associated with
+    /// this controller *before* the step change happens.
+    ///
+    /// On an Apple watch, authorization handling is managed by using a handshake request that requires opening
+    /// the paired phone and responding to the authorization on the phone. This is a cumbersome UX that must be
+    /// handled using the app delegate so it is recommended that the architecture for apps that use the watch
+    /// include authorization handling though the iPhone app prior to running a task on the watch.
+    ///
+    /// - remark: The controller should call the completion handler with an `Error` if authorization failed.
+    /// Whether or not the completion handler includes a non-nil result that includes the authorization status,
+    /// is up to the developers and researchers using this controller as a tool for gathering information for
+    /// their study.
+    ///
+    /// - parameters:
+    ///     - completion: The completion handler.
+    func requestPermissions(_ completion: @escaping RSDAsyncActionCompletionHandler)
+    
+    #else
+    /// **Available** for iOS and tvOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. This method is intended to allow the controller to request any permissions associated with
+    /// this controller *before* the step change happens.
+    ///
+    /// It is the responsibility of the controller to manage the display of any alerts that are not controlled
+    /// by the OS. The `viewController` parameter is the view controler that should be used to present any modal
+    /// dialogs.
+    ///
+    /// - note: The calling view controller or application delegate should block any UI presentation changes
+    /// until *after* the completion handler is called to ensure that any modals presented by the async
+    /// controller or the OS aren't swallowed by other UI events.
+    ///
+    /// - remark: The controller should call the completion handler with an `Error` if authorization failed.
+    /// Whether or not the completion handler includes a non-nil result that includes the authorization status,
+    /// is up to the developers and researchers using this controller as a tool for gathering information for
+    /// their study.
+    ///
+    /// - parameters:
+    ///     - viewController: The view controler that should be used to present any modal dialogs.
+    ///     - completion: The completion handler.
+    func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler)
+    #endif
+    
     /// Start the asynchronous action with the given completion handler.
     /// - note: The handler may be called on a background thread.
-    func start(at taskPath: RSDTaskPath, completion: RSDAsyncActionCompletionHandler?)
+    /// - parameter completion: The completion handler to call once the controller is started.
+    func start(_ completion: RSDAsyncActionCompletionHandler?)
     
     /// Pause the action. Ignored if not applicable.
     func pause()
@@ -76,11 +181,15 @@ public protocol RSDAsyncActionController : class {
     
     /// Stop the action with the given completion handler.
     /// - note: The handler may be called on a background thread.
+    /// - parameter completion: The completion handler to call once the controller has processed its results.
     func stop(_ completion: RSDAsyncActionCompletionHandler?)
     
     /// Cancel the action.
     func cancel()
     
-    /// Let the controller know that the task has moved to the given step.
+    /// Let the controller know that the task will move to the given step.
+    /// - parameters:
+    ///     - step: The step that will be presented.
+    ///     - taskPath: The current state of the task.
     func moveTo(step: RSDStep, taskPath: RSDTaskPath)
 }

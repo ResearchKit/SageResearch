@@ -238,6 +238,12 @@ public final class RSDTaskPath : NSObject, NSCopying {
         }
     }
     
+    /// Append the async results with the given result, replacing the previous instance with the same identifier.
+    /// - parameter result:  The result to add to the async results.
+    public func appendAsyncResult(with newResult: RSDResult) {
+        result.appendAsyncResult(with: newResult)
+    }
+    
     /// The description of the path.
     override public var description: String {
         return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"

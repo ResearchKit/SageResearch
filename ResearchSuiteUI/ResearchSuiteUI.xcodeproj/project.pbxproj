@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
 		FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */; };
 		FFF2D9411FCF415E007258F8 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2D9381FCF415E007258F8 /* ResearchSuiteUI.framework */; };
 		FFF2D9781FCF41F8007258F8 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -93,6 +94,7 @@
 		FF39E5321F97347E00C366FC /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		FF39E5371F97392200C366FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResearchSuiteUI.strings; sourceTree = "<group>"; };
 		FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchSuiteUI.h; sourceTree = "<group>"; };
+		FF478D911FD752E800493A49 /* RSDNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDNavigationController.swift; sourceTree = "<group>"; };
 		FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugStepViewController.swift; sourceTree = "<group>"; };
 		FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugStepViewController.xib; sourceTree = "<group>"; };
 		FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskInfoStepViewController.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */,
 				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
 				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
+				FF478D911FD752E800493A49 /* RSDNavigationController.swift */,
 			);
 			path = "Step View Controllers";
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 				FFF2D9951FCF4530007258F8 /* RSDStepProgressView.swift in Sources */,
 				FFF2D97D1FCF44A9007258F8 /* Localization.swift in Sources */,
 				FFF2D98A1FCF4527007258F8 /* RSDCountdownStepViewController.swift in Sources */,
+				FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */,
 				FFF2D9901FCF4530007258F8 /* RSDRoundedButton.swift in Sources */,
 				FFF2D97B1FCF449E007258F8 /* StaticUtilities.swift in Sources */,
 				FFF2D9831FCF4504007258F8 /* RSDStepViewController.swift in Sources */,

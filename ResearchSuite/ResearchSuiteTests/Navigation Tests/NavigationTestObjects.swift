@@ -144,25 +144,31 @@ class TestStepController: NSObject, RSDStepController {
 }
 
 class TestAsyncActionController: NSObject, RSDAsyncActionController {
-
+    
     var delegate: RSDAsyncActionControllerDelegate?
-    var isRunning: Bool = false
+    var status: RSDAsyncActionStatus = .idle
     var isPaused: Bool = false
-    var isCancelled: Bool = false
     var result: RSDResult?
+    var error: Error?
     let configuration: RSDAsyncActionConfiguration
+    let taskPath: RSDTaskPath
     
     var moveTo_called = false
     var moveTo_step: RSDStep?
     var moveTo_taskPath: RSDTaskPath?
     
-    init(with configuration: RSDAsyncActionConfiguration) {
+    init(with configuration: RSDAsyncActionConfiguration, at taskPath: RSDTaskPath) {
         self.configuration = configuration
+        self.taskPath = taskPath
         super.init()
     }
+
+    func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
+        status = .permissionGranted
+    }
     
-    func start(at taskPath: RSDTaskPath, completion: RSDAsyncActionCompletionHandler?) {
-        isRunning = true
+    func start(_ completion: RSDAsyncActionCompletionHandler?) {
+        status = .running
         completion?(self, nil, nil)
     }
     
@@ -175,12 +181,12 @@ class TestAsyncActionController: NSObject, RSDAsyncActionController {
     }
     
     func stop(_ completion: RSDAsyncActionCompletionHandler?) {
-        isRunning = false
+        status = .finished
         completion?(self, nil, nil)
     }
     
     func cancel() {
-        isCancelled = true
+        status = .cancelled
     }
     
     func moveTo(step: RSDStep, taskPath: RSDTaskPath) {
@@ -213,8 +219,10 @@ class TestTaskController: NSObject, RSDTaskController {
     var handleTaskCompleted_called = false
     var handleTaskResultReady_calledWith: RSDTaskPath?
     var handleTaskCancelled_called = false
+    var addAsyncActions_called = false
+    var addAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
     var startAsyncActions_called = false
-    var startAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
+    var startAsyncActions_calledWith: [RSDAsyncActionController]?
     var stopAsyncActions_called = false
     var stopAsyncActions_calledWith: [RSDAsyncActionController]?
     
@@ -240,10 +248,13 @@ class TestTaskController: NSObject, RSDTaskController {
         hideLoadingIfNeeded_called = true
     }
     
-    func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection) {
+    func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
         navigate_calledTo = step
         navigate_calledFrom = previousStep
         navigate_calledDirection = direction
+        DispatchQueue.main.async {
+            completion?(true)
+        }
     }
     
     func handleTaskFailure(with error: Error) {
@@ -300,27 +311,43 @@ class TestTaskController: NSObject, RSDTaskController {
         return nextStep!
     }
     
-    func startAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (() -> Void)) {
-        startAsyncActions_called = true
-        startAsyncActions_calledWith = configurations
-        let controllers: [RSDAsyncActionController] = configurations.map {
-            let controller = TestAsyncActionController(with: $0)
-            controller.isRunning = true
-            return controller
+    func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncActionController]) -> Void)) {
+        addAsyncActions_called = true
+        addAsyncActions_calledWith = configurations
+        DispatchQueue.main.async {
+            let controllers: [RSDAsyncActionController] = configurations.map {
+                return TestAsyncActionController(with: $0, at: self.taskPath)
+            }
+            self.currentAsyncControllers.append(contentsOf: controllers)
+            completion(controllers)
         }
-        self.currentAsyncControllers.append(contentsOf: controllers)
-        completion()
     }
     
-    func stopAsyncActions(for controllers: [RSDAsyncActionController], completion: @escaping (() -> Void)) {
+    func startAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
+        startAsyncActions_called = true
+        startAsyncActions_calledWith = controllers
+        DispatchQueue.main.async {
+            for controller in controllers {
+                controller.start(nil)
+            }
+            let set = NSMutableSet(array: self.currentAsyncControllers)
+            set.union(Set(controllers as! [TestAsyncActionController]))
+            self.currentAsyncControllers = set.allObjects as! [TestAsyncActionController]
+            completion()
+        }
+    }
+    
+    func stopAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
         stopAsyncActions_called = true
         stopAsyncActions_calledWith = controllers
-        for controller in controllers {
-            controller.stop(nil)
+        DispatchQueue.main.async {
+            for controller in controllers {
+                controller.stop(nil)
+            }
+            let set = NSMutableSet(array: self.currentAsyncControllers)
+            set.minus(Set(controllers as! [TestAsyncActionController]))
+            self.currentAsyncControllers = set.allObjects as! [TestAsyncActionController]
+            completion()
         }
-        let set = NSMutableSet(array: self.currentAsyncControllers)
-        set.minus(Set(controllers as! [TestAsyncActionController]))
-        self.currentAsyncControllers = set.allObjects as! [TestAsyncActionController]
-        completion()
     }
 }

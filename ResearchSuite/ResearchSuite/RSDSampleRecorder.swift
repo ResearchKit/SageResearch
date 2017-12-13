@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// The `RSDSampleRecord` defines the properties that are included with all JSON logging samples.
 /// By defining a protocol, the logger can include markers for step transitions and the records
@@ -125,16 +126,18 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         /// Returned when the recorder has already been started.
         case alreadyRunning
         
-        /// Returned when the recorder that has been cancelled.
-        case cancelled
+        /// Returned when the recorder that has been cancelled, failed, or finished.
+        case finished
     }
     
     /// Default initializer.
     /// - parameters:
     ///     - configuration: The configuration used to set up the controller.
+    ///     - taskPath:
     ///     - outputDirectory: File URL for the directory in which to store generated data files.
-    public init(configuration: RSDAsyncActionConfiguration, outputDirectory: URL) {
+    public init(configuration: RSDAsyncActionConfiguration, taskPath: RSDTaskPath, outputDirectory: URL) {
         self.configuration = configuration
+        self.taskPath = taskPath
         self.outputDirectory = outputDirectory
         self.collectionResult = RSDCollectionResultObject(identifier: configuration.identifier)
     }
@@ -147,13 +150,14 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// The configuration used to set up the controller.
     public let configuration: RSDAsyncActionConfiguration
     
-    /// Is the action currently running? The base class implementation returns `true` if the logging file is open.
+    /// The associated task path to which the result should be attached.
+    public let taskPath: RSDTaskPath
+    
+    /// The status of the recorder.
     ///
     /// - note: This property is implemented as `@objc dynamic` so that step view controllers can use KVO
     ///         to listen for changes.
-    @objc dynamic open var isRunning: Bool {
-        return loggers.count > 0
-    }
+    @objc dynamic public private(set) var status: RSDAsyncActionStatus = .idle
     
     /// Is the action currently paused?
     ///
@@ -161,11 +165,11 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     ///         to listen for changes.
     @objc dynamic open private(set) var isPaused: Bool = false
     
-    /// Was the action cancelled?
-    ///
-    /// - note: This property is implemented as `@objc dynamic` so that step view controllers can use KVO
-    ///         to listen for changes.
-    @objc dynamic open private(set) var isCancelled: Bool = false
+    /// The last error on the action controller.
+    /// - note: Under certain circumstances, getting an error will not result in a terminal failure of the controller.
+    /// For example, if a controller is both processing motion and camera sensors and only the motion sensors failed
+    /// but using them is a secondary action.
+    public var error: Error?
     
     /// Results for this recorder.
     ///
@@ -200,13 +204,15 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// subclasses should implement logic required to start a recorder by overriding the `startRecorder()`
     /// method. This is done to ensure that the logging file was successfully created before attempting to
     /// record any data to that file.
-    public final func start(at taskPath: RSDTaskPath, completion: RSDAsyncActionCompletionHandler?) {
-        guard !self.isRunning else {
-            self.callOnMainThread(nil, RSDRecorderError.alreadyRunning, completion)
+    public final func start(_ completion: RSDAsyncActionCompletionHandler?) {
+
+        guard self.status < RSDAsyncActionStatus.finished else {
+            self.callOnMainThread(nil, RSDRecorderError.finished, completion)
             return
         }
-        guard !self.isCancelled else {
-            self.callOnMainThread(nil, RSDRecorderError.cancelled, completion)
+        
+        guard self.status <= .permissionGranted else {
+            self.callOnMainThread(nil, RSDRecorderError.alreadyRunning, completion)
             return
         }
         
@@ -214,16 +220,20 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         isPaused = false
         startUptime = ProcessInfo.processInfo.systemUptime
         startDate = Date()
+        _syncUpdateStatus(.starting)
         
         self.loggerQueue.async {
             do {
-                try self._startLogger(at: taskPath)
+                try self._startLogger(at: self.taskPath)
                 DispatchQueue.main.async {
-                    if !self.isCancelled {
-                        self.startRecorder(completion)
-                    } else {
-                        completion?(self, nil, RSDRecorderError.cancelled)
+                    guard self.status < RSDAsyncActionStatus.finished else {
+                        completion?(self, nil, RSDRecorderError.finished)
+                        return
                     }
+                    self.startRecorder({ (newStatus, error) in
+                        self._syncUpdateStatus(newStatus, error: error)
+                        self.callOnMainThread(self.result, error ?? self.error, completion)
+                    })
                 }
             } catch let error {
                 self.callOnMainThread(nil, error, completion)
@@ -252,16 +262,25 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// subclasses should implement logic required to stop a recorder by overriding the `stopRecorder()`
     /// method. This is done to ensure that the logging file is closed and the result is added to the result
     /// collection *before* handing over control to the subclass.
+    ///
     public final func stop(_ completion: RSDAsyncActionCompletionHandler?) {
+        _syncUpdateStatus(.waitingToStop)
         self.loggerQueue.async {
-            var error: Error?
             do {
+                self._syncUpdateStatus(.processingResults)
                 try self._stopLogger()
             } catch let err {
-                error = err
+                self.error = err
             }
             DispatchQueue.main.async {
-                self.stopRecorder(loggerError: error, completion)
+                self.stopRecorder({ (newStatus) in
+                    if newStatus > self.status {
+                        self._syncUpdateStatus(newStatus)
+                    } else {
+                        self._syncUpdateStatus(.finished)
+                    }
+                    self.callOnMainThread(self.result, self.error, completion)
+                })
             }
         }
     }
@@ -269,7 +288,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// Cancel the action. The default implementation will set the `isCancelled` flag to `true` and then
     /// call `stop()` with a nil completion handler.
     open func cancel() {
-        isCancelled = true
+        _syncUpdateStatus(.cancelled)
         stop()
     }
     
@@ -277,9 +296,41 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// controller when the task transitions to a new step. The default implementation will update the
     /// `currentStepIdentifier` and `currentStepPath`, then it will add a marker to the logging files.
     open func moveTo(step: RSDStep, taskPath: RSDTaskPath) {
-        updateMarker(step: step, taskPath: taskPath)
-        writeMarkers()
+        _writeMarkers(step: step, taskPath: taskPath)
     }
+    
+    #if os(watchOS)
+    
+    /// **Available** for watchOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. The base class implementation will immediately call the completion handler.
+    ///
+    /// - remark: Override to implement custom permission handling.
+    /// - seealso: `RSDAsyncActionController.requestPermissions()`
+    /// - parameters:
+    ///     - completion: The completion handler.
+    open func requestPermissions(_ completion: @escaping RSDAsyncActionCompletionHandler) {
+        _syncUpdateStatus(.permissionGranted)
+        completion(self, self.result, nil)
+    }
+    
+    #else
+    /// **Available** for iOS and tvOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. The base class implementation will immediately call the completion handler.
+    ///
+    /// - remark: Override to implement custom permission handling.
+    /// - seealso: `RSDAsyncActionController.requestPermissions(on:)`
+    /// - parameters:
+    ///     - viewController: The view controler that should be used to present any modal dialogs.
+    ///     - completion: The completion handler.
+    open func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
+        _syncUpdateStatus(.permissionGranted)
+        completion(self, self.result, nil)
+    }
+    #endif
     
     // MARK: State management
     
@@ -314,7 +365,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// The current `stepPath` to record to log samples.
     public private(set) var currentStepPath: String = ""
     
-    /// A conveniece method for calling the result handler on the main thread.
+    /// A conveniece method for calling the result handler on the main thread asynchronously.
     private func callOnMainThread(_ result: RSDResult?, _ error: Error?, _ completion: RSDAsyncActionCompletionHandler?) {
         DispatchQueue.main.async {
             completion?(self, result, error)
@@ -325,9 +376,11 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// implementation will immediately call the completion handler. If an overriding class needs to do any
     /// initialization to start the recorder, then override this method. If the override calls the completion
     /// handler then **DO NOT** call super. This method is called from `start()` on the main thread queue.
-    open func startRecorder(_ completion: RSDAsyncActionCompletionHandler?) {
-        // In case the override doesn't move this back to the main thread, call completion on next run loop.
-        callOnMainThread(self.result, nil, completion)
+    ///
+    /// - parameter completion: Callback for updating the status of the recorder once startup has completed
+    ///                         (or failed).
+    open func startRecorder(_ completion: @escaping ((RSDAsyncActionStatus, Error?) -> Void)) {
+        completion(.running, nil)
     }
 
     /// Convenience method for stopping the recorder without a callback handler.
@@ -340,9 +393,11 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// recorder, then override this method. If the override calls the completion handler then **DO NOT**
     /// call super. Otherwise, super will call the completion with the logger error as the input to the
     /// completion handler. This method is called from `stop()` on the main thread queue.
-    open func stopRecorder(loggerError: Error?, _ completion: RSDAsyncActionCompletionHandler?) {
-        // In case the override doesn't move this back to the main thread, call completion on next run loop.
-        callOnMainThread(self.result, loggerError, completion)
+    ///
+    /// - parameter completion: Callback for updating the status of the recorder once startup has completed
+    ///                         (or failed).
+    open func stopRecorder(_ completion: @escaping ((RSDAsyncActionStatus) -> Void)) {
+        completion(.finished)
     }
     
     /// This method can be called by either the logging file if there was a write error, or by the subclass
@@ -350,6 +405,8 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// `asyncActionController(_, didFailWith:)` asynchronously on the main queue and will call `cancel()`
     /// synchronously on the current queue.
     open func didFail(with error: Error) {
+        guard self.status <= .running else { return }
+        _syncUpdateStatus(.failed, error: error)
         DispatchQueue.main.async {
             self.delegate?.asyncActionController(self, didFailWith: error)
         }
@@ -358,8 +415,40 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
 
     /// Append the `collectionResult` with the given result.
     /// - parameter result: The result to add to the collection.
-    public func appendResults(_ result: RSDResult) {
+    public final func appendResults(_ result: RSDResult) {
+        guard self.status <= RSDAsyncActionStatus.processingResults else {
+            debugPrint("WARNING: Attempting to append the result set after status has been locked. \(self.status)")
+            return
+        }
         self.collectionResult.appendInputResults(with: result)
+    }
+    
+    /// This method will synchronously update the status and is expected to **only** be called by a subclass to allow
+    /// subclasses to transition the status from `.processingResults` to `.stopping` and then `.finished` or from
+    /// `.starting` to `.running`.
+    public final func updateStatus(to newStatus: RSDAsyncActionStatus, error: Error?) {
+        _syncUpdateStatus(newStatus, error: error)
+    }
+    
+    /// Synchronously update the status. If called from a background thread, then this call will block until
+    /// the main thread is available. The status is only changed on the main thread to ensure that KVO observers
+    /// are on the main thread and also to ensure that the status is changed synchronously.
+    private func _syncUpdateStatus(_ newStatus: RSDAsyncActionStatus, error: Error? = nil) {
+        // Status transitions are sequential so do not change the status if the new status is not greater than
+        // the current status
+        guard newStatus > self.status else { return }
+        
+        // Check if this is the main thread and if not, then call it *synchronously* on the main thread.
+        guard Thread.isMainThread else {
+            DispatchQueue.main.sync {
+                self._syncUpdateStatus(newStatus, error: error)
+            }
+            return
+        }
+        
+        // Change the status
+        self.status = newStatus
+        self.error = error
     }
     
     // MARK: Logger handling
@@ -432,6 +521,9 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     ///                         `defaultLoggerIdentifier` will be used.
     public final func writeSample(_ sample: RSDSampleRecord, loggerIdentifier:String? = nil) {
         self.loggerQueue.async {
+            // Only write to the file if the recorder status indicates that the logging file is open
+            guard self.status >= RSDAsyncActionStatus.starting && self.status <= RSDAsyncActionStatus.running else { return }
+            
             let identifier = loggerIdentifier ?? self.defaultLoggerIdentifier
             guard let logger = self.loggers[identifier] as? RSDRecordSampleLogger else { return }
             do {
@@ -451,6 +543,9 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     ///                         `defaultLoggerIdentifier` will be used.
     public final func writeSamples(_ samples: [RSDSampleRecord], loggerIdentifier:String? = nil) {
         self.loggerQueue.async {
+            // Only write to the file if the recorder status indicates that the logging file is open
+            guard self.status >= RSDAsyncActionStatus.starting && self.status <= RSDAsyncActionStatus.running else { return }
+        
             // Check that the logger hasn't been closed and nil'd
             let identifier = loggerIdentifier ?? self.defaultLoggerIdentifier
             guard let logger = self.loggers[identifier] as? RSDRecordSampleLogger else { return }
@@ -478,11 +573,18 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }
     
     /// Write a marker to each logging file.
-    private func writeMarkers() {
+    private func _writeMarkers(step: RSDStep?, taskPath: RSDTaskPath) {
         let uptime = ProcessInfo.processInfo.systemUptime
         let date = Date()
-        let stepPath = self.currentStepPath
         self.loggerQueue.async {
+            
+            // Update the marker
+            self.updateMarker(step: step, taskPath: taskPath)
+            let stepPath = self.currentStepPath
+            
+            // Only write to the file if the recorder status indicates that the logging file is open
+            guard self.status >= RSDAsyncActionStatus.starting && self.status <= RSDAsyncActionStatus.running else { return }
+            
             do {
                 for (identifier, dataLogger) in self.loggers {
                     guard let logger = dataLogger as? RSDRecordSampleLogger else { continue }
@@ -499,7 +601,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     
     /// Open log files. This method should be called on the `loggerQueue`.
     private func _startLogger(at taskPath: RSDTaskPath) throws {
-        updateMarker(step: taskPath.currentStep, taskPath: taskPath)
+        updateMarker(step: taskPath.currentStep ?? taskPath.parentPath?.currentStep, taskPath: taskPath)
         for identifier in self.loggerIdentifiers {
             guard let dataLogger = try instantiateLogger(with: identifier) else {
                 continue

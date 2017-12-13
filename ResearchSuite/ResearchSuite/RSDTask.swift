@@ -80,25 +80,4 @@ extension RSDTask {
             ($0.startStepIdentifier == step.identifier) || ($0.startStepIdentifier == nil && isFirstStep)
         }
     }
-    
-    /// Filter the `asyncActions` and return only those actions to stop after this step. This will return the
-    /// configurations that conform to the `RSDRecorderConfiguration` protocol and where the `stopStepIdentifier`
-    /// matches the given step.
-    ///
-    /// - parameter step: The step that is about to end.
-    /// - returns: The array of async actions to stop.
-    public func asyncActionsToStop(after step: RSDStep?) -> [RSDAsyncActionConfiguration] {
-        guard let actions = self.asyncActions else { return [] }
-        return actions.filter {
-            guard let recorder = $0 as? RSDRecorderConfiguration else { return false }
-            if recorder.stopStepIdentifier == nil && step == nil {
-                return true
-            } else if let stopIdentifier = recorder.stopStepIdentifier,
-                let stepIdentifier = step?.identifier {
-                return stopIdentifier == stepIdentifier
-            } else {
-                return false
-            }
-        }
-    }
 }

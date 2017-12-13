@@ -35,9 +35,72 @@ import Foundation
 
 /// The direction of navigation for the steps.
 public enum RSDStepDirection : Int {
+    /// go back
     case reverse = -1
+    /// initial step
     case none = 0
+    /// go forward
     case forward = 1
+}
+
+// The `RSDTaskFinishReason` value indicates why the task controller has finished the task.
+public enum RSDTaskFinishReason : Int {
+    /// The task was canceled by the participant or the developer, and the participant asked to save the current result.
+    case saved
+    /// The task was canceled by the participant or the developer, and the participant asked to discard the current result.
+    case discarded
+    /// The task has completed successfully, because all steps have been completed.
+    case completed
+    /// An error was detected during the current step.
+    case failed
+    /// For a task with navigation, the participant or the developer elected to exit the task early.
+    case earlyExit
+}
+
+/// `RSDTaskControllerDelegate` is responsible for processing the results of the task, providing some input into
+/// how the controller behaves, and providing additional content as needed. It's primary purpose is to handle
+/// processing the results of running the task.
+public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
+    
+    /// Tells the delegate that the task has finished.
+    ///
+    /// The task controller should call this method when an unrecoverable error occurs, when the user has canceled
+    /// the task (with or without saving), or when the user completes the last step in the task.
+    ///
+    /// In most circumstances, the receiver should dismiss the task view controller in response to this method, and
+    /// may also need to collect and process the results of the task.
+    ///
+    /// - parameters:
+    ///     - taskController:   The `RSDTaskController` instance that is returning the result.
+    ///     - reason:           An `RSDTaskFinishReason` value indicating how the user chose to complete the task.
+    ///     - error:            If failure occurred, an `NSError` object indicating the reason for the failure.
+    ///                         The value of this parameter is `nil` if `reason` does not indicate failure.
+    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?)
+    
+    /// Tells the delegate that the task is ready to save.
+    ///
+    /// The task controller should call this method when the task has completed all steps that add information to
+    /// the result set. This may be called on the last step *or* prior to the last step if that step is a completion
+    /// step or else a step used to display the results of a task. This allows the developers to mark the end timestamp
+    /// for when a task ended rather than for when the participant dismissed the task.
+    ///
+    /// - parameters:
+    ///     - taskController:   The `RSDTaskController` instance that is returning the result.
+    ///     - taskPath:         The task path with the results for this task run.
+    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath)
+    
+    /// Requests the `RSDAsyncActionController` for a given `RSDAsyncActionConfiguration`.
+    ///
+    /// The task controller should call this method when the task controller determines that an async action should be
+    /// started. If this method returns `nil` then the task controller should check if the `configuration` conforms to
+    /// the `RSDAsyncActionControllerVendor` protocol and vend the controller returned by the `instantiateController()`
+    /// method if applicable.
+    ///
+    /// - parameters:
+    ///     - taskController:   The `RSDTaskController` instance that is returning the result.
+    ///     - configuration:    The `RSDAsyncActionConfiguration` to be started.
+    /// - returns: An `RSDAsyncActionController` if available.
+    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController?
 }
 
 /// `RSDTaskController` handles default implementations for running a task.
@@ -56,7 +119,8 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     /// Returns the currently active step controller (if any).
     var currentStepController: RSDStepController? { get }
     
-    /// Returns a list of the async action controllers that are currently active.
+    /// Returns a list of the async action controllers that are currently active. This includes controllers
+    /// that are requesting permissions, starting, running, *and* stopping.
     var currentAsyncControllers: [RSDAsyncActionController] { get }
     
     /// Should the protocol extension fetch the subtask from a task info object or does this
@@ -90,7 +154,8 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     ///                     else the `RSDSectionStep` or `RSDTaskStep` if the previous step was the
     ///                     last step in a paged section or fetched subtask.
     ///     - direction: The direction in which to show the animation change.
-    func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection)
+    ///     - completion: The completion to call once the navigation animation has completed.
+    func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?)
     
     /// Failed to fetch the task from the current task path. Handle the error. A retry can be fired
     /// by calling `goForward()`.
@@ -109,22 +174,34 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     /// The user has tapped the cancel button.
     func handleTaskCancelled()
     
-    /// Start the action for this as async configuration. The protocol extension calls this method when
-    /// an async action should be started. It is up to the task controller to handle what should happen
-    /// and how to create the controller. Any permissions required by this controller should be requested
-    /// *before* returning the completion. Otherwise, the modal popup alert can be swallowed by the step
-    /// change.
+    /// Add async action controllers to the shared queue for the given configuations. It is up to the task
+    /// controller to decide how to create the controllers and how to manage adding them to the `currentStepController`
+    /// array.
+    ///
+    /// The async actions should *not* be started. Instead they should be returned with `idle` status.
     ///
     /// - note: If creating the recorder might take time, the task controller should move creation to a
-    ///         background thread so that the main thread is not blocked.
-    func startAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (() -> Void))
+    /// background thread so that the main thread is not blocked.
+    ///
+    /// - parameters:
+    ///     - configurations: The configurations to start.
+    ///     - completion: The completion to call with the instantiated controllers.
+    func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncActionController]) -> Void))
     
-    /// Stop the async action controller. The protocol extension does not directly implement stopping the
+    /// Start the async action controllers. The protocol extension calls this method when an async action
+    /// should be started directly *after* the step is presented.
+    ///
+    /// The task controller needs to handle blocking any navigation changes until the async controllers are
+    /// ready to proceed. Otherwise, the modal popup alert can be swallowed by the step change.
+    ///
+    func startAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void))
+    
+    /// Stop the async action controllers. The protocol extension does not directly implement stopping the
     /// async actions to allow customization of how the results are added to the task and whether or not
     /// forward navigation should be blocked until the completion handler is called. When the stop action
-    /// is called, the view controller needs to handle stopping the controllers, adding the results and
+    /// is called, the view controller needs to handle stopping the controllers, adding the results, and
     /// showing a loading state until ready to move forward in the task navigation.
-    func stopAsyncActions(for controllers: [RSDAsyncActionController], completion: @escaping (() -> Void))
+    func stopAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void))
 }
 
 extension RSDTaskController {
@@ -293,10 +370,12 @@ extension RSDTaskController {
         }
     }
     
-    private func _moveToNextStep(hasPreviousEarlyExit: Bool = false) {
+    // Mark: private methods for navigating between steps
+    
+    private func _moveToNextStep() {
         
+        // Check if the current step is nil, if so, then validate the task
         if taskPath.currentStep == nil {
-            // Check if the current step is nil, if so, then validate the task
             do {
                 try taskPath.task!.validate()
             } catch let error {
@@ -305,110 +384,51 @@ extension RSDTaskController {
             }
         }
         
+        // store the previous step and get the next step
         let previousStep = taskPath.currentStep
         let nextStep = taskPath.task!.stepNavigator.step(after: previousStep, with: &taskPath.result)
-        let isTaskComplete = (nextStep == nil) ||
-            ((nextStep!.type == RSDStepType.completion.rawValue) &&
-                !taskPath.task!.stepNavigator.hasStep(after: nextStep!, with: taskPath.result))
+
+        // save the previous step and look for a next step
+        guard let step = nextStep else {
+            _finishStoppingTaskPart1(previousStep: previousStep)
+            return
+        }
         
-        if !hasPreviousEarlyExit, let stopStep = previousStep,
-            let controllers = _asyncActionsToStop(after: stopStep, isTaskComplete: isTaskComplete) {
-            // If there are action controllers to stop then do that before continuing
-            // and call this method again after they have been stopped. Use the hasPreviousEarlyExit
-            // flag to indicate that this is the second go-around and don't check the controllers the
-            // second time.
-            self.stopAsyncActions(for: controllers, completion: { [weak self] in
+        let isFirstSubtaskStep = self.taskPath.currentStep == nil
+        if let asyncActions = _asyncActionsToStart(at: step, isFirstStep: isFirstSubtaskStep) {
+            // If there are action controllers to start then add them to the queue and get controllers
+            // before transitioning to the next step. 
+            self.addAsyncActions(with: asyncActions, completion: { [weak self] (_) in
                 DispatchQueue.main.async {
-                    self?._moveToNextStep(hasPreviousEarlyExit: true)
+                    self?._moveToNextStepPart2(previousStep: previousStep, step: step)
                 }
             })
             return
         }
         
-        // save the previous step and look for a next step
-        guard let step = nextStep else {
-            // Update the end date for the task result but only if the last step is *not*
-            // a completion step, in which case the true end date will already be set.
-            if !self.taskPath.isCompleted  {
-                _handleTaskReady(with: self.taskPath)
-            }
-            
-            let shouldExit = taskPath.task!.stepNavigator.shouldExit(after: previousStep, with: taskPath.result)
-            if !shouldExit, let parent = taskPath.parentPath {
-                // If the parent path is non-nil then go back up to the parent
-                parent.appendStepHistory(with: taskPath.result)
-                self.taskPath = parent
-                _moveToNextStep()
-            }
-            else {
-                // move up the parent chain
-                var path = taskPath!
-                while path.parentPath != nil {
-                    path = path.parentPath!
-                }
-                self.taskPath = path
-                self.taskPath.didExitEarly = shouldExit
-                if !taskPath.isCompleted {
-                    _handleTaskReady(with: taskPath)
-                }
-                handleTaskCompleted()
-            }
-            return
-        }
-        
-        _moveToNextStepPart2(previousStep: previousStep, step: step, isTaskComplete: isTaskComplete)
+        _moveToNextStepPart2(previousStep: previousStep, step: step)
     }
     
-    private func _moveToNextStepPart2(previousStep: RSDStep?, step: RSDStep, isTaskComplete: Bool, hasPreviousEarlyExit: Bool = false) {
-        
-        // Set the new current step
-        let isFirstTaskStep = self.taskPath.currentStep == nil && self.taskPath.parentPath == nil
-        let isFirstSubtaskStep = self.taskPath.currentStep == nil
-        
-        if !hasPreviousEarlyExit, let asyncActions = _asyncActionsToStart(at: step, isFirstStep: isFirstSubtaskStep) {
-            // If there are action controllers to start then do that before continuing
-            // and call this method again after they have been started. Use the hasPreviousEarlyExit
-            // flag to indicate that this is the second go-around and don't check the controllers the
-            // second time.
-            self.startAsyncActions(with: asyncActions) { [weak self] in
-                DispatchQueue.main.async {
-                    self?._moveToNextStepPart2(previousStep: previousStep, step: step, isTaskComplete: isTaskComplete, hasPreviousEarlyExit: true)
-                }
-            }
-            return
-        }
-        
-        self.taskPath.currentStep = step
+    private func _moveToNextStepPart2(previousStep: RSDStep?, step: RSDStep) {
         
         if let subtaskStep = step as? RSDTaskInfoStep, shouldFetchSubtask(for: subtaskStep) {
             // If this is a subtask step, then update the task path and fetch the subtask
+            self.taskPath.currentStep = step
             self.taskPath = RSDTaskPath(taskInfo: subtaskStep, parentPath: self.taskPath)
             _fetchTaskFromCurrentInfo()
         }
         else if let sectionStep = step as? RSDSectionStep, shouldPageSectionSteps(for: sectionStep) {
+            // If this is a section step, then update the task path and move to the first step in that section
+            self.taskPath.currentStep = step
             self.taskPath = RSDTaskPath(task: sectionStep, parentPath: self.taskPath)
             _moveToNextStep()
         }
         else {
             // If not a subtask (or if this implementation handles subtasks using custom logic)
             // then update the path and navigate forward.
+            let isFirstTaskStep = self.taskPath.currentStep == nil && self.taskPath.parentPath == nil
             let direction: RSDStepDirection = isFirstTaskStep ? .none : .forward
-            if isTaskComplete {
-                // If this is a completion step and the user cannot go back and change previous answers,
-                // then do *not* use it to mark the end of the task. Instead, mark *now* as the end date.
-                _handleTaskReady(with: self.taskPath)
-            }
             _move(to: step, from: previousStep, direction: direction)
-        }
-    }
-    
-    private func _handleTaskReady(with taskPath: RSDTaskPath) {
-        // Mark the task end date and isCompleted
-        taskPath.result.endDate = Date()
-        taskPath.isCompleted = true
-        if taskPath.parentPath == nil {
-            // ONLY send the message to save the results if this is the end of the task
-            self.handleTaskResultReady(with: taskPath.copy() as! RSDTaskPath)
         }
     }
     
@@ -457,16 +477,146 @@ extension RSDTaskController {
     }
     
     private func _move(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection) {
+        
         self.taskPath.currentStep = step
-        for controller in self.currentAsyncControllers {
+        let stepResult = step.instantiateStepResult()
+        self.taskPath.appendStepHistory(with: stepResult)
+        self.navigate(to: step, from: previousStep, direction: direction) { [weak self] (finished) in
+            self?._finishMoving(to: step, from: previousStep, direction: direction)
+        }
+        
+        self.hideLoadingIfNeeded()
+    }
+    
+    private func _finishMoving(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection) {
+        guard direction != .reverse else {
+            _notifyAsyncControllers(to: step, excludingControllers:[])
+            return
+        }
+        
+        // Get which controllers should be stopped
+        let isTaskComplete = (step.type == .completion) && !taskPath.task!.stepNavigator.hasStep(after: step, with: taskPath.result)
+        let path = self.taskPath!
+        var excludedControllers: [RSDAsyncActionController] = []
+        var controllersToStop: [RSDAsyncActionController]?
+        if let stopStep = previousStep, let controllers = _asyncActionsToStop(after: stopStep, taskPath: path, isTaskComplete: isTaskComplete) {
+            controllersToStop = controllers
+            excludedControllers.append(contentsOf: controllers)
+        }
+        
+        // Notify the controllers that the task has moved to the given step and start the idle controllers.
+        excludedControllers.append(contentsOf: _startIdleAsyncControllers(excludingControllers: excludedControllers))
+        _notifyAsyncControllers(to: step, excludingControllers: excludedControllers)
+        
+        // stop the controllers that should be stopped at this point
+        if let controllers = controllersToStop {
+            self.stopAsyncActions(for: controllers, showLoading: false, completion: { [weak self] in
+                if let strongSelf = self, isTaskComplete, !strongSelf.hasStepBefore  {
+                    // If this is a completion step and the user cannot go back and change previous answers,
+                    // then do *not* use it to mark the end of the task. Instead, mark *now* as the end date.
+                    strongSelf._handleTaskReady(with: path)
+                }
+            })
+        }
+    }
+    
+    private func _notifyAsyncControllers(to step: RSDStep, excludingControllers: [RSDAsyncActionController]) {
+        let controllers = self.currentAsyncControllers.filter { (lhs) -> Bool in
+            return (lhs.status <= .running) && !excludingControllers.contains(where: { $0.isEqual(lhs) })
+        }
+        for controller in controllers {
             // let any controllers know that the step has changed
             controller.moveTo(step: step, taskPath: self.taskPath)
         }
-        let stepResult = step.instantiateStepResult()
-        self.taskPath.appendStepHistory(with: stepResult)
-        self.navigate(to: step, from: previousStep, direction: direction)
-        self.hideLoadingIfNeeded()
     }
+    
+    private func _startIdleAsyncControllers(excludingControllers: [RSDAsyncActionController]) -> [RSDAsyncActionController] {
+        let controllers = self.currentAsyncControllers.filter { (lhs) -> Bool in
+            return (lhs.status == .idle) && !excludingControllers.contains(where: { $0.isEqual(lhs) })
+        }
+        guard controllers.count > 0 else { return [] }
+        self.startAsyncActions(for: controllers, showLoading: false) {
+            // Do nothing
+        }
+        return controllers
+    }
+    
+    // Mark: Private methods for finishing a task.
+    
+    private func _finishStoppingTaskPart1(previousStep: RSDStep?) {
+        
+        let shouldExit = taskPath.task!.stepNavigator.shouldExit(after: previousStep, with: taskPath.result)
+        
+        // Look to see if there is a task path parent to go up to
+        if !shouldExit, let parent = taskPath.parentPath {
+            _moveUpThePath(from: previousStep, to: parent)
+        }
+        else {
+            // move up the parent chain if we aren't already there
+            var path = taskPath!
+            while path.parentPath != nil {
+                path = path.parentPath!
+            }
+            self.taskPath = path
+            self.taskPath.didExitEarly = shouldExit
+            
+            // look to see if there are any controllers that need to be stopped due to an early exit.
+            let controllers = self.currentAsyncControllers.filter() { $0.status <= .running }
+            if controllers.count > 0 {
+                self.stopAsyncActions(for: controllers, showLoading: true, completion: { [weak self] in
+                    DispatchQueue.main.async {
+                        self?._finishStoppingTaskPart2()
+                    }
+                })
+            } else {
+                _finishStoppingTaskPart2()
+            }
+        }
+    }
+    
+    private func _moveUpThePath(from previousStep: RSDStep?, to parent: RSDTaskPath, hasPreviousEarlyExit: Bool = false) {
+        
+        if !hasPreviousEarlyExit, let stopStep = previousStep,
+            let controllers = _asyncActionsToStop(after: stopStep, taskPath: taskPath, isTaskComplete: true) {
+            // If there are action controllers to stop and this is the last step then do that before continuing
+            // and call this method again after they have been stopped. Use the hasPreviousEarlyExit
+            // flag to indicate that this is the second go-around and don't check the controllers the
+            // second time in case the called task controller returns before all the async controllers
+            // have been removed from the queue.
+            self.stopAsyncActions(for: controllers, showLoading: true, completion: { [weak self] in
+                DispatchQueue.main.async {
+                    self?._moveUpThePath(from: previousStep, to: parent, hasPreviousEarlyExit: true)
+                }
+            })
+            return
+        }
+        
+        // Mark the task as complete
+        _handleTaskReady(with: taskPath)
+        
+        // If the parent path is non-nil then go back up to the parent
+        parent.appendStepHistory(with: taskPath.result)
+        self.taskPath = parent
+        _moveToNextStep()
+    }
+    
+    private func _finishStoppingTaskPart2() {
+        _handleTaskReady(with: taskPath)
+        handleTaskCompleted()
+    }
+    
+    private func _handleTaskReady(with taskPath: RSDTaskPath) {
+        guard !taskPath.isCompleted else { return }
+        // Mark the task end date and isCompleted
+        taskPath.result.endDate = Date()
+        taskPath.isCompleted = true
+        if taskPath.parentPath == nil {
+            // ONLY send the message to save the results if this is the end of the task
+            self.handleTaskResultReady(with: taskPath.copy() as! RSDTaskPath)
+        }
+    }
+    
+    // MARK: private methods for handling async actions
     
     private func _asyncActionsToStart(at step: RSDStep, isFirstStep: Bool) -> [RSDAsyncActionConfiguration]? {
         guard let asyncActions = self.taskPath.task?.asyncActionsToStart(at: step, isFirstStep: isFirstStep), asyncActions.count > 0
@@ -475,22 +625,33 @@ extension RSDTaskController {
         }
         let current = self.currentAsyncControllers.map { $0.configuration.identifier }
         let configs = asyncActions.filter { !current.contains($0.identifier) }
+        
         return configs.count > 0 ? configs : nil
     }
     
-    private func _asyncActionsToStop(after step: RSDStep?, isTaskComplete: Bool) -> [RSDAsyncActionController]? {
-        guard let task = self.taskPath.task else { return nil }
-        var asyncActions = task.asyncActionsToStop(after: step)
-        if isTaskComplete, step != nil {
-            asyncActions.append(contentsOf: task.asyncActionsToStop(after: nil))
+    private func _asyncActionsToStop(after step: RSDStep?, taskPath: RSDTaskPath, isTaskComplete: Bool) -> [RSDAsyncActionController]? {
+        let controllers = self.currentAsyncControllers.filter { (controller) -> Bool in
+            // Verify that the controller is running
+            guard controller.status <= .running else { return false }
+            
+            // verify that the controller task path is either the input path *or* a child of the current path.
+            let path = controller.taskPath.fullPath
+            guard path == taskPath.fullPath || taskPath.childPaths.contains(where: { $0.value.fullPath == path})
+                else {
+                    return false
+            }
+            
+            // If this is a recorder and the stop step matches then it should be stopped.
+            if let recorderConfig = controller.configuration as? RSDRecorderConfiguration,
+                step?.identifier == recorderConfig.stopStepIdentifier {
+                return true
+            }
+            
+            // Otherwise, should be stopped only if this is the end of this task path
+            return isTaskComplete
         }
-        guard asyncActions.count > 0 else {
-            return nil
-        }
-        let identifiers = asyncActions.map { $0.identifier }
-        let controllers = self.currentAsyncControllers.filter {
-            identifiers.contains($0.configuration.identifier) && $0.isRunning
-        }
+                
+        // Return nil if the filtered count == 0
         return controllers.count > 0 ? controllers : nil
     }
 }
