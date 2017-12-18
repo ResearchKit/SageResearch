@@ -33,24 +33,28 @@
 
 import UIKit
 
+/// `DebugStepViewController` is an internal class that is used to display a view controller for a step without any UI.
+/// This allows the developer to use a placeholder view controller when developing a new task.
 class DebugStepViewController: RSDStepViewController {
     
+    /// A label for displaying the step identifier.
     @IBOutlet var identifierLabel: UILabel!
+    
+    /// A label for displaying the step description.
     @IBOutlet var titleLabel: UILabel!
     
+    /// Default initializer used to display "DebugStepViewController.xib" for the given step.
     public override init(step: RSDStep) {
         super.init(nibName: "DebugStepViewController", bundle: Bundle(for: DebugStepViewController.self))
         self.step = step
     }
     
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
+    /// Required initializer. Unused.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
+    /// Override `viewWillAppear()` to set the identifier label and title label.
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -59,6 +63,7 @@ class DebugStepViewController: RSDStepViewController {
         self.titleLabel.text = String(describing: self.step!)
     }
     
+    /// Override to always allow forward navigation.
     override var isForwardEnabled: Bool {
         return true
     }

@@ -70,8 +70,9 @@ open class RSDStepChoiceCell: UITableViewCell {
         }
     }
 
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    public init(uiHint: RSDFormUIHint, reuseIdentifier: String?) {
+        // TODO: syoung 12/18/2017 Support checkbox and radio button hint types.
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
         commonInit()
     }
     

@@ -88,10 +88,8 @@ open class RSDNavigationBarView: RSDStepNavigationView {
     @IBOutlet open var progressView: RSDStepProgressView?
     @IBOutlet open var stepCountLabel: UILabel?
     
-    /**
-     Causes the progress view to be shown or hidden. Default is the value from UI config.
-     */
-    @IBInspectable open var shouldShowCloseButton = RSDGenericStepUIConfig.shouldShowCloseButton() {
+    /// Causes the progress view to be shown or hidden. Default is `true`.
+    @IBInspectable open var shouldShowCloseButton = true {
         didSet {
             addCloseButtonIfNeeded()
             cancelButton?.isHidden = !shouldShowCloseButton
@@ -99,10 +97,8 @@ open class RSDNavigationBarView: RSDStepNavigationView {
         }
     }
     
-    /**
-     Causes the progress view to be shown or hidden. Default is the value from UI config.
-     */
-    @IBInspectable open var shouldShowProgress = RSDGenericStepUIConfig.shouldShowProgressView() {
+    /// Causes the progress view to be shown or hidden. Default is `true`.
+    @IBInspectable open var shouldShowProgress = true {
         didSet {
             addProgressViewIfNeeded()
             progressView?.isHidden = !shouldShowProgress
@@ -110,9 +106,7 @@ open class RSDNavigationBarView: RSDStepNavigationView {
         }
     }
     
-    /**
-     Should the step label be hidden?
-     */
+    /// Should the step label be hidden?
     @IBInspectable open var isStepLabelHidden: Bool = false {
         didSet {
             stepCountLabel?.isHidden = isStepLabelHidden

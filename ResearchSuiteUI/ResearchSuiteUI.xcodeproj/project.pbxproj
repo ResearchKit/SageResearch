@@ -300,9 +300,9 @@
 				FFDD780F1FAE96C70024BDD1 /* RSDCountdownStepViewController.swift */,
 				FFDD781E1FAE990F0024BDD1 /* RSDActiveStepViewController.swift */,
 				FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */,
-				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
-				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
 				FF478D911FD752E800493A49 /* RSDNavigationController.swift */,
+				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
+				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
 			);
 			path = "Step View Controllers";
 			sourceTree = "<group>";
