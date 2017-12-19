@@ -164,7 +164,12 @@ extension RSDFormStepDataSource {
             return
         }
         
-        try itemGroup.setAnswer(answer)
+        if let tableItem = self.tableItem(at: indexPath) as? RSDTextInputTableItem {
+            // If this is a text input table item then store the answer on the table item instead of on the group.
+            try tableItem.setAnswer(answer)
+        } else {
+            try itemGroup.setAnswer(answer)
+        }
         _answerDidChange(for: itemGroup, at: indexPath)
     }
     

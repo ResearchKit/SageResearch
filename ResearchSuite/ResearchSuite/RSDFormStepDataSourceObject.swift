@@ -231,7 +231,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
             items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
         }
         if items.count > 0 {
-            let itemGroup = RSDTableItemGroup(items: items, beginningRowIndex: 0)
+            let itemGroup = RSDTableItemGroup(beginningRowIndex: 0, items: items)
             let section = RSDTableSection(sectionIndex: sections.count, itemGroups: [itemGroup])
             sections.append(section)
         }

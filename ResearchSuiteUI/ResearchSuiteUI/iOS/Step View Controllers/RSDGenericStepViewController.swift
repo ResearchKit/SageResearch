@@ -435,7 +435,22 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         // If the cell is dequeued then we are done. return the cell.
         guard cell == nil else { return cell }
         
-        // If there isn't a table iten in the tableData associated with this index path then this is a failure.
+        return instantiateCell(with: identifier, at: indexPath)
+    }
+    
+    /// Instantiate a cell that is appropriate for the item at the given index path.
+    ///
+    /// - note: This is a factory method and it will assert if a cell cannot be instantiated. Developers must
+    /// overrride the default method and test for conditions *not* supported by this implementations *before*
+    /// calling through to super if and only if the subclass does not instantiate different cell.
+    ///
+    /// - parameters:
+    ///     - reuseIdentifier: A String representing the reuse identifier of the cell.
+    ///     - indexPath: The given index path.
+    /// - returns: The table view cell dequeued for this index path.
+    open func instantiateCell(with reuseIdentifier: String, at indexPath: IndexPath) -> UITableViewCell? {
+        
+        // If there isn't a table item in the tableData associated with this index path then this is a failure.
         // Assert and return a placeholder cell.
         guard let tableItem = tableData?.tableItem(at: indexPath) else {
             assertionFailure("Failed to get an RSDTableItem for this index path \(indexPath)")
@@ -445,33 +460,31 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         // Look to see if this is a UI element that does not require user interaction.
         // If so, exit early with an appropriate instantiated cell.
         if tableItem is RSDTextTableItem {
-            return RSDTextLabelCell(style: .default, reuseIdentifier: identifier)
+            return RSDTextLabelCell(style: .default, reuseIdentifier: reuseIdentifier)
         } else if tableItem is RSDImageTableItem {
-            return RSDImageViewCell(style: .default, reuseIdentifier: identifier)
+            return RSDImageViewCell(style: .default, reuseIdentifier: reuseIdentifier)
         }
         
         // Look to see that there is an input field item group and standard UI hint type
         // associated with this index path.
-        guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
-            let uiHintType = itemGroup.uiHint.standardType
-            else {
-                assertionFailure("Failed to dequeue a cell for \(indexPath).")
-                return nil
+        guard let uiHintType = (tableItem as? RSDInputFieldTableItem)?.uiHint.standardType else {
+            assertionFailure("Failed to dequeue a cell for \(indexPath).")
+            return nil
         }
         
         // If the table item is a choice table item then an `RSDStepChoiceCell`.
         if tableItem is RSDChoiceTableItem {
-            return RSDStepChoiceCell(uiHint: uiHintType, reuseIdentifier: identifier)
+            return RSDStepChoiceCell(uiHint: uiHintType, reuseIdentifier: reuseIdentifier)
         }
-        else if uiHintType == .textfield || uiHintType == .picker {
+        else if let textInputItem = tableItem as? RSDTextInputTableItem, uiHintType == .textfield || uiHintType == .picker {
             
             // Create a textField based cell
-            let fieldCell = textFieldCell(reuseIdentifier: identifier)
+            let fieldCell = instantiateTextFieldCell(with: reuseIdentifier, at: indexPath)
             fieldCell.textField.delegate = self
             fieldCell.selectionStyle = .none
             
             // setup our keyboard accessory view, which is a standard navigationView
-            if let footer = self.navigationFooter {
+            if let footer = self.navigationFooter, fieldCell.textField.inputAccessoryView == nil {
                 
                 let navView = type(of: footer).init()
                 setupFooter(navView)
@@ -479,7 +492,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                 // using auto layout to constrain the navView to fill its superview after adding it to the textfield
                 // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
                 // navView and manually set its frame before assigning it to the text field
-                
                 let navHeight = navView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
                 let navWidth = UIScreen.main.bounds.size.width
                 navView.frame = CGRect(x: 0, y: 0, width: navWidth, height: navHeight)
@@ -488,7 +500,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             }
             
             // use the keyboard properties defined for this step
-            if let textAnswerFormat = itemGroup.textFieldOptions {
+            if let textAnswerFormat = textInputItem.textFieldOptions {
                 fieldCell.textField.keyboardType = textAnswerFormat.keyboardType.keyboardType()
                 fieldCell.textField.isSecureTextEntry = textAnswerFormat.isSecureTextEntry
                 fieldCell.textField.autocapitalizationType = textAnswerFormat.autocapitalizationType.textAutocapitalizationType()
@@ -529,7 +541,8 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             imageCell.imageLoader = item.imageTheme
         }
         else if let textFieldCell = cell as? RSDStepTextFieldCell {
-            guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup
+            guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
+                let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
                 else {
                     return
             }
@@ -540,7 +553,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             
             // if we have an answer, populate the text field
             if itemGroup.isAnswerValid {
-                textFieldCell.textField.text = itemGroup.answerText
+                textFieldCell.textField.text = tableItem.answerText
             }
             
             if let text = itemGroup.inputField.prompt {
@@ -569,9 +582,11 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     /// If this step has just one form item, like for 'externalID' or 'yourAge', then use the `RSDStepTextFieldFeaturedCell`
     /// textField cell, which centers the field in the view and uses a large font. Otherwise, use `RSDStepTextFieldCell`.
     ///
-    /// - parameter reuseIdentifier: A String representing the reuse identifier of the cell
-    /// - returns: The 'RSDStepTextFieldCell' class to use
-    open func textFieldCell(reuseIdentifier: String) -> RSDStepTextFieldCell {
+    /// - parameters:
+    ///     - reuseIdentifier: A String representing the reuse identifier of the cell.
+    ///     - indexPath: The given index path.
+    /// - returns: The 'RSDStepTextFieldCell' class to use.
+    open func instantiateTextFieldCell(with reuseIdentifier: String, at indexPath: IndexPath) -> RSDStepTextFieldCell {
         if formStep?.inputFields.count ?? 0 > 1 {
             return RSDStepTextFieldCell(style: .default, reuseIdentifier: reuseIdentifier)
         }
@@ -579,7 +594,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             return RSDStepTextFieldFeaturedCell(style: .default, reuseIdentifier: reuseIdentifier)
         }
     }
-    
     
     // MARK: UITableView Delegate
     
@@ -698,15 +712,15 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         return indexPath
     }
 
-    /// Get the item group associated with a given text field.
-    public func itemGroup(for textField: UITextField?) -> RSDInputFieldTableItemGroup? {
+    /// Get the table item associated with a given text field.
+    public func tableItem(for textField: UITextField?) -> RSDTextInputTableItem? {
         guard let customTextField = textField as? RSDStepTextField,
             let indexPath = customTextField.indexPath,
-            let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup
+            let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem?
             else {
                 return nil
         }
-        return itemGroup
+        return tableItem
     }
     
     /// Validate the text field value and save the answer if valid.
@@ -721,8 +735,8 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         // If this is a custom text field then update the text to match the
         // actual value stored in case it differs from the text entered.
         let success = saveAnswer(newValue: textField.text ?? NSNull(), at: indexPath)
-        if !success, let itemGroup = itemGroup(for: textField) {
-            textField.text = itemGroup.answerText
+        if !success, let tableItem = tableItem(for: textField) {
+            textField.text = tableItem.answerText
         }
         return success
     }
@@ -779,7 +793,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     /// Show a validation error message that is appropriate for the given context.
     open func showValidationError(title: String?, message: String?, context: RSDInputFieldError.Context?, at indexPath: IndexPath) {
-        let invalidMessage = (tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup)?.textFieldOptions?.invalidMessage
+        let invalidMessage = (tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem)?.textFieldOptions?.invalidMessage
         self.presentAlertWithOk(title: nil,
                              message: invalidMessage ?? message ?? Localization.localizedString("VALIDATION_ERROR_GENERIC"),
                              actionHandler: nil)

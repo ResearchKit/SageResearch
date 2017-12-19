@@ -54,11 +54,11 @@ open class RSDTableItemGroup {
     
     /// Default initializer.
     /// - parameters:
-    ///     - items: The list of items (or rows) included in this group.
     ///     - beginningRowIndex: The row index for the first row in the group.
-    public init(items: [RSDTableItem], beginningRowIndex: Int) {
-        self.items = items
+    ///     - items: The list of items (or rows) included in this group.
+    public init(beginningRowIndex: Int, items: [RSDTableItem]) {
         self.beginningRowIndex = beginningRowIndex
+        self.items = items
     }
 }
 
@@ -68,58 +68,35 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     /// The input field associated with this item group.
     public let inputField: RSDInputField
     
-    /// The UI hint for displaying the item group.
+    /// The UI hint for displaying the component of the item group.
     public let uiHint: RSDFormUIHint
     
     /// The answer type for the input field result.
     public let answerType: RSDAnswerResultType
     
-    /// The default answer for the input field result.
-    public let defaultAnswer: Any
-    
-    /// The text field options for this input.
-    public let textFieldOptions: RSDTextFieldOptions?
-    
-    /// The formatter used for dislaying answers and converting text to a number or date.
-    open private(set) var formatter: Formatter?
-    
-    /// The picker data source for selecting answers.
-    open private(set) var pickerSource: RSDPickerDataSource?
-    
     /// Default initializer.
     /// - parameters:
     ///     - beginningRowIndex: The first row of the item group.
+    ///     - items: The table items included in this item group.
     ///     - inputField: The input field associated with this item group.
     ///     - uiHint: The UI hint.
     ///     - answerType: The answer type.
-    ///     - defaultAnswer: The default answer.
-    ///     - textFieldOptions: The text field options.
-    ///     - items: The table items included in this item group.
-    ///     - formatter: The formatter used for dislaying answers and converting text to a number or date.
-    ///     - pickerSource: The picker data source for selecting answers.
-    public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType, defaultAnswer: Any? = nil, textFieldOptions: RSDTextFieldOptions? = nil, items: [RSDTableItem]? = nil, formatter: Formatter? = nil, pickerSource: RSDPickerDataSource? = nil) {
+    public init(beginningRowIndex: Int, items: [RSDTableItem], inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType) {
         self.inputField = inputField
         self.uiHint = uiHint
         self.answerType = answerType
-        self.pickerSource = pickerSource
-        self.formatter = formatter
-        self.defaultAnswer = defaultAnswer ?? NSNull()
-        
-        // Set the text field options
-        self.textFieldOptions = textFieldOptions ?? inputField.textFieldOptions ?? {
-            switch answerType.baseType {
-            case .decimal:
-                return RSDTextFieldOptionsObject(keyboardType: .decimalPad)
-            case .integer, .timeInterval:
-                return RSDTextFieldOptionsObject(keyboardType: .numberPad)
-            case .date, .string:
-                return RSDTextFieldOptionsObject(keyboardType: .default)
-            case .boolean, .data:
-                return nil
-            }
-            }()
-        
-        super.init(items: items ?? [RSDInputFieldTableItem(rowIndex: beginningRowIndex, inputField: inputField)], beginningRowIndex: beginningRowIndex)
+        super.init(beginningRowIndex: beginningRowIndex, items: items)
+    }
+    
+    /// Convenience initializer.
+    /// - parameters:
+    ///     - beginningRowIndex: The first row of the item group.
+    ///     - tableItem: A single table item that can be used to build an answer.
+    public init(beginningRowIndex: Int, tableItem: RSDTextInputTableItem) {
+        self.inputField = tableItem.inputField
+        self.uiHint = tableItem.uiHint
+        self.answerType = tableItem.answerType
+        super.init(beginningRowIndex: beginningRowIndex, items: [tableItem])
     }
     
     /// Convenience property for accessing the identifier associated with the item group.
@@ -127,24 +104,29 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         return inputField.identifier
     }
     
-    /// Save an answer for this ItemGroup. This is used only for those questions that have single answers,
-    // such as text and numeric answers, as opposed to booleans or text choice answers.
+    /// The answer for this item group. This is the answer stored to the `RSDAnswerResult`. The default implementation will
+    /// return the privately stored answer if set and if not, will look to see if the first table item is recognized as a table item
+    /// that stores an answer on it.
     open var answer: Any {
-        return _answer ?? defaultAnswer
+        return _answer ?? (self.items.first as? RSDTextInputTableItem)?.answer ?? NSNull()
     }
-    fileprivate var _answer: Any?
-    
-    /// The text string to display as the answer.
-    open var answerText: String? {
-        return (_answer as? String) ?? formatter?.string(for: _answer)
-    }
+    private var _answer: Any?
     
     /// Set the new answer value. This will throw an error if the value isn't valid. Otherwise, it will
     /// set the answer.
     /// - parameter newValue: The new value for the answer.
     /// - throws: `RSDInputFieldError` if the answer is invalid.
-    public final func setAnswer(_ newValue: Any?) throws {
-        _answer = try validatedAnswer(newValue)
+    open func setAnswer(_ newValue: Any?) throws {
+        
+        // Only validation at this level is on a single-input field. Otherwise, just set the answer and return
+        guard self.items.count == 1, let textItem = self.items.first as? RSDTextInputTableItem
+            else {
+                _answer = newValue
+                return
+        }
+        
+        // If there is a single-input field then set the answer on that field
+        try textItem.setAnswer(newValue)
     }
     
     /// Set the new answer value from a previous result. This will throw an error if the result isn't valid.
@@ -166,122 +148,10 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     /// - returns: A `Bool` indicating if answer is valid.
     open override var isAnswerValid: Bool {
         // if answer is NOT optional and it equals Null, then it's invalid
-        return inputField.isOptional || !(answer is NSNull)
-    }
-    
-    /// Convert the input answer into a validated answer of a supported type, or throw an error if it fails validation.
-    /// - parameter newValue: The new value for the answer.
-    /// - returns: The converted answer.
-    open func validatedAnswer(_ newValue: Any?) throws -> Any? {
-        guard let newAnswer = newValue, !(newAnswer is NSNull) else {
-            return nil
+        let isOptional = self.items.reduce(self.inputField.isOptional) {
+            $0 && (($1 as? RSDInputFieldTableItem)?.inputField.isOptional ?? true)
         }
-        let answer = try convertAnswer(newAnswer)
-        
-        // Look for a range on the new value if it was converted from a text field
-        if let _ = newValue as? String, (answer != nil) {
-            switch answerType.baseType {
-                
-            case .date:
-                if let date = answer as? Date, let range = inputField.range as? RSDDateRange {
-                    if let minDate = range.minimumDate, date < minDate {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
-                        throw RSDInputFieldError.lessThanMinimumDate(minDate, context)
-                    }
-                    if let maxDate = range.maximumDate, date > maxDate {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
-                        throw RSDInputFieldError.greaterThanMaximumDate(maxDate, context)
-                    }
-                }
-                
-            case .string:
-                if let string = answer as? String {
-                    if let validator = self.textFieldOptions?.textValidator, let isValid = try? validator.isValid(string), !isValid {
-                        let debugDescription = self.textFieldOptions?.invalidMessage ?? "Invalid regex"
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: debugDescription)
-                        throw RSDInputFieldError.invalidRegex(self.textFieldOptions?.invalidMessage, context)
-                    }
-                    else if let maxLen = self.textFieldOptions?.maximumLength, maxLen > 0, string.count > maxLen {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Exceeds max length of \(maxLen)")
-                        throw RSDInputFieldError.exceedsMaxLength(maxLen, context)
-                    }
-                }
-                
-            default:
-                break
-            }
-        }
-        
-        return answer
-    }
-    
-    /// Convert the input answer into a validated answer of a supported type, or throw an error if it fails validation.
-    /// - parameter newValue: The new value for the answer.
-    /// - returns: The converted answer.
-    open func convertAnswer(_ newValue: Any) throws -> Any? {
-        var answer = newValue
-        
-        // First check if this is an array and if so, if it needs to have the first value pulled from it.
-        if let array = answer as? [Any] {
-            if answerType.sequenceType == .array {
-                return array
-            } else if array.count == 0 {
-                return nil
-            } else if array.count == 1 {
-                answer = array.first!
-            } else {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Array Type \(answer) is not supported for \(inputField.identifier)")
-                throw RSDInputFieldError.invalidType(context)
-            }
-        }
-        
-        if answerType.baseType == .string {
-            return (answer as? String) ?? formatter?.string(for: answer) ?? "\(answer)"
-        }
-        else if let string = answer as? String {
-            if let formatter = self.formatter {
-                var obj: AnyObject?
-                var err: NSString?
-                formatter.getObjectValue(&obj, for: string, errorDescription: &err)
-                if err != nil {
-                    let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: (err as String!))
-                    throw RSDInputFieldError.invalidFormatter(formatter, context)
-                } else {
-                    return obj
-                }
-            } else if answerType.baseType == .boolean {
-                return NSNumber(value: (string as NSString).boolValue)
-            } else if answerType.baseType == .integer {
-                return NSNumber(value: (string as NSString).integerValue)
-            } else if answerType.baseType == .decimal || answerType.baseType == .timeInterval {
-                return NSNumber(value: (string as NSString).doubleValue)
-            } else {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "String Type \(answer) is not supported for \(inputField.identifier)")
-                throw RSDInputFieldError.invalidType(context)
-            }
-        }
-        else if let date = answer as? Date {
-            if answerType.baseType == .date {
-                return date
-            } else {
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Date Type \(answer) is not supported for \(inputField.identifier)")
-                throw RSDInputFieldError.invalidType(context)
-            }
-        }
-        else if let num = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber()  {
-            switch answerType.baseType  {
-            case .boolean:
-                return num.boolValue
-            case .integer, .decimal, .timeInterval:
-                return num
-            default:
-                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Number Type \(answer) is not supported for \(inputField.identifier)")
-                throw RSDInputFieldError.invalidType(context)
-            }
-        } else {
-            let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "\(answer) is not supported for \(inputField.identifier)")
-            throw RSDInputFieldError.invalidType(context)
-        }
+        return isOptional || !(self.answer is NSNull)
     }
 }
 
@@ -299,11 +169,8 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
     ///     - uiHint: The UI hint.
     ///     - choicePicker: The choice picker data source.
     ///     - answerType: The answer type.
-    ///     - defaultAnswer: The default answer.
-    ///     - textFieldOptions: The text field options.
-    ///     - formatter: The formatter used for dislaying answers and converting text to a number or date.
-    public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, choicePicker: RSDChoicePickerDataSource, answerType: RSDAnswerResultType? = nil,  defaultAnswer: Any? = nil, textFieldOptions: RSDTextFieldOptions? = nil, formatter: Formatter? = nil) {
-        
+    public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, choicePicker: RSDChoicePickerDataSource, answerType: RSDAnswerResultType? = nil) {
+
         // Set the items
         var items: [RSDTableItem]?
         var singleSelection: Bool = true
@@ -313,11 +180,11 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
                 singleSelection = false
             }
             items = choicePicker.choices.enumerated().map { (index, choice) -> RSDTableItem in
-                RSDChoiceTableItem(rowIndex: beginningRowIndex + index, inputField: inputField, choice: choice)
+                RSDChoiceTableItem(rowIndex: beginningRowIndex + index, inputField: inputField, uiHint: uiHint, choice: choice)
             }
         }
         self.singleSelection = singleSelection
-        
+
         // Setup the answer type if nil
         let aType: RSDAnswerResultType = answerType ?? {
             let baseType: RSDAnswerResultType.BaseType = inputField.dataType.defaultAnswerResultBaseType()
@@ -325,11 +192,17 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
             let dateFormatter: DateFormatter? = (inputField.range as? RSDDateRange)?.dateCoder?.resultFormatter
             let unit: String? = (inputField.range as? RSDNumberRange)?.unit
             return RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: nil)
-            }()
+        }()
         
-        super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: aType, defaultAnswer: defaultAnswer, textFieldOptions: textFieldOptions, items: items, formatter: formatter, pickerSource: choicePicker)
+        // If this is being used as a picker source, then setup the picker
+        if items == nil {
+            items = [RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: aType)]
+        }
+        
+        super.init(beginningRowIndex: beginningRowIndex, items: items!, inputField: inputField, uiHint: uiHint, answerType: aType)
     }
     
+    // Override to set the selected items from the result.
     override open func setAnswer(from result: RSDResult) throws {
         try super.setAnswer(from: result)
         
@@ -367,11 +240,11 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
             }
         }
         
-        // Set the answer array bypassing validation.
+        // Set the answer array
         if singleSelection {
-            _answer = answers.first
+            try setAnswer(answers.first)
         } else {
-            _answer = answers
+            try setAnswer(answers)
         }
     }
 }
@@ -380,7 +253,8 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
 final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {
     
     public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
-        super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: RSDAnswerResultType(baseType: .string))
+        let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
+        super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
     }
 }
 
@@ -427,79 +301,21 @@ final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
         }
         
         let answerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, dateFormat: dateFormatter?.dateFormat, unit: nil, sequenceSeparator: nil)
-        super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, defaultAnswer: nil, textFieldOptions: nil, items: nil, formatter: formatter, pickerSource: pickerSource)
+
+        // TODO: syoung 12/19/2017 Refactor to use an array of RSDNumberInputTableItem to represent the
+        // entry if the preferred uiHint is a text field (rather than a picker).
+        let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource)
+        
+        super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
     }
 }
 
 /// An item group for entering a number value.
 final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
     
-    var numberRange: RSDNumberRange?
-    
     public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
-        
-        var pickerSource: RSDPickerDataSource? = inputField as? RSDPickerDataSource
-        var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
-        var range: RSDNumberRange? = (inputField.range as? RSDNumberRange)
-        
-        if inputField.dataType.baseType == .year, let dateRange = inputField.range as? RSDDateRange {
-            let calendar = Calendar(identifier: .gregorian)
-            let min: Int? = (dateRange.minimumDate != nil) ? calendar.component(.year, from: dateRange.minimumDate!) : nil
-            let max: Int? = (dateRange.maximumDate != nil) ? calendar.component(.year, from: dateRange.maximumDate!) : nil
-            if min != nil || max != nil {
-                range = RSDNumberRangeObject(minimumInt: min, maximumInt: max)
-            }
-        }
-        
-        let baseType: RSDAnswerResultType.BaseType = (inputField.dataType.baseType == .decimal) ? .decimal : .integer
-        let digits = (baseType == .decimal) ? 3 : 0
-        let numberFormatter = (formatter as? NumberFormatter) ?? NumberFormatter.defaultNumberFormatter(with: digits)
-        if inputField.dataType.baseType == .year {
-            numberFormatter.groupingSeparator = ""
-        }
-        formatter = formatter ?? numberFormatter
-        
-        
-        if pickerSource == nil, let range = range, let min = range.minimumValue, let max = range.maximumValue {
-            pickerSource = RSDNumberPickerDataSourceObject(minimum: min, maximum: max, stepInterval: range.stepInterval, numberFormatter: numberFormatter)
-        }
-        
-        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: nil, dateFormat: nil, unit: range?.unit, sequenceSeparator: nil)
-        
-        super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, defaultAnswer: nil, textFieldOptions: nil, items: nil, formatter: formatter, pickerSource: pickerSource)
-        self.numberRange = range
-    }
-    
-    /// Convert the input answer into a validated answer of a supported type, or throw an error if it fails validation.
-    /// - parameter newValue: The new value for the answer.
-    /// - returns: The converted answer.
-    override func validatedAnswer(_ newValue: Any?) throws -> Any? {
-        guard let answer = try super.validatedAnswer(newValue) else {
-            return nil
-        }
-        
-        // Look for a range on the new value if it was converted from a text field
-        if let _ = newValue as? String {
-            switch answerType.baseType {
-            case .integer, .decimal, .timeInterval:
-                if let number = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber(), let range = numberRange {
-                    let decimal = number.decimalValue
-                    if let min = range.minimumValue, decimal < min {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
-                        throw RSDInputFieldError.lessThanMinimumValue(min, context)
-                    }
-                    if let max = range.maximumValue, decimal > max {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
-                        throw RSDInputFieldError.greaterThanMaximumValue(max, context)
-                    }
-                }
-                
-            default:
-                break
-            }
-        }
-        
-        return answer
+        let tableItem = RSDNumberInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
+        super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
     }
 }
 
@@ -512,8 +328,11 @@ final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
         let dateFormatter: DateFormatter? = (inputField.range as? RSDDateRange)?.dateCoder?.resultFormatter
         let unit: String? = (inputField.range as? RSDNumberRange)?.unit
         let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: .array, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: inputField.separator)
-        
-        super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, defaultAnswer: nil, textFieldOptions: nil, items: nil, formatter: nil, pickerSource: inputField)
+        let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: nil, pickerSource: inputField)
+    
+        // TODO: syoung 12/19/2017 Refactor to use an array of RSDTextInputTableItem objects to represent the
+        // entry if the preferred uiHint is a text field (rather than a picker).
+        super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
     }
 }
 
@@ -544,6 +363,8 @@ final class RSDMeasurementTableItemGroup : RSDInputFieldTableItemGroup {
                 unit = unit ?? "kg"
                 
             case .bloodPressure:
+                // TODO: syoung 12/19/2017 Refactor to use an array of RSDTextInputTableItem objects to represent the
+                // entry if the preferred uiHint is a text field (rather than a picker).
                 sequenceType = .array
                 sequenceSeparator = "/"
             }
@@ -554,7 +375,8 @@ final class RSDMeasurementTableItemGroup : RSDInputFieldTableItemGroup {
         let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: unit, sequenceSeparator: sequenceSeparator)
         let pickerSource: RSDPickerDataSource = (inputField as? RSDPickerDataSource) ?? RSDMeasurementPickerDataSourceObject(dataType: inputField.dataType, unit: unit, formatter: formatter)
         
-        super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, defaultAnswer: nil, textFieldOptions: nil, items: nil, formatter: formatter, pickerSource: pickerSource)
+        let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource)
         
+        super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
     }
 }
