@@ -267,9 +267,8 @@ final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
         if let picker = inputField as? RSDChoicePickerDataSource {
             choicePicker = picker
         } else {
-            // TODO: syoung 10/20/2017 Implement Boolean formatter
-            let choiceYes = try! RSDChoiceObject<Bool>(value: true, text: nil, iconName: nil, detail: nil, isExclusive: true)
-            let choiceNo = try! RSDChoiceObject<Bool>(value: false, text: nil, iconName: nil, detail: nil, isExclusive: true)
+            let choiceYes = try! RSDChoiceObject<Bool>(value: true, text: Localization.buttonYes(), iconName: nil, detail: nil, isExclusive: true)
+            let choiceNo = try! RSDChoiceObject<Bool>(value: false, text: Localization.buttonNo(), iconName: nil, detail: nil, isExclusive: true)
             choicePicker = RSDChoiceOptionsObject(choices: [choiceYes, choiceNo], isOptional: inputField.isOptional)
         }
         let answerType = RSDAnswerResultType(baseType: .boolean)
@@ -330,8 +329,6 @@ final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
         let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: .array, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: inputField.separator)
         let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: nil, pickerSource: inputField)
     
-        // TODO: syoung 12/19/2017 Refactor to use an array of RSDTextInputTableItem objects to represent the
-        // entry if the preferred uiHint is a text field (rather than a picker).
         super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
     }
 }
