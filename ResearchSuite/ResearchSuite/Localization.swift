@@ -240,6 +240,11 @@ open class Localization: NSObject {
         return localizedString("BUTTON_DONE")
     }
     
+    /// Localized button title for a "Close" button.
+    @objc open class func buttonClose() -> String {
+        return localizedString("BUTTON_CLOSE")
+    }
+    
     /// Localized button title for a "Next" button.
     @objc open class func buttonNext() -> String {
         return localizedString("BUTTON_NEXT")

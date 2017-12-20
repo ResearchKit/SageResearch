@@ -40,6 +40,7 @@
 "BUTTON_OK" = "OK";
 "BUTTON_CANCEL" = "Cancel";
 "BUTTON_DONE" = "Done";
+"BUTTON_CLOSE" = "Close";
 "BUTTON_GET_STARTED" = "Get Started";
 "BUTTON_LEARN_MORE" = "Learn more";
 "BUTTON_NEXT" = "Next";

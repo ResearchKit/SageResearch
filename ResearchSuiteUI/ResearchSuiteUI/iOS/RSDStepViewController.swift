@@ -416,7 +416,15 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     @IBAction open func showLearnMore() {
-        // Default implementation does nothing
+        guard let action = self.action(for: .navigation(.learnMore)) as? RSDResourceTransformer
+            else {
+                self.presentAlertWithOk(title: nil, message: "Missing learn more action for this task", actionHandler: nil)
+                return
+        }
+        
+        let (webVC, navVC) = RSDWebViewController.instantiateController()
+        webVC.resourceTransformer = action
+        self.present(navVC, animated: true, completion: nil)
     }
     
     open func action(for actionType: RSDUIActionType) -> RSDUIAction? {
