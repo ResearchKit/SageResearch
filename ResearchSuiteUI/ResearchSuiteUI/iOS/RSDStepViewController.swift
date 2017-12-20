@@ -34,48 +34,90 @@
 import Foundation
 import AudioToolbox
 
-public protocol RSDStepViewControllerDelegate : class, RSDUIActionHandler {
+/// `RSDOptionalStepViewControllerDelegate` is a delegate protocol defined as `@objc` to allow the
+/// methods to be optionally implemented. As such, these methods cannot take Swift protocols as their
+/// paramenters.
+@objc
+public protocol RSDOptionalStepViewControllerDelegate : class, NSObjectProtocol {
     
-    func stepViewController(_ stepViewController: (UIViewController & RSDStepController), willAppear animated: Bool)
-    func stepViewController(_ stepViewController: (UIViewController & RSDStepController), didAppear animated: Bool)
-    func stepViewController(_ stepViewController: (UIViewController & RSDStepController), willDisappear animated: Bool)
-    func stepViewController(_ stepViewController: (UIViewController & RSDStepController), didDisappear animated: Bool)
+    /// Called when the view is about to made visible.
+    func stepViewController(_ stepViewController: UIViewController, willAppear animated: Bool)
+    
+    /// Called when the view has been fully transitioned onto the screen.
+    func stepViewController(_ stepViewController: UIViewController, didAppear animated: Bool)
+    
+    ///  Called when the view is dismissed, covered, or otherwise hidden.
+    func stepViewController(_ stepViewController: UIViewController, willDisappear animated: Bool)
+    
+    /// Called after the view was dismissed, covered, or otherwise hidden.
+    func stepViewController(_ stepViewController: UIViewController, didDisappear animated: Bool)
 }
 
-/**
- Protocol to allow setting the step view controller delegate on a view controller that may not inherit directly from
- UIViewController.
- 
- Note: Any implementation should call the delegate methods during view appearance transitions.
- */
+/// `RSDStepViewControllerDelegate` is an extension of the `RSDUIActionHandler` protocol that also
+/// implements optional methods defined by `RSDOptionalStepViewControllerDelegate`.
+public protocol RSDStepViewControllerDelegate : RSDOptionalStepViewControllerDelegate, RSDUIActionHandler {
+}
+
+/// Protocol to allow setting the step view controller delegate on a view controller that may not
+/// inherit directly from UIViewController.
+/// - note: Any implementation should call the delegate methods during view appearance transitions.
 public protocol RSDStepViewControllerProtocol : RSDStepController {
+    
+    /// The step view controller delegate.
     weak var delegate: RSDStepViewControllerDelegate? { get set }
 }
 
+/// `RSDStepViewController` is the default base class implementation for the steps presented using this
+/// UI architecture.
 open class RSDStepViewController : UIViewController, RSDStepViewControllerProtocol {
 
+    /// Pointer back to the task controller that is displaying the step controller. The implementation
+    /// of the task controller should set this pointer before displaying the step controller.
     open weak var taskController: RSDTaskController!
     
+    /// The step view controller delegate.
     open weak var delegate: RSDStepViewControllerDelegate?
     
-    open var step: RSDStep!
+    /// The step presented by the step view controller.
+    ///
+    /// If you use a storyboard to initialize the step view controller, `init(step:)` isn't called,
+    /// so you need to set the `step` property directly before the step view controller is presented.
+    ///
+    /// Setting the value of `step` after the controller has been presented is an error that
+    /// generates an assertion. Modifying the value of `step` after the controller has been
+    /// presented is an error that has undefined results.
+    ///
+    /// Subclasses that override the setter of this property must call super.
+    open var step: RSDStep! {
+        didSet {
+            if isVisible {
+                assertionFailure("Cannot set step after presenting step view controller")
+            }
+        }
+    }
     
+    /// Convenience property for casting the step to a `RSDUIStep`.
     public var uiStep: RSDUIStep? {
         return step as? RSDUIStep
     }
     
+    /// Convenience property for casting the step to a `RSDThemedUIStep`.
     public var themedStep: RSDThemedUIStep? {
         return step as? RSDThemedUIStep
     }
     
+    /// Convenience property for casting the step to a `RSDActiveUIStep`.
     public var activeStep: RSDActiveUIStep? {
         return step as? RSDActiveUIStep
     }
     
+    /// Convenience property for accessing the original result after navigating back or from a previous task run.
     open var originalResult: RSDResult? {
         return taskController.taskPath.previousResults?.rsd_last(where: { $0.identifier == self.step.identifier })
     }
     
+    /// Returns the current result associated with this step. This property uses a lazy initializer to instantiate
+    /// the result and append it to the step history if not found in the step history.
     lazy open var currentResult: RSDResult = {
         if let lastResult = taskController.taskPath.result.stepHistory.last, lastResult.identifier == self.step.identifier {
             return lastResult
@@ -86,37 +128,54 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }()
     
+    // MARK: Initialization
+    
+    /// Returns a new step view controller for the specified step.
+    /// - parameter step: The step to be presented.
     public init(step: RSDStep) {
         super.init(nibName: nil, bundle: nil)
         self.step = step
     }
     
+    /// Initialize the class using the given nib and bundle.
+    /// - parameters:
+    ///     - nibNameOrNil: The name of the nib or `nil`.
+    ///     - nibBundleOrNil: The name of the bundle or `nil`.
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
+    /// Required initializer. This is the initializer used by a `UIStoryboard`.
+    /// - parameter aDecoder: The decoder used to initialize this view controller.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    
     // MARK: View appearance handling
     
-    // We use a flag to track whether viewWillDisappear has been called because we run a check on
-    // viewDidAppear to see if we have any textFields in the tableView. This check is done after a delay,
-    // so we need to track if viewWillDisappear was called during the delay
+    /// Track whether or not the view is visible. The value of this flag is set to `true` in
+    /// `viewDidAppear` before anything else is done. It is set to `false` in `viewWillDisappear`
+    /// before anything else is done.
     public private(set) var isVisible = false
+    
+    /// Track whether or not this is the first appearance. This flag is set to `true` in
+    /// `viewDidAppear`. This flag is used to mark whether or not to call `performStartCommands()`.
     public private(set) var isFirstAppearance: Bool = true
     
+    /// Override `viewWillAppear` to call through to the delegate method and if this is the first
+    /// appearance to set up the navigation, step details, and background color theme.
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         delegate?.stepViewController(self, willAppear: animated)
         if isFirstAppearance {
-            setupNavigation()
+            setupViews()
             setupBackgroundColorTheme()
         }
     }
     
+    /// Override `viewDidAppear` to set the flag for `isVisible`, call the delegate, mark the result
+    /// `startDate`, perform the start commands, and if the active commands include disabling the
+    /// idle timer then do so in this method.
     open override func viewDidAppear(_ animated: Bool) {
         isVisible = true
         super.viewDidAppear(animated)
@@ -136,6 +195,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /// Override `viewWillDisappear` to set the `isVisible` flag, call the delegate, and enable
+    /// the idle timer if it was disabled in view will appear.
     open override func viewWillDisappear(_ animated: Bool) {
         isVisible = false
         super.viewWillDisappear(animated)
@@ -146,6 +207,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /// Override `viewDidDisappear` to call the delegate.
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         delegate?.stepViewController(self, didDisappear: animated)
@@ -164,20 +226,26 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// A footer view that includes navigation elements.
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
     
-    open var continueButton: UIButton? {
+    /// Convenience method for getting the "Next" button.
+    open var nextButton: UIButton? {
         return navigationFooter?.nextButton
     }
     
+    /// Is forward navigation enabled? The default implementation will check the task controller.
     open var isForwardEnabled: Bool {
         return taskController.isForwardEnabled
     }
     
+    /// Callback from the task controller called on the current step controller when loading is finished
+    /// and the task is ready to continue.
     open func didFinishLoading() {
         // Enable the continue button if all done
-        continueButton?.isEnabled = isForwardEnabled
+        nextButton?.isEnabled = isForwardEnabled
     }
 
-    open func setupNavigation() {
+    /// Set up the navigation header and footer. Additionally, set up the UI theme colors, UI images, and
+    /// the step details such as the title, text, detail, and progress.
+    open func setupViews() {
         if let header = self.navigationHeader {
             setupHeader(header)
         }
@@ -186,6 +254,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /// Set up the background color using the `colorTheme` from the step. This method does nothing
+    /// if the step does not conform to the `RSDThemedUIStep` protocol.
     open func setupBackgroundColorTheme() {
         guard let colorTheme = themedStep?.colorTheme,
             let backgroundColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection)
@@ -204,6 +274,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /// Set up the header. Because this may be used in a table view as the table's header view, this includes
+    /// all the step details that are typically at the top of the view such as setting images, text, and progress.
+    /// Additionally, this method will set up the navigation buttons included in the header view and any color
+    /// themes that are appropriate.
+    /// - parameter header: The header view.
     open func setupHeader(_ header: RSDNavigationHeaderView) {
         setupNavigationView(header, isFooter: false)
 
@@ -261,23 +336,21 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         header.setNeedsUpdateConstraints()
     }
     
-    open func hasTopBackgroundImage() -> Bool {
-        if let imageTheme = self.themedStep?.imageTheme, let placement = imageTheme.placementType {
-            return placement == .topBackground
-        } else {
-            return false
-        }
-    }
-    
+    /// Set up the footer. This method will set up the navigation buttons included in the footer view
+    /// and any color themes that are appropriate.
+    /// - parameter footer: The footer view.
     open func setupFooter(_ footer: RSDNavigationFooterView) {
         setupNavigationView(footer, isFooter: true)
     }
     
-    @available(*, deprecated)
-    open func shouldUseGlobalButtonVisibility() -> Bool {
-        return false
-    }
-    
+    /// Set up the navigation UI elements for the given view.  By default, this method will
+    /// check for whether or not a button should be hidden and set the visibility as is
+    /// appropriate. For example, the first step in a task should never show a back button.
+    /// This will also setup color themes, images, selectors, etc.
+    ///
+    /// - parameters:
+    ///     - navigationView: The view to set up.
+    ///     - isFooter: Is this the footer?
     open func setupNavigationView(_ navigationView: RSDStepNavigationView, isFooter: Bool) {
         
         // Check if the back button and skip button should be hidden for this task
@@ -301,12 +374,31 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         navigationView.setNeedsUpdateConstraints()
     }
     
+    /// By default, this method will return `true` if the image theme uses a placement of `topBackground`.
+    open func hasTopBackgroundImage() -> Bool {
+        if let imageTheme = self.themedStep?.imageTheme, let placement = imageTheme.placementType {
+            return placement == .topBackground
+        } else {
+            return false
+        }
+    }
+    
+    /// Should the navigation view be set up to use "light" theme style or "dark" theme style?
+    /// - parameter isFooter: Is this the footer?
+    /// - returns: `true` if this navigation view uses light style.
     open func usesLightStyle(isFooter: Bool) -> Bool? {
         guard let colorTheme = themedStep?.colorTheme else { return nil }
         let hasTopBackgroundImage = self.hasTopBackgroundImage()
         return colorTheme.usesLightStyle && (!isFooter || !hasTopBackgroundImage)
     }
 
+    /// Convenience method for setting up each of the buttons. This will set up color theme, add the
+    /// selector, and hide the button if indicated by the UI and the task state.
+    ///
+    /// - parameters:
+    ///     - button:       The button to set up.
+    ///     - actionType:   The navigation action type for the button.
+    ///     - isFooter:     Is this button in the navigation footer?
     open func setupButton(_ button: UIButton?, for actionType: RSDUIActionType, isFooter: Bool) {
         guard let btn = button else { return }
         
@@ -374,11 +466,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
-    open func color(named name: String?) -> UIColor? {
-        guard #available(iOS 11.0, *), let colorName = name else { return nil }
-        return UIColor(named: colorName, in: nil, compatibleWith: self.traitCollection)
-    }
-    
     @objc private func _forwardTapped() {
         self.goForward()
     }
@@ -399,6 +486,12 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         self.showLearnMore()
     }
     
+    /// Navigates forward to the next step. By default, it calls `performStopCommands()` to end
+    /// the step and speaks the "end" instruction. When the end instruction is done, it will call
+    /// `goForward` on the task controller.
+    ///
+    /// When a user taps a Next button, the information passes through this method. You can use
+    /// this method as an override point or a target action for a subclass.
     @IBAction open func goForward() {
         performStopCommands()
         _speakEndCommand {
@@ -406,21 +499,34 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /// Navigates backward to the previous step. By default, it calls stop() to stop the timer
+    /// and then calls `goBack` on the task controller.
+    ///
+    /// When a user taps the Back button, the information passes through this method. You can use
+    /// this method as an override point or a target action for a subclass.
     @IBAction open func goBack() {
         stop()
         self.taskController.goBack()
     }
     
+    /// This method is called when the user taps the skip button. By default, it calls stop() to
+    /// stop the timer and then calls `goForward` on the task controller.
     @IBAction open func skipForward() {
         stop()
         self.taskController.goForward()
     }
     
+    /// This method is called when the user taps the cancel button. By default, it calls stop() to
+    /// stop the timer and then calls `handleTaskCancelled` on the task controller.
     @IBAction open func cancel() {
         stop()
         self.taskController.handleTaskCancelled()
     }
     
+    /// This method is called when the user taps the "learn more" button. The default implementation
+    /// will check if the learn more action is an `RSDResourceTransformer` and if so, will assume that
+    /// the learn more is an embedded HTML file or an online URL. It will instantiate `RSDWebViewController`
+    /// and present it modally.
     @IBAction open func showLearnMore() {
         guard let action = self.action(for: .navigation(.learnMore)) as? RSDResourceTransformer
             else {
@@ -433,6 +539,12 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         self.present(navVC, animated: true, completion: nil)
     }
     
+    /// Get the action for the given action type. The default implementation will first queury the step
+    /// for an action, if that returns nil, it will then check the delegate, if that returns nil, it will
+    /// look up the task path chain for an action. Finally, if not found it will return nil.
+    ///
+    /// - parameter actionType: The action type to get.
+    /// - returns: The action if found.
     open func action(for actionType: RSDUIActionType) -> RSDUIAction? {
         guard step.identifier == self.step.identifier else { return nil }
         
@@ -464,6 +576,20 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         return nil
     }
     
+    /// Should the action be hidden for the given action type?
+    ///
+    /// The default implementation will first look to see if the step overrides and forces the
+    /// action to be hidden. If not, then the delegate will be queried next. If that does not
+    /// return a value, then the task path will be checked. Finally, whether or not to hide the
+    /// action will be determined based on the action type and the state of the task as follows:
+    /// 1. `.navigation(.cancel)` - Always defaults to `false` (not hidden).
+    /// 2. `.navigation(.goForward)` - Hidden if the step is an active step that transitions automatically.
+    /// 3. `.navigation(.goBack)` - Hidden if the step is an active step that transitions automatically,
+    ///                             or if the task does not allow backward navigation.
+    /// 4. Others - Hidden if the `action()` is nil.
+    ///
+    /// - parameter actionType: The action type to get.
+    /// - returns: `true` if the action should be hidden.
     open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
         if let shouldHide = uiStep?.shouldHideAction(for: actionType, on: step) {
             // Allow the step to override the default from the delegate
@@ -507,31 +633,42 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     // MARK: Active step handling
     
+    /// The countdown is a second countdown used by active steps. This value will be `0` if not used.
+    /// Otherwise, `countdown = duration - timeIntervalSinceStart`.
     open var countdown: Int = 0
     
-    /**
-     Should this step start the timer? By default, this will return true for active steps. However, if you are running your app in the background, then you will need to set up a secondary means of keeping the app from suspending when the user locks the screen. You can do so by playing music or by using background GPS location updates.
-     
-     Note: The speech synthesizer does not work when the app is in background mode, but sounds and vibrations will still fire if the AVAudioSession is set up to do so.
-     */
+    /// Should this step start the timer? By default, this will return true for active steps. However,
+    /// if you are running your app in the background, then you will need to set up a secondary means
+    /// of keeping the app from suspending when the user locks the screen. You can do so by playing
+    /// music or by using background GPS location updates.
+    ///
+    /// - note: The speech synthesizer does not work when the app is in background mode, but sounds
+    /// and vibrations will still fire if the AVAudioSession is set up to do so.
     open var usesTimer: Bool {
         return self.activeStep != nil
     }
     
-    /**
-     Time interval for firing a repeating timer.
-     */
+    /// Time interval for firing a repeating timer. Default = `1`.
     open var timerInterval: TimeInterval {
         return 1
     }
     
-    public private(set) var pauseUptime: TimeInterval?
+    /// The system uptime for when the step was started. This is used by the timer to determine when to
+    /// speak the next instruction and to set the value of the countdown.
     public private(set) var startUptime: TimeInterval?
+    
+    /// The system uptime for when the step was paused.
+    public private(set) var pauseUptime: TimeInterval?
+    
+    /// The system uptime for when the step was finished.
     public private(set) var completedUptime: TimeInterval?
     
     private var timer: Timer?
     private var lastInstruction: Int = -1
     
+    /// Perform any start commands. This will speak an instruction that is set up for the start of the
+    /// step, set the initial `countdown` value, and handle any `RSDActiveUIStepCommand` related to start
+    /// up including starting the timer if the step should start automatically.
     open func performStartCommands() {
         
         if let stepDuration = self.activeStep?.duration {
@@ -554,6 +691,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /// Perform any stop command. This will also call `stop()` to stop the timer.
     open func performStopCommands() {
         if let commands = self.activeStep?.commands {
             if commands.contains(.playSoundOnFinish) {
@@ -578,18 +716,27 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /// Play a sound. The default method will use the shared instance of `RSDAudioSoundPlayer`.
+    /// - parameter sound: The sound to play.
     open func playSound(_ sound: RSDSound = .short_low_high) {
         RSDAudioSoundPlayer.shared.playSound(sound)
     }
     
+    /// Vibrate the device (if applicable).
     open func vibrateDevice() {
         AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
     }
     
+    /// Speak the given instruction. The default method will use the shared `RSDSpeechSynthesizer`.
+    /// - parameters:
+    ///     - instruction: The instruction to speak.
+    ///     - timeInterval: The time interval marker (ignored by default implementation).
+    ///     - completion: A completion handler to call when the instruction has finished.
     open func speakInstruction(_ instruction: String, at timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
         RSDSpeechSynthesizer.shared.speak(text: instruction, completion: completion)
     }
     
+    /// Speak the instruction that is included at the given time marker (if any).
     open func speakInstruction(at duration: TimeInterval) {
         let nextInstruction = Int(duration)
         if nextInstruction > lastInstruction {
@@ -603,6 +750,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /// Start the timer.
     open func start() {
         _startTimer()
     }
@@ -620,6 +768,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
+    /// Stop the timer.
     open func stop() {
         _stopTimer()
     }
@@ -629,6 +778,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         timer = nil
     }
     
+    /// Pause the timer.
     open func pause() {
         if pauseUptime == nil {
             pauseUptime = ProcessInfo.processInfo.systemUptime
@@ -636,6 +786,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         _stopTimer()
     }
     
+    /// Resume the timer.
     open func resume() {
         if let pauseTime = pauseUptime, let startTime = startUptime {
             startUptime = ProcessInfo.processInfo.systemUptime - pauseTime + startTime
@@ -644,6 +795,24 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         _startTimer()
     }
     
+    /// Method fired when the timer fires. This method will be called when the timer fires.
+    /// Should you need to run in the background, you will need to use playing music or GPS
+    /// updates to keep the app from going to sleep in which case the timer will not fire
+    /// automatically. Instead, you will need to call this method directly.
+    ///
+    /// The method will first check to see if, based on the `uptime` and the step duration,
+    /// if the step should be transitioned automatically.
+    ///
+    /// If the step is completed (countdown == 0), then this method will check if the app
+    /// is running in the background. If not, it will transition to the next step.
+    /// If the app **is** running in the background then the app will start calling
+    /// `playCompletedAlert()` using dispatch_async with a delay. By default, that method
+    /// will play an alarm sound and vibrate the device to alert the user to bring the
+    /// app to the foreground. Once the app is active, then it will transition to the next
+    /// step.
+    ///
+    /// If the timer fires and the step is still running, it will check to see if there is
+    /// a vocal instruction to speak since the last firing of the timer.
     open func timerFired() {
         guard let uptime = startUptime, completedUptime == nil else { return }
         let duration = ProcessInfo.processInfo.systemUptime - uptime
@@ -665,6 +834,15 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             // Otherwise, look for any spoken instructions since last fire
             speakInstruction(at: duration)
         }
+    }
+    
+    /// An alert to play if the step should transition automatically and the user has put the
+    /// app into the background either by locking the screen or else because the system idle
+    /// timer has fired. This is **only** called if the app is running in the background.
+    /// Otherwise, the app will automatically call `goForward`.
+    open func playCompletedAlert() {
+        vibrateDevice()
+        playSound(.alarm)
     }
     
     private var _activeObserver: Any?
@@ -704,10 +882,5 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         DispatchQueue.main.asyncAfter(deadline: delay, execute: { [weak self] in
             self?._playAlarm()
         })
-    }
-    
-    open func playCompletedAlert() {
-        vibrateDevice()
-        playSound(.alarm)
     }
 }
