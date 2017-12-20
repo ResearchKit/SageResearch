@@ -116,6 +116,10 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     /// from a plist or json.
     var factory: RSDFactory? { get }
     
+    /// Can the task progress be saved? This should only return `true` if the task result can be saved and
+    /// the current progress can be restored.
+    var canSaveTaskProgress: Bool { get }
+    
     /// Returns the currently active step controller (if any).
     var currentStepController: RSDStepController? { get }
     
@@ -172,7 +176,8 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     func handleTaskResultReady(with taskPath: RSDTaskPath)
     
     /// The user has tapped the cancel button.
-    func handleTaskCancelled()
+    /// - parameter shouldSave: Should the task progress be saved (if applicable).
+    func handleTaskCancelled(shouldSave: Bool)
     
     /// Add async action controllers to the shared queue for the given configuations. It is up to the task
     /// controller to decide how to create the controllers and how to manage adding them to the `currentStepController`

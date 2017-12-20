@@ -209,18 +209,6 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         self.duration = step.userInfo[CodingKeys.duration.stringValue] as? TimeInterval ?? self.duration
     }
     
-//    TODO: syoung 11/01/2017 Implement encoding if we ever decide we need to support it.
-//    open override func encode(to encoder: Encoder) throws {
-//        try super.encode(to: encoder)
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(duration, forKey: .duration)
-//        try container.encode(commands, forKey: .commands)
-//        if let spokenInstructions = self.spokenInstructions {
-//            let dictionary = spokenInstructions.mapKeys { SpokenInstructionKeys(at: $0, duration: self.duration)?.rawValue ?? "\($0)" }
-//            try container.encode(dictionary, forKey: .spokenInstructions)
-//        }
-//    }
-    
     
     // Overrides must be defined in the base implementation
     

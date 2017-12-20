@@ -369,19 +369,9 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         }
     }
     
-    override open func goBack() {
+    override open func stop() {
         activeTextField = nil
-        super.goBack()
-    }
-    
-    override open func skipForward() {
-        activeTextField = nil
-        super.skipForward()
-    }
-    
-    override open func cancel() {
-        activeTextField = nil
-        super.cancel()
+        super.stop()
     }
 
     

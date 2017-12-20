@@ -135,6 +135,18 @@ public final class RSDTaskPath : NSObject, NSCopying {
         return outputDirectory
     }()
     
+    /// Is this the first step in the task?
+    public var isFirstStep: Bool {
+        var taskPath: RSDTaskPath! = self
+        repeat {
+            if taskPath.result.stepHistory.count > 1 {
+                return false
+            }
+            taskPath = taskPath.parentPath
+        } while taskPath != nil
+        return true
+    }
+    
     /// Initialize the task path with a task.
     /// - parameters:
     ///     - task: The task to set for this path segment.

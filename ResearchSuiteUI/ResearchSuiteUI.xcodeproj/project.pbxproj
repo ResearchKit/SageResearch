@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */; };
 		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
 		FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */; };
 		FFF2D9411FCF415E007258F8 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2D9381FCF415E007258F8 /* ResearchSuiteUI.framework */; };
@@ -74,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDLoadingView.swift; sourceTree = "<group>"; };
 		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utilities.swift"; sourceTree = "<group>"; };
 		FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnderlinedButton.swift; sourceTree = "<group>"; };
@@ -211,13 +213,14 @@
 			isa = PBXGroup;
 			children = (
 				FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */,
+				FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */,
+				F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */,
 				FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */,
 				FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */,
-				FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */,
 				FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */,
 				FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */,
 				FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */,
-				FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */,
+				FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				FFF2D9911FCF4530007258F8 /* RSDShadowGradient.swift in Sources */,
 				FFF2D9931FCF4530007258F8 /* RSDStepChoiceCell.swift in Sources */,
 				FFF2D98D1FCF4527007258F8 /* DebugStepViewController.swift in Sources */,
+				F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */,
 				FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
 				FFF2D98C1FCF4527007258F8 /* RSDGenericStepViewController.swift in Sources */,
 				FFF2D9981FCF4538007258F8 /* UIImage+Utilities.swift in Sources */,
