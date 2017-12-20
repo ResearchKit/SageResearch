@@ -39,7 +39,7 @@ import UIKit
 
 
 /// `RSDGenericStepViewController` is a custom instance of `RSDStepViewController`. Its subviews include a `UITableView`,
-/// a `RSDNavigationFooterView`, which may or may not be embedded in the tableView as its footerView, and a `RSDNavigationBarView`,
+/// a `RSDNavigationFooterView`, which may or may not be embedded in the tableView as its footerView, and a `RSDNavigationHeaderView`,
 /// which is embedded in the tableView as its headerView.
 ///
 /// This class populates the contents and properties of the headerView and navigationView based on the associated `RSDStep`,
@@ -283,7 +283,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     // MARK: View setup
     
     /// Override the set up of the header to set the background color for the table view and adjust the minimum height.
-    open override func setupHeader(_ header: RSDNavigationBarView) {
+    open override func setupHeader(_ header: RSDNavigationHeaderView) {
         super.setupHeader(header)
         guard let stepHeader = header as? RSDStepHeaderView else { return }
         

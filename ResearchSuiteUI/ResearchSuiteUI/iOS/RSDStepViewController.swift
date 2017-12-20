@@ -154,8 +154,14 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     // MARK: Navigation and Layout
     
-    @IBOutlet open var statusBackgroundView: UIView?
-    @IBOutlet open var navigationHeader: RSDNavigationBarView?
+    /// A UIView that is behind the status bar. This can be used to set the background for only the top
+    /// part of a step view.
+    @IBOutlet open var statusBarBackgroundView: UIView?
+    
+    /// A header view that includes navigation elements.
+    @IBOutlet open var navigationHeader: RSDNavigationHeaderView?
+    
+    /// A footer view that includes navigation elements.
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
     
     open var continueButton: UIButton? {
@@ -187,7 +193,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
                 return
         }
         
-        self.statusBackgroundView?.backgroundColor = backgroundColor
+        self.statusBarBackgroundView?.backgroundColor = backgroundColor
         if self.hasTopBackgroundImage() {
             (self.navigationHeader as? RSDStepHeaderView)?.imageView?.superview?.backgroundColor = backgroundColor
         }
@@ -198,7 +204,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
-    open func setupHeader(_ header: RSDNavigationBarView) {
+    open func setupHeader(_ header: RSDNavigationHeaderView) {
         setupNavigationView(header, isFooter: false)
 
         // setup progress
