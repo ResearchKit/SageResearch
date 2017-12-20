@@ -48,6 +48,9 @@
 "BUTTON_SKIP_TASK" = "I can't do this now";
 "BUTTON_PAUSE" = "Pause";
 "BUTTON_RESUME" = "Resume";
+"BUTTON_OPTION_SAVE" = "Save for Later";
+"BUTTON_OPTION_DISCARD" = "Discard Results";
+"BUTTON_OPTION_CONTINUE" = "Keep Going";
 
 /* Joining items */
 "TWO_ITEM_LIST_OR_FORMAT_%1$@_%2$@" = "%1$@ or %2$@"; // Format of a list with two items (For example, 'apples or oranges')
@@ -56,8 +59,9 @@
 "THREE_ITEM_LIST_AND_FORMAT_%1$@_%2$@_%3$@" = "%1$@, %2$@, and %3$@"; // Format of a list with three items (For example, 'apples, oranges, and bananas')
 "LIST_FORMAT_DELIMITER"  = ", "; // Delimiter for a list of more than 3 items. Include whitespace as appropriate. (For example, 'foo, bar, goo, or boo')
 
-/* Progress */
+/* Task progress */
 "CURRENT_STEP_%@_OF_TOTAL_STEPS_%@" = "Step %1$@ of %2$@";  // Text for marking the current steps
+"MESSAGE_CONFIRM_CANCEL_TASK" = "Are you sure that you want to stop?";  // Message to show when confirming that tapping the close task button was intentional.
 
 /* Default placeholders to request answers in a questionnaire. */
 "PLACEHOLDER_TEXT_OR_NUMBER" = "Tap to answer";
