@@ -38,6 +38,7 @@ import UIKit
 @IBDesignable
 open class RSDProgressIndicator: UIView {
     
+    /// The progress of the indicator.
     @IBInspectable
     open var progress: CGFloat {
         get { return _progress }
@@ -51,6 +52,11 @@ open class RSDProgressIndicator: UIView {
     }
     private var _progress: CGFloat = 0.3
     
+    /// Set the progress position for the view using an animation duration.
+    ///
+    /// - parameters:
+    ///     - newValue: The new value of the progress at the end of the animation.
+    ///     - animationDuration: The duration of the animation.
     open func setProgressPosition(_ newValue: CGFloat, animationDuration: TimeInterval) {
         guard let progressLayer = self.progressLayer else {
             self.progress = newValue
@@ -71,18 +77,18 @@ open class RSDProgressIndicator: UIView {
         progressLayer.add(animation, forKey: "animateCircle")
     }
     
-    // Override to implement progress layer
+    /// Override to implement progress layer.
     open var progressLayer: CAShapeLayer! {
         return nil
     }
 }
 
-/**
- `RSDCountdownDial` shows a circular dial indicator.
- */
+/// `RSDCountdownDial` shows a circular dial indicator.
+/// - seealso: `RSDActiveStepViewController`
 @IBDesignable
 public final class RSDCountdownDial: RSDProgressIndicator {
     
+    /// The color of the circular ring that shows the track of the progress indicator.
     @IBInspectable
     public var ringColor: UIColor = UIColor.rsd_dialRing {
         didSet {
@@ -90,6 +96,7 @@ public final class RSDCountdownDial: RSDProgressIndicator {
         }
     }
     
+    /// The width of the circular ring that shows the track of the progress indicator.
     @IBInspectable
     public var ringWidth: CGFloat = 4 {
         didSet {
@@ -97,6 +104,8 @@ public final class RSDCountdownDial: RSDProgressIndicator {
         }
     }
     
+    /// The width of the dial (progress indicator).
+    /// - note: The color of the dial is set using the `tintColor` property.
     @IBInspectable
     public var dialWidth: CGFloat = 18 {
         didSet {
@@ -104,6 +113,7 @@ public final class RSDCountdownDial: RSDProgressIndicator {
         }
     }
     
+    /// Override `tintColorDidChange()` to update the color of the progress indicator dial.
     open override func tintColorDidChange() {
         super.tintColorDidChange()
         dialLayer?.strokeColor = tintColor.cgColor
@@ -129,7 +139,7 @@ public final class RSDCountdownDial: RSDProgressIndicator {
     
     // MARK: Draw the dial
     
-    // Override to implement progress layer
+    /// Override to implement progress layer.
     public override var progressLayer: CAShapeLayer! {
         return dialLayer
     }

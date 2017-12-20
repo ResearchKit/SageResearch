@@ -39,7 +39,12 @@ import Foundation
 /// `RSDThemedUIStep` using just the image name as oppose to the more complex schema that supports
 /// additional information about the presentation of the image.
 extension RSDImageWrapper : RSDFetchableImageThemeElement {
-
+    
+    /// The unique identifier for the image.
+    public var identifier: String {
+        return self.imageName
+    }
+    
     /// The placement type for the image. This is `nil` for an `RSDImageWrapper`.
     public var placementType: RSDImagePlacementType? {
         return nil

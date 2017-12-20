@@ -132,7 +132,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     private var navigationViewHeight: CGFloat = 0.0
     private let useStickyNavView = RSDGenericStepUIConfig.shouldUseStickyNavigationView()
     private var tableViewInsetBottom: CGFloat {
-        return useStickyNavView ? navigationViewHeight + constants().mainViewBottomMargin : constants().mainViewBottomMargin
+        return useStickyNavView ? navigationViewHeight + constants.mainViewBottomMargin : constants.mainViewBottomMargin
     }
     
     /// Should the view controller tableview include a header? If `true`, then by default, a `RSDStepHeaderView` will be added in
@@ -159,7 +159,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             tableView.estimatedSectionHeaderHeight = 0.0
             tableView.separatorStyle = .none
             tableView.rowHeight = UITableViewAutomaticDimension
-            tableView.estimatedRowHeight = constants().defaultRowHeight
+            tableView.estimatedRowHeight = constants.defaultRowHeight
             
             view.addSubview(tableView)
             
@@ -295,7 +295,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             // We have a minimum height for ORKFormSteps because these step usually have just a title and
             // description and the design generally calls for quite a bit of margin above and below the labels.
             // So we set a minimum size
-            stepHeader.minumumHeight = constants().formStepMinHeaderHeight
+            stepHeader.minumumHeight = constants.formStepMinHeaderHeight
         }
         
         if stepHeader === tableView.tableHeaderView {
@@ -311,7 +311,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     /// Auto layout constraint constants for the margin used at the bottom of the main view
     /// and the default tableView row height.
     /// - returns: A struct with the layout constants
-    open func constants() -> RSDGenericStepLayoutConstants {
+    open var constants: RSDGenericStepLayoutConstants {
         
         // we only need some bottom margin if we have any table data (rows), otherwise, the bottom
         // margin built into the headerView is enough
@@ -871,7 +871,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             // change tableView contentInset bottom to be equal to the height of the keyboard plue
             // our constant for the bottom margin
             var contentInset = tableView.contentInset
-            contentInset.bottom = endFrame.size.height + constants().mainViewBottomMargin
+            contentInset.bottom = endFrame.size.height + constants.mainViewBottomMargin
             tableView.contentInset = contentInset
         }
         

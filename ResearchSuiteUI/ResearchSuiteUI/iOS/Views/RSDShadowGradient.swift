@@ -33,43 +33,38 @@
 
 import UIKit
 
+/// `RSDShadowGradient` is a UI element for adding a shadow gradient to a view.
 @IBDesignable open class RSDShadowGradient : UIView {
     
-    /**
-     * The color of the shadow that is drawn as the background of this
-     */
+    /// The color of the shadow that is drawn as the background of this
     @IBInspectable var shadowColor : UIColor = UIColor.black {
         didSet {
             commonInit()
         }
     }
     
-    /**
-     * The alpha value (0.0 to 1.0) that the bototm part of the gradient will be at
-     */
+    /// The alpha value (0.0 to 1.0) that the bototm part of the gradient will be at
     @IBInspectable var bottomAlpha : CGFloat = CGFloat(0.25) {
         didSet {
             commonInit()
         }
     }
     
-    /**
-     * The alpha value (0.0 to 1.0) that the top part of the gradient will be at
-     */
+    /// The alpha value (0.0 to 1.0) that the top part of the gradient will be at
     @IBInspectable var topAlpha : CGFloat = CGFloat(0.0) {
         didSet {
             commonInit()
         }
     }
     
-    let gradientLayer = CAGradientLayer()
+    private let gradientLayer = CAGradientLayer()
     
     public init() {
         super.init(frame: CGRect.zero)
         commonInit()
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }

@@ -33,11 +33,10 @@
 
 import UIKit
 
+/// `RSDUnderlinedButton` is a UI element for displaying an underlined button.
 @IBDesignable open class RSDUnderlinedButton : UIButton {
     
-    /**
-     * The font used for the text button
-     */
+    /// The font used for the text button.
     @IBInspectable open var textFont : UIFont = UIFont.systemFont(ofSize: 17) {
         didSet {
             refreshView()
@@ -71,17 +70,17 @@ import UIKit
     }
     
     func refreshView() {
-        // Forces refresh of current title to be attributed
+        // Forces refresh of current title to be attributed.
         setTitle(self.currentTitle, for: .normal)
     }
     
-    // Force all titles to be an attributed title
+    /// Force all titles to be an attributed title.
     override open func setTitle(_ title: String?, for state: UIControlState) {
         super.setTitle(title, for: state)
         self.setAttributedTitle(attributedString(title), for: state)
     }
     
-    // Create an attributed string for this class that uses the following properties
+    /// Create an attributed string for this class.
     private func attributedString(_ title: String?) -> NSAttributedString? {
         if let titleUnwrapped = title {
             let attributes: [NSAttributedStringKey : Any] = [
