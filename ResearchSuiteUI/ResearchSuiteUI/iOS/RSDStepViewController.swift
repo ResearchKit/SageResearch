@@ -570,7 +570,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     private func _speakEndCommand(_ completion: @escaping (() -> Void)) {
         if let instruction = self.activeStep?.spokenInstruction(at: Double.infinity) {
-            speakInstruction(instruction, at: Double.infinity, completion: { (_) in
+            speakInstruction(instruction, at: Double.infinity, completion: { (_, _) in
                 completion()
             })
         } else {
