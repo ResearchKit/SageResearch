@@ -76,9 +76,6 @@ public protocol RSDFormStepDataSource : class {
     /// The table sections for this data source.
     var sections: [RSDTableSection] { get }
     
-    /// The initial result when the data source was first displayed.
-    var initialResults: [String : RSDResult] { get }
-    
     /// This method is used to create an appropriate answer result for a given item group.
     /// - parameter itemGroup: The item group.
     /// - returns: The instantiated answer result (if applicable)
