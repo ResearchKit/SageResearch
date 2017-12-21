@@ -239,7 +239,7 @@ public protocol RSDStepTextFieldCellLayoutConstants {
     var sideMargin: CGFloat { get }
 }
 
-/// Default constants
+/// Default constants.
 fileprivate struct RSDDefaultStepTextFieldCellLayoutConstants {
     let verticalMargin: CGFloat = 10.0
     let verticalPadding: CGFloat = 7.0

@@ -37,7 +37,7 @@ import Foundation
 /// not inherit from the same subclass to show and hide a loading indicator.
 public protocol RSDLoadingViewControllerProtocol {
     
-    /// The container view for the loading indicator
+    /// The container view for the loading indicator.
     var loadingContainerView: UIView! { get }
 }
 
@@ -107,7 +107,7 @@ open class RSDLoadingView: UIView {
         containerView.center = CGPoint(x: self.bounds.size.width / 2.0, y: self.bounds.size.height / 2.0)
     }
     
-    /// Start animating the loading view
+    /// Start animating the loading view.
     open func startAnimating() {
         self.alpha = 0.0
         self.superview?.addSubview(self)
@@ -118,7 +118,7 @@ open class RSDLoadingView: UIView {
         })
     }
     
-    /// Stop animating the loading view
+    /// Stop animating the loading view.
     open func stopAnimating(_ completion: (() -> Void)?) {
         UIView.animate(withDuration: 0.2, animations: {
             self.alpha = 0.0

@@ -62,7 +62,7 @@ open class RSDStepNavigationView: UIView {
         }
     }
     
-    /// Should the navigation view show the back button?
+    /// Should the navigation view show the skip button?
     @IBInspectable open var isSkipHidden: Bool = true {
         didSet {
             skipButton?.isHidden = isSkipHidden
@@ -110,7 +110,7 @@ open class RSDNavigationHeaderView: RSDStepNavigationView {
     }
     
     /// Layout constants. Subclasses can override to customize; otherwise the default private
-    /// are used.
+    /// constants are used.
     open private(set) var constants: RSDNavigationHeaderLayoutConstants = DefaultNavigationHeaderLayoutConstants()
     
     /// Convenience method for adding a close button if needed.
@@ -161,7 +161,7 @@ public protocol RSDNavigationHeaderLayoutConstants {
     var labelMaxLayoutWidth: CGFloat { get }
 }
 
-/// Default constants
+/// Default constants.
 fileprivate struct DefaultNavigationHeaderLayoutConstants {
     let topMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
     let bottomMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
@@ -220,7 +220,7 @@ open class RSDStepHeaderView: RSDNavigationHeaderView {
 }
 
 /// `RSDGenericStepHeaderView` is a concrete implementation of `RSDStepHeaderView` that will automatically
-/// layout the UI elements in this order, from top to bottom of the view:
+/// lay out the UI elements in this order, from top to bottom of the view:
 ///
 /// 1. cancelButton: UIButton - allows for cancelling the task
 /// 2. progressView: RSDStepProgressView - show progress thru the current flow
@@ -481,7 +481,7 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
     @IBOutlet open var shadowView: RSDShadowGradient?
     
     /// Causes the drop shadow at the top of the view to be shown or hidden.
-    /// If the value in app configuration is false, that overrides any attempt to set to true
+    /// If the value in app configuration is false, that overrides any attempt to set to true.
     open var shouldShowShadow: Bool {
         get {
             return _shouldShowShadow
@@ -494,18 +494,6 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
         }
     }
     private var _shouldShowShadow = false
-    
-    public required init() {
-        super.init(frame: CGRect.zero)
-    }
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
 }
 
 /// Constants used by the navigation view footer to set up standard constraints.
@@ -533,7 +521,7 @@ extension DefaultNavigationFooterLayoutConstants : RSDNavigationFooterLayoutCons
 }
 
 /// `RSDGenericNavigationFooterView` is a concrete implementation of `RSDNavigationFooterView` that will
-/// automatically layout the UI elements included in the navigation footer:
+/// automatically lay out the UI elements included in the navigation footer:
 ///
 /// 1. nextButton: UIButton - for navigating to the next step
 /// 2. backButton: UIButton - for navigating to the previous step
@@ -573,7 +561,7 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
     }
     
     /// Layout constants. Subclasses can override to customize; otherwise the default private
-    /// are used.
+    /// constants are used.
     open private(set) var constants: RSDNavigationFooterLayoutConstants = DefaultNavigationFooterLayoutConstants()
     
     /// Convenience method for adding a navigation button. The default method instantiates an `RSDRoundedButton`.

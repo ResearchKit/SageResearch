@@ -51,7 +51,7 @@ import UIKit
 /// task.
 ///
 /// This class is responsible for acquiring input from the user, validating it, and supplying it as an answer to to the model
-/// (tableData). This is typically done in delegate call backs from various input views, such as UITableView (didSelectRow) or
+/// (tableData). This is typically done in delegate callbacks from various input views, such as UITableView (didSelectRow) or
 /// UITextField (valueDidChange or shouldChangeCharactersInRange).
 ///
 /// Some RSDSteps, such as `RSDFactory.StepType.instruction`, require no user input (and have no input fields). These steps
@@ -377,22 +377,22 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     // MARK: UITableView Datasource
     
-    /// Return the number of sections. The default implementation returns the row count of the `tableData`
-    /// data source.
-    /// - parameters:
-    ///     - tableView: The table view.
-    ///     - section: The section for the table view.
-    /// - returns: The number of rows in the given section.
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData?.sections[section].rowCount() ?? 0
-    }
-    
     /// Return the number of sections. The default implementation returns the section count of the `tableData`
     /// data source.
     /// - parameter tableView: The table view.
     /// - returns: The number of sections.
     open func numberOfSections(in tableView: UITableView) -> Int {
         return tableData?.sections.count ?? 0
+    }
+    
+    /// Return the number of rows in a given section. The default implementation returns the row count of
+    /// the `tableData` data source.
+    /// - parameters:
+    ///     - tableView: The table view.
+    ///     - section: The section for the table view.
+    /// - returns: The number of rows in the given section.
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableData?.sections[section].rowCount() ?? 0
     }
     
     /// Instantiate or dequeue a cell for the given index path. The default implementation will use a unique identifier
@@ -567,7 +567,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         }
     }
     
-    /// The 'RSDStepTextFieldCell' to use. Override to provide a custom instances of this class.
+    /// The 'RSDStepTextFieldCell' to use. Override to provide a custom instance of this class.
     ///
     /// If this step has just one form item, like for 'externalID' or 'yourAge', then use the `RSDStepTextFieldFeaturedCell`
     /// textField cell, which centers the field in the view and uses a large font. Otherwise, use `RSDStepTextFieldCell`.
@@ -639,7 +639,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         return false
     }
     
-    /// Enable the next button as soon as the test field entry has changed.
+    /// Enable the next button as soon as the text field entry has changed.
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         // Always enable the next button once something has been entered
@@ -922,7 +922,7 @@ public protocol RSDGenericStepLayoutConstants {
     var formStepMinHeaderHeight: CGFloat { get }
 }
 
-/// Default constants
+/// Default constants.
 fileprivate struct RSDDefaultGenericStepLayoutConstants {
     private let kMainViewBottomMargin: CGFloat = 30.0
     

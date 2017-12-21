@@ -550,8 +550,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         self.presentAlertWithActions(title: nil, message: Localization.localizedString("MESSAGE_CONFIRM_CANCEL_TASK"), preferredStyle: .actionSheet, actions: actions)
     }
     
-    /// Should the step view controller confirm the cancel action? By default, this will return `true` if
-    /// this is the first step in the task. Otherwise, this method will return `false`.
+    /// Should the step view controller confirm the cancel action? By default, this will return `false` if
+    /// this is the first step in the task. Otherwise, this method will return `true`.
     /// - returns: Whether or not to confirm the cancel action.
     open func shouldConfirmCancel() -> Bool {
         return !self.taskController.taskPath.isFirstStep
@@ -581,9 +581,12 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         self.present(navVC, animated: true, completion: nil)
     }
     
-    /// Get the action for the given action type. The default implementation will first queury the step
-    /// for an action, if that returns nil, it will then check the delegate, if that returns nil, it will
-    /// look up the task path chain for an action. Finally, if not found it will return nil.
+    /// Get the action for the given action type. The default implementation check the step, the delegate
+    /// and the task as follows:
+    /// - Query the step for an action.
+    /// - If that returns nil, it will then check the delegate.
+    /// - If that returns nil, it will look up the task path chain for an action.
+    /// - Finally, if not found it will return nil.
     ///
     /// - parameter actionType: The action type to get.
     /// - returns: The action if found.
@@ -620,10 +623,13 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     /// Should the action be hidden for the given action type?
     ///
-    /// The default implementation will first look to see if the step overrides and forces the
-    /// action to be hidden. If not, then the delegate will be queried next. If that does not
-    /// return a value, then the task path will be checked. Finally, whether or not to hide the
-    /// action will be determined based on the action type and the state of the task as follows:
+    /// - The default implementation will first look to see if the step overrides and forces the
+    /// action to be hidden.
+    /// - If not, then the delegate will be queried next.
+    /// - If that does not return a value, then the task path will be checked.
+    ///
+    /// Finally, whether or not to hide the action will be determined based on the action type and
+    /// the state of the task as follows:
     /// 1. `.navigation(.cancel)` - Always defaults to `false` (not hidden).
     /// 2. `.navigation(.goForward)` - Hidden if the step is an active step that transitions automatically.
     /// 3. `.navigation(.goBack)` - Hidden if the step is an active step that transitions automatically,
@@ -842,11 +848,12 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// updates to keep the app from going to sleep in which case the timer will not fire
     /// automatically. Instead, you will need to call this method directly.
     ///
-    /// The method will first check to see if, based on the `uptime` and the step duration,
-    /// if the step should be transitioned automatically.
+    /// The method will first check to see if the step should be transitioned automatically,
+    /// based on the `uptime` and the step duration.
     ///
     /// If the step is completed (countdown == 0), then this method will check if the app
     /// is running in the background. If not, it will transition to the next step.
+    ///
     /// If the app **is** running in the background then the app will start calling
     /// `playCompletedAlert()` using dispatch_async with a delay. By default, that method
     /// will play an alarm sound and vibrate the device to alert the user to bring the

@@ -78,13 +78,13 @@ open class LocalizationBundle {
             return bundleStr
         }
         if let tableName = tableName {
-            // Otherwise, look in the a resource that is shared between targets.
+            // Otherwise, look in the resource that is shared between targets.
             for suffix in targetSuffixes {
                 if let range = tableName.range(of: suffix) {
                     let sharedName = String(tableName.prefix(upTo: range.lowerBound))
                     let sharedStr = NSLocalizedString(key, tableName: sharedName, bundle: bundle, value: key, comment: "")
                     if sharedStr != key {
-                        // If something is found here then return
+                        // If something is found here then return.
                         return sharedStr
                     }
                 }
@@ -140,8 +140,8 @@ open class Localization: NSObject {
     ///     let groceryList1 = ["apples", "oranges"]
     ///     print (Localization.localizedJoin(groceryList1))  // "apples or oranges"
     ///
-    ///     let groceryList2 = ["apples", "oranges", "banannas", "grapes"]
-    ///     print (Localization.localizedJoin(groceryList2))  // "apples, oranges, banannas, or grapes"
+    ///     let groceryList2 = ["apples", "oranges", "bananas", "grapes"]
+    ///     print (Localization.localizedJoin(groceryList2))  // "apples, oranges, bananas, or grapes"
     /// ````
     ///
     /// - note: This function is currently written to support US English. Any other language is untested.
@@ -159,8 +159,8 @@ open class Localization: NSObject {
     ///     let groceryList1 = ["apples", "oranges"]
     ///     print (Localization.localizedJoin(groceryList1))  // "apples and oranges"
     ///
-    ///     let groceryList2 = ["apples", "oranges", "banannas", "grapes"]
-    ///     print (Localization.localizedJoin(groceryList2))  // "apples, oranges, banannas, and grapes"
+    ///     let groceryList2 = ["apples", "oranges", "bananas", "grapes"]
+    ///     print (Localization.localizedJoin(groceryList2))  // "apples, oranges, bananas, and grapes"
     /// ````
     ///
     /// - note: This function is currently written to support US English. Any other language is untested.
@@ -225,7 +225,7 @@ open class Localization: NSObject {
         return localizedString("BOOL_NO")
     }
     
-    /// Localized button title for an "Ok" button.
+    /// Localized button title for an "OK" button.
     @objc open class func buttonOK() -> String {
         return localizedString("BUTTON_OK")
     }

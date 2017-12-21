@@ -60,7 +60,7 @@ extension CGFloat {
     /// Occasionally we want padding to be a little bigger or longer on bigger screens.
     /// This method will apply the `multiplier` if and only if this is an iPad.
     /// - note: This does not check the size class of the view.
-    /// - parameter multiplier: The value to multiple by if this is an iPad.
+    /// - parameter multiplier: The value to multiply by if this is an iPad.
     func rsd_iPadMultiplier(_ multiplier: CGFloat) -> CGFloat {
         if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
             return self * multiplier

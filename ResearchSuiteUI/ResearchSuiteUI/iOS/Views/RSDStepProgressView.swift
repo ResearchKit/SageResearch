@@ -103,7 +103,7 @@ open class RSDStepProgressView: UIView {
         return self.totalSteps > 0
     }
     
-    /// The text of the label that is displayed directly under the progress bar
+    /// The text of the label that is displayed directly under the progress bar.
     open func attributedStringForLabel() -> NSAttributedString? {
 
         if currentStep > 0 && totalSteps > 0 {
@@ -212,5 +212,3 @@ open class RSDStepProgressView: UIView {
         }
     }
 }
-
-

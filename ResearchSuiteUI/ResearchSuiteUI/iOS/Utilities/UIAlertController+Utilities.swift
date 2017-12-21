@@ -51,7 +51,7 @@ extension UIViewController: RSDAlertPresenter {
 
 public extension RSDAlertPresenter {
     
-    /// Present a pop-up alert with only an "Ok" button.
+    /// Present a pop-up alert with only an "OK" button.
     ///
     /// - parameters:
     ///     - title:            The title to display in the popup.
