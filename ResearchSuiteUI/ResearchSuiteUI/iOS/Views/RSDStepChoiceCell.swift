@@ -33,9 +33,8 @@
 
 import UIKit
 
-// MARK: Choice Cell
-
-open class RSDStepChoiceCell: UITableViewCell {
+/// `RSDStepChoiceCell` is the base implementation for a selection table view cell of a form step.
+public class RSDStepChoiceCell: UITableViewCell {
     
     private let kShadowHeight: CGFloat = 5.0
     private let kSideMargin = CGFloat(20.0).rsd_proportionalToScreenWidth()
@@ -44,19 +43,19 @@ open class RSDStepChoiceCell: UITableViewCell {
 
     var choiceValueLabel = UILabel()
     
-    open var shadowAlpha: CGFloat {
+    var shadowAlpha: CGFloat {
         return isSelected ? 0.2 : 0.05
     }
     
-    open var bgColor: UIColor {
+    var bgColor: UIColor {
         return isSelected ? UIColor.rsd_choiceCellBackgroundHighlighted : UIColor.rsd_choiceCellBackground
     }
     
-    open var labelColor: UIColor {
+    var labelColor: UIColor {
         return isSelected ? UIColor.rsd_choiceCellLabelHighlighted : UIColor.rsd_choiceCellLabel
     }
     
-    open let shadowView: UIView = {
+    let shadowView: UIView = {
         let rule = UIView()
         rule.backgroundColor = UIColor.black
         return rule
@@ -70,8 +69,9 @@ open class RSDStepChoiceCell: UITableViewCell {
         }
     }
 
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    public init(uiHint: RSDFormUIHint, reuseIdentifier: String?) {
+        // TODO: syoung 12/18/2017 Support checkbox and radio button hint types.
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
         commonInit()
     }
     
@@ -122,50 +122,38 @@ open class RSDStepChoiceCell: UITableViewCell {
     }
 }
 
-// MARK: TextField Cell
-
+/// `RSDStepTextFieldCell` is the base implementation of a text field used to enter answers in a
+/// form step table view.
 open class RSDStepTextFieldCell: UITableViewCell {
     
-    private let kVerticalMargin: CGFloat = 10.0
-    private let kVerticalPadding: CGFloat = 7.0
-    private let kSideMargin = CGFloat(25.0).rsd_proportionalToScreenWidth()
-    
+    /// The text field associated with this cell.
     public var textField: UITextField!
+    
+    /// The label used to display the prompt for the input field.
     open var fieldLabel: UILabel!
+    
+    /// A line show below the text field.
     open var ruleView: UIView!
     
-    /**
-     Layout constants. Subclasses can override to customize; otherwise the default private
-     constants are used.
-     */
-    open func constants() -> (
-        verticalMargin: CGFloat,
-        verticalPadding: CGFloat,
-        sideMargin: CGFloat) {
-        return (kVerticalMargin,
-                kVerticalPadding,
-                kSideMargin)
-    }
+    /// Layout constants. Subclasses can override to customize; otherwise the default private
+    /// constants are used.
+    open private(set) var constants: RSDStepTextFieldCellLayoutConstants = RSDDefaultStepTextFieldCellLayoutConstants()
     
-    /**
-     Create all the view elements. Subclasses can override to provide custom instances.
-     */
+    /// Create all the view elements. Subclasses can override to provide custom instances.
     open func initializeViews() {
         textField = RSDStepTextField()
         ruleView = UIView()
         fieldLabel = UILabel()
     }
     
-    /**
-     Define the subView properties.
-     */
+    /// Define the subView properties.
     open func setupViews() {
 
         // configure our field label
         fieldLabel.font = UIFont.textFieldCellLabel
         fieldLabel.textColor = UIColor.rsd_textFieldCellLabel
         fieldLabel.numberOfLines = 1
-        fieldLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (2 * constants().sideMargin)
+        fieldLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (2 * constants.sideMargin)
         
         // we don't want auto correction since this is for email address. This should really be
         // part of the step config, like keyboardType, but it's not currently
@@ -179,13 +167,10 @@ open class RSDStepTextFieldCell: UITableViewCell {
         ruleView.backgroundColor = UIColor.rsd_textFieldCellBorder
     }
     
-    /**
-     Set the string for the text field placeholder. View controllers should use this methods rather
-     than accessing the text field's 'placeholder' directly because some subclasses may not display
-     the placeholder text.
-     
-     @param text    The 'String' to use as the text field's placeholder text.
-    */
+    /// Set the string for the text field placeholder. View controllers should use this methods rather
+    /// than accessing the text field's 'placeholder' directly because some subclasses may not display
+    /// the placeholder text.
+    /// - parameter text:    The 'String' to use as the text field's placeholder text.
     open func setPlaceholderText(_ text: String) {
         textField.placeholder = text
     }
@@ -215,7 +200,6 @@ open class RSDStepTextFieldCell: UITableViewCell {
 
         setupViews()
         
-        
         textField.translatesAutoresizingMaskIntoConstraints = false
         ruleView.translatesAutoresizingMaskIntoConstraints = false
         fieldLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -230,28 +214,48 @@ open class RSDStepTextFieldCell: UITableViewCell {
         textField.rsd_removeSiblingAndAncestorConstraints()
         ruleView.rsd_removeSiblingAndAncestorConstraints()
         
-        fieldLabel.rsd_alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
-        fieldLabel.rsd_alignToSuperview([.top], padding: constants().verticalMargin)
+        fieldLabel.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
+        fieldLabel.rsd_alignToSuperview([.top], padding: constants.verticalMargin)
         
-        textField.rsd_alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
-        textField.rsd_alignBelow(view: fieldLabel, padding: constants().verticalPadding)
+        textField.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
+        textField.rsd_alignBelow(view: fieldLabel, padding: constants.verticalPadding)
         
-        ruleView.rsd_alignBelow(view: textField, padding: constants().verticalPadding)
+        ruleView.rsd_alignBelow(view: textField, padding: constants.verticalPadding)
         ruleView.rsd_makeHeight(.equal, 1.0)
         
         // align left and right edges of ruleView to the textField
         ruleView.rsd_align([.leading, .trailing], .equal, to: textField, [.leading, .trailing], padding: 0.0)
         
-        ruleView.rsd_alignToSuperview([.bottom], padding: constants().verticalMargin)
+        ruleView.rsd_alignToSuperview([.bottom], padding: constants.verticalMargin)
 
         super.updateConstraints()
     }
 }
 
+/// `RSDStepTextFieldCellLayoutConstants` defines the layout constants used by a `RSDStepTextFieldCell`.
+public protocol RSDStepTextFieldCellLayoutConstants {
+    var verticalMargin: CGFloat { get }
+    var verticalPadding: CGFloat { get }
+    var sideMargin: CGFloat { get }
+}
+
+/// Default constants.
+fileprivate struct RSDDefaultStepTextFieldCellLayoutConstants {
+    let verticalMargin: CGFloat = 10.0
+    let verticalPadding: CGFloat = 7.0
+    let sideMargin = CGFloat(25.0).rsd_proportionalToScreenWidth()
+}
+
+extension RSDDefaultStepTextFieldCellLayoutConstants : RSDStepTextFieldCellLayoutConstants {
+}
+
+/// `RSDStepTextFieldFeaturedCell` is an implementation of the text field form step entry cell for
+/// use when there is a single input field on for the step.
 open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
     
     private let kTextFieldWidth: CGFloat = 150.0
 
+    /// Override `setupViews()` to increase the size of the text field.
     override open func setupViews() {
         
         super.setupViews()
@@ -263,6 +267,7 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
         fieldLabel.isHidden = true
     }
     
+    /// Override `setPlaceholderText()` to block displaying the placeholder text.
     override open func setPlaceholderText(_ text: String) {
         // we don't want placeholder text
     }
@@ -283,12 +288,12 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
             textField.rsd_alignCenterHorizontal(padding: 0.0)
         } else {
             
-            textField.rsd_alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
+            textField.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
         }
         
-        textField.rsd_alignToSuperview([.top], padding: constants().verticalMargin)
+        textField.rsd_alignToSuperview([.top], padding: constants.verticalMargin)
         
-        ruleView.rsd_alignBelow(view: textField, padding: constants().verticalPadding)
+        ruleView.rsd_alignBelow(view: textField, padding: constants.verticalPadding)
         ruleView.rsd_makeHeight(.equal, 1.0)
         
         // align left and right edges of ruleView to the textField
@@ -296,23 +301,21 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
     }
 }
 
-class RSDStepTextField: UITextField {
-    var indexPath: IndexPath?
+/// `RSDStepTextField` is a subclass of `UITextField` that keeps a reference to the index path
+/// associated with this text field.
+public class RSDStepTextField: UITextField {
+    public var indexPath: IndexPath?
 }
 
-// MARK: Text label cell
-
-open class RSDTextLabelCell : UITableViewCell {
+/// `RSDTextLabelCell` can be used to display a text element such as a footnote in a table.
+@IBDesignable open class RSDTextLabelCell : UITableViewCell {
     
     private let kSideMargin = CGFloat(20.0).rsd_proportionalToScreenWidth()
     private let kVertMargin: CGFloat = 10.0
     private let kMinHeight: CGFloat = 75.0
     
-    public var label = UILabel()
-    
-    open var labelColor: UIColor {
-        return UIColor.rsd_choiceCellLabel
-    }
+    /// The label used to display text using this cell.
+    @IBOutlet public var label: UILabel!
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -333,48 +336,48 @@ open class RSDTextLabelCell : UITableViewCell {
         
         self.selectionStyle = .none
         
-        contentView.addSubview(label)
+        if label == nil {
         
-        label.accessibilityTraits = UIAccessibilityTraitSummaryElement
+            label = UILabel()
+            contentView.addSubview(label)
+            
+            label.accessibilityTraits = UIAccessibilityTraitSummaryElement
 
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (kSideMargin * 2)
-        
-        label.numberOfLines = 0
-        label.font = UIFont.footnoteLabel
-        label.textColor = UIColor.rsd_headerTextLabel
-        label.textAlignment = .left
-        
-        setNeedsUpdateConstraints()
-    }
-    
-    open override func updateConstraints() {
-        
-        NSLayoutConstraint.deactivate(self.constraints)
-        
-        label.rsd_alignToSuperview([.leading, .trailing], padding: kSideMargin)
-        label.rsd_alignToSuperview([.top], padding: kVertMargin)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (kSideMargin * 2)
+            
+            label.numberOfLines = 0
+            label.font = UIFont.footnoteLabel
+            label.textColor = UIColor.rsd_headerTextLabel
+            label.textAlignment = .left
+            
+            label.rsd_alignToSuperview([.leading, .trailing], padding: kSideMargin)
+            label.rsd_alignToSuperview([.top], padding: kVertMargin)
+        }
         
         contentView.rsd_makeHeight(.greaterThanOrEqual, kMinHeight)
         
-        super.updateConstraints()
+        setNeedsUpdateConstraints()
     }
 }
 
-// MARK: Image cell
-
-open class RSDImageViewCell : UITableViewCell {
+/// `RSDImageViewCell` can be used to display images amongst the table cells.
+@IBDesignable open class RSDImageViewCell : UITableViewCell {
     
     private let kVertMargin: CGFloat = 10.0
     private let kImageViewHeight: CGFloat = CGFloat(150.0).rsd_proportionalToScreenWidth()
 
+    /// The image view to load into.
     @IBOutlet public var iconView: UIImageView!
     
-    private var _loading = false
+    /// Set the image loader for this cell. This will automatically load the image or animation.
     public var imageLoader: RSDImageThemeElement? {
         didSet {
-            if !_loading, let loader = imageLoader, iconView.image == nil {
-                _loading = true
+            guard _imageIdentifier != imageLoader?.identifier else {
+                return
+            }
+            _imageIdentifier = imageLoader?.identifier
+            if let loader = imageLoader {
                 if let animatedVendor = loader as? RSDAnimatedImageThemeElement {
                     DispatchQueue.main.async {
                         self.iconView.animationImages = animatedVendor.images(compatibleWith: nil)
@@ -382,15 +385,21 @@ open class RSDImageViewCell : UITableViewCell {
                         self.iconView.startAnimating()
                     }
                 } else if let fetchLoader = loader as? RSDFetchableImageThemeElement {
+                    let loadingIdentifier = _imageIdentifier!
                     fetchLoader.fetchImage(for: iconView.bounds.size, callback: { [weak self] (img) in
+                        guard self?._imageIdentifier == loadingIdentifier else { return }
                         self?.iconView.image = img
                     })
                 } else {
                     assertionFailure("Unknown image theme class. \(loader)")
                 }
+            } else {
+                // Nil out the image if the identifier is nil
+                iconView.image = nil
             }
         }
     }
+    private var _imageIdentifier: String?
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

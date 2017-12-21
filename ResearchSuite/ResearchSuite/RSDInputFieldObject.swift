@@ -103,7 +103,6 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     
     /// Validate the input field to check for any configuration that should throw an error.
     open func validate() throws {
-        // TODO: syoung 10/04/2017 Implement 
     }
     
     private enum CodingKeys : String, CodingKey {

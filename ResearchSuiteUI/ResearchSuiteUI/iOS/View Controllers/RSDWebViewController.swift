@@ -33,16 +33,36 @@
 
 import UIKit
 
+/// `RSDWebViewController` is a simple view controller for showing a webview. The base-class implementation
+/// supports loading a web view from a URL, HTML string, or `RSDResourceTransformer`. It is assumed that
+/// the property will be set for one of these values.
 open class RSDWebViewController: UIViewController, UIWebViewDelegate {
     
-    @IBOutlet weak var webView: UIWebView!
+    /// The webview attached to this view controller.
+    @IBOutlet var webView: UIWebView!
     
+    /// The URL to load into the webview on `viewWillAppear()`.
     open var url: URL?
+    
+    /// The HTML string to load into the webview on `viewWillAppear()`.
     open var html: String?
+    
+    /// The resource to load into the webview on `viewWillAppear()`.
     open var resourceTransformer: RSDResourceTransformer?
     
     fileprivate var _webviewLoaded = false
-
+    
+    /// Convenience method for instantiating a web view controller that is the root view controller for a
+    /// navigation controller.
+    open class func instantiateController() -> (RSDWebViewController, UINavigationController) {
+        let webVC = RSDWebViewController()
+        webVC.navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localization.buttonClose(), style: .plain, target: webVC, action: #selector(close))
+        return (webVC, UINavigationController(rootViewController: webVC))
+    }
+    
+    // MARK: View management
+    
+    /// Override `viewDidLoad()` to instantiate a webview if there wasn't one created using a storyboard or nib.
     open override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,6 +78,7 @@ open class RSDWebViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
+    /// Override `viewWillAppear()` to load the webview on first appearance.
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -87,23 +108,26 @@ open class RSDWebViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
+    /// Failed to load the webview. Default implementation will print the error to the console but is otherwise silent.
     open func loadFailed(with error: Error? = nil) {
         if let err = error {
             debugPrint("Failed to load resource. \(err)")
         } else {
             debugPrint("Failed to load.")
         }
-        // TODO: syoung 11/30/2017 Message the user.
     }
     
-    open func dismissViewController() {
+    /// Dismiss the view controller that was presented modally.
+    @objc open func close() {
         self.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - UIWebViewDelegate
+    // MARK: UIWebViewDelegate
+    
+    /// If the webview request is a clicked link then open using the `UIApplication.open()` method.
     open func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
 
-        if let url = request.url , (navigationType == .linkClicked) {
+        if let url = request.url, (navigationType == .linkClicked) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
             return false
         }
@@ -111,5 +135,4 @@ open class RSDWebViewController: UIViewController, UIWebViewDelegate {
             return true
         }
     }
-
 }

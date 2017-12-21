@@ -33,19 +33,33 @@
 
 import AVFoundation
 
-public typealias RSDVoiceBoxCompletionHandler = (String) -> Void
+/// A completion handler for the voice box.
+public typealias RSDVoiceBoxCompletionHandler = (_ text: String, _ finished: Bool) -> Void
 
+/// `RSDVoiceBox` is used by `RSDStepViewController` to "speak" text strings.
 public protocol RSDVoiceBox {
+    
+    /// Is the voice box currently speaking?
     var isSpeaking: Bool { get }
+    
+    /// Command the voice box to speak the given text.
+    /// - parameters:
+    ///     - text: The text to speak.
+    ///     - completion: The completion handler to call after the text has finished.
     func speak(text: String, completion: RSDVoiceBoxCompletionHandler?)
+    
+    /// Command the voice box to stop speaking.
     func stopTalking()
 }
 
+/// `RSDSpeechSynthesizer` is a concrete implementation of the `RSDVoiceBox` protocol that uses the
+/// `AVSpeechSynthesizer` to synthesize text to sound.
 open class RSDSpeechSynthesizer : NSObject, RSDVoiceBox, AVSpeechSynthesizerDelegate {
 
+    /// A singleton instance of the voice box.
     public static var shared: RSDVoiceBox = RSDSpeechSynthesizer()
     
-    let speechSynthesizer = AVSpeechSynthesizer()
+    private let speechSynthesizer = AVSpeechSynthesizer()
     
     private var _completionHandlers: [String: RSDVoiceBoxCompletionHandler] = [:]
     
@@ -59,11 +73,19 @@ open class RSDSpeechSynthesizer : NSObject, RSDVoiceBox, AVSpeechSynthesizerDele
         speechSynthesizer.delegate = nil
     }
     
-    public var isSpeaking: Bool {
+    /// Is the voice box currently speaking? The default implementation will return `true` if the
+    /// `AVSpeechSynthesizer` is speaking.
+    open var isSpeaking: Bool {
         return speechSynthesizer.isSpeaking
     }
 
-    public func speak(text: String, completion: RSDVoiceBoxCompletionHandler?) {
+    /// Command the voice box to speak the given text. The default implementation will create an
+    /// `AVSpeechUtterance` and call the speech synthesizer with the utterance.
+    ///
+    /// - parameters:
+    ///     - text: The text to speak.
+    ///     - completion: The completion handler to call after the text has finished.
+    open func speak(text: String, completion: RSDVoiceBoxCompletionHandler?) {
         if speechSynthesizer.isSpeaking {
             stopTalking()
         }
@@ -79,19 +101,24 @@ open class RSDSpeechSynthesizer : NSObject, RSDVoiceBox, AVSpeechSynthesizerDele
         speechSynthesizer.speak(utterance)
     }
 
-    public func stopTalking() {
+    /// Command the voice box to stop speaking.
+    open func stopTalking() {
         speechSynthesizer.stopSpeaking(at: .word)
     }
     
+    // MARK: AVSpeechSynthesizerDelegate
+    
+    /// Called when the text is synthesizer is finished.
     open func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         guard let handler = _completionHandlers[utterance.speechString] else { return }
         _completionHandlers[utterance.speechString] = nil
-        handler(utterance.speechString)
+        handler(utterance.speechString, true)
     }
     
+    /// Called when the text is synthesizer is cancelled.
     open func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
         guard let handler = _completionHandlers[utterance.speechString] else { return }
         _completionHandlers[utterance.speechString] = nil
-        handler(utterance.speechString)
+        handler(utterance.speechString, false)
     }
 }

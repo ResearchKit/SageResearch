@@ -83,7 +83,6 @@ public protocol RSDOptionalTaskViewControllerDelegate : class, NSObjectProtocol 
     @objc optional
     func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController?
     
-    
     /// Asks the delegate whether or not the task should show a view controller for the  `RSDTaskInfoStep`
     /// while the initial task is being fetched.
     ///
@@ -103,6 +102,17 @@ public protocol RSDOptionalTaskViewControllerDelegate : class, NSObjectProtocol 
     /// - returns: A `Bool` value indicating whether or not the task controller should show the task info step.
     @objc optional
     func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool
+    
+    /// Asks the delegate whether or not the task progress can be saved and the task dismissed.
+    /// - parameter taskViewController: The task view controller.
+    /// - returns: `true` if the task progress can be saved.
+    @objc optional
+    func taskViewController(_ taskViewController: UIViewController, canSaveTaskProgress for: RSDTaskPath) -> Bool
+    
+    /// Save the task progress for the given task controller.
+    /// - parameter taskViewController: The task view controller.
+    @objc optional
+    func taskViewController(_ taskViewController: UIViewController, saveTaskProgress for: RSDTaskPath)
 }
 
 /// `RSDTaskViewControllerDelegate` is an extension of the `RSDTaskControllerDelegate` protocol that also
@@ -123,7 +133,8 @@ public protocol RSDStepViewControllerVendor : RSDUIStep {
 /// `RSDTaskViewController` is the default implementation of task view controller that is suitable to the iPhone or iPad.
 /// The default implementation will display a series of steps using a `UIPageViewController`. This controller will also handle
 /// starting and stoping async actions and vending the appropriate step view controller for each step.
-open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, RSDAsyncActionControllerDelegate {
+open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, RSDAsyncActionControllerDelegate, RSDLoadingViewControllerProtocol {
+    
 
     /// The delegate for the task view controller.
     ///
@@ -279,6 +290,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     public var taskPath: RSDTaskPath!
     
+    public var canSaveTaskProgress: Bool {
+        return self.delegate?.taskViewController?(self, canSaveTaskProgress: self.taskPath) ?? false
+    }
+    
     public var currentAsyncControllers: [RSDAsyncActionController] {
         return _asyncControllers.allObjects as! [RSDAsyncActionController]
     }
@@ -330,12 +345,16 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         }
     }
     
+    open var loadingContainerView: UIView! {
+        return self.view
+    }
+    
     open func showLoadingView() {
-        // TODO: syoung 11/02/2017 Add a standard non-step loading view.
+        showStandardLoadingView()
     }
     
     open func hideLoadingIfNeeded() {
-        // TODO: syoung 10/11/2017 Implement
+        hideStandardLoadingView()
     }
     
     public func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
@@ -360,8 +379,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         delegate?.taskController(self, didFinishWith: .completed, error: nil)
     }
     
-    open func handleTaskCancelled() {
-        // TODO: syoung 12/04/2017 Confirm exit if this is not the first step.
+    open func handleTaskCancelled(shouldSave: Bool) {
+        if shouldSave {
+            self.delegate?.taskViewController?(self, saveTaskProgress: self.taskPath.copy() as! RSDTaskPath)
+        }
         _stopAudioSession()
         cancelAllAsyncActions()
         delegate?.taskController(self, didFinishWith: .discarded, error: nil)
@@ -486,8 +507,6 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
            controller.cancel()
         }
     }
-
-    
 
     
     // MARK: View management

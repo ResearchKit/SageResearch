@@ -47,6 +47,7 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
         return self.childViewControllers.first as! (UIViewController & RSDStepController)
     }
     
+    /// get/set `rootStepViewController.taskController`
     public var taskController: RSDTaskController! {
         get {
             return rootStepViewController.taskController
@@ -56,6 +57,7 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
         }
     }
     
+    /// get/set `rootStepViewController.step`
     public var step: RSDStep! {
         get {
             return rootStepViewController.step
@@ -65,28 +67,33 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
         }
     }
     
+    /// calls `rootStepViewController.didFinishLoading()`
     public func didFinishLoading() {
         rootStepViewController.didFinishLoading()
     }
     
+    /// calls `rootStepViewController.isForwardEnabled`
     public var isForwardEnabled: Bool {
         return rootStepViewController.isForwardEnabled
     }
     
+    /// calls `rootStepViewController.goForward()`
     public func goForward() {
         rootStepViewController.goForward()
     }
     
+    /// calls `rootStepViewController.goBack()`
     public func goBack() {
         rootStepViewController.goBack()
     }
     
+    /// calls `rootStepViewController.skipForward()`
     public func skipForward() {
         rootStepViewController.skipForward()
     }
     
+    /// calls `rootStepViewController.cancel()`
     public func cancel() {
         rootStepViewController.cancel()
     }
 }
-

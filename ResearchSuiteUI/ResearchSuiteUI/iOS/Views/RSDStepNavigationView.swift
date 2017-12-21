@@ -33,23 +33,28 @@
 
 import UIKit
 
-/**
- A custom UIView to be included in an RSDStepViewController. It contains a Next button, back button, and shadowView. The ViewController is responsible for assigning targets and actions to the buttons.
- 
- To customize the view elements, subclasses should override the initializeViews() method. This will allow the use of any custom element (of the appropriate type) to be used instead of the default instances.
- */
+/// `RSDStepNavigationView` is a custom `UIView` to be included in a `RSDStepViewController`.
+/// It optionally contains references to standard step navigation UI including a next button,
+/// back button, skip button, learn more button, and cancel button.
 @IBDesignable
 open class RSDStepNavigationView: UIView {
     
+    /// Button for navigating to the next step.
     @IBOutlet open var nextButton: UIButton?
+    
+    /// Button for navigating back to the previous step.
     @IBOutlet open var backButton: UIButton?
+    
+    /// Button for skipping the step or task.
     @IBOutlet open var skipButton: UIButton?
+    
+    /// Button for showing learn more info about the step or task.
     @IBOutlet open var learnMoreButton: UIButton?
+    
+    /// Button for cancelling the task.
     @IBOutlet open var cancelButton: UIButton?
     
-    /**
-     Should the navigation view show the back button
-     */
+    /// Should the navigation view show the back button?
     @IBInspectable open var isBackHidden: Bool = false {
         didSet {
             backButton?.isHidden = isBackHidden
@@ -57,41 +62,29 @@ open class RSDStepNavigationView: UIView {
         }
     }
     
-    /**
-     Should the navigation view show the back button
-     */
+    /// Should the navigation view show the skip button?
     @IBInspectable open var isSkipHidden: Bool = true {
         didSet {
             skipButton?.isHidden = isSkipHidden
             self.setNeedsUpdateConstraints()
         }
     }
-    
-    open func updateInteractiveConstraints() {
-        // Do nothing - included to allow customized layout by having subclasses that override this anddo not call through to super
-    }
-    
-    open override func updateConstraints() {
-        self.updateInteractiveConstraints()
-        super.updateConstraints()
-    }
 }
 
+/// `RSDNavigationHeaderView` is a general purpose navigation header view that can be used
+/// by the step view controller to include UI elements that may typically be shown at the top
+/// of the step view.
 @IBDesignable
-open class RSDNavigationBarView: RSDStepNavigationView {
+open class RSDNavigationHeaderView: RSDStepNavigationView {
     
-    public let kSideMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenWidth()
-    public let kHorizontalSpacing: CGFloat = CGFloat(16.0).rsd_iPadMultiplier(2)
-    public let kButtonHeight: CGFloat = CGFloat(32.0).rsd_iPadMultiplier(1.5)
-    public let kButtonToTop: CGFloat = CGFloat(12.0).rsd_iPadMultiplier(2)
-    
+    /// A progress view for showing step progress.
     @IBOutlet open var progressView: RSDStepProgressView?
+    
+    /// A label used to display the number of steps. For example, "Step 2 out of 5".
     @IBOutlet open var stepCountLabel: UILabel?
     
-    /**
-     Causes the progress view to be shown or hidden. Default is the value from UI config.
-     */
-    @IBInspectable open var shouldShowCloseButton = RSDGenericStepUIConfig.shouldShowCloseButton() {
+    /// Causes the progress view to be shown or hidden. Default is `true`.
+    @IBInspectable open var shouldShowCloseButton = true {
         didSet {
             addCloseButtonIfNeeded()
             cancelButton?.isHidden = !shouldShowCloseButton
@@ -99,10 +92,8 @@ open class RSDNavigationBarView: RSDStepNavigationView {
         }
     }
     
-    /**
-     Causes the progress view to be shown or hidden. Default is the value from UI config.
-     */
-    @IBInspectable open var shouldShowProgress = RSDGenericStepUIConfig.shouldShowProgressView() {
+    /// Causes the progress view to be shown or hidden. Default is `true`.
+    @IBInspectable open var shouldShowProgress = true {
         didSet {
             addProgressViewIfNeeded()
             progressView?.isHidden = !shouldShowProgress
@@ -110,9 +101,7 @@ open class RSDNavigationBarView: RSDStepNavigationView {
         }
     }
     
-    /**
-     Should the step label be hidden?
-     */
+    /// Should the step label be hidden?
     @IBInspectable open var isStepLabelHidden: Bool = false {
         didSet {
             stepCountLabel?.isHidden = isStepLabelHidden
@@ -120,6 +109,11 @@ open class RSDNavigationBarView: RSDStepNavigationView {
         }
     }
     
+    /// Layout constants. Subclasses can override to customize; otherwise the default private
+    /// constants are used.
+    open private(set) var constants: RSDNavigationHeaderLayoutConstants = DefaultNavigationHeaderLayoutConstants()
+    
+    /// Convenience method for adding a close button if needed.
     open func addCloseButtonIfNeeded() {
         guard cancelButton == nil && shouldShowCloseButton else { return }
         cancelButton = UIButton()
@@ -127,8 +121,8 @@ open class RSDNavigationBarView: RSDStepNavigationView {
         self.addSubview(cancelButton!)
     }
     
+    /// Convenience method for adding a progress view if needed.
     open func addProgressViewIfNeeded() {
-        
         guard progressView == nil && shouldShowProgress else { return }
         
         progressView = RSDStepProgressView()
@@ -145,7 +139,7 @@ open class RSDNavigationBarView: RSDStepNavigationView {
         
         // Move the step count label to this view so that we can align it to center of *this* view.
         self.addSubview(stepCountLabel!)
-        stepCountLabel!.rsd_alignToSuperview([.leading, .trailing], padding: kSideMargin)
+        stepCountLabel!.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
         stepCountLabel!.rsd_makeHeight(.greaterThanOrEqual, 0.0)
         
         // Add pointer to the progress label
@@ -153,35 +147,60 @@ open class RSDNavigationBarView: RSDStepNavigationView {
     }
 }
 
+/// Constants used by the navigation view header to set up standard constraints.
+public protocol RSDNavigationHeaderLayoutConstants {
+    var topMargin: CGFloat { get }
+    var bottomMargin: CGFloat { get }
+    var sideMargin: CGFloat { get }
+    var promptBottomMargin: CGFloat { get }
+    var horizontalSpacing: CGFloat { get }
+    var verticalSpacing: CGFloat { get }
+    var barButtonHeight: CGFloat { get }
+    var buttonToTop: CGFloat { get }
+    var imageViewHeight: CGFloat { get }
+    var labelMaxLayoutWidth: CGFloat { get }
+}
 
-/**
- A custom UIView to be included in an RSDGenericStepViewController. It optionally contains several subViews
- and displays them in this order, from top to bottom of the view:
- 
- 1) cancelButton: UIButton - allows for cancelling the task
- 2) progressView: RSDStepProgressView - show progress thru the current flow
- 3) imageView: UIImageView - shows an image associated with the current step
- 4) titleLabel: UILabel - generally the Title of the current step
- 5) textLabel: UILabel - generally the Text of the current step
- 6) learnMoreButton: UIButton - a button to call the learnMoreAction
- 7) detailLabel: UILabel - a label intended to prompt the user to enter data or make a selection
- 
- Several public properties are provided to configure the view, such has hiding or showing the learnMoreButton
- or progressView, and providing a minimumHeight or customView.
- 
- To customize the view elements, subclasses should override the initializeViews() method. This will allow
- the use of any custom element (of the appropriate type) to be used instead of the default instances.
- */
+/// Default constants.
+fileprivate struct DefaultNavigationHeaderLayoutConstants {
+    let topMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
+    let bottomMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
+    let sideMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenWidth()
+    let promptBottomMargin: CGFloat = CGFloat(10.0).rsd_proportionalToScreenHeight()
+    let horizontalSpacing: CGFloat = CGFloat(16.0).rsd_iPadMultiplier(2)
+    let verticalSpacing: CGFloat = CGFloat(20.0).rsd_proportionalToScreenHeight()
+    let barButtonHeight: CGFloat = CGFloat(32.0).rsd_iPadMultiplier(1.5)
+    let buttonToTop: CGFloat = CGFloat(12.0).rsd_iPadMultiplier(2)
+    let imageViewHeight: CGFloat = CGFloat(100.0).rsd_proportionalToScreenHeight()
+    let labelMaxLayoutWidth: CGFloat = {
+        return CGFloat(UIScreen.main.bounds.size.width - (2 * CGFloat(30.0).rsd_proportionalToScreenWidth()))
+    }()
+}
+
+extension DefaultNavigationHeaderLayoutConstants : RSDNavigationHeaderLayoutConstants {
+}
+
+/// `RSDStepHeaderView` is a custom `UIView` designed for use as a header view in a table view, such as
+/// an `RSDGenericStepViewController`.
 @IBDesignable
-open class RSDStepHeaderView: RSDNavigationBarView {
+open class RSDStepHeaderView: RSDNavigationHeaderView {
     
+    /// The image view for displaying an image in the header.
     @IBOutlet open var imageView: UIImageView?
+    
+    /// The label for displaying the title.
     @IBOutlet open var titleLabel: UILabel?
+    
+    /// The label for displaying step text.
     @IBOutlet open var textLabel: UILabel?
+    
+    /// The label for displaying step detail text.
     @IBOutlet open var detailLabel: UILabel?
     
+    /// Whether or not the step header has an image.
     open var hasImage: Bool = false
     
+    /// The image to display in the step header view.
     open var image: UIImage? {
         get { return imageView?.image }
         set {
@@ -191,49 +210,29 @@ open class RSDStepHeaderView: RSDNavigationBarView {
         }
     }
     
-    /**
-     Causes the main view to be resized to this minimum height, if necessary. The extra needed height
-     is added to and divided equally between the top margin and bottom margin of the main view.
-     */
+    /// Causes the main view to be resized to this minimum height, if necessary. The extra needed height
+    /// is added to and divided equally between the top margin and bottom margin of the main view.
     open var minumumHeight: CGFloat = 0.0 {
         didSet {
             setNeedsUpdateConstraints()
         }
     }
-
-    private let kTopMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
-    private let kVerticalSpacing: CGFloat = CGFloat(20.0).rsd_proportionalToScreenHeight()
-    private let kBottomMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
-    private let kPromptBottomMargin: CGFloat = CGFloat(10.0).rsd_proportionalToScreenHeight()
-    private let kImageViewHeight: CGFloat = CGFloat(100.0).rsd_proportionalToScreenHeight()
-    private let kLearnMoreButtonHeight: CGFloat = 30.0
-    private let kLabelMaxLayoutWidth: CGFloat = {
-        return CGFloat(UIScreen.main.bounds.size.width - (2 * CGFloat(30.0).rsd_proportionalToScreenWidth()))
-    }()
-    
-    /**
-     Layout constants. Subclasses can override to customize; otherwise the default private
-     constants are used.
-     */
-    open func constants() -> (
-        topMargin: CGFloat,
-        bottomMargin: CGFloat,
-        promptBottomMargin: CGFloat,
-        sideMargin: CGFloat,
-        verticalSpacing: CGFloat,
-        imageViewHeight: CGFloat,
-        labelMaxLayoutWidth: CGFloat)
-    {
-        return (kTopMargin,
-                kBottomMargin,
-                kPromptBottomMargin,
-                kSideMargin,
-                kVerticalSpacing,
-                kImageViewHeight,
-                kLabelMaxLayoutWidth)
-    }
 }
 
+/// `RSDGenericStepHeaderView` is a concrete implementation of `RSDStepHeaderView` that will automatically
+/// lay out the UI elements in this order, from top to bottom of the view:
+///
+/// 1. cancelButton: UIButton - allows for cancelling the task
+/// 2. progressView: RSDStepProgressView - show progress thru the current flow
+/// 3. imageView: UIImageView - shows an image associated with the current step
+/// 4. titleLabel: UILabel - generally the Title of the current step
+/// 5. textLabel: UILabel - generally the Text of the current step
+/// 6. learnMoreButton: UIButton - a button to call the learnMoreAction
+/// 7. detailLabel: UILabel - a label intended to prompt the user to enter data or make a selection
+///
+/// Several public properties are provided to configure the view, such has hiding or showing the learnMoreButton
+/// or progressView, and providing a minimumHeight or customView.
+///
 @IBDesignable
 open class RSDGenericStepHeaderView: RSDStepHeaderView {
     
@@ -254,7 +253,6 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
     }
     
     private func commonInit() {
-        
         addCloseButtonIfNeeded()
         addProgressViewIfNeeded()
         addLearnMoreIfNeeded()
@@ -266,6 +264,7 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
         setNeedsUpdateConstraints()
     }
 
+    /// Convenience method for adding a learn more button if needed.
     open func addLearnMoreIfNeeded() {
         guard learnMoreButton == nil else { return }
         learnMoreButton = RSDUnderlinedButton()
@@ -275,6 +274,7 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
         learnMoreButton!.rsd_alignCenterHorizontal(padding: 0.0)
     }
     
+    /// Convenience method for adding an image view if needed.
     open func addImageViewIfNeeded() {
         guard imageView == nil else { return }
         imageView = UIImageView()
@@ -283,10 +283,11 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
         self.addSubview(imageView!)
         
         imageView!.rsd_alignCenterHorizontal(padding: 0)
-        let height = imageView!.heightAnchor.constraint(equalToConstant: constants().imageViewHeight)
+        let height = imageView!.heightAnchor.constraint(equalToConstant: constants.imageViewHeight)
         height.isActive = true
     }
     
+    /// Convenience method for adding a label.
     open func addLabel(font: UIFont, color: UIColor) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -294,27 +295,30 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
         label.font = font
         label.textColor = color
         label.textAlignment = .center
-        label.preferredMaxLayoutWidth = constants().labelMaxLayoutWidth
+        label.preferredMaxLayoutWidth = constants.labelMaxLayoutWidth
         self.addSubview(label)
         
-        label.rsd_alignToSuperview([.leading, .trailing], padding: constants().sideMargin)
+        label.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
         label.rsd_makeHeight(.greaterThanOrEqual, 0.0)
         
         return label
     }
     
+    /// Convenience method for adding the title label if needed.
     open func addTitleLabelIfNeeded() {
         guard titleLabel == nil else { return }
         titleLabel = addLabel(font: UIFont.headerViewHeaderLabel, color: UIColor.rsd_headerTitleLabel)
         titleLabel!.accessibilityTraits = UIAccessibilityTraitHeader
     }
     
+    /// Convenience method for adding the text label if needed.
     open func addTextLabelIfNeeded() {
         guard textLabel == nil else { return }
         textLabel = addLabel(font: UIFont.headerViewDetailsLabel, color: UIColor.rsd_headerTextLabel)
         textLabel!.accessibilityTraits = UIAccessibilityTraitSummaryElement
     }
     
+    /// Convenience method for adding the detail label if needed.
     open func addDetailLabelIfNeeded() {
         guard detailLabel == nil else { return }
         detailLabel = addLabel(font: UIFont.headerViewPromptLabel, color: UIColor.rsd_headerDetailLabel)
@@ -329,11 +333,14 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
         layoutIfNeeded()
     }
     
+    open override func updateConstraints() {
+        self.updateInteractiveConstraints()
+        super.updateConstraints()
+    }
+    
     private var _interactiveContraints: [NSLayoutConstraint] = []
     
-    open override func updateInteractiveConstraints() {
-        super.updateInteractiveConstraints()
-        
+    private func updateInteractiveConstraints() {
         NSLayoutConstraint.deactivate(_interactiveContraints)
         _interactiveContraints.removeAll()
         
@@ -343,11 +350,11 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
         
         if let cancelButton = cancelButton, shouldShowCloseButton, !cancelButton.isHidden {
             _interactiveContraints.append(contentsOf:
-                cancelButton.rsd_alignToSuperview([.leading], padding: kHorizontalSpacing))
+                cancelButton.rsd_alignToSuperview([.leading], padding: constants.horizontalSpacing))
             _interactiveContraints.append(contentsOf:
-                cancelButton.rsd_alignToSuperview([.top], padding: kButtonToTop))
+                cancelButton.rsd_alignToSuperview([.top], padding: constants.buttonToTop))
             _interactiveContraints.append(contentsOf:
-                cancelButton.rsd_makeHeight(.equal, kButtonHeight))
+                cancelButton.rsd_makeHeight(.equal, constants.barButtonHeight))
             topView = cancelButton
             lastView = cancelButton
         }
@@ -357,9 +364,9 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
             if let cancelButton = topView {
                 progressView.hasRoundedEnds = true
                 _interactiveContraints.append(contentsOf:
-                    progressView.rsd_align([.leading], .equal, to: cancelButton, [.trailing], padding: kHorizontalSpacing))
+                    progressView.rsd_align([.leading], .equal, to: cancelButton, [.trailing], padding: constants.horizontalSpacing))
                 _interactiveContraints.append(contentsOf:
-                    progressView.rsd_alignToSuperview([.trailing], padding: kHorizontalSpacing))
+                    progressView.rsd_alignToSuperview([.trailing], padding: constants.horizontalSpacing))
                 _interactiveContraints.append(contentsOf:
                     progressView.rsd_align([.centerY], .equal, to: cancelButton, [.centerY], padding: 0.0))
             } else {
@@ -398,13 +405,13 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
         if lastView != nil {
             if let detailLabel = detailLabel, shouldLayout(detailLabel) {
                 _interactiveContraints.append(contentsOf:
-                    detailLabel.rsd_alignBelow(view: lastView!, padding: constants().bottomMargin))
+                    detailLabel.rsd_alignBelow(view: lastView!, padding: constants.bottomMargin))
                 _interactiveContraints.append(contentsOf:
-                    detailLabel.rsd_alignToSuperview([.bottom], padding: constants().promptBottomMargin))
+                    detailLabel.rsd_alignToSuperview([.bottom], padding: constants.promptBottomMargin))
             }
             else {
                 _interactiveContraints.append(contentsOf:
-                    lastView!.rsd_alignToSuperview([.bottom], padding: constants().bottomMargin))
+                    lastView!.rsd_alignToSuperview([.bottom], padding: constants.bottomMargin))
             }
             
             // check our minimum height
@@ -426,21 +433,21 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
         }
     }
     
-    func applyVerticalConstraint(to view: UIView, lastView: UIView?) {
+    private func applyVerticalConstraint(to view: UIView, lastView: UIView?) {
         if lastView != nil {
             // align below last view. If the last view is the progressView, then we want our gap to be
             // the topMargin, otherwise it's verticalSpacing
-            let gap = (lastView == progressView) ? constants().topMargin : constants().verticalSpacing
+            let gap = (lastView == progressView) ? constants.topMargin : constants.verticalSpacing
             _interactiveContraints.append(contentsOf:
                 view.rsd_alignBelow(view: lastView!, padding: gap))
         } else {
             // align pinned to superview top
             _interactiveContraints.append(contentsOf:
-                view.rsd_alignToSuperview([.top], padding: constants().topMargin))
+                view.rsd_alignToSuperview([.top], padding: constants.topMargin))
         }
     }
     
-    func shouldLayout(_ view: UIView?) -> Bool {
+    private func shouldLayout(_ view: UIView?) -> Bool {
         
         guard view != nil else { return false }
         
@@ -464,18 +471,17 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
     }
 }
 
-/**
- `RSDNavigationFooterView` is the default implementation for the `RSDStepNavigationView` which can be added to a Nib, Storyboard or instantiated using the `RSDGenericStepUIConfig.instantiatNavigationView()` method.
- */
+/// `RSDNavigationFooterView` is an abstract implementation for the `RSDStepNavigationView` which can be
+/// added to a Nib, Storyboard or instantiated using the `RSDGenericStepUIConfig.instantiatNavigationView()`
+/// method.
 @IBDesignable
 open class RSDNavigationFooterView: RSDStepNavigationView {
     
+    /// An optional shadow gradient to use to display a shadow (used to indicate additional content below the fold).
     @IBOutlet open var shadowView: RSDShadowGradient?
     
-    /**
-     Causes the drop shadow at the top of the view to be shown or hidden.
-     If the value in app configuration is false, that overrides any attempt to set to true
-     */
+    /// Causes the drop shadow at the top of the view to be shown or hidden.
+    /// If the value in app configuration is false, that overrides any attempt to set to true.
     open var shouldShowShadow: Bool {
         get {
             return _shouldShowShadow
@@ -488,30 +494,42 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
         }
     }
     private var _shouldShowShadow = false
-    
-    public required init() {
-        super.init(frame: CGRect.zero)
-    }
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
 }
 
+/// Constants used by the navigation view footer to set up standard constraints.
+public protocol RSDNavigationFooterLayoutConstants {
+    var topMargin: CGFloat { get }
+    var bottomMargin: CGFloat { get }
+    var oneButtonSideMargin: CGFloat { get }
+    var twoButtonSideMargin: CGFloat { get }
+    var horizontalPadding: CGFloat { get }
+    var verticalPadding: CGFloat { get }
+    var shadowHeight: CGFloat { get }
+}
+
+fileprivate struct DefaultNavigationFooterLayoutConstants {
+    let topMargin = CGFloat(16.0).rsd_proportionalToScreenHeight(max: 24.0)
+    let bottomMargin = CGFloat(18.0)
+    let horizontalPadding = CGFloat(20.0)
+    let verticalPadding = CGFloat(18.0)
+    let oneButtonSideMargin = CGFloat(24.0)
+    let twoButtonSideMargin = CGFloat(10.0).rsd_proportionalToScreenWidth()
+    let shadowHeight = CGFloat(5.0)
+}
+
+extension DefaultNavigationFooterLayoutConstants : RSDNavigationFooterLayoutConstants {
+}
+
+/// `RSDGenericNavigationFooterView` is a concrete implementation of `RSDNavigationFooterView` that will
+/// automatically lay out the UI elements included in the navigation footer:
+///
+/// 1. nextButton: UIButton - for navigating to the next step
+/// 2. backButton: UIButton - for navigating to the previous step
+/// 3. skipButton: UIButton - for skipping the step or task
+/// 4. shadowView: RSDShadowGradient - shows a shadow to indicate that there is content below the fold
+///
 @IBDesignable
 open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
-
-    private let kTopMargin = CGFloat(16.0).rsd_proportionalToScreenHeight(max: 24.0)
-    private let kBottomMargin = CGFloat(18.0)
-    private let kHorizontalPadding = CGFloat(20.0)
-    private let kVerticalPadding = CGFloat(18.0)
-    private let kOneButtonSideMargin = CGFloat(24.0)
-    private let kTwoButtonSideMargin = CGFloat(10.0).rsd_proportionalToScreenWidth()
-    private let kShadowHeight = CGFloat(5.0)
     
     public required init() {
         super.init(frame: CGRect.zero)
@@ -542,28 +560,11 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
         addShadowIfNeeded()
     }
     
-    /**
-     Layout constants. Subclasses can override to customize; otherwise the default private
-     constants are used.
-     */
-    open func constants() -> (
-        topMargin: CGFloat,
-        bottomMargin: CGFloat,
-        oneButtonSideMargin: CGFloat,
-        twoButtonSideMargin: CGFloat,
-        horizontalPadding: CGFloat,
-        verticalPadding: CGFloat,
-        shadowHeight: CGFloat)
-    {
-        return (kTopMargin,
-                kBottomMargin,
-                kOneButtonSideMargin,
-                kTwoButtonSideMargin,
-                kHorizontalPadding,
-                kVerticalPadding,
-                kShadowHeight)
-    }
+    /// Layout constants. Subclasses can override to customize; otherwise the default private
+    /// constants are used.
+    open private(set) var constants: RSDNavigationFooterLayoutConstants = DefaultNavigationFooterLayoutConstants()
     
+    /// Convenience method for adding a navigation button. The default method instantiates an `RSDRoundedButton`.
     open func addNavigationButton() -> UIButton {
         let button = RSDRoundedButton()
         button.corners = RSDRoundedButton.defaultCornerRadius
@@ -572,18 +573,21 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
         return button
     }
     
+    /// Convenience method for adding a back button.
     open func addBackButtonIfNeeded() {
         guard backButton == nil else { return }
         backButton = addNavigationButton()
         backButton!.setTitle(Localization.buttonBack(), for: .normal)
     }
     
+    /// Convenience method for adding a next button.
     open func addNextButtonIfNeeded() {
         guard nextButton == nil else { return }
         nextButton = addNavigationButton()
         nextButton!.setTitle(Localization.buttonNext(), for: .normal)
     }
     
+    /// Convenience method for adding a skip button.
     open func addSkipButtonIfNeeded() {
         guard skipButton == nil else { return }
         let button = RSDUnderlinedButton()
@@ -593,24 +597,30 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
         skipButton!.setTitle(Localization.buttonSkip(), for: .normal)
     }
     
+    /// Convenience method for adding a shadow gradient.
     open func addShadowIfNeeded() {
         guard shadowView == nil else { return }
         
         shadowView = RSDShadowGradient()
         shadowView!.translatesAutoresizingMaskIntoConstraints = false
-        shadowView!.heightAnchor.constraint(equalToConstant: constants().shadowHeight).isActive = true
+        shadowView!.heightAnchor.constraint(equalToConstant: constants.shadowHeight).isActive = true
         
         self.addSubview(shadowView!)
         
         shadowView!.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
-        shadowView!.rsd_alignToSuperview([.top], padding:  -1 * constants().shadowHeight)
+        shadowView!.rsd_alignToSuperview([.top], padding:  -1 * constants.shadowHeight)
         shadowView!.isHidden = !shouldShowShadow
+    }
+    
+    open override func updateConstraints() {
+        addShadowIfNeeded()
+        self.updateInteractiveConstraints()
+        super.updateConstraints()
     }
     
     private var _interactiveContraints: [NSLayoutConstraint] = []
     
-    open override func updateInteractiveConstraints() {
-        super.updateInteractiveConstraints()
+    private func updateInteractiveConstraints() {
         
         NSLayoutConstraint.deactivate(_interactiveContraints)
         _interactiveContraints.removeAll()
@@ -623,12 +633,12 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
         skipButton!.isHidden = isSkipHidden
         
         _interactiveContraints.append(contentsOf:
-            nextButton!.rsd_alignToSuperview([.top], padding: constants().topMargin))
+            nextButton!.rsd_alignToSuperview([.top], padding: constants.topMargin))
         
         if isBackHidden {
             // if we don't have backButton, align left edge of nextButton to superview left
             _interactiveContraints.append(contentsOf:
-                nextButton!.rsd_alignToSuperview([.leading, .trailing], padding: constants().oneButtonSideMargin, priority: UILayoutPriority(800.0)))
+                nextButton!.rsd_alignToSuperview([.leading, .trailing], padding: constants.oneButtonSideMargin, priority: UILayoutPriority(800.0)))
             _interactiveContraints.append(contentsOf:
                 nextButton!.rsd_alignToSuperview([.centerX], padding: 0))
         }
@@ -639,29 +649,24 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
             _interactiveContraints.append(contentsOf:
                 backButton!.rsd_makeWidthEqualToView(nextButton!))
             _interactiveContraints.append(contentsOf:
-                backButton!.rsd_alignToSuperview([.leading], padding: constants().twoButtonSideMargin))
+                backButton!.rsd_alignToSuperview([.leading], padding: constants.twoButtonSideMargin))
             _interactiveContraints.append(contentsOf:
-                nextButton!.rsd_alignToSuperview([.trailing], padding: constants().twoButtonSideMargin))
+                nextButton!.rsd_alignToSuperview([.trailing], padding: constants.twoButtonSideMargin))
             _interactiveContraints.append(contentsOf:
-                backButton!.rsd_alignLeftOf(view: nextButton!, padding: constants().horizontalPadding, priority: UILayoutPriority(800.0)))
+                backButton!.rsd_alignLeftOf(view: nextButton!, padding: constants.horizontalPadding, priority: UILayoutPriority(800.0)))
         }
         
         if isSkipHidden {
             _interactiveContraints.append(contentsOf:
-                nextButton!.rsd_alignToSuperview([.bottom], padding: constants().bottomMargin))
+                nextButton!.rsd_alignToSuperview([.bottom], padding: constants.bottomMargin))
         }
         else {
             _interactiveContraints.append(contentsOf:
-                skipButton!.rsd_alignBelow(view: nextButton!, padding: constants().verticalPadding))
+                skipButton!.rsd_alignBelow(view: nextButton!, padding: constants.verticalPadding))
             _interactiveContraints.append(contentsOf:
-                skipButton!.rsd_alignToSuperview([.bottom], padding: constants().bottomMargin))
+                skipButton!.rsd_alignToSuperview([.bottom], padding: constants.bottomMargin))
             _interactiveContraints.append(contentsOf:
                 skipButton!.rsd_alignToSuperview([.centerX], padding: 0))
         }
-    }
-    
-    open override func updateConstraints() {
-        addShadowIfNeeded()
-        super.updateConstraints()
     }
 }

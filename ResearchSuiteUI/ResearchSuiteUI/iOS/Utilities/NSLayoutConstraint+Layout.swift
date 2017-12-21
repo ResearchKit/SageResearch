@@ -32,19 +32,15 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-
 import Foundation
 import UIKit
 
 extension NSLayoutConstraint {
     
-    /**
-     Change the multiplier on a constraint by creating a new constraint with all the same
-     properties and the new multiplier
-     
-     @param multiplier  The new multipler value.
-     @return            A new constraint with the new multiplier value.
-     */
+    /// Change the multiplier on a constraint by creating a new constraint with all the same
+    /// properties and the new multiplier
+    /// - parameter multiplier: The new multipler value.
+    /// - returns: A new constraint with the new multiplier value.
     func rsd_setMultiplier(multiplier:CGFloat) -> NSLayoutConstraint {
         
         NSLayoutConstraint.deactivate([self])

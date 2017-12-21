@@ -34,33 +34,64 @@
 import Foundation
 import AudioToolbox
 
+/// `RSDSound` contains sound file URLs.
 public struct RSDSound {
+    
+    /// The name of the sound.
+    public let name: String
+    
+    /// The url for the sound (if any).
     public let url: URL?
     
+    /// Initializer for initializing system library UISounds.
+    /// - parameter name: The name of the sound. This is also the name of the .caf file for that sound in the library.
     public init(name: String) {
+        self.name = name
         self.url = URL(string: "/System/Library/Audio/UISounds/\(name).caf")
     }
     
+    /// Initializer for creating a sound with a custom URL.
+    /// - parameter url: The url with the path to the sound file.
     public init(url: URL) {
         self.url = url
+        self.name = url.lastPathComponent
     }
     
+    /// The alarm sound.
     public static let alarm = RSDSound(name: "alarm")
+    
+    /// A short low-high beep sound.
     public static let short_low_high = RSDSound(name: "short_low_high")
+    
+    /// A short double-high beep sound.
     public static let short_double_high = RSDSound(name: "short_double_high")
-    public static let short_double_low = RSDSound(name: "alarm")
+    
+    /// A short double-low beep sound.
+    public static let short_double_low = RSDSound(name: "short_double_low")
+    
+    /// The "photo shutter" sound played when taking a picture.
     public static let photoShutter = RSDSound(name: "photoShutter")
 }
 
+/// `RSDSoundPlayer` is a protocol for playing sounds intended to give the user UI feedback during
+/// the running of a task.
 public protocol RSDSoundPlayer {
+    
+    /// Play the given sound.
+    /// - parameter sound: The system sound to play.
     func playSound(_ sound: RSDSound)
 }
 
-public class RSDAudioSoundPlayer : NSObject, RSDSoundPlayer {
+/// `RSDAudioSoundPlayer` is a concrete implementation of the `RSDSoundPlayer` protocol that can be used
+/// to play system sounds using `AudioServicesCreateSystemSoundID()`.
+open class RSDAudioSoundPlayer : NSObject, RSDSoundPlayer {
 
+    /// A singleton instance of the audio sound player.
     public static var shared: RSDSoundPlayer = RSDAudioSoundPlayer()
 
-    public func playSound(_ sound: RSDSound) {
+    /// Play the given sound.
+    /// - parameter sound: The system sound to play.
+    open func playSound(_ sound: RSDSound) {
         guard let url = sound.url else { return }
         var soundId: SystemSoundID = 0
         let status = AudioServicesCreateSystemSoundID(url as CFURL, &soundId)

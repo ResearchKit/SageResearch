@@ -142,6 +142,10 @@ extension RSDImagePlacementType : RSDDocumentableEnum {
 /// `RSDImageThemeElement` extends the UI step to include an image.
 public protocol RSDImageThemeElement : RSDUIThemeElement {
     
+    /// A unique identifier for the image element. This can be used to check if a dequeued cell
+    /// has changed the image loader.
+    var identifier: String { get }
+    
     /// The preferred placement of the image. Default placement is `iconBefore` if undefined.
     var placementType: RSDImagePlacementType? { get }
     

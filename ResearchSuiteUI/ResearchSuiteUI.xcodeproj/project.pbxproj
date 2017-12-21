@@ -21,17 +21,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */; };
 		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
 		FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */; };
 		FFF2D9411FCF415E007258F8 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2D9381FCF415E007258F8 /* ResearchSuiteUI.framework */; };
 		FFF2D9781FCF41F8007258F8 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFF2D9791FCF41FA007258F8 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FFF2D97B1FCF449E007258F8 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */; };
-		FFF2D97C1FCF449F007258F8 /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */; };
-		FFF2D97D1FCF44A9007258F8 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5321F97347E00C366FC /* Localization.swift */; };
-		FFF2D97E1FCF44AA007258F8 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5321F97347E00C366FC /* Localization.swift */; };
-		FFF2D97F1FCF44AD007258F8 /* ResearchSuiteUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF39E5381F97392200C366FC /* ResearchSuiteUI.strings */; };
-		FFF2D9801FCF44AE007258F8 /* ResearchSuiteUI.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF39E5381F97392200C366FC /* ResearchSuiteUI.strings */; };
 		FFF2D9821FCF4504007258F8 /* RSDTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */; };
 		FFF2D9831FCF4504007258F8 /* RSDStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */; };
 		FFF2D9841FCF4509007258F8 /* RSDVoiceBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF55C4361FAB1732004EDB59 /* RSDVoiceBox.swift */; };
@@ -80,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDLoadingView.swift; sourceTree = "<group>"; };
 		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utilities.swift"; sourceTree = "<group>"; };
 		FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnderlinedButton.swift; sourceTree = "<group>"; };
@@ -91,8 +87,6 @@
 		FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepNavigationView.swift; sourceTree = "<group>"; };
 		FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepProgressView.swift; sourceTree = "<group>"; };
 		FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDShadowGradient.swift; sourceTree = "<group>"; };
-		FF39E5321F97347E00C366FC /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
-		FF39E5371F97392200C366FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ResearchSuiteUI.strings; sourceTree = "<group>"; };
 		FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchSuiteUI.h; sourceTree = "<group>"; };
 		FF478D911FD752E800493A49 /* RSDNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDNavigationController.swift; sourceTree = "<group>"; };
 		FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugStepViewController.swift; sourceTree = "<group>"; };
@@ -108,7 +102,6 @@
 		FF6D1C101FB27D0E0087DDE6 /* RSDUISoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUISoundPlayer.swift; sourceTree = "<group>"; };
 		FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepViewController.swift; sourceTree = "<group>"; };
 		FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Layout.swift"; sourceTree = "<group>"; };
-		FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
 		FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDWebViewController.swift; sourceTree = "<group>"; };
 		FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCrosshatchView.swift; sourceTree = "<group>"; };
 		FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownDial.swift; sourceTree = "<group>"; };
@@ -177,15 +170,6 @@
 			path = Styleguide;
 			sourceTree = "<group>";
 		};
-		FF39E5301F9732C500C366FC /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				FF39E5321F97347E00C366FC /* Localization.swift */,
-				FF39E5381F97392200C366FC /* ResearchSuiteUI.strings */,
-			);
-			path = Localization;
-			sourceTree = "<group>";
-		};
 		FF443E0C1F7AC21900F43BE7 = {
 			isa = PBXGroup;
 			children = (
@@ -213,8 +197,6 @@
 				FF74A7DD1F7DA2EB0064A634 /* iOS */,
 				FFF2D97A1FCF422C007258F8 /* watchOS */,
 				FF25E8371F96ACD200BC09A8 /* Styleguide */,
-				FF39E5301F9732C500C366FC /* Localization */,
-				FFCA18381F8F2605006ADAF3 /* Utilities */,
 			);
 			path = ResearchSuiteUI;
 			sourceTree = "<group>";
@@ -231,13 +213,14 @@
 			isa = PBXGroup;
 			children = (
 				FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */,
+				FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */,
+				F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */,
 				FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */,
 				FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */,
-				FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */,
 				FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */,
 				FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */,
 				FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */,
-				FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */,
+				FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -285,14 +268,6 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
-		FFCA18381F8F2605006ADAF3 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				FF88FD1C1F8D44A400CADB53 /* StaticUtilities.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		FFDD780E1FAE96760024BDD1 /* Step View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,9 +275,9 @@
 				FFDD780F1FAE96C70024BDD1 /* RSDCountdownStepViewController.swift */,
 				FFDD781E1FAE990F0024BDD1 /* RSDActiveStepViewController.swift */,
 				FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */,
-				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
-				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
 				FF478D911FD752E800493A49 /* RSDNavigationController.swift */,
+				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
+				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
 			);
 			path = "Step View Controllers";
 			sourceTree = "<group>";
@@ -461,7 +436,6 @@
 				FFF2D9871FCF451C007258F8 /* RSDActiveStepViewController.xib in Resources */,
 				FFF2D9A41FCF4FC6007258F8 /* DefaultImages.xcassets in Resources */,
 				FFF2D9891FCF451C007258F8 /* RSDTaskInfoStepViewController.xib in Resources */,
-				FFF2D97F1FCF44AD007258F8 /* ResearchSuiteUI.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,7 +450,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFF2D9801FCF44AE007258F8 /* ResearchSuiteUI.strings in Resources */,
 				FFF2D9A81FCF4FC7007258F8 /* DefaultImages.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -509,6 +482,7 @@
 				FFF2D9911FCF4530007258F8 /* RSDShadowGradient.swift in Sources */,
 				FFF2D9931FCF4530007258F8 /* RSDStepChoiceCell.swift in Sources */,
 				FFF2D98D1FCF4527007258F8 /* DebugStepViewController.swift in Sources */,
+				F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */,
 				FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
 				FFF2D98C1FCF4527007258F8 /* RSDGenericStepViewController.swift in Sources */,
 				FFF2D9981FCF4538007258F8 /* UIImage+Utilities.swift in Sources */,
@@ -517,11 +491,9 @@
 				FFF2D98E1FCF4527007258F8 /* RSDTaskInfoStepViewController.swift in Sources */,
 				FFF2D9971FCF4538007258F8 /* NSLayoutConstraint+Layout.swift in Sources */,
 				FFF2D9951FCF4530007258F8 /* RSDStepProgressView.swift in Sources */,
-				FFF2D97D1FCF44A9007258F8 /* Localization.swift in Sources */,
 				FFF2D98A1FCF4527007258F8 /* RSDCountdownStepViewController.swift in Sources */,
 				FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */,
 				FFF2D9901FCF4530007258F8 /* RSDRoundedButton.swift in Sources */,
-				FFF2D97B1FCF449E007258F8 /* StaticUtilities.swift in Sources */,
 				FFF2D9831FCF4504007258F8 /* RSDStepViewController.swift in Sources */,
 				FFF2D98B1FCF4527007258F8 /* RSDActiveStepViewController.swift in Sources */,
 				FFF2D9821FCF4504007258F8 /* RSDTaskViewController.swift in Sources */,
@@ -546,9 +518,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFF2D9A61FCF4FC7007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
-				FFF2D97E1FCF44AA007258F8 /* Localization.swift in Sources */,
 				FFF2D9A51FCF4FC7007258F8 /* UIColor+BridgeKeyNames.swift in Sources */,
-				FFF2D97C1FCF449F007258F8 /* StaticUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,17 +531,6 @@
 			targetProxy = FFF2D9421FCF415E007258F8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		FF39E5381F97392200C366FC /* ResearchSuiteUI.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FF39E5371F97392200C366FC /* en */,
-			);
-			name = ResearchSuiteUI.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FF1446C21FBCF42600389F77 /* Debug */ = {

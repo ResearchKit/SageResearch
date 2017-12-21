@@ -37,6 +37,8 @@ import ResearchSuiteUI
 
 class ViewController: UIViewController, RSDTaskViewControllerDelegate {
 
+    
+
     @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
@@ -61,50 +63,57 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         self.present(taskViewController, animated: true, completion: nil)
     }
     
-    // MARK: RSDTaskViewControllerDelegate
     
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+    // Mark: RSDTaskViewControllerDelegate
+    
+    let offMainQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.Serialized.\(UUID())")
+    
+    open func deleteOutputDirectory(_ outputDirectory: URL?) {
+        guard let outputDirectory = outputDirectory else { return }
+        do {
+            try FileManager.default.removeItem(at: outputDirectory)
+        } catch let error {
+            print("Error removing ResearchKit output directory: \(error.localizedDescription)")
+            debugPrint("\tat: \(outputDirectory)")
+        }
+    }
+    
+    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // dismiss the view controller
-        taskViewController.dismiss(animated: true, completion: nil)
-        
-        var debugResult: String = taskViewController.taskPath.description
-        
-        if reason == .completed {
-            do {
-                let encoder = RSDFactory.shared.createJSONEncoder()
-                let taskJSON = try taskViewController.taskPath.encodeResult(to: encoder)
-                if let string = String(data: taskJSON, encoding: .utf8) {
-                    debugResult.append("\n\n\(string)")
-                }
-            } catch let error {
-                debugResult.append("\n\n=== Failed to encode the result: \(error)")
+        let outputDirectory = taskController.taskPath.outputDirectory
+        (taskController as? UIViewController)?.dismiss(animated: true) {
+            self.offMainQueue.async {
+                self.deleteOutputDirectory(outputDirectory)
             }
         }
-        else {
-            debugResult.append("\n\n=== Failed: \(String(describing: error))")
+        
+        var debugResult: String = taskController.taskPath.description
+        debugResult.append("\n\n=== Completed: \(reason) error:\(String(describing: error))")
+        print(debugResult)
+    }
+    
+    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+        var debugResult: String = taskPath.description
+        
+        do {
+            let encoder = RSDFactory.shared.createJSONEncoder()
+            let taskJSON = try taskPath.encodeResult(to: encoder)
+            if let string = String(data: taskJSON, encoding: .utf8) {
+                debugResult.append("\n\n\(string)")
+            }
+        } catch let error {
+            debugResult.append("\n\n=== Failed to encode the result: \(error)")
         }
         
-        textView.text = debugResult
+        print(debugResult)
     }
     
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor step: RSDStep) -> (UIViewController & RSDStepController)? {
+    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
         return nil
     }
     
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), viewControllerFor taskInfo: RSDTaskInfoStep) -> (UIViewController & RSDStepController)? {
-        return nil
-    }
-    
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
-    }
-    
-    func taskViewController(_ taskViewController: (UIViewController & RSDTaskController), readyToSave taskPath: RSDTaskPath) {
-        // do nothing
-    }
-    
-    func taskViewControllerShouldAutomaticallyForward(_ taskViewController: (UIViewController & RSDTaskController)) -> Bool {
+    func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {
         return false
     }
 }

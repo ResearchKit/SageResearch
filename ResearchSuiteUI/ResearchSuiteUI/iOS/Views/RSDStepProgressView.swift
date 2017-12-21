@@ -33,17 +33,22 @@
 
 import UIKit
 
-/**
- A UIView subclass that displays a progress bar going from left to right and a label
- that is positioned under the progress bar to display current step and number of steps.
- Views should set currentStep and totalSteps to cause progress to be displayed.
- */
+/// `RSDStepProgressView` is a UI element that displays a progress bar drawn horizontally
+/// from left to right.
+///
+/// This view includes an optional pointer to `stepCountLabel` which is *not* a subview of
+/// this view but can be used to display current step and number of steps.
+///
+/// The view controller must set `currentStep` and `totalSteps` to cause progress to be
+/// displayed.
+///
 @IBDesignable
 open class RSDStepProgressView: UIView {
+    
+    /// A pointer to the label that should be updated with the current progress.
+    @IBOutlet public weak var stepCountLabel: UILabel?
 
-    /**
-     The current step in the current flow.
-     */
+    /// The current step in the current flow.
     @IBInspectable
     public var currentStep: Int = 0 {
         didSet {
@@ -51,9 +56,7 @@ open class RSDStepProgressView: UIView {
         }
     }
     
-    /**
-     The total number of steps in the current flow.
-     */
+    /// The total number of steps in the current flow.
     @IBInspectable
     open var totalSteps: Int = 0 {
         didSet {
@@ -61,9 +64,7 @@ open class RSDStepProgressView: UIView {
         }
     }
     
-    /**
-     Should the progress bar display with rounded ends?
-     */
+    /// Should the progress bar display with rounded ends?
     @IBInspectable
     open var hasRoundedEnds: Bool = false {
         didSet {
@@ -71,21 +72,16 @@ open class RSDStepProgressView: UIView {
         }
     }
     
-    /**
-     Should the progress bar display with a light style of progress bar and label for use on a dark background, or with a dark style of progress bar for use on a light background?
-     */
+    /// Should the progress bar display with a light style of progress bar and label for use
+    /// on a dark background, or with a dark style of progress bar for use on a light background?
     @IBInspectable
     open var usesLightStyle: Bool = false {
         didSet {
             setNeedsUpdateConstraints()
         }
     }
-    
 
-    
-    /**
-     The height of the actual progress bar
-     */
+    /// The height of the actual progress bar.
     @IBInspectable
     open var progressLineHeight: CGFloat = 10.0 {
         didSet {
@@ -93,6 +89,7 @@ open class RSDStepProgressView: UIView {
         }
     }
     
+    /// The progress (0 - 1.0) to display.
     public var progress: CGFloat {
         if totalSteps > 0 {
             return CGFloat(currentStep) / CGFloat(totalSteps)
@@ -101,20 +98,12 @@ open class RSDStepProgressView: UIView {
         }
     }
     
+    /// Returns `true` if the total steps is greather than `0`.
     public var hasProgress: Bool {
         return self.totalSteps > 0
     }
     
-    // MARK: View elements
-    
-    public var stepCountLabel: UILabel?
-    
-    private var progressView = UIView()
-    private var backgroundView = UIView()
-    
-    /**
-     The text of the label that is displayed directly under the progress bar
-     */
+    /// The text of the label that is displayed directly under the progress bar.
     open func attributedStringForLabel() -> NSAttributedString? {
 
         if currentStep > 0 && totalSteps > 0 {
@@ -141,7 +130,10 @@ open class RSDStepProgressView: UIView {
         }
     }
     
-    // MARK: Initializers
+    // MARK: View Life-cycle
+    
+    private var progressView = UIView()
+    private var backgroundView = UIView()
     
     public init() {
         super.init(frame: CGRect.zero)
@@ -220,5 +212,3 @@ open class RSDStepProgressView: UIView {
         }
     }
 }
-
-

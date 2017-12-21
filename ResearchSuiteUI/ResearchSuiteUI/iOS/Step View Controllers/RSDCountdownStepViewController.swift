@@ -33,20 +33,37 @@
 
 import UIKit
 
-/**
- `RSDCountdownStepViewController` is a simple countdown timer for displaying a short duration (5-4-3-2-1) countdown.
- */
+/// `RSDCountdownStepViewController` is a simple countdown timer for displaying a short duration (5-4-3-2-1) countdown.
+///
+/// This view controller includes a default nib implementation that is included in this framework. It includes a `countdownLabel`
+/// that can be used to show a numeric countdown (5-4-3-2-1) and a `pauseButton` that can be used to pause the countdown timer.
+/// 
+/// - seealso: `RSDTaskViewController.vendDefaultViewController(for:)`
+///
 open class RSDCountdownStepViewController: RSDStepViewController {
     
+    /// A label that is updated to show a countdown (5-4-3-2-1).
     @IBOutlet open var countdownLabel: UILabel?
+    
+    /// A button that can be used to pause/resume the countdown timer.
     @IBOutlet open var pauseButton: UIButton?
     
+    /// This class overrides `didSet` to update the `countdownLabel` to the new value.
     open override var countdown: Int {
         didSet {
-            countdownLabel?.text = "\(countdown)"
+            countdownLabel?.text = numberFormatter.string(from: NSNumber(value: countdown))
         }
     }
     
+    /// The number formatter to use to show the countdown number.
+    private let numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.allowsFloats = false
+        numberFormatter.generatesDecimalNumbers = true
+        return numberFormatter
+    }()
+    
+    /// Toggle the state of the `pauseButton` to pause/resume the countdown.
     @IBAction open func pauseTimer() {
         if self.pauseUptime == nil {
             self.pauseButton?.setTitle(Localization.buttonResume(), for: .normal)
@@ -60,23 +77,34 @@ open class RSDCountdownStepViewController: RSDStepViewController {
     
     // MARK: Initialization
     
+    /// The default nib name to use when instantiating the view controller using `init(step:)`.
     open class var nibName: String {
         return String(describing: RSDCountdownStepViewController.self)
     }
     
+    /// The default bundle to use when instantiating the view controller using `init(step:)`.
     open class var bundle: Bundle {
         return Bundle(for: RSDCountdownStepViewController.self)
     }
     
+    /// Default initializer. This initializer will initialize using the `nibName` and `bundle` defined on this class.
+    /// - parameter step: The step to set for this view controller.
     public override init(step: RSDStep) {
         super.init(nibName: type(of: self).nibName, bundle: type(of: self).bundle)
         self.step = step
     }
     
+    /// Initialize the class using the given nib and bundle.
+    /// - note: If this initializer is used with a `nil` nib, then it must assign the expected outlets.
+    /// - parameters:
+    ///     - nibNameOrNil: The name of the nib or `nil`.
+    ///     - nibBundleOrNil: The name of the bundle or `nil`.
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
+    /// Required initializer. This is the initializer used by a `UIStoryboard`.
+    /// - parameter aDecoder: The decoder used to initialize this view controller.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

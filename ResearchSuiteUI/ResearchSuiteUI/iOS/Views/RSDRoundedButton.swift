@@ -33,20 +33,23 @@
 
 import UIKit
 
+/// `RSDRoundedButton` is a UI element for displaying navigation buttons in the footer area of a view.
 @IBDesignable open class RSDRoundedButton : UIButton {
     
     public static let defaultHeight: CGFloat = 52.0
     public static let defaultWidthWith2Buttons: CGFloat = CGFloat(144.0).rsd_proportionalToScreenWidth(max: 160)
     public static let defaultWidthWith1Button: CGFloat = CGFloat(280.0).rsd_proportionalToScreenWidth(max: 320)
-    public static let defaultCornerRadius: CGFloat = 26.0
+    public static let defaultCornerRadius: CGFloat = defaultHeight / 2.0
     
-    @IBInspectable open var corners: CGFloat = CGFloat(5) {
+    /// The corner radius of the button.
+    @IBInspectable open var corners: CGFloat = RSDRoundedButton.defaultCornerRadius {
         didSet {
             refreshView()
             setNeedsDisplay()
         }
     }
 
+    /// The shadow color of the button.
     @IBInspectable open var shadowColor: UIColor = UIColor.rsd_roundedButtonShadowDark {
         didSet {
             refreshView()
@@ -61,8 +64,6 @@ import UIKit
             self.alpha = isEnabled ? CGFloat(1) : CGFloat(0.3)
         }
     }
-    
-    public var isInTransition: Bool = false
     
     open var titleFont: UIFont? {
         didSet {
@@ -163,6 +164,4 @@ import UIKit
         let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: shadowRadius)
         layer.shadowPath = shadowPath.cgPath
     }
-    
-
 }
