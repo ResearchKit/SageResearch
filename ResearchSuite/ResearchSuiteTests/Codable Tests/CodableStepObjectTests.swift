@@ -209,6 +209,7 @@ class CodableStepObjectTests: XCTestCase {
             "spokenInstructions" : { "start": "Start moving",
                                      "10": "Keep going",
                                      "halfway": "Halfway there",
+                                     "countdown": "5",
                                      "end": "Stop moving"}
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -225,6 +226,11 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.spokenInstruction(at: 0), "Start moving")
             XCTAssertEqual(object.spokenInstruction(at: 10), "Keep going")
             XCTAssertEqual(object.spokenInstruction(at: 15), "Halfway there")
+            XCTAssertEqual(object.spokenInstruction(at: 25), "five")
+            XCTAssertEqual(object.spokenInstruction(at: 26), "four")
+            XCTAssertEqual(object.spokenInstruction(at: 27), "three")
+            XCTAssertEqual(object.spokenInstruction(at: 28), "two")
+            XCTAssertEqual(object.spokenInstruction(at: 29), "one")
             XCTAssertEqual(object.spokenInstruction(at: 30), "Stop moving")
             XCTAssertEqual(object.spokenInstruction(at: Double.infinity), "Stop moving")
             

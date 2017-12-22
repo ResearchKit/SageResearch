@@ -70,6 +70,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     ///            "spokenInstructions" : { "start": "Start moving",
     ///                                     "10": "Keep going",
     ///                                     "halfway": "Halfway there",
+    ///                                     "countdown": "5",
     ///                                     "end": "Stop moving"}
     ///         }
     ///         """.data(using: .utf8)! // our data in native (JSON) format
@@ -78,12 +79,17 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     ///         self.spokenInstructions = [ 0.0 : "Start moving",
     ///                                     10.0 : "Keep going",
     ///                                     15.0 : "Halfway there",
+    ///                                     25.0 : "five",
+    ///                                     26.0 : "four",
+    ///                                     27.0 : "three",
+    ///                                     28.0 : "two",
+    ///                                     29.0 : "one",
     ///                                     Double.infinity : "Stop moving"]
     ///     ```
     ///
     public var spokenInstructions: [TimeInterval : String]?
     
-    /// The `SpokenInstructionKeys` are a specialized marker for the timing of when to speak the
+    /// The `SpokenInstructionKeys` are specialized markers for the timing of when to speak the
     /// spoken instruction. These include keys that can be transformed into a time interval using
     /// the duration of the step to indicate the `halfway` point.
     /// - seealso: `spokenInstructions`
@@ -95,16 +101,11 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         /// Speak the instruction at the halfway point.
         case halfway
         
+        /// Speak a countdown.
+        case countdown
+        
         /// Speak the instruction at the end of the step.
         case end
-        
-        func timeInterval(with duration:TimeInterval) -> TimeInterval {
-            switch(self) {
-            case .start: return 0
-            case .halfway: return duration / 2
-            case .end: return Double.infinity
-            }
-        }
         
         init?(at timeInterval: TimeInterval, duration:TimeInterval) {
             if timeInterval == 0 {
@@ -167,6 +168,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     ///            "spokenInstructions" : { "start": "Start moving",
     ///                                     "10": "Keep going",
     ///                                     "halfway": "Halfway there",
+    ///                                     "countdown": "5",
     ///                                     "end": "Stop moving"}
     ///         }
     ///         """.data(using: .utf8)! // our data in native (JSON) format
@@ -186,16 +188,39 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         if let dictionary = try container.decodeIfPresent([String : String].self, forKey: .spokenInstructions) {
             
             // Map the json deserialized dictionary into the `spokenInstructions` dictionary.
-            spokenInstructions = dictionary.mapKeys({ (key) -> TimeInterval in
+            var countdownStart: Int?
+            var instructions = dictionary.mapKeys({ (key) -> TimeInterval in
                 if let specialKey = SpokenInstructionKeys(stringValue: key) {
                     switch(specialKey) {
-                    case .start: return 0
-                    case .halfway: return stepDuration / 2
-                    case .end: return Double.infinity
+                    case .start:
+                        return 0
+                    case .halfway:
+                        return stepDuration / 2
+                    case .end:
+                        return Double.infinity
+                    case .countdown:
+                        guard let countdown = (dictionary[key] as NSString?)?.integerValue, countdown > 0
+                            else {
+                                return -1.0
+                        }
+                        countdownStart = countdown
+                        return stepDuration - TimeInterval(countdown)
                     }
                 }
                 return (key as NSString).doubleValue as TimeInterval
             })
+            
+            // special-case handling of the countdown
+            if let countdown = countdownStart {
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .spellOut
+                for ii in 1...countdown {
+                    let timeInterval = stepDuration - TimeInterval(ii)
+                    instructions[timeInterval] = numberFormatter.string(from: NSNumber(value: ii))
+                }
+            }
+                        
+            self.spokenInstructions = instructions
         }
         
         try super.init(from: decoder)
