@@ -48,7 +48,7 @@ public protocol RSDResult : Codable {
     var type: RSDResultType { get }
     
     /// The start date timestamp for the result.
-    var startDate: Date { get }
+    var startDate: Date { get set }
     
     /// The end date timestamp for the result.
     var endDate: Date { get set }

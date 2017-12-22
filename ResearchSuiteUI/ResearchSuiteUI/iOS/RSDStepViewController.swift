@@ -216,6 +216,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     // MARK: Navigation and Layout
     
+    /// A mapping of all the buttons that were registered using `setupButton`.
+    public private(set) var registeredButtons: [RSDUIActionType : Set<UIButton>] = [:]
+    
     /// A UIView that is behind the status bar. This can be used to set the background for only the top
     /// part of a step view.
     @IBOutlet open var statusBarBackgroundView: UIView?
@@ -228,7 +231,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     /// Convenience method for getting the "Next" button.
     open var nextButton: UIButton? {
-        return navigationFooter?.nextButton
+        return registeredButtons[.navigation(.goForward)]?.first
     }
     
     /// Is forward navigation enabled? The default implementation will check the task controller.
@@ -239,8 +242,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// Callback from the task controller called on the current step controller when loading is finished
     /// and the task is ready to continue.
     open func didFinishLoading() {
-        // Enable the continue button if all done
-        nextButton?.isEnabled = isForwardEnabled
+        // Enable the continue button(s) if all done.
+        guard isForwardEnabled, let buttons = registeredButtons[.navigation(.goForward)] else { return }
+        for button in buttons {
+            button.isEnabled = true
+        }
     }
 
     /// Set up the navigation header and footer. Additionally, set up the UI theme colors, UI images, and
@@ -402,6 +408,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     open func setupButton(_ button: UIButton?, for actionType: RSDUIActionType, isFooter: Bool) {
         guard let btn = button else { return }
         
+        // Register the buttons
+        var buttonSet: Set<UIButton> = registeredButtons[actionType] ?? []
+        buttonSet.insert(btn)
+        registeredButtons[actionType] = buttonSet
+
         // Add an action if not setup already and the action type is recognized
         if btn.actions(forTarget: nil, forControlEvent: .touchUpInside) == nil {
             switch actionType {
@@ -466,24 +477,50 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
-    @objc private func _forwardTapped() {
+    @objc private func _forwardTapped(_ sender: UIButton) {
+        momentarilyDisableButton(sender)
         self.goForward()
     }
     
-    @objc private func _backTapped() {
+    @objc private func _backTapped(_ sender: UIButton) {
+        momentarilyDisableButton(sender)
         self.goBack()
     }
     
-    @objc private func _skipTapped() {
+    @objc private func _skipTapped(_ sender: UIButton) {
+        momentarilyDisableButton(sender)
         self.skipForward()
     }
     
-    @objc private func _cancelTapped() {
+    @objc private func _cancelTapped(_ sender: UIButton) {
+        momentarilyDisableButton(sender)
         self.cancel()
     }
     
-    @objc private func _learnMoreTapped() {
+    @objc private func _learnMoreTapped(_ sender: UIButton) {
         self.showLearnMore()
+    }
+    
+    /// Momentarily disable the button.  This keeps a double-tap of a navigation button from
+    /// triggering more than once. This is required b/c of how the UI handles the call to
+    /// go forward/backward by calling a method that just looks at the current step.
+    private func momentarilyDisableButton(_ button: UIButton) {
+        if let transitionButton = button as? RSDButton {
+            transitionButton.isInTransition = true
+        }
+        button.isUserInteractionEnabled = false
+        let delay = DispatchTime.now() + .milliseconds(1000)
+        DispatchQueue.main.asyncAfter(deadline: delay) { [weak self, weak button] in
+            self?._reenableButtons(button: button)
+        }
+    }
+    
+    private func _reenableButtons(button: UIButton?) {
+        guard let button = button else { return }
+        button.isUserInteractionEnabled = true
+        if let transitionButton = button as? RSDButton {
+            transitionButton.isInTransition = false
+        }
     }
     
     /// Navigates forward to the next step. By default, it calls `performStopCommands()` to end

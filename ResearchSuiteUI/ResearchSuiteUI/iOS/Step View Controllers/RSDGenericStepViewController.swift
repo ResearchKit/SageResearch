@@ -278,6 +278,9 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     open func setupModel() {
         tableData = RSDFormStepDataSourceObject(step: self.step, taskPath: self.taskController.taskPath, supportedHints: type(of: self).supportedUIHints)
         tableData?.delegate = self
+        
+        // after setting up the data source, check the enabled state of the forward button.
+        self.answersDidChange(in: 0)
     }
     
     // MARK: View setup

@@ -52,31 +52,50 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     open private(set) var sections: [RSDTableSection]
 
     /// The initial result when the data source was first displayed.
-    open private(set) var initialResults: [String : RSDResult]
+    open private(set) var initialResult: RSDCollectionResult?
 
     /// Initialize a new `RSDFormStepDataSourceObject`.
     /// - parameters:
-    ///     - step:       The RSDStep for this data source.
-    ///     - taskPath:   The current task path for this data source.
-    public init(step: RSDStep, taskPath: RSDTaskPath, supportedHints: Set<RSDFormUIHint>? = nil, sections: [RSDTableSection]? = nil, initialResults: [String : RSDResult]? = nil) {
+    ///     - step:             The RSDStep for this data source.
+    ///     - taskPath:         The current task path for this data source.
+    ///     - supportedHints:   The supported UI hints for this data source.
+    ///     - sections:         The sections to use with this data source. If `nil`, the base class
+    ///                         implementation will set up the sections using the step.
+    ///     - initialResult:    The initial result to use to set up this source. If `nil`, the base
+    ///                         class will look in the previous results of the task path.
+    public init(step: RSDStep, taskPath: RSDTaskPath, supportedHints: Set<RSDFormUIHint>? = nil, sections: [RSDTableSection]? = nil, initialResult: RSDCollectionResult? = nil) {
         
         self.step = step
         self.taskPath = taskPath
         self.supportedHints = supportedHints ?? RSDFormUIHint.allStandardHints
         self.sections = sections ?? []
-        self.initialResults = initialResults ?? [:]
         
-        // If the sections and/or initial results are undefined then set them
+        // Set the initial result if available.
+        if let result = initialResult {
+            self.initialResult = result
+        }
+        else if let previousResult = taskPath.previousResults?.rsd_last(where: { $0.identifier == step.identifier }) {
+            if let collectionResult = (previousResult as? RSDCollectionResult) {
+                self.initialResult = collectionResult
+            } else {
+                var collectionResult = self.instantiateCollectionResult()
+                collectionResult.startDate = previousResult.startDate
+                collectionResult.endDate = previousResult.endDate
+                collectionResult.appendInputResults(with: previousResult)
+                self.initialResult = collectionResult
+            }
+        }
+        
+        // If the sections are undefined then set them.
         if sections == nil {
             populateSections()
         }
-        if initialResults == nil {
-            populateInitialResults()
-        }
+        // Then populate the results from the initial result.
+        populateInitialResults()
     }
     
     /// The collection result associated with this data source. The default implementation is to search the `taskPath`
-    /// for a matching result and if that fails to return a new instance of `RSDCollectionResultObject`.
+    /// for a matching result and if that fails to return a new instance created using `instantiateCollectionResult()`.
     ///
     /// - returns: The appropriate collection result.
     open func collectionResult() -> RSDCollectionResult {
@@ -84,8 +103,16 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
             return collectionResult
         }
         else {
-            return RSDCollectionResultObject(identifier: step.identifier)
+            return instantiateCollectionResult()
         }
+    }
+    
+    /// Instantiate a collection result of the appropriate object type for this data source.
+    /// The default implementation returns a new instance of `RSDCollectionResultObject`.
+    ///
+    /// - returns: The appropriate collection result.
+    open func instantiateCollectionResult() -> RSDCollectionResult {
+        return RSDCollectionResultObject(identifier: step.identifier)
     }
     
     /// Instantiate the appropriate answer result for the given item group.
@@ -166,23 +193,37 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         }
     }
     
-    /// Convenience method for looking at the previous results in the task path and setting the answer based on that result.
-    /// - returns: A dictionary of results mapped to the result identifier.
+    /// Convenience method for looking at the previous results in the task path and setting the answer
+    /// based on that result. Get the collection result for this step and populate that result with the
+    /// initial results that are valid from this form.
+    ///
+    /// - note: This is **not** handled universally by the `RSDTaskController` for all steps because it
+    /// is possible that a different implementation should not include populating the current result with
+    /// a previous result. For example, a form should be populated with previous answers, but an active
+    /// test should not.
     private func populateInitialResults() {
-        guard let previousResult = self.taskPath.previousResults?.rsd_last(where: { $0.identifier == self.step.identifier }) else {
-            return
-        }
-        let results: [RSDResult] = (previousResult as? RSDCollectionResult)?.inputResults ?? [previousResult]
+        guard let results = self.initialResult?.inputResults, results.count > 0 else { return }
+        
+        var stepResult = self.collectionResult()
+        var hasChanges: Bool = false
+        
         for result in results {
             if let itemGroup = itemGroup(with: result.identifier) as? RSDInputFieldTableItemGroup {
                 do {
                     try itemGroup.setAnswer(from: result)
-                    initialResults[result.identifier] = result
+                    if let result = self.instantiateAnswerResult(for: itemGroup) {
+                        stepResult.appendInputResults(with: result)
+                        hasChanges = true
+                    }
                 } catch let err {
                     // ignore error but do not save the result
                     debugPrint("Failed to restore answer from result. \(err)")
                 }
             }
+        }
+
+        if hasChanges {
+            self.taskPath.appendStepHistory(with: stepResult)
         }
     }
     
