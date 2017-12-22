@@ -34,7 +34,7 @@
 import UIKit
 
 /// `RSDUnderlinedButton` is a UI element for displaying an underlined button.
-@IBDesignable open class RSDUnderlinedButton : UIButton {
+@IBDesignable open class RSDUnderlinedButton : RSDButton {
     
     /// The font used for the text button.
     @IBInspectable open var textFont : UIFont = UIFont.systemFont(ofSize: 17) {

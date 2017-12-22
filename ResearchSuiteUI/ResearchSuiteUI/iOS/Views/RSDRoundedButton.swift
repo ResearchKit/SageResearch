@@ -33,8 +33,29 @@
 
 import UIKit
 
+/// `RSDButton` is a base-class implementation of `RSDButtonProtocol` that handles overriding
+/// default accessibility behavior for a button in transition.
+@IBDesignable open class RSDButton : UIButton {
+    
+    var isInTransition : Bool = false
+
+    override open var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            let traits = super.accessibilityTraits
+            // Prevent VoiceOver from speaking "dimmed" when transitioning between pages.
+            if self.isInTransition {
+                return traits & ~UIAccessibilityTraitNotEnabled
+            }
+            return traits
+        }
+        set {
+            super.accessibilityTraits = newValue
+        }
+    }
+}
+
 /// `RSDRoundedButton` is a UI element for displaying navigation buttons in the footer area of a view.
-@IBDesignable open class RSDRoundedButton : UIButton {
+@IBDesignable open class RSDRoundedButton : RSDButton {
     
     public static let defaultHeight: CGFloat = 52.0
     public static let defaultWidthWith2Buttons: CGFloat = CGFloat(144.0).rsd_proportionalToScreenWidth(max: 160)
