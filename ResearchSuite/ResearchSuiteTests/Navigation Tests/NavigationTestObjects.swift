@@ -201,7 +201,7 @@ class TestTaskController: NSObject, RSDTaskController {
     var taskPath: RSDTaskPath!
     var factory: RSDFactory?
     var currentStepController: RSDStepController?
-    
+    var canSaveTaskProgress: Bool = false
     var shouldFetchSubtask: Bool = true
     var shouldPageSectionSteps: Bool = true
     
@@ -219,6 +219,7 @@ class TestTaskController: NSObject, RSDTaskController {
     var handleTaskCompleted_called = false
     var handleTaskResultReady_calledWith: RSDTaskPath?
     var handleTaskCancelled_called = false
+    var handleTaskCancelled_shouldSave: Bool?
     var addAsyncActions_called = false
     var addAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
     var startAsyncActions_called = false
@@ -269,8 +270,9 @@ class TestTaskController: NSObject, RSDTaskController {
         handleTaskResultReady_calledWith = taskPath
     }
     
-    func handleTaskCancelled() {
+    func handleTaskCancelled(shouldSave: Bool) {
         handleTaskCancelled_called = true
+        handleTaskCancelled_shouldSave = shouldSave
     }
     
     func test_stepTo(_ stepIdentifier: String) -> RSDStep {
