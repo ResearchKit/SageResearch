@@ -95,7 +95,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     }
     
     /// The collection result associated with this data source. The default implementation is to search the `taskPath`
-    /// for a matching result and if that fails to return a new instance creating using `instantiateCollectionResult()`.
+    /// for a matching result and if that fails to return a new instance created using `instantiateCollectionResult()`.
     ///
     /// - returns: The appropriate collection result.
     open func collectionResult() -> RSDCollectionResult {
