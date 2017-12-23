@@ -71,6 +71,15 @@ public struct RSDSound {
     
     /// The "photo shutter" sound played when taking a picture.
     public static let photoShutter = RSDSound(name: "photoShutter")
+    
+    /// A key tap sound.
+    public static let tock = RSDSound(name: "Tock")
+    
+    /// A key tap sound.
+    public static let tink = RSDSound(name: "Tink")
+    
+    /// The lock screen sound.
+    public static let lock = RSDSound(name: "lock")
 }
 
 /// `RSDSoundPlayer` is a protocol for playing sounds intended to give the user UI feedback during
