@@ -187,7 +187,12 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
     
     /// The text string to display as the answer.
     open var answerText: String? {
-        return (_answer as? String) ?? formatter?.string(for: _answer)
+        return answerText(for:_answer)
+    }
+    
+    /// The text string to display for a given answer.
+    open func answerText(for answer: Any?) -> String? {
+        return (answer as? String) ?? formatter?.string(for: answer)
     }
     
     /// Set the new answer value. This will throw an error if the value isn't valid. Otherwise, it will

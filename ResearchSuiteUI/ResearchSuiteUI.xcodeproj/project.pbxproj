@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */; };
 		F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */; };
 		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
 		FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */; };
@@ -75,6 +76,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPickerViewProtocol.swift; sourceTree = "<group>"; };
 		F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDLoadingView.swift; sourceTree = "<group>"; };
 		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utilities.swift"; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */,
 				FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */,
 				F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */,
+				F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */,
 				FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */,
 				FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */,
 				FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */,
@@ -484,6 +487,7 @@
 				FFF2D98D1FCF4527007258F8 /* DebugStepViewController.swift in Sources */,
 				F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */,
 				FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
+				F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */,
 				FFF2D98C1FCF4527007258F8 /* RSDGenericStepViewController.swift in Sources */,
 				FFF2D9981FCF4538007258F8 /* UIImage+Utilities.swift in Sources */,
 				FFF2D9991FCF4538007258F8 /* UIView+Layout.swift in Sources */,

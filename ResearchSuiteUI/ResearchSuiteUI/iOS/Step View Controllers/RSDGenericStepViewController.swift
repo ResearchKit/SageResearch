@@ -501,7 +501,14 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                 fieldCell.textField.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
             }
             
-            // TODO: syoung 10/23/2017 Add support for picker views
+            // Add support for picker views
+            if uiHintType == .picker {
+                if let pickerSource = textInputItem.pickerSource as? RSDDatePickerDataSource {
+                    let picker = RSDDatePicker(pickerSource: pickerSource, indexPath: indexPath)
+                    fieldCell.textField.inputView = picker
+                    picker.addTarget(self, action: #selector(pickerValueChanged), for: .valueChanged)
+                }
+            }
             
             return fieldCell
         }
@@ -547,6 +554,9 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             // if we have an answer, populate the text field
             if itemGroup.isAnswerValid {
                 textFieldCell.textField.text = tableItem.answerText
+                if let picker = textFieldCell.textField.inputView as? RSDPickerViewProtocol {
+                    picker.answer = tableItem.answer
+                }
             }
             
             if let text = itemGroup.inputField.prompt {
@@ -631,6 +641,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     open func textFieldDidBeginEditing(_ textField: UITextField) {
         activeTextField = textField
         (activeTextField?.inputAccessoryView as? RSDNavigationFooterView)?.nextButton?.isEnabled = self.isForwardEnabled
+        pickerValueChanged(textField)
         scroll(to: textField)
     }
     
@@ -644,10 +655,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     /// Enable the next button as soon as the text field entry has changed.
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        // Always enable the next button once something has been entered
-        (textField.inputAccessoryView as? RSDStepNavigationView)?.nextButton?.isEnabled = true
-        
+        didChangeTextField(textField)
         return true
     }
     
@@ -665,10 +673,31 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         tableView.setContentOffset(CGPoint(x: 0.0, y: savedVerticalScrollOffet), animated: true)
     }
     
+    // Picker management
+    
+    @objc func pickerValueChanged(_ sender: Any) {
+        guard let picker = ((sender as? UITextField)?.inputView ?? sender) as? RSDPickerViewProtocol,
+            let textField = activeTextField as? RSDStepTextField,
+            picker.indexPath == textField.indexPath,
+            let inputItem = self.tableData?.tableItem(at: picker.indexPath) as? RSDTextInputTableItem
+            else {
+                return
+        }
+        textField.text = inputItem.answerText(for: picker.answer)
+        if picker.answer != nil {
+            didChangeTextField(textField)
+        }
+    }
+    
     // Text field management
     
     private var savedVerticalScrollOffet: CGFloat = 0.0
     private var activeTextField: UITextField?
+    
+    private func didChangeTextField(_ textField: UITextField) {
+        // Always enable the next button once something has been entered
+        (textField.inputAccessoryView as? RSDStepNavigationView)?.nextButton?.isEnabled = true
+    }
     
     /// Check if the first cell is a text field and if so, set it as the first responder.
     private func checkForFirstCellTextField() {
@@ -724,10 +753,18 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             let indexPath = customTextField.indexPath else {
                 return false
         }
-
+        
+        let answer: Any? = {
+            if let picker = textField.inputView as? RSDPickerViewProtocol {
+                return picker.answer
+            } else {
+                return textField.text
+            }
+        }()
+        
         // If this is a custom text field then update the text to match the
         // actual value stored in case it differs from the text entered.
-        let success = saveAnswer(newValue: textField.text ?? NSNull(), at: indexPath)
+        let success = saveAnswer(newValue: answer ?? NSNull(), at: indexPath)
         if !success, let tableItem = tableItem(for: textField) {
             textField.text = tableItem.answerText
         }
@@ -802,7 +839,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         navigationFooter?.nextButton?.isEnabled = self.isForwardEnabled
         (activeTextField?.inputAccessoryView as? RSDNavigationFooterView)?.nextButton?.isEnabled = self.isForwardEnabled
     }
-
     
     // MARK: UIScrollView delegate
     
