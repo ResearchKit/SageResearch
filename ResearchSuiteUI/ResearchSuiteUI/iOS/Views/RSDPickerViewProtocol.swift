@@ -33,18 +33,31 @@
 
 import Foundation
 
+/// `RSDPickerObserver` is an observer of changes to the picker.
+@objc
+public protocol RSDPickerObserver : class, NSObjectProtocol {
+    @objc func pickerValueChanged(_ sender: Any)
+}
+
 /// `RSDPickerViewProtocol` is a protocol for an input view that can be used to pick an answer.
+@objc
 public protocol RSDPickerViewProtocol : class, NSObjectProtocol {
     
     /// The index path associated with this picker.
-    var indexPath: IndexPath! { get set }
+    @objc var indexPath: IndexPath! { get set }
     
     /// The answer from the picker view that maps to the input field.
-    var answer: Any? { get set }
+    @objc var answer: Any? { get set }
+    
+    /// The observer to alert when there is a change in the selected value.
+    @objc weak var observer: RSDPickerObserver? { get set }
 }
 
 /// `RSDDatePicker` is a date picker that stores a pointer to the index path with which it is associated.
-open class RSDDatePicker : UIDatePicker, RSDPickerViewProtocol {
+public class RSDDatePicker : UIDatePicker, RSDPickerViewProtocol {
+    
+    /// The observer of this picker
+    public weak var observer: RSDPickerObserver?
     
     /// The index path associated with this picker.
     public var indexPath: IndexPath!
@@ -76,6 +89,14 @@ open class RSDDatePicker : UIDatePicker, RSDPickerViewProtocol {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    private func commonInit() {
+        self.addTarget(self, action: #selector(pickerValueChanged), for: .valueChanged)
+    }
+    
+    @objc private func pickerValueChanged(_ sender: Any) {
+        self.observer?.pickerValueChanged(self)
+    }
 }
 
 extension RSDDatePickerMode {
@@ -90,5 +111,77 @@ extension RSDDatePickerMode {
         case .dateAndTime:
             return .dateAndTime
         }
+    }
+}
+
+/// `RSDPickerView` is a `UIPickerView` that can be used to represent a picker with an associated index path.
+open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    public weak var observer: RSDPickerObserver?
+    
+    /// The index path associated with this picker.
+    public var indexPath: IndexPath!
+    
+    /// The picker view data source for this view. This is a strong reference.
+    public var pickerSource: RSDChoicePickerDataSource!
+    
+    /// The answer maps to the values for the selected rows.
+    public var answer: Any? {
+        get {
+            var selections: [Int] = []
+            for ii in 0..<self.numberOfComponents {
+                let selectedRow = self.selectedRow(inComponent: ii) - 1
+                guard selectedRow >= 0 else { return nil }
+                selections.append(selectedRow)
+            }
+            return pickerSource.selectedAnswer(with: selections)
+        }
+        set {
+            guard let selectedRows = pickerSource.selectedRows(from: newValue)
+                else {
+                    return
+            }
+            for (component, row) in selectedRows.enumerated() {
+                self.selectRow(row + 1, inComponent: component, animated: false)
+            }
+        }
+    }
+    
+    /// Default initializer.
+    /// - parameters:
+    ///     - pickerSource: The picker source used to set up the picker.
+    ///     - indexPath: The index path associated with this picker.
+    public init(pickerSource: RSDChoicePickerDataSource, indexPath: IndexPath) {
+        super.init(frame: .zero)
+        self.indexPath = indexPath
+        self.pickerSource = pickerSource
+        self.delegate = self
+        self.dataSource = self
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    // MARK: UIPickerViewDataSource
+    
+    open func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return pickerSource.numberOfComponents
+    }
+    
+    open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerSource.numberOfRows(in: component) + 1
+    }
+    
+    // MARK: UIPickerViewDelegate
+    
+    open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        guard row > 0 else { return nil }
+        guard let choice = pickerSource.choice(forRow: row - 1, forComponent: component) else { return nil }
+        return choice.text
+    }
+    
+    open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.observer?.pickerValueChanged(self)
     }
 }

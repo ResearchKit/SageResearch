@@ -63,6 +63,13 @@
               "choices": ["Alpha","Beta","Charlie","Delta","Epsilon"]
               },
               {
+              "identifier": "selectCombination",
+              "type": "form",
+              "title": "Pick a combination",
+              "dataType": "multipleComponent",
+              "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
+              },
+              {
               "identifier": "selectMultiple",
               "type": "form",
               "title": "Select as many as you want",

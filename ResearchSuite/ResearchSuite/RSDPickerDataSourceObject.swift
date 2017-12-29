@@ -84,6 +84,42 @@ extension RSDChoiceOptions {
     }
 }
 
+extension RSDChoicePickerDataSource {
+    
+    /// Returns the selected answer for the given selected rows of a picker view.
+    public func selectedAnswer(with selectedRows: [Int]) -> Any? {
+        let choices = selectedRows.enumerated().rsd_mapAndFilter { (component, selectedRow) -> Any? in
+            return self.choice(forRow: selectedRow, forComponent: component)?.value
+        }
+        return choices.count == self.numberOfComponents ? (choices.count == 1 ? choices.first : choices) : nil
+    }
+    
+    /// Returns the selected rows that match the given selected answer.
+    public func selectedRows(from selectedAnswer: Any?) -> [Int]? {
+        guard selectedAnswer != nil else { return nil }
+        let answers:[Any] = (selectedAnswer! as? [Any]) ?? [selectedAnswer!]
+        guard answers.count == self.numberOfComponents else { return nil }
+        
+        // Filter through and look for the current answer
+        var selected: [Int] = []
+        for (component, value) in answers.enumerated() {
+            let numRows = self.numberOfRows(in: component)
+            var found: Bool = false
+            for row in 0..<numRows {
+                if let choice = self.choice(forRow: row, forComponent: component),
+                    RSDObjectEquality(choice.value, value) {
+                    selected.append(row)
+                    found = true
+                }
+            }
+            // Exit early with nil if a selected row is not found
+            if !found { return nil }
+        }
+        
+        return selected
+    }
+}
+
 /// A simple struct that can be used to implement the `RSDChoiceOptions` protocol.
 public struct RSDChoiceOptionsObject : RSDChoiceOptions {
     

@@ -58,7 +58,7 @@ import UIKit
 /// will result in a `tableData` that has no sections and, therefore, no rows. So the tableView will simply have a headerView,
 /// no rows, and a footerView.
 ///
-open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RSDFormStepDataSourceDelegate {
+open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RSDFormStepDataSourceDelegate, RSDPickerObserver {
     
     /// The table view associated with this view controller. This will be created during `viewDidLoad()` with a default
     /// set up if it is `nil`. If this view controller is loaded from a nib or storyboard, then it should set this outlet
@@ -86,7 +86,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             case .collection(let collectionType, _):
                 switch collectionType {
                 case .multipleComponent:
-                    return false // TODO: syoung 10/18/2018 Implement support for multiple component
+                    return true
                 default:
                     if let choiceInputField = item as? RSDChoiceInputField {
                         for choice in choiceInputField.choices {
@@ -506,7 +506,12 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                 if let pickerSource = textInputItem.pickerSource as? RSDDatePickerDataSource {
                     let picker = RSDDatePicker(pickerSource: pickerSource, indexPath: indexPath)
                     fieldCell.textField.inputView = picker
-                    picker.addTarget(self, action: #selector(pickerValueChanged), for: .valueChanged)
+                    picker.observer = self
+                }
+                else if let pickerSource = textInputItem.pickerSource as? RSDChoicePickerDataSource {
+                    let picker = RSDChoicePickerView(pickerSource: pickerSource, indexPath: indexPath)
+                    fieldCell.textField.inputView = picker
+                    picker.observer = self
                 }
             }
             
@@ -675,7 +680,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     
     // Picker management
     
-    @objc func pickerValueChanged(_ sender: Any) {
+    @objc open func pickerValueChanged(_ sender: Any) {
         guard let picker = ((sender as? UITextField)?.inputView ?? sender) as? RSDPickerViewProtocol,
             let textField = activeTextField as? RSDStepTextField,
             picker.indexPath == textField.indexPath,

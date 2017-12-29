@@ -192,7 +192,21 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
     
     /// The text string to display for a given answer.
     open func answerText(for answer: Any?) -> String? {
-        return (answer as? String) ?? formatter?.string(for: answer)
+        if let textFormatter = formatter {
+            return textFormatter.string(for: answer)
+        }
+        else if let string = answer as? String {
+            return string
+        }
+        else if let array = answer as? [Any], let multipleComponent = self.inputField as? RSDMultipleComponentInputField {
+            let strings = array.map { String(describing: $0) }
+            let separator = multipleComponent.separator ?? " "
+            return strings.joined(separator: separator)
+        }
+        else if let anyAnswer = answer {
+            return String(describing: anyAnswer)
+        }
+        return nil
     }
     
     /// Set the new answer value. This will throw an error if the value isn't valid. Otherwise, it will
