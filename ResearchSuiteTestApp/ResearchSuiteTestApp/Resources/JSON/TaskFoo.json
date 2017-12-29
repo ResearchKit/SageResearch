@@ -62,13 +62,7 @@
               "dataType": "singleChoice",
               "choices": ["Alpha","Beta","Charlie","Delta","Epsilon"]
               },
-              {
-              "identifier": "selectCombination",
-              "type": "form",
-              "title": "Pick a combination",
-              "dataType": "multipleComponent",
-              "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
-              },
+
               {
               "identifier": "selectMultiple",
               "type": "form",
@@ -96,12 +90,12 @@
               "identifier": "step4",
               "type": "form",
               "title": "Pick some values",
-              "text": "Choose a date in the future and a number between -2 and 3",
+              "text": "This step shows examples of various text fields that use a picker view.",
               "inputFields": [{
                               "identifier": "date",
                               "dataType": "date",
                               "uiHint": "picker",
-                              "prompt": "Date",
+                              "prompt": "Pick a date in the future",
                               "range": {
                                   "allowPast": false,
                                   "codingFormat": "yyyy-MM-dd"
@@ -110,11 +104,17 @@
                               {
                               "identifier": "number",
                               "dataType": "integer",
-                              "prompt": "Number",
+                              "prompt": "Pick a number between -2 and +3",
                               "uiHint": "picker",
                               "range" : {   "minimumValue" : -2,
                                             "maximumValue" : 3,
                                             "stepInterval" : 1},
+                              },
+                              {
+                              "identifier": "multipleComponent",
+                              "dataType": "multipleComponent",
+                              "prompt": "Pick a combination of colors and animals",
+                              "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat", "duck"]]
                               }
                               ]
               },

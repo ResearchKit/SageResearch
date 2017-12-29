@@ -33,12 +33,6 @@
 
 import Foundation
 
-/// `RSDPickerObserver` is an observer of changes to the picker.
-@objc
-public protocol RSDPickerObserver : class, NSObjectProtocol {
-    @objc func pickerValueChanged(_ sender: Any)
-}
-
 /// `RSDPickerViewProtocol` is a protocol for an input view that can be used to pick an answer.
 @objc
 public protocol RSDPickerViewProtocol : class, NSObjectProtocol {
@@ -51,6 +45,12 @@ public protocol RSDPickerViewProtocol : class, NSObjectProtocol {
     
     /// The observer to alert when there is a change in the selected value.
     @objc weak var observer: RSDPickerObserver? { get set }
+}
+
+/// `RSDPickerObserver` is an observer of changes to the picker.
+@objc
+public protocol RSDPickerObserver : class, NSObjectProtocol {
+    @objc func pickerValueChanged(_ sender: Any)
 }
 
 /// `RSDDatePicker` is a date picker that stores a pointer to the index path with which it is associated.
@@ -120,6 +120,7 @@ extension RSDDatePickerMode {
 /// This picker has a `RSDChoicePickerDataSource` as it's source. This implementation only supports text choices.
 open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    /// The observer of this picker
     public weak var observer: RSDPickerObserver?
     
     /// The index path associated with this picker.
@@ -193,6 +194,7 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
 /// This picker has a `RSDNumberPickerDataSource` as it's source.
 open class RSDNumberPickerView : UIPickerView, RSDPickerViewProtocol, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    /// The observer of this picker
     public weak var observer: RSDPickerObserver?
     
     /// The index path associated with this picker.
@@ -224,7 +226,7 @@ open class RSDNumberPickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
             
             // get the nearest decimal
             let decimalRow = (number - pickerSource.minimum) / interval
-            let row = (decimalRow as NSNumber).intValue + 1
+            let row = Int(round((decimalRow as NSNumber).doubleValue)) + 1
             self.selectRow(row, inComponent: 0, animated: false)
         }
     }
@@ -245,15 +247,15 @@ open class RSDNumberPickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
         super.init(coder: aDecoder)
     }
     
-    public var range: Decimal {
-        return pickerSource.maximum - pickerSource.minimum
+    private var range: Decimal {
+        return abs(pickerSource.maximum - pickerSource.minimum)
     }
     
-    public var interval: Decimal {
+    private var interval: Decimal {
         return pickerSource.stepInterval ?? 1
     }
     
-    public func decimalNumber(forRow row: Int) -> Decimal? {
+    private func decimalNumber(forRow row: Int) -> Decimal? {
         guard row > 0 else { return nil }
         return pickerSource.minimum + interval * Decimal(row - 1)
     }
@@ -266,7 +268,7 @@ open class RSDNumberPickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
     
     open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         let numSteps = range / interval
-        return (numSteps as NSNumber).intValue + 1
+        return Int(round((numSteps as NSNumber).doubleValue)) + 1
     }
     
     // MARK: UIPickerViewDelegate

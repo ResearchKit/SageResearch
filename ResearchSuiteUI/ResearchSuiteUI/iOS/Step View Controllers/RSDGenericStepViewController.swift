@@ -500,21 +500,9 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             
             // Add support for picker views
             if uiHintType == .picker {
-                if let pickerSource = textInputItem.pickerSource as? RSDDatePickerDataSource {
-                    let picker = RSDDatePicker(pickerSource: pickerSource, indexPath: indexPath)
-                    fieldCell.textField.inputView = picker
-                    picker.observer = self
-                }
-                else if let pickerSource = textInputItem.pickerSource as? RSDChoicePickerDataSource {
-                    let picker = RSDChoicePickerView(pickerSource: pickerSource, indexPath: indexPath)
-                    fieldCell.textField.inputView = picker
-                    picker.observer = self
-                }
-                else if let pickerSource = textInputItem.pickerSource as? RSDNumberPickerDataSource {
-                    let picker = RSDNumberPickerView(pickerSource: pickerSource, indexPath: indexPath)
-                    fieldCell.textField.inputView = picker
-                    picker.observer = self
-                }
+                let picker = instantiatePickerView(textInputItem: textInputItem, indexPath: indexPath)
+                fieldCell.textField.inputView = picker
+                picker?.observer = self
             }
             
             return fieldCell
@@ -523,6 +511,24 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             assertionFailure("tableItem \(String(describing: tableItem)) is not supported. indexPath=\(indexPath)")
             return nil
         }
+    }
+    
+    /// Instantiate the appropriate picker view for the given input item.
+    /// - parameters:
+    ///     - textInputItem: The table item.
+    ///     - indexPath: The index path.
+    open func instantiatePickerView(textInputItem: RSDTextInputTableItem, indexPath:IndexPath) -> (RSDPickerViewProtocol & UIView)? {
+        if let pickerSource = textInputItem.pickerSource as? RSDDatePickerDataSource {
+            return RSDDatePicker(pickerSource: pickerSource, indexPath: indexPath)
+        }
+        else if let pickerSource = textInputItem.pickerSource as? RSDChoicePickerDataSource {
+            return RSDChoicePickerView(pickerSource: pickerSource, indexPath: indexPath)
+        }
+        else if let pickerSource = textInputItem.pickerSource as? RSDNumberPickerDataSource {
+            return RSDNumberPickerView(pickerSource: pickerSource, indexPath: indexPath)
+        }
+        debugPrint("Could not instantiate an appropriate picker for \(textInputItem.inputField.identifier): \(String(describing: textInputItem.pickerSource))")
+        return nil
     }
     
     /// Configure a cell that is appropriate for the item at the given index path.
