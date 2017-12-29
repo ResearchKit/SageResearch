@@ -84,10 +84,12 @@ public class RSDDatePicker : UIDatePicker, RSDPickerViewProtocol {
         self.maximumDate = pickerSource.maximumDate
         self.minimumDate = pickerSource.minimumDate
         self.minuteInterval = pickerSource.minuteInterval ?? 1
+        commonInit()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        commonInit()
     }
     
     private func commonInit() {
@@ -114,7 +116,8 @@ extension RSDDatePickerMode {
     }
 }
 
-/// `RSDPickerView` is a `UIPickerView` that can be used to represent a picker with an associated index path.
+/// `RSDChoicePickerView` is a `UIPickerView` that can be used to represent a picker with an associated index path.
+/// This picker has a `RSDChoicePickerDataSource` as it's source. This implementation only supports text choices.
 open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerViewDataSource, UIPickerViewDelegate {
     
     public weak var observer: RSDPickerObserver?
@@ -179,6 +182,98 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
         guard row > 0 else { return nil }
         guard let choice = pickerSource.choice(forRow: row - 1, forComponent: component) else { return nil }
         return choice.text
+    }
+    
+    open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.observer?.pickerValueChanged(self)
+    }
+}
+
+/// `RSDNumberPickerView` is a `UIPickerView` that can be used to represent a picker with an associated index path.
+/// This picker has a `RSDNumberPickerDataSource` as it's source.
+open class RSDNumberPickerView : UIPickerView, RSDPickerViewProtocol, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    public weak var observer: RSDPickerObserver?
+    
+    /// The index path associated with this picker.
+    public var indexPath: IndexPath!
+    
+    /// The picker view data source for this view. This is a strong reference.
+    public var pickerSource: RSDNumberPickerDataSource!
+    
+    /// The answer maps to the values for the selected rows.
+    public var answer: Any? {
+        get {
+            let selectedRow = self.selectedRow(inComponent: 0)
+            return decimalNumber(forRow: selectedRow)
+        }
+        set {
+            // Check that the answer is a number in range
+            let number: Decimal
+            if let decimal = newValue as? Decimal {
+                number = decimal
+            } else if let num = (newValue as? NSNumber) ?? (newValue as? RSDJSONNumber)?.jsonNumber() {
+                number = Decimal(num.doubleValue)
+            } else {
+                number = .nan
+            }
+            guard number != .nan, number <= pickerSource.maximum, number >= pickerSource.minimum else {
+                self.selectRow(0, inComponent: 0, animated: false)
+                return
+            }
+            
+            // get the nearest decimal
+            let decimalRow = (number - pickerSource.minimum) / interval
+            let row = (decimalRow as NSNumber).intValue + 1
+            self.selectRow(row, inComponent: 0, animated: false)
+        }
+    }
+    
+    /// Default initializer.
+    /// - parameters:
+    ///     - pickerSource: The picker source used to set up the picker.
+    ///     - indexPath: The index path associated with this picker.
+    public init(pickerSource: RSDNumberPickerDataSource, indexPath: IndexPath) {
+        super.init(frame: .zero)
+        self.indexPath = indexPath
+        self.pickerSource = pickerSource
+        self.delegate = self
+        self.dataSource = self
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public var range: Decimal {
+        return pickerSource.maximum - pickerSource.minimum
+    }
+    
+    public var interval: Decimal {
+        return pickerSource.stepInterval ?? 1
+    }
+    
+    public func decimalNumber(forRow row: Int) -> Decimal? {
+        guard row > 0 else { return nil }
+        return pickerSource.minimum + interval * Decimal(row - 1)
+    }
+    
+    // MARK: UIPickerViewDataSource
+    
+    open func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        let numSteps = range / interval
+        return (numSteps as NSNumber).intValue + 1
+    }
+    
+    // MARK: UIPickerViewDelegate
+    
+    open func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        guard let number = decimalNumber(forRow: row) else { return nil }
+        return pickerSource.numberFormatter.string(from: number as NSNumber)
     }
     
     open func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

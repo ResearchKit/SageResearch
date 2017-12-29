@@ -96,7 +96,7 @@
               "identifier": "step4",
               "type": "form",
               "title": "Pick some values",
-              "text": "Choose a date in the future and a number",
+              "text": "Choose a date in the future and a number between -2 and 3",
               "inputFields": [{
                               "identifier": "date",
                               "dataType": "date",
@@ -110,7 +110,11 @@
                               {
                               "identifier": "number",
                               "dataType": "integer",
-                              "prompt": "Number"
+                              "prompt": "Number",
+                              "uiHint": "picker",
+                              "range" : {   "minimumValue" : -2,
+                                            "maximumValue" : 3,
+                                            "stepInterval" : 1},
                               }
                               ]
               },

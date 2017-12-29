@@ -35,9 +35,6 @@
 import UIKit
 
 
-
-
-
 /// `RSDGenericStepViewController` is a custom instance of `RSDStepViewController`. Its subviews include a `UITableView`,
 /// a `RSDNavigationFooterView`, which may or may not be embedded in the tableView as its footerView, and a `RSDNavigationHeaderView`,
 /// which is embedded in the tableView as its headerView.
@@ -510,6 +507,11 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                 }
                 else if let pickerSource = textInputItem.pickerSource as? RSDChoicePickerDataSource {
                     let picker = RSDChoicePickerView(pickerSource: pickerSource, indexPath: indexPath)
+                    fieldCell.textField.inputView = picker
+                    picker.observer = self
+                }
+                else if let pickerSource = textInputItem.pickerSource as? RSDNumberPickerDataSource {
+                    let picker = RSDNumberPickerView(pickerSource: pickerSource, indexPath: indexPath)
                     fieldCell.textField.inputView = picker
                     picker.observer = self
                 }
