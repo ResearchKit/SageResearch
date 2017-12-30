@@ -117,7 +117,7 @@ public protocol RSDChoice {
 /// `RSDChoiceOptions` is a data source protocol that can be used to set up a picker or list of choices.
 ///
 /// - seealso: `RSDChoiceInputField` and `RSDFormStepDataSource`
-public protocol RSDChoiceOptions: RSDChoicePickerDataSource {
+public protocol RSDChoiceOptions : RSDChoicePickerDataSource {
     
     /// A list of choices for the input field.
     var choices : [RSDChoice] { get }
@@ -144,20 +144,22 @@ extension RSDChoiceInputField {
     }
 }
 
-/// `RSDMultipleComponentInputField` extends the properties of `RSDInputField` with information
-/// required to create a multiple component input field.
+/// `RSDMultipleComponentOptions` is a data source protocol that can be used to set up a picker.
 ///
-/// - note: This type of input field was originally designed for entering values such as blood pressure
-///         or height (US English). It is included here because the code was developed and there may be
-///         a use-case for it in the future. (syoung 11/16/2017)
-///
-/// - seealso: `RSDFormDataType.CollectionType.multipleComponent`
-public protocol RSDMultipleComponentInputField : RSDInputField, RSDChoicePickerDataSource {
-        
+/// - seealso: `RSDMultipleComponentInputField` and `RSDFormStepDataSource`
+public protocol RSDMultipleComponentOptions : RSDChoicePickerDataSource {
+    
     /// A list of choices for input fields that make up the multiple component option set.
     var choices : [[RSDChoice]] { get }
     
     /// If this is a multiple component input field, the UI can optionally define a separator.
     /// For example, blood pressure would have a separator of "/".
     var separator: String? { get }
+}
+
+/// `RSDMultipleComponentInputField` extends the properties of `RSDInputField` with information
+/// required to create a multiple component input field.
+///
+/// - seealso: `RSDFormDataType.CollectionType.multipleComponent`
+public protocol RSDMultipleComponentInputField : RSDInputField, RSDMultipleComponentOptions {
 }

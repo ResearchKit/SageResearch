@@ -34,7 +34,7 @@
 import Foundation
 
 /// Extension of the `RSDMultipleComponentInputField` protocol to implement the `RSDChoicePickerDataSource` protocol.
-extension RSDMultipleComponentInputField {
+extension RSDMultipleComponentOptions {
     
     /// Returns the number of 'columns' to display.
     public var numberOfComponents: Int {
@@ -56,6 +56,50 @@ extension RSDMultipleComponentInputField {
     public func choice(forRow row: Int, forComponent component: Int) -> RSDChoice? {
         guard component < self.choices.count, row < self.choices[component].count else { return nil }
         return self.choices[component][row]
+    }
+    
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func textAnswer(from selectedAnswer: Any?) -> String? {
+        guard let array = selectedRows(from: selectedAnswer) else { return nil }
+        let strings = array.enumerated().rsd_mapAndFilter { choice(forRow: $0.element, forComponent: $0.offset)?.text }
+        let separator = self.separator ?? " "
+        return strings.joined(separator: separator)
+    }
+}
+
+extension RSDMultipleComponentInputField {
+    
+    /// Returns the selected answer created by the union of the selected rows.
+    /// - parameter selectedRows: The selected rows, where there is a selected row for each component.
+    /// - returns: The answer created from the given array of selected rows.
+    public func selectedAnswer(with selectedRows: [Int]) -> Any? {
+        let choices = selectedRows.enumerated().rsd_mapAndFilter { (component, selectedRow) -> Any? in
+            return self.choice(forRow: selectedRow, forComponent: component)?.value
+        }
+        guard choices.count == self.numberOfComponents
+            else {
+                return nil
+        }
+        return choices
+    }
+    
+    /// Returns the selected rows that match the given selected answer (if any).
+    /// - parameter selectedAnswer: The selected answer.
+    /// - returns: The selected rows, where there is a selected row for each component, or `nil` if not
+    ///            all rows are selected.
+    public func selectedRows(from selectedAnswer: Any?) -> [Int]? {
+        guard selectedAnswer != nil else { return nil }
+        let answers:[Any] = (selectedAnswer! as? [Any]) ?? [selectedAnswer!]
+        guard answers.count == self.numberOfComponents else { return nil }
+        
+        // Filter through and look for the current answer
+        let selected: [Int] = answers.enumerated().rsd_mapAndFilter { (component, value) -> Int? in
+            return choices[component].index(where: { RSDObjectEquality($0.value, value) })
+        }
+        
+        return selected.count == self.numberOfComponents ? selected : nil
     }
 }
 
@@ -82,41 +126,30 @@ extension RSDChoiceOptions {
         guard component < 1, row < self.choices.count else { return nil }
         return self.choices[row]
     }
-}
-
-extension RSDChoicePickerDataSource {
     
-    /// Returns the selected answer for the given selected rows of a picker view.
+    /// Returns the selected answer created by the union of the selected rows.
+    /// - parameter selectedRows: The selected rows, where there is a selected row for each component.
+    /// - returns: The answer created from the given array of selected rows.
     public func selectedAnswer(with selectedRows: [Int]) -> Any? {
-        let choices = selectedRows.enumerated().rsd_mapAndFilter { (component, selectedRow) -> Any? in
-            return self.choice(forRow: selectedRow, forComponent: component)?.value
-        }
-        return choices.count == self.numberOfComponents ? (choices.count == 1 ? choices.first : choices) : nil
+        guard selectedRows.count == 1, let row = selectedRows.first else { return nil }
+        return self.choice(forRow: row, forComponent: 0)?.value
     }
     
-    /// Returns the selected rows that match the given selected answer.
+    /// Returns the selected rows that match the given selected answer (if any).
+    /// - parameter selectedAnswer: The selected answer.
+    /// - returns: The selected rows, where there is a selected row for each component, or `nil` if not
+    ///            all rows are selected.
     public func selectedRows(from selectedAnswer: Any?) -> [Int]? {
-        guard selectedAnswer != nil else { return nil }
-        let answers:[Any] = (selectedAnswer! as? [Any]) ?? [selectedAnswer!]
-        guard answers.count == self.numberOfComponents else { return nil }
-        
-        // Filter through and look for the current answer
-        var selected: [Int] = []
-        for (component, value) in answers.enumerated() {
-            let numRows = self.numberOfRows(in: component)
-            var found: Bool = false
-            for row in 0..<numRows {
-                if let choice = self.choice(forRow: row, forComponent: component),
-                    RSDObjectEquality(choice.value, value) {
-                    selected.append(row)
-                    found = true
-                }
-            }
-            // Exit early with nil if a selected row is not found
-            if !found { return nil }
-        }
-        
-        return selected
+        guard let index = self.choices.index(where: { RSDObjectEquality($0.value, selectedAnswer) }) else { return nil }
+        return [index]
+    }
+    
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func textAnswer(from selectedAnswer: Any?) -> String? {
+        guard let array = selectedRows(from: selectedAnswer), let row = array.first else { return nil }
+        return choices[row].text
     }
 }
 
@@ -160,26 +193,137 @@ public struct RSDNumberPickerDataSourceObject : RSDNumberPickerDataSource {
     }
 }
 
-/// A concrete implementation of `RSDChoicePickerDataSource` for a measurement.
-/// TODO: Implement syoung 11/28/2017
-public struct RSDMeasurementPickerDataSourceObject : RSDChoicePickerDataSource {
-    public let dataType: RSDFormDataType
-    public let unit: String?
-    public let formatter: Formatter?
+extension RSDNumberPickerDataSource {
     
-    // Returns the number of 'columns' to display.
-    public var numberOfComponents: Int {
-        fatalError("Not yet implemented")
+    /// Returns the decimal number answer for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func numberAnswer(from selectedAnswer: Any?) -> Decimal? {
+        // Check that the answer is a number in range
+        let number: Decimal
+        if let decimal = selectedAnswer as? Decimal {
+            number = decimal
+        } else if let num = (selectedAnswer as? NSNumber) ?? (selectedAnswer as? RSDJSONNumber)?.jsonNumber() {
+            number = Decimal(num.doubleValue)
+        } else {
+            return nil
+        }
+        guard number <= maximum, number >= minimum else {
+            return nil
+        }
+        return number
     }
     
-    // Returns the # of rows in each component.
-    public func numberOfRows(in component: Int) -> Int {
-        fatalError("Not yet implemented")
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func textAnswer(from selectedAnswer: Any?) -> String? {
+        guard let number = numberAnswer(from: selectedAnswer) else { return nil }
+        return numberFormatter.string(from: number as NSNumber)
+    }
+}
+
+/// `RSDImperialMeasurementPickerDataSource` is a generic protocol for converting imperial (multiple component)
+/// units from and to imperial units.
+public protocol RSDImperialMeasurementPickerDataSource : RSDMultipleComponentOptions {
+    associatedtype UnitType : Dimension
+    
+    // The imperial unit converter.
+    var converter: RSDUnitConverter.ImperialConverter<UnitType> { get }
+    
+    // The bounds of the larger unit. This is the range of numbers (integers) to display for the
+    // the picker.  For example, a heigh measurement is from 1 ft to 8 ft, so the bounds would be (1, 8).
+    var largeUnitBounds: (lower: Int, upper: Int) { get }
+}
+
+extension RSDImperialMeasurementPickerDataSource {
+    
+    /// Returns the selected answer created by the union of the selected rows.
+    /// - parameter selectedRows: The selected rows, where there is a selected row for each component.
+    /// - returns: The answer created from the given array of selected rows.
+    public func selectedAnswer(with selectedRows: [Int]) -> Any? {
+        guard selectedRows.count == choices.count else { return nil }
+        // Generic measurements cannot be cast to a Codable object. Therefore, do not use the
+        // measurement from the converter directly. Instead, this must be returned as the Double value.
+        let measurement = converter.measurement(fromLargeValue: Double(selectedRows[0] + largeUnitBounds.lower),
+                                                smallValue: Double(selectedRows[1]))
+        return measurement.value
     }
     
-    // Returns the choice for this row/component.
-    public func choice(forRow row: Int, forComponent component: Int) -> RSDChoice? {
-        fatalError("Not yet implemented")
+    /// Returns the selected rows that match the given selected answer (if any).
+    /// - parameter selectedAnswer: The selected answer.
+    /// - returns: The selected rows, where there is a selected row for each component, or `nil` if not
+    ///            all rows are selected.
+    public func selectedRows(from selectedAnswer: Any?) -> [Int]? {
+        guard selectedAnswer != nil,
+            let tuple = converter.toImperialValue(from: selectedAnswer!)
+            else {
+                return nil
+        }
+        return [Int(tuple.largeValue) - largeUnitBounds.lower, Int(tuple.smallValue)]
+    }
+}
+
+/// `RSDUSHeightPickerDataSource` is a custom height picker for use when the `Locale` is `US_en`.
+public struct RSDUSHeightPickerDataSource : RSDImperialMeasurementPickerDataSource {
+    
+    // The imperial unit converter.
+    public let converter: RSDUnitConverter.ImperialConverter<UnitLength>
+    
+    /// The separator is hardcoded to a space.
+    public let separator: String? = " "
+    
+    /// The unit bounds for the source.
+    public let largeUnitBounds: (lower: Int, upper: Int) = (1, 8)
+    
+    /// The choices are hardcoded for a range from 1' to 8' 11".
+    public let choices: [[RSDChoice]] = {
+        let formatter = LengthFormatter()
+        formatter.unitStyle = .short
+        let feet = Array(1...8)
+        let inches = Array(0...11)
+        return [ feet.map { try! RSDChoiceObject(value: $0, text: formatter.string(fromValue: Double($0), unit: .foot))},
+                 inches.map { try! RSDChoiceObject(value: $0, text: formatter.string(fromValue: Double($0), unit: .inch))} ]
+    }()
+    
+    /// Default initializer.
+    /// - parameter unit: The length unit that the answer should be stored in. Default = .centimeters
+    public init(unit: UnitLength = .centimeters) {
+        var converter = RSDUnitConverter.feetAndInches
+        converter.baseUnit = unit
+        self.converter = converter
+    }
+}
+
+/// `RSDUSInfantMassPickerDataSource` is a custom weight picker for use when the `Locale` is `US_en`
+/// and the mass is for an infant in "lb, oz".
+public struct RSDUSInfantMassPickerDataSource : RSDImperialMeasurementPickerDataSource {
+    
+    // The imperial unit converter.
+    public let converter: RSDUnitConverter.ImperialConverter<UnitMass>
+    
+    /// The separator is equal to ", ".
+    public let separator: String? = ", "
+    
+    /// The unit bounds for the source.
+    public let largeUnitBounds: (lower: Int, upper: Int) = (1, 20)
+    
+    /// The mass choices are hard coded from 1 lb to 20 lb, 15 oz.
+    public let choices : [[RSDChoice]] = {
+        let formatter = MassFormatter()
+        formatter.unitStyle = .medium
+        let pounds = Array(1...20)
+        let ounces = Array(0...15)
+        return [ pounds.map { try! RSDChoiceObject(value: $0, text: formatter.string(fromValue: Double($0), unit: .pound))},
+                 ounces.map { try! RSDChoiceObject(value: $0, text: formatter.string(fromValue: Double($0), unit: .ounce))} ]
+    }()
+    
+    /// Default initializer.
+    /// - parameter unit: The unit of mass that the answers should be stored in. Default = .kilograms
+    public init(unit: UnitMass = .kilograms) {
+        var converter = RSDUnitConverter.poundAndOunces
+        converter.baseUnit = unit
+        self.converter = converter
     }
 }
 
@@ -212,6 +356,17 @@ public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
     }
 }
 
+extension RSDDatePickerDataSource {
+    
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func textAnswer(from selectedAnswer: Any?) -> String? {
+        guard let date = selectedAnswer as? Date else { return nil }
+        return dateFormatter.string(from: date)
+    }
+}
+
 /// A simple struct that can be used to implement the `RSDDateComponentPickerDataSource` protocol.
 public struct RSDDateComponentPickerDataSourceObject : RSDDateComponentPickerDataSource {
     /// The calendar to use for the date components.
@@ -236,6 +391,16 @@ public struct RSDDateComponentPickerDataSourceObject : RSDDateComponentPickerDat
         self.minimumYear = minimumYear
         self.maximumYear = maximumYear
         self.dateComponentsFormatter = dateComponentsFormatter
+    }
+}
+
+extension RSDDateComponentPickerDataSource {
+    
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func textAnswer(from selectedAnswer: Any?) -> String? {
+        return dateComponentsFormatter.string(for: selectedAnswer)
     }
 }
 

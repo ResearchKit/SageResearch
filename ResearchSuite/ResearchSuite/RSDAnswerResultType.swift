@@ -100,13 +100,6 @@ public struct RSDAnswerResultType : Codable {
     /// The unit (if any) to store with the answer for localized measurement conversion.
     public let unit: String?
     
-    /// A convenience property for getting the measurement `Unit` from the `unit` string.
-    /// - seealso: https://developer.apple.com/documentation/foundation/units_and_measurement
-    public var measurementUnit: Unit? {
-        guard let symbol = self.unit else { return nil }
-        return Unit(symbol: symbol)
-    }
-    
     /// A conveniece property for accessing the formatter used to encode and decode a date.
     public var dateFormatter: DateFormatter? {
         guard let dateFormat = self.dateFormat else { return nil }
@@ -393,16 +386,6 @@ extension RSDAnswerResultType {
                 return "\(num)"
             default:
                 return nil
-            }
-        }
-        else if let measurement = value as? Measurement {
-            if let mUnit = self.measurementUnit, measurement.unit != mUnit {
-                guard (measurement as NSMeasurement).canBeConverted(to: mUnit) else {
-                    throw EncodingError.invalidValue(value, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "Measurement \(value) cannot be converted to \(mUnit.symbol) unit."))
-                }
-                return try _encodableValue(NSNumber(value: (measurement as NSMeasurement).converting(to: mUnit).value), encoder: encoder)
-            } else {
-                return try _encodableValue(NSNumber(value: measurement.value), encoder: encoder)
             }
         }
         else if let string = value as? NSString {

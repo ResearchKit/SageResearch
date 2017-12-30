@@ -139,6 +139,9 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
     /// The text field options for this input.
     open private(set) var textFieldOptions: RSDTextFieldOptions?
     
+    /// The placeholder text for this input.
+    open private(set) var placeholderText: String?
+    
     /// The formatter used for dislaying answers and converting text to a number or date.
     open private(set) var formatter: Formatter?
     
@@ -157,10 +160,11 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
     ///     - textFieldOptions: The text field options.
     ///     - formatter: The formatter used for dislaying answers and converting text to a number or date.
     ///     - pickerSource: The picker data source for selecting answers.
-    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType = .string, textFieldOptions: RSDTextFieldOptions? = nil, formatter: Formatter? = nil, pickerSource: RSDPickerDataSource? = nil) {
+    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType = .string, textFieldOptions: RSDTextFieldOptions? = nil, formatter: Formatter? = nil, pickerSource: RSDPickerDataSource? = nil, placeholderText: String? = nil) {
         self.answerType = answerType
         self.formatter = formatter
         self.pickerSource = pickerSource
+        self.placeholderText = placeholderText ?? inputField.placeholderText
         
         // Set the text field options
         self.textFieldOptions = textFieldOptions ?? inputField.textFieldOptions ?? {
@@ -192,18 +196,9 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
     
     /// The text string to display for a given answer.
     open func answerText(for answer: Any?) -> String? {
-        if let textFormatter = formatter {
-            return textFormatter.string(for: answer)
-        }
-        else if let string = answer as? String {
-            return string
-        }
-        else if let array = answer as? [Any], let multipleComponent = self.inputField as? RSDMultipleComponentInputField {
-            let strings = array.map { String(describing: $0) }
-            let separator = multipleComponent.separator ?? " "
-            return strings.joined(separator: separator)
-        }
-        else if let anyAnswer = answer {
+        if let text = pickerSource?.textAnswer(from: answer) ?? formatter?.string(for: answer) {
+            return text
+        } else if let anyAnswer = answer {
             return String(describing: anyAnswer)
         }
         return nil
@@ -340,9 +335,9 @@ final class RSDNumberInputTableItem : RSDTextInputTableItem {
     
     /// Initialize a new RSDInputFieldTableItem.
     /// parameters:
-    ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides.
-    ///     - inputField:    The RSDInputField representing this tableItem.
-    ///     - uiHint: The UI hint for this row of the table.
+    ///     - rowIndex:     The index of this item relative to all rows in the section in which this item resides.
+    ///     - inputField:   The RSDInputField representing this tableItem.
+    ///     - uiHint:       The UI hint for this row of the table.
     public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
         
         var pickerSource: RSDPickerDataSource? = inputField as? RSDPickerDataSource
@@ -407,5 +402,158 @@ final class RSDNumberInputTableItem : RSDTextInputTableItem {
         }
         
         return answer
+    }
+}
+
+/// A custom implementation for inputing a person's mass (weight) that can set up a picker for
+/// setting the weight of an infant. Typically, US English user's know what their newborn baby's
+/// weight is in lb and oz. Additionally, the placeholder text for an adult or child measurement
+/// range will be either "pounds" or "kilograms", depending upon the user's locale.
+final class RSDMassInputTableItem : RSDTextInputTableItem {
+    
+    /// The base unit is the unit of mass that the measurement should be converted to in order
+    /// to save the result. Because the `Measurement` class has a generic `UnitType`, it cannot
+    /// be easily converted to a `Codable` object so the results are stored as `.decimal` base
+    /// type with the unit symbol also stored on the result.
+    public let baseUnit: UnitMass
+    
+    /// Default initializer.
+    /// - parameters:
+    ///     - rowIndex:         The index of this item relative to all rows in the section in which this item resides.
+    ///     - inputField:       The RSDInputField representing this tableItem.
+    ///     - uiHint:           The UI hint for this row of the table.
+    ///     - measurementSize:  The measurement range for the input field.
+    init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, measurementSize: RSDFormDataType.MeasurementRange) {
+            
+        // Set up the default unit.
+        let unit = (inputField.range as? RSDNumberRange)?.unit ?? "kg"
+        let massUnit = UnitMass(fromSymbol: unit) ?? .kilograms
+        self.baseUnit = massUnit
+        
+        // If the measurement is for an infant and the local is US
+        // then use the infant mass picker.
+        var pickerSource: RSDPickerDataSource? = (inputField as? RSDPickerDataSource)
+        if pickerSource == nil, measurementSize == .infant, !Locale.current.usesMetricSystem {
+            pickerSource = RSDUSInfantMassPickerDataSource(unit: massUnit)
+        }
+        
+        // Switch the hint type to a supported type most appropriate to the units.
+        var hint: RSDFormUIHint = uiHint
+        if uiHint != .popover {
+            hint = (pickerSource == nil) ? .textfield : .picker
+        }
+        
+        // Setup the formatter.
+        var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
+        var placeholderText: String?
+        if (formatter == nil) {
+            let massFormatter = RSDMassFormatter()
+            formatter = massFormatter
+            massFormatter.isForPersonMassUse = true
+            massFormatter.isForInfantMassUse = (measurementSize == .infant)
+            massFormatter.toStringUnit = massUnit
+            
+            // When converting from the value entered by the participant, then the
+            // locale is used to determine the preferred units.
+            massFormatter.unitStyle = .long
+            if Locale.current.usesMetricSystem {
+                massFormatter.fromStringUnit = .kilograms
+                placeholderText = massFormatter.unitString(fromValue: 60, unit: .kilogram)
+            } else {
+                massFormatter.fromStringUnit = .pounds
+                placeholderText = massFormatter.unitString(fromValue: 140, unit: .pound)
+            }
+            massFormatter.unitStyle = .medium
+        }
+        
+        let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, dateFormat: nil, unit: unit, sequenceSeparator: nil)
+        
+        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource, placeholderText: placeholderText)
+    }
+    
+    /// Override the `convertAnswer()` function to convert the `Measurement` returned
+    /// by the formatter into a decimal value in the `baseUnit`.
+    override func convertAnswer(_ newValue: Any) throws -> Any? {
+        let answer = try super.convertAnswer(newValue)
+        guard let measurement = answer as? Measurement<UnitMass> else { return answer }
+        return measurement.converted(to: baseUnit).value
+    }
+}
+
+/// A custom implementation for inputing a person's height that can set up a picker for
+/// setting the height of an adult. Typically, US English user's will report an adult height
+/// using ft and in, whereas a child or infant will be reported in inches. The placeholder
+/// text for child or infant measurement range will be either "inches" or "centimeters",
+/// depending upon the user's locale.
+final class RSDHeightInputTableItem : RSDTextInputTableItem {
+    
+    /// The base unit is the unit of mass that the measurement should be converted to in order
+    /// to save the result. Because the `Measurement` class has a generic `UnitType`, it cannot
+    /// be easily converted to a `Codable` object so the results are stored as `.decimal` base
+    /// type with the unit symbol also stored on the result.
+    public let baseUnit: UnitLength
+    
+    /// Default initializer.
+    /// - parameters:
+    ///     - rowIndex:         The index of this item relative to all rows in the section in which this item resides.
+    ///     - inputField:       The RSDInputField representing this tableItem.
+    ///     - uiHint:           The UI hint for this row of the table.
+    ///     - measurementSize:  The measurement range for the input field.
+    init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, measurementSize: RSDFormDataType.MeasurementRange) {
+        
+        // Set up the default unit.
+        let unit = (inputField.range as? RSDNumberRange)?.unit ?? "cm"
+        let lengthUnit = UnitLength(fromSymbol: unit) ?? .centimeters
+        self.baseUnit = lengthUnit
+        
+        // If the measurement size is for an adult and the locale is US
+        // then use a picker with feet/inches.
+        var pickerSource: RSDPickerDataSource? = (inputField as? RSDPickerDataSource)
+        if pickerSource == nil, measurementSize == .adult, !Locale.current.usesMetricSystem {
+            pickerSource = RSDUSHeightPickerDataSource(unit: lengthUnit)
+        }
+        
+        // Switch the hint type to a supported type.
+        var hint: RSDFormUIHint = uiHint
+        if uiHint != .popover {
+            hint = (pickerSource == nil) ? .textfield : .picker
+        }
+        
+        // Setup the formatter.
+        var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
+        var placeholderText: String?
+        if (formatter == nil) {
+            let lengthFormatter = RSDLengthFormatter()
+            formatter = lengthFormatter
+            lengthFormatter.isForPersonHeightUse = true
+            lengthFormatter.isForChildHeightUse = (measurementSize != .adult)
+            lengthFormatter.toStringUnit = lengthUnit
+            
+            // When converting from the value entered by the participant, then the
+            // locale is used to determine the preferred units.
+            lengthFormatter.unitStyle = .long
+            if Locale.current.usesMetricSystem {
+                lengthFormatter.fromStringUnit = .centimeters
+                placeholderText = lengthFormatter.unitString(fromValue: 150, unit: .centimeter)
+            } else {
+                lengthFormatter.fromStringUnit = .inches
+                if (pickerSource == nil) {
+                    placeholderText = lengthFormatter.unitString(fromValue: 60, unit: .inch)
+                }
+            }
+            lengthFormatter.unitStyle = .medium
+        }
+        
+        let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, dateFormat: nil, unit: unit, sequenceSeparator: nil)
+        
+        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource, placeholderText: placeholderText)
+    }
+    
+    /// Override the `convertAnswer()` function to convert the `Measurement` returned
+    /// by the formatter into a decimal value in the `baseUnit`.
+    override func convertAnswer(_ newValue: Any) throws -> Any? {
+        let answer = try super.convertAnswer(newValue)
+        guard let measurement = answer as? Measurement<UnitLength> else { return answer }
+        return measurement.converted(to: baseUnit).value
     }
 }

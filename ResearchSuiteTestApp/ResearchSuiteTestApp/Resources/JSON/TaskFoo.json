@@ -119,6 +119,37 @@
                               ]
               },
               {
+              "identifier": "step5",
+              "type": "form",
+              "title": "Height and Weight",
+              "text": "This step shows examples entering height and weight in the user's Locale.",
+              "inputFields": [{
+                              "identifier": "heightAdult",
+                              "dataType": "height.adult",
+                              "uiHint": "picker",
+                              "prompt": "Enter a height for an adult"
+                              },
+                              {
+                              "identifier": "weightAdult",
+                              "dataType": "weight.adult",
+                              "uiHint": "picker",
+                              "prompt": "Enter a weight for an adult"
+                              },
+                              {
+                              "identifier": "heightInfant",
+                              "dataType": "height.infant",
+                              "uiHint": "picker",
+                              "prompt": "Enter a height for a baby"
+                              },
+                              {
+                              "identifier": "weightInfant",
+                              "dataType": "weight.infant",
+                              "prompt": "Enter a weight for a baby",
+                              "uiHint": "picker"
+                              }
+                              ]
+              },
+              {
               "identifier": "year",
               "type": "form",
               "title": "Enter a year",

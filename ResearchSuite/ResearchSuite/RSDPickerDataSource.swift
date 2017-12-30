@@ -36,6 +36,11 @@ import Foundation
 
 /// `RSDPickerDataSource` includes information that can be used to build a picker UI element.
 public protocol RSDPickerDataSource {
+    
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    func textAnswer(from selectedAnswer: Any?) -> String?
 }
 
 /// `RSDDatePickerMode` describes the type of UI picker to display for dates and times.
@@ -108,6 +113,17 @@ public protocol RSDChoicePickerDataSource : RSDPickerDataSource {
     ///     - row: The row for the selected component.
     ///     - component: The component (or column) of the picker.
     func choice(forRow row: Int, forComponent component: Int) -> RSDChoice?
+    
+    /// Returns the selected answer created by the union of the selected rows.
+    /// - parameter selectedRows: The selected rows, where there is a selected row for each component.
+    /// - returns: The answer created from the given array of selected rows.
+    func selectedAnswer(with selectedRows: [Int]) -> Any?
+    
+    /// Returns the selected rows that match the given selected answer (if any).
+    /// - parameter selectedAnswer: The selected answer.
+    /// - returns: The selected rows, where there is a selected row for each component, or `nil` if not
+    ///            all rows are selected.
+    func selectedRows(from selectedAnswer: Any?) -> [Int]?
 }
 
 /// A picker data source for picking a number.

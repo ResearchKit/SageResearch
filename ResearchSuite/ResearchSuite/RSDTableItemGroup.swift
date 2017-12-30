@@ -252,6 +252,11 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
 /// An item group for entering text.
 final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {
     
+    /// Default initializer.
+    /// - parameters:
+    ///     - beginningRowIndex: The first row of the item group.
+    ///     - inputField: The input field associated with this item group.
+    ///     - uiHint: The UI hint.
     public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
         let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
         super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
@@ -261,6 +266,11 @@ final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {
 /// An item group for entering a boolean data type.
 final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
     
+    /// Default initializer.
+    /// - parameters:
+    ///     - beginningRowIndex: The first row of the item group.
+    ///     - inputField: The input field associated with this item group.
+    ///     - uiHint: The UI hint.
     public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
         
         let choicePicker: RSDChoicePickerDataSource
@@ -280,6 +290,11 @@ final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
 /// An item group for entering a date.
 final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
     
+    /// Default initializer.
+    /// - parameters:
+    ///     - beginningRowIndex: The first row of the item group.
+    ///     - inputField: The input field associated with this item group.
+    ///     - uiHint: The UI hint.
     public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
         
         var pickerSource: RSDPickerDataSource? = inputField as? RSDPickerDataSource
@@ -312,6 +327,11 @@ final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
 /// An item group for entering a number value.
 final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
     
+    /// Default initializer.
+    /// - parameters:
+    ///     - beginningRowIndex: The first row of the item group.
+    ///     - inputField: The input field associated with this item group.
+    ///     - uiHint: The UI hint.
     public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
         let tableItem = RSDNumberInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
         super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
@@ -321,6 +341,11 @@ final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
 /// An item group for entering data requiring a multiple component format.
 final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
     
+    /// Default initializer.
+    /// - parameters:
+    ///     - beginningRowIndex: The first row of the item group.
+    ///     - inputField: The input field associated with this item group.
+    ///     - uiHint: The UI hint.
     public init(beginningRowIndex: Int, inputField: RSDMultipleComponentInputField, uiHint: RSDFormUIHint) {
         
         let baseType: RSDAnswerResultType.BaseType = inputField.dataType.defaultAnswerResultBaseType()
@@ -337,43 +362,41 @@ final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
 /// size-range of the human (adult, child, infant).
 final class RSDMeasurementTableItemGroup : RSDInputFieldTableItemGroup {
     
+    /// Default initializer.
+    /// - parameters:
+    ///     - beginningRowIndex: The first row of the item group.
+    ///     - inputField: The input field associated with this item group.
+    ///     - uiHint: The UI hint.
     public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
         
-        var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
-        let baseType: RSDAnswerResultType.BaseType = .decimal
-        var unit: String?
-        var sequenceType: RSDAnswerResultType.SequenceType?
-        var sequenceSeparator: String?
+        var tableItems: [RSDTableItem]!
+        var answerType: RSDAnswerResultType!
+        var hint: RSDFormUIHint = uiHint
         
-        if case .measurement(let measurementType, _) = inputField.dataType {
+        if case .measurement(let measurementType, let measurementSize) = inputField.dataType {
             switch measurementType {
             case .height:
-                let lengthFormatter = LengthFormatter()
-                lengthFormatter.isForPersonHeightUse = true
-                formatter = formatter ?? lengthFormatter
-                unit = unit ?? "cm"
-                
+                let tableItem = RSDHeightInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, measurementSize: measurementSize)
+                answerType = tableItem.answerType
+                hint = tableItem.uiHint
+                tableItems = [tableItem]
+
             case .weight:
-                let massFormatter = MassFormatter()
-                massFormatter.isForPersonMassUse = true
-                formatter = formatter ?? massFormatter
-                unit = unit ?? "kg"
-                
+                let tableItem = RSDMassInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, measurementSize: measurementSize)
+                answerType = tableItem.answerType
+                hint = tableItem.uiHint
+                tableItems = [tableItem]
+
             case .bloodPressure:
-                // TODO: syoung 12/19/2017 Refactor to use an array of RSDTextInputTableItem objects to represent the
-                // entry if the preferred uiHint is a text field (rather than a picker).
-                sequenceType = .array
-                sequenceSeparator = "/"
+                // TODO: syoung 12/19/2017 Implement for both text field and picker
+                answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: .array, dateFormat: nil, unit: nil, sequenceSeparator: "/")
+                let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: nil, pickerSource: nil, placeholderText: nil)
+                tableItems = [tableItem]
             }
         } else {
             fatalError("Cannot instantiate a measurement type item group without a base data type")
         }
         
-        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: unit, sequenceSeparator: sequenceSeparator)
-        let pickerSource: RSDPickerDataSource = (inputField as? RSDPickerDataSource) ?? RSDMeasurementPickerDataSourceObject(dataType: inputField.dataType, unit: unit, formatter: formatter)
-        
-        let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource)
-        
-        super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
+        super.init(beginningRowIndex: beginningRowIndex, items: tableItems, inputField: inputField, uiHint: hint, answerType: answerType)
     }
 }

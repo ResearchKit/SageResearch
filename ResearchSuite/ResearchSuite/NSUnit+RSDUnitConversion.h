@@ -1,5 +1,5 @@
 //
-//  ResearchSuite.h
+//  NSUnit+RSDUnitConversion.h
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,17 +31,32 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-//! Project version number for ResearchSuite.
-FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
+NS_ASSUME_NONNULL_BEGIN
 
-//! Project version string for ResearchSuite.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
+@interface NSUnit (RSDUnitConversion)
 
-#import <Researchsuite/RSDExceptionHandler.h>
-#import <Researchsuite/NSUnit+RSDUnitConversion.h>
-#import <Researchsuite/RSDLengthFormatter.h>
-#import <Researchsuite/RSDMassFormatter.h>
+/// Convert the symbol into a unit of the appropriate subtype (if found).
+/// @param symbol   The symbol for the unit.
++ (NSUnit * _Nullable)unitFromSymbol:(NSString *)symbol;
 
+@end
 
+@interface NSUnitLength (RSDUnitConversion)
+
+/// Convert the symbol into a unit of length.
+/// @param symbol   The symbol for the unit.
++ (NSUnitLength * _Nullable)unitLengthFromSymbol:(NSString *)symbol;
+
+@end
+
+@interface NSUnitMass (RSDUnitConversion)
+
+/// Convert the symbol into a unit of mass.
+/// @param symbol   The symbol for the unit.
++ (NSUnitMass * _Nullable)unitMassFromSymbol:(NSString *)symbol;
+
+@end
+
+NS_ASSUME_NONNULL_END

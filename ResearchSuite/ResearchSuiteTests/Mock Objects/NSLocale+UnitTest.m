@@ -1,8 +1,8 @@
 //
-//  ResearchSuite.h
+//  NSLocale+UnitTest.m
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,17 +31,36 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+#import "NSLocale+UnitTest.h"
+#import <objc/runtime.h>
 
-//! Project version number for ResearchSuite.
-FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
+static NSLocale * _currentTestLocale;
+static BOOL _hasBeenSwizzled = false;
 
-//! Project version string for ResearchSuite.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
+@implementation NSLocale (UnitTest)
 
-#import <Researchsuite/RSDExceptionHandler.h>
-#import <Researchsuite/NSUnit+RSDUnitConversion.h>
-#import <Researchsuite/RSDLengthFormatter.h>
-#import <Researchsuite/RSDMassFormatter.h>
++ (void)swizzleLocale {
+    if (!_hasBeenSwizzled) {
+        _hasBeenSwizzled = true;
+        
+        // Swizzle the locale
+        Method origMethod = class_getClassMethod(self, @selector(currentLocale));
+        Method newMethod = class_getClassMethod(self, @selector(rsd_testLocale));
+        method_exchangeImplementations(origMethod, newMethod);
+    }
+}
 
++ (NSLocale *)rsd_testLocale {
+    return [self currentTestLocale];
+}
 
++ (NSLocale *)currentTestLocale {
+    return _currentTestLocale ? : [NSLocale localeWithLocaleIdentifier:@"en_US"];
+}
+
++ (void)setCurrentTestLocale: (NSLocale *)locale {
+    _currentTestLocale = locale;
+    [self swizzleLocale];
+}
+
+@end

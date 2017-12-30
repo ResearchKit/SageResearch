@@ -81,25 +81,22 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                 return false
                 
             case .collection(let collectionType, _):
-                switch collectionType {
-                case .multipleComponent:
-                    return true
-                default:
+                if (collectionType == .singleChoice) {
                     if let choiceInputField = item as? RSDChoiceInputField {
                         for choice in choiceInputField.choices {
                             if choice.hasIcon {
-                                return false // TODO: syoung 10/18/2018 Implement support for image choices
+                                // TODO: syoung 10/18/2017 Implement support for image choices
+                                return false
                             }
                         }
                     }
-                    else {
-                        // If there aren't choices or a range, then cannot create the picker
-                        return item.range != nil
-                    }
                 }
                 
-            case .measurement(_, _):
-                return false // TODO: syoung 10/18/2018 Implement support for measurements
+            case .measurement(let measurementType, _):
+                if (measurementType == .bloodPressure) {
+                    // TODO: syoung 10/18/2017 Implement support for blood pressure
+                    return false
+                }
             
             default:
                 break
@@ -572,12 +569,12 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                 }
             }
             
-            if let text = itemGroup.inputField.prompt {
+            if let text = tableItem.inputField.prompt {
                 // populate the field label
                 textFieldCell.fieldLabel.text = text
             }
             
-            if let placeholder = itemGroup.inputField.placeholderText {
+            if let placeholder = tableItem.placeholderText {
                 // populate the text field placeholder label
                 textFieldCell.setPlaceholderText(placeholder)
             }
