@@ -441,43 +441,6 @@ extension RSDDatePickerDataSource {
     }
 }
 
-/// A simple struct that can be used to implement the `RSDDateComponentPickerDataSource` protocol.
-public struct RSDDateComponentPickerDataSourceObject : RSDDateComponentPickerDataSource {
-    /// The calendar to use for the date components.
-    public let calendar: Calendar
-
-    /// The components to include in the picker.
-    public let calendarComponents: Set<Calendar.Component>
-
-    /// The minimum year if the year is included, otherwise this value is ignored.
-    public let minimumYear: Int?
-
-    /// The maximum year if the year is included, otherwise this value is ignored.
-    public let maximumYear: Int?
-
-    /// The date components formatter for displaying the date components in a text field or label.
-    public let dateComponentsFormatter: DateComponentsFormatter
-    
-    /// Default initializer. Auto-synthesized init is not public.
-    public init(calendar: Calendar, calendarComponents: Set<Calendar.Component>, minimumYear: Int?, maximumYear: Int?, dateComponentsFormatter: DateComponentsFormatter) {
-        self.calendar = calendar
-        self.calendarComponents = calendarComponents
-        self.minimumYear = minimumYear
-        self.maximumYear = maximumYear
-        self.dateComponentsFormatter = dateComponentsFormatter
-    }
-}
-
-extension RSDDateComponentPickerDataSource {
-    
-    /// Returns the text answer to display for a given selected answer.
-    /// - parameter selectedAnswer: The answer to convert.
-    /// - returns: A text value for the answer to display to the user.
-    public func textAnswer(from selectedAnswer: Any?) -> String? {
-        return dateComponentsFormatter.string(for: selectedAnswer)
-    }
-}
-
 extension NSCalendar.Unit {
     
     /// Convenience initializer for converting from a `Calendar.Component` set to an `NSCalendar.Unit`
@@ -534,7 +497,7 @@ extension RSDDateRange {
     
     /// Get the picker data source and formatter for this date range.
     /// - returns: Tuple for the picker data source and formatter.
-    public func dataSource() -> (RSDPickerDataSource, Formatter)  {
+    public func dataSource() -> (RSDPickerDataSource?, Formatter)  {
         let dateComponents : Set<Calendar.Component> = [.year, .month, .day]
         let timeComponents : Set<Calendar.Component> = [.hour, .minute]
         let dateAndTimeComponents = dateComponents.union(timeComponents)
@@ -562,14 +525,10 @@ extension RSDDateRange {
             return (pickerSource, formatter)
         }
         else {
-            let calendar = Calendar(identifier: .gregorian)
-            let minYear: Int? = (self.minimumDate == nil) ? nil : calendar.component(.year, from: self.minimumDate!)
-            let maxYear: Int? = (self.maximumDate == nil) ? nil : calendar.component(.year, from: self.maximumDate!)
             let formatter = DateComponentsFormatter()
-            formatter.calendar = calendar
+            formatter.calendar = Locale.current.calendar
             formatter.allowedUnits = NSCalendar.Unit(calendarComponents: components)
-            let pickerSource = RSDDateComponentPickerDataSourceObject(calendar: calendar, calendarComponents: components, minimumYear: minYear, maximumYear: maxYear, dateComponentsFormatter: formatter)
-            return (pickerSource, formatter)
+            return (nil, formatter)
         }
     }
 }

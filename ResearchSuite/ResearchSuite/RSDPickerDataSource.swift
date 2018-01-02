@@ -78,25 +78,6 @@ public protocol RSDDatePickerDataSource : RSDPickerDataSource {
     var dateFormatter: DateFormatter { get }
 }
 
-/// A picker data source for selecting date components.
-public protocol RSDDateComponentPickerDataSource : RSDPickerDataSource {
-    
-    /// The calendar to use for the date components.
-    var calendar: Calendar { get }
-    
-    /// The components to include in the picker.
-    var calendarComponents: Set<Calendar.Component> { get }
-    
-    /// The minimum year if the year is included, otherwise this value is ignored.
-    var minimumYear: Int? { get }
-    
-    /// The maximum year if the year is included, otherwise this value is ignored.
-    var maximumYear: Int? { get }
-    
-    /// The date components formatter for displaying the date components in a text field or label.
-    var dateComponentsFormatter: DateComponentsFormatter { get }
-}
-
 /// A picker data source for selecting choices.
 public protocol RSDChoicePickerDataSource : RSDPickerDataSource {
     
@@ -140,4 +121,29 @@ public protocol RSDNumberPickerDataSource : RSDPickerDataSource {
     
     /// Returns the number formatter to use to format the displayed value and to parse the result.
     var numberFormatter: NumberFormatter { get }
+}
+
+/// `RSDMultipleComponentOptions` is a data source protocol that can be used to set up a picker.
+///
+/// - seealso: `RSDMultipleComponentInputField` and `RSDFormStepDataSource`
+public protocol RSDMultipleComponentOptions : RSDChoicePickerDataSource {
+    
+    /// A list of choices for input fields that make up the multiple component option set.
+    var choices : [[RSDChoice]] { get }
+    
+    /// If this is a multiple component input field, the UI can optionally define a separator.
+    /// For example, blood pressure would have a separator of "/".
+    var separator: String? { get }
+}
+
+/// `RSDChoiceOptions` is a data source protocol that can be used to set up a picker or list of choices.
+///
+/// - seealso: `RSDChoiceInputField` and `RSDFormStepDataSource`
+public protocol RSDChoiceOptions : RSDChoicePickerDataSource {
+    
+    /// A list of choices for the input field.
+    var choices : [RSDChoice] { get }
+    
+    /// A Boolean value indicating whether the user can skip the input field without providing an answer.
+    var isOptional: Bool { get }
 }

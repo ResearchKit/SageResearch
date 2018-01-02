@@ -114,18 +114,6 @@ public protocol RSDChoice {
     func isEqualToResult(_ result: RSDResult?) -> Bool
 }
 
-/// `RSDChoiceOptions` is a data source protocol that can be used to set up a picker or list of choices.
-///
-/// - seealso: `RSDChoiceInputField` and `RSDFormStepDataSource`
-public protocol RSDChoiceOptions : RSDChoicePickerDataSource {
-    
-    /// A list of choices for the input field.
-    var choices : [RSDChoice] { get }
-    
-    /// A Boolean value indicating whether the user can skip the input field without providing an answer.
-    var isOptional: Bool { get }
-}
-
 /// `RSDChoiceInputField` extends the properties of `RSDInputField` with information required to create a
 /// multiple or single choice question.
 public protocol RSDChoiceInputField : RSDInputField, RSDChoiceOptions {
@@ -142,19 +130,6 @@ extension RSDChoiceInputField {
         }
         return false
     }
-}
-
-/// `RSDMultipleComponentOptions` is a data source protocol that can be used to set up a picker.
-///
-/// - seealso: `RSDMultipleComponentInputField` and `RSDFormStepDataSource`
-public protocol RSDMultipleComponentOptions : RSDChoicePickerDataSource {
-    
-    /// A list of choices for input fields that make up the multiple component option set.
-    var choices : [[RSDChoice]] { get }
-    
-    /// If this is a multiple component input field, the UI can optionally define a separator.
-    /// For example, blood pressure would have a separator of "/".
-    var separator: String? { get }
 }
 
 /// `RSDMultipleComponentInputField` extends the properties of `RSDInputField` with information
