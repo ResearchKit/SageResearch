@@ -424,17 +424,44 @@ final class RSDMassInputTableItem : RSDTextInputTableItem {
     ///     - uiHint:           The UI hint for this row of the table.
     ///     - measurementSize:  The measurement range for the input field.
     init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, measurementSize: RSDFormDataType.MeasurementRange) {
+        
+        // initial unit
+        var unit = (inputField.range as? RSDNumberRange)?.unit
+        
+        // Setup the formatter.
+        var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
+        var placeholderText: String?
+        if (formatter == nil) {
+            let massFormatter = RSDMassFormatter(forInfantUse: (measurementSize == .infant), unitSymbol: unit)
+            formatter = massFormatter
+        }
+        
+        let massUnit: UnitMass
+        if let massFormatter = formatter as? RSDMassFormatter {
+            // When converting from the value entered by the participant, then the
+            // locale is used to determine the preferred units.
+            massFormatter.unitStyle = .long
+            if Locale.current.usesMetricSystem {
+                placeholderText = massFormatter.unitString(fromValue: 60, unit: .kilogram)
+            } else {
+                placeholderText = massFormatter.unitString(fromValue: 140, unit: .pound)
+            }
+            massFormatter.unitStyle = .medium
             
-        // Set up the default unit.
-        let unit = (inputField.range as? RSDNumberRange)?.unit ?? "kg"
-        let massUnit = UnitMass(fromSymbol: unit) ?? .kilograms
+            massUnit = massFormatter.toStringUnit
+        }
+        else {
+            massUnit = ((unit != nil) ? UnitMass(fromSymbol: unit!) : nil) ?? .kilograms
+        }
+        
         self.baseUnit = massUnit
+        unit = massUnit.symbol
         
         // If the measurement is for an infant and the local is US
         // then use the infant mass picker.
         var pickerSource: RSDPickerDataSource? = (inputField as? RSDPickerDataSource)
         if pickerSource == nil, measurementSize == .infant, !Locale.current.usesMetricSystem {
-            pickerSource = RSDUSInfantMassPickerDataSource(unit: massUnit)
+            pickerSource = RSDUSInfantMassPickerDataSource(formatter: formatter as? RSDMassFormatter)
         }
         
         // Switch the hint type to a supported type most appropriate to the units.
@@ -442,30 +469,7 @@ final class RSDMassInputTableItem : RSDTextInputTableItem {
         if uiHint != .popover {
             hint = (pickerSource == nil) ? .textfield : .picker
         }
-        
-        // Setup the formatter.
-        var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
-        var placeholderText: String?
-        if (formatter == nil) {
-            let massFormatter = RSDMassFormatter()
-            formatter = massFormatter
-            massFormatter.isForPersonMassUse = true
-            massFormatter.isForInfantMassUse = (measurementSize == .infant)
-            massFormatter.toStringUnit = massUnit
-            
-            // When converting from the value entered by the participant, then the
-            // locale is used to determine the preferred units.
-            massFormatter.unitStyle = .long
-            if Locale.current.usesMetricSystem {
-                massFormatter.fromStringUnit = .kilograms
-                placeholderText = massFormatter.unitString(fromValue: 60, unit: .kilogram)
-            } else {
-                massFormatter.fromStringUnit = .pounds
-                placeholderText = massFormatter.unitString(fromValue: 140, unit: .pound)
-            }
-            massFormatter.unitStyle = .medium
-        }
-        
+
         let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, dateFormat: nil, unit: unit, sequenceSeparator: nil)
         
         super.init(rowIndex: rowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource, placeholderText: placeholderText)
@@ -501,47 +505,49 @@ final class RSDHeightInputTableItem : RSDTextInputTableItem {
     ///     - measurementSize:  The measurement range for the input field.
     init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, measurementSize: RSDFormDataType.MeasurementRange) {
         
-        // Set up the default unit.
-        let unit = (inputField.range as? RSDNumberRange)?.unit ?? "cm"
-        let lengthUnit = UnitLength(fromSymbol: unit) ?? .centimeters
+        // initial unit
+        var unit = (inputField.range as? RSDNumberRange)?.unit
+        
+        // Setup the formatter.
+        var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
+        var placeholderText: String?
+        if (formatter == nil) {
+            let lengthFormatter = RSDLengthFormatter(forChildUse: (measurementSize != .adult), unitSymbol: unit)
+            formatter = lengthFormatter
+        }
+        
+        let lengthUnit: UnitLength
+        if let lengthFormatter = formatter as? RSDLengthFormatter {
+            // When converting from the value entered by the participant, then the
+            // locale is used to determine the preferred units.
+            lengthFormatter.unitStyle = .long
+            if Locale.current.usesMetricSystem {
+                placeholderText = lengthFormatter.unitString(fromValue: 250, unit: .centimeter)
+            } else {
+                placeholderText = lengthFormatter.unitString(fromValue: 60, unit: .inch)
+            }
+            lengthFormatter.unitStyle = .short
+            
+            lengthUnit = lengthFormatter.toStringUnit
+        }
+        else {
+            lengthUnit = ((unit != nil) ? UnitLength(fromSymbol: unit!) : nil) ?? .centimeters
+        }
+        
         self.baseUnit = lengthUnit
+        unit = lengthUnit.symbol
         
         // If the measurement size is for an adult and the locale is US
         // then use a picker with feet/inches.
         var pickerSource: RSDPickerDataSource? = (inputField as? RSDPickerDataSource)
         if pickerSource == nil, measurementSize == .adult, !Locale.current.usesMetricSystem {
-            pickerSource = RSDUSHeightPickerDataSource(unit: lengthUnit)
+            pickerSource = RSDUSHeightPickerDataSource(formatter: formatter as? RSDLengthFormatter)
         }
         
         // Switch the hint type to a supported type.
         var hint: RSDFormUIHint = uiHint
         if uiHint != .popover {
             hint = (pickerSource == nil) ? .textfield : .picker
-        }
-        
-        // Setup the formatter.
-        var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
-        var placeholderText: String?
-        if (formatter == nil) {
-            let lengthFormatter = RSDLengthFormatter()
-            formatter = lengthFormatter
-            lengthFormatter.isForPersonHeightUse = true
-            lengthFormatter.isForChildHeightUse = (measurementSize != .adult)
-            lengthFormatter.toStringUnit = lengthUnit
-            
-            // When converting from the value entered by the participant, then the
-            // locale is used to determine the preferred units.
-            lengthFormatter.unitStyle = .long
-            if Locale.current.usesMetricSystem {
-                lengthFormatter.fromStringUnit = .centimeters
-                placeholderText = lengthFormatter.unitString(fromValue: 150, unit: .centimeter)
-            } else {
-                lengthFormatter.fromStringUnit = .inches
-                if (pickerSource == nil) {
-                    placeholderText = lengthFormatter.unitString(fromValue: 60, unit: .inch)
-                }
-            }
-            lengthFormatter.unitStyle = .medium
         }
         
         let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, dateFormat: nil, unit: unit, sequenceSeparator: nil)

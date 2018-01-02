@@ -57,16 +57,6 @@ extension RSDMultipleComponentOptions {
         guard component < self.choices.count, row < self.choices[component].count else { return nil }
         return self.choices[component][row]
     }
-    
-    /// Returns the text answer to display for a given selected answer.
-    /// - parameter selectedAnswer: The answer to convert.
-    /// - returns: A text value for the answer to display to the user.
-    public func textAnswer(from selectedAnswer: Any?) -> String? {
-        guard let array = selectedRows(from: selectedAnswer) else { return nil }
-        let strings = array.enumerated().rsd_mapAndFilter { choice(forRow: $0.element, forComponent: $0.offset)?.text }
-        let separator = self.separator ?? " "
-        return strings.joined(separator: separator)
-    }
 }
 
 extension RSDMultipleComponentInputField {
@@ -100,6 +90,16 @@ extension RSDMultipleComponentInputField {
         }
         
         return selected.count == self.numberOfComponents ? selected : nil
+    }
+    
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func textAnswer(from selectedAnswer: Any?) -> String? {
+        guard let array = selectedRows(from: selectedAnswer) else { return nil }
+        let strings = array.enumerated().rsd_mapAndFilter { choice(forRow: $0.element, forComponent: $0.offset)?.text }
+        let separator = self.separator ?? " "
+        return strings.joined(separator: separator)
     }
 }
 
@@ -276,6 +276,9 @@ public struct RSDUSHeightPickerDataSource : RSDImperialMeasurementPickerDataSour
     /// The unit bounds for the source.
     public let largeUnitBounds: (lower: Int, upper: Int) = (1, 8)
     
+    /// The formatter to use for converting the value inches and feet.
+    public let formatter: RSDLengthFormatter
+    
     /// The choices are hardcoded for a range from 1' to 8' 11".
     public let choices: [[RSDChoice]] = {
         let formatter = LengthFormatter()
@@ -287,11 +290,45 @@ public struct RSDUSHeightPickerDataSource : RSDImperialMeasurementPickerDataSour
     }()
     
     /// Default initializer.
-    /// - parameter unit: The length unit that the answer should be stored in. Default = .centimeters
-    public init(unit: UnitLength = .centimeters) {
+    /// - parameter formatter: The length formatter to use for converting to and from text.
+    public init(formatter: RSDLengthFormatter? = nil) {
+        let formatter = formatter ?? RSDLengthFormatter(forChildUse: false)
         var converter = RSDUnitConverter.feetAndInches
-        converter.baseUnit = unit
+        converter.baseUnit = formatter.toStringUnit
         self.converter = converter
+        self.formatter = formatter
+    }
+    
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func textAnswer(from selectedAnswer: Any?) -> String? {
+        return formatter.string(for:selectedAnswer)
+    }
+}
+
+extension RSDLengthFormatter {
+    
+    /// Convenience initializer for initializing a length formatter for the appropriate
+    /// range of human measurement.
+    public convenience init(forChildUse: Bool, unitSymbol: String? = nil) {
+        self.init()
+        
+        self.isForPersonHeightUse = true
+        self.isForChildHeightUse = forChildUse
+        self.toStringUnit = UnitLength(fromSymbol: unitSymbol ?? "cm") ?? .centimeters
+        self.unitStyle = .short
+        
+        // When converting from the value entered by the participant, then the
+        // locale is used to determine the preferred units.
+        if Locale.current.usesMetricSystem {
+            self.fromStringUnit = .centimeters
+        } else {
+            self.fromStringUnit = .inches
+            if !forChildUse {
+                self.numberFormatter.maximumFractionDigits = 0
+            }
+        }
     }
 }
 
@@ -308,6 +345,9 @@ public struct RSDUSInfantMassPickerDataSource : RSDImperialMeasurementPickerData
     /// The unit bounds for the source.
     public let largeUnitBounds: (lower: Int, upper: Int) = (1, 20)
     
+    /// The formatter to use for converting the value inches and feet.
+    public let formatter: RSDMassFormatter
+    
     /// The mass choices are hard coded from 1 lb to 20 lb, 15 oz.
     public let choices : [[RSDChoice]] = {
         let formatter = MassFormatter()
@@ -319,11 +359,45 @@ public struct RSDUSInfantMassPickerDataSource : RSDImperialMeasurementPickerData
     }()
     
     /// Default initializer.
-    /// - parameter unit: The unit of mass that the answers should be stored in. Default = .kilograms
-    public init(unit: UnitMass = .kilograms) {
+    /// - parameter formatter: The mass formatter to use for converting to and from text.
+    public init(formatter: RSDMassFormatter? = nil) {
+        let formatter = formatter ?? RSDMassFormatter(forInfantUse: true)
         var converter = RSDUnitConverter.poundAndOunces
-        converter.baseUnit = unit
+        converter.baseUnit = formatter.toStringUnit
         self.converter = converter
+        self.formatter = formatter
+    }
+    
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func textAnswer(from selectedAnswer: Any?) -> String? {
+        return formatter.string(for:selectedAnswer)
+    }
+}
+
+extension RSDMassFormatter {
+    
+    /// Convenience initializer for initializing a mass formatter for the appropriate
+    /// range of human measurement.
+    public convenience init(forInfantUse: Bool, unitSymbol: String? = nil) {
+        self.init()
+
+        self.isForPersonMassUse = true
+        self.isForInfantMassUse = forInfantUse
+        self.toStringUnit = UnitMass(fromSymbol: unitSymbol ?? "kg") ?? .kilograms
+        self.unitStyle = .medium
+        
+        // When converting from the value entered by the participant, then the
+        // locale is used to determine the preferred units.
+        if Locale.current.usesMetricSystem {
+            self.fromStringUnit = .kilograms
+        } else {
+            self.fromStringUnit = .pounds
+            if forInfantUse {
+                self.numberFormatter.maximumFractionDigits = 0
+            }
+        }
     }
 }
 
