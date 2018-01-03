@@ -33,6 +33,10 @@
 
 #import "RSDMassFormatter.h"
 #import "NSUnit+RSDUnitConversion.h"
+#import "RSDMeasurementWrapper.h"
+
+@interface RSDMassFormatter () <RSDMeasurementFormatter>
+@end
 
 @implementation RSDMassFormatter
 
@@ -118,48 +122,16 @@
         }
     }
     
-    NSMeasurement *measurement = nil;
-    NSArray *componentArray = [string componentsSeparatedByString:@","];
-    
-    for (NSString *part in componentArray) {
-        NSMeasurement *partMeasurement = [self measurementForString:part];
-        if (measurement == nil) {
-            measurement = partMeasurement;
-        } else if (partMeasurement) {
-            measurement = [measurement measurementByAddingMeasurement:partMeasurement];
-        }
-    }
-    
+    NSMeasurement *measurement = [RSDMeasurementWrapper measurementFromString:string withFormatter:self];
     if (measurement) {
         *obj = measurement;
     }
-    
     return (measurement != nil);
 }
 
-- (NSMeasurement *)measurementForString:(NSString *)string {
-    
-    NSString *trimmedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    double measurementValue;
-    NSUnitMass *unit;
-    
-    // look to parse out the string into a unit and a measurement
-    NSArray *split = [trimmedString componentsSeparatedByString:@" "];
-    if (split.count == 2) {
-        if ((unit = [self unitForString:split[0]])) {
-            measurementValue = [split[1] doubleValue];
-        } else {
-            measurementValue = [split[0] doubleValue];
-            unit = [self unitForString:split[1]];
-        }
-    } else {
-        measurementValue = [trimmedString doubleValue];
-    }
-    
-    if (unit == nil) {
-        unit = self.fromStringUnit;
-    }
-    
+- (NSMeasurement *)measurementForNumber:(NSNumber *)number unit:(NSString *)unitString {
+    NSUnitMass *unit = [self unitForString:unitString] ? : self.fromStringUnit;
+    double measurementValue = [number doubleValue];
     return [[NSMeasurement alloc] initWithDoubleValue:measurementValue unit:unit];
 }
 

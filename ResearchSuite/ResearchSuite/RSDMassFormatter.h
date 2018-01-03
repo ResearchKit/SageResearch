@@ -38,22 +38,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// `RSDMassFormatter` is a custom subclass of the `NSMassFormatter` that can convert a `NSMeasurement`
 /// object to a localized string.
 ///
-/// The default converters are overriden to check for a `NSMeasurement` and return the converted string
-/// if available. If the units are imperial for the current locale, this is for measuring the height
-/// of a person, *and* the value is below the `heightLowerThreshold`, then the measurement
-/// will be returned in inches rather than in feet and inches.
-///
 /// - note: While this SDK is written in Swift where permissibile, formatters are written in Obj-c to allow
 /// overriding `-getObjectValue:forString:errorDescription:`. Apple documentation does not include how to
 /// set the value of the pointer for a Swift 4 implementation of the function. syoung 12/30/2017
 ///
 @interface RSDMassFormatter : NSMassFormatter
 
-/// Is this formatter used to describe an infant's weight (mass)? The default behavior for
-/// `NSMassFormatter` when the locale uses imperial units (not metric) is to show for a person's weight
-/// in lb even if it is for an infant. Whereas, typically a US weight for infants  is shown in lb and oz.
-/// This property, if set to `true` will return weight in lb and oz unless the locale is metric,
-/// in which case it is ignored.
+/// Is this formatter used to describe an infant's weight (mass)? The default behavior for `NSMassFormatter`
+/// when the locale uses Imperial or US customary units (not metric) is to show a person's weight
+/// in lb even if it is for an infant whereas, typically a US weight for infants is shown in lb and oz.
+/// This property, if set to `true`, will return weight in lb and oz for Locales that do *not* use the
+/// metric system.
 ///
 /// - note: Setting this value to `true` will also set `isForPersonMassUse` to `true`.
 ///

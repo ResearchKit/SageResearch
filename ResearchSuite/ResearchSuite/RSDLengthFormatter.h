@@ -38,46 +38,42 @@ NS_ASSUME_NONNULL_BEGIN
 /// `RSDLengthFormatter` is a custom subclass of the `NSLengthFormatter` that can convert a `NSMeasurement`
 /// object to a localized string.
 ///
-/// The default converters are overriden to check for a `NSMeasurement` and return the converted string
-/// if available. If the units are imperial for the current locale, this is for measuring the height
-/// of a person, *and* the value is below the `heightLowerThreshold`, then the measurement
-/// will be returned in inches rather than in feet and inches.
-///
 /// - note: While this SDK is written in Swift where permissibile, formatters are written in Obj-c to allow
 /// overriding `-getObjectValue:forString:errorDescription:`. Apple documentation does not include how to
 /// set the value of the pointer for a Swift 4 implementation of the function. syoung 12/30/2017
 ///
 @interface RSDLengthFormatter : NSLengthFormatter
 
+/// This is used by the `-stringForObjectValue:` method to convert the input value to a localized string
+/// in units that are appropriate for the height of an infant or small child.
+///
 /// Is this formatter used to describe a child's height? The default behavior for `NSLengthFormatter`
-/// when the locale uses imperial units (not metric) is to show for a person's height in ft/in even
-/// if it is for an infant or child. Whereas, typically a US height for infants and children is shown
-/// in inches only. This property, if set to `true` will return a child's height in inches unless
-/// the locale is metric, in which case it is ignored.
+/// for locales that uses Imperial or US customary units is to show for a person's height in ft/in
+/// even if the height measurement is for an infant or small child whereas, typically US height for
+/// infants and children is recorded in inches only. This property, if set to `true`, will return a
+/// height in inches if the locale has a US country code *and* the Locale property `usesMetricSystem` equals `false`.
 ///
 /// - note: Setting this value to `true` will also set `isForPersonHeightUse` to `true`.
 ///
 @property (nonatomic, getter=isForChildHeightUse) BOOL forChildHeightUse;
 
-/// The base unit to use for converting a `NSNumber` to a string. The default value will depend upon
-/// whether or not this is used for measuring a person's height, and whether or not the `numberFormatter`
-/// locale uses the metric system. If this is a height formatter then the default metric unit is
-/// centimeters and the default imperial unit (US English) is inches. Otherwise, the default metric
-/// unit is meters and the default imperial unit is feet.
+/// The base unit to use for converting a `NSNumber` to a string.
 ///
 /// This is used by the `-stringForObjectValue:` method to convert the input object to a localized string
 /// for the case where the object value is a `NSNumber`. If the input object is a `NSMeasurement` then
 /// this value is ignored.
+///
+/// If this is a height formatter then the default unit is centimeters. Otherwise, the default unit
+/// is meters.
 @property (nonatomic) NSUnitLength *toStringUnit;
 
-/// The base unit to use for converting a string to an `NSMeasurement`. The default value will depend upon
-/// whether or not this is used for measuring a person's height, and whether or not the `numberFormatter`
-/// locale uses the metric system. If this is a height formatter then the default metric unit is
-/// centimeters and the default imperial unit (US English) is inches. Otherwise, the default metric
-/// unit is meters and the default imperial unit is feet.
+/// The base unit to use for converting a string to an `NSMeasurement`.
 ///
 /// This is used by the `-getObjectValue:forString:errorDescription:` method to convert the input string
 /// to a `NSMeasurement` if the units cannot be parsed from the input string.
+///
+/// If this is a height formatter then the default unit is centimeters. Otherwise, the default unit
+/// is meters.
 @property (nonatomic) NSUnitLength *fromStringUnit;
 
 @end

@@ -53,6 +53,12 @@
 		F8904D491FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
 		F8904D4A1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
 		F8904D4B1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
+		F8A5E15D1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */; };
+		F8A5E15E1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */; };
+		F8A5E15F1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */; };
+		F8A5E1601FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */; };
+		F8A5E1611FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */; };
+		F8A5E1621FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */; };
 		F8B42BE31FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
 		F8B42BE41FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
 		F8B42BE51FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
@@ -401,6 +407,8 @@
 		F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
 		F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
 		F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnitConverter.swift; sourceTree = "<group>"; };
+		F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDMeasurementWrapper.h; sourceTree = "<group>"; };
+		F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDMeasurementWrapper.m; sourceTree = "<group>"; };
 		F8B42BE21FE9ABE200E23783 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		FF0920BE1FCE310500C9E031 /* RSDTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableSection.swift; sourceTree = "<group>"; };
 		FF0920C01FCE37AD00C9E031 /* RSDTableItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableItemGroup.swift; sourceTree = "<group>"; };
@@ -581,6 +589,8 @@
 				F829F0D71FF86DA4001B0680 /* RSDMassFormatter.m */,
 				F829F0E11FF8AF28001B0680 /* NSUnit+RSDUnitConversion.h */,
 				F829F0E21FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m */,
+				F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */,
+				F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */,
 			);
 			name = Formatters;
 			sourceTree = "<group>";
@@ -953,6 +963,7 @@
 				F829F0D81FF86DA4001B0680 /* RSDMassFormatter.h in Headers */,
 				FF8B53711FCE6940006B6937 /* ResearchSuite.h in Headers */,
 				FF8B54ED1FCE6D15006B6937 /* RSDExceptionHandler.h in Headers */,
+				F8A5E15D1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -965,6 +976,7 @@
 				F829F0D91FF86DA4001B0680 /* RSDMassFormatter.h in Headers */,
 				FF8B53721FCE6942006B6937 /* ResearchSuite.h in Headers */,
 				FF8B54E61FCE6D14006B6937 /* RSDExceptionHandler.h in Headers */,
+				F8A5E15E1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -977,6 +989,7 @@
 				F829F0DA1FF86DA4001B0680 /* RSDMassFormatter.h in Headers */,
 				FF8B53731FCE6943006B6937 /* ResearchSuite.h in Headers */,
 				FF8B54DF1FCE6D14006B6937 /* RSDExceptionHandler.h in Headers */,
+				F8A5E15F1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1289,6 +1302,7 @@
 				FF8B54611FCE6CB8006B6937 /* RSDViewThemeElementObject.swift in Sources */,
 				F8B42BE31FE9ABE200E23783 /* Localization.swift in Sources */,
 				FF8B540A1FCE6C97006B6937 /* RSDAnswerResultObject.swift in Sources */,
+				F8A5E1601FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */,
 				FF8B54061FCE6C8E006B6937 /* RSDStandardAsyncActionConfiguration.swift in Sources */,
 				FF8B543D1FCE6CA9006B6937 /* RSDComparableSurveyRuleObject.swift in Sources */,
 				FF8B540C1FCE6C97006B6937 /* RSDResultObject.swift in Sources */,
@@ -1415,6 +1429,7 @@
 				FF8B54141FCE6C99006B6937 /* RSDAnswerResultObject.swift in Sources */,
 				F8B42BE41FE9ABE200E23783 /* Localization.swift in Sources */,
 				FF8B54071FCE6C8F006B6937 /* RSDStandardAsyncActionConfiguration.swift in Sources */,
+				F8A5E1611FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */,
 				FF8B54441FCE6CAA006B6937 /* RSDComparableSurveyRuleObject.swift in Sources */,
 				FF8B54161FCE6C99006B6937 /* RSDResultObject.swift in Sources */,
 				FF8B53FC1FCE6C87006B6937 /* RSDRegExValidatorObject.swift in Sources */,
@@ -1497,6 +1512,7 @@
 				FF8B53DE1FCE6C7B006B6937 /* RSDTaskGroup.swift in Sources */,
 				F84E54551FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */,
 				FF8B54AE1FCE6CF8006B6937 /* RSDTableSection.swift in Sources */,
+				F8A5E1621FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */,
 				FF8B54C91FCE6D0B006B6937 /* RSDDocumentable.swift in Sources */,
 				FF8B54911FCE6CE3006B6937 /* RSDSampleRecorder.swift in Sources */,
 				FF8B54AD1FCE6CF8006B6937 /* RSDPickerDataSourceObject.swift in Sources */,

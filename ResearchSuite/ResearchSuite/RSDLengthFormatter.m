@@ -33,9 +33,13 @@
 
 #import "RSDLengthFormatter.h"
 #import "NSUnit+RSDUnitConversion.h"
+#import "RSDMeasurementWrapper.h"
 
 static const NSString * RSDShortFeetUnitString = @"′";
 static const NSString * RSDShortInchUnitString = @"″";
+
+@interface RSDLengthFormatter () <RSDMeasurementFormatter>
+@end
 
 @implementation RSDLengthFormatter
 
@@ -56,14 +60,14 @@ static const NSString * RSDShortInchUnitString = @"″";
 
 - (NSUnitLength *)defaultUnit {
     if (self.isForPersonHeightUse) {
-        return [self usesMetricSystem] ? NSUnitLength.centimeters : NSUnitLength.inches;
+        return NSUnitLength.centimeters;
     } else {
-        return [self usesMetricSystem] ? NSUnitLength.meters : NSUnitLength.feet;
+        return NSUnitLength.meters;
     }
 }
 
 - (NSLocale *)locale {
-    return self.numberFormatter.locale ?: NSLocale.currentLocale;
+    return self.numberFormatter.locale ? : NSLocale.currentLocale;
 }
 
 - (BOOL)usesMetricSystem {
@@ -124,67 +128,30 @@ static const NSString * RSDShortInchUnitString = @"″";
         }
     }
     
-    NSMeasurement *measurement = nil;
-    NSArray *componentArray = [string componentsSeparatedByString:@","];
-    if ((componentArray.count == 1) && [string containsString:(NSString *)RSDShortFeetUnitString]) {
-        NSRange range = [string rangeOfString:(NSString *)RSDShortFeetUnitString];
-        NSMutableArray *array = [@[[string substringToIndex:range.location + 1]] mutableCopy];
-        NSInteger splitIndex = range.location + 2;
-        if (string.length > splitIndex) {
-            [array addObject:[string substringFromIndex:splitIndex]];
-        }
-        componentArray = array;
-    }
-    
-    for (NSString *part in componentArray) {
-        NSMeasurement *partMeasurement = [self measurementForString:part];
-        if (measurement == nil) {
-            measurement = partMeasurement;
-        } else if (partMeasurement) {
-            measurement = [measurement measurementByAddingMeasurement:partMeasurement];
-        }
-    }
-    
+    NSMeasurement *measurement = [RSDMeasurementWrapper measurementFromString:string withFormatter:self];
     if (measurement) {
         *obj = measurement;
     }
-    
     return (measurement != nil);
 }
 
-- (NSMeasurement *)measurementForString:(NSString *)string {
-    
-    NSString *trimmedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    double measurementValue;
-    NSUnitLength *unit;
-    
-    // look to parse out the string into a unit and a measurement
-    NSArray *split = [trimmedString componentsSeparatedByString:@" "];
-    if (split.count == 2) {
-        if ((unit = [self unitForString:split[0]])) {
-            measurementValue = [split[1] doubleValue];
-        } else {
-            measurementValue = [split[0] doubleValue];
-            unit = [self unitForString:split[1]];
-        }
-    } else {
-        measurementValue = [trimmedString doubleValue];
-        if ([trimmedString hasSuffix:(NSString *)RSDShortFeetUnitString]) {
-            unit = NSUnitLength.feet;
-        } else if ([trimmedString hasSuffix:(NSString *)RSDShortInchUnitString]) {
-            unit = NSUnitLength.inches;
-        } 
-    }
-    
-    if (unit == nil) {
-        unit = self.fromStringUnit;
-    }
-    
+- (NSMeasurement *)measurementForNumber:(NSNumber *)number unit:(NSString *)unitString {
+    NSUnitLength *unit = [self unitForString:unitString] ? : self.fromStringUnit;
+    double measurementValue = [number doubleValue];
     return [[NSMeasurement alloc] initWithDoubleValue:measurementValue unit:unit];
 }
 
 - (NSUnitLength *)unitForString:(NSString *)string {
-    return [NSUnitLength unitLengthFromSymbol:string];
+    NSString *trimmedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (trimmedString.length == 0) {
+        return nil;
+    } else if ([trimmedString isEqualToString:(NSString *)RSDShortFeetUnitString]) {
+        return NSUnitLength.feet;
+    } else if ([trimmedString isEqualToString:(NSString *)RSDShortInchUnitString]) {
+        return NSUnitLength.inches;
+    } else {
+        return [NSUnitLength unitLengthFromSymbol: trimmedString];
+    }
 }
 
 #pragma mark - Coding, copying, and equality inheritance
