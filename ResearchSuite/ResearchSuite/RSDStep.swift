@@ -58,7 +58,7 @@ public protocol RSDStep {
     
     /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
     /// the UI.
-    var type: RSDStepType { get }
+    var stepType: RSDStepType { get }
     
     /// Instantiate a step result that is appropriate for this step.
     /// - returns: A result for this step.

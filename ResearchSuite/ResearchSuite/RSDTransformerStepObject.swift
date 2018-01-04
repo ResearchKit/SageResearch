@@ -43,7 +43,7 @@ public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
     public let identifier: String
     
     /// The type of the step.
-    public let type: RSDStepType
+    public let stepType: RSDStepType
     
     /// A list of steps keyed by identifier with replacement values for the properties in the step.
     public var replacementSteps: [RSDGenericStep]?
@@ -52,7 +52,7 @@ public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
     public var sectionTransformer: RSDSectionStepTransformer!
         
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, replacementSteps, sectionTransformer
+        case identifier, stepType = "type", replacementSteps, sectionTransformer
     }
     
     /// Initialize from a `Decoder`. 
@@ -82,7 +82,7 @@ public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decodeIfPresent(RSDStepType.self, forKey: .type) ?? .section
+        self.stepType = try container.decodeIfPresent(RSDStepType.self, forKey: .stepType) ?? .section
         if container.contains(.replacementSteps) {
             self.replacementSteps = try container.decode([RSDGenericStepObject].self, forKey: .replacementSteps)
         }
@@ -109,7 +109,7 @@ extension RSDTransformerStepObject : RSDDocumentableDecodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .replacementSteps, .sectionTransformer]
+        let codingKeys: [CodingKeys] = [.identifier, .stepType, .replacementSteps, .sectionTransformer]
         return codingKeys
     }
     
@@ -119,7 +119,7 @@ extension RSDTransformerStepObject : RSDDocumentableDecodableObject {
             switch key {
             case .identifier:
                 if idx != 0 { return false }
-            case .type:
+            case .stepType:
                 if idx != 1 { return false }
             case .replacementSteps:
                 if idx != 2 { return false }

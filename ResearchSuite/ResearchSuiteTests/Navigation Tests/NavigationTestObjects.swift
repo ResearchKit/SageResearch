@@ -36,7 +36,7 @@ import ResearchSuite
 
 struct TestStep : RSDStep {
     let identifier: String
-    var type: RSDStepType = .instruction
+    var stepType: RSDStepType = .instruction
     var result: RSDResult?
     var validationError: Error?
     

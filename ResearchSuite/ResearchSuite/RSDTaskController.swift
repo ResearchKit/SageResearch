@@ -500,7 +500,7 @@ extension RSDTaskController {
         }
         
         // Get which controllers should be stopped
-        let isTaskComplete = (step.type == .completion) && !taskPath.task!.stepNavigator.hasStep(after: step, with: taskPath.result)
+        let isTaskComplete = (step.stepType == .completion) && !taskPath.task!.stepNavigator.hasStep(after: step, with: taskPath.result)
         let path = self.taskPath!
         var excludedControllers: [RSDAsyncActionController] = []
         var controllersToStop: [RSDAsyncActionController]?

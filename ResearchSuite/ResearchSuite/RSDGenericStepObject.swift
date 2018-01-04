@@ -46,13 +46,13 @@ public struct RSDGenericStepObject : RSDGenericStep, Decodable {
     public let identifier: String
     
     /// The type of the step. 
-    public let type: RSDStepType
+    public let stepType: RSDStepType
     
     /// The decoded dictionary.
     public let userInfo: [String : Any]
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, type
+        case identifier, stepType = "type"
     }
     
     /// Initialize from a `Decoder`.
@@ -76,7 +76,7 @@ public struct RSDGenericStepObject : RSDGenericStep, Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decodeIfPresent(RSDStepType.self, forKey: .type) ?? "unknown"
+        self.stepType = try container.decodeIfPresent(RSDStepType.self, forKey: .stepType) ?? "unknown"
         
         // Store any additional information to a user info dictionary
         let genericContainer = try decoder.container(keyedBy: AnyCodingKey.self)
@@ -86,7 +86,7 @@ public struct RSDGenericStepObject : RSDGenericStep, Decodable {
     /// Instantiate a step result that is appropriate for this step. Default implementation will return a `RSDResultObject`.
     /// - returns: A result for this step.
     public func instantiateStepResult() -> RSDResult {
-        return RSDResultObject(identifier: identifier, type: RSDResultType(rawValue: type.rawValue))
+        return RSDResultObject(identifier: identifier, type: RSDResultType(rawValue: stepType.rawValue))
     }
     
     /// Required method. This implementation has no validation.

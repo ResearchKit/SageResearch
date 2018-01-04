@@ -371,7 +371,7 @@ class CodableStepObjectTests: XCTestCase {
             let object = try decoder.decode(RSDSectionStepObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foobar")
-            XCTAssertEqual(object.type, "section")
+            XCTAssertEqual(object.stepType, "section")
             XCTAssertEqual(object.steps.count, 2, "\(object.steps)")
             
             guard let firstStep = object.steps.first as? RSDUIStep else {
