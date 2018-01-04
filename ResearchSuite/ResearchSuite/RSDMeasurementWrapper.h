@@ -1,8 +1,8 @@
 //
-//  ResearchSuite.h
+//  RSDMeasurementWrapper.h
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,17 +31,40 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-//! Project version number for ResearchSuite.
-FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
+NS_ASSUME_NONNULL_BEGIN
 
-//! Project version string for ResearchSuite.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
+/// Protocol defining the methods called by the `RSDMeasurementWrapper` to convert the number and string
+/// to a unit.
+@protocol RSDMeasurementFormatter <NSObject>
 
-#import <Researchsuite/RSDExceptionHandler.h>
-#import <Researchsuite/NSUnit+RSDUnitConversion.h>
-#import <Researchsuite/RSDLengthFormatter.h>
-#import <Researchsuite/RSDMassFormatter.h>
+/// Default `NSNumberFormatter` for this measurement formatter.
+- (NSNumberFormatter *)numberFormatter;
 
+/// Convert the number (with an optional unit string) into a measurement.
+/// @param  number      The number to convert.
+/// @param  unitString  A string representation of the unit. Optional.
+/// @returns            The measurement from this number and unit.
+- (NSMeasurement * _Nullable)measurementForNumber:(NSNumber *)number unit:(NSString * _Nullable)unitString;
 
+@end
+
+/// `RSDMeasurementWrapper` is a convenience wrapper for allowing shared parsing code for both
+/// a length and mass formatter.
+@interface RSDMeasurementWrapper : NSObject
+
+/// Use regex pattern matching to find decimal numbers in the string, and assume that the other part
+/// of the string is a unit.
+///
+/// Note: This will only work for languages that define numbers using 0-9 digits. syoung 01/03/2018
+///
+/// @param  string      The string to parse into a number and unit.
+/// @param  formatter   The formatter to use to actually convert the parsed number into an `NSMeasurement`.
+/// @return             The measurement (if any) parsed from the string.
+///
++ (NSMeasurement * _Nullable)measurementFromString:(NSString *)string withFormatter:(id <RSDMeasurementFormatter>)formatter;
+
+@end
+
+NS_ASSUME_NONNULL_END

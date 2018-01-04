@@ -1,5 +1,5 @@
 //
-//  RSDPickerDataSourceObject.swift
+//  RSDDatePickerDataSourceObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,136 +33,22 @@
 
 import Foundation
 
-/// Extension of the `RSDMultipleComponentInputField` protocol to implement the `RSDChoicePickerDataSource` protocol.
-extension RSDMultipleComponentInputField {
-    
-    /// Returns the number of 'columns' to display.
-    public var numberOfComponents: Int {
-        return self.choices.count
-    }
-    
-    /// Returns the # of rows in each component.
-    /// - parameter component: The component (or column) of the picker.
-    /// - returns: The number of rows in the given component.
-    public func numberOfRows(in component: Int) -> Int {
-        guard component < self.choices.count else { return 0 }
-        return self.choices[component].count
-    }
-    
-    /// Returns the choice for this row/component. If this is returns `nil` then this is the "skip" choice.
-    /// - parameters:
-    ///     - row: The row for the selected component.
-    ///     - component: The component (or column) of the picker.
-    public func choice(forRow row: Int, forComponent component: Int) -> RSDChoice? {
-        guard component < self.choices.count, row < self.choices[component].count else { return nil }
-        return self.choices[component][row]
-    }
-}
-
-/// Extension of the `RSDChoiceOptions` protocol to implement the `RSDChoicePickerDataSource` protocol.
-extension RSDChoiceOptions {
-    
-    /// Returns the number of 'columns' to display.
-    public var numberOfComponents: Int {
-        return 1
-    }
-    
-    /// Returns the # of rows in each component.
-    /// - parameter component: The component (or column) of the picker.
-    /// - returns: The number of rows in the given component.
-    public func numberOfRows(in component: Int) -> Int {
-        return self.choices.count
-    }
-    
-    /// Returns the choice for this row/component. If this is returns `nil` then this is the "skip" choice.
-    /// - parameters:
-    ///     - row: The row for the selected component.
-    ///     - component: The component (or column) of the picker.
-    public func choice(forRow row: Int, forComponent component: Int) -> RSDChoice? {
-        guard component < 1, row < self.choices.count else { return nil }
-        return self.choices[row]
-    }
-}
-
-/// A simple struct that can be used to implement the `RSDChoiceOptions` protocol.
-public struct RSDChoiceOptionsObject : RSDChoiceOptions {
-    
-    /// A list of choices for the input field.
-    public let choices: [RSDChoice]
-    
-    /// A Boolean value indicating whether the user can skip the input field without providing an answer.
-    public let isOptional: Bool
-    
-    /// Default initializer. Auto-synthesized init is not public.
-    public init(choices: [RSDChoice], isOptional: Bool) {
-        self.choices = choices
-        self.isOptional = isOptional
-    }
-}
-
-/// A simple struct that can be used to implement the `RSDNumberPickerDataSource` protocol.
-public struct RSDNumberPickerDataSourceObject : RSDNumberPickerDataSource {
-    
-    /// Returns the minimum number allowed.
-    public let minimum: Decimal
-    
-    /// Returns the maximum number allowed.
-    public let maximum: Decimal
-
-    /// Returns the step interval to use. If `nil`, then the step interval will default to advance by 1.
-    public let stepInterval: Decimal?
-
-    /// Returns the number formatter to use to format the displayed value and to parse the result.
-    public let numberFormatter: NumberFormatter
-    
-    /// Default initializer. Auto-synthesized init is not public.
-    public init(minimum: Decimal, maximum: Decimal, stepInterval: Decimal?, numberFormatter: NumberFormatter) {
-        self.minimum = minimum
-        self.maximum = maximum
-        self.stepInterval = stepInterval
-        self.numberFormatter = numberFormatter
-    }
-}
-
-/// A concrete implementation of `RSDChoicePickerDataSource` for a measurement.
-/// TODO: Implement syoung 11/28/2017
-public struct RSDMeasurementPickerDataSourceObject : RSDChoicePickerDataSource {
-    public let dataType: RSDFormDataType
-    public let unit: String?
-    public let formatter: Formatter?
-    
-    // Returns the number of 'columns' to display.
-    public var numberOfComponents: Int {
-        fatalError("Not yet implemented")
-    }
-    
-    // Returns the # of rows in each component.
-    public func numberOfRows(in component: Int) -> Int {
-        fatalError("Not yet implemented")
-    }
-    
-    // Returns the choice for this row/component.
-    public func choice(forRow row: Int, forComponent component: Int) -> RSDChoice? {
-        fatalError("Not yet implemented")
-    }
-}
-
 /// A simple struct that can be used to implement the `RSDDatePickerDataSource` protocol.
 public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
     
     /// The type of UI picker to display for dates and times.
     public let datePickerMode: RSDDatePickerMode
-
+    
     /// Specify the minimum date range. Default = `nil`. When `minimumDate` > `maximumDate`, the values are ignored.
     public let minimumDate: Date?
-
+    
     /// Specify the maximum date range. Default = `nil`. When `minimumDate` > `maximumDate`, the values are ignored.
     public let maximumDate: Date?
-
+    
     /// The minute interval to display in a picker wheel or list of choices. The interval must be evenly divided into 60.
     /// For example, `5` is valid but `7` is not. Default is `1`, minimum is `1`, maximum is `30`.
     public let minuteInterval: Int?
-
+    
     /// The date formatter for displaying the date in a text field or label.
     public let dateFormatter: DateFormatter
     
@@ -176,30 +62,14 @@ public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
     }
 }
 
-/// A simple struct that can be used to implement the `RSDDateComponentPickerDataSource` protocol.
-public struct RSDDateComponentPickerDataSourceObject : RSDDateComponentPickerDataSource {
-    /// The calendar to use for the date components.
-    public let calendar: Calendar
-
-    /// The components to include in the picker.
-    public let calendarComponents: Set<Calendar.Component>
-
-    /// The minimum year if the year is included, otherwise this value is ignored.
-    public let minimumYear: Int?
-
-    /// The maximum year if the year is included, otherwise this value is ignored.
-    public let maximumYear: Int?
-
-    /// The date components formatter for displaying the date components in a text field or label.
-    public let dateComponentsFormatter: DateComponentsFormatter
+extension RSDDatePickerDataSource {
     
-    /// Default initializer. Auto-synthesized init is not public.
-    public init(calendar: Calendar, calendarComponents: Set<Calendar.Component>, minimumYear: Int?, maximumYear: Int?, dateComponentsFormatter: DateComponentsFormatter) {
-        self.calendar = calendar
-        self.calendarComponents = calendarComponents
-        self.minimumYear = minimumYear
-        self.maximumYear = maximumYear
-        self.dateComponentsFormatter = dateComponentsFormatter
+    /// Returns the text answer to display for a given selected answer.
+    /// - parameter selectedAnswer: The answer to convert.
+    /// - returns: A text value for the answer to display to the user.
+    public func textAnswer(from selectedAnswer: Any?) -> String? {
+        guard let date = selectedAnswer as? Date else { return nil }
+        return dateFormatter.string(from: date)
     }
 }
 
@@ -259,7 +129,7 @@ extension RSDDateRange {
     
     /// Get the picker data source and formatter for this date range.
     /// - returns: Tuple for the picker data source and formatter.
-    public func dataSource() -> (RSDPickerDataSource, Formatter)  {
+    public func dataSource() -> (RSDPickerDataSource?, Formatter)  {
         let dateComponents : Set<Calendar.Component> = [.year, .month, .day]
         let timeComponents : Set<Calendar.Component> = [.hour, .minute]
         let dateAndTimeComponents = dateComponents.union(timeComponents)
@@ -287,14 +157,10 @@ extension RSDDateRange {
             return (pickerSource, formatter)
         }
         else {
-            let calendar = Calendar(identifier: .gregorian)
-            let minYear: Int? = (self.minimumDate == nil) ? nil : calendar.component(.year, from: self.minimumDate!)
-            let maxYear: Int? = (self.maximumDate == nil) ? nil : calendar.component(.year, from: self.maximumDate!)
             let formatter = DateComponentsFormatter()
-            formatter.calendar = calendar
+            formatter.calendar = Locale.current.calendar
             formatter.allowedUnits = NSCalendar.Unit(calendarComponents: components)
-            let pickerSource = RSDDateComponentPickerDataSourceObject(calendar: calendar, calendarComponents: components, minimumYear: minYear, maximumYear: maxYear, dateComponentsFormatter: formatter)
-            return (pickerSource, formatter)
+            return (nil, formatter)
         }
     }
 }

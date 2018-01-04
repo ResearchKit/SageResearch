@@ -1,5 +1,5 @@
 //
-//  ResearchSuite.h
+//  RSDChoiceTableItem.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -31,17 +31,30 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for ResearchSuite.
-FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
-
-//! Project version string for ResearchSuite.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
-
-#import <Researchsuite/RSDExceptionHandler.h>
-#import <Researchsuite/NSUnit+RSDUnitConversion.h>
-#import <Researchsuite/RSDLengthFormatter.h>
-#import <Researchsuite/RSDMassFormatter.h>
-
-
+/// `RSDChoiceTableItem` is used to represent a single row in a table where the user picks from a list of choices.
+open class RSDChoiceTableItem : RSDInputFieldTableItem {
+    
+    /// The choice for a single or multiple choice input field.
+    open private(set) var choice: RSDChoice
+    
+    /// The answer associated with this choice
+    open override var answer: Any? {
+        return selected ? choice.value : nil
+    }
+    
+    /// Whether or not the choice is currently selected.
+    public var selected: Bool = false
+    
+    /// Initialize a new RSDChoiceTableItem.
+    /// parameters:
+    ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides.
+    ///     - inputField:    The RSDInputField representing this tableItem.
+    ///     - uiHint:        The UI hint for this row of the table.
+    ///     - choice:        The choice for a single or multiple choice input field.
+    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, choice: RSDChoice) {
+        self.choice = choice
+        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: uiHint)
+    }
+}
