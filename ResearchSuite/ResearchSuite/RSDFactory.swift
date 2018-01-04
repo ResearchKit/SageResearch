@@ -229,9 +229,7 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
         switch (type) {
-        case .instruction, .completion:
-            return try RSDUIStepObject(from: decoder)
-        case .active, .countdown:
+        case .instruction, .completion, .active, .countdown:
             return try RSDActiveUIStepObject(from: decoder)
         case .form:
             return try RSDFormUIStepObject(from: decoder)

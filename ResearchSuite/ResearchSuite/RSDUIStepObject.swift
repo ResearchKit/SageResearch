@@ -46,7 +46,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     
     /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
     /// the UI.
-    public let type: RSDStepType
+    public let stepType: RSDStepType
     
     /// The primary text to display for the step in a localized string.
     public var title: String?
@@ -89,7 +89,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     ///     - type: The type of the step. Default = `RSDStepType.instruction`
     public init(identifier: String, type: RSDStepType? = nil) {
         self.identifier = identifier
-        self.type = type ?? .instruction
+        self.stepType = type ?? .instruction
         super.init()
     }
     
@@ -120,7 +120,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
         
     private enum CodingKeys: String, CodingKey {
         case identifier
-        case type
+        case stepType = "type"
         case title
         case text
         case detail
@@ -196,7 +196,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decode(RSDStepType.self, forKey: .type)
+        self.stepType = try container.decode(RSDStepType.self, forKey: .stepType)
         
         self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
         
@@ -242,7 +242,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .title, .text, .detail, .footnote, .nextStepIdentifier, .viewTheme, .colorTheme, .imageTheme]
+        let codingKeys: [CodingKeys] = [.identifier, .stepType, .title, .text, .detail, .footnote, .nextStepIdentifier, .viewTheme, .colorTheme, .imageTheme]
         return codingKeys
     }
     
@@ -253,7 +253,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
             switch key {
             case .identifier:
                 if idx != 0 { return false }
-            case .type:
+            case .stepType:
                 if idx != 1 { return false }
             case .title:
                 if idx != 2 { return false }

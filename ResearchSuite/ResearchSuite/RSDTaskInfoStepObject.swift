@@ -38,7 +38,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
 
     private enum CodingKeys : String, CodingKey {
         case identifier
-        case type
+        case stepType = "type"
         case _schemaIdentifier = "schemaIdentifier"
         case schemaRevision
         case title
@@ -55,7 +55,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
     public let identifier: String
     
     /// The type of the step.
-    public let type: RSDStepType
+    public let stepType: RSDStepType
     
     /// The primary text to display for the task in a localized string.
     public var title: String?
@@ -96,7 +96,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
     /// - parameter identifier: A short string that uniquely identifies the step.
     public init(with identifier: String) {
         self.identifier = identifier
-        self.type = .taskInfo
+        self.stepType = .taskInfo
     }
     
     /// Initialize from a `Decoder`.
@@ -126,7 +126,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decodeIfPresent(RSDStepType.self, forKey: .type) ?? .taskInfo
+        self.stepType = try container.decodeIfPresent(RSDStepType.self, forKey: .stepType) ?? .taskInfo
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
@@ -205,7 +205,7 @@ extension RSDTaskInfoStepObject : RSDDocumentableDecodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, ._schemaIdentifier, .schemaRevision, .title, .subtitle, .detail, .copyright, .estimatedMinutes, .icon, .taskTransformer]
+        let codingKeys: [CodingKeys] = [.identifier, .stepType, ._schemaIdentifier, .schemaRevision, .title, .subtitle, .detail, .copyright, .estimatedMinutes, .icon, .taskTransformer]
         return codingKeys
     }
     
@@ -215,7 +215,7 @@ extension RSDTaskInfoStepObject : RSDDocumentableDecodableObject {
             switch key {
             case .identifier:
                 if idx != 0 { return false }
-            case .type:
+            case .stepType:
                 if idx != 1 { return false }
             case ._schemaIdentifier:
                 if idx != 2 { return false }

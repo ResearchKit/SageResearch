@@ -42,7 +42,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     public let identifier: String
     
     /// The type of the step.
-    public let type: RSDStepType
+    public let stepType: RSDStepType
     
     /// A list of the steps used to define this subgrouping of steps.
     public let steps: [RSDStep]
@@ -61,7 +61,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     public init(identifier: String, steps: [RSDStep], type: RSDStepType? = nil) {
         self.identifier = identifier
         self.steps = steps
-        self.type = type ?? .section
+        self.stepType = type ?? .section
     }
     
     /// Instantiate a step result that is appropriate for this step. The default for this struct is a `RSDTaskResultObject`.
@@ -76,7 +76,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, steps, progressMarkers, asyncActions
+        case identifier, stepType = "type", steps, progressMarkers, asyncActions
     }
     
     /// Initialize from a `Decoder`. This implementation will query the `RSDFactory` attached to the decoder for the
@@ -114,7 +114,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.type = try container.decode(RSDStepType.self, forKey: .type)
+        self.stepType = try container.decode(RSDStepType.self, forKey: .stepType)
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
         self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)
@@ -154,7 +154,7 @@ extension RSDSectionStepObject : RSDDocumentableDecodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .steps, .progressMarkers, .asyncActions]
+        let codingKeys: [CodingKeys] = [.identifier, .stepType, .steps, .progressMarkers, .asyncActions]
         return codingKeys
     }
     
@@ -164,7 +164,7 @@ extension RSDSectionStepObject : RSDDocumentableDecodableObject {
             switch key {
             case .identifier:
                 if idx != 0 { return false }
-            case .type:
+            case .stepType:
                 if idx != 1 { return false }
             case .steps:
                 if idx != 2 { return false }
