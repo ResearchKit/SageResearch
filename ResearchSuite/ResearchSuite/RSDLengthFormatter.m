@@ -36,6 +36,9 @@
 #import "RSDMeasurementWrapper.h"
 
 static const NSString * RSDShortFeetUnitString = @"′";
+static const NSString * RSDShortFeetUnitAlternativeString = @"'";
+
+static const NSString * RSDShortInchUnitAlternativeString = @"\"";
 static const NSString * RSDShortInchUnitString = @"″";
 
 @interface RSDLengthFormatter () <RSDMeasurementFormatter>
@@ -145,13 +148,41 @@ static const NSString * RSDShortInchUnitString = @"″";
     NSString *trimmedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if (trimmedString.length == 0) {
         return nil;
-    } else if ([trimmedString isEqualToString:(NSString *)RSDShortFeetUnitString]) {
+    } else if ([trimmedString isEqualToString:(NSString *)RSDShortFeetUnitString] ||
+               [trimmedString isEqualToString:(NSString *)RSDShortFeetUnitAlternativeString]) {
         return NSUnitLength.feet;
-    } else if ([trimmedString isEqualToString:(NSString *)RSDShortInchUnitString]) {
+    } else if ([trimmedString isEqualToString:(NSString *)RSDShortInchUnitString] ||
+               [trimmedString isEqualToString:(NSString *)RSDShortInchUnitAlternativeString]) {
         return NSUnitLength.inches;
     } else {
-        return [NSUnitLength unitLengthFromSymbol: trimmedString];
+        return [NSUnitLength unitLengthFromSymbol: trimmedString] ? : [self unitForLocalizedString: trimmedString];
     }
+}
+
+- (NSUnitLength * _Nullable)unitForLocalizedString:(NSString*)string {
+    
+    NSDictionary * unitConvertions = @{
+                                       @(NSLengthFormatterUnitInch) : NSUnitLength.inches,
+                                       @(NSLengthFormatterUnitFoot) : NSUnitLength.feet,
+                                       @(NSLengthFormatterUnitYard) : NSUnitLength.yards,
+                                       @(NSLengthFormatterUnitMile) : NSUnitLength.miles,
+                                       @(NSLengthFormatterUnitMeter) : NSUnitLength.meters,
+                                       @(NSLengthFormatterUnitKilometer) : NSUnitLength.kilometers,
+                                       @(NSLengthFormatterUnitCentimeter) : NSUnitLength.centimeters,
+                                       @(NSLengthFormatterUnitMillimeter) : NSUnitLength.millimeters };
+    
+    RSDLengthFormatter *formatter = [self copy];
+    formatter.unitStyle = NSFormattingUnitStyleLong;
+    
+    for (NSNumber *key in unitConvertions.allKeys) {
+        NSLengthFormatterUnit formatterUnit = key.integerValue;
+        if ([string isEqualToString:[formatter unitStringFromValue:1 unit:formatterUnit]] ||
+            [string isEqualToString:[formatter unitStringFromValue:100 unit:formatterUnit]]) {
+            return unitConvertions[key];
+        }
+    }
+    
+    return nil;
 }
 
 #pragma mark - Coding, copying, and equality inheritance

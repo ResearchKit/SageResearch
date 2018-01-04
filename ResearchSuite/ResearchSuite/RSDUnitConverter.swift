@@ -39,18 +39,18 @@ import Foundation
 public struct RSDUnitConverter {
     
     /// The converter to use for mass measurements.
-    public static let poundAndOunces = ImperialConverter<UnitMass>(largeUnit: .pounds, smallUnit: .ounces, baseUnit: .kilograms)
+    public static let poundAndOunces = USCustomaryUnitConverter<UnitMass>(largeUnit: .pounds, smallUnit: .ounces, baseUnit: .kilograms)
     
     /// The converter to use for length measurements.
-    public static let feetAndInches = ImperialConverter<UnitLength>(largeUnit: .feet, smallUnit: .inches, baseUnit: .centimeters)
+    public static let feetAndInches = USCustomaryUnitConverter<UnitLength>(largeUnit: .feet, smallUnit: .inches, baseUnit: .centimeters)
     
-    /// `ImperialConverter` is generic struct for converting measurements from various units.
+    /// `USCustomaryUnitConverter` is generic struct for converting measurements from various units.
     ///
-    /// -note: Imperial measurements are typically shown using a "larger" and "smaller" unit
-    /// such as "ft, in" or "lb, oz". This converter will convert from a base unit (default
-    /// will be metric) to two values, one representing the larger unit and one representing
-    /// the smaller unit.
-    public struct ImperialConverter<UnitType> where UnitType : Dimension {
+    /// - note: US Customary and Imperial units measurements are typically shown using a "larger"
+    /// and "smaller" unit such as "ft, in" or "lb, oz". This converter will convert from a base
+    /// unit (default will be metric) to two values, a larger and smaller unit, that are added
+    /// together to represent a measurement. For example, "5 ft, 6 in".
+    public struct USCustomaryUnitConverter<UnitType> where UnitType : Dimension {
         
         /// The larger imperial unit. For example, "lb" (UnitMass) or "ft" (UnitLength).
         public let largeUnit: UnitType
@@ -94,9 +94,9 @@ public struct RSDUnitConverter {
             }
         }
         
-        /// Convert the input Imperial values to a `Measurement` of the same unit type. This will convert
-        /// the `largeValue` to a `Measurement` with a unit of `largeUnit` and the `smallValue` to a
-        /// `Measurement` with a unit of `smallUnit`. The measurements will be summed and the total will
+        /// Convert the input US Customary unit values to a `Measurement` of the same unit type. This
+        /// will convert the `largeValue` to a `Measurement` with a unit of `largeUnit` and the `smallValue`
+        /// to a `Measurement` with a unit of `smallUnit`. The measurements will be summed and the total will
         /// be returned with a unit of  `baseUnit`.
         ///
         /// - parameters:
@@ -110,19 +110,20 @@ public struct RSDUnitConverter {
         }
         
         /// Convert the input value to a tuple with the large and small measurement components used to
-        /// represent the measurement using Imperial units.
+        /// represent the measurement using US Customary or Imperial units where the units are represented
+        /// with a larger and smaller unit.
         ///
         /// - example:
         /// ```
         ///     // returns 1 foot, 8 inches
-        ///     let feet_1_AndInches_8 = lengthConverter.toImperialValue(from: 20 * 2.54)
+        ///     let feet_1_AndInches_8 = lengthConverter.toTupleValue(from: 20 * 2.54)
         /// ```
         ///
         /// - parameter value: The value to convert.
         /// - returns:
         ///     - largeValue: The larger component of the converted measurement.
         ///     - smallValue: The smaller component of the converted measurement.
-        public func toImperialValue(from value: Any) -> (largeValue: Double, smallValue: Double)? {
+        public func toTupleValue(from value: Any) -> (largeValue: Double, smallValue: Double)? {
             guard let measurement = measurement(from: value) else { return nil }
             let largeValue = floor(measurement.converted(to: largeUnit).value)
             let remainder = measurement.converted(to: smallUnit).value - Measurement(value: largeValue, unit: largeUnit).converted(to: smallUnit).value

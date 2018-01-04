@@ -80,7 +80,7 @@ class UnitConversionTests: XCTestCase {
     func testFeetAndInchesConverter() {
         let converter = RSDUnitConverter.feetAndInches
         
-        if let imperialValue = converter.toImperialValue(from: 167.64) {
+        if let imperialValue = converter.toTupleValue(from: 167.64) {
             XCTAssertEqual(Int(imperialValue.largeValue), 5)
             XCTAssertEqual(Int(imperialValue.smallValue), 6)
         } else {
@@ -94,7 +94,7 @@ class UnitConversionTests: XCTestCase {
     func testPoundAndOunceConverter() {
         let converter = RSDUnitConverter.poundAndOunces
         
-        if let imperialValue = converter.toImperialValue(from: 3.97) {
+        if let imperialValue = converter.toTupleValue(from: 3.97) {
             XCTAssertEqual(Int(imperialValue.largeValue), 8)
             XCTAssertEqual(Int(imperialValue.smallValue), 12)
         } else {

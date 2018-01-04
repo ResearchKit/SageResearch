@@ -1,5 +1,5 @@
 //
-//  RSDTableItemGroup.swift
+//  RSDChoiceTableItem.swift
 //  ResearchSuite
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,31 +33,28 @@
 
 import Foundation
 
-/// `RSDTableItemGroup` is a generic table item group object that can be used to display information in a tableview
-/// that does not have an associated input field.
-open class RSDTableItemGroup {
+/// `RSDChoiceTableItem` is used to represent a single row in a table where the user picks from a list of choices.
+open class RSDChoiceTableItem : RSDInputFieldTableItem {
     
-    /// The list of items (or rows) included in this group. A table group can be used to represent one or more rows.
-    public let items: [RSDTableItem]
+    /// The choice for a single or multiple choice input field.
+    open private(set) var choice: RSDChoice
     
-    /// The row index for the first row in the group.
-    public let beginningRowIndex: Int
-    
-    /// A unique identifier that can be used to track the group.
-    public let uuid = UUID()
-    
-    /// Determine if the current answer is valid. Also checks the case where answer is required but one has not
-    /// been provided.
-    public var isAnswerValid: Bool {
-        return true
+    /// The answer associated with this choice
+    open override var answer: Any? {
+        return selected ? choice.value : nil
     }
     
-    /// Default initializer.
-    /// - parameters:
-    ///     - beginningRowIndex: The row index for the first row in the group.
-    ///     - items: The list of items (or rows) included in this group.
-    public init(beginningRowIndex: Int, items: [RSDTableItem]) {
-        self.beginningRowIndex = beginningRowIndex
-        self.items = items
+    /// Whether or not the choice is currently selected.
+    public var selected: Bool = false
+    
+    /// Initialize a new RSDChoiceTableItem.
+    /// parameters:
+    ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides.
+    ///     - inputField:    The RSDInputField representing this tableItem.
+    ///     - uiHint:        The UI hint for this row of the table.
+    ///     - choice:        The choice for a single or multiple choice input field.
+    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, choice: RSDChoice) {
+        self.choice = choice
+        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: uiHint)
     }
 }

@@ -136,7 +136,31 @@
 }
 
 - (NSUnitMass *)unitForString:(NSString *)string {
-    return [NSUnitMass unitMassFromSymbol:string];
+    NSString *trimmedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return [NSUnitMass unitMassFromSymbol: trimmedString] ? : [self unitForLocalizedString: trimmedString];
+}
+
+- (NSUnitMass * _Nullable)unitForLocalizedString:(NSString*)string {
+    
+    NSDictionary * unitConvertions = @{
+                                       @(NSMassFormatterUnitGram) : NSUnitMass.grams,
+                                       @(NSMassFormatterUnitKilogram) : NSUnitMass.kilograms,
+                                       @(NSMassFormatterUnitOunce) : NSUnitMass.ounces,
+                                       @(NSMassFormatterUnitPound) : NSUnitMass.poundsMass,
+                                       @(NSMassFormatterUnitStone) : NSUnitMass.stones};
+    
+    RSDMassFormatter *formatter = [self copy];
+    formatter.unitStyle = NSFormattingUnitStyleLong;
+    
+    for (NSNumber *key in unitConvertions.allKeys) {
+        NSMassFormatterUnit formatterUnit = key.integerValue;
+        if ([string isEqualToString:[formatter unitStringFromValue:1 unit:formatterUnit]] ||
+            [string isEqualToString:[formatter unitStringFromValue:100 unit:formatterUnit]]) {
+            return unitConvertions[key];
+        }
+    }
+    
+    return nil;
 }
 
 #pragma mark - Coding, copying, and equality inheritance
@@ -189,7 +213,4 @@
 }
 
 @end
-
-
-
 

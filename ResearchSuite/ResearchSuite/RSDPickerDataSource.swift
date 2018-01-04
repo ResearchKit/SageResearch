@@ -125,11 +125,17 @@ public protocol RSDNumberPickerDataSource : RSDPickerDataSource {
 
 /// `RSDMultipleComponentOptions` is a data source protocol that can be used to set up a picker.
 ///
-/// - seealso: `RSDMultipleComponentInputField` and `RSDFormStepDataSource`
-public protocol RSDMultipleComponentOptions : RSDChoicePickerDataSource {
+/// - seealso: `RSDMultipleComponentOptions` and `RSDUSMeasurementPickerDataSource`
+public protocol RSDMultipleComponentChoiceOptions : RSDChoicePickerDataSource {
     
     /// A list of choices for input fields that make up the multiple component option set.
     var choices : [[RSDChoice]] { get }
+}
+
+/// `RSDMultipleComponentOptions` is a data source protocol that can be used to set up a picker.
+///
+/// - seealso: `RSDMultipleComponentInputField` and `RSDFormStepDataSource`
+public protocol RSDMultipleComponentOptions : RSDMultipleComponentChoiceOptions {
     
     /// If this is a multiple component input field, the UI can optionally define a separator.
     /// For example, blood pressure would have a separator of "/".

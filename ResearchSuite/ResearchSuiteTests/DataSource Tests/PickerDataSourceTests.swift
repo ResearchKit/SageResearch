@@ -87,7 +87,7 @@ class PickerDataSourceTests: XCTestCase {
     
     func testHeightPicker() {
         
-        let picker = RSDUSHeightPickerDataSource()
+        let picker = RSDUSHeightPickerDataSourceObject()
         
         XCTAssertEqual(picker.converter.baseUnit, .centimeters)
         XCTAssertEqual(picker.numberOfComponents, 2)
@@ -117,7 +117,7 @@ class PickerDataSourceTests: XCTestCase {
     
     func testWeightPicker() {
         
-        let picker = RSDUSInfantMassPickerDataSource()
+        let picker = RSDUSInfantMassPickerDataSourceObject()
         
         XCTAssertEqual(picker.converter.baseUnit, .kilograms)
         XCTAssertEqual(picker.numberOfComponents, 2)

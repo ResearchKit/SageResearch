@@ -161,6 +161,32 @@ class FormatterTests: XCTestCase {
         }
     }
     
+    func testLengthFormatter_5ft_6in_colloquial() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let formatter = RSDLengthFormatter()
+        formatter.isForPersonHeightUse = true
+        formatter.toStringUnit = .centimeters
+        formatter.fromStringUnit = .inches
+        
+        formatter.unitStyle = .short
+        let inputString = "5 foot 6"
+        
+        let measurement = Measurement(value: 5 * 12 + 6, unit: UnitLength.inches)
+        
+        var obj: AnyObject?
+        var err: NSString?
+        let success = formatter.getObjectValue(&obj, for: inputString, errorDescription: &err)
+        XCTAssertTrue(success)
+        XCTAssertNil(err)
+        if let output = obj as? Measurement<UnitLength> {
+            let inches = output.converted(to: .inches)
+            XCTAssertEqual(inches, measurement)
+        } else {
+            XCTFail("Failed to convert string to inches")
+        }
+    }
+    
     func testMassFormatter_5lb_6oz_medium() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
 
