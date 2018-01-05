@@ -230,7 +230,8 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     /// in the generic step and replace properties on self as appropriate.
     ///
     /// For an `RSDActiveUIStepObject`, the `duration` property can be replaced.
-    open override func replace(from step: RSDGenericStep) throws { 
+    open override func replace(from step: RSDGenericStep) throws {
+        try super.replace(from: step)
         self.duration = step.userInfo[CodingKeys.duration.stringValue] as? TimeInterval ?? self.duration
     }
     
