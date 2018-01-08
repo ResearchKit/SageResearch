@@ -268,7 +268,8 @@ open class RSDNumberPickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
     
     open func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         let numSteps = range / interval
-        return Int(round((numSteps as NSNumber).doubleValue)) + 1
+        let numValueRows = numSteps + 1 // n steps means n + 1 values
+        return Int(round((numValueRows as NSNumber).doubleValue)) + 1 // add a row for "no choice selected" at row 0
     }
     
     // MARK: UIPickerViewDelegate
