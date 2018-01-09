@@ -70,7 +70,7 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
             let sequenceType: RSDAnswerResultType.SequenceType? = singleSelection ? nil : .array
             let dateFormatter: DateFormatter? = (inputField.range as? RSDDateRange)?.dateCoder?.resultFormatter
             let unit: String? = (inputField.range as? RSDNumberRange)?.unit
-            return RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: nil)
+            return RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType:inputField.dataType, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: nil)
             }()
         
         // If this is being used as a picker source, then setup the picker
@@ -146,7 +146,7 @@ final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
             let choiceNo = try! RSDChoiceObject<Bool>(value: false, text: Localization.buttonNo(), iconName: nil, detail: nil, isExclusive: true)
             choicePicker = RSDChoiceOptionsObject(choices: [choiceYes, choiceNo], isOptional: inputField.isOptional)
         }
-        let answerType = RSDAnswerResultType(baseType: .boolean)
+        let answerType = RSDAnswerResultType(baseType: .boolean, sequenceType: nil, formDataType: inputField.dataType)
         
         super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, choicePicker: choicePicker, answerType: answerType)
     }

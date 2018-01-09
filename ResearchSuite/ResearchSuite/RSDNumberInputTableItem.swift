@@ -70,7 +70,7 @@ final class RSDNumberInputTableItem : RSDTextInputTableItem {
             pickerSource = RSDNumberPickerDataSourceObject(minimum: min, maximum: max, stepInterval: range.stepInterval, numberFormatter: numberFormatter)
         }
         
-        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: nil, dateFormat: nil, unit: range?.unit, sequenceSeparator: nil)
+        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: nil, formDataType: inputField.dataType, dateFormat: nil, unit: range?.unit, sequenceSeparator: nil)
         
         self.numberRange = range
         
