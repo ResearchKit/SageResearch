@@ -387,7 +387,7 @@ class CodableResultObjectTests: XCTestCase {
             XCTAssertEqual(object.type, "bar")
             XCTAssertGreaterThan(object.endDate, object.startDate)
             
-            let expectedAnswerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, dateFormat: "yyyy-MM-dd")
+            let expectedAnswerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "yyyy-MM-dd")
             XCTAssertEqual(object.answerType, expectedAnswerType)
             
             XCTAssertNotNil(object.value)
@@ -695,7 +695,7 @@ class CodableResultObjectTests: XCTestCase {
             XCTAssertEqual(object.type, "bar")
             XCTAssertGreaterThan(object.endDate, object.startDate)
             
-            let expectedAnswerType = RSDAnswerResultType(baseType: .date, sequenceType: .array, dateFormat: "MM/yyyy")
+            let expectedAnswerType = RSDAnswerResultType(baseType: .date, sequenceType: .array, formDataType: nil, dateFormat: "MM/yyyy")
             XCTAssertEqual(object.answerType, expectedAnswerType)
             
             XCTAssertNotNil(object.value)
@@ -763,7 +763,7 @@ class CodableResultObjectTests: XCTestCase {
             XCTAssertEqual(object.type, "bar")
             XCTAssertGreaterThan(object.endDate, object.startDate)
             
-            let expectedAnswerType = RSDAnswerResultType(baseType: .integer, sequenceType: .array, dateFormat: nil, unit: nil, sequenceSeparator: "-")
+            let expectedAnswerType = RSDAnswerResultType(baseType: .integer, sequenceType: .array, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: "-")
             XCTAssertEqual(object.answerType, expectedAnswerType)
             
             XCTAssertNotNil(object.value)
@@ -820,7 +820,7 @@ class CodableResultObjectTests: XCTestCase {
             XCTAssertEqual(object.type, "bar")
             XCTAssertGreaterThan(object.endDate, object.startDate)
             
-            let expectedAnswerType = RSDAnswerResultType(baseType: .date, sequenceType: .array, dateFormat: nil, unit: nil, sequenceSeparator: ",")
+            let expectedAnswerType = RSDAnswerResultType(baseType: .date, sequenceType: .array, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: ",")
             XCTAssertEqual(object.answerType, expectedAnswerType)
             
             XCTAssertNotNil(object.value)
@@ -885,7 +885,7 @@ class CodableResultObjectTests: XCTestCase {
             XCTAssertEqual(object.type, "bar")
             XCTAssertGreaterThan(object.endDate, object.startDate)
             
-            let expectedAnswerType = RSDAnswerResultType(baseType: .date, sequenceType: .dictionary, dateFormat: "HH:mm")
+            let expectedAnswerType = RSDAnswerResultType(baseType: .date, sequenceType: .dictionary, formDataType: nil, dateFormat: "HH:mm")
             XCTAssertEqual(object.answerType, expectedAnswerType)
             
             XCTAssertNotNil(object.value)

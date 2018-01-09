@@ -169,7 +169,7 @@ final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
             pickerSource = pickerSource ?? RSDDatePickerDataSourceObject(datePickerMode: .dateAndTime, minimumDate: nil, maximumDate: nil, minuteInterval: nil, dateFormatter: dateFormatter)
         }
         
-        let answerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, dateFormat: dateFormatter?.dateFormat, unit: nil, sequenceSeparator: nil)
+        let answerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: inputField.dataType, dateFormat: dateFormatter?.dateFormat, unit: nil, sequenceSeparator: nil)
         
         // TODO: syoung 12/19/2017 Refactor to use an array of RSDNumberInputTableItem to represent the
         // entry if the preferred uiHint is a text field (rather than a picker).
@@ -208,7 +208,7 @@ final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
         let baseType: RSDAnswerResultType.BaseType = inputField.dataType.defaultAnswerResultBaseType()
         let dateFormatter: DateFormatter? = (inputField.range as? RSDDateRange)?.dateCoder?.resultFormatter
         let unit: String? = (inputField.range as? RSDNumberRange)?.unit
-        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: .array, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: inputField.separator)
+        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: .array, formDataType: inputField.dataType, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: inputField.separator)
         let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: nil, pickerSource: inputField)
         
         super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)

@@ -100,7 +100,7 @@ final class RSDHeightInputTableItem : RSDTextInputTableItem {
             hint = (pickerSource == nil) ? .textfield : .picker
         }
         
-        let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, dateFormat: nil, unit: unit, sequenceSeparator: nil)
+        let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, formDataType: inputField.dataType, dateFormat: nil, unit: unit, sequenceSeparator: nil)
         
         super.init(rowIndex: rowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource, placeholderText: placeholderText)
     }
@@ -180,7 +180,7 @@ final class RSDMassInputTableItem : RSDTextInputTableItem {
             hint = (pickerSource == nil) ? .textfield : .picker
         }
         
-        let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, dateFormat: nil, unit: unit, sequenceSeparator: nil)
+        let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, formDataType: inputField.dataType, dateFormat: nil, unit: unit, sequenceSeparator: nil)
         
         super.init(rowIndex: rowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource, placeholderText: placeholderText)
     }

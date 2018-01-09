@@ -90,6 +90,9 @@ public struct RSDAnswerResultType : Codable {
     /// The sequence type (if any) for the answer.
     public let sequenceType: SequenceType?
     
+    /// The original data type of the form input item.
+    public let formDataType: RSDFormDataType?
+    
     /// The date format that should be used to encode and decode the answer.
     public let dateFormat: String?
     
@@ -119,7 +122,7 @@ public struct RSDAnswerResultType : Codable {
     public private(set) var sequenceSeparator: String?
     
     private enum CodingKeys: String, CodingKey {
-        case baseType, sequenceType, dateFormat, dateLocaleIdentifier, unit, sequenceSeparator
+        case baseType, sequenceType, formDataType, dateFormat, dateLocaleIdentifier, unit, sequenceSeparator
     }
     
     /// Static type for a `RSDAnswerResultType` with a `Bool` base type.
@@ -151,9 +154,10 @@ public struct RSDAnswerResultType : Codable {
     ///     - dateFormat: The date format that should be used to encode the answer. Default is `nil`.
     ///     - unit: The unit (if any) to store with the answer for localized measurement conversion. Default is `nil`.
     ///     - sequenceSeparator: The sequence separator to use when storing a multiple component answer as a string. Default is `nil`.
-    public init(baseType: BaseType, sequenceType: SequenceType? = nil, dateFormat: String? = nil, unit: String? = nil, sequenceSeparator: String? = nil) {
+    public init(baseType: BaseType, sequenceType: SequenceType? = nil, formDataType: RSDFormDataType? = nil, dateFormat: String? = nil, unit: String? = nil, sequenceSeparator: String? = nil) {
         self.baseType = baseType
         self.sequenceType = sequenceType
+        self.formDataType = formDataType
         self.dateFormat = dateFormat
         self.unit = unit
         self.sequenceSeparator = sequenceSeparator
@@ -464,7 +468,7 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        return [.baseType, .sequenceType, .dateFormat, .dateLocaleIdentifier, .unit, .sequenceSeparator]
+        return [.baseType, .sequenceType, .formDataType, .dateFormat, .dateLocaleIdentifier, .unit, .sequenceSeparator]
     }
     
     static func validateAllKeysIncluded() -> Bool {
@@ -475,17 +479,19 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
                 if idx != 0 { return false }
             case .sequenceType:
                 if idx != 1 { return false }
-            case .dateFormat:
+            case .formDataType:
                 if idx != 2 { return false }
-            case .dateLocaleIdentifier:
+            case .dateFormat:
                 if idx != 3 { return false }
-            case .unit:
+            case .dateLocaleIdentifier:
                 if idx != 4 { return false }
-            case .sequenceSeparator:
+            case .unit:
                 if idx != 5 { return false }
+            case .sequenceSeparator:
+                if idx != 6 { return false }
             }
         }
-        return keys.count == 6
+        return keys.count == 7
     }
     
     static func examples() -> [Encodable] {
@@ -518,7 +524,7 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
                     let date = Date(timeIntervalSince1970: 200000)
                     examples.append((RSDAnswerResultType.date, date))
                     for dateFormat in dateFormats {
-                        var answerType = RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: dateFormat)
+                        var answerType = RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: dateFormat)
                         answerType.dateLocaleIdentifier = RSDAnswerResultType.defaultDateLocaleIdentifier
                         examples.append((answerType, date))
                     }
@@ -538,10 +544,10 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
                     }()
                     examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
                     if sequenceType == nil {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: "kg", sequenceSeparator: nil), 54.4311))
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: "kg", sequenceSeparator: nil), 54.4311))
                     }
                     if sequenceType == .array {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: "m", sequenceSeparator: ","), [1234.56, 9876.54]))
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: "m", sequenceSeparator: ","), [1234.56, 9876.54]))
                     }
                     
                 case .integer:
@@ -559,10 +565,10 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
                     }()
                     examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
                     if sequenceType == nil {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: "hr", sequenceSeparator: nil), 2))
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: "hr", sequenceSeparator: nil), 2))
                     }
                     if sequenceType == .array {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: nil, sequenceSeparator: "-"), [206, 555, 1212]))
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: "-"), [206, 555, 1212]))
                     }
                     
                 case .string:
@@ -580,7 +586,7 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
                     }()
                     examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
                     if sequenceType == .array {
-                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, dateFormat: nil, unit: nil, sequenceSeparator: "/"), ["and","or"]))
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: "/"), ["and","or"]))
                     }
                     
                 case .timeInterval:
