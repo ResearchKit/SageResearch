@@ -58,9 +58,12 @@ public struct RSDResultType : RawRepresentable, Codable {
     /// Defaults to creating a `RSDFileResult`.
     public static let file: RSDResultType = "file"
     
+    /// Defaults to creating a `RSDErrorResult`.
+    public static let error: RSDResultType = "error"
+    
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDResultType] {
-        return [.base, .answer, .collection, .task, .file]
+        return [.base, .answer, .collection, .task, .file, .error]
     }
 }
 

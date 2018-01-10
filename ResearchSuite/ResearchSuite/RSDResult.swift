@@ -211,6 +211,19 @@ public protocol RSDFileResult : RSDResult {
     var startUptime: TimeInterval? { get }
 }
 
+/// `RSDErrorResult` is a result that holds information about an error.
+public protocol RSDErrorResult : RSDResult {
+    
+    /// A description associated with an `NSError`.
+    var errorDescription: String { get }
+    
+    /// A domain associated with an `NSError`.
+    var errorDomain: String { get }
+    
+    /// The error code associated with an `NSError`.
+    var errorCode: Int { get }
+}
+
 /// `RSDAnswerResultFinder` is a convenience protocol used to retrieve an answer result. It is used in
 /// survey navigation to find the result for a given input field.
 ///
