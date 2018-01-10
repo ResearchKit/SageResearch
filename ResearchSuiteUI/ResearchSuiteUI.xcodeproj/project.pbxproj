@@ -38,7 +38,7 @@
 		FFF2D9891FCF451C007258F8 /* RSDTaskInfoStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */; };
 		FFF2D98A1FCF4527007258F8 /* RSDCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD780F1FAE96C70024BDD1 /* RSDCountdownStepViewController.swift */; };
 		FFF2D98B1FCF4527007258F8 /* RSDActiveStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD781E1FAE990F0024BDD1 /* RSDActiveStepViewController.swift */; };
-		FFF2D98C1FCF4527007258F8 /* RSDGenericStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */; };
+		FFF2D98C1FCF4527007258F8 /* RSDTableStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5231F972F5200C366FC /* RSDTableStepViewController.swift */; };
 		FFF2D98D1FCF4527007258F8 /* DebugStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */; };
 		FFF2D98E1FCF4527007258F8 /* RSDTaskInfoStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */; };
 		FFF2D98F1FCF4530007258F8 /* RSDCrosshatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */; };
@@ -84,7 +84,7 @@
 		FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRoundedButton.swift; sourceTree = "<group>"; };
 		FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+BridgeKeyNames.swift"; sourceTree = "<group>"; };
 		FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+BridgeKeyNames.swift"; sourceTree = "<group>"; };
-		FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDGenericStepViewController.swift; sourceTree = "<group>"; };
+		FF39E5231F972F5200C366FC /* RSDTableStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableStepViewController.swift; sourceTree = "<group>"; };
 		FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepChoiceCell.swift; sourceTree = "<group>"; };
 		FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepNavigationView.swift; sourceTree = "<group>"; };
 		FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepProgressView.swift; sourceTree = "<group>"; };
@@ -277,7 +277,7 @@
 				FFDD782D1FAE9E220024BDD1 /* Default NIbs */,
 				FFDD780F1FAE96C70024BDD1 /* RSDCountdownStepViewController.swift */,
 				FFDD781E1FAE990F0024BDD1 /* RSDActiveStepViewController.swift */,
-				FF39E5231F972F5200C366FC /* RSDGenericStepViewController.swift */,
+				FF39E5231F972F5200C366FC /* RSDTableStepViewController.swift */,
 				FF478D911FD752E800493A49 /* RSDNavigationController.swift */,
 				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
 				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
@@ -488,7 +488,7 @@
 				F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */,
 				FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
 				F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */,
-				FFF2D98C1FCF4527007258F8 /* RSDGenericStepViewController.swift in Sources */,
+				FFF2D98C1FCF4527007258F8 /* RSDTableStepViewController.swift in Sources */,
 				FFF2D9981FCF4538007258F8 /* UIImage+Utilities.swift in Sources */,
 				FFF2D9991FCF4538007258F8 /* UIView+Layout.swift in Sources */,
 				FFF2D9941FCF4530007258F8 /* RSDStepNavigationView.swift in Sources */,

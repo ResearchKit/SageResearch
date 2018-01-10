@@ -1,5 +1,5 @@
 //
-//  RSDGenericStepViewController.swift
+//  RSDTableStepViewController.swift
 //  ResearchSuiteUI
 //
 //  Created by Josh Bruhin on 5/16/17.
@@ -35,7 +35,7 @@
 import UIKit
 
 
-/// `RSDGenericStepViewController` is a custom instance of `RSDStepViewController`. Its subviews include a `UITableView`,
+/// `RSDTableStepViewController` is a custom instance of `RSDStepViewController`. Its subviews include a `UITableView`,
 /// a `RSDNavigationFooterView`, which may or may not be embedded in the tableView as its footerView, and a `RSDNavigationHeaderView`,
 /// which is embedded in the tableView as its headerView.
 ///
@@ -55,7 +55,7 @@ import UIKit
 /// will result in a `tableData` that has no sections and, therefore, no rows. So the tableView will simply have a headerView,
 /// no rows, and a footerView.
 ///
-open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RSDFormStepDataSourceDelegate, RSDPickerObserver {
+open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RSDFormStepDataSourceDelegate, RSDPickerObserver {
     
     /// The table view associated with this view controller. This will be created during `viewDidLoad()` with a default
     /// set up if it is `nil`. If this view controller is loaded from a nib or storyboard, then it should set this outlet
@@ -126,7 +126,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     // MARK: View lifecycle
     
     private var navigationViewHeight: CGFloat = 0.0
-    private let useStickyNavView = RSDGenericStepUIConfig.shouldUseStickyNavigationView()
+    private let useStickyNavView = RSDTableStepUIConfig.shouldUseStickyNavigationView()
     private var tableViewInsetBottom: CGFloat {
         return useStickyNavView ? navigationViewHeight + constants.mainViewBottomMargin : constants.mainViewBottomMargin
     }
@@ -163,11 +163,11 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             tableView.rsd_alignAllToSuperview(padding: 0)
         }
         if self.navigationHeader == nil && shouldShowHeader {
-            navigationHeader = RSDGenericStepUIConfig.instantiateHeaderView()
+            navigationHeader = RSDTableStepUIConfig.instantiateHeaderView()
             tableView.tableHeaderView = navigationHeader
         }
         if self.navigationFooter == nil && shouldShowFooter {
-            navigationFooter = RSDGenericStepUIConfig.instantiateNavigationView()
+            navigationFooter = RSDTableStepUIConfig.instantiateNavigationView()
         }
     }
     
@@ -280,6 +280,38 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         self.answersDidChange(in: 0)
     }
     
+    /// Register the given reuse identifier.  This is a factory method that is called before dequeuing a table cell.
+    /// Overrides of this method should first check to see if the reuse identifier has already been registered and if
+    /// not, do so by calling `tableView.register(, forCellReuseIdentifier:)` with either a nib or a class.
+    open func registerReuseIdentifierIfNeeded(_ reuseIdentifier: String) {
+        guard !_registeredIdentifiers.contains(reuseIdentifier) else { return }
+        _registeredIdentifiers.insert(reuseIdentifier)
+        
+        if let reuseId = RSDTableItem.ReuseIdentifier(rawValue: reuseIdentifier) {
+            switch reuseId {
+            case .image:
+                tableView.register(RSDImageViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+            case .label:
+                tableView.register(RSDTextLabelCell.self, forCellReuseIdentifier: reuseIdentifier)
+            }
+        }
+        else {
+            let isFeatured = formStep?.inputFields.count ?? 0 <= 1
+            let reuseId = RSDFormUIHint(rawValue: reuseIdentifier)
+            switch reuseId {
+            case .list:
+                tableView.register(RSDStepChoiceCell.self, forCellReuseIdentifier: reuseIdentifier)
+            case .textfield, .picker:
+                let cellClass: AnyClass = isFeatured ? RSDStepTextFieldFeaturedCell.self : RSDStepTextFieldCell.self
+                tableView.register(cellClass, forCellReuseIdentifier: reuseIdentifier)
+            default:
+                tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+            }
+        }
+    }
+    private var _registeredIdentifiers = Set<String>()
+    
+    
     // MARK: View setup
     
     /// Override the set up of the header to set the background color for the table view and adjust the minimum height.
@@ -311,7 +343,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     /// Auto layout constraint constants for the margin used at the bottom of the main view
     /// and the default tableView row height.
     /// - returns: A struct with the layout constants
-    open var constants: RSDGenericStepLayoutConstants {
+    open var constants: RSDTableStepLayoutConstants {
         
         // we only need some bottom margin if we have any table data (rows), otherwise, the bottom
         // margin built into the headerView is enough
@@ -404,8 +436,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     ///     - indexPath: The given index path.
     /// - returns: The table view cell configured for this index path.
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let identifier = "\(indexPath.section)-\(indexPath.row)"
-        let cell = dequeueCell(in: tableView, at: indexPath) ?? UITableViewCell(style: .default, reuseIdentifier: identifier)
+        let cell = dequeueCell(in: tableView, for: indexPath) ?? UITableViewCell(style: .default, reuseIdentifier: "__BasicCell")
         configure(cell: cell, in: tableView, at: indexPath)
         return cell
     }
@@ -418,27 +449,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     ///     - tableView: The table view.
     ///     - indexPath: The given index path.
     /// - returns: The table view cell dequeued for this index path.
-    open func dequeueCell(in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell? {
-        let identifier = "\(indexPath.section)-\(indexPath.row)"
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier)
-        
-        // If the cell is dequeued then we are done. return the cell.
-        guard cell == nil else { return cell }
-        
-        return instantiateCell(with: identifier, at: indexPath)
-    }
-    
-    /// Instantiate a cell that is appropriate for the item at the given index path.
-    ///
-    /// - note: This is a factory method and it will assert if a cell cannot be instantiated. Developers must
-    /// overrride the default method and test for conditions *not* supported by this implementations *before*
-    /// calling through to super if and only if the subclass does not instantiate different cell.
-    ///
-    /// - parameters:
-    ///     - reuseIdentifier: A String representing the reuse identifier of the cell.
-    ///     - indexPath: The given index path.
-    /// - returns: The table view cell dequeued for this index path.
-    open func instantiateCell(with reuseIdentifier: String, at indexPath: IndexPath) -> UITableViewCell? {
+    open func dequeueCell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell? {
         
         // If there isn't a table item in the tableData associated with this index path then this is a failure.
         // Assert and return a placeholder cell.
@@ -447,70 +458,120 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             return nil
         }
         
-        // Look to see if this is a UI element that does not require user interaction.
-        // If so, exit early with an appropriate instantiated cell.
-        if tableItem is RSDTextTableItem {
-            return RSDTextLabelCell(style: .default, reuseIdentifier: reuseIdentifier)
-        } else if tableItem is RSDImageTableItem {
-            return RSDImageViewCell(style: .default, reuseIdentifier: reuseIdentifier)
+        registerReuseIdentifierIfNeeded(tableItem.reuseIdentifier)
+        return tableView.dequeueReusableCell(withIdentifier: tableItem.reuseIdentifier, for: indexPath)
+    }
+    
+    /// Configure a cell that is appropriate for the item at the given index path.
+    ///
+    /// - parameters:
+    ///     - cell: The cell to configure.
+    ///     - tableView: The table view.
+    ///     - indexPath: The given index path.
+    open func configure(cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
+        
+        if let labelCell = cell as? RSDTextLabelCell {
+            configure(labelCell: labelCell, for: indexPath)
+        }
+        else if let imageCell = cell as? RSDImageViewCell {
+            configure(imageCell: imageCell, for: indexPath)
+        }
+        else if let textFieldCell = cell as? RSDStepTextFieldCell {
+            configure(textFieldCell: textFieldCell, for: indexPath)
+        }
+        else if let choiceCell = cell as? RSDStepChoiceCell {
+            configure(choiceCell: choiceCell, for: indexPath)
+        }
+    }
+    
+    /// Configure a label cell.
+    func configure(labelCell: RSDTextLabelCell, for indexPath: IndexPath) {
+        guard let item = tableData?.tableItem(at: indexPath) as? RSDTextTableItem
+            else {
+                return
+        }
+        labelCell.label.text = item.text
+    }
+    
+    /// Configure an image cell.
+    func configure(imageCell: RSDImageViewCell, for indexPath: IndexPath) {
+        guard let item = tableData?.tableItem(at: indexPath) as? RSDImageTableItem
+            else {
+                return
+        }
+        imageCell.imageLoader = item.imageTheme
+    }
+    
+    /// Configure a choice cell.
+    func configure(choiceCell: RSDStepChoiceCell, for indexPath: IndexPath) {
+        guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDChoiceTableItem
+            else {
+                return
+        }
+        choiceCell.choiceValueLabel.text = tableItem.choice.text
+        choiceCell.isSelected = tableItem.selected
+    }
+    
+    /// Configure a text field cell.
+    func configure(textFieldCell: RSDStepTextFieldCell, for indexPath: IndexPath) {
+        guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
+            let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
+            else {
+                return
         }
         
-        // Look to see that there is an input field item group and standard UI hint type
-        // associated with this index path.
-        guard let uiHintType = (tableItem as? RSDInputFieldTableItem)?.uiHint.standardType else {
-            assertionFailure("Failed to dequeue a cell for \(indexPath).")
-            return nil
+        // Always set the index path and delegate
+        textFieldCell.textField.indexPath = indexPath
+        textFieldCell.textField.delegate = self
+        textFieldCell.selectionStyle = .none
+        
+        // Set up our keyboard accessory view, which is a standard navigationView but only if there
+        // isn't already a footer set for this cell.
+        if let footer = self.navigationFooter, textFieldCell.textField.inputAccessoryView == nil {
+            
+            let navView = type(of: footer).init()
+            setupFooter(navView)
+            
+            // using auto layout to constrain the navView to fill its superview after adding it to the textfield
+            // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
+            // navView and manually set its frame before assigning it to the text field
+            let navHeight = navView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            let navWidth = UIScreen.main.bounds.size.width
+            navView.frame = CGRect(x: 0, y: 0, width: navWidth, height: navHeight)
+            
+            textFieldCell.textField.inputAccessoryView = navView
         }
         
-        // If the table item is a choice table item then an `RSDStepChoiceCell`.
-        if tableItem is RSDChoiceTableItem {
-            return RSDStepChoiceCell(uiHint: uiHintType, reuseIdentifier: reuseIdentifier)
+        // use the keyboard properties defined for this step
+        if let textAnswerFormat = tableItem.textFieldOptions {
+            textFieldCell.textField.keyboardType = textAnswerFormat.keyboardType.keyboardType()
+            textFieldCell.textField.isSecureTextEntry = textAnswerFormat.isSecureTextEntry
+            textFieldCell.textField.autocapitalizationType = textAnswerFormat.autocapitalizationType.textAutocapitalizationType()
+            textFieldCell.textField.autocorrectionType = textAnswerFormat.autocorrectionType.textAutocorrectionType()
+            textFieldCell.textField.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
         }
-        else if let textInputItem = tableItem as? RSDTextInputTableItem, uiHintType == .textfield || uiHintType == .picker {
-            
-            // Create a textField based cell
-            let fieldCell = instantiateTextFieldCell(with: reuseIdentifier, at: indexPath)
-            fieldCell.textField.delegate = self
-            fieldCell.selectionStyle = .none
-            
-            // setup our keyboard accessory view, which is a standard navigationView
-            if let footer = self.navigationFooter, fieldCell.textField.inputAccessoryView == nil {
-                
-                let navView = type(of: footer).init()
-                setupFooter(navView)
-                
-                // using auto layout to constrain the navView to fill its superview after adding it to the textfield
-                // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
-                // navView and manually set its frame before assigning it to the text field
-                let navHeight = navView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-                let navWidth = UIScreen.main.bounds.size.width
-                navView.frame = CGRect(x: 0, y: 0, width: navWidth, height: navHeight)
-                
-                fieldCell.textField.inputAccessoryView = navView
-            }
-            
-            // use the keyboard properties defined for this step
-            if let textAnswerFormat = textInputItem.textFieldOptions {
-                fieldCell.textField.keyboardType = textAnswerFormat.keyboardType.keyboardType()
-                fieldCell.textField.isSecureTextEntry = textAnswerFormat.isSecureTextEntry
-                fieldCell.textField.autocapitalizationType = textAnswerFormat.autocapitalizationType.textAutocapitalizationType()
-                fieldCell.textField.autocorrectionType = textAnswerFormat.autocorrectionType.textAutocorrectionType()
-                fieldCell.textField.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
-            }
-            
-            // Add support for picker views
-            if uiHintType == .picker {
-                let picker = instantiatePickerView(textInputItem: textInputItem, indexPath: indexPath)
-                fieldCell.textField.inputView = picker
-                picker?.observer = self
-            }
-            
-            return fieldCell
+        
+        // Add support for picker views
+        let pickerView = textFieldCell.textField.inputView as? (RSDPickerViewProtocol & UIView)
+        if tableItem.uiHint == .picker, pickerView?.indexPath != indexPath {
+            let picker = instantiatePickerView(textInputItem: tableItem, indexPath: indexPath)
+            textFieldCell.textField.inputView = picker
+            picker?.observer = self
         }
-        else {
-            assertionFailure("tableItem \(String(describing: tableItem)) is not supported. indexPath=\(indexPath)")
-            return nil
+
+        // if we have an answer, populate the text field
+        if itemGroup.isAnswerValid {
+            textFieldCell.textField.text = tableItem.answerText
+            if let picker = textFieldCell.textField.inputView as? RSDPickerViewProtocol {
+                picker.answer = tableItem.answer
+            }
         }
+        
+        // populate the field label
+        textFieldCell.fieldLabel.text = tableItem.inputField.prompt
+        
+        // populate the text field placeholder label
+        textFieldCell.placeholderText = tableItem.placeholderText
     }
     
     /// Instantiate the appropriate picker view for the given input item.
@@ -531,85 +592,6 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         return nil
     }
     
-    /// Configure a cell that is appropriate for the item at the given index path.
-    ///
-    /// - parameters:
-    ///     - cell: The cell to configure.
-    ///     - tableView: The table view.
-    ///     - indexPath: The given index path.
-    open func configure(cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
-
-        if let labelCell = cell as? RSDTextLabelCell {
-            guard let item = tableData?.tableItem(at: indexPath) as? RSDTextTableItem
-                else {
-                    return
-            }
-            labelCell.label.text = item.text
-        }
-        else if let imageCell = cell as? RSDImageViewCell {
-            guard let item = tableData?.tableItem(at: indexPath) as? RSDImageTableItem
-                else {
-                    return
-            }
-            imageCell.imageLoader = item.imageTheme
-        }
-        else if let textFieldCell = cell as? RSDStepTextFieldCell {
-            guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
-                let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
-                else {
-                    return
-            }
-            
-            if let customField = textFieldCell.textField as? RSDStepTextField {
-                customField.indexPath = indexPath
-            }
-            
-            // if we have an answer, populate the text field
-            if itemGroup.isAnswerValid {
-                textFieldCell.textField.text = tableItem.answerText
-                if let picker = textFieldCell.textField.inputView as? RSDPickerViewProtocol {
-                    picker.answer = tableItem.answer
-                }
-            }
-            
-            if let text = tableItem.inputField.prompt {
-                // populate the field label
-                textFieldCell.fieldLabel.text = text
-            }
-            
-            if let placeholder = tableItem.placeholderText {
-                // populate the text field placeholder label
-                textFieldCell.setPlaceholderText(placeholder)
-            }
-        }
-        else if let choiceCell = cell as? RSDStepChoiceCell {
-            guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDChoiceTableItem
-                else {
-                    return
-            }
-            
-            choiceCell.choiceValueLabel.text = tableItem.choice.text
-            choiceCell.isSelected = tableItem.selected
-        }
-    }
-    
-    /// The 'RSDStepTextFieldCell' to use. Override to provide a custom instance of this class.
-    ///
-    /// If this step has just one form item, like for 'externalID' or 'yourAge', then use the `RSDStepTextFieldFeaturedCell`
-    /// textField cell, which centers the field in the view and uses a large font. Otherwise, use `RSDStepTextFieldCell`.
-    ///
-    /// - parameters:
-    ///     - reuseIdentifier: A String representing the reuse identifier of the cell.
-    ///     - indexPath: The given index path.
-    /// - returns: The 'RSDStepTextFieldCell' class to use.
-    open func instantiateTextFieldCell(with reuseIdentifier: String, at indexPath: IndexPath) -> RSDStepTextFieldCell {
-        if formStep?.inputFields.count ?? 0 > 1 {
-            return RSDStepTextFieldCell(style: .default, reuseIdentifier: reuseIdentifier)
-        }
-        else {
-            return RSDStepTextFieldFeaturedCell(style: .default, reuseIdentifier: reuseIdentifier)
-        }
-    }
     
     // MARK: UITableView Delegate
     
@@ -853,6 +835,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         (activeTextField?.inputAccessoryView as? RSDNavigationFooterView)?.nextButton?.isEnabled = self.isForwardEnabled
     }
     
+    
     // MARK: UIScrollView delegate
     
     /// Base class implementation will call `updateShadows()`.
@@ -929,14 +912,14 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
     }
 }
 
-/// `RSDGenericStepUIConfig` is a configuration class. All the methods are defined as `@objc open class func`
+/// `RSDTableStepUIConfig` is a configuration class. All the methods are defined as `@objc open class func`
 /// methods which can be overriden by an application to return different shared implementations. This allows
 /// the generic step to override the UI consistently for all step views that use either
-/// `RSDGenericStepViewController` or a subclass implementation.
-public class RSDGenericStepUIConfig: NSObject {
+/// `RSDTableStepViewController` or a subclass implementation.
+public class RSDTableStepUIConfig: NSObject {
 }
 
-extension RSDGenericStepUIConfig {
+extension RSDTableStepUIConfig {
     
     /// Defines whether or not a drop shadow is shown below the top edge of the navigation view. The shadow
     /// is only shown if content is underlapping the navigation view.
@@ -951,12 +934,12 @@ extension RSDGenericStepUIConfig {
         return true
     }
     
-    /// Instantiate an instance of the header view used by the `RSDGenericStepViewController` table view.
+    /// Instantiate an instance of the header view used by the `RSDTableStepViewController` table view.
     @objc open class func instantiateHeaderView() -> RSDStepHeaderView {
-        return RSDGenericStepHeaderView()
+        return RSDTableStepHeaderView()
     }
     
-    /// Instantiate an instance of the footer view used by the `RSDGenericStepViewController` table view.
+    /// Instantiate an instance of the footer view used by the `RSDTableStepViewController` table view.
     /// The footer is either "sticky", meaning that it is pinned to the bottom of the screen or "scrolling"
     /// meaning that it is set as the footer for the table view.
     ///
@@ -967,8 +950,8 @@ extension RSDGenericStepUIConfig {
     }
 }
 
-/// `RSDGenericStepLayoutConstants` defines the layout constants used by the `RSDGenericStepViewController`.
-public protocol RSDGenericStepLayoutConstants {
+/// `RSDTableStepLayoutConstants` defines the layout constants used by the `RSDTableStepViewController`.
+public protocol RSDTableStepLayoutConstants {
     var mainViewBottomMargin: CGFloat { get }
     var defaultRowHeight: CGFloat { get }
     var formStepMinHeaderHeight: CGFloat { get }
@@ -987,6 +970,6 @@ fileprivate struct RSDDefaultGenericStepLayoutConstants {
     }
 }
 
-extension RSDDefaultGenericStepLayoutConstants : RSDGenericStepLayoutConstants {
+extension RSDDefaultGenericStepLayoutConstants : RSDTableStepLayoutConstants {
 }
 

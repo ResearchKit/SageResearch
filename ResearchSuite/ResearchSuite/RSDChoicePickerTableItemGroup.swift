@@ -141,13 +141,44 @@ final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
         let choicePicker: RSDChoicePickerDataSource
         if let picker = inputField as? RSDChoicePickerDataSource {
             choicePicker = picker
-        } else {
+            self.singleCheckbox = (choicePicker.numberOfComponents == 1 && choicePicker.numberOfRows(in: 0) == 1)
+        }
+        else if uiHint == .checkbox || uiHint == .radioButton {
+            let text = inputField.prompt ?? Localization.buttonYes()
+            let choiceYes = try! RSDChoiceObject<Bool>(value: true, text: text, iconName: nil, detail: nil, isExclusive: true)
+            choicePicker = RSDChoiceOptionsObject(choices: [choiceYes], isOptional: true)
+            self.singleCheckbox = true
+        }
+        else {
             let choiceYes = try! RSDChoiceObject<Bool>(value: true, text: Localization.buttonYes(), iconName: nil, detail: nil, isExclusive: true)
             let choiceNo = try! RSDChoiceObject<Bool>(value: false, text: Localization.buttonNo(), iconName: nil, detail: nil, isExclusive: true)
             choicePicker = RSDChoiceOptionsObject(choices: [choiceYes, choiceNo], isOptional: inputField.isOptional)
+            self.singleCheckbox = false
         }
         let answerType = RSDAnswerResultType(baseType: .boolean, sequenceType: nil, formDataType: inputField.dataType)
         
         super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, choicePicker: choicePicker, answerType: answerType)
+    }
+    
+    /// Does this input field use a single checkbox or radio button to mark as `true` (ie. selected)?
+    private let singleCheckbox: Bool
+    
+    /// Override setting the answer to set to `false` rather than `nil` if this is a single selection
+    /// checkbox and the value has been de-selected.
+    public override func setAnswer(_ newValue: Any?) throws {
+        let answer: Any? = newValue ?? (singleCheckbox ? false : nil)
+        try super.setAnswer(answer)
+    }
+    
+    /// Override setting the answer from a result to check for `nil` and exit early if found.
+    public override func setAnswer(from result: RSDResult) throws {
+        // If this is a single checkbox representation, then look to see if the answer result has a
+        // non-nil value set on it. If and only if that value is non-nil, should the result be set
+        // because otherwise, a nil value will erroneously be converted to `false` in the override
+        // of `setAnswer()` that this method will call through to.
+        if singleCheckbox, let answerResult = result as? RSDAnswerResult, answerResult.value == nil {
+            return
+        }
+        try super.setAnswer(from: result)
     }
 }

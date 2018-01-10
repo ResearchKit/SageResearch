@@ -181,7 +181,7 @@ extension DefaultNavigationHeaderLayoutConstants : RSDNavigationHeaderLayoutCons
 }
 
 /// `RSDStepHeaderView` is a custom `UIView` designed for use as a header view in a table view, such as
-/// an `RSDGenericStepViewController`.
+/// an `RSDTableStepViewController`.
 @IBDesignable
 open class RSDStepHeaderView: RSDNavigationHeaderView {
     
@@ -219,7 +219,7 @@ open class RSDStepHeaderView: RSDNavigationHeaderView {
     }
 }
 
-/// `RSDGenericStepHeaderView` is a concrete implementation of `RSDStepHeaderView` that will automatically
+/// `RSDTableStepHeaderView` is a concrete implementation of `RSDStepHeaderView` that will automatically
 /// lay out the UI elements in this order, from top to bottom of the view:
 ///
 /// 1. cancelButton: UIButton - allows for cancelling the task
@@ -234,7 +234,7 @@ open class RSDStepHeaderView: RSDNavigationHeaderView {
 /// or progressView, and providing a minimumHeight or customView.
 ///
 @IBDesignable
-open class RSDGenericStepHeaderView: RSDStepHeaderView {
+open class RSDTableStepHeaderView: RSDStepHeaderView {
     
     public init() {
         super.init(frame: CGRect.zero)
@@ -472,7 +472,7 @@ open class RSDGenericStepHeaderView: RSDStepHeaderView {
 }
 
 /// `RSDNavigationFooterView` is an abstract implementation for the `RSDStepNavigationView` which can be
-/// added to a Nib, Storyboard or instantiated using the `RSDGenericStepUIConfig.instantiatNavigationView()`
+/// added to a Nib, Storyboard or instantiated using the `RSDTableStepUIConfig.instantiatNavigationView()`
 /// method.
 @IBDesignable
 open class RSDNavigationFooterView: RSDStepNavigationView {
@@ -487,7 +487,7 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
             return _shouldShowShadow
         }
         set {
-            let shadowEnabled = RSDGenericStepUIConfig.shouldShowNavigationViewShadow()
+            let shadowEnabled = RSDTableStepUIConfig.shouldShowNavigationViewShadow()
             _shouldShowShadow = shadowEnabled && newValue
             self.shadowView?.isHidden = !_shouldShowShadow
             self.clipsToBounds = !_shouldShowShadow
