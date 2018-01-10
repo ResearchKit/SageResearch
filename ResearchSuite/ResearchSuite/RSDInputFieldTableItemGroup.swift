@@ -173,6 +173,7 @@ final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
         
         // TODO: syoung 12/19/2017 Refactor to use an array of RSDNumberInputTableItem to represent the
         // entry if the preferred uiHint is a text field (rather than a picker).
+        // https://github.com/ResearchKit/SageResearch/issues/7
         let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource)
         
         super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)

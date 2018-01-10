@@ -71,6 +71,7 @@ public class RSDStepChoiceCell: UITableViewCell {
 
     public init(uiHint: RSDFormUIHint, reuseIdentifier: String?) {
         // TODO: syoung 12/18/2017 Support checkbox and radio button hint types.
+        // https://github.com/ResearchKit/SageResearch/issues/9
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         commonInit()
     }
