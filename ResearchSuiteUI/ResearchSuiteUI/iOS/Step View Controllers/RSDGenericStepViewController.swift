@@ -86,6 +86,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
                         for choice in choiceInputField.choices {
                             if choice.hasIcon {
                                 // TODO: syoung 10/18/2017 Implement support for image choices
+                                // https://github.com/ResearchKit/SageResearch/issues/11
                                 return false
                             }
                         }
@@ -95,6 +96,7 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
             case .measurement(let measurementType, _):
                 if (measurementType == .bloodPressure) {
                     // TODO: syoung 10/18/2017 Implement support for blood pressure
+                    // https://github.com/ResearchKit/SageResearch/issues/6
                     return false
                 }
             
@@ -188,7 +190,8 @@ open class RSDGenericStepViewController: RSDStepViewController, UITableViewDataS
         super.viewDidAppear(animated)
         
         // TODO: syoung 10/18/2017 Look into other ways of delaying the first responder call.
-        
+        // https://github.com/ResearchKit/SageResearch/issues/10
+        //
         // If the first row in our tableView has a textField, we want it to become the first responder automatically.
         // We must do this after a delay because of how RSDTaskViewController presents these step view controllers,
         // which is done via a UIPageViewController. Without the delay, the textField will NOT become the firstResponder. 

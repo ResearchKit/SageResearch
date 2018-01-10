@@ -87,6 +87,7 @@ public enum RSDFormDataType {
         /// In a time interval question, the participant can enter a time span such as "4 years, 3 months" or
         /// "8 hours, 5 minutes".
         // TODO: syoung 10/06/2017 add TimeIntervalRange
+        // https://github.com/ResearchKit/SageResearch/issues/8
         //case timeInterval
         
         public static func allTypes() -> [BaseType] {
