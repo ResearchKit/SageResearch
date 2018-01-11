@@ -818,6 +818,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     ///     - timeInterval: The time interval marker (ignored by default implementation).
     ///     - completion: A completion handler to call when the instruction has finished.
     open func speakInstruction(_ instruction: String, at timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
+        if self.activeStep?.requiresBackgroundAudio ?? false {
+            (self.taskController as? RSDTaskViewController)?.startBackgroundAudioSessionIfNeeded()
+        }
         RSDSpeechSynthesizer.shared.speak(text: instruction, completion: completion)
     }
     
