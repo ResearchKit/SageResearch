@@ -192,6 +192,10 @@ public protocol RSDActiveUIStep: RSDUIStep {
     /// the step such as playing a sound as well as whether or not to automatically start and finish the step.
     var commands: RSDActiveUIStepCommand { get }
     
+    /// Whether or not the step uses audio, such as the speech synthesizer, that should play whether or not the user
+    /// has the mute switch turned on.
+    var requiresBackgroundAudio: Bool { get }
+    
     /// Localized text that represents an instructional voice prompt. Instructional speech begins when the step
     /// passes the time indicated by the given time.  If `timeInterval` is greater than or equal to `duration`
     /// or is equal to `Double.infinity`, then the spoken instruction returned should be for when the step is finished.

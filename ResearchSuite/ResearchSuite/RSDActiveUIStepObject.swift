@@ -47,6 +47,10 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     /// - seealso: `RSDActiveUIStepCommand.stringMapping` for a list of the coding strings included in this framework.
     public var commands: RSDActiveUIStepCommand = .defaultCommands
     
+    /// Whether or not the step uses audio, such as the speech synthesizer, that should play whether or not the user
+    /// has the mute switch turned on. Default = `false`.
+    public var requiresBackgroundAudio: Bool = false
+    
     // MARK: spoken instruction handling
     
     /// A mapping of the localized text that represents an instructional voice prompt to the time marker for speaking
@@ -66,6 +70,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     ///            "title": "Hello World!",
     ///            "text": "Some text.",
     ///            "duration": 30,
+    ///            "requiresBackgroundAudio": true,
     ///            "commands": ["playSoundOnStart", "vibrateOnFinish"],
     ///            "spokenInstructions" : { "start": "Start moving",
     ///                                     "10": "Keep going",
@@ -140,7 +145,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     // MARK: Coding (spoken instructions requires special handling and Codable auto-synthesis does not work with subclassing)
     
     private enum CodingKeys: String, CodingKey {
-        case duration, commands, spokenInstructions
+        case duration, commands, requiresBackgroundAudio, spokenInstructions
     }
     
     /// Default initializer.
@@ -184,6 +189,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
             self.duration = duration
             stepDuration = duration
         }
+        self.requiresBackgroundAudio = try container.decodeIfPresent(Bool.self, forKey: .requiresBackgroundAudio) ?? false
         self.commands = try container.decodeIfPresent(RSDActiveUIStepCommand.self, forKey: .commands) ?? .defaultCommands
         if let dictionary = try container.decodeIfPresent([String : String].self, forKey: .spokenInstructions) {
             
@@ -259,11 +265,13 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
                 if idx != 0 { return false }
             case .commands:
                 if idx != 1 { return false }
-            case .spokenInstructions:
+            case .requiresBackgroundAudio:
                 if idx != 2 { return false }
+            case .spokenInstructions:
+                if idx != 3 { return false }
             }
         }
-        return keys.count == 3
+        return keys.count == 4
     }
 
     override class func examples() -> [[String : RSDJSONValue]] {
@@ -273,6 +281,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
             "title": "Hello World!",
             "text": "Some text.",
             "duration": 30,
+            "requiresBackgroundAudio": true,
             "commands": ["playSoundOnStart", "vibrateOnFinish"],
             "spokenInstructions" : [ "start": "Start moving",
                                      "10": "Keep going",
