@@ -200,6 +200,15 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
         
         self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
         
+        try super.init(from: decoder)
+        
+        try decode(from: decoder, for: nil)
+    }
+    
+    func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.text = try container.decodeIfPresent(String.self, forKey: .text)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
@@ -218,7 +227,14 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
             }
         }
         
-        try super.init(from: decoder)
+        if deviceType == nil {
+            let subcontainer = try decoder.container(keyedBy: RSDDeviceType.self)
+            let preferredType = decoder.factory.deviceType
+            if subcontainer.contains(preferredType) {
+                let subdecoder = try subcontainer.superDecoder(forKey: preferredType)
+                try decode(from: subdecoder, for: preferredType)
+            }
+        }
     }
     
     /// A step to merge with this step that carries replacement info. This step will look at the replacement info

@@ -111,6 +111,45 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    func testUIStepObject_DeviceType_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "instruction",
+            "title": "Hello World!",
+            "text": "Some text.",
+            "detail": "This is a test.",
+            "footnote": "This is a footnote.",
+            "watch" : {
+                "title": "Watch: Hello World!",
+                "text": "Watch: Some text.",
+                "detail": "Watch: This is a test.",
+                "footnote": "Watch: This is a footnote."
+            }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let factory = RSDFactory()
+            factory.deviceType = .watch
+            let decoder = factory.createJSONDecoder()
+            
+            let object = try decoder.decode(RSDUIStepObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.title, "Watch: Hello World!")
+            XCTAssertEqual(object.text, "Watch: Some text.")
+            XCTAssertEqual(object.detail, "Watch: This is a test.")
+            XCTAssertEqual(object.footnote, "Watch: This is a footnote.")
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
     func testUIStepObjectWithThemes_Codable() {
         
         let json = """

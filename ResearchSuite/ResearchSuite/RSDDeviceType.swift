@@ -99,3 +99,18 @@ extension RSDDeviceType : ExpressibleByStringLiteral {
         self.init(rawValue: value)
     }
 }
+
+extension RSDDeviceType : CodingKey {
+    
+    public init?(stringValue: String) {
+        self.init(rawValue: stringValue)
+    }
+    
+    public var intValue: Int? {
+        return nil
+    }
+    
+    public init?(intValue: Int) {
+        return nil
+    }
+}
