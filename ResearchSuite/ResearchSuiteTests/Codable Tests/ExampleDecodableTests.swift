@@ -78,7 +78,7 @@ class ExampleDecodableTests: XCTestCase {
         for objectType in documentCreator.allDecodableObjects {
             
             let validKeys = objectType.validateAllKeysIncluded()
-            XCTAssertTrue(validKeys)
+            XCTAssertTrue(validKeys, "\(objectType)")
             
             let decoder = RSDFactory.shared.createJSONDecoder()
             
