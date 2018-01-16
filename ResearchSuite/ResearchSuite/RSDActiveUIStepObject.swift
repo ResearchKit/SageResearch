@@ -252,7 +252,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.duration, .commands, .spokenInstructions]
+        let codingKeys: [CodingKeys] = [.duration, .commands, .requiresBackgroundAudio, .spokenInstructions]
         return codingKeys
     }
     
