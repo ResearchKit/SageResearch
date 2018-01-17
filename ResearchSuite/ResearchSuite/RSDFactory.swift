@@ -41,6 +41,20 @@ open class RSDFactory {
     /// then this will be used.
     public static var shared = RSDFactory()
     
+    /// The type of device to point use when decoding different text depending upon the target
+    /// device.
+    public internal(set) var deviceType: RSDDeviceType = {
+        #if os(watchOS)
+        return .watch
+        #elseif os(iOS)
+        return .phone
+        #elseif os(tvOS)
+        return .tv
+        #else
+        return .computer
+        #endif
+    }()
+    
     // Initializer
     public init() {
     }
