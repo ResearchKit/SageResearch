@@ -49,7 +49,7 @@ open class RSDTableItem {
         self.reuseIdentifier = reuseIdentifier
     }
     
-    /// The `RSDTableReuseIdentifier` is a list of reuse identifiers used by this framework
+    /// The `ReuseIdentifier` is a list of reuse identifiers used by this framework
     /// to register table cells in a table.
     ///
     /// In addition to the values listed here, the default behavior for the `RSDTableItem`

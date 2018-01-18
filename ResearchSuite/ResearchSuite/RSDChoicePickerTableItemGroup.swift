@@ -160,7 +160,7 @@ final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
         super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, choicePicker: choicePicker, answerType: answerType)
     }
     
-    /// Does this input field use a single checkbox or radio button to mark as `true` (ie. selected)?
+    /// Does this input field use a single checkbox or radio button to mark as `true` (i.e. selected)?
     private let singleCheckbox: Bool
     
     /// Override setting the answer to set to `false` rather than `nil` if this is a single selection

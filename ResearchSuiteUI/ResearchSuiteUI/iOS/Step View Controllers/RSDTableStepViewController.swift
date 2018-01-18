@@ -427,39 +427,52 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         return tableData?.sections[section].rowCount() ?? 0
     }
     
-    /// Instantiate or dequeue a cell for the given index path. The default implementation will use a unique identifier
-    /// as the reuse identifier. It will then call `dequeueCell(in:, at:)` to dequeue the cell followed by calling
-    /// `configure(cell:, in:, at:)` to configure the cell.
+    /// Instantiate or dequeue a cell for the given index path. The default implementation will call
+    /// `dequeueCell(in:, at:)` to dequeue the cell followed by calling `configure(cell:, in:, at:)`
+    /// to configure the cell.
     ///
     /// - parameters:
     ///     - tableView: The table view.
     ///     - indexPath: The given index path.
     /// - returns: The table view cell configured for this index path.
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = dequeueCell(in: tableView, for: indexPath) ?? UITableViewCell(style: .default, reuseIdentifier: "__BasicCell")
+        let cell = dequeueCell(in: tableView, for: indexPath)
         configure(cell: cell, in: tableView, at: indexPath)
         return cell
     }
     
     // UI Implementation
     
-    /// Dequeue a cell that is appropriate for the item at the given index path.
+    /// Dequeue a cell that is appropriate for the item at the given index path. By default,
+    /// this method will call `reuseIdentifier(for:)` followed by `registerReuseIdentifierIfNeeded()`
+    /// to register the table view cell reuse identifier before calling `dequeueReusableCell()`
+    /// on the given table view.
     ///
     /// - parameters:
     ///     - tableView: The table view.
     ///     - indexPath: The given index path.
     /// - returns: The table view cell dequeued for this index path.
-    open func dequeueCell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell? {
-        
-        // If there isn't a table item in the tableData associated with this index path then this is a failure.
-        // Assert and return a placeholder cell.
+    open func dequeueCell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
+        let reuseId = reuseIdentifier(for: indexPath)
+        registerReuseIdentifierIfNeeded(reuseId)
+        return tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
+    }
+    
+    /// Returns the cell reuse identifier for a given index path.
+    ///
+    /// By default, this will look for a `RSDTableItem` at the given index path and return the
+    /// `reuseIdentifier` property on that object. If there isn't a table item in the tableData
+    /// associated with this index path then this is a failure. The default behavior is to throw
+    /// an assertion and return a placeholder cell identifier.
+    ///
+    /// - parameter indexPath: The given index path.
+    /// - returns: The reuse identifier for the given index path.
+    open func reuseIdentifier(for indexPath: IndexPath) -> String {
         guard let tableItem = tableData?.tableItem(at: indexPath) else {
             assertionFailure("Failed to get an RSDTableItem for this index path \(indexPath)")
-            return nil
+            return "__BasicCell"
         }
-        
-        registerReuseIdentifierIfNeeded(tableItem.reuseIdentifier)
-        return tableView.dequeueReusableCell(withIdentifier: tableItem.reuseIdentifier, for: indexPath)
+        return tableItem.reuseIdentifier
     }
     
     /// Configure a cell that is appropriate for the item at the given index path.
@@ -471,21 +484,21 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     open func configure(cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
         
         if let labelCell = cell as? RSDTextLabelCell {
-            configure(labelCell: labelCell, for: indexPath)
+            configure(labelCell: labelCell, at: indexPath)
         }
         else if let imageCell = cell as? RSDImageViewCell {
-            configure(imageCell: imageCell, for: indexPath)
+            configure(imageCell: imageCell, at: indexPath)
         }
         else if let textFieldCell = cell as? RSDStepTextFieldCell {
-            configure(textFieldCell: textFieldCell, for: indexPath)
+            configure(textFieldCell: textFieldCell, at: indexPath)
         }
         else if let choiceCell = cell as? RSDStepChoiceCell {
-            configure(choiceCell: choiceCell, for: indexPath)
+            configure(choiceCell: choiceCell, at: indexPath)
         }
     }
     
     /// Configure a label cell.
-    func configure(labelCell: RSDTextLabelCell, for indexPath: IndexPath) {
+    func configure(labelCell: RSDTextLabelCell, at indexPath: IndexPath) {
         guard let item = tableData?.tableItem(at: indexPath) as? RSDTextTableItem
             else {
                 return
@@ -494,7 +507,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     }
     
     /// Configure an image cell.
-    func configure(imageCell: RSDImageViewCell, for indexPath: IndexPath) {
+    func configure(imageCell: RSDImageViewCell, at indexPath: IndexPath) {
         guard let item = tableData?.tableItem(at: indexPath) as? RSDImageTableItem
             else {
                 return
@@ -503,7 +516,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     }
     
     /// Configure a choice cell.
-    func configure(choiceCell: RSDStepChoiceCell, for indexPath: IndexPath) {
+    func configure(choiceCell: RSDStepChoiceCell, at indexPath: IndexPath) {
         guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDChoiceTableItem
             else {
                 return
@@ -513,7 +526,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     }
     
     /// Configure a text field cell.
-    func configure(textFieldCell: RSDStepTextFieldCell, for indexPath: IndexPath) {
+    func configure(textFieldCell: RSDStepTextFieldCell, at indexPath: IndexPath) {
         guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
             let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
             else {
@@ -972,4 +985,3 @@ fileprivate struct RSDDefaultGenericStepLayoutConstants {
 
 extension RSDDefaultGenericStepLayoutConstants : RSDTableStepLayoutConstants {
 }
-
