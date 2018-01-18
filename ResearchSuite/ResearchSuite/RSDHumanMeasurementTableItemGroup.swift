@@ -69,7 +69,7 @@ open class RSDHumanMeasurementTableItemGroup : RSDInputFieldTableItemGroup {
             // TODO: syoung 12/19/2017 Implement for both text field and picker
             // https://github.com/ResearchKit/SageResearch/issues/6
             answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: .array, formDataType: inputField.dataType, dateFormat: nil, unit: nil, sequenceSeparator: "/")
-            let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: nil, pickerSource: nil, placeholderText: nil)
+            let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: nil, pickerSource: nil, placeholder: nil)
             tableItems = [tableItem]
         }
         

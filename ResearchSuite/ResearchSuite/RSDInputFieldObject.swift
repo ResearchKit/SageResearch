@@ -56,7 +56,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     ///
     /// You can display placeholder text in a text field or text area to help users understand how to answer
     /// the item's question.
-    open var placeholderText: String?
+    open var placeholder: String?
     
     /// Options for displaying a text field. This is only applicable for certain types of UI hints and data types.
     open var textFieldOptions: RSDTextFieldOptions?
@@ -108,7 +108,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     private enum CodingKeys : String, CodingKey {
         case identifier
         case prompt
-        case placeholderText
+        case placeholder
         case dataType
         case uiHint
         case isOptional = "optional"
@@ -233,7 +233,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     ///     {
     ///     "identifier": "foo",
     ///     "prompt": "Text",
-    ///     "placeholderText": "enter text",
+    ///     "placeholder": "enter text",
     ///     "dataType": "singleChoice.string",
     ///     "choices" : ["never", "sometimes", "often", "always"],
     ///     "matchingAnswer": "never"
@@ -329,7 +329,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
         self.surveyRules = surveyRules
         self.identifier = try container.decode(String.self, forKey: .identifier)
         self.prompt = try container.decodeIfPresent(String.self, forKey: .prompt)
-        self.placeholderText = try container.decodeIfPresent(String.self, forKey: .placeholderText)
+        self.placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder)
         self.isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? false
     }
     
@@ -341,7 +341,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
         try container.encode(self.identifier, forKey: .identifier)
         try container.encode(self.dataType, forKey: .dataType)
         try container.encodeIfPresent(prompt, forKey: .prompt)
-        try container.encodeIfPresent(placeholderText, forKey: .placeholderText)
+        try container.encodeIfPresent(placeholder, forKey: .placeholder)
         try container.encodeIfPresent(uiHint, forKey: .uiHint)
         if let obj = self.range {
             let nestedEncoder = container.superEncoder(forKey: .range)
@@ -379,7 +379,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .prompt, .placeholderText, .dataType, .uiHint, .isOptional, .textFieldOptions, .range, .surveyRules]
+        let codingKeys: [CodingKeys] = [.identifier, .prompt, .placeholder, .dataType, .uiHint, .isOptional, .textFieldOptions, .range, .surveyRules]
         return codingKeys
     }
     
@@ -391,7 +391,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                 if idx != 0 { return false }
             case .prompt:
                 if idx != 1 { return false }
-            case .placeholderText:
+            case .placeholder:
                 if idx != 2 { return false }
             case .dataType:
                 if idx != 3 { return false }
@@ -427,7 +427,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                          "prompt" : "This is a date input field",
                          "dataType" : "date",
                          "uiHint" : "picker",
-                         "placeholderText" : "enter a date",
+                         "placeholder" : "enter a date",
                          "range" : [ "minimumDate" : "2017-02-20",
                                      "maximumDate" : "2017-03-20",
                                      "codingFormat" : "yyyy-MM-dd"]]
@@ -436,7 +436,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                          "prompt" : "This is a decimal input field",
                          "dataType" : "decimal",
                          "uiHint" : "slider",
-                         "placeholderText" : "select a numer",
+                         "placeholder" : "select a numer",
                          "range" : [ "minimumValue" : -2.5,
                                      "maximumValue" : 3,
                                      "stepInterval" : 0.1,
@@ -453,7 +453,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                          "prompt" : "This is a integer input field",
                          "dataType" : "integer",
                          "uiHint" : "popover",
-                         "placeholderText" : "select a numer",
+                         "placeholder" : "select a numer",
                          "range" : [ "minimumValue" : -10,
                                      "maximumValue" : 10,
                                      "stepInterval" : 2],
@@ -464,14 +464,14 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                          "prompt" : "This is a year input field",
                          "dataType" : "year",
                          "uiHint" : "textfield",
-                         "placeholderText" : "birth year",
+                         "placeholder" : "birth year",
                          "range" : [ "allowFuture" : false]]
             
             case .string:
                 return [ "identifier" : "stringExample",
                          "prompt" : "This is a string input field",
                          "dataType" : "string",
-                         "placeholderText" : "enter some text",
+                         "placeholder" : "enter some text",
                          "textFieldOptions" : [ "keyboardType" : "asciiCapable"]]
             }
         }

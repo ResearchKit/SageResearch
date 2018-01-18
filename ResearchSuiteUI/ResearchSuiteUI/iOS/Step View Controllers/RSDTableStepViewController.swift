@@ -584,7 +584,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         textFieldCell.fieldLabel.text = tableItem.inputField.prompt
         
         // populate the text field placeholder label
-        textFieldCell.placeholderText = tableItem.placeholderText
+        textFieldCell.placeholder = tableItem.placeholder
     }
     
     /// Instantiate the appropriate picker view for the given input item.
