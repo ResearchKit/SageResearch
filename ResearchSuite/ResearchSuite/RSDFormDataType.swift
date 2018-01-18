@@ -188,15 +188,10 @@ public enum RSDFormDataType {
     /// The set of ui hints that can display using a list format such as a scrolling list.
     public var listSelectionHints : Set<RSDFormUIHint> {
         switch self {
-        case .collection(let collectionType, _):
-            if collectionType == .multipleComponent {
-                return []
-            } else {
-                return [.checkbox, .list, .radioButton]
-            }
-            
-        case .base(.boolean):
-            return [.list]
+        case .collection(.singleChoice, _),
+             .collection(.multipleChoice, _),
+             .base(.boolean):
+            return [.list, .checkbox, .radioButton]
             
         default:
             return []

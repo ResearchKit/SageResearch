@@ -229,7 +229,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// 2. If `step.stepType == .countdown` then instantiate a `RSDCountdownStepViewController`.
     /// 3. If the step implements the `RSDActiveUIStep` protocol, `duration > 0`, and the step includes the command for
     ///    `RSDActiveUIStepCommand.transitionAutomatically` then instantiate a `RSDActiveStepViewController`.
-    /// 4. If `RSDGenericStepViewController.doesSupport()` returns `true` then instantiate a `RSDGenericStepViewController`
+    /// 4. If `RSDTableStepViewController.doesSupport()` returns `true` then instantiate a `RSDTableStepViewController`
     /// 5. Otherwise, instantiate a `DebugStepViewController` to be used during development as a placeholder.
     ///
     /// - parameter step: The step to display.
@@ -248,10 +248,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             activeStep.commands.contains(.transitionAutomatically) {
             return RSDActiveStepViewController(step: step)
         }
-        else if RSDGenericStepViewController.doesSupport(step) {
+        else if RSDTableStepViewController.doesSupport(step) {
             // If this step *can* be displayed using the generic step view controller, then default to that
             // rather than the using the debug step.
-            return RSDGenericStepViewController(step: step)
+            return RSDTableStepViewController(step: step)
         }
         else {
             // If no default is set the use the debug controller

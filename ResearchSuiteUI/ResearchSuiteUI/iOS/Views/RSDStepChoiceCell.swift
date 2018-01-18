@@ -68,10 +68,8 @@ public class RSDStepChoiceCell: UITableViewCell {
             shadowView.alpha = shadowAlpha
         }
     }
-
-    public init(uiHint: RSDFormUIHint, reuseIdentifier: String?) {
-        // TODO: syoung 12/18/2017 Support checkbox and radio button hint types.
-        // https://github.com/ResearchKit/SageResearch/issues/9
+    
+    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         commonInit()
     }
@@ -128,7 +126,7 @@ public class RSDStepChoiceCell: UITableViewCell {
 open class RSDStepTextFieldCell: UITableViewCell {
     
     /// The text field associated with this cell.
-    public var textField: UITextField!
+    public var textField: RSDStepTextField!
     
     /// The label used to display the prompt for the input field.
     open var fieldLabel: UILabel!
@@ -171,9 +169,13 @@ open class RSDStepTextFieldCell: UITableViewCell {
     /// Set the string for the text field placeholder. View controllers should use this methods rather
     /// than accessing the text field's 'placeholder' directly because some subclasses may not display
     /// the placeholder text.
-    /// - parameter text:    The 'String' to use as the text field's placeholder text.
-    open func setPlaceholderText(_ text: String) {
-        textField.placeholder = text
+    open var placeholderText: String? {
+        get {
+            return textField.placeholder
+        }
+        set {
+            textField.placeholder = newValue
+        }
     }
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -266,11 +268,6 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
         
         // we don't want the field label
         fieldLabel.isHidden = true
-    }
-    
-    /// Override `setPlaceholderText()` to block displaying the placeholder text.
-    override open func setPlaceholderText(_ text: String) {
-        // we don't want placeholder text
     }
 
     override open func updateConstraints() {

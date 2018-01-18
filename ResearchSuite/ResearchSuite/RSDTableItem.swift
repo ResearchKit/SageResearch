@@ -39,10 +39,38 @@ open class RSDTableItem {
     /// The index of this item relative to all rows in the section in which this item resides.
     public let rowIndex: Int
     
+    /// The string to use as the reuse identifier.
+    public let reuseIdentifier: String
+    
     /// Initialize a new RSDTableItem.
     /// - parameter rowIndex: The index of this item relative to all rows in the section in which this item resides.
-    public init(rowIndex: Int) {
+    public init(rowIndex: Int, reuseIdentifier: String) {
         self.rowIndex = rowIndex
+        self.reuseIdentifier = reuseIdentifier
+    }
+    
+    /// The `ReuseIdentifier` is a list of reuse identifiers used by this framework
+    /// to register table cells in a table.
+    ///
+    /// In addition to the values listed here, the default behavior for the `RSDTableItem`
+    /// subclasses includes optional support for all standard `RSDFormUIHint` values.
+    ///
+    public enum ReuseIdentifier : String, Codable {
+        
+        /// Display a label (text that cannot be edited). This is used for
+        /// text in a footnote or other additional detail information.
+        case label = "label"
+        
+        /// Display an image.
+        case image = "image"
+    }
+    
+    /// A list of all the `RSDTableItem.reuseIdentifier` values that are standard to this framework.
+    public static var allStandardReuseIdentifiers: [String] {
+        let baseIds: [ReuseIdentifier] = [.label, .image]
+        var reuseIds = baseIds.map { $0.stringValue }
+        reuseIds.append(contentsOf: RSDFormUIHint.allStandardHints.map { $0.stringValue })
+        return reuseIds
     }
 }
 
@@ -58,7 +86,7 @@ public final class RSDTextTableItem : RSDTableItem {
     ///     - text:          The text to display.
     public init(rowIndex: Int, text: String) {
         self.text = text
-        super.init(rowIndex: rowIndex)
+        super.init(rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.label.rawValue)
     }
 }
 
@@ -74,7 +102,7 @@ public final class RSDImageTableItem : RSDTableItem {
     ///     - imageTheme:    The image to display.
     public init(rowIndex: Int, imageTheme: RSDImageThemeElement) {
         self.imageTheme = imageTheme
-        super.init(rowIndex: rowIndex)
+        super.init(rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.image.rawValue)
     }
 }
 
@@ -98,9 +126,13 @@ open class RSDInputFieldTableItem : RSDTableItem {
     ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides.
     ///     - inputField:    The RSDInputField representing this tableItem.
     ///     - uiHint: The UI hint for this row of the table.
-    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
+    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, reuseIdentifier: String? = nil) {
         self.inputField = inputField
         self.uiHint = uiHint
-        super.init(rowIndex: rowIndex)
+        
+        // If the reuse identifier isn't passed to the initializer then set it from the ui hint.
+        let reuseId: String = reuseIdentifier ?? uiHint.stringValue
+        
+        super.init(rowIndex: rowIndex, reuseIdentifier: reuseId)
     }
 }
