@@ -207,7 +207,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "prompt": "Text",
-            "placeholderText": "enter text",
+            "placeholder": "enter text",
             "dataType": "singleChoice.integer",
             "uiHint": "picker",
             "optional": true,
@@ -229,7 +229,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.prompt, "Text")
-            XCTAssertEqual(object.placeholderText, "enter text")
+            XCTAssertEqual(object.placeholder, "enter text")
             XCTAssertEqual(object.dataType, .collection(.singleChoice, .integer))
             XCTAssertEqual(object.uiHint, .picker)
             XCTAssertTrue(object.isOptional)
@@ -254,7 +254,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["prompt"] as? String, "Text")
-            XCTAssertEqual(dictionary["placeholderText"] as? String, "enter text")
+            XCTAssertEqual(dictionary["placeholder"] as? String, "enter text")
             XCTAssertEqual(dictionary["dataType"] as? String, "singleChoice.integer")
             XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
             XCTAssertEqual(dictionary["optional"] as? Bool, true)

@@ -53,7 +53,7 @@ public protocol RSDInputField {
     ///
     /// You can display placeholder text in a text field or text area to help users understand how to answer
     /// the item's question.
-    var placeholderText: String? { get }
+    var placeholder: String? { get }
     
     /// A Boolean value indicating whether the user can skip the input field without providing an answer.
     var isOptional: Bool { get }

@@ -42,7 +42,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
     open private(set) var textFieldOptions: RSDTextFieldOptions?
     
     /// The placeholder text for this input.
-    open private(set) var placeholderText: String?
+    open private(set) var placeholder: String?
     
     /// The formatter used for dislaying answers and converting text to a number or date.
     open private(set) var formatter: Formatter?
@@ -62,11 +62,11 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
     ///     - textFieldOptions: The text field options.
     ///     - formatter: The formatter used for dislaying answers and converting text to a number or date.
     ///     - pickerSource: The picker data source for selecting answers.
-    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType = .string, textFieldOptions: RSDTextFieldOptions? = nil, formatter: Formatter? = nil, pickerSource: RSDPickerDataSource? = nil, placeholderText: String? = nil) {
+    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType = .string, textFieldOptions: RSDTextFieldOptions? = nil, formatter: Formatter? = nil, pickerSource: RSDPickerDataSource? = nil, placeholder: String? = nil) {
         self.answerType = answerType
         self.formatter = formatter
         self.pickerSource = pickerSource
-        self.placeholderText = placeholderText ?? inputField.placeholderText
+        self.placeholder = placeholder ?? inputField.placeholder
         
         // Set the text field options
         self.textFieldOptions = textFieldOptions ?? inputField.textFieldOptions ?? {

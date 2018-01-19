@@ -60,7 +60,7 @@ final class RSDHeightInputTableItem : RSDTextInputTableItem {
         
         // Setup the formatter.
         var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
-        var placeholderText: String?
+        var placeholder: String?
         if (formatter == nil) {
             let lengthFormatter = RSDLengthFormatter(forChildUse: (measurementSize != .adult), unitSymbol: unit)
             formatter = lengthFormatter
@@ -72,9 +72,9 @@ final class RSDHeightInputTableItem : RSDTextInputTableItem {
             // locale is used to determine the preferred units.
             lengthFormatter.unitStyle = .long
             if Locale.current.usesMetricSystem {
-                placeholderText = lengthFormatter.unitString(fromValue: 250, unit: .centimeter)
+                placeholder = lengthFormatter.unitString(fromValue: 250, unit: .centimeter)
             } else {
-                placeholderText = lengthFormatter.unitString(fromValue: 60, unit: .inch)
+                placeholder = lengthFormatter.unitString(fromValue: 60, unit: .inch)
             }
             lengthFormatter.unitStyle = .short
             
@@ -102,7 +102,7 @@ final class RSDHeightInputTableItem : RSDTextInputTableItem {
         
         let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, formDataType: inputField.dataType, dateFormat: nil, unit: unit, sequenceSeparator: nil)
         
-        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource, placeholderText: placeholderText)
+        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource, placeholder: placeholder)
     }
     
     /// Override the `convertAnswer()` function to convert the `Measurement` returned
@@ -140,7 +140,7 @@ final class RSDMassInputTableItem : RSDTextInputTableItem {
         
         // Setup the formatter.
         var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
-        var placeholderText: String?
+        var placeholder: String?
         if (formatter == nil) {
             let massFormatter = RSDMassFormatter(forInfantUse: (measurementSize == .infant), unitSymbol: unit)
             formatter = massFormatter
@@ -152,9 +152,9 @@ final class RSDMassInputTableItem : RSDTextInputTableItem {
             // locale is used to determine the preferred units.
             massFormatter.unitStyle = .long
             if Locale.current.usesMetricSystem {
-                placeholderText = massFormatter.unitString(fromValue: 60, unit: .kilogram)
+                placeholder = massFormatter.unitString(fromValue: 60, unit: .kilogram)
             } else {
-                placeholderText = massFormatter.unitString(fromValue: 140, unit: .pound)
+                placeholder = massFormatter.unitString(fromValue: 140, unit: .pound)
             }
             massFormatter.unitStyle = .medium
             
@@ -182,7 +182,7 @@ final class RSDMassInputTableItem : RSDTextInputTableItem {
         
         let answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: nil, formDataType: inputField.dataType, dateFormat: nil, unit: unit, sequenceSeparator: nil)
         
-        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource, placeholderText: placeholderText)
+        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource, placeholder: placeholder)
     }
     
     /// Override the `convertAnswer()` function to convert the `Measurement` returned

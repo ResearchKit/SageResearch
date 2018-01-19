@@ -169,7 +169,7 @@ open class RSDStepTextFieldCell: UITableViewCell {
     /// Set the string for the text field placeholder. View controllers should use this methods rather
     /// than accessing the text field's 'placeholder' directly because some subclasses may not display
     /// the placeholder text.
-    open var placeholderText: String? {
+    open var placeholder: String? {
         get {
             return textField.placeholder
         }
