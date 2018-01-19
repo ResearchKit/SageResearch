@@ -83,7 +83,7 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
             choices = try container.decode([[RSDChoiceObject<Bool>]].self, forKey: .choices)
         case .integer, .year:
             choices = try container.decode([[RSDChoiceObject<Int>]].self, forKey: .choices)
-        case .date:
+        case .date, .fraction:
             if let intChoices = try? container.decode([[RSDChoiceObject<Int>]].self, forKey: .choices) {
                 choices = intChoices
             } else {
@@ -97,7 +97,11 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         self.choices = choices
         
         // decode the separator
-        self.separator = try container.decodeIfPresent(String.self, forKey: .separator)
+        if (container.contains(.separator)) {
+            self.separator = try container.decodeIfPresent(String.self, forKey: .separator)
+        } else if dataType.baseType == .fraction {
+            self.separator = RSDFractionFormatter().fractionSeparator
+        }
         
         // call super
         try super.init(from: decoder)

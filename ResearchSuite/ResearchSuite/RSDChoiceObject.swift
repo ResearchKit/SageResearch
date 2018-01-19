@@ -91,8 +91,6 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
         self.isExclusive = isExclusive
     }
     
-
-    
     // MARK: Codable
     
     private enum CodingKeys : String, CodingKey {
@@ -127,19 +125,16 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
         }
         catch DecodingError.typeMismatch(let type, let context) {
             // If attempting to get a dictionary fails, then look to see if this is a single String value
-            if Value.self == String.self {
-                do {
-                    let container = try decoder.singleValueContainer()
-                    value = try container.decode(Value.self)
-                    text = value as? String
-                }
-                catch {
-                    // If we did not succeed in creating a single value/text String from the decoder,
-                    // then rethrow the error
-                    throw DecodingError.typeMismatch(type, context)
+            do {
+                let container = try decoder.singleValueContainer()
+                value = try container.decode(Value.self)
+                if value != nil {
+                    text = "\(value!)"
                 }
             }
-            else {
+            catch {
+                // If we did not succeed in creating a single value/text String from the decoder,
+                // then rethrow the error
                 throw DecodingError.typeMismatch(type, context)
             }
         }

@@ -157,6 +157,7 @@ extension RSDComparable {
         // Exit early if operator or value are unsupported
         guard let answerValue = convertValue(for: matchingAnswer, with: answerType) else { return nil }
         let isArray = (answerType.sequenceType == .array)
+        let isDecimal = (answerType.baseType == .decimal)
 
         switch(op) {
         case .skip:
@@ -164,6 +165,12 @@ extension RSDComparable {
         case .equal:
             if isArray {
                 return NSPredicate(format: "ANY %@ IN SELF", answerValue)
+            } else if isDecimal, let num = answerValue as? NSNumber {
+                let decimal = num.decimalValue
+                let epsilon = Decimal(accuracy ?? 0.00001)
+                let min = decimal - epsilon
+                let max = decimal + epsilon
+                return NSPredicate(format: "SELF >= %@ AND SELF <= %@", min as NSNumber, max as NSNumber)
             } else {
                 return NSPredicate(format: "SELF == %@", answerValue)
             }

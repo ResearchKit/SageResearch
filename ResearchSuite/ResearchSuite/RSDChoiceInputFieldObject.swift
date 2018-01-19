@@ -175,6 +175,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
             choices = try container.decode([RSDChoiceObject<Int>].self, forKey: .choices)
         case .decimal:
             choices = try container.decode([RSDChoiceObject<Double>].self, forKey: .choices)
+        case .fraction:
+            choices = try container.decode([RSDChoiceObject<RSDFraction>].self, forKey: .choices)
         case .date:
             choices = try container.decode([RSDChoiceObject<Date>].self, forKey: .choices)
         case .string:

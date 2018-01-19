@@ -81,6 +81,10 @@ public enum RSDFormDataType {
         /// map to a `RSDNumberRange` to box the allowed values, but will store the value as an `Int`.
         case integer
         
+        /// The fraction question type asks the participant to enter a fractional number. A fractional data type
+        /// can map to a `RSDNumberRange` to box the allowed values.
+        case fraction
+        
         /// In a string question, the participant can enter text.
         case string
         
@@ -91,7 +95,7 @@ public enum RSDFormDataType {
         //case timeInterval
         
         public static func allTypes() -> [BaseType] {
-            return [.boolean, .date, .decimal, .integer, .string, .year]
+            return [.boolean, .date, .decimal, .integer, .fraction, .string, .year]
         }
     }
     
@@ -161,7 +165,7 @@ public enum RSDFormDataType {
             case .date:
                 return [.picker, .textfield]
                 
-            case .decimal, .integer, .year:
+            case .decimal, .integer, .year, .fraction:
                 return [.textfield, .slider, .picker]
                 
             case .string:
@@ -230,7 +234,7 @@ public enum RSDFormDataType {
             return .boolean
         case .date:
             return .date
-        case .decimal:
+        case .decimal, .fraction:
             return .decimal
         case .integer, .year:
             return .integer
