@@ -51,7 +51,7 @@ extension RSDFraction : ExpressibleByStringLiteral {
     /// String representation of the fractional value
     public var stringValue: String {
         if self.denominator == 0 {
-            return (self.numerator == 0) ? "0" : ((self.numerator > 0) ? "inf" : "-inf")
+            return (self.numerator == 0) ? "NaN" : ((self.numerator > 0) ? "inf" : "-inf")
         } else if self.denominator == 1 {
             return "\(self.numerator)"
         } else {
@@ -82,7 +82,7 @@ extension RSDFraction : ExpressibleByFloatLiteral {
     public var doubleValue: Double {
         guard self.denominator != 0
             else {
-                return (self.numerator == 0) ? 0 : ((self.numerator > 0) ? Double.infinity : -1 * Double.infinity)
+                return (self.numerator == 0) ? Double.nan : ((self.numerator > 0) ? Double.infinity : -1 * Double.infinity)
         }
         return Double(self.numerator) / Double(self.denominator)
     }

@@ -40,8 +40,16 @@
     
     RSDFraction fraction;
     
-    if ([self isEqual: [NSDecimalNumber notANumber]] || (self.doubleValue == INFINITY)) {
+    if ([self isEqual: [NSDecimalNumber notANumber]]) {
+        fraction.numerator = 0;
+        fraction.denominator = 0;
+        return fraction;
+    } else if (self.doubleValue == INFINITY) {
         fraction.numerator = 1;
+        fraction.denominator = 0;
+        return fraction;
+    } else if (self.doubleValue == -1 * INFINITY) {
+        fraction.numerator = -1;
         fraction.denominator = 0;
         return fraction;
     }

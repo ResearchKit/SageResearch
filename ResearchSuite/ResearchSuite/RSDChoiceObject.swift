@@ -124,16 +124,14 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
             isExclusive = try container.decodeIfPresent(Bool.self, forKey: .isExclusive) ?? false
         }
         catch DecodingError.typeMismatch(let type, let context) {
-            // If attempting to get a dictionary fails, then look to see if this is a single String value
+            // If attempting to get a dictionary fails, then look to see if this is a single value
             do {
                 let container = try decoder.singleValueContainer()
                 value = try container.decode(Value.self)
-                if value != nil {
-                    text = "\(value!)"
-                }
+                text = (value != nil) ? "\(value!)" : Localization.localizedString("BUTTON_SKIP")
             }
             catch {
-                // If we did not succeed in creating a single value/text String from the decoder,
+                // If we did not succeed in creating a single value/text from the decoder,
                 // then rethrow the error
                 throw DecodingError.typeMismatch(type, context)
             }
