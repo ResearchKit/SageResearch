@@ -273,6 +273,34 @@ class CodableInputFieldObjectTests: XCTestCase {
         }
     }
     
+    func testChoiceInputFieldObject_Codable_Fraction() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "prompt": "Text",
+            "dataType": "singleChoice.fraction",
+            "choices" : ["1/25","1/50","1/125"]
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDChoiceInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.prompt, "Text")
+            XCTAssertEqual(object.dataType, .collection(.singleChoice, .fraction))
+            XCTAssertEqual(object.choices.count, 3)
+            XCTAssertEqual(object.choices.last?.text, "1/125")
+            XCTAssertEqual((object.choices.last?.value as? RSDFraction)?.doubleValue, 1.0 / 125.0)
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
     func testMultipleComponentInputFieldObject_Codable_String() {
         
         let json = """

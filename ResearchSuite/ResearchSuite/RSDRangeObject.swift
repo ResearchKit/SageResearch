@@ -312,8 +312,6 @@ public struct RSDNumberRangeObject : RSDNumberRange, Codable {
             try encodable.encode(to: nestedEncoder)
         }
     }
-    
-
 }
 
 extension RSDNumberRangeObject : RSDDocumentableCodableObject {

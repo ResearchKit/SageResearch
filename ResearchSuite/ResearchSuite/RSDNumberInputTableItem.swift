@@ -58,13 +58,26 @@ final class RSDNumberInputTableItem : RSDTextInputTableItem {
             }
         }
         
-        let baseType: RSDAnswerResultType.BaseType = (inputField.dataType.baseType == .decimal) ? .decimal : .integer
-        let digits = (baseType == .decimal) ? 3 : 0
-        let numberFormatter = (formatter as? NumberFormatter) ?? NumberFormatter.defaultNumberFormatter(with: digits)
-        if inputField.dataType.baseType == .year {
-            numberFormatter.groupingSeparator = ""
+        let baseType: RSDAnswerResultType.BaseType = {
+            switch inputField.dataType.baseType {
+            case .decimal, .fraction:
+                return .decimal
+            default:
+                return .integer
+            }
+        }()
+        
+        let numberFormatter: RSDNumberFormatterProtocol
+        if inputField.dataType.baseType == .fraction {
+            numberFormatter = RSDFractionFormatter()
+        } else {
+            let digits = (baseType == .decimal) ? 3 : 0
+            numberFormatter = (formatter as? NumberFormatter) ?? NumberFormatter.defaultNumberFormatter(with: digits)
+            if inputField.dataType.baseType == .year {
+                (numberFormatter as? NumberFormatter)?.groupingSeparator = ""
+            }
         }
-        formatter = formatter ?? numberFormatter
+        formatter = formatter ?? (numberFormatter as! Formatter)
         
         if pickerSource == nil, let range = range, let min = range.minimumValue, let max = range.maximumValue {
             pickerSource = RSDNumberPickerDataSourceObject(minimum: min, maximum: max, stepInterval: range.stepInterval, numberFormatter: numberFormatter)

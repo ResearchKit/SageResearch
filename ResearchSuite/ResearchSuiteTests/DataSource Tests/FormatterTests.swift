@@ -265,4 +265,71 @@ class FormatterTests: XCTestCase {
             XCTFail("Failed to convert string to inches")
         }
     }
+    
+    func testFractionFormatter_threeFourths() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+
+        let numerator = 3
+        let denominator = 4
+        let inputString = "3/4"
+        let doubleValue = 0.75
+        
+        let formatter = RSDFractionFormatter()
+        let fractionString = formatter.string(for: NSNumber(value: doubleValue))
+        XCTAssertEqual(fractionString, inputString)
+        
+        var obj: AnyObject?
+        var err: NSString?
+        let success = formatter.getObjectValue(&obj, for: inputString, errorDescription: &err)
+        XCTAssertTrue(success)
+        XCTAssertNil(err)
+        if let output = (obj as? NSNumber)?.fractionalValue() {
+            XCTAssertEqual(output.numerator, numerator)
+            XCTAssertEqual(output.denominator, denominator)
+        } else {
+            XCTFail("Failed to convert string to inches")
+        }
+    }
+    
+    
+    func testFractionFormatter_twoThirds() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+
+        let numerator = 2
+        let denominator = 3
+        let inputString = "2/3"
+        let doubleValue = 0.66666666666666667
+        
+        let formatter = RSDFractionFormatter()
+        let fractionString = formatter.string(for: NSNumber(value: doubleValue))
+        XCTAssertEqual(fractionString, inputString)
+        
+        var obj: AnyObject?
+        var err: NSString?
+        let success = formatter.getObjectValue(&obj, for: inputString, errorDescription: &err)
+        XCTAssertTrue(success)
+        XCTAssertNil(err)
+        if let output = (obj as? NSNumber)?.fractionalValue() {
+            XCTAssertEqual(output.numerator, numerator)
+            XCTAssertEqual(output.denominator, denominator)
+        } else {
+            XCTFail("Failed to convert string to inches")
+        }
+    }
+    
+    func testFractionFormatter_Infinity() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+
+        let inputString = "2/0"
+        let doubleValue = Double.infinity
+        
+        let formatter = RSDFractionFormatter()
+        let fractionString = formatter.string(for: NSNumber(value: doubleValue))
+        XCTAssertNil(fractionString)
+        
+        var obj: AnyObject?
+        var err: NSString?
+        let success = formatter.getObjectValue(&obj, for: inputString, errorDescription: &err)
+        XCTAssertFalse(success)
+    }
 }

@@ -167,7 +167,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     open class func range(from decoder: Decoder, dataType: RSDFormDataType) throws -> RSDRange? {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         switch dataType.baseType {
-        case .integer, .decimal:
+        case .integer, .decimal, .fraction:
             return try container.decodeIfPresent(RSDNumberRangeObject.self, forKey: .range)
         case .date:
             return try container.decodeIfPresent(RSDDateRangeObject.self, forKey: .range)
@@ -283,6 +283,8 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                 return try container.decode([RSDComparableSurveyRuleObject<Date>].self, forKey: .surveyRules)
             case .decimal:
                 return try container.decode([RSDComparableSurveyRuleObject<Double>].self, forKey: .surveyRules)
+            case .fraction:
+                return try container.decode([RSDComparableSurveyRuleObject<RSDFraction>].self, forKey: .surveyRules)
             case .integer, .year:
                 return try container.decode([RSDComparableSurveyRuleObject<Int>].self, forKey: .surveyRules)
             }
@@ -297,6 +299,8 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                 rule = try? RSDComparableSurveyRuleObject<Date>(from: decoder)
             case .decimal:
                 rule = try? RSDComparableSurveyRuleObject<Double>(from: decoder)
+            case .fraction:
+                rule = try? RSDComparableSurveyRuleObject<RSDFraction>(from: decoder)
             case .integer, .year:
                 rule = try? RSDComparableSurveyRuleObject<Int>(from: decoder)
             }
@@ -457,6 +461,17 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                          "range" : [ "minimumValue" : -10,
                                      "maximumValue" : 10,
                                      "stepInterval" : 2],
+                         "matchingAnswer" : 0]
+                
+            case .fraction:
+                return [ "identifier" : "fractionExample",
+                         "prompt" : "This is a fraction input field",
+                         "dataType" : "fraction",
+                         "uiHint" : "textfield",
+                         "placeholderText" : "select a numer",
+                         "range" : [ "minimumValue" : -1.0,
+                                     "maximumValue" : 1.0,
+                                     "stepInterval" : 0.25],
                          "matchingAnswer" : 0]
                 
             case .year:

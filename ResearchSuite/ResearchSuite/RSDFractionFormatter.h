@@ -1,8 +1,8 @@
 //
-//  ResearchSuite.h
+//  RSDFractionFormatter.h
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,18 +31,41 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-//! Project version number for ResearchSuite.
-FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
+NS_ASSUME_NONNULL_BEGIN
 
-//! Project version string for ResearchSuite.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
+/// Fractions are are represented by `numerator / denominator`.
+typedef struct {
+    NSInteger numerator;
+    NSInteger denominator;
+} RSDFraction;
 
-#import <Researchsuite/RSDExceptionHandler.h>
-#import <Researchsuite/NSUnit+RSDUnitConversion.h>
-#import <Researchsuite/RSDFractionFormatter.h>
-#import <Researchsuite/RSDLengthFormatter.h>
-#import <Researchsuite/RSDMassFormatter.h>
+@interface NSNumber (RSDFraction)
 
+/// @return  The fraction that represents this number.
+- (RSDFraction)fractionalValue;
 
+@end
+
+/// `RSDFractionFormatter` is a custom subclass of the `NSNumberFormatter` that can convert a number
+/// to a string with a fractional format, or a fraction to a number -- for example, "3/4" would be converted
+/// to `RSDFraction` with a double value of 0.75.
+///
+/// - note: While this SDK is written in Swift where permissibile, formatters are written in Obj-c to allow
+/// overriding `-getObjectValue:forString:errorDescription:`. Apple documentation does not include how to
+/// set the value of the pointer for a Swift 4 implementation of the function. syoung 12/30/2017
+///
+@interface RSDFractionFormatter : NSFormatter
+
+@property (null_resettable, copy, nonatomic) NSNumberFormatter *numberFormatter;
+
+@property (null_resettable, copy, nonatomic) NSString *fractionSeparator;
+
+- (NSNumber * _Nullable)numberFromString:(NSString *)string;
+
+- (NSString * _Nullable)stringFromNumber:(NSNumber *)number;
+    
+@end
+
+NS_ASSUME_NONNULL_END

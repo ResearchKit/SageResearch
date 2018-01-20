@@ -120,7 +120,12 @@ public protocol RSDNumberPickerDataSource : RSDPickerDataSource {
     var stepInterval: Decimal? { get }
     
     /// Returns the number formatter to use to format the displayed value and to parse the result.
-    var numberFormatter: NumberFormatter { get }
+    var numberFormatter: RSDNumberFormatterProtocol { get }
+}
+
+public protocol RSDNumberFormatterProtocol {
+    func string(from number: NSNumber) -> String?
+    func number(from string: String) -> NSNumber?
 }
 
 /// `RSDMultipleComponentOptions` is a data source protocol that can be used to set up a picker.

@@ -46,10 +46,10 @@ public struct RSDNumberPickerDataSourceObject : RSDNumberPickerDataSource {
     public let stepInterval: Decimal?
     
     /// Returns the number formatter to use to format the displayed value and to parse the result.
-    public let numberFormatter: NumberFormatter
+    public let numberFormatter: RSDNumberFormatterProtocol
     
     /// Default initializer. Auto-synthesized init is not public.
-    public init(minimum: Decimal, maximum: Decimal, stepInterval: Decimal?, numberFormatter: NumberFormatter) {
+    public init(minimum: Decimal, maximum: Decimal, stepInterval: Decimal?, numberFormatter: RSDNumberFormatterProtocol) {
         self.minimum = minimum
         self.maximum = maximum
         self.stepInterval = stepInterval
@@ -85,5 +85,11 @@ extension RSDNumberPickerDataSource {
         guard let number = numberAnswer(from: selectedAnswer) else { return nil }
         return numberFormatter.string(from: number as NSNumber)
     }
+}
+
+extension NumberFormatter : RSDNumberFormatterProtocol {
+}
+
+extension RSDFractionFormatter : RSDNumberFormatterProtocol {
 }
 
