@@ -100,6 +100,13 @@ public protocol RSDComparable {
     var matchingAnswer: Any? { get }
 }
 
+/// `RSDDecimalComparable` can be used to compare a stored result to a matching value where the values are decimals.
+public protocol RSDDecimalComparable : RSDComparable {
+    
+    /// The accuracy to use for comparing two decimal values.
+    var accuracy: Decimal? { get }
+}
+
 extension RSDComparableSurveyRule {
 
     /// For a given result (if any), what is the step that the survey should go to next?
@@ -167,7 +174,7 @@ extension RSDComparable {
                 return NSPredicate(format: "ANY %@ IN SELF", answerValue)
             } else if isDecimal, let num = answerValue as? NSNumber {
                 let decimal = num.decimalValue
-                let epsilon = Decimal(accuracy ?? 0.00001)
+                let epsilon = (self as? RSDDecimalComparable)?.accuracy ?? Decimal(0.00001)
                 let min = decimal - epsilon
                 let max = decimal + epsilon
                 return NSPredicate(format: "SELF >= %@ AND SELF <= %@", min as NSNumber, max as NSNumber)
