@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RSDOptionalTaskViewControllerDelegate Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/RSDOptionalTaskViewControllerDelegate" class="dashAnchor"></a>
+    <a title="RSDOptionalTaskViewControllerDelegate Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ResearchSuiteUI Docs</a> (73% documented)</p>
+        <p class="header-right"><a href="https://github.com/ResearchKit/SageResearch.git"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ResearchSuiteUI Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        RSDOptionalTaskViewControllerDelegate Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/RSDActiveStepViewController.html">RSDActiveStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDAudioSoundPlayer.html">RSDAudioSoundPlayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDButton.html">RSDButton</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDCountdownDial.html">RSDCountdownDial</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDCountdownStepViewController.html">RSDCountdownStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDCrosshatchView.html">RSDCrosshatchView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDatePicker.html">RSDDatePicker</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDGenericNavigationFooterView.html">RSDGenericNavigationFooterView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDImageViewCell.html">RSDImageViewCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDLoadingView.html">RSDLoadingView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDNavigationController.html">RSDNavigationController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDNavigationFooterView.html">RSDNavigationFooterView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDNavigationHeaderView.html">RSDNavigationHeaderView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDNumberPickerView.html">RSDNumberPickerView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDProgressIndicator.html">RSDProgressIndicator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDRoundedButton.html">RSDRoundedButton</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDShadowGradient.html">RSDShadowGradient</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSpeechSynthesizer.html">RSDSpeechSynthesizer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepChoiceCell.html">RSDStepChoiceCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepHeaderView.html">RSDStepHeaderView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepNavigationView.html">RSDStepNavigationView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepProgressView.html">RSDStepProgressView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepTextField.html">RSDStepTextField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepTextFieldCell.html">RSDStepTextFieldCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepTextFieldFeaturedCell.html">RSDStepTextFieldFeaturedCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepViewController.html">RSDStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableStepHeaderView.html">RSDTableStepHeaderView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableStepUIConfig.html">RSDTableStepUIConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableStepViewController.html">RSDTableStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTaskInfoStepViewController.html">RSDTaskInfoStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTaskViewController.html">RSDTaskViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTextLabelCell.html">RSDTextLabelCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDUnderlinedButton.html">RSDUnderlinedButton</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDWebViewController.html">RSDWebViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/UIColor.html">UIColor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIFont.html">UIFont</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIImage.html">UIImage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIPageViewController.html">UIPageViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIView.html">UIView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIViewController.html">UIViewController</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDAlertPresenter.html">RSDAlertPresenter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDLoadingViewControllerProtocol.html">RSDLoadingViewControllerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDNavigationFooterLayoutConstants.html">RSDNavigationFooterLayoutConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDNavigationHeaderLayoutConstants.html">RSDNavigationHeaderLayoutConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDOptionalStepViewControllerDelegate.html">RSDOptionalStepViewControllerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDOptionalTaskViewControllerDelegate.html">RSDOptionalTaskViewControllerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDPageViewControllerProtocol.html">RSDPageViewControllerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDPickerObserver.html">RSDPickerObserver</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDPickerViewProtocol.html">RSDPickerViewProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSoundPlayer.html">RSDSoundPlayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStepTextFieldCellLayoutConstants.html">RSDStepTextFieldCellLayoutConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:15ResearchSuiteUI29RSDStepViewControllerDelegateP">RSDStepViewControllerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStepViewControllerProtocol.html">RSDStepViewControllerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStepViewControllerVendor.html">RSDStepViewControllerVendor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTableStepLayoutConstants.html">RSDTableStepLayoutConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:15ResearchSuiteUI29RSDTaskViewControllerDelegateP">RSDTaskViewControllerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDVoiceBox.html">RSDVoiceBox</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/RSDSound.html">RSDSound</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:15ResearchSuiteUI28RSDVoiceBoxCompletionHandlera">RSDVoiceBoxCompletionHandler</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>RSDOptionalTaskViewControllerDelegate</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDOptionalTaskViewControllerDelegate</span> <span class="p">:</span> <span class="kd">class</span><span class="p">,</span> <span class="kt">NSObjectProtocol</span></code></pre>
+
+                </div>
+              </div>
+            <p><code>RSDOptionalTaskViewControllerDelegate</code> is a delegate protocol defined as <code>@objc</code> to allow the methods to be optionally
+implemented. As such, these methods cannot take Swift protocols as their paramenters.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchSuiteUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:viewControllerFor:"></a>
+                    <a name="//apple_ref/swift/Method/taskViewController(_:viewControllerFor:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchSuiteUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:viewControllerFor:">taskViewController(_:viewControllerFor:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks the delegate for a custom view controller for the specified step.</p>
+
+<p>If this method is implemented, the task view controller calls it to obtain a step view controller for the step.</p>
+
+<p>In most circumstances, the task view controller can determine which view controller to instantiate for a step.
+However, if you want to provide a specific view controller instance, you can call this method to do so.</p>
+
+<p>The delegate should provide a step view controller implementation for any custom step that does not implement
+either the <code><a href="../Protocols/RSDStepViewControllerVendor.html">RSDStepViewControllerVendor</a></code> protocol or the <code>RSDThemedUIStep</code> protocol where the <code>viewTheme</code> is
+non-nil.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">viewControllerFor</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>taskViewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The calling <code>(UIViewController &amp; RSDTaskController)</code> instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>step</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The step for which a view controller is requested. This will be an object that conforms to
+    the <code>RSDStep</code> protocol.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A custom view controller, or <code>nil</code> to request the default step controller for this step.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchSuiteUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:shouldShowTaskInfoFor:"></a>
+                    <a name="//apple_ref/swift/Method/taskViewController(_:shouldShowTaskInfoFor:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchSuiteUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:shouldShowTaskInfoFor:">taskViewController(_:shouldShowTaskInfoFor:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks the delegate whether or not the task should show a view controller for the  <code>RSDTaskInfoStep</code>
+while the initial task is being fetched.</p>
+
+<p>If defined, then:
+    * If this function returns <code>true</code> then a view controller specific to the <code>RSDTaskInfoStep</code> will be displayed.
+    * If this function returns <code>false</code> then <code>showLoadingView()</code> will be called and the task will automatically
+      forward to the first step once the task is fetched.</p>
+
+<p>If not defined, then:
+    * If and only if the task is a subtask where <code>estimatedFetchTime == 0</code>, then <code>showLoadingView()</code> will be called
+      and the task will automatically forward to the first step once the task is fetched.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">shouldShowTaskInfoFor</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>taskViewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The calling <code>(UIViewController &amp; RSDTaskController)</code> instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>step</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The step for which a view controller is requested. This will be an object that conforms to
+    the <code>RSDTaskInfoStep</code> protocol.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A <code>Bool</code> value indicating whether or not the task controller should show the task info step.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchSuiteUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:canSaveTaskProgress:"></a>
+                    <a name="//apple_ref/swift/Method/taskViewController(_:canSaveTaskProgress:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchSuiteUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:canSaveTaskProgress:">taskViewController(_:canSaveTaskProgress:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Asks the delegate whether or not the task progress can be saved and the task dismissed.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">canSaveTaskProgress</span> <span class="nv">for</span><span class="p">:</span> <span class="kt">RSDTaskPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>taskViewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The task view controller.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>true</code> if the task progress can be saved.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchSuiteUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:saveTaskProgress:"></a>
+                    <a name="//apple_ref/swift/Method/taskViewController(_:saveTaskProgress:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchSuiteUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:saveTaskProgress:">taskViewController(_:saveTaskProgress:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Save the task progress for the given task controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">saveTaskProgress</span> <span class="nv">for</span><span class="p">:</span> <span class="kt">RSDTaskPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>taskViewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The task view controller.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://developer.sagebridge.org" target="_blank" rel="external">Sage Bionetworks</a>. All rights reserved. (Last updated: 2018-01-22)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
