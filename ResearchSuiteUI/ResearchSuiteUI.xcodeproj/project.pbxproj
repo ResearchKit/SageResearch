@@ -76,6 +76,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		80242B0E2018013E00FC4F44 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPickerViewProtocol.swift; sourceTree = "<group>"; };
 		F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDLoadingView.swift; sourceTree = "<group>"; };
 		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +196,7 @@
 		FF443E181F7AC21900F43BE7 /* ResearchSuiteUI */ = {
 			isa = PBXGroup;
 			children = (
+				80242B0E2018013E00FC4F44 /* README.md */,
 				FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */,
 				FF74A7DD1F7DA2EB0064A634 /* iOS */,
 				FFF2D97A1FCF422C007258F8 /* watchOS */,
