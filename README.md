@@ -1,6 +1,10 @@
 # SageResearch-AppleOS
 Sage Research SDK is an open source software framework for modeling shared classes for use in research projects.
 
+## Documentation
+
+Reference documentation for the ResearchSuite and ResearchSuiteUI modules can be found (https://erin-mounts.github.io/sageresearch/Documentation/index.html "here.")
+
 ## License
 
 Sage Research SDK is available under the BSD license:
