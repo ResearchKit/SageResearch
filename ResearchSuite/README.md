@@ -1,5 +1,5 @@
 # ResearchSuite
-ResearchSuite contains the core logic for navigating Steps and Tasks to collect Results independently of any particular UI/UX implementation. Key elements of this project are updating code to Swift 4, and creating a data model built around Protocols, allowing the more modular composition of apps from independent components.
+ResearchSuite contains the core logic for navigating Steps and Tasks to collect Results independently of any particular UI/UX implementation or back-end services. Key elements of this project are updating code to Swift 4 and creating a data model built around protocols, allowing the more modular composition of apps from independent components.
 
 ## License
 
