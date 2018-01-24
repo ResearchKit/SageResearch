@@ -1,5 +1,5 @@
 # ResearchSuiteUI
-ResearchSuiteUI contains the logic for UI/UX controllers, and reference controller and view implementations. It is designed to allow greater flexibility in the design of UI elements and screen layout, and to more strongly decouple the presentation layer from the underlying data model of the app.
+ResearchSuiteUI contains the logic for UI/UX controllers, and reference implementations of controllers and views. It is designed to allow greater flexibility in the design of UI elements and screen layout, and to more strongly decouple the presentation layer from the underlying data model of the app.
 
 ## License
 

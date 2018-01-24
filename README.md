@@ -1,12 +1,12 @@
 # SageResearch
 
-[Sage Bionetworks](http://sagebionetworks.org) has spent four years of developing mobile health study apps and played a role in supporting over 20 projects, using Research Kit as the basis for all of our iPhone development. Based on that experience, we have begun to generate a next-generation framework and are looking for the involvement of the broader Research Kit community to provide input on design goals and approaches, and contribute to development. This experimental framework:
+[Sage Bionetworks](http://sagebionetworks.org) has spent four years developing mobile health study apps and played a role in supporting over 20 projects, using Research Kit as the basis for all of our iPhone development. Based on that experience, we have begun to generate a next-generation framework and are looking for the involvement of the broader Research Kit community to provide input on design goals and approaches, and contribute to development. This framework:
 
 - Keeps what is good and useful about ResearchKit, provides for a smooth transition from it, and allows ResearchKit 1.x components to be used as modules in ResearchSuite apps;
 - Is based on modern technology (Swift 4);
-- Allows maximum flexibility in extending the core step/task navigation and results gathering functionality by defining a set of Protocols and then providing a set of classes as concrete reference implementations;
-- Allows maximum flexibility in UI/UX design, first by separating generic UX logic control from platform-specific UI implementations, and also again by providing Protocols and concrete reference implementations of those protocols;
-- Reduces app size and dependency on unused parts of the underlying OS (e.g., permissions strings required in Info.plist files) by separating specific active tasks or logical groups of tasks into their own modules, in general (but not necessarily) built on these two;
+- Allows maximum flexibility in extending the core step/task navigation and results gathering functionality by defining a set of protocols and then providing a set of classes as concrete reference implementations;
+- Allows maximum flexibility in UI/UX design, first by separating generic UX logic control from platform-specific UI implementations, and also again by providing protocols and concrete reference implementations of those protocols;
+- Reduces app size and dependency on unused parts of the underlying OS (e.g., permissions strings required in Info.plist files) by separating specific active tasks or logical groups of tasks into their own modules, in general (but not necessarily) built on these two frameworks;
 - Is designed with parallel development for other (mobile and web) platforms in mind so that the broadest spectrum of study participants can be reached with the minimum coding effort.
 
 Like ResearchKit, this project is independent of any particular back-end service used to collect study data, record consent, or perform other centralized study functions. Sage Bionetworks is also the lead developer of [Bridge Server](http://developer.sagebridge.org), an open source set of services and SDKs for supporting mHealth research.
