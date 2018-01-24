@@ -13,9 +13,9 @@ This project represents the results to date and the ongoing implementation of th
 
 ## Documentation
 
-The core step/task navigation and results-gathering framework is currently called [ResearchSuite](https://erin-mounts.github.io/sageresearch/documentation/researchsuite).
+The core step/task navigation and results-gathering framework is currently called [ResearchSuite](https://Erin-Mounts.github.io/SageResearch/Documentation/ResearchSuite/index.html).
 
-The UI/UX framework is called [ResearchSuiteUI](https://erin-mounts.github.io/sageresearch/documentation/researchsuiteui).
+The UI/UX framework is called [ResearchSuiteUI](https://Erin-Mounts.github.io/SageResearch/Documentation/ResearchSuiteUI/index.html).
 
 Our first (transitional) app and task module built with these new frameworks is [CRFModuleValidation](https://github.com/Sage-Bionetworks/CRFValidationApp), being used to clinically validate our Cardio-Respiratory Fitness tasks module.
 
