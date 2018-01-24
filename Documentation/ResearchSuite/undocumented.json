@@ -1,558 +1,558 @@
 {
   "warnings": [
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/Array+Utilities.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/Array+Utilities.swift",
       "line": 34,
       "symbol": "RSDArrayExtension",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/Dictionary+Utilities.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/Dictionary+Utilities.swift",
       "line": 36,
       "symbol": "RSDDictionaryExtension",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDAnswerResultType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDAnswerResultType.swift",
       "line": 290,
       "symbol": "RSDAnswerResultType.decodeDate(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDAnswerResultType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDAnswerResultType.swift",
       "line": 439,
       "symbol": "RSDAnswerResultType.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDComparableSurveyRuleObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDComparableSurveyRuleObject.swift",
       "line": 55,
       "symbol": "RSDComparableSurveyRuleObject.matchingValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDDeviceType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDDeviceType.swift",
       "line": 81,
       "symbol": "RSDDeviceType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDDeviceType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDDeviceType.swift",
       "line": 84,
       "symbol": "RSDDeviceType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDDocumentable.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDDocumentable.swift",
       "line": 36,
       "symbol": "RSDDocumentCreator",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDDocumentable.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDDocumentable.swift",
       "line": 150,
       "symbol": "RawRepresentable.stringValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
       "line": 59,
       "symbol": "RSDFactory.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
       "line": 701,
       "symbol": "RSDFactoryDecoder.decode(_:from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
       "line": 702,
       "symbol": "RSDFactoryDecoder.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
       "line": 739,
       "symbol": "RSDFactoryEncoder.encode(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
       "line": 740,
       "symbol": "RSDFactoryEncoder.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
       "line": 97,
       "symbol": "RSDFormDataType.BaseType.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
       "line": 117,
       "symbol": "RSDFormDataType.CollectionType.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
       "line": 134,
       "symbol": "RSDFormDataType.MeasurementType.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
       "line": 152,
       "symbol": "RSDFormDataType.MeasurementRange.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormUIHint.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFormUIHint.swift",
       "line": 95,
       "symbol": "RSDFormUIHint.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormUIHint.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDFormUIHint.swift",
       "line": 98,
       "symbol": "RSDFormUIHint.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
       "line": 50,
       "symbol": "RSDIdentifier.exit",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
       "line": 51,
       "symbol": "RSDIdentifier.nextSection",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
       "line": 53,
       "symbol": "RSDIdentifier.allGlobalIdentifiers()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
       "line": 62,
       "symbol": "RSDIdentifier.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
       "line": 65,
       "symbol": "RSDIdentifier.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDImageWrapper.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDImageWrapper.swift",
       "line": 173,
       "symbol": "RSDImageWrapper.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDImageWrapper.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDImageWrapper.swift",
       "line": 176,
       "symbol": "RSDImageWrapper.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDJSONValue.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDJSONValue.swift",
       "line": 172,
       "symbol": "DateComponents.defaultFormatter()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDPickerDataSource.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDPickerDataSource.swift",
       "line": 126,
       "symbol": "RSDNumberFormatterProtocol",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDPickerDataSource.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDPickerDataSource.swift",
       "line": 127,
       "symbol": "RSDNumberFormatterProtocol.string(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDPickerDataSource.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDPickerDataSource.swift",
       "line": 128,
       "symbol": "RSDNumberFormatterProtocol.number(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
       "line": null,
       "symbol": "RSDRegExValidatorObject",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
       "line": null,
       "symbol": "RSDRegExValidatorObject",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
       "line": null,
       "symbol": "RSDRegExValidatorObject",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
       "line": 36,
       "symbol": "RSDRegExValidatorObject",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDRegExValidatorObject.swift",
       "line": 41,
       "symbol": "RSDRegExValidatorObject.init(regExPattern:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDResultType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDResultType.swift",
       "line": 74,
       "symbol": "RSDResultType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDResultType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDResultType.swift",
       "line": 77,
       "symbol": "RSDResultType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDStepType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDStepType.swift",
       "line": 81,
       "symbol": "RSDStepType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDStepType.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDStepType.swift",
       "line": 84,
       "symbol": "RSDStepType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDSurveyRule.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDSurveyRule.swift",
       "line": 78,
       "symbol": "RSDSurveyRuleOperator.allRuleOperators()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTaskController.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTaskController.swift",
       "line": 47,
       "symbol": "RSDTaskFinishReason",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
       "line": null,
       "symbol": "RSDCodableRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
       "line": null,
       "symbol": "RSDRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
       "line": 67,
       "symbol": "RSDTextValidator",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
       "line": 75,
       "symbol": "RSDRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
       "line": 83,
       "symbol": "RSDCodableRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.allCharacters",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.sentences",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.words",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 210,
       "symbol": "RSDTextAutocapitalizationType.textAutocapitalizationType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 230,
       "symbol": "RSDTextAutocorrectionType.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 230,
       "symbol": "RSDTextAutocorrectionType.no",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 230,
       "symbol": "RSDTextAutocorrectionType.yes",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 238,
       "symbol": "RSDTextAutocorrectionType.textAutocorrectionType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 258,
       "symbol": "RSDTextSpellCheckingType.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 258,
       "symbol": "RSDTextSpellCheckingType.no",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 258,
       "symbol": "RSDTextSpellCheckingType.yes",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 266,
       "symbol": "RSDTextSpellCheckingType.textSpellCheckingType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.URL",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.asciiCapable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.asciiCapableNumberPad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.decimalPad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.emailAddress",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.namePhonePad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.numberPad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.numbersAndPunctuation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.phonePad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.twitter",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 288,
       "symbol": "RSDKeyboardType.webSearch",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
       "line": 296,
       "symbol": "RSDKeyboardType.keyboardType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUIAction.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDUIAction.swift",
       "line": 162,
       "symbol": "RSDUIActionType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUIAction.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDUIAction.swift",
       "line": 165,
       "symbol": "RSDUIActionType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
       "line": 42,
       "symbol": "RSDUSMeasurementPickerDataSource.converter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
       "line": 46,
       "symbol": "RSDUSMeasurementPickerDataSource.largeUnitBounds",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
       "line": 83,
       "symbol": "RSDUSHeightPickerDataSourceObject.converter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
       "line": 150,
       "symbol": "RSDUSInfantMassPickerDataSourceObject.converter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite"
+  "source_directory": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuite"
 }
