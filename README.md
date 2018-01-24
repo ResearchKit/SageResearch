@@ -1,13 +1,15 @@
 # SageResearch
 
-After four years of developing mobile health study apps at Sage Bionetworks based on the ResearchKit framework, the time has come to use what we've learned from that experience to move beyond some of its limitations and quirks, by creating a set of frameworks for building mobile health study apps that:
+[Sage Bionetworks](http://sagebionetworks.org) has spent four years of developing mobile health study apps and played a role in supporting over 20 projects, using Research Kit as the basis for all of our iPhone development. Based on that experience, we have begun to generate a next-generation framework and are looking for the involvement of the broader Research Kit community to provide input on design goals and approaches, and contribute to development. This experimental framework:
 
-- Keeps what is good and useful about ResearchKit, and provides for a smooth transition from it;
+- Keeps what is good and useful about ResearchKit, and provides for a smooth transition from it, and allows ResearchKit 1.x components to be used as modules in ResearchSuite apps;
 - Is based on modern technology (Swift 4);
 - Allows maximum flexibility in extending the core step/task navigation and results gathering functionality by defining a set of Protocols and then providing a set of classes as concrete reference implementations;
 - Allows maximum flexibility in UI/UX design, first by separating generic UX logic control from platform-specific UI implementations, and also again by providing Protocols and concrete reference implementations of those protocols;
 - Reduces app size and dependency on unused parts of the underlying OS (e.g., permissions strings required in Info.plist files) by separating specific active tasks or logical groups of tasks into their own modules, in general (but not necessarily) built on these two;
-- Is designed with parallel development for other (mobile and stationary) platforms in mind so that the broadest spectrum of study participants can be reached with the minimum coding effort.
+- Is designed with parallel development for other (mobile and web) platforms in mind so that the broadest spectrum of study participants can be reached with the minimum coding effort.
+
+Like ResearchKit, this project is independent of any particular back-end service used to collect study data, record consent, or perform other centralized study functions. Sage Bionetworks is also the lead developer and of [Bridge Server](http://developer.sagebridge.org), an open source set of services and SDKs for supporting mHealth research. 
 
 This project represents the results to date and the ongoing implementation of those goals.
 
@@ -17,7 +19,7 @@ The core step/task navigation and results-gathering framework is currently calle
 
 The UI/UX framework is called [ResearchSuiteUI](https://Erin-Mounts.github.io/SageResearch/Documentation/ResearchSuiteUI/index.html).
 
-Our first (transitional) app and task module built with these new frameworks is [CRFModuleValidation](https://github.com/Sage-Bionetworks/CRFValidationApp), being used to clinically validate our Cardio-Respiratory Fitness tasks module.
+Our first (transitional) app and task module built with these new frameworks is [CRFModuleValidation](https://github.com/Sage-Bionetworks/CRFValidationApp). This work is being used in the [NIH All of Us study] to clinically validate a smartphone-based measurement of cardiorespiratory fitness based on measuring an individual's heart rate response to exercise.
 
 ## License
 
