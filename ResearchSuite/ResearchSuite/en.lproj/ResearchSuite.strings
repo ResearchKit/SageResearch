@@ -80,4 +80,5 @@
 "VALIDATION_ERROR_MAX_DATE_%@" = "The date entered is after %@.";
 "VALIDATION_ERROR_MIN_NUMBER_%@" = "The number entered is less than %@.";
 "VALIDATION_ERROR_MAX_NUMBER_%@" = "The number entered is more than %@.";
+"VALIDATION_ERROR_BLOOD_PRESSURE" = "Blood pressure must be entered as a string in the form of 120/90 (For example).";
 

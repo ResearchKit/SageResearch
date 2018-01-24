@@ -33,11 +33,15 @@
 
 import Foundation
 
+/// The `RSDRegExValidatorObject` is a concrete implementation of the `RSDCodableRegExMatchValidator`
+/// that can be used to create a regex validation of an input string using a regex pattern.
 public struct RSDRegExValidatorObject : RSDCodableRegExMatchValidator {
     
     /// A localized custom regular expression that can be used to validate a string.
     public let regExPattern: String
     
+    /// Default initializer.
+    /// - parameter regExPattern: The regular expression pattern.
     public init(regExPattern: String) throws {
         self.regExPattern = regExPattern
     }

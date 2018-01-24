@@ -54,6 +54,8 @@
 		F80CA53D1FFEC01300E89C06 /* RSDHumanMeasurementTableItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CA53C1FFEC01300E89C06 /* RSDHumanMeasurementTableItemGroup.swift */; };
 		F80CA53E1FFEC01300E89C06 /* RSDHumanMeasurementTableItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CA53C1FFEC01300E89C06 /* RSDHumanMeasurementTableItemGroup.swift */; };
 		F80CA53F1FFEC01300E89C06 /* RSDHumanMeasurementTableItemGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CA53C1FFEC01300E89C06 /* RSDHumanMeasurementTableItemGroup.swift */; };
+		F818EAC6201948D0001C9FE4 /* TableItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F818EAC5201948D0001C9FE4 /* TableItemTests.swift */; };
+		F818EAC7201948D0001C9FE4 /* TableItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F818EAC5201948D0001C9FE4 /* TableItemTests.swift */; };
 		F829F0C61FF71C7B001B0680 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0C51FF71C7B001B0680 /* FormatterTests.swift */; };
 		F829F0C71FF71C7B001B0680 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0C51FF71C7B001B0680 /* FormatterTests.swift */; };
 		F829F0D01FF71EE7001B0680 /* RSDLengthFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F829F0CE1FF71EE7001B0680 /* RSDLengthFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -449,6 +451,7 @@
 		F80CA5341FFEBEFE00E89C06 /* RSDChoicePickerTableItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDChoicePickerTableItemGroup.swift; sourceTree = "<group>"; };
 		F80CA5381FFEBF6800E89C06 /* RSDInputFieldTableItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDInputFieldTableItemGroup.swift; sourceTree = "<group>"; };
 		F80CA53C1FFEC01300E89C06 /* RSDHumanMeasurementTableItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDHumanMeasurementTableItemGroup.swift; sourceTree = "<group>"; };
+		F818EAC5201948D0001C9FE4 /* TableItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableItemTests.swift; sourceTree = "<group>"; };
 		F829F0C51FF71C7B001B0680 /* FormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatterTests.swift; sourceTree = "<group>"; };
 		F829F0CE1FF71EE7001B0680 /* RSDLengthFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDLengthFormatter.h; sourceTree = "<group>"; };
 		F829F0CF1FF71EE7001B0680 /* RSDLengthFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDLengthFormatter.m; sourceTree = "<group>"; };
@@ -672,6 +675,7 @@
 				F829F0C51FF71C7B001B0680 /* FormatterTests.swift */,
 				F829F0DE1FF887C3001B0680 /* UnitConversionTests.swift */,
 				F829F0E91FFB4620001B0680 /* PickerDataSourceTests.swift */,
+				F818EAC5201948D0001C9FE4 /* TableItemTests.swift */,
 			);
 			path = "DataSource Tests";
 			sourceTree = "<group>";
@@ -1447,6 +1451,7 @@
 				FF633D771FCE7A6900CF2267 /* CodableTaskObjectTests.swift in Sources */,
 				F829F0C61FF71C7B001B0680 /* FormatterTests.swift in Sources */,
 				FF633D781FCE7A6900CF2267 /* FactoryTests.swift in Sources */,
+				F818EAC6201948D0001C9FE4 /* TableItemTests.swift in Sources */,
 				FF633D8A1FCE7A7300CF2267 /* SurveyRuleTests.swift in Sources */,
 				FF633D791FCE7A6900CF2267 /* ExampleDecodableTests.swift in Sources */,
 				FF633D761FCE7A6900CF2267 /* CodableStepObjectTests.swift in Sources */,
@@ -1707,6 +1712,7 @@
 				FF633D7B1FCE7A6A00CF2267 /* CodableInputFieldObjectTests.swift in Sources */,
 				FF633D911FCE7A7400CF2267 /* StepControllerTests.swift in Sources */,
 				FF633D901FCE7A7400CF2267 /* NavigationTestObjects.swift in Sources */,
+				F818EAC7201948D0001C9FE4 /* TableItemTests.swift in Sources */,
 				FF633D7E1FCE7A6A00CF2267 /* CodableTaskObjectTests.swift in Sources */,
 				FF633D7F1FCE7A6A00CF2267 /* FactoryTests.swift in Sources */,
 				FF633D921FCE7A7400CF2267 /* SurveyRuleTests.swift in Sources */,

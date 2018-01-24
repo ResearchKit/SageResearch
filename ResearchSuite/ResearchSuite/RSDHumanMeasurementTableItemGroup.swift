@@ -66,10 +66,14 @@ open class RSDHumanMeasurementTableItemGroup : RSDInputFieldTableItemGroup {
             tableItems = [tableItem]
             
         case .bloodPressure:
-            // TODO: syoung 12/19/2017 Implement for both text field and picker
-            // https://github.com/ResearchKit/SageResearch/issues/6
-            answerType = RSDAnswerResultType(baseType: .decimal, sequenceType: .array, formDataType: inputField.dataType, dateFormat: nil, unit: nil, sequenceSeparator: "/")
-            let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: nil, pickerSource: nil, placeholder: nil)
+            answerType = RSDAnswerResultType(baseType: .string, sequenceType: nil, formDataType: inputField.dataType)
+            let textFieldOptions: RSDTextFieldOptions = inputField.textFieldOptions ?? {
+                var options = RSDTextFieldOptionsObject()
+                options.textValidator = try! RSDRegExValidatorObject(regExPattern: "^\\s*\\d{2,3}\\s{0,1}\\/\\s{0,1}\\d{2,3}\\s*$")
+                options.invalidMessage = Localization.localizedString("VALIDATION_ERROR_BLOOD_PRESSURE")
+                return options
+                }()
+            let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: hint, answerType: answerType, textFieldOptions: textFieldOptions)
             tableItems = [tableItem]
         }
         
