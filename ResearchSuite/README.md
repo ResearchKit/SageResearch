@@ -1,7 +1,5 @@
 # ResearchSuite
-ResearchSuite/ResearchSuiteUI is a set of open source software frameworks for modeling shared classes for use in research projects. It is built as part of an evolution of ResearchKit based on several years of real-world experience with that framework, bringing it into the age of Swift and basing the major components on Protocols to make it easier to extend, modify, or override parts as needed.
-
-ResearchSuite contains the core logic for navigating Steps and Tasks to collect Results independently of any particular UI/UX implementation.
+ResearchSuite contains the core logic for navigating Steps and Tasks to collect Results independently of any particular UI/UX implementation. Key elements of this project are updating code to Swift 4, and creating a data model built around Protocols, allowing the more modular composition of apps from independent components.
 
 ## License
 
@@ -17,7 +15,7 @@ notice, this list of conditions and the following disclaimer.
 * Redistributions in binary form must reproduce the above copyright
 notice, this list of conditions and the following disclaimer in the
 documentation and/or other materials provided with the distribution.
-* Neither the name of Sage Bionetworks nor the names of BridgeSDk's
+* Neither the name of Sage Bionetworks nor the names of any
 contributors may be used to endorse or promote products derived from
 this software without specific prior written permission.
 
