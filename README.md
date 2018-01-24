@@ -1,4 +1,4 @@
-# SageResearch-AppleOS
+# SageResearch
 
 After four years of developing mobile health study apps at Sage Bionetworks based on the ResearchKit framework, the time has come to use what we've learned from that experience to move beyond some of its limitations and quirks, by creating a set of frameworks for building mobile health study apps that:
 
