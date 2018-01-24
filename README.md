@@ -9,15 +9,15 @@
 - Reduces app size and dependency on unused parts of the underlying OS (e.g., permissions strings required in Info.plist files) by separating specific active tasks or logical groups of tasks into their own modules, in general (but not necessarily) built on these two;
 - Is designed with parallel development for other (mobile and web) platforms in mind so that the broadest spectrum of study participants can be reached with the minimum coding effort.
 
-Like ResearchKit, this project is independent of any particular back-end service used to collect study data, record consent, or perform other centralized study functions. Sage Bionetworks is also the lead developer of [Bridge Server](http://developer.sagebridge.org), an open source set of services and SDKs for supporting mHealth research. 
+Like ResearchKit, this project is independent of any particular back-end service used to collect study data, record consent, or perform other centralized study functions. Sage Bionetworks is also the lead developer of [Bridge Server](http://developer.sagebridge.org), an open source set of services and SDKs for supporting mHealth research.
 
 This project represents the results to date and the ongoing implementation of those goals.
 
 ## Documentation
 
-The core step/task navigation and results-gathering framework is currently called [ResearchSuite](https://Erin-Mounts.github.io/SageResearch/Documentation/ResearchSuite/index.html).
+The core step/task navigation and results-gathering framework is currently called [ResearchSuite](https://ResearchKit.github.io/SageResearch/Documentation/ResearchSuite/index.html).
 
-The UI/UX framework is called [ResearchSuiteUI](https://Erin-Mounts.github.io/SageResearch/Documentation/ResearchSuiteUI/index.html).
+The UI/UX framework is called [ResearchSuiteUI](https://ResearchKit.github.io/SageResearch/Documentation/ResearchSuiteUI/index.html).
 
 Our first (transitional) app and task module built with these new frameworks is [CRFModuleValidation](https://github.com/Sage-Bionetworks/CRFValidationApp). This work is being used in the [NIH All of Us study](https://allofus.nih.gov/) to clinically validate a smartphone-based measurement of cardiorespiratory fitness based on measuring an individual's heart rate response to exercise.
 
