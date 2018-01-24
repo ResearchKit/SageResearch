@@ -1,5 +1,21 @@
 # SageResearch-AppleOS
-Sage Research SDK is an open source software framework for modeling shared classes for use in research projects.
+
+After four years of developing mobile health study apps at Sage Bionetworks based on the ResearchKit framework, we felt the time had come to use what we'd learned from that experience to move beyond some of its limitations and quirks by creating a set of frameworks for building mobile health study apps that:
+
+- Keeps what is good and useful about ResearchKit, and provides for a smooth transition from it;
+- Is based on modern technology (Swift 4);
+- Allows maximum flexibility in extending the core data gathering functionality by defining a set of Protocols and then providing a set of classes as concrete reference implementations;
+- Allows maximum flexibility in UI/UX design, first by separating UX logic control from platform-specific UI implementations, and also again by providing Protocols and concrete reference implementations of those protocols;
+- Reduces app size and dependency on unused parts of the underlying OS (e.g., permissions strings required in Info.plist files) by separating specific active tasks or logical groups of tasks into their own modules;
+- Is designed with parallel development for other (mobile and stationary) platforms in mind so that the broadest spectrum of study participants can be reached with the minimum coding effort.
+
+This project represents the results to date and the ongoing implementation of those goals.
+
+The core Protocol-based framework is currently called [ResearchSuite](https://erin-mounts.github.io/sageresearch/documentation/researchsuite).
+
+The concrete reference UI/UX implementation is called [ResearchSuiteUI](https://erin-mounts.github.io/sageresearch/documentation/researchsuiteui).
+
+Our first (transitional) app built with these new frameworks is CRFModuleValidation, being used to clinically validate our Cardio-Respiratory Fitness tasks module.
 
 ## Documentation
 
