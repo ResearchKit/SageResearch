@@ -3,7 +3,7 @@ ResearchSuiteUI contains the logic for UI/UX controllers, and reference implemen
 
 ## License
 
-ResearchSuite is available under the BSD license:
+ResearchSuiteUI is available under the BSD license:
 
 Copyright (c) 2017-2018, Sage Bionetworks
 All rights reserved.
