@@ -173,7 +173,7 @@ public enum RSDFormDataType {
             }
         
         case .collection(let collectionType, _):
-            switch (collectionType) {
+            switch collectionType {
             case .multipleChoice, .singleChoice:
                 return [.list, .slider, .checkbox, .combobox, .picker, .radioButton]
                 
@@ -181,8 +181,13 @@ public enum RSDFormDataType {
                 return [.picker, .textfield]
             }
         
-        case .measurement(_, _):
-            return [.picker, .textfield]
+        case .measurement(let measurementType, _):
+            switch measurementType {
+            case .bloodPressure:
+                return [.textfield]
+            case .height, .weight:
+                return [.picker, .textfield]
+            }
 
         case .custom(_):
             return RSDFormUIHint.allStandardHints
