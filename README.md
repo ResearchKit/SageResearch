@@ -1,6 +1,6 @@
 # SageResearch
 
-[Sage Bionetworks](http://sagebionetworks.org) has spent four years of developing mobile health study apps and played a role in supporting over 20 projects, using Research Kit as the basis for all of our iPhone development. Based on that experience, we have begun to generate a next-generation framework and are looking for the involvement of the broader Research Kit community to provide input on design goals and approaches, and contribute to development. This experimental framework:
+[Sage Bionetworks](http://sagebionetworks.org) has spent four years developing mobile health study apps and played a role in supporting over 20 projects, using Research Kit as the basis for all of our iPhone development. Based on that experience, we have begun to generate a next-generation framework and are looking for the involvement of the broader Research Kit community to provide input on design goals and approaches, and contribute to development. This experimental framework:
 
 - Keeps what is good and useful about ResearchKit, provides for a smooth transition from it, and allows ResearchKit 1.x components to be used as modules in ResearchSuite apps;
 - Is based on modern technology (Swift 4);
