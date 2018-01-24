@@ -23,7 +23,7 @@ Our first (transitional) app and task module built with these new frameworks is 
 
 Sage Research SDK is available under the BSD license:
 
-Copyright (c) 2017, Sage Bionetworks
+Copyright (c) 2017-2018, Sage Bionetworks
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
