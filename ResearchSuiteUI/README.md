@@ -1,7 +1,5 @@
 # ResearchSuiteUI
-ResearchSuite/ResearchSuiteUI is a set of open source software frameworks for modeling shared classes for use in research projects. It is built as part of an evolution of ResearchKit based on several years of real-world experience with that framework, bringing it into the age of Swift and basing the major components on Protocols to make it easier to extend, modify, or override parts as needed.
-
-ResearchSuiteUI contains the logic for UI/UX controllers and reference controller and view implementations.
+ResearchSuiteUI contains the logic for UI/UX controllers, and reference controller and view implementations. It is designed to allow greater flexibility in the design of UI elements and screen layout, and to more strongly decouple the presentation layer from the underlying data model of the app.
 
 ## License
 
