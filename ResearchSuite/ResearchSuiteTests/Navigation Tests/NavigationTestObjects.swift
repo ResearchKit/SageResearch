@@ -111,6 +111,7 @@ struct TestTask : RSDTask {
 }
 
 class TestStepController: NSObject, RSDStepController {
+    
     var taskController: RSDTaskController!
     var step: RSDStep!
     
@@ -119,7 +120,9 @@ class TestStepController: NSObject, RSDStepController {
     var goBack_called: Bool = false
     var skipForward_called: Bool = false
     var cancel_called: Bool = false
+    var shouldHideAction_called: Bool = false
     
+    var shouldHideActionItems : [RSDUIActionType] = []
     var isForwardEnabled: Bool = true
     
     func didFinishLoading() {
@@ -140,6 +143,11 @@ class TestStepController: NSObject, RSDStepController {
     
     public func cancel() {
         cancel_called = true
+    }
+    
+    func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
+        shouldHideAction_called = true
+        return shouldHideActionItems.contains(actionType)
     }
 }
 
