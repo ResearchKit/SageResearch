@@ -63,6 +63,12 @@ public protocol RSDStepController : class, NSObjectProtocol {
     
     /// Cancel the task.
     func cancel()
+    
+    /// Should the action be hidden for the given action type?
+    ///
+    /// - parameter actionType: The action type to get.
+    /// - returns: `true` if the action should be hidden.
+    func shouldHideAction(for actionType: RSDUIActionType) -> Bool
 }
 
 extension RSDStepController {

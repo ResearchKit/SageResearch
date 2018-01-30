@@ -513,15 +513,21 @@ extension RSDTaskController {
         excludedControllers.append(contentsOf: _startIdleAsyncControllers(excludingControllers: excludedControllers))
         _notifyAsyncControllers(to: step, excludingControllers: excludedControllers)
         
+        // Ready to save if this is the completion step and there isn't a back button.
+        let backHidden = self.currentStepController?.shouldHideAction(for: .navigation(.goBackward)) ?? !self.hasStepBefore
+        let readyToSave = isTaskComplete && backHidden
+        
         // stop the controllers that should be stopped at this point
         if let controllers = controllersToStop {
             self.stopAsyncActions(for: controllers, showLoading: false, completion: { [weak self] in
-                if let strongSelf = self, isTaskComplete, !strongSelf.hasStepBefore  {
+                if readyToSave  {
                     // If this is a completion step and the user cannot go back and change previous answers,
                     // then do *not* use it to mark the end of the task. Instead, mark *now* as the end date.
-                    strongSelf._handleTaskReady(with: path)
+                    self?._handleTaskReady(with: path)
                 }
             })
+        } else if readyToSave {
+            self._handleTaskReady(with: path)
         }
     }
     
