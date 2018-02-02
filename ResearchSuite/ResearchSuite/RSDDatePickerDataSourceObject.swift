@@ -73,48 +73,6 @@ extension RSDDatePickerDataSource {
     }
 }
 
-extension NSCalendar.Unit {
-    
-    /// Convenience initializer for converting from a `Calendar.Component` set to an `NSCalendar.Unit`
-    public init(calendarComponents: Set<Calendar.Component>) {
-        self = calendarComponents.reduce(NSCalendar.Unit(rawValue: 0), { (input, component) -> NSCalendar.Unit in
-            switch component {
-            case .era:
-                return input.union(.era)
-            case .year:
-                return input.union(.year)
-            case .month:
-                return input.union(.month)
-            case .day:
-                return input.union(.day)
-            case .hour:
-                return input.union(.hour)
-            case .minute:
-                return input.union(.minute)
-            case .second:
-                return input.union(.second)
-            case .nanosecond:
-                return input.union(.nanosecond)
-            case .weekday:
-                return input.union(.weekday)
-            case .weekdayOrdinal:
-                return input.union(.weekdayOrdinal)
-            case .quarter:
-                return input.union(.quarter)
-            case .weekOfMonth:
-                return input.union(.weekOfMonth)
-            case .weekOfYear:
-                return input.union(.weekOfYear)
-            case .yearForWeekOfYear:
-                return input.union(.yearForWeekOfYear)
-            case .timeZone:
-                return input.union(.timeZone)
-            case .calendar:
-                return input.union(.calendar)
-            }
-        })
-    }
-}
 
 /// Extension of `RSDDateRange` for setting up calendar components and a data source.
 extension RSDDateRange {

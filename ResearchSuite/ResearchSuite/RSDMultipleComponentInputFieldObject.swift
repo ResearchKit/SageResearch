@@ -44,6 +44,9 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
     /// For example, blood pressure would have a separator of "/".
     open private(set) var separator: String?
     
+    /// The default answer associated with this option set.
+    open private(set) var defaultAnswer: Any?
+    
     /// Default initializer.
     ///
     /// - parameters:
@@ -54,15 +57,16 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
     ///     - uiHint: A UI hint for how the study would prefer that the input field is displayed to the user.
     ///     - prompt: A localized string that displays a short text offering a hint to the user of the data to be entered for
     ///               this field.
-    public init(identifier: String, choices: [[RSDChoice]], baseType: RSDFormDataType.BaseType, separator: String? = nil, uiHint: RSDFormUIHint? = nil, prompt: String? = nil) {
+    public init(identifier: String, choices: [[RSDChoice]], baseType: RSDFormDataType.BaseType, separator: String? = nil, uiHint: RSDFormUIHint? = nil, prompt: String? = nil, defaultAnswer: Any? = nil) {
         self.choices = choices
         self.separator = separator
+        self.defaultAnswer = defaultAnswer
         let dataType = RSDFormDataType.collection(.multipleComponent, baseType)
         super.init(identifier: identifier, dataType: dataType, uiHint: uiHint, prompt: prompt)
     }
     
     private enum CodingKeys : String, CodingKey {
-        case choices, separator
+        case choices, separator, defaultAnswer
     }
     
     /// Initialize from a `Decoder`. This method uses the `RSDFormDataType.BaseType` associated with this input field to
@@ -81,18 +85,22 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         switch dataType.baseType {
         case .boolean:
             choices = try container.decode([[RSDChoiceObject<Bool>]].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(Bool.self, forKey: .defaultAnswer)
         case .integer, .year:
             choices = try container.decode([[RSDChoiceObject<Int>]].self, forKey: .choices)
-        case .date, .fraction:
-            if let intChoices = try? container.decode([[RSDChoiceObject<Int>]].self, forKey: .choices) {
-                choices = intChoices
-            } else {
-                choices = try container.decode([[RSDChoiceObject<Int>]].self, forKey: .choices)
-            }
-        case .decimal:
+            defaultAnswer = try container.decodeIfPresent(Int.self, forKey: .defaultAnswer)
+        case .decimal, .duration:
             choices = try container.decode([[RSDChoiceObject<Double>]].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(Double.self, forKey: .defaultAnswer)
         case .string:
             choices = try container.decode([[RSDChoiceObject<String>]].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(String.self, forKey: .defaultAnswer)
+        case .fraction:
+            choices = try container.decode([[RSDChoiceObject<RSDFraction>]].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(RSDFraction.self, forKey: .defaultAnswer)
+        case .date:
+            choices = try container.decode([[RSDChoiceObject<Date>]].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(Date.self, forKey: .defaultAnswer)
         }
         self.choices = choices
         
@@ -131,6 +139,59 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
                 try encodable.encode(to: innerEncoder)
             }
         }
+        
+        if let obj = self.defaultAnswer as? Bool {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? Int {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? Double {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? Date {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? String {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? RSDFraction {
+            try container.encode(obj, forKey: .defaultAnswer)
+        }
+    }
+    
+    // Overrides must be defined in the base implementation
+    
+    override class func codingKeys() -> [CodingKey] {
+        var keys = super.codingKeys()
+        let thisKeys: [CodingKey] = allCodingKeys()
+        keys.append(contentsOf: thisKeys)
+        return keys
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.choices, .separator, .defaultAnswer]
+        return codingKeys
+    }
+    
+    override class func validateAllKeysIncluded() -> Bool {
+        guard super.validateAllKeysIncluded() else { return false }
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .choices:
+                if idx != 0 { return false }
+            case .separator:
+                if idx != 1 { return false }
+            case .defaultAnswer:
+                if idx != 2 { return false }
+            }
+        }
+        return keys.count == 3
+    }
+    
+    override class func examples() -> [[String : RSDJSONValue]] {
+        let json: [String : RSDJSONValue] = [
+            "identifier": "foo",
+            "dataType": "multipleComponent",
+            "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
+        ]
+        return [json]
     }
 }
 

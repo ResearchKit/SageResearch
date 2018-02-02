@@ -33,6 +33,13 @@
 
 import Foundation
 
+/// `RSDEnumSet` is a protocol for defining the set of all values included in an enum.
+public protocol RSDEnumSet : Hashable, RawRepresentable where RawValue == String {
+    
+    /// The set that includes all the enum values.
+    static var all: Set<Self> { get }
+}
+
 public struct RSDDocumentCreator {
     
     let allEnums: [RSDDocumentableEnum.Type] = [
@@ -82,6 +89,7 @@ public struct RSDDocumentCreator {
         RSDDateRangeObject.self,
         RSDNumberRangeObject.self,
         RSDTextFieldOptionsObject.self,
+        RSDDurationRangeObject.self,
         ]
     
     let allDecodableObjects: [RSDDocumentableDecodableObject.Type] = [
@@ -123,6 +131,13 @@ protocol RSDDocumentableEnum : RSDDocumentable, Codable {
 
     /// All the coding keys supported by this framework for defining this enum using a JSON dictionary.
     static func allCodingKeys() -> [String]
+}
+
+/// Any enum set can represent its coding keys by mapping the raw value to a string.
+extension RSDEnumSet {
+    static func allCodingKeys() -> [String] {
+        return self.all.map{ $0.rawValue }
+    }
 }
 
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up

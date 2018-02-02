@@ -113,7 +113,7 @@ public protocol RSDColorThemeElement : RSDUIThemeElement {
 }
 
 /// A hint as to where the UI should place an image.
-public enum RSDImagePlacementType : String, Codable {
+public enum RSDImagePlacementType : String, Codable, RSDEnumSet {
     
     /// Smaller presentation of an icon image before the content.
     case iconBefore
@@ -128,15 +128,12 @@ public enum RSDImagePlacementType : String, Codable {
     case topBackground
     
     /// Return all the types defined in this enum.
-    public static func allTypes() -> [RSDImagePlacementType] {
+    public static var all: Set<RSDImagePlacementType> {
         return [.iconBefore, .iconAfter, .fullsizeBackground, .topBackground]
     }
 }
 
 extension RSDImagePlacementType : RSDDocumentableEnum {
-    static func allCodingKeys() -> [String] {
-        return allTypes().map { $0.rawValue }
-    }
 }
 
 /// `RSDImageThemeElement` extends the UI step to include an image.

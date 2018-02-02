@@ -115,6 +115,11 @@
                               "dataType": "multipleComponent",
                               "prompt": "Pick a combination of colors and animals",
                               "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat", "duck"]]
+                              },
+                              {
+                              "identifier": "duration",
+                              "dataType": "duration",
+                              "prompt": "Pick a time interval"
                               }
                               ]
               },

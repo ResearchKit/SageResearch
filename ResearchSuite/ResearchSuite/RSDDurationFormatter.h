@@ -1,8 +1,8 @@
 //
-//  NSUnit+RSDUnitConversion.h
+//  RSDDurationFormatter.h
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,35 +35,37 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSUnit (RSDUnitConversion)
+/// `RSDDurationFormatter` is a custom subclass of the `NSDateComponentsFormatter` that can convert a
+/// `NSMeasurement` object to a localized string.
+///
+/// - note: While this SDK is written in Swift where permissibile, formatters are written in Obj-c to allow
+/// overriding `-getObjectValue:forString:errorDescription:`. Apple documentation does not include how to
+/// set the value of the pointer for a Swift 4 implementation of the function. syoung 12/30/2017
+///
+@interface RSDDurationFormatter : NSDateComponentsFormatter
 
-/// Convert the symbol into a unit of the appropriate subtype (if found).
-/// @param symbol   The symbol for the unit.
-+ (NSUnit * _Nullable)unitFromSymbol:(NSString *)symbol;
+/// The base unit to use for converting a `NSNumber` to a string.
+///
+/// This is used by the `-stringForObjectValue:` method to convert the input object to a localized string
+/// for the case where the object value is a `NSNumber`. If the input object is a `NSMeasurement` then
+/// this value is ignored.
+///
+/// The default unit is seconds.
+@property (null_resettable, nonatomic) NSUnitDuration *toStringUnit;
 
-@end
+/// The base unit to use for converting a string to an `NSMeasurement`.
+///
+/// This is used by the `-getObjectValue:forString:errorDescription:` method to convert the input string
+/// to a `NSMeasurement` if the units cannot be parsed from the input string.
+///
+/// The default unit is seconds.
+@property (null_resettable, nonatomic) NSUnitDuration *fromStringUnit;
 
-@interface NSUnitLength (RSDUnitConversion)
+/// Return the number value (or nil) for the given string.
+- (NSNumber * _Nullable)numberFromString:(NSString *)string;
 
-/// Convert the symbol into a unit of length.
-/// @param symbol   The symbol for the unit.
-+ (NSUnitLength * _Nullable)unitLengthFromSymbol:(NSString *)symbol;
-
-@end
-
-@interface NSUnitMass (RSDUnitConversion)
-
-/// Convert the symbol into a unit of mass.
-/// @param symbol   The symbol for the unit.
-+ (NSUnitMass * _Nullable)unitMassFromSymbol:(NSString *)symbol;
-
-@end
-
-@interface NSUnitDuration (RSDUnitConversion)
-
-/// Convert the symbol into a unit of duration.
-/// @param symbol   The symbol for the unit.
-+ (NSUnitDuration * _Nullable)unitDurationFromSymbol:(NSString *)symbol;
+/// Return the string (or nil) for the given number.
+- (NSString * _Nullable)stringFromNumber:(NSNumber *)number;
 
 @end
 

@@ -48,9 +48,9 @@ typedef struct {
 
 @end
 
-/// `RSDFractionFormatter` is a custom subclass of the `NSNumberFormatter` that can convert a number
-/// to a string with a fractional format, or a fraction to a number -- for example, "3/4" would be converted
-/// to `RSDFraction` with a double value of 0.75.
+/// `RSDFractionFormatter` is a custom subclass of the `NSFormatter` that can convert a number to a string
+/// with a fractional format, or a fraction to a number -- for example, "3/4" would be converted to
+/// `RSDFraction` with a double value of 0.75.
 ///
 /// - note: While this SDK is written in Swift where permissibile, formatters are written in Obj-c to allow
 /// overriding `-getObjectValue:forString:errorDescription:`. Apple documentation does not include how to

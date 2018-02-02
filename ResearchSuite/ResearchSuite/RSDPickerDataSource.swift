@@ -81,6 +81,14 @@ public protocol RSDDatePickerDataSource : RSDPickerDataSource {
 /// A picker data source for selecting choices.
 public protocol RSDChoicePickerDataSource : RSDPickerDataSource {
     
+    /// If this is a multiple component input field, the UI can optionally define a separator.
+    /// For example, blood pressure would have a separator of "/".
+    var separator: String? { get }
+    
+    /// Returns the default answer (if any) for this picker. If `nil` then the UI should display
+    /// empty rows initially, otherwise, the UI should display the default value.
+    var defaultAnswer: Any? { get }
+    
     /// Returns the number of 'columns' to display.
     var numberOfComponents: Int { get }
     
@@ -107,6 +115,14 @@ public protocol RSDChoicePickerDataSource : RSDPickerDataSource {
     func selectedRows(from selectedAnswer: Any?) -> [Int]?
 }
 
+public protocol RSDImageChoicePickerDataSource : RSDPickerDataSource {
+    
+    /// Returns the size of the images for the given component.
+    /// - parameter component: The component (or column) of the picker.
+    /// - returns: The size of the images in that component.
+    func imageSize(forComponent component: Int) -> CGSize
+}
+
 /// A picker data source for picking a number.
 public protocol RSDNumberPickerDataSource : RSDPickerDataSource {
     
@@ -124,7 +140,11 @@ public protocol RSDNumberPickerDataSource : RSDPickerDataSource {
 }
 
 public protocol RSDNumberFormatterProtocol {
+    
+    /// Return the string for the given number.
     func string(from number: NSNumber) -> String?
+    
+    /// Return the number for the given string.
     func number(from string: String) -> NSNumber?
 }
 
@@ -141,10 +161,6 @@ public protocol RSDMultipleComponentChoiceOptions : RSDChoicePickerDataSource {
 ///
 /// - seealso: `RSDMultipleComponentInputField` and `RSDFormStepDataSource`
 public protocol RSDMultipleComponentOptions : RSDMultipleComponentChoiceOptions {
-    
-    /// If this is a multiple component input field, the UI can optionally define a separator.
-    /// For example, blood pressure would have a separator of "/".
-    var separator: String? { get }
 }
 
 /// `RSDChoiceOptions` is a data source protocol that can be used to set up a picker or list of choices.
@@ -157,4 +173,12 @@ public protocol RSDChoiceOptions : RSDChoicePickerDataSource {
     
     /// A Boolean value indicating whether the user can skip the input field without providing an answer.
     var isOptional: Bool { get }
+}
+
+extension RSDChoiceOptions {
+    
+    /// The separator is not used with only one column of choices.
+    public var separator: String? {
+        return nil
+    }
 }

@@ -47,6 +47,7 @@ class TableItemTests: XCTestCase {
     }
     
     func testBloodPressure() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         
         let inputField = RSDInputFieldObject(identifier: "bloodPressure", dataType: .measurement(.bloodPressure, .adult))
         let itemGroup = RSDHumanMeasurementTableItemGroup(beginningRowIndex: 0, inputField: inputField, uiHint: .textfield)
@@ -58,6 +59,285 @@ class TableItemTests: XCTestCase {
             XCTAssertEqual(itemGroup.answer as? String, "120 / 40")
         } catch let error {
             XCTFail("Failed to set the answer to a valid answer. \(error)")
+        }
+    }
+    
+    func testNumberTableItem_Decimal() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let inputField = RSDInputFieldObject(identifier: "number", dataType: .base(.decimal), uiHint: .picker)
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        inputField.range = RSDNumberRangeObject(minimumDecimal: -1.5, maximumDecimal: 3.5, stepInterval: 0.5, unit: "foo", formatter: formatter)
+
+        let itemGroup = RSDNumberTableItemGroup(beginningRowIndex: 0, inputField: inputField, uiHint: .picker)
+        
+        XCTAssertEqual(itemGroup.items.count, 1)
+        
+        if let item = itemGroup.items.first as? RSDNumberInputTableItem {
+            XCTAssertEqual(item.formatter, formatter)
+            XCTAssertEqual(item.answerType.baseType, .decimal)
+            XCTAssertEqual(item.answerType.unit, "foo")
+            if let picker = item.pickerSource as? RSDNumberPickerDataSource {
+                XCTAssertEqual(picker.minimum, -1.5)
+                XCTAssertEqual(picker.maximum, 3.5)
+                XCTAssertEqual(picker.stepInterval, 0.5)
+            } else {
+                XCTFail("\(String(describing: item.pickerSource)) not of expected type.")
+            }
+        } else {
+            XCTFail("\(itemGroup.items) not of expected type.")
+        }
+        
+        do {
+            try itemGroup.setAnswer("1.36")
+            let answer = itemGroup.answer
+            XCTAssertEqual((answer as? NSNumber)?.doubleValue, 1.36, "\(itemGroup.answer)")
+        } catch let error {
+            XCTFail("Failed to set the answer to a valid answer. \(error)")
+        }
+        
+        do {
+            try itemGroup.setAnswer("4")
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.greaterThanMaximumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+        
+        do {
+            try itemGroup.setAnswer("-3.123")
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.lessThanMinimumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+    }
+    
+    func testNumberTableItem_Integer() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let inputField = RSDInputFieldObject(identifier: "number", dataType: .base(.integer), uiHint: .picker)
+        let formatter = NumberFormatter()
+        inputField.range = RSDNumberRangeObject(minimumDecimal: -1, maximumDecimal: 3, stepInterval: nil, unit: "foo", formatter: formatter)
+        
+        let itemGroup = RSDNumberTableItemGroup(beginningRowIndex: 0, inputField: inputField, uiHint: .picker)
+        
+        XCTAssertEqual(itemGroup.items.count, 1)
+        
+        if let item = itemGroup.items.first as? RSDNumberInputTableItem {
+            XCTAssertEqual(item.formatter, formatter)
+            XCTAssertEqual(item.answerType.baseType, .integer)
+            XCTAssertEqual(item.answerType.unit, "foo")
+            if let picker = item.pickerSource as? RSDNumberPickerDataSource {
+                XCTAssertEqual(picker.minimum, -1)
+                XCTAssertEqual(picker.maximum, 3)
+                XCTAssertNil(picker.stepInterval)
+            } else {
+                XCTFail("\(String(describing: item.pickerSource)) not of expected type.")
+            }
+        } else {
+            XCTFail("\(itemGroup.items) not of expected type.")
+        }
+        
+        do {
+            try itemGroup.setAnswer("1")
+            let answer = itemGroup.answer
+            XCTAssertEqual((answer as? NSNumber)?.intValue, 1, "\(itemGroup.answer)")
+        } catch let error {
+            XCTFail("Failed to set the answer to a valid answer. \(error)")
+        }
+        
+        do {
+            try itemGroup.setAnswer("4")
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.greaterThanMaximumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+        
+        do {
+            try itemGroup.setAnswer("-3")
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.lessThanMinimumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+    }
+    
+    func testNumberTableItem_Year() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let inputField = RSDInputFieldObject(identifier: "number", dataType: .base(.year), uiHint: .picker)
+        let year1970 = RSDDateCoderObject(rawValue: "yyyy")?.date(from: "1970")
+        let yearNow = Calendar.current.component(.year, from: Date())
+        inputField.range = RSDDateRangeObject(minimumDate: year1970, maximumDate: nil, allowFuture: false, allowPast: nil)
+        
+        let itemGroup = RSDNumberTableItemGroup(beginningRowIndex: 0, inputField: inputField, uiHint: .picker)
+        
+        XCTAssertEqual(itemGroup.items.count, 1)
+        
+        if let item = itemGroup.items.first as? RSDNumberInputTableItem {
+            XCTAssertEqual(item.answerType.baseType, .integer)
+            if let picker = item.pickerSource as? RSDNumberPickerDataSource {
+                XCTAssertEqual(picker.minimum, 1970)
+                XCTAssertEqual(picker.maximum, Decimal(yearNow))
+                XCTAssertNil(picker.stepInterval)
+            } else {
+                XCTFail("\(String(describing: item.pickerSource)) not of expected type.")
+            }
+        } else {
+            XCTFail("\(itemGroup.items) not of expected type.")
+        }
+        
+        do {
+            try itemGroup.setAnswer("1980")
+            let answer = itemGroup.answer
+            XCTAssertEqual((answer as? NSNumber)?.intValue, 1980, "\(itemGroup.answer)")
+        } catch let error {
+            XCTFail("Failed to set the answer to a valid answer. \(error)")
+        }
+        
+        do {
+            let futureYear = "\(yearNow + 5)"
+            try itemGroup.setAnswer(futureYear)
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.greaterThanMaximumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+        
+        do {
+            try itemGroup.setAnswer("1950")
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.lessThanMinimumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+    }
+    
+    func testNumberTableItem_Fraction() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let inputField = RSDInputFieldObject(identifier: "number", dataType: .base(.fraction), uiHint: .picker)
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 3
+        inputField.range = RSDNumberRangeObject(minimumDecimal: -1.5, maximumDecimal: 3.5, stepInterval: 0.5, unit: "foo", formatter: formatter)
+        
+        let itemGroup = RSDNumberTableItemGroup(beginningRowIndex: 0, inputField: inputField, uiHint: .picker)
+        
+        XCTAssertEqual(itemGroup.items.count, 1)
+        
+        if let item = itemGroup.items.first as? RSDNumberInputTableItem {
+            
+            XCTAssertEqual(item.answerType.baseType, .decimal)
+            XCTAssertEqual(item.answerType.unit, "foo")
+            
+            if let picker = item.pickerSource as? RSDNumberPickerDataSource {
+                XCTAssertEqual(picker.minimum, -1.5)
+                XCTAssertEqual(picker.maximum, 3.5)
+                XCTAssertEqual(picker.stepInterval, 0.5)
+            } else {
+                XCTFail("\(String(describing: item.pickerSource)) not of expected type.")
+            }
+            
+            if let fractionFormatter = item.formatter as? RSDFractionFormatter {
+                XCTAssertEqual(fractionFormatter.numberFormatter.maximumFractionDigits, 3)
+            } else {
+                XCTFail("\(String(describing: item.formatter)) not of expected type.")
+            }
+        } else {
+            XCTFail("\(itemGroup.items) not of expected type.")
+        }
+        
+        do {
+            try itemGroup.setAnswer("136/100")
+            let answer = itemGroup.answer
+            XCTAssertEqual((answer as? NSNumber)?.doubleValue, 1.36, "\(itemGroup.answer)")
+        } catch let error {
+            XCTFail("Failed to set the answer to a valid answer. \(error)")
+        }
+        
+        do {
+            try itemGroup.setAnswer("48/2")
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.greaterThanMaximumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+        
+        do {
+            try itemGroup.setAnswer("-312/100")
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.lessThanMinimumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+    }
+    
+    func testNumberTableItem_Duration() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let inputField = RSDInputFieldObject(identifier: "number", dataType: .base(.duration), uiHint: .picker)
+        let min = Measurement(value: 15, unit: UnitDuration.minutes)
+        let max = Measurement(value: 5, unit: UnitDuration.hours)
+        let range = RSDDurationRangeObject(durationUnits: [.hours, .minutes], minimumDuration: min, maximumDuration: max)
+        inputField.range = range
+        
+        // test assumptions
+        XCTAssertEqual(range.minimumDuration, min)
+        XCTAssertEqual(range.maximumDuration, max)
+        XCTAssertEqual(range.baseUnit, .minutes)
+        XCTAssertEqual(range.durationUnits, Set([.minutes, .hours]))
+
+        let itemGroup = RSDNumberTableItemGroup(beginningRowIndex: 0, inputField: inputField, uiHint: .picker)
+        
+        XCTAssertEqual(itemGroup.items.count, 1)
+        
+        if let item = itemGroup.items.first as? RSDNumberInputTableItem {
+            
+            XCTAssertEqual(item.answerType.baseType, .decimal)
+            XCTAssertEqual(item.answerType.unit, "min")
+            
+            if let picker = item.pickerSource as? RSDDurationPickerDataSourceObject {
+                XCTAssertEqual(picker.baseUnit, .minutes)
+            } else {
+                XCTFail("\(String(describing: item.pickerSource)) not of expected type.")
+            }
+            
+            if let durationFormatter = item.formatter as? RSDDurationFormatter {
+                XCTAssertEqual(durationFormatter.toStringUnit, .minutes)
+                XCTAssertEqual(durationFormatter.fromStringUnit, .minutes)
+            } else {
+                XCTFail("\(String(describing: item.formatter)) not of expected type.")
+            }
+            
+        } else {
+            XCTFail("\(itemGroup.items) not of expected type.")
+        }
+        
+        do {
+            try itemGroup.setAnswer("2 hours, 50 minutes")
+            let answer = itemGroup.answer
+            XCTAssertEqual((answer as? NSNumber)?.intValue, 170, "\(itemGroup.answer)")
+        } catch let error {
+            XCTFail("Failed to set the answer to a valid answer. \(error)")
+        }
+        
+        do {
+            try itemGroup.setAnswer("48:00")
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.greaterThanMaximumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+        
+        do {
+            try itemGroup.setAnswer("-2:30")
+            XCTFail("Setting answer to a value outside allowed range should fail.")
+        } catch RSDInputFieldError.lessThanMinimumValue(_, _) {
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
         }
     }
 }

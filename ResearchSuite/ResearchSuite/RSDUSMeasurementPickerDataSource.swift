@@ -48,6 +48,11 @@ public protocol RSDUSMeasurementPickerDataSource : RSDMultipleComponentChoiceOpt
 
 extension RSDUSMeasurementPickerDataSource {
     
+    /// US measurement pickers do not have a default answer.
+    public var defaultAnswer: Any? {
+        return nil
+    }
+    
     /// Returns the selected answer created by the union of the selected rows.
     /// - parameter selectedRows: The selected rows, where there is a selected row for each component.
     /// - returns: The answer created from the given array of selected rows.
@@ -78,6 +83,9 @@ extension RSDUSMeasurementPickerDataSource {
 /// `RSDUSHeightPickerDataSourceObject` is a custom height picker for use when the `Locale`
 /// uses US Customary units (not metric system).
 public struct RSDUSHeightPickerDataSourceObject : RSDUSMeasurementPickerDataSource {
+    
+    /// The separator is not used with the height picker.
+    public let separator: String? = nil
     
     // The US Customary unit converter.
     public let converter: RSDUnitConverter.USCustomaryUnitConverter<UnitLength>
@@ -145,6 +153,9 @@ extension RSDLengthFormatter {
 /// `RSDUSInfantMassPickerDataSource` is a custom weight picker for use when the `Locale`
 /// uses US Customary units (not metric system) and the mass is for an infant in "lb, oz".
 public struct RSDUSInfantMassPickerDataSourceObject : RSDUSMeasurementPickerDataSource {
+    
+    /// The separator is not used with the mass picker.
+    public let separator: String? = nil
     
     // The US Customary unit converter.
     public let converter: RSDUnitConverter.USCustomaryUnitConverter<UnitMass>

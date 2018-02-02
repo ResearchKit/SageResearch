@@ -42,10 +42,14 @@ public struct RSDChoiceOptionsObject : RSDChoiceOptions {
     /// A Boolean value indicating whether the user can skip the input field without providing an answer.
     public let isOptional: Bool
     
+    /// The default answer associated with this option set.
+    public let defaultAnswer: Any?
+    
     /// Default initializer. Auto-synthesized init is not public.
-    public init(choices: [RSDChoice], isOptional: Bool) {
+    public init(choices: [RSDChoice], isOptional: Bool, defaultAnswer: Any? = nil) {
         self.choices = choices
         self.isOptional = isOptional
+        self.defaultAnswer = defaultAnswer
     }
 }
 

@@ -86,6 +86,7 @@ class PickerDataSourceTests: XCTestCase {
     }
     
     func testHeightPicker() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         
         let picker = RSDUSHeightPickerDataSourceObject()
         
@@ -116,6 +117,7 @@ class PickerDataSourceTests: XCTestCase {
     }
     
     func testWeightPicker() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         
         let picker = RSDUSInfantMassPickerDataSourceObject()
         
@@ -169,7 +171,9 @@ class PickerDataSourceTests: XCTestCase {
         XCTAssertEqual(text, "cat")
     }
     
-    func testRSDNumberPickerDataSource() {
+    func testNumberPickerDataSource() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+
         let formatter = NumberFormatter.defaultNumberFormatter(with: 1)
         let picker = RSDNumberPickerDataSourceObject(minimum: -1.0, maximum: 1.0, stepInterval: 0.2, numberFormatter: formatter)
         
@@ -180,5 +184,107 @@ class PickerDataSourceTests: XCTestCase {
         
         let textAnswer = picker.textAnswer(from: inputAnswer)
         XCTAssertEqual(textAnswer, "0.8")
+    }
+    
+    func testTimeIntervalPickerDataSource_MinuteSecond() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+
+        let range = RSDDurationRangeObject(durationUnits: [.seconds, .minutes])
+        
+        // Confirm assumptions about defaults
+        XCTAssertEqual(range.baseUnit, .seconds)
+        XCTAssertEqual(range.minimumDuration, Measurement(value: 0, unit: UnitDuration.seconds))
+        
+        guard let picker = RSDDurationPickerDataSourceObject(range: range)
+            else {
+                XCTFail("Failed to instantiate a picker from the given range")
+                return
+        }
+        
+        XCTAssertEqual(picker.numberOfComponents, 2)
+        
+        // minute field
+        XCTAssertEqual(picker.numberOfRows(in: 0), 61)
+        XCTAssertEqual(picker.componentChoices[0].first?.value as? Int, 0)
+        XCTAssertEqual(picker.componentChoices[0].last?.value as? Int, 60)
+
+        // second field
+        XCTAssertEqual(picker.numberOfRows(in: 1), 60)
+        XCTAssertEqual(picker.componentChoices[1].first?.value as? Int, 0)
+        XCTAssertEqual(picker.componentChoices[1].last?.value as? Int, 59)
+        
+        let inputAnswer = Double(90)
+        let expectedRows = [1, 30]
+        let expectedMinutes = 1
+        let expectedSeconds = 30
+        let expectedText = "1:30"
+        
+        if let rows = picker.selectedRows(from: inputAnswer) {
+            XCTAssertEqual(rows, expectedRows)
+            if rows.count == 2 {
+                XCTAssertEqual(picker.choice(forRow: rows[0], forComponent: 0)?.value as? Int, expectedMinutes)
+                XCTAssertEqual(picker.choice(forRow: rows[1], forComponent: 1)?.value as? Int, expectedSeconds)
+            } else {
+                XCTFail("Row count does not match expected. \(rows)")
+            }
+        } else {
+            XCTFail("Failed to get the rows for an answer within range")
+        }
+        
+        let textAnswer = picker.textAnswer(from: inputAnswer)
+        XCTAssertEqual(textAnswer, expectedText)
+        
+        XCTAssertEqual(picker.selectedAnswer(with: expectedRows) as? Double, inputAnswer)
+    }
+    
+    func testTimeIntervalPickerDataSource_HourMinute() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+
+        let range = RSDDurationRangeObject(durationUnits: [.minutes, .hours])
+        
+        // Confirm assumptions about defaults
+        XCTAssertEqual(range.baseUnit, .minutes)
+        XCTAssertEqual(range.minimumDuration, Measurement(value: 0, unit: UnitDuration.minutes))
+        
+        guard let picker = RSDDurationPickerDataSourceObject(range: range)
+            else {
+                XCTFail("Failed to instantiate a picker from the given range")
+                return
+        }
+        
+        XCTAssertEqual(picker.numberOfComponents, 2)
+        
+        // hour field
+        XCTAssertEqual(picker.numberOfRows(in: 0), 25)
+        XCTAssertEqual(picker.componentChoices[0].first?.value as? Int, 0)
+        XCTAssertEqual(picker.componentChoices[0].last?.value as? Int, 24)
+        
+        // minute field
+        XCTAssertEqual(picker.numberOfRows(in: 1), 60)
+        XCTAssertEqual(picker.componentChoices[1].first?.value as? Int, 0)
+        XCTAssertEqual(picker.componentChoices[1].last?.value as? Int, 59)
+        
+        let inputAnswer = Double(90)
+        let expectedRows = [1, 30]
+        let expectedHours = 1
+        let expectedMinutes = 30
+        let expectedText = "1:30"
+        
+        if let rows = picker.selectedRows(from: inputAnswer) {
+            XCTAssertEqual(rows, expectedRows)
+            if rows.count == 2 {
+                XCTAssertEqual(picker.choice(forRow: rows[0], forComponent: 0)?.value as? Int, expectedHours)
+                XCTAssertEqual(picker.choice(forRow: rows[1], forComponent: 1)?.value as? Int, expectedMinutes)
+            } else {
+                XCTFail("Row count does not match expected. \(rows)")
+            }
+        } else {
+            XCTFail("Failed to get the rows for an answer within range")
+        }
+        
+        let textAnswer = picker.textAnswer(from: inputAnswer)
+        XCTAssertEqual(textAnswer, expectedText)
+        
+        XCTAssertEqual(picker.selectedAnswer(with: expectedRows) as? Double, inputAnswer)
     }
 }

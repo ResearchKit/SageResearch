@@ -47,7 +47,7 @@ public protocol RSDRangeWithFormatter : RSDRange {
     /// entered in a text field into the appropriate value type.
     ///
     /// - seealso: `RSDAnswerResultType.BaseType` and `RSDFormStepDataSource`
-    var formatter: Formatter? { get }
+    var formatter: Formatter? { get set }
 }
 
 /// `RSDDateRange` defines the range of values appropriate for a `date` data type.
@@ -114,4 +114,20 @@ public protocol RSDNumberRange : RSDRange {
     /// researcher expects the returned value in meters then the unit here would be "m" and the formatter
     /// would be a `LengthFormatter` that uses the current locale with a `unitStyle` of `.long`.
     var unit: String? { get }
+}
+
+public protocol RSDDurationRange : RSDRange {
+    
+    /// The minimum allowed duration.
+    var minimumDuration: Measurement<UnitDuration> { get }
+    
+    /// The maximum allowed duration. When the value of this property is `nil`, there is no maximum.
+    var maximumDuration: Measurement<UnitDuration>? { get }
+    
+    /// A step interval to be used for a slider or picker in the smallest units represented.
+    var stepInterval: Int? { get }
+    
+    /// The duration units that should be included in the formatter and picker used for setting up a
+    /// `.timeInterval` data type.
+    var durationUnits: Set<UnitDuration> { get }
 }

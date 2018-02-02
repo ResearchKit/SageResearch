@@ -153,11 +153,12 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     /// Overridable class function for decoding the range from the decoder. The default implementation will key to
     /// `CodingKeys.range` and will decode a range object appropriate to the data type.
     ///
-    /// | RSDFormDataType.BaseType | Type of range to decode                                    |
-    /// |--------------------------|:----------------------------------------------------------:|
-    /// | .integer, .decimal       | `RSDNumberRangeObject`                                     |
-    /// | .date                    | `RSDDateRangeObject`                                       |
-    /// | .year                    | `RSDDateRangeObject` or `RSDNumberRangeObject`             |
+    /// | RSDFormDataType.BaseType      | Type of range to decode                                    |
+    /// |-------------------------------|:----------------------------------------------------------:|
+    /// | .integer, .decimal, .fraction | `RSDNumberRangeObject`                                     |
+    /// | .date                         | `RSDDateRangeObject`                                       |
+    /// | .year                         | `RSDDateRangeObject` or `RSDNumberRangeObject`             |
+    /// | .timeInterval                 | `RSDDurationRangeObject`                               |
     ///
     /// - parameters:
     ///     - decoder: The decoder used to decode this object.
@@ -169,6 +170,8 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
         switch dataType.baseType {
         case .integer, .decimal, .fraction:
             return try container.decodeIfPresent(RSDNumberRangeObject.self, forKey: .range)
+        case .duration:
+            return try container.decodeIfPresent(RSDDurationRangeObject.self, forKey: .range)
         case .date:
             return try container.decodeIfPresent(RSDDateRangeObject.self, forKey: .range)
         case .year:
@@ -181,7 +184,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
             } else {
                 return try container.decodeIfPresent(RSDNumberRangeObject.self, forKey: .range)
             }
-        default:
+        case .string, .boolean:
             return nil
         }
     }
@@ -281,7 +284,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                 return try container.decode([RSDComparableSurveyRuleObject<String>].self, forKey: .surveyRules)
             case .date:
                 return try container.decode([RSDComparableSurveyRuleObject<Date>].self, forKey: .surveyRules)
-            case .decimal:
+            case .decimal, .duration:
                 return try container.decode([RSDComparableSurveyRuleObject<Double>].self, forKey: .surveyRules)
             case .fraction:
                 return try container.decode([RSDComparableSurveyRuleObject<RSDFraction>].self, forKey: .surveyRules)
@@ -297,7 +300,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                 rule = try? RSDComparableSurveyRuleObject<String>(from: decoder)
             case .date:
                 rule = try? RSDComparableSurveyRuleObject<Date>(from: decoder)
-            case .decimal:
+            case .decimal, .duration:
                 rule = try? RSDComparableSurveyRuleObject<Double>(from: decoder)
             case .fraction:
                 rule = try? RSDComparableSurveyRuleObject<RSDFraction>(from: decoder)
@@ -473,6 +476,16 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
                                      "maximumValue" : 1.0,
                                      "stepInterval" : 0.25],
                          "matchingAnswer" : 0]
+                
+            case .duration:
+                return [ "identifier" : "timeIntervalExample",
+                         "prompt" : "This is a time interval input field",
+                         "dataType" : "timeInterval",
+                         "uiHint" : "picker",
+                         "placeholderText" : "select a time interval",
+                         "range" : [ "minimumValue" : 0,
+                                     "maximumValue" : 26,
+                                     "unit" : "minute"]]
                 
             case .year:
                 return [ "identifier" : "yearExample",

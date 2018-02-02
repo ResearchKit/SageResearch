@@ -39,7 +39,7 @@ import Foundation
 /// using ft and in, whereas a child or infant will be reported in inches. The placeholder
 /// text for child or infant measurement range will be either "inches" or "centimeters",
 /// depending upon the user's locale.
-final class RSDHeightInputTableItem : RSDTextInputTableItem {
+public final class RSDHeightInputTableItem : RSDTextInputTableItem {
     
     /// The base unit is the unit of mass that the measurement should be converted to in order
     /// to save the result. Because the `Measurement` class has a generic `UnitType`, it cannot
@@ -107,7 +107,7 @@ final class RSDHeightInputTableItem : RSDTextInputTableItem {
     
     /// Override the `convertAnswer()` function to convert the `Measurement` returned
     /// by the formatter into a decimal value in the `baseUnit`.
-    override func convertAnswer(_ newValue: Any) throws -> Any? {
+    override public func convertAnswer(_ newValue: Any) throws -> Any? {
         let answer = try super.convertAnswer(newValue)
         guard let measurement = answer as? Measurement<UnitLength> else { return answer }
         return measurement.converted(to: baseUnit).value
@@ -119,7 +119,7 @@ final class RSDHeightInputTableItem : RSDTextInputTableItem {
 /// setting the weight of an infant. Typically, US participants know what their newborn baby's
 /// weight is in lb and oz. Additionally, the placeholder text for an adult or child measurement
 /// range will be either "pounds" or "kilograms", depending upon the participant's locale.
-final class RSDMassInputTableItem : RSDTextInputTableItem {
+public final class RSDMassInputTableItem : RSDTextInputTableItem {
     
     /// The base unit is the unit of mass that the measurement should be converted to in order
     /// to save the result. Because the `Measurement` class has a generic `UnitType`, it cannot
@@ -187,7 +187,7 @@ final class RSDMassInputTableItem : RSDTextInputTableItem {
     
     /// Override the `convertAnswer()` function to convert the `Measurement` returned
     /// by the formatter into a decimal value in the `baseUnit`.
-    override func convertAnswer(_ newValue: Any) throws -> Any? {
+    override public func convertAnswer(_ newValue: Any) throws -> Any? {
         let answer = try super.convertAnswer(newValue)
         guard let measurement = answer as? Measurement<UnitMass> else { return answer }
         return measurement.converted(to: baseUnit).value

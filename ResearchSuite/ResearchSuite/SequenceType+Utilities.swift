@@ -31,8 +31,21 @@
 
 import Foundation
 
-
 extension Sequence {
+    
+    /// Returns an `Set` containing the results of mapping and filtering `transform`
+    /// over `self`.
+    /// - parameter transform: The method which returns either the transformed element or `nil` if filtered.
+    /// - returns: A set of the transformed elements.
+    public func rsd_mapAndFilterSet<T : Hashable>(_ transform: (Self.Iterator.Element) throws -> T?) rethrows -> Set<T> {
+        var result = Set<T>()
+        for element in self {
+            if let t = try transform(element) {
+                result.insert(t)
+            }
+        }
+        return result
+    }
     
     /// Returns an `Array` containing the results of mapping and filtering `transform`
     /// over `self`.

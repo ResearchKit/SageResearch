@@ -40,6 +40,9 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
     /// A list of choices for the input field.
     public let choices : [RSDChoice]
     
+    /// The default answer associated with this option set.
+    open private(set) var defaultAnswer: Any?
+    
     /// Default initializer.
     ///
     /// - parameters:
@@ -49,13 +52,14 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
     ///     - uiHint: A UI hint for how the study would prefer that the input field is displayed to the user.
     ///     - prompt: A localized string that displays a short text offering a hint to the user of the data to be entered for
     ///               this field.
-    public init(identifier: String, choices: [RSDChoice], dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String?) {
+    public init(identifier: String, choices: [RSDChoice], dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String? = nil, defaultAnswer: Any? = nil) {
         self.choices = choices
+        self.defaultAnswer = nil
         super.init(identifier: identifier, dataType: dataType, uiHint: uiHint, prompt: prompt)
     }
     
     private enum CodingKeys : String, CodingKey {
-        case choices
+        case choices, defaultAnswer
     }
     
     /// Initialize from a `Decoder`. This method uses the `RSDFormDataType.BaseType` associated with this input field to
@@ -107,6 +111,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
     ///            "type": "form",
     ///            "title": "How happy are you?",
     ///            "dataType": "singleChoice.integer",
+    ///            "defaultAnswer": 3,
     ///            "choices": [{
     ///                        "text": "delighted",
     ///                        "detail": "Nothing could be better!",
@@ -171,16 +176,22 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
         switch dataType.baseType {
         case .boolean:
             choices = try container.decode([RSDChoiceObject<Bool>].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(Bool.self, forKey: .defaultAnswer)
         case .integer, .year:
             choices = try container.decode([RSDChoiceObject<Int>].self, forKey: .choices)
-        case .decimal:
+            defaultAnswer = try container.decodeIfPresent(Int.self, forKey: .defaultAnswer)
+        case .decimal, .duration:
             choices = try container.decode([RSDChoiceObject<Double>].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(Double.self, forKey: .defaultAnswer)
         case .fraction:
             choices = try container.decode([RSDChoiceObject<RSDFraction>].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(RSDFraction.self, forKey: .defaultAnswer)
         case .date:
             choices = try container.decode([RSDChoiceObject<Date>].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(Date.self, forKey: .defaultAnswer)
         case .string:
             choices = try container.decode([RSDChoiceObject<String>].self, forKey: .choices)
+            defaultAnswer = try container.decodeIfPresent(String.self, forKey: .defaultAnswer)
         }
         self.choices = choices
         
@@ -203,6 +214,19 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
             let nestedEncoder = nestedContainer.superEncoder()
             try encodable.encode(to: nestedEncoder)
         }
+        if let obj = self.defaultAnswer as? Bool {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? Int {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? Double {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? Date {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? String {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } else if let obj = self.defaultAnswer as? RSDFraction {
+            try container.encode(obj, forKey: .defaultAnswer)
+        } 
     }
     
     // Overrides must be defined in the base implementation
@@ -215,7 +239,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.choices]
+        let codingKeys: [CodingKeys] = [.choices, .defaultAnswer]
         return codingKeys
     }
     
@@ -226,9 +250,11 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
             switch key {
             case .choices:
                 if idx != 0 { return false }
+            case .defaultAnswer:
+                if idx != 1 { return false }
             }
         }
-        return keys.count == 1
+        return keys.count == 2
     }
     
     override class func examples() -> [[String : RSDJSONValue]] {
@@ -238,6 +264,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
                 "prompt": "Choose a number",
                 "dataType": "singleChoice.decimal",
                 "uiHint": "picker",
+                "defaultAnswer": 1.2,
                 "choices" : [[  "value" : 0,
                                 "text" : "0"],
                              [  "value" : 1.2,
@@ -255,6 +282,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
               "type": "form",
               "title": "Step 3",
               "dataType": "multipleChoice",
+              "defaultAnswer": "alpha",
               "choices" : ["alpha", "beta", "charlie", "delta"]
               ]
         
@@ -263,6 +291,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
             "type": "form",
             "title": "How happy are you?",
             "dataType": "singleChoice.integer",
+            "defaultAnswer": 1,
             "choices": [[
                         "text": "delighted",
                         "detail": "Nothing could be better!",
@@ -300,6 +329,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
                 "type": "form",
                 "prompt": "Are you tall?",
                 "dataType": "singleChoice.boolean",
+                "defaultAnswer": true,
                 "choices" : [[  "value" : true,
                                 "text" : "Yes"],
                              [  "value" : false,
@@ -308,6 +338,45 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
                                 "isExclusive" : true ]],
             ]
         
-        return [jsonA, jsonB, jsonC, jsonD]
+        let jsonE: [String : RSDJSONValue] = [
+            "identifier": "happiness",
+            "type": "form",
+            "title": "How happy are you?",
+            "dataType": "singleChoice.fraction",
+            "defaultAnswer": "3/5",
+            "choices": [[
+                            "text": "delighted",
+                            "detail": "Nothing could be better!",
+                            "value": "1/5",
+                            "icon": "moodScale1"
+                        ],
+                        [
+                            "text": "good",
+                            "detail": "Life is good.",
+                            "value": "2/5",
+                            "icon": "moodScale2"
+                        ],
+                        [
+                            "text": "so-so",
+                            "detail": "Things are okay, I guess.",
+                            "value": "3/5",
+                            "icon": "moodScale3"
+                        ],
+                        [
+                            "text": "sad",
+                            "detail": "I'm feeling a bit down.",
+                            "value": "4/5",
+                            "icon": "moodScale4"
+                        ],
+                        [
+                            "text": "miserable",
+                            "detail": "I cry into my pillow every night.",
+                            "value": "5/5",
+                            "icon": "moodScale5"
+                        ]
+            ]
+        ]
+        
+        return [jsonA, jsonB, jsonC, jsonD, jsonE]
     }
 }

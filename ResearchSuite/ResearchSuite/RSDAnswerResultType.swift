@@ -46,7 +46,7 @@ public struct RSDAnswerResultType : Codable {
     /// The base type of the answer result. This is used to indicate what the type is of the
     /// value being stored. The value stored in the `RSDAnswerResult` should be convertable
     /// to one of these base types.
-    public enum BaseType : String, Codable {
+    public enum BaseType : String, Codable, RSDEnumSet {
         
         /// Bool
         case boolean
@@ -60,18 +60,16 @@ public struct RSDAnswerResultType : Codable {
         case integer
         /// String
         case string
-        /// TimeInterval
-        case timeInterval
         
         /// List of all the base types
-        public static func allTypes() -> [BaseType] {
-            return [.boolean, .data, .date, .decimal, .integer, .string, .timeInterval]
+        public static var all: Set<BaseType> {
+            return [.boolean, .data, .date, .decimal, .integer, .string]
         }
     }
     
     /// The sequence type of the answer result. This is used to represent a multiple-choice
     /// answer array or a key/value dictionary.
-    public enum SequenceType : String, Codable {
+    public enum SequenceType : String, Codable, RSDEnumSet {
         
         /// Array
         case array
@@ -79,7 +77,7 @@ public struct RSDAnswerResultType : Codable {
         case dictionary
         
         /// List of all the sequence types
-        public static func allTypes() -> [SequenceType] {
+        public static  var all: Set<SequenceType> {
             return [.array, .dictionary]
         }
     }
@@ -142,9 +140,6 @@ public struct RSDAnswerResultType : Codable {
     
     /// Static type for a `RSDAnswerResultType` with a `String` base type.
     public static let string = RSDAnswerResultType(baseType: .string)
-    
-    /// Static type for a `RSDAnswerResultType` with a `TimeInterval` base type.
-    public static let timeInterval = RSDAnswerResultType(baseType: .timeInterval)
     
     /// The initializer for the `RSDAnswerResultType`.
     ///
@@ -239,10 +234,6 @@ extension RSDAnswerResultType {
             
         case .date:
             return try decoder.factory.decodeDate(from: string, formatter: self.dateFormatter, codingPath: decoder.codingPath)
-            
-        case .timeInterval:
-            return (string as NSString).doubleValue
-            
         }
     }
     
@@ -272,10 +263,6 @@ extension RSDAnswerResultType {
             else {
                 return try container.decode(Date.self)
             }
-            
-        case .timeInterval:
-            return try container.decode(TimeInterval.self)
-            
         }
     }
     
@@ -382,7 +369,7 @@ extension RSDAnswerResultType {
             switch baseType {
             case .boolean:
                 return num.boolValue
-            case .decimal, .timeInterval:
+            case .decimal:
                 return num.doubleValue
             case .integer:
                 return num.intValue
@@ -422,7 +409,7 @@ extension RSDAnswerResultType {
             switch baseType {
             case .data:
                 return (value as? Data)
-            case .boolean, .decimal, .integer, .timeInterval:
+            case .boolean, .decimal, .integer:
                 return (value as? RSDJSONNumber)
             case .string:
                 return "\(value)"
@@ -450,15 +437,9 @@ extension RSDAnswerResultType : Hashable, Equatable {
 }
 
 extension RSDAnswerResultType.BaseType : RSDDocumentableEnum {
-    static func allCodingKeys() -> [String] {
-        return self.allTypes().map{ $0.rawValue }
-    }
 }
 
 extension RSDAnswerResultType.SequenceType : RSDDocumentableEnum {
-    static func allCodingKeys() -> [String] {
-        return self.allTypes().map{ $0.rawValue }
-    }
 }
 
 extension RSDAnswerResultType : RSDDocumentableCodableObject {
@@ -502,10 +483,10 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
     static func examplesWithValues() -> [(answerType: RSDAnswerResultType, value: Any)] {
         var examples: [(RSDAnswerResultType, Any)] = []
 
-        let sequenceTypes = SequenceType.allTypes()
+        let sequenceTypes = SequenceType.all
         
         func addExamples(sequenceType: SequenceType?) {
-            let baseTypes = BaseType.allTypes()
+            let baseTypes = BaseType.all
             for baseType in baseTypes {
                 switch baseType {
                 case .boolean:
@@ -588,21 +569,6 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
                     if sequenceType == .array {
                         examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: "/"), ["and","or"]))
                     }
-                    
-                case .timeInterval:
-                    let value: Any = {
-                        if sequenceType == nil {
-                            return 120.0
-                        } else {
-                            switch sequenceType! {
-                            case .array:
-                                return [123.45, 345.67]
-                            case .dictionary:
-                                return ["timestamp": 0.123]
-                            }
-                        }
-                    }()
-                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), value))
                 }
             }
         }

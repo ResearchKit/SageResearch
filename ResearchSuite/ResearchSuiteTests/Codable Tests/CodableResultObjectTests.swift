@@ -318,55 +318,6 @@ class CodableResultObjectTests: XCTestCase {
         }
     }
     
-    func testAnswerResultObject_TimeInterval_Codable() {
-        let json = """
-        {
-            "identifier": "foo",
-            "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
-            "answerType": {"baseType" : "timeInterval"},
-            "value": 12.5
-        }
-        """.data(using: .utf8)! // our data in native (JSON) format
-        
-        do {
-            
-            let object = try decoder.decode(RSDAnswerResultObject.self, from: json)
-            
-            XCTAssertEqual(object.identifier, "foo")
-            XCTAssertEqual(object.type, "bar")
-            XCTAssertGreaterThan(object.endDate, object.startDate)
-            
-            let expectedAnswerType = RSDAnswerResultType(baseType: .timeInterval)
-            XCTAssertEqual(object.answerType, expectedAnswerType)
-            
-            XCTAssertEqual(object.value as? TimeInterval, 12.5)
-            
-            let jsonData = try encoder.encode(object)
-            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
-                else {
-                    XCTFail("Encoded object is not a dictionary")
-                    return
-            }
-            
-            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
-            XCTAssertEqual(dictionary["value"] as? TimeInterval, 12.5)
-            if let answerType = dictionary["answerType"] as? [String:Any] {
-                XCTAssertEqual(answerType["baseType"] as? String, "timeInterval")
-            }
-            else {
-                XCTFail("Encoded object does not include the answerType")
-            }
-            
-        } catch let err {
-            XCTFail("Failed to decode/encode object: \(err)")
-        }
-    }
-    
     func testAnswerResultObject_Date_Codable() {
         let json = """
         {
@@ -601,69 +552,6 @@ class CodableResultObjectTests: XCTestCase {
             }
             if let answerType = dictionary["answerType"] as? [String:Any] {
                 XCTAssertEqual(answerType["baseType"] as? String, "decimal")
-                XCTAssertEqual(answerType["sequenceType"] as? String, "array")
-            }
-            else {
-                XCTFail("Encoded object does not include the answerType")
-            }
-            
-        } catch let err {
-            XCTFail("Failed to decode/encode object: \(err)")
-        }
-    }
-    
-    func testAnswerResultObject_TimeIntervalArray_Codable() {
-        let json = """
-        {
-            "identifier": "foo",
-            "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
-            "answerType": {"baseType" : "timeInterval", "sequenceType" : "array"},
-            "value": [65.3, 47.2, 99.8]
-        }
-        """.data(using: .utf8)! // our data in native (JSON) format
-        
-        do {
-            
-            let object = try decoder.decode(RSDAnswerResultObject.self, from: json)
-            
-            XCTAssertEqual(object.identifier, "foo")
-            XCTAssertEqual(object.type, "bar")
-            XCTAssertGreaterThan(object.endDate, object.startDate)
-            
-            let expectedAnswerType = RSDAnswerResultType(baseType: .timeInterval, sequenceType: .array)
-            XCTAssertEqual(object.answerType, expectedAnswerType)
-            
-            XCTAssertNotNil(object.value)
-            if let array = object.value as? [TimeInterval] {
-                XCTAssertEqual(array.count, 3)
-                XCTAssertEqual(array.first, 65.3)
-                XCTAssertEqual(array.last, 99.8)
-            }
-            else {
-                XCTFail("Failed to decode the array value \(String(describing: object.value))")
-            }
-            
-            let jsonData = try encoder.encode(object)
-            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
-                else {
-                    XCTFail("Encoded object is not a dictionary")
-                    return
-            }
-            
-            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
-            if let values = dictionary["value"] as? [Double] {
-                XCTAssertEqual(values, [65.3, 47.2, 99.8])
-            }
-            else {
-                XCTFail("Failed to encode the values. \(dictionary)")
-            }
-            if let answerType = dictionary["answerType"] as? [String:Any] {
-                XCTAssertEqual(answerType["baseType"] as? String, "timeInterval")
                 XCTAssertEqual(answerType["sequenceType"] as? String, "array")
             }
             else {
