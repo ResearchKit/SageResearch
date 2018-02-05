@@ -128,7 +128,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
 
 
 /// An item group for entering text.
-final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {
+public final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Default initializer.
     /// - parameters:
@@ -143,7 +143,7 @@ final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {
 
 
 /// An item group for entering a date.
-final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
+public final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Default initializer.
     /// - parameters:
@@ -170,10 +170,6 @@ final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
         }
         
         let answerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: inputField.dataType, dateFormat: dateFormatter?.dateFormat, unit: nil, sequenceSeparator: nil)
-        
-        // TODO: syoung 12/19/2017 Refactor to use an array of RSDNumberInputTableItem to represent the
-        // entry if the preferred uiHint is a text field (rather than a picker).
-        // https://github.com/ResearchKit/SageResearch/issues/7
         let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource)
         
         super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
@@ -182,7 +178,7 @@ final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
 
 
 /// An item group for entering a number value.
-final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
+public final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Default initializer.
     /// - parameters:
@@ -197,7 +193,7 @@ final class RSDNumberTableItemGroup : RSDInputFieldTableItemGroup {
 
 
 /// An item group for entering data requiring a multiple component format.
-final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
+public final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Default initializer.
     /// - parameters:

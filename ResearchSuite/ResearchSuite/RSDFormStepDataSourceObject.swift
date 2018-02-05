@@ -187,7 +187,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
                 return RSDTextFieldTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
             case .date:
                 return RSDDateTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
-            case .decimal, .integer, .year, .fraction:
+            case .decimal, .integer, .year, .fraction, .duration:
                 return RSDNumberTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
             }
         }

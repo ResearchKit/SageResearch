@@ -44,7 +44,7 @@ public protocol RSDSurveyRule {
 }
 
 /// List of rules creating the survey rule items.
-public enum RSDSurveyRuleOperator: String, Codable {
+public enum RSDSurveyRuleOperator: String, Codable, RSDEnumSet {
     
     /// Survey rule for checking if the skip identifier should apply if the answer was skipped
     /// in which case the result answer value will be `nil`
@@ -75,9 +75,13 @@ public enum RSDSurveyRuleOperator: String, Codable {
     /// defined by the `matchingAnswer`.
     case otherThan          = "ot"
     
-    public static func allRuleOperators() -> [RSDSurveyRuleOperator] {
+    /// List of all the operators.
+    public static var all: Set<RSDSurveyRuleOperator> {
         return [.skip, .equal, .notEqual, .lessThan, .greaterThan, .lessThanEqual, .greaterThanEqual, .otherThan]
     }
+}
+
+extension RSDSurveyRuleOperator : RSDDocumentableEnum {
 }
 
 /// `RSDComparableSurveyRule` is a survey rule that matches an expected result to the answer and vends a skip
@@ -241,8 +245,4 @@ extension RSDComparable {
     }
 }
 
-extension RSDSurveyRuleOperator : RSDDocumentableEnum {
-    static func allCodingKeys() -> [String] {
-        return allRuleOperators().map { $0.rawValue }
-    }
-}
+

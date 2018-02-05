@@ -73,7 +73,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
             switch answerType.baseType {
             case .decimal:
                 return RSDTextFieldOptionsObject(keyboardType: .decimalPad)
-            case .integer, .timeInterval:
+            case .integer:
                 return RSDTextFieldOptionsObject(keyboardType: .numberPad)
             case .date, .string:
                 return RSDTextFieldOptionsObject(keyboardType: .default)
@@ -198,7 +198,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
                 return NSNumber(value: (string as NSString).boolValue)
             } else if answerType.baseType == .integer {
                 return NSNumber(value: (string as NSString).integerValue)
-            } else if answerType.baseType == .decimal || answerType.baseType == .timeInterval {
+            } else if answerType.baseType == .decimal {
                 return NSNumber(value: (string as NSString).doubleValue)
             } else {
                 let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "String Type \(answer) is not supported for \(inputField.identifier)")
@@ -217,7 +217,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
             switch answerType.baseType  {
             case .boolean:
                 return num.boolValue
-            case .integer, .decimal, .timeInterval:
+            case .integer, .decimal:
                 return num
             default:
                 let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Number Type \(answer) is not supported for \(inputField.identifier)")

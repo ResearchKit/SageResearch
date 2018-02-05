@@ -69,33 +69,31 @@ public enum RSDFormDataType {
         /// type can map to a `RSDDateRange` to box the allowed values.
         case date
         
-        /// In a year question, the participant can enter a year when an event occured. A year data type can map
-        /// to an `RSDDateRange` or `RSDNumberRange` to box the allowed values.
-        case year
-        
         /// The decimal question type asks the participant to enter a decimal number. A decimal data type can
         /// map to a `RSDNumberRange` to box the allowed values.
         case decimal
         
-        /// The integer question type asks the participant to enter an integer number. An integer data type can
-        /// map to a `RSDNumberRange` to box the allowed values, but will store the value as an `Int`.
-        case integer
+        /// In a duration question, the participant can enter a time span such as "8 hours, 5 minutes"
+        /// or "3 minutes, 15 seconds".
+        case duration
         
         /// The fraction question type asks the participant to enter a fractional number. A fractional data type
         /// can map to a `RSDNumberRange` to box the allowed values.
         case fraction
         
+        /// The integer question type asks the participant to enter an integer number. An integer data type can
+        /// map to a `RSDNumberRange` to box the allowed values, but will store the value as an `Int`.
+        case integer
+        
         /// In a string question, the participant can enter text.
         case string
         
-        /// In a time interval question, the participant can enter a time span such as "4 years, 3 months" or
-        /// "8 hours, 5 minutes".
-        // TODO: syoung 10/06/2017 add TimeIntervalRange
-        // https://github.com/ResearchKit/SageResearch/issues/8
-        //case timeInterval
+        /// In a year question, the participant can enter a year when an event occured. A year data type can map
+        /// to an `RSDDateRange` or `RSDNumberRange` to box the allowed values.
+        case year
         
         public static func allTypes() -> [BaseType] {
-            return [.boolean, .date, .decimal, .integer, .fraction, .string, .year]
+            return [.boolean, .date, .decimal, .fraction, .integer, .string, .duration, .year]
         }
     }
     
@@ -155,6 +153,12 @@ public enum RSDFormDataType {
     }
     
     /// List of the standard UI hints that are valid for this data type.
+    ///
+    /// The valid hints are returned in priority order such that if the preferred hint is not
+    /// supported by the UI then a fall-back will be selected. For example, `.base(.date)` will
+    /// return `.picker` as its preferred hint, whereas `.base(.integer)` will return `.textfield`,
+    /// but both support `.textfield` *and* `.picker`.
+    ///
     public var validStandardUIHints: Set<RSDFormUIHint> {
         switch self {
         case .base(let baseType):
@@ -162,7 +166,7 @@ public enum RSDFormDataType {
             case .boolean:
                 return [.list, .picker, .checkbox, .radioButton, .toggle]
                 
-            case .date:
+            case .date, .duration:
                 return [.picker, .textfield]
                 
             case .decimal, .integer, .year, .fraction:
@@ -239,7 +243,7 @@ public enum RSDFormDataType {
             return .boolean
         case .date:
             return .date
-        case .decimal, .fraction:
+        case .decimal, .fraction, .duration:
             return .decimal
         case .integer, .year:
             return .integer

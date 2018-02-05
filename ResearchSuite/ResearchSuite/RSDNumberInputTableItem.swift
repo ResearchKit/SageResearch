@@ -34,9 +34,10 @@
 import Foundation
 
 /// An table item for entering a number value.
-final class RSDNumberInputTableItem : RSDTextInputTableItem {
+public final class RSDNumberInputTableItem : RSDTextInputTableItem {
     
-    private var numberRange: RSDNumberRange?
+    fileprivate var numberRange: RSDNumberRange?
+    fileprivate var unit: Unit?
     
     /// Initialize a new RSDInputFieldTableItem.
     /// parameters:
@@ -45,10 +46,12 @@ final class RSDNumberInputTableItem : RSDTextInputTableItem {
     ///     - uiHint:       The UI hint for this row of the table.
     public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
         
+        var formatter: Formatter?
         var pickerSource: RSDPickerDataSource? = inputField as? RSDPickerDataSource
-        var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
         var range: RSDNumberRange? = (inputField.range as? RSDNumberRange)
+        var unitString: String? = range?.unit
         
+        // special-case the .year and .duration data types to set up range and picker
         if inputField.dataType.baseType == .year, let dateRange = inputField.range as? RSDDateRange {
             let calendar = Calendar(identifier: .gregorian)
             let min: Int? = (dateRange.minimumDate != nil) ? calendar.component(.year, from: dateRange.minimumDate!) : nil
@@ -56,66 +59,80 @@ final class RSDNumberInputTableItem : RSDTextInputTableItem {
             if min != nil || max != nil {
                 range = RSDNumberRangeObject(minimumInt: min, maximumInt: max)
             }
+        } else if inputField.dataType.baseType == .duration, (range == nil) {
+            let durationRange = (inputField.range as? RSDDurationRange) ?? RSDDurationRangeObject()
+            let baseUnit = durationRange.baseUnit
+            unitString = baseUnit.symbol
+            self.unit = baseUnit
+            if pickerSource == nil {
+                pickerSource = RSDDurationPickerDataSourceObject(range: durationRange)
+            }
+            formatter = (durationRange as? RSDRangeWithFormatter)?.formatter ??
+                UnitDuration.defaultFormatter(for: durationRange.durationUnits, baseUnit: baseUnit)
+            range = RSDNumberRangeObject(minimumDouble: durationRange.minimumDuration.valueConverted(to: baseUnit),
+                                         maximumDouble: durationRange.maximumDuration?.valueConverted(to: baseUnit))
         }
         
-        let baseType: RSDAnswerResultType.BaseType = {
-            switch inputField.dataType.baseType {
-            case .decimal, .fraction:
-                return .decimal
-            default:
-                return .integer
-            }
-        }()
+        // get the answer type
+        let baseType: RSDAnswerResultType.BaseType = inputField.dataType.defaultAnswerResultBaseType()
+        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: nil, formDataType: inputField.dataType, dateFormat: nil, unit: unitString)
         
-        let numberFormatter: RSDNumberFormatterProtocol
+        // set up the formatter
+        let numberFormatter: (RSDNumberFormatterProtocol & Formatter)
         if inputField.dataType.baseType == .fraction {
-            numberFormatter = RSDFractionFormatter()
+            // If this is a fraction type then always default to the fraction formatter
+            // as the number protocol formatter, and use the range number formatter as the
+            // fraction formatter's number formatter.
+            let fractionFormatter = RSDFractionFormatter()
+            if let rangeFormatter = (inputField.range as? RSDRangeWithFormatter)?.formatter as? NumberFormatter {
+                fractionFormatter.numberFormatter = rangeFormatter
+            }
+            numberFormatter = fractionFormatter
         } else {
+            // Otherwise, set the number formatter based on whether or not the range formatter is a number formatter.
             let digits = (baseType == .decimal) ? 3 : 0
-            numberFormatter = (formatter as? NumberFormatter) ?? NumberFormatter.defaultNumberFormatter(with: digits)
+            formatter = formatter ?? (inputField.range as? RSDRangeWithFormatter)?.formatter
+            numberFormatter = (formatter as? (RSDNumberFormatterProtocol & Formatter)) ?? NumberFormatter.defaultNumberFormatter(with: digits)
             if inputField.dataType.baseType == .year {
                 (numberFormatter as? NumberFormatter)?.groupingSeparator = ""
             }
         }
-        formatter = formatter ?? (numberFormatter as! Formatter)
+        formatter = formatter ?? numberFormatter
+        self.numberRange = range
         
+        // set up the picker source
         if pickerSource == nil, let range = range, let min = range.minimumValue, let max = range.maximumValue {
             pickerSource = RSDNumberPickerDataSourceObject(minimum: min, maximum: max, stepInterval: range.stepInterval, numberFormatter: numberFormatter)
         }
-        
-        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: nil, formDataType: inputField.dataType, dateFormat: nil, unit: range?.unit, sequenceSeparator: nil)
-        
-        self.numberRange = range
-        
+
         super.init(rowIndex: rowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource)
     }
     
-    /// Convert the input answer into a validated answer of a supported type, or throw an error if it fails validation.
-    /// - parameter newValue: The new value for the answer.
-    /// - returns: The converted answer.
-    override func validatedAnswer(_ newValue: Any?) throws -> Any? {
+    /// Override to check if the returned value is a Measurement and return the double value if it is.
+    override public func convertAnswer(_ newValue: Any) throws -> Any? {
+        let answer = try super.convertAnswer(newValue)
+        guard let measurement = answer as? Measurement else { return answer }
+        if let baseUnit = self.unit as? UnitDuration, let dm = answer as? Measurement<UnitDuration> {
+            return dm.valueConverted(to: baseUnit)
+        }
+        return measurement.value
+    }
+    
+    /// Override to check the range of the value
+    override public func validatedAnswer(_ newValue: Any?) throws -> Any? {
         guard let answer = try super.validatedAnswer(newValue) else {
             return nil
         }
-        
-        // Look for a range on the new value if it was converted from a text field
-        if let _ = newValue as? String {
-            switch answerType.baseType {
-            case .integer, .decimal, .timeInterval:
-                if let number = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber(), let range = numberRange {
-                    let decimal = number.decimalValue
-                    if let min = range.minimumValue, decimal < min {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
-                        throw RSDInputFieldError.lessThanMinimumValue(min, context)
-                    }
-                    if let max = range.maximumValue, decimal > max {
-                        let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
-                        throw RSDInputFieldError.greaterThanMaximumValue(max, context)
-                    }
-                }
-                
-            default:
-                break
+    
+        if let number = (answer as? NSNumber) ?? (answer as? RSDJSONNumber)?.jsonNumber(), let range = numberRange {
+            let decimal = number.decimalValue
+            if let min = range.minimumValue, decimal < min {
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
+                throw RSDInputFieldError.lessThanMinimumValue(min, context)
+            }
+            if let max = range.maximumValue, decimal > max {
+                let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: "Value entered is outside allowed range.")
+                throw RSDInputFieldError.greaterThanMaximumValue(max, context)
             }
         }
         

@@ -503,6 +503,74 @@ class CodableInputFieldObjectTests: XCTestCase {
         }
     }
     
+    func testInputFieldObject_Codable_TimeInterval() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "dataType": "duration",
+            "uiHint": "picker",
+            "range" : { "minimumValue" : 15,
+                        "maximumValue" : 360,
+                        "stepInterval" : 5,
+                        "unit" : "min",
+                        "durationUnits" : ["min", "hr"]
+                       }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .base(.duration))
+            XCTAssertEqual(object.uiHint, .picker)
+            if let range = object.range as? RSDDurationRangeObject {
+                XCTAssertEqual(range.baseUnit, .minutes)
+                XCTAssertEqual(range.minimumDuration, Measurement(value: 15, unit: UnitDuration.minutes))
+                XCTAssertEqual(range.maximumDuration, Measurement(value: 6, unit: UnitDuration.hours))
+                XCTAssertEqual(range.stepInterval, 5)
+                let expectedUnits: Set<UnitDuration> = [.hours, .minutes]
+                XCTAssertEqual(range.durationUnits, expectedUnits)
+                XCTAssertNotNil((range.formatter as? DateComponentsFormatter), "\(String(describing: range.formatter))")
+            }
+            else{
+                XCTFail("Failed to decode range")
+            }
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["dataType"] as? String, "duration")
+            XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
+            
+            if let range = dictionary["range"] as? [String: Any] {
+                XCTAssertEqual(range["minimumValue"] as? Int, 15)
+                XCTAssertEqual(range["maximumValue"] as? Int, 360)
+                XCTAssertEqual(range["stepInterval"] as? Int, 5)
+                XCTAssertEqual(range["unit"] as? String, "min")
+                if let timeUnits = range["durationUnits"] as? [String] {
+                    XCTAssertEqual(Set(timeUnits), Set(["min", "hr"]))
+                } else {
+                    XCTFail("Failed to encode time interval units.")
+                }
+            }
+            else {
+                XCTFail("Failed to encode range")
+            }
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
     func testInputFieldObject_Codable_Date() {
         
         let json = """

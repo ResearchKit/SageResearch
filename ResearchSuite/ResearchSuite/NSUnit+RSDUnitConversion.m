@@ -132,3 +132,43 @@
 }
 
 @end
+
+@implementation NSUnitDuration (RSDUnitConversion)
+
+/// Convert the symbol into a unit of duration.
+/// @param symbol   The symbol for the unit.
++ (NSUnitDuration * _Nullable)unitDurationFromSymbol:(NSString *)symbol {
+    NSString *searchSymbol = [symbol stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    for (NSUnitDuration *unit in [self units]) {
+        if ([unit.symbol isEqualToString:searchSymbol]) {
+            return unit;
+        }
+    }
+    return [self longUnits][symbol];
+}
+
++ (NSArray <NSUnitDuration *> *)units {
+    static dispatch_once_t once;
+    static NSArray <NSUnitDuration *> * units;
+    dispatch_once(&once, ^{
+        units = @[NSUnitDuration.seconds,
+                  NSUnitDuration.minutes,
+                  NSUnitDuration.hours
+                  ];
+    });
+    return units;
+}
+
++ (NSDictionary <NSString *, NSUnitDuration *> *)longUnits {
+    static dispatch_once_t once;
+    static NSDictionary <NSString *, NSUnitDuration *> * longUnits;
+    dispatch_once(&once, ^{
+        longUnits = @{ @"seconds" : NSUnitDuration.seconds,
+                       @"minutes" : NSUnitDuration.minutes,
+                       @"hours" : NSUnitDuration.hours
+                       };
+    });
+    return longUnits;
+}
+
+@end

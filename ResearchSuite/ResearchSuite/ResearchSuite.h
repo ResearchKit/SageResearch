@@ -41,6 +41,7 @@ FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
 
 #import <Researchsuite/RSDExceptionHandler.h>
 #import <Researchsuite/NSUnit+RSDUnitConversion.h>
+#import <Researchsuite/RSDDurationFormatter.h>
 #import <Researchsuite/RSDFractionFormatter.h>
 #import <Researchsuite/RSDLengthFormatter.h>
 #import <Researchsuite/RSDMassFormatter.h>

@@ -129,7 +129,7 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
 }
 
 /// An item group for entering a boolean data type.
-final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
+public final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
     
     /// Default initializer.
     /// - parameters:

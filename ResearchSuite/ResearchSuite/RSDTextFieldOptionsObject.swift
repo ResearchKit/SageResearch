@@ -198,17 +198,21 @@ extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
 
 /// `Codable` enum for the auto-capitalization type for an input text field.
 /// - keywords: ["none", "words", "sentences", "allCharacters"]
-public enum RSDTextAutocapitalizationType : String, Codable {
+public enum RSDTextAutocapitalizationType : String, Codable, RSDEnumSet {
     case none, words, sentences, allCharacters
     
-    static func allTypes() -> [RSDTextAutocapitalizationType] {
+    public static var all: Set<RSDTextAutocapitalizationType> {
+        return Set(orderedSet)
+    }
+    
+    static var orderedSet: [RSDTextAutocapitalizationType] {
         return [.none, .words, .sentences, .allCharacters]
     }
 
     /// Return the `UITextAutocapitalizationType` that maps to this enum.
     #if !os(watchOS)
     public func textAutocapitalizationType() -> UITextAutocapitalizationType {
-        guard let idx = RSDTextAutocapitalizationType.allTypes().index(of: self),
+        guard let idx = RSDTextAutocapitalizationType.orderedSet.index(of: self),
             let type = UITextAutocapitalizationType(rawValue: Int(idx))
             else {
                 return .none
@@ -219,24 +223,25 @@ public enum RSDTextAutocapitalizationType : String, Codable {
 }
 
 extension RSDTextAutocapitalizationType : RSDDocumentableEnum {
-    static func allCodingKeys() -> [String] {
-        return allTypes().map { $0.rawValue }
-    }
 }
 
 /// `Codable` enum for the auto-capitalization type for an input text field.
 /// - keywords: ["default", "no", yes"]
-public enum RSDTextAutocorrectionType : String, Codable {
+public enum RSDTextAutocorrectionType : String, Codable, RSDEnumSet {
     case `default`, no, yes
     
-    static func allTypes() -> [RSDTextAutocorrectionType] {
+    public static var all: Set<RSDTextAutocorrectionType> {
+        return Set(orderedSet)
+    }
+    
+    static var orderedSet: [RSDTextAutocorrectionType] {
         return [.default, .no, .yes]
     }
 
     /// Return the `UITextAutocorrectionType` that maps to this enum.
     #if !os(watchOS)
     public func textAutocorrectionType() -> UITextAutocorrectionType {
-        guard let idx = RSDTextAutocorrectionType.allTypes().index(of: self),
+        guard let idx = RSDTextAutocorrectionType.orderedSet.index(of: self),
             let type = UITextAutocorrectionType(rawValue: Int(idx))
             else {
                 return .default
@@ -247,24 +252,25 @@ public enum RSDTextAutocorrectionType : String, Codable {
 }
 
 extension RSDTextAutocorrectionType : RSDDocumentableEnum {
-    static func allCodingKeys() -> [String] {
-        return allTypes().map { $0.rawValue }
-    }
 }
 
 /// `Codable` enum for the spell checking type for an input text field.
 /// - keywords: ["default", "no", yes"]
-public enum RSDTextSpellCheckingType  : String, Codable {
+public enum RSDTextSpellCheckingType  : String, Codable, RSDEnumSet {
     case `default`, no, yes
     
-    static func allTypes() -> [RSDTextSpellCheckingType] {
+    public static var all: Set<RSDTextSpellCheckingType> {
+        return Set(orderedSet)
+    }
+    
+    static var orderedSet: [RSDTextSpellCheckingType] {
         return [.default, .no, .yes]
     }
 
     /// Return the `UITextSpellCheckingType` that maps to this enum.
     #if !os(watchOS)
     public func textSpellCheckingType() -> UITextSpellCheckingType {
-        guard let idx = RSDTextSpellCheckingType.allTypes().index(of: self),
+        guard let idx = RSDTextSpellCheckingType.orderedSet.index(of: self),
             let type = UITextSpellCheckingType(rawValue: Int(idx))
             else {
                 return .default
@@ -275,26 +281,27 @@ public enum RSDTextSpellCheckingType  : String, Codable {
 }
 
 extension RSDTextSpellCheckingType : RSDDocumentableEnum {
-    static func allCodingKeys() -> [String] {
-        return allTypes().map { $0.rawValue }
-    }
 }
 
 /// `Codable` enum for the spell checking type for an input text field.
 /// - keywords: [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
 ///               "numberPad", "phonePad", "namePhonePad", "emailAddress",
 ///               "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]
-public enum RSDKeyboardType  : String, Codable {
+public enum RSDKeyboardType  : String, Codable, RSDEnumSet {
     case `default`, asciiCapable, numbersAndPunctuation, URL, numberPad, phonePad, namePhonePad, emailAddress, decimalPad, twitter, webSearch, asciiCapableNumberPad
+    
+    public static var all: Set<RSDKeyboardType> {
+        return Set(orderedSet)
+    }
 
-    static func allTypes() -> [RSDKeyboardType] {
+    static var orderedSet: [RSDKeyboardType] {
         return [.default, .asciiCapable, .numbersAndPunctuation, .URL, .numberPad, .phonePad, .namePhonePad, .emailAddress, .decimalPad, .twitter, .webSearch, .asciiCapableNumberPad]
     }
 
     /// Return the `UIKeyboardType` that maps to this enum.
     #if !os(watchOS)
     public func keyboardType() -> UIKeyboardType {
-        guard let idx = RSDKeyboardType.allTypes().index(of: self),
+        guard let idx = RSDKeyboardType.orderedSet.index(of: self),
             let type = UIKeyboardType(rawValue: Int(idx))
             else {
                 return .default
@@ -305,7 +312,4 @@ public enum RSDKeyboardType  : String, Codable {
 }
 
 extension RSDKeyboardType : RSDDocumentableEnum {
-    static func allCodingKeys() -> [String] {
-        return allTypes().map { $0.rawValue }
-    }
 }

@@ -93,3 +93,6 @@ extension NumberFormatter : RSDNumberFormatterProtocol {
 extension RSDFractionFormatter : RSDNumberFormatterProtocol {
 }
 
+extension RSDDurationFormatter : RSDNumberFormatterProtocol {
+}
+

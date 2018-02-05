@@ -35,7 +35,7 @@ import Foundation
 
 /// A simple struct that can be used to implement the `RSDMultipleComponentOptions` protocol.
 public struct RSDMultipleComponentOptionsObject : RSDMultipleComponentOptions {
-    
+
     /// A list of choices for the input field.
     public let choices : [[RSDChoice]]
     
@@ -46,11 +46,15 @@ public struct RSDMultipleComponentOptionsObject : RSDMultipleComponentOptions {
     /// For example, blood pressure would have a separator of "/".
     public let separator: String?
     
+    /// The default answer associated with this option set.
+    public let defaultAnswer: Any?
+    
     /// Default initializer. Auto-synthesized init is not public.
-    public init(choices: [[RSDChoice]], separator: String?, isOptional: Bool) {
+    public init(choices: [[RSDChoice]], separator: String?, isOptional: Bool, defaultAnswer: Any? = nil) {
         self.choices = choices
         self.separator = separator
         self.isOptional = isOptional
+        self.defaultAnswer = defaultAnswer
     }
 }
 

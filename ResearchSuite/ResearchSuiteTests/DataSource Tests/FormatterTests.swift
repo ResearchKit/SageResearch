@@ -332,4 +332,118 @@ class FormatterTests: XCTestCase {
         let success = formatter.getObjectValue(&obj, for: inputString, errorDescription: &err)
         XCTAssertFalse(success)
     }
+    
+    func testDurationFormatter_1hour_2minute_full() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+
+        let inputString = "1 hour, 30 minutes"
+        let expectedValue = Double(90)
+        let measurement = NSNumber(value: expectedValue)
+        
+        let formatter = RSDDurationFormatter()
+        formatter.toStringUnit = .minutes
+        formatter.fromStringUnit = .minutes
+        formatter.unitsStyle = .full
+        
+        let text = formatter.string(for: measurement)
+        XCTAssertEqual(text, inputString)
+        
+        var obj: AnyObject?
+        var err: NSString?
+        let success = formatter.getObjectValue(&obj, for: inputString, errorDescription: &err)
+        XCTAssertTrue(success)
+        XCTAssertNil(err)
+        if let output = obj as? Measurement<UnitDuration> {
+            let value = output.converted(to: .minutes).value
+            XCTAssertEqual(value, expectedValue)
+        } else {
+            XCTFail("Failed to convert string to inches")
+        }
+    }
+    
+    func testDurationFormatter_1hour_2minute_positional() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let inputString = "1:30"
+        let expectedValue = Double(90)
+        let measurement = NSNumber(value: expectedValue)
+        
+        let formatter = RSDDurationFormatter()
+        formatter.toStringUnit = .minutes
+        formatter.fromStringUnit = .minutes
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.hour, .minute]
+        
+        let text = formatter.string(for: measurement)
+        XCTAssertEqual(text, inputString)
+        
+        var obj: AnyObject?
+        var err: NSString?
+        let success = formatter.getObjectValue(&obj, for: inputString, errorDescription: &err)
+        XCTAssertTrue(success)
+        XCTAssertNil(err)
+        if let output = obj as? Measurement<UnitDuration> {
+            let value = output.converted(to: .minutes).value
+            XCTAssertEqual(value, expectedValue)
+        } else {
+            XCTFail("Failed to convert string to inches")
+        }
+    }
+    
+    func testDurationFormatter_2minute_30second_full() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let inputString = "2 minutes, 30 seconds"
+        let expectedValue = Double(150)
+        let measurement = NSNumber(value: expectedValue)
+        
+        let formatter = RSDDurationFormatter()
+        formatter.toStringUnit = .seconds
+        formatter.fromStringUnit = .seconds
+        formatter.unitsStyle = .full
+        
+        let text = formatter.string(for: measurement)
+        XCTAssertEqual(text, inputString)
+        
+        var obj: AnyObject?
+        var err: NSString?
+        let success = formatter.getObjectValue(&obj, for: inputString, errorDescription: &err)
+        XCTAssertTrue(success)
+        XCTAssertNil(err)
+        if let output = obj as? Measurement<UnitDuration> {
+            let value = output.converted(to: .seconds).value
+            XCTAssertEqual(value, expectedValue)
+        } else {
+            XCTFail("Failed to convert string to inches")
+        }
+    }
+    
+    func testDurationFormatter_2minute_30second_positional() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let inputString = "2:30"
+        let expectedValue = Double(150)
+        let measurement = NSNumber(value: expectedValue)
+        
+        let formatter = RSDDurationFormatter()
+        formatter.toStringUnit = .seconds
+        formatter.fromStringUnit = .seconds
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.minute, .second]
+        
+        let text = formatter.string(for: measurement)
+        XCTAssertEqual(text, inputString)
+        
+        var obj: AnyObject?
+        var err: NSString?
+        let success = formatter.getObjectValue(&obj, for: inputString, errorDescription: &err)
+        XCTAssertTrue(success)
+        XCTAssertNil(err)
+        if let output = obj as? Measurement<UnitDuration> {
+            let value = output.converted(to: .seconds).value
+            XCTAssertEqual(value, expectedValue)
+        } else {
+            XCTFail("Failed to convert string to inches")
+        }
+    }
 }
