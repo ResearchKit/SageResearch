@@ -115,6 +115,17 @@ public struct RSDNumberRangeObject : RSDNumberRange, RSDRangeWithFormatter, Coda
     
     /// Initialize from a `Decoder`.
     ///
+    /// - example:
+    ///
+    /// ```
+    ///     { "minimumValue" : 15,
+    ///       "maximumValue" : 360,
+    ///       "stepInterval" : 5,
+    ///       "unit" : "cm",
+    ///       "formatter" : {"maximumDigits" : 3 }
+    ///    }
+    /// ```
+    ///
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {

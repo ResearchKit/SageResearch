@@ -118,7 +118,9 @@ public protocol RSDNumberRange : RSDRange {
 
 public protocol RSDDurationRange : RSDRange {
     
-    /// The minimum allowed duration.
+    /// The minimum allowed duration. The minimum duration should use the `UnitDuration` of the
+    /// base unit that is used to represent the answer.
+    /// - seealso: `RSDAnswerResultType.unit`
     var minimumDuration: Measurement<UnitDuration> { get }
     
     /// The maximum allowed duration. When the value of this property is `nil`, there is no maximum.
@@ -128,6 +130,6 @@ public protocol RSDDurationRange : RSDRange {
     var stepInterval: Int? { get }
     
     /// The duration units that should be included in the formatter and picker used for setting up a
-    /// `.timeInterval` data type.
+    /// `.duration` data type.
     var durationUnits: Set<UnitDuration> { get }
 }

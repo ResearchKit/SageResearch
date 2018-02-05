@@ -158,7 +158,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     /// | .integer, .decimal, .fraction | `RSDNumberRangeObject`                                     |
     /// | .date                         | `RSDDateRangeObject`                                       |
     /// | .year                         | `RSDDateRangeObject` or `RSDNumberRangeObject`             |
-    /// | .timeInterval                 | `RSDDurationRangeObject`                               |
+    /// | .duration                     | `RSDDurationRangeObject`                                   |
     ///
     /// - parameters:
     ///     - decoder: The decoder used to decode this object.

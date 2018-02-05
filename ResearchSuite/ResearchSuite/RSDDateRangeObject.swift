@@ -85,6 +85,35 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     
     /// Initialize from a `Decoder`.
     ///
+    /// - example:
+    ///
+    /// Example where the minimum and maximum dates are set to specific values.
+    /// ```
+    ///    {
+    ///     "minimumDate" : "2017-02-20",
+    ///     "maximumDate" : "2017-03-20",
+    ///     "codingFormat" : "yyyy-MM-dd"
+    ///    }
+    /// ```
+    ///
+    /// Example where the range does not allow future dates.
+    /// ```
+    ///     { "allowFuture" : "false" }
+    /// ```
+    ///
+    /// Example where the range does not allow future dates.
+    /// ```
+    ///     { "allowPast" : "false" }
+    /// ```
+    ///
+    /// Example where the time should include hours and minutes, but the minute interval is set to 15 minutes.
+    /// ```
+    ///     {
+    ///      "minuteInterval" : 15,
+    ///      "codingFormat" : "HH:mm"
+    ///     }
+    /// ```
+    ///
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - throws: `DecodingError`
     public init(from decoder: Decoder) throws {

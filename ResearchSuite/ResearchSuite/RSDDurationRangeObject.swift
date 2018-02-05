@@ -33,7 +33,7 @@
 
 import Foundation
 
-/// `RSDDurationRangeObject` extends the properties of an `RSDInputField` for a `timeInterval` data type.
+/// `RSDDurationRangeObject` extends the properties of an `RSDInputField` for a `.duration` data type.
 public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, Codable {
     
     /// The minimum allowed duration.
@@ -46,7 +46,7 @@ public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, 
     public let stepInterval: Int?
     
     /// The duration units that should be included in the formatter and picker used for setting up a
-    /// `.timeInterval` data type.
+    /// `.duration` data type.
     public let durationUnits: Set<UnitDuration>
     
     /// `Formatter` that is appropriate to the data type. For a duration, the formatter is a
@@ -56,8 +56,9 @@ public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, 
     /// Default initializer for a `Decimal` range. This is used to initialize the range for a `Decimal` type.
     ///
     /// - parameters:
-    ///     - durationUnits: The units that should be included in the formatter and picker.
-    ///     - minimumDuration: The minimum allowed duration.
+    ///     - durationUnits: The units that should be included in the formatter and picker. If `nil` then the
+    ///                      the default will include all units.
+    ///     - minimumDuration: The minimum allowed duration. If `nil` then the default will be `0`.
     ///     - maximumDuration: The maximum allowed duration.
     ///     - stepInterval: A step interval to be used for a slider or picker in the smallest units represented.
     public init(durationUnits: Set<UnitDuration>? = nil, minimumDuration: Measurement<UnitDuration>? = nil, maximumDuration: Measurement<UnitDuration>? = nil, stepInterval: Int? = nil) {
@@ -80,6 +81,17 @@ public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, 
     }
     
     /// Initialize from a `Decoder`.
+    ///
+    /// - example:
+    ///
+    /// ```
+    ///     { "minimumValue" : 15,
+    ///       "maximumValue" : 360,
+    ///       "stepInterval" : 5,
+    ///       "unit" : "min",
+    ///       "durationUnits" : ["min", "hr"]
+    ///    }
+    /// ```
     ///
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - throws: `DecodingError`

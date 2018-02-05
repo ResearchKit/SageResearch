@@ -57,7 +57,6 @@
 		F818EAC6201948D0001C9FE4 /* TableItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F818EAC5201948D0001C9FE4 /* TableItemTests.swift */; };
 		F818EAC7201948D0001C9FE4 /* TableItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F818EAC5201948D0001C9FE4 /* TableItemTests.swift */; };
 		F829F0C61FF71C7B001B0680 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0C51FF71C7B001B0680 /* FormatterTests.swift */; };
-		F829F0C71FF71C7B001B0680 /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0C51FF71C7B001B0680 /* FormatterTests.swift */; };
 		F829F0D01FF71EE7001B0680 /* RSDLengthFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F829F0CE1FF71EE7001B0680 /* RSDLengthFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F829F0D11FF71EE7001B0680 /* RSDLengthFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F829F0CE1FF71EE7001B0680 /* RSDLengthFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F829F0D21FF71EE7001B0680 /* RSDLengthFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F829F0CE1FF71EE7001B0680 /* RSDLengthFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -71,7 +70,6 @@
 		F829F0DC1FF86DA4001B0680 /* RSDMassFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F829F0D71FF86DA4001B0680 /* RSDMassFormatter.m */; };
 		F829F0DD1FF86DA4001B0680 /* RSDMassFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F829F0D71FF86DA4001B0680 /* RSDMassFormatter.m */; };
 		F829F0DF1FF887C3001B0680 /* UnitConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0DE1FF887C3001B0680 /* UnitConversionTests.swift */; };
-		F829F0E01FF887C3001B0680 /* UnitConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0DE1FF887C3001B0680 /* UnitConversionTests.swift */; };
 		F829F0E31FF8AF28001B0680 /* NSUnit+RSDUnitConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = F829F0E11FF8AF28001B0680 /* NSUnit+RSDUnitConversion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F829F0E41FF8AF28001B0680 /* NSUnit+RSDUnitConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = F829F0E11FF8AF28001B0680 /* NSUnit+RSDUnitConversion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F829F0E51FF8AF28001B0680 /* NSUnit+RSDUnitConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = F829F0E11FF8AF28001B0680 /* NSUnit+RSDUnitConversion.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -114,6 +112,8 @@
 		F8A5E1601FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */; };
 		F8A5E1611FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */; };
 		F8A5E1621FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */; };
+		F8A794ED2028F56E0078068B /* FormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0C51FF71C7B001B0680 /* FormatterTests.swift */; };
+		F8A794EE2028F5770078068B /* UnitConversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0DE1FF887C3001B0680 /* UnitConversionTests.swift */; };
 		F8B42BE31FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
 		F8B42BE41FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
 		F8B42BE51FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
@@ -1647,7 +1647,6 @@
 				FF8B54791FCE6CC6006B6937 /* RSDTaskObject.swift in Sources */,
 				FF8B54771FCE6CC6006B6937 /* RSDTaskGroupObject.swift in Sources */,
 				FF8B53D81FCE6C7B006B6937 /* RSDSurveyNavigationStep.swift in Sources */,
-				F829F0E01FF887C3001B0680 /* UnitConversionTests.swift in Sources */,
 				FF8B54991FCE6CEE006B6937 /* RSDFormStepDataSource.swift in Sources */,
 				F80CA5101FFEAB8D00E89C06 /* RSDDatePickerDataSourceObject.swift in Sources */,
 				F80CA50C1FFEAB2100E89C06 /* RSDNumberPickerDataSourceObject.swift in Sources */,
@@ -1755,7 +1754,6 @@
 				FF8B53FE1FCE6C87006B6937 /* RSDDateCoderObject.swift in Sources */,
 				FF8B53CE1FCE6C7B006B6937 /* RSDDateCoder.swift in Sources */,
 				FF8B54CB1FCE6D0B006B6937 /* RSDJSONValue.swift in Sources */,
-				F829F0C71FF71C7B001B0680 /* FormatterTests.swift in Sources */,
 				FF8B54341FCE6CA3006B6937 /* RSDTransformerStepObject.swift in Sources */,
 				FF8B544C1FCE6CAA006B6937 /* RSDInputFieldObject.swift in Sources */,
 				F80CA51D1FFEAD1F00E89C06 /* RSDUSMeasurementPickerDataSource.swift in Sources */,
@@ -1772,7 +1770,9 @@
 				FF633D7A1FCE7A6A00CF2267 /* CodableTestObjects.swift in Sources */,
 				F829F0EB1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */,
 				FF633D7B1FCE7A6A00CF2267 /* CodableInputFieldObjectTests.swift in Sources */,
+				F8A794ED2028F56E0078068B /* FormatterTests.swift in Sources */,
 				FF633D911FCE7A7400CF2267 /* StepControllerTests.swift in Sources */,
+				F8A794EE2028F5770078068B /* UnitConversionTests.swift in Sources */,
 				FF633D901FCE7A7400CF2267 /* NavigationTestObjects.swift in Sources */,
 				F818EAC7201948D0001C9FE4 /* TableItemTests.swift in Sources */,
 				FF633D7E1FCE7A6A00CF2267 /* CodableTaskObjectTests.swift in Sources */,
