@@ -1,1069 +1,1034 @@
 {
   "warnings": [
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 55,
       "symbol": "UIColor.appBackgroundLight",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 59,
       "symbol": "UIColor.appBackgroundDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 63,
       "symbol": "UIColor.appCrosshatchLight",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 67,
       "symbol": "UIColor.appCrosshatchDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 74,
       "symbol": "UIColor.appTextLight",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 78,
       "symbol": "UIColor.appTextDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 85,
       "symbol": "UIColor.rsd_underlinedButtonTextLight",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 89,
       "symbol": "UIColor.rsd_underlinedButtonTextDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 96,
       "symbol": "UIColor.rsd_roundedButtonBackgroundDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 100,
       "symbol": "UIColor.rsd_roundedButtonShadowDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 104,
       "symbol": "UIColor.rsd_roundedButtonTextLight",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 108,
       "symbol": "UIColor.rsd_roundedButtonBackgroundLight",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 112,
       "symbol": "UIColor.rsd_roundedButtonShadowLight",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 116,
       "symbol": "UIColor.rsd_roundedButtonTextDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 122,
       "symbol": "UIColor.rsd_dialRing",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 128,
       "symbol": "UIColor.rsd_headerTitleLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 132,
       "symbol": "UIColor.rsd_headerTextLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 136,
       "symbol": "UIColor.rsd_headerDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 140,
       "symbol": "UIColor.rsd_footnoteLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 144,
       "symbol": "UIColor.rsd_progressBar",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 148,
       "symbol": "UIColor.rsd_progressBarBackgroundLight",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 152,
       "symbol": "UIColor.rsd_progressBarBackgroundDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 156,
       "symbol": "UIColor.rsd_stepCountLabelLight",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 160,
       "symbol": "UIColor.rsd_stepCountLabelDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 166,
       "symbol": "UIColor.rsd_choiceCellBackground",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 170,
       "symbol": "UIColor.rsd_choiceCellBackgroundHighlighted",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 174,
       "symbol": "UIColor.rsd_choiceCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 178,
       "symbol": "UIColor.rsd_choiceCellLabelHighlighted",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 184,
       "symbol": "UIColor.rsd_textFieldCellText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 188,
       "symbol": "UIColor.rsd_textFieldCellBorder",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 192,
       "symbol": "UIColor.rsd_textFieldCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 198,
       "symbol": "UIColor.appWhiteTwo",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 202,
       "symbol": "UIColor.appWhiteThree",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 206,
       "symbol": "UIColor.appDarkGrayText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 210,
       "symbol": "UIColor.appLightGrayText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 214,
       "symbol": "UIColor.appButtonTintBlue",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 218,
       "symbol": "UIColor.appTintGreen",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 222,
       "symbol": "UIColor.appSoftGreen",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 40,
       "symbol": "UIFont.roundedButtonTitle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 46,
       "symbol": "UIFont.headerViewHeaderLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 50,
       "symbol": "UIFont.headerViewDetailsLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 54,
       "symbol": "UIFont.headerViewPromptLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 58,
       "symbol": "UIFont.footnoteLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 62,
       "symbol": "UIFont.stepCountLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 66,
       "symbol": "UIFont.boldStepCountLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 72,
       "symbol": "UIFont.choiceCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 78,
       "symbol": "UIFont.textFieldCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 82,
       "symbol": "UIFont.textFieldCellText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 86,
       "symbol": "UIFont.textFieldFeaturedCellText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Audio/RSDVoiceBox.swift",
       "line": 66,
       "symbol": "RSDSpeechSynthesizer.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/RSDTaskViewController.swift",
       "line": 56,
       "symbol": "UIPageViewController.setViewControllers(_:direction:animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
       "line": 686,
       "symbol": "RSDTableStepViewController.pickerValueChanged(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
       "line": 968,
       "symbol": "RSDTableStepLayoutConstants.mainViewBottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
       "line": 969,
       "symbol": "RSDTableStepLayoutConstants.defaultRowHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
       "line": 970,
       "symbol": "RSDTableStepLayoutConstants.formStepMinHeaderHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
       "line": 124,
       "symbol": "RSDCountdownDial.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
       "line": 129,
       "symbol": "RSDCountdownDial.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCountdownDial.swift",
       "line": 150,
       "symbol": "RSDCountdownDial.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 49,
       "symbol": "RSDCrosshatchView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 59,
       "symbol": "RSDCrosshatchView.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 64,
       "symbol": "RSDCrosshatchView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 69,
       "symbol": "RSDCrosshatchView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 101,
       "symbol": "RSDCrosshatchView.layoutSublayers(of:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDLoadingView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDLoadingView.swift",
       "line": 105,
       "symbol": "RSDLoadingView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
       "line": 53,
       "symbol": "RSDPickerObserver.pickerValueChanged(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
       "line": 90,
       "symbol": "RSDDatePicker.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 166,
-      "symbol": "RSDChoicePickerView.init(coder:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 172,
-      "symbol": "RSDChoicePickerView.numberOfComponents(in:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 176,
-      "symbol": "RSDChoicePickerView.pickerView(_:numberOfRowsInComponent:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 182,
-      "symbol": "RSDChoicePickerView.pickerView(_:titleForRow:forComponent:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 188,
-      "symbol": "RSDChoicePickerView.pickerView(_:didSelectRow:inComponent:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 246,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "line": 408,
       "symbol": "RSDNumberPickerView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 265,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "line": 427,
       "symbol": "RSDNumberPickerView.numberOfComponents(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 269,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "line": 431,
       "symbol": "RSDNumberPickerView.pickerView(_:numberOfRowsInComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 277,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "line": 439,
       "symbol": "RSDNumberPickerView.pickerView(_:titleForRow:forComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 282,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "line": 444,
       "symbol": "RSDNumberPickerView.pickerView(_:didSelectRow:inComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 42,
       "symbol": "RSDButton.accessibilityTraits",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 60,
       "symbol": "RSDRoundedButton.defaultHeight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 61,
       "symbol": "RSDRoundedButton.defaultWidthWith2Buttons",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 62,
       "symbol": "RSDRoundedButton.defaultWidthWith1Button",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 63,
       "symbol": "RSDRoundedButton.defaultCornerRadius",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 81,
       "symbol": "RSDRoundedButton.isEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 89,
       "symbol": "RSDRoundedButton.titleFont",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 96,
       "symbol": "RSDRoundedButton.titleColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 102,
       "symbol": "RSDRoundedButton.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 117,
       "symbol": "RSDRoundedButton.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 123,
       "symbol": "RSDRoundedButton.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 128,
       "symbol": "RSDRoundedButton.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 134,
       "symbol": "RSDRoundedButton.setupDefaults()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 147,
       "symbol": "RSDRoundedButton.commonInit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDRoundedButton.swift",
       "line": 158,
       "symbol": "RSDRoundedButton.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
       "line": 62,
       "symbol": "RSDShadowGradient.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
       "line": 67,
       "symbol": "RSDShadowGradient.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
       "line": 72,
       "symbol": "RSDShadowGradient.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
       "line": 77,
       "symbol": "RSDShadowGradient.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
       "line": 82,
       "symbol": "RSDShadowGradient.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDShadowGradient.swift",
       "line": 101,
       "symbol": "RSDShadowGradient.layoutSublayers(of:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 64,
       "symbol": "RSDStepChoiceCell.isSelected",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 72,
       "symbol": "RSDStepChoiceCell.init(style:reuseIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 77,
       "symbol": "RSDStepChoiceCell.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 82,
       "symbol": "RSDStepChoiceCell.awakeFromNib()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 107,
       "symbol": "RSDStepChoiceCell.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 181,
       "symbol": "RSDStepTextFieldCell.init(style:reuseIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 186,
       "symbol": "RSDStepTextFieldCell.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 191,
       "symbol": "RSDStepTextFieldCell.awakeFromNib()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 213,
       "symbol": "RSDStepTextFieldCell.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 240,
       "symbol": "RSDStepTextFieldCellLayoutConstants.verticalMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 241,
       "symbol": "RSDStepTextFieldCellLayoutConstants.verticalPadding",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 242,
       "symbol": "RSDStepTextFieldCellLayoutConstants.sideMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 273,
       "symbol": "RSDStepTextFieldFeaturedCell.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 305,
       "symbol": "RSDStepTextField.indexPath",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 318,
       "symbol": "RSDTextLabelCell.init(style:reuseIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 323,
       "symbol": "RSDTextLabelCell.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 328,
       "symbol": "RSDTextLabelCell.awakeFromNib()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 402,
       "symbol": "RSDImageViewCell.init(style:reuseIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 407,
       "symbol": "RSDImageViewCell.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 152,
       "symbol": "RSDNavigationHeaderLayoutConstants.topMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 153,
       "symbol": "RSDNavigationHeaderLayoutConstants.bottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 154,
       "symbol": "RSDNavigationHeaderLayoutConstants.sideMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 155,
       "symbol": "RSDNavigationHeaderLayoutConstants.promptBottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 156,
       "symbol": "RSDNavigationHeaderLayoutConstants.horizontalSpacing",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 157,
       "symbol": "RSDNavigationHeaderLayoutConstants.verticalSpacing",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 158,
       "symbol": "RSDNavigationHeaderLayoutConstants.barButtonHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 159,
       "symbol": "RSDNavigationHeaderLayoutConstants.buttonToTop",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 160,
       "symbol": "RSDNavigationHeaderLayoutConstants.imageViewHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 161,
       "symbol": "RSDNavigationHeaderLayoutConstants.labelMaxLayoutWidth",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 239,
       "symbol": "RSDTableStepHeaderView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 245,
       "symbol": "RSDTableStepHeaderView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 250,
       "symbol": "RSDTableStepHeaderView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 327,
       "symbol": "RSDTableStepHeaderView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 336,
       "symbol": "RSDTableStepHeaderView.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 501,
       "symbol": "RSDNavigationFooterLayoutConstants.topMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 502,
       "symbol": "RSDNavigationFooterLayoutConstants.bottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 503,
       "symbol": "RSDNavigationFooterLayoutConstants.oneButtonSideMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 504,
       "symbol": "RSDNavigationFooterLayoutConstants.twoButtonSideMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 505,
       "symbol": "RSDNavigationFooterLayoutConstants.horizontalPadding",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 506,
       "symbol": "RSDNavigationFooterLayoutConstants.verticalPadding",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 507,
       "symbol": "RSDNavigationFooterLayoutConstants.shadowHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 534,
       "symbol": "RSDGenericNavigationFooterView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 540,
       "symbol": "RSDGenericNavigationFooterView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 545,
       "symbol": "RSDGenericNavigationFooterView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 550,
       "symbol": "RSDGenericNavigationFooterView.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 615,
       "symbol": "RSDGenericNavigationFooterView.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
       "line": 138,
       "symbol": "RSDStepProgressView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
       "line": 143,
       "symbol": "RSDStepProgressView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
       "line": 148,
       "symbol": "RSDStepProgressView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDStepProgressView.swift",
       "line": 166,
       "symbol": "RSDStepProgressView.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 46,
       "symbol": "RSDUnderlinedButton.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 51,
       "symbol": "RSDUnderlinedButton.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 56,
       "symbol": "RSDUnderlinedButton.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 62,
       "symbol": "RSDUnderlinedButton.commonInit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI/ResearchSuiteUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 67,
       "symbol": "RSDUnderlinedButton.tintColorDidChange()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/erinmounts/Development/Sage/SageResearch/ResearchSuiteUI"
+  "source_directory": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuiteUI"
 }
