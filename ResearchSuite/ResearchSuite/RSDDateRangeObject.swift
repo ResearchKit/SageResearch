@@ -45,11 +45,11 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     /// property is checked for `nil`, otherwise `allowFuture` is ignored.
     public let maxDate: Date?
     
-    /// Whether or not the UI should allow future dates. If `nil` or if `minDate` is defined then this value
+    /// Whether or not the UI should allow future dates. If `nil` or if `maxDate` is defined then this value
     /// is ignored. Default is `true`.
     public let allowFuture: Bool?
     
-    /// Whether or not the UI should allow past dates. If `nil` or if `maxDate` is defined then this value
+    /// Whether or not the UI should allow past dates. If `nil` or if `minDate` is defined then this value
     /// is ignored. Default is `true`.
     public let allowPast: Bool?
     

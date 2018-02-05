@@ -74,7 +74,7 @@ public enum RSDFormDataType {
         case decimal
         
         /// In a duration question, the participant can enter a time span such as "8 hours, 5 minutes"
-        /// or "3 minutes, 15 seconds"
+        /// or "3 minutes, 15 seconds".
         case duration
         
         /// The fraction question type asks the participant to enter a fractional number. A fractional data type

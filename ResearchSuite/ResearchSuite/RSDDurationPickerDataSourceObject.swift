@@ -55,7 +55,7 @@ public struct RSDDurationPickerDataSourceObject : RSDMultipleComponentChoiceOpti
     /// The formatter for displaying the duration.
     let formatter: DateComponentsFormatter
     
-    /// The separator is not used with the hieght picker.
+    /// The separator is not used with the height picker.
     public let separator: String?
     
     /// The default answer associated with this option set.
@@ -152,7 +152,7 @@ extension RSDDurationRange {
         return self.minimumDuration.unit
     }
     
-    /// Convenience method for getting the date components formatter for this range
+    /// Convenience method for getting the date components formatter for this range.
     public func dateComponentsFormatter() -> DateComponentsFormatter {
         return ((self as? RSDRangeWithFormatter)?.formatter as? DateComponentsFormatter) ?? UnitDuration.defaultFormatter(for: self.durationUnits, baseUnit: self.baseUnit)
     }

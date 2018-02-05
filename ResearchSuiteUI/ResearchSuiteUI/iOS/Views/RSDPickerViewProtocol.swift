@@ -204,7 +204,7 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
         }
     }
     
-    /// Override super to return the number of rows for each comonent returned by the picker
+    /// Override super to return the number of rows for each component returned by the picker
     /// source because this is the `UIPickerViewDataSource` for itself and therefore calling this
     /// method can cause returning `0` or an infinite loop of wacky madness.
     open override func numberOfRows(inComponent component: Int) -> Int {
@@ -222,7 +222,7 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
     }
     
     /// Returns the array of components that map to the components of the picker.
-    /// This is needed because the separator is displayed using it's own row.
+    /// This is needed because the separator is displayed using its own row.
     /// By doing so, the separator will appear stationary while the rows spin to
     /// either side of the separator.
     func pickerComponents() -> [Int] {
@@ -276,7 +276,7 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
     }
     
     /// Return a view to use for this picker. By default, this method returns a label that is
-    /// alligned with the components center aligned.
+    /// aligned with the components center aligned.
     open func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let label = (view as? UILabel) ?? instantiateLabel(for: component)
         label.text = self.pickerView(self, titleForRow: row, forComponent: component)
