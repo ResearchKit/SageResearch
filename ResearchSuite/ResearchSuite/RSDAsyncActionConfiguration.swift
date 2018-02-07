@@ -88,7 +88,14 @@ public protocol RSDRecorderConfiguration : RSDAsyncActionConfiguration {
     /// stopped when the task is stopped.
     var stopStepIdentifier: String? { get }
     
-    /// Whether or not the recorder requires background audio.
+    /// Whether or not the recorder requires background audio. Default = `false`.
+    ///
+    /// If `true` then background audio can be used to keep the recorder running if the screen is locked
+    /// because of the idle timer turning off the device screen.
+    ///
+    /// If the app uses background audio, then the developer will need to turn `ON` the "Background Modes"
+    /// under the "Capabilities" tab of the Xcode project, and will need to select "Audio, AirPlay, and
+    /// Picture in Picture".
     var requiresBackgroundAudio: Bool { get }
 }
 

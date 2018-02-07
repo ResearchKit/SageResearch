@@ -80,6 +80,7 @@
 		F829F0EB1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0E91FFB4620001B0680 /* PickerDataSourceTests.swift */; };
 		F829F0F61FFC0B2B001B0680 /* NSLocale+UnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */; };
 		F829F0F71FFC0B2B001B0680 /* NSLocale+UnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */; };
+		F84205A6202BAB6B000614D6 /* RSDMotionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84205A5202BAB6B000614D6 /* RSDMotionRecorder.swift */; };
 		F84E54541FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
 		F84E54551FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
 		F84E54561FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
@@ -91,6 +92,7 @@
 		F8586AEB2011697700B2DF65 /* RSDFractionFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F8586AE52011697700B2DF65 /* RSDFractionFormatter.m */; };
 		F858D14B201BA67B00132325 /* MeasurementDurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */; };
 		F858D14C201BA67B00132325 /* MeasurementDurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */; };
+		F85B1AD6202C16D500B89AA4 /* CodableMotionRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */; };
 		F87F97C520059B100013D2DC /* RSDErrorResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F97C420059B100013D2DC /* RSDErrorResultObject.swift */; };
 		F87F97C620059B100013D2DC /* RSDErrorResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F97C420059B100013D2DC /* RSDErrorResultObject.swift */; };
 		F87F97C720059B100013D2DC /* RSDErrorResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87F97C420059B100013D2DC /* RSDErrorResultObject.swift */; };
@@ -485,10 +487,12 @@
 		F829F0F41FFC0B2B001B0680 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
 		F8321EB7201AB7F900074DFA /* RSDDurationPickerDataSourceObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDurationPickerDataSourceObject.swift; sourceTree = "<group>"; };
+		F84205A5202BAB6B000614D6 /* RSDMotionRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDMotionRecorder.swift; sourceTree = "<group>"; };
 		F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
 		F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDFractionFormatter.h; sourceTree = "<group>"; };
 		F8586AE52011697700B2DF65 /* RSDFractionFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDFractionFormatter.m; sourceTree = "<group>"; };
 		F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementDurationTests.swift; sourceTree = "<group>"; };
+		F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMotionRecorderTests.swift; sourceTree = "<group>"; };
 		F87F97C420059B100013D2DC /* RSDErrorResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDErrorResultObject.swift; sourceTree = "<group>"; };
 		F88051A12011B43700B0FDDD /* RSDFraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFraction.swift; sourceTree = "<group>"; };
 		F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnitConverter.swift; sourceTree = "<group>"; };
@@ -735,6 +739,15 @@
 			path = "Mock Objects";
 			sourceTree = "<group>";
 		};
+		F84205A4202BAB03000614D6 /* Recorders */ = {
+			isa = PBXGroup;
+			children = (
+				F84205A5202BAB6B000614D6 /* RSDMotionRecorder.swift */,
+				FF816AFD1FAB99B600E9F808 /* RSDSampleRecorder.swift */,
+			);
+			name = Recorders;
+			sourceTree = "<group>";
+		};
 		F858D149201BA61A00132325 /* ModelObject Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -812,6 +825,7 @@
 			children = (
 				FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */,
 				FFDAE9E61F908510001D0CC0 /* CodableInputFieldObjectTests.swift */,
+				F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */,
 				FFD243291F9568C70083F458 /* CodableResultObjectTests.swift */,
 				FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */,
 				FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */,
@@ -1040,7 +1054,7 @@
 		FFD38DE81FBF8D5E004203D8 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				FF816AFD1FAB99B600E9F808 /* RSDSampleRecorder.swift */,
+				F84205A4202BAB03000614D6 /* Recorders */,
 				FF52BCB21FD8884200DB3322 /* RSDDataLogger.swift */,
 			);
 			name = Objects;
@@ -1417,6 +1431,7 @@
 				FF8B54571FCE6CB1006B6937 /* RSDUIActionObject.swift in Sources */,
 				FF8B54E81FCE6D15006B6937 /* Array+Utilities.swift in Sources */,
 				FF8B53861FCE6C6F006B6937 /* RSDStepType.swift in Sources */,
+				F84205A6202BAB6B000614D6 /* RSDMotionRecorder.swift in Sources */,
 				FF8B53B11FCE6C7A006B6937 /* RSDTaskInfoStep.swift in Sources */,
 				FF8B548E1FCE6CDD006B6937 /* RSDStepController.swift in Sources */,
 				FF8B54A01FCE6CF6006B6937 /* RSDInputFieldError.swift in Sources */,
@@ -1500,6 +1515,7 @@
 			files = (
 				F858D14B201BA67B00132325 /* MeasurementDurationTests.swift in Sources */,
 				FF633D751FCE7A6900CF2267 /* CodableResultObjectTests.swift in Sources */,
+				F85B1AD6202C16D500B89AA4 /* CodableMotionRecorderTests.swift in Sources */,
 				FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */,
 				F829F0EA1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */,
 				FF633D741FCE7A6900CF2267 /* CodableInputFieldObjectTests.swift in Sources */,

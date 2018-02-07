@@ -121,13 +121,19 @@ public struct RSDRecordMarker : RSDSampleRecord {
 open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
 
     /// Errors returned in the completion handler during `start()` when starting fails for timing reasons.
-    public enum RSDRecorderError : Error {
+    public enum RecorderError : Error {
         
         /// Returned when the recorder has already been started.
         case alreadyRunning
         
         /// Returned when the recorder that has been cancelled, failed, or finished.
         case finished
+        
+        /// Error to return if one or more required permissions are denied.
+        case permissionDenied
+        
+        /// Error to return if the permission is not available.
+        case notAvailable
     }
     
     /// Default initializer.
@@ -207,12 +213,12 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     public final func start(_ completion: RSDAsyncActionCompletionHandler?) {
 
         guard self.status < RSDAsyncActionStatus.finished else {
-            self.callOnMainThread(nil, RSDRecorderError.finished, completion)
+            self.callOnMainThread(nil, RecorderError.finished, completion)
             return
         }
         
         guard self.status <= .permissionGranted else {
-            self.callOnMainThread(nil, RSDRecorderError.alreadyRunning, completion)
+            self.callOnMainThread(nil, RecorderError.alreadyRunning, completion)
             return
         }
         
@@ -227,7 +233,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
                 try self._startLogger(at: self.taskPath)
                 DispatchQueue.main.async {
                     guard self.status < RSDAsyncActionStatus.finished else {
-                        completion?(self, nil, RSDRecorderError.finished)
+                        completion?(self, nil, RecorderError.finished)
                         return
                     }
                     self.startRecorder({ (newStatus, error) in

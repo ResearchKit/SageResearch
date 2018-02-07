@@ -451,8 +451,19 @@ open class RSDFactory {
     open func decodeAsyncActionConfiguration(from decoder:Decoder, with typeName: String) throws -> RSDAsyncActionConfiguration? {
         
         // Look to see if there is a standard permission to map to this config.
-        if let _ = RSDStandardPermissionType(rawValue: typeName) {
-            return try RSDStandardAsyncActionConfiguration(from: decoder)
+        if let permissionType = RSDStandardPermissionType(rawValue: typeName) {
+            switch permissionType {
+            case .motion:
+                #if os(iOS)
+                    return try RSDMotionRecorderConfiguration(from: decoder)
+                #else
+                    // watchOS does not currently support CoreMotion
+                    // tvOS remote does not support CoreMotion
+                    return nil
+                #endif
+            default:
+                return try RSDStandardAsyncActionConfiguration(from: decoder)
+            }
         }
         
         // Base class does not implement the conditional rule
