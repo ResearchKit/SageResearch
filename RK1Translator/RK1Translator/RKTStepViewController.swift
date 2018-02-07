@@ -34,11 +34,12 @@
 import UIKit
 import ResearchSuiteUI
 
-/// `RSDNavigationController` extends `UINavigationController` with a pass-through implementation of
-/// `ORKStepViewController`.
+/// `RKTStepViewController` extends `UINavigationController` with a pass-through implementation of
+/// `ORKStepViewController`. This can be used with the ResearchSuiteUI implementation of `RSDTaskViewController`
+/// to wrap an `ORKStepViewController` for use as a view controller presented by the `RSDTaskViewController`.
 ///
-/// - seealso: `RSDStepViewControllerVendor`
-open class RKTStepViewController: UINavigationController, RSDCancelActionController, ORKStepViewControllerDelegate {
+/// - seealso: `RSDStepViewControllerVendor`, `RSDTaskViewController`
+open class RKTStepViewController:  UINavigationController, RSDStepController, RSDCancelActionController, ORKStepViewControllerDelegate {
     
     public override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootStepViewController)
