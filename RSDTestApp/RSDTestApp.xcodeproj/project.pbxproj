@@ -12,8 +12,8 @@
 		FF2415661F7AC31800D0BA5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF2415641F7AC31800D0BA5C /* Main.storyboard */; };
 		FF2415681F7AC31800D0BA5C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF2415671F7AC31800D0BA5C /* Images.xcassets */; };
 		FF24156B1F7AC31800D0BA5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF2415691F7AC31800D0BA5C /* LaunchScreen.storyboard */; };
-		FF2415761F7AC31900D0BA5C /* ResearchSuiteTestAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2415751F7AC31900D0BA5C /* ResearchSuiteTestAppTests.swift */; };
-		FF2415811F7AC31900D0BA5C /* ResearchSuiteTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2415801F7AC31900D0BA5C /* ResearchSuiteTestAppUITests.swift */; };
+		FF2415761F7AC31900D0BA5C /* RSDTestAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2415751F7AC31900D0BA5C /* RSDTestAppTests.swift */; };
+		FF2415811F7AC31900D0BA5C /* RSDTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2415801F7AC31900D0BA5C /* RSDTestAppUITests.swift */; };
 		FF81ECE01FA0460400E1F5C2 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF81ECDF1FA0460400E1F5C2 /* ResearchSuiteUI.framework */; };
 		FF81ECE11FA0460400E1F5C2 /* ResearchSuiteUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF81ECDF1FA0460400E1F5C2 /* ResearchSuiteUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF81ECE31FA0460400E1F5C2 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF81ECE21FA0460400E1F5C2 /* ResearchSuite.framework */; };
@@ -28,14 +28,14 @@
 			containerPortal = FF2415551F7AC31800D0BA5C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FF24155C1F7AC31800D0BA5C;
-			remoteInfo = ResearchSuiteTestApp;
+			remoteInfo = RSDTestApp;
 		};
 		FF24157D1F7AC31900D0BA5C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FF2415551F7AC31800D0BA5C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FF24155C1F7AC31800D0BA5C;
-			remoteInfo = ResearchSuiteTestApp;
+			remoteInfo = RSDTestApp;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -55,18 +55,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FF24155D1F7AC31800D0BA5C /* ResearchSuiteTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResearchSuiteTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF24155D1F7AC31800D0BA5C /* RSDTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF2415601F7AC31800D0BA5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF2415621F7AC31800D0BA5C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FF2415651F7AC31800D0BA5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FF2415671F7AC31800D0BA5C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FF24156A1F7AC31800D0BA5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF24156C1F7AC31800D0BA5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF2415711F7AC31900D0BA5C /* ResearchSuiteTestAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchSuiteTestAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF2415751F7AC31900D0BA5C /* ResearchSuiteTestAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResearchSuiteTestAppTests.swift; sourceTree = "<group>"; };
+		FF2415711F7AC31900D0BA5C /* RSDTestAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSDTestAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF2415751F7AC31900D0BA5C /* RSDTestAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTestAppTests.swift; sourceTree = "<group>"; };
 		FF2415771F7AC31900D0BA5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FF24157C1F7AC31900D0BA5C /* ResearchSuiteTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchSuiteTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF2415801F7AC31900D0BA5C /* ResearchSuiteTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResearchSuiteTestAppUITests.swift; sourceTree = "<group>"; };
+		FF24157C1F7AC31900D0BA5C /* RSDTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RSDTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF2415801F7AC31900D0BA5C /* RSDTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTestAppUITests.swift; sourceTree = "<group>"; };
 		FF2415821F7AC31900D0BA5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF81ECDF1FA0460400E1F5C2 /* ResearchSuiteUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuiteUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF81ECE21FA0460400E1F5C2 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,9 +104,9 @@
 		FF2415541F7AC31800D0BA5C = {
 			isa = PBXGroup;
 			children = (
-				FF24155F1F7AC31800D0BA5C /* ResearchSuiteTestApp */,
-				FF2415741F7AC31900D0BA5C /* ResearchSuiteTestAppTests */,
-				FF24157F1F7AC31900D0BA5C /* ResearchSuiteTestAppUITests */,
+				FF24155F1F7AC31800D0BA5C /* RSDTestApp */,
+				FF2415741F7AC31900D0BA5C /* RSDTestAppTests */,
+				FF24157F1F7AC31900D0BA5C /* RSDTestAppUITests */,
 				FF24155E1F7AC31800D0BA5C /* Products */,
 				FF81ECE21FA0460400E1F5C2 /* ResearchSuite.framework */,
 				FF81ECDF1FA0460400E1F5C2 /* ResearchSuiteUI.framework */,
@@ -116,14 +116,14 @@
 		FF24155E1F7AC31800D0BA5C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF24155D1F7AC31800D0BA5C /* ResearchSuiteTestApp.app */,
-				FF2415711F7AC31900D0BA5C /* ResearchSuiteTestAppTests.xctest */,
-				FF24157C1F7AC31900D0BA5C /* ResearchSuiteTestAppUITests.xctest */,
+				FF24155D1F7AC31800D0BA5C /* RSDTestApp.app */,
+				FF2415711F7AC31900D0BA5C /* RSDTestAppTests.xctest */,
+				FF24157C1F7AC31900D0BA5C /* RSDTestAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FF24155F1F7AC31800D0BA5C /* ResearchSuiteTestApp */ = {
+		FF24155F1F7AC31800D0BA5C /* RSDTestApp */ = {
 			isa = PBXGroup;
 			children = (
 				FF2415601F7AC31800D0BA5C /* AppDelegate.swift */,
@@ -133,25 +133,25 @@
 				FF24158E1F7AC34500D0BA5C /* Storyboards-Nibs */,
 				FF24158F1F7AC36700D0BA5C /* Supporting Files */,
 			);
-			path = ResearchSuiteTestApp;
+			path = RSDTestApp;
 			sourceTree = "<group>";
 		};
-		FF2415741F7AC31900D0BA5C /* ResearchSuiteTestAppTests */ = {
+		FF2415741F7AC31900D0BA5C /* RSDTestAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				FF2415751F7AC31900D0BA5C /* ResearchSuiteTestAppTests.swift */,
+				FF2415751F7AC31900D0BA5C /* RSDTestAppTests.swift */,
 				FF2415771F7AC31900D0BA5C /* Info.plist */,
 			);
-			path = ResearchSuiteTestAppTests;
+			path = RSDTestAppTests;
 			sourceTree = "<group>";
 		};
-		FF24157F1F7AC31900D0BA5C /* ResearchSuiteTestAppUITests */ = {
+		FF24157F1F7AC31900D0BA5C /* RSDTestAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				FF2415801F7AC31900D0BA5C /* ResearchSuiteTestAppUITests.swift */,
+				FF2415801F7AC31900D0BA5C /* RSDTestAppUITests.swift */,
 				FF2415821F7AC31900D0BA5C /* Info.plist */,
 			);
-			path = ResearchSuiteTestAppUITests;
+			path = RSDTestAppUITests;
 			sourceTree = "<group>";
 		};
 		FF24158E1F7AC34500D0BA5C /* Storyboards-Nibs */ = {
@@ -199,9 +199,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FF24155C1F7AC31800D0BA5C /* ResearchSuiteTestApp */ = {
+		FF24155C1F7AC31800D0BA5C /* RSDTestApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF2415851F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "ResearchSuiteTestApp" */;
+			buildConfigurationList = FF2415851F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTestApp" */;
 			buildPhases = (
 				FF2415591F7AC31800D0BA5C /* Sources */,
 				FF24155A1F7AC31800D0BA5C /* Frameworks */,
@@ -212,14 +212,14 @@
 			);
 			dependencies = (
 			);
-			name = ResearchSuiteTestApp;
-			productName = ResearchSuiteTestApp;
-			productReference = FF24155D1F7AC31800D0BA5C /* ResearchSuiteTestApp.app */;
+			name = RSDTestApp;
+			productName = RSDTestApp;
+			productReference = FF24155D1F7AC31800D0BA5C /* RSDTestApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FF2415701F7AC31900D0BA5C /* ResearchSuiteTestAppTests */ = {
+		FF2415701F7AC31900D0BA5C /* RSDTestAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF2415881F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "ResearchSuiteTestAppTests" */;
+			buildConfigurationList = FF2415881F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTestAppTests" */;
 			buildPhases = (
 				FF24156D1F7AC31900D0BA5C /* Sources */,
 				FF24156E1F7AC31900D0BA5C /* Frameworks */,
@@ -230,14 +230,14 @@
 			dependencies = (
 				FF2415731F7AC31900D0BA5C /* PBXTargetDependency */,
 			);
-			name = ResearchSuiteTestAppTests;
-			productName = ResearchSuiteTestAppTests;
-			productReference = FF2415711F7AC31900D0BA5C /* ResearchSuiteTestAppTests.xctest */;
+			name = RSDTestAppTests;
+			productName = RSDTestAppTests;
+			productReference = FF2415711F7AC31900D0BA5C /* RSDTestAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		FF24157B1F7AC31900D0BA5C /* ResearchSuiteTestAppUITests */ = {
+		FF24157B1F7AC31900D0BA5C /* RSDTestAppUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF24158B1F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "ResearchSuiteTestAppUITests" */;
+			buildConfigurationList = FF24158B1F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTestAppUITests" */;
 			buildPhases = (
 				FF2415781F7AC31900D0BA5C /* Sources */,
 				FF2415791F7AC31900D0BA5C /* Frameworks */,
@@ -248,9 +248,9 @@
 			dependencies = (
 				FF24157E1F7AC31900D0BA5C /* PBXTargetDependency */,
 			);
-			name = ResearchSuiteTestAppUITests;
-			productName = ResearchSuiteTestAppUITests;
-			productReference = FF24157C1F7AC31900D0BA5C /* ResearchSuiteTestAppUITests.xctest */;
+			name = RSDTestAppUITests;
+			productName = RSDTestAppUITests;
+			productReference = FF24157C1F7AC31900D0BA5C /* RSDTestAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -265,7 +265,12 @@
 				TargetAttributes = {
 					FF24155C1F7AC31800D0BA5C = {
 						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					FF2415701F7AC31900D0BA5C = {
 						CreatedOnToolsVersion = 9.0;
@@ -279,7 +284,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FF2415581F7AC31800D0BA5C /* Build configuration list for PBXProject "ResearchSuiteTestApp" */;
+			buildConfigurationList = FF2415581F7AC31800D0BA5C /* Build configuration list for PBXProject "RSDTestApp" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -292,9 +297,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FF24155C1F7AC31800D0BA5C /* ResearchSuiteTestApp */,
-				FF2415701F7AC31900D0BA5C /* ResearchSuiteTestAppTests */,
-				FF24157B1F7AC31900D0BA5C /* ResearchSuiteTestAppUITests */,
+				FF24155C1F7AC31800D0BA5C /* RSDTestApp */,
+				FF2415701F7AC31900D0BA5C /* RSDTestAppTests */,
+				FF24157B1F7AC31900D0BA5C /* RSDTestAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -342,7 +347,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF2415761F7AC31900D0BA5C /* ResearchSuiteTestAppTests.swift in Sources */,
+				FF2415761F7AC31900D0BA5C /* RSDTestAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF2415811F7AC31900D0BA5C /* ResearchSuiteTestAppUITests.swift in Sources */,
+				FF2415811F7AC31900D0BA5C /* RSDTestAppUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,12 +364,12 @@
 /* Begin PBXTargetDependency section */
 		FF2415731F7AC31900D0BA5C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FF24155C1F7AC31800D0BA5C /* ResearchSuiteTestApp */;
+			target = FF24155C1F7AC31800D0BA5C /* RSDTestApp */;
 			targetProxy = FF2415721F7AC31900D0BA5C /* PBXContainerItemProxy */;
 		};
 		FF24157E1F7AC31900D0BA5C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FF24155C1F7AC31800D0BA5C /* ResearchSuiteTestApp */;
+			target = FF24155C1F7AC31800D0BA5C /* RSDTestApp */;
 			targetProxy = FF24157D1F7AC31900D0BA5C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -500,13 +505,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = ResearchSuiteTestApp/Info.plist;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = RSDTestApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteTestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "877c46a3-e438-4856-ab71-0df11d8f51c4";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development: org.sagebase.RSDTest";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -516,13 +523,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = ResearchSuiteTestApp/Info.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = RSDTestApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteTestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "84a674c1-10a5-4b79-b2e8-05507424ffec";
+				PROVISIONING_PROFILE_SPECIFIER = "match Distribution: org.sagebase.RSDTest";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -535,13 +545,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = ResearchSuiteTestAppTests/Info.plist;
+				INFOPLIST_FILE = RSDTestAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteTestAppTests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTestAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ResearchSuiteTestApp.app/ResearchSuiteTestApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSDTestApp.app/RSDTestApp";
 			};
 			name = Debug;
 		};
@@ -552,13 +562,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = ResearchSuiteTestAppTests/Info.plist;
+				INFOPLIST_FILE = RSDTestAppTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteTestAppTests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTestAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ResearchSuiteTestApp.app/ResearchSuiteTestApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSDTestApp.app/RSDTestApp";
 			};
 			name = Release;
 		};
@@ -568,13 +578,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = ResearchSuiteTestAppUITests/Info.plist;
+				INFOPLIST_FILE = RSDTestAppUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteTestAppUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ResearchSuiteTestApp;
+				TEST_TARGET_NAME = RSDTestApp;
 			};
 			name = Debug;
 		};
@@ -584,20 +594,20 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = ResearchSuiteTestAppUITests/Info.plist;
+				INFOPLIST_FILE = RSDTestAppUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.ResearchSuiteTestAppUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ResearchSuiteTestApp;
+				TEST_TARGET_NAME = RSDTestApp;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FF2415581F7AC31800D0BA5C /* Build configuration list for PBXProject "ResearchSuiteTestApp" */ = {
+		FF2415581F7AC31800D0BA5C /* Build configuration list for PBXProject "RSDTestApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF2415831F7AC31900D0BA5C /* Debug */,
@@ -606,7 +616,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF2415851F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "ResearchSuiteTestApp" */ = {
+		FF2415851F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTestApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF2415861F7AC31900D0BA5C /* Debug */,
@@ -615,7 +625,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF2415881F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "ResearchSuiteTestAppTests" */ = {
+		FF2415881F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTestAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF2415891F7AC31900D0BA5C /* Debug */,
@@ -624,7 +634,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF24158B1F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "ResearchSuiteTestAppUITests" */ = {
+		FF24158B1F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTestAppUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF24158C1F7AC31900D0BA5C /* Debug */,

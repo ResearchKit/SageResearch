@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FF24155C1F7AC31800D0BA5C"
-               BuildableName = "ResearchSuiteTestApp.app"
-               BlueprintName = "ResearchSuiteTestApp"
-               ReferencedContainer = "container:ResearchSuiteTestApp.xcodeproj">
+               BuildableName = "RSDTestApp.app"
+               BlueprintName = "RSDTestApp"
+               ReferencedContainer = "container:RSDTestApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,9 +34,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FF2415701F7AC31900D0BA5C"
-               BuildableName = "ResearchSuiteTestAppTests.xctest"
-               BlueprintName = "ResearchSuiteTestAppTests"
-               ReferencedContainer = "container:ResearchSuiteTestApp.xcodeproj">
+               BuildableName = "RSDTestAppTests.xctest"
+               BlueprintName = "RSDTestAppTests"
+               ReferencedContainer = "container:RSDTestApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -44,9 +44,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FF24157B1F7AC31900D0BA5C"
-               BuildableName = "ResearchSuiteTestAppUITests.xctest"
-               BlueprintName = "ResearchSuiteTestAppUITests"
-               ReferencedContainer = "container:ResearchSuiteTestApp.xcodeproj">
+               BuildableName = "RSDTestAppUITests.xctest"
+               BlueprintName = "RSDTestAppUITests"
+               ReferencedContainer = "container:RSDTestApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -54,9 +54,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF24155C1F7AC31800D0BA5C"
-            BuildableName = "ResearchSuiteTestApp.app"
-            BlueprintName = "ResearchSuiteTestApp"
-            ReferencedContainer = "container:ResearchSuiteTestApp.xcodeproj">
+            BuildableName = "RSDTestApp.app"
+            BlueprintName = "RSDTestApp"
+            ReferencedContainer = "container:RSDTestApp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -78,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF24155C1F7AC31800D0BA5C"
-            BuildableName = "ResearchSuiteTestApp.app"
-            BlueprintName = "ResearchSuiteTestApp"
-            ReferencedContainer = "container:ResearchSuiteTestApp.xcodeproj">
+            BuildableName = "RSDTestApp.app"
+            BlueprintName = "RSDTestApp"
+            ReferencedContainer = "container:RSDTestApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -97,9 +97,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF24155C1F7AC31800D0BA5C"
-            BuildableName = "ResearchSuiteTestApp.app"
-            BlueprintName = "ResearchSuiteTestApp"
-            ReferencedContainer = "container:ResearchSuiteTestApp.xcodeproj">
+            BuildableName = "RSDTestApp.app"
+            BlueprintName = "RSDTestApp"
+            ReferencedContainer = "container:RSDTestApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
