@@ -10,4 +10,7 @@
    <FileRef
       location = "group:ResearchSuite/ResearchSuite.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:/Users/syoung2/Documents/AppleCode/SageResearch/RK1Translator/RK1Translator.xcodeproj">
+   </FileRef>
 </Workspace>
