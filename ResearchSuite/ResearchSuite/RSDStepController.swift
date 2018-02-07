@@ -38,7 +38,7 @@ public protocol RSDStepController : class, NSObjectProtocol {
     
     /// Pointer back to the task controller that is displaying the step controller. The implementation
     /// of the task controller should set this pointer before displaying the step controller.
-    weak var taskController: RSDTaskController! { get set }
+    weak var taskController: RSDTaskUIController! { get set }
     
     /// A pointer to the step with the model information used to display and run the step. The
     /// implementation of the task controller should set this pointer before displaying the step controller.
@@ -64,11 +64,22 @@ public protocol RSDStepController : class, NSObjectProtocol {
     /// Cancel the task.
     func cancel()
     
-    /// Should the action be hidden for the given action type?
+    /// Returns a Boolean value indicating whether there is a previous step.
     ///
-    /// - parameter actionType: The action type to get.
-    /// - returns: `true` if the action should be hidden.
-    func shouldHideAction(for actionType: RSDUIActionType) -> Bool
+    /// This method is a convenience accessor that subclasses can call to make a delegate callback to
+    /// determine whether a previous step exists. Subclasses can also override this method if the step
+    /// view controller should always behave as if backward navigation is disabled.
+    ///
+    /// - returns: `true` if there is a previous step; otherwise, `false`.
+    var hasStepBefore: Bool { get }
+    
+    /// Returns a Boolean value indicating whether there is a next step.
+    ///
+    /// This method is a convenience method that subclasses can call to make a delegate callback to
+    /// determine whether a next step exists.
+    ///
+    /// - returns: `true` if there is a next step; otherwise, `false`.
+    var hasStepAfter: Bool { get }
 }
 
 extension RSDStepController {

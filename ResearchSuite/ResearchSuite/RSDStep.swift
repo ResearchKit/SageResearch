@@ -67,6 +67,10 @@ public protocol RSDStep {
     /// Validate the step to check for any configuration that should throw an error.
     /// - throws: An error if validation fails.
     func validate() throws
+    
+    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
+    /// - parameter identifier: The new identifier.
+    func copy(with identifier: String) -> Self
 }
 
 /// `RSDGenericStep` is a step with key/value pairs decoded from a dictionary. This is the default step returned by

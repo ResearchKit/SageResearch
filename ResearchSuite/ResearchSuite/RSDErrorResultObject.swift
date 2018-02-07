@@ -34,7 +34,7 @@
 import Foundation
 
 /// `RSDErrorResult` is a result that holds information about an error.
-public struct RSDErrorResultObject : RSDErrorResult {
+public struct RSDErrorResultObject : RSDErrorResult, Codable {
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String

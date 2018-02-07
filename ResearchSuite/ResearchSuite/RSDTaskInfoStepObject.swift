@@ -99,6 +99,27 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
         self.stepType = .taskInfo
     }
     
+    private init(identifier: String, stepType: RSDStepType) {
+        self.identifier = identifier
+        self.stepType = stepType
+    }
+    
+    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
+    /// - parameter identifier: The new identifier.
+    public func copy(with identifier: String) -> RSDTaskInfoStepObject {
+        var copy = RSDTaskInfoStepObject(identifier: identifier, stepType: self.stepType)
+        copy.title = self.title
+        copy.subtitle = self.subtitle
+        copy.detail = self.detail
+        copy.copyright = self.copyright
+        copy.estimatedMinutes = self.estimatedMinutes
+        copy.icon = self.icon
+        copy._schemaIdentifier = self._schemaIdentifier
+        copy.schemaRevision = self.schemaRevision
+        copy.taskTransformer = self.taskTransformer
+        return copy
+    }
+    
     /// Initialize from a `Decoder`.
     ///
     /// - example:

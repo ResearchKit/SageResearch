@@ -391,7 +391,8 @@ extension RSDAnswerResultType {
                 return string as String
             }
         }
-        else if let date = value as? Date {
+        else if (value is Date) || (value is DateComponents),
+            let date = (value as? Date) ?? Calendar(identifier: .gregorian).date(from: (value as! DateComponents)) {
             guard baseType == .date || baseType == .string else {
                 return nil
             }

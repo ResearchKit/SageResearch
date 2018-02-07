@@ -78,22 +78,22 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         }
     }
     
-    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+    func taskController(_ taskController: RSDTaskUIController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // dismiss the view controller
-        let outputDirectory = taskController.taskPath.outputDirectory
+        let outputDirectory = taskController.outputDirectory
         (taskController as? UIViewController)?.dismiss(animated: true) {
             self.offMainQueue.async {
                 self.deleteOutputDirectory(outputDirectory)
             }
         }
         
-        var debugResult: String = taskController.taskPath.description
+        var debugResult: String = taskController.taskResult.identifier
         debugResult.append("\n\n=== Completed: \(reason) error:\(String(describing: error))")
         print(debugResult)
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+    func taskController(_ taskController: RSDTaskUIController, readyToSave taskPath: RSDTaskPath) {
         var debugResult: String = taskPath.description
         
         do {
@@ -109,7 +109,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         print(debugResult)
     }
     
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+    func taskController(_ taskController: RSDTaskUIController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
         return nil
     }
     

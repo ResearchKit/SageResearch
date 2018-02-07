@@ -57,6 +57,24 @@ public enum RSDTaskFinishReason : Int {
     case earlyExit
 }
 
+/// `RSDTaskController` handles a base-level implementation for running a task. This object is expected to
+/// be an appropriate instance of a view controller, depending upon the operating system.
+public protocol RSDTaskController : class, NSObjectProtocol {
+    
+    /// The top-level result associated with this task.
+    var taskResult : RSDTaskResult! { get }
+    
+    /// The output directory used for any file results.
+    var outputDirectory: URL? { get }
+    
+    /// Property for getting/setting the main entry point for the task controller via the task.
+    var topLevelTask : RSDTask! { get set }
+    
+    /// Optional factory subclass that can be used to vend custom steps that are decoded
+    /// from a plist or json.
+    var factory: RSDFactory? { get }
+}
+
 /// `RSDTaskControllerDelegate` is responsible for processing the results of the task, providing some input into
 /// how the controller behaves, and providing additional content as needed. It's primary purpose is to handle
 /// processing the results of running the task.
@@ -71,7 +89,7 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
     /// may also need to collect and process the results of the task.
     ///
     /// - parameters:
-    ///     - taskController:   The `RSDTaskController` instance that is returning the result.
+    ///     - taskController:   The `RSDTaskUIController` instance that is returning the result.
     ///     - reason:           An `RSDTaskFinishReason` value indicating how the user chose to complete the task.
     ///     - error:            If failure occurred, an `NSError` object indicating the reason for the failure.
     ///                         The value of this parameter is `nil` if `reason` does not indicate failure.
@@ -103,18 +121,14 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
     func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController?
 }
 
-/// `RSDTaskController` handles default implementations for running a task.
+/// `RSDTaskUIController` handles default implementations for running a task.
 ///
 /// To start a task, create an instance of a view controller that conforms to this protocol
 /// and set either the `topLevelTask` or the `topLevelTaskInfo`.
-public protocol RSDTaskController : class, NSObjectProtocol {
+public protocol RSDTaskUIController : RSDTaskController {
     
-    /// A mutable path object used to track the current state of a running task.
+    /// A path object used to track the current state of a running task.
     var taskPath: RSDTaskPath! { get set }
-    
-    /// Optional factory subclass that can be used to vend custom steps that are decoded
-    /// from a plist or json.
-    var factory: RSDFactory? { get }
     
     /// Can the task progress be saved? This should only return `true` if the task result can be saved and
     /// the current progress can be restored.
@@ -209,7 +223,12 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     func stopAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void))
 }
 
-extension RSDTaskController {
+extension RSDTaskUIController {
+    
+    /// The output directory used for any file results.
+    public var outputDirectory: URL? {
+        return self.topLevelTaskPath.outputDirectory
+    }
     
     /// Convenience method for getting/setting the main entry point for the task controller via the task info.
     public var topLevelTaskInfo : RSDTaskInfoStep! {
@@ -514,8 +533,8 @@ extension RSDTaskController {
         _notifyAsyncControllers(to: step, excludingControllers: excludedControllers)
         
         // Ready to save if this is the completion step and there isn't a back button.
-        let backHidden = self.currentStepController?.shouldHideAction(for: .navigation(.goBackward)) ?? !self.hasStepBefore
-        let readyToSave = isTaskComplete && backHidden
+        let hasStepBefore = (self.currentStepController?.hasStepBefore ?? self.hasStepBefore)
+        let readyToSave = isTaskComplete && !hasStepBefore
         
         // stop the controllers that should be stopped at this point
         if let controllers = controllersToStop {

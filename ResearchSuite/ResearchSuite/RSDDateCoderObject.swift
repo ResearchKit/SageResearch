@@ -43,7 +43,18 @@ import Foundation
 /// instantiated using a `Decoder`. The locale for the date formatters is "en_US_POSIX" by default.
 ///
 public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
-    public typealias RawValue = String
+
+    /// Coder for a timestamp.
+    public static let timestampCoder = RSDDateCoderObject(rawValue: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")!
+    
+    /// Coder for a date only.
+    public static let dateOnlyCoder = RSDDateCoderObject(rawValue: "yyyy-MM-dd")!
+    
+    /// Coder for a time only.
+    public static let timeOnlyCoder = RSDDateCoderObject(rawValue: "HH:mm:ss")!
+    
+    /// Coder for a time of day.
+    public static let timeOfDayCoder = RSDDateCoderObject(rawValue: "HH:mm")!
     
     /// The input format used to represent the formatters and calendar components.
     public var rawValue: String {

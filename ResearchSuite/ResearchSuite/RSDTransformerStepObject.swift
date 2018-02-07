@@ -50,6 +50,20 @@ public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
     
     /// The transformer for the section steps.
     public var sectionTransformer: RSDSectionStepTransformer!
+    
+    init(identifier: String, stepType: RSDStepType) {
+        self.identifier = identifier
+        self.stepType = stepType
+    }
+    
+    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
+    /// - parameter identifier: The new identifier.
+    public func copy(with identifier: String) -> RSDTransformerStepObject {
+        var copy = RSDTransformerStepObject(identifier: identifier, stepType: stepType)
+        copy.replacementSteps = self.replacementSteps
+        copy.sectionTransformer = self.sectionTransformer
+        return copy
+    }
         
     private enum CodingKeys : String, CodingKey {
         case identifier, stepType = "type", replacementSteps, sectionTransformer

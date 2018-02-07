@@ -75,6 +75,15 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
         try stepValidation()
     }
     
+    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
+    /// - parameter identifier: The new identifier.
+    public func copy(with identifier: String) -> RSDSectionStepObject {
+        var copy = RSDSectionStepObject(identifier: identifier, steps: steps, type: self.stepType)
+        copy.progressMarkers = self.progressMarkers
+        copy.asyncActions = self.asyncActions
+        return copy
+    }
+    
     private enum CodingKeys : String, CodingKey {
         case identifier, stepType = "type", steps, progressMarkers, asyncActions
     }
