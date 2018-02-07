@@ -37,8 +37,6 @@ import ResearchSuiteUI
 
 class ViewController: UIViewController, RSDTaskViewControllerDelegate {
 
-    
-
     @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
@@ -78,7 +76,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         }
     }
     
-    func taskController(_ taskController: RSDTaskUIController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // dismiss the view controller
         let outputDirectory = taskController.outputDirectory
@@ -93,7 +91,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         print(debugResult)
     }
     
-    func taskController(_ taskController: RSDTaskUIController, readyToSave taskPath: RSDTaskPath) {
+    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
         var debugResult: String = taskPath.description
         
         do {
@@ -109,7 +107,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         print(debugResult)
     }
     
-    func taskController(_ taskController: RSDTaskUIController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
         return nil
     }
     
