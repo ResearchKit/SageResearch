@@ -39,7 +39,7 @@ import Foundation
 /// the base protocol. All the `RSDResult` objects are required to conform to the `Codable` protocol to allow
 /// the app to store and upload results in a standardized way.
 ///
-public protocol RSDResult : Codable {
+public protocol RSDResult : Encodable {
     
     /// The identifier associated with the task, step, or asynchronous action.
     var identifier: String { get }

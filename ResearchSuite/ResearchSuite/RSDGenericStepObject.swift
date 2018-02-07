@@ -40,7 +40,7 @@ import Foundation
 /// or for replacing properties on an `RSDMutableStep`.
 ///
 public struct RSDGenericStepObject : RSDGenericStep, Decodable {
-    
+
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
     /// of a step history.
     public let identifier: String
@@ -53,6 +53,18 @@ public struct RSDGenericStepObject : RSDGenericStep, Decodable {
     
     private enum CodingKeys : String, CodingKey {
         case identifier, stepType = "type"
+    }
+    
+    public init(identifier: String, stepType: RSDStepType, userInfo: [String : Any]) {
+        self.identifier = identifier
+        self.stepType = stepType
+        self.userInfo = userInfo
+    }
+    
+    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
+    /// - parameter identifier: The new identifier.
+    public func copy(with identifier: String) -> RSDGenericStepObject {
+        return RSDGenericStepObject(identifier: identifier, stepType: self.stepType, userInfo: self.userInfo)
     }
     
     /// Initialize from a `Decoder`.

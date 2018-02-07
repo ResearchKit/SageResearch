@@ -87,12 +87,36 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.
     ///     - type: The type of the step. Default = `RSDStepType.instruction`
-    public init(identifier: String, type: RSDStepType? = nil) {
+    public required init(identifier: String, type: RSDStepType? = nil) {
         self.identifier = identifier
         self.stepType = type ?? .instruction
         super.init()
     }
     
+    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
+    /// - parameter identifier: The new identifier.
+    public func copy(with identifier: String) -> Self {
+        let copy = type(of: self).init(identifier: identifier, type: self.stepType)
+        copyInto(copy as RSDUIStepObject)
+        return copy
+    }
+    
+    /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)` method.
+    /// Swift does not nicely handle casting from `Self` to a class instance for non-final classes. This is a
+    /// work-around.
+    open func copyInto(_ copy: RSDUIStepObject) {
+        copy.title = self.title
+        copy.text = self.text
+        copy.detail = self.detail
+        copy.footnote = self.footnote
+        copy.viewTheme = self.viewTheme
+        copy.colorTheme = self.colorTheme
+        copy.imageTheme = self.imageTheme
+        copy.nextStepIdentifier = self.nextStepIdentifier
+        copy.actions = self.actions
+        copy.shouldHideActions = self.shouldHideActions
+    }
+
     // MARK: Result management
     
     /// Instantiate a step result that is appropriate for this step. Default implementation will return a `RSDResultObject`.

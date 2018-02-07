@@ -35,6 +35,7 @@ import Foundation
 import ResearchSuite
 
 struct TestStep : RSDStep {
+    
     let identifier: String
     var stepType: RSDStepType = .instruction
     var result: RSDResult?
@@ -61,6 +62,14 @@ struct TestStep : RSDStep {
         if let err = validationError {
             throw err
         }
+    }
+    
+    func copy(with identifier: String) -> TestStep {
+        var copy = TestStep(identifier: identifier)
+        copy.stepType = stepType
+        copy.result = result
+        copy.validationError = validationError
+        return copy
     }
 }
 
@@ -111,19 +120,18 @@ struct TestTask : RSDTask {
 }
 
 class TestStepController: NSObject, RSDStepController {
-    
-    var taskController: RSDTaskController!
+
+    var taskController: RSDTaskUIController!
     var step: RSDStep!
+    var hasStepBefore: Bool = true
+    var hasStepAfter: Bool = true
+    var isForwardEnabled: Bool = true
     
     var didFinishLoading_called: Bool = false
     var goForward_called: Bool = false
     var goBack_called: Bool = false
     var skipForward_called: Bool = false
     var cancel_called: Bool = false
-    var shouldHideAction_called: Bool = false
-    
-    var shouldHideActionItems : [RSDUIActionType] = []
-    var isForwardEnabled: Bool = true
     
     func didFinishLoading() {
         didFinishLoading_called = true
@@ -143,11 +151,6 @@ class TestStepController: NSObject, RSDStepController {
     
     public func cancel() {
         cancel_called = true
-    }
-    
-    func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
-        shouldHideAction_called = true
-        return shouldHideActionItems.contains(actionType)
     }
 }
 
@@ -204,7 +207,7 @@ class TestAsyncActionController: NSObject, RSDAsyncActionController {
     }
 }
 
-class TestTaskController: NSObject, RSDTaskController {
+class TestTaskController: NSObject, RSDTaskUIController {
 
     var taskPath: RSDTaskPath!
     var factory: RSDFactory?

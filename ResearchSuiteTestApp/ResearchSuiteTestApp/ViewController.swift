@@ -37,8 +37,6 @@ import ResearchSuiteUI
 
 class ViewController: UIViewController, RSDTaskViewControllerDelegate {
 
-    
-
     @IBOutlet weak var textView: UITextView!
     
     override func viewDidLoad() {
@@ -81,14 +79,14 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // dismiss the view controller
-        let outputDirectory = taskController.taskPath.outputDirectory
+        let outputDirectory = taskController.outputDirectory
         (taskController as? UIViewController)?.dismiss(animated: true) {
             self.offMainQueue.async {
                 self.deleteOutputDirectory(outputDirectory)
             }
         }
         
-        var debugResult: String = taskController.taskPath.description
+        var debugResult: String = taskController.taskResult.identifier
         debugResult.append("\n\n=== Completed: \(reason) error:\(String(describing: error))")
         print(debugResult)
     }

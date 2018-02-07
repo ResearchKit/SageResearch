@@ -39,6 +39,22 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
 
     /// The `inputFields` array is used to hold a logical subgrouping of input fields.
     open private(set) var inputFields: [RSDInputField]
+    
+    /// Initializer required for `copy(with:)` implementation.
+    public required init(identifier: String, type: RSDStepType?) {
+        self.inputFields = []
+        super.init(identifier: identifier, type: type ?? .form)
+    }
+    
+    /// Override to set the properties of the subclass.
+    override open func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
+        guard let subclassCopy = copy as? RSDFormUIStepObject else {
+            assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
+            return
+        }
+        subclassCopy.inputFields = self.inputFields
+    }
 
     /// Default initializer.
     /// - parameters:

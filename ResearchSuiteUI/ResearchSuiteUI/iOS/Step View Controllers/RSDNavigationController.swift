@@ -42,15 +42,13 @@ import UIKit
 /// using this implementation by extending `UINavigationController` directly.
 open class RSDNavigationController : UINavigationController, RSDStepController {
 
-    
-
     /// The root view controller is assumed to be a `RSDStepController`.
     open var rootStepViewController : (UIViewController & RSDStepController)! {
         return self.childViewControllers.first as! (UIViewController & RSDStepController)
     }
     
     /// get/set `rootStepViewController.taskController`
-    public var taskController: RSDTaskController! {
+    public var taskController: RSDTaskUIController! {
         get {
             return rootStepViewController.taskController
         }
@@ -99,8 +97,13 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
         rootStepViewController.cancel()
     }
     
-    /// calls `rootStepViewController.shouldHideAction(for: actionType)`
-    public func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
-        return rootStepViewController.shouldHideAction(for: actionType)
+    /// Calls `rootStepViewController.hasStepBefore`
+    public var hasStepBefore: Bool {
+        return rootStepViewController.hasStepBefore
+    }
+    
+    /// Calls `rootStepViewController.hasStepAfter`
+    public var hasStepAfter: Bool {
+        return rootStepViewController.hasStepAfter
     }
 }

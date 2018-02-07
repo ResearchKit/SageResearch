@@ -152,8 +152,21 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.
     ///     - type: The type of the step. Default = `RSDStepType.active`
-    public override init(identifier: String, type: RSDStepType? = nil) {
+    public required init(identifier: String, type: RSDStepType? = nil) {
         super.init(identifier: identifier, type: type ?? .active)
+    }
+    
+    /// Override to set the properties of the subclass.
+    override open func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
+        guard let subclassCopy = copy as? RSDActiveUIStepObject else {
+            assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
+            return
+        }
+        subclassCopy.duration = self.duration
+        subclassCopy.commands = self.commands
+        subclassCopy.requiresBackgroundAudio = self.requiresBackgroundAudio
+        subclassCopy.spokenInstructions = self.spokenInstructions
     }
     
     /// Initialize from a `Decoder`.

@@ -69,11 +69,11 @@ public protocol RSDStepViewControllerProtocol : RSDStepController {
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
 /// UI architecture.
-open class RSDStepViewController : UIViewController, RSDStepViewControllerProtocol {
+open class RSDStepViewController : UIViewController, RSDStepViewControllerProtocol, RSDCancelActionController {
 
     /// Pointer back to the task controller that is displaying the step controller. The implementation
     /// of the task controller should set this pointer before displaying the step controller.
-    open weak var taskController: RSDTaskController!
+    open weak var taskController: RSDTaskUIController!
     
     /// The step view controller delegate.
     open weak var delegate: RSDStepViewControllerDelegate?
@@ -212,7 +212,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         super.viewDidDisappear(animated)
         delegate?.stepViewController(self, didDisappear: animated)
     }
-    
     
     // MARK: Navigation and Layout
     
@@ -557,34 +556,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// should be canceled (unless this is the first step in the task). If the user confirms exit, then
     /// `cancelTask` is called.
     @IBAction open func cancel() {
-        guard shouldConfirmCancel() else {
-            cancelTask(shouldSave: false)
-            return
-        }
-        
-        var actions: [UIAlertAction] = []
-
-        // Always add a choice to discard the results.
-        let discardResults = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_DISCARD"), style: .destructive) { (_) in
-            self.cancelTask(shouldSave: false)
-        }
-        actions.append(discardResults)
-        
-        // Only add the option to save if the task controller supports it.
-        if self.taskController.canSaveTaskProgress {
-            let saveResults = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_SAVE"), style: .default) { (_) in
-                self.cancelTask(shouldSave: true)
-            }
-            actions.append(saveResults)
-        }
-        
-        // Always add a choice to keep going.
-        let keepGoing = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_CONTINUE"), style: .cancel) { (_) in
-            // Do nothing, just hide the alert
-        }
-        actions.append(keepGoing)
-        
-        self.presentAlertWithActions(title: nil, message: Localization.localizedString("MESSAGE_CONFIRM_CANCEL_TASK"), preferredStyle: .actionSheet, actions: actions)
+        self.confirmCancel()
     }
     
     /// Should the step view controller confirm the cancel action? By default, this will return `false` if
@@ -656,6 +628,16 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             taskPath = taskPath?.parentPath
         } while (taskPath != nil)
         return nil
+    }
+    
+    /// Calls through to `!shouldHideAction(for: .navigation(.goBackward))`
+    public var hasStepBefore: Bool {
+        return !shouldHideAction(for: .navigation(.goBackward))
+    }
+    
+    /// Calls through to `!shouldHideAction(for: .navigation(.goForward))`
+    public var hasStepAfter: Bool {
+        return !shouldHideAction(for: .navigation(.goForward))
     }
     
     /// Should the action be hidden for the given action type?
@@ -971,5 +953,58 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         DispatchQueue.main.asyncAfter(deadline: delay, execute: { [weak self] in
             self?._playAlarm()
         })
+    }
+}
+
+/// `RSDCancelActionController` is a shared protocol that can be used to present a consistent
+/// response to a cancel action (button tap) where the implementation of the step view controller
+/// is not shared.
+public protocol RSDCancelActionController : RSDStepController, RSDAlertPresenter {
+    
+    /// Should the step view controller confirm the cancel action? By default, this will return `false` if
+    /// this is the first step in the task. Otherwise, this method will return `true`.
+    /// - returns: Whether or not to confirm the cancel action.
+    func shouldConfirmCancel() -> Bool
+    
+    /// Finish canceling the task. This is called once the cancel is confirmed by the user.
+    ///
+    /// - parameter shouldSave: Should the task progress be saved?
+    func cancelTask(shouldSave: Bool)
+}
+
+extension RSDCancelActionController {
+    
+    /// This method is called when the user taps the cancel button. It confirms that the task should
+    /// be canceled (unless this is the first step in the task). If the user confirms exit, then
+    /// `cancelTask` is called.
+    public func confirmCancel() {
+        guard shouldConfirmCancel() else {
+            cancelTask(shouldSave: false)
+            return
+        }
+        
+        var actions: [UIAlertAction] = []
+        
+        // Always add a choice to discard the results.
+        let discardResults = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_DISCARD"), style: .destructive) { (_) in
+            self.cancelTask(shouldSave: false)
+        }
+        actions.append(discardResults)
+        
+        // Only add the option to save if the task controller supports it.
+        if self.taskController.canSaveTaskProgress {
+            let saveResults = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_SAVE"), style: .default) { (_) in
+                self.cancelTask(shouldSave: true)
+            }
+            actions.append(saveResults)
+        }
+        
+        // Always add a choice to keep going.
+        let keepGoing = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_CONTINUE"), style: .cancel) { (_) in
+            // Do nothing, just hide the alert
+        }
+        actions.append(keepGoing)
+        
+        self.presentAlertWithActions(title: nil, message: Localization.localizedString("MESSAGE_CONFIRM_CANCEL_TASK"), preferredStyle: .actionSheet, actions: actions)
     }
 }
