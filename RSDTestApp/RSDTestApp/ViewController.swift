@@ -52,10 +52,6 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     @IBAction func runFooTask(_ sender: Any) {
         var taskInfo = RSDTaskInfoStepObject(with: "foo")
         taskInfo.taskTransformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
-        taskInfo.title = "Da Foo"
-        taskInfo.subtitle = "In da house"
-        taskInfo.icon = try! RSDImageWrapper(imageName: "activityIcon")
-        taskInfo.detail = "This is an example task created by loading the task info from a resource."
         let taskViewController = RSDTaskViewController(taskInfo: taskInfo)
         taskViewController.delegate = self
         self.present(taskViewController, animated: true, completion: nil)
@@ -71,7 +67,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         do {
             try FileManager.default.removeItem(at: outputDirectory)
         } catch let error {
-            print("Error removing ResearchKit output directory: \(error.localizedDescription)")
+            print("Error removing output directory: \(error.localizedDescription)")
             debugPrint("\tat: \(outputDirectory)")
         }
     }

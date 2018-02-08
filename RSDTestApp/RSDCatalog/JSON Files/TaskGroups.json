@@ -1,0 +1,46 @@
+[
+ {
+    "identifier": "surveyExamples",
+    "title": "Surveys",
+    "detail": "This task group includes examples of surveys that are currently supported by the ResearchSuiteUI framework.",
+    "icon": "activityIcon",
+    "tasks" : [{
+               "identifier": "list",
+               "title": "List UI hint examples",
+               "subtitle": "Questions that use the `list` uiHint",
+               "detail": "The steps included in this task are all examples of RSDInputField objects that use the `list` RSDFormUIHint that are currently supported by the ResearchSuiteUI framework.",
+               "icon": "activityIcon",
+               "taskTransformer" : { "resourceName": "FormStep_List" }
+               },
+               {
+               "identifier": "picker",
+               "title": "Picker UI hint examples",
+               "subtitle": "Questions that use the `picker` uiHint",
+               "detail": "The steps included in this task are all examples of RSDInputField objects that use the `picker` RSDFormUIHint that are currently supported by the ResearchSuiteUI framework.",
+               "icon": "activityIcon",
+               "taskTransformer" : { "resourceName": "FormStep_Picker" }
+               },
+               {
+               "identifier": "textfield",
+               "title": "Textfield UI hint examples",
+               "subtitle": "Questions that use the `textfield` uiHint",
+               "detail": "The steps included in this task are all examples of RSDInputField objects that use the `textfield` RSDFormUIHint that are currently supported by the ResearchSuiteUI framework.",
+               "icon": "activityIcon",
+               "taskTransformer" : { "resourceName": "FormStep_Textfield" }
+               }]
+ },
+ {
+     "identifier": "recorderExamples",
+     "title": "Recorders",
+     "detail": "This task group includes examples of active tasks that include spoken instructions and recorders that are currently included in the ResearchSuite and ResearchSuiteUI frameworks.",
+     "icon": "activityIcon",
+     "tasks" : [{
+                "identifier": "motion",
+                "title": "Motion Recorder",
+                "subtitle": "Activity for recording motion sensor data.",
+                "detail": "This is an example task for recording motion sensor data using the RSDMotionRecorder. This task also includes using the voice synthesizer to include spoken instructions.",
+                "icon": "activityIcon",
+                "taskTransformer" : { "resourceName": "Recorder_Motion" }
+                }]
+ }
+]
