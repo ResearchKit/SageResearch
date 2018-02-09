@@ -2,7 +2,7 @@
 //  RSDMotionRecorder.swift
 //  RSDModuleValidation
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -89,7 +89,7 @@ public class RSDMotionRecorder : RSDSampleRecorder {
     }()
     
     /// For best results, only use a single motion manager to handle all motion sensor data.
-    private var motionManager: CMMotionManager?
+    public private(set) var motionManager: CMMotionManager?
     
     /// The pedometer is used to request motion sensor permission since for motion sensors
     /// there is no method specifically intended for that purpose.
@@ -302,10 +302,10 @@ public struct RSDMotionRecord : RSDSampleRecord {
     /// A number marking the sensor accuracy of the magnetic field sensor.
     public let eventAccuracy: Int?
     
-    /// Used for a `attitude` record type to describe the reference frame.
+    /// Used for an `attitude` record type to describe the reference frame.
     public let referenceCoordinate: RSDAttitudeReferenceFrame?
     
-    /// The heading angle in the range [0,360] degrees with respect to the CMAttitude reference frame.
+    /// The heading angle in the range [0,360) degrees with respect to the CMAttitude reference frame.
     /// A negative value is returned for `CMAttitudeReferenceFrame.xArbitraryZVertical` and
     /// `CMAttitudeReferenceFrame.xArbitraryCorrectedZVertical` reference coordinates.
     public let heading: Double?
@@ -434,7 +434,7 @@ public enum RSDAttitudeReferenceFrame : String, Codable {
     /// Describes a reference frame in which the Z axis is vertical and the X axis points toward
     /// magnetic north.
     ///
-    /// - note: Using this reference frame may require device movement to calibrate the magnetometer.
+    /// - note: Using this reference frame may require user interaction to calibrate the magnetometer.
     case xMagneticNorthZVertical = "North-West-Up"
     
     init(frame : CMAttitudeReferenceFrame) {

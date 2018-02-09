@@ -2,7 +2,7 @@
 //  RSDDistanceRecorder.swift
 //  ResearchSuiteUI
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -101,11 +101,11 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
         return self.configuration as? RSDDistanceRecorderConfiguration
     }
     
-    /// Should relative distance only be saved to the log. Default = `true`.
+    /// Should relative distance only be saved to the log? Default = `true`.
     public var relativeDistanceOnly: Bool = true
     
     /// Whether or not the user is expected to be standing still or moving. This is used to mark
-    /// when to start calculating distance travelled while moving as a part of a larger overrall
+    /// when to start calculating distance travelled while moving as a part of a larger overall
     /// data gathering effort that might include how much a person is moving during other steps
     /// when they should be standing still (while recording heart rate, for example).
     public var isStandingStill: Bool = false {
@@ -148,7 +148,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     
     // MARK: Recorder state management
 
-    private var locationManager: CLLocationManager?
+    public private(set) var locationManager: CLLocationManager?
     private var pedometer: CMPedometer?
     private let processingQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.location.processing")
     private var _permissionCompletion: RSDAsyncActionCompletionHandler?
@@ -175,7 +175,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
                 debugPrint("Failed to query pedometer: \(err)")
             }
             // If querying the pedometer failed, then keep going anyway b/c the pedometer
-            // just a "nice to have".
+            // is just a "nice to have".
             strongSelf.pedometer = nil
             strongSelf._requestLocationPermission(completion)
         }
@@ -282,7 +282,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     // MARK: CLLocationManagerDelegate
     
     /// If the location manager failed, then check if the manager was requesting permission
-    /// and return the completion handler if appropriate.
+    /// and call the completion handler if appropriate.
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if let completion = _permissionCompletion {
             self.updateStatus(to: .failed, error: error)
@@ -377,7 +377,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
                 return nil
         }
 
-        // Determine if this location is accurat enough to use in calculations
+        // Determine if this location is accurate enough to use in calculations
         let isOutdoors = location.horizontalAccuracy > 0 && location.horizontalAccuracy <= kLocationRequiredAccuracy
         var distance: Double?
         

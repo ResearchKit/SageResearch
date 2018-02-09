@@ -10,7 +10,7 @@
               "text": "Select a single option",
               "uiHint": "picker",
               "dataType": "singleChoice",
-              "choices": ["Alpha","Beta","Charlie","Delta","Epsilon"]
+              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
               },
               {
               "identifier": "imageList",

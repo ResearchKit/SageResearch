@@ -94,7 +94,7 @@ public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Co
     }
     
     /// Validate the async action to check for any configuration that should throw an error.
-    /// This method does nothing  but is required by the `RSDAsyncActionConfiguration` protocol.
+    /// This method does nothing but is required by the `RSDAsyncActionConfiguration` protocol.
     public func validate() throws {
         // Do nothing
     }

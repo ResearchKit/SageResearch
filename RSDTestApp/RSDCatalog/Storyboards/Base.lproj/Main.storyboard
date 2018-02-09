@@ -75,7 +75,7 @@
         <scene sceneID="onU-0h-Bzb">
             <objects>
                 <tableViewController id="gbj-Uz-h61" customClass="TaskTableViewController" customModule="RSDCatalog" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="BeF-cX-D6a">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" estimatedRowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" id="BeF-cX-D6a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -99,22 +99,22 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="1PF-Sl-QzB">
-                            <rect key="frame" x="0.0" y="184" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="180" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BasicCell" rowHeight="78" id="sJb-Eg-7E0" customClass="ImageTableViewCell" customModule="RSDCatalog" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="106" width="375" height="78"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="BasicCell" id="sJb-Eg-7E0" customClass="ImageTableViewCell" customModule="RSDCatalog" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="106" width="375" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sJb-Eg-7E0" id="oEg-01-hwe">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="77.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="73.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="activityIcon" translatesAutoresizingMaskIntoConstraints="NO" id="hht-jI-0BA">
-                                            <rect key="frame" x="16" y="11" width="52" height="53"/>
+                                            <rect key="frame" x="16" y="11" width="52" height="52"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="hht-jI-0BA" secondAttribute="height" multiplier="45:46" id="TQa-Pb-EWT"/>
+                                                <constraint firstAttribute="width" secondItem="hht-jI-0BA" secondAttribute="height" multiplier="1:1" id="TQa-Pb-EWT"/>
                                                 <constraint firstAttribute="width" constant="52" id="fPp-xs-rKC"/>
                                             </constraints>
                                         </imageView>
@@ -132,12 +132,12 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="60z-Z7-Jit" secondAttribute="bottom" id="4x9-AO-efw"/>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="hht-jI-0BA" secondAttribute="bottom" id="5G2-dw-vuE"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="60z-Z7-Jit" secondAttribute="bottom" priority="225" id="4x9-AO-efw"/>
                                         <constraint firstItem="GHr-Js-cyC" firstAttribute="leading" secondItem="hht-jI-0BA" secondAttribute="trailing" constant="8" id="9jv-6M-WB8"/>
                                         <constraint firstItem="hht-jI-0BA" firstAttribute="leading" secondItem="oEg-01-hwe" secondAttribute="leadingMargin" id="Rjd-zk-YG7"/>
                                         <constraint firstItem="60z-Z7-Jit" firstAttribute="top" secondItem="GHr-Js-cyC" secondAttribute="bottom" constant="3" id="YEb-N3-RZZ"/>
                                         <constraint firstAttribute="rightMargin" secondItem="60z-Z7-Jit" secondAttribute="rightMargin" id="hlK-Bp-fCA"/>
+                                        <constraint firstItem="hht-jI-0BA" firstAttribute="bottom" secondItem="oEg-01-hwe" secondAttribute="bottomMargin" priority="250" id="jXp-aC-vR6"/>
                                         <constraint firstItem="hht-jI-0BA" firstAttribute="top" secondItem="oEg-01-hwe" secondAttribute="topMargin" id="kkt-dp-XMh"/>
                                         <constraint firstItem="GHr-Js-cyC" firstAttribute="top" secondItem="oEg-01-hwe" secondAttribute="topMargin" id="nHb-2D-TCe"/>
                                         <constraint firstItem="60z-Z7-Jit" firstAttribute="leading" secondItem="hht-jI-0BA" secondAttribute="trailing" constant="8" id="sh2-Ae-JhT"/>

@@ -60,7 +60,7 @@
               "type": "form",
               "title": "Select one option",
               "dataType": "singleChoice",
-              "choices": ["Alpha","Beta","Charlie","Delta","Epsilon"]
+              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
               },
 
               {

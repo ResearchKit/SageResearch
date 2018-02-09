@@ -55,7 +55,7 @@ class TaskGroupTableViewController: UITableViewController {
             assertionFailure("Failed to decode the TaskGroups JSON: \(err)")
         }
         
-        /// Call super
+        // Call super
         super.viewDidLoad()
     }
     

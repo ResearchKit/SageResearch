@@ -11,7 +11,7 @@
               "text": "Select a single option",
               "uiHint": "list",
               "dataType": "singleChoice",
-              "choices": ["Alpha","Beta","Charlie","Delta","Epsilon"]
+              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
               },
               {
               "identifier": "selectMultiple",

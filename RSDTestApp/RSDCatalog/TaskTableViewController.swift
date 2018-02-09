@@ -49,8 +49,8 @@ class TaskTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Use automatic hieght dimension
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 68
         
         detailLabel.text = taskGroup.detail
     }
