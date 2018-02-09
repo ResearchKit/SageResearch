@@ -47,19 +47,20 @@ public struct RSDDocumentCreator {
         var allEnums: [RSDDocumentableEnum.Type] = [
         RSDAnswerResultType.BaseType.self,
         RSDAnswerResultType.SequenceType.self,
+        RSDAsyncActionType.self,
+        RSDDateCoderObject.self,
         RSDDeviceType.self,
         RSDFormDataType.self,
         RSDFormUIHint.self,
         RSDIdentifier.self,
-        RSDStandardPermissionType.self,
+        RSDKeyboardType.self,
         RSDResultType.self,
+        RSDStandardPermissionType.self,
         RSDStepType.self,
-        RSDDateCoderObject.self,
         RSDSurveyRuleOperator.self,
         RSDTextAutocapitalizationType.self,
         RSDTextAutocorrectionType.self,
         RSDTextSpellCheckingType.self,
-        RSDKeyboardType.self,
         ]
     
     #if os(iOS)
@@ -107,6 +108,8 @@ public struct RSDDocumentCreator {
         
     #if os(iOS)
         let iOSCodableObjects: [RSDDocumentableCodableObject.Type] = [
+            RSDDistanceRecorderConfiguration.self,
+            RSDDistanceRecord.self,
             RSDMotionRecorderConfiguration.self,
             RSDMotionRecord.self,
             ]

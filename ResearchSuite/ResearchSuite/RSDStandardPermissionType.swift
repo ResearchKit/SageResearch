@@ -78,6 +78,11 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
         return rawValue
     }
     
+    /// The mapped async action type for this permission
+    public var asyncActionType: RSDAsyncActionType {
+        return RSDAsyncActionType(rawValue: self.rawValue)
+    }
+    
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStandardPermissionType] {
         return [.camera, .locationWhenInUse, .location, .microphone, .motion, .photoLibrary]

@@ -98,7 +98,7 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
             cell.subtitleLabel?.text = answerResult.value != nil ? String(describing: answerResult.value!) : "nil"
         } else if let fileResult = result as? RSDFileResult {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.file.stringValue, for: indexPath) as! ImageTableViewCell
-            cell.subtitleLabel?.text = String(describing: fileResult.url?.lastPathComponent)
+            cell.subtitleLabel?.text = fileResult.url != nil ? String(describing: fileResult.url!.lastPathComponent) : "nil"
         } else if (result is RSDCollectionResult) || (result is RSDTaskResult) {
             cell = tableView.dequeueReusableCell(withIdentifier: ReuseIdentifier.section.stringValue, for: indexPath) as! ImageTableViewCell
         } else if let errorResult = result as? RSDErrorResult {

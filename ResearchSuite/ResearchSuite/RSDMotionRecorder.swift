@@ -34,107 +34,15 @@
 import Foundation
 import CoreMotion
 
-/// `RSDMotionRecorderType` is used to enumerate the sensors and calculated measurements
-/// that can be recorded by the `RSDMotionRecorder`.
-///
-/// `RSDMotionRecorder` records each sample from either the raw CoreMotion sensors
-/// (accelerometer, gyro, and magnetometer) or the calculated vectors returned when requesting
-/// `CMDeviceMotion` data updates. The `CMDeviceMotion` data is split into the components
-/// enumerated by this enum into a single vector (sensor or calculated) per type.
-///
-/// By default, the requested types are are saved to a single logging file as instances of
-/// `RSDMotionRecord` structs.
-///
-/// Spliting the device motion into components in this manner stores the data in using a
-/// consistent JSON schema that can represent the sensor data returned by both iOS and Android
-/// devices. Thus, allowing research studies to target a broader audience. Additionally, this
-/// schema allows for a single table to be used to store the data which can then be filtered
-/// by type to perform calculations and DSP on the input sources.
-///
-public enum RSDMotionRecorderType : String, Codable, RSDEnumSet {
-    
-    /// Raw accelerometer reading. `CMAccelerometerData` accelerometer.
-    /// - seealso: https://developer.apple.com/documentation/coremotion/getting_raw_accelerometer_events
-    case accelerometer
-    
-    /// Raw gyroscope reading. `CMGyroData` rotationRate.
-    /// - seealso: https://developer.apple.com/documentation/coremotion/getting_raw_gyroscope_events
-    case gyro
-
-    /// Raw magnetometer reading. `CMMagnetometerData` magneticField.
-    /// - seealso: https://developer.apple.com/documentation/coremotion/cmmagnetometerdata
-    case magnetometer
-    
-    /// Calculated orientation of the device using the gyro and magnetometer (if appropriate).
-    ///
-    /// This is included in the `CMDeviceMotion` data object.
-    ///
-    /// - note: If the `magneticField` is included in the configuration's list of desired
-    /// recorder types then the reference frame is `.xMagneticNorthZVertical`. Otherwise,
-    /// the motion recorder will use `.xArbitraryZVertical`.
-    ///
-    /// - seealso: https://developer.apple.com/documentation/coremotion/getting_processed_device_motion_data
-    case attitude
-    
-    /// Calculated vector for the direction of gravity in the coordinates of the device.
-    ///
-    /// This is included in the `CMDeviceMotion` data object.
-    ///
-    /// - seealso: https://developer.apple.com/documentation/coremotion/getting_processed_device_motion_data
-    case gravity
-    
-    /// The magnetic field vector with respect to the device for devices with a magnetometer.
-    /// Note that this is the total magnetic field in the device's vicinity without device
-    /// bias (Earth's magnetic field plus surrounding fields, without device bias),
-    /// unlike `CMMagnetometerData` magneticField.
-    ///
-    /// This is included in the `CMDeviceMotion` data object.
-    ///
-    /// - note: If this recorder type is included in the configuration, then the attitude
-    /// reference frame will be set to `.xMagneticNorthZVertical`. Otherwise, the magnetic
-    /// field vector will be returned as `{ 0, 0, 0 }`.
-    ///
-    /// - seealso: https://developer.apple.com/documentation/coremotion/getting_processed_device_motion_data
-    case magneticField
-    
-    /// The rotation rate of the device for devices with a gyro.
-    ///
-    /// This is included in the `CMDeviceMotion` data object.
-    ///
-    /// - seealso: https://developer.apple.com/documentation/coremotion/getting_processed_device_motion_data
-    case rotationRate
-    
-    /// Calculated vector for the user's acceleration in the coordinates of the device.
-    /// This is the acceleration component after subtracting the gravity vector.
-    ///
-    /// This is included in the `CMDeviceMotion` data object.
-    ///
-    /// - seealso: https://developer.apple.com/documentation/coremotion/getting_processed_device_motion_data
-    case userAcceleration
-    
-    /// A list of all the enum values.
-    public static var all: Set<RSDMotionRecorderType> {
-        return [.accelerometer, .attitude, .gravity, .gyro, .magneticField, .magnetometer, .rotationRate, .userAcceleration]
-    }
-    
-    /// List of the device motion types that are calculated from multiple sensors and returned
-    /// by listening to device motion updates.
-    ///
-    /// - seealso: https://developer.apple.com/documentation/coremotion/getting_processed_device_motion_data
-    public static var deviceMotionTypes: Set<RSDMotionRecorderType> {
-        return [.attitude, .gravity, .magneticField, .rotationRate, .userAcceleration]
-    }
-    
-    /// List of the raw motion sensor types.
-    public static var rawSensorTypes: Set<RSDMotionRecorderType> {
-        return [.accelerometer, .gyro, .magnetometer]
-    }
-}
-
 /// `RSDMotionRecorder` is a subclass of `RSDSampleRecorder` that implements recording core motion
 /// sensor data.
 ///
-/// - note: This recorder is only available on iOS devices. Not supported by other platforms.
+/// You will need to add the privacy permission for  motion sensors to the application `Info.plist`
+/// file. As of this writing (syoung 02/09/2018), the required key is:
+/// - `Privacy - Motion Usage Description`
+///
+/// - note: This recorder is only available on iOS devices. CoreMotion is not supported by other
+///         platforms.
 ///
 /// - seealso: `RSDMotionRecorderType`, `RSDMotionRecorderConfiguration`, and `RSDMotionRecord`.
 @available(iOS 10.0, *)
@@ -345,104 +253,34 @@ public class RSDMotionRecorder : RSDSampleRecorder {
     }
 }
 
-    
-/// The default configuration to use for a `RSDMotionRecorder`.
-///
-/// - example:
-///
-/// ```
-///     // Example json for a codable configuration.
-///        let json = """
-///             {
-///                "identifier": "foo",
-///                "type": "motion",
-///                "startStepIdentifier": "start",
-///                "stopStepIdentifier": "stop",
-///                "requiresBackgroundAudio": true,
-///                "recorderTypes": ["accelerometer", "gyro", "magnetometer"],
-///                "frequency": 50
-///            }
-///            """.data(using: .utf8)! // our data in native (JSON) format
-/// ```
-public struct RSDMotionRecorderConfiguration : RSDRecorderConfiguration, RSDAsyncActionControllerVendor, Codable {
-    
-    /// A short string that uniquely identifies the asynchronous action within the task. If started
-    /// asynchronously, then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.
-    public let identifier: String
-    
-    /// The standard permission type associated with this configuration.
-    public let type: RSDStandardPermissionType
-    
-    /// An identifier marking the step to start the action. If `nil`, then the action will be started when
-    /// the task is started.
-    public var startStepIdentifier: String?
-    
-    /// An identifier marking the step at which to stop the action. If `nil`, then the action will be
-    /// stopped when the task is stopped.
-    public var stopStepIdentifier: String?
-    
-    /// Whether or not the recorder requires background audio. Default = `false`.
-    ///
-    /// If `true` then background audio can be used to keep the recorder running if the screen is locked
-    /// because of the idle timer turning off the device screen.
-    ///
-    /// If the app uses background audio, then the developer will need to turn `ON` the "Background Modes"
-    /// under the "Capabilities" tab of the Xcode project, and will need to select "Audio, AirPlay, and
-    /// Picture in Picture".
-    ///
-    public var requiresBackgroundAudio: Bool {
-        return _requiresBackgroundAudio ?? false
-    }
-    private let _requiresBackgroundAudio: Bool?
-    
-    /// The `CoreMotion` device sensor types to include with this configuration. If `nil` then the
-    /// `RSDMotionRecorder` defaults will be used.
-    public var recorderTypes: Set<RSDMotionRecorderType>?
-    
-    /// The sampling frequency of the motion sensors. If `nil`, then `RSDMotionRecorder` default
-    /// frequency will be used.
-    public var frequency: Double?
-    
-    /// This recorder configuration requires `RSDStandardPermissionType.motion`.
-    /// - note: The use of this recorder requires adding “Privacy - Motion Usage Description” to the
-    ///         application "info.plist" file.
-    public var permissions: [RSDPermissionType] {
-        return [RSDStandardPermissionType.motion]
-    }
-    
-    private enum CodingKeys : String, CodingKey {
-        case identifier, type, recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio"
-    }
-    
-    /// Default initializer.
-    /// - parameters:
-    ///     - identifier: The configuration identifier.
-    ///     - recorderTypes: The `CoreMotion` device sensor types to include with this configuration.
-    ///     - requiresBackgroundAudio: Whether or not the recorder requires background audio. Default = `false`.
-    ///     - frequency: The sampling frequency of the motion sensors.
-    public init(identifier: String, recorderTypes: Set<RSDMotionRecorderType>?, requiresBackgroundAudio: Bool = false, frequency: Double? = nil) {
-        self.type = .motion
-        self.identifier = identifier
-        self.recorderTypes = recorderTypes
-        self._requiresBackgroundAudio = requiresBackgroundAudio
-        self.frequency = frequency
-    }
-    
-    /// Do nothing. No validation is required for this recorder.
-    public func validate() throws {
-    }
-    
-    /// Instantiate a `RSDMotionRecorder`.
-    /// - parameter taskPath: The current task path to use to initialize the controller.
-    /// - returns: A new instance of `RSDMotionRecorder`.
-    public func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController? {
-        return RSDMotionRecorder(configuration: self, taskPath: taskPath, outputDirectory: taskPath.outputDirectory)
-    }
-}
 
 /// A `RSDMotionRecord` is a `Codable` implementation of `RSDSampleRecord` that can be used
 /// to record a sample from one of the core motion sensors or calculated vectors of the
 /// `CMDeviceMotion` data object.
+///
+/// - example:
+///
+/// ```
+///     // Example json for a codable record.
+///        func testMotionRecord_Attitude() {
+///            let json = """
+///                {
+///                    "uptime" : 37246.68689429167,
+///                    "timestamp" : 1.2498140833340585,
+///                    "stepPath" : "Cardio Stair Step/heartRate.after/heartRate",
+///                    "sensorType" : "attitude",
+///                    "referenceCoordinate" : "North-West-Up",
+///                    "heading" : 270.25,
+///                    "eventAccuracy" : 4,
+///                    "x" : 0.064788818359375,
+///                    "y" : -0.1324615478515625,
+///                    "z" : -0.9501953125,
+///                    "w" : 1
+///                }
+///                """.data(using: .utf8)! // our data in native (JSON) format
+/// ```
+///
+/// - seealso: "CodableMotionRecorderTests.swift" unit tests for additional examples.
 public struct RSDMotionRecord : RSDSampleRecord {
     
     /// The clock uptime.
@@ -684,52 +522,6 @@ extension CMMagnetometerData : RSDVectorData {
 
 
 // Documentation and Tests
-
-extension RSDMotionRecorderType : RSDDocumentableEnum {
-}
-
-extension RSDMotionRecorderConfiguration : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .recorderTypes, .startStepIdentifier, .stopStepIdentifier, .frequency, ._requiresBackgroundAudio, .type]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .recorderTypes:
-                if idx != 1 { return false }
-            case .startStepIdentifier:
-                if idx != 2 { return false }
-            case .stopStepIdentifier:
-                if idx != 3 { return false }
-            case .frequency:
-                if idx != 4 { return false }
-            case ._requiresBackgroundAudio:
-                if idx != 5 { return false }
-            case .type:
-                if idx != 6 { return false }
-            }
-        }
-        return keys.count == 7
-    }
-    
-    static func examples() -> [Encodable] {
-        
-        var example = RSDMotionRecorderConfiguration(identifier: "motion", recorderTypes: [.accelerometer, .gyro], requiresBackgroundAudio: true, frequency: 50)
-        example.startStepIdentifier = "start"
-        example.stopStepIdentifier = "stop"
-        return [example]
-    }
-}
 
 extension RSDMotionRecord : RSDDocumentableCodableObject {
     

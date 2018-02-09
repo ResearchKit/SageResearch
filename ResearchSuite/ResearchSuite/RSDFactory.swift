@@ -451,23 +451,15 @@ open class RSDFactory {
     open func decodeAsyncActionConfiguration(from decoder:Decoder, with typeName: String) throws -> RSDAsyncActionConfiguration? {
         
         // Look to see if there is a standard permission to map to this config.
-        if let permissionType = RSDStandardPermissionType(rawValue: typeName) {
-            switch permissionType {
-            case .motion:
-                #if os(iOS)
-                    return try RSDMotionRecorderConfiguration(from: decoder)
-                #else
-                    // watchOS does not currently support CoreMotion
-                    // tvOS remote does not support CoreMotion
-                    return nil
-                #endif
-            default:
-                return try RSDStandardAsyncActionConfiguration(from: decoder)
-            }
+        let type = RSDAsyncActionType(rawValue: typeName)
+        switch type {
+        case .motion:
+            return try RSDMotionRecorderConfiguration(from: decoder)
+        case .distance:
+            return try RSDDistanceRecorderConfiguration(from: decoder)
+        default:
+            return try RSDStandardAsyncActionConfiguration(from: decoder)
         }
-        
-        // Base class does not implement the conditional rule
-        throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for an async action.")
     }
     
     

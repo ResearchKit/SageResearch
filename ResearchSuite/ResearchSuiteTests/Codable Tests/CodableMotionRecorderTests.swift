@@ -1,5 +1,5 @@
 //
-//  CodableAsyncActionConfigurationTests.swift
+//  CodableMotionRecorderTests.swift
 //  ResearchSuiteTests_iOS
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -34,7 +34,7 @@
 import XCTest
 @testable import ResearchSuite
 
-class CodableAsyncActionConfigurationTests: XCTestCase {
+class CodableMotionRecorderTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -20,11 +20,16 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app uses the GPS sensor to measure relative distance travelled.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app uses the GPS sensor to measure relative distance travelled.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>This app uses the motion sensors to record motion while shaking the phone.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
