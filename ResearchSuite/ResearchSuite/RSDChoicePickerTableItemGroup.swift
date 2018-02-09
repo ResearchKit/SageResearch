@@ -75,7 +75,8 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         
         // If this is being used as a picker source, then setup the picker
         if items == nil {
-            items = [RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: aType)]
+            let item = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: aType, textFieldOptions: nil, formatter: nil, pickerSource: choicePicker)
+            items = [item]
         }
         
         super.init(beginningRowIndex: beginningRowIndex, items: items!, inputField: inputField, uiHint: uiHint, answerType: aType)

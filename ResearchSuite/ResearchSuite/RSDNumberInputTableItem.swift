@@ -50,6 +50,7 @@ public final class RSDNumberInputTableItem : RSDTextInputTableItem {
         var pickerSource: RSDPickerDataSource? = inputField as? RSDPickerDataSource
         var range: RSDNumberRange? = (inputField.range as? RSDNumberRange)
         var unitString: String? = range?.unit
+        var textFieldOptions: RSDTextFieldOptions? = nil
         
         // special-case the .year and .duration data types to set up range and picker
         if inputField.dataType.baseType == .year, let dateRange = inputField.range as? RSDDateRange {
@@ -71,6 +72,9 @@ public final class RSDNumberInputTableItem : RSDTextInputTableItem {
                 UnitDuration.defaultFormatter(for: durationRange.durationUnits, baseUnit: baseUnit)
             range = RSDNumberRangeObject(minimumDouble: durationRange.minimumDuration.valueConverted(to: baseUnit),
                                          maximumDouble: durationRange.maximumDuration?.valueConverted(to: baseUnit))
+            
+            // Set the text field options
+            textFieldOptions = inputField.textFieldOptions ?? RSDTextFieldOptionsObject(keyboardType: .default)
         }
         
         // get the answer type
@@ -105,7 +109,7 @@ public final class RSDNumberInputTableItem : RSDTextInputTableItem {
             pickerSource = RSDNumberPickerDataSourceObject(minimum: min, maximum: max, stepInterval: range.stepInterval, numberFormatter: numberFormatter)
         }
 
-        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: formatter, pickerSource: pickerSource)
+        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: textFieldOptions, formatter: formatter, pickerSource: pickerSource)
     }
     
     /// Override to check if the returned value is a Measurement and return the double value if it is.
