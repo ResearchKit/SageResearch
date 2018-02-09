@@ -34,8 +34,8 @@
 import Foundation
 
 /// `RSDDataLogger` is used to write data samples using a custom encoding to a logging file.
-/// - note: This class does **not** use a serial queue to process the samples. It is assumed that the recorder that
-/// is using this file will handle that implementation.
+/// - note: This class does **not** use a serial queue to process the samples. It is assumed that the
+/// recorder that is using this file will handle that implementation.
 open class RSDDataLogger {
     
     /// A unique identifier for the logger.

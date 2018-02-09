@@ -29,7 +29,26 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FF8B531B1FCE678E006B6937"
+               BuildableName = "ResearchSuiteTests_iOS.xctest"
+               BlueprintName = "ResearchSuiteTests_iOS"
+               ReferencedContainer = "container:ResearchSuite.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FF8B53131FCE678E006B6937"
+            BuildableName = "ResearchSuite.framework"
+            BlueprintName = "ResearchSuite (iOS)"
+            ReferencedContainer = "container:ResearchSuite.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

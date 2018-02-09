@@ -1,0 +1,69 @@
+{
+    "identifier": "textfield",
+    "actions": {
+        "cancel": { "iconName": "closeActivity" }
+    },
+    "steps": [
+              {
+              "identifier": "step4",
+              "type": "form",
+              "text": "These inputs use a formatter to parse the entered text.",
+              "inputFields": [{
+                              "identifier": "number",
+                              "dataType": "integer",
+                              "prompt": "Pick a number between -2 and +3",
+                              "uiHint": "textfield",
+                              "range" : {   "minimumValue" : -2,
+                                            "maximumValue" : 3,
+                                            "stepInterval" : 1}
+                              },
+                              {
+                              "identifier": "duration",
+                              "dataType": "duration",
+                              "uiHint": "textfield",
+                              "prompt": "Enter a duration of time."
+                              }
+                              ]
+              },
+              {
+              "identifier": "heightAndWeight",
+              "type": "form",
+              "title": "Height and Weight",
+              "text": "Enter height and weight in your current Locale.",
+              "inputFields": [{
+                              "identifier": "heightAdult",
+                              "dataType": "height.adult",
+                              "uiHint": "textfield",
+                              "prompt": "Enter a height for an adult"
+                              },
+                              {
+                              "identifier": "weightAdult",
+                              "dataType": "weight.adult",
+                              "uiHint": "textfield",
+                              "prompt": "Enter a weight for an adult"
+                              },
+                              {
+                              "identifier": "heightInfant",
+                              "dataType": "height.infant",
+                              "uiHint": "textfield",
+                              "prompt": "Enter a height for a baby"
+                              },
+                              {
+                              "identifier": "weightInfant",
+                              "dataType": "weight.infant",
+                              "uiHint": "textfield",
+                              "prompt": "Enter a weight for a baby"
+                              }
+                              ]
+              },
+              {
+              "identifier": "year",
+              "type": "form",
+              "title": "Enter a year",
+              "text": "Enter a year in the past.",
+              "dataType": "year",
+              "uiHint": "textfield",
+              "range": { "allowFuture": false }
+              }
+              ]
+}

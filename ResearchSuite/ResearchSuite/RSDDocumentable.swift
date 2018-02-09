@@ -42,23 +42,36 @@ public protocol RSDEnumSet : Hashable, RawRepresentable where RawValue == String
 
 public struct RSDDocumentCreator {
     
-    let allEnums: [RSDDocumentableEnum.Type] = [
+    let allEnums: [RSDDocumentableEnum.Type] = {
+        
+        var allEnums: [RSDDocumentableEnum.Type] = [
         RSDAnswerResultType.BaseType.self,
         RSDAnswerResultType.SequenceType.self,
+        RSDAsyncActionType.self,
+        RSDDateCoderObject.self,
         RSDDeviceType.self,
         RSDFormDataType.self,
         RSDFormUIHint.self,
         RSDIdentifier.self,
-        RSDStandardPermissionType.self,
+        RSDKeyboardType.self,
         RSDResultType.self,
+        RSDStandardPermissionType.self,
         RSDStepType.self,
-        RSDDateCoderObject.self,
         RSDSurveyRuleOperator.self,
         RSDTextAutocapitalizationType.self,
         RSDTextAutocorrectionType.self,
         RSDTextSpellCheckingType.self,
-        RSDKeyboardType.self,
         ]
+    
+    #if os(iOS)
+        let iOSEnums: [RSDDocumentableEnum.Type] = [
+            RSDMotionRecorderType.self,
+            ]
+        allEnums.append(contentsOf: iOSEnums)
+    #endif
+        
+        return allEnums
+    }()
     
     let allOptionSets: [RSDDocumentableOptionSet.Type] = [
         RSDActiveUIStepCommand.self,
@@ -70,27 +83,41 @@ public struct RSDDocumentCreator {
         RSDRegExValidatorObject.self,
         ]
 
-    let allCodableObjects: [RSDDocumentableCodableObject.Type] = [
-        RSDAnswerResultType.self,
-        RSDResourceTransformerObject.self,
-        RSDStandardAsyncActionConfiguration.self,
-        RSDResultObject.self,
-        RSDAnswerResultObject.self,
-        RSDFileResultObject.self,
-        RSDCollectionResultObject.self,
-        RSDTaskResultObject.self,
-        RSDColorThemeElementObject.self,
-        RSDFetchableImageThemeElementObject.self,
-        RSDAnimatedImageThemeElementObject.self,
-        RSDViewThemeElementObject.self,
-        RSDUIActionObject.self,
-        RSDSkipToUIActionObject.self,
-        RSDWebViewUIActionObject.self,
-        RSDDateRangeObject.self,
-        RSDNumberRangeObject.self,
-        RSDTextFieldOptionsObject.self,
-        RSDDurationRangeObject.self,
-        ]
+    let allCodableObjects: [RSDDocumentableCodableObject.Type] = {
+        var allCodableObjects: [RSDDocumentableCodableObject.Type] = [
+            RSDAnswerResultType.self,
+            RSDResourceTransformerObject.self,
+            RSDStandardAsyncActionConfiguration.self,
+            RSDResultObject.self,
+            RSDAnswerResultObject.self,
+            RSDFileResultObject.self,
+            RSDCollectionResultObject.self,
+            RSDTaskResultObject.self,
+            RSDColorThemeElementObject.self,
+            RSDFetchableImageThemeElementObject.self,
+            RSDAnimatedImageThemeElementObject.self,
+            RSDViewThemeElementObject.self,
+            RSDUIActionObject.self,
+            RSDSkipToUIActionObject.self,
+            RSDWebViewUIActionObject.self,
+            RSDDateRangeObject.self,
+            RSDNumberRangeObject.self,
+            RSDTextFieldOptionsObject.self,
+            RSDDurationRangeObject.self,
+            ]
+        
+    #if os(iOS)
+        let iOSCodableObjects: [RSDDocumentableCodableObject.Type] = [
+            RSDDistanceRecorderConfiguration.self,
+            RSDDistanceRecord.self,
+            RSDMotionRecorderConfiguration.self,
+            RSDMotionRecord.self,
+            ]
+        allCodableObjects.append(contentsOf: iOSCodableObjects)
+    #endif
+        
+        return allCodableObjects
+    }()
     
     let allDecodableObjects: [RSDDocumentableDecodableObject.Type] = [
         RSDChoiceObject<String>.self,

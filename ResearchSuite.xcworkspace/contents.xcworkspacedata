@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ResearchSuiteTestApp/ResearchSuiteTestApp.xcodeproj">
+      location = "group:/Users/syoung2/Documents/AppleCode/SageResearch/RSDTestApp/RSDTestApp.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:ResearchSuiteUI/ResearchSuiteUI.xcodeproj">

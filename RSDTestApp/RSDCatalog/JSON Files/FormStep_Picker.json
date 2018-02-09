@@ -1,0 +1,111 @@
+{
+    "identifier": "picker",
+    "actions": {
+        "cancel": { "iconName": "closeActivity" }
+    },
+    "steps": [{
+              "identifier": "selectOne",
+              "type": "form",
+              "title": "Single Choice",
+              "text": "Select a single option",
+              "uiHint": "picker",
+              "dataType": "singleChoice",
+              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+              },
+              {
+              "identifier": "imageList",
+              "type": "form",
+              "title": "Single Choice with Images",
+              "text": "Select a single option",
+              "uiHint": "picker",
+              "dataType": "singleChoice.integer",
+              "choices": [{
+                          "text": "delighted",
+                          "detail": "Nothing could be better!",
+                          "value": 1,
+                          "icon": "moodScale1"
+                          },
+                          {
+                          "text": "good",
+                          "detail": "Life is good.",
+                          "value": 2,
+                          "icon": "moodScale2"
+                          },
+                          {
+                          "text": "so-so",
+                          "detail": "Things are okay, I guess.",
+                          "value": 3,
+                          "icon": "moodScale3"
+                          },
+                          {
+                          "text": "sad",
+                          "detail": "I'm feeling a bit down.",
+                          "value": 4,
+                          "icon": "moodScale4"
+                          },
+                          {
+                          "text": "miserable",
+                          "detail": "I cry into my pillow every night.",
+                          "value": 5,
+                          "icon": "moodScale5"
+                          }
+                          ]
+              },
+              {
+              "identifier": "multipleInputs",
+              "type": "form",
+              "title": "Pick some values",
+              "text": "These inputs use a picker view to select the answer.",
+              "inputFields": [{
+                              "identifier": "date",
+                              "dataType": "date",
+                              "uiHint": "picker",
+                              "prompt": "Pick a date in the future",
+                              "range": {
+                                  "allowPast": false,
+                                  "codingFormat": "yyyy-MM-dd"
+                                  }
+                              },
+                              {
+                              "identifier": "number",
+                              "dataType": "integer",
+                              "prompt": "Pick a number between -2 and +3",
+                              "uiHint": "picker",
+                              "range" : {   "minimumValue" : -2,
+                                            "maximumValue" : 3,
+                                            "stepInterval" : 1}
+                              },
+                              {
+                              "identifier": "multipleComponent",
+                              "dataType": "multipleComponent",
+                              "prompt": "Pick a combination of colors and animals",
+                              "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat", "duck"]]
+                              },
+                              {
+                              "identifier": "duration",
+                              "dataType": "duration",
+                              "prompt": "Pick a time interval"
+                              }
+                              ]
+              },
+              {
+              "identifier": "heightAndWeight",
+              "type": "form",
+              "title": "Height and Weight",
+              "text": "If your Locale is US, these will use a picker with US Customary units.",
+              "inputFields": [{
+                              "identifier": "heightAdult",
+                              "dataType": "height.adult",
+                              "uiHint": "picker",
+                              "prompt": "Enter a height for an adult"
+                              },
+                              {
+                              "identifier": "weightInfant",
+                              "dataType": "weight.infant",
+                              "prompt": "Enter a weight for a baby",
+                              "uiHint": "picker"
+                              }
+                              ]
+              }
+              ]
+}

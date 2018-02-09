@@ -1,0 +1,56 @@
+{
+    "identifier"        : "motion",
+    "schemaInfo": {
+        "identifier": "Motion Recorder",
+        "revision": 1
+    },
+    "actions"           : { "cancel": { "iconName": "closeActivity" }},
+    "shouldHideActions" : ["goBackward", "skip"],
+    "steps"             : [
+                           {
+                           "identifier"     : "shaker",
+                           "type"           : "section",
+                           "asyncActions"      : [
+                                                  {
+                                                  "identifier"              : "motion",
+                                                  "type"                    : "motion",
+                                                  "startStepIdentifier"     : "countdown",
+                                                  "requiresBackgroundAudio" : true,
+                                                  "recorderTypes"           : ["gravity", "gyro"]
+                                                  }
+                                                  ],
+                           "steps"          : [
+                                               {
+                                               "identifier"   : "instruction",
+                                               "type"         : "instruction",
+                                               "title"        : "Please hold your phone",
+                                               "text"         : "After the countdown, shake your phone. This will record the calculated gravity vector and the raw gyro data."
+                                               },
+                                               {
+                                               "identifier"     : "countdown",
+                                               "type"           : "countdown",
+                                               "text"           : "Start in",
+                                               "duration"       : 5,
+                                               "commands"       : ["playSoundOnStart", "transitionAutomatically"]
+                                               },
+                                               {
+                                               "identifier"         : "motion",
+                                               "type"               : "active",
+                                               "duration"           : 30,
+                                               "text"               : "Shake your phone",
+                                               "commands"           : ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate",
+                                                                       "playSound"],
+                                               "spokenInstructions" : { "start": "Start shaking your phone",
+                                                                        "halfway": "Halfway there. Keep shaking!",
+                                                                        "end": "You're done!"}
+                                               }
+                                               ]
+                           },
+                           {
+                           "identifier"   : "completion",
+                           "type"         : "completion",
+                           "title"        : "Great Job!",
+                           "text"         : "You have completed this task."
+                           }
+                           ]
+}

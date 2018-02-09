@@ -144,7 +144,7 @@ class StepTests: XCTestCase {
 
         var step = RSDSectionStepObject(identifier: "foo", steps: [uiStep], type: "boo")
         step.progressMarkers = ["goo"]
-        step.asyncActions = [RSDStandardAsyncActionConfiguration(identifier: "location", type: .location, startStepIdentifier: nil, stopStepIdentifier: nil)]
+        step.asyncActions = [RSDStandardAsyncActionConfiguration(identifier: "location", type: .distance, startStepIdentifier: nil, stopStepIdentifier: nil)]
 
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")
