@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/syoung2/Documents/AppleCode/SageResearch/RSDTestApp/RSDTestApp.xcodeproj">
+      location = "group:RSDTestApp/RSDTestApp.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:ResearchSuiteUI/ResearchSuiteUI.xcodeproj">
@@ -11,6 +11,6 @@
       location = "group:ResearchSuite/ResearchSuite.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/syoung2/Documents/AppleCode/SageResearch/RK1Translator/RK1Translator.xcodeproj">
+      location = "group:RK1Translator/RK1Translator.xcodeproj">
    </FileRef>
 </Workspace>
