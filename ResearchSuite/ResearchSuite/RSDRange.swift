@@ -63,11 +63,11 @@ public protocol RSDDateRange : RSDRange {
     
     /// Whether or not the UI should allow future dates. If `nil` or if `minDate` is defined then this value
     /// is ignored. Default is `true`.
-    var allowFuture: Bool? { get }
+    var shouldAllowFuture: Bool? { get }
     
     /// Whether or not the UI should allow past dates. If `nil` or if `maxDate` is defined then this value
     /// is ignored. Default is `true`.
-    var allowPast: Bool? { get }
+    var shouldAllowPast: Bool? { get }
     
     /// The minute interval to allow for a time picker. A time picker will default to 1 minute if this
     /// is `nil` or if the number is outside the allowable range of 1 to 30 minutes.
@@ -84,14 +84,14 @@ extension RSDDateRange {
     /// date if `allowPast` is non-nil and `false`. If both `minDate` and `allowPast` are `nil` then this
     /// property will return `nil`.
     public var minimumDate: Date? {
-        return minDate ?? ((allowPast ?? true) ? nil : Date())
+        return minDate ?? ((shouldAllowPast ?? true) ? nil : Date())
     }
     
     /// The maximum allowed date. This is calculated by using either the `maxDate` (if non-nil) or today's
     /// date if `allowFuture` is non-nil and `false`. If both `maxDate` and `allowFuture` are `nil` then this
     /// property will return `nil`.
     public var maximumDate: Date? {
-        return maxDate ?? ((allowFuture ?? true) ? nil : Date())
+        return maxDate ?? ((shouldAllowFuture ?? true) ? nil : Date())
     }
 }
 
