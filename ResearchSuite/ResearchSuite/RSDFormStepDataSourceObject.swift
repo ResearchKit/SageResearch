@@ -131,7 +131,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     /// - parameter inputField  The inputField to check.
     /// - returns: The ui hint to return.
     open func preferredUIHint(for inputField: RSDInputField) -> RSDFormUIHint {
-        if let uiHint = inputField.uiHint, supportedHints.contains(uiHint) {
+        if let uiHint = inputField.inputUIHint, supportedHints.contains(uiHint) {
             return uiHint
         }
         let standardType: RSDFormUIHint?

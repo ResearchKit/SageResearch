@@ -231,7 +231,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.inputPrompt, "Text")
             XCTAssertEqual(object.placeholder, "enter text")
             XCTAssertEqual(object.dataType, .collection(.singleChoice, .integer))
-            XCTAssertEqual(object.uiHint, .picker)
+            XCTAssertEqual(object.inputUIHint, .picker)
             XCTAssertTrue(object.isOptional)
             XCTAssertEqual(object.choices.count, 4)
             XCTAssertEqual(object.choices.last?.text, "always")
@@ -370,7 +370,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.integer))
-            XCTAssertEqual(object.uiHint, .slider)
+            XCTAssertEqual(object.inputUIHint, .slider)
             if let range = object.range as? RSDNumberRange {
                 XCTAssertEqual(range.minimumValue, -2)
                 XCTAssertEqual(range.maximumValue, 3)
@@ -459,7 +459,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.decimal))
-            XCTAssertEqual(object.uiHint, .slider)
+            XCTAssertEqual(object.inputUIHint, .slider)
             if let range = object.range as? RSDNumberRangeObject {
                 XCTAssertEqual(range.minimumValue, -2.5)
                 XCTAssertEqual(range.maximumValue, 3)
@@ -525,7 +525,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.duration))
-            XCTAssertEqual(object.uiHint, .picker)
+            XCTAssertEqual(object.inputUIHint, .picker)
             if let range = object.range as? RSDDurationRangeObject {
                 XCTAssertEqual(range.baseUnit, .minutes)
                 XCTAssertEqual(range.minimumDuration, Measurement(value: 15, unit: UnitDuration.minutes))
@@ -590,7 +590,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.date))
-            XCTAssertEqual(object.uiHint, .picker)
+            XCTAssertEqual(object.inputUIHint, .picker)
             if let range = object.range as? RSDDateRange {
                 
                 let calendar = Calendar(identifier: .gregorian)
@@ -666,7 +666,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.string))
-            XCTAssertEqual(object.uiHint, .textfield)
+            XCTAssertEqual(object.inputUIHint, .textfield)
             if let textFieldOptions = object.textFieldOptions  {
                 XCTAssertEqual((textFieldOptions.textValidator as? RSDRegExValidatorObject)?.regExPattern, "[A:C]")
                 XCTAssertEqual(textFieldOptions.invalidMessage, "You know me")
@@ -724,7 +724,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.string))
-            XCTAssertEqual(object.uiHint, .textfield)
+            XCTAssertEqual(object.inputUIHint, .textfield)
             if let textFieldOptions = object.textFieldOptions  {
                 XCTAssertNil(textFieldOptions.textValidator)
                 XCTAssertNil(textFieldOptions.invalidMessage)

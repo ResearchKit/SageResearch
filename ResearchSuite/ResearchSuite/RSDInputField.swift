@@ -62,7 +62,7 @@ public protocol RSDInputField {
     var dataType: RSDFormDataType { get }
     
     /// A UI hint for how the study would prefer that the input field is displayed to the user.
-    var uiHint: RSDFormUIHint? { get }
+    var inputUIHint: RSDFormUIHint? { get }
     
     /// Options for displaying a text field. This is only applicable for certain types of UI hints and data types.
     var textFieldOptions: RSDTextFieldOptions? { get }

@@ -46,7 +46,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     open private(set) var dataType: RSDFormDataType
     
     /// A UI hint for how the study would prefer that the input field is displayed to the user.
-    open private(set) var uiHint: RSDFormUIHint?
+    open private(set) var inputUIHint: RSDFormUIHint?
     
     /// A localized string that displays a short text offering a hint to the user of the data to be entered for
     /// this field. This is only applicable for certain types of UI hints and data types.
@@ -97,7 +97,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     public init(identifier: String, dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String? = nil) {
         self.identifier = identifier
         self.dataType = dataType
-        self.uiHint = uiHint
+        self.inputUIHint = uiHint
         self.inputPrompt = prompt
     }
     
@@ -330,7 +330,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.dataType = dataType
-        self.uiHint = uiHint
+        self.inputUIHint = uiHint
         self.range = range
         self.textFieldOptions = textFieldOptions
         self.surveyRules = surveyRules
@@ -349,7 +349,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
         try container.encode(self.dataType, forKey: .dataType)
         try container.encodeIfPresent(inputPrompt, forKey: .prompt)
         try container.encodeIfPresent(placeholder, forKey: .placeholder)
-        try container.encodeIfPresent(uiHint, forKey: .uiHint)
+        try container.encodeIfPresent(inputUIHint, forKey: .uiHint)
         if let obj = self.range {
             let nestedEncoder = container.superEncoder(forKey: .range)
             guard let encodable = obj as? Encodable else {
