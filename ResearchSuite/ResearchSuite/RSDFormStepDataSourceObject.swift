@@ -174,7 +174,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         if case .measurement(_,_) = inputField.dataType {
             return RSDHumanMeasurementTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
         }
-        else if let choiceInput = inputField as? RSDChoiceInputField {
+        else if let choiceInput = inputField.pickerSource as? RSDChoiceInputField {
             return RSDChoicePickerTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, choicePicker: choiceInput)
         }
         else if let componentInput = inputField as? RSDMultipleComponentInputField {

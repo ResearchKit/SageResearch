@@ -78,6 +78,9 @@ public protocol RSDInputField {
     /// - seealso: `RSDAnswerResultType.BaseType` and `RSDFormStepDataSource`
     var formatter: Formatter? { get }
     
+    /// Optional picker source for a picker or multiple selection input field.
+    var pickerSource: RSDPickerDataSource? { get }
+    
     /// Validate the input field to check for any configuration that should throw an error.
     func validate() throws
 }

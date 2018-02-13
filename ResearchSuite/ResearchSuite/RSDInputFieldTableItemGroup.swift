@@ -152,7 +152,7 @@ public final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
     ///     - uiHint: The UI hint.
     public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
         
-        var pickerSource: RSDPickerDataSource? = inputField as? RSDPickerDataSource
+        var pickerSource: RSDPickerDataSource? = inputField.pickerSource
         var formatter: Formatter? = (inputField.range as? RSDRangeWithFormatter)?.formatter
         var dateFormatter: DateFormatter?
         

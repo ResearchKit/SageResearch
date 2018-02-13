@@ -89,7 +89,7 @@ public final class RSDHeightInputTableItem : RSDTextInputTableItem {
         
         // If the measurement size is for an adult and the locale is US
         // then use a picker with feet/inches.
-        var pickerSource: RSDPickerDataSource? = (inputField as? RSDPickerDataSource)
+        var pickerSource: RSDPickerDataSource? = inputField.pickerSource
         if pickerSource == nil, measurementSize == .adult, !Locale.current.usesMetricSystem {
             pickerSource = RSDUSHeightPickerDataSourceObject(formatter: formatter as? RSDLengthFormatter)
         }
@@ -169,7 +169,7 @@ public final class RSDMassInputTableItem : RSDTextInputTableItem {
         
         // If the measurement is for an infant and the locale is US
         // then use the infant mass picker.
-        var pickerSource: RSDPickerDataSource? = (inputField as? RSDPickerDataSource)
+        var pickerSource: RSDPickerDataSource? = inputField.pickerSource
         if pickerSource == nil, measurementSize == .infant, !Locale.current.usesMetricSystem {
             pickerSource = RSDUSInfantMassPickerDataSourceObject(formatter: formatter as? RSDMassFormatter)
         }

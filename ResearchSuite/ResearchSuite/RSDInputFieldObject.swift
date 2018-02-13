@@ -86,6 +86,11 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     }
     private var _formatter: Formatter?
     
+    /// Default for the picker source is to optionally cast self.
+    open var pickerSource: RSDPickerDataSource? {
+        return self as? RSDPickerDataSource
+    }
+    
     /// Default intializer.
     ///
     /// - parameters:
