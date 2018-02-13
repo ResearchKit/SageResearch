@@ -45,16 +45,13 @@ import Foundation
 public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
 
     /// Coder for a timestamp.
-    public static let timestampCoder = RSDDateCoderObject(rawValue: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")!
+    public static let timestamp = RSDDateCoderObject(rawValue: "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")!
     
     /// Coder for a date only.
-    public static let dateOnlyCoder = RSDDateCoderObject(rawValue: "yyyy-MM-dd")!
-    
-    /// Coder for a time only.
-    public static let timeOnlyCoder = RSDDateCoderObject(rawValue: "HH:mm:ss")!
+    public static let dateOnly = RSDDateCoderObject(rawValue: "yyyy-MM-dd")!
     
     /// Coder for a time of day.
-    public static let timeOfDayCoder = RSDDateCoderObject(rawValue: "HH:mm")!
+    public static let timeOfDay = RSDDateCoderObject(rawValue: "HH:mm:ss")!
     
     /// The input format used to represent the formatters and calendar components.
     public var rawValue: String {
@@ -172,6 +169,9 @@ public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
         }
         return components
     }
+}
+
+extension RSDDateCoderObject : Equatable {
 }
 
 extension RSDDateCoderObject : RSDDocumentableEnum {
