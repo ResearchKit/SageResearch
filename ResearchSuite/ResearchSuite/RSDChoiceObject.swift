@@ -41,7 +41,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
     public typealias Value = T
     
     /// A JSON encodable object to return as the value when this choice is selected.
-    public var value: Codable? {
+    public var answerValue: Codable? {
         return _value
     }
     private let _value: Value?

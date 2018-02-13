@@ -90,7 +90,7 @@ public protocol RSDChoice {
     
     /// A JSON encodable object to return as the value when this choice is selected. A `nil` value indicates that
     /// the user has selected to skip the question or "prefers not to answer".
-    var value: Codable? { get }
+    var answerValue: Codable? { get }
     
     /// Localized text string to display for the choice.
     var text: String? { get }

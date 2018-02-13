@@ -82,7 +82,7 @@ extension RSDChoiceOptions {
     /// - returns: The answer created from the given array of selected rows.
     public func selectedAnswer(with selectedRows: [Int]) -> Any? {
         guard selectedRows.count == 1, let row = selectedRows.first else { return nil }
-        return self.choice(forRow: row, forComponent: 0)?.value
+        return self.choice(forRow: row, forComponent: 0)?.answerValue
     }
     
     /// Returns the selected rows that match the given selected answer (if any).
@@ -90,7 +90,7 @@ extension RSDChoiceOptions {
     /// - returns: The selected rows, where there is a selected row for each component, or `nil` if not
     ///            all rows are selected.
     public func selectedRows(from selectedAnswer: Any?) -> [Int]? {
-        guard let index = self.choices.index(where: { RSDObjectEquality($0.value, selectedAnswer) }) else { return nil }
+        guard let index = self.choices.index(where: { RSDObjectEquality($0.answerValue, selectedAnswer) }) else { return nil }
         return [index]
     }
     

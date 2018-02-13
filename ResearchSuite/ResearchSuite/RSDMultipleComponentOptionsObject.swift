@@ -94,7 +94,7 @@ extension RSDMultipleComponentOptions {
     /// - returns: The answer created from the given array of selected rows.
     public func selectedAnswer(with selectedRows: [Int]) -> Any? {
         let choices = selectedRows.enumerated().rsd_mapAndFilter { (component, selectedRow) -> Any? in
-            return self.choice(forRow: selectedRow, forComponent: component)?.value
+            return self.choice(forRow: selectedRow, forComponent: component)?.answerValue
         }
         guard choices.count == self.numberOfComponents
             else {
@@ -114,7 +114,7 @@ extension RSDMultipleComponentOptions {
         
         // Filter through and look for the current answer
         let selected: [Int] = answers.enumerated().rsd_mapAndFilter { (component, value) -> Int? in
-            return choices[component].index(where: { RSDObjectEquality($0.value, value) })
+            return choices[component].index(where: { RSDObjectEquality($0.answerValue, value) })
         }
         
         return selected.count == self.numberOfComponents ? selected : nil

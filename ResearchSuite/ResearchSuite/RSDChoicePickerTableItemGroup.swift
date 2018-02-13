@@ -112,10 +112,10 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         // our other items and de-select them.
         var answers: [Any] = []
         for (ii, input) in selectableItems.enumerated() {
-            if deselectOthers || (ii == index) || input.choice.isExclusive || (input.choice.value == nil) {
+            if deselectOthers || (ii == index) || input.choice.isExclusive || (input.choice.answerValue == nil) {
                 input.selected = (ii == index) && selected
             }
-            if input.selected, let value = input.choice.value {
+            if input.selected, let value = input.choice.answerValue {
                 answers.append(value)
             }
         }
