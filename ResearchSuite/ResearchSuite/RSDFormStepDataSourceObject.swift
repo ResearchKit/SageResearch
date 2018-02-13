@@ -257,7 +257,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
             else {
                 let section = RSDTableSectionBuilder(sectionIndex: sectionBuilders.count, singleFormItem: needExclusiveSection)
                 section.itemGroups.append(itemGroup)
-                section.title = item.prompt
+                section.title = item.inputPrompt
                 sectionBuilders.append(section)
             }
         }

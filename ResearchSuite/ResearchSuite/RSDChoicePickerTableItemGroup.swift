@@ -145,7 +145,7 @@ public final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
             self.singleCheckbox = (choicePicker.numberOfComponents == 1 && choicePicker.numberOfRows(in: 0) == 1)
         }
         else if uiHint == .checkbox || uiHint == .radioButton {
-            let text = inputField.prompt ?? Localization.buttonYes()
+            let text = inputField.inputPrompt ?? Localization.buttonYes()
             let choiceYes = try! RSDChoiceObject<Bool>(value: true, text: text, iconName: nil, detail: nil, isExclusive: true)
             choicePicker = RSDChoiceOptionsObject(choices: [choiceYes], isOptional: true)
             self.singleCheckbox = true

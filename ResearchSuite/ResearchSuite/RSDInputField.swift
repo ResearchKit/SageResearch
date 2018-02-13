@@ -47,7 +47,7 @@ public protocol RSDInputField {
     
     /// A localized string that displays a short text offering a hint to the user of the data to be entered for
     /// this field.
-    var prompt: String? { get }
+    var inputPrompt: String? { get }
     
     /// A localized string that displays placeholder information for the input field.
     ///

@@ -581,7 +581,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         
         // populate the field label
-        textFieldCell.fieldLabel.text = tableItem.inputField.prompt
+        textFieldCell.fieldLabel.text = tableItem.inputField.inputPrompt
         
         // populate the text field placeholder label
         textFieldCell.placeholder = tableItem.placeholder
