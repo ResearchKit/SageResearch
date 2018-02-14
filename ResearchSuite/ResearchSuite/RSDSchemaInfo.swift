@@ -42,5 +42,5 @@ public protocol RSDSchemaInfo {
     var schemaIdentifier: String? { get }
     
     /// A revision number associated with the result schema.
-    var schemaRevision: Int { get }
+    var schemaVersion: Int { get }
 }

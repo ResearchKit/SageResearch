@@ -44,7 +44,7 @@ public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable {
     }
     
     /// A revision number associated with the result schema.
-    public var schemaRevision: Int {
+    public var schemaVersion: Int {
         return revision
     }
     
@@ -65,13 +65,13 @@ public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable {
 extension RSDSchemaInfoObject : Equatable {
     public static func ==(lhs: RSDSchemaInfoObject, rhs: RSDSchemaInfoObject) -> Bool {
         return lhs.schemaIdentifier == rhs.schemaIdentifier &&
-            lhs.schemaRevision == rhs.schemaRevision
+            lhs.schemaVersion == rhs.schemaVersion
     }
 }
 
 extension RSDSchemaInfoObject : Hashable {
     public var hashValue : Int {
-        return (schemaIdentifier?.hashValue ?? 0) ^ schemaRevision
+        return (schemaIdentifier?.hashValue ?? 0) ^ schemaVersion
     }
 }
 

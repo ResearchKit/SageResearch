@@ -82,7 +82,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
     private var _schemaIdentifier: String?
     
     /// A revision number associated with the result schema.
-    public var schemaRevision: Int = 1
+    public var schemaVersion: Int = 1
     
     /// The task transformer for vending a task.
     public var taskTransformer: RSDTaskTransformer!
@@ -115,7 +115,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
         copy.estimatedMinutes = self.estimatedMinutes
         copy.icon = self.icon
         copy._schemaIdentifier = self._schemaIdentifier
-        copy.schemaRevision = self.schemaRevision
+        copy.schemaVersion = self.schemaVersion
         copy.taskTransformer = self.taskTransformer
         return copy
     }
@@ -155,7 +155,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
         self.icon = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .icon)
         self.estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes) ?? 0
         self._schemaIdentifier = try container.decodeIfPresent(String.self, forKey: ._schemaIdentifier)
-        self.schemaRevision = try container.decodeIfPresent(Int.self, forKey: .schemaRevision) ?? 1
+        self.schemaVersion = try container.decodeIfPresent(Int.self, forKey: .schemaRevision) ?? 1
 
         if container.contains(.taskTransformer) {
             let nestedDecoder = try container.superDecoder(forKey: .taskTransformer)

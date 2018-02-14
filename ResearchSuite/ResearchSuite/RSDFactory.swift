@@ -151,7 +151,7 @@ open class RSDFactory {
             try encodableSchema.encode(to: encoder)
         } else {
             let encodableSchema = RSDSchemaInfoObject(identifier: taskResult.schemaInfo?.schemaIdentifier ?? taskResult.identifier,
-                                                      revision: taskResult.schemaInfo?.schemaRevision ?? 1)
+                                                      revision: taskResult.schemaInfo?.schemaVersion ?? 1)
             try encodableSchema.encode(to: encoder)
         }
     }

@@ -1005,7 +1005,7 @@ class CodableResultObjectTests: XCTestCase {
             
             if let schemaInfo = object.schemaInfo {
                 XCTAssertEqual(schemaInfo.schemaIdentifier, "bar")
-                XCTAssertEqual(schemaInfo.schemaRevision, 3)
+                XCTAssertEqual(schemaInfo.schemaVersion, 3)
             }
             
         } catch let err {

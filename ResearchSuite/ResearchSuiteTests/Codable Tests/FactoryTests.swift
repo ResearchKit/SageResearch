@@ -73,7 +73,7 @@ class FactoryTests: XCTestCase {
         XCTAssertEqual(fooTaskInfo.copyright, "This is a copyright string for foo.")
         XCTAssertEqual(fooTaskInfo.estimatedMinutes, 5)
         XCTAssertEqual(fooTaskInfo.icon?.imageName, "fooIcon")
-        XCTAssertEqual(fooTaskInfo.schemaRevision, 2)
+        XCTAssertEqual(fooTaskInfo.schemaVersion, 2)
         
         XCTAssertEqual(barTaskInfo.identifier, "bar")
         XCTAssertEqual(barTaskInfo.title, "Hello Bar!")
@@ -81,7 +81,7 @@ class FactoryTests: XCTestCase {
         XCTAssertNil(barTaskInfo.copyright)
         XCTAssertEqual(barTaskInfo.estimatedMinutes, 7)
         XCTAssertEqual(barTaskInfo.icon?.imageName, "barIcon")
-        XCTAssertEqual(barTaskInfo.schemaRevision, 4)
+        XCTAssertEqual(barTaskInfo.schemaVersion, 4)
     }
     
     func testFetchTask() {

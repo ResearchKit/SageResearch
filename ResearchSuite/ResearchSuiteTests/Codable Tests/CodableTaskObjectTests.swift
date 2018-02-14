@@ -63,7 +63,7 @@ class CodableTaskObjectTests: XCTestCase {
             let object = try decoder.decode(RSDSchemaInfoObject.self, from: json)
             
             XCTAssertEqual(object.schemaIdentifier, "foo")
-            XCTAssertEqual(object.schemaRevision, 5)
+            XCTAssertEqual(object.schemaVersion, 5)
             
             let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
