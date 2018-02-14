@@ -85,10 +85,10 @@ struct TestConditionalNavigator: RSDConditionalStepNavigator {
 }
 
 struct TestTask : RSDTask {
+    
     let identifier: String
     let stepNavigator: RSDStepNavigator
-    
-    var taskInfo: RSDTaskInfoStep?
+    var copyright: String?
     var schemaInfo: RSDSchemaInfo?
     var asyncActions: [RSDAsyncActionConfiguration]?
     

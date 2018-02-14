@@ -92,7 +92,6 @@ class CodableTaskObjectTests: XCTestCase {
             "identifier": "foo",
             "title": "Hello World!",
             "detail": "This is a test.",
-            "copyright": "This is a copyright string.",
             "estimatedMinutes": 5,
             "icon": "foobar"
         }
@@ -105,7 +104,6 @@ class CodableTaskObjectTests: XCTestCase {
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.title, "Hello World!")
             XCTAssertEqual(object.detail, "This is a test.")
-            XCTAssertEqual(object.copyright, "This is a copyright string.")
             XCTAssertEqual(object.estimatedMinutes, 5)
             XCTAssertEqual(object.icon?.imageName, "foobar")
             
@@ -129,7 +127,6 @@ class CodableTaskObjectTests: XCTestCase {
                     "identifier": "foo",
                     "title": "Hello World!",
                     "detail": "This is a test.",
-                    "copyright": "This is a copyright string.",
                     "estimatedMinutes": 5,
                     "icon": "foobar"
                 },
@@ -161,7 +158,6 @@ class CodableTaskObjectTests: XCTestCase {
             XCTAssertEqual(firstTask.identifier, "foo")
             XCTAssertEqual(firstTask.title, "Hello World!")
             XCTAssertEqual(firstTask.detail, "This is a test.")
-            XCTAssertEqual(firstTask.copyright, "This is a copyright string.")
             XCTAssertEqual(firstTask.estimatedMinutes, 5)
             XCTAssertEqual(firstTask.icon?.imageName, "foobar")
             

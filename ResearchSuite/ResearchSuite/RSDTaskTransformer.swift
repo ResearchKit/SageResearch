@@ -45,11 +45,11 @@ public protocol RSDTaskTransformer {
     /// Fetch the task for this task info. Use the given factory to transform the task.
     ///
     /// - parameters:
-    ///     - factory:     The factory to use for creating the task and steps.
-    ///     - taskInfo:    The task info for the task (if applicable).
-    ///     - schemaInfo:  The schema info for the task (if applicable).
-    ///     - callback:    The callback with the task or an error if the task failed, run on the main thread.
-    func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
+    ///     - factory: The factory to use for creating the task and steps.
+    ///     - taskIdentifier: The task info for the task (if applicable).
+    ///     - schemaInfo: The schema info for the task (if applicable).
+    ///     - callback: The callback with the task or an error if the task failed, run on the main thread.
+    func fetchTask(with factory: RSDFactory, taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
 }
 
 /// `RSDTaskResourceTransformer` is an implementation of a `RSDTaskTransformer` that uses a `RSDResourceTransformer`
@@ -62,20 +62,20 @@ extension RSDTaskResourceTransformer {
     /// Fetch the task for this task info. Use the given factory to transform the task.
     ///
     /// - parameters:
-    ///     - factory:     The factory to use for creating the task and steps.
-    ///     - taskInfo:    The task info for the task (if applicable).
-    ///     - schemaInfo:  The schema info for the task (if applicable).
-    ///     - callback:    The callback with the task or an error if the task failed, run on the main thread.
-    public func fetchTask(with factory: RSDFactory, taskInfo: RSDTaskInfoStep, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
+    ///     - factory: The factory to use for creating the task and steps.
+    ///     - taskIdentifier: The task info for the task (if applicable).
+    ///     - schemaInfo: The schema info for the task (if applicable).
+    ///     - callback: The callback with the task or an error if the task failed, run on the main thread.
+    public func fetchTask(with factory: RSDFactory, taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
         DispatchQueue.global().async {
             do {
-                let task = try factory.decodeTask(with: self, taskInfo: taskInfo, schemaInfo: schemaInfo)
+                let task = try factory.decodeTask(with: self, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo)
                 DispatchQueue.main.async {
-                    callback(taskInfo, task, nil)
+                    callback(taskIdentifier, task, nil)
                 }
             } catch let err {
                 DispatchQueue.main.async {
-                    callback(taskInfo, nil, err)
+                    callback(taskIdentifier, nil, err)
                 }
             }
         }

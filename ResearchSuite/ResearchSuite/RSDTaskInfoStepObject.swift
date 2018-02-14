@@ -34,17 +34,16 @@
 import Foundation
 
 /// `RSDTaskInfoStepObject` is a concrete implementation of the `RSDTaskInfoStep` protocol.
-public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbeddedIconVendor, Decodable {
+public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDEmbeddedIconVendor, Decodable {
 
     private enum CodingKeys : String, CodingKey {
         case identifier
         case stepType = "type"
-        case _schemaIdentifier = "schemaIdentifier"
+        case schemaIdentifier
         case schemaRevision
         case title
         case subtitle
         case detail
-        case copyright
         case estimatedMinutes
         case icon
         case taskTransformer
@@ -63,11 +62,9 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
     /// The subtitle text to display for the task in a localized string.
     public var subtitle: String?
     
-    /// Additional detail text to display for the task.
+    /// Additional detail text to display for the task. Generally, this would be displayed
+    /// while the task is being fetched.
     public var detail: String?
-    
-    /// Copyright information for the task.
-    public var copyright: String?
     
     /// The estimated number of minutes that the task will take. If `0`, then this is ignored.
     public var estimatedMinutes: Int = 0
@@ -75,14 +72,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
     /// The icon used to display this task reference in a list of tasks.
     public var icon: RSDImageWrapper?
     
-    /// A short string that uniquely identifies the associated result schema.
-    public var schemaIdentifier: String? {
-        return _schemaIdentifier ?? identifier
-    }
-    private var _schemaIdentifier: String?
-    
-    /// A revision number associated with the result schema.
-    public var schemaVersion: Int = 1
+    public var schemaInfo: RSDSchemaInfo?
     
     /// The task transformer for vending a task.
     public var taskTransformer: RSDTaskTransformer!
@@ -111,11 +101,9 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
         copy.title = self.title
         copy.subtitle = self.subtitle
         copy.detail = self.detail
-        copy.copyright = self.copyright
         copy.estimatedMinutes = self.estimatedMinutes
         copy.icon = self.icon
-        copy._schemaIdentifier = self._schemaIdentifier
-        copy.schemaVersion = self.schemaVersion
+        copy.schemaInfo = self.schemaInfo
         copy.taskTransformer = self.taskTransformer
         return copy
     }
@@ -133,7 +121,6 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
     ///             "title": "Hello Foo!",
     ///             "subtitle": "This is a subtitle.",
     ///             "detail": "This is a test of foo.",
-    ///             "copyright": "This is a copyright string for foo.",
     ///             "estimatedMinutes": 5,
     ///             "icon": "fooIcon",
     ///             "taskTransformer" : { "resourceName": "TaskFoo",
@@ -146,38 +133,22 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, RSDSchemaInfo, RSDEmbedde
     /// - throws: `DecodingError` if there is a decoding error.
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.identifier = try container.decode(String.self, forKey: .identifier)
+        let identifier = try container.decode(String.self, forKey: .identifier)
+        self.identifier = identifier
         self.stepType = try container.decodeIfPresent(RSDStepType.self, forKey: .stepType) ?? .taskInfo
         self.title = try container.decodeIfPresent(String.self, forKey: .title)
         self.subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
-        self.copyright = try container.decodeIfPresent(String.self, forKey: .copyright)
         self.icon = try container.decodeIfPresent(RSDImageWrapper.self, forKey: .icon)
         self.estimatedMinutes = try container.decodeIfPresent(Int.self, forKey: .estimatedMinutes) ?? 0
-        self._schemaIdentifier = try container.decodeIfPresent(String.self, forKey: ._schemaIdentifier)
-        self.schemaVersion = try container.decodeIfPresent(Int.self, forKey: .schemaRevision) ?? 1
-
+        let schemaIdentifier = try container.decodeIfPresent(String.self, forKey: .schemaIdentifier)
+        if let schemaVersion = try container.decodeIfPresent(Int.self, forKey: .schemaRevision) {
+            self.schemaInfo = RSDSchemaInfoObject(identifier: schemaIdentifier ?? identifier, revision: schemaVersion)
+        }
         if container.contains(.taskTransformer) {
             let nestedDecoder = try container.superDecoder(forKey: .taskTransformer)
             self.taskTransformer = try decoder.factory.decodeTaskTransformer(from: nestedDecoder)
         }
-    }
-    
-    /// Fetch the task for this task info. Use the given factory to transform the task.
-    ///
-    /// - parameters:
-    ///     - factory:     The factory to use for creating the task and steps.
-    ///     - callback:    The callback with the task or an error if the task failed, run on the main thread.
-    public func fetchTask(with factory: RSDFactory, callback: @escaping RSDTaskFetchCompletionHandler) {
-        guard let transformer = self.taskTransformer else {
-            let message = "Attempting to fetch a task with a nil transformer."
-            assertionFailure(message)
-            DispatchQueue.main.async {
-                callback(self, nil, RSDValidationError.unexpectedNullObject(message))
-            }
-            return
-        }
-        transformer.fetchTask(with: factory, taskInfo: self, schemaInfo: self, callback: callback)
     }
     
     /// Instantiate a step result that is appropriate for this step.
@@ -196,8 +167,8 @@ extension RSDTaskInfoStepObject : Equatable {
     public static func ==(lhs: RSDTaskInfoStepObject, rhs: RSDTaskInfoStepObject) -> Bool {
         return lhs.identifier == rhs.identifier &&
             lhs.title == rhs.title &&
+            lhs.subtitle == rhs.subtitle &&
             lhs.detail == rhs.detail &&
-            lhs.copyright == rhs.copyright &&
             lhs.estimatedMinutes == rhs.estimatedMinutes &&
             lhs.icon == rhs.icon
     }
@@ -226,7 +197,7 @@ extension RSDTaskInfoStepObject : RSDDocumentableDecodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .stepType, ._schemaIdentifier, .schemaRevision, .title, .subtitle, .detail, .copyright, .estimatedMinutes, .icon, .taskTransformer]
+        let codingKeys: [CodingKeys] = [.identifier, .stepType, .schemaIdentifier, .schemaRevision, .title, .subtitle, .detail,  .estimatedMinutes, .icon, .taskTransformer]
         return codingKeys
     }
     
@@ -238,7 +209,7 @@ extension RSDTaskInfoStepObject : RSDDocumentableDecodableObject {
                 if idx != 0 { return false }
             case .stepType:
                 if idx != 1 { return false }
-            case ._schemaIdentifier:
+            case .schemaIdentifier:
                 if idx != 2 { return false }
             case .schemaRevision:
                 if idx != 3 { return false }
@@ -248,18 +219,16 @@ extension RSDTaskInfoStepObject : RSDDocumentableDecodableObject {
                 if idx != 5 { return false }
             case .detail:
                 if idx != 6 { return false }
-            case .copyright:
-                if idx != 7 { return false }
             case .estimatedMinutes:
-                if idx != 8 { return false }
+                if idx != 7 { return false }
             case .icon:
-                if idx != 9 { return false }
+                if idx != 8 { return false }
             case .taskTransformer:
-                if idx != 10 { return false }
+                if idx != 9 { return false }
                 
             }
         }
-        return keys.count == 11
+        return keys.count == 10
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

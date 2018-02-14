@@ -115,12 +115,7 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
         }
         
         // Set up the step text
-        var text = taskInfo.detail ?? ""
-        if let copyright = taskInfo.copyright {
-            text.append("\n\n")
-            text.append(copyright)
-        }
-        self.textView?.text = text
+        self.textView?.text = taskInfo.detail
     }
     
     /// Override the skip forward action to cancel the task

@@ -53,6 +53,9 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     /// A list of asynchronous actions to run on the task.
     public var asyncActions: [RSDAsyncActionConfiguration]?
     
+    /// Copyright is undefined for a task section. Always `nil`.
+    public let copyright: String? = nil
+    
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.

@@ -42,11 +42,11 @@ public protocol RSDTask : RSDUIActionHandler {
     /// A short string that uniquely identifies the task.
     var identifier: String { get }
     
-    /// Additional information about the task.
-    var taskInfo: RSDTaskInfoStep? { get }
-    
     /// Additional information about the result schema.
     var schemaInfo: RSDSchemaInfo? { get }
+    
+    /// Copyright information for the task.
+    var copyright: String? { get }
     
     /// The step navigator for this task.
     var stepNavigator: RSDStepNavigator { get }
