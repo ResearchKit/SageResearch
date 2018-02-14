@@ -70,33 +70,32 @@ class FactoryTests: XCTestCase {
         XCTAssertEqual(fooTaskInfo.identifier, "foo")
         XCTAssertEqual(fooTaskInfo.title, "Hello Foo!")
         XCTAssertEqual(fooTaskInfo.detail, "This is a test of foo.")
-        XCTAssertEqual(fooTaskInfo.copyright, "This is a copyright string for foo.")
         XCTAssertEqual(fooTaskInfo.estimatedMinutes, 5)
         XCTAssertEqual(fooTaskInfo.icon?.imageName, "fooIcon")
-        XCTAssertEqual(fooTaskInfo.schemaRevision, 2)
+        XCTAssertEqual(fooTaskInfo.schemaInfo?.schemaVersion, 2)
         
         XCTAssertEqual(barTaskInfo.identifier, "bar")
         XCTAssertEqual(barTaskInfo.title, "Hello Bar!")
         XCTAssertEqual(barTaskInfo.detail, "This is a test of bar.")
-        XCTAssertNil(barTaskInfo.copyright)
         XCTAssertEqual(barTaskInfo.estimatedMinutes, 7)
         XCTAssertEqual(barTaskInfo.icon?.imageName, "barIcon")
-        XCTAssertEqual(barTaskInfo.schemaRevision, 4)
+        XCTAssertEqual(barTaskInfo.schemaInfo?.schemaVersion, 4)
     }
     
     func testFetchTask() {
 
         var taskInfo = RSDTaskInfoStepObject(with: "foo")
+        let schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 3)
         taskInfo.taskTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: BundleWrapper.bundleIdentifier!, classType: nil)
         
         let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
-        taskInfo.fetchTask(with: RSDFactory()) { (_, task, err)  in
+        taskInfo.taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: taskInfo.identifier, schemaInfo: schemaInfo) { (_, task, err)  in
             if let task = task {
                 
                 // Check identifiers
-                XCTAssertEqual(task.taskInfo?.identifier, "foo")
-                XCTAssertEqual(task.schemaInfo?.schemaIdentifier, "foo")
                 XCTAssertEqual(task.identifier, "foo")
+                XCTAssertEqual(task.schemaInfo?.schemaIdentifier, "bar")
+                XCTAssertEqual(task.schemaInfo?.schemaVersion, 3)
                 
                 // Investigate the step navigator
                 if let stepNavigator = task.stepNavigator as? RSDConditionalStepNavigatorObject {

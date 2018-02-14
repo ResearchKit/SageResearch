@@ -33,9 +33,8 @@
 
 import Foundation
 
-
 /// A completion handler for fetching a task using the task info `fetchTask()` method.
-public typealias RSDTaskFetchCompletionHandler = (RSDTaskInfoStep, RSDTask?, Error?) -> Void
+public typealias RSDTaskFetchCompletionHandler = (String, RSDTask?, Error?) -> Void
 
 /// The possible errors thrown when fetching a task.
 public enum RSDTaskFetchError : Error {
@@ -47,11 +46,10 @@ public enum RSDTaskFetchError : Error {
     case offline
 }
 
-/// `RSDTaskInfoStep` is a reference interface for information about the task. This includes information that can
-/// be displayed in a table or collection view before starting the task as well as information that is displayed
-/// while the task is being fetched in the case where the task is not fetched using an embedded resource or via
-/// a hardcoded task.
-public protocol RSDTaskInfoStep : RSDStep {
+/// `RSDTaskInfo` includes information to display about a task before the task is fetched.
+/// This can be used to display a collection of tasks and only load the task when selected
+/// by the participant.
+public protocol RSDTaskInfo {
     
     /// A short string that uniquely identifies the task.
     var identifier: String { get }
@@ -62,25 +60,12 @@ public protocol RSDTaskInfoStep : RSDStep {
     /// The subtitle text to display for the task in a localized string.
     var subtitle: String? { get }
     
-    /// Additional detail text to display for the task.
+    /// Additional detail text to display for the task. Generally, this would be displayed
+    /// while the task is being fetched.
     var detail: String? { get }
-    
-    /// Copyright information for the task.
-    var copyright: String? { get }
     
     /// The estimated number of minutes that the task will take. If `0`, then this is ignored.
     var estimatedMinutes: Int { get }
-    
-    /// The estimated time to fetch the task. This can be used by the UI to determine whether or not to
-    /// display a loading state while fetching the task. If `0` then the task is assumed to be cached on the device.
-    var estimatedFetchTime: TimeInterval { get }
-    
-    /// Fetch the task for this task info. Use the given factory to transform the task.
-    ///
-    /// - parameters:
-    ///     - factory:     The factory to use for creating the task and steps.
-    ///     - callback:    The callback with the task or an error if the task failed, run on the main thread.
-    func fetchTask(with factory: RSDFactory, callback: @escaping RSDTaskFetchCompletionHandler)
     
     /// An icon image that can be used for displaying the task.
     ///
@@ -88,4 +73,17 @@ public protocol RSDTaskInfoStep : RSDStep {
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
     func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
+}
+
+/// `RSDTaskInfoStep` is a reference interface for information about the task. This includes information that can
+/// be displayed in a table or collection view before starting the task as well as information that is displayed
+/// while the task is being fetched in the case where the task is not fetched using an embedded resource or via
+/// a hardcoded task.
+public protocol RSDTaskInfoStep : RSDStep, RSDTaskInfo {
+    
+    /// Additional information about the result schema.
+    var schemaInfo: RSDSchemaInfo? { get }
+    
+    /// The task transformer for vending a task.
+    var taskTransformer: RSDTaskTransformer!  { get }
 }

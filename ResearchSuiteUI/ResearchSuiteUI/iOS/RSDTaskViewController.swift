@@ -366,7 +366,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
             if let autoForward = self.delegate?.taskViewController?(self, shouldShowTaskInfoFor: taskInfo) {
                 return !autoForward
             } else {
-                return (self.taskPath.parentPath != nil) && (taskInfo.estimatedFetchTime == 0)
+                return (self.taskPath.parentPath != nil) && (taskInfo.taskTransformer.estimatedFetchTime == 0)
             }
         }()
         if showLoading {

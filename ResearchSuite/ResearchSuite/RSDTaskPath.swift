@@ -154,7 +154,6 @@ public final class RSDTaskPath : NSObject, NSCopying {
     public init(task: RSDTask, parentPath: RSDTaskPath? = nil) {
         self.identifier = task.identifier
         self.task = task
-        self.taskInfo = task.taskInfo
         self.result = task.instantiateTaskResult()
         super.init()
         commonInit(identifier: task.identifier, parentPath: parentPath)
@@ -194,7 +193,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
         }
         
         self.isLoading = true
-        taskInfo.fetchTask(with: factory) { [weak self] (info, task, error) in
+        taskInfo.taskTransformer.fetchTask(with: factory, taskIdentifier: self.identifier, schemaInfo: taskInfo.schemaInfo) { [weak self] (info, task, error) in
             guard let strongSelf = self else { return }
             strongSelf.isLoading = false
             if task != nil {

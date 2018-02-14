@@ -201,7 +201,6 @@ class StepTests: XCTestCase {
         step.title = "title"
         step.subtitle = "subtitle"
         step.detail = "detail"
-        step.copyright = "copyright"
         step.estimatedMinutes = 5
         
         let copy = step.copy(with: "bar")
@@ -209,7 +208,6 @@ class StepTests: XCTestCase {
         XCTAssertEqual(copy.title, "title")
         XCTAssertEqual(copy.subtitle, "subtitle")
         XCTAssertEqual(copy.detail, "detail")
-        XCTAssertEqual(copy.copyright, "copyright")
         XCTAssertEqual(copy.estimatedMinutes, 5)
     }
 }

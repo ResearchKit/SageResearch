@@ -36,12 +36,12 @@ import Foundation
 /// `RSDTaskObject` is the interface for running a task. It includes information about how to calculate progress,
 /// validation, and the order of display for the steps.
 public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
-
+    
     /// A short string that uniquely identifies the task.
     public let identifier: String
     
-    /// Information about the task.
-    public var taskInfo: RSDTaskInfoStep?
+    /// Copyright information about the task.
+    public var copyright: String?
     
     /// Information about the result schema.
     public var schemaInfo: RSDSchemaInfo?
@@ -58,9 +58,9 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
     ///     - stepNavigator: The step navigator for this task.
     ///     - schemaInfo: Information about the result schema.
     ///     - asyncActions: A list of asynchronous actions to run on the task.
-    public init(taskInfo: RSDTaskInfoStep, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
-        self.identifier = taskInfo.identifier
-        self.taskInfo = taskInfo
+    public init(identifier: String, stepNavigator: RSDStepNavigator, copyright: String? = nil, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
+        self.identifier = identifier
+        self.copyright = copyright
         self.schemaInfo = schemaInfo
         self.stepNavigator = stepNavigator
         self.asyncActions = asyncActions
@@ -68,7 +68,7 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, taskInfo, schemaInfo, asyncActions
+        case identifier, copyright, schemaInfo, asyncActions
     }
     
     /// Initialize from a `Decoder`.
@@ -106,28 +106,26 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         // Set the identifier and
-        let taskInfo: RSDTaskInfoStep?
         let identifier: String
-        if let info = try container.decodeIfPresent(RSDTaskInfoStepObject.self, forKey: .taskInfo) {
-            taskInfo = info
-            identifier = info.identifier
-        }
-        else {
-            if let info = decoder.taskInfo {
-                taskInfo = info
-                identifier = info.identifier
-            }
-            else {
-                identifier = try container.decode(String.self, forKey: .identifier)
-                taskInfo = decoder.taskDataSource?.taskInfo(with: identifier)
-            }
+        if let taskIdentifier = decoder.taskIdentifier {
+            identifier = taskIdentifier
+        } else {
+            identifier = try container.decode(String.self, forKey: .identifier)
         }
         
-        self.taskInfo = taskInfo
         self.identifier = identifier
+        self.copyright = try container.decodeIfPresent(String.self, forKey: .copyright)
         
         // Look for a schema info
-        self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo ?? decoder.taskDataSource?.schemaInfo(with: identifier)
+        let schemaInfo: RSDSchemaInfo?
+        if let info = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) {
+            schemaInfo = info
+        } else if let info = decoder.schemaInfo {
+            schemaInfo = info
+        } else {
+            schemaInfo = decoder.taskDataSource?.schemaInfo(with: identifier)
+        }
+        self.schemaInfo = schemaInfo
         
         // Get the step navigator
         let factory = decoder.factory
@@ -198,7 +196,7 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .taskInfo, .schemaInfo, .asyncActions]
+        let codingKeys: [CodingKeys] = [.identifier, .copyright, .schemaInfo, .asyncActions]
         return codingKeys
     }
     
@@ -209,7 +207,7 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
             switch key {
             case .identifier:
                 if idx != 0 { return false }
-            case .taskInfo:
+            case .copyright:
                 if idx != 1 { return false }
             case .schemaInfo:
                 if idx != 2 { return false }

@@ -86,15 +86,18 @@ open class RSDFactory {
 
     /// Use the resource transformer to get a data object to decode into a task.
     ///
-    /// - parameter resourceTransformer: The resource transformer.
+    /// - parameters:
+    ///     - resourceTransformer: The resource transformer.
+    ///     - taskIdentifier: The identifier of the task.
+    ///     - schemaInfo: The schema info for the task.
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeTask(with resourceTransformer: RSDResourceTransformer, taskInfo: RSDTaskInfoStep? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
+    open func decodeTask(with resourceTransformer: RSDResourceTransformer, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
         let (data, type) = try resourceTransformer.resourceData()
         return try decodeTask(with: data,
                               resourceType: type,
                               typeName: resourceTransformer.classType,
-                              taskInfo: taskInfo,
+                              taskIdentifier: taskIdentifier,
                               schemaInfo: schemaInfo)
     }
     
@@ -105,11 +108,12 @@ open class RSDFactory {
     ///     - data:            The data to use to decode the object.
     ///     - resourceType:    The type of resource (json or plist).
     ///     - typeName:        The class name type key for this task (if any).
-    ///     - taskInfo:        The task info used to create this task (if any).
+    ///     - taskIdentifier:  The identifier of the task.
+    ///     - schemaInfo:      The schema info for the task.
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskInfo: RSDTaskInfoStep? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
-        let decoder = try createDecoder(for: resourceType, taskInfo: taskInfo, schemaInfo: schemaInfo)
+    open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
+        let decoder = try createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo)
         let task = try decoder.decode(RSDTaskObject.self, from: data)
         try task.validate()
         return task
@@ -151,7 +155,7 @@ open class RSDFactory {
             try encodableSchema.encode(to: encoder)
         } else {
             let encodableSchema = RSDSchemaInfoObject(identifier: taskResult.schemaInfo?.schemaIdentifier ?? taskResult.identifier,
-                                                      revision: taskResult.schemaInfo?.schemaRevision ?? 1)
+                                                      revision: taskResult.schemaInfo?.schemaVersion ?? 1)
             try encodableSchema.encode(to: encoder)
         }
     }
@@ -589,11 +593,11 @@ open class RSDFactory {
     ///
     /// - parameters:
     ///     - resourceType:    The resource type.
-    ///     - taskInfo:        The task info to pass with the decoder.
+    ///     - taskIdentifier:  The task identifier to pass with the decoder.
     ///     - schemaInfo:      The schema info to pass with the decoder.
     /// - returns: The decoder for the given type.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func createDecoder(for resourceType: RSDResourceType, taskInfo: RSDTaskInfoStep? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDFactoryDecoder {
+    open func createDecoder(for resourceType: RSDResourceType, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDFactoryDecoder {
         var decoder : RSDFactoryDecoder = try {
             if resourceType == .json {
                 return self.createJSONDecoder()
@@ -607,8 +611,8 @@ open class RSDFactory {
                 throw RSDResourceTransformerError.invalidResourceType("ResourceType \(resourceType.rawValue) is not supported by this factory. Supported types: \(supportedTypeList)")
             }
             }()
-        if let taskInfo = taskInfo {
-            decoder.userInfo[.taskInfo] = taskInfo
+        if let taskIdentifier = taskIdentifier {
+            decoder.userInfo[.taskIdentifier] = taskIdentifier
         }
         if let schemaInfo = schemaInfo {
             decoder.userInfo[.schemaInfo] = schemaInfo
@@ -688,8 +692,8 @@ extension CodingUserInfoKey {
     /// The key for the factory to use when coding.
     public static let factory = CodingUserInfoKey(rawValue: "RSDFactory.factory")!
     
-    /// The key for the task info to use when coding.
-    public static let taskInfo = CodingUserInfoKey(rawValue: "RSDFactory.taskInfo")!
+    /// The key for the task identifier to use when coding.
+    public static let taskIdentifier = CodingUserInfoKey(rawValue: "RSDFactory.taskIdentifier")!
     
     /// The key for the schema info to use when coding.
     public static let schemaInfo = CodingUserInfoKey(rawValue: "RSDFactory.schemaInfo")!
@@ -721,8 +725,8 @@ extension Decoder {
     }
     
     /// The task info to use when decoding if there isn't a local task info defined on the object.
-    public var taskInfo: RSDTaskInfoStep? {
-        return self.userInfo[.taskInfo] as? RSDTaskInfoStep
+    public var taskIdentifier: String? {
+        return self.userInfo[.taskIdentifier] as? String
     }
     
     /// The schema info to use when decoding if there isn't a local task info defined on the object.
@@ -759,8 +763,8 @@ extension Encoder {
     }
     
     /// The task info to use when encoding.
-    public var taskInfo: RSDTaskInfoStep? {
-        return self.userInfo[.taskInfo] as? RSDTaskInfoStep
+    public var taskIdentifier: String? {
+        return self.userInfo[.taskIdentifier] as? String
     }
     
     /// The schema info to use when encoding.
