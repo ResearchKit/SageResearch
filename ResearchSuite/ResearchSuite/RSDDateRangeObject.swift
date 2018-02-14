@@ -47,11 +47,11 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     
     /// Whether or not the UI should allow future dates. If `nil` or if `maxDate` is defined then this value
     /// is ignored. Default is `true`.
-    public let allowFuture: Bool?
+    public let shouldAllowFuture: Bool?
     
     /// Whether or not the UI should allow past dates. If `nil` or if `minDate` is defined then this value
     /// is ignored. Default is `true`.
-    public let allowPast: Bool?
+    public let shouldAllowPast: Bool?
     
     /// The minute interval to allow for a time picker. A time picker will default to 1 minute if this
     /// is `nil` or if the number is outside the allowable range of 1 to 30 minutes.
@@ -73,8 +73,8 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     public init(minimumDate: Date?, maximumDate: Date?, allowFuture: Bool? = nil, allowPast: Bool? = nil, minuteInterval: Int? = nil, dateCoder: RSDDateCoder? = nil) {
         self.minDate = minimumDate
         self.maxDate = maximumDate
-        self.allowFuture = allowFuture
-        self.allowPast = allowPast
+        self.shouldAllowFuture = allowFuture
+        self.shouldAllowPast = allowPast
         self.minuteInterval = minuteInterval
         self.dateCoder = dateCoder
     }
@@ -139,8 +139,8 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
         self.dateCoder = dateCoder
         self.minDate = minDate
         self.maxDate = maxDate
-        self.allowPast = try container.decodeIfPresent(Bool.self, forKey: .allowPast)
-        self.allowFuture = try container.decodeIfPresent(Bool.self, forKey: .allowFuture)
+        self.shouldAllowPast = try container.decodeIfPresent(Bool.self, forKey: .allowPast)
+        self.shouldAllowFuture = try container.decodeIfPresent(Bool.self, forKey: .allowFuture)
         self.minuteInterval = try container.decodeIfPresent(Int.self, forKey: .minuteInterval)
     }
     
@@ -163,8 +163,8 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
             try container.encodeIfPresent(minDate, forKey: .minDate)
             try container.encodeIfPresent(maxDate, forKey: .maxDate)
         }
-        try container.encodeIfPresent(allowPast, forKey: .allowPast)
-        try container.encodeIfPresent(allowFuture, forKey: .allowFuture)
+        try container.encodeIfPresent(shouldAllowPast, forKey: .allowPast)
+        try container.encodeIfPresent(shouldAllowFuture, forKey: .allowFuture)
         try container.encodeIfPresent(minuteInterval, forKey: .minuteInterval)
     }
 }

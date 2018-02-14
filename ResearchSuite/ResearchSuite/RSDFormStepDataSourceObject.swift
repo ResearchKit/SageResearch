@@ -131,7 +131,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     /// - parameter inputField  The inputField to check.
     /// - returns: The ui hint to return.
     open func preferredUIHint(for inputField: RSDInputField) -> RSDFormUIHint {
-        if let uiHint = inputField.uiHint, supportedHints.contains(uiHint) {
+        if let uiHint = inputField.inputUIHint, supportedHints.contains(uiHint) {
             return uiHint
         }
         let standardType: RSDFormUIHint?
@@ -174,7 +174,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         if case .measurement(_,_) = inputField.dataType {
             return RSDHumanMeasurementTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
         }
-        else if let choiceInput = inputField as? RSDChoiceInputField {
+        else if let choiceInput = inputField.pickerSource as? RSDChoiceInputField {
             return RSDChoicePickerTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, choicePicker: choiceInput)
         }
         else if let componentInput = inputField as? RSDMultipleComponentInputField {
@@ -257,7 +257,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
             else {
                 let section = RSDTableSectionBuilder(sectionIndex: sectionBuilders.count, singleFormItem: needExclusiveSection)
                 section.itemGroups.append(itemGroup)
-                section.title = item.prompt
+                section.title = item.inputPrompt
                 sectionBuilders.append(section)
             }
         }

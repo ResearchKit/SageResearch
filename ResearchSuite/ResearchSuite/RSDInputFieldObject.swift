@@ -46,11 +46,11 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     open private(set) var dataType: RSDFormDataType
     
     /// A UI hint for how the study would prefer that the input field is displayed to the user.
-    open private(set) var uiHint: RSDFormUIHint?
+    open private(set) var inputUIHint: RSDFormUIHint?
     
     /// A localized string that displays a short text offering a hint to the user of the data to be entered for
     /// this field. This is only applicable for certain types of UI hints and data types.
-    open var prompt: String?
+    open var inputPrompt: String?
     
     /// A localized string that displays placeholder information for the input field.
     ///
@@ -86,6 +86,11 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     }
     private var _formatter: Formatter?
     
+    /// Default for the picker source is to optionally cast self.
+    open var pickerSource: RSDPickerDataSource? {
+        return self as? RSDPickerDataSource
+    }
+    
     /// Default intializer.
     ///
     /// - parameters:
@@ -97,8 +102,8 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     public init(identifier: String, dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String? = nil) {
         self.identifier = identifier
         self.dataType = dataType
-        self.uiHint = uiHint
-        self.prompt = prompt
+        self.inputUIHint = uiHint
+        self.inputPrompt = prompt
     }
     
     /// Validate the input field to check for any configuration that should throw an error.
@@ -330,12 +335,12 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.dataType = dataType
-        self.uiHint = uiHint
+        self.inputUIHint = uiHint
         self.range = range
         self.textFieldOptions = textFieldOptions
         self.surveyRules = surveyRules
         self.identifier = try container.decode(String.self, forKey: .identifier)
-        self.prompt = try container.decodeIfPresent(String.self, forKey: .prompt)
+        self.inputPrompt = try container.decodeIfPresent(String.self, forKey: .prompt)
         self.placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder)
         self.isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? false
     }
@@ -347,9 +352,9 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.identifier, forKey: .identifier)
         try container.encode(self.dataType, forKey: .dataType)
-        try container.encodeIfPresent(prompt, forKey: .prompt)
+        try container.encodeIfPresent(inputPrompt, forKey: .prompt)
         try container.encodeIfPresent(placeholder, forKey: .placeholder)
-        try container.encodeIfPresent(uiHint, forKey: .uiHint)
+        try container.encodeIfPresent(inputUIHint, forKey: .uiHint)
         if let obj = self.range {
             let nestedEncoder = container.superEncoder(forKey: .range)
             guard let encodable = obj as? Encodable else {

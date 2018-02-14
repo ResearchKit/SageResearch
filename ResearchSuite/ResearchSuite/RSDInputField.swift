@@ -47,7 +47,7 @@ public protocol RSDInputField {
     
     /// A localized string that displays a short text offering a hint to the user of the data to be entered for
     /// this field.
-    var prompt: String? { get }
+    var inputPrompt: String? { get }
     
     /// A localized string that displays placeholder information for the input field.
     ///
@@ -62,7 +62,7 @@ public protocol RSDInputField {
     var dataType: RSDFormDataType { get }
     
     /// A UI hint for how the study would prefer that the input field is displayed to the user.
-    var uiHint: RSDFormUIHint? { get }
+    var inputUIHint: RSDFormUIHint? { get }
     
     /// Options for displaying a text field. This is only applicable for certain types of UI hints and data types.
     var textFieldOptions: RSDTextFieldOptions? { get }
@@ -78,6 +78,9 @@ public protocol RSDInputField {
     /// - seealso: `RSDAnswerResultType.BaseType` and `RSDFormStepDataSource`
     var formatter: Formatter? { get }
     
+    /// Optional picker source for a picker or multiple selection input field.
+    var pickerSource: RSDPickerDataSource? { get }
+    
     /// Validate the input field to check for any configuration that should throw an error.
     func validate() throws
 }
@@ -87,7 +90,7 @@ public protocol RSDChoice {
     
     /// A JSON encodable object to return as the value when this choice is selected. A `nil` value indicates that
     /// the user has selected to skip the question or "prefers not to answer".
-    var value: Codable? { get }
+    var answerValue: Codable? { get }
     
     /// Localized text string to display for the choice.
     var text: String? { get }

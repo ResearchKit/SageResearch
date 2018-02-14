@@ -102,7 +102,7 @@ public struct RSDDurationPickerDataSourceObject : RSDMultipleComponentChoiceOpti
         let value: Double = selectedRows.enumerated().reduce(0) { (input, arg) -> Double in
             let (component, index) = arg
             let unit = self.componentUnits[component]
-            let choiceValue = self.componentChoices[component][index].value as! Int
+            let choiceValue = self.componentChoices[component][index].answerValue as! Int
             let measurement = Measurement(value: Double(choiceValue), unit: unit)
             return input + measurement.valueConverted(to: baseUnit)
         }
@@ -117,7 +117,7 @@ public struct RSDDurationPickerDataSourceObject : RSDMultipleComponentChoiceOpti
         guard let duration = duration(for: selectedAnswer) else { return nil }
         return componentUnits.enumerated().map { (idx, unit) -> Int in
             let value = duration.component(of: unit)
-            return self.componentChoices[idx].index(where: { ($0.value as! Int) == value }) ?? 0
+            return self.componentChoices[idx].index(where: { ($0.answerValue as! Int) == value }) ?? 0
         }
     }
     

@@ -47,7 +47,7 @@ public final class RSDNumberInputTableItem : RSDTextInputTableItem {
     public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint) {
         
         var formatter: Formatter?
-        var pickerSource: RSDPickerDataSource? = inputField as? RSDPickerDataSource
+        var pickerSource: RSDPickerDataSource? = inputField.pickerSource
         var range: RSDNumberRange? = (inputField.range as? RSDNumberRange)
         var unitString: String? = range?.unit
         var textFieldOptions: RSDTextFieldOptions? = nil

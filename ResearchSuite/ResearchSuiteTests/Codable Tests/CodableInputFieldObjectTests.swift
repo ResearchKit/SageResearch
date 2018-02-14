@@ -64,7 +64,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             let object = try decoder.decode(RSDChoiceObject<String>.self, from: json)
             
-            XCTAssertEqual(object.value as? String, "foo")
+            XCTAssertEqual(object.answerValue as? String, "foo")
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "A detail about the object")
             XCTAssertEqual(object.icon?.imageName, "fooImage")
@@ -104,7 +104,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         do {
             let object = try decoder.decode(RSDChoiceObject<Int>.self, from: json)
             
-            XCTAssertEqual(object.value as? Int, 3)
+            XCTAssertEqual(object.answerValue as? Int, 3)
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "A detail about the object")
             XCTAssertEqual(object.icon?.imageName, "fooImage")
@@ -139,8 +139,8 @@ class CodableInputFieldObjectTests: XCTestCase {
             let objects = try decoder.decode([RSDChoiceObject<String>].self, from: json)
             
             XCTAssertEqual(objects.count, 2)
-            XCTAssertEqual(objects.first?.value as? String, "alpha")
-            XCTAssertEqual(objects.last?.value as? String, "beta")
+            XCTAssertEqual(objects.first?.answerValue as? String, "alpha")
+            XCTAssertEqual(objects.last?.answerValue as? String, "beta")
             
             guard let object = objects.first else {
                 return
@@ -181,7 +181,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertFalse(object.isOptional)
             XCTAssertEqual(object.choices.count, 4)
             XCTAssertEqual(object.choices.last?.text, "always")
-            XCTAssertEqual(object.choices.last?.value as? String, "always")
+            XCTAssertEqual(object.choices.last?.answerValue as? String, "always")
             
             let jsonData = try encoder.encode(object)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
@@ -228,14 +228,14 @@ class CodableInputFieldObjectTests: XCTestCase {
             let object = try decoder.decode(RSDChoiceInputFieldObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
-            XCTAssertEqual(object.prompt, "Text")
+            XCTAssertEqual(object.inputPrompt, "Text")
             XCTAssertEqual(object.placeholder, "enter text")
             XCTAssertEqual(object.dataType, .collection(.singleChoice, .integer))
-            XCTAssertEqual(object.uiHint, .picker)
+            XCTAssertEqual(object.inputUIHint, .picker)
             XCTAssertTrue(object.isOptional)
             XCTAssertEqual(object.choices.count, 4)
             XCTAssertEqual(object.choices.last?.text, "always")
-            XCTAssertEqual(object.choices.last?.value as? Int, 3)
+            XCTAssertEqual(object.choices.last?.answerValue as? Int, 3)
             
             if let surveyRules = object.surveyRules, let rule = surveyRules.first as? RSDComparableSurveyRule {
                 XCTAssertNil(rule.skipToIdentifier)
@@ -289,11 +289,11 @@ class CodableInputFieldObjectTests: XCTestCase {
             let object = try decoder.decode(RSDChoiceInputFieldObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
-            XCTAssertEqual(object.prompt, "Text")
+            XCTAssertEqual(object.inputPrompt, "Text")
             XCTAssertEqual(object.dataType, .collection(.singleChoice, .fraction))
             XCTAssertEqual(object.choices.count, 3)
             XCTAssertEqual(object.choices.last?.text, "1/125")
-            XCTAssertEqual((object.choices.last?.value as? RSDFraction)?.doubleValue, 1.0 / 125.0)
+            XCTAssertEqual((object.choices.last?.answerValue as? RSDFraction)?.doubleValue, 1.0 / 125.0)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -370,7 +370,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.integer))
-            XCTAssertEqual(object.uiHint, .slider)
+            XCTAssertEqual(object.inputUIHint, .slider)
             if let range = object.range as? RSDNumberRange {
                 XCTAssertEqual(range.minimumValue, -2)
                 XCTAssertEqual(range.maximumValue, 3)
@@ -459,7 +459,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.decimal))
-            XCTAssertEqual(object.uiHint, .slider)
+            XCTAssertEqual(object.inputUIHint, .slider)
             if let range = object.range as? RSDNumberRangeObject {
                 XCTAssertEqual(range.minimumValue, -2.5)
                 XCTAssertEqual(range.maximumValue, 3)
@@ -525,7 +525,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.duration))
-            XCTAssertEqual(object.uiHint, .picker)
+            XCTAssertEqual(object.inputUIHint, .picker)
             if let range = object.range as? RSDDurationRangeObject {
                 XCTAssertEqual(range.baseUnit, .minutes)
                 XCTAssertEqual(range.minimumDuration, Measurement(value: 15, unit: UnitDuration.minutes))
@@ -590,7 +590,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.date))
-            XCTAssertEqual(object.uiHint, .picker)
+            XCTAssertEqual(object.inputUIHint, .picker)
             if let range = object.range as? RSDDateRange {
                 
                 let calendar = Calendar(identifier: .gregorian)
@@ -666,7 +666,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.string))
-            XCTAssertEqual(object.uiHint, .textfield)
+            XCTAssertEqual(object.inputUIHint, .textfield)
             if let textFieldOptions = object.textFieldOptions  {
                 XCTAssertEqual((textFieldOptions.textValidator as? RSDRegExValidatorObject)?.regExPattern, "[A:C]")
                 XCTAssertEqual(textFieldOptions.invalidMessage, "You know me")
@@ -724,7 +724,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .base(.string))
-            XCTAssertEqual(object.uiHint, .textfield)
+            XCTAssertEqual(object.inputUIHint, .textfield)
             if let textFieldOptions = object.textFieldOptions  {
                 XCTAssertNil(textFieldOptions.textValidator)
                 XCTAssertNil(textFieldOptions.invalidMessage)

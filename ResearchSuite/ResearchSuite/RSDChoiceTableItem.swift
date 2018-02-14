@@ -41,7 +41,7 @@ open class RSDChoiceTableItem : RSDInputFieldTableItem {
     
     /// The answer associated with this choice
     open override var answer: Any? {
-        return selected ? choice.value : nil
+        return selected ? choice.answerValue : nil
     }
     
     /// Whether or not the choice is currently selected.

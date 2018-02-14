@@ -205,13 +205,13 @@ class PickerDataSourceTests: XCTestCase {
         
         // minute field
         XCTAssertEqual(picker.numberOfRows(in: 0), 61)
-        XCTAssertEqual(picker.componentChoices[0].first?.value as? Int, 0)
-        XCTAssertEqual(picker.componentChoices[0].last?.value as? Int, 60)
+        XCTAssertEqual(picker.componentChoices[0].first?.answerValue as? Int, 0)
+        XCTAssertEqual(picker.componentChoices[0].last?.answerValue as? Int, 60)
 
         // second field
         XCTAssertEqual(picker.numberOfRows(in: 1), 60)
-        XCTAssertEqual(picker.componentChoices[1].first?.value as? Int, 0)
-        XCTAssertEqual(picker.componentChoices[1].last?.value as? Int, 59)
+        XCTAssertEqual(picker.componentChoices[1].first?.answerValue as? Int, 0)
+        XCTAssertEqual(picker.componentChoices[1].last?.answerValue as? Int, 59)
         
         let inputAnswer = Double(90)
         let expectedRows = [1, 30]
@@ -222,8 +222,8 @@ class PickerDataSourceTests: XCTestCase {
         if let rows = picker.selectedRows(from: inputAnswer) {
             XCTAssertEqual(rows, expectedRows)
             if rows.count == 2 {
-                XCTAssertEqual(picker.choice(forRow: rows[0], forComponent: 0)?.value as? Int, expectedMinutes)
-                XCTAssertEqual(picker.choice(forRow: rows[1], forComponent: 1)?.value as? Int, expectedSeconds)
+                XCTAssertEqual(picker.choice(forRow: rows[0], forComponent: 0)?.answerValue as? Int, expectedMinutes)
+                XCTAssertEqual(picker.choice(forRow: rows[1], forComponent: 1)?.answerValue as? Int, expectedSeconds)
             } else {
                 XCTFail("Row count does not match expected. \(rows)")
             }
@@ -256,13 +256,13 @@ class PickerDataSourceTests: XCTestCase {
         
         // hour field
         XCTAssertEqual(picker.numberOfRows(in: 0), 25)
-        XCTAssertEqual(picker.componentChoices[0].first?.value as? Int, 0)
-        XCTAssertEqual(picker.componentChoices[0].last?.value as? Int, 24)
+        XCTAssertEqual(picker.componentChoices[0].first?.answerValue as? Int, 0)
+        XCTAssertEqual(picker.componentChoices[0].last?.answerValue as? Int, 24)
         
         // minute field
         XCTAssertEqual(picker.numberOfRows(in: 1), 60)
-        XCTAssertEqual(picker.componentChoices[1].first?.value as? Int, 0)
-        XCTAssertEqual(picker.componentChoices[1].last?.value as? Int, 59)
+        XCTAssertEqual(picker.componentChoices[1].first?.answerValue as? Int, 0)
+        XCTAssertEqual(picker.componentChoices[1].last?.answerValue as? Int, 59)
         
         let inputAnswer = Double(90)
         let expectedRows = [1, 30]
@@ -273,8 +273,8 @@ class PickerDataSourceTests: XCTestCase {
         if let rows = picker.selectedRows(from: inputAnswer) {
             XCTAssertEqual(rows, expectedRows)
             if rows.count == 2 {
-                XCTAssertEqual(picker.choice(forRow: rows[0], forComponent: 0)?.value as? Int, expectedHours)
-                XCTAssertEqual(picker.choice(forRow: rows[1], forComponent: 1)?.value as? Int, expectedMinutes)
+                XCTAssertEqual(picker.choice(forRow: rows[0], forComponent: 0)?.answerValue as? Int, expectedHours)
+                XCTAssertEqual(picker.choice(forRow: rows[1], forComponent: 1)?.answerValue as? Int, expectedMinutes)
             } else {
                 XCTFail("Row count does not match expected. \(rows)")
             }

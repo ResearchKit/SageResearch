@@ -112,10 +112,10 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         // our other items and de-select them.
         var answers: [Any] = []
         for (ii, input) in selectableItems.enumerated() {
-            if deselectOthers || (ii == index) || input.choice.isExclusive || (input.choice.value == nil) {
+            if deselectOthers || (ii == index) || input.choice.isExclusive || (input.choice.answerValue == nil) {
                 input.selected = (ii == index) && selected
             }
-            if input.selected, let value = input.choice.value {
+            if input.selected, let value = input.choice.answerValue {
                 answers.append(value)
             }
         }
@@ -145,7 +145,7 @@ public final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
             self.singleCheckbox = (choicePicker.numberOfComponents == 1 && choicePicker.numberOfRows(in: 0) == 1)
         }
         else if uiHint == .checkbox || uiHint == .radioButton {
-            let text = inputField.prompt ?? Localization.buttonYes()
+            let text = inputField.inputPrompt ?? Localization.buttonYes()
             let choiceYes = try! RSDChoiceObject<Bool>(value: true, text: text, iconName: nil, detail: nil, isExclusive: true)
             choicePicker = RSDChoiceOptionsObject(choices: [choiceYes], isOptional: true)
             self.singleCheckbox = true
