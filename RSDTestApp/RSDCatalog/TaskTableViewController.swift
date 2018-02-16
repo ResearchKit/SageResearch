@@ -116,7 +116,7 @@ class TaskTableViewController: UITableViewController {
         cell.titleLabel?.text = taskInfo.title ?? taskInfo.identifier
         cell.subtitleLabel?.text = taskInfo.subtitle
         if let imageView = cell.thumbnailView {
-            taskInfo.fetchIcon(for: imageView.bounds.size) { (img) in
+            taskGroup.imageVendor?.fetchImage(for: imageView.bounds.size) { (_, img) in
                 imageView.image = img
             }
         }
@@ -126,14 +126,17 @@ class TaskTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         guard let cell = sender as? UITableViewCell,
             let indexPath = self.tableView.indexPath(for: cell),
-            let vc = segue.destination as? ResultTableViewController
+            let vc = segue.destination as? ResultTableViewController,
+            let taskPath = taskGroup.instantiateTaskPath(for: taskGroup.tasks[indexPath.row])
             else {
                 return
         }
-        vc.taskInfo = taskGroup.tasks[indexPath.row]
-        vc.title = vc.taskInfo!.identifier
+        let taskInfo = taskGroup.tasks[indexPath.row]
+        vc.taskPath = taskPath
+        vc.title = taskInfo.title ?? taskInfo.identifier
         vc.navigationItem.title = vc.title
     }
 }

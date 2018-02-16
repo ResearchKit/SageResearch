@@ -67,19 +67,15 @@ public protocol RSDTaskInfo {
     /// The estimated number of minutes that the task will take. If `0`, then this is ignored.
     var estimatedMinutes: Int { get }
     
-    /// An icon image that can be used for displaying the task.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the image, run on the main thread.
-    func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
+    /// An icon image that can be used for displaying the choice.
+    var imageVendor: RSDImageVendor? { get }
 }
 
-/// `RSDTaskInfoStep` is a reference interface for information about the task. This includes information that can
-/// be displayed in a table or collection view before starting the task as well as information that is displayed
-/// while the task is being fetched in the case where the task is not fetched using an embedded resource or via
-/// a hardcoded task.
-public protocol RSDTaskInfoStep : RSDStep, RSDTaskInfo {
+/// `RSDTaskInfoStep` is a reference interface for information about the task. This includes
+/// information that can be displayed in a table or collection view before starting the task as
+/// well as information that is displayed while the task is being fetched in the case where the
+/// task is not fetched using an embedded resource or via a hardcoded task.
+public protocol RSDTaskInfoStep : RSDTaskInfo, RSDStep {
     
     /// Additional information about the result schema.
     var schemaInfo: RSDSchemaInfo? { get }
@@ -87,3 +83,5 @@ public protocol RSDTaskInfoStep : RSDStep, RSDTaskInfo {
     /// The task transformer for vending a task.
     var taskTransformer: RSDTaskTransformer!  { get }
 }
+
+

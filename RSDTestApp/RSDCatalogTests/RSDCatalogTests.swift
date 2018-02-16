@@ -57,9 +57,9 @@ class RSDCatalogTests: XCTestCase {
         do {
             let taskGroups = try jsonDecoder.decode([RSDTaskGroupObject].self, from: jsonData)
             for taskGroup in taskGroups {
-                for taskInfo in taskGroup.tasks {
+                for taskInfo in taskGroup.taskInfoSteps {
                     let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
-                    taskInfo.fetchTask(with: RSDFactory()) { (info, task, err)  in
+                    taskInfo.taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: taskInfo.identifier, schemaInfo:taskInfo.schemaInfo) { (identifier, task, err)  in
                         if let task = task {
                             do {
                                 try task.validate()
@@ -67,7 +67,7 @@ class RSDCatalogTests: XCTestCase {
                                 XCTFail("Failed to validate task \(task.identifier): \(err)")
                             }
                         } else {
-                            XCTFail("Failed to decode task \(info.identifier): \(String(describing: err))")
+                            XCTFail("Failed to decode task \(identifier): \(String(describing: err))")
                         }
                         expect.fulfill()
                     }

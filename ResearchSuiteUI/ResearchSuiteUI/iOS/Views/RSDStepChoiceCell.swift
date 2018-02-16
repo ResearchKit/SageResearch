@@ -371,10 +371,10 @@ public class RSDStepTextField: UITextField {
     /// Set the image loader for this cell. This will automatically load the image or animation.
     public var imageLoader: RSDImageThemeElement? {
         didSet {
-            guard _imageIdentifier != imageLoader?.identifier else {
+            guard _imageIdentifier != imageLoader?.imageIdentifier else {
                 return
             }
-            _imageIdentifier = imageLoader?.identifier
+            _imageIdentifier = imageLoader?.imageIdentifier
             if let loader = imageLoader {
                 if let animatedVendor = loader as? RSDAnimatedImageThemeElement {
                     DispatchQueue.main.async {
@@ -383,8 +383,7 @@ public class RSDStepTextField: UITextField {
                         self.iconView.startAnimating()
                     }
                 } else if let fetchLoader = loader as? RSDFetchableImageThemeElement {
-                    let loadingIdentifier = _imageIdentifier!
-                    fetchLoader.fetchImage(for: iconView.bounds.size, callback: { [weak self] (img) in
+                    fetchLoader.fetchImage(for: iconView.bounds.size, callback: { [weak self] (loadingIdentifier, img) in
                         guard self?._imageIdentifier == loadingIdentifier else { return }
                         self?.iconView.image = img
                     })

@@ -1,8 +1,8 @@
 //
-//  RSDTaskGroup.swift
+//  RSDImageVendor.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,32 +33,36 @@
 
 import Foundation
 
-/// `RSDTaskGroup` defines a subgrouping of tasks.  This is used in UI presentations where
-/// the researchers wish to tie a group of activities and surveys together but allow the
-/// user to perform them non-sequentially or with a break between the activities.
-public protocol RSDTaskGroup {
+
+/// `RSDImageVendor` is a protocol for defining an abstract method for fetching an image.
+public protocol RSDImageVendor {
     
-    /// A short string that uniquely identifies the task group.
-    var identifier: String { get }
+    /// A unique identifier that can be used to validate that the image shown in a reusable view
+    /// is the same image as the one fetched.
+    var imageIdentifier: String { get }
     
-    /// The primary text to display for the task group in a localized string.
-    var title: String? { get }
+    /// The size of the image.
+    var size: CGSize { get }
     
-    /// Additional detail text to display for the task group in a localized string.
-    var detail: String? { get }
-    
-    /// An icon image that can be used for displaying the choice.
-    var imageVendor: RSDImageVendor? { get }
-    
-    /// A list of the task references included in this group.
-    var tasks: [RSDTaskInfo] { get }
-    
-    /// Instantiate a task path for the task info. This can either create a task path that
-    /// points at a `RSDTask` or a `RSDTaskInfoStep`. If it returns nil then the application
-    /// will need to have an alternate method of mapping a task info to a task path to start
-    /// a task run.
+    /// Fetch the image.
     ///
-    /// - parameter taskInfo: The task info to map from.
-    /// - returns: A new task path.
-    func instantiateTaskPath(for taskInfo: RSDTaskInfo) -> RSDTaskPath?
+    /// - parameters:
+    ///     - size:        The size of the image to return.
+    ///     - callback:    The callback with the identifier and image, run on the main thread.
+    func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void))
+}
+
+extension UIImage : RSDImageVendor {
+    
+    /// Returns `self.hash` as a string.
+    public var imageIdentifier: String {
+        return "\(self.hash)"
+    }
+    
+    /// Fetchs self.
+    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
+        DispatchQueue.main.async {
+            callback(self.imageIdentifier, self)
+        }
+    }
 }

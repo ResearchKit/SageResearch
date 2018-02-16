@@ -83,10 +83,6 @@ class CodableTaskObjectTests: XCTestCase {
 
     
     func testTaskInfoObject_Codable() {
-        
-        var taskInfo = RSDTaskInfoStepObject(with: "bar")
-        taskInfo.title = "yo"
-        
         let json = """
         {
             "identifier": "foo",
@@ -105,7 +101,7 @@ class CodableTaskObjectTests: XCTestCase {
             XCTAssertEqual(object.title, "Hello World!")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.estimatedMinutes, 5)
-            XCTAssertEqual(object.icon?.imageName, "foobar")
+            XCTAssertEqual((object.imageVendor as? RSDImageWrapper)?.imageName, "foobar")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -149,8 +145,9 @@ class CodableTaskObjectTests: XCTestCase {
             XCTAssertEqual(object.detail, "This is a test of the task group.")
             XCTAssertEqual(object.icon?.imageName, "foobarGroup")
             XCTAssertEqual(object.tasks.count, 2, "\(object.tasks)")
+            XCTAssertEqual(object.taskInfoSteps.count, 2, "\(object.taskInfoSteps)")
             
-            guard let firstTask = object.tasks.first as? RSDTaskInfoStepObject else {
+            guard let firstTask = (object.tasks.first as? RSDTaskInfoStepObject)?.taskInfoObject else {
                 XCTFail("Encoded object is not expected type")
                 return
             }

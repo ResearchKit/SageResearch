@@ -54,9 +54,9 @@ struct TestResourceWrapper : RSDResourceTransformer, Codable {
 }
 
 struct TestImageWrapperDelegate : RSDImageWrapperDelegate {
-    func fetchImage(for size: CGSize, with imageName: String, callback: @escaping ((UIImage?) -> Void)) {
+    func fetchImage(for imageWrapper: RSDImageWrapper, callback: @escaping ((String?, UIImage?) -> Void)) {
         DispatchQueue.main.async {
-            callback(nil)
+            callback(imageWrapper.imageName, nil)
         }
     }
 }

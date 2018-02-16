@@ -37,15 +37,15 @@ import ResearchSuite
 
 class ResultTableViewController: UITableViewController, RSDTaskViewControllerDelegate {
 
-    var taskInfo: RSDTaskInfoStep?
+    var taskPath: RSDTaskPath?
     var result: RSDResult?
     var firstAppearance: Bool = true
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if firstAppearance, (self.result == nil), let taskInfo = self.taskInfo {
-            let taskViewController = RSDTaskViewController(taskInfo: taskInfo)
+        if firstAppearance, (self.result == nil), let taskPath = self.taskPath {
+            let taskViewController = RSDTaskViewController(taskPath: taskPath)
             taskViewController.delegate = self
             self.present(taskViewController, animated: true, completion: nil)
         }

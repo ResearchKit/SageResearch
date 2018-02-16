@@ -317,7 +317,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
                             stepHeader.imageView?.image = image
                         }
                     } else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
-                        fetchLoader.fetchImage(for: imageView.bounds.size, callback: { [weak stepHeader] (img) in
+                        fetchLoader.fetchImage(for: imageView.bounds.size, callback: { [weak stepHeader] (_, img) in
                             stepHeader?.image = img
                         })
                     }
