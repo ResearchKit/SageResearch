@@ -36,7 +36,7 @@ import Foundation
 /// `RSDTaskTransformer` The task transformer is a lightweight protocol for vending a task. This can be used by
 /// an `RSDTaskInfoStep` to fetch a task or depending upon the design of the application, it could be used to
 /// fetch a task that is loaded from a table or collection view before presenting the task.
-public protocol RSDTaskTransformer {
+public protocol RSDTaskTransformer : class {
     
     /// The estimated time to fetch the task. This can be used by the UI to determine whether or not to
     /// display a loading state while fetching the task. If `0` then the task is assumed to be cached on the device.

@@ -35,7 +35,7 @@ import Foundation
 
 /// `RSDResourceTransformerObject` is a concrete implementation of a codable resource transformer. The transformer
 /// can be used to create an object decoded from an embedded resource.
-public struct RSDResourceTransformerObject : Codable {
+public final class RSDResourceTransformerObject : Codable {
     
     /// Either a fully qualified URL string or else a relative reference to either an embedded resource or a
     /// relative URL defined globally by overriding the `RSDResourceConfig` class methods.
