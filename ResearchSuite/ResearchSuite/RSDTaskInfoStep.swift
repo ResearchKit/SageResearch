@@ -83,5 +83,3 @@ public protocol RSDTaskInfoStep : RSDTaskInfo, RSDStep {
     /// The task transformer for vending a task.
     var taskTransformer: RSDTaskTransformer!  { get }
 }
-
-

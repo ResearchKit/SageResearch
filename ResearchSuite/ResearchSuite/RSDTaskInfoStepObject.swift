@@ -97,7 +97,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, Decodable {
 
     /// Returns the task info identifier.
     public var identifier: String {
-        return taskInfoObject.identifier
+        return self.taskInfoObject.identifier
     }
     
     /// Returns the task info title.
@@ -122,7 +122,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, Decodable {
     
     /// Returns the task info image vendor
     public var imageVendor: RSDImageVendor? {
-        return taskInfoObject.imageVendor
+        return self.taskInfoObject.imageVendor
     }
     
     /// For the task info step, the task info

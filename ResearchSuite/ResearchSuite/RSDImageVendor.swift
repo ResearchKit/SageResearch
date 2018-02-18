@@ -59,7 +59,7 @@ extension UIImage : RSDImageVendor {
         return "\(self.hash)"
     }
     
-    /// Fetchs self.
+    /// Fetches self.
     public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
         DispatchQueue.main.async {
             callback(self.imageIdentifier, self)

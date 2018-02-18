@@ -115,10 +115,27 @@ open class LocalizationBundle : NSObject {
 /// the list order of the `allBundles` property.
 open class Localization: NSObject {
     
-    /// List of all the bundles to search for a given localized string.
-    public static var allBundles: Set<LocalizationBundle> = {
+    /// List of all the bundles to search for a given localized string. This is an ordered set
+    /// of all the bundles to search for a localized string. To add a bundle to this set, use
+    /// the `insert(bundle:, at:)` method.
+    public private(set) static var allBundles: [LocalizationBundle] = {
         return [LocalizationBundle(Bundle.main), LocalizationBundle(Bundle(for: Localization.self))]
     }()
+    
+    /// Insert a bundle into `allBundles` at a given index. If the index is beyond the range of
+    /// `allBundles`, then the bundle will be appended to the end of the array. If the bundle was
+    /// previously in the array, then the previous instance will be moved to the new .
+    @objc(insertBundle:atIndex:)
+    public static func insert(bundle: LocalizationBundle, at index: UInt) {
+        if let idx = allBundles.index(of: bundle) {
+            allBundles.remove(at: idx)
+        }
+        if (index < allBundles.count) {
+            allBundles.insert(bundle, at: Int(index))
+        } else {
+            allBundles.append(bundle)
+        }
+    }
 
     /// Return the localized string for the given key.
     /// - seealso: `NSLocalizedString`
