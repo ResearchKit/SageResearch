@@ -39,19 +39,14 @@ import Foundation
 /// `RSDThemedUIStep` using just the image name as oppose to the more complex schema that supports
 /// additional information about the presentation of the image.
 extension RSDImageWrapper : RSDFetchableImageThemeElement {
-    
+
     /// The unique identifier for the image.
-    public var identifier: String {
+    public var imageIdentifier: String {
         return self.imageName
     }
     
     /// The placement type for the image. This is `nil` for an `RSDImageWrapper`.
     public var placementType: RSDImagePlacementType? {
-        return nil
-    }
-    
-    /// The size of the image. This is `nil` for an `RSDImageWrapper`.
-    public var size: CGSize? {
         return nil
     }
     
@@ -74,13 +69,13 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     public let placementType: RSDImagePlacementType?
     
     /// The image size. If undefined then default sizing will be used.
-    public var size: CGSize? {
-        return _size?.size
+    public var size: CGSize {
+        return _size?.size ?? .zero
     }
     private let _size: RSDSizeWrapper?
     
     /// The unique identifier for the image
-    public var identifier: String {
+    public var imageIdentifier: String {
         guard let bundleIdentifier = bundleIdentifier else { return imageName }
         return "\(bundleIdentifier).\(imageName)"
     }
@@ -108,14 +103,14 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     /// - parameters:
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
+    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
         #if os(watchOS)
             let fetchedImage = UIImage(named: imageName)
         #else
             let fetchedImage = UIImage(named: imageName, in: bundle, compatibleWith: nil)
         #endif
         DispatchQueue.main.async {
-            callback(fetchedImage)
+            callback(self.imageIdentifier, fetchedImage)
         }
     }
 }
@@ -136,13 +131,13 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     public let bundleIdentifier: String?
     
     /// The image size.
-    public var size: CGSize? {
-        return _size?.size
+    public var size: CGSize {
+        return _size?.size ?? .zero
     }
     private let _size: RSDSizeWrapper?
     
     /// The unique identifier for the image
-    public var identifier: String {
+    public var imageIdentifier: String {
         guard let bundleIdentifier = bundleIdentifier else { return imageNames.first! }
         return "\(bundleIdentifier).\(imageNames.first!)"
     }

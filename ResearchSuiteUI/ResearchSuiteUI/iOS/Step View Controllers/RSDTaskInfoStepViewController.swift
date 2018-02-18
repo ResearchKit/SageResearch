@@ -62,11 +62,10 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
     @IBOutlet public var textView: UITextView?
     
     /// The `RSDTaskInfoStep` object with the information to display about this task. This can be displayed while the task is loading.
-    public var taskInfo: RSDTaskInfoStep! {
+    public var taskInfoStep: RSDTaskInfoStep! {
         get { return self.step as! RSDTaskInfoStep }
         set { self.step = newValue}
     }
-    
     
     // MARK: View appearance and set up
     
@@ -106,16 +105,16 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
         super.viewWillAppear(animated)
         
         // Schedule and step should both be set before showing the view controller
-        titleLabel?.text = taskInfo.title
-        subtitleLabel?.text = taskInfo.subtitle
+        titleLabel?.text = taskInfoStep.title
+        subtitleLabel?.text = taskInfoStep.subtitle
         if let imageSize = iconImageView?.bounds.size {
-            taskInfo.fetchIcon(for: imageSize) { [weak self] (img) in
+            taskInfoStep.imageVendor?.fetchImage(for: imageSize) { [weak self] (_, img) in
                 self?.iconImageView?.image = img
             }
         }
         
         // Set up the step text
-        self.textView?.text = taskInfo.detail
+        self.textView?.text = taskInfoStep.detail
     }
     
     /// Override the skip forward action to cancel the task
@@ -181,7 +180,7 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
     /// - parameter step: The step to set for this view controller.
     public init(taskInfo: RSDTaskInfoStep) {
         super.init(nibName: type(of: self).nibName, bundle: type(of: self).bundle)
-        self.taskInfo = taskInfo
+        self.taskInfoStep = taskInfo
     }
     
     /// Initialize the class using the given nib and bundle.

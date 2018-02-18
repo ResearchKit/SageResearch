@@ -82,14 +82,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 
             case .collection(let collectionType, _):
                 if (collectionType == .singleChoice) {
-                    if let choiceInputField = item as? RSDChoiceInputField {
-                        for choice in choiceInputField.choices {
-                            if choice.hasIcon {
-                                // TODO: syoung 10/18/2017 Implement support for image choices
-                                // https://github.com/ResearchKit/SageResearch/issues/11
-                                return false
-                            }
-                        }
+                    if let choiceInputField = item as? RSDChoiceInputField, choiceInputField.hasImages {
+                        return false
                     }
                 }
                 

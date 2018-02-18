@@ -36,26 +36,14 @@ import Foundation
 /// `RSDEmbeddedIconVendor` is a convenience protocol for fetching an codable image using an optional
 /// `RSDImageWrapper`. This protocol implements an extension method to fetch the icon.
 public protocol RSDEmbeddedIconVendor {
+    
     /// The optional `RSDImageWrapper` with the pointer to the image.
     var icon: RSDImageWrapper? { get }
 }
 
 extension RSDEmbeddedIconVendor {
-    
-    /// Fetch the icon. If `icon` is `nil` then this will call the callback method asynchronously on the main thread.
-    /// Otherwise, it will pass through to the image wrapper to use the image wrapper callback.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
-        guard let wrapper = icon else {
-            DispatchQueue.main.async {
-                callback(nil)
-            }
-            return
-        }
-        wrapper.fetchImage(for: size, callback: callback)
+    public var imageVendor: RSDImageVendor? {
+        return icon
     }
 }
 
@@ -70,7 +58,7 @@ public protocol RSDImageWrapperDelegate {
     ///     - size:        The size of the image to return.
     ///     - imageName:   The name of the image
     ///     - callback:    The callback with the image, run on the main thread.
-    func fetchImage(for size: CGSize, with imageName: String, callback: @escaping ((UIImage?) -> Void))
+    func fetchImage(for imageWrapper: RSDImageWrapper, callback: @escaping ((String?, UIImage?) -> Void))
 }
 
 /// `RSDImageWrapper` vends an image. It does not handle image caching. If your app using a custom image caching,
@@ -80,6 +68,9 @@ public struct RSDImageWrapper {
     
     /// The name of the image to be fetched.
     public let imageName: String
+    
+    /// The size of the image.
+    public let size: CGSize
     
     /// The `sharedDelegate` is a singleton delegate that can be used to customize the rules for fetching
     /// an image using the `RSDImageWrapper`. If defined and attached to the `RSDImageWrapper` using the
@@ -93,16 +84,18 @@ public struct RSDImageWrapper {
     ///         this initializer will check that the image is either included in the main bundle or in the
     ///         bundle returned by a call to `RSDResourceConfig.resourceBundle()`.
     public init?(imageName: String) throws {
-        try RSDImageWrapper.validate(imageName: imageName)
+        self.size = try RSDImageWrapper.validate(imageName: imageName)
         self.imageName = imageName
     }
     
-    private static func validate(imageName: String) throws {
+    private static func validate(imageName: String) throws -> CGSize {
         // Check that the input string can be converted to an image from an embedded resource bundle or that
         // there is a delegate. Otherwise, this is not a valid string and the wrapper doesn't know how to fetch
         // an image with it.
-        guard sharedDelegate == nil else { return }
-        guard UIImage(named: imageName) == nil else { return }
+        guard sharedDelegate == nil else { return .zero }
+        if let image = UIImage(named: imageName){
+            return image.size
+        }
         #if os(watchOS)
             throw RSDValidationError.invalidImageName("Invalid image name: \(imageName). Cannot use images on the watch that are not included in the main bundle.")
         #else
@@ -112,6 +105,7 @@ public struct RSDImageWrapper {
                     throw RSDValidationError.invalidImageName("Invalid image name: \(imageName)")
             }
         #endif
+        return .zero
     }
     
     /// Fetch the image.
@@ -119,13 +113,13 @@ public struct RSDImageWrapper {
     /// - parameters:
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
+    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
         if let delegate = RSDImageWrapper.sharedDelegate {
-            delegate.fetchImage(for: size, with: self.imageName, callback: callback)
+            delegate.fetchImage(for: self, callback: callback)
         }
         else if let image = UIImage(named: imageName) {
             DispatchQueue.main.async {
-                callback(image)
+                callback(self.imageName, image)
             }
         }
         else if let url = URL(string: self.imageName) {
@@ -133,14 +127,14 @@ public struct RSDImageWrapper {
             let task = URLSession.shared.dataTask(with: request) {(data, _, _) in
                     let image: UIImage? = (data != nil) ? UIImage(data: data!) : nil
                     DispatchQueue.main.async {
-                        callback(image)
+                        callback(self.imageName, image)
                     }
             }
             task.resume()
         }
         else {
             DispatchQueue.main.async {
-                callback(nil)
+                callback(self.imageName, nil)
             }
         }
     }
@@ -178,12 +172,11 @@ extension RSDImageWrapper : Equatable {
     }
 }
 
-extension RSDImageWrapper : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
+extension RSDImageWrapper : ExpressibleByStringLiteral {    
     /// Required initializer for conformance to `ExpressibleByStringLiteral`.
     /// - parameter stringLiteral: The `imageName` for this image wrapper.
     public init(stringLiteral value: String) {
+        self.size = try! RSDImageWrapper.validate(imageName: value)
         self.imageName = value
     }
 }
@@ -197,7 +190,7 @@ extension RSDImageWrapper : Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let imageName = try container.decode(String.self)
-        try RSDImageWrapper.validate(imageName: imageName)
+        self.size = try RSDImageWrapper.validate(imageName: imageName)
         self.imageName = imageName
     }
 }
@@ -210,4 +203,3 @@ extension RSDImageWrapper : RSDDocumentableStringLiteral {
         return ["happyFaceIcon"]
     }
 }
-

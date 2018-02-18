@@ -198,16 +198,25 @@ class StepTests: XCTestCase {
     
     func testCopy_TaskInfoStepObject() {
         var step = RSDTaskInfoStepObject(with: "foo")
-        step.title = "title"
-        step.subtitle = "subtitle"
-        step.detail = "detail"
-        step.estimatedMinutes = 5
-        
+        var taskInfo = step.taskInfoObject
+        taskInfo.title = "title"
+        taskInfo.subtitle = "subtitle"
+        taskInfo.detail = "detail"
+        step.taskInfoObject = taskInfo
+        step.schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 6)
+        step.taskTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: "org.sagebase.ResearchSuiteTests", classType: nil)
+
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.title, "title")
         XCTAssertEqual(copy.subtitle, "subtitle")
         XCTAssertEqual(copy.detail, "detail")
-        XCTAssertEqual(copy.estimatedMinutes, 5)
+        XCTAssertEqual(copy.schemaInfo?.schemaIdentifier, "bar")
+        XCTAssertEqual(copy.schemaInfo?.schemaVersion, 6)
+        if let transformer = copy.taskTransformer as? RSDResourceTransformerObject {
+            XCTAssertEqual(transformer.resourceName, "FactoryTest_TaskFoo")
+        } else {
+            XCTFail("Failed to copy the task transformer.")
+        }
     }
 }

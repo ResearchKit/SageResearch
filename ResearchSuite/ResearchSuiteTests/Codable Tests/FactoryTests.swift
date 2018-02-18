@@ -71,15 +71,13 @@ class FactoryTests: XCTestCase {
         XCTAssertEqual(fooTaskInfo.title, "Hello Foo!")
         XCTAssertEqual(fooTaskInfo.detail, "This is a test of foo.")
         XCTAssertEqual(fooTaskInfo.estimatedMinutes, 5)
-        XCTAssertEqual(fooTaskInfo.icon?.imageName, "fooIcon")
-        XCTAssertEqual(fooTaskInfo.schemaInfo?.schemaVersion, 2)
+        XCTAssertEqual((fooTaskInfo.imageVendor as? RSDImageWrapper)?.imageName, "fooIcon")
         
         XCTAssertEqual(barTaskInfo.identifier, "bar")
         XCTAssertEqual(barTaskInfo.title, "Hello Bar!")
         XCTAssertEqual(barTaskInfo.detail, "This is a test of bar.")
         XCTAssertEqual(barTaskInfo.estimatedMinutes, 7)
-        XCTAssertEqual(barTaskInfo.icon?.imageName, "barIcon")
-        XCTAssertEqual(barTaskInfo.schemaInfo?.schemaVersion, 4)
+        XCTAssertEqual((barTaskInfo.imageVendor as? RSDImageWrapper)?.imageName, "barIcon")
     }
     
     func testFetchTask() {

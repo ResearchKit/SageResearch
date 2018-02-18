@@ -173,6 +173,13 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
         self.topLevelTaskInfo = taskInfo
     }
     
+    /// Initializer for initializing a view controller that is not associated with a storyboard or nib.
+    /// - parameter task: The task to run using this controller.
+    public init(taskPath: RSDTaskPath) {
+        super.init(nibName: nil, bundle: nil)
+        self.taskPath = taskPath
+    }
+    
     // MARK: View controller vending
     
     /// Main entry for vending an appropriate step view controller for a given step.

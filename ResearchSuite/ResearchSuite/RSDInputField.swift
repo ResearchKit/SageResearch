@@ -101,15 +101,8 @@ public protocol RSDChoice {
     /// For a multiple choice option, is this choice mutually exclusive? For example, "none of the above".
     var isExclusive: Bool { get }
     
-    /// Whether or not this choice has an image associated with it that should be returned by the fetch icon method.
-    var hasIcon: Bool { get }
-    
     /// An icon image that can be used for displaying the choice.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the image, run on the main thread.
-    func fetchIcon(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
+    var imageVendor: RSDImageVendor? { get }
     
     /// Is the choice value equal to the given result?
     /// - parameter result: A result to test for equality.
@@ -127,7 +120,7 @@ extension RSDChoiceInputField {
     /// Convenience property for whether or not the choice input field has associated images
     public var hasImages: Bool {
         for choice in choices {
-            if choice.hasIcon {
+            if choice.imageVendor != nil {
                 return true
             }
         }

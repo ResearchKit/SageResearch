@@ -2,7 +2,7 @@
 //  Localization.swift
 //  ResearchSuite
 //
-//  Copyright © 2016-2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -36,7 +36,7 @@ import UIKit
 /// `LocalizationBundle` is a wrapper for returning a bundle along with a table name and target suffixes.
 /// This is used by the `Localization` class to return localized strings that are defined in a strings
 /// file embedded in the given bundle.
-open class LocalizationBundle {
+open class LocalizationBundle : NSObject {
     
     /// The bundle to check for a localized string.
     public let bundle: Bundle
@@ -94,6 +94,19 @@ open class LocalizationBundle {
         // If nothing found then return nil
         return nil
     }
+    
+    // MARK: Equality
+    
+    override open var hash: Int {
+        return bundle.hash ^ RSDObjectHash(tableName as NSString?) ^ RSDObjectHash(targetSuffixes as NSArray)
+    }
+    
+    override open func isEqual(_ object: Any?) -> Bool {
+        guard let castObject = object as? LocalizationBundle else { return false }
+        return castObject.bundle == self.bundle &&
+            castObject.tableName == self.tableName &&
+            castObject.targetSuffixes == self.targetSuffixes
+    }
 }
 
 /// `Localization` is a wrapper class for getting a localized string that allows overriding the
@@ -102,10 +115,27 @@ open class LocalizationBundle {
 /// the list order of the `allBundles` property.
 open class Localization: NSObject {
     
-    /// List of all the bundles to search for a given localized string.
-    public static var allBundles: [LocalizationBundle] = {
+    /// List of all the bundles to search for a given localized string. This is an ordered set
+    /// of all the bundles to search for a localized string. To add a bundle to this set, use
+    /// the `insert(bundle:, at:)` method.
+    public private(set) static var allBundles: [LocalizationBundle] = {
         return [LocalizationBundle(Bundle.main), LocalizationBundle(Bundle(for: Localization.self))]
     }()
+    
+    /// Insert a bundle into `allBundles` at a given index. If the index is beyond the range of
+    /// `allBundles`, then the bundle will be appended to the end of the array. If the bundle was
+    /// previously in the array, then the previous instance will be moved to the new .
+    @objc(insertBundle:atIndex:)
+    public static func insert(bundle: LocalizationBundle, at index: UInt) {
+        if let idx = allBundles.index(of: bundle) {
+            allBundles.remove(at: idx)
+        }
+        if (index < allBundles.count) {
+            allBundles.insert(bundle, at: Int(index))
+        } else {
+            allBundles.append(bundle)
+        }
+    }
 
     /// Return the localized string for the given key.
     /// - seealso: `NSLocalizedString`

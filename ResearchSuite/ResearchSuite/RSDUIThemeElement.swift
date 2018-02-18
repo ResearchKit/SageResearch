@@ -139,26 +139,19 @@ extension RSDImagePlacementType : RSDDocumentableEnum {
 /// `RSDImageThemeElement` extends the UI step to include an image.
 public protocol RSDImageThemeElement : RSDUIThemeElement {
     
-    /// A unique identifier for the image element. This can be used to check if a dequeued cell
-    /// has changed the image loader.
-    var identifier: String { get }
+    /// A unique identifier that can be used to validate that the image shown in a reusable view
+    /// is the same image as the one fetched.
+    var imageIdentifier: String { get }
     
     /// The preferred placement of the image. Default placement is `iconBefore` if undefined.
     var placementType: RSDImagePlacementType? { get }
     
-    /// The image size. If undefined then default sizing will be used.
-    var size: CGSize? { get }
+    /// The image size. If `.zero` then default sizing will be used.
+    var size: CGSize { get }
 }
 
 /// `RSDFetchableImageThemeElement` defines an image that can be fetched asynchronously.
-public protocol RSDFetchableImageThemeElement : RSDImageThemeElement {
-    
-    /// A method for fetching the image.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the image, run on the main thread.
-    func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void))
+public protocol RSDFetchableImageThemeElement : RSDImageThemeElement, RSDImageVendor {
 }
 
 /// `RSDAnimatedImageThemeElement` defines a series of images that can be animated.
@@ -167,7 +160,6 @@ public protocol RSDAnimatedImageThemeElement : RSDImageThemeElement {
     /// The animation duration.
     var animationDuration: TimeInterval { get }
     
-
     #if os(watchOS)
     /// **Available** for watchOS.
     ///
