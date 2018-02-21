@@ -2,7 +2,7 @@
 //  RSDJSONValue.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -46,11 +46,18 @@ public protocol RSDJSONValue {
     
     /// Return a JSON type object. Elements may be any one of the JSON types (NSNull, NSNumber, String, Array, [String : Any]).
     func jsonObject() -> Any
+    
+    /// Encode the object.
+    func encode(to encoder: Encoder) throws
 }
 
 extension NSString : RSDJSONValue {
     public func jsonObject() -> Any {
         return String(self)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self as String).encode(to: encoder)
     }
 }
 
@@ -154,6 +161,10 @@ extension NSDate : RSDJSONValue {
     public func jsonObject() -> Any {
         return (self as Date).jsonObject()
     }
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self as Date).encode(to: encoder)
+    }
 }
 
 extension Date : RSDJSONValue {
@@ -206,6 +217,10 @@ extension NSDateComponents : RSDJSONValue {
     public func jsonObject() -> Any {
         return (self as DateComponents).jsonObject()
     }
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self as DateComponents).encode(to: encoder)
+    }
 }
 
 extension Data : RSDJSONValue {
@@ -218,11 +233,19 @@ extension NSData : RSDJSONValue {
     public func jsonObject() -> Any {
         return (self as Data).jsonObject()
     }
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self as Data).encode(to: encoder)
+    }
 }
 
 extension NSUUID : RSDJSONValue {
     public func jsonObject() -> Any {
         return self.uuidString
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self as UUID).encode(to: encoder)
     }
 }
 
@@ -235,6 +258,10 @@ extension UUID : RSDJSONValue {
 extension NSURL : RSDJSONValue {
     public func jsonObject() -> Any {
         return self.absoluteString ?? NSNull()
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self as URL).encode(to: encoder)
     }
 }
 
@@ -265,7 +292,37 @@ fileprivate func _convertToJSONValue(from object: Any) -> Any {
     }
 }
 
-extension NSDictionary : RSDJSONValue {
+fileprivate func _encode(value: Any, to nestedEncoder:Encoder) throws {
+    // Note: need to special-case encoding a Date, Data type, or NonConformingNumber since these
+    // are not encoding correctly unless cast to a nested container that can handle
+    // custom encoding strategies.
+    if let date = value as? Date {
+        var container = nestedEncoder.singleValueContainer()
+        try container.encode(date)
+    } else if let data = value as? Data {
+        var container = nestedEncoder.singleValueContainer()
+        try container.encode(data)
+    } else if let nestedArray = value as? [Any] {
+        let encodable = AnyCodableArray(nestedArray)
+        try encodable.encode(to: nestedEncoder)
+    } else if let nestedDictionary = value as? Dictionary<String, Any> {
+        let encodable = AnyCodableDictionary(nestedDictionary)
+        try encodable.encode(to: nestedEncoder)
+    }  else if let number = (value as? RSDJSONNumber)?.jsonNumber() {
+        var container = nestedEncoder.singleValueContainer()
+        try container.encode(number)
+    } else if let encodable = value as? RSDJSONValue {
+        try encodable.encode(to: nestedEncoder)
+    } else if let encodable = value as? Encodable {
+        try encodable.encode(to: nestedEncoder)
+    } else {
+        let context = EncodingError.Context(codingPath: nestedEncoder.codingPath, debugDescription: "Could not encode value \(value).")
+        throw EncodingError.invalidValue(value, context)
+    }
+}
+
+extension NSDictionary : RSDJSONValue, Encodable {
+    
     public func jsonObject() -> Any {
         var dictionary : [AnyHashable : Any] = [:]
         for (key, value) in self {
@@ -274,29 +331,72 @@ extension NSDictionary : RSDJSONValue {
         }
         return dictionary
     }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: AnyCodingKey.self)
+        for (key, value) in self {
+            let strKey = "\(key)"
+            let codingKey = AnyCodingKey(stringValue: strKey)!
+            let nestedEncoder = container.superEncoder(forKey: codingKey)
+            try _encode(value: value, to: nestedEncoder)
+        }
+    }
 }
 
 extension Dictionary : RSDJSONValue {
+    
     public func jsonObject() -> Any {
         return (self as NSDictionary).jsonObject()
     }
 }
 
+extension Dictionary where Value : Any {
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self as NSDictionary).encode(to: encoder)
+    }
+}
+
 extension NSArray : RSDJSONValue {
+    
     public func jsonObject() -> Any {
         return self.map { _convertToJSONValue(from: $0) }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.unkeyedContainer()
+        for value in self {
+            let nestedEncoder = container.superEncoder()
+            try _encode(value: value, to: nestedEncoder)
+        }
     }
 }
 
 extension Array : RSDJSONValue {
+    
     public func jsonObject() -> Any {
         return (self as NSArray).jsonObject()
     }
 }
 
+extension Array where Element : Any {
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self as NSArray).encode(to: encoder)
+    }
+}
+
 extension Set : RSDJSONValue {
+    
     public func jsonObject() -> Any {
         return Array(self).jsonObject()
+    }
+}
+
+extension Set where Element : Any {
+    
+    public func encode(to encoder: Encoder) throws {
+        try Array(self).encode(to: encoder)
     }
 }
 

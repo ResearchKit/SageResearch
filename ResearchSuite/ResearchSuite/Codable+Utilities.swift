@@ -2,7 +2,7 @@
 //  Codable+Utilities.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,8 +33,50 @@
 
 import Foundation
 
-/// Internally defined method for converting a decoding container to a dictionary
-/// where any key in the dictionary is accessible.
+extension Dictionary {
+    
+    /// Use this dictionary to decode the given object type.
+    public func decode<T>(_ type: T.Type) throws -> T where T : Decodable {
+        let decoder = RSDFactory.shared.createJSONDecoder()
+        let jsonData = try JSONSerialization.data(withJSONObject: self, options: [])
+        let decodable = try decoder.decode(type, from: jsonData)
+        return decodable
+    }
+}
+
+extension Array {
+    
+    /// Use this array to decode an array of objects of the given type.
+    public func decode<T>(_ type: Array<T>.Type) throws -> Array<T> where T : Decodable {
+        let decoder = RSDFactory.shared.createJSONDecoder()
+        let jsonData = try JSONSerialization.data(withJSONObject: self, options: [])
+        let decodable = try decoder.decode(type, from: jsonData)
+        return decodable
+    }
+}
+
+extension RSDFactoryEncoder {
+    
+    /// Serialize a dictionary. This is a work-around for not being able to
+    /// directly encode a generic dictionary.
+    func encode(_ value: Dictionary<String, Any>) throws -> Data {
+        let dictionary = value.mapKeys { "\($0)" }
+        let anyDictionary = AnyCodableDictionary(dictionary)
+        let data = try self.encode(anyDictionary)
+        return data
+    }
+    
+    /// Serialize an array. This is a work-around for not being able to
+    /// directly encode a generic dictionary.
+    func encode(_ value: Array<Any>) throws -> Data {
+        let anyArray = AnyCodableArray(value)
+        let data = try self.encode(anyArray)
+        return data
+    }
+}
+
+/// `CodingKey` for converting a decoding container to a dictionary where any key in the
+/// dictionary is accessible.
 struct AnyCodingKey: CodingKey {
     public let stringValue: String
     public let intValue: Int?
@@ -47,6 +89,42 @@ struct AnyCodingKey: CodingKey {
     public init?(intValue: Int) {
         self.intValue = intValue
         self.stringValue = "\(intValue)"
+    }
+}
+
+/// Wrapper for any codable array.
+struct AnyCodableArray : Codable {
+    let array : [Any]
+    
+    public init(_ array : [Any]) {
+        self.array = array
+    }
+    
+    public init(from decoder: Decoder) throws {
+        var genericContainer = try decoder.unkeyedContainer()
+        self.array = try genericContainer.decode(Array<Any>.self)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self.array as NSArray).encode(to: encoder)
+    }
+}
+
+/// Wrapper for any codable dictionary.
+struct AnyCodableDictionary : Codable {
+    public let dictionary : [String : Any]
+    
+    public init(_ dictionary : [String : Any]) {
+        self.dictionary = dictionary
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let genericContainer = try decoder.container(keyedBy: AnyCodingKey.self)
+        self.dictionary = try genericContainer.decode(Dictionary<String, Any>.self)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        try (self.dictionary as NSDictionary).encode(to: encoder)
     }
 }
 
