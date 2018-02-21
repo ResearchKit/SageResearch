@@ -2,7 +2,7 @@
 //  RSDSurveyNavigationStep.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -96,6 +96,36 @@ extension RSDSurveyNavigationStep {
         }
 
         return skipIdentifiers.count == 1 ? skipIdentifiers.first : (allAnswersNil ? skipToIfNil : nil)
+    }
+    
+    /// Evaluate the survey rules for the given task result and return the cohorts that should be
+    /// added or removed based on the result.
+    ///
+    /// - note: `RSDSurveyNavigationStep` extends `RSDCohortAssignmentStep` but does not implement
+    ///         the `cohortsToApply()` method because that will allow for additional customization
+    ///         by the step that is implementing this protocol.
+    ///
+    /// - seealso: `RSDFormUIStepObject` for an example implementation.
+    ///
+    /// - parameter result: The task result to evaluate.
+    /// - returns: The cohorts to add/remove or `nil` if no rules apply.
+    public func evaluateCohortsToApply(with result: RSDTaskResult) -> (add: Set<String>, remove: Set<String>)? {
+        var cohortsToAdd = Set<String>()
+        var cohortsToRemove = Set<String>()
+        
+        for inputField in inputFields {
+            let answerResult = result.findAnswerResult(with: inputField.identifier)
+            if let surveyInput = inputField as? RSDSurveyInputField,
+                let rules = surveyInput.surveyRules {
+                for rule in rules {
+                    guard let cohorts = rule.evaluateCohorts(with: answerResult) else { continue }
+                    cohortsToAdd.formUnion(cohorts.add)
+                    cohortsToRemove.formUnion(cohorts.remove)
+                }
+            }
+        }
+        
+        return (cohortsToAdd.count > 0 || cohortsToRemove.count > 0) ? (cohortsToAdd, cohortsToRemove) : nil
     }
 }
 

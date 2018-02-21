@@ -2,7 +2,7 @@
 //  RSDDocumentable.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -48,6 +48,7 @@ public struct RSDDocumentCreator {
         RSDAnswerResultType.BaseType.self,
         RSDAnswerResultType.SequenceType.self,
         RSDAsyncActionType.self,
+        RSDCohortRuleOperator.self,
         RSDDateCoderObject.self,
         RSDDeviceType.self,
         RSDFormDataType.self,
@@ -85,25 +86,26 @@ public struct RSDDocumentCreator {
 
     let allCodableObjects: [RSDDocumentableCodableObject.Type] = {
         var allCodableObjects: [RSDDocumentableCodableObject.Type] = [
-            RSDAnswerResultType.self,
-            RSDResourceTransformerObject.self,
-            RSDStandardAsyncActionConfiguration.self,
-            RSDResultObject.self,
-            RSDAnswerResultObject.self,
-            RSDFileResultObject.self,
-            RSDCollectionResultObject.self,
-            RSDTaskResultObject.self,
-            RSDColorThemeElementObject.self,
-            RSDFetchableImageThemeElementObject.self,
             RSDAnimatedImageThemeElementObject.self,
-            RSDViewThemeElementObject.self,
-            RSDUIActionObject.self,
-            RSDSkipToUIActionObject.self,
-            RSDWebViewUIActionObject.self,
+            RSDAnswerResultObject.self,
+            RSDAnswerResultType.self,
+            RSDCohortNavigationRuleObject.self,
+            RSDCollectionResultObject.self,
+            RSDColorThemeElementObject.self,
             RSDDateRangeObject.self,
-            RSDNumberRangeObject.self,
-            RSDTextFieldOptionsObject.self,
             RSDDurationRangeObject.self,
+            RSDFetchableImageThemeElementObject.self,
+            RSDFileResultObject.self,
+            RSDNumberRangeObject.self,
+            RSDResourceTransformerObject.self,
+            RSDResultObject.self,
+            RSDSkipToUIActionObject.self,
+            RSDStandardAsyncActionConfiguration.self,
+            RSDTaskResultObject.self,
+            RSDTextFieldOptionsObject.self,
+            RSDUIActionObject.self,
+            RSDViewThemeElementObject.self,
+            RSDWebViewUIActionObject.self,
             ]
         
     #if os(iOS)

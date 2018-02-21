@@ -353,7 +353,8 @@ class CodableInputFieldObjectTests: XCTestCase {
                             {
                             "skipToIdentifier": "lessThan",
                             "ruleOperator": "lt",
-                            "matchingAnswer": 0
+                            "matchingAnswer": 0,
+                            "cohort": "less"
                             },
                             {
                             "skipToIdentifier": "greaterThan",
@@ -388,6 +389,7 @@ class CodableInputFieldObjectTests: XCTestCase {
                 XCTAssertEqual(firstRule.skipToIdentifier, "lessThan")
                 XCTAssertEqual(firstRule.ruleOperator, .lessThan)
                 XCTAssertEqual(firstRule.matchingAnswer as? Int, 0)
+                XCTAssertEqual(firstRule.cohort, "less")
                 
                 XCTAssertEqual(lastRule.skipToIdentifier, "greaterThan")
                 XCTAssertEqual(lastRule.ruleOperator, .greaterThan)

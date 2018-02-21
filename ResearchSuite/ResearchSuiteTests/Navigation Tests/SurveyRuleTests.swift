@@ -2,7 +2,7 @@
 //  SurveyRuleTests.swift
 //  ResearchSuiteTests
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -111,6 +111,44 @@ class SurveyRuleTests: XCTestCase {
         
         let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "equal")
+    }
+    
+    func testSurveyRule_Integer_Equal_Default() {
+        
+        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
+        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        
+        let rule = RSDComparableSurveyRuleObject<Int>(skipToIdentifier: "equal", matchingValue: 2, ruleOperator: nil)
+        inputField2.surveyRules = [ rule ]
+        
+        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
+        
+        let taskResult = createTaskResult(answerType: .integer, value: 2)
+        
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        XCTAssertNil(peekingIdentifier)
+        
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        XCTAssertEqual(navigatingIdentifier, "equal")
+    }
+    
+    func testSurveyRule_Integer_Skip_Default() {
+        
+        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
+        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        
+        let rule = RSDComparableSurveyRuleObject<Int>(skipToIdentifier: "skip", matchingValue: nil, ruleOperator: nil)
+        inputField2.surveyRules = [ rule ]
+        
+        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
+        
+        let taskResult = createTaskResult(answerType: .integer, value: nil)
+        
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        XCTAssertNil(peekingIdentifier)
+        
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        XCTAssertEqual(navigatingIdentifier, "skip")
     }
     
     func testSurveyRule_Integer_LessThan() {
@@ -693,6 +731,289 @@ class SurveyRuleTests: XCTestCase {
         XCTAssertNil(navigatingIdentifier)
     }
     
+    // Cohorts
+    
+    func testSurveyRule_Cohort_Equal() {
+        
+        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
+        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
+        
+        let rule1 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "charlie", ruleOperator: .equal, cohort: "c")
+        let rule2 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "delta", ruleOperator: .equal, cohort: "d")
+        let rule3 = RSDComparableSurveyRuleObject<String>(skipToIdentifier: nil, matchingValue: nil, ruleOperator: nil, cohort: "skip")
+        inputField2.surveyRules = [rule1, rule2, rule3]
+        
+        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
+        
+        let taskResult = createTaskResult(answerType: .string, value: "charlie")
+        
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        XCTAssertNil(peekingIdentifier)
+        
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        XCTAssertNil(navigatingIdentifier)
+        
+        if let cohorts = step.cohortsToApply(with: taskResult) {
+            XCTAssertEqual(cohorts.add, ["c"])
+            XCTAssertEqual(cohorts.remove, ["d", "skip"])
+        } else {
+            XCTFail("Cohorts for this step should not return nil")
+        }
+    }
+    
+    func testSurveyRule_Cohort_Skip() {
+        
+        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
+        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
+        
+        let rule1 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "charlie", ruleOperator: .equal, cohort: "c")
+        let rule2 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "delta", ruleOperator: .equal, cohort: "d")
+        let rule3 = RSDComparableSurveyRuleObject<String>(skipToIdentifier: nil, matchingValue: nil, ruleOperator: nil, cohort: "skip")
+        inputField2.surveyRules = [rule1, rule2, rule3]
+        
+        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
+        
+        let after1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        step.afterCohortRules = [after1]
+        
+        let taskResult = createTaskResult(answerType: .string, value: nil)
+        
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        XCTAssertNil(peekingIdentifier)
+        
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        XCTAssertNil(navigatingIdentifier)
+        
+        if let cohorts = step.cohortsToApply(with: taskResult) {
+            XCTAssertEqual(cohorts.add, ["skip"])
+            XCTAssertEqual(cohorts.remove, ["d", "c"])
+        } else {
+            XCTFail("Cohorts for this step should not return nil")
+        }
+    }
+    
+    func testCohortTrackingRule_NextStep() {
+        
+        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
+        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.string))
+        
+        let rule1 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "charlie", ruleOperator: .equal, cohort: "c")
+        let rule2 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "delta", ruleOperator: .equal, cohort: "d")
+        inputField2.surveyRules = [rule1, rule2]
+        
+        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
+        
+        let taskResult = createTaskResult(answerType: .string, value: "charlie")
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["d", "test"])
+        
+        // If peeking, should not change the cohorts.
+        let id1 = tracker.nextStepIdentifier(after: step, with: taskResult, isPeeking: true)
+        XCTAssertNil(id1)
+        XCTAssertEqual(tracker.currentCohorts, ["d", "test"])
+        
+        // If not peeking, should change the cohorts.
+        let id2 = tracker.nextStepIdentifier(after: step, with: taskResult, isPeeking: false)
+        XCTAssertNil(id2)
+        XCTAssertEqual(tracker.currentCohorts, ["c", "test"])
+    }
+    
+    func testCohortTrackingRule_SkipStep_Default() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let beforeRule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let beforeRule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let beforeRule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.beforeCohortRules = [beforeRule1, beforeRule2, beforeRule3]
+        
+        let afterRule = RSDCohortNavigationRuleObject(requiredCohorts: ["c"], cohortOperator: .all, skipToIdentifier: "cat")
+        step.afterCohortRules = [afterRule]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["d", "test"])
+        
+        let skipToPeeking = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: false)
+        
+        XCTAssertEqual(skipToPeeking, RSDIdentifier.nextStep.stringValue)
+        XCTAssertEqual(skipToActual, RSDIdentifier.nextStep.stringValue)
+    }
+    
+    func testCohortTrackingRule_SkipStep_All_Failed() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let beforeRule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let beforeRule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let beforeRule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.beforeCohortRules = [beforeRule1, beforeRule2, beforeRule3]
+        
+        let afterRule = RSDCohortNavigationRuleObject(requiredCohorts: ["c"], cohortOperator: .all, skipToIdentifier: "cat")
+        step.afterCohortRules = [afterRule]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["e", "test"])
+        
+        let skipToPeeking = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: false)
+        
+        XCTAssertNil(skipToPeeking)
+        XCTAssertNil(skipToActual)
+    }
+    
+    func testCohortTrackingRule_SkipStep_All_Passed() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let beforeRule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let beforeRule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let beforeRule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.beforeCohortRules = [beforeRule1, beforeRule2, beforeRule3]
+        
+        let afterRule = RSDCohortNavigationRuleObject(requiredCohorts: ["c"], cohortOperator: .all, skipToIdentifier: "cat")
+        step.afterCohortRules = [afterRule]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["e", "g", "test"])
+        
+        let skipToPeeking = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: false)
+        
+        XCTAssertEqual(skipToPeeking, "elephant")
+        XCTAssertEqual(skipToActual, "elephant")
+    }
+    
+    func testCohortTrackingRule_SkipStep_Any_Passed() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let beforeRule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let beforeRule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let beforeRule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.beforeCohortRules = [beforeRule1, beforeRule2, beforeRule3]
+        
+        let afterRule = RSDCohortNavigationRuleObject(requiredCohorts: ["c"], cohortOperator: .all, skipToIdentifier: "cat")
+        step.afterCohortRules = [afterRule]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["h", "test"])
+        
+        let skipToPeeking = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: false)
+        
+        XCTAssertEqual(skipToPeeking, "fox")
+        XCTAssertEqual(skipToActual, "fox")
+    }
+    
+    func testCohortTrackingRule_SkipStep_Any_Failed() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let beforeRule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let beforeRule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let beforeRule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.beforeCohortRules = [beforeRule1, beforeRule2, beforeRule3]
+        
+        let afterRule = RSDCohortNavigationRuleObject(requiredCohorts: ["c"], cohortOperator: .all, skipToIdentifier: "cat")
+        step.afterCohortRules = [afterRule]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["test"])
+        
+        let skipToPeeking = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.skipToStepIdentifier(before: step, with: nil, isPeeking: false)
+        
+        XCTAssertNil(skipToPeeking)
+        XCTAssertNil(skipToActual)
+    }
+    
+    func testCohortTrackingRule_NextStep_Default() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let rule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let rule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let rule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.afterCohortRules = [rule1, rule2, rule3]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["d", "test"])
+        
+        let skipToPeeking = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: false)
+        
+        XCTAssertNil(skipToPeeking)
+        XCTAssertEqual(skipToActual, RSDIdentifier.nextSection.stringValue)
+    }
+    
+    func testCohortTrackingRule_NextStep_All_Failed() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let rule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let rule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let rule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.afterCohortRules = [rule1, rule2, rule3]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["e", "test"])
+        
+        let skipToPeeking = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: false)
+        
+        XCTAssertNil(skipToPeeking)
+        XCTAssertNil(skipToActual)
+    }
+    
+    func testCohortTrackingRule_NextStep_All_Passed() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let rule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let rule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let rule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.afterCohortRules = [rule1, rule2, rule3]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["e", "g", "test"])
+        
+        let skipToPeeking = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: false)
+        
+        XCTAssertNil(skipToPeeking)
+        XCTAssertEqual(skipToActual, "elephant")
+    }
+    
+    func testCohortTrackingRule_NextStep_Any_Passed() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let rule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let rule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let rule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.afterCohortRules = [rule1, rule2, rule3]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["h", "test"])
+        
+        let skipToPeeking = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: false)
+        
+        XCTAssertNil(skipToPeeking)
+        XCTAssertEqual(skipToActual, "fox")
+    }
+    
+    func testCohortTrackingRule_NextStep_Any_Failed() {
+        
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        let rule1 = RSDCohortNavigationRuleObject(requiredCohorts: ["d"], cohortOperator: nil, skipToIdentifier: nil)
+        let rule2 = RSDCohortNavigationRuleObject(requiredCohorts: ["e", "g"], cohortOperator: .all, skipToIdentifier: "elephant")
+        let rule3 = RSDCohortNavigationRuleObject(requiredCohorts: ["f", "h"], cohortOperator: .any, skipToIdentifier: "fox")
+        step.afterCohortRules = [rule1, rule2, rule3]
+        
+        let tracker = RSDCohortTrackingRule(initialCohorts: ["test"])
+        
+        let skipToPeeking = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: true)
+        let skipToActual = tracker.nextStepIdentifier(after: step, with: nil, isPeeking: false)
+        
+        XCTAssertNil(skipToPeeking)
+        XCTAssertNil(skipToActual)
+    }
+    
+    
     // Helper methods
     
     func createRule<Value : Codable>(_ skipIdentifier: String?, _ matchingValue: Value, _ ruleOperator:RSDSurveyRuleOperator) -> RSDComparableSurveyRuleObject<Value> {
@@ -714,5 +1035,4 @@ class SurveyRuleTests: XCTestCase {
         
         return taskResult
     }
-
 }

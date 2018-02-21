@@ -2,7 +2,7 @@
 //  RSDSurveyRule.swift
 //  ResearchSuite
 //
-//  Copyright © 2016-2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -41,6 +41,12 @@ public protocol RSDSurveyRule {
     /// - parameter results: The result to evaluate.
     /// - returns: The identifier to skip to if the result evaluates to `true`.
     func evaluateRule(with result: RSDResult?) -> String?
+    
+    /// For a given result (if any), what are the cohorts to add or remove?
+    ///
+    /// - parameter results: The result to evaluate.
+    /// - returns: The cohorts to add and remove.
+    func evaluateCohorts(with result: RSDResult?) -> (add: Set<String>, remove: Set<String>)?
 }
 
 /// List of rules creating the survey rule items.
@@ -68,11 +74,11 @@ public enum RSDSurveyRuleOperator: String, Codable, RSDEnumSet {
     /// The answer value is greater than or equal to the `matchingAnswer`.
     case greaterThanEqual   = "ge"
     
-    /// The answer value is "other than" the `matchingAnswer`. This is intended for use where the answer type
-    /// is an array and the comparison is for the case where the array is evaluated as the elements are *not*
-    /// included. For example, if the `matchingAnswer` is `[0,3]` and the result answer is `[2,4]` then this
-    /// will evaluate to `true` and return the `skipIdentifier` because neither `2` nor `4` are in the set
-    /// defined by the `matchingAnswer`.
+    /// The answer value is "other than" the `matchingAnswer`. This is intended for use where the answer
+    /// type is an array and the comparison is for the case where the array is evaluated as the elements
+    /// are *not* included. For example, if the `matchingAnswer` is `[0,3]` and the result answer is
+    /// `[2,4]` then this will evaluate to `true` and return the `skipIdentifier` because neither `2` nor
+    /// `4` are in the set defined by the `matchingAnswer`.
     case otherThan          = "ot"
     
     /// List of all the operators.
@@ -89,22 +95,29 @@ extension RSDSurveyRuleOperator : RSDDocumentableEnum {
 public protocol RSDComparableSurveyRule : RSDSurveyRule, RSDComparable {
     
     /// Optional skip identifier for this rule. If available, this will be used as the skip identifier,
-    /// otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit`
+    /// otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit` **unless** the
+    /// `cohort` is not `nil`.
     var skipToIdentifier: String? { get }
     
-    /// The rule operator to apply. If `nil`, `.equal` will be assumed unless the `expectedAnswer` is also nil,
-    /// in which case `.skip` will be assumed.
+    /// Optional cohort to assign if the rule matches. If non-nil, then the `evaluateRule()` function
+    /// will return the `skipToIdentifier` and will *not* assume exit if the skipToIdentifier is `nil`.
+    var cohort: String? { get }
+    
+    /// The rule operator to apply. If `nil`, `.equal` will be assumed unless the `matchingAnswer`
+    /// is also `nil`, in which case `.skip` will be assumed.
     var ruleOperator: RSDSurveyRuleOperator? { get }
 }
 
 /// `RSDComparable` can be used to compare a stored result to a matching value.
 public protocol RSDComparable {
     
-    /// Expected answer for the rule. If `nil`, then the operator must be .skip or this will return a nil value.
+    /// Expected answer for the rule. If `nil`, then the operator must be .skip or this will return a nil
+    /// value.
     var matchingAnswer: Any? { get }
 }
 
-/// `RSDDecimalComparable` can be used to compare a stored result to a matching value where the values are decimals.
+/// `RSDDecimalComparable` can be used to compare a stored result to a matching value where the values
+/// are decimals.
 public protocol RSDDecimalComparable : RSDComparable {
     
     /// The accuracy to use for comparing two decimal values.
@@ -112,6 +125,10 @@ public protocol RSDDecimalComparable : RSDComparable {
 }
 
 extension RSDComparableSurveyRule {
+    
+    fileprivate var _ruleOperator: RSDSurveyRuleOperator {
+        return self.ruleOperator ?? ((self.matchingAnswer == nil) ? .skip : .equal)
+    }
 
     /// For a given result (if any), what is the step that the survey should go to next?
     ///
@@ -121,11 +138,23 @@ extension RSDComparableSurveyRule {
     /// - parameter results: The result to evaluate.
     /// - returns: The identifier to skip to if the result evaluates to `true`.
     public func evaluateRule(with result: RSDResult?) -> String? {
+        guard cohort == nil || skipToIdentifier != nil else { return nil }
         
-        let op: RSDSurveyRuleOperator = self.ruleOperator ?? ((self.matchingAnswer == nil) ? .skip : .equal)
         let skipTo: String = skipToIdentifier ?? RSDIdentifier.exit.rawValue
-        
-        return isMatching(to: result, op: op) ? skipTo : nil
+        return isMatching(to: result, op: _ruleOperator) ? skipTo : nil
+    }
+    
+    /// For a given result (if any), what is the step that the survey should go to next?
+    ///
+    /// For the `RSDComparableSurveyRule`, this will evaluate the result using the `ruleOperator`
+    /// and the `matchingAnswer` and return the `cohort` to add if the rule evaluates to `true`
+    /// or the `cohort` to remove if the rule evaluates to `false`.
+    ///
+    /// - parameter results: The result to evaluate.
+    /// - returns: The cohorts to add and remove.
+    public func evaluateCohorts(with result: RSDResult?) -> (add: Set<String>, remove: Set<String>)? {
+        guard let cohort = self.cohort else { return nil }
+        return isMatching(to: result, op: _ruleOperator) ? ([cohort], []) : ([], [cohort])
     }
 }
 

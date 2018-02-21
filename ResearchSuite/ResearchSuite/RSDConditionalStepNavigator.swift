@@ -1,8 +1,8 @@
 //
-//  RSDNavigableTask.swift
+//  RSDConditionalStepNavigator.swift
 //  ResearchSuite
 //
-//  Copyright © 2016-2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,9 +33,9 @@
 
 import Foundation
 
-/// Define the navigation rule as a protocol to allow for protocol-oriented extension (multiple inheritance).
-/// Currently defined usage is to allow the `RSDConditionalStepNavigator` to check if a step has a navigation
-/// rule and apply as necessary.
+/// Define the navigation rule as a protocol to allow for protocol-oriented extension (multiple
+/// inheritance). Currently defined usage is to allow the `RSDConditionalStepNavigator` to check if a
+/// step has a navigation rule and apply as necessary.
 public protocol RSDNavigationRule : RSDStep {
     
     /// Identifier for the next step to navigate to based on the current task result and the conditional
@@ -54,8 +54,8 @@ public protocol RSDNavigationRule : RSDStep {
 /// A navigation skip rule applies to this step to allow the step to be skipped.
 public protocol RSDNavigationSkipRule : RSDStep {
     
-    /// Should this step be skipped based on the current task result and the conditional rule associated with
-    /// this task?
+    /// Should this step be skipped based on the current task result and the conditional rule associated
+    /// with this task?
     ///
     /// - parameters:
     ///     - result:           The current task result.
@@ -79,31 +79,51 @@ public protocol RSDNavigationBackRule : RSDStep {
     func allowsBackNavigation(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?) -> Bool
 }
 
-/// A conditional rule is appended to the navigable task to check a secondary source for whether or not the
-/// step should be displayed.
+/// A conditional rule is appended to the navigable task to check a secondary source for whether or not
+/// the step should be displayed.
 ///
-/// - note: `ResearchSuite` does not currently implement any conditional rule objects. The conditional rule is
-///         included here for future implementation of data tracking across runs of a task. (syoung 10/03/2017)
+/// - seealso: `RSDCohortRule`
 public protocol RSDConditionalRule {
     
-    /// Should the given step be skipped, based on the current result set?
+    /// Asks the conditional rule what the identifier is for the next step to display after the given step
+    /// is displayed.
+    ///
+    /// If *only* this step should be skipped, then return `RSDIdentifier.nextStep`. If the section should
+    /// be skipped then return `RSDIdentifier.nextSection`.
     ///
     /// - parameters:
-    ///     - step:     The step about to be displayed.
-    ///     - result:   The current task result.
-    /// - returns: `true` if the step should be skipped, otherwise `no`.
-    func shouldSkip(step: RSDStep, with result: RSDTaskResult?) -> Bool
+    ///     - step:      The step about to be displayed.
+    ///     - result:    The current task result.
+    ///     - isPeeking: Is this navigation rule being called on a result for a step that is navigating
+    ///                  forward or is it a step navigator that is peeking at the next step to set up UI
+    ///                  display? If peeking at the next step then this parameter will be `true`.
+    /// - returns: The identifier of the next step to display.
+    func skipToStepIdentifier(before step: RSDStep, with result: RSDTaskResult?, isPeeking: Bool) -> String?
     
-    /// Asks the conditional rule what the identifier is for the next step to display after the given step.
+    /// Asks the conditional rule what the identifier is for the next step to display after the given step
+    /// is displayed.
     ///
     /// - parameters:
-    ///     - step:     The step that just finished.
-    ///     - result:   The current task result.
+    ///     - step:      The step that just finished.
+    ///     - result:    The current task result.
+    ///     - isPeeking: Is this navigation rule being called on a result for a step that is navigating
+    ///                  forward or is it a step navigator that is peeking at the next step to set up UI
+    ///                  display? If peeking at the next step then this parameter will be `true`.
     /// - returns: The identifier of the next step.
-    func nextStepIdentifier(after step: RSDStep?, with result: RSDTaskResult?) -> String?
+    func nextStepIdentifier(after step: RSDStep?, with result: RSDTaskResult?, isPeeking: Bool) -> String?
+}
+
+/// A conditional **replacement** rule is a conditional rule that needs to replace a given step with a
+/// different instance of a step under a set of conditions determined by the rule.
+///
+/// - note: `ResearchSuite` does not currently implement any conditional replacement rule objects. The
+///  replacement rule is included here for future implementation of data tracking across runs of a task.
+///  (syoung 02/21/2018)
+public protocol RSDConditionalReplacementRule : RSDConditionalRule {
     
-    /// Allows the conditional rule to mutate or replace the step that the navigation rules determine should be
-    /// the return step.
+    /// Allows the conditional rule to mutate or replace the step that the navigation rules determine
+    /// should be the return step. This rule should return the original step if no replacement is
+    /// required. Returning `nil` indicates that the task should end.
     ///
     /// - parameters:
     ///     - step:     The step that navigation has opted to return.
@@ -112,8 +132,14 @@ public protocol RSDConditionalRule {
     func replacementStep(for step:RSDStep?, with result: RSDTaskResult?) -> RSDStep?
 }
 
-/// Implementation of a step navigator that will apply conditions and navigation based on the steps, navigation rules,
-/// and conditional rules associated with this navigator.
+/// A tracking rule is used to track changes that are applied during a task that should be saved at the
+/// end of the the overall task. By definition, these rules can mutate and should be handled using
+/// pointers rather than using structs.
+public protocol RSDTrackingRule : class, RSDConditionalRule {
+}
+
+/// Implementation of a step navigator that will apply conditions and navigation based on the steps,
+/// navigation rules, and conditional rules associated with this navigator.
 public protocol RSDConditionalStepNavigator : RSDStepNavigator, RSDStepValidator {
     
     /// An ordered list of steps to run for this task.
@@ -122,13 +148,14 @@ public protocol RSDConditionalStepNavigator : RSDStepNavigator, RSDStepValidator
     /// A conditional rule to optionally associate with this step navigator.
     var conditionalRule : RSDConditionalRule? { get }
     
-    /// A list of step markers to use for calculating progress. If defined, progress is calculated counting only
-    /// those steps that are included in the progress markers rather than inspecting the step array.
+    /// A list of step markers to use for calculating progress. If defined, progress is calculated
+    /// counting only those steps that are included in the progress markers rather than inspecting the
+    /// step array.
     var progressMarkers : [String]? { get }
 }
 
-/// Extend the conditional step navigator to implement the step navigation using the ordered list of steps and the
-/// conditional rule.
+/// Extend the conditional step navigator to implement the step navigation using the ordered list of
+/// steps and the conditional rule.
 extension RSDConditionalStepNavigator {
     
     /// Returns the step associated with a given identifier.
@@ -143,7 +170,7 @@ extension RSDConditionalStepNavigator {
             let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking)
             else {
                 // Check the conditional rule for a next step identifier
-                return conditionalRule?.nextStepIdentifier(after: previousStep, with: result)
+                return conditionalRule?.nextStepIdentifier(after: previousStep, with: result, isPeeking: isPeeking)
         }
         // If this is a step that conforms to the RSDNavigationRule protocol and the next step is non-nil,
         // then return this as the next step identifier
@@ -235,9 +262,15 @@ extension RSDConditionalStepNavigator {
                 returnStep = steps.first
             }
             
-            // Check if this is a skipable step
-            shouldSkip = (returnStep != nil) && (conditionalRule?.shouldSkip(step: returnStep!, with: result) ?? false)
-            if !shouldSkip, let navigationSkipStep = returnStep as? RSDNavigationSkipRule {
+            shouldSkip = false
+            if (returnStep != nil), let nextId = conditionalRule?.skipToStepIdentifier(before: returnStep!, with: result, isPeeking: isPeeking) {
+                if nextId == RSDIdentifier.nextStep {
+                    shouldSkip = true
+                } else {
+                    returnStep = steps.rsd_next(after: {$0.identifier == nextId})
+                }
+            }
+            if !shouldSkip, (returnStep != nil), let navigationSkipStep = returnStep as? RSDNavigationSkipRule {
                 shouldSkip = navigationSkipStep.shouldSkipStep(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking)
             }
             if (shouldSkip) {
@@ -247,7 +280,7 @@ extension RSDConditionalStepNavigator {
         } while (shouldSkip)
             
         // If there is a conditionalRule, then check to see if the step should be mutated or replaced.
-        if let conditionalRule = self.conditionalRule {
+        if let conditionalRule = self.conditionalRule as? RSDConditionalReplacementRule {
             returnStep = conditionalRule.replacementStep(for: returnStep, with: result)
         }
         

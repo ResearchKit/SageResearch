@@ -42,6 +42,10 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
     /// otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit`
     public let skipToIdentifier: String?
     
+    /// Optional cohort to assign if the rule matches. If available, then an `RSDCohortRule` can be used to track
+    /// the cohort to assign depending upon how this rule evaluates.
+    public let cohort: String?
+    
     /// The rule operator to apply. If `nil`, `.equal` will be assumed unless the `expectedAnswer` is also nil,
     /// in which case `.skip` will be assumed.
     public let ruleOperator: RSDSurveyRuleOperator?
@@ -60,14 +64,16 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
     ///     - skipToIdentifier: Skip identifier for this rule.
     ///     - matchingValue: Value-typed matching answer.
     ///     - ruleOperator: The rule operator to apply.
-    public init(skipToIdentifier: String?, matchingValue: Value?, ruleOperator: RSDSurveyRuleOperator?) {
+    ///     - cohort: The cohort to assign for this rule if it matches.
+    public init(skipToIdentifier: String?, matchingValue: Value?, ruleOperator: RSDSurveyRuleOperator?, cohort: String? = nil) {
         self.skipToIdentifier = skipToIdentifier
         self.matchingValue = matchingValue
         self.ruleOperator = ruleOperator
+        self.cohort = cohort
     }
     
     private enum CodingKeys: String, CodingKey {
-        case skipToIdentifier, matchingValue = "matchingAnswer", ruleOperator
+        case skipToIdentifier, matchingValue = "matchingAnswer", ruleOperator, cohort
     }
     
     /// Initialize from a `Decoder`. This method will decode the values and also check that the combination of
@@ -80,7 +86,8 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
         let skipToIdentifier = try container.decodeIfPresent(String.self, forKey: .skipToIdentifier)
         let matchingValue = try container.decodeIfPresent(Value.self, forKey: .matchingValue)
         let ruleOperator = try container.decodeIfPresent(RSDSurveyRuleOperator.self, forKey: .ruleOperator)
-        if (skipToIdentifier == nil) && (matchingValue == nil) && (ruleOperator == nil) {
+        let cohort = try container.decodeIfPresent(String.self, forKey: .cohort)
+        if (skipToIdentifier == nil) && (matchingValue == nil) && (ruleOperator == nil) && (cohort == nil) {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "All the values are nil. While each value in the comparable rule is optional, a comparable rule that does not include *any* values is invalid.")
             throw DecodingError.valueNotFound(Value.self, context)
         }
@@ -91,6 +98,7 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
         self.skipToIdentifier = skipToIdentifier
         self.matchingValue = matchingValue
         self.ruleOperator = ruleOperator
+        self.cohort = cohort
     }
 }
 
@@ -101,7 +109,7 @@ extension RSDComparableSurveyRuleObject : RSDDocumentableDecodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.skipToIdentifier, .matchingValue, .ruleOperator]
+        let codingKeys: [CodingKeys] = [.skipToIdentifier, .matchingValue, .ruleOperator, .cohort]
         return codingKeys
     }
     
@@ -115,9 +123,11 @@ extension RSDComparableSurveyRuleObject : RSDDocumentableDecodableObject {
                 if idx != 1 { return false }
             case .ruleOperator:
                 if idx != 2 { return false }
+            case .cohort:
+                if idx != 3 { return false }
             }
         }
-        return keys.count == 3
+        return keys.count == 4
     }
     
     static func examples() -> [[String : RSDJSONValue]] {
