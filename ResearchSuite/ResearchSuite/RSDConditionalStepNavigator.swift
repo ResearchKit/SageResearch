@@ -165,12 +165,31 @@ extension RSDConditionalStepNavigator {
         return self.steps.first(where: { $0.identifier == identifier })
     }
     
+    private func _checkConditionalRules(after previousStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
+        for rule in RSDFactory.shared.trackingRules {
+            if let nextStepId = rule.nextStepIdentifier(after: previousStep, with: result, isPeeking: isPeeking) {
+                return nextStepId
+            }
+        }
+        return self.conditionalRule?.nextStepIdentifier(after: previousStep, with: result, isPeeking: isPeeking)
+    }
+    
+    private func _checkConditionalSkipRules(before returnStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
+        guard let returnStep = returnStep else { return nil }
+        for rule in RSDFactory.shared.trackingRules {
+            if let nextStepId = rule.skipToStepIdentifier(before: returnStep, with: result, isPeeking: isPeeking) {
+                return nextStepId
+            }
+        }
+        return conditionalRule?.skipToStepIdentifier(before: returnStep, with: result, isPeeking: isPeeking)
+    }
+    
     private func _nextStepIdentifier(after previousStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
         guard let navigableStep = previousStep as? RSDNavigationRule,
             let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking)
             else {
                 // Check the conditional rule for a next step identifier
-                return conditionalRule?.nextStepIdentifier(after: previousStep, with: result, isPeeking: isPeeking)
+                return _checkConditionalRules(after: previousStep, with: result, isPeeking: isPeeking)
         }
         // If this is a step that conforms to the RSDNavigationRule protocol and the next step is non-nil,
         // then return this as the next step identifier
@@ -263,7 +282,7 @@ extension RSDConditionalStepNavigator {
             }
             
             shouldSkip = false
-            if (returnStep != nil), let nextId = conditionalRule?.skipToStepIdentifier(before: returnStep!, with: result, isPeeking: isPeeking) {
+            if let nextId = _checkConditionalSkipRules(before: returnStep, with: result, isPeeking: isPeeking) {
                 if nextId == RSDIdentifier.nextStep {
                     shouldSkip = true
                 } else {
