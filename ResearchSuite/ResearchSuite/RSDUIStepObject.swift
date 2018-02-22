@@ -2,7 +2,7 @@
 //  RSDUIStepObject.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -38,7 +38,7 @@ import Foundation
 /// to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavigationRule, Decodable, RSDMutableStep {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDMutableStep {
 
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
     /// of a step history.
@@ -83,6 +83,12 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     /// will need to "jump" over the alternate path step and the alternate path step will need to "jump" to the "exit".
     open var nextStepIdentifier: String?
     
+    /// The navigation cohort rules to apply *before* displaying the step.
+    public var beforeCohortRules: [RSDCohortNavigationRule]?
+    
+    /// The navigation cohort rules to apply *after* displaying the step.
+    public var afterCohortRules: [RSDCohortNavigationRule]?
+    
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.
@@ -115,6 +121,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
         copy.nextStepIdentifier = self.nextStepIdentifier
         copy.actions = self.actions
         copy.shouldHideActions = self.shouldHideActions
+        copy.beforeCohortRules = self.beforeCohortRules
+        copy.afterCohortRules = self.afterCohortRules
     }
 
     // MARK: Result management
@@ -153,6 +161,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
         case viewTheme
         case colorTheme
         case imageTheme = "image"
+        case beforeCohortRules
+        case afterCohortRules
     }
     
     /// Initialize from a `Decoder`.
@@ -188,7 +198,13 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     ///                "colorTheme"     : { "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true },
     ///                "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
     ///                                     "storyboardIdentifier": "ActiveTaskSteps",
-    ///                                     "bundleIdentifier": "org.example.SharedResources" }
+    ///                                     "bundleIdentifier": "org.example.SharedResources" },
+    ///                "beforeCohortRules" : { "requiredCohorts" : ["boo", "goo"],
+    ///                                        "skipToIdentifier" : "blueGu",
+    ///                                        "operator" : "any" },
+    ///                "afterCohortRules" : { "requiredCohorts" : ["boo", "goo"],
+    ///                                        "skipToIdentifier" : "blueGu",
+    ///                                        "operator" : "any" }
     ///            }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
     ///
@@ -251,6 +267,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
             }
         }
         
+        self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules)
+        self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules)
+
         if deviceType == nil {
             let subcontainer = try decoder.container(keyedBy: RSDDeviceType.self)
             let preferredType = decoder.factory.deviceType
@@ -282,7 +301,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .stepType, .title, .text, .detail, .footnote, .nextStepIdentifier, .viewTheme, .colorTheme, .imageTheme]
+        let codingKeys: [CodingKeys] = [.identifier, .stepType, .title, .text, .detail, .footnote, .nextStepIdentifier, .viewTheme, .colorTheme, .imageTheme, .beforeCohortRules, .afterCohortRules]
         return codingKeys
     }
     
@@ -311,9 +330,13 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
                 if idx != 8 { return false }
             case .imageTheme:
                 if idx != 9 { return false }
+            case .beforeCohortRules:
+                if idx != 10 { return false }
+            case .afterCohortRules:
+                if idx != 11 { return false }
             }
         }
-        return keys.count == 10
+        return keys.count == 12
     }
     
     class func examples() -> [[String : RSDJSONValue]] {
@@ -340,7 +363,13 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
             "colorTheme"     : [ "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true ],
             "viewTheme"      : [ "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps",
-                                 "bundleIdentifier": "org.example.SharedResources" ]
+                                 "bundleIdentifier": "org.example.SharedResources" ],
+            "beforeCohortRules" : [["requiredCohorts" : ["boo", "goo"],
+                                    "skipToIdentifier" : "blueGu",
+                                    "operator" : "any" ]],
+            "afterCohortRules" : [[ "requiredCohorts" : ["boo", "goo"],
+                                    "skipToIdentifier" : "blueGu",
+                                    "operator" : "any" ]]
         ]
         
         // Example JSON for a step with an `RSDFetchableImageThemeElement`.

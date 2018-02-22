@@ -64,6 +64,8 @@ class StepTests: XCTestCase {
         step.commands = [.continueOnFinish]
         step.spokenInstructions = [0 : "start"]
         step.requiresBackgroundAudio = true
+        step.beforeCohortRules = [RSDCohortNavigationRuleObject(requiredCohorts: ["boo"], cohortOperator: nil, skipToIdentifier: nil)]
+        step.afterCohortRules = [RSDCohortNavigationRuleObject(requiredCohorts: ["goo"], cohortOperator: nil, skipToIdentifier: nil)]
         
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")
@@ -82,19 +84,29 @@ class StepTests: XCTestCase {
         } else {
             XCTFail("\(String(describing: copy.actions)) does not include expected learn more action")
         }
-        if let shouldHideActions = step.shouldHideActions {
+        if let shouldHideActions = copy.shouldHideActions {
             XCTAssertEqual(shouldHideActions, [.navigation(.skip)])
         } else {
-            XCTAssertNotNil(step.shouldHideActions)
+            XCTAssertNotNil(copy.shouldHideActions)
         }
         XCTAssertEqual(copy.duration, 5)
         XCTAssertEqual(copy.commands, [.continueOnFinish])
-        if let spokenInstructions = step.spokenInstructions {
+        if let spokenInstructions = copy.spokenInstructions {
             XCTAssertEqual(spokenInstructions, [0 : "start"])
         } else {
-            XCTAssertNotNil(step.spokenInstructions)
+            XCTAssertNotNil(copy.spokenInstructions)
         }
         XCTAssertTrue(copy.requiresBackgroundAudio)
+        if let cohort = copy.beforeCohortRules?.first {
+            XCTAssertEqual(cohort.requiredCohorts, ["boo"])
+        } else {
+            XCTAssertNotNil(copy.beforeCohortRules?.first)
+        }
+        if let cohort = copy.afterCohortRules?.first {
+            XCTAssertEqual(cohort.requiredCohorts, ["goo"])
+        } else {
+            XCTAssertNotNil(copy.beforeCohortRules?.first)
+        }
     }
     
     func testCopy_FormUIStepObject() {
@@ -128,10 +140,10 @@ class StepTests: XCTestCase {
         } else {
             XCTFail("\(String(describing: copy.actions)) does not include expected learn more action")
         }
-        if let shouldHideActions = step.shouldHideActions {
+        if let shouldHideActions = copy.shouldHideActions {
             XCTAssertEqual(shouldHideActions, [.navigation(.skip)])
         } else {
-            XCTAssertNotNil(step.shouldHideActions)
+            XCTAssertNotNil(copy.shouldHideActions)
         }
         
         XCTAssertEqual(copy.inputFields.count, 1)
@@ -189,10 +201,10 @@ class StepTests: XCTestCase {
         } else {
             XCTFail("\(String(describing: copy.actions)) does not include expected learn more action")
         }
-        if let shouldHideActions = step.shouldHideActions {
+        if let shouldHideActions = copy.shouldHideActions {
             XCTAssertEqual(shouldHideActions, [.navigation(.skip)])
         } else {
-            XCTAssertNotNil(step.shouldHideActions)
+            XCTAssertNotNil(copy.shouldHideActions)
         }
     }
     

@@ -143,6 +143,9 @@
 		F8F561E92023C2A9000EEA8C /* RSDDurationPickerDataSourceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8321EB7201AB7F900074DFA /* RSDDurationPickerDataSourceObject.swift */; };
 		F8F72401203BF7BD00AC0E5B /* AnyObjectSerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F72400203BF7BD00AC0E5B /* AnyObjectSerializationTests.swift */; };
 		F8F72402203BF7BD00AC0E5B /* AnyObjectSerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F72400203BF7BD00AC0E5B /* AnyObjectSerializationTests.swift */; };
+		F8F72435203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F72434203DF20E00AC0E5B /* RSDCohortTrackingRule.swift */; };
+		F8F72436203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F72434203DF20E00AC0E5B /* RSDCohortTrackingRule.swift */; };
+		F8F72437203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F72434203DF20E00AC0E5B /* RSDCohortTrackingRule.swift */; };
 		F8F9544220239E8F00347940 /* RSDDateRangeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F9544120239E8F00347940 /* RSDDateRangeObject.swift */; };
 		F8F9544320239E8F00347940 /* RSDDateRangeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F9544120239E8F00347940 /* RSDDateRangeObject.swift */; };
 		F8F9544420239E8F00347940 /* RSDDateRangeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F9544120239E8F00347940 /* RSDDateRangeObject.swift */; };
@@ -526,6 +529,7 @@
 		F8B17860202E22CC00B62416 /* RSDStandardAsyncActionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStandardAsyncActionConfiguration.swift; sourceTree = "<group>"; };
 		F8B42BE21FE9ABE200E23783 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		F8F72400203BF7BD00AC0E5B /* AnyObjectSerializationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyObjectSerializationTests.swift; sourceTree = "<group>"; };
+		F8F72434203DF20E00AC0E5B /* RSDCohortTrackingRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCohortTrackingRule.swift; sourceTree = "<group>"; };
 		F8F9544120239E8F00347940 /* RSDDateRangeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDateRangeObject.swift; sourceTree = "<group>"; };
 		F8F9544520239ED400347940 /* RSDNumberRangeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDNumberRangeObject.swift; sourceTree = "<group>"; };
 		FF0920BE1FCE310500C9E031 /* RSDTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableSection.swift; sourceTree = "<group>"; };
@@ -779,6 +783,14 @@
 				F89BEA2F202B9550007BD2DD /* StepTests.swift */,
 			);
 			path = "ModelObject Tests";
+			sourceTree = "<group>";
+		};
+		F8F72433203DF1CD00AC0E5B /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				F8F72434203DF20E00AC0E5B /* RSDCohortTrackingRule.swift */,
+			);
+			name = Tracking;
 			sourceTree = "<group>";
 		};
 		F8F9544020239E5D00347940 /* Range */ = {
@@ -1119,6 +1131,7 @@
 		FFF53EA81FBF9018004211D2 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				F8F72433203DF1CD00AC0E5B /* Tracking */,
 				FFF53EA91FBF90AC004211D2 /* Common */,
 				FFB015CD1F8BF0A900AC209B /* AsyncAction */,
 				FF5C4C301F8C9D9600F311BA /* Result */,
@@ -1488,6 +1501,7 @@
 				F80CA5301FFEBE3200E89C06 /* RSDMeasurementInputTableItem.swift in Sources */,
 				FF8B53A81FCE6C7A006B6937 /* RSDResult.swift in Sources */,
 				FF8B53821FCE6C6F006B6937 /* RSDFormUIHint.swift in Sources */,
+				F8F72435203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */,
 				FF8B54241FCE6CA2006B6937 /* RSDFormUIStepObject.swift in Sources */,
 				FF8B53B01FCE6C7A006B6937 /* RSDTask.swift in Sources */,
 				FF8B54951FCE6CEC006B6937 /* RSDTaskDataSource.swift in Sources */,
@@ -1683,6 +1697,7 @@
 				F8B42BE41FE9ABE200E23783 /* Localization.swift in Sources */,
 				F8A5E1611FFD6E5700D337A5 /* RSDMeasurementWrapper.m in Sources */,
 				FF8B54441FCE6CAA006B6937 /* RSDComparableSurveyRuleObject.swift in Sources */,
+				F8F72436203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */,
 				FF8B54161FCE6C99006B6937 /* RSDResultObject.swift in Sources */,
 				FF8B53FC1FCE6C87006B6937 /* RSDRegExValidatorObject.swift in Sources */,
 				FF8B53CB1FCE6C7B006B6937 /* RSDUIThemeElement.swift in Sources */,
@@ -1810,6 +1825,7 @@
 				F8F9544420239E8F00347940 /* RSDDateRangeObject.swift in Sources */,
 				F80CA5321FFEBE3200E89C06 /* RSDMeasurementInputTableItem.swift in Sources */,
 				FF8B54191FCE6C9A006B6937 /* RSDAnswerResultObject.swift in Sources */,
+				F8F72437203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */,
 				F829F0E81FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m in Sources */,
 				FF8B544B1FCE6CAA006B6937 /* RSDComparableSurveyRuleObject.swift in Sources */,
 				FF8B541B1FCE6C9A006B6937 /* RSDResultObject.swift in Sources */,

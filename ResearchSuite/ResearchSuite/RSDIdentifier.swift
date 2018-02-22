@@ -49,6 +49,7 @@ public struct RSDIdentifier : RawRepresentable, Codable {
     
     public static let exit: RSDIdentifier = "exit"
     public static let nextSection: RSDIdentifier = "nextSection"
+    public static let nextStep: RSDIdentifier = "nextStep"
     
     public static func allGlobalIdentifiers() -> [RSDIdentifier] {
         return [.exit, .nextSection]

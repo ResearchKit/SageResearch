@@ -175,7 +175,13 @@ class CodableStepObjectTests: XCTestCase {
                                },
             "colorTheme"     : { "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true },
             "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
-                                 "storyboardIdentifier": "ActiveTaskSteps" }
+                                 "storyboardIdentifier": "ActiveTaskSteps" },
+            "beforeCohortRules" : [{ "requiredCohorts" : ["boo", "goo"],
+                                    "skipToIdentifier" : "blueGu",
+                                    "operator" : "any" }],
+            "afterCohortRules" : [{ "requiredCohorts" : ["foo", "baloo"],
+                                    "skipToIdentifier" : "foomanchu",
+                                    "operator" : "all" }]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -228,6 +234,22 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.viewTheme?.storyboardIdentifier, "ActiveTaskSteps")
             XCTAssertEqual(object.viewTheme?.viewIdentifier, "ActiveInstruction")
+            
+            if let cohortRule = object.beforeCohortRules?.first {
+                XCTAssertEqual(cohortRule.requiredCohorts, ["boo", "goo"])
+                XCTAssertEqual(cohortRule.skipToIdentifier, "blueGu")
+                XCTAssertEqual(cohortRule.cohortOperator, .any)
+            } else {
+                XCTFail("Failed to decode before cohort rules")
+            }
+            
+            if let cohortRule = object.afterCohortRules?.first {
+                XCTAssertEqual(cohortRule.requiredCohorts, ["foo", "baloo"])
+                XCTAssertEqual(cohortRule.skipToIdentifier, "foomanchu")
+                XCTAssertEqual(cohortRule.cohortOperator, .all)
+            } else {
+                XCTFail("Failed to decode before cohort rules")
+            }
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")

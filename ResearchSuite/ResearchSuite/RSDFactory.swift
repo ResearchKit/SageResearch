@@ -61,6 +61,9 @@ open class RSDFactory {
     
     /// Optional data source for this factory.
     public var taskDataSource: RSDTaskDataSource?
+    
+    /// Optional shared tracking rules
+    open var trackingRules: [RSDTrackingRule] = []
 
     // MARK: Class name factory
     
