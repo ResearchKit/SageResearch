@@ -100,7 +100,7 @@ extension RSDStepType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDStepType : RSDDocumentableEnum {
+extension RSDStepType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }

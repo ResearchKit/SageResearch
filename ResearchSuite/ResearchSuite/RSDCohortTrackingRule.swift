@@ -185,7 +185,7 @@ public struct RSDCohortNavigationRuleObject : RSDCohortNavigationRule, Codable {
 
 // Documentable implementations
 
-extension RSDCohortRuleOperator : RSDDocumentableEnum {
+extension RSDCohortRuleOperator : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         let allKeys: [RSDCohortRuleOperator] = [.all, .any]
         return allKeys.map { $0.stringValue }

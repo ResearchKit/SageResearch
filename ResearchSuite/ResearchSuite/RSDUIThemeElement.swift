@@ -113,7 +113,7 @@ public protocol RSDColorThemeElement : RSDUIThemeElement {
 }
 
 /// A hint as to where the UI should place an image.
-public enum RSDImagePlacementType : String, Codable, RSDEnumSet {
+public enum RSDImagePlacementType : String, Codable, RSDStringEnumSet {
     
     /// Smaller presentation of an icon image before the content.
     case iconBefore
@@ -133,7 +133,7 @@ public enum RSDImagePlacementType : String, Codable, RSDEnumSet {
     }
 }
 
-extension RSDImagePlacementType : RSDDocumentableEnum {
+extension RSDImagePlacementType : RSDDocumentableStringEnum {
 }
 
 /// `RSDImageThemeElement` extends the UI step to include an image.

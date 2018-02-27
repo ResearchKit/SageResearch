@@ -50,7 +50,7 @@ public protocol RSDSurveyRule {
 }
 
 /// List of rules creating the survey rule items.
-public enum RSDSurveyRuleOperator: String, Codable, RSDEnumSet {
+public enum RSDSurveyRuleOperator: String, Codable, RSDStringEnumSet {
     
     /// Survey rule for checking if the skip identifier should apply if the answer was skipped
     /// in which case the result answer value will be `nil`
@@ -87,7 +87,7 @@ public enum RSDSurveyRuleOperator: String, Codable, RSDEnumSet {
     }
 }
 
-extension RSDSurveyRuleOperator : RSDDocumentableEnum {
+extension RSDSurveyRuleOperator : RSDDocumentableStringEnum {
 }
 
 /// `RSDComparableSurveyRule` is a survey rule that matches an expected result to the answer and vends a skip

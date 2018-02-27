@@ -38,7 +38,7 @@ import Foundation
 /// which components of a date should be stored in the answer for a given `RSDInputField`.
 ///
 /// This coder uses ISO 8601 format to determine which calendar components to request from the user and to
-/// store from the input result. The `calendar` is Gregorian and the `resultFormatter` is determined from
+/// store from the input result. The `calendar` is ISO8601 and the `resultFormatter` is determined from
 /// the `calendarComponents` using the shared `RSDFactory` or the factory associated with the decoder if
 /// instantiated using a `Decoder`. The locale for the date formatters is "en_US_POSIX" by default.
 ///
@@ -52,6 +52,9 @@ public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
     
     /// Coder for a time of day.
     public static let timeOfDay = RSDDateCoderObject(rawValue: "HH:mm:ss")!
+    
+    /// Coder for a time of day.
+    public static let hourAndMinutesOnly = RSDDateCoderObject(rawValue: "HH:mm")!
     
     /// The input format used to represent the formatters and calendar components.
     public var rawValue: String {
@@ -70,7 +73,7 @@ public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
     /// The components to request from the user and to store.
     public let calendarComponents: Set<Calendar.Component>
     
-    /// The calendar used by the associated input field. Default = "Gregorian".
+    /// The calendar used by the associated input field. Default = "ISO8601".
     public let calendar: Calendar
     
     /// The default initializer initializes the date coder as a timestamp.
@@ -111,7 +114,7 @@ public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
     }
     
     fileprivate static func getProperties(format: String, factory: RSDFactory = RSDFactory.shared) -> (inputFormatter: DateFormatter, resultFormatter: DateFormatter, Set<Calendar.Component>, Calendar)? {
-        let calendar = Calendar(identifier: .gregorian)
+        let calendar = Calendar.iso8601
         let components = calendarComponents(from: format)
         guard components.count > 0 else {
             return nil
@@ -171,10 +174,16 @@ public struct RSDDateCoderObject : RSDDateCoder, RawRepresentable {
     }
 }
 
+extension Calendar {
+    
+    /// Convenience property for accessing the ISO8601 calendar.
+    public static let iso8601 = Calendar(identifier: .iso8601)
+}
+
 extension RSDDateCoderObject : Equatable {
 }
 
-extension RSDDateCoderObject : RSDDocumentableEnum {
+extension RSDDateCoderObject : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return ["yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", "yyyy-MM", "yyyy-MM-dd", "--MM-dd", "MM-dd", "HH:mm:ss", "HH:mm"]
     }

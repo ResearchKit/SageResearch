@@ -81,7 +81,7 @@ extension RSDAsyncActionType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDAsyncActionType : RSDDocumentableEnum {
+extension RSDAsyncActionType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allBaseTypes().map{ $0.rawValue }
     }

@@ -46,7 +46,7 @@ public struct RSDAnswerResultType : Codable {
     /// The base type of the answer result. This is used to indicate what the type is of the
     /// value being stored. The value stored in the `RSDAnswerResult` should be convertable
     /// to one of these base types.
-    public enum BaseType : String, Codable, RSDEnumSet {
+    public enum BaseType : String, Codable, RSDStringEnumSet {
         
         /// Bool
         case boolean
@@ -69,7 +69,7 @@ public struct RSDAnswerResultType : Codable {
     
     /// The sequence type of the answer result. This is used to represent a multiple-choice
     /// answer array or a key/value dictionary.
-    public enum SequenceType : String, Codable, RSDEnumSet {
+    public enum SequenceType : String, Codable, RSDStringEnumSet {
         
         /// Array
         case array
@@ -437,10 +437,10 @@ extension RSDAnswerResultType : Hashable, Equatable {
     }
 }
 
-extension RSDAnswerResultType.BaseType : RSDDocumentableEnum {
+extension RSDAnswerResultType.BaseType : RSDDocumentableStringEnum {
 }
 
-extension RSDAnswerResultType.SequenceType : RSDDocumentableEnum {
+extension RSDAnswerResultType.SequenceType : RSDDocumentableStringEnum {
 }
 
 extension RSDAnswerResultType : RSDDocumentableCodableObject {

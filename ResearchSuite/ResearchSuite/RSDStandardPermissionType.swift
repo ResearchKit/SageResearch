@@ -89,7 +89,7 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
     }
 }
 
-extension RSDStandardPermissionType : RSDDocumentableEnum {
+extension RSDStandardPermissionType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }

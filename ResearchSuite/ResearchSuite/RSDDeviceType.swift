@@ -63,14 +63,14 @@ public struct RSDDeviceType : RawRepresentable, Codable {
     public static let watch: RSDDeviceType = "watch"
 }
 
-extension RSDDeviceType : RSDEnumSet {
+extension RSDDeviceType : RSDStringEnumSet {
     /// List of all the standard types.
     public static var all: Set<RSDDeviceType> {
         return [.computer, .phone, .tablet, .tv, .watch]
     }
 }
 
-extension RSDDeviceType : RSDDocumentableEnum {
+extension RSDDeviceType : RSDDocumentableStringEnum {
 }
 
 extension RSDDeviceType : Equatable {

@@ -114,7 +114,7 @@ extension RSDFormUIHint : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDFormUIHint : RSDDocumentableEnum {
+extension RSDFormUIHint : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardHints.map{ $0.rawValue }
     }

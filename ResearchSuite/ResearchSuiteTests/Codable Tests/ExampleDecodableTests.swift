@@ -127,9 +127,9 @@ class ExampleDecodableTests: XCTestCase {
         }
     }
     
-    func testAllEnums() {
+    func testAllStringEnums() {
         let documentCreator = RSDDocumentCreator()
-        for objectType in documentCreator.allEnums {
+        for objectType in documentCreator.allStringEnums {
             
             let encoder = RSDFactory.shared.createJSONEncoder()
             let decoder = RSDFactory.shared.createJSONDecoder()
@@ -143,9 +143,38 @@ class ExampleDecodableTests: XCTestCase {
                 XCTAssertEqual(decodedObject.items.count, examples.count)
                 for (idx, value) in decodedObject.items.enumerated() {
                     XCTAssertTrue(type(of: value) == objectType)
-                    if let obj = value as? RSDDocumentableEnum, idx < examples.count {
+                    if let obj = value as? RSDDocumentableStringEnum, idx < examples.count {
                         let expectedValue = examples[idx]
                         XCTAssertEqual(obj.stringValue, expectedValue)
+                    } else {
+                        XCTFail("Failed to decode to expected type for \(value)")
+                    }
+                }
+            } catch let err {
+                XCTFail("Failed to encode/decode \(examples) for \(objectType). \(err)")
+            }
+        }
+    }
+    
+    func testAllIntEnums() {
+        let documentCreator = RSDDocumentCreator()
+        for objectType in documentCreator.allIntEnums {
+            
+            let encoder = RSDFactory.shared.createJSONEncoder()
+            let decoder = RSDFactory.shared.createJSONDecoder()
+            
+            let examples = Array(objectType.allCodingKeys())
+            do {
+                let wrapper = _EncodableWrapper(encodableObject: examples)
+                let encodedObject = try encoder.encode(wrapper)
+                _DecodableArrayWrapper._unboxType = objectType
+                let decodedObject = try decoder.decode(_DecodableArrayWrapper.self, from: encodedObject)
+                XCTAssertEqual(decodedObject.items.count, examples.count)
+                for (idx, value) in decodedObject.items.enumerated() {
+                    XCTAssertTrue(type(of: value) == objectType)
+                    if let obj = value as? RSDDocumentableIntEnum, idx < examples.count {
+                        let expectedValue = examples[idx]
+                        XCTAssertEqual(obj.intValue, expectedValue)
                     } else {
                         XCTFail("Failed to decode to expected type for \(value)")
                     }

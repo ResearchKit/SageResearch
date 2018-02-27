@@ -93,7 +93,7 @@ extension RSDResultType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDResultType : RSDDocumentableEnum {
+extension RSDResultType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }

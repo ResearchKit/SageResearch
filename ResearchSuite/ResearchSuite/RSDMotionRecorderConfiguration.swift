@@ -50,7 +50,7 @@ import Foundation
 /// schema allows for a single table to be used to store the data which can then be filtered
 /// by type to perform calculations and DSP on the input sources.
 ///
-public enum RSDMotionRecorderType : String, Codable, RSDEnumSet {
+public enum RSDMotionRecorderType : String, Codable, RSDStringEnumSet {
     
     /// Raw accelerometer reading. `CMAccelerometerData` accelerometer.
     /// - seealso: https://developer.apple.com/documentation/coremotion/getting_raw_accelerometer_events
@@ -236,7 +236,7 @@ public struct RSDMotionRecorderConfiguration : RSDRecorderConfiguration, RSDAsyn
 
 // Documentation and Tests
 
-extension RSDMotionRecorderType : RSDDocumentableEnum {
+extension RSDMotionRecorderType : RSDDocumentableStringEnum {
 }
 
 extension RSDMotionRecorderConfiguration : RSDDocumentableCodableObject {
