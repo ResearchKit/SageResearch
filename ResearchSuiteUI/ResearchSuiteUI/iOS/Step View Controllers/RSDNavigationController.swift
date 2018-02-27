@@ -33,13 +33,16 @@
 
 import UIKit
 
-/// `RSDNavigationController` extends `UINavigationController` with a pass-through implementation of `RSDStepController`.
-/// This allows step controllers to be wrapped in a navigation controller for UI implementations that use the features of
-/// a navigation controller, while passing control of the step to the step controller.
+/// `RSDNavigationController` extends `UINavigationController` with a pass-through implementation of
+/// `RSDStepController`.
 ///
-/// - note: For applications that customize the navigation controller with their own subclass implementation, this
-/// implementation can be copy/pasted and used to extend that custom implementation. This framework does *not* force
-/// using this implementation by extending `UINavigationController` directly.
+/// This allows step controllers to be wrapped in a navigation controller for UI implementations that use the
+/// features of a navigation controller, while passing control of the step to the step controller.
+///
+/// - note: For applications that customize the navigation controller with their own subclass implementation,
+///         this implementation can be copy/pasted and used to extend that custom implementation. This
+///         framework does *not* force using this implementation by extending `UINavigationController`
+///         directly.
 open class RSDNavigationController : UINavigationController, RSDStepController {
 
     /// The root view controller is assumed to be a `RSDStepController`.
@@ -48,7 +51,7 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
     }
     
     /// get/set `rootStepViewController.taskController`
-    public var taskController: RSDTaskUIController! {
+    public var taskController: RSDTaskController! {
         get {
             return rootStepViewController.taskController
         }

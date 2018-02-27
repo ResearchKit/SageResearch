@@ -121,7 +121,7 @@ struct TestTask : RSDTask {
 
 class TestStepController: NSObject, RSDStepController {
 
-    var taskController: RSDTaskUIController!
+    var taskController: RSDTaskController!
     var step: RSDStep!
     var hasStepBefore: Bool = true
     var hasStepAfter: Bool = true
