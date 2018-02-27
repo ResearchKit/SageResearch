@@ -59,8 +59,14 @@ public struct RSDStepType : RawRepresentable, Codable {
     /// Defaults to creating a `RSDUIStep`.
     public static let instruction: RSDStepType = "instruction"
     
+    /// Defaults to creating a `RSDTrackedItemsReviewStepObject`.
+    public static let review: RSDStepType = "review"
+    
     /// Defaults to creating a `RSDSectionStep`.
     public static let section: RSDStepType = "section"
+    
+    /// Defaults to creating a `RSDTrackedSelectionStepObject`.
+    public static let selection: RSDStepType = "selection"
     
     /// Defaults to creating a `RSDSectionStep` created using a `RSDTransformerStep`.
     public static let transform: RSDStepType = "transform"

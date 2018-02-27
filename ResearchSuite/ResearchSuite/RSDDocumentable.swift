@@ -118,6 +118,9 @@ public struct RSDDocumentCreator {
             RSDDurationRangeObject.self,
             RSDFetchableImageThemeElementObject.self,
             RSDFileResultObject.self,
+            RSDMedicationAnswer.self,
+            RSDMedicationItem.self,
+            RSDMedicationTrackingResult.self,
             RSDNumberRangeObject.self,
             RSDResourceTransformerObject.self,
             RSDResultObject.self,
@@ -125,9 +128,11 @@ public struct RSDDocumentCreator {
             RSDStandardAsyncActionConfiguration.self,
             RSDTaskResultObject.self,
             RSDTextFieldOptionsObject.self,
+            RSDTrackedSectionObject.self,
             RSDUIActionObject.self,
             RSDViewThemeElementObject.self,
             RSDWebViewUIActionObject.self,
+            RSDWeeklyScheduleObject.self,
             ]
         
     #if os(iOS)
@@ -157,6 +162,8 @@ public struct RSDDocumentCreator {
         RSDActiveUIStepObject.self,
         RSDFormUIStepObject.self,
         RSDSectionStepObject.self,
+        RSDTrackedItemsReviewStepObject.self,
+        RSDTrackedSelectionStepObject.self,
         RSDTransformerStepObject.self,
         RSDInputFieldObject.self,
         RSDChoiceInputFieldObject.self,

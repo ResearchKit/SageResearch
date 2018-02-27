@@ -47,4 +47,22 @@ extension Array : RSDArrayExtension {
         }
         return nil
     }
+    
+    /// Remove the elements that evaluate to true and return that array.
+    /// - parameter evaluate: The function to use to evaluate the search pattern.
+    /// - returns: The elements that matche the pattern.
+    @discardableResult
+    public mutating func remove(where evaluate: (Element) throws -> Bool) rethrows -> [Element] {
+        var indices = Array<Index>()
+        for (ii, element) in self.enumerated() {
+            if try evaluate(element) {
+                indices.append(ii)
+            }
+        }
+        var result = Array<Element>()
+        for ii in indices {
+            result.append(self.remove(at: ii))
+        }
+        return result
+    }
 }

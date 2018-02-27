@@ -141,6 +141,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         copy.footnote = userInfo?[CodingKeys.footnote.stringValue] as? String ?? self.footnote
 
         // TODO: syoung 02/26/2018 Use `Decodable` to support copying from dictionaries.
+        // https://github.com/ResearchKit/SageResearch/issues/42
         copy.viewTheme = self.viewTheme
         copy.colorTheme = self.colorTheme
         copy.imageTheme = self.imageTheme

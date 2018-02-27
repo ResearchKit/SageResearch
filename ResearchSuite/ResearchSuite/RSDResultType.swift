@@ -52,6 +52,12 @@ public struct RSDResultType : RawRepresentable, Codable {
     /// Defaults to creating a `RSDCollectionResult`.
     public static let collection: RSDResultType = "collection"
     
+    /// Defaults to creating a `RSDMedicationTrackingResult`.
+    public static let medication: RSDResultType = "medication"
+    
+    /// Defaults to creating a `RSDSelectionResult`.
+    public static let selection: RSDResultType = "selection"
+    
     /// Defaults to creating a `RSDTaskResult`.
     public static let task: RSDResultType = "task"
     

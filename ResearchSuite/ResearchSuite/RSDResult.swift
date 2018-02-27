@@ -172,6 +172,15 @@ extension RSDCollectionResult {
         return self.findResult(with: identifier) as? RSDAnswerResult
     }
     
+    /// Return a mapping of all the `RSDAnswerResult` objects in this collection as a mapping
+    /// of the identifier to the value.
+    public func answers() -> [String : Any] {
+        return self.inputResults.rsd_filteredDictionary { (result) -> (String, Any)? in
+            guard let answerResult = result as? RSDAnswerResult, let value = answerResult.value else { return nil }
+            return (answerResult.identifier, value)
+        }
+    }
+    
     /// Append the result to the end of the input results, replacing the previous instance with the same identifier.
     /// - parameter result: The result to add to the input results.
     /// - returns: The previous result or `nil` if there wasn't one.

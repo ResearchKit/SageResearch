@@ -256,6 +256,8 @@ open class RSDFactory {
             return try RSDFormUIStepObject(from: decoder)
         case .section:
             return try RSDSectionStepObject(from: decoder)
+        case .selection:
+            return try RSDTrackedSelectionStepObject(from: decoder)
         case .taskInfo:
             return try RSDTaskInfoStepObject(from: decoder)
         case .transform:

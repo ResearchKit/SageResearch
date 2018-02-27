@@ -117,6 +117,9 @@ public enum RSDUIActionType {
         
         /// Display additional information about the step.
         case learnMore
+        
+        /// Used in selection to allow for a navigation that adds additional selection items.
+        case addMore
     }
     
     /// A custom action on the step. Must be handled by the app.
