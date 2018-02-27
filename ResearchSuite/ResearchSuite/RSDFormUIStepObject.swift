@@ -37,6 +37,10 @@ import Foundation
 /// `RSDSurveyNavigationStep` protocols. It is a subclass of `RSDUIStepObject` and can be used to display
 /// a navigable survey.
 open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNavigationStep, RSDCohortAssignmentStep {
+    
+    private enum CodingKeys: String, CodingKey {
+        case inputFields
+    }
 
     /// The `inputFields` array is used to hold a logical subgrouping of input fields.
     open private(set) var inputFields: [RSDInputField]
@@ -48,8 +52,8 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     }
     
     /// Override to set the properties of the subclass.
-    override open func copyInto(_ copy: RSDUIStepObject) {
-        super.copyInto(copy)
+    override open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
+        try super.copyInto(copy, userInfo: userInfo)
         guard let subclassCopy = copy as? RSDFormUIStepObject else {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
@@ -65,6 +69,16 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     public init(identifier: String, inputFields: [RSDInputField], type: RSDStepType? = nil) {
         self.inputFields = inputFields
         super.init(identifier: identifier, type: type ?? .form)
+    }
+    
+    /// Look to the input fields and return true if any are choice type that include an image.
+    override open var hasImageChoices: Bool {
+        for item in inputFields {
+            if let picker = item.pickerSource as? RSDChoiceOptions, picker.hasImages {
+                return true
+            }
+        }
+        return false
     }
     
     /// Identifier to skip to if all input fields have nil answers.
@@ -102,10 +116,6 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     /// - returns: The cohorts to add/remove or `nil` if no rules apply.
     open func cohortsToApply(with result: RSDTaskResult) -> (add: Set<String>, remove: Set<String>)? {
         return self.evaluateCohortsToApply(with: result)
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case inputFields
     }
     
     /// Initialize from a `Decoder`. This implementation will query the `RSDFactory` attached to the

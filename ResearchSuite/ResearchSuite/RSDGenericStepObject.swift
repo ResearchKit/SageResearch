@@ -40,6 +40,10 @@ import Foundation
 /// or for replacing properties on an `RSDMutableStep`.
 ///
 public struct RSDGenericStepObject : RSDGenericStep, Decodable {
+    
+    private enum CodingKeys : String, CodingKey {
+        case identifier, stepType = "type"
+    }
 
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
     /// of a step history.
@@ -50,10 +54,6 @@ public struct RSDGenericStepObject : RSDGenericStep, Decodable {
     
     /// The decoded dictionary.
     public let userInfo: [String : Any]
-    
-    private enum CodingKeys : String, CodingKey {
-        case identifier, stepType = "type"
-    }
     
     public init(identifier: String, stepType: RSDStepType, userInfo: [String : Any]) {
         self.identifier = identifier

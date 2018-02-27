@@ -33,12 +33,27 @@
 
 import Foundation
 
-/// `RSDUIStepObject` is the base class implementation for all UI display steps defined in this framework. Depending upon
-/// the available real-estate, more than one ui step may be displayed at a time. For example, on an iPad, you may choose
-/// to group a set of questions using a `RSDSectionStep`.
+/// `RSDUIStepObject` is the base class implementation for all UI display steps defined in this framework.
+/// Depending upon the available real-estate, more than one ui step may be displayed at a time. For
+/// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDMutableStep {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep {
+
+    private enum CodingKeys: String, CodingKey {
+        case identifier
+        case stepType = "type"
+        case title
+        case text
+        case detail
+        case footnote
+        case nextStepIdentifier
+        case viewTheme
+        case colorTheme
+        case imageTheme = "image"
+        case beforeCohortRules
+        case afterCohortRules
+    }
 
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
     /// of a step history.
@@ -102,19 +117,30 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
     /// - parameter identifier: The new identifier.
     public func copy(with identifier: String) -> Self {
+        return try! copy(with: identifier, userInfo: nil)
+    }
+    
+    /// Copy the step to a new instance with the given identifier and user info.
+    /// - parameters:
+    ///     - identifier: The new identifier.
+    ///     - userInfo: A dictionary that can be used to set properties on a replacement step.
+    public func copy(with identifier: String, userInfo: [String : Any]?) throws -> Self {
         let copy = type(of: self).init(identifier: identifier, type: self.stepType)
-        copyInto(copy as RSDUIStepObject)
+        try copyInto(copy as RSDUIStepObject, userInfo: userInfo)
         return copy
     }
     
-    /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)` method.
-    /// Swift does not nicely handle casting from `Self` to a class instance for non-final classes. This is a
-    /// work-around.
-    open func copyInto(_ copy: RSDUIStepObject) {
-        copy.title = self.title
-        copy.text = self.text
-        copy.detail = self.detail
-        copy.footnote = self.footnote
+    /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
+    /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
+    /// This is a work-around.
+    open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
+        
+        copy.title = userInfo?[CodingKeys.title.stringValue] as? String ?? self.title
+        copy.text = userInfo?[CodingKeys.text.stringValue] as? String ?? self.text
+        copy.detail = userInfo?[CodingKeys.detail.stringValue] as? String ?? self.detail
+        copy.footnote = userInfo?[CodingKeys.footnote.stringValue] as? String ?? self.footnote
+
+        // TODO: syoung 02/26/2018 Use `Decodable` to support copying from dictionaries.
         copy.viewTheme = self.viewTheme
         copy.colorTheme = self.colorTheme
         copy.imageTheme = self.imageTheme
@@ -140,7 +166,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
         // do nothing
     }
     
-    // MARK: navigation
+    // MARK: Navigation
     
     /// Identifier for the next step to navigate to based on the current task result. All parameters are ignored by this
     /// implementation of the navigation rule. Instead, this will return `nextStepIdentifier` if defined.
@@ -149,21 +175,18 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     open func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
         return self.nextStepIdentifier
     }
-        
-    private enum CodingKeys: String, CodingKey {
-        case identifier
-        case stepType = "type"
-        case title
-        case text
-        case detail
-        case footnote
-        case nextStepIdentifier
-        case viewTheme
-        case colorTheme
-        case imageTheme = "image"
-        case beforeCohortRules
-        case afterCohortRules
+    
+    // MARK: Table source
+    
+    open var hasImageChoices: Bool {
+        return false
     }
+    
+    open func instantiateDataSource(with taskPath: RSDTaskPath, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        return RSDFormStepDataSourceObject(step: self, taskPath: taskPath, supportedHints: supportedHints)
+    }
+    
+    // MARK: Decodable
     
     /// Initialize from a `Decoder`.
     ///
@@ -278,17 +301,6 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
                 try decode(from: subdecoder, for: preferredType)
             }
         }
-    }
-    
-    /// A step to merge with this step that carries replacement info. This step will look at the replacement info
-    /// in the generic step and replace properties on self as appropriate.
-    ///
-    /// For an `RSDUIStepObject`, the `title`, `text`, `detail`, and `footnote` properties can be replaced.
-    open func replace(from step: RSDGenericStep) throws {
-        self.title = step.userInfo[CodingKeys.title.stringValue] as? String ?? self.title
-        self.text = step.userInfo[CodingKeys.text.stringValue] as? String ?? self.text
-        self.detail = step.userInfo[CodingKeys.detail.stringValue] as? String ?? self.detail
-        self.footnote = step.userInfo[CodingKeys.footnote.stringValue] as? String ?? self.footnote
     }
     
     // Overrides must be defined in the base implementation

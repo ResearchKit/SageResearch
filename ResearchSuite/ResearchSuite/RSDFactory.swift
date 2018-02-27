@@ -289,12 +289,12 @@ open class RSDFactory {
         if let replacementSteps = transform.replacementSteps {
             steps = try steps.map({ (inputStep) -> RSDStep in
                 guard let replacementStep = replacementSteps.first(where: { $0.identifier == inputStep.identifier }),
-                    let copyableStep = inputStep as? RSDMutableStep
+                    let copyableStep = inputStep as? RSDCopyStep
                     else {
                         return inputStep
                 }
-                try copyableStep.replace(from: replacementStep)
-                return copyableStep
+                let step = try copyableStep.copy(with: inputStep.identifier, userInfo: replacementStep.userInfo)
+                return step
             })
         }
         

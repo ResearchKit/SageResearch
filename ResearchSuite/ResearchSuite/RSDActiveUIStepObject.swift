@@ -37,6 +37,10 @@ import Foundation
 /// case where an `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also implement
 /// the `RSDActiveUIStep` protocol to allow for spoken instruction.
 open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
+    
+    private enum CodingKeys: String, CodingKey {
+        case duration, commands, requiresBackgroundAudio, spokenInstructions
+    }
 
     /// The duration of time to run the step. If `0`, then this value is ignored.
     public var duration: TimeInterval = 0
@@ -144,10 +148,6 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     
     // MARK: Coding (spoken instructions requires special handling and Codable auto-synthesis does not work with subclassing)
     
-    private enum CodingKeys: String, CodingKey {
-        case duration, commands, requiresBackgroundAudio, spokenInstructions
-    }
-    
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.
@@ -157,13 +157,13 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     }
     
     /// Override to set the properties of the subclass.
-    override open func copyInto(_ copy: RSDUIStepObject) {
-        super.copyInto(copy)
+    override open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
+        try super.copyInto(copy, userInfo: userInfo)
         guard let subclassCopy = copy as? RSDActiveUIStepObject else {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
-        subclassCopy.duration = self.duration
+        subclassCopy.duration = userInfo?[CodingKeys.duration.stringValue] as? TimeInterval ?? self.duration
         subclassCopy.commands = self.commands
         subclassCopy.requiresBackgroundAudio = self.requiresBackgroundAudio
         subclassCopy.spokenInstructions = self.spokenInstructions
@@ -244,16 +244,6 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         
         try super.init(from: decoder)
     }
-
-    /// A step to merge with this step that carries replacement info. This step will look at the replacement info
-    /// in the generic step and replace properties on self as appropriate.
-    ///
-    /// For an `RSDActiveUIStepObject`, the `duration` property can be replaced.
-    open override func replace(from step: RSDGenericStep) throws {
-        try super.replace(from: step)
-        self.duration = step.userInfo[CodingKeys.duration.stringValue] as? TimeInterval ?? self.duration
-    }
-    
     
     // Overrides must be defined in the base implementation
     
