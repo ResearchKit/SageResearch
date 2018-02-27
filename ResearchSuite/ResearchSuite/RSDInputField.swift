@@ -33,27 +33,24 @@
 
 import Foundation
 
-/// `RSDInputField` is used to describe a form input and includes the data type and a possible hint to how the UI
-/// should be displayed. The ResearchSuite framework uses `RSDFormUIStep` to represent questions to ask the user.
-/// Each question must have at least one associated input field. An input field is validated when its owning step
-/// is validated.
+/// `RSDInputField` is used to describe a form input and includes the data type and a possible hint to how
+/// the UI should be displayed. The ResearchSuite framework uses `RSDFormUIStep` to represent questions to
+/// ask the user. Each question must have at least one associated input field. An input field is validated
+/// when its owning step is validated.
 ///
 /// - seealso: `RSDFormUIStep`
 public protocol RSDInputField {
     
-    /// A short string that uniquely identifies the input field within the step. The identifier is reproduced in the
-    /// results of a step result in the step history of a task result.
+    /// A short string that uniquely identifies the input field within the step. The identifier is
+    /// reproduced in the results of a step result in the step history of a task result.
     var identifier: String { get }
     
-    /// A localized string that displays a short text offering a hint to the user of the data to be entered for
-    /// this field.
+    /// A localized string that displays a short text offering a hint to the user of the data to be entered
+    /// for this field.
     var inputPrompt: String? { get }
     
-    /// A localized string that displays placeholder information for the input field.
-    ///
-    /// You can display placeholder text in a text field or text area to help users understand how to answer
-    /// the item's question.
-    var placeholder: String? { get }
+    /// Additional detail about this input field.
+    var inputPromptDetail: String? { get }
     
     /// A Boolean value indicating whether the user can skip the input field without providing an answer.
     var isOptional: Bool { get }
@@ -64,73 +61,58 @@ public protocol RSDInputField {
     /// A UI hint for how the study would prefer that the input field is displayed to the user.
     var inputUIHint: RSDFormUIHint? { get }
     
-    /// Options for displaying a text field. This is only applicable for certain types of UI hints and data types.
+    /// Validate the input field to check for any configuration that should throw an error.
+    func validate() throws
+
+    /// MARK: Extended protocol for an input field that can be used to enter input using a text field.
+    
+    /// A localized string that displays placeholder information for the input field.
+    ///
+    /// You can display placeholder text in a text field or text area to help users understand how to answer
+    /// the item's question.
+    var placeholder: String? { get }
+    
+    /// Options for displaying a text field. This is only applicable for certain types of UI hints and data
+    /// types. If not applicable, it will be ignored.
     var textFieldOptions: RSDTextFieldOptions? { get }
     
     /// A range used by dates and numbers for setting up a picker wheel, slider, or providing text field
-    /// input validation.
+    /// input validation. If not applicable, it will be ignored.
     var range: RSDRange? { get }
     
     /// A formatter that is appropriate to the data type. If `nil`, the format will be determined by the UI.
-    /// This is the formatter used to display a previously entered answer to the user or to convert an answer
-    /// entered in a text field into the appropriate value type.
+    /// This is the formatter used to display a previously entered answer to the user or to convert an
+    /// answer entered in a text field into the appropriate value type.
     ///
     /// - seealso: `RSDAnswerResultType.BaseType` and `RSDFormStepDataSource`
     var formatter: Formatter? { get }
     
     /// Optional picker source for a picker or multiple selection input field.
     var pickerSource: RSDPickerDataSource? { get }
-    
-    /// Validate the input field to check for any configuration that should throw an error.
-    func validate() throws
 }
 
-/// `RSDChoice` is used to describe a choice item for use with a multiple choice or multiple component input field.
-public protocol RSDChoice {
-    
-    /// A JSON encodable object to return as the value when this choice is selected. A `nil` value indicates that
-    /// the user has selected to skip the question or "prefers not to answer".
-    var answerValue: Codable? { get }
-    
-    /// Localized text string to display for the choice.
-    var text: String? { get }
-    
-    /// Additional detail text.
-    var detail: String? { get }
-    
-    /// For a multiple choice option, is this choice mutually exclusive? For example, "none of the above".
-    var isExclusive: Bool { get }
-    
-    /// An icon image that can be used for displaying the choice.
-    var imageVendor: RSDImageVendor? { get }
-    
-    /// Is the choice value equal to the given result?
-    /// - parameter result: A result to test for equality.
-    /// - returns: `true` if the values are equal.
-    func isEqualToResult(_ result: RSDResult?) -> Bool
+/// `RSDPopoverInputField` wraps the input field in a form step. This allows the data source used to display
+/// the input field to show a form step in a modal view controller.
+public protocol RSDPopoverInputField : RSDInputField, RSDFormUIStep {
 }
 
-/// `RSDChoiceInputField` extends the properties of `RSDInputField` with information required to create a
-/// multiple or single choice question.
-public protocol RSDChoiceInputField : RSDInputField, RSDChoiceOptions {
-}
-
-extension RSDChoiceInputField {
+/// Extend the input field to a mutable type.
+public protocol RSDMutableInputField : class, RSDInputField {
     
-    /// Convenience property for whether or not the choice input field has associated images
-    public var hasImages: Bool {
-        for choice in choices {
-            if choice.imageVendor != nil {
-                return true
-            }
-        }
-        return false
-    }
+    /// Extend to allow setting.
+    var inputPrompt: String? { get set }
+    
+    /// Extend to allow setting.
+    var inputPromptDetail: String? { get set }
+    
+    /// Extend to allow setting.
+    var placeholder: String? { get set }
 }
 
-/// `RSDMultipleComponentInputField` extends the properties of `RSDInputField` with information
-/// required to create a multiple component input field.
-///
-/// - seealso: `RSDFormDataType.CollectionType.multipleComponent`
-public protocol RSDMultipleComponentInputField : RSDInputField, RSDMultipleComponentOptions {
+/// Extend the input field to allow copying the field with a new identifier.
+public protocol RSDCopyInputField : RSDInputField {
+    
+    /// Return a copy of the input field with a new identifier.
+    func copy(with identifier: String) -> Self
 }
+

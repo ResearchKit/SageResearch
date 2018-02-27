@@ -33,11 +33,12 @@
 
 import Foundation
 
-/// `RSDFormStepDataSourceObject` is a concrete implementation of the `RSDFormStepDataSource` protocol.
-open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
+/// `RSDFormStepDataSourceObject` is a concrete implementation of the `RSDTableDataSource` protocol that is
+/// designed to be used to supply the data source for a form step.
+open class RSDFormStepDataSourceObject : RSDTableDataSource {
     
     /// The delegate associated with this data source.
-    open weak var delegate: RSDFormStepDataSourceDelegate?
+    open weak var delegate: RSDTableDataSourceDelegate?
 
     /// The step associated with this data source.
     public let step: RSDStep
@@ -59,16 +60,12 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     ///     - step:             The RSDStep for this data source.
     ///     - taskPath:         The current task path for this data source.
     ///     - supportedHints:   The supported UI hints for this data source.
-    ///     - sections:         The sections to use with this data source. If `nil`, the base class
-    ///                         implementation will set up the sections using the step.
-    ///     - initialResult:    The initial result to use to set up this source. If `nil`, the base
-    ///                         class will look in the previous results of the task path.
-    public init(step: RSDStep, taskPath: RSDTaskPath, supportedHints: Set<RSDFormUIHint>? = nil, sections: [RSDTableSection]? = nil, initialResult: RSDCollectionResult? = nil) {
+    public init(step: RSDStep, taskPath: RSDTaskPath, supportedHints: Set<RSDFormUIHint>? = nil) {
         
         self.step = step
         self.taskPath = taskPath
         self.supportedHints = supportedHints ?? RSDFormUIHint.allStandardHints
-        self.sections = sections ?? []
+        self.sections = []
         
         // Set the initial result if available.
         if let result = initialResult {
@@ -86,11 +83,8 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
             }
         }
         
-        // If the sections are undefined then set them.
-        if sections == nil {
-            populateSections()
-        }
-        // Then populate the results from the initial result.
+        // Populate the sections and initial results.
+        populateSections()
         populateInitialResults()
     }
     
@@ -135,7 +129,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
             return uiHint
         }
         let standardType: RSDFormUIHint?
-        if let choiceInput = inputField as? RSDChoiceInputField, choiceInput.hasImages {
+        if let choiceInput = inputField.pickerSource as? RSDChoiceOptions, choiceInput.hasImages {
             standardType = supportedHints.contains(.slider) ? .slider : nil
         } else {
             standardType = inputField.dataType.validStandardUIHints.first(where:{ supportedHints.contains($0) })
@@ -174,11 +168,11 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         if case .measurement(_,_) = inputField.dataType {
             return RSDHumanMeasurementTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
         }
-        else if let choiceInput = inputField.pickerSource as? RSDChoiceInputField {
-            return RSDChoicePickerTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, choicePicker: choiceInput)
+        else if let pickerSource = inputField.pickerSource as? RSDChoiceOptions {
+            return RSDChoicePickerTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, choicePicker: pickerSource)
         }
-        else if let componentInput = inputField as? RSDMultipleComponentInputField {
-            return RSDMultipleComponentTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: componentInput, uiHint: uiHint)
+        else if let pickerSource = inputField.pickerSource as? RSDMultipleComponentPickerDataSource {
+            return RSDMultipleComponentTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, pickerSource: pickerSource)
         } else {
             switch inputField.dataType.baseType {
             case .boolean:
@@ -283,6 +277,143 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     private func inputFields() -> [RSDInputField] {
         guard let formStep = self.step as? RSDFormUIStep else { return [] }
         return formStep.inputFields
+    }
+    
+    // MARK: RSDTableDataSource implementation
+    
+    /// Retrieve the `RSDTableItemGroup` with a specific `RSDInputField` identifier.
+    /// - parameter identifier: The identifier of the `RSDInputField` assigned to the item group.
+    /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
+    public func itemGroup(with identifier: String) -> RSDTableItemGroup? {
+        for section in sections {
+            for itemGroup in section.itemGroups {
+                if (itemGroup as? RSDInputFieldTableItemGroup)?.inputField.identifier == identifier {
+                    return itemGroup
+                }
+            }
+        }
+        return nil
+    }
+    
+    /// Retrieve the 'RSDTableItemGroup' for a specific IndexPath.
+    /// - parameter indexPath: The index path that represents the item group in the table view.
+    /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
+    public func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
+        let section = sections[indexPath.section]
+        for itemGroup in section.itemGroups {
+            if itemGroup.beginningRowIndex ... itemGroup.beginningRowIndex + (itemGroup.items.count - 1) ~= indexPath.row {
+                return itemGroup
+            }
+        }
+        return nil
+    }
+    
+    /// Retrieve the next item group after the current one at the given index path.
+    /// - parameter indexPath: The index path that represents the item group in the table view.
+    /// - returns: The next `RSDTableItemGroup` or `nil` if this was the last item.
+    public func nextItem(after indexPath: IndexPath) -> RSDTableItemGroup? {
+        let section = sections[indexPath.section]
+        guard let itemGroup = itemGroup(at: indexPath),
+            let idx = section.itemGroups.index(where: { $0.uuid == itemGroup.uuid })
+            else {
+                return nil
+        }
+        let nextIdx = idx.advanced(by: 1)
+        if nextIdx < section.itemGroups.count {
+            return section.itemGroups[nextIdx]
+        } else if indexPath.section + 1 < sections.count {
+            return sections[indexPath.section + 1].itemGroups.first
+        } else {
+            return nil
+        }
+    }
+    
+    /// Retrieve the index path that points at the given item group.
+    /// - parameter itemGroup: The item group.
+    /// - returns: The index path for the given item group or `nil` if not found.
+    public func indexPath(for itemGroup: RSDTableItemGroup) -> IndexPath? {
+        for (sectionIdx, section) in sections.enumerated() {
+            var row: Int = 0
+            for item in section.itemGroups {
+                if itemGroup.uuid == item.uuid {
+                    return IndexPath(row: row, section: sectionIdx)
+                }
+                row += item.items.count
+            }
+        }
+        return nil
+    }
+    
+    /// Save an answer for a specific IndexPath.
+    /// - parameters:
+    ///     - answer:      The object to be save as the answer.
+    ///     - indexPath:   The `IndexPath` that represents the `RSDTableItem` in the table view.
+    /// - throws: `RSDInputFieldError` if the answer is invalid.
+    public func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
+        guard let itemGroup = self.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup else {
+            return
+        }
+        
+        if let tableItem = self.tableItem(at: indexPath) as? RSDTextInputTableItem {
+            // If this is a text input table item then store the answer on the table item instead of on the group.
+            try tableItem.setAnswer(answer)
+        } else {
+            try itemGroup.setAnswer(answer)
+        }
+        _answerDidChange(for: itemGroup, at: indexPath)
+    }
+    
+    /// Select or deselect the answer option for a specific IndexPath.
+    /// - parameter indexPath: The `IndexPath` that represents the `RSDTableItem` in the  table view.
+    /// - throws: `RSDInputFieldError` if the selection is invalid.
+    public func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws {
+        guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
+            return
+        }
+        
+        try itemGroup.select(item, indexPath: indexPath)
+        _answerDidChange(for: itemGroup, at: indexPath)
+    }
+    
+    private func _answerDidChange(for itemGroup: RSDInputFieldTableItemGroup, at indexPath: IndexPath) {
+        
+        // Update the answers
+        var stepResult = self.collectionResult()
+        if let result = self.instantiateAnswerResult(for: itemGroup) {
+            stepResult.appendInputResults(with: result)
+        } else {
+            stepResult.removeInputResult(with: itemGroup.identifier)
+        }
+        self.taskPath.appendStepHistory(with: stepResult)
+        
+        // inform delegate that answers have changed
+        if let delegate = delegate {
+            delegate.answersDidChange(in: indexPath.section)
+        }
+    }
+    
+    /// Determine if all answers are valid. Also checks the case where answers are required but one has not been provided.
+    /// - returns: A `Bool` indicating if all answers are valid.
+    public func allAnswersValid() -> Bool {
+        for section in sections {
+            for itemGroup in section.itemGroups {
+                if !itemGroup.isAnswerValid {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
+    /// Retrieve the `RSDTableItem` for a specific `IndexPath`.
+    /// - parameter indexPath: The `IndexPath` that represents the table item in the table view.
+    /// - returns: The requested `RSDTableItem`, or nil if it cannot be found.
+    public func tableItem(at indexPath: IndexPath) -> RSDTableItem? {
+        if let itemGroup = itemGroup(at: indexPath) {
+            let index = indexPath.row - itemGroup.beginningRowIndex
+            return itemGroup.items[index]
+        }
+        return nil
     }
 }
 

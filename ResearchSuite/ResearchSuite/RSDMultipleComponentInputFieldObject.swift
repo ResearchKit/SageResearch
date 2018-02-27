@@ -35,10 +35,14 @@ import Foundation
 
 /// `RSDMultipleComponentInputFieldObject` extends the properties of `RSDInputFieldObject` with information
 /// required to create a multiple component input field.
-open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultipleComponentInputField {
+open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultipleComponentOptions {
+    
+    private enum CodingKeys : String, CodingKey {
+        case choices, separator, defaultAnswer
+    }
     
     /// A list of choices for input fields that make up the multiple component option set.
-    public let choices : [[RSDChoice]]
+    public private(set) var choices : [[RSDChoice]]
     
     /// If this is a multiple component input field, the UI can optionally define a separator.
     /// For example, blood pressure would have a separator of "/".
@@ -65,8 +69,20 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         super.init(identifier: identifier, dataType: dataType, uiHint: uiHint, prompt: prompt)
     }
     
-    private enum CodingKeys : String, CodingKey {
-        case choices, separator, defaultAnswer
+    /// This is a reuired initializer for copying, but the choices will be an empty array.
+    public required init(identifier: String, dataType: RSDFormDataType) {
+        self.choices = []
+        super.init(identifier: identifier, dataType: dataType)
+    }
+    
+    override open func copyInto(_ copy: RSDInputFieldObject) {
+        guard let subclassCopy = copy as? RSDMultipleComponentInputFieldObject else {
+            assertionFailure("Failed to cast the class to the subclass.")
+            return
+        }
+        subclassCopy.choices = self.choices
+        subclassCopy.defaultAnswer = self.defaultAnswer
+        subclassCopy.separator = self.separator
     }
     
     /// Initialize from a `Decoder`. This method uses the `RSDFormDataType.BaseType` associated with this input field to

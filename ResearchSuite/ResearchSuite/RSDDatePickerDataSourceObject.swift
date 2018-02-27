@@ -52,13 +52,17 @@ public struct RSDDatePickerDataSourceObject : RSDDatePickerDataSource {
     /// The date formatter for displaying the date in a text field or label.
     public let dateFormatter: DateFormatter
     
+    /// The date that should be set initially.
+    public let defaultDate: Date?
+    
     /// Default initializer. Auto-synthesized init is not public.
-    public init(datePickerMode: RSDDatePickerMode, minimumDate: Date?, maximumDate: Date?, minuteInterval: Int?, dateFormatter: DateFormatter) {
+    public init(datePickerMode: RSDDatePickerMode, minimumDate: Date?, maximumDate: Date?, minuteInterval: Int?, dateFormatter: DateFormatter, defaultDate: Date?) {
         self.datePickerMode = datePickerMode
         self.minimumDate = minimumDate
         self.maximumDate = maximumDate
         self.minuteInterval = minuteInterval
         self.dateFormatter = dateFormatter
+        self.defaultDate = defaultDate
     }
 }
 
@@ -97,21 +101,21 @@ extension RSDDateRange {
             let formatter = DateFormatter()
             formatter.dateStyle = .short
             formatter.timeStyle = .short
-            let pickerSource = RSDDatePickerDataSourceObject(datePickerMode: .dateAndTime, minimumDate: self.minimumDate, maximumDate: self.maximumDate, minuteInterval: self.minuteInterval, dateFormatter: formatter)
+            let pickerSource = RSDDatePickerDataSourceObject(datePickerMode: .dateAndTime, minimumDate: self.minimumDate, maximumDate: self.maximumDate, minuteInterval: self.minuteInterval, dateFormatter: formatter, defaultDate: self.defaultDate)
             return (pickerSource, formatter)
         }
         else if components == dateComponents {
             let formatter = DateFormatter()
             formatter.dateStyle = .short
             formatter.timeStyle = .none
-            let pickerSource = RSDDatePickerDataSourceObject(datePickerMode: .date, minimumDate: self.minimumDate, maximumDate: self.maximumDate, minuteInterval: self.minuteInterval, dateFormatter: formatter)
+            let pickerSource = RSDDatePickerDataSourceObject(datePickerMode: .date, minimumDate: self.minimumDate, maximumDate: self.maximumDate, minuteInterval: self.minuteInterval, dateFormatter: formatter, defaultDate: self.defaultDate)
             return (pickerSource, formatter)
         }
         else if components == timeComponents {
             let formatter = DateFormatter()
             formatter.dateStyle = .none
             formatter.timeStyle = .short
-            let pickerSource = RSDDatePickerDataSourceObject(datePickerMode: .time, minimumDate: self.minimumDate, maximumDate: self.maximumDate, minuteInterval: self.minuteInterval, dateFormatter: formatter)
+            let pickerSource = RSDDatePickerDataSourceObject(datePickerMode: .time, minimumDate: self.minimumDate, maximumDate: self.maximumDate, minuteInterval: self.minuteInterval, dateFormatter: formatter, defaultDate: self.defaultDate)
             return (pickerSource, formatter)
         }
         else {

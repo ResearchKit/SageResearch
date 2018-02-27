@@ -47,6 +47,9 @@ open class RSDTableSection {
     /// The title for this section.
     public var title: String?
     
+    /// The subtitle for this section.
+    public var subtitle: String?
+    
     /// Returns the total count of all Items in this section.
     /// - returns: The total number of `RSDTableItems` in this section.
     open func rowCount() -> Int {

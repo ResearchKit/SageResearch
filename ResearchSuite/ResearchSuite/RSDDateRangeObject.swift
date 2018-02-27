@@ -61,6 +61,9 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     /// `maxDate` are assumed to be used for time and date with the default coding implementation.
     public let dateCoder: RSDDateCoder?
     
+    /// The date that should be set initially.
+    public let defaultDate: Date?
+    
     /// Default initializer.
     ///
     /// - parameters:
@@ -70,17 +73,29 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     ///     - allowPast: Whether or not the UI should allow past dates.
     ///     - minuteInterval: The minute interval to allow for a time picker.
     ///     - dateCoder: The date encoder to use for formatting the result.
-    public init(minimumDate: Date?, maximumDate: Date?, allowFuture: Bool? = nil, allowPast: Bool? = nil, minuteInterval: Int? = nil, dateCoder: RSDDateCoder? = nil) {
+    public init(minimumDate: Date?, maximumDate: Date?, allowFuture: Bool? = nil, allowPast: Bool? = nil, minuteInterval: Int? = nil, dateCoder: RSDDateCoder? = nil, defaultDate: Date? = nil) {
         self.minDate = minimumDate
         self.maxDate = maximumDate
         self.shouldAllowFuture = allowFuture
         self.shouldAllowPast = allowPast
         self.minuteInterval = minuteInterval
         self.dateCoder = dateCoder
+        self.defaultDate = defaultDate
+    }
+    
+    /// Convenience initializer for time only
+    ///
+    /// - parameters:
+    ///     - minuteInterval: The minute interval to allow for a time picker.
+    ///     - defaultTime: The default time as a string encoded in ISO8601 format.
+    public init(minuteInterval: Int?, defaultTime: String?) {
+        let dateCoder = RSDDateCoderObject.hourAndMinutesOnly
+        let defaultDate = (defaultTime != nil) ? dateCoder.inputFormatter.date(from: defaultTime!) : nil
+        self.init(minimumDate: nil, maximumDate: nil, allowFuture: nil, allowPast: nil, minuteInterval: minuteInterval, dateCoder: dateCoder, defaultDate: defaultDate)
     }
     
     private enum CodingKeys : String, CodingKey {
-        case minDate = "minimumDate", maxDate = "maximumDate", allowFuture, allowPast, minuteInterval, codingFormat
+        case minDate = "minimumDate", maxDate = "maximumDate", allowFuture, allowPast, minuteInterval, codingFormat, defaultDate
     }
     
     /// Initialize from a `Decoder`.
@@ -110,6 +125,7 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
     /// ```
     ///     {
     ///      "minuteInterval" : 15,
+    ///      "defaultDate" : "07:00",
     ///      "codingFormat" : "HH:mm"
     ///     }
     /// ```
@@ -122,6 +138,7 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
         // If there is an encoding format, then the date should be decoded/encoded using a string of that format.
         var minDate: Date?
         var maxDate: Date?
+        var defaultDate: Date?
         let dateCoder = try container.decodeIfPresent(RSDDateCoderObject.self, forKey: .codingFormat)
         if dateCoder != nil {
             if let dateStr = try container.decodeIfPresent(String.self, forKey: .minDate) {
@@ -130,15 +147,20 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
             if let dateStr = try container.decodeIfPresent(String.self, forKey: .maxDate) {
                 maxDate = dateCoder!.date(from: dateStr)
             }
+            if let dateStr = try container.decodeIfPresent(String.self, forKey: .defaultDate) {
+                defaultDate = dateCoder!.date(from: dateStr)
+            }
         }
         else {
             minDate = try container.decodeIfPresent(Date.self, forKey: .minDate)
             maxDate = try container.decodeIfPresent(Date.self, forKey: .maxDate)
+            defaultDate = try container.decodeIfPresent(Date.self, forKey: .defaultDate)
         }
         
         self.dateCoder = dateCoder
         self.minDate = minDate
         self.maxDate = maxDate
+        self.defaultDate = defaultDate
         self.shouldAllowPast = try container.decodeIfPresent(Bool.self, forKey: .allowPast)
         self.shouldAllowFuture = try container.decodeIfPresent(Bool.self, forKey: .allowFuture)
         self.minuteInterval = try container.decodeIfPresent(Int.self, forKey: .minuteInterval)
@@ -176,7 +198,7 @@ extension RSDDateRangeObject : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.minDate, .maxDate, .allowFuture, .allowPast, .minuteInterval, .codingFormat]
+        let codingKeys: [CodingKeys] = [.minDate, .maxDate, .allowFuture, .allowPast, .minuteInterval, .codingFormat, .defaultDate]
         return codingKeys
     }
     
@@ -196,9 +218,11 @@ extension RSDDateRangeObject : RSDDocumentableCodableObject {
                 if idx != 4 { return false }
             case .codingFormat:
                 if idx != 5 { return false }
+            case .defaultDate:
+                if idx != 6 { return false }
             }
         }
-        return keys.count == 6
+        return keys.count == 7
     }
     
     static func dateRangeExamples() -> [RSDDateRangeObject] {
