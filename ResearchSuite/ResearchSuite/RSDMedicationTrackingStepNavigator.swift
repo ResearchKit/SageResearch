@@ -73,7 +73,7 @@ open class RSDMedicationTrackingStepNavigator : RSDTrackedItemsStepNavigator {
     }
     
     override open func instantiateReviewResult() -> RSDTrackedItemsResult {
-        return RSDMedicationTrackingResult(identifier: self.reviewStep.identifier)
+        return RSDMedicationTrackingResult(identifier: self.reviewStep!.identifier)
     }
 }
 

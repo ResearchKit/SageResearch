@@ -60,7 +60,7 @@ class MedicationTrackingTests: XCTestCase {
         XCTAssertEqual(selectionStep.title, "What medications are you taking?")
         XCTAssertEqual(selectionStep.detail, "Select all that apply")
         
-        let reviewStep = medTracker.reviewStep
+        let reviewStep = medTracker.reviewStep!
         XCTAssertEqual(reviewStep.items.count, items.count)
         XCTAssertEqual(reviewStep.sections?.count ?? 0, sections.count)
         if let step = reviewStep as? RSDTrackedItemsReviewStepObject {

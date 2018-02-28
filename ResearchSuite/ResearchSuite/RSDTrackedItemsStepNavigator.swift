@@ -92,7 +92,7 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
     public let selectionStep: RSDTrackedSelectionStep
     
     /// The review step to display when reviewing/editing selected medication.
-    public let reviewStep: RSDTrackedItemsReviewStep
+    public let reviewStep: RSDTrackedItemsReviewStep?
     
     /// The detail step should be displayed for each tracked item that has additional details.
     public let detailStepTemplates: [RSDTrackedItemDetailsStep]?
@@ -119,8 +119,10 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
     /// Returns the existing task result (if there is one) and otherwise calls `instantiateReviewResult()`.
     /// - parameter taskResult: The current task result.
     /// - returns: Found or instantiated review result.
-    public func reviewResult(from taskResult: RSDTaskResult) -> RSDTrackedItemsResult {
-        var result = taskResult.findResult(for: self.reviewStep) as? RSDTrackedItemsResult ?? self.instantiateReviewResult()
+    public func reviewResult(from taskResult: RSDTaskResult) -> RSDTrackedItemsResult? {
+        guard let reviewIdentifier = self.reviewStep?.identifier else { return nil }
+        
+        var result = taskResult.findResult(with: reviewIdentifier) as? RSDTrackedItemsResult ?? self.instantiateReviewResult()
         let selected = selectedIdentifiers(from: taskResult)
         result.updateSelected(to: selected, with: self.items, from: taskResult)
         return result
@@ -133,7 +135,8 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
     
     /// Instantiate the appropriate review result.
     open func instantiateReviewResult() -> RSDTrackedItemsResult {
-        return RSDTrackedItemsResultObject(identifier: self.reviewStep.identifier)
+        let reviewIdentifier = self.reviewStep?.identifier ?? StepIdentifiers.review.stringValue
+        return RSDTrackedItemsResultObject(identifier: reviewIdentifier)
     }
     
     // MARK: Detail step management
@@ -142,7 +145,7 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
 
     /// Find or copy the detail step specific to this identifier.
     open func detailStep(with identifier: String) -> (RSDStep, RSDTrackedItemAnswer)? {
-        guard let selectedAnswer = self.reviewStep.result?.selectedAnswers.first(where: { $0.identifier == identifier}),
+        guard let selectedAnswer = self.reviewStep?.result?.selectedAnswers.first(where: { $0.identifier == identifier}),
             let item = (self.items.first(where: { $0.identifier == identifier}) ?? (selectedAnswer as? RSDTrackedItem)),
             let detailsId = item.addDetailsIdentifier
             else {
@@ -163,7 +166,7 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
     
     /// Get the next detail step that still has details to fill in.
     public func nextDetailStep(after identifier: String) -> RSDStep? {
-        guard let selectedIdentifiers = self.reviewStep.result?.selectedIdentifiers,
+        guard let selectedIdentifiers = self.reviewStep?.result?.selectedIdentifiers,
             selectedIdentifiers.count > 0
             else {
                 return nil
@@ -193,7 +196,7 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
     open func step(with identifier: String) -> RSDStep? {
         if identifier == self.selectionStep.identifier {
             return self.selectionStep
-        } else if identifier == self.reviewStep.identifier {
+        } else if identifier == self.reviewStep?.identifier {
             return self.reviewStep
         } else if let (step, _) = detailStep(with: identifier) {
             return step
@@ -210,19 +213,20 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
     /// Returns `true` unless this is a review step with all information completed.
     open func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
         guard let identifier = step?.identifier else { return true }
-        if identifier != self.reviewStep.identifier {
+        guard let reviewStep = self.reviewStep else { return false }
+        if identifier != reviewStep.identifier {
             // If this is not a review step then there will always be a step after b/c the
             // review step is always last.
             return true
         } else {
             // There is a step after the review step if it does not have all required values.
-            return !(self.reviewStep.result?.hasRequiredValues ?? false)
+            return !(reviewStep.result?.hasRequiredValues ?? false)
         }
     }
     
     /// Returns `false` if and only if this is the selection or review step.
     open func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool {
-        if step.identifier == self.selectionStep.identifier || step.identifier == self.reviewStep.identifier {
+        if step.identifier == self.selectionStep.identifier || step.identifier == self.reviewStep?.identifier {
             return false
         } else {
             return true
@@ -236,11 +240,15 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
             return self.selectionStep
         }
         
+        guard let reviewStep = self.reviewStep else {
+            // If there is no review step then the selection is always the final step.
+            return nil
+        }
+        
         // If this is not the review step then update the review result
-        if identifier != self.reviewStep.identifier {
-            let reviewResult = self.reviewResult(from: result)
+        if identifier != reviewStep.identifier, let reviewResult = self.reviewResult(from: result) {
             result.appendStepHistory(with: reviewResult)
-            self.reviewStep.result = reviewResult
+            self.reviewStep?.result = reviewResult
         }
         
         if identifier == self.selectionStep.identifier {
@@ -249,10 +257,10 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
         } else if let nextStep = self.nextDetailStep(after: identifier) {
             // If there is a step that doesn't have details added then return that.
             return nextStep
-        } else if identifier != self.reviewStep.identifier {
+        } else if identifier != reviewStep.identifier {
             // If this is *not* the review step then we are done adding details, so
             // return the review step.
-            return self.reviewStep
+            return reviewStep
         } else {
             // Exit.
             return nil
@@ -261,7 +269,8 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
     
     /// Going back should always return to the review step (unless this *is* selection or review).
     open func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep? {
-        if step.identifier == self.selectionStep.identifier || step.identifier == self.reviewStep.identifier {
+        guard let reviewStep = self.reviewStep else { return nil }
+        if step.identifier == self.selectionStep.identifier || step.identifier == reviewStep.identifier {
             return nil
         } else {
             return self.reviewStep
