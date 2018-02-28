@@ -90,41 +90,6 @@ public protocol RSDTrackedSection {
     var detail: String? { get }
 }
 
-/// The tracked data selection step is customized for selecting a long list of data items that are
-/// sorted into sections for display to the user.
-public protocol RSDTrackedSelectionStep : RSDTableStep, RSDCopyStep {
-    
-    /// The list of the items to track.
-    var items: [RSDTrackedItem] { get }
-    
-    /// The section items for mapping each medication.
-    var sections: [RSDTrackedSection]? { get }
-}
-
-/// The selection result is a custom subclass of the answer result that **only** tracks selection state
-/// for tracked data.
-public protocol RSDSelectionResult : RSDResult {
-    
-    /// List of the identifiers of the tracked items that are currently selected.
-    var selectedIdentifiers : [String] { get }
-}
-
-/// A tracked data review step can be used to display the selected items both before and after
-/// any required details have been added for the initial selection.
-public protocol RSDTrackedItemsReviewStep : class, RSDTrackedSelectionStep {
-    
-    /// The result with the list of selected items.
-    var result: RSDTrackedItemsResult? { get set }
-}
-
-extension RSDTrackedItemsReviewStep {
-    
-    /// Do all the tracked data items currently under review have their required values set?
-    public var hasRequiredValues: Bool {
-        return self.result?.hasRequiredValues ?? false
-    }
-}
-
 /// A tracked item answer includes the answer details (including selection) that are tracked for
 /// this participant.
 public protocol RSDTrackedItemAnswer : Codable {
@@ -137,13 +102,16 @@ public protocol RSDTrackedItemAnswer : Codable {
 }
 
 /// The tracked items result includes a list of all the answers for this tracked selection.
-public protocol RSDTrackedItemsResult : RSDSelectionResult {
+public protocol RSDTrackedItemsResult : RSDResult, RSDCopyWithIdentifier {
     
     /// A list of the currently selected items including any tracked details.
     var selectedAnswers: [RSDTrackedItemAnswer] { get }
     
+    /// Update the result to the selected identifiers using the items mapping.
+    mutating func updateSelected(to selectedIdentifiers: [String]?, with items: [RSDTrackedItem])
+    
     /// Update the result from the given task result and items.
-    mutating func updateSelected(to selectedIdentifiers: [String]?, with items: [RSDTrackedItem], from taskResult: RSDTaskResult)
+    mutating func updateDetails(to newValue: RSDTrackedItemAnswer)
 }
 
 extension RSDTrackedItemsResult {
@@ -159,9 +127,37 @@ extension RSDTrackedItemsResult {
     }
 }
 
-/// The tracked items form step is used to add additional details to the tracked item steps.
+/// The tracked data selection step is customized for selecting a long list of data items that are
+/// sorted into sections for display to the user.
+///
+/// - note: These steps are used as templates that are retained by the `RSDTrackedItemsStepNavigator`
+/// and thus need to be mutable classes.
+public protocol RSDTrackedItemsStep : class, RSDStep {
+    
+    /// The result with the list of selected items.
+    var result: RSDTrackedItemsResult? { get set }
+    
+    /// The list of the items to track.
+    var items: [RSDTrackedItem] { get set }
+    
+    /// The section items for mapping each medication.
+    var sections: [RSDTrackedSection]? { get set }
+}
+
+extension RSDTrackedItemsStep {
+    
+    /// Do all the tracked data items currently under review have their required values set?
+    public var hasRequiredValues: Bool {
+        return self.result?.hasRequiredValues ?? false
+    }
+}
+
+/// The tracked item detail step is used to add additional details to the tracked item.
 public protocol RSDTrackedItemDetailsStep : RSDStep {
     
     /// Create a copy of the step using this step as a template for the given tracked item.
-    func copy(from trackedItem: RSDTrackedItem) -> RSDStep?
+    func copy(from trackedItem: RSDTrackedItem, with previousAnswer: RSDTrackedItemAnswer?) -> RSDStep?
+    
+    /// Return the appropriate tracked item answer from the given task result.
+    func answer(from taskResult: RSDTaskResult) -> RSDTrackedItemAnswer?
 }

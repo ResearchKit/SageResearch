@@ -54,33 +54,27 @@ class MedicationTrackingTests: XCTestCase {
         XCTAssertEqual(medTracker.items.count, items.count)
         XCTAssertEqual(medTracker.sections?.count ?? 0, sections.count)
         
-        let selectionStep = medTracker.selectionStep
+        let selectionStep = medTracker.selectionStep as! RSDTrackedSelectionStepObject
         XCTAssertEqual(selectionStep.items.count, items.count)
         XCTAssertEqual(selectionStep.sections?.count ?? 0, sections.count)
         XCTAssertEqual(selectionStep.title, "What medications are you taking?")
         XCTAssertEqual(selectionStep.detail, "Select all that apply")
         
-        let reviewStep = medTracker.reviewStep!
+        guard let reviewStep = medTracker.reviewStep as? RSDTrackedItemsReviewStepObject else {
+            XCTFail("Failed to build review step. Exiting.")
+            return
+        }
         XCTAssertEqual(reviewStep.items.count, items.count)
         XCTAssertEqual(reviewStep.sections?.count ?? 0, sections.count)
-        if let step = reviewStep as? RSDTrackedItemsReviewStepObject {
-            XCTAssertEqual(reviewStep.title, step.addDetailsTitle)
-            XCTAssertEqual(reviewStep.detail, step.addDetailsSubtitle)
-            XCTAssertEqual(step.addDetailsTitle, "Add medication details")
-            XCTAssertEqual(step.addDetailsSubtitle, "Select to add your medication dosing information and schedule(s).")
-            XCTAssertEqual(step.reviewTitle, "Review medications")
-            if let action = step.actions?[.navigation(.addMore)] {
-                XCTAssertEqual(action.buttonTitle, "＋ Add medications")
-            } else {
-                XCTFail("Step action does not include `.addMore`")
-            }
-            if let action = step.actions?[.navigation(.goForward)] {
-                XCTAssertEqual(action.buttonTitle, "Submit")
-            } else {
-                XCTFail("Step action does not include `.goForward`")
-            }
+        XCTAssertEqual(reviewStep.title, reviewStep.addDetailsTitle)
+        XCTAssertEqual(reviewStep.detail, reviewStep.addDetailsSubtitle)
+        XCTAssertEqual(reviewStep.addDetailsTitle, "Add medication details")
+        XCTAssertEqual(reviewStep.addDetailsSubtitle, "Select to add your medication dosing information and schedule(s).")
+        XCTAssertEqual(reviewStep.reviewTitle, "Review medications")
+        if let action = reviewStep.actions?[.navigation(.addMore)] {
+            XCTAssertEqual(action.buttonTitle, "＋ Add medications")
         } else {
-            XCTFail("\(reviewStep) not of expected type.")
+            XCTFail("Step action does not include `.addMore`")
         }
         
         XCTAssertEqual(medTracker.detailStepTemplates?.count ?? 0, 1)
@@ -93,7 +87,7 @@ class MedicationTrackingTests: XCTestCase {
         if let dosage = detailStep.inputFields.first {
             XCTAssertEqual(dosage.identifier, "dosage")
             XCTAssertEqual(dosage.inputPrompt, "Dosage")
-            XCTAssertEqual(dosage.placeholder, "i.e.: 10/100 mg")
+            XCTAssertEqual(dosage.placeholder, "e.g. 10/100 mg")
             XCTAssertEqual(dosage.dataType, .base(.string))
             XCTAssertEqual(dosage.inputUIHint, .textfield)
         } else {
@@ -128,7 +122,7 @@ class MedicationTrackingTests: XCTestCase {
         let firstStep = medTracker.step(after: nil, with: &taskResult)
         XCTAssertNotNil(firstStep)
         
-        guard let selectionStep = firstStep as? RSDTrackedSelectionStep else {
+        guard let selectionStep = firstStep as? RSDTrackedSelectionStepObject else {
             XCTFail("Failed to create the selection step. Exiting.")
             return
         }
@@ -138,12 +132,12 @@ class MedicationTrackingTests: XCTestCase {
         XCTAssertFalse(medTracker.hasStep(before: selectionStep, with: taskResult))
         XCTAssertTrue(medTracker.hasStep(after: selectionStep, with: taskResult))
 
-        guard let firstResult = selectionStep.instantiateStepResult() as? RSDSelectionResultObject else {
+        guard let firstResult = selectionStep.instantiateStepResult() as? RSDTrackedItemsResult else {
             XCTFail("Failed to create the expected result. Exiting.")
             return
         }
         var selectionResult = firstResult
-        selectionResult.selectedIdentifiers = ["medA2", "medB4"]
+        selectionResult.updateSelected(to: ["medA2", "medB4"], with: selectionStep.items)
         taskResult.appendStepHistory(with: selectionResult)
         
         // Next step after selection is review.
@@ -155,10 +149,13 @@ class MedicationTrackingTests: XCTestCase {
         XCTAssertEqual(medTracker.step(with: "medB4")?.identifier, "medB4")
         XCTAssertNil(medTracker.step(with: "medA1"))
         
-        guard let initialReviewStep = secondStep as? RSDTrackedItemsReviewStep else {
+        guard let initialReviewStep = secondStep as? RSDTrackedItemsReviewStepObject else {
             XCTFail("Failed to create the initial review step. Exiting.")
             return
         }
+        
+        // The review should use the default title for forward navigation if the answers are not complete.
+        XCTAssertNil(initialReviewStep.action(for: .navigation(.goForward), on: initialReviewStep))
     
         XCTAssertNil(medTracker.step(before: initialReviewStep, with: &taskResult))
         XCTAssertEqual(medTracker.step(with: initialReviewStep.identifier)?.identifier, initialReviewStep.identifier)
@@ -248,7 +245,7 @@ class MedicationTrackingTests: XCTestCase {
         let fifthStep = medTracker.step(after: fourthStep, with: &taskResult)
         XCTAssertNotNil(fifthStep)
         
-        guard let finalReviewStep = fifthStep as? RSDTrackedItemsReviewStep else {
+        guard let finalReviewStep = fifthStep as? RSDTrackedItemsReviewStepObject else {
             XCTFail("Failed to return the final review step. Exiting. \(String(describing: fifthStep))")
             return
         }
@@ -257,6 +254,13 @@ class MedicationTrackingTests: XCTestCase {
         XCTAssertEqual(finalReviewStep.identifier, initialReviewStep.identifier)
         XCTAssertFalse(medTracker.hasStep(before: finalReviewStep, with: taskResult))
         XCTAssertFalse(medTracker.hasStep(after: finalReviewStep, with: taskResult))
+        
+        // The review should use the "Submit" title for forward navigation if the answers are not complete.
+        if let action = finalReviewStep.action(for: .navigation(.goForward), on: finalReviewStep) {
+            XCTAssertEqual(action.buttonTitle, "Submit")
+        } else {
+            XCTFail("Step action does not include `.goForward`")
+        }
         
         guard let finalResult = finalReviewStep.instantiateStepResult() as? RSDMedicationTrackingResult else {
             XCTFail("Failed to create the expected result. Exiting.")
@@ -293,11 +297,215 @@ class MedicationTrackingTests: XCTestCase {
     }
     
     
-    // MARK: Shared tests
-    
-    func checkDetailStep(_ detailStep: RSDMedicationDetailsStepObject) {
+    func testMedicationTrackingNavigation_FirstRun_CustomOrder() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         
+        let (items, sections) = buildMedicationItems()
+        let medTracker = RSDMedicationTrackingStepNavigator(items: items, sections: sections)
+        let timeFormatter = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter
+        
+        var taskResult: RSDTaskResult = RSDTaskResultObject(identifier: "medication")
+        
+        guard let selectionStep = medTracker.step(after: nil, with: &taskResult) as? RSDTrackedSelectionStepObject else {
+            XCTFail("Failed to create the selection step. Exiting.")
+            return
+        }
+        
+        guard let firstResult = selectionStep.instantiateStepResult() as? RSDTrackedItemsResult else {
+            XCTFail("Failed to create the expected result. Exiting.")
+            return
+        }
+        var selectionResult = firstResult
+        selectionResult.updateSelected(to: ["medA2", "medB4"], with: selectionStep.items)
+        taskResult.appendStepHistory(with: selectionResult)
+        
+        guard let initialReviewStep = medTracker.step(after: selectionStep, with: &taskResult) as? RSDTrackedItemsReviewStepObject else {
+            XCTFail("Failed to create the initial review step. Exiting.")
+            return
+        }
+        guard let secondResult = initialReviewStep.instantiateStepResult() as? RSDMedicationTrackingResult else {
+            XCTFail("Failed to create the expected result. Exiting.")
+            return
+        }
+        
+        taskResult.appendStepHistory(with: secondResult)
+        
+        // Set up the review step with a custom order by setting the next step identifier
+        initialReviewStep.nextStepIdentifier = "medB4"
+        
+        let thirdStep = medTracker.step(after: initialReviewStep, with: &taskResult)
+
+        XCTAssertNotNil(thirdStep)
+        XCTAssertEqual(thirdStep?.identifier, "medB4")
+        
+        guard let medB4DetailsStep = thirdStep as? RSDMedicationDetailsStepObject else {
+            XCTFail("Failed to create the expected step. Exiting.")
+            return
+        }
+        
+        guard let medB4Result = medB4DetailsStep.instantiateStepResult() as? RSDCollectionResult else {
+            XCTFail("Failed to create the expected result. Exiting.")
+            return
+        }
+        
+        var collectionResultB4 = medB4Result
+        var dosageB4 = RSDAnswerResultObject(identifier: "dosage", answerType: .string)
+        dosageB4.value = "1/20 mg"
+        collectionResultB4.appendInputResults(with: dosageB4)
+        var timeB4_0 = RSDAnswerResultObject(identifier: "timeOfDay.0", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
+        timeB4_0.value = timeFormatter.date(from: "07:30")
+        collectionResultB4.appendInputResults(with: timeB4_0)
+        var daysB4_0 = RSDAnswerResultObject(identifier: "daysOfWeek.0", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
+        daysB4_0.value = Array(1...7)
+        collectionResultB4.appendInputResults(with: daysB4_0)
+        
+        taskResult.appendStepHistory(with: collectionResultB4)
+        
+        let fourthStep = medTracker.step(after: thirdStep, with: &taskResult)
+        XCTAssertNotNil(fourthStep)
+        XCTAssertEqual(fourthStep?.identifier, "medA2")
+        
+        guard let medA2DetailsStep = fourthStep as? RSDMedicationDetailsStepObject else {
+            XCTFail("Failed to create the expected step. Exiting.")
+            return
+        }
+        
+        XCTAssertEqual(medTracker.step(before: medA2DetailsStep, with: &taskResult)?.identifier, "review")
+        XCTAssertTrue(medTracker.hasStep(before: medA2DetailsStep, with: taskResult))
+        XCTAssertTrue(medTracker.hasStep(after: medA2DetailsStep, with: taskResult))
+        
+        guard let medA2Result = medA2DetailsStep.instantiateStepResult() as? RSDCollectionResult else {
+            XCTFail("Failed to create the expected result. Exiting.")
+            return
+        }
+        
+        var collectionResultA2 = medA2Result
+        var dosageA2 = RSDAnswerResultObject(identifier: "dosage", answerType: .string)
+        dosageA2.value = "5 ml"
+        collectionResultA2.appendInputResults(with: dosageA2)
+        var timeA2_0 = RSDAnswerResultObject(identifier: "timeOfDay.0", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
+        timeA2_0.value = timeFormatter.date(from: "08:30")
+        collectionResultA2.appendInputResults(with: timeA2_0)
+        var daysA2_0 = RSDAnswerResultObject(identifier: "daysOfWeek.0", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
+        daysA2_0.value = [2, 4, 6]
+        collectionResultA2.appendInputResults(with: daysA2_0)
+        var timeA2_1 = RSDAnswerResultObject(identifier: "timeOfDay.1", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
+        timeA2_1.value = timeFormatter.date(from: "20:00")
+        collectionResultA2.appendInputResults(with: timeA2_1)
+        var daysA2_1 = RSDAnswerResultObject(identifier: "daysOfWeek.1", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
+        daysA2_1.value = [1]
+        collectionResultA2.appendInputResults(with: daysA2_1)
+        
+        taskResult.appendStepHistory(with: collectionResultA2)
+        
+        // Next step after selection is review.
+        let fifthStep = medTracker.step(after: fourthStep, with: &taskResult)
+        XCTAssertNotNil(fifthStep)
+        
+        guard let finalReviewStep = fifthStep as? RSDTrackedItemsReviewStepObject else {
+            XCTFail("Failed to return the final review step. Exiting. \(String(describing: fifthStep))")
+            return
+        }
+        
+        XCTAssertNil(medTracker.step(before: finalReviewStep, with: &taskResult))
+        XCTAssertEqual(finalReviewStep.identifier, initialReviewStep.identifier)
+        XCTAssertFalse(medTracker.hasStep(before: finalReviewStep, with: taskResult))
+        XCTAssertFalse(medTracker.hasStep(after: finalReviewStep, with: taskResult))
+        
+        // The review should use the "Submit" title for forward navigation if the answers are not complete.
+        if let action = finalReviewStep.action(for: .navigation(.goForward), on: finalReviewStep) {
+            XCTAssertEqual(action.buttonTitle, "Submit")
+        } else {
+            XCTFail("Step action does not include `.goForward`")
+        }
+        
+        guard let finalResult = finalReviewStep.instantiateStepResult() as? RSDMedicationTrackingResult else {
+            XCTFail("Failed to create the expected result. Exiting.")
+            return
+        }
+        XCTAssertEqual(finalResult.selectedAnswers.count, 2)
+        XCTAssertTrue(finalResult.hasRequiredValues)
+        
+        // Inspect the final result for expected values.
+        guard let answerA2 = finalResult.selectedAnswers.first as? RSDMedicationAnswer,
+            let answerB4 = finalResult.selectedAnswers.last as? RSDMedicationAnswer,
+            answerA2.identifier != answerB4.identifier else {
+                XCTFail("Failed to create the expected result. Exiting.")
+                return
+        }
+        
+        XCTAssertEqual(answerA2.identifier, "medA2")
+        XCTAssertEqual(answerA2.dosage, "5 ml")
+        XCTAssertEqual(answerA2.scheduleItems?.count, 2)
+        if let sortedItems = answerA2.scheduleItems?.sorted() {
+            XCTAssertEqual(sortedItems.first?.timeOfDayString, "08:30")
+            XCTAssertEqual(sortedItems.first?.daysOfWeek, [.monday, .wednesday, .friday])
+            XCTAssertEqual(sortedItems.last?.timeOfDayString, "20:00")
+            XCTAssertEqual(sortedItems.last?.daysOfWeek, [.sunday])
+        }
+        
+        XCTAssertEqual(answerB4.identifier, "medB4")
+        XCTAssertEqual(answerB4.dosage, "1/20 mg")
+        XCTAssertEqual(answerB4.scheduleItems?.count, 1)
+        if let sortedItems = answerB4.scheduleItems?.sorted() {
+            XCTAssertEqual(sortedItems.first?.timeOfDayString, "07:30")
+            XCTAssertEqual(sortedItems.first?.daysOfWeek, RSDWeekday.all)
+        }
     }
+    
+    func testMedicationTrackingNavigation_FollowupRun() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let (items, sections) = buildMedicationItems()
+        let medTracker = RSDMedicationTrackingStepNavigator(items: items, sections: sections)
+        
+        var initialResult = RSDMedicationTrackingResult(identifier: medTracker.reviewStep!.identifier)
+        var medA3 = RSDMedicationAnswer(identifier: "medA3")
+        medA3.dosage = "1"
+        medA3.scheduleItems = [RSDWeeklyScheduleObject(timeOfDayString: "08:00", daysOfWeek: [.monday, .wednesday, .friday])]
+        var medC3 = RSDMedicationAnswer(identifier: "medC3")
+        medC3.dosage = "1"
+        medC3.scheduleItems = [RSDWeeklyScheduleObject(timeOfDayString: "20:00", daysOfWeek: [.sunday, .thursday])]
+        initialResult.medications = [medA3, medC3]
+        medTracker.previousResult = initialResult
+
+        var taskResult: RSDTaskResult = RSDTaskResultObject(identifier: "logMedications")
+        
+        // Check initial state
+        XCTAssertNotNil(medTracker.getSelectionStep())
+        XCTAssertNotNil(medTracker.getReviewStep())
+        
+        if let detailsStep = medTracker.step(with: "medA3") as? RSDTrackedItemDetailsStepObject {
+            XCTAssertNotNil(detailsStep.trackedItem)
+            XCTAssertNotNil(detailsStep.previousAnswer)
+            XCTAssertEqual(detailsStep.previousAnswer?.hasRequiredValues, true)
+        } else {
+            XCTFail("Step not found or not of expected type.")
+        }
+        if let detailsStep = medTracker.step(with: "medC3") as? RSDTrackedItemDetailsStepObject {
+            XCTAssertNotNil(detailsStep.trackedItem)
+            XCTAssertNotNil(detailsStep.previousAnswer)
+            XCTAssertEqual(detailsStep.previousAnswer?.hasRequiredValues, true)
+        } else {
+            XCTFail("Step not found or not of expected type.")
+        }
+
+        // For the case where the meds have been set, this should jump to logging the medication results.
+        let firstStep = medTracker.step(after: nil, with: &taskResult)
+        
+        guard let loggingStep = firstStep as? RSDMedicationLoggingStepObject else {
+            XCTFail("First step not of expected type. For a follow-up run should start with logging step.")
+            return
+        }
+        
+        XCTAssertEqual(loggingStep.result?.selectedAnswers.count, 2)
+        XCTAssertFalse(medTracker.hasStep(after: loggingStep, with: taskResult))
+        XCTAssertFalse(medTracker.hasStep(before: loggingStep, with: taskResult))
+        XCTAssertNil(medTracker.step(before: loggingStep, with: &taskResult))
+        XCTAssertNil(medTracker.step(after: loggingStep, with: &taskResult))
+    }
+    
+    // MARK: Shared tests
     
     // Check functions that should remain the same for all instances.
     func checkScheduleTime(_ scheduleTime: RSDInputField, _ debug: String) {

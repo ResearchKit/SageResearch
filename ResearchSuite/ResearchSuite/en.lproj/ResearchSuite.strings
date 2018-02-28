@@ -102,6 +102,6 @@
 "MEDICATION_ADD_DETAILS_DETAIL" = "Select to add your medication dosing information and schedule(s).";
 "MEDICATION_ADD_MORE_BUTTON" = "＋ Add medications";
 "MEDICATION_DOSAGE_PROMPT" = "Dosage";
-"MEDICATION_DOSAGE_PLACEHOLDER" = "i.e.: 10/100 mg";    // Placeholder text for medication dosage.
+"MEDICATION_DOSAGE_PLACEHOLDER" = "e.g. 10/100 mg";    // Placeholder text for medication dosage.
 "MEDICATION_DAYS_OF_WEEK_TITLE_%1$@_at_%2$@" = "Which days do you take %1$@ at %2$@?"; // ex. "Advil at 7:00 AM"
 "MEDICATION_REVIEW_TITLE" = "Review medications";

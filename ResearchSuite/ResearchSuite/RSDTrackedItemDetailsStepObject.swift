@@ -1,5 +1,5 @@
 //
-//  RSDTrackedItemDetailsStep.swift
+//  RSDTrackedItemDetailsStepObject.swift
 //  ResearchSuite
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -45,6 +45,8 @@ open class RSDTrackedItemDetailsStepObject : RSDFormUIStepObject, RSDTrackedItem
     
     /// The tracked item for this step.
     public private(set) var trackedItem: RSDTrackedItem?
+    
+    public private(set) var previousAnswer: RSDTrackedItemAnswer?
 
     /// The template input field for selecting the time of day for a given schedule.
     lazy public private(set) var scheduleTimeTemplate: RSDCopyInputField = {
@@ -96,15 +98,17 @@ open class RSDTrackedItemDetailsStepObject : RSDFormUIStepObject, RSDTrackedItem
     }
     
     /// Create a copy of this tracked item
-    open func copy(from trackedItem: RSDTrackedItem) -> RSDStep? {
+    open func copy(from trackedItem: RSDTrackedItem, with previousAnswer: RSDTrackedItemAnswer?) -> RSDStep? {
         let copy = self.copy(with: trackedItem.identifier)
         copy.trackedItem = trackedItem
+        copy.previousAnswer = previousAnswer
         copy.title = self.title ?? trackedItem.title
         return copy
     }
     
     /// Create a mapping of key/value pairs for this `RSDStep.Type`.
-    open class func answers(from collectionResult: RSDCollectionResult) -> (answers: [String : Any], schedules: [RSDWeeklyScheduleObject]) {
+    open func answerMap(from taskResult: RSDTaskResult) -> (answers: [String : Any], schedules: [RSDWeeklyScheduleObject])? {
+        guard let collectionResult = taskResult.findResult(for: self) as? RSDCollectionResult else { return nil }
         var answerMap : [String : Any] = [:]
         var scheduleIndexes : [String] = []
         var schedules : [RSDWeeklyScheduleObject] = []
@@ -134,6 +138,12 @@ open class RSDTrackedItemDetailsStepObject : RSDFormUIStepObject, RSDTrackedItem
         return (answerMap, schedules)
     }
     
+    /// Subclasses must implement and *DO NOT* call super.
+    open func answer(from taskResult: RSDTaskResult) -> RSDTrackedItemAnswer? {
+        // TODO: syoung 02/28/2018 Use `Decodable` protocol to create the appropriate item from a dictionary.
+        fatalError("Subclasses must override this method to return a details answer that is appropriate to this step.")
+    }
+
     /// Class function for returning the identifiers for the added fields.
     open class func inputFieldIdentifiers() -> [String] {
         return self.buildInputFields().map { $0.identifier }

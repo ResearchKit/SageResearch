@@ -50,20 +50,20 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
     open private(set) var sections: [RSDTableSection]
     
     /// The initial result when the data source was first displayed.
-    open private(set) var initialResult: RSDSelectionResult?
+    open private(set) var initialResult: RSDTrackedItemsResult?
     
     /// Initialize a new `RSDFormStepDataSourceObject`.
     /// - parameters:
     ///     - step:             The RSDTrackedSelectionStep for this data source.
     ///     - taskPath:         The current task path for this data source.
-    public init(step: RSDTrackedSelectionStep, taskPath: RSDTaskPath) {
+    public init(step: RSDTrackedItemsStep, taskPath: RSDTaskPath) {
         
         self.step = step
         self.taskPath = taskPath
         self.sections =  []
         
         // Set the initial result if available.
-        if let result = initialResult {
+        if let result = step.result {
             self.initialResult = result
         }
     }

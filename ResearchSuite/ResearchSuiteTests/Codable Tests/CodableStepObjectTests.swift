@@ -122,7 +122,6 @@ class CodableStepObjectTests: XCTestCase {
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "watch" : {
-                "title": "Watch: Hello World!",
                 "text": "Watch: Some text.",
                 "detail": "Watch: This is a test.",
                 "footnote": "Watch: This is a footnote."
@@ -139,7 +138,7 @@ class CodableStepObjectTests: XCTestCase {
             let object = try decoder.decode(RSDUIStepObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
-            XCTAssertEqual(object.title, "Watch: Hello World!")
+            XCTAssertEqual(object.title, "Hello World!")
             XCTAssertEqual(object.text, "Watch: Some text.")
             XCTAssertEqual(object.detail, "Watch: This is a test.")
             XCTAssertEqual(object.footnote, "Watch: This is a footnote.")

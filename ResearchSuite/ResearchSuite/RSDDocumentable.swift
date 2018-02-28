@@ -128,6 +128,8 @@ public struct RSDDocumentCreator {
             RSDStandardAsyncActionConfiguration.self,
             RSDTaskResultObject.self,
             RSDTextFieldOptionsObject.self,
+            RSDTrackedItemObject.self,
+            RSDTrackedItemsResultObject.self,
             RSDTrackedSectionObject.self,
             RSDUIActionObject.self,
             RSDViewThemeElementObject.self,

@@ -33,43 +33,19 @@
 
 import Foundation
 
-/// Simple concrete implementation of the `RSDSelectionResult`.
-public struct RSDSelectionResultObject : RSDSelectionResult {
-    
-    private enum CodingKeys : String, CodingKey {
-        case identifier, type, startDate, endDate, selectedIdentifiers
-    }
-    
-    /// The identifier associated with the task, step, or asynchronous action.
-    public let identifier: String
-    
-    /// The result type = `.selection`.
-    public private(set) var type: RSDResultType = .selection
-    
-    /// The start timestamp.
-    public var startDate: Date = Date()
-    
-    /// The end timestamp.
-    public var endDate: Date = Date()
-    
-    /// The list of selected identifiers.
-    public var selectedIdentifiers: [String] = []
-    
-    public init(identifier: String) {
-        self.identifier = identifier
-    }
-}
-
 /// `RSDTrackedSelectionStepObject` is intended for use in selecting items from a long, sectioned list.
 /// In general, this would be the first step in setting up tracked data such as symptoms of a disease
 /// or triggers associated with a medical condition.
 ///
-/// - seealso: `RSDMedicationTrackingStepNavigator`
-open class RSDTrackedSelectionStepObject : RSDUIStepObject, RSDTrackedSelectionStep {
+/// - seealso: `RSDTrackedItemsStepNavigator`
+open class RSDTrackedSelectionStepObject : RSDUIStepObject, RSDTrackedItemsStep {
     
     private enum CodingKeys: String, CodingKey {
         case items, sections
     }
+    
+    /// The shared result for review, details, and selection.
+    public var result: RSDTrackedItemsResult?
     
     /// The list of the items to track.
     public var items: [RSDTrackedItem]
@@ -133,7 +109,7 @@ open class RSDTrackedSelectionStepObject : RSDUIStepObject, RSDTrackedSelectionS
     /// - throws: `DecodingError`
     public required init(from decoder: Decoder) throws {
         // Decode the items and sections
-        self.items = try type(of: self).decodeItems(from: decoder)
+        self.items = try type(of: self).decodeItems(from: decoder) ?? []
         self.sections = try type(of: self).decodeSections(from: decoder)
         try super.init(from: decoder)
     }
@@ -142,9 +118,9 @@ open class RSDTrackedSelectionStepObject : RSDUIStepObject, RSDTrackedSelectionS
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - returns: The decoded items.
     /// - throws: `DecodingError`
-    open class func decodeItems(from decoder: Decoder) throws -> [RSDTrackedItem] {
+    open class func decodeItems(from decoder: Decoder) throws -> [RSDTrackedItem]? {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let items = try container.decode([RSDTrackedItemObject].self, forKey: .items)
+        let items = try container.decodeIfPresent([RSDTrackedItemObject].self, forKey: .items)
         return items
     }
     
@@ -152,17 +128,22 @@ open class RSDTrackedSelectionStepObject : RSDUIStepObject, RSDTrackedSelectionS
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - returns: The decoded sections.
     /// - throws: `DecodingError`
-    open class func decodeSections(from decoder: Decoder) throws -> [RSDTrackedSection] {
+    open class func decodeSections(from decoder: Decoder) throws -> [RSDTrackedSection]? {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let sections = try container.decode([RSDTrackedSectionObject].self, forKey: .sections)
+        let sections = try container.decodeIfPresent([RSDTrackedSectionObject].self, forKey: .sections)
         return sections
     }
     
     /// Instantiate a step result that is appropriate for this step. The default for this class is a
-    /// `RSDSelectionResultObject`.
+    /// `RSDTrackedItemsResultObject`. If the `result` property is set, then this will instantiate a
+    /// copy of the result with this step's identifier.
+    ///
     /// - returns: A result for this step.
     open override func instantiateStepResult() -> RSDResult {
-        return RSDSelectionResultObject(identifier: self.identifier)
+        guard let result = self.result else {
+            return RSDTrackedItemsResultObject(identifier: self.identifier)
+        }
+        return result.copy(with: self.identifier)
     }
     
     /// Validate the step to check for any configuration that should throw an error. This class will
@@ -345,6 +326,95 @@ public struct RSDTrackedItemObject : Codable, RSDTrackedItem, RSDEmbeddedIconVen
     }
 }
 
+
+/// Simple tracking object for the case where only the identifier is being tracked.
+public struct RSDTrackedItemsResultObject : RSDTrackedItemsResult, Codable {
+
+    private enum CodingKeys : String, CodingKey {
+        case identifier, type, startDate, endDate, items
+    }
+    
+    /// The identifier associated with the task, step, or asynchronous action.
+    public let identifier: String
+    
+    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
+    public private(set) var type: RSDResultType = "trackedItemsReview"
+    
+    /// The start date timestamp for the result.
+    public var startDate: Date = Date()
+    
+    /// The end date timestamp for the result.
+    public var endDate: Date = Date()
+    
+    /// The list of medications that are currently selected.
+    public var items: [RSDIdentifier] = []
+    
+    /// Return the list of identifiers.
+    public var selectedAnswers: [RSDTrackedItemAnswer] {
+        return self.items
+    }
+    
+    public init(identifier: String) {
+        self.identifier = identifier
+    }
+    
+    public func copy(with identifier: String) -> RSDTrackedItemsResultObject {
+        var copy = RSDTrackedItemsResultObject(identifier: identifier)
+        copy.items = self.items
+        return copy
+    }
+    
+    mutating public func updateSelected(to selectedIdentifiers: [String]?, with items: [RSDTrackedItem]) {
+        self.items = selectedIdentifiers?.map { RSDIdentifier(rawValue: $0) } ?? []
+    }
+    
+    mutating public func updateDetails(to newValue: RSDTrackedItemAnswer) {
+        // Do nothing
+    }
+}
+
+extension RSDIdentifier : RSDTrackedItemAnswer {
+    
+    public var identifier: String {
+        return self.stringValue
+    }
+    
+    public var hasRequiredValues: Bool {
+        return true
+    }
+}
+
+extension RSDIdentifier : RSDTrackedItem {
+    
+    public var sectionIdentifier: String? {
+        return nil
+    }
+    
+    public var addDetailsIdentifier: String? {
+        return nil
+    }
+    
+    public var title: String? {
+        return nil
+    }
+    
+    public var detail: String? {
+        return nil
+    }
+    
+    public var shortText: String? {
+        return nil
+    }
+    
+    public var isExclusive: Bool {
+        return false
+    }
+    
+    public var imageVendor: RSDImageVendor? {
+        return nil
+    }
+}
+
 // Documentable
 
 extension RSDTrackedSectionObject : RSDDocumentableCodableObject {
@@ -421,6 +491,47 @@ extension RSDTrackedItemObject : RSDDocumentableCodableObject {
     
     static func _examples() -> [RSDTrackedItemObject] {
         let exampleA = RSDTrackedItemObject(identifier: "foo", sectionIdentifier: "pain", title: "Foo Brand Pain Killer", shortText: "Foo", detail: "Ease your pain with foo", icon: "fooIcon", isExclusive: true)
+        return [exampleA]
+    }
+    
+    static func examples() -> [Encodable] {
+        return _examples()
+    }
+}
+
+extension RSDTrackedItemsResultObject : RSDDocumentableCodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return allCodingKeys()
+    }
+    
+    private static func allCodingKeys() -> [CodingKeys] {
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .items]
+        return codingKeys
+    }
+    
+    static func validateAllKeysIncluded() -> Bool {
+        let keys: [CodingKeys] = allCodingKeys()
+        for (idx, key) in keys.enumerated() {
+            switch key {
+            case .identifier:
+                if idx != 0 { return false }
+            case .type:
+                if idx != 1 { return false }
+            case .startDate:
+                if idx != 2 { return false }
+            case .endDate:
+                if idx != 3 { return false }
+            case .items:
+                if idx != 4 { return false }
+            }
+        }
+        return keys.count == 5
+    }
+    
+    static func _examples() -> [RSDTrackedItemsResultObject] {
+        var exampleA = RSDTrackedItemsResultObject(identifier: "foo")
+        exampleA.items = [RSDIdentifier(rawValue: "a"), RSDIdentifier(rawValue: "b")]
         return [exampleA]
     }
     

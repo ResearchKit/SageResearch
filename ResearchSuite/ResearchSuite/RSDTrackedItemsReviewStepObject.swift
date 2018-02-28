@@ -37,14 +37,11 @@ import Foundation
 /// adding details if necessary.
 ///
 /// - seealso: `RSDMedicationTrackingStepNavigator`
-open class RSDTrackedItemsReviewStepObject : RSDTrackedSelectionStepObject, RSDTrackedItemsReviewStep {
+open class RSDTrackedItemsReviewStepObject : RSDTrackedSelectionStepObject {
     
     private enum CodingKeys : String, CodingKey {
         case addDetailsTitle, addDetailsSubtitle, reviewTitle, reviewSubtitle
     }
-    
-    /// The result with the list of selected items.
-    public var result: RSDTrackedItemsResult?
     
     /// The title text to display when the details about each tracked item are not all filled in.
     public var addDetailsTitle: String?
@@ -78,53 +75,26 @@ open class RSDTrackedItemsReviewStepObject : RSDTrackedSelectionStepObject, RSDT
         }
     }
     
-    /// Initializer required for `copy(with:)` implementation.
-    public required init(identifier: String, type: RSDStepType?) {
-        super.init(identifier: identifier, type: type ?? .review)
+    /// Override to replace the "Submit" button with default ("Next") if this step does not have the required
+    /// items.
+    open override func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
+        guard let action = super.action(for: actionType, on: step) else { return nil }
+        if actionType == .navigation(.goForward) && !self.hasRequiredValues {
+            return nil
+        }
+        return action
     }
     
-    /// Default initializer.
-    /// - parameters:
-    ///     - identifier: A short string that uniquely identifies the step.
-    ///     - inputFields: The input fields used to create this step.
-    public override init(identifier: String, items: [RSDTrackedItem], sections: [RSDTrackedSection]? = nil, type: RSDStepType? = nil) {
-        super.init(identifier: identifier, items: items, sections: sections, type: .review)
-    }
-    
-    /// Initialize from a `Decoder`.
-    ///
-    /// - example:
-    /// ```
-    ///    let json = """
-    ///        {
-    ///            "identifier": "foo",
-    ///            "type": "selection",
-    ///            "title": "Please select the items you wish to track",
-    ///            "detail": "Select all that apply",
-    ///            "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
-    ///                         "cancel": { "iconName" : "closeX" },
-    ///                        },
-    ///            "shouldHideActions": ["goBackward", "skip"],
-    ///            "items" : [ {"identifier" : "itemA1", "sectionIdentifier" : "a"},
-    ///                        {"identifier" : "itemA2", "sectionIdentifier" : "a"},
-    ///                        {"identifier" : "itemA3", "sectionIdentifier" : "a"},
-    ///                        {"identifier" : "itemB1", "sectionIdentifier" : "b"},
-    ///                        {"identifier" : "itemB2", "sectionIdentifier" : "b"},
-    ///                        {"identifier" : "itemB3", "sectionIdentifier" : "b"}],
-    ///            "sections" : [ {"identifier" : "a"}, {"identifier" : "b"}]
-    ///        }
-    ///        """.data(using: .utf8)! // our data in native (JSON) format
-    /// ```
-    ///
-    /// - parameter decoder: The decoder to use to decode this instance.
-    /// - throws: `DecodingError`
-    public required init(from decoder: Decoder) throws {
+    /// Decode from the given decoder, replacing values on self with those from the decoder
+    /// if the properties are mutable.
+    override open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
+        try super.decode(from: decoder, for: deviceType)
+        
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.addDetailsTitle = try container.decodeIfPresent(String.self, forKey: .addDetailsTitle)
-        self.addDetailsSubtitle = try container.decodeIfPresent(String.self, forKey: .addDetailsSubtitle)
-        self.reviewTitle = try container.decodeIfPresent(String.self, forKey: .reviewTitle)
-        self.reviewSubtitle = try container.decodeIfPresent(String.self, forKey: .reviewSubtitle)
-        try super.init(from: decoder)
+        self.addDetailsTitle = try container.decodeIfPresent(String.self, forKey: .addDetailsTitle) ?? self.addDetailsTitle
+        self.addDetailsSubtitle = try container.decodeIfPresent(String.self, forKey: .addDetailsSubtitle) ?? self.addDetailsSubtitle
+        self.reviewTitle = try container.decodeIfPresent(String.self, forKey: .reviewTitle) ?? self.reviewTitle
+        self.reviewSubtitle = try container.decodeIfPresent(String.self, forKey: .reviewSubtitle) ?? self.reviewSubtitle
     }
     
     /// Override to set the properties of the subclass.
@@ -138,11 +108,6 @@ open class RSDTrackedItemsReviewStepObject : RSDTrackedSelectionStepObject, RSDT
         subclassCopy.addDetailsSubtitle = userInfo?[CodingKeys.addDetailsSubtitle.stringValue] as? String ?? self.addDetailsSubtitle
         subclassCopy.reviewTitle = userInfo?[CodingKeys.reviewTitle.stringValue] as? String ?? self.reviewTitle
         subclassCopy.reviewSubtitle = userInfo?[CodingKeys.reviewSubtitle.stringValue] as? String ?? self.reviewSubtitle
-    }
-    
-    /// Override the instantiate method and return the current result object.
-    override open func instantiateStepResult() -> RSDResult {
-        return self.result ?? RSDTrackedItemsResultObject(identifier: self.identifier)
     }
     
     // Overrides must be defined in the base implementation
@@ -194,55 +159,5 @@ open class RSDTrackedItemsReviewStepObject : RSDTrackedSelectionStepObject, RSDT
         ]
         
         return [jsonA]
-    }
-}
-
-/// Simple tracking object for the case where only the identifier is being tracked.
-public struct RSDTrackedItemsResultObject : RSDTrackedItemsResult {
-
-    private enum CodingKeys : String, CodingKey {
-        case identifier, type, startDate, endDate, identifiers
-    }
-    
-    /// The identifier associated with the task, step, or asynchronous action.
-    public let identifier: String
-    
-    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    public private(set) var type: RSDResultType = "trackedItemsReview"
-    
-    /// The start date timestamp for the result.
-    public var startDate: Date = Date()
-    
-    /// The end date timestamp for the result.
-    public var endDate: Date = Date()
-    
-    /// The list of medications that are currently selected.
-    public private(set) var identifiers: [RSDIdentifier] = []
-    
-    /// Return the list of identifiers.
-    public var selectedAnswers: [RSDTrackedItemAnswer] {
-        return self.identifiers
-    }
-    
-    public init(identifier: String) {
-        self.identifier = identifier
-    }
-    
-    /// Create identifier objects from the selected identifiers
-    mutating public func updateSelected(to selectedIdentifiers: [String]?,
-                                        with items: [RSDTrackedItem],
-                                        from taskResult: RSDTaskResult) {
-        self.identifiers = selectedIdentifiers?.map { RSDIdentifier(rawValue: $0) } ?? []
-    }
-}
-
-extension RSDIdentifier : RSDTrackedItemAnswer {
-    
-    public var identifier: String {
-        return self.stringValue
-    }
-    
-    public var hasRequiredValues: Bool {
-        return true
     }
 }

@@ -38,7 +38,7 @@ import Foundation
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement {
 
     private enum CodingKeys: String, CodingKey {
         case identifier
@@ -269,17 +269,19 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         try decode(from: decoder, for: nil)
     }
     
-    func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
+    /// Decode from the given decoder, replacing values on self with those from the decoder
+    /// if the properties are mutable.
+    open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.title = try container.decodeIfPresent(String.self, forKey: .title)
-        self.text = try container.decodeIfPresent(String.self, forKey: .text)
-        self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
-        self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote)
         
-        self.viewTheme = try container.decodeIfPresent(RSDViewThemeElementObject.self, forKey: .viewTheme)
-        self.colorTheme = try container.decodeIfPresent(RSDColorThemeElementObject.self, forKey: .colorTheme)
+        self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? self.title
+        self.text = try container.decodeIfPresent(String.self, forKey: .text) ?? self.text
+        self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
+        self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
+        
+        self.viewTheme = try container.decodeIfPresent(RSDViewThemeElementObject.self, forKey: .viewTheme) ?? self.viewTheme
+        self.colorTheme = try container.decodeIfPresent(RSDColorThemeElementObject.self, forKey: .colorTheme) ?? self.colorTheme
         if container.contains(.imageTheme) {
             let nestedDecoder = try container.superDecoder(forKey: .imageTheme)
             if let image = try? RSDImageWrapper(from: nestedDecoder) {
@@ -291,9 +293,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
             }
         }
         
-        self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules)
-        self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules)
-
+        self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
+        self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
+        
         if deviceType == nil {
             let subcontainer = try decoder.container(keyedBy: RSDDeviceType.self)
             let preferredType = decoder.factory.deviceType

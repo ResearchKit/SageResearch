@@ -42,7 +42,7 @@ open class RSDMedicationTrackingStepNavigator : RSDTrackedItemsStepNavigator {
         return (items, sections)
     }
     
-    override open class func buildSelectionStep(items: [RSDTrackedItem], sections: [RSDTrackedSection]?) -> RSDTrackedSelectionStep {
+    override open class func buildSelectionStep(items: [RSDTrackedItem], sections: [RSDTrackedSection]?) -> RSDTrackedItemsStep {
         let stepId = StepIdentifiers.selection.stringValue
         let step = RSDTrackedSelectionStepObject(identifier: stepId, items: items, sections: sections)
         step.title = Localization.localizedString("MEDICATION_SELECTION_TITLE")
@@ -50,9 +50,9 @@ open class RSDMedicationTrackingStepNavigator : RSDTrackedItemsStepNavigator {
         return step
     }
     
-    override open class func buildReviewStep(items: [RSDTrackedItem], sections: [RSDTrackedSection]?) -> RSDTrackedItemsReviewStep {
+    override open class func buildReviewStep(items: [RSDTrackedItem], sections: [RSDTrackedSection]?) -> RSDTrackedItemsStep? {
         let stepId = StepIdentifiers.review.stringValue
-        let step = RSDTrackedItemsReviewStepObject(identifier: stepId, items: items, sections: sections)
+        let step = RSDTrackedItemsReviewStepObject(identifier: stepId, items: items, sections: sections, type: .review)
         
         // Set the default values for the title and subtitle to display depending upon state.
         step.addDetailsTitle = Localization.localizedString("MEDICATION_ADD_DETAILS_TITLE")
@@ -68,8 +68,12 @@ open class RSDMedicationTrackingStepNavigator : RSDTrackedItemsStepNavigator {
         return step
     }
     
-    override open class func buildDetailSteps() -> [RSDTrackedItemDetailsStep]? {
+    override open class func buildDetailSteps(items: [RSDTrackedItem], sections: [RSDTrackedSection]?) -> [RSDTrackedItemDetailsStep]? {
         return [RSDMedicationDetailsStepObject(identifier: StepIdentifiers.addDetails.stringValue)]
+    }
+    
+    override open class func buildLoggingStep(items: [RSDTrackedItem], sections: [RSDTrackedSection]?) -> RSDTrackedItemsStep? {
+        return RSDMedicationLoggingStepObject(identifier: StepIdentifiers.logging.stringValue, items: items, sections: sections)
     }
     
     override open func instantiateReviewResult() -> RSDTrackedItemsResult {
@@ -113,9 +117,24 @@ open class RSDMedicationDetailsStepObject : RSDTrackedItemDetailsStepObject {
         return [FieldIdentifiers.dosage.rawValue]
     }
     
+    /// Override and return an `RSDMedicationAnswer`.
+    override open func answer(from taskResult: RSDTaskResult) -> RSDTrackedItemAnswer? {
+        guard let answerMap = self.answerMap(from: taskResult) else { return nil }
+        var medication = RSDMedicationAnswer(identifier: self.identifier)
+        medication.dosage = answerMap.answers[FieldIdentifiers.dosage.stringValue] as? String
+        medication.scheduleItems = Set(answerMap.schedules)
+        return medication
+    }
+    
     // TODO: syoung 02/27/2018 customize the daysOfWeek input field title to include medication
     // and time of the day.
     // "MEDICATION_DAYS_OF_WEEK_TITLE_%1$@_at_%2$@" = "Which days do you take %1$@ at %2$@?";
+}
+
+/// The medication logging step is used to log information about each item that is being tracked.
+open class RSDMedicationLoggingStepObject : RSDTrackedSelectionStepObject {
+    
+    // TODO: syoung 02/28/2018 Implement model for this step.
 }
 
 /// A medication item includes details for displaying a given medication.
@@ -282,7 +301,7 @@ public struct RSDMedicationTrackingResult : Codable, RSDTrackedItemsResult {
     public var endDate: Date = Date()
     
     /// The list of medications that are currently selected.
-    public private(set) var medications: [RSDMedicationAnswer] = []
+    public var medications: [RSDMedicationAnswer] = []
     
     /// A list of the selected answer items.
     public var selectedAnswers: [RSDTrackedItemAnswer] {
@@ -293,23 +312,20 @@ public struct RSDMedicationTrackingResult : Codable, RSDTrackedItemsResult {
         self.identifier = identifier
     }
     
-    mutating public func updateSelected(to selectedIdentifiers: [String]?,
-                                        with items: [RSDTrackedItem],
-                                        from taskResult: RSDTaskResult) {
+    public func copy(with identifier: String) -> RSDMedicationTrackingResult {
+        var copy = RSDMedicationTrackingResult(identifier: identifier)
+        copy.medications = self.medications
+        return copy
+    }
+    
+    mutating public func updateSelected(to selectedIdentifiers: [String]?, with items: [RSDTrackedItem]) {
         guard let newIdentifiers = selectedIdentifiers, newIdentifiers.count > 0 else {
             self.medications = []
             return
         }
         
         func getMedication(with identifier: String) -> RSDMedicationAnswer {
-            var medication = medications.first(where: { $0.identifier == identifier }) ??
-                RSDMedicationAnswer(identifier: identifier)
-            if let result = taskResult.findResult(with: identifier) as? RSDCollectionResult {
-                let answers = RSDMedicationDetailsStepObject.answers(from: result)
-                medication.dosage = answers.answers[RSDMedicationDetailsStepObject.FieldIdentifiers.dosage.stringValue] as? String
-                medication.scheduleItems = Set(answers.schedules)
-            }
-            return medication
+            return medications.first(where: { $0.identifier == identifier }) ?? RSDMedicationAnswer(identifier: identifier)
         }
 
         // Filter and replace the meds.
@@ -327,6 +343,15 @@ public struct RSDMedicationTrackingResult : Codable, RSDTrackedItemsResult {
         
         // Set the new array
         self.medications = meds
+    }
+    
+    mutating public func updateDetails(to newValue: RSDTrackedItemAnswer) {
+        guard let idx = medications.index(where: { $0.identifier == newValue.identifier }),
+            let newMedication = newValue as? RSDMedicationAnswer else {
+                return
+        }
+        self.medications.remove(at: idx)
+        self.medications.insert(newMedication, at: idx)
     }
 }
 
