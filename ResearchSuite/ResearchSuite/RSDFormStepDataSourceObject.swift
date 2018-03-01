@@ -145,32 +145,6 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         return itemGroups.first(where: { isMatching($0, at: indexPath) })
     }
     
-    /// Retrieve the `RSDTableItem` for a specific `IndexPath`.
-    /// - parameter indexPath: The `IndexPath` that represents the table item in the table view.
-    /// - returns: The requested `RSDTableItem`, or nil if it cannot be found.
-    open func tableItem(at indexPath: IndexPath) -> RSDTableItem? {
-        guard indexPath.section < sections.count,
-            indexPath.row < sections[indexPath.section].tableItems.count
-            else {
-                return nil
-        }
-        return sections[indexPath.section].tableItems[indexPath.row]
-    }
-    
-    /// Retrieve the next table item after the current one at the given index path.
-    /// - parameter indexPath: The index path that represents the item group in the table view.
-    /// - returns: The next `RSDTableItem` or `nil` if this was the last item.
-    public func nextItem(after indexPath: IndexPath) -> RSDTableItem? {
-        guard indexPath.section < sections.count else { return nil }
-        if indexPath.row + 1 < sections[indexPath.section].tableItems.count {
-            return sections[indexPath.section].tableItems[indexPath.row + 1]
-        } else if indexPath.section + 1 < sections.count {
-            return sections[indexPath.section + 1].tableItems.first
-        } else {
-            return nil
-        }
-    }
-    
     /// Save an answer for a specific IndexPath.
     /// - parameters:
     ///     - answer:      The object to be save as the answer.

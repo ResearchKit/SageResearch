@@ -54,14 +54,15 @@ extension Array : RSDArrayExtension {
     @discardableResult
     public mutating func remove(where evaluate: (Element) throws -> Bool) rethrows -> [Element] {
         var indices = Array<Index>()
+        var result = Array<Element>()
         for (ii, element) in self.enumerated() {
             if try evaluate(element) {
                 indices.append(ii)
+                result.append(element)
             }
         }
-        var result = Array<Element>()
-        for ii in indices {
-            result.append(self.remove(at: ii))
+        for ii in indices.reversed() {
+            self.remove(at: ii)
         }
         return result
     }

@@ -76,16 +76,6 @@ public protocol RSDTableDataSource : class {
     /// The table sections for this data source.
     var sections: [RSDTableSection] { get }
     
-    /// Retrieve the `RSDTableItem` for a specific `IndexPath`.
-    /// - parameter indexPath: The `IndexPath` that represents the table item in the table view.
-    /// - returns: The requested `RSDTableItem`, or nil if it cannot be found.
-    func tableItem(at indexPath: IndexPath) -> RSDTableItem?
-    
-    /// Retrieve the next item group after the current one at the given index path.
-    /// - parameter indexPath: The index path that represents the item group in the table view.
-    /// - returns: The next `RSDTableItemGroup` or `nil` if this was the last item.
-    func nextItem(after indexPath: IndexPath) -> RSDTableItem?
-    
     /// Retrieve the 'RSDTableItemGroup' for a specific IndexPath.
     /// - parameter indexPath: The index path that represents the item group in the table view.
     /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
@@ -107,4 +97,33 @@ public protocol RSDTableDataSource : class {
     /// - parameter indexPath: The `IndexPath` that represents the `RSDTableItem` in the  table view.
     /// - throws: `RSDInputFieldError` if the selection is invalid.
     func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws
+}
+
+extension RSDTableDataSource {
+    
+    /// Retrieve the `RSDTableItem` for a specific `IndexPath`.
+    /// - parameter indexPath: The `IndexPath` that represents the table item in the table view.
+    /// - returns: The requested `RSDTableItem`, or nil if it cannot be found.
+    public func tableItem(at indexPath: IndexPath) -> RSDTableItem? {
+        guard indexPath.section < sections.count,
+            indexPath.row < sections[indexPath.section].tableItems.count
+            else {
+                return nil
+        }
+        return sections[indexPath.section].tableItems[indexPath.row]
+    }
+    
+    /// Retrieve the next table item after the current one at the given index path.
+    /// - parameter indexPath: The index path that represents the item group in the table view.
+    /// - returns: The next `RSDTableItem` or `nil` if this was the last item.
+    public func nextItem(after indexPath: IndexPath) -> RSDTableItem? {
+        guard indexPath.section < sections.count else { return nil }
+        if indexPath.row + 1 < sections[indexPath.section].tableItems.count {
+            return sections[indexPath.section].tableItems[indexPath.row + 1]
+        } else if indexPath.section + 1 < sections.count {
+            return sections[indexPath.section + 1].tableItems.first
+        } else {
+            return nil
+        }
+    }
 }

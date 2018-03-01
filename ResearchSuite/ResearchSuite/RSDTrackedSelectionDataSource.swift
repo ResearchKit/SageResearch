@@ -37,8 +37,6 @@ import Foundation
 /// that is designed to be used with a `RSDTrackedItemsStep`.
 open class RSDTrackedSelectionDataSource : RSDTableDataSource {
 
-    
-
     /// The delegate associated with this data source.
     open weak var delegate: RSDTableDataSourceDelegate?
     
@@ -49,7 +47,10 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
     public let taskPath: RSDTaskPath
     
     /// The table sections for this data source.
-    open private(set) var sections: [RSDTableSection]
+    public let sections: [RSDTableSection]
+    
+    /// The list of item groups.
+    public let itemGroups: [RSDChoicePickerTableItemGroup]
     
     /// The initial result when the data source was first displayed.
     public let initialResult: RSDTrackedItemsResult?
@@ -61,58 +62,150 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
     public init(step: RSDTrackedItemsStep, taskPath: RSDTaskPath) {
         self.step = step
         self.taskPath = taskPath
-        self.initialResult = step.result
-        self.sections = []
+        
+        // Look for an initial result in either the taskPath or on self.
+        var initialResult: RSDTrackedItemsResult?
+        if let result = step.result {
+            initialResult = result
+        }
+        else if let previousResult = taskPath.previousResults?.rsd_last(where: { $0.identifier == step.identifier }) as? RSDTrackedItemsResult {
+            initialResult = previousResult
+        }
+        self.initialResult = initialResult
+        
+        // build the sections and groups
+        let (sections, groups) = type(of: self).buildSections(step: step, initialResult: initialResult)
+        self.sections = sections
+        self.itemGroups = groups
     }
     
-    open func buildSections() {
-        // TODO: implement syoung 02/25/2018
+    open class func buildSections(step: RSDTrackedItemsStep, initialResult: RSDTrackedItemsResult?) -> ([RSDTableSection], [RSDChoicePickerTableItemGroup]) {
 
-//        let sections = sectionItems ?? []
-//        let dataType: RSDFormDataType = .collection(.multipleChoice, .string)
-//        var meds = items
-//        
-//        var inputFields: [RSDInputField] = sections.map { (section) -> RSDInputField in
-//            let choices = meds.remove(where: { $0.sectionIdentifier == section.identifier })
-//            let field = RSDChoiceInputFieldObject(identifier: section.identifier, choices: choices, dataType: dataType, uiHint: .list, prompt: section.text, defaultAnswer: nil)
-//            field.placeholder = section.detail
-//            return field
-//        }
-//
-//        if meds.count > 0 {
-//            let prompt = inputFields.count > 0 ? Localization.localizedString("OTHER_SECTION_TITLE") : nil
-//            let field = RSDChoiceInputFieldObject(identifier: stepId, choices: meds, dataType: dataType, uiHint: .list, prompt: prompt, defaultAnswer: nil)
-//            inputFields.append(field)
-//        }
+        let sectionItems = step.sections ?? []
+        let dataType: RSDFormDataType = .collection(.multipleChoice, .string)
+        var trackedItems = step.items
+        var trackedAnswers = initialResult?.selectedAnswers ?? []
+        var tableSections: [RSDTableSection] = []
+        var itemGroups: [RSDChoicePickerTableItemGroup] = []
+        
+        func appendSection(choices: [RSDTrackedItem], section: RSDTrackedSection?) {
+            let identifier = section?.identifier ?? step.identifier
+            let idx = tableSections.count
+            let field = RSDChoiceInputFieldObject(identifier: identifier, choices: choices, dataType: dataType, uiHint: .list)
+            // group
+            let group = RSDChoicePickerTableItemGroup(beginningRowIndex: 0, inputField: field, uiHint: .list, choicePicker: field)
+            group.sectionIndex = idx
+            itemGroups.append(group)
+            // table section
+            let tableSection = RSDTableSection(sectionIndex: idx, tableItems: group.items)
+            tableSection.title = (section?.text ?? section?.identifier) ?? (
+                idx > 0 ? Localization.localizedString("OTHER_SECTION_TITLE") : nil
+            )
+            tableSection.subtitle = section?.detail
+            tableSections.append(tableSection)
+            // selection state
+            let choiceIdentifiers = choices.map { $0.identifier }
+            let answers = trackedAnswers.remove(where: { choiceIdentifiers.contains($0.identifier) }).map { $0.identifier }
+            let selectableItems = group.items as! [RSDChoiceTableItem]
+            for input in selectableItems {
+                input.selected = answers.contains((input.choice as! RSDTrackedItem).identifier)
+            }
+            try! group.setAnswer(answers)
+        }
+        
+        /// Look through the sections first for a mapped item
+        for section in sectionItems {
+            let choices = trackedItems.remove(where: { $0.sectionIdentifier == section.identifier })
+            appendSection(choices: choices, section: section)
+        }
+        
+        /// Look through the items for a sectionIdentifier without a matching section
+        var otherSections: [String] = []
+        for item in trackedItems {
+            if let sectionIdentifier = item.sectionIdentifier, !otherSections.contains(sectionIdentifier) {
+                otherSections.append(sectionIdentifier)
+            }
+        }
+        for sectionIdentifier in otherSections {
+            let choices = trackedItems.remove(where: { $0.sectionIdentifier == sectionIdentifier })
+            let section = RSDTrackedSectionObject(identifier: sectionIdentifier)
+            appendSection(choices: choices, section: section)
+        }
+        
+        /// Look for answers and items without a matching section and add those last
+        let otherItems: [RSDTrackedItem] = trackedAnswers.map {
+            return ($0 as? RSDTrackedItem) ?? RSDIdentifier(rawValue: $0.identifier)
+        }
+        trackedItems.append(contentsOf: otherItems)
+        if trackedItems.count > 0 {
+            appendSection(choices: trackedItems, section: nil)
+        }
+
+        return (tableSections, itemGroups)
+    }
+    
+    // MARK: Selection management
+    
+    /// The tracking result associated with this data source. The default implementation is to search the `taskPath`
+    /// for a matching result and if that fails to return a new instance created using `instantiateTrackingResult()`.
+    ///
+    /// - returns: The appropriate tracking result.
+    open func trackingResult() -> RSDTrackedItemsResult {
+        if let trackingResult = taskPath.result.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) as? RSDTrackedItemsResult {
+            return trackingResult
+        }
+        else {
+            return instantiateTrackingResult()
+        }
+    }
+    
+    /// Instantiate a tracking result of the appropriate object type for this data source.
+    /// The default implementation returns a new instance of `RSDTrackedItemsResultObject`.
+    ///
+    /// - returns: The appropriate tracking result.
+    open func instantiateTrackingResult() -> RSDTrackedItemsResult {
+        return self.step.instantiateStepResult() as? RSDTrackedItemsResult ??
+            RSDTrackedItemsResultObject(identifier: step.identifier)
     }
     
     // MARK: RSDTableDataSource implementation
     
-    public func tableItem(at indexPath: IndexPath) -> RSDTableItem? {
-        // TODO: implement syoung 02/25/2018
-        return nil
+    open func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
+        guard indexPath.section < itemGroups.count else { return nil }
+        return itemGroups[indexPath.section]
     }
     
-    public func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
-        // TODO: implement syoung 02/25/2018
-        return nil
+    open func allAnswersValid() -> Bool {
+        return self.trackingResult().selectedAnswers.count > 0
     }
     
-    public func nextItem(after indexPath: IndexPath) -> RSDTableItem? {
-        // TODO: implement syoung 02/25/2018
-        return nil
+    open func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
+        assertionFailure("This is not a valid method of changing the answer for this table data source")
     }
     
-    public func allAnswersValid() -> Bool {
-        // TODO: implement syoung 02/25/2018
-        return true
-    }
-    
-    public func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
-        // TODO: implement syoung 02/25/2018
-    }
-    
-    public func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws {
-        // TODO: implement syoung 02/25/2018
+    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws {
+        guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
+            return
+        }
+        
+        // TODO: syoung 5/1/2018 If the user is de-selecting a tracked item that they selected in a previous run
+        // (and may have added details for it), then we want to alert them and confirm that this was not an
+        // accident. Not sure where to add this particular special-case requirement, but adding a TODO comment
+        // to track that it needs to be implemented.
+        
+        // update selection for this group
+        try itemGroup.select(item, indexPath: indexPath)
+        let selectedIdentifiers = itemGroups.rsd_mapAndFilter({ $0.answer as? [String] }).flatMap{$0}
+        let items = (self.step as? RSDTrackedItemsStep)?.items ?? []
+        
+        // Update the answers
+        var stepResult = self.trackingResult()
+        stepResult.updateSelected(to: selectedIdentifiers, with: items)
+        self.taskPath.appendStepHistory(with: stepResult)
+        
+        // inform delegate that answers have changed
+        if let delegate = delegate {
+            delegate.answersDidChange(in: indexPath.section)
+        }
     }
 }

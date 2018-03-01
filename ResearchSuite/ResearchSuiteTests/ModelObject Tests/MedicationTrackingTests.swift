@@ -499,8 +499,6 @@ func buildMedicationItems() -> (items: [RSDMedicationItem], sections: [RSDTracke
                     RSDMedicationItem(identifier: "medC3", sectionIdentifier: "section3"),
                     RSDMedicationItem(identifier: "medC4", sectionIdentifier: "section4"),
                     RSDMedicationItem(identifier: "medNoSection1", sectionIdentifier: nil),
-                    RSDMedicationItem(identifier: "medNoSection2", sectionIdentifier: nil),
-                    RSDMedicationItem(identifier: "medNoSection3", sectionIdentifier: nil),
                     RSDMedicationItem(identifier: "medFooSection1", sectionIdentifier: "Foo"),
                     RSDMedicationItem(identifier: "medFooSection2", sectionIdentifier: "Foo"),
                     ]

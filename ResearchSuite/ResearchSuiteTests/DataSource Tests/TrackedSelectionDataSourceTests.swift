@@ -49,6 +49,93 @@ class TrackedSelectionDataSourceTests: XCTestCase {
     func testInitialSelection() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         
+        guard let dataSource = buildDataSource() else {
+            XCTFail("Failed to instantiate the data source. Exiting.")
+            return
+        }
+        
+        // Must select at least one item
+        XCTAssertFalse(dataSource.allAnswersValid())
+        
+        let expectedCounts = [3,3,3,3,2,1]
+        XCTAssertEqual(dataSource.sections.count, expectedCounts.count)
+        
+        guard dataSource.sections.count == expectedCounts.count else {
+            XCTFail("Failed to build sections. Exiting.")
+            return
+        }
+
+        for (sectionIdx, rowCount) in expectedCounts.enumerated() {
+            
+            XCTAssertEqual(dataSource.sections[sectionIdx].tableItems.count, rowCount)
+            let uuid = dataSource.itemGroup(at: IndexPath(row: 0, section: sectionIdx))?.uuid
+            XCTAssertNotNil(uuid)
+            
+            for ii in 0..<rowCount {
+                
+                let expectedItem = dataSource.sections[sectionIdx].tableItems[ii]
+                let indexPath = IndexPath(row: ii, section: sectionIdx)
+                XCTAssertEqual(expectedItem.indexPath, indexPath)
+
+                if let tableItem = dataSource.tableItem(at: indexPath) {
+                    XCTAssertEqual(tableItem.indexPath, indexPath)
+                } else {
+                    XCTFail("item nil at \(indexPath)")
+                }
+                
+                if let tableGroup = dataSource.itemGroup(at: indexPath) {
+                    XCTAssertEqual(uuid, tableGroup.uuid)
+                } else {
+                    XCTFail("item nil at \(indexPath)")
+                }
+                
+                if sectionIdx + 1 < expectedCounts.count || ii + 1 < rowCount {
+                    XCTAssertNotNil(dataSource.nextItem(after: indexPath))
+                } else {
+                    XCTAssertNil(dataSource.nextItem(after: indexPath))
+                }
+            }
+        }
+    }
+    
+    func testSelectAnswer() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        guard let dataSource = buildDataSource() else {
+            XCTFail("Failed to instantiate the data source. Exiting.")
+            return
+        }
+        
+        let indexPath = IndexPath(row: 2, section: 0)
+        guard let choiceItem = dataSource.tableItem(at: indexPath) as? RSDChoiceTableItem else {
+            XCTFail("Failed to get expected table item. Exiting.")
+            return
+        }
+        do {
+            // Select the answer
+            try dataSource.selectAnswer(item: choiceItem, at: indexPath)
+            if let result = dataSource.taskPath.result.findResult(with: dataSource.step.identifier) as? RSDTrackedItemsResult {
+                XCTAssertEqual(result.selectedIdentifiers, ["medC1"])
+            } else {
+                XCTFail("Failed to get expected result. \(dataSource.taskPath.result)")
+            }
+            
+            // Deselect the answer
+            try dataSource.selectAnswer(item: choiceItem, at: indexPath)
+            if let result = dataSource.taskPath.result.findResult(with: dataSource.step.identifier) as? RSDTrackedItemsResult {
+                XCTAssertEqual(result.selectedIdentifiers, [])
+            } else {
+                XCTFail("Failed to get expected result. \(dataSource.taskPath.result)")
+            }
+            
+        } catch let err {
+            XCTFail("Failed to select/deselect answer. \(err)")
+        }
+    }
+    
+    // Helper methods
+    
+    func buildDataSource() -> RSDTableDataSource? {
         let (items, sections) = buildMedicationItems()
         let medTracker = RSDMedicationTrackingStepNavigator(items: items, sections: sections)
         let task = RSDTaskObject(identifier: "medication", stepNavigator: medTracker)
@@ -56,38 +143,12 @@ class TrackedSelectionDataSourceTests: XCTestCase {
         
         guard let selectionStep = medTracker.selectionStep as? RSDTrackedSelectionStepObject else {
             XCTFail("Selection step not of expected type. Exiting.")
-            return
+            return nil
         }
         guard let dataSource = selectionStep.instantiateDataSource(with: taskPath, for: [.list]) else {
             XCTFail("Failed to instantiate the data source. Exiting.")
-            return
+            return nil
         }
-        
-        let expectedCount = 6
-        XCTAssertEqual(dataSource.sections.count, expectedCount)
-        
-        for section in 0..<6 {
-            let indexPath = IndexPath(row: 0, section: section)
-            XCTAssertNotNil(dataSource.itemGroup(at: indexPath))
-            if let tableItem = dataSource.tableItem(at: indexPath) as? RSDChoiceTableItem {
-                
-            } else {
-                XCTFail("Failed to get expected table item. \(indexPath)")
-            }
-        }
-        
-        // Only one item group so next is always nil
-        XCTAssertNil(dataSource.nextItem(after: IndexPath(item: 0, section: 0)))
-        
-        
-        //
-        //    public func indexPath(for itemGroup: RSDTableItemGroup) -> IndexPath? {
-        //        // TODO: implement syoung 02/25/2018
-        //        return nil
-        //    }
-        //
-
-        // Must select at least one item
-        XCTAssertFalse(dataSource.allAnswersValid())
+        return dataSource
     }
 }
