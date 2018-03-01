@@ -45,6 +45,9 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     /// The answer type for the input field result.
     public let answerType: RSDAnswerResultType
     
+    /// Does this item group require an exclusive section?
+    public let requiresExclusiveSection: Bool
+    
     /// Default initializer.
     /// - parameters:
     ///     - beginningRowIndex: The first row of the item group.
@@ -52,10 +55,11 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     ///     - inputField: The input field associated with this item group.
     ///     - uiHint: The UI hint.
     ///     - answerType: The answer type.
-    public init(beginningRowIndex: Int, items: [RSDTableItem], inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType) {
+    public init(beginningRowIndex: Int, items: [RSDTableItem], inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType, requiresExclusiveSection: Bool? = nil) {
         self.inputField = inputField
         self.uiHint = uiHint
         self.answerType = answerType
+        self.requiresExclusiveSection = requiresExclusiveSection ?? (beginningRowIndex == 0 && items.count > 0)
         super.init(beginningRowIndex: beginningRowIndex, items: items)
     }
     
@@ -67,6 +71,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         self.inputField = tableItem.inputField
         self.uiHint = tableItem.uiHint
         self.answerType = tableItem.answerType
+        self.requiresExclusiveSection = false
         super.init(beginningRowIndex: beginningRowIndex, items: [tableItem])
     }
     
@@ -125,7 +130,6 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         return isOptional || !(self.answer is NSNull)
     }
 }
-
 
 /// An item group for entering text.
 public final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {

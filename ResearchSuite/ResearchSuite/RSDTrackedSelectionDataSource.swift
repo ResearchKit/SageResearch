@@ -34,8 +34,10 @@
 import Foundation
 
 /// `RSDTrackedSelectionDataSource` is a concrete implementation of the `RSDTableDataSource` protocol
-/// that is designed to be used with a `RSDTrackedSelectionStep`.
+/// that is designed to be used with a `RSDTrackedItemsStep`.
 open class RSDTrackedSelectionDataSource : RSDTableDataSource {
+
+    
 
     /// The delegate associated with this data source.
     open weak var delegate: RSDTableDataSourceDelegate?
@@ -44,28 +46,23 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
     public let step: RSDStep
     
     /// The current task path.
-    public private(set) var taskPath: RSDTaskPath
+    public let taskPath: RSDTaskPath
     
     /// The table sections for this data source.
     open private(set) var sections: [RSDTableSection]
     
     /// The initial result when the data source was first displayed.
-    open private(set) var initialResult: RSDTrackedItemsResult?
+    public let initialResult: RSDTrackedItemsResult?
     
     /// Initialize a new `RSDFormStepDataSourceObject`.
     /// - parameters:
     ///     - step:             The RSDTrackedSelectionStep for this data source.
     ///     - taskPath:         The current task path for this data source.
     public init(step: RSDTrackedItemsStep, taskPath: RSDTaskPath) {
-        
         self.step = step
         self.taskPath = taskPath
-        self.sections =  []
-        
-        // Set the initial result if available.
-        if let result = step.result {
-            self.initialResult = result
-        }
+        self.initialResult = step.result
+        self.sections = []
     }
     
     open func buildSections() {
@@ -101,12 +98,7 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
         return nil
     }
     
-    public func nextItem(after indexPath: IndexPath) -> RSDTableItemGroup? {
-        // TODO: implement syoung 02/25/2018
-        return nil
-    }
-    
-    public func indexPath(for itemGroup: RSDTableItemGroup) -> IndexPath? {
+    public func nextItem(after indexPath: IndexPath) -> RSDTableItem? {
         // TODO: implement syoung 02/25/2018
         return nil
     }

@@ -39,8 +39,16 @@ open class RSDTableItem {
     /// The index of this item relative to all rows in the section in which this item resides.
     public let rowIndex: Int
     
+    /// The section index for this group.
+    public var sectionIndex: Int = 0
+    
     /// The string to use as the reuse identifier.
     public let reuseIdentifier: String
+    
+    /// Return the index path of the item
+    public var indexPath: IndexPath {
+        return IndexPath(row: rowIndex, section: sectionIndex)
+    }
     
     /// Initialize a new RSDTableItem.
     /// - parameter rowIndex: The index of this item relative to all rows in the section in which this item resides.

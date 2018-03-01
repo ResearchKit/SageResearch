@@ -33,13 +33,15 @@
 
 import Foundation
 
-/// Defines a section in a table. A table is made up of sections, groups and items. For most group types,
-/// there is one cell per group. The exception would be where the ui hint is for a list where each value
-/// is displayed in a selectable list.
+/// Defines a section in a table. A table is made up of sections, groups and items.
+///
+/// For most group types, there is one cell per group and there can be one or more groups per section.
+/// However, there are exceptions such as multiple-choice lists where each value is displayed in a
+/// selectable table item.
 open class RSDTableSection {
     
     /// The list of items included in this section.
-    open private(set) var itemGroups: [RSDTableItemGroup] = []
+    open private(set) var tableItems: [RSDTableItem]
     
     /// The table section index.
     open private(set) var index: Int
@@ -53,15 +55,18 @@ open class RSDTableSection {
     /// Returns the total count of all Items in this section.
     /// - returns: The total number of `RSDTableItems` in this section.
     open func rowCount() -> Int {
-        return itemGroups.reduce(0, {$0 + $1.items.count})
+        return tableItems.count
     }
     
     /// Default initializer.
     /// - parameters:
     ///     - sectionIndex: The table section index for this item.
-    ///     - itemGroups: The item groups in this section.
-    public init(sectionIndex: Int, itemGroups: [RSDTableItemGroup]) {
+    ///     - tableItems: The table items in this section.
+    public init(sectionIndex: Int, tableItems: [RSDTableItem]) {
         self.index = sectionIndex
-        self.itemGroups = itemGroups
+        for item in tableItems {
+            item.sectionIndex = sectionIndex
+        }
+        self.tableItems = tableItems
     }
 }

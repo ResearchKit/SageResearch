@@ -164,6 +164,10 @@
 		F8B42BE31FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
 		F8B42BE41FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
 		F8B42BE51FE9ABE200E23783 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B42BE21FE9ABE200E23783 /* Localization.swift */; };
+		F8BAF4102047E57A004B9406 /* TrackedSelectionDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BAF40F2047E57A004B9406 /* TrackedSelectionDataSourceTests.swift */; };
+		F8BAF4112047E57A004B9406 /* TrackedSelectionDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BAF40F2047E57A004B9406 /* TrackedSelectionDataSourceTests.swift */; };
+		F8BAF41320488CCA004B9406 /* FormStepTableDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BAF41220488CCA004B9406 /* FormStepTableDataSourceTests.swift */; };
+		F8BAF41420488CCA004B9406 /* FormStepTableDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BAF41220488CCA004B9406 /* FormStepTableDataSourceTests.swift */; };
 		F8C723ED2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C723EC2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift */; };
 		F8C723EE2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C723EC2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift */; };
 		F8C723EF2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C723EC2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift */; };
@@ -570,6 +574,8 @@
 		F8B17854202E1AB100B62416 /* RSDDistanceRecorderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDistanceRecorderConfiguration.swift; sourceTree = "<group>"; };
 		F8B17860202E22CC00B62416 /* RSDStandardAsyncActionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStandardAsyncActionConfiguration.swift; sourceTree = "<group>"; };
 		F8B42BE21FE9ABE200E23783 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		F8BAF40F2047E57A004B9406 /* TrackedSelectionDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedSelectionDataSourceTests.swift; sourceTree = "<group>"; };
+		F8BAF41220488CCA004B9406 /* FormStepTableDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStepTableDataSourceTests.swift; sourceTree = "<group>"; };
 		F8C723EC2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPopoverInputFieldObject.swift; sourceTree = "<group>"; };
 		F8C723F02045F98E003DCD42 /* RSDTrackedItemDetailsStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTrackedItemDetailsStepObject.swift; sourceTree = "<group>"; };
 		F8F72400203BF7BD00AC0E5B /* AnyObjectSerializationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyObjectSerializationTests.swift; sourceTree = "<group>"; };
@@ -776,9 +782,11 @@
 			isa = PBXGroup;
 			children = (
 				F829F0C51FF71C7B001B0680 /* FormatterTests.swift */,
+				F8BAF41220488CCA004B9406 /* FormStepTableDataSourceTests.swift */,
 				F829F0DE1FF887C3001B0680 /* UnitConversionTests.swift */,
 				F829F0E91FFB4620001B0680 /* PickerDataSourceTests.swift */,
 				F818EAC5201948D0001C9FE4 /* TableItemTests.swift */,
+				F8BAF40F2047E57A004B9406 /* TrackedSelectionDataSourceTests.swift */,
 			);
 			path = "DataSource Tests";
 			sourceTree = "<group>";
@@ -1635,6 +1643,7 @@
 				F829F0EA1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */,
 				FF633D741FCE7A6900CF2267 /* CodableInputFieldObjectTests.swift in Sources */,
 				FF633D891FCE7A7300CF2267 /* StepControllerTests.swift in Sources */,
+				F8BAF41320488CCA004B9406 /* FormStepTableDataSourceTests.swift in Sources */,
 				FF633D881FCE7A7300CF2267 /* NavigationTestObjects.swift in Sources */,
 				FF633D771FCE7A6900CF2267 /* CodableTaskObjectTests.swift in Sources */,
 				F829F0C61FF71C7B001B0680 /* FormatterTests.swift in Sources */,
@@ -1647,6 +1656,7 @@
 				F8FCE05F203F46EC00616CE8 /* ScheduleTests.swift in Sources */,
 				F8F72401203BF7BD00AC0E5B /* AnyObjectSerializationTests.swift in Sources */,
 				FF633D791FCE7A6900CF2267 /* ExampleDecodableTests.swift in Sources */,
+				F8BAF4102047E57A004B9406 /* TrackedSelectionDataSourceTests.swift in Sources */,
 				F810CF3A202E34C6009C49C9 /* CodableDistanceRecorderTests.swift in Sources */,
 				FF633D761FCE7A6900CF2267 /* CodableStepObjectTests.swift in Sources */,
 				F829F0F61FFC0B2B001B0680 /* NSLocale+UnitTest.m in Sources */,
@@ -1954,7 +1964,9 @@
 				FF633D921FCE7A7400CF2267 /* SurveyRuleTests.swift in Sources */,
 				FF633D801FCE7A6A00CF2267 /* ExampleDecodableTests.swift in Sources */,
 				FF633D7D1FCE7A6A00CF2267 /* CodableStepObjectTests.swift in Sources */,
+				F8BAF4112047E57A004B9406 /* TrackedSelectionDataSourceTests.swift in Sources */,
 				FF633D931FCE7A7400CF2267 /* TaskControllerTests.swift in Sources */,
+				F8BAF41420488CCA004B9406 /* FormStepTableDataSourceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

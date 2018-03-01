@@ -183,32 +183,9 @@ class MedicationTrackingTests: XCTestCase {
         XCTAssertEqual(medTracker.step(before: medA2DetailsStep, with: &taskResult)?.identifier, "review")
         XCTAssertTrue(medTracker.hasStep(before: medA2DetailsStep, with: taskResult))
         XCTAssertTrue(medTracker.hasStep(after: medA2DetailsStep, with: taskResult))
-        
-        guard let thirdResult = medA2DetailsStep.instantiateStepResult() as? RSDCollectionResult else {
-            XCTFail("Failed to create the expected result. Exiting.")
-            return
-        }
-        
-        let timeFormatter = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter
-        
-        var collectionResultA2 = thirdResult
-        var dosageA2 = RSDAnswerResultObject(identifier: "dosage", answerType: .string)
-        dosageA2.value = "5 ml"
-        collectionResultA2.appendInputResults(with: dosageA2)
-        var timeA2_0 = RSDAnswerResultObject(identifier: "timeOfDay.0", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
-        timeA2_0.value = timeFormatter.date(from: "08:30")
-        collectionResultA2.appendInputResults(with: timeA2_0)
-        var daysA2_0 = RSDAnswerResultObject(identifier: "daysOfWeek.0", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
-        daysA2_0.value = [2, 4, 6]
-        collectionResultA2.appendInputResults(with: daysA2_0)
-        var timeA2_1 = RSDAnswerResultObject(identifier: "timeOfDay.1", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
-        timeA2_1.value = timeFormatter.date(from: "20:00")
-        collectionResultA2.appendInputResults(with: timeA2_1)
-        var daysA2_1 = RSDAnswerResultObject(identifier: "daysOfWeek.1", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
-        daysA2_1.value = [1]
-        collectionResultA2.appendInputResults(with: daysA2_1)
+        XCTAssertTrue(medA2DetailsStep.instantiateStepResult() is RSDCollectionResult)
 
-        taskResult.appendStepHistory(with: collectionResultA2)
+        taskResult.appendStepHistory(with: medA2Result())
         
         let fourthStep = medTracker.step(after: thirdStep, with: &taskResult)
         XCTAssertNotNil(fourthStep)
@@ -222,24 +199,9 @@ class MedicationTrackingTests: XCTestCase {
         XCTAssertEqual(medTracker.step(before: medB4DetailsStep, with: &taskResult)?.identifier, "review")
         XCTAssertTrue(medTracker.hasStep(before: medB4DetailsStep, with: taskResult))
         XCTAssertTrue(medTracker.hasStep(after: medB4DetailsStep, with: taskResult))
-        
-        guard let fourthResult = medB4DetailsStep.instantiateStepResult() as? RSDCollectionResult else {
-            XCTFail("Failed to create the expected result. Exiting.")
-            return
-        }
-        
-        var collectionResultB4 = fourthResult
-        var dosageB4 = RSDAnswerResultObject(identifier: "dosage", answerType: .string)
-        dosageB4.value = "1/20 mg"
-        collectionResultB4.appendInputResults(with: dosageB4)
-        var timeB4_0 = RSDAnswerResultObject(identifier: "timeOfDay.0", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
-        timeB4_0.value = timeFormatter.date(from: "07:30")
-        collectionResultB4.appendInputResults(with: timeB4_0)
-        var daysB4_0 = RSDAnswerResultObject(identifier: "daysOfWeek.0", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
-        daysB4_0.value = Array(1...7)
-        collectionResultB4.appendInputResults(with: daysB4_0)
-        
-        taskResult.appendStepHistory(with: collectionResultB4)
+        XCTAssertTrue(medB4DetailsStep.instantiateStepResult() is RSDCollectionResult)
+
+        taskResult.appendStepHistory(with: medB4Result())
         
         // Next step after selection is review.
         let fifthStep = medTracker.step(after: fourthStep, with: &taskResult)
@@ -255,54 +217,14 @@ class MedicationTrackingTests: XCTestCase {
         XCTAssertFalse(medTracker.hasStep(before: finalReviewStep, with: taskResult))
         XCTAssertFalse(medTracker.hasStep(after: finalReviewStep, with: taskResult))
         
-        // The review should use the "Submit" title for forward navigation if the answers are not complete.
-        if let action = finalReviewStep.action(for: .navigation(.goForward), on: finalReviewStep) {
-            XCTAssertEqual(action.buttonTitle, "Submit")
-        } else {
-            XCTFail("Step action does not include `.goForward`")
-        }
-        
-        guard let finalResult = finalReviewStep.instantiateStepResult() as? RSDMedicationTrackingResult else {
-            XCTFail("Failed to create the expected result. Exiting.")
-            return
-        }
-        XCTAssertEqual(finalResult.selectedAnswers.count, 2)
-        XCTAssertTrue(finalResult.hasRequiredValues)
-        
-        // Inspect the final result for expected values.
-        guard let answerA2 = finalResult.selectedAnswers.first as? RSDMedicationAnswer,
-            let answerB4 = finalResult.selectedAnswers.last as? RSDMedicationAnswer,
-            answerA2.identifier != answerB4.identifier else {
-            XCTFail("Failed to create the expected result. Exiting.")
-            return
-        }
-        
-        XCTAssertEqual(answerA2.identifier, "medA2")
-        XCTAssertEqual(answerA2.dosage, "5 ml")
-        XCTAssertEqual(answerA2.scheduleItems?.count, 2)
-        if let sortedItems = answerA2.scheduleItems?.sorted() {
-            XCTAssertEqual(sortedItems.first?.timeOfDayString, "08:30")
-            XCTAssertEqual(sortedItems.first?.daysOfWeek, [.monday, .wednesday, .friday])
-            XCTAssertEqual(sortedItems.last?.timeOfDayString, "20:00")
-            XCTAssertEqual(sortedItems.last?.daysOfWeek, [.sunday])
-        }
-        
-        XCTAssertEqual(answerB4.identifier, "medB4")
-        XCTAssertEqual(answerB4.dosage, "1/20 mg")
-        XCTAssertEqual(answerB4.scheduleItems?.count, 1)
-        if let sortedItems = answerB4.scheduleItems?.sorted() {
-            XCTAssertEqual(sortedItems.first?.timeOfDayString, "07:30")
-            XCTAssertEqual(sortedItems.first?.daysOfWeek, RSDWeekday.all)
-        }
+        checkFinalReviewStep(finalReviewStep)
     }
-    
     
     func testMedicationTrackingNavigation_FirstRun_CustomOrder() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         
         let (items, sections) = buildMedicationItems()
         let medTracker = RSDMedicationTrackingStepNavigator(items: items, sections: sections)
-        let timeFormatter = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter
         
         var taskResult: RSDTaskResult = RSDTaskResultObject(identifier: "medication")
         
@@ -343,23 +265,9 @@ class MedicationTrackingTests: XCTestCase {
             return
         }
         
-        guard let medB4Result = medB4DetailsStep.instantiateStepResult() as? RSDCollectionResult else {
-            XCTFail("Failed to create the expected result. Exiting.")
-            return
-        }
+        XCTAssertTrue(medB4DetailsStep.instantiateStepResult() is RSDCollectionResult)
         
-        var collectionResultB4 = medB4Result
-        var dosageB4 = RSDAnswerResultObject(identifier: "dosage", answerType: .string)
-        dosageB4.value = "1/20 mg"
-        collectionResultB4.appendInputResults(with: dosageB4)
-        var timeB4_0 = RSDAnswerResultObject(identifier: "timeOfDay.0", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
-        timeB4_0.value = timeFormatter.date(from: "07:30")
-        collectionResultB4.appendInputResults(with: timeB4_0)
-        var daysB4_0 = RSDAnswerResultObject(identifier: "daysOfWeek.0", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
-        daysB4_0.value = Array(1...7)
-        collectionResultB4.appendInputResults(with: daysB4_0)
-        
-        taskResult.appendStepHistory(with: collectionResultB4)
+        taskResult.appendStepHistory(with: medB4Result())
         
         let fourthStep = medTracker.step(after: thirdStep, with: &taskResult)
         XCTAssertNotNil(fourthStep)
@@ -373,30 +281,9 @@ class MedicationTrackingTests: XCTestCase {
         XCTAssertEqual(medTracker.step(before: medA2DetailsStep, with: &taskResult)?.identifier, "review")
         XCTAssertTrue(medTracker.hasStep(before: medA2DetailsStep, with: taskResult))
         XCTAssertTrue(medTracker.hasStep(after: medA2DetailsStep, with: taskResult))
-        
-        guard let medA2Result = medA2DetailsStep.instantiateStepResult() as? RSDCollectionResult else {
-            XCTFail("Failed to create the expected result. Exiting.")
-            return
-        }
-        
-        var collectionResultA2 = medA2Result
-        var dosageA2 = RSDAnswerResultObject(identifier: "dosage", answerType: .string)
-        dosageA2.value = "5 ml"
-        collectionResultA2.appendInputResults(with: dosageA2)
-        var timeA2_0 = RSDAnswerResultObject(identifier: "timeOfDay.0", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
-        timeA2_0.value = timeFormatter.date(from: "08:30")
-        collectionResultA2.appendInputResults(with: timeA2_0)
-        var daysA2_0 = RSDAnswerResultObject(identifier: "daysOfWeek.0", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
-        daysA2_0.value = [2, 4, 6]
-        collectionResultA2.appendInputResults(with: daysA2_0)
-        var timeA2_1 = RSDAnswerResultObject(identifier: "timeOfDay.1", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
-        timeA2_1.value = timeFormatter.date(from: "20:00")
-        collectionResultA2.appendInputResults(with: timeA2_1)
-        var daysA2_1 = RSDAnswerResultObject(identifier: "daysOfWeek.1", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
-        daysA2_1.value = [1]
-        collectionResultA2.appendInputResults(with: daysA2_1)
-        
-        taskResult.appendStepHistory(with: collectionResultA2)
+        XCTAssertTrue(medA2DetailsStep.instantiateStepResult() is RSDCollectionResult)
+
+        taskResult.appendStepHistory(with: medA2Result())
         
         // Next step after selection is review.
         let fifthStep = medTracker.step(after: fourthStep, with: &taskResult)
@@ -408,49 +295,11 @@ class MedicationTrackingTests: XCTestCase {
         }
         
         XCTAssertNil(medTracker.step(before: finalReviewStep, with: &taskResult))
-        XCTAssertEqual(finalReviewStep.identifier, initialReviewStep.identifier)
+        XCTAssertEqual(finalReviewStep.identifier, "review")
         XCTAssertFalse(medTracker.hasStep(before: finalReviewStep, with: taskResult))
         XCTAssertFalse(medTracker.hasStep(after: finalReviewStep, with: taskResult))
         
-        // The review should use the "Submit" title for forward navigation if the answers are not complete.
-        if let action = finalReviewStep.action(for: .navigation(.goForward), on: finalReviewStep) {
-            XCTAssertEqual(action.buttonTitle, "Submit")
-        } else {
-            XCTFail("Step action does not include `.goForward`")
-        }
-        
-        guard let finalResult = finalReviewStep.instantiateStepResult() as? RSDMedicationTrackingResult else {
-            XCTFail("Failed to create the expected result. Exiting.")
-            return
-        }
-        XCTAssertEqual(finalResult.selectedAnswers.count, 2)
-        XCTAssertTrue(finalResult.hasRequiredValues)
-        
-        // Inspect the final result for expected values.
-        guard let answerA2 = finalResult.selectedAnswers.first as? RSDMedicationAnswer,
-            let answerB4 = finalResult.selectedAnswers.last as? RSDMedicationAnswer,
-            answerA2.identifier != answerB4.identifier else {
-                XCTFail("Failed to create the expected result. Exiting.")
-                return
-        }
-        
-        XCTAssertEqual(answerA2.identifier, "medA2")
-        XCTAssertEqual(answerA2.dosage, "5 ml")
-        XCTAssertEqual(answerA2.scheduleItems?.count, 2)
-        if let sortedItems = answerA2.scheduleItems?.sorted() {
-            XCTAssertEqual(sortedItems.first?.timeOfDayString, "08:30")
-            XCTAssertEqual(sortedItems.first?.daysOfWeek, [.monday, .wednesday, .friday])
-            XCTAssertEqual(sortedItems.last?.timeOfDayString, "20:00")
-            XCTAssertEqual(sortedItems.last?.daysOfWeek, [.sunday])
-        }
-        
-        XCTAssertEqual(answerB4.identifier, "medB4")
-        XCTAssertEqual(answerB4.dosage, "1/20 mg")
-        XCTAssertEqual(answerB4.scheduleItems?.count, 1)
-        if let sortedItems = answerB4.scheduleItems?.sorted() {
-            XCTAssertEqual(sortedItems.first?.timeOfDayString, "07:30")
-            XCTAssertEqual(sortedItems.first?.daysOfWeek, RSDWeekday.all)
-        }
+        checkFinalReviewStep(finalReviewStep)
     }
     
     func testMedicationTrackingNavigation_FollowupRun() {
@@ -507,6 +356,49 @@ class MedicationTrackingTests: XCTestCase {
     
     // MARK: Shared tests
     
+    func checkFinalReviewStep(_ finalReviewStep: RSDTrackedItemsReviewStepObject) {
+        
+        // The review should use the "Submit" title for forward navigation if the answers are not complete.
+        if let action = finalReviewStep.action(for: .navigation(.goForward), on: finalReviewStep) {
+            XCTAssertEqual(action.buttonTitle, "Submit")
+        } else {
+            XCTFail("Step action does not include `.goForward`")
+        }
+        
+        guard let finalResult = finalReviewStep.result as? RSDMedicationTrackingResult else {
+            XCTFail("Failed to create the expected result. Exiting.")
+            return
+        }
+        XCTAssertEqual(finalResult.selectedAnswers.count, 2)
+        XCTAssertTrue(finalResult.hasRequiredValues)
+        
+        // Inspect the final result for expected values.
+        guard let answerA2 = finalResult.selectedAnswers.first as? RSDMedicationAnswer,
+            let answerB4 = finalResult.selectedAnswers.last as? RSDMedicationAnswer,
+            answerA2.identifier != answerB4.identifier else {
+                XCTFail("Failed to create the expected result. Exiting.")
+                return
+        }
+        
+        XCTAssertEqual(answerA2.identifier, "medA2")
+        XCTAssertEqual(answerA2.dosage, "5 ml")
+        XCTAssertEqual(answerA2.scheduleItems?.count, 2)
+        if let sortedItems = answerA2.scheduleItems?.sorted() {
+            XCTAssertEqual(sortedItems.first?.timeOfDayString, "08:30")
+            XCTAssertEqual(sortedItems.first?.daysOfWeek, [.monday, .wednesday, .friday])
+            XCTAssertEqual(sortedItems.last?.timeOfDayString, "20:00")
+            XCTAssertEqual(sortedItems.last?.daysOfWeek, [.sunday])
+        }
+        
+        XCTAssertEqual(answerB4.identifier, "medB4")
+        XCTAssertEqual(answerB4.dosage, "1/20 mg")
+        XCTAssertEqual(answerB4.scheduleItems?.count, 1)
+        if let sortedItems = answerB4.scheduleItems?.sorted() {
+            XCTAssertEqual(sortedItems.first?.timeOfDayString, "07:30")
+            XCTAssertEqual(sortedItems.first?.daysOfWeek, RSDWeekday.all)
+        }
+    }
+    
     // Check functions that should remain the same for all instances.
     func checkScheduleTime(_ scheduleTime: RSDInputField, _ debug: String) {
         XCTAssertEqual(scheduleTime.dataType, .base(.date), debug)
@@ -549,35 +441,75 @@ class MedicationTrackingTests: XCTestCase {
             XCTFail("\(String(describing: scheduleDays)) not expected type. \(debug)")
         }
     }
+}
+
+// Helper methods
+
+func medB4Result() -> RSDCollectionResult {
+    let timeFormatter = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter
     
-    // Helper methods
+    var collectionResultB4 = RSDCollectionResultObject(identifier: "medB4")
+    var dosageB4 = RSDAnswerResultObject(identifier: "dosage", answerType: .string)
+    dosageB4.value = "1/20 mg"
+    collectionResultB4.appendInputResults(with: dosageB4)
+    var timeB4_0 = RSDAnswerResultObject(identifier: "timeOfDay.0", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
+    timeB4_0.value = timeFormatter.date(from: "07:30")
+    collectionResultB4.appendInputResults(with: timeB4_0)
+    var daysB4_0 = RSDAnswerResultObject(identifier: "daysOfWeek.0", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
+    daysB4_0.value = Array(1...7)
+    collectionResultB4.appendInputResults(with: daysB4_0)
     
-    func buildMedicationItems() -> (items: [RSDMedicationItem], sections: [RSDTrackedSection]) {
-        let items = [   RSDMedicationItem(identifier: "medA1", sectionIdentifier: "section1"),
-                        RSDMedicationItem(identifier: "medA2", sectionIdentifier: "section2"),
-                        RSDMedicationItem(identifier: "medA3", sectionIdentifier: "section3"),
-                        RSDMedicationItem(identifier: "medA4", sectionIdentifier: "section4"),
-                        RSDMedicationItem(identifier: "medB1", sectionIdentifier: "section1"),
-                        RSDMedicationItem(identifier: "medB2", sectionIdentifier: "section2"),
-                        RSDMedicationItem(identifier: "medB3", sectionIdentifier: "section3"),
-                        RSDMedicationItem(identifier: "medB4", sectionIdentifier: "section4"),
-                        RSDMedicationItem(identifier: "medC1", sectionIdentifier: "section1"),
-                        RSDMedicationItem(identifier: "medC2", sectionIdentifier: "section2"),
-                        RSDMedicationItem(identifier: "medC3", sectionIdentifier: "section3"),
-                        RSDMedicationItem(identifier: "medC4", sectionIdentifier: "section4"),
-                        RSDMedicationItem(identifier: "medNoSection1", sectionIdentifier: nil),
-                        RSDMedicationItem(identifier: "medNoSection2", sectionIdentifier: nil),
-                        RSDMedicationItem(identifier: "medNoSection3", sectionIdentifier: nil),
-                        RSDMedicationItem(identifier: "medFooSection1", sectionIdentifier: "Foo"),
-                        RSDMedicationItem(identifier: "medFooSection2", sectionIdentifier: "Foo"),
+    return collectionResultB4
+}
+
+func medA2Result() -> RSDCollectionResult {
+    let timeFormatter = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter
+    
+    var collectionResultA2 = RSDCollectionResultObject(identifier: "medA2")
+    var dosageA2 = RSDAnswerResultObject(identifier: "dosage", answerType: .string)
+    dosageA2.value = "5 ml"
+    collectionResultA2.appendInputResults(with: dosageA2)
+    var timeA2_0 = RSDAnswerResultObject(identifier: "timeOfDay.0", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
+    timeA2_0.value = timeFormatter.date(from: "08:30")
+    collectionResultA2.appendInputResults(with: timeA2_0)
+    var daysA2_0 = RSDAnswerResultObject(identifier: "daysOfWeek.0", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
+    daysA2_0.value = [2, 4, 6]
+    collectionResultA2.appendInputResults(with: daysA2_0)
+    var timeA2_1 = RSDAnswerResultObject(identifier: "timeOfDay.1", answerType: RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm"))
+    timeA2_1.value = timeFormatter.date(from: "20:00")
+    collectionResultA2.appendInputResults(with: timeA2_1)
+    var daysA2_1 = RSDAnswerResultObject(identifier: "daysOfWeek.1", answerType: RSDAnswerResultType(baseType: .integer, sequenceType: .array))
+    daysA2_1.value = [1]
+    collectionResultA2.appendInputResults(with: daysA2_1)
+    
+    return collectionResultA2
+}
+
+func buildMedicationItems() -> (items: [RSDMedicationItem], sections: [RSDTrackedSection]) {
+    let items = [   RSDMedicationItem(identifier: "medA1", sectionIdentifier: "section1"),
+                    RSDMedicationItem(identifier: "medA2", sectionIdentifier: "section2"),
+                    RSDMedicationItem(identifier: "medA3", sectionIdentifier: "section3"),
+                    RSDMedicationItem(identifier: "medA4", sectionIdentifier: "section4"),
+                    RSDMedicationItem(identifier: "medB1", sectionIdentifier: "section1"),
+                    RSDMedicationItem(identifier: "medB2", sectionIdentifier: "section2"),
+                    RSDMedicationItem(identifier: "medB3", sectionIdentifier: "section3"),
+                    RSDMedicationItem(identifier: "medB4", sectionIdentifier: "section4"),
+                    RSDMedicationItem(identifier: "medC1", sectionIdentifier: "section1"),
+                    RSDMedicationItem(identifier: "medC2", sectionIdentifier: "section2"),
+                    RSDMedicationItem(identifier: "medC3", sectionIdentifier: "section3"),
+                    RSDMedicationItem(identifier: "medC4", sectionIdentifier: "section4"),
+                    RSDMedicationItem(identifier: "medNoSection1", sectionIdentifier: nil),
+                    RSDMedicationItem(identifier: "medNoSection2", sectionIdentifier: nil),
+                    RSDMedicationItem(identifier: "medNoSection3", sectionIdentifier: nil),
+                    RSDMedicationItem(identifier: "medFooSection1", sectionIdentifier: "Foo"),
+                    RSDMedicationItem(identifier: "medFooSection2", sectionIdentifier: "Foo"),
+                    ]
+    
+    let sections = [    RSDTrackedSectionObject(identifier: "section1"),
+                        RSDTrackedSectionObject(identifier: "section2"),
+                        RSDTrackedSectionObject(identifier: "section3"),
+                        RSDTrackedSectionObject(identifier: "section4"),
                         ]
-        
-        let sections = [    RSDTrackedSectionObject(identifier: "section1"),
-                            RSDTrackedSectionObject(identifier: "section2"),
-                            RSDTrackedSectionObject(identifier: "section3"),
-                            RSDTrackedSectionObject(identifier: "section4"),
-                            ]
-        
-        return (items, sections)
-    }
+    
+    return (items, sections)
 }

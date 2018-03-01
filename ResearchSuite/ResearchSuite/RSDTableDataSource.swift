@@ -81,20 +81,15 @@ public protocol RSDTableDataSource : class {
     /// - returns: The requested `RSDTableItem`, or nil if it cannot be found.
     func tableItem(at indexPath: IndexPath) -> RSDTableItem?
     
+    /// Retrieve the next item group after the current one at the given index path.
+    /// - parameter indexPath: The index path that represents the item group in the table view.
+    /// - returns: The next `RSDTableItemGroup` or `nil` if this was the last item.
+    func nextItem(after indexPath: IndexPath) -> RSDTableItem?
+    
     /// Retrieve the 'RSDTableItemGroup' for a specific IndexPath.
     /// - parameter indexPath: The index path that represents the item group in the table view.
     /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
     func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup?
-    
-    /// Retrieve the next item group after the current one at the given index path.
-    /// - parameter indexPath: The index path that represents the item group in the table view.
-    /// - returns: The next `RSDTableItemGroup` or `nil` if this was the last item.
-    func nextItem(after indexPath: IndexPath) -> RSDTableItemGroup?
-    
-    /// Retrieve the index path that points at the given item group.
-    /// - parameter itemGroup: The item group.
-    /// - returns: The index path for the given item group or `nil` if not found.
-    func indexPath(for itemGroup: RSDTableItemGroup) -> IndexPath?
     
     /// Determine if all answers are valid. Also checks the case where answers are required but one has
     /// not been provided.

@@ -364,12 +364,11 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         
         // If the textfield is valid, check to see if there is another item that is below this one
         if let indexPath = indexPath(for: textField),
-            let nextItem = tableData?.nextItem(after: indexPath),
-            let nextPath = tableData?.indexPath(for: nextItem) {
+            let nextItem = tableData?.nextItem(after: indexPath) {
             
             // need to get our cell and tell its textField to become first responder
             // but do *not* go forward.
-            if let customCell = tableView.cellForRow(at: nextPath) as? RSDStepTextFieldCell {
+            if let customCell = tableView.cellForRow(at: nextItem.indexPath) as? RSDStepTextFieldCell {
                 customCell.textField.becomeFirstResponder()
             } else {
                 textField.resignFirstResponder()
