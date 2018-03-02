@@ -79,6 +79,7 @@ class ExampleDecodableTests: XCTestCase {
         let documentCreator = RSDDocumentCreator()
         for objectType in documentCreator.allDecodableObjects {
             
+            debugPrint(objectType)
             let validKeys = objectType.validateAllKeysIncluded()
             XCTAssertTrue(validKeys, "\(objectType)")
             

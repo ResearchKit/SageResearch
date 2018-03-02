@@ -105,12 +105,23 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - throws: `DecodingError`
     public required init(from decoder: Decoder) throws {
+        try decodeActions(from: decoder)
+    }
+    
+    /// Decode from the given decoder, replacing values on self with those from the decoder
+    /// if the properties are mutable.
+    internal func decodeActions(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.shouldHideActions = try container.decodeIfPresent([RSDUIActionType].self, forKey: .shouldHideActions)
+        
+        if let shouldHide = try container.decodeIfPresent([RSDUIActionType].self, forKey: .shouldHideActions) {
+            var set = Set(self.shouldHideActions ?? [])
+            set.formUnion(shouldHide)
+            self.shouldHideActions = Array(set)
+        }
         if container.contains(.actions) {
             let nestedDecoder = try container.superDecoder(forKey: .actions)
             let nestedContainer = try nestedDecoder.container(keyedBy: AnyCodingKey.self)
-            var actions: [RSDUIActionType : RSDUIAction] = [:]
+            var actions: [RSDUIActionType : RSDUIAction] = self.actions ?? [:]
             for key in nestedContainer.allKeys {
                 let objectDecoder = try nestedContainer.superDecoder(forKey: key)
                 let actionType = RSDUIActionType(rawValue: key.stringValue)

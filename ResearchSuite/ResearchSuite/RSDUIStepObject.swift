@@ -111,7 +111,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     public required init(identifier: String, type: RSDStepType? = nil) {
         self.identifier = identifier
         self.stepType = type ?? .instruction
+        self._initCompleted = false
         super.init()
+        self._initCompleted = true
     }
     
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
@@ -263,16 +265,25 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         self.stepType = try container.decode(RSDStepType.self, forKey: .stepType)
         
         self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
-        
+
+        self._initCompleted = false
         try super.init(from: decoder)
-        
         try decode(from: decoder, for: nil)
+        self._initCompleted = true
     }
+    private var _initCompleted: Bool
     
     /// Decode from the given decoder, replacing values on self with those from the decoder
     /// if the properties are mutable.
+    public final func decode(from decoder: Decoder) throws {
+        try decode(from: decoder, for: nil)
+        try decodeActions(from: decoder)
+    }
+    
+    /// Decode from the given decoder, replacing values on self with those from the decoder
+    /// if the properties are mutable. This function is designed to loop through a second
+    /// pass to replace any values that should be decoded for a specific device type.
     open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
-        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? self.title

@@ -91,25 +91,33 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
         let selectionStep = type(of: self).buildSelectionStep(items: items, sections: sections)
         if let step = selectionStep as? RSDDecodableReplacement, container.contains(.selection)  {
             let nestedDecoder = try container.superDecoder(forKey: .selection)
-            try step.decode(from: nestedDecoder, for: nil)
+            try step.decode(from: nestedDecoder)
         }
         
         let reviewStep = type(of: self).buildReviewStep(items: items, sections: sections)
         if let step = reviewStep as? RSDDecodableReplacement, container.contains(.review)  {
             let nestedDecoder = try container.superDecoder(forKey: .review)
-            try step.decode(from: nestedDecoder, for: nil)
+            try step.decode(from: nestedDecoder)
         }
         
         let detailStepTemplates = type(of: self).buildDetailSteps(items: items, sections: sections)
         if let step = detailStepTemplates?.first as? RSDDecodableReplacement, container.contains(.addDetails) {
             let nestedDecoder = try container.superDecoder(forKey: .addDetails)
-            try step.decode(from: nestedDecoder, for: nil)
+            try step.decode(from: nestedDecoder)
         }
         
-        let loggingStep = type(of: self).buildLoggingStep(items: items, sections: sections)
-        if let step = loggingStep as? RSDDecodableReplacement, container.contains(.logging)  {
+        var loggingStep = type(of: self).buildLoggingStep(items: items, sections: sections)
+        if container.contains(.logging) {
+            /// If there isn't a class override, but the decoder includes a logging step, then include one here.
+            let step: RSDDecodableReplacement
+            if let dStep = loggingStep as? RSDDecodableReplacement {
+                step = dStep
+            } else {
+                loggingStep = RSDTrackedItemsLoggingStepObject(identifier: StepIdentifiers.logging.stringValue, items: items, sections: sections, type: .logging)
+                step = loggingStep as! RSDDecodableReplacement
+            }
             let nestedDecoder = try container.superDecoder(forKey: .logging)
-            try step.decode(from: nestedDecoder, for: nil)
+            try step.decode(from: nestedDecoder)
         }
         
         self.selectionStep = selectionStep
@@ -305,7 +313,11 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
     open func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
         guard let identifier = step?.identifier else { return true }
         guard identifier != self.loggingStep?.identifier else { return false }
-        guard let reviewStep = self.reviewStep else { return false }
+        guard let reviewStep = self.reviewStep else {
+            // If there isn't a review step, but there is a logging step then that
+            // is the last step.
+            return self.loggingStep != nil
+        }
         if identifier != reviewStep.identifier {
             // If this is not a review step then there will always be a step after b/c the
             // review step is always last.

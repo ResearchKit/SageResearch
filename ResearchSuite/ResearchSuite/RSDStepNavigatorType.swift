@@ -1,8 +1,8 @@
 //
-//  RSDStepType.swift
+//  RSDStepNavigatorType.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,7 +35,7 @@ import Foundation
 
 /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
 /// the UI.
-public struct RSDStepType : RawRepresentable, Codable {
+public struct RSDStepNavigatorType : RawRepresentable, Codable {
     public typealias RawValue = String
     
     public private(set) var rawValue: String
@@ -44,72 +44,43 @@ public struct RSDStepType : RawRepresentable, Codable {
         self.rawValue = rawValue
     }
     
-    /// Defaults to creating a `RSDActiveUIStep`.
-    public static let active: RSDStepType = "active"
+    /// Defaults to creating a `RSDConditionalStepNavigatorObject`.
+    public static let conditional: RSDStepNavigatorType = "conditional"
     
-    /// Defaults to creating a `RSDUIStep` used to mark task completion.
-    public static let completion: RSDStepType = "completion"
+    /// Defaults to creating a `RSDMedicationTrackingStepNavigator`.
+    public static let medicationTracking: RSDStepNavigatorType = "medicationTracking"
     
-    /// Defaults to creating a `RSDActiveUIStep` used as a countdown to an active step.
-    public static let countdown: RSDStepType = "countdown"
-    
-    /// Defaults to creating a `RSDFormUIStep`.
-    public static let form: RSDStepType = "form"
-    
-    /// Defaults to creating a `RSDUIStep`.
-    public static let instruction: RSDStepType = "instruction"
-    
-    /// Defaults to creating a `RSDTrackedItemsLoggingStepObject`.
-    public static let logging: RSDStepType = "logging"
-    
-    /// Defaults to creating a `RSDTrackedItemsReviewStepObject`.
-    public static let review: RSDStepType = "review"
-    
-    /// Defaults to creating a `RSDSectionStep`.
-    public static let section: RSDStepType = "section"
-    
-    /// Defaults to creating a `RSDTrackedSelectionStepObject`.
-    public static let selection: RSDStepType = "selection"
-    
-    /// Defaults to creating a `RSDSectionStep` created using a `RSDTransformerStep`.
-    public static let transform: RSDStepType = "transform"
-    
-    /// Defaults to creating a `RSDTaskInfoStep`.
-    public static let taskInfo: RSDStepType = "taskInfo"
+    /// Defaults to creating a `RSDTrackedItemsStepNavigator`.
+    public static let tracking: RSDStepNavigatorType = "tracking"
     
     /// List of all the standard types.
-    public static func allStandardTypes() -> [RSDStepType] {
-        return [.active, .completion, .countdown, .form, .instruction, .section, .transform, .taskInfo]
+    public static func allStandardTypes() -> [RSDStepNavigatorType] {
+        return [.conditional, .tracking, .medicationTracking]
     }
 }
 
-extension RSDStepType : Equatable {
-    public static func ==(lhs: RSDStepType, rhs: RSDStepType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDStepType) -> Bool {
+extension RSDStepNavigatorType : Equatable {
+    public static func ==(lhs: String, rhs: RSDStepNavigatorType) -> Bool {
         return lhs == rhs.rawValue
     }
-    public static func ==(lhs: RSDStepType, rhs: String) -> Bool {
+    public static func ==(lhs: RSDStepNavigatorType, rhs: String) -> Bool {
         return lhs.rawValue == rhs
     }
 }
 
-extension RSDStepType : Hashable {
+extension RSDStepNavigatorType : Hashable {
     public var hashValue : Int {
         return self.rawValue.hashValue
     }
 }
 
-extension RSDStepType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
+extension RSDStepNavigatorType : ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }
 }
 
-extension RSDStepType : RSDDocumentableStringEnum {
+extension RSDStepNavigatorType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }

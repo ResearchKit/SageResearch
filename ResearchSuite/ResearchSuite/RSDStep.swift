@@ -80,7 +80,7 @@ public protocol RSDCopyWithIdentifier {
 public protocol RSDDecodableReplacement : class {
     
     /// Decode from the given decoder, replacing mutable properties on self with those from the decoder.
-    func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws
+    func decode(from decoder: Decoder) throws
 }
 
 /// `RSDCopyStep` is a step that supports creating a copy of itself that has specified properties mutated

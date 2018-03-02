@@ -485,4 +485,48 @@ class CodableTrackedDataTests: XCTestCase {
             return
         }
     }
+    
+    func testTriggerTrackingStepNavigator_Codable() {
+        
+        let json = """
+            {
+                "identifier": "logging",
+                "type" : "tracking",
+                "items": [
+                            { "identifier": "itemA1", "sectionIdentifier" : "a" },
+                            { "identifier": "itemA2", "sectionIdentifier" : "a" },
+                            { "identifier": "itemA3", "sectionIdentifier" : "a" },
+                            { "identifier": "itemB1", "sectionIdentifier" : "b" },
+                            { "identifier": "itemB2", "sectionIdentifier" : "b" },
+                            { "identifier": "itemC1", "sectionIdentifier" : "c" },
+                            { "identifier": "itemC2", "sectionIdentifier" : "c" },
+                            { "identifier": "itemC3", "sectionIdentifier" : "c" }
+                        ],
+                "selection": { "title": "What items would you like to track?",
+                                "detail": "Select all that apply"},
+                "logging": { "title": "Your logged items",
+                             "actions": { "addMore": { "buttonTitle" : "Edit Logged Items" }}
+                            }
+            }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            let object = try decoder.decode(RSDTaskObject.self, from: json)
+            XCTAssertEqual(object.identifier, "logging")
+            guard let navigator = object.stepNavigator as? RSDTrackedItemsStepNavigator else {
+                XCTFail("Failed to decode the step navigator. Exiting.")
+                return
+            }
+            XCTAssertEqual(navigator.items.count, 8)
+            XCTAssertNil(navigator.sections)
+            XCTAssertEqual((navigator.selectionStep as? RSDUIStep)?.title, "What items would you like to track?")
+            XCTAssertEqual((navigator.selectionStep as? RSDUIStep)?.detail, "Select all that apply")
+            XCTAssertEqual((navigator.loggingStep as? RSDUIStep)?.title, "Your logged items")
+            XCTAssertEqual((navigator.loggingStep as? RSDUIStepObject)?.actions?[.navigation(.addMore)]?.buttonTitle, "Edit Logged Items")
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
 }
