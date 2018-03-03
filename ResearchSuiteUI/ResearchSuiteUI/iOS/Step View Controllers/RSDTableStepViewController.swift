@@ -114,8 +114,6 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             tableView = UITableView(frame: view.bounds, style: .plain)
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.sectionHeaderHeight = 0.0
-            tableView.estimatedSectionHeaderHeight = 0.0
             tableView.separatorStyle = .none
             tableView.rowHeight = UITableViewAutomaticDimension
             tableView.estimatedRowHeight = constants.defaultRowHeight
@@ -252,6 +250,12 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             tableData = RSDFormStepDataSourceObject(step: self.step, taskPath: taskPath, supportedHints: supportedHints)
         }
         tableData?.delegate = self
+        
+        // Check if there are any titles
+        if tableData!.sections.count == 1 {
+            tableView.sectionHeaderHeight = 0.0
+            tableView.estimatedSectionHeaderHeight = 0.0
+        }
         
         // after setting up the data source, check the enabled state of the forward button.
         self.answersDidChange(in: 0)
@@ -417,6 +421,17 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         let cell = dequeueCell(in: tableView, for: indexPath)
         configure(cell: cell, in: tableView, at: indexPath)
         return cell
+    }
+    
+    /// Returns the section title (and subtitle if there is one) for this section.
+    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let title = tableData?.sections[section].title else { return nil }
+        if let detail = tableData?.sections[section].subtitle {
+            let separator = detail.hasPrefix("(") ? " " : " - "
+            return "\(title)\(separator)\(detail)"
+        } else {
+            return title
+        }
     }
     
     // UI Implementation

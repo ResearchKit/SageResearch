@@ -49,50 +49,53 @@ class TrackedSelectionDataSourceTests: XCTestCase {
     func testInitialSelection() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         
-        guard let dataSource = buildDataSource() else {
-            XCTFail("Failed to instantiate the data source. Exiting.")
-            return
-        }
+        for ii in 0...1 {
         
-        // Must select at least one item
-        XCTAssertFalse(dataSource.allAnswersValid())
-        
-        let expectedCounts = [3,3,3,3,2,1]
-        XCTAssertEqual(dataSource.sections.count, expectedCounts.count)
-        
-        guard dataSource.sections.count == expectedCounts.count else {
-            XCTFail("Failed to build sections. Exiting.")
-            return
-        }
-
-        for (sectionIdx, rowCount) in expectedCounts.enumerated() {
+            guard let dataSource = buildDataSource(usingSections: ii == 0) else {
+                XCTFail("Failed to instantiate the data source. Exiting.")
+                return
+            }
             
-            XCTAssertEqual(dataSource.sections[sectionIdx].tableItems.count, rowCount)
-            let uuid = dataSource.itemGroup(at: IndexPath(row: 0, section: sectionIdx))?.uuid
-            XCTAssertNotNil(uuid)
+            // Must select at least one item
+            XCTAssertFalse(dataSource.allAnswersValid(), "\(ii)")
             
-            for ii in 0..<rowCount {
-                
-                let expectedItem = dataSource.sections[sectionIdx].tableItems[ii]
-                let indexPath = IndexPath(row: ii, section: sectionIdx)
-                XCTAssertEqual(expectedItem.indexPath, indexPath)
+            let expectedCounts = [3,3,3,3,2,1]
+            XCTAssertEqual(dataSource.sections.count, expectedCounts.count, "\(ii)")
+            
+            guard dataSource.sections.count == expectedCounts.count else {
+                XCTFail("Failed to build sections. Exiting. \(ii)")
+                return
+            }
 
-                if let tableItem = dataSource.tableItem(at: indexPath) {
-                    XCTAssertEqual(tableItem.indexPath, indexPath)
-                } else {
-                    XCTFail("item nil at \(indexPath)")
-                }
+            for (sectionIdx, rowCount) in expectedCounts.enumerated() {
                 
-                if let tableGroup = dataSource.itemGroup(at: indexPath) {
-                    XCTAssertEqual(uuid, tableGroup.uuid)
-                } else {
-                    XCTFail("item nil at \(indexPath)")
-                }
+                XCTAssertEqual(dataSource.sections[sectionIdx].tableItems.count, rowCount)
+                let uuid = dataSource.itemGroup(at: IndexPath(row: 0, section: sectionIdx))?.uuid
+                XCTAssertNotNil(uuid, "\(ii)")
                 
-                if sectionIdx + 1 < expectedCounts.count || ii + 1 < rowCount {
-                    XCTAssertNotNil(dataSource.nextItem(after: indexPath))
-                } else {
-                    XCTAssertNil(dataSource.nextItem(after: indexPath))
+                for ii in 0..<rowCount {
+                    
+                    let expectedItem = dataSource.sections[sectionIdx].tableItems[ii]
+                    let indexPath = IndexPath(row: ii, section: sectionIdx)
+                    XCTAssertEqual(expectedItem.indexPath, indexPath, "\(ii)")
+
+                    if let tableItem = dataSource.tableItem(at: indexPath) {
+                        XCTAssertEqual(tableItem.indexPath, indexPath, "\(ii)")
+                    } else {
+                        XCTFail("item nil at \(indexPath) \(ii)")
+                    }
+                    
+                    if let tableGroup = dataSource.itemGroup(at: indexPath) {
+                        XCTAssertEqual(uuid, tableGroup.uuid, "\(ii)")
+                    } else {
+                        XCTFail("item nil at \(indexPath) \(ii)")
+                    }
+                    
+                    if sectionIdx + 1 < expectedCounts.count || ii + 1 < rowCount {
+                        XCTAssertNotNil(dataSource.nextItem(after: indexPath), "\(ii)")
+                    } else {
+                        XCTAssertNil(dataSource.nextItem(after: indexPath), "\(ii)")
+                    }
                 }
             }
         }
@@ -135,9 +138,9 @@ class TrackedSelectionDataSourceTests: XCTestCase {
     
     // Helper methods
     
-    func buildDataSource() -> RSDTableDataSource? {
+    func buildDataSource(usingSections: Bool = true) -> RSDTableDataSource? {
         let (items, sections) = buildMedicationItems()
-        let medTracker = RSDMedicationTrackingStepNavigator(items: items, sections: sections)
+        let medTracker = RSDMedicationTrackingStepNavigator(items: items, sections: usingSections ? sections : nil)
         let task = RSDTaskObject(identifier: "medication", stepNavigator: medTracker)
         let taskPath = RSDTaskPath(task: task)
         

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		F810CF3C202E3BB7009C49C9 /* Recorder_Distance.json in Resources */ = {isa = PBXBuildFile; fileRef = F810CF3B202E3BB7009C49C9 /* Recorder_Distance.json */; };
+		F8491124204A06D7007B4C77 /* Tracking_Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F8491123204A06D7007B4C77 /* Tracking_Triggers.json */; };
+		F8491126204A086D007B4C77 /* Tracking_Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = F8491125204A086D007B4C77 /* Tracking_Medication.json */; };
 		F8B1777E202CD31700B62416 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8B1777D202CD31700B62416 /* README.md */; };
 		F8B17786202CD73B00B62416 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B17785202CD73B00B62416 /* AppDelegate.swift */; };
 		F8B17788202CD73B00B62416 /* TaskGroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B17787202CD73B00B62416 /* TaskGroupTableViewController.swift */; };
@@ -35,6 +37,7 @@
 		F8B1782B202D4EAC00B62416 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchSuiteUI.framework */; };
 		F8B1782C202D4EAC00B62416 /* ResearchSuiteUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchSuiteUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8B17844202D82AB00B62416 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17843202D82AB00B62416 /* CoreLocation.framework */; };
+		F8B4FFE2204A145A00D41E97 /* Tracking_Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = F8B4FFE1204A145900D41E97 /* Tracking_Symptoms.json */; };
 		FF2415611F7AC31800D0BA5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2415601F7AC31800D0BA5C /* AppDelegate.swift */; };
 		FF2415631F7AC31800D0BA5C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2415621F7AC31800D0BA5C /* ViewController.swift */; };
 		FF2415661F7AC31800D0BA5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF2415641F7AC31800D0BA5C /* Main.storyboard */; };
@@ -90,6 +93,8 @@
 
 /* Begin PBXFileReference section */
 		F810CF3B202E3BB7009C49C9 /* Recorder_Distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Recorder_Distance.json; sourceTree = "<group>"; };
+		F8491123204A06D7007B4C77 /* Tracking_Triggers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tracking_Triggers.json; sourceTree = "<group>"; };
+		F8491125204A086D007B4C77 /* Tracking_Medication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tracking_Medication.json; sourceTree = "<group>"; };
 		F8B1777D202CD31700B62416 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		F8B17783202CD73B00B62416 /* RSDCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B17785202CD73B00B62416 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +122,7 @@
 		F8B17822202D4E8400B62416 /* ResearchSuiteUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuiteUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B17826202D4E8C00B62416 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B17843202D82AB00B62416 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F8B4FFE1204A145900D41E97 /* Tracking_Symptoms.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tracking_Symptoms.json; sourceTree = "<group>"; };
 		FF24155D1F7AC31800D0BA5C /* RSDTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF2415601F7AC31800D0BA5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF2415621F7AC31800D0BA5C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +216,9 @@
 				F8B177B7202CE10E00B62416 /* FormStep_Textfield.json */,
 				F810CF3B202E3BB7009C49C9 /* Recorder_Distance.json */,
 				F8B177B4202CE10D00B62416 /* Recorder_Motion.json */,
+				F8491125204A086D007B4C77 /* Tracking_Medication.json */,
+				F8B4FFE1204A145900D41E97 /* Tracking_Symptoms.json */,
+				F8491123204A06D7007B4C77 /* Tracking_Triggers.json */,
 			);
 			path = "JSON Files";
 			sourceTree = "<group>";
@@ -439,11 +448,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8B17790202CD73B00B62416 /* LaunchScreen.storyboard in Resources */,
+				F8491124204A06D7007B4C77 /* Tracking_Triggers.json in Resources */,
+				F8491126204A086D007B4C77 /* Tracking_Medication.json in Resources */,
 				F8B177BA202CE10E00B62416 /* FormStep_List.json in Resources */,
 				F8B177B8202CE10E00B62416 /* FormStep_Picker.json in Resources */,
 				F8B1778D202CD73B00B62416 /* Assets.xcassets in Resources */,
 				F810CF3C202E3BB7009C49C9 /* Recorder_Distance.json in Resources */,
 				F8B177BB202CE10E00B62416 /* TaskGroups.json in Resources */,
+				F8B4FFE2204A145A00D41E97 /* Tracking_Symptoms.json in Resources */,
 				F8B177B9202CE10E00B62416 /* Recorder_Motion.json in Resources */,
 				F8B1778B202CD73B00B62416 /* Main.storyboard in Resources */,
 				F8B177BC202CE10E00B62416 /* FormStep_Textfield.json in Resources */,

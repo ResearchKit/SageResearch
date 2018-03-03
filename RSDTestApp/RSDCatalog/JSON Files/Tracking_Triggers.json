@@ -1,0 +1,114 @@
+{
+    "identifier": "Triggers",
+    "type" : "tracking",
+    "selection": {
+        "title": "What triggers would you like to track?",
+        "detail": "Select all that apply"
+    },
+    "logging": {
+        "title": "Your triggers",
+        "actions": { "addMore": { "buttonTitle" : "Edit triggers" }}
+    },
+    "items" : [
+               {
+               "sectionIdentifier" : "Environment",
+               "identifier" : "Cold"
+               },
+               {
+               "sectionIdentifier" : "Environment",
+               "identifier" : "Hot"
+               },
+               {
+               "sectionIdentifier" : "Environment",
+               "identifier" : "Darkness"
+               },
+               {
+               "sectionIdentifier" : "Environment",
+               "identifier" : "Humidity"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Bedtime, early"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Bedtime, late"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Diet, protein"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Diet, carbohydrates"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Diet, fiber"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Diet, caffeine"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Diet, alcohol"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Diet, vegetarian"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Exercise, aerobic, high intensity"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Exercise, aerobic, low intensity"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Exercise, stretching"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Exercise, boxing"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Exercise, Tae Chi"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Exercise, yoga"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Sitting still"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Illness"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Stress"
+               },
+               {
+               "sectionIdentifier" : "Lifestyle",
+               "identifier" : "Traveling"
+               },
+               {
+               "sectionIdentifier" : "Holistic treatments",
+               "identifier" : "Acupuncture"
+               },
+               {
+               "sectionIdentifier" : "Holistic treatments",
+               "identifier" : "Aromatherapy"
+               },
+               {
+               "sectionIdentifier" : "Holistic treatments",
+               "identifier" : "Homeopathic therapy"
+               }
+               ]
+}
