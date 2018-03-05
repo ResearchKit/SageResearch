@@ -255,7 +255,7 @@ public protocol RSDAnswerResult : RSDResult, RSDAnswerResultFinder {
     var answerType: RSDAnswerResultType { get }
     
     /// The answer for the result.
-    var value: Any? { get set }
+    var value: Any? { get }
 }
 
 extension RSDAnswerResult {
@@ -271,7 +271,3 @@ extension RSDAnswerResult {
         return self.identifier == identifier ? self : nil
     }
 }
-
-
-
-

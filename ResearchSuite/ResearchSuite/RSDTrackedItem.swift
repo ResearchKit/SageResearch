@@ -102,7 +102,7 @@ public protocol RSDTrackedItemAnswer : Codable {
 }
 
 /// The tracked items result includes a list of all the answers for this tracked selection.
-public protocol RSDTrackedItemsResult : RSDResult, RSDCopyWithIdentifier {
+public protocol RSDTrackedItemsResult : RSDAnswerResult, RSDCopyWithIdentifier {
     
     /// A list of the currently selected items including any tracked details.
     var selectedAnswers: [RSDTrackedItemAnswer] { get }
@@ -124,6 +124,17 @@ extension RSDTrackedItemsResult {
     /// Do all the tracked data items have their required values set?
     public var hasRequiredValues: Bool {
         return self.selectedAnswers.reduce(true, { $0 && $1.hasRequiredValues })
+    }
+    
+    /// The answer type of the answer result. This includes coding information required to encode and
+    /// decode the value. The value is expected to conform to one of the coding types supported by the answer type.
+    public var answerType: RSDAnswerResultType {
+        return RSDAnswerResultType(baseType: .codable, sequenceType: .array)
+    }
+    
+    /// The answer for the result.
+    public var value: Any? {
+        return selectedAnswers
     }
 }
 

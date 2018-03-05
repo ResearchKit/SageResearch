@@ -60,10 +60,12 @@ public struct RSDAnswerResultType : Codable {
         case integer
         /// String
         case string
+        /// Codable
+        case codable
         
         /// List of all the base types
         public static var all: Set<BaseType> {
-            return [.boolean, .data, .date, .decimal, .integer, .string]
+            return [.boolean, .data, .date, .decimal, .integer, .string, .codable]
         }
     }
     
@@ -73,6 +75,7 @@ public struct RSDAnswerResultType : Codable {
         
         /// Array
         case array
+        
         /// Dictionary
         case dictionary
         
@@ -140,6 +143,9 @@ public struct RSDAnswerResultType : Codable {
     
     /// Static type for a `RSDAnswerResultType` with a `String` base type.
     public static let string = RSDAnswerResultType(baseType: .string)
+    
+    /// Static type for a `RSDAnswerResultType` with a `Codable` base type.
+    public static let codable = RSDAnswerResultType(baseType: .codable)
     
     /// The initializer for the `RSDAnswerResultType`.
     ///
@@ -229,7 +235,7 @@ extension RSDAnswerResultType {
         case .integer:
             return (string as NSString).integerValue
             
-        case .string:
+        case .string, .codable:
             return string
             
         case .date:
@@ -238,6 +244,14 @@ extension RSDAnswerResultType {
     }
     
     private func _decodeSingleValue(from decoder: Decoder) throws -> RSDJSONValue {
+        
+        // special-case the ".codable" type to return a dictionary
+        if baseType == .codable {
+            let container = try decoder.container(keyedBy: AnyCodingKey.self)
+            return try container.decode(Dictionary<String, Any>.self)
+        }
+        
+        // all other types are single value
         let container = try decoder.singleValueContainer()
         switch baseType {
         case .boolean:
@@ -263,6 +277,9 @@ extension RSDAnswerResultType {
             else {
                 return try container.decode(Date.self)
             }
+        case .codable:
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Could not decode a Codable to a single value container.")
+            throw DecodingError.typeMismatch(Dictionary<String, Any>.self, context)
         }
     }
     
@@ -365,7 +382,10 @@ extension RSDAnswerResultType {
     }
     
     private func _encodableValue(_ value: Any, encoder: Encoder) throws -> Encodable? {
-        if let num = value as? NSNumber {
+        if baseType == .codable {
+            return value as? Encodable
+        }
+        else if let num = value as? NSNumber {
             switch baseType {
             case .boolean:
                 return num.boolValue
@@ -419,6 +439,8 @@ extension RSDAnswerResultType {
             }
         }
     }
+    
+    
 }
 
 // MARK: Equatable and Hashable
@@ -570,6 +592,9 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
                     if sequenceType == .array {
                         examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: nil, unit: nil, sequenceSeparator: "/"), ["and","or"]))
                     }
+                    
+                case .codable:
+                    break
                 }
             }
         }
