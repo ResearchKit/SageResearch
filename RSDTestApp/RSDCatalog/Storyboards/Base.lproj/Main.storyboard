@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -237,6 +238,7 @@
                                 <connections>
                                     <outlet property="subtitleLabel" destination="bPu-9P-HrL" id="1Vc-Hg-ADu"/>
                                     <outlet property="titleLabel" destination="nf8-YY-lUN" id="ADQ-tt-If6"/>
+                                    <segue destination="5Pz-SL-aWS" kind="show" id="vsL-6T-XHS"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="error" rowHeight="65" id="Ytw-qI-SU3" customClass="ImageTableViewCell" customModule="RSDCatalog" customModuleProvider="target">
@@ -330,6 +332,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XII-Oc-wgs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2600.8000000000002" y="124.58770614692655"/>
+        </scene>
+        <!--File Result View Controller-->
+        <scene sceneID="qms-B1-9uc">
+            <objects>
+                <viewController id="5Pz-SL-aWS" customClass="FileResultViewController" customModule="RSDCatalog" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lKA-na-Uyl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vhm-dh-dMC">
+                                <rect key="frame" x="16" y="64" width="343" height="583"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="r4X-ph-d6w">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="r4X-ph-d6w" firstAttribute="leading" secondItem="rJ2-GS-CEC" secondAttribute="leading" id="9kU-bM-U3O"/>
+                            <constraint firstItem="rJ2-GS-CEC" firstAttribute="trailing" secondItem="vhm-dh-dMC" secondAttribute="trailing" constant="16" id="Cpn-j4-zu7"/>
+                            <constraint firstItem="vhm-dh-dMC" firstAttribute="top" secondItem="rJ2-GS-CEC" secondAttribute="top" id="HMc-dk-OHv"/>
+                            <constraint firstItem="r4X-ph-d6w" firstAttribute="bottom" secondItem="rJ2-GS-CEC" secondAttribute="bottom" id="WKC-mi-Zzj"/>
+                            <constraint firstItem="rJ2-GS-CEC" firstAttribute="bottom" secondItem="vhm-dh-dMC" secondAttribute="bottom" constant="20" id="ZFQ-Tu-Pwq"/>
+                            <constraint firstItem="vhm-dh-dMC" firstAttribute="leading" secondItem="rJ2-GS-CEC" secondAttribute="leading" constant="16" id="bgB-zS-3hC"/>
+                            <constraint firstItem="r4X-ph-d6w" firstAttribute="top" secondItem="rJ2-GS-CEC" secondAttribute="top" id="pnG-5K-LTD"/>
+                            <constraint firstItem="r4X-ph-d6w" firstAttribute="trailing" secondItem="rJ2-GS-CEC" secondAttribute="trailing" id="xAm-Lq-dDt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rJ2-GS-CEC"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="r4X-ph-d6w" id="BV6-Ob-iBF"/>
+                        <outlet property="textView" destination="vhm-dh-dMC" id="yJm-9d-bqe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MRg-Fb-k03" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3432.8000000000002" y="121.88905547226388"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FQ1-uo-pmz">

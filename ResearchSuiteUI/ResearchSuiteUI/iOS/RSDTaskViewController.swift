@@ -255,6 +255,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
             activeStep.commands.contains(.transitionAutomatically) {
             return RSDActiveStepViewController(step: step)
         }
+        else if step.stepType == .imagePicker {
+            return RSDImagePickerStepViewController(step: step)
+        }
         else if RSDTableStepViewController.doesSupport(step) {
             // If this step *can* be displayed using the generic step view controller, then default to that
             // rather than the using the debug step.

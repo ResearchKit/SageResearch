@@ -1,0 +1,70 @@
+{
+    "identifier"        : "imagePicker",
+    "schemaInfo": {
+        "identifier": "Image Picker",
+        "revision": 1
+    },
+    "actions"           : { "cancel": { "iconName": "closeActivity" }},
+    "shouldHideActions" : ["goBackward", "skip"],
+    "steps"             : [
+                           {
+                           "identifier"     : "camera",
+                           "type"           : "section",
+                           "steps"          : [
+                                               {
+                                               "identifier"   : "instruction",
+                                               "type"         : "instruction",
+                                               "title"        : "Using your camera",
+                                               "text"         : "In this step you will use your phone's camera to take a picture. This step is not available when running in the simulator."
+                                               },
+                                               {
+                                               "identifier"     : "image",
+                                               "type"           : "imagePicker",
+                                               "sourceType"     : "camera"
+                                               }
+                                               ]
+                           },
+                           {
+                           "identifier"     : "video",
+                           "type"           : "section",
+                           "steps"          : [
+                                               {
+                                               "identifier"   : "instruction",
+                                               "type"         : "instruction",
+                                               "title"        : "Using your camera",
+                                               "text"         : "In this step you will use your phone's camera to take a video. This step is not available when running in the simulator."
+                                               },
+                                               {
+                                               "identifier"     : "image",
+                                               "type"           : "imagePicker",
+                                               "sourceType"     : "camera",
+                                               "mediaTypes"     : ["video"]
+                                               }
+                                               ]
+                           },
+                           {
+                           "identifier"     : "photoLibrary",
+                           "type"           : "section",
+                           "steps"          : [
+                                               {
+                                               "identifier"   : "instruction",
+                                               "type"         : "instruction",
+                                               "title"        : "Select from library",
+                                               "text"         : "In this step you will use your photo library to select a photo or video."
+                                               },
+                                               {
+                                               "identifier"     : "image",
+                                               "type"           : "imagePicker",
+                                               "sourceType"     : "photoLibrary",
+                                               "mediaTypes"     : ["photo", "video"]
+                                               }
+                                               ]
+                           },
+                           {
+                           "identifier"   : "completion",
+                           "type"         : "completion",
+                           "title"        : "Great Job!",
+                           "text"         : "You have completed this task."
+                           }
+                           ]
+}
