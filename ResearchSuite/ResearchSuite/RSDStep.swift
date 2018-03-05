@@ -2,7 +2,7 @@
 //  RSDStep.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -70,6 +70,7 @@ public protocol RSDStep {
     func validate() throws
 }
 
+/// A light-weight protocol for copying objects with a new identifier.
 public protocol RSDCopyWithIdentifier {
     
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
@@ -77,6 +78,7 @@ public protocol RSDCopyWithIdentifier {
     func copy(with identifier: String) -> Self
 }
 
+/// A light-weight protocol for replacing the mutable properties on a class with values from a decoder.
 public protocol RSDDecodableReplacement : class {
     
     /// Decode from the given decoder, replacing mutable properties on self with those from the decoder.
@@ -100,150 +102,4 @@ public protocol RSDGenericStep : RSDStep {
     
     /// The decoded dictionary.
     var userInfo: [String : Any] { get }
-}
-
-/// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey
-/// or an active step that includes an instruction step, countdown step, and activity step.
-public protocol RSDSectionStep: RSDStep, RSDTask, RSDConditionalStepNavigator {
-    
-    /// A list of the steps used to define this subgrouping of steps.
-    var steps: [RSDStep] { get }
-}
-
-extension RSDSectionStep {
-    
-    /// Conditional rule is `nil` for a section step.
-    public var conditionalRule : RSDConditionalRule? {
-        return nil
-    }
-    
-    /// Task info is `nil` for a section step.
-    public var taskInfo: RSDTaskInfoStep? {
-        return nil
-    }
-    
-    /// Schema info is `nil` for a section step.
-    public var schemaInfo: RSDSchemaInfo? {
-        return nil
-    }
-    
-    /// The step navigator is `self` for a section step.
-    public var stepNavigator: RSDStepNavigator {
-        return self
-    }
-    
-    /// A section step returns a task result for both the step result and the task result
-    /// This method will throw an assert if the implementation of the section step does not
-    /// return a `RSDTaskResult` as its type.
-    public func instantiateTaskResult() -> RSDTaskResult {
-        let result = self.instantiateStepResult()
-        guard let taskResult = result as? RSDTaskResult else {
-            assertionFailure("Expected that a section step will return a result that conforms to RSDTaskResult protocol.")
-            return RSDTaskResultObject(identifier: identifier)
-        }
-        return taskResult
-    }
-}
-
-/// `RSDUIStep` is used to define a single "display unit". Depending upon the available real-estate, more
-/// than one ui step may be displayed at a time. For example, on an iPad, you may choose to group a set of
-/// questions using a `RSDSectionStep`.
-public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
-    
-    /// The primary text to display for the step in a localized string.
-    var title: String? { get }
-    
-    /// Additional text to display for the step in a localized string.
-    ///
-    /// The additional text is often displayed in a smaller font below `title`. If you need to display a
-    /// long question, it can work well to keep the title short and put the additional content in the
-    /// `text` property.
-    var text: String? { get }
-    
-    /// Additional detailed explanation for the step.
-    ///
-    /// The font size and display of this property will depend upon the device type.
-    var detail: String? { get }
-    
-    /// Additional text to display for the step in a localized string at the bottom of the view.
-    ///
-    /// The footnote is intended to be displayed in a smaller font at the bottom of the screen. It is
-    /// intended to be used in order to include disclaimer, copyright, etc. that is important to display in
-    /// the step but should not distract from the main purpose of the step.
-    var footnote: String? { get }
-}
-
-/// `RSDThemedUIStep` is a UI step that supports theme customization of the color and/or images used.
-public protocol RSDThemedUIStep : RSDUIStep {
-    
-    /// The view info used to create a custom step.
-    var viewTheme: RSDViewThemeElement? { get }
-    
-    /// The color theme.
-    var colorTheme: RSDColorThemeElement? { get }
-    
-    /// The image theme.
-    var imageTheme: RSDImageThemeElement? { get }
-}
-
-/// `RSDTableStep` is a UI step that can be displayed using a `UITableView`.
-public protocol RSDTableStep : RSDUIStep {
-    
-    /// Does this step require support for image choices?
-    var hasImageChoices: Bool { get }
-    
-    /// Instantiate an instance of the data source with the data source mapping to the included list of
-    /// supported ui hints.
-    /// - parameters:
-    ///     - taskPath: The taskPath for this table view controller.
-    ///     - supportedHints: The ui hints that are supported by the calling table view controller.
-    /// - returns: A table data source that maps to the supported hints, or `nil` if it is not compatible.
-    func instantiateDataSource(with taskPath: RSDTaskPath, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource?
-}
-
-/// `RSDFormUIStep` implements additional properties used in creating a form input.
-public protocol RSDFormUIStep: RSDUIStep {
-    
-    /// The `inputFields` array is used to hold a logical subgrouping of input fields. If this array holds
-    /// more than one input field, those fields should describe an input that is uses a logical subgrouping
-    /// such as birth month/year or given/family name.
-    var inputFields: [RSDInputField] { get }
-}
-
-/// `RSDActiveUIStep` extends the `RSDUIStep` to include a duration and commands. This is used for the case
-/// where an `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also
-/// implement the `RSDActiveUIStep` protocol to allow for spoken instruction.
-public protocol RSDActiveUIStep: RSDUIStep {
-    
-    /// The duration of time to run the step. If `0`, then this value is ignored.
-    var duration: TimeInterval { get }
-    
-    /// The set of commands to apply to this active step. These indicate actions to fire at the beginning
-    /// and end of the step such as playing a sound as well as whether or not to automatically start and
-    /// finish the step.
-    var commands: RSDActiveUIStepCommand { get }
-    
-    /// Whether or not the step uses audio, such as the speech synthesizer, that should play whether or not
-    /// the user has the mute switch turned on.
-    var requiresBackgroundAudio: Bool { get }
-    
-    /// Localized text that represents an instructional voice prompt. Instructional speech begins when the
-    /// step passes the time indicated by the given time.  If `timeInterval` is greater than or equal to
-    /// `duration` or is equal to `Double.infinity`, then the spoken instruction returned should be for
-    /// when the step is finished.
-    ///
-    /// - parameter timeInterval: The time interval at which to speak the instruction.
-    /// - returns: The localized instruction to speak or `nil` if there isn't an instruction.
-    func spokenInstruction(at timeInterval: TimeInterval) -> String?
-}
-
-/// `RSDTransformerStep` is used in decoding a step with replacement properties for some or all of the
-/// steps in a section that is defined using a different resource.
-public protocol RSDTransformerStep: RSDStep {
-    
-    /// A list of steps keyed by identifier with replacement values for the properties in the step.
-    var replacementSteps: [RSDGenericStep]? { get }
-    
-    /// The transformer for the section steps.
-    var sectionTransformer: RSDSectionStepTransformer! { get }
 }

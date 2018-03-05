@@ -1,8 +1,8 @@
 //
-//  RSDSectionStepTransformer.swift
+//  RSDSectionStep.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,6 +32,62 @@
 //
 
 import Foundation
+
+
+/// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey
+/// or an active step that includes an instruction step, countdown step, and activity step.
+public protocol RSDSectionStep: RSDStep, RSDTask, RSDConditionalStepNavigator {
+    
+    /// A list of the steps used to define this subgrouping of steps.
+    var steps: [RSDStep] { get }
+}
+
+extension RSDSectionStep {
+    
+    /// Conditional rule is `nil` for a section step.
+    public var conditionalRule : RSDConditionalRule? {
+        return nil
+    }
+    
+    /// Task info is `nil` for a section step.
+    public var taskInfo: RSDTaskInfoStep? {
+        return nil
+    }
+    
+    /// Schema info is `nil` for a section step.
+    public var schemaInfo: RSDSchemaInfo? {
+        return nil
+    }
+    
+    /// The step navigator is `self` for a section step.
+    public var stepNavigator: RSDStepNavigator {
+        return self
+    }
+    
+    /// A section step returns a task result for both the step result and the task result
+    /// This method will throw an assert if the implementation of the section step does not
+    /// return a `RSDTaskResult` as its type.
+    public func instantiateTaskResult() -> RSDTaskResult {
+        let result = self.instantiateStepResult()
+        guard let taskResult = result as? RSDTaskResult else {
+            assertionFailure("Expected that a section step will return a result that conforms to RSDTaskResult protocol.")
+            return RSDTaskResultObject(identifier: identifier)
+        }
+        return taskResult
+    }
+}
+
+
+/// `RSDTransformerStep` is used in decoding a step with replacement properties for some or all of the
+/// steps in a section that is defined using a different resource.
+public protocol RSDTransformerStep: RSDStep {
+    
+    /// A list of steps keyed by identifier with replacement values for the properties in the step.
+    var replacementSteps: [RSDGenericStep]? { get }
+    
+    /// The transformer for the section steps.
+    var sectionTransformer: RSDSectionStepTransformer! { get }
+}
 
 /// `RSDSectionStepTransformer` is a lightweight protocol for vending the steps in a section.
 /// This object is used to allow accessing an `RSDSectionStep` for use in multiple tasks or

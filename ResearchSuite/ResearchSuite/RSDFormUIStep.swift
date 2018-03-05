@@ -1,8 +1,8 @@
 //
-//  RSDInputField.swift
+//  RSDFormUIStep.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,6 +32,15 @@
 //
 
 import Foundation
+
+/// `RSDFormUIStep` implements additional properties used in creating a form input.
+public protocol RSDFormUIStep: RSDUIStep {
+    
+    /// The `inputFields` array is used to hold a logical subgrouping of input fields. If this array holds
+    /// more than one input field, those fields should describe an input that is uses a logical subgrouping
+    /// such as birth month/year or given/family name.
+    var inputFields: [RSDInputField] { get }
+}
 
 /// `RSDInputField` is used to describe a form input and includes the data type and a possible hint to how
 /// the UI should be displayed. The ResearchSuite framework uses `RSDFormUIStep` to represent questions to
