@@ -41,7 +41,7 @@ open class RSDTrackedItemsLoggingStepObject : RSDTrackedSelectionStepObject {
         case inputFields
     }
     
-    // Template input fields.
+    /// Template input fields.
     open var inputFields: [RSDInputField]?
     
     /// Decode from the given decoder, replacing values on self with those from the decoder

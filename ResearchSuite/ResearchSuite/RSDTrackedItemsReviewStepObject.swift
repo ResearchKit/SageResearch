@@ -46,13 +46,13 @@ open class RSDTrackedItemsReviewStepObject : RSDTrackedSelectionStepObject {
     /// The title text to display when the details about each tracked item are not all filled in.
     public var addDetailsTitle: String?
     
-    /// The detail text to display when the details about each tracked item are not all filled in.
+    /// The text to display as the subtitle when the details about each tracked item are not all filled in.
     public var addDetailsSubtitle: String?
     
     /// The title text to display as the title when all the details have been added.
     public var reviewTitle: String?
     
-    /// The detail text to display as the title when all the details have been added.
+    /// The text to display as the subtitle when all the details have been added.
     public var reviewSubtitle: String?
     
     /// Override the title to return the appropriate string given the current review state.

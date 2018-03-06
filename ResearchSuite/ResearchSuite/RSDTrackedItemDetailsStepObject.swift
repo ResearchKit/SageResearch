@@ -97,7 +97,7 @@ open class RSDTrackedItemDetailsStepObject : RSDFormUIStepObject, RSDTrackedItem
         subclassCopy.scheduleDaysTemplate = self.scheduleDaysTemplate
     }
     
-    /// Create a copy of this tracked item
+    /// Create a copy of this tracked item.
     open func copy(from trackedItem: RSDTrackedItem, with previousAnswer: RSDTrackedItemAnswer?) -> RSDStep? {
         let copy = self.copy(with: trackedItem.identifier)
         copy.trackedItem = trackedItem
