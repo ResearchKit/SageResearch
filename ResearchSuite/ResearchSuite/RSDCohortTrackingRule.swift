@@ -51,8 +51,8 @@ public enum RSDCohortRuleOperator : String, Codable {
     case any
 }
 
-/// A cohort navigation rule is used by the `RSDCohortTrackingRule` to determine if a step should either
-/// be skipped or skip to a step based on the currently applied cohorts.
+/// A cohort navigation rule is used by the `RSDCohortTrackingRule` to determine whether to skip a step,
+/// and if so where to skip to, based on the currently applied cohorts.
 public protocol RSDCohortNavigationRule {
     
     /// The list of cohorts that are tested for this navigation rule.

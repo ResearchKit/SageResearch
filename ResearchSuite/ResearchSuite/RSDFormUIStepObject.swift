@@ -122,7 +122,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     /// decoder for the appropriate implementation for each input field in the array.
     ///
     /// - note: This method will also check for both an array of input fields and in order to support
-    /// existing serialization methods defined prior to the developement of the Swift 4 `Decodable`
+    /// existing serialization methods defined prior to the development of the Swift 4 `Decodable`
     /// protocol, it will also recognize a single input field defined inline as a single question.
     ///
     /// - example:

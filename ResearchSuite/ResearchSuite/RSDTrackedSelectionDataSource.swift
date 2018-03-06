@@ -113,13 +113,13 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
             try! group.setAnswer(answers)
         }
         
-        /// Look through the sections first for a mapped item
+        // Look through the sections first for a mapped item
         for section in sectionItems {
             let choices = trackedItems.remove(where: { $0.sectionIdentifier == section.identifier })
             appendSection(choices: choices, section: section)
         }
         
-        /// Look through the items for a sectionIdentifier without a matching section
+        // Look through the items for a sectionIdentifier without a matching section
         var otherSections: [String] = []
         for item in trackedItems {
             if let sectionIdentifier = item.sectionIdentifier, !otherSections.contains(sectionIdentifier) {
@@ -132,7 +132,7 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
             appendSection(choices: choices, section: section)
         }
         
-        /// Look for answers and items without a matching section and add those last
+        // Look for answers and items without a matching section and add those last
         let otherItems: [RSDTrackedItem] = trackedAnswers.map {
             return ($0 as? RSDTrackedItem) ?? RSDIdentifier(rawValue: $0.identifier)
         }
@@ -146,8 +146,9 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
     
     // MARK: Selection management
     
-    /// The tracking result associated with this data source. The default implementation is to search the `taskPath`
-    /// for a matching result and if that fails to return a new instance created using `instantiateTrackingResult()`.
+    /// The tracking result associated with this data source. The default implementation is to search the
+    /// `taskPath` for a matching result and if that fails to return a new instance created using
+    /// `instantiateTrackingResult()`.
     ///
     /// - returns: The appropriate tracking result.
     open func trackingResult() -> RSDTrackedItemsResult {
@@ -188,10 +189,10 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
             return
         }
         
-        // TODO: syoung 5/1/2018 If the user is de-selecting a tracked item that they selected in a previous run
-        // (and may have added details for it), then we want to alert them and confirm that this was not an
-        // accident. Not sure where to add this particular special-case requirement, but adding a TODO comment
-        // to track that it needs to be implemented.
+        // TODO: syoung 03/01/2018 If the user is de-selecting a tracked item that they selected in a
+        // previous run (and may have added details for it), then we want to alert them and confirm that
+        // this was not an accident. Not sure where to add this particular special-case requirement, but
+        // adding a TODO comment to track that it needs to be implemented.
         
         // update selection for this group
         try itemGroup.select(item, indexPath: indexPath)

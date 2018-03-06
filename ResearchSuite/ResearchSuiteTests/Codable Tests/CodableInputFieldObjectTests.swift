@@ -595,7 +595,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.inputUIHint, .picker)
             if let range = object.range as? RSDDateRange {
                 
-                let calendar = Calendar(identifier: .gregorian)
+                let calendar = Calendar(identifier: .iso8601)
                 let calendarComponents = range.calendarComponents
                 XCTAssertEqual(calendarComponents, [.year, .month, .day])
                 

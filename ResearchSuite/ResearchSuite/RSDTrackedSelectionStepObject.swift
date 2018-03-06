@@ -170,7 +170,7 @@ open class RSDTrackedSelectionStepObject : RSDUIStepObject, RSDTrackedItemsStep 
         }
     }
     
-    /// Override the default selector to return a tracked selection data source
+    /// Override the default selector to return a tracked selection data source.
     open override func instantiateDataSource(with taskPath: RSDTaskPath, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
         guard supportedHints.contains(.list) else { return nil }
         return RSDTrackedSelectionDataSource(step: self, taskPath: taskPath)
@@ -285,10 +285,10 @@ public struct RSDTrackedItemObject : Codable, RSDTrackedItem, RSDEmbeddedIconVen
         case icon
     }
     
-    /// A unique identifier that can be used to track the data item.
+    /// A unique identifier that can be used to track the item.
     public let identifier : String
     
-    /// An optional identifier that can be used to group the tracked data items by section.
+    /// An optional identifier that can be used to group the tracked items by section.
     public let sectionIdentifier : String?
     
     /// An optional identifier that can be used to map a tracked item to a mutable step that can be used

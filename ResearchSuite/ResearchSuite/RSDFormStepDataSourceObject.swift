@@ -201,7 +201,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     
 
     // MARK: Build table - These methods are called during initialization, but they are *not*
-    // defined as class methods b/c there is a lot of inter-dependancy on the methods used to
+    // defined as class methods b/c there is a lot of interdependancy on the methods used to
     // update results during use.
     
     /// Convenience method for building the sections of the table from the input fields.

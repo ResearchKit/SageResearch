@@ -33,14 +33,14 @@
 
 import Foundation
 
-/// `RSDTrackedDataItem` is a protocol for defining an item that can be mapped using its `identifier`
+/// `RSDTrackedItem` is a protocol for defining an item that can be mapped using its `identifier`
 /// to a list of selected items.
 public protocol RSDTrackedItem : RSDChoice, RSDComparable {
     
-    /// A unique identifier that can be used to track the data item.
+    /// A unique identifier that can be used to track the item.
     var identifier: String { get }
     
-    /// An optional identifier that can be used to group the tracked data items by section.
+    /// An optional identifier that can be used to group the tracked items by section.
     var sectionIdentifier: String? { get }
     
     /// An optional identifier that can be used to map a tracked item to a mutable step that can be used
@@ -64,20 +64,20 @@ extension RSDTrackedItem {
         return self.title ?? self.identifier
     }
     
-    /// A tracked data item uses its `identifier` as the answer value.
+    /// A tracked item uses its `identifier` as the answer value.
     public var answerValue : Codable? {
         return self.identifier
     }
     
-    /// A tracked data item uses its `identifier` as the matching answer for a comparable.
+    /// A tracked item uses its `identifier` as the matching answer for a comparable.
     public var matchingAnswer : Any? {
         return self.identifier
     }
 }
 
-/// `RSDTrackedDataSection` is used to define a subgrouping of `RSDTrackedDataItem` objects. Because
-/// the study designer may change these grouping as the study progresses, this is a weak link to the
-/// `RSDTrackedDataItem` as it is only used for display.
+/// `RSDTrackedSection` is used to define a subgrouping of `RSDTrackedItem` objects. Because the study
+/// designer may change these grouping as the study progresses, this is a weak link to the `RSDTrackedItem`
+/// as it is only used for display.
 public protocol RSDTrackedSection {
     
     /// A unique identifier for this section.
@@ -97,7 +97,7 @@ public protocol RSDTrackedItemAnswer : Codable {
     /// A identifier that maps to the associated `RSDTrackedItem`.
     var identifier: String { get }
     
-    /// Does the tracked data answer have the required answers?
+    /// Does the tracked answer have the required answers?
     var hasRequiredValues: Bool { get }
 }
 
@@ -121,7 +121,7 @@ extension RSDTrackedItemsResult {
         return self.selectedAnswers.map { $0.identifier }
     }
     
-    /// Do all the tracked data items have their required values set?
+    /// Do all the tracked items have their required values set?
     public var hasRequiredValues: Bool {
         return self.selectedAnswers.reduce(true, { $0 && $1.hasRequiredValues })
     }
@@ -138,8 +138,8 @@ extension RSDTrackedItemsResult {
     }
 }
 
-/// The tracked data selection step is customized for selecting a long list of data items that are
-/// sorted into sections for display to the user.
+/// `RSDTrackedItemsStep` is customized for selecting a long list of items that are sorted into sections
+/// for display to the user.
 ///
 /// - note: These steps are used as templates that are retained by the `RSDTrackedItemsStepNavigator`
 /// and thus need to be mutable classes.
@@ -157,7 +157,7 @@ public protocol RSDTrackedItemsStep : class, RSDStep {
 
 extension RSDTrackedItemsStep {
     
-    /// Do all the tracked data items currently under review have their required values set?
+    /// Do all the tracked items currently under review have their required values set?
     public var hasRequiredValues: Bool {
         return self.result?.hasRequiredValues ?? false
     }

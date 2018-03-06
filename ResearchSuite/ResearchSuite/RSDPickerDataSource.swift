@@ -205,7 +205,7 @@ public protocol RSDChoiceOptions : RSDChoicePickerDataSource {
 
 extension RSDChoiceOptions {
     
-    /// Convenience property for whether or not the choice input field has associated images
+    /// Convenience property for whether or not the choice input field has associated images.
     public var hasImages: Bool {
         for choice in choices {
             if choice.imageVendor != nil {

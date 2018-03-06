@@ -94,7 +94,7 @@ extension RSDSchedule {
 }
 
 /// A weekly schedule item is a light-weight codable struct that can be used to store and track events
-/// that happen at regularily scheduled intervals. This schedule assumes a gregorian 7-day calendar.
+/// that happen at regularily scheduled intervals. This schedule assumes a ISO8601 7-day calendar.
 ///
 /// - example: `Codable` protocol schema.
 /// ```

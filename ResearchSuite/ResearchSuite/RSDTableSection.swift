@@ -33,7 +33,7 @@
 
 import Foundation
 
-/// Defines a section in a table. A table is made up of sections, groups and items.
+/// Defines a section in a table. A table is made up of sections, groups, and items.
 ///
 /// For most group types, there is one cell per group and there can be one or more groups per section.
 /// However, there are exceptions such as multiple-choice lists where each value is displayed in a

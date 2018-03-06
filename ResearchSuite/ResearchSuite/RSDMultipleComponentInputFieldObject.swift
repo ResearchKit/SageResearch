@@ -69,7 +69,7 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         super.init(identifier: identifier, dataType: dataType, uiHint: uiHint, prompt: prompt)
     }
     
-    /// This is a reuired initializer for copying, but the choices will be an empty array.
+    /// This is a required initializer for copying, but the choices will be an empty array.
     public required init(identifier: String, dataType: RSDFormDataType) {
         self.choices = []
         super.init(identifier: identifier, dataType: dataType)

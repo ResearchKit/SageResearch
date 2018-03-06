@@ -34,7 +34,7 @@
 import Foundation
 
 /// `RSDTrackedItemsStepNavigator` is a general-purpose navigator designed to be used for selecting tracked
-/// data such as medication, triggers or symptoms.
+/// data such as medication, triggers, or symptoms.
 open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
     
     /// Publicly accessible coding keys for the default structure for decoding items and sections.
@@ -166,7 +166,7 @@ open class RSDTrackedItemsStepNavigator : Decodable, RSDStepNavigator {
         return nil
     }
     
-    /// Build the logging step for this tracked data collection. Override to customize the steps.
+    /// Build the logging step for this tracked data collection. Override to customize the step.
     open class func buildLoggingStep(items: [RSDTrackedItem], sections: [RSDTrackedSection]?) -> RSDTrackedItemsStep? {
         return nil
     }

@@ -84,14 +84,14 @@ open class RSDMedicationTrackingStepNavigator : RSDTrackedItemsStepNavigator {
 /// A medication item includes details for displaying a given medication.
 public protocol RSDMedication : RSDTrackedItem {
     
-    /// Is the medication delivered via continuous injection. If this is the case, then questions about
+    /// Is the medication delivered via continuous injection? If this is the case, then questions about
     /// schedule timing and dosage should be skipped. Assumed `false` if `nil`.
     var isContinuousInjection: Bool? { get }
 }
 
 extension RSDMedication {
     
-    /// The step identifier for mapping the results of a form step
+    /// The step identifier for mapping the results of a `RSDMedicationDetailsStepObject`.
     public var addDetailsIdentifier: String? {
         return (self.isContinuousInjection ?? false) ? nil : RSDTrackedItemsStepNavigator.StepIdentifiers.addDetails.stringValue
     }
@@ -167,7 +167,7 @@ public struct RSDMedicationItem : Codable, RSDMedication, RSDEmbeddedIconVendor 
         case isContinuousInjection = "injection"
     }
     
-    /// A unique identifier that can be used to track the data item.
+    /// A unique identifier that can be used to track the item.
     public let identifier: String
     
     /// An optional identifier that can be used to group the medication into a section.
@@ -179,7 +179,7 @@ public struct RSDMedicationItem : Codable, RSDMedication, RSDEmbeddedIconVendor 
     /// Localized shortened text to display when used in a sentence.
     public let shortText: String?
     
-    /// Detail text to display with additional information about the medication
+    /// Detail text to display with additional information about the medication.
     public let detail: String?
     
     /// Whether or not the medication is set up so that *only* this can be selected
@@ -192,7 +192,7 @@ public struct RSDMedicationItem : Codable, RSDMedication, RSDEmbeddedIconVendor 
     /// An optional icon to display for the medication.
     public let icon: RSDImageWrapper?
     
-    /// Is the medication delivered via continuous injection. If this is the case, then questions about
+    /// Is the medication delivered via continuous injection? If this is the case, then questions about
     /// schedule timing and dosage should be skipped.
     public let isContinuousInjection: Bool?
     
@@ -235,7 +235,7 @@ public struct RSDMedicationAnswer : Codable, RSDTrackedItemAnswer {
     /// The scheduled items associated with this medication result.
     public var scheduleItems: Set<RSDWeeklyScheduleObject>?
     
-    /// Is the medication delivered via continuous injection. If this is the case, then questions about
+    /// Is the medication delivered via continuous injection? If this is the case, then questions about
     /// schedule timing and dosage should be skipped.
     public var isContinuousInjection: Bool?
     

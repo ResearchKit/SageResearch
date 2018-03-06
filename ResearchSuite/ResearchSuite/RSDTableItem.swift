@@ -45,7 +45,7 @@ open class RSDTableItem {
     /// The string to use as the reuse identifier.
     public let reuseIdentifier: String
     
-    /// Return the index path of the item
+    /// Return the index path of the item.
     public var indexPath: IndexPath {
         return IndexPath(row: rowIndex, section: sectionIndex)
     }
