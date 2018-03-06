@@ -35,10 +35,14 @@ import Foundation
 
 /// `RSDChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses `RSDInputFieldObject`
 /// to include a list of choices for a multiple choice or single choice input field.
-open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField {
+open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
+    
+    private enum CodingKeys : String, CodingKey {
+        case choices, defaultAnswer
+    }
     
     /// A list of choices for the input field.
-    public let choices : [RSDChoice]
+    public private(set) var choices : [RSDChoice]
     
     /// The default answer associated with this option set.
     open private(set) var defaultAnswer: Any?
@@ -58,8 +62,19 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceInputField 
         super.init(identifier: identifier, dataType: dataType, uiHint: uiHint, prompt: prompt)
     }
     
-    private enum CodingKeys : String, CodingKey {
-        case choices, defaultAnswer
+    /// This is a required initializer for copying, but the choices will be an empty array.
+    public required init(identifier: String, dataType: RSDFormDataType) {
+        self.choices = []
+        super.init(identifier: identifier, dataType: dataType)
+    }
+    
+    override open func copyInto(_ copy: RSDInputFieldObject) {
+        guard let subclassCopy = copy as? RSDChoiceInputFieldObject else {
+            assertionFailure("Failed to cast the class to the subclass.")
+            return
+        }
+        subclassCopy.choices = self.choices
+        subclassCopy.defaultAnswer = self.defaultAnswer
     }
     
     /// Initialize from a `Decoder`. This method uses the `RSDFormDataType.BaseType` associated with this input field to

@@ -54,7 +54,7 @@ public final class RSDNumberInputTableItem : RSDTextInputTableItem {
         
         // special-case the .year and .duration data types to set up range and picker
         if inputField.dataType.baseType == .year, let dateRange = inputField.range as? RSDDateRange {
-            let calendar = Calendar(identifier: .gregorian)
+            let calendar = Calendar(identifier: .iso8601)
             let min: Int? = (dateRange.minimumDate != nil) ? calendar.component(.year, from: dateRange.minimumDate!) : nil
             let max: Int? = (dateRange.maximumDate != nil) ? calendar.component(.year, from: dateRange.maximumDate!) : nil
             if min != nil || max != nil {

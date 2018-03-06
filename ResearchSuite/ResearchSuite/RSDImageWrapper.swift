@@ -104,8 +104,8 @@ public struct RSDImageWrapper {
                 else {
                     throw RSDValidationError.invalidImageName("Invalid image name: \(imageName)")
             }
+            return .zero
         #endif
-        return .zero
     }
     
     /// Fetch the image.

@@ -2,7 +2,7 @@
 //  RSDDocumentable.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,8 +33,15 @@
 
 import Foundation
 
-/// `RSDEnumSet` is a protocol for defining the set of all values included in an enum.
-public protocol RSDEnumSet : Hashable, RawRepresentable where RawValue == String {
+/// `RSDStringEnumSet` is a protocol for defining the set of all string values included in an enum.
+public protocol RSDStringEnumSet : Hashable, RawRepresentable where RawValue == String {
+    
+    /// The set that includes all the enum values.
+    static var all: Set<Self> { get }
+}
+
+/// `RSDIntEnumSet` is a protocol for defining the set of all int values included in an enum.
+public protocol RSDIntEnumSet : Hashable, RawRepresentable where RawValue == Int {
     
     /// The set that includes all the enum values.
     static var all: Set<Self> { get }
@@ -42,12 +49,13 @@ public protocol RSDEnumSet : Hashable, RawRepresentable where RawValue == String
 
 public struct RSDDocumentCreator {
     
-    let allEnums: [RSDDocumentableEnum.Type] = {
+    let allStringEnums: [RSDDocumentableStringEnum.Type] = {
         
-        var allEnums: [RSDDocumentableEnum.Type] = [
+        var allEnums: [RSDDocumentableStringEnum.Type] = [
         RSDAnswerResultType.BaseType.self,
         RSDAnswerResultType.SequenceType.self,
         RSDAsyncActionType.self,
+        RSDCohortRuleOperator.self,
         RSDDateCoderObject.self,
         RSDDeviceType.self,
         RSDFormDataType.self,
@@ -64,11 +72,26 @@ public struct RSDDocumentCreator {
         ]
     
     #if os(iOS)
-        let iOSEnums: [RSDDocumentableEnum.Type] = [
+        let iOSEnums: [RSDDocumentableStringEnum.Type] = [
             RSDMotionRecorderType.self,
             ]
         allEnums.append(contentsOf: iOSEnums)
     #endif
+        
+        return allEnums
+    }()
+    
+    let allIntEnums: [RSDDocumentableIntEnum.Type] = {
+        
+        var allEnums: [RSDDocumentableIntEnum.Type] = [
+            RSDWeekday.self,
+            ]
+        
+        #if os(iOS)
+            let iOSEnums: [RSDDocumentableIntEnum.Type] = [
+                ]
+            allEnums.append(contentsOf: iOSEnums)
+        #endif
         
         return allEnums
     }()
@@ -78,32 +101,40 @@ public struct RSDDocumentCreator {
         ]
     
     let allStringLiterals: [RSDDocumentableStringLiteral.Type] = [
-        RSDImageWrapper.self,
         RSDChoiceObject<String>.self,
+        RSDImageWrapper.self,
         RSDRegExValidatorObject.self,
         ]
 
     let allCodableObjects: [RSDDocumentableCodableObject.Type] = {
         var allCodableObjects: [RSDDocumentableCodableObject.Type] = [
-            RSDAnswerResultType.self,
-            RSDResourceTransformerObject.self,
-            RSDStandardAsyncActionConfiguration.self,
-            RSDResultObject.self,
-            RSDAnswerResultObject.self,
-            RSDFileResultObject.self,
-            RSDCollectionResultObject.self,
-            RSDTaskResultObject.self,
-            RSDColorThemeElementObject.self,
-            RSDFetchableImageThemeElementObject.self,
             RSDAnimatedImageThemeElementObject.self,
-            RSDViewThemeElementObject.self,
-            RSDUIActionObject.self,
-            RSDSkipToUIActionObject.self,
-            RSDWebViewUIActionObject.self,
+            RSDAnswerResultObject.self,
+            RSDAnswerResultType.self,
+            RSDCohortNavigationRuleObject.self,
+            RSDCollectionResultObject.self,
+            RSDColorThemeElementObject.self,
             RSDDateRangeObject.self,
-            RSDNumberRangeObject.self,
-            RSDTextFieldOptionsObject.self,
             RSDDurationRangeObject.self,
+            RSDFetchableImageThemeElementObject.self,
+            RSDFileResultObject.self,
+            RSDMedicationAnswer.self,
+            RSDMedicationItem.self,
+            RSDMedicationTrackingResult.self,
+            RSDNumberRangeObject.self,
+            RSDResourceTransformerObject.self,
+            RSDResultObject.self,
+            RSDSkipToUIActionObject.self,
+            RSDStandardAsyncActionConfiguration.self,
+            RSDTaskResultObject.self,
+            RSDTextFieldOptionsObject.self,
+            RSDTrackedItemObject.self,
+            RSDTrackedItemsResultObject.self,
+            RSDTrackedSectionObject.self,
+            RSDUIActionObject.self,
+            RSDViewThemeElementObject.self,
+            RSDWebViewUIActionObject.self,
+            RSDWeeklyScheduleObject.self,
             ]
         
     #if os(iOS)
@@ -133,6 +164,8 @@ public struct RSDDocumentCreator {
         RSDActiveUIStepObject.self,
         RSDFormUIStepObject.self,
         RSDSectionStepObject.self,
+        RSDTrackedItemsReviewStepObject.self,
+        RSDTrackedSelectionStepObject.self,
         RSDTransformerStepObject.self,
         RSDInputFieldObject.self,
         RSDChoiceInputFieldObject.self,
@@ -151,7 +184,7 @@ protocol RSDDocumentable {
 
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up
 /// testing of `Codable` enum objects used by this framework.
-protocol RSDDocumentableEnum : RSDDocumentable, Codable {
+protocol RSDDocumentableStringEnum : RSDDocumentable, Codable {
     
     /// Not all of the enums have a `rawValue` of a `String` but they should all be codable using a string value.
     var stringValue: String { get }
@@ -161,8 +194,31 @@ protocol RSDDocumentableEnum : RSDDocumentable, Codable {
 }
 
 /// Any enum set can represent its coding keys by mapping the raw value to a string.
-extension RSDEnumSet {
+extension RSDStringEnumSet {
     static func allCodingKeys() -> [String] {
+        return self.all.map{ $0.rawValue }
+    }
+}
+
+/// This is an internal protocol (accessible by test but not externally) that can be used to set up
+/// testing of `Codable` enum objects used by this framework.
+protocol RSDDocumentableIntEnum : RSDDocumentable, Codable {
+    
+    /// The int Value for the enum.
+    var intValue: Int { get }
+    
+    /// All the coding keys supported by this framework for defining this enum using a JSON dictionary.
+    static func allCodingKeys() -> [Int]
+}
+
+/// Any enum set can represent its coding keys by mapping the raw value to a string.
+extension RSDIntEnumSet {
+    
+    var intValue: Int {
+        return rawValue
+    }
+    
+    static func allCodingKeys() -> [Int] {
         return self.all.map{ $0.rawValue }
     }
 }

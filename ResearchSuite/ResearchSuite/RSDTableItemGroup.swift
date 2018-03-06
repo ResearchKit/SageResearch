@@ -40,6 +40,9 @@ open class RSDTableItemGroup {
     /// The list of items (or rows) included in this group. A table group can be used to represent one or more rows.
     public let items: [RSDTableItem]
     
+    /// The section index for this group.
+    public var sectionIndex: Int = 0
+    
     /// The row index for the first row in the group.
     public let beginningRowIndex: Int
     

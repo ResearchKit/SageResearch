@@ -37,6 +37,10 @@ import Foundation
 /// step that includes an instruction step, countdown step, and activity step.
 public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable {
     
+    private enum CodingKeys : String, CodingKey {
+        case identifier, stepType = "type", steps, progressMarkers, asyncActions
+    }
+    
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
     /// of a step history.
     public let identifier: String
@@ -85,10 +89,6 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
         copy.progressMarkers = self.progressMarkers
         copy.asyncActions = self.asyncActions
         return copy
-    }
-    
-    private enum CodingKeys : String, CodingKey {
-        case identifier, stepType = "type", steps, progressMarkers, asyncActions
     }
     
     /// Initialize from a `Decoder`. This implementation will query the `RSDFactory` attached to the decoder for the

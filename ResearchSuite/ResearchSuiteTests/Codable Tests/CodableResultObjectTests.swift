@@ -343,7 +343,7 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertNotNil(object.value)
             if let date = object.value as? Date {
-                let calendar = Calendar(identifier: .gregorian)
+                let calendar = Calendar(identifier: .iso8601)
                 let calendarComponents: Set<Calendar.Component> = [.year, .month, .day]
                 let comp = calendar.dateComponents(calendarComponents, from: date)
                 XCTAssertEqual(comp.year, 2016)
@@ -590,7 +590,7 @@ class CodableResultObjectTests: XCTestCase {
             if let array = object.value as? [Date] {
                 XCTAssertEqual(array.count, 3)
                 
-                let calendar = Calendar(identifier: .gregorian)
+                let calendar = Calendar(identifier: .iso8601)
                 let calendarComponents: Set<Calendar.Component> = [.year, .month]
                 let comp = calendar.dateComponents(calendarComponents, from: array[0])
                 XCTAssertEqual(comp.year, 2013)
@@ -713,7 +713,7 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertNotNil(object.value)
             if let array = object.value as? [Date] {
-                var calendar = Calendar(identifier: .gregorian)
+                var calendar = Calendar(identifier: .iso8601)
                 calendar.timeZone = TimeZone(secondsFromGMT: -7 * 60 * 60)!
                 let calendarComponents: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute]
                 let comp = calendar.dateComponents(calendarComponents, from: array[0])
@@ -780,7 +780,7 @@ class CodableResultObjectTests: XCTestCase {
             if let dictionary = object.value as? [String : Date] {
                 XCTAssertEqual(dictionary.count, 3)
                 
-                let calendar = Calendar(identifier: .gregorian)
+                let calendar = Calendar(identifier: .iso8601)
                 let calendarComponents: Set<Calendar.Component> = [.hour, .minute]
                 
                 if let date = dictionary["breakfast"] {

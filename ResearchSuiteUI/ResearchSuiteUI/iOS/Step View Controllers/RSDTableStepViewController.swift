@@ -35,82 +35,51 @@
 import UIKit
 
 
-/// `RSDTableStepViewController` is a custom instance of `RSDStepViewController`. Its subviews include a `UITableView`,
-/// a `RSDNavigationFooterView`, which may or may not be embedded in the tableView as its footerView, and a `RSDNavigationHeaderView`,
-/// which is embedded in the tableView as its headerView.
+/// `RSDTableStepViewController` is a custom instance of `RSDStepViewController`. Its subviews include a
+/// `UITableView`, a `RSDNavigationFooterView`, which may or may not be embedded in the tableView as its
+/// footerView, and a `RSDNavigationHeaderView`, which is embedded in the tableView as its headerView.
 ///
-/// This class populates the contents and properties of the headerView and navigationView based on the associated `RSDStep`,
-/// which is expected to be set before presenting the view controller.
+/// This class populates the contents and properties of the headerView and navigationView based on the
+/// associated `RSDStep`, which is expected to be set before presenting the view controller.
 ///
-/// An instance of `RSDFormStepDataSource` is created by `setupModel()` and assigned to property `tableData`. This method is
-/// called by `viewWillAppear()` and serves as the `UITableViewDataSource`. The `tableData` also keeps track of answers that
-/// are derived from the user's input and it provides the `RSDResult` that is appended to the `RSDTaskPath` associated with this
-/// task.
+/// An instance of `RSDFormStepDataSource` is created by `setupModel()` and assigned to property
+/// `tableData`. This method is called by `viewWillAppear()` and serves as the `UITableViewDataSource`. The
+/// `tableData` also keeps track of answers that are derived from the user's input and it provides the
+/// `RSDResult` that is appended to the `RSDTaskPath` associated with this task.
 ///
-/// This class is responsible for acquiring input from the user, validating it, and supplying it as an answer to to the model
-/// (tableData). This is typically done in delegate callbacks from various input views, such as UITableView (didSelectRow) or
-/// UITextField (valueDidChange or shouldChangeCharactersInRange).
+/// This class is responsible for acquiring input from the user, validating it, and supplying it as an
+/// answer to to the model (tableData). This is typically done in delegate callbacks from various input
+/// views, such as UITableView (didSelectRow) or  UITextField (valueDidChange or
+/// shouldChangeCharactersInRange).
 ///
-/// Some RSDSteps, such as `RSDFactory.StepType.instruction`, require no user input (and have no input fields). These steps
-/// will result in a `tableData` that has no sections and, therefore, no rows. So the tableView will simply have a headerView,
-/// no rows, and a footerView.
+/// Some RSDSteps, such as `RSDFactory.StepType.instruction`, require no user input (and have no input
+/// fields). These steps will result in a `tableData` that has no sections and, therefore, no rows. So the
+/// tableView will simply have a headerView, no rows, and a footerView.
 ///
-open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RSDFormStepDataSourceDelegate, RSDPickerObserver {
+open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RSDTableDataSourceDelegate, RSDPickerObserver {
     
-    /// The table view associated with this view controller. This will be created during `viewDidLoad()` with a default
-    /// set up if it is `nil`. If this view controller is loaded from a nib or storyboard, then it should set this outlet
-    /// using the interface builder.
+    /// The table view associated with this view controller. This will be created during `viewDidLoad()`
+    /// with a default set up if it is `nil`. If this view controller is loaded from a nib or storyboard,
+    /// then it should set this outlet using the interface builder.
     @IBOutlet open var tableView: UITableView!
     
     /// The data source for this table.
-    open var tableData: RSDFormStepDataSource?
+    open var tableData: RSDTableDataSource?
     
-    /// Convenience property for accessing the form step (if casting the step to a `RSDFormUIStep` is applicable).
+    /// Convenience property for accessing the form step (if casting the step to a `RSDFormUIStep` is
+    /// applicable).
     public var formStep: RSDFormUIStep? {
         return step as? RSDFormUIStep
     }
-    
-    /// Class method to determine if this view controller class supports the provided step's form input fields. This will vary
-    /// based on the `RSDFormDataType` and `RSDFormUIHint' for each of the input fields in the step.
-    open class func doesSupportInputFields(in inputFields: [RSDInputField]) -> Bool {
 
-        for item in inputFields {
-            switch item.dataType {
-            case .custom(_, _):
-                // Custom data types are not supported
-                return false
-                
-            case .collection(let collectionType, _):
-                if (collectionType == .singleChoice) {
-                    if let choiceInputField = item as? RSDChoiceInputField, choiceInputField.hasImages {
-                        return false
-                    }
-                }
-                
-            case .measurement(let measurementType, _):
-                if (measurementType == .bloodPressure) {
-                    // TODO: syoung 10/18/2017 Implement support for blood pressure
-                    // https://github.com/ResearchKit/SageResearch/issues/6
-                    return false
-                }
-            
-            default:
-                break
-            }
-        }
-        
-        // all input fields are supported
-        return true
-    }
-    
     /// Static method to determine if this view controller class supports the provided step.
     open class func doesSupport(_ step: RSDStep) -> Bool {
         // Only UI steps are supported
         guard let _ = step as? RSDUIStep else { return false }
-        
-        // If this is a form step then need to look to see if there is custom handling
-        if let formStep = step as? RSDFormUIStep {
-            return doesSupportInputFields(in: formStep.inputFields)
+        if let tableStep = step as? RSDTableStep {
+            // TODO: syoung 02/26/2018 Implement support for image selection.
+            // https://github.com/ResearchKit/SageResearch/issues/11
+            return !tableStep.hasImageChoices
         } else {
             return true
         }
@@ -125,14 +94,14 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         return useStickyNavView ? navigationViewHeight + constants.mainViewBottomMargin : constants.mainViewBottomMargin
     }
     
-    /// Should the view controller tableview include a header? If `true`, then by default, a `RSDStepHeaderView` will be added in
-    /// `viewDidLoad()` if the view controller was not loaded using a storyboard or nib that included setting the `navigationFooter`
-    /// property.
+    /// Should the view controller tableview include a header? If `true`, then by default, a
+    /// `RSDStepHeaderView` will be added in `viewDidLoad()` if the view controller was not loaded using a
+    /// storyboard or nib that included setting the `navigationFooter` property.
     open var shouldShowHeader: Bool = true
     
-    /// Should the view controller tableview include a footer? If `true`, then by default, a `RSDNavigationFooterView` will be added in
-    /// `viewDidLoad()` if the view controller was not loaded using a storyboard or nib that included setting the `navigationFooter`
-    /// property.
+    /// Should the view controller tableview include a footer? If `true`, then by default, a
+    /// `RSDNavigationFooterView` will be added in `viewDidLoad()` if the view controller was not loaded
+    /// using a storyboard or nib that included setting the `navigationFooter` property.
     open var shouldShowFooter: Bool = true
     
     /// Override `viewDidLoad()` to add the table view, navigation header, and navigation footer if needed.
@@ -145,8 +114,6 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             tableView = UITableView(frame: view.bounds, style: .plain)
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.sectionHeaderHeight = 0.0
-            tableView.estimatedSectionHeaderHeight = 0.0
             tableView.separatorStyle = .none
             tableView.rowHeight = UITableViewAutomaticDimension
             tableView.estimatedRowHeight = constants.defaultRowHeight
@@ -165,7 +132,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
     }
     
-    /// Override `viewWillAppear()` to set up the `tableData` data source model and add a keyboard listener.
+    /// Override `viewWillAppear()` to set up the `tableData` data source model and add a keyboard
+    /// listener.
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -186,9 +154,11 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         // TODO: syoung 10/18/2017 Look into other ways of delaying the first responder call.
         // https://github.com/ResearchKit/SageResearch/issues/10
         //
-        // If the first row in our tableView has a textField, we want it to become the first responder automatically.
-        // We must do this after a delay because of how RSDTaskViewController presents these step view controllers,
-        // which is done via a UIPageViewController. Without the delay, the textField will NOT become the firstResponder. 
+        // If the first row in our tableView has a textField, we want it to become the first responder
+        // automatically. We must do this after a delay because of how RSDTaskViewController presents
+        // these step view controllers, which is done via a UIPageViewController. Without the delay,
+        // the textField will NOT become the firstResponder.
+        //
         // Use a 0.3 seconds delay to give transitions and animations plenty of time to complete.
         let delay = DispatchTime.now() + .milliseconds(300)
         DispatchQueue.main.asyncAfter(deadline: delay) {
@@ -207,7 +177,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         tableView?.endEditing(false)
     }
 
-    /// Override `viewDidLayoutSubviews()` to set up the navigation footer either as the table footer or as a "sticky" footer.
+    /// Override `viewDidLayoutSubviews()` to set up the navigation footer either as the table footer or as
+    /// a "sticky" footer.
     override open func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
@@ -264,19 +235,36 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         return [.list, .textfield, .picker]
     }
     
-    /// Creates and assigns a new instance of the model. The default implementation will instantiate `RSDFormStepDataSourceObject`
-    /// and set this as the `tableData`.
+    /// Creates and assigns a new instance of the model. The default implementation will instantiate
+    /// `RSDFormStepDataSourceObject` and set this as the `tableData`.
     open func setupModel() {
-        tableData = RSDFormStepDataSourceObject(step: self.step, taskPath: self.taskController.taskPath, supportedHints: type(of: self).supportedUIHints)
+        
+        // Get the table data source from the step (if applicable)
+        let supportedHints = type(of: self).supportedUIHints
+        let taskPath = self.taskController.taskPath!
+        if let tableStep = self.step as? RSDTableStep,
+            let source = tableStep.instantiateDataSource(with: taskPath, for: supportedHints)
+            {
+            tableData = source
+        } else {
+            tableData = RSDFormStepDataSourceObject(step: self.step, taskPath: taskPath, supportedHints: supportedHints)
+        }
         tableData?.delegate = self
+        
+        // Check if there are any titles
+        if tableData!.sections.count == 1 {
+            tableView.sectionHeaderHeight = 0.0
+            tableView.estimatedSectionHeaderHeight = 0.0
+        }
         
         // after setting up the data source, check the enabled state of the forward button.
         self.answersDidChange(in: 0)
     }
     
-    /// Register the given reuse identifier.  This is a factory method that is called before dequeuing a table cell.
-    /// Overrides of this method should first check to see if the reuse identifier has already been registered and if
-    /// not, do so by calling `tableView.register(, forCellReuseIdentifier:)` with either a nib or a class.
+    /// Register the given reuse identifier.  This is a factory method that is called before dequeuing a
+    /// table cell. Overrides of this method should first check to see if the reuse identifier has already
+    /// been registered and if not, do so by calling `tableView.register(, forCellReuseIdentifier:)` with
+    /// either a nib or a class.
     open func registerReuseIdentifierIfNeeded(_ reuseIdentifier: String) {
         guard !_registeredIdentifiers.contains(reuseIdentifier) else { return }
         _registeredIdentifiers.insert(reuseIdentifier)
@@ -308,7 +296,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     // MARK: View setup
     
-    /// Override the set up of the header to set the background color for the table view and adjust the minimum height.
+    /// Override the set up of the header to set the background color for the table view and adjust the
+    /// minimum height.
     open override func setupHeader(_ header: RSDNavigationHeaderView) {
         super.setupHeader(header)
         guard let stepHeader = header as? RSDStepHeaderView else { return }
@@ -319,8 +308,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         
         if formStep?.inputFields.count ?? 0 > 0 {
             // We have a minimum height for ORKFormSteps because these step usually have just a title and
-            // description and the design generally calls for quite a bit of margin above and below the labels.
-            // So we set a minimum size
+            // description and the design generally calls for quite a bit of margin above and below the
+            // labels. So we set a minimum size
             stepHeader.minumumHeight = constants.formStepMinHeaderHeight
         }
         
@@ -379,12 +368,11 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         
         // If the textfield is valid, check to see if there is another item that is below this one
         if let indexPath = indexPath(for: textField),
-            let nextItem = tableData?.nextItem(after: indexPath),
-            let nextPath = tableData?.indexPath(for: nextItem) {
+            let nextItem = tableData?.nextItem(after: indexPath) {
             
             // need to get our cell and tell its textField to become first responder
             // but do *not* go forward.
-            if let customCell = tableView.cellForRow(at: nextPath) as? RSDStepTextFieldCell {
+            if let customCell = tableView.cellForRow(at: nextItem.indexPath) as? RSDStepTextFieldCell {
                 customCell.textField.becomeFirstResponder()
             } else {
                 textField.resignFirstResponder()
@@ -403,8 +391,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     // MARK: UITableView Datasource
     
-    /// Return the number of sections. The default implementation returns the section count of the `tableData`
-    /// data source.
+    /// Return the number of sections. The default implementation returns the section count of the
+    /// `tableData` data source.
     /// - parameter tableView: The table view.
     /// - returns: The number of sections.
     open func numberOfSections(in tableView: UITableView) -> Int {
@@ -433,6 +421,17 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         let cell = dequeueCell(in: tableView, for: indexPath)
         configure(cell: cell, in: tableView, at: indexPath)
         return cell
+    }
+    
+    /// Returns the section title (and subtitle if there is one) for this section.
+    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let title = tableData?.sections[section].title else { return nil }
+        if let detail = tableData?.sections[section].subtitle {
+            let separator = detail.hasPrefix("(") ? " " : " - "
+            return "\(title)\(separator)\(detail)"
+        } else {
+            return title
+        }
     }
     
     // UI Implementation
@@ -605,8 +604,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     /// Handle the selection of a row.
     ///
     /// The base class implementation can handle the following ui hints:
-    /// 1. List - Selects the given index path as the current selection. This will also deselect other rows if the form data type
-    ///           is single choice.
+    /// 1. List - Selects the given index path as the current selection. This will also deselect other rows
+    ///         if the form data type is single choice.
     /// 2. Textfield - Calls `becomeFirstResponder()` to present the keyboard.
     ///
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

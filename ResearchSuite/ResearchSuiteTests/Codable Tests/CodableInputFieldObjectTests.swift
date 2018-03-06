@@ -353,7 +353,8 @@ class CodableInputFieldObjectTests: XCTestCase {
                             {
                             "skipToIdentifier": "lessThan",
                             "ruleOperator": "lt",
-                            "matchingAnswer": 0
+                            "matchingAnswer": 0,
+                            "cohort": "less"
                             },
                             {
                             "skipToIdentifier": "greaterThan",
@@ -388,6 +389,7 @@ class CodableInputFieldObjectTests: XCTestCase {
                 XCTAssertEqual(firstRule.skipToIdentifier, "lessThan")
                 XCTAssertEqual(firstRule.ruleOperator, .lessThan)
                 XCTAssertEqual(firstRule.matchingAnswer as? Int, 0)
+                XCTAssertEqual(firstRule.cohort, "less")
                 
                 XCTAssertEqual(lastRule.skipToIdentifier, "greaterThan")
                 XCTAssertEqual(lastRule.ruleOperator, .greaterThan)
@@ -593,7 +595,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(object.inputUIHint, .picker)
             if let range = object.range as? RSDDateRange {
                 
-                let calendar = Calendar(identifier: .gregorian)
+                let calendar = Calendar(identifier: .iso8601)
                 let calendarComponents = range.calendarComponents
                 XCTAssertEqual(calendarComponents, [.year, .month, .day])
                 

@@ -45,6 +45,9 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     /// The answer type for the input field result.
     public let answerType: RSDAnswerResultType
     
+    /// Does this item group require an exclusive section?
+    public let requiresExclusiveSection: Bool
+    
     /// Default initializer.
     /// - parameters:
     ///     - beginningRowIndex: The first row of the item group.
@@ -52,10 +55,11 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     ///     - inputField: The input field associated with this item group.
     ///     - uiHint: The UI hint.
     ///     - answerType: The answer type.
-    public init(beginningRowIndex: Int, items: [RSDTableItem], inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType) {
+    public init(beginningRowIndex: Int, items: [RSDTableItem], inputField: RSDInputField, uiHint: RSDFormUIHint, answerType: RSDAnswerResultType, requiresExclusiveSection: Bool? = nil) {
         self.inputField = inputField
         self.uiHint = uiHint
         self.answerType = answerType
+        self.requiresExclusiveSection = requiresExclusiveSection ?? (beginningRowIndex == 0 && items.count > 0)
         super.init(beginningRowIndex: beginningRowIndex, items: items)
     }
     
@@ -67,6 +71,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         self.inputField = tableItem.inputField
         self.uiHint = tableItem.uiHint
         self.answerType = tableItem.answerType
+        self.requiresExclusiveSection = false
         super.init(beginningRowIndex: beginningRowIndex, items: [tableItem])
     }
     
@@ -126,7 +131,6 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     }
 }
 
-
 /// An item group for entering text.
 public final class RSDTextFieldTableItemGroup : RSDInputFieldTableItemGroup {
     
@@ -166,7 +170,7 @@ public final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .short
             formatter = formatter ?? dateFormatter
-            pickerSource = pickerSource ?? RSDDatePickerDataSourceObject(datePickerMode: .dateAndTime, minimumDate: nil, maximumDate: nil, minuteInterval: nil, dateFormatter: dateFormatter)
+            pickerSource = pickerSource ?? RSDDatePickerDataSourceObject(datePickerMode: .dateAndTime, minimumDate: nil, maximumDate: nil, minuteInterval: nil, dateFormatter: dateFormatter, defaultDate: nil)
         }
         
         let answerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: inputField.dataType, dateFormat: dateFormatter?.dateFormat, unit: nil, sequenceSeparator: nil)
@@ -200,13 +204,13 @@ public final class RSDMultipleComponentTableItemGroup : RSDInputFieldTableItemGr
     ///     - beginningRowIndex: The first row of the item group.
     ///     - inputField: The input field associated with this item group.
     ///     - uiHint: The UI hint.
-    public init(beginningRowIndex: Int, inputField: RSDMultipleComponentInputField, uiHint: RSDFormUIHint) {
+    public init(beginningRowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, pickerSource: RSDMultipleComponentPickerDataSource) {
         
         let baseType: RSDAnswerResultType.BaseType = inputField.dataType.defaultAnswerResultBaseType()
         let dateFormatter: DateFormatter? = (inputField.range as? RSDDateRange)?.dateCoder?.resultFormatter
         let unit: String? = (inputField.range as? RSDNumberRange)?.unit
-        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: .array, formDataType: inputField.dataType, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: inputField.separator)
-        let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: nil, pickerSource: inputField)
+        let answerType = RSDAnswerResultType(baseType: baseType, sequenceType: .array, formDataType: inputField.dataType, dateFormat: dateFormatter?.dateFormat, unit: unit, sequenceSeparator: pickerSource.separator)
+        let tableItem = RSDTextInputTableItem(rowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, answerType: answerType, textFieldOptions: nil, formatter: nil, pickerSource: pickerSource)
         
         super.init(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
     }

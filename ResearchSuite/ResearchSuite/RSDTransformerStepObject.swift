@@ -37,6 +37,10 @@ import Foundation
 /// section that is defined using a different resource. The factory will convert this step into an appropriate
 /// `RSDSectionStep` from the decoded object.
 public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
+    
+    private enum CodingKeys : String, CodingKey {
+        case identifier, stepType = "type", replacementSteps, sectionTransformer
+    }
 
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
     /// of a step history.
@@ -63,10 +67,6 @@ public struct RSDTransformerStepObject : RSDTransformerStep, Decodable {
         copy.replacementSteps = self.replacementSteps
         copy.sectionTransformer = self.sectionTransformer
         return copy
-    }
-        
-    private enum CodingKeys : String, CodingKey {
-        case identifier, stepType = "type", replacementSteps, sectionTransformer
     }
     
     /// Initialize from a `Decoder`. 

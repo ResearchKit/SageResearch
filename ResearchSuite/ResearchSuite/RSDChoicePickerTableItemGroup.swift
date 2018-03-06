@@ -158,7 +158,9 @@ public final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
         }
         let answerType = RSDAnswerResultType(baseType: .boolean, sequenceType: nil, formDataType: inputField.dataType)
         
-        super.init(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, choicePicker: choicePicker, answerType: answerType)
+        // If this is a single checkbox then it can be in-line with other items in a group, otherwise, it cannot.
+        let row = self.singleCheckbox ? 0 : beginningRowIndex
+        super.init(beginningRowIndex: row, inputField: inputField, uiHint: uiHint, choicePicker: choicePicker, answerType: answerType)
     }
     
     /// Does this input field use a single checkbox or radio button to mark as `true` (i.e. selected)?

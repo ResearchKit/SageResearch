@@ -33,11 +33,12 @@
 
 import Foundation
 
-/// `RSDFormStepDataSourceObject` is a concrete implementation of the `RSDFormStepDataSource` protocol.
-open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
+/// `RSDFormStepDataSourceObject` is a concrete implementation of the `RSDTableDataSource` protocol that is
+/// designed to be used to supply the data source for a form step.
+open class RSDFormStepDataSourceObject : RSDTableDataSource {
     
     /// The delegate associated with this data source.
-    open weak var delegate: RSDFormStepDataSourceDelegate?
+    open weak var delegate: RSDTableDataSourceDelegate?
 
     /// The step associated with this data source.
     public let step: RSDStep
@@ -49,7 +50,10 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     public private(set) var taskPath: RSDTaskPath
 
     /// The table sections for this data source.
-    open private(set) var sections: [RSDTableSection]
+    open private(set) var sections: [RSDTableSection] = []
+    
+    /// The table item groups displayed in this table.
+    open private(set) var itemGroups: [RSDTableItemGroup] = []
 
     /// The initial result when the data source was first displayed.
     open private(set) var initialResult: RSDCollectionResult?
@@ -59,16 +63,11 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     ///     - step:             The RSDStep for this data source.
     ///     - taskPath:         The current task path for this data source.
     ///     - supportedHints:   The supported UI hints for this data source.
-    ///     - sections:         The sections to use with this data source. If `nil`, the base class
-    ///                         implementation will set up the sections using the step.
-    ///     - initialResult:    The initial result to use to set up this source. If `nil`, the base
-    ///                         class will look in the previous results of the task path.
-    public init(step: RSDStep, taskPath: RSDTaskPath, supportedHints: Set<RSDFormUIHint>? = nil, sections: [RSDTableSection]? = nil, initialResult: RSDCollectionResult? = nil) {
+    public init(step: RSDStep, taskPath: RSDTaskPath, supportedHints: Set<RSDFormUIHint>? = nil) {
         
         self.step = step
         self.taskPath = taskPath
         self.supportedHints = supportedHints ?? RSDFormUIHint.allStandardHints
-        self.sections = sections ?? []
         
         // Set the initial result if available.
         if let result = initialResult {
@@ -86,11 +85,10 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
             }
         }
         
-        // If the sections are undefined then set them.
-        if sections == nil {
-            populateSections()
-        }
-        // Then populate the results from the initial result.
+        // Populate the sections and initial results.
+        let (sections, groups) = self.bulidSections()
+        self.sections = sections
+        self.itemGroups = groups
         populateInitialResults()
     }
     
@@ -124,43 +122,142 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         return answerResult
     }
     
-    /// What is the preferred ui hint for this input field that is supported by this table? By default,
-    /// this will look for the uiHint from the inputField to be included in the supported hints and if
-    /// not, will return the preferred ui hint for the data type.
-    ///
-    /// - parameter inputField  The inputField to check.
-    /// - returns: The ui hint to return.
-    open func preferredUIHint(for inputField: RSDInputField) -> RSDFormUIHint {
-        if let uiHint = inputField.inputUIHint, supportedHints.contains(uiHint) {
-            return uiHint
-        }
-        let standardType: RSDFormUIHint?
-        if let choiceInput = inputField as? RSDChoiceInputField, choiceInput.hasImages {
-            standardType = supportedHints.contains(.slider) ? .slider : nil
-        } else {
-            standardType = inputField.dataType.validStandardUIHints.first(where:{ supportedHints.contains($0) })
-        }
-        return standardType ?? .textfield
+    // MARK: RSDTableDataSource implementation
+    
+    /// Retrieve the `RSDTableItemGroup` with a specific `RSDInputField` identifier.
+    /// - parameter identifier: The identifier of the `RSDInputField` assigned to the item group.
+    /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
+    open func itemGroup(with identifier: String) -> RSDTableItemGroup? {
+        return itemGroups.first(where: {
+            ($0 as? RSDInputFieldTableItemGroup)?.inputField.identifier == identifier
+        })
     }
     
-    /// Does this ui hint require an exclusive section? This sets up a section with one and only one ItemGroup
-    /// for certain ui hints.
-    ///
-    /// - parameter uiHint: The ui hint to test.
-    /// - returns: `true` if the ui hint type requires it's own table section.
-    open func requiresExclusiveSection(for itemGroup: RSDTableItemGroup) -> Bool {
-        guard let input = itemGroup as? RSDInputFieldTableItemGroup else { return true }
-        let inputField = input.inputField
-        let uiHint = input.uiHint
-        if inputField.dataType.listSelectionHints.contains(uiHint) {
-            return true
+    func isMatching(_ itemGroup: RSDTableItemGroup, at indexPath: IndexPath) -> Bool {
+        return itemGroup.sectionIndex == indexPath.section &&
+            (itemGroup.beginningRowIndex ... itemGroup.beginningRowIndex + (itemGroup.items.count - 1) ~= indexPath.row)
+    }
+    
+    /// Retrieve the 'RSDTableItemGroup' for a specific IndexPath.
+    /// - parameter indexPath: The index path that represents the item group in the table view.
+    /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
+    open func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
+        return itemGroups.first(where: { isMatching($0, at: indexPath) })
+    }
+    
+    /// Save an answer for a specific IndexPath.
+    /// - parameters:
+    ///     - answer:      The object to be save as the answer.
+    ///     - indexPath:   The `IndexPath` that represents the `RSDTableItem` in the table view.
+    /// - throws: `RSDInputFieldError` if the answer is invalid.
+    open func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
+        guard let itemGroup = self.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup else {
+            return
         }
-        switch uiHint {
-        case .picker, .textfield, .toggle, .checkbox, .radioButton:
-            return false
-        default:
-            return true
+        
+        if let tableItem = self.tableItem(at: indexPath) as? RSDTextInputTableItem {
+            // If this is a text input table item then store the answer on the table item instead of on the group.
+            try tableItem.setAnswer(answer)
+        } else {
+            try itemGroup.setAnswer(answer)
         }
+        _answerDidChange(for: itemGroup, at: indexPath)
+    }
+    
+    /// Select or deselect the answer option for a specific IndexPath.
+    /// - parameter indexPath: The `IndexPath` that represents the `RSDTableItem` in the  table view.
+    /// - throws: `RSDInputFieldError` if the selection is invalid.
+    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws {
+        guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
+            return
+        }
+        
+        try itemGroup.select(item, indexPath: indexPath)
+        _answerDidChange(for: itemGroup, at: indexPath)
+    }
+    
+    private func _answerDidChange(for itemGroup: RSDInputFieldTableItemGroup, at indexPath: IndexPath) {
+        
+        // Update the answers
+        var stepResult = self.collectionResult()
+        if let result = self.instantiateAnswerResult(for: itemGroup) {
+            stepResult.appendInputResults(with: result)
+        } else {
+            stepResult.removeInputResult(with: itemGroup.identifier)
+        }
+        self.taskPath.appendStepHistory(with: stepResult)
+        
+        // inform delegate that answers have changed
+        if let delegate = delegate {
+            delegate.answersDidChange(in: indexPath.section)
+        }
+    }
+    
+    /// Determine if all answers are valid. Also checks the case where answers are required but one has not been provided.
+    /// - returns: A `Bool` indicating if all answers are valid.
+    open func allAnswersValid() -> Bool {
+        return itemGroups.reduce(true, { $0 && $1.isAnswerValid })
+    }
+    
+
+    // MARK: Build table - These methods are called during initialization, but they are *not*
+    // defined as class methods b/c there is a lot of interdependancy on the methods used to
+    // update results during use.
+    
+    /// Convenience method for building the sections of the table from the input fields.
+    /// - returns: The sections for the table.
+    open func bulidSections() -> ([RSDTableSection], [RSDTableItemGroup]) {
+        guard let uiStep = step as? RSDUIStep else { return ([], []) }
+        
+        var sectionBuilders: [RSDTableSectionBuilder] = []
+        let inputFields = (step as? RSDFormUIStep)?.inputFields ?? []
+        for item in inputFields {
+            
+            // Get the next row index
+            let rowIndex: Int = {
+                if let lastSection = sectionBuilders.last, !lastSection.singleFormItem {
+                    return lastSection.tableSection.rowCount()
+                } else {
+                    return 0
+                }
+            }()
+            
+            // Call open method to get the appropriate item group
+            let itemGroup = instantiateTableItemGroup(for: item, beginningRowIndex: rowIndex)
+            let needExclusiveSection = (itemGroup as? RSDInputFieldTableItemGroup)?.requiresExclusiveSection ?? false
+            
+            // if we don't need an exclusive section and we have an existing section and it's not exclusive ('singleFormItem'),
+            // then add this item to that existing section, otherwise create a new one
+            if !needExclusiveSection, let lastSection = sectionBuilders.last, !lastSection.singleFormItem {
+                lastSection.title = nil
+                lastSection.appendGroup(itemGroup)
+            }
+            else {
+                let section = RSDTableSectionBuilder(sectionIndex: sectionBuilders.count, singleFormItem: needExclusiveSection)
+                section.appendGroup(itemGroup)
+                section.title = item.inputPrompt
+                section.subtitle = item.inputPromptDetail
+                sectionBuilders.append(section)
+            }
+        }
+        
+        var sections = sectionBuilders.map { $0.tableSection }
+        let itemGroups = sectionBuilders.map { $0.itemGroups }.flatMap{$0}
+        
+        // add image below and footnote
+        var items: [RSDTableItem] = []
+        if let imageTheme = (step as? RSDThemedUIStep)?.imageTheme, imageTheme.placementType == .iconAfter {
+            items.append(RSDImageTableItem(rowIndex: items.count, imageTheme: imageTheme))
+        }
+        if let footnote = uiStep.footnote {
+            items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
+        }
+        if items.count > 0 {
+            let section = RSDTableSection(sectionIndex: sections.count, tableItems: items)
+            sections.append(section)
+        }
+        
+        return (sections, itemGroups)
     }
     
     /// Instantiate the appropriate item group for this input field.
@@ -174,11 +271,11 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         if case .measurement(_,_) = inputField.dataType {
             return RSDHumanMeasurementTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
         }
-        else if let choiceInput = inputField.pickerSource as? RSDChoiceInputField {
-            return RSDChoicePickerTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, choicePicker: choiceInput)
+        else if let pickerSource = inputField.pickerSource as? RSDChoiceOptions {
+            return RSDChoicePickerTableItemGroup(beginningRowIndex: 0, inputField: inputField, uiHint: uiHint, choicePicker: pickerSource)
         }
-        else if let componentInput = inputField as? RSDMultipleComponentInputField {
-            return RSDMultipleComponentTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: componentInput, uiHint: uiHint)
+        else if let pickerSource = inputField.pickerSource as? RSDMultipleComponentPickerDataSource {
+            return RSDMultipleComponentTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint, pickerSource: pickerSource)
         } else {
             switch inputField.dataType.baseType {
             case .boolean:
@@ -193,6 +290,25 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
         }
     }
     
+    /// What is the preferred ui hint for this input field that is supported by this table? By default,
+    /// this will look for the uiHint from the inputField to be included in the supported hints and if
+    /// not, will return the preferred ui hint for the data type.
+    ///
+    /// - parameter inputField  The inputField to check.
+    /// - returns: The ui hint to return.
+    open func preferredUIHint(for inputField: RSDInputField) -> RSDFormUIHint {
+        if let uiHint = inputField.inputUIHint, supportedHints.contains(uiHint) {
+            return uiHint
+        }
+        let standardType: RSDFormUIHint?
+        if let choiceInput = inputField.pickerSource as? RSDChoiceOptions, choiceInput.hasImages {
+            standardType = supportedHints.contains(.slider) ? .slider : nil
+        } else {
+            standardType = inputField.dataType.validStandardUIHints.first(where:{ supportedHints.contains($0) })
+        }
+        return standardType ?? .textfield
+    }
+    
     /// Convenience method for looking at the previous results in the task path and setting the answer
     /// based on that result. Get the collection result for this step and populate that result with the
     /// initial results that are valid from this form.
@@ -201,7 +317,7 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
     /// is possible that a different implementation should not include populating the current result with
     /// a previous result. For example, a form should be populated with previous answers, but an active
     /// test should not.
-    private func populateInitialResults() {
+    open func populateInitialResults() {
         guard let results = self.initialResult?.inputResults, results.count > 0 else { return }
         
         var stepResult = self.collectionResult()
@@ -221,86 +337,36 @@ open class RSDFormStepDataSourceObject : RSDFormStepDataSource {
                 }
             }
         }
-
+        
         if hasChanges {
             self.taskPath.appendStepHistory(with: stepResult)
         }
-    }
-    
-    /// Convenience method for building the sections of the table from the input fields.
-    /// - returns: The sections for the table.
-    private func populateSections() {
-        guard let uiStep = step as? RSDUIStep else { return }
-
-        var sectionBuilders: [RSDTableSectionBuilder] = []
-        for item in inputFields() {
-            
-            // Get the next row index
-            let rowIndex: Int = {
-                if let lastSection = sectionBuilders.last, !lastSection.singleFormItem {
-                    return lastSection.tableSection.rowCount()
-                } else {
-                    return 0
-                }
-            }()
-            
-            // Call open method to get the appropriate item group
-            let itemGroup = instantiateTableItemGroup(for: item, beginningRowIndex: rowIndex)
-            let needExclusiveSection = requiresExclusiveSection(for: itemGroup)
-
-            // if we don't need an exclusive section and we have an existing section and it's not exclusive ('singleFormItem'),
-            // then add this item to that existing section, otherwise create a new one
-            if !needExclusiveSection, let lastSection = sectionBuilders.last, !lastSection.singleFormItem {
-                lastSection.title = nil
-                lastSection.itemGroups.append(itemGroup)
-            }
-            else {
-                let section = RSDTableSectionBuilder(sectionIndex: sectionBuilders.count, singleFormItem: needExclusiveSection)
-                section.itemGroups.append(itemGroup)
-                section.title = item.inputPrompt
-                sectionBuilders.append(section)
-            }
-        }
-        self.sections = sectionBuilders.map { $0.tableSection }
-        
-        // add image below and footnote
-        var items: [RSDTableItem] = []
-        if let imageTheme = (uiStep as? RSDThemedUIStep)?.imageTheme, imageTheme.placementType == .iconAfter {
-            items.append(RSDImageTableItem(rowIndex: items.count, imageTheme: imageTheme))
-        }
-        if let footnote = uiStep.footnote {
-            items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
-        }
-        if items.count > 0 {
-            let itemGroup = RSDTableItemGroup(beginningRowIndex: 0, items: items)
-            let section = RSDTableSection(sectionIndex: sections.count, itemGroups: [itemGroup])
-            sections.append(section)
-        }
-    }
-    
-    /// Convenience method for returning the input fields.
-    /// - returns: The input fields for the form step.
-    private func inputFields() -> [RSDInputField] {
-        guard let formStep = self.step as? RSDFormUIStep else { return [] }
-        return formStep.inputFields
     }
 }
 
 /// Used in refactored code to allow developers to build their own implementation of the table section.
 fileprivate class RSDTableSectionBuilder {
-    var itemGroups: [RSDTableItemGroup] = []
+    private(set) var itemGroups: [RSDTableItemGroup] = []
     let index: Int
     let singleFormItem: Bool
     var title: String?
+    var subtitle: String?
     
     init(sectionIndex: Int, singleFormItem: Bool = true) {
         self.index = sectionIndex
         self.singleFormItem = singleFormItem
     }
     
+    func appendGroup(_ itemGroup: RSDTableItemGroup) {
+        itemGroup.sectionIndex = index
+        itemGroups.append(itemGroup)
+    }
+    
     var tableSection: RSDTableSection {
-        let section = RSDTableSection(sectionIndex: index, itemGroups: itemGroups)
+        let tableItems = itemGroups.map{$0.items}.flatMap{$0}
+        let section = RSDTableSection(sectionIndex: index, tableItems: tableItems)
         section.title = title
+        section.subtitle = subtitle
         return section
     }
 }

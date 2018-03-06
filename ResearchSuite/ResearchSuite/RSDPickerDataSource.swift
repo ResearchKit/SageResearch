@@ -76,6 +76,9 @@ public protocol RSDDatePickerDataSource : RSDPickerDataSource {
     
     /// The date formatter for displaying the date in a text field or label
     var dateFormatter: DateFormatter { get }
+    
+    /// The date that should be set initially.
+    var defaultDate: Date? { get }
 }
 
 /// A picker data source for selecting choices.
@@ -148,10 +151,35 @@ public protocol RSDNumberFormatterProtocol {
     func number(from string: String) -> NSNumber?
 }
 
+/// `RSDChoice` is used to describe a choice item for use with a multiple choice or multiple component input field.
+public protocol RSDChoice {
+    
+    /// A JSON encodable object to return as the value when this choice is selected. A `nil` value indicates that
+    /// the user has selected to skip the question or "prefers not to answer".
+    var answerValue: Codable? { get }
+    
+    /// Localized text string to display for the choice.
+    var text: String? { get }
+    
+    /// Additional detail text.
+    var detail: String? { get }
+    
+    /// For a multiple choice option, is this choice mutually exclusive? For example, "none of the above".
+    var isExclusive: Bool { get }
+    
+    /// An icon image that can be used for displaying the choice.
+    var imageVendor: RSDImageVendor? { get }
+    
+    /// Is the choice value equal to the given result?
+    /// - parameter result: A result to test for equality.
+    /// - returns: `true` if the values are equal.
+    func isEqualToResult(_ result: RSDResult?) -> Bool
+}
+
 /// `RSDMultipleComponentOptions` is a data source protocol that can be used to set up a picker.
 ///
 /// - seealso: `RSDMultipleComponentOptions` and `RSDUSMeasurementPickerDataSource`
-public protocol RSDMultipleComponentChoiceOptions : RSDChoicePickerDataSource {
+public protocol RSDMultipleComponentPickerDataSource : RSDChoicePickerDataSource {
     
     /// A list of choices for input fields that make up the multiple component option set.
     var choices : [[RSDChoice]] { get }
@@ -160,12 +188,12 @@ public protocol RSDMultipleComponentChoiceOptions : RSDChoicePickerDataSource {
 /// `RSDMultipleComponentOptions` is a data source protocol that can be used to set up a picker.
 ///
 /// - seealso: `RSDMultipleComponentInputField` and `RSDFormStepDataSource`
-public protocol RSDMultipleComponentOptions : RSDMultipleComponentChoiceOptions {
+public protocol RSDMultipleComponentOptions : RSDMultipleComponentPickerDataSource {
 }
 
 /// `RSDChoiceOptions` is a data source protocol that can be used to set up a picker or list of choices.
 ///
-/// - seealso: `RSDChoiceInputField` and `RSDFormStepDataSource`
+/// - seealso: `RSDChoiceInputFieldObject` and `RSDFormStepDataSource`
 public protocol RSDChoiceOptions : RSDChoicePickerDataSource {
     
     /// A list of choices for the input field.
@@ -176,6 +204,16 @@ public protocol RSDChoiceOptions : RSDChoicePickerDataSource {
 }
 
 extension RSDChoiceOptions {
+    
+    /// Convenience property for whether or not the choice input field has associated images.
+    public var hasImages: Bool {
+        for choice in choices {
+            if choice.imageVendor != nil {
+                return true
+            }
+        }
+        return false
+    }
     
     /// The separator is not used with only one column of choices.
     public var separator: String? {

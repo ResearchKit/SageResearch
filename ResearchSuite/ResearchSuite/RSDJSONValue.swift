@@ -176,7 +176,7 @@ extension Date : RSDJSONValue {
 extension DateComponents : RSDJSONValue {
     
     public func jsonObject() -> Any {
-        guard let date = self.date ?? Calendar(identifier: .gregorian).date(from: self) else { return NSNull() }
+        guard let date = self.date ?? Calendar(identifier: .iso8601).date(from: self) else { return NSNull() }
         return defaultFormatter().string(from: date)
     }
     

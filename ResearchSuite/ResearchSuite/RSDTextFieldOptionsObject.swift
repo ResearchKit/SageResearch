@@ -198,7 +198,7 @@ extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
 
 /// `Codable` enum for the auto-capitalization type for an input text field.
 /// - keywords: ["none", "words", "sentences", "allCharacters"]
-public enum RSDTextAutocapitalizationType : String, Codable, RSDEnumSet {
+public enum RSDTextAutocapitalizationType : String, Codable, RSDStringEnumSet {
     case none, words, sentences, allCharacters
     
     public static var all: Set<RSDTextAutocapitalizationType> {
@@ -222,12 +222,12 @@ public enum RSDTextAutocapitalizationType : String, Codable, RSDEnumSet {
     #endif
 }
 
-extension RSDTextAutocapitalizationType : RSDDocumentableEnum {
+extension RSDTextAutocapitalizationType : RSDDocumentableStringEnum {
 }
 
 /// `Codable` enum for the auto-capitalization type for an input text field.
 /// - keywords: ["default", "no", yes"]
-public enum RSDTextAutocorrectionType : String, Codable, RSDEnumSet {
+public enum RSDTextAutocorrectionType : String, Codable, RSDStringEnumSet {
     case `default`, no, yes
     
     public static var all: Set<RSDTextAutocorrectionType> {
@@ -251,12 +251,12 @@ public enum RSDTextAutocorrectionType : String, Codable, RSDEnumSet {
     #endif
 }
 
-extension RSDTextAutocorrectionType : RSDDocumentableEnum {
+extension RSDTextAutocorrectionType : RSDDocumentableStringEnum {
 }
 
 /// `Codable` enum for the spell checking type for an input text field.
 /// - keywords: ["default", "no", yes"]
-public enum RSDTextSpellCheckingType  : String, Codable, RSDEnumSet {
+public enum RSDTextSpellCheckingType  : String, Codable, RSDStringEnumSet {
     case `default`, no, yes
     
     public static var all: Set<RSDTextSpellCheckingType> {
@@ -280,14 +280,14 @@ public enum RSDTextSpellCheckingType  : String, Codable, RSDEnumSet {
     #endif
 }
 
-extension RSDTextSpellCheckingType : RSDDocumentableEnum {
+extension RSDTextSpellCheckingType : RSDDocumentableStringEnum {
 }
 
 /// `Codable` enum for the spell checking type for an input text field.
 /// - keywords: [ "default", "asciiCapable", "numbersAndPunctuation", "URL",
 ///               "numberPad", "phonePad", "namePhonePad", "emailAddress",
 ///               "decimalPad", "twitter", "webSearch", "asciiCapableNumberPad"]
-public enum RSDKeyboardType  : String, Codable, RSDEnumSet {
+public enum RSDKeyboardType  : String, Codable, RSDStringEnumSet {
     case `default`, asciiCapable, numbersAndPunctuation, URL, numberPad, phonePad, namePhonePad, emailAddress, decimalPad, twitter, webSearch, asciiCapableNumberPad
     
     public static var all: Set<RSDKeyboardType> {
@@ -311,5 +311,5 @@ public enum RSDKeyboardType  : String, Codable, RSDEnumSet {
     #endif
 }
 
-extension RSDKeyboardType : RSDDocumentableEnum {
+extension RSDKeyboardType : RSDDocumentableStringEnum {
 }

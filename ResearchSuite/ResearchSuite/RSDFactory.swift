@@ -61,6 +61,9 @@ open class RSDFactory {
     
     /// Optional data source for this factory.
     public var taskDataSource: RSDTaskDataSource?
+    
+    /// Optional shared tracking rules
+    open var trackingRules: [RSDTrackingRule] = []
 
     // MARK: Class name factory
     
@@ -190,13 +193,37 @@ open class RSDFactory {
     // MARK: Step navigator factory
     
     /// Decode the step navigator from this decoder. This method *must* return a step navigator.
-    /// The default implementation will return a `RSDConditionalStepNavigatorObject`.
+    /// The default implementation will return a `RSDConditionalStepNavigatorObject` if the type
+    /// is not in the decoder.
     ///
     /// - parameter decoder: The decoder to use to instatiate the object.
     /// - returns: The step navigator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStepNavigator(from decoder: Decoder) throws -> RSDStepNavigator {
-        return try RSDConditionalStepNavigatorObject(from: decoder)
+        guard let name = try typeName(from: decoder) else {
+            return try RSDConditionalStepNavigatorObject(from: decoder)
+        }
+        return try self.decodeStepNavigator(from: decoder, with: RSDStepNavigatorType(rawValue: name))
+    }
+    
+    /// Decode the step navigator from this decoder. This method *must* return a step navigator.
+    /// The default implementation will return a `RSDConditionalStepNavigatorObject` for an
+    /// unrecognized type.
+    ///
+    /// - parameters:
+    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - type: The `RSDStepNavigatorType` to instantiate.
+    /// - returns: The step navigator created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeStepNavigator(from decoder: Decoder, with type: RSDStepNavigatorType) throws -> RSDStepNavigator {
+        switch type {
+        case .medicationTracking:
+            return try RSDMedicationTrackingStepNavigator(from: decoder)
+        case .tracking:
+            return try RSDTrackedItemsStepNavigator(from: decoder)
+        default:
+            return try RSDConditionalStepNavigatorObject(from: decoder)
+        }
     }
     
 
@@ -253,6 +280,8 @@ open class RSDFactory {
             return try RSDFormUIStepObject(from: decoder)
         case .section:
             return try RSDSectionStepObject(from: decoder)
+        case .selection:
+            return try RSDTrackedSelectionStepObject(from: decoder)
         case .taskInfo:
             return try RSDTaskInfoStepObject(from: decoder)
         case .transform:
@@ -286,12 +315,12 @@ open class RSDFactory {
         if let replacementSteps = transform.replacementSteps {
             steps = try steps.map({ (inputStep) -> RSDStep in
                 guard let replacementStep = replacementSteps.first(where: { $0.identifier == inputStep.identifier }),
-                    let copyableStep = inputStep as? RSDMutableStep
+                    let copyableStep = inputStep as? RSDCopyStep
                     else {
                         return inputStep
                 }
-                try copyableStep.replace(from: replacementStep)
-                return copyableStep
+                let step = try copyableStep.copy(with: inputStep.identifier, userInfo: replacementStep.userInfo)
+                return step
             })
         }
         

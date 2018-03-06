@@ -61,6 +61,9 @@ public enum RSDTaskFinishReason : Int {
 /// be an appropriate instance of a view controller, depending upon the operating system.
 public protocol RSDTaskController : class, NSObjectProtocol {
     
+    /// A path object used to track the current state of a running task.
+    var taskPath: RSDTaskPath! { get set }
+    
     /// The top-level result associated with this task.
     var taskResult : RSDTaskResult! { get }
     
@@ -73,6 +76,30 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     /// Optional factory subclass that can be used to vend custom steps that are decoded
     /// from a plist or json.
     var factory: RSDFactory? { get }
+    
+    /// Can this task go forward? If forward navigation is disabled, then the task isn't waiting for a result
+    /// or a task fetch to enable forward navigation.
+    var isForwardEnabled: Bool { get }
+    
+    /// Is there a next step or is this the last step in the task?
+    var hasStepAfter: Bool { get }
+    
+    /// Is there previous step that this task can go back to?
+    var hasStepBefore: Bool { get }
+    
+    /// Go forward to the next step.
+    func goForward()
+    
+    /// Go back to the previous step.
+    func goBack()
+    
+    /// Can the task progress be saved? This should only return `true` if the task result can be saved and
+    /// the current progress can be restored.
+    var canSaveTaskProgress: Bool { get }
+    
+    /// The user has tapped the cancel button.
+    /// - parameter shouldSave: Should the task progress be saved (if applicable).
+    func handleTaskCancelled(shouldSave: Bool)
 }
 
 /// `RSDTaskControllerDelegate` is responsible for processing the results of the task, providing some input into
@@ -82,11 +109,11 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
     
     /// Tells the delegate that the task has finished.
     ///
-    /// The task controller should call this method when an unrecoverable error occurs, when the user has canceled
-    /// the task (with or without saving), or when the user completes the last step in the task.
+    /// The task controller should call this method when an unrecoverable error occurs, when the user has
+    /// canceled the task (with or without saving), or when the user completes the last step in the task.
     ///
-    /// In most circumstances, the receiver should dismiss the task view controller in response to this method, and
-    /// may also need to collect and process the results of the task.
+    /// In most circumstances, the receiver should dismiss the task view controller in response to this
+    /// method, and may also need to collect and process the results of the task.
     ///
     /// - parameters:
     ///     - taskController:   The `RSDTaskUIController` instance that is returning the result.
@@ -97,10 +124,11 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
     
     /// Tells the delegate that the task is ready to save.
     ///
-    /// The task controller should call this method when the task has completed all steps that add information to
-    /// the result set. This may be called on the last step *or* prior to the last step if that step is a completion
-    /// step or else a step used to display the results of a task. This allows the developers to mark the end timestamp
-    /// for when a task ended rather than for when the participant dismissed the task.
+    /// The task controller should call this method when the task has completed all steps that add
+    /// information to the result set. This may be called on the last step *or* prior to the last step if
+    /// that step is a completion step or else a step used to display the results of a task. This allows the
+    /// developers to mark the end timestamp for when a task ended rather than for when the participant
+    /// dismissed the task.
     ///
     /// - parameters:
     ///     - taskController:   The `RSDTaskController` instance that is returning the result.
@@ -109,10 +137,10 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
     
     /// Requests the `RSDAsyncActionController` for a given `RSDAsyncActionConfiguration`.
     ///
-    /// The task controller should call this method when the task controller determines that an async action should be
-    /// started. If this method returns `nil` then the task controller should check if the `configuration` conforms to
-    /// the `RSDAsyncActionControllerVendor` protocol and vend the controller returned by the `instantiateController()`
-    /// method if applicable.
+    /// The task controller should call this method when the task controller determines that an async action
+    /// should be started. If this method returns `nil` then the task controller should check if the
+    /// `configuration` conforms to the `RSDAsyncActionControllerVendor` protocol and vend the controller
+    /// returned by the `instantiateController()` method if applicable.
     ///
     /// - parameters:
     ///     - taskController:   The `RSDTaskController` instance that is returning the result.
@@ -126,13 +154,6 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
 /// To start a task, create an instance of a view controller that conforms to this protocol
 /// and set either the `topLevelTask` or the `topLevelTaskInfo`.
 public protocol RSDTaskUIController : RSDTaskController {
-    
-    /// A path object used to track the current state of a running task.
-    var taskPath: RSDTaskPath! { get set }
-    
-    /// Can the task progress be saved? This should only return `true` if the task result can be saved and
-    /// the current progress can be restored.
-    var canSaveTaskProgress: Bool { get }
     
     /// Returns the currently active step controller (if any).
     var currentStepController: RSDStepController? { get }
@@ -189,13 +210,9 @@ public protocol RSDTaskUIController : RSDTaskController {
     /// the *last* completion step.
     func handleTaskResultReady(with taskPath: RSDTaskPath)
     
-    /// The user has tapped the cancel button.
-    /// - parameter shouldSave: Should the task progress be saved (if applicable).
-    func handleTaskCancelled(shouldSave: Bool)
-    
     /// Add async action controllers to the shared queue for the given configuations. It is up to the task
-    /// controller to decide how to create the controllers and how to manage adding them to the `currentStepController`
-    /// array.
+    /// controller to decide how to create the controllers and how to manage adding them to the
+    /// `currentStepController` array.
     ///
     /// The async actions should *not* be started. Instead they should be returned with `idle` status.
     ///
@@ -333,11 +350,11 @@ extension RSDTaskUIController {
         return false
     }
     
-    /// Go forward to the next step. If the task is not loaded for the current point in the task path, then it will
-    /// attempt to fetch it again.
+    /// Go forward to the next step. If the task is not loaded for the current point in the task path, then
+    /// it will attempt to fetch it again.
     ///
-    /// - note: This method will throw an assertion if it is called without first checking that the current task
-    ///         can navigate forward.
+    /// - note: This method will throw an assertion if it is called without first checking that the current
+    /// task can navigate forward.
     public func goForward() {
         guard self.taskPath.task != nil else {
             _fetchTaskFromCurrentInfo()

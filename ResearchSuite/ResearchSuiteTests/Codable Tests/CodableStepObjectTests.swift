@@ -122,7 +122,6 @@ class CodableStepObjectTests: XCTestCase {
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "watch" : {
-                "title": "Watch: Hello World!",
                 "text": "Watch: Some text.",
                 "detail": "Watch: This is a test.",
                 "footnote": "Watch: This is a footnote."
@@ -139,7 +138,7 @@ class CodableStepObjectTests: XCTestCase {
             let object = try decoder.decode(RSDUIStepObject.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
-            XCTAssertEqual(object.title, "Watch: Hello World!")
+            XCTAssertEqual(object.title, "Hello World!")
             XCTAssertEqual(object.text, "Watch: Some text.")
             XCTAssertEqual(object.detail, "Watch: This is a test.")
             XCTAssertEqual(object.footnote, "Watch: This is a footnote.")
@@ -175,7 +174,13 @@ class CodableStepObjectTests: XCTestCase {
                                },
             "colorTheme"     : { "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true },
             "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
-                                 "storyboardIdentifier": "ActiveTaskSteps" }
+                                 "storyboardIdentifier": "ActiveTaskSteps" },
+            "beforeCohortRules" : [{ "requiredCohorts" : ["boo", "goo"],
+                                    "skipToIdentifier" : "blueGu",
+                                    "operator" : "any" }],
+            "afterCohortRules" : [{ "requiredCohorts" : ["foo", "baloo"],
+                                    "skipToIdentifier" : "foomanchu",
+                                    "operator" : "all" }]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -228,6 +233,22 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertEqual(object.viewTheme?.storyboardIdentifier, "ActiveTaskSteps")
             XCTAssertEqual(object.viewTheme?.viewIdentifier, "ActiveInstruction")
+            
+            if let cohortRule = object.beforeCohortRules?.first {
+                XCTAssertEqual(cohortRule.requiredCohorts, ["boo", "goo"])
+                XCTAssertEqual(cohortRule.skipToIdentifier, "blueGu")
+                XCTAssertEqual(cohortRule.cohortOperator, .any)
+            } else {
+                XCTFail("Failed to decode before cohort rules")
+            }
+            
+            if let cohortRule = object.afterCohortRules?.first {
+                XCTAssertEqual(cohortRule.requiredCohorts, ["foo", "baloo"])
+                XCTAssertEqual(cohortRule.skipToIdentifier, "foomanchu")
+                XCTAssertEqual(cohortRule.cohortOperator, .all)
+            } else {
+                XCTFail("Failed to decode before cohort rules")
+            }
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -461,6 +482,77 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.userInfo["copyright"] as? String, "This is a copyright string.")
             XCTAssertEqual(object.userInfo["estimatedMinutes"] as? Int, 5)
             XCTAssertEqual(object.userInfo["icon"] as? String, "foobar")
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
+    func testTrackedSelectionStepObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "instruction",
+            "title": "Hello World!",
+            "text": "Some text.",
+            "detail": "This is a test.",
+            "footnote": "This is a footnote.",
+            "image": "before",
+            "nextStepIdentifier": "boo",
+            "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
+                         "cancel": { "iconName" : "closeX" },
+                         "learnMore": { "iconName" : "infoIcon",
+                                        "url" : "fooInfo" },
+                         "skip": { "buttonTitle" : "not applicable",
+                                    "skipToIdentifier": "boo"}
+                        },
+            "shouldHideActions": ["goBackward", "skip"],
+            "items" : [ {"identifier" : "itemA1", "sectionIdentifier" : "a"},
+                        {"identifier" : "itemA2", "sectionIdentifier" : "a"},
+                        {"identifier" : "itemA3", "sectionIdentifier" : "a"},
+                        {"identifier" : "itemB1", "sectionIdentifier" : "b"},
+                        {"identifier" : "itemB2", "sectionIdentifier" : "b"},
+                        {"identifier" : "itemB3", "sectionIdentifier" : "b"}],
+            "sections" : [ {"identifier" : "a"}, {"identifier" : "b"}]
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDTrackedSelectionStepObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.title, "Hello World!")
+            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.detail, "This is a test.")
+            XCTAssertEqual(object.footnote, "This is a footnote.")
+            XCTAssertEqual((object.imageTheme as? RSDImageWrapper)?.imageName, "before")
+            XCTAssertEqual(object.nextStepIdentifier, "boo")
+            
+            let goForwardAction = object.action(for: .navigation(.goForward), on: object)
+            XCTAssertNotNil(goForwardAction)
+            XCTAssertEqual(goForwardAction?.buttonTitle, "Go, Dogs! Go!")
+            
+            let cancelAction = object.action(for: .navigation(.cancel), on: object)
+            XCTAssertNotNil(cancelAction)
+            XCTAssertEqual((cancelAction as? RSDUIActionObject)?.iconName, "closeX")
+            
+            let learnMoreAction = object.action(for: .navigation(.learnMore), on: object)
+            XCTAssertNotNil(learnMoreAction)
+            XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.iconName, "infoIcon")
+            XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.url, "fooInfo")
+            
+            let skipAction = object.action(for: .navigation(.skip), on: object)
+            XCTAssertNotNil(skipAction)
+            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.buttonTitle, "not applicable")
+            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.skipToIdentifier, "boo")
+            
+            XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
+            
+            XCTAssertEqual(object.items.count, 6)
+            XCTAssertEqual(object.sections?.count ?? 0, 2)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")

@@ -58,9 +58,9 @@ public struct RSDMultipleComponentOptionsObject : RSDMultipleComponentOptions {
     }
 }
 
-/// Extension of the `RSDMultipleComponentChoiceOptions` protocol to implement part of the
-/// `RSDMultipleComponentChoiceOptions` protocol.
-extension RSDMultipleComponentChoiceOptions {
+/// Extension of the `RSDMultipleComponentPickerDataSource` protocol to implement part of the
+/// `RSDChoicePickerDataSource` protocol.
+extension RSDMultipleComponentPickerDataSource {
     
     /// Returns the number of 'columns' to display.
     public var numberOfComponents: Int {

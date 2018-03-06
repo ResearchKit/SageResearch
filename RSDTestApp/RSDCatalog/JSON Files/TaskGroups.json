@@ -50,5 +50,35 @@
                 "icon": "activityIcon",
                 "taskTransformer" : { "resourceName": "Recorder_Motion" }
                 }]
+ },
+ {
+     "identifier": "trackingExamples",
+     "title": "Data Tracking",
+     "detail": "This task group includes examples of tasks that track data.",
+     "icon": "activityIcon",
+     "tasks" : [{
+                "identifier": "Medication",
+                "title": "Medication Tracking",
+                "subtitle": "Task for recording your medication",
+                "detail": "This is an example of setting up a medication schedule.",
+                "icon": "activityIcon",
+                "taskTransformer" : { "resourceName": "Tracking_Medication" }
+                },
+                {
+                "identifier": "Triggers",
+                "title": "Triggers",
+                "subtitle": "Task for logging triggers.",
+                "detail": "This is an example task that allows the user to log events that they wish to track as triggers for their health condition.",
+                "icon": "activityIcon",
+                "taskTransformer" : { "resourceName": "Tracking_Triggers" }
+                },
+                {
+                "identifier": "Symptoms",
+                "title": "Symptoms",
+                "subtitle": "Task for logging symptoms.",
+                "detail": "This is an example task that allows the user to log events that they wish to track as symptoms of a given health condition that they are experiencing.",
+                "icon": "activityIcon",
+                "taskTransformer" : { "resourceName": "Tracking_Symptoms" }
+                }]
  }
 ]

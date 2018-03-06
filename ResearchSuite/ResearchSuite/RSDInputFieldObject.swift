@@ -36,8 +36,8 @@ import Foundation
 /// `RSDInputFieldObject` is a `Decodable` implementation of the `RSDSurveyInputField` protocol. This is implemented as
 /// an open class so that the decoding strategy can be used to support subclasses.
 ///
-open class RSDInputFieldObject : RSDSurveyInputField, Codable {
-    
+open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDCopyInputField, Codable {
+
     /// A short string that uniquely identifies the input field within the step. The identifier is reproduced in the
     /// results of a step result in the step history of a task result.
     public let identifier: String
@@ -51,6 +51,9 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
     /// A localized string that displays a short text offering a hint to the user of the data to be entered for
     /// this field. This is only applicable for certain types of UI hints and data types.
     open var inputPrompt: String?
+    
+    /// Additional detail about this input field.
+    open var inputPromptDetail: String?
     
     /// A localized string that displays placeholder information for the input field.
     ///
@@ -104,6 +107,32 @@ open class RSDInputFieldObject : RSDSurveyInputField, Codable {
         self.dataType = dataType
         self.inputUIHint = uiHint
         self.inputPrompt = prompt
+    }
+    
+    public required init(identifier: String, dataType: RSDFormDataType) {
+        self.identifier = identifier
+        self.dataType = dataType
+    }
+    
+    public func copy(with identifier: String) -> Self {
+        let copy = type(of: self).init(identifier: identifier, dataType: dataType)
+        copyInto(copy as RSDInputFieldObject)
+        return copy
+    }
+    
+    /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
+    /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
+    /// This is a work-around.
+    open func copyInto(_ copy: RSDInputFieldObject) {
+        copy.inputUIHint = self.inputUIHint
+        copy.inputPrompt = self.inputPrompt
+        copy.inputPromptDetail = self.inputPromptDetail
+        copy.placeholder = self.placeholder
+        copy.textFieldOptions = self.textFieldOptions
+        copy.range = self.range
+        copy.isOptional = self.isOptional
+        copy.surveyRules = self.surveyRules
+        copy._formatter = self._formatter
     }
     
     /// Validate the input field to check for any configuration that should throw an error.

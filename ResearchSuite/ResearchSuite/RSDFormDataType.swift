@@ -326,7 +326,7 @@ extension RSDFormDataType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDFormDataType : RSDDocumentableEnum {
+extension RSDFormDataType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }

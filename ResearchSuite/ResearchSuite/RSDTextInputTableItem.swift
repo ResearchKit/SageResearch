@@ -77,7 +77,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
                 return RSDTextFieldOptionsObject(keyboardType: .numberPad)
             case .date, .string:
                 return RSDTextFieldOptionsObject(keyboardType: .default)
-            case .boolean, .data:
+            case .boolean, .data, .codable:
                 return nil
             }
             }()

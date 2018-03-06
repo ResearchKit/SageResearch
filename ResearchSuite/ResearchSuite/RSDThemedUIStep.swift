@@ -1,8 +1,8 @@
 //
-//  RSDUIThemeElement.swift
+//  RSDThemedUIStep.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,6 +32,19 @@
 //
 
 import Foundation
+
+/// `RSDThemedUIStep` is a UI step that supports theme customization of the color and/or images used.
+public protocol RSDThemedUIStep : RSDUIStep {
+    
+    /// The view info used to create a custom step.
+    var viewTheme: RSDViewThemeElement? { get }
+    
+    /// The color theme.
+    var colorTheme: RSDColorThemeElement? { get }
+    
+    /// The image theme.
+    var imageTheme: RSDImageThemeElement? { get }
+}
 
 /// `RSDUIThemeElement` is used to tell the application UI view controllers how to style a given step.
 public protocol RSDUIThemeElement {
@@ -113,7 +126,7 @@ public protocol RSDColorThemeElement : RSDUIThemeElement {
 }
 
 /// A hint as to where the UI should place an image.
-public enum RSDImagePlacementType : String, Codable, RSDEnumSet {
+public enum RSDImagePlacementType : String, Codable, RSDStringEnumSet {
     
     /// Smaller presentation of an icon image before the content.
     case iconBefore
@@ -133,7 +146,7 @@ public enum RSDImagePlacementType : String, Codable, RSDEnumSet {
     }
 }
 
-extension RSDImagePlacementType : RSDDocumentableEnum {
+extension RSDImagePlacementType : RSDDocumentableStringEnum {
 }
 
 /// `RSDImageThemeElement` extends the UI step to include an image.

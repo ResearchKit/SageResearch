@@ -2,7 +2,7 @@
 //  RSDUIStepObject.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,12 +33,27 @@
 
 import Foundation
 
-/// `RSDUIStepObject` is the base class implementation for all UI display steps defined in this framework. Depending upon
-/// the available real-estate, more than one ui step may be displayed at a time. For example, on an iPad, you may choose
-/// to group a set of questions using a `RSDSectionStep`.
+/// `RSDUIStepObject` is the base class implementation for all UI display steps defined in this framework.
+/// Depending upon the available real-estate, more than one ui step may be displayed at a time. For
+/// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavigationRule, Decodable, RSDMutableStep {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement {
+
+    private enum CodingKeys: String, CodingKey {
+        case identifier
+        case stepType = "type"
+        case title
+        case text
+        case detail
+        case footnote
+        case nextStepIdentifier
+        case viewTheme
+        case colorTheme
+        case imageTheme = "image"
+        case beforeCohortRules
+        case afterCohortRules
+    }
 
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
     /// of a step history.
@@ -83,6 +98,12 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     /// will need to "jump" over the alternate path step and the alternate path step will need to "jump" to the "exit".
     open var nextStepIdentifier: String?
     
+    /// The navigation cohort rules to apply *before* displaying the step.
+    public var beforeCohortRules: [RSDCohortNavigationRule]?
+    
+    /// The navigation cohort rules to apply *after* displaying the step.
+    public var afterCohortRules: [RSDCohortNavigationRule]?
+    
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.
@@ -90,31 +111,47 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     public required init(identifier: String, type: RSDStepType? = nil) {
         self.identifier = identifier
         self.stepType = type ?? .instruction
+        self._initCompleted = false
         super.init()
+        self._initCompleted = true
     }
     
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
     /// - parameter identifier: The new identifier.
     public func copy(with identifier: String) -> Self {
+        return try! copy(with: identifier, userInfo: nil)
+    }
+    
+    /// Copy the step to a new instance with the given identifier and user info.
+    /// - parameters:
+    ///     - identifier: The new identifier.
+    ///     - userInfo: A dictionary that can be used to set properties on a replacement step.
+    public func copy(with identifier: String, userInfo: [String : Any]?) throws -> Self {
         let copy = type(of: self).init(identifier: identifier, type: self.stepType)
-        copyInto(copy as RSDUIStepObject)
+        try copyInto(copy as RSDUIStepObject, userInfo: userInfo)
         return copy
     }
     
-    /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)` method.
-    /// Swift does not nicely handle casting from `Self` to a class instance for non-final classes. This is a
-    /// work-around.
-    open func copyInto(_ copy: RSDUIStepObject) {
-        copy.title = self.title
-        copy.text = self.text
-        copy.detail = self.detail
-        copy.footnote = self.footnote
+    /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
+    /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
+    /// This is a work-around.
+    open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
+        
+        copy.title = userInfo?[CodingKeys.title.stringValue] as? String ?? self.title
+        copy.text = userInfo?[CodingKeys.text.stringValue] as? String ?? self.text
+        copy.detail = userInfo?[CodingKeys.detail.stringValue] as? String ?? self.detail
+        copy.footnote = userInfo?[CodingKeys.footnote.stringValue] as? String ?? self.footnote
+
+        // TODO: syoung 02/26/2018 Use `Decodable` to support copying from dictionaries.
+        // https://github.com/ResearchKit/SageResearch/issues/42
         copy.viewTheme = self.viewTheme
         copy.colorTheme = self.colorTheme
         copy.imageTheme = self.imageTheme
         copy.nextStepIdentifier = self.nextStepIdentifier
         copy.actions = self.actions
         copy.shouldHideActions = self.shouldHideActions
+        copy.beforeCohortRules = self.beforeCohortRules
+        copy.afterCohortRules = self.afterCohortRules
     }
 
     // MARK: Result management
@@ -132,7 +169,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
         // do nothing
     }
     
-    // MARK: navigation
+    // MARK: Navigation
     
     /// Identifier for the next step to navigate to based on the current task result. All parameters are ignored by this
     /// implementation of the navigation rule. Instead, this will return `nextStepIdentifier` if defined.
@@ -141,19 +178,18 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     open func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
         return self.nextStepIdentifier
     }
-        
-    private enum CodingKeys: String, CodingKey {
-        case identifier
-        case stepType = "type"
-        case title
-        case text
-        case detail
-        case footnote
-        case nextStepIdentifier
-        case viewTheme
-        case colorTheme
-        case imageTheme = "image"
+    
+    // MARK: Table source
+    
+    open var hasImageChoices: Bool {
+        return false
     }
+    
+    open func instantiateDataSource(with taskPath: RSDTaskPath, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        return RSDFormStepDataSourceObject(step: self, taskPath: taskPath, supportedHints: supportedHints)
+    }
+    
+    // MARK: Decodable
     
     /// Initialize from a `Decoder`.
     ///
@@ -188,7 +224,13 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     ///                "colorTheme"     : { "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true },
     ///                "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
     ///                                     "storyboardIdentifier": "ActiveTaskSteps",
-    ///                                     "bundleIdentifier": "org.example.SharedResources" }
+    ///                                     "bundleIdentifier": "org.example.SharedResources" },
+    ///                "beforeCohortRules" : { "requiredCohorts" : ["boo", "goo"],
+    ///                                        "skipToIdentifier" : "blueGu",
+    ///                                        "operator" : "any" },
+    ///                "afterCohortRules" : { "requiredCohorts" : ["boo", "goo"],
+    ///                                        "skipToIdentifier" : "blueGu",
+    ///                                        "operator" : "any" }
     ///            }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
     ///
@@ -223,23 +265,34 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
         self.stepType = try container.decode(RSDStepType.self, forKey: .stepType)
         
         self.nextStepIdentifier = try container.decodeIfPresent(String.self, forKey: .nextStepIdentifier)
-        
+
+        self._initCompleted = false
         try super.init(from: decoder)
-        
         try decode(from: decoder, for: nil)
+        self._initCompleted = true
+    }
+    private var _initCompleted: Bool
+    
+    /// Decode from the given decoder, replacing values on self with those from the decoder
+    /// if the properties are mutable.
+    public final func decode(from decoder: Decoder) throws {
+        try decode(from: decoder, for: nil)
+        try decodeActions(from: decoder)
     }
     
-    func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
-        
+    /// Decode from the given decoder, replacing values on self with those from the decoder
+    /// if the properties are mutable. This function is designed to loop through a second
+    /// pass to replace any values that should be decoded for a specific device type.
+    open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.title = try container.decodeIfPresent(String.self, forKey: .title)
-        self.text = try container.decodeIfPresent(String.self, forKey: .text)
-        self.detail = try container.decodeIfPresent(String.self, forKey: .detail)
-        self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote)
         
-        self.viewTheme = try container.decodeIfPresent(RSDViewThemeElementObject.self, forKey: .viewTheme)
-        self.colorTheme = try container.decodeIfPresent(RSDColorThemeElementObject.self, forKey: .colorTheme)
+        self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? self.title
+        self.text = try container.decodeIfPresent(String.self, forKey: .text) ?? self.text
+        self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
+        self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
+        
+        self.viewTheme = try container.decodeIfPresent(RSDViewThemeElementObject.self, forKey: .viewTheme) ?? self.viewTheme
+        self.colorTheme = try container.decodeIfPresent(RSDColorThemeElementObject.self, forKey: .colorTheme) ?? self.colorTheme
         if container.contains(.imageTheme) {
             let nestedDecoder = try container.superDecoder(forKey: .imageTheme)
             if let image = try? RSDImageWrapper(from: nestedDecoder) {
@@ -251,6 +304,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
             }
         }
         
+        self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
+        self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
+        
         if deviceType == nil {
             let subcontainer = try decoder.container(keyedBy: RSDDeviceType.self)
             let preferredType = decoder.factory.deviceType
@@ -259,17 +315,6 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
                 try decode(from: subdecoder, for: preferredType)
             }
         }
-    }
-    
-    /// A step to merge with this step that carries replacement info. This step will look at the replacement info
-    /// in the generic step and replace properties on self as appropriate.
-    ///
-    /// For an `RSDUIStepObject`, the `title`, `text`, `detail`, and `footnote` properties can be replaced.
-    open func replace(from step: RSDGenericStep) throws {
-        self.title = step.userInfo[CodingKeys.title.stringValue] as? String ?? self.title
-        self.text = step.userInfo[CodingKeys.text.stringValue] as? String ?? self.text
-        self.detail = step.userInfo[CodingKeys.detail.stringValue] as? String ?? self.detail
-        self.footnote = step.userInfo[CodingKeys.footnote.stringValue] as? String ?? self.footnote
     }
     
     // Overrides must be defined in the base implementation
@@ -282,7 +327,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .stepType, .title, .text, .detail, .footnote, .nextStepIdentifier, .viewTheme, .colorTheme, .imageTheme]
+        let codingKeys: [CodingKeys] = [.identifier, .stepType, .title, .text, .detail, .footnote, .nextStepIdentifier, .viewTheme, .colorTheme, .imageTheme, .beforeCohortRules, .afterCohortRules]
         return codingKeys
     }
     
@@ -311,9 +356,13 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
                 if idx != 8 { return false }
             case .imageTheme:
                 if idx != 9 { return false }
+            case .beforeCohortRules:
+                if idx != 10 { return false }
+            case .afterCohortRules:
+                if idx != 11 { return false }
             }
         }
-        return keys.count == 10
+        return keys.count == 12
     }
     
     class func examples() -> [[String : RSDJSONValue]] {
@@ -340,7 +389,13 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDNavig
             "colorTheme"     : [ "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true ],
             "viewTheme"      : [ "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps",
-                                 "bundleIdentifier": "org.example.SharedResources" ]
+                                 "bundleIdentifier": "org.example.SharedResources" ],
+            "beforeCohortRules" : [["requiredCohorts" : ["boo", "goo"],
+                                    "skipToIdentifier" : "blueGu",
+                                    "operator" : "any" ]],
+            "afterCohortRules" : [[ "requiredCohorts" : ["boo", "goo"],
+                                    "skipToIdentifier" : "blueGu",
+                                    "operator" : "any" ]]
         ]
         
         // Example JSON for a step with an `RSDFetchableImageThemeElement`.
