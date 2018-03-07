@@ -251,6 +251,16 @@ public class RSDMotionRecorder : RSDSampleRecorder {
             self.updateStatus(to: .finished, error: nil)
         }
     }
+    
+    /// Returns the string encoding format to use for this file. Default is `nil`. If this is `nil`
+    /// then the file will be formatted using JSON encoding.
+    override public func stringEncodingFormat() -> RSDStringSeparatedEncodingFormat? {
+        if self.motionConfiguration?.usesCSVEncoding == true {
+            return CSVEncodingFormat<RSDMotionRecord>()
+        } else {
+            return nil
+        }
+    }
 }
 
 
@@ -281,7 +291,7 @@ public class RSDMotionRecorder : RSDSampleRecorder {
 /// ```
 ///
 /// - seealso: "CodableMotionRecorderTests.swift" unit tests for additional examples.
-public struct RSDMotionRecord : RSDSampleRecord {
+public struct RSDMotionRecord : RSDSampleRecord, RSDCommaSeparatedEncodable {
     
     /// The clock uptime.
     public let uptime: TimeInterval
@@ -525,7 +535,7 @@ extension CMMagnetometerData : RSDVectorData {
 
 extension RSDMotionRecord : RSDDocumentableCodableObject {
     
-    static func codingKeys() -> [CodingKey] {
+    public static func codingKeys() -> [CodingKey] {
         return allCodingKeys()
     }
     

@@ -51,14 +51,25 @@ public struct RSDFileResultObject : RSDFileResult, Codable {
     /// The system clock uptime when the recorder was started (if applicable).
     public var startUptime: TimeInterval?
     
-    /// The URL with the path to the file-based result.
-    public var url: URL?
+    /// The URL with the full path to the file-based result. This should *not*
+    /// be encoded in the file result.
+    public var url: URL? {
+        get { return _url }
+        set {
+            _url = newValue
+            relativePath = newValue?.relativePath
+        }
+    }
+    private var _url: URL? = nil
+    
+    /// The relative path to the file-based result.
+    public var relativePath: String?
     
     /// The MIME content type of the result.
     public var contentType: String?
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, startDate, endDate, startUptime, url, contentType
+        case identifier, type, startDate, endDate, startUptime, relativePath, contentType
     }
     
     /// Default initializer for this object.
@@ -79,7 +90,7 @@ extension RSDFileResultObject : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .startUptime, .url, .contentType]
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .startUptime, .relativePath, .contentType]
         return codingKeys
     }
     
@@ -97,7 +108,7 @@ extension RSDFileResultObject : RSDDocumentableCodableObject {
                 if idx != 3 { return false }
             case .startUptime:
                 if idx != 4 { return false }
-            case .url:
+            case .relativePath:
                 if idx != 5 { return false }
             case .contentType:
                 if idx != 6 { return false }
@@ -111,7 +122,7 @@ extension RSDFileResultObject : RSDDocumentableCodableObject {
         fileResult.startDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         fileResult.endDate = fileResult.startDate.addingTimeInterval(5 * 60)
         fileResult.startUptime = 1234.567
-        fileResult.url = URL(fileURLWithPath: "temp.json")
+        fileResult.relativePath = "temp.json"
         return fileResult
     }
     
