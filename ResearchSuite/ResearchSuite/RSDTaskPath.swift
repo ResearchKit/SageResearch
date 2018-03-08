@@ -106,7 +106,8 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// This property specifies where such data should be written.
     ///
     /// If no output directory is specified, this property will use lazy initialization to create a
-    /// directory in the `NSTemporaryDirectory()` with a subpath of the `taskRunUUID`.
+    /// directory in the `NSTemporaryDirectory()` with a subpath of the `taskRunUUID` and the current
+    /// date.
     ///
     /// In general, set this property after instantiating the task view controller and before
     /// presenting it in order to override the default location.
@@ -119,21 +120,33 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// are processed by encrypting them locally. The encrypted files can then be stored for upload
     /// to a server or cloud service. These files are **not** encrypted so depending upon the
     /// application, there is a risk of exposing PII data stored in these files.
-    lazy public var outputDirectory: URL! = {
-        guard parentPath == nil else { return parentPath!.outputDirectory }
-        let path = (NSTemporaryDirectory() as NSString).appendingPathComponent(result.taskRunUUID.uuidString)
-        if !FileManager.default.fileExists(atPath: path) {
-            do {
-                try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [ .protectionKey : FileProtectionType.completeUntilFirstUserAuthentication ])
-            } catch let error as NSError {
-                print ("Error creating file: \(error)")
-                return nil
+    public var outputDirectory: URL! {
+        get {
+            guard parentPath == nil
+                else {
+                    return parentPath!.outputDirectory
             }
+            if _outputDirectory == nil {
+                let tempDir = NSTemporaryDirectory()
+                let dir = result.taskRunUUID.uuidString
+                let path = (tempDir as NSString).appendingPathComponent(dir)
+                if !FileManager.default.fileExists(atPath: path) {
+                    do {
+                        try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [ .protectionKey : FileProtectionType.completeUntilFirstUserAuthentication ])
+                    } catch let error as NSError {
+                        print ("Error creating file: \(error)")
+                        return nil
+                    }
+                }
+                _outputDirectory = URL(fileURLWithPath: path, isDirectory: true)
+            }
+            return _outputDirectory
         }
-        
-        let outputDirectory = URL(fileURLWithPath: path, isDirectory: true)
-        return outputDirectory
-    }()
+        set {
+            _outputDirectory = newValue
+        }
+    }
+    private var _outputDirectory: URL!
     
     /// Is this the first step in the task?
     public var isFirstStep: Bool {
@@ -210,15 +223,6 @@ public final class RSDTaskPath : NSObject, NSCopying {
         }
     }
     
-    /// Convenience method for encoding a result. This is a work-around for a limitation of the encoder
-    /// where it cannot encode an object without a Type for the object.
-    /// - parameter encoder: The factory top-level encoder.
-    /// - returns: The encoded result.
-    public func encodeResult(to encoder: RSDFactoryEncoder) throws -> Data {
-        let encodable = _EncodableResultWrapper(taskResult: self.result)
-        return try encoder.encode(encodable)
-    }
-    
     /// Append the result to the end of the step history, replacing the previous instance with the same
     /// identifier and adding the previous instance to the previous results.
     /// - parameter newResult:  The result to add to the step history.
@@ -260,7 +264,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
         return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
     }
     
-    // NSCopying
+    // MARK: NSCopying
     
     private init(with identifier: String, result: RSDTaskResult, taskInfo: RSDTaskInfoStep?, task: RSDTask?) {
         guard taskInfo != nil || task != nil else {
@@ -278,7 +282,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
         let result = (self.result as? NSCopying)?.copy(with: nil) as? RSDTaskResult ?? self.result
         let taskInfo = (self.taskInfo as? NSCopying)?.copy(with: nil) as? RSDTaskInfoStep ?? self.taskInfo
         let task = (self.task as? NSCopying)?.copy(with: nil) as? RSDTask ?? self.task
-
+        
         let copy = type(of: self).init(with: self.identifier, result: result, taskInfo: taskInfo, task: task)
         copy.scheduleIdentifier = self.scheduleIdentifier
         copy.previousResults = self.previousResults?.map({ ($0 as? NSCopying)?.copy(with: nil) as? RSDResult ?? $0 })
@@ -286,15 +290,72 @@ public final class RSDTaskPath : NSObject, NSCopying {
         copy.isCompleted = self.isCompleted
         return copy
     }
-}
-
-/// The wrapper is required b/c `JSONEncoder` does not implement the `Encoder` protocol.
-/// Instead, it uses a private wrapper to box the encoded object.
-fileprivate struct _EncodableResultWrapper: Encodable {
-    let taskResult: RSDTaskResult
     
-    func encode(to encoder: Encoder) throws {
-        try taskResult.encode(to: encoder)
+    
+    // MARK: Task Finalization - The methods included in this section should **not** be called until the task is finished.
+    
+    /// A queue that can be used to serialize archiving and cleaning up the file output.
+    public let fileManagementQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.fileQueue.\(UUID())")
+    
+    /// Convenience method for encoding a result. This is a work-around for a limitation of the encoder
+    /// where it cannot encode an object without a Type for the object.
+    /// - parameter encoder: The factory top-level encoder.
+    /// - returns: The encoded result.
+    public func encodeResult(to encoder: RSDFactoryEncoder) throws -> Data {
+        return try self.result.encodeObject(to: encoder)
+    }
+        
+    /// Delete the output directory on the file management queue. Do *not* call this method until the
+    /// files generated by this task have been copied to a new location, unless the results are being
+    /// discarded.
+    public func deleteOutputDirectory(_ completion:(() -> Void)? = nil) {
+        fileManagementQueue.async {
+            
+            guard let outputDirectory = self._outputDirectory else { return }
+            do {
+                try FileManager.default.removeItem(at: outputDirectory)
+            } catch let error {
+                print("Error removing output directory: \(error.localizedDescription)")
+                debugPrint("\tat: \(outputDirectory)")
+            }
+            completion?()
+        }
+    }
+    
+    /// Build an archive from the task result.
+    ///
+    /// This method will recurse through the task result and pull out data for archiving using the given
+    /// `RSDDataArchiveManager` to manage vending `RSDDataArchive` instances as appropriate. The completion
+    /// handler will be called on the `fileManagementQueue` so that the app can manage any post-processing
+    /// that must be serialized as appropriate.
+    ///
+    /// This method will call `RSDDataArchive.insertDataIntoArchive()` for each `RSDArchivable` result found
+    /// in the collection.
+    ///
+    /// This method will insert the `RSDTaskResult` as JSON-encoded Data unless
+    /// `RSDDataArchive.shouldInsertData(for: .taskResult) == false`
+    ///
+    /// Finally, it will recursively look through the task result step history and async results for
+    /// `RSDAnswerResult` objects. The answer results will be added to a consolidated mapping dictionary of
+    /// answers where the key = `\(section.identifier).\(result.identifier)` and the value is the `value`
+    /// property. This dictionary will be serialized as JSON-encoded Data.
+    ///
+    /// The file results will be added to the files list in a JSON serialized file named "metadata.json"
+    /// that includes information about the device, application, task, and a file manifest.
+    ///
+    public func archiveResults(with manager: RSDDataArchiveManager, completion: (() -> Void)? = nil) {
+        fileManagementQueue.async {
+            do {
+                let taskArchiver = TaskArchiver(manager: manager, taskResult: self.result, scheduleIdentifier: self.scheduleIdentifier)
+                let archives = try taskArchiver.buildArchives()
+                manager.encryptAndUpload(taskPath: self, dataArchives: archives) {
+                    self.deleteOutputDirectory(completion)
+                }
+            } catch let error {
+                manager.handleArchiveFailure(taskPath: self, error: error) {
+                    self.deleteOutputDirectory(completion)
+                }
+            }
+        }
     }
 }
-

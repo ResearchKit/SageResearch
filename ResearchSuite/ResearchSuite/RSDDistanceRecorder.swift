@@ -335,6 +335,16 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
         }
     }
     
+    /// Returns the string encoding format to use for this file. Default is `nil`. If this is `nil`
+    /// then the file will be formatted using JSON encoding.
+    override public func stringEncodingFormat() -> RSDStringSeparatedEncodingFormat? {
+        if self.locationConfiguration?.usesCSVEncoding == true {
+            return CSVEncodingFormat<RSDDistanceRecord>()
+        } else {
+            return nil
+        }
+    }
+    
     // MARK: Data management
     
     private var _stepStartLocation : CLLocation?
@@ -446,7 +456,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
 ///                }
 ///                """.data(using: .utf8)! // our data in native (JSON) format
 /// ```
-public struct RSDDistanceRecord: RSDSampleRecord {
+public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable {
 
     /// The clock uptime.
     public let uptime: TimeInterval
@@ -567,7 +577,7 @@ public struct RSDDistanceRecord: RSDSampleRecord {
 
 extension RSDDistanceRecord : RSDDocumentableCodableObject {
     
-    static func codingKeys() -> [CodingKey] {
+    public static func codingKeys() -> [CodingKey] {
         return allCodingKeys()
     }
     

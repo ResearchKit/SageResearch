@@ -56,6 +56,9 @@ public struct RSDStepType : RawRepresentable, Codable {
     /// Defaults to creating a `RSDFormUIStep`.
     public static let form: RSDStepType = "form"
     
+    /// Defaults to creating a `RSDImagePickerStep`.
+    public static let imagePicker: RSDStepType = "imagePicker"
+    
     /// Defaults to creating a `RSDUIStep`.
     public static let instruction: RSDStepType = "instruction"
     

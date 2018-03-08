@@ -50,6 +50,11 @@ open class RSDDataLogger {
     /// Number of samples written to the file.
     public private(set) var sampleCount: Int = 0
     
+    /// The content type of the data file (if known).
+    open var contentType: String? {
+        return nil
+    }
+    
     /// Default initializer. The initializer will automatically open the file and write the
     /// initial data (if any).
     ///
@@ -90,15 +95,34 @@ open class RSDDataLogger {
 
 /// `RSDFileResultUtility` is a utility for naming temporary files used to save task results.
 public class RSDFileResultUtility {
+
+    /// This utility will create a filename scrubbing the identifier string of any characters that
+    /// are not alpha-numeric, dash, or underscore characters. Additionally, this utility will
+    /// replace '.' and whitespace characters with an underscore. Finally, the string will be
+    /// shortened (if needed) to 24 characters. If the resulting string is empty then a UUID will
+    /// be created and this will be used as the name of the file.
+    ///
+    /// - parameter identifier: The string to use to create the file name.
+    /// - returns: The scrubbed string.
+    public static func filename(for identifier: String) -> String {
+        // Scrub non-alphanumeric characters from the identifer
+        var characterSet = CharacterSet.alphanumerics
+        characterSet.insert("-")
+        characterSet.insert("_")
+        characterSet.invert()
+        var scrubbedIdentifier = identifier.replacingOccurrences(of: ".", with: "_").replacingOccurrences(of: " ", with: "_")
+        while let range = scrubbedIdentifier.rangeOfCharacter(from: characterSet) {
+            scrubbedIdentifier.removeSubrange(range)
+        }
+        scrubbedIdentifier = String(scrubbedIdentifier.prefix(24))
+        return scrubbedIdentifier.count > 0 ? scrubbedIdentifier : String(UUID().uuidString)
+    }
     
     /// Convenience method for creating a file URL to use as the location to save data.
     ///
-    /// This utility will create a directory from the identifier by scrubbing the identifier string of
-    /// any non-alphanumeric characters and then using the first 12 characters of the resulting string.
-    /// If the resulting string is empty then "temp" will be used. The method then creates the directory
-    /// if needed.
-    ///
-    /// Next, a UUID is created and the first 8 characters of the UUID are used as the filename.
+    /// This utility will first create the output directory if needed. Then it will append the scrubbed
+    /// filename using the `filename()` utility function. Finally, the url will be checked and if the
+    /// file already exists, then the filename will be appended with a random 4-letter UUID code.
     ///
     /// The purpose of using this method is two-fold. First, it uses a directory that is simplier for
     /// developers to find while developing a recorder. Second, it limits the length of the file path
@@ -112,26 +136,37 @@ public class RSDFileResultUtility {
     /// - returns: Scrubbed URL for the given identifier.
     /// - throws: An exception if the file directory cannot be created.
     public static func createFileURL(identifier: String, ext: String, outputDirectory: URL) throws -> URL {
-        
-        // Scrub non-alphanumeric characters from the identifer
-        var characterSet = CharacterSet.alphanumerics
-        characterSet.invert()
-        var scrubbedIdentifier = identifier
-        while let range = scrubbedIdentifier.rangeOfCharacter(from: characterSet) {
-            scrubbedIdentifier.removeSubrange(range)
-        }
-        scrubbedIdentifier = String(scrubbedIdentifier.prefix(12))
-        let directory = scrubbedIdentifier.count > 0 ? scrubbedIdentifier : "temp"
-        
+
         // create the directory if needed
-        let dirURL = outputDirectory.appendingPathComponent(directory, isDirectory: true)
-        try FileManager.default.createDirectory(at: dirURL, withIntermediateDirectories: true, attributes: nil)
+        try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true, attributes: nil)
         
-        // Use the first 8 characters of a UUID string for the filename
-        let uuid = UUID().uuidString
-        let filename = String(uuid.prefix(8))
-        let url = dirURL.appendingPathComponent(filename, isDirectory: false).appendingPathExtension(ext)
+        // Check the file name.
+        var filename = self.filename(for: identifier)
+        if let _ = RSDReservedFilename(rawValue: filename) {
+            assertionFailure("\(filename) is a reserved file name.")
+            let uuidCode = UUID().uuidString.prefix(4)
+            filename.append("-\(uuidCode)")
+        }
         
-        return url
+        // Check the url.
+        let relativePath = (filename as NSString).appendingPathExtension(ext)!
+        let url = URL(fileURLWithPath: relativePath, relativeTo: outputDirectory)
+        if !FileManager.default.fileExists(atPath: url.path) {
+            return url
+        } else {
+            assertionFailure("A file already exists at \(filename).")
+            let uuidCode = UUID().uuidString.prefix(4)
+            return URL(fileURLWithPath: "\(filename)-\(uuidCode).\(ext)", relativeTo: outputDirectory)
+        }
+    }
+    
+    /// Convenience method for creating a file URL for a given reserved file name to use as the location
+    /// to save data.
+    ///
+    /// - parameter filename: The name of the file.
+    /// - returns: String path for the given file name.
+    internal static func fileManifest(for filename: RSDReservedFilename) -> RSDFileManifest {
+        let filename = (filename.stringValue as NSString).appendingPathExtension("json")!
+        return RSDFileManifest(filename: filename, timestamp: Date(), contentType: "application/json")
     }
 }

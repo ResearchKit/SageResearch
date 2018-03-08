@@ -200,8 +200,11 @@ public struct RSDMotionRecorderConfiguration : RSDRecorderConfiguration, RSDAsyn
         #endif
     }
     
+    /// Set the flag to `true` to encode the samples as a CSV file.
+    public var usesCSVEncoding : Bool?
+    
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio"
+        case identifier, type, recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio", usesCSVEncoding
     }
     
     /// Default initializer.
@@ -246,7 +249,7 @@ extension RSDMotionRecorderConfiguration : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .recorderTypes, .startStepIdentifier, .stopStepIdentifier, .frequency, ._requiresBackgroundAudio, .type]
+        let codingKeys: [CodingKeys] = [.identifier, .recorderTypes, .startStepIdentifier, .stopStepIdentifier, .frequency, ._requiresBackgroundAudio, .type, .usesCSVEncoding]
         return codingKeys
     }
     
@@ -268,9 +271,11 @@ extension RSDMotionRecorderConfiguration : RSDDocumentableCodableObject {
                 if idx != 5 { return false }
             case .type:
                 if idx != 6 { return false }
+            case .usesCSVEncoding:
+                if idx != 7 { return false }
             }
         }
-        return keys.count == 7
+        return keys.count == 8
     }
     
     static func examples() -> [Encodable] {

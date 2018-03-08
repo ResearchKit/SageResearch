@@ -72,8 +72,11 @@ public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, RSDAs
     /// the task is started.
     public let stopStepIdentifier: String?
     
+    /// Set the flag to `true` to encode the samples as a CSV file.
+    public var usesCSVEncoding : Bool?
+    
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, motionStepIdentifier, startStepIdentifier, stopStepIdentifier
+        case identifier, type, motionStepIdentifier, startStepIdentifier, stopStepIdentifier, usesCSVEncoding
     }
     
     /// Default initializer.
@@ -129,7 +132,7 @@ extension RSDDistanceRecorderConfiguration : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .motionStepIdentifier, .startStepIdentifier, .stopStepIdentifier]
+        let codingKeys: [CodingKeys] = [.identifier, .type, .motionStepIdentifier, .startStepIdentifier, .stopStepIdentifier, .usesCSVEncoding]
         return codingKeys
     }
     
@@ -147,9 +150,11 @@ extension RSDDistanceRecorderConfiguration : RSDDocumentableCodableObject {
                 if idx != 3 { return false }
             case .stopStepIdentifier:
                 if idx != 4 { return false }
+            case .usesCSVEncoding:
+                if idx != 5 { return false }
             }
         }
-        return keys.count == 5
+        return keys.count == 6
     }
     
     static func examples() -> [Encodable] {

@@ -51,7 +51,12 @@ public struct RSDTaskInfoObject : RSDTaskInfo, RSDEmbeddedIconVendor, Codable {
     
     /// The estimated number of minutes that the task will take. If `0`, then this is ignored.
     public var estimatedMinutes: Int {
-        return _estimatedMinutes ?? 0
+        get {
+            return _estimatedMinutes ?? 0
+        }
+        set {
+            _estimatedMinutes = newValue
+        }
     }
     private var _estimatedMinutes: Int?
     
@@ -62,12 +67,12 @@ public struct RSDTaskInfoObject : RSDTaskInfo, RSDEmbeddedIconVendor, Codable {
         case identifier, title, subtitle, detail, _estimatedMinutes = "estimatedMinutes", icon
     }
     
-    public init(identifier: String) {
+    public init(with identifier: String) {
         self.identifier = identifier
     }
     
     public func copy(with identifier: String) -> RSDTaskInfoObject {
-        var copy = RSDTaskInfoObject(identifier: identifier)
+        var copy = RSDTaskInfoObject(with: identifier)
         copy.title = self.title
         copy.subtitle = self.subtitle
         copy.detail = self.detail
@@ -145,7 +150,14 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep, Decodable {
     /// Default initializer.
     /// - parameter identifier: A short string that uniquely identifies the step.
     public init(with identifier: String) {
-        self.taskInfoObject = RSDTaskInfoObject(identifier: identifier)
+        self.taskInfoObject = RSDTaskInfoObject(with: identifier)
+        self.stepType = .taskInfo
+    }
+    
+    /// Default initializer.
+    /// - parameter identifier: A short string that uniquely identifies the step.
+    public init(with taskInfo: RSDTaskInfoObject) {
+        self.taskInfoObject = taskInfo
         self.stepType = .taskInfo
     }
     

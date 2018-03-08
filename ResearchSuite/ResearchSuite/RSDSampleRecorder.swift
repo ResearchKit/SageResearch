@@ -567,15 +567,21 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     
     /// Instantiate the logger file for the given identifier.
     ///
-    /// By default, the file will be created using the `RSDFileResultUtility.createFileURL()` utility method to create
-    /// a URL in the `outputDirectory`. A `RSDRecordSampleLogger` is returned by default.
+    /// By default, the file will be created using the `RSDFileResultUtility.createFileURL()` utility method
+    /// to create a URL in the `outputDirectory`. A `RSDRecordSampleLogger` is returned by default.
     ///
     /// - parameter identifier: The unique identifier for the logger.
     /// - returns: A new instance of a `RSDDataLogger`.
     /// - throws: An error if opening the log file failed.
     open func instantiateLogger(with identifier: String) throws -> RSDDataLogger? {
         let url = try RSDFileResultUtility.createFileURL(identifier: identifier, ext: "json", outputDirectory: outputDirectory)
-        return try RSDRecordSampleLogger(identifier: identifier, url: url, usesRootDictionary: self.usesRootDictionary)
+        return try RSDRecordSampleLogger(identifier: identifier, url: url, usesRootDictionary: self.usesRootDictionary, stringEncodingFormat: stringEncodingFormat())
+    }
+    
+    /// Returns the string encoding format to use for this file. Default is `nil`. If this is `nil`
+    /// then the file will be formatted using JSON encoding.
+    open func stringEncodingFormat() -> RSDStringSeparatedEncodingFormat? {
+        return nil
     }
     
     /// Write a marker to each logging file.
@@ -633,6 +639,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
                 fileResult.endDate = Date()
                 fileResult.url = logger.url
                 fileResult.startUptime = self.startUptime
+                fileResult.contentType = logger.contentType
                 self.appendResults(fileResult)
             }
             catch let err {
@@ -650,6 +657,50 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }
 }
 
+/// A protocol that can be used to define the keys and header to use in a string-separated file.
+/// - seealso: `RSDRecordSampleLogger`
+public protocol RSDStringSeparatedEncodingFormat {
+    
+    /// The string to use as the separator. For example, a comma-delimited file uses a "," character.
+    var encodingSeparator: String { get }
+    
+    /// The content type for the file.
+    var contentType: String { get }
+    
+    /// A string that includes a header for the file. The columns in the table should be separated using
+    /// the `encodingSeparator`.
+    func fileTableHeader() -> String
+    
+    /// A list of the coding keys to use to build the delimited string for a single Element in an Array.
+    func codingKeys() -> [CodingKey]
+}
+
+/// Implementation of the `RSDStringSeparatedEncodingFormat` protocol that wraps a comma separated encodable.
+public struct CSVEncodingFormat<K> : RSDStringSeparatedEncodingFormat where K : RSDDelimiterSeparatedEncodable {
+    public typealias Key = K
+    
+    /// Does this encoding format include a header?
+    public var includesHeader: Bool = true
+    
+    /// Returns a comma.
+    public var encodingSeparator: String {
+        return ","
+    }
+    
+    /// Returns "text/csv".
+    public var contentType: String {
+        return "text/csv"
+    }
+    
+    public func fileTableHeader() -> String {
+        return includesHeader ? Key.fileTableHeader(with: encodingSeparator) : ""
+    }
+    
+    public func codingKeys() -> [CodingKey] {
+        return Key.codingKeys()
+    }
+}
+
 /// `RSDRecordSampleLogger` is used to write samples encoded as json dictionary objects to a logging file.
 public class RSDRecordSampleLogger : RSDDataLogger {
     
@@ -663,6 +714,17 @@ public class RSDRecordSampleLogger : RSDDataLogger {
     /// - seealso: `RSDSampleRecorder.usesRootDictionary`
     public let usesRootDictionary: Bool
     
+    /// Does the recorder use a string-delimited format for saving each sample? If so, this contains the keys
+    /// used to support encoding in that format.
+    public let stringEncodingFormat: RSDStringSeparatedEncodingFormat?
+    
+    /// Returns "application/json" or the string encoding if applicable.
+    override public var contentType: String? {
+        return stringEncodingFormat?.contentType ?? "application/json"
+    }
+    
+    private let startText: String
+    
     /// Default initializer. The initializer will automatically open the file and write the
     /// JSON root element and start the sample array.
     ///
@@ -670,17 +732,21 @@ public class RSDRecordSampleLogger : RSDDataLogger {
     ///     - identifier: A unique identifier for the logger.
     ///     - url: The url to the file.
     ///     - usesRootDictionary: Is the root element in the json file a dictionary?
-    public init(identifier: String, url: URL, usesRootDictionary: Bool) throws {
+    public init(identifier: String, url: URL, usesRootDictionary: Bool, stringEncodingFormat: RSDStringSeparatedEncodingFormat? = nil) throws {
         self.usesRootDictionary = usesRootDictionary
+        self.stringEncodingFormat = stringEncodingFormat
         
         let startText: String
-        if usesRootDictionary {
+        if let format = stringEncodingFormat {
+            startText = "\(format.fileTableHeader())"
+        } else if usesRootDictionary {
             // If this json file uses a dictionary as its root, then add a start date timestamp
             // and a key for the items in the dictionary.
+            let timestamp = RSDFactory.shared.encodeString(from: Date(), codingPath: [])
             startText =
             """
             {
-            "startDate" : \(Date().jsonObject()),
+            "startDate" : "\(timestamp)",
             "items"     : [
             """
         } else {
@@ -690,6 +756,7 @@ public class RSDRecordSampleLogger : RSDDataLogger {
         guard let data = startText.data(using: .utf8) else {
             throw RSDRecordSampleLoggerError.stringEncodingFailed(startText)
         }
+        self.startText = startText
         
         try super.init(identifier: identifier, url: url, initialData: data)
     }
@@ -707,14 +774,22 @@ public class RSDRecordSampleLogger : RSDDataLogger {
     /// - parameter sample: The sample to add to the logging file.
     /// - throws: Error if writing the sample fails because the wasn't enough memory on the device.
     public func writeSample(_ sample: RSDSampleRecord) throws {
-        if sampleCount > 0 {
-            // If this is not the first sample then write a period and line feed
-            try write(",\n")
+        if let format = self.stringEncodingFormat {
+            let string = try sample.delimiterEncodedString(with: format.codingKeys(), delimiter: format.encodingSeparator)
+            if sampleCount > 0 || startText.count > 0 {
+                try write("\n\(string)")
+            } else {
+                try write("\(string)")
+            }
         }
-        let jsonEncoder = RSDFactory.shared.createJSONEncoder()
-        let wrapper = _EncodableSampleWrapper(record: sample)
-        let data = try jsonEncoder.encode(wrapper)
-        try write(data)
+        else {
+            if sampleCount > 0 {
+                // If this is not the first sample then write a comma and line feed
+                try write(",\n")
+            }
+            let data = try sample.jsonEncodedData()
+            try write(data)
+        }
     }
     
     /// Close the file. This will write the end tag for the root element and then close the file handle.
@@ -723,8 +798,15 @@ public class RSDRecordSampleLogger : RSDDataLogger {
     ///
     /// - throws: Error thrown when attempting to write the closing tag.
     public override func close() throws {
+        
+        /// If there is a string encoding format, then there isn't a need for a JSON closure.
+        guard self.stringEncodingFormat == nil else {
+            try super.close()
+            return
+        }
+        
         // Write the json closure to the file
-        let endText = usesRootDictionary ? "}]" : "\n]"
+        let endText = usesRootDictionary ? "\n]\n}" : "\n]"
         var writeError: Error?
         do {
             try write(endText)
@@ -743,15 +825,6 @@ public class RSDRecordSampleLogger : RSDDataLogger {
             throw RSDRecordSampleLoggerError.stringEncodingFailed(string)
         }
         try write(data)
-    }
-}
-
-/// The wrapper is required b/c `JSONEncoder` does not implement the `Encoder` protocol.
-/// Instead, it uses a private wrapper to box the encoded object.
-fileprivate struct _EncodableSampleWrapper: Encodable {
-    let record: RSDSampleRecord
-    func encode(to encoder: Encoder) throws {
-        try record.encode(to: encoder)
     }
 }
 

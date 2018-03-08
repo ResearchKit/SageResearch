@@ -115,14 +115,20 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let cell = sender as? UITableViewCell,
-            let indexPath = self.tableView.indexPath(for: cell),
-            let vc = segue.destination as? ResultTableViewController
-            else {
+            let indexPath = self.tableView.indexPath(for: cell) else {
                 return
         }
-        vc.result = results(in: indexPath.section)[indexPath.row]
-        vc.title = vc.result!.identifier
-        vc.navigationItem.title = vc.title
+        
+        if let vc = segue.destination as? ResultTableViewController {
+            vc.result = results(in: indexPath.section)[indexPath.row]
+            vc.title = vc.result!.identifier
+            vc.navigationItem.title = vc.title
+        }
+        else if let vc = segue.destination as? FileResultViewController {
+            vc.result = results(in: indexPath.section)[indexPath.row] as? RSDFileResult
+            vc.title = vc.result!.identifier
+            vc.navigationItem.title = vc.title
+        }
     }
     
     // MARK: - RSDTaskControllerDelegate

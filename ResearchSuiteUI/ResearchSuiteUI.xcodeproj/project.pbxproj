@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F802F3DC204DECA80027CB00 /* RSDImagePickerStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3DA204DECA80027CB00 /* RSDImagePickerStepViewController.swift */; };
+		F802F3DD204DECA80027CB00 /* RSDImagePickerStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F802F3DB204DECA80027CB00 /* RSDImagePickerStepViewController.xib */; };
 		F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */; };
 		F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */; };
 		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
@@ -77,6 +79,8 @@
 
 /* Begin PBXFileReference section */
 		80242B0E2018013E00FC4F44 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		F802F3DA204DECA80027CB00 /* RSDImagePickerStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImagePickerStepViewController.swift; sourceTree = "<group>"; };
+		F802F3DB204DECA80027CB00 /* RSDImagePickerStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDImagePickerStepViewController.xib; sourceTree = "<group>"; };
 		F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPickerViewProtocol.swift; sourceTree = "<group>"; };
 		F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDLoadingView.swift; sourceTree = "<group>"; };
 		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -279,6 +283,7 @@
 				FFDD782D1FAE9E220024BDD1 /* Default NIbs */,
 				FFDD780F1FAE96C70024BDD1 /* RSDCountdownStepViewController.swift */,
 				FFDD781E1FAE990F0024BDD1 /* RSDActiveStepViewController.swift */,
+				F802F3DA204DECA80027CB00 /* RSDImagePickerStepViewController.swift */,
 				FF478D911FD752E800493A49 /* RSDNavigationController.swift */,
 				FF39E5231F972F5200C366FC /* RSDTableStepViewController.swift */,
 				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
@@ -293,6 +298,7 @@
 				FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */,
 				FFDD781F1FAE990F0024BDD1 /* RSDActiveStepViewController.xib */,
 				FFDD78101FAE96C70024BDD1 /* RSDCountdownStepViewController.xib */,
+				F802F3DB204DECA80027CB00 /* RSDImagePickerStepViewController.xib */,
 				FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */,
 			);
 			path = "Default NIbs";
@@ -440,6 +446,7 @@
 				FFF2D9861FCF451C007258F8 /* DebugStepViewController.xib in Resources */,
 				FFF2D9871FCF451C007258F8 /* RSDActiveStepViewController.xib in Resources */,
 				FFF2D9A41FCF4FC6007258F8 /* DefaultImages.xcassets in Resources */,
+				F802F3DD204DECA80027CB00 /* RSDImagePickerStepViewController.xib in Resources */,
 				FFF2D9891FCF451C007258F8 /* RSDTaskInfoStepViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,6 +495,7 @@
 				FFF2D9931FCF4530007258F8 /* RSDStepChoiceCell.swift in Sources */,
 				FFF2D98D1FCF4527007258F8 /* DebugStepViewController.swift in Sources */,
 				F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */,
+				F802F3DC204DECA80027CB00 /* RSDImagePickerStepViewController.swift in Sources */,
 				FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
 				F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */,
 				FFF2D98C1FCF4527007258F8 /* RSDTableStepViewController.swift in Sources */,

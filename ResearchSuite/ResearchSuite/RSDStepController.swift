@@ -86,7 +86,7 @@ extension RSDStepController {
     
     /// Pointer back to the task controller that is displaying the step controller. The implementation
     /// of the task controller should set this pointer before displaying the step controller.
-    var taskUIController: RSDTaskUIController? {
+    public var taskUIController: RSDTaskUIController? {
         return self.taskController as? RSDTaskUIController
     }
     

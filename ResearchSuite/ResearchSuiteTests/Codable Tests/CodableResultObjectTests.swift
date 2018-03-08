@@ -81,6 +81,56 @@ class CodableResultObjectTests: XCTestCase {
         }
     }
     
+    func testFileResultObject_Codable() {
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "file",
+            "startDate": "2017-10-16T22:28:09.000-07:00",
+            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "relativePath": "temp.json",
+            "contentType": "application/json"
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            var object = try decoder.decode(RSDFileResultObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.type, "file")
+            XCTAssertGreaterThan(object.endDate, object.startDate)
+            XCTAssertEqual(object.relativePath, "temp.json")
+            XCTAssertEqual(object.contentType, "application/json")
+            
+            // set the url
+            let tempDir = NSTemporaryDirectory()
+            let path = (tempDir as NSString).appendingPathComponent(UUID().uuidString)
+            let baseURL = URL(fileURLWithPath: path, isDirectory: true)
+            object.url = URL(fileURLWithPath: "foo.json", relativeTo: baseURL)
+            let expectedPath = (path as NSString).appendingPathComponent("foo.json")
+            XCTAssertEqual(object.url?.path, expectedPath)
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["type"] as? String, "file")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["relativePath"] as? String, "foo.json")
+            XCTAssertEqual(dictionary["contentType"] as? String, "application/json")
+            XCTAssertNil(dictionary["url"])
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+        }
+    }
+    
     func testAnswerResultObject_String_NilValue_Codable() {
         let json = """
         {
@@ -1012,6 +1062,4 @@ class CodableResultObjectTests: XCTestCase {
             XCTFail("Failed to decode/encode object: \(err)")
         }
     }
-    
-    
 }
