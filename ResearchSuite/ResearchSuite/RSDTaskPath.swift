@@ -324,7 +324,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     
     /// Build an archive from the task result.
     ///
-    /// This method will recursive through the task result and pull out data for archiving using the given
+    /// This method will recurse through the task result and pull out data for archiving using the given
     /// `RSDDataArchiveManager` to manage vending `RSDDataArchive` instances as appropriate. The completion
     /// handler will be called on the `fileManagementQueue` so that the app can manage any post-processing
     /// that must be serialized as appropriate.

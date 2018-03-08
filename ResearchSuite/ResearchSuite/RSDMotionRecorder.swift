@@ -291,7 +291,7 @@ public class RSDMotionRecorder : RSDSampleRecorder {
 /// ```
 ///
 /// - seealso: "CodableMotionRecorderTests.swift" unit tests for additional examples.
-public struct RSDMotionRecord : RSDSampleRecord, RSDCommaSeparatedEncodable {
+public struct RSDMotionRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     
     /// The clock uptime.
     public let uptime: TimeInterval

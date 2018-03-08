@@ -38,22 +38,22 @@ import Foundation
 /// A csv-formatted file is a smaller format that might be suitable for saving data to a file that will
 /// be parsed into a table, **but** the elements must all conform to single value container encoding
 /// **and** they may not include any strings in the encoded value.
-public protocol RSDCommaSeparatedEncodable : Encodable {
+public protocol RSDDelimiterSeparatedEncodable : Encodable {
     
     /// An ordered list of coding keys to use when encoding this object to a comma-separated string.
     static func codingKeys() -> [CodingKey]
 }
 
-extension RSDCommaSeparatedEncodable {
+extension RSDDelimiterSeparatedEncodable {
     
     /// The comma-separated list of header strings to use as the header in a CSV file.
-    public static func csvHeader() -> String {
-        return self.codingKeys().map { $0.stringValue }.joined(separator: ",")
+    public static func fileTableHeader(with delimiter: String) -> String {
+        return self.codingKeys().map { $0.stringValue }.joined(separator: delimiter)
     }
     
     /// The comma-separated string representing this object.
-    public func csvEncodedString() throws -> String {
-        return try csvEncodedString(with: type(of: self).codingKeys())
+    public func delimiterEncodedString(with delimiter: String) throws -> String {
+        return try delimiterEncodedString(with: type(of: self).codingKeys(), delimiter: delimiter)
     }
 }
 
@@ -61,7 +61,7 @@ extension Encodable {
     
     /// Returns the comma-separated string representing this object.
     /// - parameter codingKeys: The codingKeys to use as mask for the comma-delimited list.
-    public func csvEncodedString(with codingKeys: [CodingKey]) throws -> String {
+    public func delimiterEncodedString(with codingKeys: [CodingKey], delimiter: String) throws -> String {
         let dictionary = try self.jsonEncodedDictionary()
         let values: [String] = try codingKeys.map { (key) -> String in
             guard let value = dictionary[key.stringValue] else { return "" }
@@ -70,13 +70,13 @@ extension Encodable {
                 throw EncodingError.invalidValue(value, context)
             }
             let string = "\(value)"
-            if string.contains(",") {
-                let context = EncodingError.Context(codingPath: [], debugDescription: "A comma-delimited string encoding cannot encode a string that contains a comma.")
+            if string.contains(delimiter) {
+                let context = EncodingError.Context(codingPath: [], debugDescription: "A delimited string encoding cannot encode a string that contains the delimiter: '\(delimiter)'.")
                 throw EncodingError.invalidValue(string, context)
             }
             return string
         }
-        return values.joined(separator: ",")
+        return values.joined(separator: delimiter)
     }
     
     /// Returns JSON-encoded data created by encoding this object using a JSON encoder created

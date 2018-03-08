@@ -660,28 +660,40 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
 /// A protocol that can be used to define the keys and header to use in a string-separated file.
 /// - seealso: `RSDRecordSampleLogger`
 public protocol RSDStringSeparatedEncodingFormat {
+    
+    /// The string to use as the separator. For example, a comma-delimited file uses a "," character.
     var encodingSeparator: String { get }
+    
+    /// The content type for the file.
     var contentType: String { get }
-    func csvHeader() -> String
+    
+    /// A string that includes a header for the file. The columns in the table should be separated using
+    /// the `encodingSeparator`.
+    func fileTableHeader() -> String
+    
+    /// A list of the coding keys to use to build the delimited string for a single Element in an Array.
     func codingKeys() -> [CodingKey]
 }
 
 /// Implementation of the `RSDStringSeparatedEncodingFormat` protocol that wraps a comma separated encodable.
-public struct CSVEncodingFormat<K> : RSDStringSeparatedEncodingFormat where K : RSDCommaSeparatedEncodable {
+public struct CSVEncodingFormat<K> : RSDStringSeparatedEncodingFormat where K : RSDDelimiterSeparatedEncodable {
     public typealias Key = K
     
+    /// Does this encoding format include a header?
     public var includesHeader: Bool = true
     
+    /// Returns a comma.
     public var encodingSeparator: String {
         return ","
     }
     
+    /// Returns "text/csv".
     public var contentType: String {
         return "text/csv"
     }
     
-    public func csvHeader() -> String {
-        return includesHeader ? Key.csvHeader() : ""
+    public func fileTableHeader() -> String {
+        return includesHeader ? Key.fileTableHeader(with: encodingSeparator) : ""
     }
     
     public func codingKeys() -> [CodingKey] {
@@ -702,7 +714,7 @@ public class RSDRecordSampleLogger : RSDDataLogger {
     /// - seealso: `RSDSampleRecorder.usesRootDictionary`
     public let usesRootDictionary: Bool
     
-    /// Does the recorder use a comma-delimited format for saving each sample? If so, this contains the keys
+    /// Does the recorder use a string-delimited format for saving each sample? If so, this contains the keys
     /// used to support encoding in that format.
     public let stringEncodingFormat: RSDStringSeparatedEncodingFormat?
     
@@ -726,7 +738,7 @@ public class RSDRecordSampleLogger : RSDDataLogger {
         
         let startText: String
         if let format = stringEncodingFormat {
-            startText = "\(format.csvHeader())"
+            startText = "\(format.fileTableHeader())"
         } else if usesRootDictionary {
             // If this json file uses a dictionary as its root, then add a start date timestamp
             // and a key for the items in the dictionary.
@@ -763,7 +775,7 @@ public class RSDRecordSampleLogger : RSDDataLogger {
     /// - throws: Error if writing the sample fails because the wasn't enough memory on the device.
     public func writeSample(_ sample: RSDSampleRecord) throws {
         if let format = self.stringEncodingFormat {
-            let string = try sample.csvEncodedString(with: format.codingKeys())
+            let string = try sample.delimiterEncodedString(with: format.codingKeys(), delimiter: format.encodingSeparator)
             if sampleCount > 0 || startText.count > 0 {
                 try write("\n\(string)")
             } else {
@@ -772,7 +784,7 @@ public class RSDRecordSampleLogger : RSDDataLogger {
         }
         else {
             if sampleCount > 0 {
-                // If this is not the first sample then write a period and line feed
+                // If this is not the first sample then write a comma and line feed
                 try write(",\n")
             }
             let data = try sample.jsonEncodedData()

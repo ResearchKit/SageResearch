@@ -97,7 +97,7 @@ public protocol RSDDataArchive : class, NSObjectProtocol {
     /// and the app needs to track what the scheduled timing is for the task.
     var scheduleIdentifier: String? { get set }
     
-    /// Should the data archive include inserting data for the given reserved filename.
+    /// Should the data archive include inserting data for the given reserved filename?
     func shouldInsertData(for filename: RSDReservedFilename) -> Bool
     
     /// Method for adding data to an archive.
@@ -308,12 +308,12 @@ internal class TaskArchiver : NSObject {
         for result in results {
             if let taskResult = result as? RSDTaskResult {
                 if let subArchiver = TaskArchiver(manager: manager, taskResult: taskResult, inputArchive: archive) {
-                    // If there is a archiver for this subtask, then append the archives with that result.
+                    // If there is an archiver for this subtask, then append the archives with that result.
                     let archives = try subArchiver.buildArchives()
                     self.childArchives.append(contentsOf: archives)
                 }
                 else {
-                    // Otherwise, recuse into the task result and add it's results to this archive.
+                    // Otherwise, recuse into the task result and add its results to this archive.
                     let path = (stepPath != nil) ? "\(stepPath!)/\(taskResult.identifier)" : taskResult.identifier
                     try recursiveAddFunc(taskResult.identifier, path, taskResult.stepHistory)
                     if let asyncResults = taskResult.asyncResults {

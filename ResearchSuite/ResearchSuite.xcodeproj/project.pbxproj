@@ -188,9 +188,9 @@
 		F8C28F28204F09CE00863F5F /* RSDDataArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C28F27204F09CE00863F5F /* RSDDataArchiveManager.swift */; };
 		F8C28F29204F09CE00863F5F /* RSDDataArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C28F27204F09CE00863F5F /* RSDDataArchiveManager.swift */; };
 		F8C28F2A204F09CE00863F5F /* RSDDataArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C28F27204F09CE00863F5F /* RSDDataArchiveManager.swift */; };
-		F8C28F30204F181600863F5F /* RSDCommaSeparatedEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C28F2F204F181600863F5F /* RSDCommaSeparatedEncodable.swift */; };
-		F8C28F31204F181600863F5F /* RSDCommaSeparatedEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C28F2F204F181600863F5F /* RSDCommaSeparatedEncodable.swift */; };
-		F8C28F32204F181600863F5F /* RSDCommaSeparatedEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C28F2F204F181600863F5F /* RSDCommaSeparatedEncodable.swift */; };
+		F8C28F30204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C28F2F204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift */; };
+		F8C28F31204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C28F2F204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift */; };
+		F8C28F32204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C28F2F204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift */; };
 		F8C723ED2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C723EC2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift */; };
 		F8C723EE2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C723EC2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift */; };
 		F8C723EF2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C723EC2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift */; };
@@ -610,7 +610,7 @@
 		F8BAF4222048E217004B9406 /* TrackingNavigatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingNavigatorTests.swift; sourceTree = "<group>"; };
 		F8BAF4252048ECDA004B9406 /* RSDTrackedItemsLoggingStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTrackedItemsLoggingStepObject.swift; sourceTree = "<group>"; };
 		F8C28F27204F09CE00863F5F /* RSDDataArchiveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDataArchiveManager.swift; sourceTree = "<group>"; };
-		F8C28F2F204F181600863F5F /* RSDCommaSeparatedEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCommaSeparatedEncodable.swift; sourceTree = "<group>"; };
+		F8C28F2F204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDelimiterSeparatedEncodable.swift; sourceTree = "<group>"; };
 		F8C723EC2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPopoverInputFieldObject.swift; sourceTree = "<group>"; };
 		F8C723F02045F98E003DCD42 /* RSDTrackedItemDetailsStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTrackedItemDetailsStepObject.swift; sourceTree = "<group>"; };
 		F8D074AD204FAC04006CDABB /* RecordSampleLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSampleLoggerTests.swift; sourceTree = "<group>"; };
@@ -982,7 +982,7 @@
 			children = (
 				FF1561FA1F940E8A0036998E /* Codable+Utilities.swift */,
 				FF2948721FCCBC71002BD221 /* NumberFormatter+Codable.swift */,
-				F8C28F2F204F181600863F5F /* RSDCommaSeparatedEncodable.swift */,
+				F8C28F2F204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift */,
 				FFDFF5C11FBFBA71009713E8 /* RSDDocumentable.swift */,
 				FFD243251F95544A0083F458 /* RSDJSONNumber.swift */,
 				FF80B11F1F7B01E200582849 /* RSDJSONValue.swift */,
@@ -1675,7 +1675,7 @@
 				F8F561E72023C2A8000EEA8C /* RSDDurationPickerDataSourceObject.swift in Sources */,
 				FF8B54261FCE6CA2006B6937 /* RSDSectionStepObject.swift in Sources */,
 				FF8B53AF1FCE6C7A006B6937 /* RSDSurveyRule.swift in Sources */,
-				F8C28F30204F181600863F5F /* RSDCommaSeparatedEncodable.swift in Sources */,
+				F8C28F30204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */,
 				FF8B549F1FCE6CF6006B6937 /* RSDFormStepDataSourceObject.swift in Sources */,
 				F89E6E222044D60E003D9E34 /* RSDTrackedItemsStepNavigator.swift in Sources */,
 				F829F0D31FF71EE7001B0680 /* RSDLengthFormatter.m in Sources */,
@@ -1812,7 +1812,7 @@
 				FF8B548B1FCE6CDD006B6937 /* RSDStepController.swift in Sources */,
 				FF8B54A61FCE6CF7006B6937 /* RSDInputFieldError.swift in Sources */,
 				FF8B53891FCE6C70006B6937 /* RSDDeviceType.swift in Sources */,
-				F8C28F31204F181600863F5F /* RSDCommaSeparatedEncodable.swift in Sources */,
+				F8C28F31204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */,
 				F88051A32011B43800B0FDDD /* RSDFraction.swift in Sources */,
 				FF8B53B81FCE6C7B006B6937 /* RSDConditionalStepNavigator.swift in Sources */,
 				F80CA50F1FFEAB8D00E89C06 /* RSDDatePickerDataSourceObject.swift in Sources */,
@@ -1956,7 +1956,7 @@
 				FF8B54881FCE6CDC006B6937 /* RSDStepController.swift in Sources */,
 				FF8B54AC1FCE6CF8006B6937 /* RSDInputFieldError.swift in Sources */,
 				F829F0DD1FF86DA4001B0680 /* RSDMassFormatter.m in Sources */,
-				F8C28F32204F181600863F5F /* RSDCommaSeparatedEncodable.swift in Sources */,
+				F8C28F32204F181600863F5F /* RSDDelimiterSeparatedEncodable.swift in Sources */,
 				FF8B53921FCE6C71006B6937 /* RSDDeviceType.swift in Sources */,
 				FF8B53CD1FCE6C7B006B6937 /* RSDConditionalStepNavigator.swift in Sources */,
 				FF8B541C1FCE6C9A006B6937 /* RSDCollectionResultObject.swift in Sources */,

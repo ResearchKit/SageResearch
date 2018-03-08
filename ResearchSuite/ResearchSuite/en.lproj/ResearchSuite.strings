@@ -110,5 +110,5 @@
 "CAMERA_NOT_AVAILABLE" = "This device does not support using the camera to capture images.";
 "PHOTO_LIBRARY_PERMISSION_DENIED" = "You have not given this app permission to use the photo library. You can enable access in the Privacy Settings.";
 "PHOTO_LIBRARY_PERMISSION_RESTRICTED" = "Access to the photo library is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
-"CAMERA_PERMISSION_DENIED" = "You have not given this app permission to use the photo library. You can enable access in the Privacy Settings.";
+"CAMERA_PERMISSION_DENIED" = "You have not given this app permission to use the camera. You can enable access in the Privacy Settings.";
 "CAMERA_PERMISSION_RESTRICTED" = "Access to the camera is restricted. You must allow permission within 'Settings -> General -> Restrictions'";

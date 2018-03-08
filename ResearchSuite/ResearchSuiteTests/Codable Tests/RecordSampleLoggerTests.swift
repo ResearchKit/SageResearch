@@ -34,7 +34,7 @@
 import XCTest
 @testable import ResearchSuite
 
-struct TestRecord : RSDSampleRecord, RSDCommaSeparatedEncodable {
+struct TestRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     let uptime: TimeInterval
     let stepPath: String
     let label: String?

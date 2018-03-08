@@ -456,7 +456,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
 ///                }
 ///                """.data(using: .utf8)! // our data in native (JSON) format
 /// ```
-public struct RSDDistanceRecord: RSDSampleRecord, RSDCommaSeparatedEncodable {
+public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable {
 
     /// The clock uptime.
     public let uptime: TimeInterval

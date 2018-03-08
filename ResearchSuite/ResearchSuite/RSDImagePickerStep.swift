@@ -34,7 +34,7 @@
 import Foundation
 
 /// What source should be used for the image selection?
-/// - note: The app is required to include the appropriate permissions in its `Info.plist` file.
+/// - note: The app is required to include the appropriate permission strings in its `Info.plist` file.
 public enum RSDImagePickerSourceType : String, Codable {
     
     /// “Privacy - Camera Usage Description”
