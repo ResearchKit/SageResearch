@@ -1,0 +1,43 @@
+{
+    "steps"             : [
+                           {
+                           "identifier"     : "instruction",
+                           "type"           : "instruction",
+                           "image"          : {
+                                               "imageNames" : ["heartRateMeasurement1", "heartRateMeasurement2", "heartRateMeasurement3"],
+                                               "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness",
+                                               "placementType" : "topBackground",
+                                               "animationDuration" : 2
+                                               },
+                           "colorTheme"     : { "backgroundColor" : "macaroniAndCheese", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "title"          : "Capture heart rate",
+                           "text"           : "Use your finger to cover the camera and flash on the back of your phone.",
+                           "actions"        : { "goForward": { "iconName": "captureStartButton", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }},
+                           "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                           },
+                           {
+                           "identifier"   : "heartRate",
+                           "type"         : "heartRate",
+                           "text"         : "Gently cover both the camera and flash with your finger.",
+                           "detail"       : "Doing a great job of keeping your finger on the camera!",
+                           "shouldHideActions": ["goBackward", "goForward"],
+                           "duration": 60,
+                           "commands": ["playSound", "continueOnFinish", "shouldDisableIdleTimer"],
+                           "requiresBackgroundAudio": true,
+                           "spokenInstructions": {
+                                "0" : "Gently cover both the camera and flash with your finger.",
+                                "5": "Please keep still",
+                                "halfway": "You’re half way there!",
+                                "45": "Just 15 seconds left",
+                                "end": "You’re all done!"
+                           }
+                           },
+                           {
+                           "identifier"   : "feedback",
+                           "type"         : "completion",
+                           "title"        : "You’re all done!",
+                           "text"         : "Your heart rate is",
+                           "viewTheme"   : { "viewIdentifier": "HeartRateResult", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                           }
+                           ]
+}

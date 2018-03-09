@@ -32,13 +32,15 @@
 //
 
 import UIKit
+import CardiorespiratoryFitness
 import ResearchSuite
+import ResearchSuiteUI
 
 class TaskTableViewController: UITableViewController {
 
     @IBOutlet weak var detailLabel: UILabel!
     
-    var tasks: [RSDTaskInfoStep] = []
+    var tasks = CRFTaskIdentifier.all().map { CRFTaskInfo($0) }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,8 +127,9 @@ class TaskTableViewController: UITableViewController {
             else {
                 return
         }
+        
         let taskInfo = tasks[indexPath.row]
-        vc.taskPath = RSDTaskPath(taskInfo: taskInfo)
+        vc.taskPath = RSDTaskPath(task: taskInfo.task)
         vc.title = taskInfo.title ?? taskInfo.identifier
         vc.navigationItem.title = vc.title
     }

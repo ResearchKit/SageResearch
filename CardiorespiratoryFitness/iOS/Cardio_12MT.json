@@ -1,0 +1,161 @@
+{
+    "identifier"        : "Cardio 12MT",
+    "actions"           : { "cancel": { "iconName": "closeActivity", "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" }},
+    "shouldHideActions" : ["goBackward", "skip"],
+    "progressMarkers"   : ["volumeUp", "goOutside", "heartRate.before", "run", "heartRate.after", "surveyAfter"],
+    "asyncActions"      : [
+                           {
+                           "identifier"             : "location",
+                           "type"                   : "distance",
+                           "startStepIdentifier"    : "heartRate.before",
+                           "stopStepIdentifier"     : "heartRate.after",
+                           "motionStepIdentifier"   : "runDistance"
+                           }
+                           ],
+    "steps"             : [
+                           {
+                           "identifier"   : "introduction",
+                           "type"         : "overview",
+                           "title"        : "12 Minute Distance Test",
+                           "text"         : "15 minutes",
+                           "image"  : {
+                                           "imageNames" : ["12MinLarge1", "12MinLarge2", "12MinLarge3", "12MinLarge4"],
+                                           "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness",
+                                           "placementType" : "topBackground",
+                                           "animationDuration" : 2,
+                                           },
+                           "colorTheme"     : { "backgroundColor" : "sky", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "permissions"    : [{
+                                               "permissionType" : "location",
+                                               "reason" : "Access to your GPS location is required in order to measure the distance you walked or ran during the test."
+                                               },
+                                               {
+                                               "permissionType" : "camera",
+                                               "reason" : "Access to your camera is required in order to measure your heart rate."
+                                               }],
+                           "actions"      : {
+                                               "goForward":  { "buttonTitle": "Start" },
+                                               "cancel":     { "iconName": "backArrowHeader", "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                                               "skip":       { "reminderIdentifier": "Cardio 12MT" },
+                                               "learnMore":  { "iconName": "infoIcon", "url": "Cardio_12MT.html", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                                            },
+                           },
+                           {
+                           "identifier"             : "heartRisk",
+                           "type"                   : "instruction",
+                           "colorTheme"             : {
+                                                       "backgroundColor"        : "salmon",
+                                                       "foregroundColor"        : "white",
+                                                       "usesLightStyle"         : true,
+                                                       "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "image"                  : { "imageName": "healthRiskIcon",
+                                                        "placementType": "iconBefore",
+                                                        "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "text"                   : "Do not attempt to complete this test if you have been told by your doctor that you should not participate in physical activity or exercise. Stop the test and talk to your doctor if any of the following symptoms occur: chest pain, dizziness, blurred vision, disorientation, excessive shortness of breath, severe nausea, severe fatigue, or severe headache.",
+                           "actions"                : { "goForward": { "buttonTitle": "Got it" }}
+                           },
+                           {
+                           "identifier"   : "volumeUp",
+                           "type"         : "instruction",
+                           "title"        : "Volume turned up?",
+                           "text"         : "Bring your phone with you and turn up your phone volume so you can hear the instructions while you are moving.",
+                           "image"        : { "imageName": "volumeCheckIcon", "placementType": "topBackground", "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "colorTheme"   : { "backgroundColor" : "perrywinkle", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "actions"      : { "goForward": { "buttonTitle": "It’s turned on" }},
+                           "viewTheme"    : { "viewIdentifier": "Instruction", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                           },
+                           {
+                           "identifier"   : "goOutside",
+                           "type"         : "instruction",
+                           "title"        : "Go outside",
+                           "text"         : "Start by going oustide and standing still to measure your resting heart rate before you start moving.",
+                           "image"        : { "imageName": "goOutsideIcon", "placementType": "topBackground", "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "colorTheme"   : { "backgroundColor" : "robinsEggBlue", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "actions"      : { "goForward": { "buttonTitle": "I am outside" }},
+                           "viewTheme"    : { "viewIdentifier": "Instruction", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                           },
+                           {
+                           "identifier"         : "heartRate.before",
+                           "type"               : "transform",
+                           "replacementSteps"   : [{ "identifier"   : "instruction",
+                                                     "title"        : "Capture heart rate",
+                                                   "text"         : "Use your finger to cover the camera and flash on the back of your phone."},
+                                                   { "identifier" : "heartRate", "isResting"    : true },
+                                                   { "identifier"   : "feedback",
+                                                     "text"         : "Your pre run heart rate is" }
+                                                   ],
+                           "sectionTransformer"    : { "type": "heartRate" }
+                           },
+                           {
+                           "identifier"     : "run",
+                           "type"           : "section",
+                           "steps"          : [
+                                               {
+                                               "identifier"   : "bringPhone",
+                                               "type"         : "instruction",
+                                               "title"        : "Take your phone with you",
+                                               "text"         : "Cover as much distance as you can on a flat course in 12 minutes by running or walking.",
+                                               "image"  : {
+                                                                   "imageNames" : ["12MinSmall1", "12MinSmall2", "12MinSmall3", "12MinSmall4"],
+                                                                   "placementType" : "topBackground",
+                                                                   "animationDuration" : 2,
+                                                                   "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness"
+                                                                   },
+                                               "colorTheme"     : { "backgroundColor" : "sky", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                                               "actions"        : { "goForward": { "iconName": "runStartButton", "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" }},
+                                               "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                                               },
+                                               {
+                                               "identifier"     : "countdown",
+                                               "type"           : "countdown",
+                                               "text"           : "Start in",
+                                               "duration"       : 10,
+                                               "commands"       : ["playSoundOnStart", "transitionAutomatically"],
+                                               },
+                                               {
+                                               "identifier"         : "runDistance",
+                                               "type"               : "active",
+                                               "duration"           : 720,
+                                               "commands"           : ["vibrate", "playSound", "transitionAutomatically", "shouldDisableIdleTimer"],
+                                               "spokenInstructions" : {"0": "Start running or walking.",
+                                                                       "180": "You’re doing well; 9 minutes left.",
+                                                                       "360": "Good job, halfway done; 6 minutes left.",
+                                                                       "540": "You’re doing well; 3 minutes left.",
+                                                                       "660": "Good job; 1 minute left.",
+                                                                       "700": "Almost done.",
+                                                                       "countdown": "15",
+                                                                       "end": "Stop running or walking."},
+                                               "colorTheme"         : { "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                                               "viewTheme"          : { "viewIdentifier": "RunDistance", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                                               }
+                                               ]
+                           },
+                           {
+                           "identifier"         : "heartRate.after",
+                           "type"               : "transform",
+                           "replacementSteps"   : [{ "identifier"   : "instruction",
+                                                   "title"        : "Stand still for 1 minute",
+                                                   "text"         : "Almost done! Stand still for a minute to measure your heart rate recovery."},
+                                                   { "identifier" : "heartRate", "isResting" : false },
+                                                   { "identifier"   : "feedback",
+                                                     "text"         : "Your heart rate changed to" }
+                                                   ],
+                           "sectionTransformer"    : { "type": "heartRate" }
+                           },
+                           {
+                           "identifier"     : "surveyAfter",
+                           "type"           : "form",
+                           "text"           : "What, if anything, kept you from going further?",
+                           "dataType"       : "singleChoice",
+                           "choices"        : ["Nothing, was my best effort",
+                                               "Feeling tired",
+                                               "Pain or physical discomfort",
+                                               "Interrupted"]
+                           },
+                           {
+                           "identifier"   : "completion",
+                           "type"         : "completion",
+                           "viewTheme"    : { "viewIdentifier": "Completed12MT", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                           }
+                           ]
+}

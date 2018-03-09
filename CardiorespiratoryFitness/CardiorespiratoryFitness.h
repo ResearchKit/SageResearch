@@ -31,7 +31,9 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+@import ResearchSuiteUI;
+@import ResearchSuite;
 
 //! Project version number for CardiorespiratoryFitness.
 FOUNDATION_EXPORT double CardiorespiratoryFitnessVersionNumber;
@@ -39,6 +41,6 @@ FOUNDATION_EXPORT double CardiorespiratoryFitnessVersionNumber;
 //! Project version string for CardiorespiratoryFitness.
 FOUNDATION_EXPORT const unsigned char CardiorespiratoryFitnessVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <CardiorespiratoryFitness/PublicHeader.h>
+#import <CardiorespiratoryFitness/CRFHeartRateVideoProcessor.h>
 
 

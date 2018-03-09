@@ -1,5 +1,5 @@
 //
-//  CardiorespiratoryFitnessTests.swift
+//  ModelTests.swift
 //  CardiorespiratoryFitnessTests
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -34,7 +34,7 @@
 import XCTest
 @testable import CardiorespiratoryFitness
 
-class CardiorespiratoryFitnessTests: XCTestCase {
+class ModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -45,17 +45,42 @@ class CardiorespiratoryFitnessTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+    func test12MT() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let taskInfo = CRFTaskInfo(.cardio12MT)
+        
+        XCTAssertEqual(taskInfo.identifier, "Cardio 12MT")
+        XCTAssertEqual(taskInfo.title, "12 Minute Distance Test")
+        XCTAssertEqual(taskInfo.subtitle, "15 minutes")
+        XCTAssertNil(taskInfo.detail)
+        XCTAssertEqual(taskInfo.estimatedMinutes, 15)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testStairStep() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+
+        let taskInfo = CRFTaskInfo(.cardioStairStep)
+        
+        XCTAssertEqual(taskInfo.identifier, "Cardio Stair Step")
+        XCTAssertEqual(taskInfo.title, "3 Minute Stair Test")
+        XCTAssertEqual(taskInfo.subtitle, "5 minutes")
+        XCTAssertNil(taskInfo.detail)
+        XCTAssertEqual(taskInfo.estimatedMinutes, 5)
+    }
+    
+    func testDecodeTasks() {
+        // Check that the JSON is decoding properly.
+        for taskIdentifier in CRFTaskIdentifier.all() {
+            let factory = CRFFactory()
+            do {
+                let taskTransformer = taskIdentifier.resourceTransformer()
+                let _ = try factory.decodeTask(with: taskTransformer)
+            } catch let err {
+                XCTFail("Failed to decode \(taskIdentifier): \(err)")
+            }
         }
     }
-    
+
 }

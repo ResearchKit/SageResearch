@@ -20,6 +20,19 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This application uses the camera to measure your heart rate.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This application uses GPS location to calculate the distance you travel while walking or running.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This application uses GPS location to calculate the distance you travel while walking or running.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This application uses your phone's motion sensors to measure steps during the 12 minute test and step height during the stair step test.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
