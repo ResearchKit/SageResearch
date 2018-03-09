@@ -574,8 +574,10 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// - returns: A new instance of a `RSDDataLogger`.
     /// - throws: An error if opening the log file failed.
     open func instantiateLogger(with identifier: String) throws -> RSDDataLogger? {
-        let url = try RSDFileResultUtility.createFileURL(identifier: identifier, ext: "json", outputDirectory: outputDirectory)
-        return try RSDRecordSampleLogger(identifier: identifier, url: url, usesRootDictionary: self.usesRootDictionary, stringEncodingFormat: stringEncodingFormat())
+        let format = stringEncodingFormat()
+        let ext = format?.fileExtension ?? "json"
+        let url = try RSDFileResultUtility.createFileURL(identifier: identifier, ext: ext, outputDirectory: outputDirectory)
+        return try RSDRecordSampleLogger(identifier: identifier, url: url, usesRootDictionary: self.usesRootDictionary, stringEncodingFormat: format)
     }
     
     /// Returns the string encoding format to use for this file. Default is `nil`. If this is `nil`
@@ -667,6 +669,9 @@ public protocol RSDStringSeparatedEncodingFormat {
     /// The content type for the file.
     var contentType: String { get }
     
+    /// The file extension for this file type.
+    var fileExtension: String { get }
+    
     /// A string that includes a header for the file. The columns in the table should be separated using
     /// the `encodingSeparator`.
     func fileTableHeader() -> String
@@ -690,6 +695,11 @@ public struct CSVEncodingFormat<K> : RSDStringSeparatedEncodingFormat where K : 
     /// Returns "text/csv".
     public var contentType: String {
         return "text/csv"
+    }
+    
+    /// Returns "csv".
+    public var fileExtension: String {
+        return "csv"
     }
     
     public func fileTableHeader() -> String {
