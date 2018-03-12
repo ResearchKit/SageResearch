@@ -45,7 +45,7 @@ public protocol RSDPermissionType {
 public protocol RSDPermissionsConfiguration {
     
     /// List of the permissions required for this action.
-    var permissions: [RSDPermissionType] { get }
+    var permissionTypes: [RSDPermissionType] { get }
 }
 
 /// `RSDAsyncActionConfiguration` defines general configuration for an asynchronous background action that

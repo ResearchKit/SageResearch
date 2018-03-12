@@ -72,6 +72,9 @@ public struct RSDImageWrapper {
     /// The size of the image.
     public let size: CGSize
     
+    /// The bundle for the image.
+    public var bundle: Bundle?
+    
     /// The `sharedDelegate` is a singleton delegate that can be used to customize the rules for fetching
     /// an image using the `RSDImageWrapper`. If defined and attached to the `RSDImageWrapper` using the
     /// this property, then the image wrapper will ask the delegate for the appropriate image.
@@ -83,12 +86,13 @@ public struct RSDImageWrapper {
     ///         image. This error will only be thrown if there is **not** a `sharedDelegate`. In that case,
     ///         this initializer will check that the image is either included in the main bundle or in the
     ///         bundle returned by a call to `RSDResourceConfig.resourceBundle()`.
-    public init?(imageName: String) throws {
-        self.size = try RSDImageWrapper.validate(imageName: imageName)
+    public init?(imageName: String, bundle: Bundle? = nil) throws {
+        self.size = try RSDImageWrapper.validate(imageName: imageName, bundle: bundle)
         self.imageName = imageName
+        self.bundle = bundle
     }
     
-    private static func validate(imageName: String) throws -> CGSize {
+    private static func validate(imageName: String, bundle: Bundle?) throws -> CGSize {
         // Check that the input string can be converted to an image from an embedded resource bundle or that
         // there is a delegate. Otherwise, this is not a valid string and the wrapper doesn't know how to fetch
         // an image with it.
@@ -99,7 +103,7 @@ public struct RSDImageWrapper {
         #if os(watchOS)
             throw RSDValidationError.invalidImageName("Invalid image name: \(imageName). Cannot use images on the watch that are not included in the main bundle.")
         #else
-            guard let bundle = RSDResourceConfig.resourceBundle(for: imageName),
+            guard let bundle = bundle ?? RSDResourceConfig.resourceBundle(for: imageName),
                 let _ = UIImage(named: imageName, in: bundle, compatibleWith: nil)
                 else {
                     throw RSDValidationError.invalidImageName("Invalid image name: \(imageName)")
@@ -117,7 +121,7 @@ public struct RSDImageWrapper {
         if let delegate = RSDImageWrapper.sharedDelegate {
             delegate.fetchImage(for: self, callback: callback)
         }
-        else if let image = UIImage(named: imageName) {
+        else if let image =  _embeddedImage() {
             DispatchQueue.main.async {
                 callback(self.imageName, image)
             }
@@ -137,6 +141,14 @@ public struct RSDImageWrapper {
                 callback(self.imageName, nil)
             }
         }
+    }
+    
+    private func _embeddedImage() -> UIImage? {
+        #if os(watchOS)
+            return UIImage(named: imageName)
+        #else
+            return UIImage(named: imageName, in: bundle, compatibleWith: nil) 
+        #endif
     }
 }
 
@@ -176,7 +188,7 @@ extension RSDImageWrapper : ExpressibleByStringLiteral {
     /// Required initializer for conformance to `ExpressibleByStringLiteral`.
     /// - parameter stringLiteral: The `imageName` for this image wrapper.
     public init(stringLiteral value: String) {
-        self.size = try! RSDImageWrapper.validate(imageName: value)
+        self.size = try! RSDImageWrapper.validate(imageName: value, bundle: nil)
         self.imageName = value
     }
 }
@@ -190,7 +202,7 @@ extension RSDImageWrapper : Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let imageName = try container.decode(String.self)
-        self.size = try RSDImageWrapper.validate(imageName: imageName)
+        self.size = try RSDImageWrapper.validate(imageName: imageName, bundle: nil)
         self.imageName = imageName
     }
 }

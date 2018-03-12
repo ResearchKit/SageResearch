@@ -33,6 +33,28 @@
 
 import Foundation
 
+/// General-purpose enum for authorization status.
+public enum RSDAuthorizationStatus : Int {
+    
+    /// Standard mapping of the authorization status
+    case authorized, notDetermined, restricted, denied
+    
+    /// There is a cached value for the authorization status that was previously denied but the user may
+    /// have since updated the Settings to allow permission.
+    case previouslyDenied
+    
+    /// Is the authorization status blocking the activity that requires it? This will return true if the
+    /// status is restricted, denied or previously denied.
+    public func isDenied() -> Bool {
+        switch self {
+        case .authorized, .notDetermined:
+            return false
+        default:
+            return true
+        }
+    }
+}
+
 /// Standard permission types.
 ///
 /// - note: This framework intentionally does not include any direct reference to Health Kit.
@@ -94,3 +116,86 @@ extension RSDStandardPermissionType : RSDDocumentableStringEnum {
         return allStandardTypes().map{ $0.rawValue }
     }
 }
+
+/// A Codable struct that can be used to store messaging information specific to the use-case specific to
+/// the associated activity, task or step.
+public struct RSDStandardPermission : Codable {
+    
+    private enum CodingKeys : String, CodingKey {
+        case permissionType
+        case title
+        case reason
+        case _restrictedMessage = "restrictedMessage"
+        case _deniedMessage = "deniedMessage"
+    }
+    
+    public static let camera = RSDStandardPermission(permissionType: .camera)
+    public static let microphone = RSDStandardPermission(permissionType: .microphone)
+    public static let motion = RSDStandardPermission(permissionType: .motion)
+    public static let photoLibrary = RSDStandardPermission(permissionType: .photoLibrary)
+    public static let location = RSDStandardPermission(permissionType: .location)
+    public static let locationWhenInUse = RSDStandardPermission(permissionType: .locationWhenInUse)
+
+    /// Default initializer.
+    public init(permissionType : RSDStandardPermissionType, title: String? = nil, reason: String? = nil, deniedMessage: String? = nil, restrictedMessage: String? = nil) {
+        self.permissionType = permissionType
+        self.title = title
+        self.reason = reason
+        self._deniedMessage = deniedMessage
+        self._restrictedMessage = restrictedMessage
+    }
+    
+    /// The permission type for this permission.
+    public let permissionType : RSDStandardPermissionType
+    
+    /// A title for this permission.
+    public let title: String?
+    
+    /// Additional reason for requiring the permission.
+    public let reason: String?
+    
+    /// The message to show when displaying an alert that the user cannot run a step or task because their
+    /// access is restricted.
+    public var restrictedMessage: String {
+        if let message = _restrictedMessage { return message }
+        switch self.permissionType {
+        case .camera:
+            return Localization.localizedString("CAMERA_PERMISSION_RESTRICTED")
+        case .location, .locationWhenInUse:
+            return Localization.localizedString("LOCATION_PERMISSION_RESTRICTED")
+        case .microphone:
+            return Localization.localizedString("MICROPHONE_PERMISSION_RESTRICTED")
+        case .photoLibrary:
+            return Localization.localizedString("PHOTO_LIBRARY_PERMISSION_RESTRICTED")
+            
+        default:
+            // permissions that are not currently part of restricted access. For these cases,
+            // return a general-purpose message.
+            assertionFailure("\(self.permissionType) is not expected to be restricted. Please fix.")
+            return Localization.localizedString("GENERAL_PERMISSION_RESTRICTED")
+        }
+    }
+    private var _restrictedMessage: String?
+    
+    /// The message to show when displaying an alert that the user cannot run a step or task because their
+    /// access is denied.
+    public var deniedMessage: String {
+        if let message = _deniedMessage { return message }
+        switch self.permissionType {
+        case .camera:
+            return Localization.localizedString("CAMERA_PERMISSION_DENIED")
+        case .location:
+            return Localization.localizedString("LOCATION_BACKGROUND_PERMISSION_DENIED")
+        case .locationWhenInUse:
+            return Localization.localizedString("LOCATION_IN_USE_PERMISSION_DENIED")
+        case .microphone:
+            return Localization.localizedString("MICROPHONE_PERMISSION_DENIED")
+        case .motion:
+            return Localization.localizedString("MOTION_PERMISSION_DENIED")
+        case .photoLibrary:
+            return Localization.localizedString("PHOTO_LIBRARY_PERMISSION_DENIED")
+        }
+    }
+    private var _deniedMessage: String?
+}
+

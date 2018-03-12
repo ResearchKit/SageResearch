@@ -55,7 +55,7 @@ public enum RSDImagePickerMediaType : String, Codable {
 }
 
 /// The image picker step protocol implements a step that is 
-public protocol RSDImagePickerStep : RSDStep, RSDPermissionsConfiguration {
+public protocol RSDImagePickerStep : RSDStandardPermissionsStep {
     
     /// What source should be used for picking an image? If nil, the default
     /// is `.camera`.
@@ -77,12 +77,8 @@ extension RSDImagePickerStep {
         return [.photo]
     }
     
-    /// List of the permissions required for this action.
-    public var permissions: [RSDPermissionType] {
-        return standardPermissions()
-    }
-    
-    public func standardPermissions() -> [RSDStandardPermissionType] {
+    /// The standard permissions for this picker are determined by the source type.
+    public var standardPermissions: [RSDStandardPermission]? {
         switch (self.sourceType ?? defaultSourceType()) {
         case .camera:
             let types = self.mediaTypes ?? defaultMediaTypes()

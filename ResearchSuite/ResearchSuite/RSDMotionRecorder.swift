@@ -100,17 +100,16 @@ public class RSDMotionRecorder : RSDSampleRecorder {
     
     /// Override to implement requesting permission to access the user's motion sensors.
     override public func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
-        pedometer = CMPedometer()
-        let now = Date()
-        pedometer!.queryPedometerData(from: now.addingTimeInterval(-2*60), to: now) { [weak self] (_, error) in
-            guard let strongSelf = self else { return }
-            if let err = error {
-                debugPrint("Failed to query pedometer: \(err)")
+        if RSDMotionAuthorization.authorizationStatus() == .authorized {
+            self.updateStatus(to: .permissionGranted , error: nil)
+            completion(self, nil, error)
+        } else {
+            RSDMotionAuthorization.requestAuthorization { [weak self] (authStatus, error) in
+                guard let strongSelf = self else { return }
+                let status: RSDAsyncActionStatus = (authStatus == .authorized) ? .permissionGranted : .failed
+                strongSelf.updateStatus(to: status, error: error)
+                completion(strongSelf, nil, error)
             }
-            let status: RSDAsyncActionStatus = (error == nil) ? .permissionGranted : .failed
-            strongSelf.updateStatus(to: status, error: error)
-            completion(strongSelf, nil, error)
-            strongSelf.pedometer = nil
         }
     }
     

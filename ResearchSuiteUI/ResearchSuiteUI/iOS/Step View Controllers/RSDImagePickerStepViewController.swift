@@ -84,10 +84,6 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
         }
     }
     
-    public enum AuthorizationStatus : Int {
-        case authorized, notDetermined, restricted, denied
-    }
-    
     public enum MediaType : String {
         case photo = "public.image"
         case video = "public.movie"
@@ -102,64 +98,19 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
         }
     }
     
-    public func authorizationStatus() -> AuthorizationStatus {
-        if sourceType == .camera {
-            switch AVCaptureDevice.authorizationStatus(for: .video) {
-            case .authorized:
-                if self.mediaTypes.contains(.video) {
-                    // Need to check for microphone authorization if this is video.
-                    switch AVCaptureDevice.authorizationStatus(for: .audio) {
-                    case .authorized:
-                        return .authorized
-                    case .notDetermined:
-                        return .notDetermined
-                    case .restricted:
-                        return .restricted
-                    case .denied:
-                        return .denied
-                    }
-                } else {
-                    return .authorized
-                }
-            case .notDetermined:
-                return .notDetermined
-            case .restricted:
-                return .restricted
-            case .denied:
-                return .denied
-            }
-        } else {
-            let status = PHPhotoLibrary.authorizationStatus()
-            switch status {
-            case .authorized:
-                return .authorized
-            case .notDetermined:
-                return .notDetermined
-            case .restricted:
-                return .restricted
-            case .denied:
-                return .denied
-            }
-        }
-    }
-    
     private func _addImagePicker() {
         // Check permissions
-        let status = self.authorizationStatus()
+        let (status, permission) = self.checkAuthorizationStatus()
         switch status {
-        case .authorized, .notDetermined:
+        case .authorized, .notDetermined, .previouslyDenied:
             self.errorMessageLabel?.isHidden = true
             self.navigationFooter?.isHidden = true
             _insertPickerViewController()
             
         case .restricted:
-            errorMessageLabel?.text = (sourceType == .camera) ?
-                Localization.localizedString("CAMERA_PERMISSION_RESTRICTED") :
-                Localization.localizedString("PHOTO_LIBRARY_PERMISSION_RESTRICTED")
+            errorMessageLabel?.text = permission?.restrictedMessage
         case .denied:
-            errorMessageLabel?.text = (sourceType == .camera) ?
-                Localization.localizedString("CAMERA_PERMISSION_DENIED") :
-                Localization.localizedString("PHOTO_LIBRARY_PERMISSION_DENIED")
+            errorMessageLabel?.text = permission?.deniedMessage
         }
     }
     

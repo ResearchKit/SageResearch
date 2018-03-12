@@ -95,7 +95,7 @@ public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, RSDAs
     
     /// Returns `location` and `motion` on iOS. Returns an empty set on platforms that do not
     /// support distance recording.
-    public var permissions: [RSDPermissionType] {
+    public var permissionTypes: [RSDPermissionType] {
         #if os(iOS)
             return [RSDStandardPermissionType.location, RSDStandardPermissionType.motion]
         #else

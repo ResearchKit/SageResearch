@@ -59,11 +59,14 @@ public struct RSDStepType : RawRepresentable, Codable {
     /// Defaults to creating a `RSDImagePickerStep`.
     public static let imagePicker: RSDStepType = "imagePicker"
     
-    /// Defaults to creating a `RSDUIStep`.
+    /// Defaults to creating a `RSDActiveUIStep`.
     public static let instruction: RSDStepType = "instruction"
     
     /// Defaults to creating a `RSDTrackedItemsLoggingStepObject`.
     public static let logging: RSDStepType = "logging"
+    
+    /// Defaults to creating a `RSDUIStep`.
+    public static let overview: RSDStepType = "overview"
     
     /// Defaults to creating a `RSDTrackedItemsReviewStepObject`.
     public static let review: RSDStepType = "review"

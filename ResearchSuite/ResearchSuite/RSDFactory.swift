@@ -276,6 +276,8 @@ open class RSDFactory {
         switch (type) {
         case .instruction, .completion, .active, .countdown:
             return try RSDActiveUIStepObject(from: decoder)
+        case .overview:
+            return try RSDUIStepObject(from: decoder)
         case .imagePicker:
             return try RSDImagePickerStepObject(from: decoder)
         case .form:
@@ -444,10 +446,16 @@ open class RSDFactory {
             let webAction = try? RSDWebViewUIActionObject(from: decoder) {
             return webAction
         }
-        // check if the decoder can be used to decode a web-based action
-        if actionType == .navigation(.skip), let skipAction = try? RSDSkipToUIActionObject(from: decoder) {
-            return skipAction
+        // check if the decoder can be used to decode a known action
+        if actionType == .navigation(.skip) {
+            if let skipAction = try? RSDSkipToUIActionObject(from: decoder) {
+                return skipAction
+            }
+            else if let skipAction = try? RSDReminderUIActionObject(from: decoder) {
+                return skipAction
+            }
         }
+        
         return try RSDUIActionObject(from: decoder)
     }
     

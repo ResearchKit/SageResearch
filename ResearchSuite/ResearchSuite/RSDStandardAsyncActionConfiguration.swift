@@ -57,7 +57,7 @@ public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Co
     }
     
     /// List of the permissions required for this action.
-    public var permissions: [RSDPermissionType] {
+    public var permissionTypes: [RSDPermissionType] {
         return _permissions ?? {
             guard let permissionType = RSDStandardPermissionType(rawValue: type.stringValue) else { return [] }
             return [permissionType]
