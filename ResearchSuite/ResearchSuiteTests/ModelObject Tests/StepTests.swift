@@ -231,4 +231,68 @@ class StepTests: XCTestCase {
             XCTFail("Failed to copy the task transformer.")
         }
     }
+    
+    func testCopy_ConditionalStepNavigator_NilInsertAfter() {
+        let steps = TestStep.steps(from: [1, 2, 3, 4])
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.progressMarkers = steps.map { $0.identifier }
+        
+        let sectionSteps = TestStep.steps(from: ["A", "B", "C"])
+        let section = RSDSectionStepObject(identifier: "section", steps: sectionSteps)
+        
+        let copy = navigator.copyAndInsert(section)
+        
+        XCTAssertEqual(copy.steps.count, 5)
+        let order = copy.steps.map { $0.identifier }
+        XCTAssertEqual(order, ["step1", "section", "step2", "step3", "step4"])
+        XCTAssertEqual(copy.insertAfterIdentifier, "section")
+        if let markers = copy.progressMarkers {
+            XCTAssertEqual(markers, ["step1", "section", "step2", "step3", "step4"])
+        } else {
+            XCTFail("Failed to copy the progress markers")
+        }
+    }
+    
+    func testCopy_ConditionalStepNavigator_MarkerBeforeNotIncluded() {
+        let steps = TestStep.steps(from: [1, 2, 3, 4])
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.progressMarkers = Array(steps.map { $0.identifier }[1...])
+        
+        let sectionSteps = TestStep.steps(from: ["A", "B", "C"])
+        let section = RSDSectionStepObject(identifier: "section", steps: sectionSteps)
+        
+        let copy = navigator.copyAndInsert(section)
+        
+        XCTAssertEqual(copy.steps.count, 5)
+        let order = copy.steps.map { $0.identifier }
+        XCTAssertEqual(order, ["step1", "section", "step2", "step3", "step4"])
+        XCTAssertEqual(copy.insertAfterIdentifier, "section")
+        if let markers = copy.progressMarkers {
+            XCTAssertEqual(markers, ["section", "step2", "step3", "step4"])
+        } else {
+            XCTFail("Failed to copy the progress markers")
+        }
+    }
+    
+    func testCopy_ConditionalStepNavigator_NonNilInsertAfter() {
+        let steps = TestStep.steps(from: [1, 2, 3, 4])
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.progressMarkers = steps.map { $0.identifier }
+        navigator.insertAfterIdentifier = "step2"
+        
+        let sectionSteps = TestStep.steps(from: ["A", "B", "C"])
+        let section = RSDSectionStepObject(identifier: "section", steps: sectionSteps)
+        
+        let copy = navigator.copyAndInsert(section)
+        
+        XCTAssertEqual(copy.steps.count, 5)
+        let order = copy.steps.map { $0.identifier }
+        XCTAssertEqual(order, ["step1", "step2", "section", "step3", "step4"])
+        XCTAssertEqual(copy.insertAfterIdentifier, "section")
+        if let markers = copy.progressMarkers {
+            XCTAssertEqual(markers, ["step1", "step2", "section", "step3", "step4"])
+        } else {
+            XCTFail("Failed to copy the progress markers")
+        }
+    }
 }

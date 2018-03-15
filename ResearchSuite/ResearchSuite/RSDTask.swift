@@ -2,7 +2,7 @@
 //  RSDTask.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -80,4 +80,24 @@ extension RSDTask {
             ($0.startStepIdentifier == step.identifier) || ($0.startStepIdentifier == nil && isFirstStep)
         }
     }
+}
+
+/// An extension of the task to allow replacing the step navigator or inserting async actions.
+///
+/// - seealso: `RSDCopyStepNavigator`
+public protocol RSDCopyTask : RSDTask, RSDCopyWithIdentifier {
+    
+    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
+    /// - parameters:
+    ///     - identifier: The new identifier.
+    ///     - schemaInfo: The schema info.
+    func copy(with identifier: String, schemaInfo: RSDSchemaInfo?) -> Self
+    
+    /// Return a copy of the task that includes the async action.
+    /// - parameter asyncAction: The async action configuration to insert.
+    func copyAndInsert(_ asyncAction: RSDAsyncActionConfiguration) -> Self
+    
+    /// Return a copy of the task that replaces the step navigator with the new copy.
+    /// - parameter stepNavigator: The step navigator to insert.
+    func copyAndReplace(_ stepNavigator: RSDStepNavigator) -> Self
 }

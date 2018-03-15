@@ -33,19 +33,6 @@
 
 import Foundation
 
-/// `RSDTaskVendor` can return a task directly and does not rely upon fetching from a remote source. It is designed
-/// to be used for displaying a top-level task where the UI calls for **not** displaying a `RSDTaskInfoStep` while
-/// fetching the actual task. Instead, the task is directly instantiated.
-public protocol RSDTaskVendor {
-    
-    /// Instantiate the task for this task info. Use the given factory to transform the task.
-    ///
-    /// - parameters:
-    ///     - taskIdentifier: The task info for the task (if applicable).
-    ///     - schemaInfo: The schema info for the task (if applicable).
-    func instantiateTask(taskIdentifier: String, schemaInfo: RSDSchemaInfo?) throws -> RSDTask
-}
-
 /// `RSDTaskTransformer` The task transformer is a lightweight protocol for vending a task. This can be used by
 /// an `RSDTaskInfoStep` to fetch a task or depending upon the design of the application, it could be used to
 /// fetch a task that is loaded from a table or collection view before presenting the task.
