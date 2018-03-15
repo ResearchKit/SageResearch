@@ -166,7 +166,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
         guard let reminderIdentifier = reminderAction?.reminderIdentifier else { return }
         
         let content = UNMutableNotificationContent()
-        if let title = (self.step as? RSDTaskInfoStep)?.title ?? self.uiStep?.title {
+        if let title = (self.step as? RSDTaskInfoStep)?.taskInfo.title ?? self.uiStep?.title {
             content.body = Localization.localizedStringWithFormatKey("REMINDER_NOTIFICATION_WITH_TITLE_%@", title)
         } else {
             content.body = Localization.localizedString("REMINDER_NOTIFICATION_WITHOUT_TITLE")

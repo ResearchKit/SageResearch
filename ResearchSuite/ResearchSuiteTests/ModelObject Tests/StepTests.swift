@@ -208,23 +208,22 @@ class StepTests: XCTestCase {
         }
     }
     
-    func testCopy_TaskInfoStepObject() {
-        var step = RSDTaskInfoStepObject(with: "foo")
-        var taskInfo = step.taskInfoObject
+    func testCopy_TaskInfoObject() {
+        var taskInfo = RSDTaskInfoObject(with: "foo")
         taskInfo.title = "title"
         taskInfo.subtitle = "subtitle"
         taskInfo.detail = "detail"
-        step.taskInfoObject = taskInfo
-        step.schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 6)
+        taskInfo.schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 6)
+        var step = RSDTaskInfoStepObject(with: taskInfo)
         step.taskTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: "org.sagebase.ResearchSuiteTests", classType: nil)
 
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")
-        XCTAssertEqual(copy.title, "title")
-        XCTAssertEqual(copy.subtitle, "subtitle")
-        XCTAssertEqual(copy.detail, "detail")
-        XCTAssertEqual(copy.schemaInfo?.schemaIdentifier, "bar")
-        XCTAssertEqual(copy.schemaInfo?.schemaVersion, 6)
+        XCTAssertEqual(copy.taskInfo.title, "title")
+        XCTAssertEqual(copy.taskInfo.subtitle, "subtitle")
+        XCTAssertEqual(copy.taskInfo.detail, "detail")
+        XCTAssertEqual(copy.taskInfo.schemaInfo?.schemaIdentifier, "bar")
+        XCTAssertEqual(copy.taskInfo.schemaInfo?.schemaVersion, 6)
         if let transformer = copy.taskTransformer as? RSDResourceTransformerObject {
             XCTAssertEqual(transformer.resourceName, "FactoryTest_TaskFoo")
         } else {

@@ -130,8 +130,8 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instatiate the object.
     /// - returns: The task info created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfoStep {
-        return try RSDTaskInfoStepObject(from: decoder)
+    open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
+        return try RSDTaskInfoObject(from: decoder)
     }
     
     
@@ -287,7 +287,8 @@ open class RSDFactory {
         case .selection:
             return try RSDTrackedSelectionStepObject(from: decoder)
         case .taskInfo:
-            return try RSDTaskInfoStepObject(from: decoder)
+            let taskInfo = try RSDTaskInfoObject(from: decoder)
+            return RSDTaskInfoStepObject(with: taskInfo)
         case .transform:
             return try self.decodeTransformableStep(from: decoder)
         default:

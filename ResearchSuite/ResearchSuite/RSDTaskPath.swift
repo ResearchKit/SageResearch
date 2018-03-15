@@ -206,7 +206,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
         }
         
         self.isLoading = true
-        taskInfo.taskTransformer.fetchTask(with: factory, taskIdentifier: self.identifier, schemaInfo: taskInfo.schemaInfo) { [weak self] (info, task, error) in
+        taskInfo.taskTransformer.fetchTask(with: factory, taskIdentifier: self.identifier, schemaInfo: taskInfo.taskInfo.schemaInfo) { [weak self] (info, task, error) in
             guard let strongSelf = self else { return }
             strongSelf.isLoading = false
             if task != nil {

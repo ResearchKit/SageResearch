@@ -60,8 +60,8 @@ class FactoryTests: XCTestCase {
         XCTAssertEqual(taskGroup.icon?.imageName, "foobarIcon")
         XCTAssertEqual(taskGroup.tasks.count, 2)
         
-        guard let fooTaskInfo = taskGroup.tasks.first as? RSDTaskInfoStepObject,
-            let barTaskInfo = taskGroup.tasks.last as? RSDTaskInfoStepObject
+        guard let fooTaskInfo = taskGroup.tasks.first as? RSDTaskInfoObject,
+            let barTaskInfo = taskGroup.tasks.last as? RSDTaskInfoObject
         else {
             XCTFail("Failed to decode task info objects")
             return
@@ -82,12 +82,13 @@ class FactoryTests: XCTestCase {
     
     func testFetchTask() {
 
-        var taskInfo = RSDTaskInfoStepObject(with: "foo")
+        var taskInfo = RSDTaskInfoObject(with: "foo")
         let schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 3)
         taskInfo.taskTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: BundleWrapper.bundleIdentifier!, classType: nil)
+        let taskStep = RSDTaskInfoStepObject(with: taskInfo)
         
         let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
-        taskInfo.taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: taskInfo.identifier, schemaInfo: schemaInfo) { (_, task, err)  in
+        taskStep.taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: taskInfo.identifier, schemaInfo: schemaInfo) { (_, task, err)  in
             if let task = task {
                 
                 // Check identifiers

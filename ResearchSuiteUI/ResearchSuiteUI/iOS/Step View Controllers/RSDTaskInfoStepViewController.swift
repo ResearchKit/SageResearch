@@ -105,16 +105,16 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
         super.viewWillAppear(animated)
         
         // Schedule and step should both be set before showing the view controller
-        titleLabel?.text = taskInfoStep.title
-        subtitleLabel?.text = taskInfoStep.subtitle
+        titleLabel?.text = taskInfoStep.taskInfo.title
+        subtitleLabel?.text = taskInfoStep.taskInfo.subtitle
         if let imageSize = iconImageView?.bounds.size {
-            taskInfoStep.imageVendor?.fetchImage(for: imageSize) { [weak self] (_, img) in
+            taskInfoStep.taskInfo.imageVendor?.fetchImage(for: imageSize) { [weak self] (_, img) in
                 self?.iconImageView?.image = img
             }
         }
         
         // Set up the step text
-        self.textView?.text = taskInfoStep.detail
+        self.textView?.text = taskInfoStep.taskInfo.detail
     }
     
     /// Override the skip forward action to cancel the task

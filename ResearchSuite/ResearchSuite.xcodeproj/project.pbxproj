@@ -210,7 +210,6 @@
 		F8E94FF320585ED100752B7B /* RSDLocationAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FF020585ED100752B7B /* RSDLocationAuthorization.swift */; };
 		F8E94FF52058602F00752B7B /* RSDMotionAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FF42058602F00752B7B /* RSDMotionAuthorization.swift */; };
 		F8E94FFB20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FFA20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift */; };
-		F8E94FFC20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FFA20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift */; };
 		F8E94FFD20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FFA20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift */; };
 		F8F561E72023C2A8000EEA8C /* RSDDurationPickerDataSourceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8321EB7201AB7F900074DFA /* RSDDurationPickerDataSourceObject.swift */; };
 		F8F561E82023C2A9000EEA8C /* RSDDurationPickerDataSourceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8321EB7201AB7F900074DFA /* RSDDurationPickerDataSourceObject.swift */; };
@@ -1826,7 +1825,6 @@
 				FF8B53881FCE6C70006B6937 /* RSDAnswerResultType.swift in Sources */,
 				F80CA50B1FFEAB2100E89C06 /* RSDNumberPickerDataSourceObject.swift in Sources */,
 				FF8B54291FCE6CA2006B6937 /* RSDActiveUIStepObject.swift in Sources */,
-				F8E94FFC20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift in Sources */,
 				FF8B54A91FCE6CF7006B6937 /* RSDTableItem.swift in Sources */,
 				F829F0E71FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m in Sources */,
 				FF8B54621FCE6CB9006B6937 /* RSDColorThemeElementObject.swift in Sources */,

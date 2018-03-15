@@ -49,7 +49,7 @@ public enum RSDTaskFetchError : Error {
 /// `RSDTaskInfo` includes information to display about a task before the task is fetched.
 /// This can be used to display a collection of tasks and only load the task when selected
 /// by the participant.
-public protocol RSDTaskInfo {
+public protocol RSDTaskInfo : RSDCopyWithIdentifier {
     
     /// A short string that uniquely identifies the task.
     var identifier: String { get }
@@ -69,17 +69,24 @@ public protocol RSDTaskInfo {
     
     /// An icon image that can be used for displaying the choice.
     var imageVendor: RSDImageVendor? { get }
+    
+    /// Optional schema info to pass with the task info for this task.
+    var schemaInfo: RSDSchemaInfo? { get }
+    
+    /// Optional task transformer.
+    var taskTransformer : RSDTaskTransformer? { get }
 }
 
 /// `RSDTaskInfoStep` is a reference interface for information about the task. This includes
 /// information that can be displayed in a table or collection view before starting the task as
 /// well as information that is displayed while the task is being fetched in the case where the
 /// task is not fetched using an embedded resource or via a hardcoded task.
-public protocol RSDTaskInfoStep : RSDTaskInfo, RSDStep {
+public protocol RSDTaskInfoStep : RSDStep {
     
-    /// Additional information about the result schema.
-    var schemaInfo: RSDSchemaInfo? { get }
+    /// The task info for this step.
+    var taskInfo: RSDTaskInfo { get }
     
-    /// The task transformer for vending a task.
+    /// The task transformer for vending a task. Once this task step is added to a running task,
+    /// this value is expected to be non-nil and will fail if not set.
     var taskTransformer: RSDTaskTransformer!  { get }
 }

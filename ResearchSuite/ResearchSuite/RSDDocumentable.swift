@@ -172,7 +172,7 @@ public struct RSDDocumentCreator {
         RSDSchemaInfoObject.self,
         RSDConditionalStepNavigatorObject.self,
         RSDTaskGroupObject.self,
-        RSDTaskInfoStepObject.self,
+        RSDTaskInfoObject.self,
         RSDTaskObject.self,
         ]
 }
