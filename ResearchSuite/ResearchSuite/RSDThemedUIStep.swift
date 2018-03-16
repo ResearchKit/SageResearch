@@ -53,22 +53,6 @@ public protocol RSDUIThemeElement {
     var bundle: Bundle? { get }
 }
 
-/// `RSDDecodableBundleInfo` is a convenience protocol for getting a bundle from a bundle identifier.
-public protocol RSDDecodableBundleInfo {
-    
-    /// The bundle identifier.
-    var bundleIdentifier : String? { get }
-}
-
-extension RSDDecodableBundleInfo {
-    
-    /// The bundle returned for the given `bundleIdentifier`.
-    public var bundle: Bundle? {
-        guard let identifier = bundleIdentifier else { return nil }
-        return Bundle(identifier: identifier)
-    }
-}
-
 /// `RSDViewThemeElement` tells the UI where to find the view controller to use when instantiating the
 /// `RSDStepController`.
 public protocol RSDViewThemeElement : RSDUIThemeElement {

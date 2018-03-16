@@ -33,20 +33,23 @@
 
 import Foundation
 
-/// `RSDResourceTransformerObject` is a concrete implementation of a codable resource transformer. The transformer
-/// can be used to create an object decoded from an embedded resource.
+/// `RSDResourceTransformerObject` is a concrete implementation of a codable resource transformer.
+/// The transformer can be used to create an object decoded from an embedded resource.
 public final class RSDResourceTransformerObject : Codable {
     
-    /// Either a fully qualified URL string or else a relative reference to either an embedded resource or a
-    /// relative URL defined globally by overriding the `RSDResourceConfig` class methods.
+    /// Either a fully qualified URL string or else a relative reference to either an embedded resource or
+    /// a relative URL defined globally by overriding the `RSDResourceConfig` class methods.
     public let resourceName: String
     
     /// The bundle identifier for the embedded resource.
     public let bundleIdentifier: String?
     
-    /// The classType for converting the resource to an object. This is a hint that subclasses of `RsDFactory` can
-    /// use to determine the type of object to instantiate.
+    /// The classType for converting the resource to an object. This is a hint that subclasses of
+    /// `RSDFactory` can use to determine the type of object to instantiate.
     public let classType: String?
+    
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
     
     private enum CodingKeys: String, CodingKey {
         case resourceName, bundleIdentifier, classType
@@ -61,6 +64,19 @@ public final class RSDResourceTransformerObject : Codable {
     public init(resourceName: String, bundleIdentifier: String? = nil, classType: String? = nil) {
         self.resourceName = resourceName
         self.bundleIdentifier = bundleIdentifier
+        self.classType = classType
+    }
+    
+    /// Default initializer for creating the object.
+    ///
+    /// - parameters:
+    ///     - resourceName: The name of the resource.
+    ///     - bundleIdentifier: The bundle identifier for the embedded resource.
+    ///     - classType: The classType for converting the resource to an object.
+    public init(resourceName: String, bundle: Bundle, classType: String? = nil) {
+        self.resourceName = resourceName
+        self.bundleIdentifier = bundle.bundleIdentifier
+        self.factoryBundle = bundle
         self.classType = classType
     }
 }

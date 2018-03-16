@@ -101,6 +101,9 @@ public protocol RSDTransformerStep: RSDStep {
 /// - seealso: `RSDSectionStep`, `RSDTransformerStepObject` and `RSDFactory`
 public protocol RSDSectionStepTransformer {
     
+    /// The bundle to use to pull resources.
+    var bundle: Bundle? { get }
+    
     /// Fetch the steps for this section.
     ///
     /// - parameter factory: The factory to use for creating the task and steps.
@@ -122,7 +125,7 @@ extension RSDSectionStepResourceTransformer {
     /// - returns: The steps for this section.
     public func transformSteps(with factory: RSDFactory) throws -> [RSDStep] {
         let (data, resourceType) = try self.resourceData()
-        let decoder = try factory.createDecoder(for: resourceType)
+        let decoder = try factory.createDecoder(for: resourceType, taskIdentifier: nil, schemaInfo: nil, bundle: self.bundle)
         let stepDecoder = try decoder.decode(_StepsDecoder.self, from: data)
         return stepDecoder.steps
     }

@@ -202,7 +202,7 @@ extension RSDImageWrapper : Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let imageName = try container.decode(String.self)
-        self.size = try RSDImageWrapper.validate(imageName: imageName, bundle: nil)
+        self.size = try RSDImageWrapper.validate(imageName: imageName, bundle: decoder.bundle)
         self.imageName = imageName
     }
 }
