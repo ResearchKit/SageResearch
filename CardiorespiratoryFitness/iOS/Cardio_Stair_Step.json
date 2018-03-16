@@ -1,6 +1,6 @@
 {
     "identifier"        : "Cardio Stair Step",
-    "actions"           : { "cancel": { "iconName": "closeActivity", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness"}},
+    "actions"           : { "cancel": { "iconName": "closeActivity"}},
     "shouldHideActions" : ["goBackward", "skip"],
     "progressMarkers"   : ["volumeUp", "heartRate.before", "stairStep", "heartRate.after"],
     "steps"             : [
@@ -12,8 +12,7 @@
                            "image"  : {
                                            "imageNames" : ["stairStepLarge1", "stairStepLarge2", "stairStepLarge3", "stairStepLarge4"],
                                            "placementType" : "topBackground",
-                                           "animationDuration" : 2,
-                                           "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness"
+                                           "animationDuration" : 2
                                            },
                            "permissions"    : [{
                                                "permissionType" : "motion",
@@ -23,12 +22,12 @@
                                                "permissionType" : "camera",
                                                "reason" : "Access to your camera is required in order to measure your heart rate."
                                                }],
-                           "colorTheme"     : { "backgroundColor" : "perrywinkleTwo", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "colorTheme"     : { "backgroundColor" : "perrywinkleTwo", "usesLightStyle" : true },
                            "actions"      : {
                                                "goForward":  { "buttonTitle": "Start" },
-                                               "cancel":     { "iconName": "backArrowHeader", "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                                               "cancel":     { "iconName": "backArrowHeader" },
                                                "skip":       { "buttonTitle": "Remind me later" },
-                                               "learnMore":  { "iconName": "infoIcon", "url": "Stair_Step.html", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                                               "learnMore":  { "iconName": "infoIcon", "url": "Stair_Step.html" }
                                             },
                            },
                            {
@@ -37,12 +36,10 @@
                            "colorTheme"             : {
                                                        "backgroundColor"        : "salmon",
                                                        "foregroundColor"        : "white",
-                                                       "usesLightStyle"         : true,
-                                                        "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness"
+                                                       "usesLightStyle"         : true
                            },
                            "image"                  : { "imageName": "healthRiskIcon",
-                                                        "placementType": "iconBefore",
-                                                        "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                                                        "placementType": "iconBefore" },
                            "text"                   : "Do not attempt to complete this test if you have been told by your doctor that you should not participate in physical activity or exercise. Stop the test and talk to your doctor if any of the following symptoms occur: chest pain, dizziness, blurred vision, disorientation, excessive shortness of breath, severe nausea, severe fatigue, or severe headache.",
                            "actions"                : { "goForward": { "buttonTitle": "Got it" }}
                            },
@@ -51,10 +48,10 @@
                            "type"         : "instruction",
                            "title"        : "Volume turned up?",
                            "text"         : "Turn up your phone volume and turn off the mute switch so you can hear the instructions while you are moving.",
-                           "image"        : { "imageName": "volumeCheckIcon", "placementType": "topBackground", "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
-                           "colorTheme"   : { "backgroundColor" : "perrywinkle", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "image"        : { "imageName": "volumeCheckIcon", "placementType": "topBackground" },
+                           "colorTheme"   : { "backgroundColor" : "perrywinkle", "usesLightStyle" : true },
                            "actions"      : { "goForward": { "buttonTitle": "It’s turned on" }},
-                           "viewTheme"    : { "viewIdentifier": "Instruction", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                           "viewTheme"    : { "viewIdentifier": "Instruction", "storyboardIdentifier": "ActiveTaskSteps" }
                            },
                            {
                            "identifier"         : "heartRate.before",
@@ -90,12 +87,11 @@
                                                "image"  : {
                                                                    "imageNames" : ["stairStepSmall1", "stairStepSmall2", "stairStepSmall3", "stairStepSmall4"],
                                                                    "placementType" : "topBackground",
-                                                                   "animationDuration" : 2,
-                                                                    "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness"
+                                                                   "animationDuration" : 2
                                                                    },
-                                               "colorTheme"     : { "backgroundColor" : "perrywinkleTwo", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
-                                               "actions"        : { "goForward": { "iconName": "stairStepButton", "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" }},
-                                               "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                                               "colorTheme"     : { "backgroundColor" : "perrywinkleTwo", "usesLightStyle" : true },
+                                               "actions"        : { "goForward": { "iconName": "stairStepButton" }},
+                                               "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps" }
                                                },
                                                {
                                                "identifier"     : "countdown",
@@ -112,13 +108,12 @@
                                                "image"  : {
                                                                    "imageNames" : ["stairStepLarge1", "stairStepLarge2", "stairStepLarge3", "stairStepLarge4"],
                                                                    "placementType" : "topBackground",
-                                                                   "animationDuration" : 2.5,
-                                                                   "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness"
+                                                                   "animationDuration" : 2.5
                                                                    },
                                                "commands"           : ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSoundOnFinish"],
                                                "spokenInstructions" : { "end": "Done! Now measure your heart rate again."},
-                                               "colorTheme"         : { "backgroundColor" : "perrywinkleTwo", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
-                                               "viewTheme"          : { "viewIdentifier": "StairStep", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                                               "colorTheme"         : { "backgroundColor" : "perrywinkleTwo", "usesLightStyle" : true },
+                                               "viewTheme"          : { "viewIdentifier": "StairStep", "storyboardIdentifier": "ActiveTaskSteps" }
                                                }
                                                ]
                            },
@@ -137,7 +132,7 @@
                            {
                            "identifier"   : "completion",
                            "type"         : "completion",
-                           "viewTheme"    : { "viewIdentifier": "CompletedStairStep", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                           "viewTheme"    : { "viewIdentifier": "CompletedStairStep", "storyboardIdentifier": "ActiveTaskSteps" }
                            }
                            ]
 }

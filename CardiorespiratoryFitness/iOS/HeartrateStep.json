@@ -5,15 +5,14 @@
                            "type"           : "instruction",
                            "image"          : {
                                                "imageNames" : ["heartRateMeasurement1", "heartRateMeasurement2", "heartRateMeasurement3"],
-                                               "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness",
                                                "placementType" : "topBackground",
                                                "animationDuration" : 2
                                                },
-                           "colorTheme"     : { "backgroundColor" : "macaroniAndCheese", "usesLightStyle" : true, "bundleIdentifier" : "org.sagebase.CardiorespiratoryFitness" },
+                           "colorTheme"     : { "backgroundColor" : "macaroniAndCheese", "usesLightStyle" : true },
                            "title"          : "Capture heart rate",
                            "text"           : "Use your finger to cover the camera and flash on the back of your phone.",
-                           "actions"        : { "goForward": { "iconName": "captureStartButton", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }},
-                           "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                           "actions"        : { "goForward": { "iconName": "captureStartButton" }},
+                           "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps" }
                            },
                            {
                            "identifier"   : "heartRate",
@@ -37,7 +36,7 @@
                            "type"         : "completion",
                            "title"        : "You’re all done!",
                            "text"         : "Your heart rate is",
-                           "viewTheme"   : { "viewIdentifier": "HeartRateResult", "storyboardIdentifier": "ActiveTaskSteps", "bundleIdentifier": "org.sagebase.CardiorespiratoryFitness" }
+                           "viewTheme"   : { "viewIdentifier": "HeartRateResult", "storyboardIdentifier": "ActiveTaskSteps" }
                            }
                            ]
 }

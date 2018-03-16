@@ -36,7 +36,7 @@ import AVFoundation
 import ResearchSuite
 
 /// A hardcoded value used as the min confidence to include a recording.
-public let CRFMinConfidence = 0.65
+public let CRFMinConfidence = 0.5
 
 /// The minimum "red level" (number of pixels that are "red" dominant) to qualify as having the lens covered.
 public let CRFMinRedLevel = 0.9
@@ -385,7 +385,22 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             }
             return
         }
-        self.bpm = 65
+        if Int(uptime - self.startUptime) % 5 == 0 {
+            self.sampleProcessingQueue.async {
+                let heartRate = 65
+                let confidence = 0.75
+                
+                let bpmSample = CRFHeartRateBPMSample(uptime: uptime, bpm: heartRate, confidence: confidence)
+                self.bpmSamples.append(bpmSample)
+                
+                if confidence > CRFMinConfidence {
+                    DispatchQueue.main.async {
+                        self.confidence = confidence
+                        self.bpm = heartRate
+                    }
+                }
+            }
+        }
     }
     
     // MARK: AVCaptureVideoDataOutputSampleBufferDelegate

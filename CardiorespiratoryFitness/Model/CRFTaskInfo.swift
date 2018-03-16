@@ -33,6 +33,7 @@
 
 import Foundation
 
+/// A list of all the tasks included in this module.
 public enum CRFTaskIdentifier : String, Codable {
     
     /// The Cardio 12-minute Distance Test.
@@ -52,6 +53,7 @@ public enum CRFTaskIdentifier : String, Codable {
     }
 }
 
+/// A task info object for the tasks included in this submodule.
 public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
 
     /// The task identifier for this task.
@@ -137,8 +139,12 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
 }
 
 /// A task transformer for the resources included in this module.
-public struct CRFTaskTransformer : RSDResourceTransformer {
+public struct CRFTaskTransformer : RSDResourceTransformer, Decodable {
 
+    private enum CodingKeys : String, CodingKey {
+        case resourceName
+    }
+    
     public init(_ taskIdentifier: CRFTaskIdentifier) {
         switch taskIdentifier {
         case .cardio12MT:
@@ -153,8 +159,15 @@ public struct CRFTaskTransformer : RSDResourceTransformer {
     
     /// Get the task resource from this bundle.
     public var bundleIdentifier: String? {
-        return Bundle(for: CRFFactory.self).bundleIdentifier
+        return factoryBundle?.bundleIdentifier
     }
+    
+    /// The factory bundle points to this framework. (nil-resettable)
+    public var factoryBundle: Bundle? {
+        get { return _bundle ?? Bundle(for: CRFFactory.self)}
+        set { _bundle = newValue  }
+    }
+    private var _bundle: Bundle? = nil
     
     // MARK: Not used.
     

@@ -139,6 +139,7 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
     public func didFinishStartingCamera() {
         DispatchQueue.main.async {
             self.loadingIndicator?.stopAnimating()
+            self.loadingIndicator?.isHidden = true
         }
     }
 
@@ -156,8 +157,8 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         addResult(bpmResult)
         
         // Record the average or initial heart rate depending upon whether or not the participant is at rest.
-        if let recorder = bpmRecorder {
-            
+        if let recorder = bpmRecorder, recorder.bpmSamples.count >= 2 {
+
             var bpmValue: Double
             let isResting = (self.step as? CRFHeartRateStep)?.isResting ?? true
             if isResting {
@@ -177,6 +178,7 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
             
             let samplesResult = CRFHeartRateSamplesResult(identifier: "\(self.sectionIdentifier())samples", samples: recorder.bpmSamples)
             addResult(samplesResult)
+            
         }
         
         super.stop()
@@ -208,6 +210,8 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
     private func _handleLensCoveredOnMainQueue(_ isCoveringLens: Bool) {
         DispatchQueue.main.async {
             self.heartImageView.isHidden = !isCoveringLens
+            self.loadingIndicator?.stopAnimating()
+            self.loadingIndicator?.isHidden = true
             if isCoveringLens {
                 self._startCountdownIfNeeded()
             } else {

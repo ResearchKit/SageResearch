@@ -54,7 +54,7 @@ open class CRFFactory: RSDFactory {
         guard let transformerType = try self.typeName(from: decoder), transformerType == RSDStepType.heartRate.stringValue else {
             return try super.decodeSectionStepTransformer(from: decoder)
         }
-        return RSDResourceTransformerObject(resourceName: "HeartrateStep", bundleIdentifier: Bundle(for: CRFFactory.self).bundleIdentifier, classType: nil)
+        return RSDResourceTransformerObject(resourceName: "HeartrateStep", bundle: Bundle(for: CRFFactory.self), classType: nil)
     }
 }
 
