@@ -39,7 +39,7 @@ import UserNotifications
 /// a notification reminder to perform the task at a later time.
 open class RSDOverviewStepViewController: RSDStepViewController {
     
-    /// Override viewDidAppear to setup notification handling.
+    /// Override viewDidAppear to set up notification handling.
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -65,7 +65,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
     
     private var _authStatus: RSDAuthorizationStatus?
     
-    /// Check authorization status
+    /// Check authorization status.
     private func _updateAuthorizationStatus() {
         
         // Check the permission status for all required permissions. This will not **request** permission,

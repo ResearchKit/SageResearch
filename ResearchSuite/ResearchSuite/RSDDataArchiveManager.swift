@@ -438,6 +438,7 @@ extension Bundle {
             case "Watch1":                                      return "Apple Watch Series 1"
             case "Watch2,6","Watch2,7","Watch2,3","Watch2,4":   return "Apple Watch Series 2"
             case "Watch3,1","Watch3,2","Watch3,3","Watch3,4":   return "Apple Watch Series 3"
+            case "i386", "x86_64":                              return "Apple Watch Simulator"
                 
             default:                                            return identifier
             }
@@ -498,10 +499,6 @@ extension Bundle {
                 
             case "AppleTV5,3":                                  return "Apple TV"
             case "AppleTV6,2":                                  return "Apple TV 4K"
-                
-            case "Watch1":                                      return "Apple Watch Series 1"
-            case "Watch2,6","Watch2,7","Watch2,3","Watch2,4":   return "Apple Watch Series 2"
-            case "Watch3,1","Watch3,2","Watch3,3","Watch3,4":   return "Apple Watch Series 3"
                 
             case "AudioAccessory1,1":                           return "HomePod"
                 

@@ -116,8 +116,8 @@ public protocol RSDStepNavigator {
 /// When using a step navigator that was developed by a third-party, it can be desirable to insert into
 /// that task flow steps related to the timing of the task. For example, a tapping task may also include
 /// asking about medication or a 12 minute run may prompt a clinic participant to put on their Fitbit
-/// before running. These additional questions or instructions need to be inserted into the task flow in a
-/// logical point **after** showing one or more initial screens
+/// before running. These additional questions or instructions need to be inserted into the task flow at a
+/// logical point **after** showing one or more initial screens.
 public protocol RSDCopyStepNavigator : RSDStepNavigator {
     
     /// Return a copy of the step navigator that includes the desired section inserted in a position that
