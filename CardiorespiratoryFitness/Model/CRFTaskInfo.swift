@@ -46,7 +46,7 @@ public enum CRFTaskIdentifier : String, Codable {
         return CRFTaskTransformer(self)
     }
     
-    /// List of all the task identifiers
+    /// List of all the task identifiers.
     public static func all() -> [CRFTaskIdentifier] {
         return [.cardio12MT, .cardioStairStep]
     }
@@ -80,7 +80,7 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
             self.detail = step.detail
         }
         
-        // Set the default image icon
+        // Set the default image icon.
         switch taskIdentifier {
         case .cardio12MT:
             self.icon = try! RSDImageWrapper(imageName: "active12MinuteRun", bundle: Bundle(for: CRFFactory.self))
@@ -148,7 +148,7 @@ public struct CRFTaskTransformer : RSDResourceTransformer {
         }
     }
     
-    /// Name of the resource for this transformer
+    /// Name of the resource for this transformer.
     public let resourceName: String
     
     /// Get the task resource from this bundle.
@@ -156,7 +156,7 @@ public struct CRFTaskTransformer : RSDResourceTransformer {
         return Bundle(for: CRFFactory.self).bundleIdentifier
     }
     
-    /// MARK: Not used
+    // MARK: Not used.
     
     public var classType: String? {
         return nil

@@ -2,7 +2,7 @@
 //  RunDistanceStepViewController.swift
 //  CardiorespiratoryFitness
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,27 +35,28 @@ import UIKit
 import ResearchSuiteUI
 import ResearchSuite
 
+/// The step view controller for running the distance step in the 12 minute walk/run test or the 6 minute
+/// endurance test.
 public class CRFRunDistanceStepViewController: RSDActiveStepViewController {
     
     private var _distanceObserver: NSKeyValueObservation?
     
+    /// The location recorder attached to this step.
     public var locationRecorder: RSDDistanceRecorder? {
         return self.taskUIController?.currentAsyncControllers.first(where: { $0 is RSDDistanceRecorder }) as? RSDDistanceRecorder
     }
     
+    /// Override the required permissions to return location if the super class returns nil.
+    override public func requiredPermissions() -> [RSDStandardPermission]? {
+        return super.requiredPermissions() ?? [RSDStandardPermission.location]
+    }
+    
+    /// Override start to set up an observer of distance changes.
     override public func start() {
         super.start()
         
-        // TODO: syoung 12/11/2017 Implement UI/UX for alerting the user that they do not have the required permission and must
-        // change this from the Settings app.
-        // TODO: syoung 12/11/2017 Implement UI/UX for the case where the user has **only** given permission when in use.
-        
-        // TODO: syoung 11/07/2017 Improve messaging to the user in the case where the GPS failed to start or
-        // isn't authorized to get updates in the background. (The permission for requesting alway on location
-        // is confusing and I suspect this will be a problem.)
-        
-        // Setup a listener for changes to the location
-        if let locationRecorder = self.locationRecorder {
+        // Set up an observer for changes to the location.
+        if let locationRecorder = self.locationRecorder, locationRecorder.status != .failed {
             
             // Set the initial value
             self._updateDistanceLabelOnMainQueue(locationRecorder.totalDistance)
@@ -65,8 +66,27 @@ public class CRFRunDistanceStepViewController: RSDActiveStepViewController {
                 self?._updateDistanceLabelOnMainQueue(recorder.totalDistance)
             }
         }
+        else {
+            // If we somehow got to this point without the task exiting early, apply belt and suspenders to
+            // ensure that we are messaging the user that without the requested permissions they can't
+            // continue. When using the full task that this step view controller is baked into, this is
+            // handled by the `RSDOverviewStepViewController` (first step) but if a developer tried to use
+            // this view controller without using the full task, this will alert them that they did something
+            // wrong. syoung 3/16/2018
+            let (status, _permission) = self.checkAuthorizationStatus()
+            let permission = _permission ?? RSDStandardPermission.location
+            let settingsMessage = (status == .restricted) ? permission.restrictedMessage : permission.deniedMessage
+            let message: String = {
+                guard let reason = permission.reason else { return settingsMessage }
+                return "\(reason)\n\n\(settingsMessage)"
+            }()
+            self.presentAlertWithOk(title: nil, message: message, actionHandler: { (_) in
+                self.cancel()
+            })
+        }
     }
     
+    /// Override stop to invalidate the observer and add a distance result.
     override public func stop() {
         _distanceObserver?.invalidate()
         _distanceObserver = nil

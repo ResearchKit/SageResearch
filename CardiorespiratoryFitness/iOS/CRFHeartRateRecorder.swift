@@ -83,9 +83,6 @@ public struct CRFHeartRateRecorderConfiguration : RSDRecorderConfiguration {
     
     /// No validation required.
     public func validate() throws {
-        // TODO: syoung 11/16/2017 Decide if we want validation to include checking the plist for required privacy alerts.
-        // The value of these keys change from time to time so they can't be relied upon to be the same but it's confusing
-        // for "researchers who write code" to have to manage that stuff when setting up a project.
     }
 }
 
@@ -125,8 +122,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     
     public override func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         
-        // TODO: syoung 12/11/2017 Implement UI/UX for alerting the user that they do not have the required permission and must
-        // change this from the Settings app.
+        // TODO: syoung 03/16/2018 Add error type for standard permissions to RS.
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         if status == .denied || status == .restricted {
             let error = CRFHeartRateRecorderError.permissionDenied(status)
