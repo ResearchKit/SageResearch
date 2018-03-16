@@ -57,22 +57,26 @@ class RSDCatalogTests: XCTestCase {
         do {
             let taskGroups = try jsonDecoder.decode([RSDTaskGroupObject].self, from: jsonData)
             for taskGroup in taskGroups {
-                for taskInfo in taskGroup.taskInfoSteps {
-                    let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
-                    taskInfo.taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: taskInfo.identifier, schemaInfo:taskInfo.schemaInfo) { (identifier, task, err)  in
-                        if let task = task {
-                            do {
-                                try task.validate()
-                            } catch let err {
-                                XCTFail("Failed to validate task \(task.identifier): \(err)")
+                for taskInfo in taskGroup.tasks {
+                    if let taskTransformer = taskInfo.taskTransformer {
+                        let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
+                        taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: taskInfo.identifier, schemaInfo:taskInfo.schemaInfo) { (identifier, task, err)  in
+                            if let task = task {
+                                do {
+                                    try task.validate()
+                                } catch let err {
+                                    XCTFail("Failed to validate task \(task.identifier): \(err)")
+                                }
+                            } else {
+                                XCTFail("Failed to decode task \(identifier): \(String(describing: err))")
                             }
-                        } else {
-                            XCTFail("Failed to decode task \(identifier): \(String(describing: err))")
+                            expect.fulfill()
                         }
-                        expect.fulfill()
-                    }
-                    waitForExpectations(timeout: 2) { (err) in
-                        print(String(describing: err))
+                        waitForExpectations(timeout: 2) { (err) in
+                            print(String(describing: err))
+                        }
+                    } else {
+                        XCTFail("\(taskInfo.identifier) does not have a transformable task.")
                     }
                 }
             }

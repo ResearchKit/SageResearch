@@ -697,6 +697,41 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         return nil
     }
     
+    // MARK: Permission handling
+    
+    /// The authorization status for this view controller.
+    open func checkAuthorizationStatus() -> (status: RSDAuthorizationStatus, permission: RSDStandardPermission?)  {
+        guard let permissions = self.requiredPermissions(), permissions.count > 0 else {
+            return (.authorized, nil)
+        }
+        for permission in permissions {
+            let status = authorizationStatus(for: permission.permissionType)
+            if status != .authorized {
+                return (status, permission)
+            }
+        }
+        return (.authorized, nil)
+    }
+    
+    /// Check the authorization status for a given permission type.
+    open func authorizationStatus(for permissionType: RSDStandardPermissionType) -> RSDAuthorizationStatus {
+        switch permissionType {
+        case .camera, .microphone:
+            return RSDAudioVisualAuthorization.authorizationStatus(for: permissionType)
+        case .photoLibrary:
+            return RSDPhotoLibraryAuthorization.authorizationStatus()
+        case .location, .locationWhenInUse:
+            return RSDLocationAuthorization.authorizationStatus(for: permissionType)
+        case .motion:
+            return RSDMotionAuthorization.authorizationStatus()
+        }
+    }
+    
+    /// The permissions required for this step.
+    open func requiredPermissions() -> [RSDStandardPermission]? {
+        return (self.step as? RSDStandardPermissionsStep)?.standardPermissions
+    }
+    
     
     // MARK: Active step handling
     

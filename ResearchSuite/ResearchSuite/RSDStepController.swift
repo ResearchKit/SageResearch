@@ -116,4 +116,10 @@ extension RSDStepController {
 
         return progress
     }
+    
+    /// An identifier string that can be appended to a step view controller to differentiate this step from
+    /// another instance in a different section.
+    public func sectionIdentifier() -> String {
+        return (self.taskController.taskPath.parentPath != nil) ? "\(self.taskController.taskPath.result.identifier)_" : ""
+    }
 }

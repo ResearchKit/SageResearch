@@ -2,7 +2,7 @@
 //  RSDConditionalStepNavigatorObject.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -34,7 +34,11 @@
 import Foundation
 
 /// `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
-public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, Decodable {
+public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, RSDCopyStepNavigator, Decodable {
+    
+    private enum CodingKeys : String, CodingKey {
+        case steps, conditionalRule, progressMarkers, insertAfterIdentifier
+    }
     
     /// An ordered list of steps to run for this task.
     public let steps : [RSDStep]
@@ -45,14 +49,61 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, D
     /// A list of step markers to use for calculating progress.
     public var progressMarkers : [String]?
     
+    /// The identifier of the step **after** which any sections or subtasks should be inserted.
+    public var insertAfterIdentifier: String?
+    
     /// Default initializer.
     /// - parameter steps: An ordered list of steps to run for this task.
     public init(with steps: [RSDStep]) {
         self.steps = steps
     }
     
-    private enum CodingKeys : String, CodingKey {
-        case steps, conditionalRule, progressMarkers
+    /// Return a copy of the step navigator that includes the desired section inserted in a position that
+    /// is appropriate to this navigator.
+    public func copyAndInsert(_ section: RSDSectionStep) -> RSDConditionalStepNavigatorObject {
+        return _copyAndInsert(section)
+    }
+    
+    /// Return a copy of the step navigator that includes the desired subtask inserted in a position that
+    /// is appropriate to this navigator.
+    public func copyAndInsert(_ subtask: RSDTaskInfoStep) -> RSDConditionalStepNavigatorObject {
+        return _copyAndInsert(subtask)
+    }
+    
+    private func _copyAndInsert(_ step: RSDStep) -> RSDConditionalStepNavigatorObject {
+        
+        /// Mutate the step array.
+        let idx = self.index(of: self.insertAfterIdentifier)?.advanced(by: 1) ?? 1
+        var steps = self.steps
+        steps.insert(step, at: idx)
+    
+        // Create the navigator.
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.conditionalRule = self.conditionalRule
+        navigator.insertAfterIdentifier = step.identifier
+        
+        // Mutate the progress markers.
+        if let markers = self.progressMarkers {
+            var progressMarkers = markers
+            let searchRange = self.steps[..<idx].map { $0.identifier }
+            if let lastIdentifier = searchRange.rsd_last(where: { markers.contains($0) }),
+                let progressIndex = markers.index(of: lastIdentifier) {
+                // If the marker is found then insert after it.
+                progressMarkers.insert(step.identifier, at: progressIndex + 1)
+            } else {
+                // Otherwise insert at the beginning.
+                progressMarkers.insert(step.identifier, at: 0)
+            }
+            navigator.progressMarkers = progressMarkers
+        }
+        
+        return navigator
+    }
+    
+    /// Find the index of the step with the given identifier.
+    public func index(of identifier: String?) -> Int? {
+        guard let identifier = identifier else { return nil }
+        return self.steps.index(where: { $0.identifier == identifier })
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
@@ -111,7 +162,7 @@ extension RSDConditionalStepNavigatorObject : RSDDocumentableDecodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.steps, .conditionalRule, .progressMarkers]
+        let codingKeys: [CodingKeys] = [.steps, .conditionalRule, .progressMarkers, .insertAfterIdentifier]
         return codingKeys
     }
     
@@ -125,9 +176,11 @@ extension RSDConditionalStepNavigatorObject : RSDDocumentableDecodableObject {
                 if idx != 1 { return false }
             case .progressMarkers:
                 if idx != 2 { return false }
+            case .insertAfterIdentifier:
+                if idx != 3 { return false }
             }
         }
-        return keys.count == 3
+        return keys.count == 4
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

@@ -49,11 +49,6 @@ extension RSDImageWrapper : RSDFetchableImageThemeElement {
     public var placementType: RSDImagePlacementType? {
         return nil
     }
-    
-    /// The bundle for the image. This is `nil` for an `RSDImageWrapper`.
-    public var bundle: Bundle? {
-        return nil
-    }
 }
 
 /// `RSDFetchableImageThemeElementObject` is a `Codable` concrete implementation of `RSDFetchableImageThemeElement`.

@@ -133,6 +133,39 @@ public struct RSDSkipToUIActionObject : RSDEmbeddedResourceUIAction, RSDSkipToUI
     }
 }
 
+/// `RSDReminderUIActionObject` implements an action for setting up a local notification to remind
+/// the participant about doing a particular task later.
+public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction {
+    
+    private enum CodingKeys : String, CodingKey {
+        case reminderIdentifier, _buttonTitle = "buttonTitle", iconName, bundleIdentifier
+    }
+    
+    /// The identifier for a `UNNotificationRequest`.
+    public let reminderIdentifier: String
+    
+    /// The title to display on the button associated with this action.
+    public var buttonTitle: String? {
+        return _buttonTitle ?? Localization.localizedString("REMINDER_BUTTON_TITLE")
+    }
+    private var _buttonTitle: String?
+    
+    /// The name of the icon to display on the button associated with this action.
+    public var iconName: String?
+    
+    /// The bundle identifier for the resource bundle that contains the image.
+    public var bundleIdentifier: String?
+    
+    /// Default initializer for a button with text.
+    /// - parameters:
+    ///     - reminderIdentifier:  The identifier for a `UNNotificationRequest`.
+    ///     - buttonTitle: The title to display on the button associated with this action.
+    public init(reminderIdentifier: String, buttonTitle: String) {
+        self.reminderIdentifier = reminderIdentifier
+        self._buttonTitle = buttonTitle
+    }
+}
+
 /// `RSDWebViewUIActionObject` implements an action that includes a pointer to a url that can display in a
 /// webview. The url can either be fully qualified or optionally point to an embedded resource. The resource
 /// bundle is assumed to be the main bundle if the `bundleIdentifier` property is `nil`.

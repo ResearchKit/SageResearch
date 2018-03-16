@@ -35,6 +35,10 @@ import Foundation
 
 /// `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
 public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
+    
+    private enum CodingKeys: String, CodingKey {
+        case identifier, title, detail, icon, tasks
+    }
 
     /// A short string that uniquely identifies the task group.
     public let identifier: String
@@ -49,35 +53,27 @@ public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodabl
     public var icon: RSDImageWrapper?
     
     /// A list of the task references included in this group.
-    public var tasks: [RSDTaskInfo] {
-        return taskInfoSteps
-    }
-    
-    /// A list of the task info step objects associated with this task group.
-    public let taskInfoSteps: [RSDTaskInfoStep]
+    public let tasks: [RSDTaskInfo]
     
     /// Map the task info to the task info step and create a task path from the step.
     /// - parameter taskInfo: The task info to map from.
     /// - returns: A new task path.
     public func instantiateTaskPath(for taskInfo: RSDTaskInfo) -> RSDTaskPath? {
-        guard let taskInfoStep = self.taskInfoSteps.first(where: { $0.identifier == taskInfo.identifier })
+        guard let taskInfo = self.tasks.first(where: { $0.identifier == taskInfo.identifier })
             else {
                 return nil
         }
-        return RSDTaskPath(taskInfo: taskInfoStep)
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case identifier, title, detail, icon, tasks
+        let step = RSDTaskInfoStepObject(with: taskInfo)
+        return RSDTaskPath(taskInfo: step)
     }
     
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the task group.
     ///     - tasks: A list of the task references included in this group.
-    public init(with identifier: String, taskInfoSteps: [RSDTaskInfoStep]) {
+    public init(with identifier: String, tasks: [RSDTaskInfo]) {
         self.identifier = identifier
-        self.taskInfoSteps = taskInfoSteps
+        self.tasks = tasks
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
@@ -126,13 +122,13 @@ public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodabl
         
         let factory = decoder.factory
         var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .tasks)
-        var decodedTasks : [RSDTaskInfoStep] = []
+        var decodedTasks : [RSDTaskInfo] = []
         while !nestedContainer.isAtEnd {
             let taskDecoder = try nestedContainer.superDecoder()
             let task = try factory.decodeTaskInfo(from: taskDecoder)
             decodedTasks.append(task)
         }
-        self.taskInfoSteps = decodedTasks
+        self.tasks = decodedTasks
     }
 }
 

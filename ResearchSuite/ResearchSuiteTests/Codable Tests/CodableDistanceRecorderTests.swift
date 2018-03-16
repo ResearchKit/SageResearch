@@ -67,7 +67,7 @@ class CodableDistanceRecorderTests: XCTestCase {
             XCTAssertEqual(object.stopStepIdentifier, "rest")
             XCTAssertEqual(object.motionStepIdentifier, "run")
             XCTAssertTrue(object.requiresBackgroundAudio)
-            if let permissions = object.permissions as? [RSDStandardPermissionType] {
+            if let permissions = object.permissionTypes as? [RSDStandardPermissionType] {
                 XCTAssertEqual(permissions, [.location, .motion])
             } else {
                 

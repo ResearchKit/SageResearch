@@ -35,8 +35,12 @@ import Foundation
 
 /// `RSDTaskObject` is the interface for running a task. It includes information about how to calculate progress,
 /// validation, and the order of display for the steps.
-public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
+public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
     
+    private enum CodingKeys : String, CodingKey {
+        case identifier, copyright, schemaInfo, asyncActions
+    }
+
     /// A short string that uniquely identifies the task.
     public let identifier: String
     
@@ -58,17 +62,12 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
     ///     - stepNavigator: The step navigator for this task.
     ///     - schemaInfo: Information about the result schema.
     ///     - asyncActions: A list of asynchronous actions to run on the task.
-    public init(identifier: String, stepNavigator: RSDStepNavigator, copyright: String? = nil, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
+    public required init(identifier: String, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
         self.identifier = identifier
-        self.copyright = copyright
         self.schemaInfo = schemaInfo
         self.stepNavigator = stepNavigator
         self.asyncActions = asyncActions
         super.init()
-    }
-    
-    private enum CodingKeys : String, CodingKey {
-        case identifier, copyright, schemaInfo, asyncActions
     }
     
     /// Initialize from a `Decoder`.
@@ -185,6 +184,40 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDTask, Decodable {
         }
     }
     
+    
+    // MARK: Copy methods
+    
+    public func copy(with identifier: String, schemaInfo: RSDSchemaInfo?) -> Self {
+        let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
+        copyInto(copy as RSDTaskObject)
+        return copy
+    }
+    
+    public func copyAndInsert(_ asyncAction: RSDAsyncActionConfiguration) -> Self {
+        var asyncActions = self.asyncActions ?? []
+        asyncActions.append(asyncAction)
+        let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
+        copyInto(copy as RSDTaskObject)
+        return copy
+    }
+    
+    public func copyAndReplace(_ stepNavigator: RSDStepNavigator) -> Self {
+        let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
+        copyInto(copy as RSDTaskObject)
+        return copy
+    }
+    
+    public func copy(with identifier: String) -> Self {
+        let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
+        copyInto(copy as RSDTaskObject)
+        return copy
+    }
+    
+    private func copyInto(_ copy: RSDTaskObject) {
+        copy.actions = self.actions
+        copy.shouldHideActions = self.shouldHideActions
+        copy.copyright = self.copyright
+    }
     
     // Overrides must be defined in the base implementation
     

@@ -208,27 +208,90 @@ class StepTests: XCTestCase {
         }
     }
     
-    func testCopy_TaskInfoStepObject() {
-        var step = RSDTaskInfoStepObject(with: "foo")
-        var taskInfo = step.taskInfoObject
+    func testCopy_TaskInfoObject() {
+        var taskInfo = RSDTaskInfoObject(with: "foo")
         taskInfo.title = "title"
         taskInfo.subtitle = "subtitle"
         taskInfo.detail = "detail"
-        step.taskInfoObject = taskInfo
-        step.schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 6)
+        taskInfo.schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 6)
+        var step = RSDTaskInfoStepObject(with: taskInfo)
         step.taskTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: "org.sagebase.ResearchSuiteTests", classType: nil)
 
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")
-        XCTAssertEqual(copy.title, "title")
-        XCTAssertEqual(copy.subtitle, "subtitle")
-        XCTAssertEqual(copy.detail, "detail")
-        XCTAssertEqual(copy.schemaInfo?.schemaIdentifier, "bar")
-        XCTAssertEqual(copy.schemaInfo?.schemaVersion, 6)
+        XCTAssertEqual(copy.taskInfo.title, "title")
+        XCTAssertEqual(copy.taskInfo.subtitle, "subtitle")
+        XCTAssertEqual(copy.taskInfo.detail, "detail")
+        XCTAssertEqual(copy.taskInfo.schemaInfo?.schemaIdentifier, "bar")
+        XCTAssertEqual(copy.taskInfo.schemaInfo?.schemaVersion, 6)
         if let transformer = copy.taskTransformer as? RSDResourceTransformerObject {
             XCTAssertEqual(transformer.resourceName, "FactoryTest_TaskFoo")
         } else {
             XCTFail("Failed to copy the task transformer.")
+        }
+    }
+    
+    func testCopy_ConditionalStepNavigator_NilInsertAfter() {
+        let steps = TestStep.steps(from: [1, 2, 3, 4])
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.progressMarkers = steps.map { $0.identifier }
+        
+        let sectionSteps = TestStep.steps(from: ["A", "B", "C"])
+        let section = RSDSectionStepObject(identifier: "section", steps: sectionSteps)
+        
+        let copy = navigator.copyAndInsert(section)
+        
+        XCTAssertEqual(copy.steps.count, 5)
+        let order = copy.steps.map { $0.identifier }
+        XCTAssertEqual(order, ["step1", "section", "step2", "step3", "step4"])
+        XCTAssertEqual(copy.insertAfterIdentifier, "section")
+        if let markers = copy.progressMarkers {
+            XCTAssertEqual(markers, ["step1", "section", "step2", "step3", "step4"])
+        } else {
+            XCTFail("Failed to copy the progress markers")
+        }
+    }
+    
+    func testCopy_ConditionalStepNavigator_MarkerBeforeNotIncluded() {
+        let steps = TestStep.steps(from: [1, 2, 3, 4])
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.progressMarkers = Array(steps.map { $0.identifier }[1...])
+        
+        let sectionSteps = TestStep.steps(from: ["A", "B", "C"])
+        let section = RSDSectionStepObject(identifier: "section", steps: sectionSteps)
+        
+        let copy = navigator.copyAndInsert(section)
+        
+        XCTAssertEqual(copy.steps.count, 5)
+        let order = copy.steps.map { $0.identifier }
+        XCTAssertEqual(order, ["step1", "section", "step2", "step3", "step4"])
+        XCTAssertEqual(copy.insertAfterIdentifier, "section")
+        if let markers = copy.progressMarkers {
+            XCTAssertEqual(markers, ["section", "step2", "step3", "step4"])
+        } else {
+            XCTFail("Failed to copy the progress markers")
+        }
+    }
+    
+    func testCopy_ConditionalStepNavigator_NonNilInsertAfter() {
+        let steps = TestStep.steps(from: [1, 2, 3, 4])
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.progressMarkers = steps.map { $0.identifier }
+        navigator.insertAfterIdentifier = "step2"
+        
+        let sectionSteps = TestStep.steps(from: ["A", "B", "C"])
+        let section = RSDSectionStepObject(identifier: "section", steps: sectionSteps)
+        
+        let copy = navigator.copyAndInsert(section)
+        
+        XCTAssertEqual(copy.steps.count, 5)
+        let order = copy.steps.map { $0.identifier }
+        XCTAssertEqual(order, ["step1", "step2", "section", "step3", "step4"])
+        XCTAssertEqual(copy.insertAfterIdentifier, "section")
+        if let markers = copy.progressMarkers {
+            XCTAssertEqual(markers, ["step1", "step2", "section", "step3", "step4"])
+        } else {
+            XCTFail("Failed to copy the progress markers")
         }
     }
 }

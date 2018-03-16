@@ -130,8 +130,8 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instatiate the object.
     /// - returns: The task info created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfoStep {
-        return try RSDTaskInfoStepObject(from: decoder)
+    open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
+        return try RSDTaskInfoObject(from: decoder)
     }
     
     
@@ -276,6 +276,8 @@ open class RSDFactory {
         switch (type) {
         case .instruction, .completion, .active, .countdown:
             return try RSDActiveUIStepObject(from: decoder)
+        case .overview:
+            return try RSDUIStepObject(from: decoder)
         case .imagePicker:
             return try RSDImagePickerStepObject(from: decoder)
         case .form:
@@ -285,7 +287,8 @@ open class RSDFactory {
         case .selection:
             return try RSDTrackedSelectionStepObject(from: decoder)
         case .taskInfo:
-            return try RSDTaskInfoStepObject(from: decoder)
+            let taskInfo = try RSDTaskInfoObject(from: decoder)
+            return RSDTaskInfoStepObject(with: taskInfo)
         case .transform:
             return try self.decodeTransformableStep(from: decoder)
         default:
@@ -444,10 +447,16 @@ open class RSDFactory {
             let webAction = try? RSDWebViewUIActionObject(from: decoder) {
             return webAction
         }
-        // check if the decoder can be used to decode a web-based action
-        if actionType == .navigation(.skip), let skipAction = try? RSDSkipToUIActionObject(from: decoder) {
-            return skipAction
+        // check if the decoder can be used to decode a known action
+        if actionType == .navigation(.skip) {
+            if let skipAction = try? RSDSkipToUIActionObject(from: decoder) {
+                return skipAction
+            }
+            else if let skipAction = try? RSDReminderUIActionObject(from: decoder) {
+                return skipAction
+            }
         }
+        
         return try RSDUIActionObject(from: decoder)
     }
     

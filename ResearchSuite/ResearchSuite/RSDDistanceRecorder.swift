@@ -167,17 +167,10 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
         }
 
         // Request permission to use the pedometer.
-        pedometer = CMPedometer()
-        let now = Date()
-        pedometer!.queryPedometerData(from: now.addingTimeInterval(-2*60), to: now) { [weak self] (_, error) in
-            guard let strongSelf = self else { return }
-            if let err = error {
-                debugPrint("Failed to query pedometer: \(err)")
-            }
+        RSDMotionAuthorization.requestAuthorization { [weak self] (_,_) in
             // If querying the pedometer failed, then keep going anyway b/c the pedometer
             // is just a "nice to have".
-            strongSelf.pedometer = nil
-            strongSelf._requestLocationPermission(completion)
+            self?._requestLocationPermission(completion)
         }
     }
     

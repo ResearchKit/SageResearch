@@ -2,7 +2,7 @@
 //  RSDStepNavigator.swift
 //  ResearchSuite
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -108,4 +108,27 @@ public protocol RSDStepNavigator {
     ///     - total:        The total number of steps.
     ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation)
     func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)?
+}
+
+/// An extension of the step navigator to allow inserting a section into the work-flow
+/// of this step navigator.
+///
+/// When using a step navigator that was developed by a third-party, it can be desirable to insert into
+/// that task flow steps related to the timing of the task. For example, a tapping task may also include
+/// asking about medication or a 12 minute run may prompt a clinic participant to put on their Fitbit
+/// before running. These additional questions or instructions need to be inserted into the task flow at a
+/// logical point **after** showing one or more initial screens.
+public protocol RSDCopyStepNavigator : RSDStepNavigator {
+    
+    /// Return a copy of the step navigator that includes the desired section inserted in a position that
+    /// is appropriate to this navigator.
+    /// - parameter section: The section step to insert.
+    /// - returns: A copy of this navigator with the inserted section.
+    func copyAndInsert(_ section: RSDSectionStep) -> Self
+    
+    /// Return a copy of the step navigator that includes the desired subtask inserted in a position that
+    /// is appropriate to this navigator.
+    /// - parameter subtask: The task info step to insert.
+    /// - returns: A copy of this navigator with the inserted section.
+    func copyAndInsert(_ subtask: RSDTaskInfoStep) -> Self
 }

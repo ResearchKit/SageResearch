@@ -192,7 +192,7 @@ public struct RSDMotionRecorderConfiguration : RSDRecorderConfiguration, RSDAsyn
     /// This recorder configuration requires `RSDStandardPermissionType.motion`.
     /// - note: The use of this recorder requires adding “Privacy - Motion Usage Description” to the
     ///         application "info.plist" file.
-    public var permissions: [RSDPermissionType] {
+    public var permissionTypes: [RSDPermissionType] {
         #if os(iOS)
             return [RSDStandardPermissionType.motion]
         #else

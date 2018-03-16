@@ -108,7 +108,26 @@
 
 /* Image Picker */
 "CAMERA_NOT_AVAILABLE" = "This device does not support using the camera to capture images.";
+
+/* Permissions */
 "PHOTO_LIBRARY_PERMISSION_DENIED" = "You have not given this app permission to use the photo library. You can enable access in the Privacy Settings.";
 "PHOTO_LIBRARY_PERMISSION_RESTRICTED" = "Access to the photo library is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
 "CAMERA_PERMISSION_DENIED" = "You have not given this app permission to use the camera. You can enable access in the Privacy Settings.";
 "CAMERA_PERMISSION_RESTRICTED" = "Access to the camera is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
+"MICROPHONE_PERMISSION_DENIED" = "You have not given this app permission to use the microphone. You can enable access in the Privacy Settings.";
+"MICROPHONE_PERMISSION_RESTRICTED" = "Access to the microphone is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
+"LOCATION_IN_USE_PERMISSION_DENIED" = "You have not given this app permission to use location services (GPS). You can enable access in the Privacy Settings.";
+"LOCATION_BACKGROUND_PERMISSION_DENIED" = "You have not given this app permission to use location services (GPS) in the background. You can enable access in the Privacy Settings.";
+"LOCATION_PERMISSION_RESTRICTED" = "Access to the location services (GPS) is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
+"MOTION_PERMISSION_DENIED" = "You have not given this app permission to use the motion and fitness sensors. You can enable access in the Privacy Settings.";
+"GENERAL_PERMISSION_RESTRICTED" = "This activity requires access to permissions or settings that are restricted on this device.";
+
+/* Reminder Notifications */
+"REMINDER_BUTTON_TITLE" = "Remind me later";
+"REMINDER_AUTH_DENIED_TITLE" = "Cannot add reminder";
+"REMINDER_AUTH_DENIED_MESSAGE" = "This app does not have authorization to send you a reminder notification. Go to the 'Settings' app to change your permissions.";
+"REMINDER_CHOICE_NONE" = "Do not remind me";
+"REMINDER_CHOICE_IN_DURATION_%@" = "Remind me in %@";
+"REMINDER_CHOICE_SELECTION_PROMPT" = "When do you want a reminder?";
+"REMINDER_NOTIFICATION_WITH_TITLE_%@" = "Time to do the %@.";
+"REMINDER_NOTIFICATION_WITHOUT_TITLE" = "Time to perform your next task.";

@@ -202,13 +202,13 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
         if let vc = delegate?.taskViewController?(self, viewControllerFor: step) {
             return vc as! (UIViewController & RSDStepController)
         }
-        if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskPath) {
-            return vc
-        }
         if let viewTheme = (step as? RSDThemedUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme) {
             if vc.step == nil {
                 vc.step = step
             }
+            return vc
+        }
+        if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskPath) {
             return vc
         }
         return self.vendDefaultViewController(for: step)
@@ -243,7 +243,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
     /// - returns: The base class implementation of a step view controller or `DebugStepViewController`
     ///            if undefined.
     open func vendDefaultViewController(for step: RSDStep) -> (UIViewController & RSDStepController) {
-        if let taskInfo = step as? RSDTaskInfoStep {
+        if step.stepType == .overview {
+            return RSDOverviewStepViewController(step: step)
+        }
+        else if let taskInfo = step as? RSDTaskInfoStep {
             return RSDTaskInfoStepViewController(taskInfo: taskInfo)
         }
         else if step.stepType == .countdown {
