@@ -198,7 +198,7 @@ public struct RSDStandardPermission : Codable {
     }
     private var _deniedMessage: String?
     
-    /// Returns the message appropriate to the status
+    /// Returns the message appropriate to the status.
     public func message(for status: RSDAuthorizationStatus) -> String? {
         switch status {
         case .denied, .previouslyDenied:

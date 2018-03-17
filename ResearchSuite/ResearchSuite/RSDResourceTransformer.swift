@@ -39,7 +39,7 @@ public protocol RSDDecodableBundleInfo : Decodable {
     /// The bundle identifier. Decodable identifier that can be used to get the bundle.
     var bundleIdentifier : String? { get }
     
-    /// A pointer to the bundle set by the factory (if applicable)
+    /// A pointer to the bundle set by the factory (if applicable).
     var factoryBundle: Bundle? { get set }
 }
 
