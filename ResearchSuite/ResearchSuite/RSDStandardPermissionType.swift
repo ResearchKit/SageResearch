@@ -197,5 +197,50 @@ public struct RSDStandardPermission : Codable {
         }
     }
     private var _deniedMessage: String?
+    
+    /// Returns the message appropriate to the status
+    public func message(for status: RSDAuthorizationStatus) -> String? {
+        switch status {
+        case .denied, .previouslyDenied:
+            return self.deniedMessage
+        case .restricted:
+            return self.restrictedMessage
+        default:
+            return nil
+        }
+    }
 }
 
+/// `RSDPermissionError` errors are thrown when a task, step, or async action does not have a permission that
+/// is required to run the action.
+public enum RSDPermissionError : Error {
+    
+    /// Permission denied.
+    case notAuthorized(RSDStandardPermission, RSDAuthorizationStatus)
+    
+    /// The localized message for this error.
+    public var localizedDescription: String {
+        switch(self) {
+        case .notAuthorized(let permission, let status):
+            return permission.message(for: status) ?? "\(permission) : \(status)"
+        }
+    }
+    
+    /// The domain of the error.
+    public static var errorDomain: String {
+        return "RSDPermissionErrorDomain"
+    }
+    
+    /// The error code within the given domain.
+    public var errorCode: Int {
+        switch(self) {
+        case .notAuthorized(_, let status):
+            return status.rawValue
+        }
+    }
+    
+    /// The user-info dictionary.
+    public var errorUserInfo: [String : Any] {
+        return ["NSDebugDescription": self.localizedDescription]
+    }
+}

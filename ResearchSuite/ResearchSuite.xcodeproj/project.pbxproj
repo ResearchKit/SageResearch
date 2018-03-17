@@ -945,6 +945,7 @@
 		F8E94FEA20585B7800752B7B /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				FFB015DF1F8C081200AC209B /* RSDStandardPermissionType.swift */,
 				F8E94FEB20585BE400752B7B /* RSDAudioVisualAuthorization.swift */,
 				F8E94FF020585ED100752B7B /* RSDLocationAuthorization.swift */,
 				F8E94FF42058602F00752B7B /* RSDMotionAuthorization.swift */,
@@ -1293,7 +1294,6 @@
 				F88051A12011B43700B0FDDD /* RSDFraction.swift */,
 				FF80B1381F7C244200582849 /* RSDIdentifier.swift */,
 				FFF53EAC1FBF9562004211D2 /* RSDResultType.swift */,
-				FFB015DF1F8C081200AC209B /* RSDStandardPermissionType.swift */,
 				FFD38DE61FBF805F004203D8 /* RSDStepType.swift */,
 				F8BAF41E2048DD35004B9406 /* RSDStepNavigatorType.swift */,
 			);

@@ -128,12 +128,6 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         
         /// Returned when the recorder that has been cancelled, failed, or finished.
         case finished
-        
-        /// Error to return if one or more required permissions are denied.
-        case permissionDenied
-        
-        /// Error to return if the permission is not available.
-        case notAvailable
     }
     
     /// Default initializer.
