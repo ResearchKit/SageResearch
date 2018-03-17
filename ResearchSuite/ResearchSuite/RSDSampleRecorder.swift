@@ -475,7 +475,14 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// The default logger identifier to call if the `writeSample()` method is called without a logger
     /// identifier.
     open var defaultLoggerIdentifier : String {
-        return configuration.identifier
+        return "\(sectionIdentifier)\(configuration.identifier)"
+    }
+    
+    /// The section identifier for this recorder.
+    /// An identifier string that can be appended to a step view controller to differentiate this step from
+    /// another instance in a different section.
+    open var sectionIdentifier: String {
+        return (self.taskPath.parentPath != nil) ? "\(self.taskPath.result.identifier)_" : ""
     }
     
     /// File URL for the directory in which to store generated data files.
