@@ -96,15 +96,14 @@ public protocol CRFHeartRateRecorderDelegate : RSDAsyncActionControllerDelegate 
 }
 
 public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcessorDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
-
-    public enum CRFHeartRateRecorderError : Error {
-        case noBackCamera
-        case permissionDenied(AVAuthorizationStatus)
-    }
     
     /// A delegate method for the view controller.
     public var crfDelegate: CRFHeartRateRecorderDelegate? {
         return self.delegate as? CRFHeartRateRecorderDelegate
+    }
+    
+    public enum CRFHeartRateRecorderError : Error {
+        case noBackCamera
     }
     
     /// Flag that indicates that the user's finger is recognized as covering the flash.
@@ -122,10 +121,9 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     
     public override func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         
-        // TODO: syoung 03/16/2018 Add error type for standard permissions to RS.
-        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        let status = RSDAudioVisualAuthorization.authorizationStatus(for: .camera)
         if status == .denied || status == .restricted {
-            let error = CRFHeartRateRecorderError.permissionDenied(status)
+            let error = RSDPermissionError.notAuthorized(.camera, status)
             self.updateStatus(to: .failed, error: error)
             completion(self, nil, error)
             return
@@ -142,7 +140,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
                 self.updateStatus(to: .permissionGranted, error: nil)
                 completion(self, nil, nil)
             } else {
-                let error = CRFHeartRateRecorderError.permissionDenied(.denied)
+                let error = RSDPermissionError.notAuthorized(.camera, .denied)
                 self.updateStatus(to: .failed, error: error)
                 completion(self, nil, error)
             }
