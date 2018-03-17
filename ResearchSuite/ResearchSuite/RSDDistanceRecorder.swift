@@ -69,12 +69,6 @@ import CoreMotion
 @available(iOS 10.0, *)
 public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate {
     
-    /// Errors specific to this recorder.
-    public enum RSDDistanceRecorderError : Error {
-        /// Permission denied.
-        case permissionDenied(CLAuthorizationStatus)
-    }
-    
     /// The result identifiers used for the additional results recorded
     /// by the distance recorder.
     public enum CRFResultIdentifier : String, CodingKey {
@@ -158,8 +152,9 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
         
         // Get the current status and exit early if the status is restricted or denied.
         let status = CLLocationManager.authorizationStatus()
-        if status == .denied || status == .restricted {
-            let error = RSDDistanceRecorderError.permissionDenied(status)
+        if status == .denied || status == .restricted || status == .authorizedWhenInUse {
+            let status: RSDAuthorizationStatus = (status == .restricted) ? .restricted : .denied
+            let error = RSDPermissionError.notAuthorized(.location, status)
             debugPrint("Failed to start the location recorder: \(status)")
             self.updateStatus(to: .failed, error: error)
             completion(self, nil, error)
@@ -215,7 +210,8 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     private func _startLocationManager() throws {
         let status = CLLocationManager.authorizationStatus()
         guard status == .authorizedAlways || status == .authorizedWhenInUse else {
-            throw RSDDistanceRecorderError.permissionDenied(status)
+            let status: RSDAuthorizationStatus = (status == .restricted) ? .restricted : .denied
+            throw RSDPermissionError.notAuthorized(.location, status)
         }
         
         _setupLocationManager()
@@ -290,7 +286,9 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         guard status != .notDetermined else { return }
         guard status == .authorizedAlways || status == .authorizedWhenInUse else {
-            self.locationManager(manager, didFailWithError: RSDDistanceRecorderError.permissionDenied(status))
+            let status: RSDAuthorizationStatus = (status == .restricted) ? .restricted : .denied
+            let error = RSDPermissionError.notAuthorized(.location, status)
+            self.locationManager(manager, didFailWithError: error)
             return
         }
         if let completion = _permissionCompletion {

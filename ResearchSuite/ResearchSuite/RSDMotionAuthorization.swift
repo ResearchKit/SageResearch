@@ -71,7 +71,8 @@ public class RSDMotionAuthorization {
                 if let err = error {
                     debugPrint("Failed to query pedometer: \(err)")
                     setCachedAuthorization(false)
-                    completion(.denied, err)
+                    let error = RSDPermissionError.notAuthorized(.motion, .denied)
+                    completion(.denied, error)
                 } else {
                     pedometer = nil
                     setCachedAuthorization(true)

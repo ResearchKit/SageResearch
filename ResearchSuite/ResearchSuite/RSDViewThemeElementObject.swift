@@ -33,9 +33,13 @@
 
 import Foundation
 
-/// `RSDViewThemeElementObject` tells the UI where to find the view controller to use when instantiating the
-/// `RSDStepController`.
+/// `RSDViewThemeElementObject` tells the UI where to find the view controller to use when instantiating
+/// the `RSDStepController`.
 public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundleInfo, Codable {
+    
+    private enum CodingKeys: String, CodingKey {
+        case viewIdentifier, bundleIdentifier, storyboardIdentifier
+    }
     
     /// The storyboard view controller identifier or the nib name for this view controller.
     public let viewIdentifier: String
@@ -43,18 +47,18 @@ public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundle
     /// The bundle identifier for the nib or storyboard.
     public let bundleIdentifier: String?
     
-    /// If the storyboard identifier is non-nil then the view is assumed to be accessible within the storyboard
-    /// via the `viewIdentifier`.
+    /// If the storyboard identifier is non-nil then the view is assumed to be accessible within the
+    /// storyboard via the `viewIdentifier`.
     public let storyboardIdentifier: String?
     
-    private enum CodingKeys: String, CodingKey {
-        case viewIdentifier, bundleIdentifier, storyboardIdentifier
-    }
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
     
     /// Default initializer.
     ///
     /// - parameters:
-    ///     - viewIdentifier: The storyboard view controller identifier or the nib name for this view controller.
+    ///     - viewIdentifier: The storyboard view controller identifier or the nib name for this view
+    ///       controller.
     ///     - bundleIdentifier: The bundle identifier for the nib or storyboard. Default = `nil`.
     ///     - storyboardIdentifier: The storyboard identifier. Default = `nil`.
     public init(viewIdentifier: String, bundleIdentifier: String? = nil, storyboardIdentifier: String? = nil) {

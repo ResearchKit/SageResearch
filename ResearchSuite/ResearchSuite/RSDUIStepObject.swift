@@ -291,21 +291,26 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
         
-        self.viewTheme = try container.decodeIfPresent(RSDViewThemeElementObject.self, forKey: .viewTheme) ?? self.viewTheme
-        self.colorTheme = try container.decodeIfPresent(RSDColorThemeElementObject.self, forKey: .colorTheme) ?? self.colorTheme
+        self.viewTheme = try _decodeResource(RSDViewThemeElementObject.self, forKey: .viewTheme, from: decoder) ?? self.viewTheme
+        self.colorTheme = try _decodeResource(RSDColorThemeElementObject.self, forKey: .colorTheme, from: decoder) ?? self.colorTheme
+
+        self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
+        self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
+        
         if container.contains(.imageTheme) {
             let nestedDecoder = try container.superDecoder(forKey: .imageTheme)
             if let image = try? RSDImageWrapper(from: nestedDecoder) {
                 self.imageTheme = image
             } else if let image = try? RSDFetchableImageThemeElementObject(from: nestedDecoder) {
-                self.imageTheme = image
+                var fetchableImage = image
+                fetchableImage.factoryBundle = decoder.bundle
+                self.imageTheme = fetchableImage
             } else {
-                self.imageTheme = try RSDAnimatedImageThemeElementObject(from: nestedDecoder)
+                var animatedImage = try RSDAnimatedImageThemeElementObject(from: nestedDecoder)
+                animatedImage.factoryBundle = decoder.bundle
+                self.imageTheme = animatedImage
             }
         }
-        
-        self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
-        self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
         
         if deviceType == nil {
             let subcontainer = try decoder.container(keyedBy: RSDDeviceType.self)
@@ -315,6 +320,14 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
                 try decode(from: subdecoder, for: preferredType)
             }
         }
+    }
+    
+    private func _decodeResource<T>(_ type: T.Type, forKey key: CodingKeys, from decoder: Decoder) throws -> T? where T : RSDDecodableBundleInfo {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard let object = try container.decodeIfPresent(type, forKey: key) else { return nil }
+        var resource = object
+        resource.factoryBundle = decoder.bundle
+        return resource
     }
     
     // Overrides must be defined in the base implementation

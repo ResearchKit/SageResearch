@@ -33,15 +33,39 @@
 
 import Foundation
 
-/// `RSDResourceConfig` is designed as an overridable resource configuration manager. The functions and properties
-/// are intended to be overridable in the app by implementing a custom extension of the function with the same name.
-/// This is designed to use app-wins namespace conflict resolution that is typical of obj-c architecture.
+/// `RSDDecodableBundleInfo` is a convenience protocol for getting a bundle from a bundle identifier.
+public protocol RSDDecodableBundleInfo : Decodable {
+    
+    /// The bundle identifier. Decodable identifier that can be used to get the bundle.
+    var bundleIdentifier : String? { get }
+    
+    /// A pointer to the bundle set by the factory (if applicable).
+    var factoryBundle: Bundle? { get set }
+}
+
+extension RSDDecodableBundleInfo {
+    
+    /// The bundle returned for the given `bundleIdentifier` or `factoryBundle` if `nil`.
+    public var bundle: Bundle? {
+        guard let identifier = bundleIdentifier
+            else {
+                return self.factoryBundle
+        }
+        return Bundle(identifier: identifier)
+    }
+}
+
+/// `RSDResourceConfig` is designed as an overridable resource configuration manager. The functions and
+/// properties are intended to be overridable in the app by implementing a custom extension of the function
+/// with the same name. This is designed to use app-wins namespace conflict resolution that is typical of
+/// obj-c architecture.
 open class RSDResourceConfig : NSObject {
 }
 
 extension RSDResourceConfig {
     
-    /// Queries the resource config for the relative URL for a given resource object. Default return is `nil`.
+    /// Queries the resource config for the relative URL for a given resource object. Default return is
+    /// `nil`.
     ///
     /// - parameter resource: The resource object.
     /// - returns: The relative URL to apply to the resource object.
@@ -64,8 +88,8 @@ extension RSDResourceConfig {
 ///
 public protocol RSDResourceTransformer: RSDDecodableBundleInfo {
     
-    /// Either a fully qualified URL string or else a relative reference to either an embedded resource or a
-    /// relative URL defined globally by overriding the `RSDResourceConfig` class methods.
+    /// Either a fully qualified URL string or else a relative reference to either an embedded resource or
+    /// a relative URL defined globally by overriding the `RSDResourceConfig` class methods.
     var resourceName: String { get }
     
     /// The classType for converting the resource to an object.
@@ -117,6 +141,9 @@ extension RSDResourceTransformer {
         let rBundle: Bundle
         if bundle != nil {
             rBundle = bundle!
+        }
+        else if self.factoryBundle != nil {
+            rBundle = self.factoryBundle!
         }
         else if let relativeBundle = RSDResourceConfig.resourceBundle(for: self) {
             rBundle = relativeBundle

@@ -58,6 +58,10 @@ extension RSDEmbeddedResourceUIAction {
 /// title and image displayed for a given action of the UI.
 public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
     
+    private enum CodingKeys : String, CodingKey {
+        case buttonTitle, iconName, bundleIdentifier
+    }
+    
     /// The title to display on the button associated with this action.
     public var buttonTitle: String?
     
@@ -66,6 +70,9 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
     
     /// The bundle identifier for the resource bundle that contains the image.
     public var bundleIdentifier: String?
+    
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
     
     /// Default initializer for a button with text.
     /// - parameter buttonTitle: The title to display on the button associated with this action.
@@ -83,16 +90,16 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
         self.iconName = iconName
         self.bundleIdentifier = bundleIdentifier
     }
-    
-    private enum CodingKeys : String, CodingKey {
-        case buttonTitle, iconName, bundleIdentifier
-    }
 }
 
 /// `RSDSkipToUIActionObject` implements an action that includes an identifier for a step to skip to if this
 /// action is called. This is used by the `RSDConditionalStepNavigator` to navigate based on a `nil` result.
 /// - seealso: `RSDSurveyNavigationStep`
 public struct RSDSkipToUIActionObject : RSDEmbeddedResourceUIAction, RSDSkipToUIAction {
+    
+    private enum CodingKeys : String, CodingKey {
+        case skipToIdentifier, buttonTitle, iconName, bundleIdentifier
+    }
     
     /// The identifier for the step to skip to if the action is called.
     public let skipToIdentifier: String
@@ -105,6 +112,9 @@ public struct RSDSkipToUIActionObject : RSDEmbeddedResourceUIAction, RSDSkipToUI
     
     /// The bundle identifier for the resource bundle that contains the image.
     public var bundleIdentifier: String?
+    
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
     
     /// Default initializer for a button with text.
     /// - parameters:
@@ -124,12 +134,6 @@ public struct RSDSkipToUIActionObject : RSDEmbeddedResourceUIAction, RSDSkipToUI
         self.skipToIdentifier = skipToIdentifier
         self.iconName = iconName
         self.bundleIdentifier = bundleIdentifier
-    }
-    
-    // MARK: Codable implementation (auto synthesized implementation does not work with subclassing)
-    
-    private enum CodingKeys : String, CodingKey {
-        case skipToIdentifier, buttonTitle, iconName, bundleIdentifier
     }
 }
 
@@ -156,6 +160,9 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction {
     /// The bundle identifier for the resource bundle that contains the image.
     public var bundleIdentifier: String?
     
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
+    
     /// Default initializer for a button with text.
     /// - parameters:
     ///     - reminderIdentifier:  The identifier for a `UNNotificationRequest`.
@@ -167,12 +174,15 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction {
 }
 
 /// `RSDWebViewUIActionObject` implements an action that includes a pointer to a url that can display in a
-/// webview. The url can either be fully qualified or optionally point to an embedded resource. The resource
-/// bundle is assumed to be the main bundle if the `bundleIdentifier` property is `nil`.
+/// webview. The url can either be fully qualified or optionally point to an embedded resource. 
 public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebViewUIAction {
 
-    /// The url to load in the webview. If this is not a fully qualified url string, then it is assumed to refer
-    /// to an embedded resource.
+    private enum CodingKeys : String, CodingKey {
+        case  url, buttonTitle, iconName, bundleIdentifier
+    }
+    
+    /// The url to load in the webview. If this is not a fully qualified url string, then it is assumed to
+    /// refer to an embedded resource.
     public let url: String
     
     /// The title to display on the button associated with this action.
@@ -183,6 +193,9 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
     
     /// The bundle identifier for the resource bundle that contains the image.
     public var bundleIdentifier: String?
+    
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
     
     /// The `url` is the resource name.
     public var resourceName: String {
@@ -215,12 +228,6 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
         self.url = url
         self.iconName = iconName
         self.bundleIdentifier = bundleIdentifier
-    }
-    
-    // MARK: Codable implementation (auto synthesized implementation does not work with subclassing)
-    
-    private enum CodingKeys : String, CodingKey {
-        case  url, buttonTitle, iconName, bundleIdentifier
     }
 }
 

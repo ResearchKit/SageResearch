@@ -53,6 +53,10 @@ extension RSDImageWrapper : RSDFetchableImageThemeElement {
 
 /// `RSDFetchableImageThemeElementObject` is a `Codable` concrete implementation of `RSDFetchableImageThemeElement`.
 public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElement, RSDDecodableBundleInfo, Codable {
+    
+    private enum CodingKeys: String, CodingKey {
+        case imageName, bundleIdentifier, placementType, _size = "size"
+    }
 
     /// The name of the image.
     public let imageName: String
@@ -69,16 +73,15 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     }
     private let _size: RSDSizeWrapper?
     
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
+    
     /// The unique identifier for the image
     public var imageIdentifier: String {
         guard let bundleIdentifier = bundleIdentifier else { return imageName }
         return "\(bundleIdentifier).\(imageName)"
     }
-    
-    private enum CodingKeys: String, CodingKey {
-        case imageName, bundleIdentifier, placementType, _size = "size"
-    }
-    
+
     /// Default initializer.
     ///
     /// - parameters:
@@ -113,6 +116,10 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
 /// `RSDAnimatedImageThemeElementObject` is a `Codable` concrete implementation of `RSDAnimatedImageThemeElement`.
 public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDDecodableBundleInfo, Codable {
     
+    private enum CodingKeys: String, CodingKey {
+        case imageNames, animationDuration, bundleIdentifier, placementType, _size = "size"
+    }
+    
     /// The list of image names for the images to include in this animation.
     public let imageNames: [String]
     
@@ -136,10 +143,9 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
         guard let bundleIdentifier = bundleIdentifier else { return imageNames.first! }
         return "\(bundleIdentifier).\(imageNames.first!)"
     }
-
-    private enum CodingKeys: String, CodingKey {
-        case imageNames, animationDuration, bundleIdentifier, placementType, _size = "size"
-    }
+    
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
 
     /// Default initializer.
     ///
