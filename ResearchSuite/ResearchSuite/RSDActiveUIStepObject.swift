@@ -43,17 +43,17 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     }
 
     /// The duration of time to run the step. If `0`, then this value is ignored.
-    public var duration: TimeInterval = 0
+    open var duration: TimeInterval = 0
     
     /// The set of commands to apply to this active step. These indicate actions to fire at the beginning and end of
     /// the step such as playing a sound as well as whether or not to automatically start and finish the step.
     ///
     /// - seealso: `RSDActiveUIStepCommand.stringMapping` for a list of the coding strings included in this framework.
-    public var commands: RSDActiveUIStepCommand = .defaultCommands
+    open var commands: RSDActiveUIStepCommand = .defaultCommands
     
     /// Whether or not the step uses audio, such as the speech synthesizer, that should play whether or not the user
     /// has the mute switch turned on. Default = `false`.
-    public var requiresBackgroundAudio: Bool = false
+    open var requiresBackgroundAudio: Bool = false
     
     // MARK: spoken instruction handling
     
@@ -96,7 +96,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     ///                                     Double.infinity : "Stop moving"]
     ///     ```
     ///
-    public var spokenInstructions: [TimeInterval : String]?
+    open var spokenInstructions: [TimeInterval : String]?
     
     /// The `SpokenInstructionKeys` are specialized markers for the timing of when to speak the
     /// spoken instruction. These include keys that can be transformed into a time interval using
