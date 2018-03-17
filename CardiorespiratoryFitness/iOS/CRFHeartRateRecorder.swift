@@ -486,12 +486,12 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
                 // get the red channel and the uptime then remove the first half the samples
                 let halfLength = windowLength / 2
                 let uptime = self.pixelSamples[Int(halfLength)].uptime
-                let red = self.pixelSamples[..<windowLength].map { $0.red }
+                let channel = self.pixelSamples[..<windowLength].map { $0.green }
                 self.pixelSamples.removeSubrange(..<halfLength)
                 
                 self.sampleProcessingQueue.async {
                     
-                    let (heartRate, confidence) = calculateHeartRate(red)
+                    let (heartRate, confidence) = calculateHeartRate(channel)
                     let bpmSample = CRFHeartRateBPMSample(uptime: uptime, bpm: heartRate, confidence: confidence)
                     self.bpmSamples.append(bpmSample)
                     self.isProcessing = false

@@ -51,9 +51,9 @@ fileprivate let fs: Double = 60                                  // frames / sec
 fileprivate let window: Double = 10                              // seconds
 fileprivate let window_len: Int = Int(round(fs * window))       // number of frames in the window
 
-/// red channel, 60fps, 10sec window
-func findHeartRateValues(with red:[Double]) -> [(heartRate: Int, confidence: Double)] {
-    let nframes = Int(floor(Double(red.count) / (Double(window_len)/2)) - 1)
+/// channel, 60fps, 10sec window
+func findHeartRateValues(with channel:[Double]) -> [(heartRate: Int, confidence: Double)] {
+    let nframes = Int(floor(Double(channel.count) / (Double(window_len)/2)) - 1)
     guard nframes >= 1 else { return [] }
     var output: [(Int, Double)] = []
     for frame_no in 1...nframes {
