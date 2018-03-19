@@ -41,51 +41,6 @@ public let CRFMinConfidence = 0.5
 /// The minimum "red level" (number of pixels that are "red" dominant) to qualify as having the lens covered.
 public let CRFMinRedLevel = 0.9
 
-/// The configuration for the heart rate recorder.
-public struct CRFHeartRateRecorderConfiguration : RSDRecorderConfiguration {
-
-    /// A unique string used to identify the recorder.
-    public let identifier: String
-    
-    /// The step used to mark when to start the recorder.
-    public var startStepIdentifier: String?
-    
-    /// The step used to mark when to stop the recorder.
-    public var stopStepIdentifier: String?
-    
-    /// Should the log file include the full pixel matrix or just the averaged value?
-    public var shouldSaveBuffer: Bool = false
-    
-    /// The duration of the capture. Default = `30`
-    public var duration: TimeInterval = 30
-    
-    /// The camera settings.
-    public var cameraSettings : CRFCameraSettings = CRFCameraSettings()
-    
-    /// Should the preview be hidden when the lens is covered?
-    public var shouldHidePreview: Bool = true
-    
-    /// Default initializer.
-    /// - parameter identifier: A unique string used to identify the recorder.
-    public init(identifier: String) {
-        self.identifier = identifier
-    }
-    
-    /// This recorder requires permission to use the camera.
-    public var permissionTypes: [RSDPermissionType] {
-        return [RSDStandardPermissionType.camera]
-    }
-    
-    /// This recorder does not require background audio
-    public var requiresBackgroundAudio: Bool {
-        return false
-    }
-    
-    /// No validation required.
-    public func validate() throws {
-    }
-}
-
 public protocol CRFHeartRateRecorderDelegate : RSDAsyncActionControllerDelegate {
     
     /// An optional view that can be used to show the user's finger while the lens is uncovered.
@@ -115,8 +70,8 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     /// Confidence for the last calculated heartrate.
     public private(set) var confidence: Double = 1
     
-    public var heartRateConfiguration : CRFHeartRateRecorderConfiguration? {
-        return self.configuration as? CRFHeartRateRecorderConfiguration
+    public var heartRateConfiguration : CRFHeartRateStep? {
+        return self.configuration as? CRFHeartRateStep
     }
     
     public override func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
@@ -421,7 +376,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         if coveringLens != self.isCoveringLens {
             DispatchQueue.main.async {
                 self.isCoveringLens = coveringLens
-                if let previewLayer = self._videoPreviewLayer, (self.heartRateConfiguration?.shouldHidePreview ?? true) {
+                if let previewLayer = self._videoPreviewLayer {
                     if coveringLens {
                         previewLayer.removeFromSuperlayer()
                     } else {

@@ -47,8 +47,8 @@ public let CRFHeartRateSettleSeconds = TimeInterval(3)
 
 // --- Code ported from Matlab
 
-fileprivate let fs: Double = 60                                  // frames / second
-fileprivate let window: Double = 10                              // seconds
+fileprivate let fs: Double = 60                                 // frames / second
+fileprivate let window: Double = 10                             // seconds
 fileprivate let window_len: Int = Int(round(fs * window))       // number of frames in the window
 
 /// channel, 60fps, 10sec window
@@ -59,7 +59,7 @@ func findHeartRateValues(with channel:[Double]) -> [(heartRate: Int, confidence:
     for frame_no in 1...nframes {
         let lower = (1 + ((frame_no - 1) * window_len / 2)) - 1
         let upper = ((frame_no + 1) * window_len / 2) - 1
-        let currframe = Array(red[lower...upper])
+        let currframe = Array(channel[lower...upper])
         output.append(calculateHeartRate(currframe))
     }
     return output

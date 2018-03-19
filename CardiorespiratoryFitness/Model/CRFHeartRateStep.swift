@@ -37,8 +37,8 @@ import ResearchSuite
 
 /// Custom subclass of the active step that can decode configuration details specific to the heart rate
 /// recorder used by this step view controller.
-open class CRFHeartRateStep : RSDActiveUIStepObject {
-    
+open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRecorderConfiguration {
+
     private enum CodingKeys : String, CodingKey {
         case shouldSaveBuffer, cameraSettings, isResting
     }
@@ -47,10 +47,25 @@ open class CRFHeartRateStep : RSDActiveUIStepObject {
     public var shouldSaveBuffer: Bool = false
     
     /// The camera settings.
-    public var cameraSettings : CRFCameraSettings?
+    public var cameraSettings : CRFCameraSettings = CRFCameraSettings()
     
     /// Is this the resting heart rate?
     public var isResting: Bool = true
+    
+    /// This recorder requires permission to use the camera.
+    public var permissionTypes: [RSDPermissionType] {
+        return [RSDStandardPermissionType.camera]
+    }
+    
+    /// The start and stop identifers are for this step.
+    public var startStepIdentifier: String? {
+        return self.identifier
+    }
+    
+    /// The start and stop identifers are for this step.
+    public var stopStepIdentifier: String? {
+        return self.identifier
+    }
     
     /// Override the copy into method.
     override open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
