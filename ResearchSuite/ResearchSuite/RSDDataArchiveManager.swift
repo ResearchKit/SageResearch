@@ -104,7 +104,7 @@ public protocol RSDDataArchive : class, NSObjectProtocol {
     /// - parameters:
     ///     - data: The data to insert.
     ///     - manifest: The file manifest for this data.
-    func insertDataIntoArchive(_ data: Data, manifest: RSDFileManifest)
+    func insertDataIntoArchive(_ data: Data, manifest: RSDFileManifest) throws
     
     /// Mark the archive as completed.
     /// - parameter metadata: The metadata for this archive.
@@ -281,7 +281,7 @@ internal class TaskArchiver : NSObject {
                 if answerMap.count > 0, archive.shouldInsertData(for: .answers) {
                     let data = try answerMap.jsonEncodedData()
                     let manifest = RSDFileResultUtility.fileManifest(for: .answers)
-                    archive.insertDataIntoArchive(data, manifest: manifest)
+                    try archive.insertDataIntoArchive(data, manifest: manifest)
                     self.files.insert(manifest)
                 }
                 
@@ -289,7 +289,7 @@ internal class TaskArchiver : NSObject {
                 if archive.shouldInsertData(for: .taskResult) {
                     let data = try taskResult.jsonEncodedData()
                     let manifest = RSDFileResultUtility.fileManifest(for: .taskResult)
-                    archive.insertDataIntoArchive(data, manifest: manifest)
+                    try archive.insertDataIntoArchive(data, manifest: manifest)
                     self.files.insert(manifest)
                 }
                 
@@ -343,7 +343,7 @@ internal class TaskArchiver : NSObject {
         if let achivable = result as? RSDArchivable {
             do {
                 if let (manifest, data) = try achivable.buildArchiveData(at: stepPath) {
-                    self.archive?.insertDataIntoArchive(data, manifest: manifest)
+                    try self.archive?.insertDataIntoArchive(data, manifest: manifest)
                     self.files.insert(manifest)
                 }
             } catch let err {
@@ -360,7 +360,6 @@ internal class TaskArchiver : NSObject {
         
         // If this result conforms to the answer result protocol then add it to the answer map
         if let answerResult = result as? RSDAnswerResult {
-            debugPrint("\(String(describing: sectionIdentifier)).\(answerResult.identifier)")
             if let answer = answerResult.value, !(answer is NSNull) {
                 let answerIdentifier: String = {
                     if let section = sectionIdentifier {
