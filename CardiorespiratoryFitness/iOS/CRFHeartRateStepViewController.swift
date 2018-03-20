@@ -159,7 +159,7 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
             let isResting = (self.step as? CRFHeartRateStep)?.isResting ?? true
             if isResting {
                 bpm = recorder.meanHeartRate()
-            } else if let sample = recorder.bpmSamples.first, (sample.confidence ?? 0) >= CRFMinConfidence {
+            } else if let sample = recorder.bpmSamples.first, sample.confidence >= CRFMinConfidence {
                 bpm = sample
             } else if recorder.bpmSamples.count >= 2 {
                 bpm = recorder.bpmSamples[1]
