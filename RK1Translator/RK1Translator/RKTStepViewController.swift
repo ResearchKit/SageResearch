@@ -32,10 +32,10 @@
 //
 
 import UIKit
-import ResearchSuiteUI
+import ResearchStack2UI
 
 /// `RKTStepViewController` extends `UINavigationController` with a pass-through implementation of
-/// `ORKStepViewController`. This can be used with the ResearchSuiteUI implementation of `RSDTaskViewController`
+/// `ORKStepViewController`. This can be used with the ResearchStack2UI implementation of `RSDTaskViewController`
 /// to wrap an `ORKStepViewController` for use as a view controller presented by the `RSDTaskViewController`.
 ///
 /// - seealso: `RSDStepViewControllerVendor`, `RSDTaskViewController`
@@ -56,7 +56,7 @@ open class RKTStepViewController:  UINavigationController, RSDStepController, RS
     }
     
     /// The task controller for this step view controller wrapper.
-    public var taskController: RSDTaskUIController!
+    public var taskController: RSDTaskController!
     
     /// Return the `ORKStep` if it conforms to the `RSDStep` protocol; otherwise, this will look to
     /// see if an `RSDStep` has been set for this property and ensure that the private step is copied
@@ -66,7 +66,7 @@ open class RKTStepViewController:  UINavigationController, RSDStepController, RS
             if let rsdStep = self.rootStepViewController.step as? RSDStep {
                 return rsdStep
             } else if let orkStep = self.rootStepViewController.step, ((_step == nil) || (_step!.identifier != orkStep.identifier)) {
-                _step = _step?.copy(with: orkStep.identifier) ??
+                _step = ((_step as? RSDCopyWithIdentifier)?.copy(with: orkStep.identifier) as? RSDStep) ??
                     RSDGenericStepObject(identifier: orkStep.identifier, stepType: RSDStepType(rawValue: NSStringFromClass(type(of: orkStep)) as String), userInfo: [:])
             }
             return _step
@@ -154,7 +154,7 @@ open class RKTStepViewController:  UINavigationController, RSDStepController, RS
     /// Call through to the task controller `handleTaskFailure()` method
     open func stepViewControllerDidFail(_ stepViewController: ORKStepViewController, withError error: Error?) {
         guard let err = error else { return }
-        self.taskController.handleTaskFailure(with: err)
+        self.taskUIController?.handleTaskFailure(with: err)
     }
     
     /// Base class implementation does nothing.

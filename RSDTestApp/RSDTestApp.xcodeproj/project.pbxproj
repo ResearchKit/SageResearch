@@ -32,14 +32,14 @@
 		F8B177DF202D0EC800B62416 /* ResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B177DE202D0EC800B62416 /* ResultTableViewController.swift */; };
 		F8B177E5202D2C0D00B62416 /* UIColor+StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8B177E4202D2C0D00B62416 /* UIColor+StyleGuide.swift */; };
 		F8B177EB202D330E00B62416 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B177EA202D330E00B62416 /* CoreMotion.framework */; };
-		F8B17823202D4E8400B62416 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchSuiteUI.framework */; };
-		F8B17824202D4E8400B62416 /* ResearchSuiteUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchSuiteUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8B17827202D4E8C00B62416 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* ResearchSuite.framework */; };
-		F8B17828202D4E8C00B62416 /* ResearchSuite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* ResearchSuite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8B17829202D4EA500B62416 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* ResearchSuite.framework */; };
-		F8B1782A202D4EA500B62416 /* ResearchSuite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* ResearchSuite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8B1782B202D4EAC00B62416 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchSuiteUI.framework */; };
-		F8B1782C202D4EAC00B62416 /* ResearchSuiteUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchSuiteUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8B17823202D4E8400B62416 /* ResearchStack2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchStack2UI.framework */; };
+		F8B17824202D4E8400B62416 /* ResearchStack2UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchStack2UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8B17827202D4E8C00B62416 /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* ResearchStack2.framework */; };
+		F8B17828202D4E8C00B62416 /* ResearchStack2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* ResearchStack2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8B17829202D4EA500B62416 /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* ResearchStack2.framework */; };
+		F8B1782A202D4EA500B62416 /* ResearchStack2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* ResearchStack2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8B1782B202D4EAC00B62416 /* ResearchStack2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchStack2UI.framework */; };
+		F8B1782C202D4EAC00B62416 /* ResearchStack2UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchStack2UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8B17844202D82AB00B62416 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17843202D82AB00B62416 /* CoreLocation.framework */; };
 		F8B4FFE2204A145A00D41E97 /* Tracking_Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = F8B4FFE1204A145900D41E97 /* Tracking_Symptoms.json */; };
 		FF2415611F7AC31800D0BA5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2415601F7AC31800D0BA5C /* AppDelegate.swift */; };
@@ -75,8 +75,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F8B1782C202D4EAC00B62416 /* ResearchSuiteUI.framework in Embed Frameworks */,
-				F8B1782A202D4EA500B62416 /* ResearchSuite.framework in Embed Frameworks */,
+				F8B1782C202D4EAC00B62416 /* ResearchStack2UI.framework in Embed Frameworks */,
+				F8B1782A202D4EA500B62416 /* ResearchStack2.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,8 +87,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F8B17828202D4E8C00B62416 /* ResearchSuite.framework in Embed Frameworks */,
-				F8B17824202D4E8400B62416 /* ResearchSuiteUI.framework in Embed Frameworks */,
+				F8B17828202D4E8C00B62416 /* ResearchStack2.framework in Embed Frameworks */,
+				F8B17824202D4E8400B62416 /* ResearchStack2UI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,8 +127,8 @@
 		F8B177DE202D0EC800B62416 /* ResultTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTableViewController.swift; sourceTree = "<group>"; };
 		F8B177E4202D2C0D00B62416 /* UIColor+StyleGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+StyleGuide.swift"; sourceTree = "<group>"; };
 		F8B177EA202D330E00B62416 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		F8B17822202D4E8400B62416 /* ResearchSuiteUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuiteUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8B17826202D4E8C00B62416 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B17822202D4E8400B62416 /* ResearchStack2UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchStack2UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8B17826202D4E8C00B62416 /* ResearchStack2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchStack2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B17843202D82AB00B62416 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F8B4FFE1204A145900D41E97 /* Tracking_Symptoms.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tracking_Symptoms.json; sourceTree = "<group>"; };
 		FF24155D1F7AC31800D0BA5C /* RSDTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,8 +150,8 @@
 				F88FE3CF2050720100E33AC4 /* Photos.framework in Frameworks */,
 				F88FE3CD205071F700E33AC4 /* AVFoundation.framework in Frameworks */,
 				F8B17844202D82AB00B62416 /* CoreLocation.framework in Frameworks */,
-				F8B1782B202D4EAC00B62416 /* ResearchSuiteUI.framework in Frameworks */,
-				F8B17829202D4EA500B62416 /* ResearchSuite.framework in Frameworks */,
+				F8B1782B202D4EAC00B62416 /* ResearchStack2UI.framework in Frameworks */,
+				F8B17829202D4EA500B62416 /* ResearchStack2.framework in Frameworks */,
 				F8B177EB202D330E00B62416 /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,8 +174,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8B17827202D4E8C00B62416 /* ResearchSuite.framework in Frameworks */,
-				F8B17823202D4E8400B62416 /* ResearchSuiteUI.framework in Frameworks */,
+				F8B17827202D4E8C00B62416 /* ResearchStack2.framework in Frameworks */,
+				F8B17823202D4E8400B62416 /* ResearchStack2UI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,8 +272,8 @@
 				F8B17799202CD73B00B62416 /* RSDCatalogTests */,
 				F8B177A4202CD73B00B62416 /* RSDCatalogUITests */,
 				FF24155E1F7AC31800D0BA5C /* Products */,
-				F8B17826202D4E8C00B62416 /* ResearchSuite.framework */,
-				F8B17822202D4E8400B62416 /* ResearchSuiteUI.framework */,
+				F8B17826202D4E8C00B62416 /* ResearchStack2.framework */,
+				F8B17822202D4E8400B62416 /* ResearchStack2UI.framework */,
 				F8B177E9202D330D00B62416 /* Frameworks */,
 			);
 			sourceTree = "<group>";

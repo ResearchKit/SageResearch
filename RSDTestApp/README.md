@@ -1,22 +1,22 @@
 # RSDTestApp
 RSDTestApp contains example applications for running the surveys and async recorders included in the
-ResearchSuite and ResearchSuiteUI frameworks. There are two test targets.
+ResearchStack2 and ResearchStack2UI frameworks. There are two test targets.
 
 RSDTestApp is set up to test that a light-weight app with no required permissions can be built and
 submitted to the Apple App Store without requiring set up of the unused privacy keys. Examples of
 form steps and instruction steps that *do not* use any additional frameworks such as HealthKit,
 CoreMotion, or CoreLocation can be added to this target when submitted as additions to the
-ResearchSuite and ResearchSuiteUI frameworks, but submission of an example to this target is not
+ResearchStack2 and ResearchStack2UI frameworks, but submission of an example to this target is not
 required.
 
 RSDCatalog is set up as a catalog of example tasks for all the tasks, steps, async actions, etc. that
-are included in the ResearchSuite and ResearchSuiteUI frameworks. When submitting an addition
+are included in the ResearchStack2 and ResearchStack2UI frameworks. When submitting an addition
 to these frameworks, as a part of your submission, please include an example in the catalog as a
 new task, add the task to the main task group JSON file, and add a UI Test to the UI test framework.
 
 ## License
 
-ResearchSuiteUI is available under the BSD license:
+ResearchStack2UI is available under the BSD license:
 
 Copyright (c) 2017-2018, Sage Bionetworks
 All rights reserved.

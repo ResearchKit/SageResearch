@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import ResearchSuite
+import ResearchStack2
 
 class TaskGroupTableViewController: UITableViewController {
 

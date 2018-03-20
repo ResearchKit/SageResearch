@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F8250548202A5B0000AF9B76 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8250549202A5B0000AF9B76 /* ResearchSuite.framework */; };
+		F8250548202A5B0000AF9B76 /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8250549202A5B0000AF9B76 /* ResearchStack2.framework */; };
 		F8250557202A5BBC00AF9B76 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8250556202A5BBB00AF9B76 /* README.md */; };
-		F8250559202A5E4700AF9B76 /* ORKInstructionStep+ResearchSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250558202A5E4700AF9B76 /* ORKInstructionStep+ResearchSuite.swift */; };
+		F8250559202A5E4700AF9B76 /* ORKInstructionStep+ResearchStack2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250558202A5E4700AF9B76 /* ORKInstructionStep+ResearchStack2.swift */; };
 		F825055C202A5EC000AF9B76 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8250551202A5B3700AF9B76 /* ResearchKit.framework */; };
-		F8250560202A634300AF9B76 /* ORKQuestionResult+ResearchSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F825055F202A634300AF9B76 /* ORKQuestionResult+ResearchSuite.swift */; };
-		F8250570202A793000AF9B76 /* ORKStepResult+ResearchSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F825056F202A793000AF9B76 /* ORKStepResult+ResearchSuite.swift */; };
-		F8250572202A7AB000AF9B76 /* ORKFileResult+ResearchSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250571202A7AB000AF9B76 /* ORKFileResult+ResearchSuite.swift */; };
-		F8250574202A7BC000AF9B76 /* ORKTaskResult+ResearchSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250573202A7BC000AF9B76 /* ORKTaskResult+ResearchSuite.swift */; };
-		F8250576202A7F9000AF9B76 /* ORKTask+ResearchSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250575202A7F9000AF9B76 /* ORKTask+ResearchSuite.swift */; };
+		F8250560202A634300AF9B76 /* ORKQuestionResult+ResearchStack2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F825055F202A634300AF9B76 /* ORKQuestionResult+ResearchStack2.swift */; };
+		F8250570202A793000AF9B76 /* ORKStepResult+ResearchStack2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F825056F202A793000AF9B76 /* ORKStepResult+ResearchStack2.swift */; };
+		F8250572202A7AB000AF9B76 /* ORKFileResult+ResearchStack2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250571202A7AB000AF9B76 /* ORKFileResult+ResearchStack2.swift */; };
+		F8250574202A7BC000AF9B76 /* ORKTaskResult+ResearchStack2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250573202A7BC000AF9B76 /* ORKTaskResult+ResearchStack2.swift */; };
+		F8250576202A7F9000AF9B76 /* ORKTask+ResearchStack2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250575202A7F9000AF9B76 /* ORKTask+ResearchStack2.swift */; };
 		F844CC6D202AD53300272FEF /* RKTStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F844CC6C202AD53300272FEF /* RKTStepViewController.swift */; };
-		F844CC71202AD5CA00272FEF /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F844CC72202AD5CA00272FEF /* ResearchSuiteUI.framework */; };
+		F844CC71202AD5CA00272FEF /* ResearchStack2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F844CC72202AD5CA00272FEF /* ResearchStack2UI.framework */; };
 		F86DBD87202A5A460017A9F6 /* RK1Translator.h in Headers */ = {isa = PBXBuildFile; fileRef = F86DBD85202A5A460017A9F6 /* RK1Translator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -39,17 +39,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F8250549202A5B0000AF9B76 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8250549202A5B0000AF9B76 /* ResearchStack2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchStack2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F825054A202A5B3600AF9B76 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = ../../ResearchKit/ResearchKit.xcodeproj; sourceTree = "<group>"; };
 		F8250556202A5BBB00AF9B76 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		F8250558202A5E4700AF9B76 /* ORKInstructionStep+ResearchSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKInstructionStep+ResearchSuite.swift"; sourceTree = "<group>"; };
-		F825055F202A634300AF9B76 /* ORKQuestionResult+ResearchSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKQuestionResult+ResearchSuite.swift"; sourceTree = "<group>"; };
-		F825056F202A793000AF9B76 /* ORKStepResult+ResearchSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKStepResult+ResearchSuite.swift"; sourceTree = "<group>"; };
-		F8250571202A7AB000AF9B76 /* ORKFileResult+ResearchSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKFileResult+ResearchSuite.swift"; sourceTree = "<group>"; };
-		F8250573202A7BC000AF9B76 /* ORKTaskResult+ResearchSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKTaskResult+ResearchSuite.swift"; sourceTree = "<group>"; };
-		F8250575202A7F9000AF9B76 /* ORKTask+ResearchSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKTask+ResearchSuite.swift"; sourceTree = "<group>"; };
+		F8250558202A5E4700AF9B76 /* ORKInstructionStep+ResearchStack2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKInstructionStep+ResearchStack2.swift"; sourceTree = "<group>"; };
+		F825055F202A634300AF9B76 /* ORKQuestionResult+ResearchStack2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKQuestionResult+ResearchStack2.swift"; sourceTree = "<group>"; };
+		F825056F202A793000AF9B76 /* ORKStepResult+ResearchStack2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKStepResult+ResearchStack2.swift"; sourceTree = "<group>"; };
+		F8250571202A7AB000AF9B76 /* ORKFileResult+ResearchStack2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKFileResult+ResearchStack2.swift"; sourceTree = "<group>"; };
+		F8250573202A7BC000AF9B76 /* ORKTaskResult+ResearchStack2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKTaskResult+ResearchStack2.swift"; sourceTree = "<group>"; };
+		F8250575202A7F9000AF9B76 /* ORKTask+ResearchStack2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKTask+ResearchStack2.swift"; sourceTree = "<group>"; };
 		F844CC6C202AD53300272FEF /* RKTStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKTStepViewController.swift; sourceTree = "<group>"; };
-		F844CC72202AD5CA00272FEF /* ResearchSuiteUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuiteUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F844CC72202AD5CA00272FEF /* ResearchStack2UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchStack2UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F86DBD82202A5A460017A9F6 /* RK1Translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RK1Translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F86DBD85202A5A460017A9F6 /* RK1Translator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RK1Translator.h; sourceTree = "<group>"; };
 		F86DBD86202A5A460017A9F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,9 +60,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F844CC71202AD5CA00272FEF /* ResearchSuiteUI.framework in Frameworks */,
+				F844CC71202AD5CA00272FEF /* ResearchStack2UI.framework in Frameworks */,
 				F825055C202A5EC000AF9B76 /* ResearchKit.framework in Frameworks */,
-				F8250548202A5B0000AF9B76 /* ResearchSuite.framework in Frameworks */,
+				F8250548202A5B0000AF9B76 /* ResearchStack2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,9 +72,9 @@
 		F8250547202A5B0000AF9B76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F844CC72202AD5CA00272FEF /* ResearchSuiteUI.framework */,
+				F844CC72202AD5CA00272FEF /* ResearchStack2UI.framework */,
 				F825054A202A5B3600AF9B76 /* ResearchKit.xcodeproj */,
-				F8250549202A5B0000AF9B76 /* ResearchSuite.framework */,
+				F8250549202A5B0000AF9B76 /* ResearchStack2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -88,20 +88,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F825055B202A5E6400AF9B76 /* ResearchSuite Extensions */ = {
+		F825055B202A5E6400AF9B76 /* ResearchStack2 Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				F825055E202A631300AF9B76 /* Results */,
 				F825055D202A630800AF9B76 /* Steps */,
 				F8250577202A7F9D00AF9B76 /* Task */,
 			);
-			name = "ResearchSuite Extensions";
+			name = "ResearchStack2 Extensions";
 			sourceTree = "<group>";
 		};
 		F825055D202A630800AF9B76 /* Steps */ = {
 			isa = PBXGroup;
 			children = (
-				F8250558202A5E4700AF9B76 /* ORKInstructionStep+ResearchSuite.swift */,
+				F8250558202A5E4700AF9B76 /* ORKInstructionStep+ResearchStack2.swift */,
 				F844CC6C202AD53300272FEF /* RKTStepViewController.swift */,
 			);
 			name = Steps;
@@ -110,10 +110,10 @@
 		F825055E202A631300AF9B76 /* Results */ = {
 			isa = PBXGroup;
 			children = (
-				F8250571202A7AB000AF9B76 /* ORKFileResult+ResearchSuite.swift */,
-				F825055F202A634300AF9B76 /* ORKQuestionResult+ResearchSuite.swift */,
-				F825056F202A793000AF9B76 /* ORKStepResult+ResearchSuite.swift */,
-				F8250573202A7BC000AF9B76 /* ORKTaskResult+ResearchSuite.swift */,
+				F8250571202A7AB000AF9B76 /* ORKFileResult+ResearchStack2.swift */,
+				F825055F202A634300AF9B76 /* ORKQuestionResult+ResearchStack2.swift */,
+				F825056F202A793000AF9B76 /* ORKStepResult+ResearchStack2.swift */,
+				F8250573202A7BC000AF9B76 /* ORKTaskResult+ResearchStack2.swift */,
 			);
 			name = Results;
 			sourceTree = "<group>";
@@ -121,7 +121,7 @@
 		F8250577202A7F9D00AF9B76 /* Task */ = {
 			isa = PBXGroup;
 			children = (
-				F8250575202A7F9000AF9B76 /* ORKTask+ResearchSuite.swift */,
+				F8250575202A7F9000AF9B76 /* ORKTask+ResearchStack2.swift */,
 			);
 			name = Task;
 			sourceTree = "<group>";
@@ -146,7 +146,7 @@
 		F86DBD84202A5A460017A9F6 /* RK1Translator */ = {
 			isa = PBXGroup;
 			children = (
-				F825055B202A5E6400AF9B76 /* ResearchSuite Extensions */,
+				F825055B202A5E6400AF9B76 /* ResearchStack2 Extensions */,
 				F8250556202A5BBB00AF9B76 /* README.md */,
 				F86DBD85202A5A460017A9F6 /* RK1Translator.h */,
 				F86DBD86202A5A460017A9F6 /* Info.plist */,
@@ -258,13 +258,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8250574202A7BC000AF9B76 /* ORKTaskResult+ResearchSuite.swift in Sources */,
-				F8250559202A5E4700AF9B76 /* ORKInstructionStep+ResearchSuite.swift in Sources */,
-				F8250572202A7AB000AF9B76 /* ORKFileResult+ResearchSuite.swift in Sources */,
+				F8250574202A7BC000AF9B76 /* ORKTaskResult+ResearchStack2.swift in Sources */,
+				F8250559202A5E4700AF9B76 /* ORKInstructionStep+ResearchStack2.swift in Sources */,
+				F8250572202A7AB000AF9B76 /* ORKFileResult+ResearchStack2.swift in Sources */,
 				F844CC6D202AD53300272FEF /* RKTStepViewController.swift in Sources */,
-				F8250576202A7F9000AF9B76 /* ORKTask+ResearchSuite.swift in Sources */,
-				F8250560202A634300AF9B76 /* ORKQuestionResult+ResearchSuite.swift in Sources */,
-				F8250570202A793000AF9B76 /* ORKStepResult+ResearchSuite.swift in Sources */,
+				F8250576202A7F9000AF9B76 /* ORKTask+ResearchStack2.swift in Sources */,
+				F8250560202A634300AF9B76 /* ORKQuestionResult+ResearchStack2.swift in Sources */,
+				F8250570202A793000AF9B76 /* ORKStepResult+ResearchStack2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,9 +32,9 @@
 //
 
 import UIKit
-import ResearchSuiteUI
+import ResearchStack2UI
 
-/// This extension will override the color values set ResearchSuiteUI.
+/// This extension will override the color values set ResearchStack2UI.
 extension UIColor {
     
     @objc open class var primaryTintColor: UIColor? {
