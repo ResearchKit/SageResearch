@@ -58,7 +58,7 @@ class RSDCatalogTests: XCTestCase {
             let taskGroups = try jsonDecoder.decode([RSDTaskGroupObject].self, from: jsonData)
             for taskGroup in taskGroups {
                 for taskInfo in taskGroup.tasks {
-                    if let taskTransformer = taskInfo.taskTransformer {
+                    if let taskTransformer = taskInfo.resourceTransformer {
                         let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
                         taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: taskInfo.identifier, schemaInfo:taskInfo.schemaInfo) { (identifier, task, err)  in
                             if let task = task {
