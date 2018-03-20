@@ -167,7 +167,7 @@ class HeartRateProcessorTests: XCTestCase {
         
         if hrValues.count == expectedHR.count {
             for (ii, value) in hrValues.enumerated() {
-                XCTAssertEqual(round(value.heartRate), expectedHR[ii], "\(ii)")
+                XCTAssertEqual(value.heartRate, expectedHR[ii], "\(ii)")
                 XCTAssertEqual(value.confidence, expectedConfidence[ii], accuracy: Double(0.0001), "\(ii)")
             }
         } else {

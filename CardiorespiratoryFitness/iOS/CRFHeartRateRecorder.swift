@@ -52,6 +52,8 @@ public protocol CRFHeartRateRecorderDelegate : RSDAsyncActionControllerDelegate 
 
 public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcessorDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    fileprivate static var current: CRFHeartRateRecorder?
+    
     /// A delegate method for the view controller.
     public var crfDelegate: CRFHeartRateRecorderDelegate? {
         return self.delegate as? CRFHeartRateRecorderDelegate
@@ -187,6 +189,8 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         } else {
             completion(.finished)
         }
+        
+        CRFHeartRateRecorder.current = nil
     }
     
     private let processingQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.heartrate.processing")
@@ -230,6 +234,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     }
     
     private func _startSampling() throws {
+        CRFHeartRateRecorder.current = self
         guard !isSimulator else {
             _simulationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] (_) in
                 self?._fireSimulationTimer()
@@ -488,6 +493,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
                     if confidence > CRFMinConfidence {
                         DispatchQueue.main.async {
                             self.confidence = confidence
+                            // Converting the calculated heart rate as an Int will not truncate b/c the Double was already rounded.
                             self.bpm = Int(heartRate)
                         }
                     }
@@ -566,7 +572,7 @@ public struct CRFHeartRateBPMSample : RSDSampleRecord, RSDDelimiterSeparatedEnco
 extension CRFPixelSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     
     private enum CodingKeys : String, CodingKey {
-        case uptime, red, green, blue, redLevel
+        case uptime, timestamp, red, green, blue, redLevel
     }
     
     /// Is the user's finger covering the lens?
@@ -591,6 +597,10 @@ extension CRFPixelSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
         return (hue <= 30 || hue >= 350) && (saturation >= 0.7)
     }
     
+    public var timestamp: TimeInterval? {
+        return self.uptime - (CRFHeartRateRecorder.current?.startUptime ?? 0)
+    }
+    
     // MARK: Encoding and Decoding
     
     public static func codingKeys() -> [CodingKey] {
@@ -598,7 +608,7 @@ extension CRFPixelSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     }
     
     private static func _codingKeys() -> [CodingKeys] {
-        return [.uptime, .red, .blue, .green, .redLevel]
+        return [.uptime, .timestamp, .red, .blue, .green, .redLevel]
     }
     
     public init(from decoder: Decoder) throws {
@@ -613,6 +623,7 @@ extension CRFPixelSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.uptime, forKey: .uptime)
+        try container.encode(self.timestamp!, forKey: .timestamp)
         try container.encode(self.red, forKey: .red)
         try container.encode(self.green, forKey: .green)
         try container.encode(self.blue, forKey: .blue)
@@ -621,7 +632,6 @@ extension CRFPixelSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     
     // Ignored
     
-    public var timestamp: TimeInterval? { return nil }
     public var timestampDate: Date? { return nil }
     public var stepPath: String { return "" }
 }

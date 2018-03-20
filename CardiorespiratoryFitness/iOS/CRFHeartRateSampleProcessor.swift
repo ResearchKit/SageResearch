@@ -66,6 +66,7 @@ func findHeartRateValues(with channel:[Double]) -> [(heartRate: Double, confiden
 }
 
 /// For a given window return the calculated heart rate and confidence.
+/// - note: The calculated heart rate is rounded.
 func calculateHeartRate(_ input: [Double]) -> (heartRate: Double, confidence: Double) {
 
     //% Preprocess and find the autocorrelation function

@@ -122,7 +122,7 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
     public var schemaInfo: RSDSchemaInfo?
     
     /// Returns `task`.
-    public var taskTransformer: RSDTaskTransformer? {
+    public var resourceTransformer: RSDTaskTransformer? {
         return self.task
     }
     
