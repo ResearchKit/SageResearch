@@ -50,9 +50,9 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     }
 
     @IBAction func runFooTask(_ sender: Any) {
-        var taskInfo = RSDTaskInfoStepObject(with: "foo")
-        taskInfo.taskTransformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
-        let taskViewController = RSDTaskViewController(taskInfo: taskInfo)
+        var taskInfoStep = RSDTaskInfoStepObject(with: RSDTaskInfoObject(with: "foo"))
+        taskInfoStep.taskTransformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
+        let taskViewController = RSDTaskViewController(taskInfo: taskInfoStep)
         taskViewController.delegate = self
         self.present(taskViewController, animated: true, completion: nil)
     }
