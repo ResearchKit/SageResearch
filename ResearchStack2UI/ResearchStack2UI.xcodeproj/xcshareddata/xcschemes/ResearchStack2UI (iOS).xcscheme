@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FFF2D9371FCF415E007258F8"
-               BuildableName = "ResearchSuiteUI.framework"
-               BlueprintName = "ResearchSuiteUI (iOS)"
-               ReferencedContainer = "container:ResearchSuiteUI.xcodeproj">
+               BuildableName = "ResearchStack2UI.framework"
+               BlueprintName = "ResearchStack2UI (iOS)"
+               ReferencedContainer = "container:ResearchStack2UI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,9 +48,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FFF2D9371FCF415E007258F8"
-            BuildableName = "ResearchSuiteUI.framework"
-            BlueprintName = "ResearchSuiteUI (iOS)"
-            ReferencedContainer = "container:ResearchSuiteUI.xcodeproj">
+            BuildableName = "ResearchStack2UI.framework"
+            BlueprintName = "ResearchStack2UI (iOS)"
+            ReferencedContainer = "container:ResearchStack2UI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FFF2D9371FCF415E007258F8"
-            BuildableName = "ResearchSuiteUI.framework"
-            BlueprintName = "ResearchSuiteUI (iOS)"
-            ReferencedContainer = "container:ResearchSuiteUI.xcodeproj">
+            BuildableName = "ResearchStack2UI.framework"
+            BlueprintName = "ResearchStack2UI (iOS)"
+            ReferencedContainer = "container:ResearchStack2UI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

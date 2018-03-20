@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FF8B533C1FCE67C7006B6937"
-               BuildableName = "ResearchStack2.framework"
-               BlueprintName = "ResearchStack2 (tvOS)"
-               ReferencedContainer = "container:ResearchStack2.xcodeproj">
+               BlueprintIdentifier = "FF1446C11FBCF42600389F77"
+               BuildableName = "Documentation"
+               BlueprintName = "Documentation"
+               ReferencedContainer = "container:ResearchStack2UI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,10 +47,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FF8B533C1FCE67C7006B6937"
-            BuildableName = "ResearchStack2.framework"
-            BlueprintName = "ResearchStack2 (tvOS)"
-            ReferencedContainer = "container:ResearchStack2.xcodeproj">
+            BlueprintIdentifier = "FF1446C11FBCF42600389F77"
+            BuildableName = "Documentation"
+            BlueprintName = "Documentation"
+            ReferencedContainer = "container:ResearchStack2UI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -65,10 +65,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FF8B533C1FCE67C7006B6937"
-            BuildableName = "ResearchStack2.framework"
-            BlueprintName = "ResearchStack2 (tvOS)"
-            ReferencedContainer = "container:ResearchStack2.xcodeproj">
+            BlueprintIdentifier = "FF1446C11FBCF42600389F77"
+            BuildableName = "Documentation"
+            BlueprintName = "Documentation"
+            ReferencedContainer = "container:ResearchStack2UI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FF8B533C1FCE67C7006B6937"
-               BuildableName = "ResearchStack2.framework"
-               BlueprintName = "ResearchStack2 (tvOS)"
+               BlueprintIdentifier = "FF8DA0571FBBC91500DFABAB"
+               BuildableName = "Documentation"
+               BlueprintName = "Documentation"
                ReferencedContainer = "container:ResearchStack2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FF8B533C1FCE67C7006B6937"
-            BuildableName = "ResearchStack2.framework"
-            BlueprintName = "ResearchStack2 (tvOS)"
+            BlueprintIdentifier = "FF8DA0571FBBC91500DFABAB"
+            BuildableName = "Documentation"
+            BlueprintName = "Documentation"
             ReferencedContainer = "container:ResearchStack2.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,9 +65,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FF8B533C1FCE67C7006B6937"
-            BuildableName = "ResearchStack2.framework"
-            BlueprintName = "ResearchStack2 (tvOS)"
+            BlueprintIdentifier = "FF8DA0571FBBC91500DFABAB"
+            BuildableName = "Documentation"
+            BlueprintName = "Documentation"
             ReferencedContainer = "container:ResearchStack2.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
