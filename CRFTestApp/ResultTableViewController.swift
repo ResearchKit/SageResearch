@@ -150,6 +150,9 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
         print("\n\n=== Ready to Save: \(taskPath.description)")
+        
+        taskPath.archiveResults(with: CRFArchiveManager.shared) {
+        }
     }
     
     func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {

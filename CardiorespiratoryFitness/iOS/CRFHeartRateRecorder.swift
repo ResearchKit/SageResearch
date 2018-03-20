@@ -74,6 +74,33 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         return self.configuration as? CRFHeartRateStep
     }
     
+    public func meanHeartRate() -> CRFHeartRateBPMSample? {
+        guard self.bpmSamples.count > 0 else { return nil }
+        
+        // Look for a mean value filtering out the low-confidence values
+        var minConfidence: Double = 0.9
+        repeat {
+            if let bpm = _meanHeartRate(minConfidence) {
+                return CRFHeartRateBPMSample(uptime: startUptime, bpm: bpm, confidence: minConfidence)
+            }
+            minConfidence -= 0.1
+        } while minConfidence >= CRFMinConfidence
+        
+        // Just average all and return both average confidence and average bpm
+        let meanBPM = Double(self.bpmSamples.map({ $0.bpm }).sum()) / Double(self.bpmSamples.count)
+        let confidence = self.bpmSamples.map({ $0.confidence }).mean()
+        return CRFHeartRateBPMSample(uptime: startUptime, bpm: meanBPM, confidence: confidence)
+    }
+    
+    private func _meanHeartRate(_ minConfidence: Double) -> Double? {
+        let samples = bpmSamples.rsd_mapAndFilter({ (sample) -> Double? in
+            guard sample.confidence >= minConfidence else { return nil }
+            return Double(bpm)
+        })
+        guard samples.count > 0 else { return nil }
+        return samples.mean()
+    }
+    
     public override func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         
         let status = RSDAudioVisualAuthorization.authorizationStatus(for: .camera)
@@ -125,9 +152,11 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             } catch {}
         }
         
-        // Append the camera settings
+        // Append the camera settings - but append them to the top-level result
+        // because we only want to include them once.
         if let settings = self.heartRateConfiguration?.cameraSettings {
-            self.appendResults(settings)
+            let topPath = self.taskPath.topLevelTaskPath
+            topPath.appendAsyncResult(with: settings)
         }
         
         self._videoPreviewLayer?.removeFromSuperlayer()
@@ -183,7 +212,11 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     }
     
     private var videoIdentifier: String {
-        return "\(self.configuration.identifier)_video"
+        return "\(self.sectionIdentifier)video"
+    }
+    
+    override public var defaultLoggerIdentifier: String {
+        return "\(self.sectionIdentifier)rgb"
     }
     
     private func _setupVideoRecorder(formatDescription: CMFormatDescription) {
@@ -340,7 +373,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         }
         if Int(uptime - self.startUptime) % 5 == 0 {
             self.sampleProcessingQueue.async {
-                let heartRate = 65
+                let heartRate: Double = 65
                 let confidence = 0.75
                 
                 let bpmSample = CRFHeartRateBPMSample(uptime: uptime, bpm: heartRate, confidence: confidence)
@@ -349,7 +382,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
                 if confidence > CRFMinConfidence {
                     DispatchQueue.main.async {
                         self.confidence = confidence
-                        self.bpm = heartRate
+                        self.bpm = Int(heartRate)
                     }
                 }
             }
@@ -441,12 +474,13 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
                 // get the red channel and the uptime then remove the first half the samples
                 let halfLength = windowLength / 2
                 let uptime = self.pixelSamples[Int(halfLength)].uptime
-                let channel = self.pixelSamples[..<windowLength].map { $0.green }
+                let channel = self.pixelSamples[..<windowLength].map { $0.red }
                 self.pixelSamples.removeSubrange(..<halfLength)
                 
                 self.sampleProcessingQueue.async {
                     
                     let (heartRate, confidence) = calculateHeartRate(channel)
+                    
                     let bpmSample = CRFHeartRateBPMSample(uptime: uptime, bpm: heartRate, confidence: confidence)
                     self.bpmSamples.append(bpmSample)
                     self.isProcessing = false
@@ -454,7 +488,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
                     if confidence > CRFMinConfidence {
                         DispatchQueue.main.async {
                             self.confidence = confidence
-                            self.bpm = heartRate
+                            self.bpm = Int(heartRate)
                         }
                     }
                 }
@@ -503,12 +537,12 @@ public struct CRFHeartRateBPMSample : RSDSampleRecord, RSDDelimiterSeparatedEnco
     public let uptime: TimeInterval
     
     /// The calculated BPM for this sample.
-    public let bpm: Int?
+    public let bpm: Double
     
     /// The confidence in the calculated BPM for this sample.
-    public let confidence: Double?
+    public let confidence: Double
     
-    init(uptime: TimeInterval, bpm: Int, confidence: Double) {
+    init(uptime: TimeInterval, bpm: Double, confidence: Double) {
         self.uptime = uptime
         self.bpm = bpm
         self.confidence = confidence

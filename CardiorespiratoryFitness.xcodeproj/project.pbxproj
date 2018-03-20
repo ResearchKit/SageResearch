@@ -53,6 +53,7 @@
 		F8BA80102051DF7100A5B83A /* ResearchSuite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FBC2051DA7C00A5B83A /* ResearchSuite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8BA80132051DF7800A5B83A /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; };
 		F8BA80142051DF7800A5B83A /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8E4B5052060728F000E53D4 /* CRFArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,6 +223,7 @@
 		F8BA80002051DCAE00A5B83A /* TaskTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewController.swift; sourceTree = "<group>"; };
 		F8BA80042051DCFC00A5B83A /* FileResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileResultViewController.swift; sourceTree = "<group>"; };
 		F8BA80062051DD0800A5B83A /* ResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewController.swift; sourceTree = "<group>"; };
+		F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFArchiveManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -434,6 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				F8BA7FE22051DC2E00A5B83A /* AppDelegate.swift */,
+				F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */,
 				F8BA80002051DCAE00A5B83A /* TaskTableViewController.swift */,
 				F8BA80042051DCFC00A5B83A /* FileResultViewController.swift */,
 				F8BA80062051DD0800A5B83A /* ResultTableViewController.swift */,
@@ -750,6 +753,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8BA80012051DCAE00A5B83A /* TaskTableViewController.swift in Sources */,
+				F8E4B5052060728F000E53D4 /* CRFArchiveManager.swift in Sources */,
 				F8BA80072051DD0800A5B83A /* ResultTableViewController.swift in Sources */,
 				F8BA7FE32051DC2E00A5B83A /* AppDelegate.swift in Sources */,
 				F8BA80052051DCFC00A5B83A /* FileResultViewController.swift in Sources */,

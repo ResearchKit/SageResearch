@@ -154,26 +154,29 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         // Record the average or initial heart rate depending upon whether or not the participant is at rest.
         if let recorder = bpmRecorder, recorder.bpmSamples.count >= 2 {
 
-            var bpmValue: Double
+            // Get the "most appropriate" heart rate.
+            var bpm: CRFHeartRateBPMSample?
             let isResting = (self.step as? CRFHeartRateStep)?.isResting ?? true
             if isResting {
-                let samples = recorder.bpmSamples.rsd_mapAndFilter({ (sample) -> Double? in
-                    guard let confidence = sample.confidence, confidence >= CRFMinConfidence,
-                        let bpm = sample.bpm else { return nil }
-                    return Double(bpm)
-                })
-                bpmValue = samples.count > 0 ? samples.mean() : 0
-            } else {
-                bpmValue = Double(recorder.bpmSamples.first(where: { $0.confidence ?? 0 >= CRFMinConfidence })?.bpm ?? 0)
+                bpm = recorder.meanHeartRate()
+            } else if let sample = recorder.bpmSamples.first, (sample.confidence ?? 0) >= CRFMinConfidence {
+                bpm = sample
+            } else if recorder.bpmSamples.count >= 2 {
+                bpm = recorder.bpmSamples[1]
             }
+                        
+            // Add results for the bpm, confidence, and all the samples.
             
-            var bpmResult = RSDAnswerResultObject(identifier: "\(self.step.identifier)", answerType: RSDAnswerResultType(baseType: .decimal))
-            bpmResult.value = bpmValue > 0 ? bpmValue : Double(recorder.bpmSamples[1].bpm ?? 0)
+            var bpmResult = RSDAnswerResultObject(identifier: "\(self.step.identifier)", answerType: RSDAnswerResultType(baseType: .integer))
+            bpmResult.value = bpm?.bpm
             addResult(bpmResult)
+            
+            var confidenceResult = RSDAnswerResultObject(identifier: "\(self.step.identifier)_confidence", answerType: RSDAnswerResultType(baseType: .decimal))
+            confidenceResult.value = bpm?.confidence
+            addResult(confidenceResult)
             
             let samplesResult = CRFHeartRateSamplesResult(identifier: "\(self.sectionIdentifier())samples", samples: recorder.bpmSamples)
             addResult(samplesResult)
-            
         }
         
         super.stop()

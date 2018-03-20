@@ -136,12 +136,13 @@ public class CRFRunDistanceResultStepViewController : CRFCompletionResultStepVie
         let resultIdentifier = "runDistance"
         let aResult = sectionResult.stepHistory.first { $0.identifier == resultIdentifier }
         guard let result = aResult as? RSDAnswerResult,
-            let answer = result.value as? Double
+            let num = result.value as? RSDJSONNumber,
+            let answer = num.jsonNumber()?.doubleValue
             else {
                 return nil
         }
         
-        return usesMetricSystem ? NSNumber(value: answer) : NSNumber(value: answer *  3.28084)
+        return usesMetricSystem ? NSNumber(value: answer) : NSNumber(value: answer * 3.28084)
     }
 }
 
@@ -173,16 +174,15 @@ public class CRFStairStepResultStepViewController : CRFCompletionResultStepViewC
                 return nil
         }
         
-        let isAfter = (identifier == "heartRate.after")
-        let resultIdentifier = isAfter ? "\(resultStepIdentifier)_start" : "\(resultStepIdentifier)_end"
+        let resultIdentifier = resultStepIdentifier
         let aResult = stepResult.inputResults.first { $0.identifier == resultIdentifier }
         guard let result = aResult as? RSDAnswerResult,
-            let answer = result.value as? Int
+            let answer = result.value as? RSDJSONNumber
             else {
                 return nil
         }
         
-        return answer
+        return Int(round(answer.jsonNumber()?.doubleValue ?? 0))
     }
 }
 
