@@ -1,6 +1,6 @@
 //
-//  ResearchSuiteUI.h
-//  ResearchSuiteUI
+//  ResearchStack2UI.h
+//  ResearchStack2UI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -33,12 +33,12 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for ResearchSuiteUI.
-FOUNDATION_EXPORT double ResearchSuiteUIVersionNumber;
+//! Project version number for ResearchStack2UI.
+FOUNDATION_EXPORT double ResearchStack2UIVersionNumber;
 
-//! Project version string for ResearchSuiteUI.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteUIVersionString[];
+//! Project version string for ResearchStack2UI.
+FOUNDATION_EXPORT const unsigned char ResearchStack2UIVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <ResearchSuiteUI/PublicHeader.h>
+// In this header, you should import all the public headers of your framework using statements like #import <ResearchStack2UI/PublicHeader.h>
 
-#import <ResearchSuite/ResearchSuite.h>
+#import <ResearchStack2/ResearchStack2.h>

@@ -1,6 +1,6 @@
 //
 //  MedicationTrackingTests.swift
-//  ResearchSuite
+//  ResearchStack2
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import ResearchSuite
+@testable import ResearchStack2
 
 class MedicationTrackingTests: XCTestCase {
     

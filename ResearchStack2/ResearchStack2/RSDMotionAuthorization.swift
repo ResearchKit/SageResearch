@@ -1,6 +1,6 @@
 //
 //  RSDMotionAuthorization.swift
-//  ResearchSuite (iOS)
+//  ResearchStack2 (iOS)
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //

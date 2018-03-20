@@ -1,6 +1,6 @@
 //
-//  ResearchSuite.h
-//  ResearchSuite
+//  ResearchStack2.h
+//  ResearchStack2
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -33,17 +33,17 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for ResearchSuite.
-FOUNDATION_EXPORT double ResearchSuiteVersionNumber;
+//! Project version number for ResearchStack2.
+FOUNDATION_EXPORT double ResearchStack2VersionNumber;
 
-//! Project version string for ResearchSuite.
-FOUNDATION_EXPORT const unsigned char ResearchSuiteVersionString[];
+//! Project version string for ResearchStack2.
+FOUNDATION_EXPORT const unsigned char ResearchStack2VersionString[];
 
-#import <Researchsuite/RSDExceptionHandler.h>
-#import <Researchsuite/NSUnit+RSDUnitConversion.h>
-#import <Researchsuite/RSDDurationFormatter.h>
-#import <Researchsuite/RSDFractionFormatter.h>
-#import <Researchsuite/RSDLengthFormatter.h>
-#import <Researchsuite/RSDMassFormatter.h>
+#import <ResearchStack2/RSDExceptionHandler.h>
+#import <ResearchStack2/NSUnit+RSDUnitConversion.h>
+#import <ResearchStack2/RSDDurationFormatter.h>
+#import <ResearchStack2/RSDFractionFormatter.h>
+#import <ResearchStack2/RSDLengthFormatter.h>
+#import <ResearchStack2/RSDMassFormatter.h>
 
 

@@ -1,6 +1,6 @@
 //
 //  RSDChoiceOptionsObject.swift
-//  ResearchSuite
+//  ResearchStack2
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //

@@ -1,6 +1,6 @@
 //
 //  RSDDataArchiveManager.swift
-//  ResearchSuite
+//  ResearchStack2
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -184,7 +184,7 @@ public struct RSDTaskMetadata : Codable {
     /// The application version.
     public let appVersion: String
     
-    /// ResearchSuite framework version.
+    /// ResearchStack2 framework version.
     public let rsdFrameworkVersion: String
     
     /// The identifier for the task.

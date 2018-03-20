@@ -1,6 +1,6 @@
 //
 //  CodableMotionRecorderTests.swift
-//  ResearchSuiteTests_iOS
+//  ResearchStack2Tests_iOS
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import ResearchSuite
+@testable import ResearchStack2
 
 class CodableMotionRecorderTests: XCTestCase {
     

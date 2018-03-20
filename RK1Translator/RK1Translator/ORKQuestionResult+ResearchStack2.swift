@@ -1,5 +1,5 @@
 //
-//  ORKQuestionResult+ResearchSuite.swift
+//  ORKQuestionResult+ResearchStack2.swift
 //  RK1Translator
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.

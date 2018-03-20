@@ -1,6 +1,6 @@
 //
 //  RSDTaskPath.swift
-//  ResearchSuite
+//  ResearchStack2
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
@@ -295,7 +295,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     // MARK: Task Finalization - The methods included in this section should **not** be called until the task is finished.
     
     /// A queue that can be used to serialize archiving and cleaning up the file output.
-    public let fileManagementQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.fileQueue.\(UUID())")
+    public let fileManagementQueue = DispatchQueue(label: "org.sagebase.ResearchStack2.fileQueue.\(UUID())")
     
     /// Convenience method for encoding a result. This is a work-around for a limitation of the encoder
     /// where it cannot encode an object without a Type for the object.

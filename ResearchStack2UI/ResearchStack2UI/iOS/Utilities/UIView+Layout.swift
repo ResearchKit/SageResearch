@@ -1,6 +1,6 @@
 //
 //  UIView+Layout.swift
-//  ResearchSuiteUI
+//  ResearchStack2UI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //

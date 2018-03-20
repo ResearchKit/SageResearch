@@ -1,6 +1,6 @@
 //
 //  RSDWebViewController.swift
-//  ResearchSuiteUI
+//  ResearchStack2UI
 //
 //  Copyright © 2016 Sage Bionetworks. All rights reserved.
 //

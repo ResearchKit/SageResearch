@@ -1,6 +1,6 @@
 //
 //  RSDMotionRecorderConfiguration.swift
-//  ResearchSuite
+//  ResearchStack2
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //

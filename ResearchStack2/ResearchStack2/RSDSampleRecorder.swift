@@ -1,6 +1,6 @@
 //
 //  RSDSampleRecorder.swift
-//  ResearchSuite
+//  ResearchStack2
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -456,7 +456,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// The serial queue used for writing samples to the log files. To ensure that write failures due to memory
     /// warnings do not get thrown by multiple threads, a single logging queue is used for writing to all the
     /// open log files.
-    public let loggerQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.Recorder.\(UUID())")
+    public let loggerQueue = DispatchQueue(label: "org.sagebase.ResearchStack2.Recorder.\(UUID())")
     
     /// The loggers used to record samples to a file.
     public private(set) var loggers: [String : RSDDataLogger] = [:]

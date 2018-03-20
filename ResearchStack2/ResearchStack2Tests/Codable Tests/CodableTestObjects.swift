@@ -1,6 +1,6 @@
 //
 //  CodableObjectTests.swift
-//  ResearchSuiteTests
+//  ResearchStack2Tests
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-import ResearchSuite
+import ResearchStack2
 
 class BundleWrapper {
     class var bundleIdentifier: String? {

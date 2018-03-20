@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import ResearchSuite
+import ResearchStack2
 
 class TaskTableViewController: UITableViewController {
 
@@ -78,7 +78,7 @@ class TaskTableViewController: UITableViewController {
         flushTempDirectory()
     }
     
-    let offMainQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.Serialized.\(UUID())")
+    let offMainQueue = DispatchQueue(label: "org.sagebase.ResearchStack2.Serialized.\(UUID())")
     
     /// Flush the temporary directory contents.
     /// For the example app, we want to leave the output directory untouched *until*

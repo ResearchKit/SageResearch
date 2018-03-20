@@ -1,6 +1,6 @@
 //
 //  RSDResourceTransformerObject.swift
-//  ResearchSuite
+//  ResearchStack2
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -128,7 +128,7 @@ extension RSDResourceTransformerObject : RSDDocumentableCodableObject {
     }
 
     static func examples() -> [Encodable] {
-        let exampleA = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: "org.sagebase.ResearchSuiteTests", classType: "RSDTaskObject")
+        let exampleA = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: "org.sagebase.ResearchStack2Tests", classType: "RSDTaskObject")
         let exampleB = RSDResourceTransformerObject(resourceName: "TaskBar")
         return [exampleA, exampleB]
     }

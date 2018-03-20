@@ -1,6 +1,6 @@
 //
 //  RSDOverviewStepViewController.swift
-//  ResearchSuiteUI (iOS)
+//  ResearchStack2UI (iOS)
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //

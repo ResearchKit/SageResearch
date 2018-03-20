@@ -1,6 +1,6 @@
 //
 //  RSDTaskViewController.swift
-//  ResearchSuiteUI
+//  ResearchStack2UI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -748,7 +748,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
     
     // MARK: Async action management
     
-    private let controllerQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.Controllers.\(UUID())")
+    private let controllerQueue = DispatchQueue(label: "org.sagebase.ResearchStack2.Controllers.\(UUID())")
     private var _asyncControllers = NSMutableSet()
     
     /// Part 1 of starting an async action controller.

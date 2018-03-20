@@ -1,6 +1,6 @@
 //
 //  Localization.swift
-//  ResearchSuite
+//  ResearchStack2
 //
 //  Copyright © 2016-2018 Sage Bionetworks. All rights reserved.
 //

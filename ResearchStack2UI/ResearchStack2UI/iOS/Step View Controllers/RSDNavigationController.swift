@@ -1,6 +1,6 @@
 //
 //  RSDNavigationController.swift
-//  ResearchSuiteUI (iOS)
+//  ResearchStack2UI (iOS)
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //

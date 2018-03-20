@@ -1,9 +1,9 @@
-# ResearchSuiteUI
-ResearchSuiteUI contains the logic for UI/UX controllers, and reference implementations of controllers and views. It is designed to allow greater flexibility in the design of UI elements and screen layout, and to more strongly decouple the presentation layer from the underlying data model of the app.
+# ResearchStack2UI
+ResearchStack2UI contains the logic for UI/UX controllers, and reference implementations of controllers and views. It is designed to allow greater flexibility in the design of UI elements and screen layout, and to more strongly decouple the presentation layer from the underlying data model of the app.
 
 ## License
 
-ResearchSuiteUI is available under the BSD license:
+ResearchStack2UI is available under the BSD license:
 
 Copyright (c) 2017-2018, Sage Bionetworks
 All rights reserved.

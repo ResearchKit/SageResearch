@@ -1,6 +1,6 @@
 //
 //  NavigationTests.swift
-//  ResearchSuiteTests
+//  ResearchStack2Tests
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import ResearchSuite
+import ResearchStack2
 
 struct TestStep : RSDStep {
     

@@ -1,6 +1,6 @@
 //
 //  RSDDistanceRecorder.swift
-//  ResearchSuiteUI
+//  ResearchStack2UI
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -144,7 +144,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
 
     public private(set) var locationManager: CLLocationManager?
     private var pedometer: CMPedometer?
-    private let processingQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.location.processing")
+    private let processingQueue = DispatchQueue(label: "org.sagebase.ResearchStack2.location.processing")
     private var _permissionCompletion: RSDAsyncActionCompletionHandler?
     
     /// Override to request GPS and motion permissions.
