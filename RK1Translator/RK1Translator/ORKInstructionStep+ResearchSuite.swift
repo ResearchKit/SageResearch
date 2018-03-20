@@ -84,9 +84,9 @@ extension ORKInstructionStep : RSDThemedUIStep, RSDFetchableImageThemeElement {
         return self
     }
     
-    public func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
+    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
         DispatchQueue.main.async {
-            callback(self.iconImage ?? self.image)
+            callback(self.identifier, self.iconImage ?? self.image)
         }
     }
     
@@ -94,12 +94,15 @@ extension ORKInstructionStep : RSDThemedUIStep, RSDFetchableImageThemeElement {
         return (self.iconImage != nil) ? .iconBefore : (self.image != nil) ? .iconAfter : nil
     }
     
-    public var size: CGSize? {
-        return self.image?.size ?? self.iconImage?.size
+    public var size: CGSize {
+        return self.image?.size ?? self.iconImage?.size ?? .zero
     }
     
     public var bundle: Bundle? {
         return nil
     }
     
+    public var imageIdentifier: String {
+        return self.identifier
+    }
 }

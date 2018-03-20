@@ -121,6 +121,10 @@ extension ORKTask {
 
 extension ORKOrderedTask : RSDTask, RSDStepNavigator {
     
+    public var copyright: String? {
+        return nil
+    }
+    
     public var stepNavigator: RSDStepNavigator {
         return self
     }

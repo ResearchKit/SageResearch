@@ -87,7 +87,7 @@ extension ORKDateQuestionResult : RSDAnswerResult {
     /// Returns `.date` or a new instance with a date-only format if this is a date-only result.
     public var answerType: RSDAnswerResultType {
         if self.questionType == ORKQuestionType.date {
-            return RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: RSDDateCoderObject.dateOnlyCoder.rawValue)
+            return RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: RSDDateCoderObject.dateOnly.rawValue)
         }
         else {
             return .date
@@ -140,6 +140,6 @@ extension ORKTimeOfDayQuestionResult : RSDAnswerResult {
     
     /// Returns `.date` with a date format coding of "HH:mm"
     public var answerType: RSDAnswerResultType {
-        return RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: RSDDateCoderObject.timeOfDayCoder.rawValue)
+        return RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: RSDDateCoderObject.timeOfDay.rawValue)
     }
 }

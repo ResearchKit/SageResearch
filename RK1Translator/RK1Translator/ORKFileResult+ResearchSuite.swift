@@ -38,7 +38,17 @@ extension ORKFileResult : RSDFileResult {
     
     /// Returns `fileURL`.
     public var url: URL? {
-        return fileURL
+        get {
+            return fileURL
+        }
+        set(newValue) {
+            self.fileURL = newValue
+        }
+    }
+    
+    /// Returns `fileURL.relativePath`.
+    public var relativePath: String? {
+        return fileURL?.relativePath
     }
     
     /// Returns `nil`.
