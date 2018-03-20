@@ -282,7 +282,7 @@ open class RSDFactory {
         case .instruction, .completion, .active, .countdown:
             return try RSDActiveUIStepObject(from: decoder)
         case .overview:
-            return try RSDUIStepObject(from: decoder)
+            return try RSDOverviewStepObject(from: decoder)
         case .imagePicker:
             return try RSDImagePickerStepObject(from: decoder)
         case .form:

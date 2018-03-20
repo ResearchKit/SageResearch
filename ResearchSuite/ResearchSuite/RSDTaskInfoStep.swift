@@ -73,8 +73,11 @@ public protocol RSDTaskInfo : RSDCopyWithIdentifier {
     /// Optional schema info to pass with the task info for this task.
     var schemaInfo: RSDSchemaInfo? { get }
     
-    /// Optional task transformer.
-    var taskTransformer : RSDTaskTransformer? { get }
+    /// The resource transformer on `RSDTaskInfo` can be used in cases where the transformer is
+    /// loaded from a resource by the task info (when decoded). If the task info is used as the
+    /// information container for a **step** that loads the task using a service to fetch the
+    /// task, then this pointer can be `nil`.
+    var resourceTransformer : RSDTaskTransformer? { get }
 }
 
 /// `RSDTaskInfoStep` is a reference interface for information about the task. This includes

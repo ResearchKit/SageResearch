@@ -44,13 +44,13 @@ public struct RSDStepType : RawRepresentable, Codable {
         self.rawValue = rawValue
     }
     
-    /// Defaults to creating a `RSDActiveUIStep`.
+    /// Defaults to creating a `RSDActiveUIStepObject`.
     public static let active: RSDStepType = "active"
     
-    /// Defaults to creating a `RSDUIStep` used to mark task completion.
+    /// Defaults to creating a `RSDActiveUIStepObject` used to mark task completion.
     public static let completion: RSDStepType = "completion"
     
-    /// Defaults to creating a `RSDActiveUIStep` used as a countdown to an active step.
+    /// Defaults to creating a `RSDActiveUIStepObject` used as a countdown to an active step.
     public static let countdown: RSDStepType = "countdown"
     
     /// Defaults to creating a `RSDFormUIStep`.
@@ -65,7 +65,7 @@ public struct RSDStepType : RawRepresentable, Codable {
     /// Defaults to creating a `RSDTrackedItemsLoggingStepObject`.
     public static let logging: RSDStepType = "logging"
     
-    /// Defaults to creating a `RSDUIStep`.
+    /// Defaults to creating a `RSDOverviewStepObject`.
     public static let overview: RSDStepType = "overview"
     
     /// Defaults to creating a `RSDTrackedItemsReviewStepObject`.

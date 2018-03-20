@@ -72,7 +72,7 @@ public struct RSDTaskInfoObject : RSDTaskInfo, RSDEmbeddedIconVendor, Decodable 
     private var _schemaInfo: RSDSchemaInfo? = nil
     
     /// The resource transformer.
-    public var taskTransformer: RSDTaskTransformer? {
+    public var resourceTransformer: RSDTaskTransformer? {
         get { return _embeddedResource ?? _taskTransformer }
         set { _taskTransformer = newValue }
     }
@@ -90,7 +90,7 @@ public struct RSDTaskInfoObject : RSDTaskInfo, RSDEmbeddedIconVendor, Decodable 
         copy.detail = self.detail
         copy.estimatedMinutes = self.estimatedMinutes
         copy.icon = self.icon
-        copy._taskTransformer = self.taskTransformer
+        copy._taskTransformer = self.resourceTransformer
         copy._schemaInfo = self.schemaInfo
         return copy
     }
@@ -118,7 +118,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
     /// - parameter identifier: A short string that uniquely identifies the step.
     public init(with taskInfo: RSDTaskInfo, taskTransformer: RSDTaskTransformer? = nil, stepType: RSDStepType = .taskInfo) {
         self.taskInfo = taskInfo
-        self.taskTransformer = taskTransformer ?? taskInfo.taskTransformer
+        self.taskTransformer = taskTransformer ?? taskInfo.resourceTransformer
         self.stepType = .taskInfo
     }
     
