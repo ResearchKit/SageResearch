@@ -74,7 +74,7 @@ public protocol RSDTaskInfo : RSDCopyWithIdentifier {
     var schemaInfo: RSDSchemaInfo? { get }
     
     /// Optional task transformer.
-    var taskTransformer : RSDTaskTransformer? { get }
+    var resourceTransformer : RSDTaskTransformer? { get }
 }
 
 /// `RSDTaskInfoStep` is a reference interface for information about the task. This includes
