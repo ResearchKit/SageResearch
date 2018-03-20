@@ -70,6 +70,7 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDStandardPermissionsStep {
     
     /// Override the decoder per device type b/c the task may require a different set of permissions depending upon the device.
     open override func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
+        try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
     }
@@ -106,7 +107,7 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDStandardPermissionsStep {
             "type": "active",
             "title": "Hello World!",
             "text": "Some text.",
-            "permissions" : [ "permissionType": "location"]
+            "permissions" : [["permissionType": "location"]]
         ]
         
         return [jsonA]
