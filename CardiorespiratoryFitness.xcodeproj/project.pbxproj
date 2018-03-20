@@ -37,8 +37,8 @@
 		F89FFDD920588B5C0089D8A7 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDD820588B5C0089D8A7 /* ModelTests.swift */; };
 		F89FFDDB205890F80089D8A7 /* CRFTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDDA205890F80089D8A7 /* CRFTaskInfo.swift */; };
 		F89FFDE02059CF2C0089D8A7 /* NSLocale+UnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDDF2059CF2C0089D8A7 /* NSLocale+UnitTest.m */; };
-		F8BA7FD22051DABF00A5B83A /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FCD2051DA9000A5B83A /* ResearchSuiteUI.framework */; };
-		F8BA7FD32051DAC700A5B83A /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FBC2051DA7C00A5B83A /* ResearchSuite.framework */; };
+		F8BA7FD22051DABF00A5B83A /* ResearchStack2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FCD2051DA9000A5B83A /* ResearchStack2UI.framework */; };
+		F8BA7FD32051DAC700A5B83A /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FBC2051DA7C00A5B83A /* ResearchStack2.framework */; };
 		F8BA7FE32051DC2E00A5B83A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA7FE22051DC2E00A5B83A /* AppDelegate.swift */; };
 		F8BA7FE82051DC2E00A5B83A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8BA7FE62051DC2E00A5B83A /* Main.storyboard */; };
 		F8BA7FEA2051DC2E00A5B83A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8BA7FE92051DC2E00A5B83A /* Assets.xcassets */; };
@@ -47,10 +47,10 @@
 		F8BA80012051DCAE00A5B83A /* TaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA80002051DCAE00A5B83A /* TaskTableViewController.swift */; };
 		F8BA80052051DCFC00A5B83A /* FileResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA80042051DCFC00A5B83A /* FileResultViewController.swift */; };
 		F8BA80072051DD0800A5B83A /* ResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA80062051DD0800A5B83A /* ResultTableViewController.swift */; };
-		F8BA800A2051DF6C00A5B83A /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FCD2051DA9000A5B83A /* ResearchSuiteUI.framework */; };
-		F8BA800B2051DF6C00A5B83A /* ResearchSuiteUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FCD2051DA9000A5B83A /* ResearchSuiteUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8BA800F2051DF7100A5B83A /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FBC2051DA7C00A5B83A /* ResearchSuite.framework */; };
-		F8BA80102051DF7100A5B83A /* ResearchSuite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FBC2051DA7C00A5B83A /* ResearchSuite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8BA800A2051DF6C00A5B83A /* ResearchStack2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FCD2051DA9000A5B83A /* ResearchStack2UI.framework */; };
+		F8BA800B2051DF6C00A5B83A /* ResearchStack2UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FCD2051DA9000A5B83A /* ResearchStack2UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8BA800F2051DF7100A5B83A /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FBC2051DA7C00A5B83A /* ResearchStack2.framework */; };
+		F8BA80102051DF7100A5B83A /* ResearchStack2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8BA7FBC2051DA7C00A5B83A /* ResearchStack2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8BA80132051DF7800A5B83A /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; };
 		F8BA80142051DF7800A5B83A /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8E4B5052060728F000E53D4 /* CRFArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */; };
@@ -73,59 +73,59 @@
 		};
 		F8BA7FBB2051DA7C00A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchSuite.xcodeproj */;
+			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchStack2.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FF8B53141FCE678E006B6937;
-			remoteInfo = "ResearchSuite (iOS)";
+			remoteInfo = "ResearchStack2 (iOS)";
 		};
 		F8BA7FBD2051DA7C00A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchSuite.xcodeproj */;
+			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchStack2.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FF8B531C1FCE678E006B6937;
-			remoteInfo = ResearchSuiteTests_iOS;
+			remoteInfo = ResearchStack2Tests_iOS;
 		};
 		F8BA7FBF2051DA7C00A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchSuite.xcodeproj */;
+			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchStack2.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FF8B53301FCE67AA006B6937;
-			remoteInfo = "ResearchSuite (watchOS)";
+			remoteInfo = "ResearchStack2 (watchOS)";
 		};
 		F8BA7FC12051DA7C00A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchSuite.xcodeproj */;
+			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchStack2.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FF8B533D1FCE67C7006B6937;
-			remoteInfo = "ResearchSuite (tvOS)";
+			remoteInfo = "ResearchStack2 (tvOS)";
 		};
 		F8BA7FC32051DA7C00A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchSuite.xcodeproj */;
+			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchStack2.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FF8B53451FCE67C8006B6937;
-			remoteInfo = ResearchSuiteTests_tvOS;
+			remoteInfo = ResearchStack2Tests_tvOS;
 		};
 		F8BA7FCC2051DA9000A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FC52051DA8F00A5B83A /* ResearchSuiteUI.xcodeproj */;
+			containerPortal = F8BA7FC52051DA8F00A5B83A /* ResearchStack2UI.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FFF2D9381FCF415E007258F8;
-			remoteInfo = "ResearchSuiteUI (iOS)";
+			remoteInfo = "ResearchStack2UI (iOS)";
 		};
 		F8BA7FCE2051DA9000A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FC52051DA8F00A5B83A /* ResearchSuiteUI.xcodeproj */;
+			containerPortal = F8BA7FC52051DA8F00A5B83A /* ResearchStack2UI.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FFF2D9401FCF415E007258F8;
-			remoteInfo = ResearchSuiteUITests_iOS;
+			remoteInfo = ResearchStack2UITests_iOS;
 		};
 		F8BA7FD02051DA9000A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FC52051DA8F00A5B83A /* ResearchSuiteUI.xcodeproj */;
+			containerPortal = F8BA7FC52051DA8F00A5B83A /* ResearchStack2UI.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = FFF2D9701FCF41BF007258F8;
-			remoteInfo = "ResearchSuiteUI (watchOS)";
+			remoteInfo = "ResearchStack2UI (watchOS)";
 		};
 		F8BA7FF42051DC2E00A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -136,17 +136,17 @@
 		};
 		F8BA800C2051DF6C00A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FC52051DA8F00A5B83A /* ResearchSuiteUI.xcodeproj */;
+			containerPortal = F8BA7FC52051DA8F00A5B83A /* ResearchStack2UI.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = FFF2D9371FCF415E007258F8;
-			remoteInfo = "ResearchSuiteUI (iOS)";
+			remoteInfo = "ResearchStack2UI (iOS)";
 		};
 		F8BA80112051DF7100A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchSuite.xcodeproj */;
+			containerPortal = F8BA7FB22051DA7C00A5B83A /* ResearchStack2.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = FF8B53131FCE678E006B6937;
-			remoteInfo = "ResearchSuite (iOS)";
+			remoteInfo = "ResearchStack2 (iOS)";
 		};
 		F8BA80152051DF7800A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -164,9 +164,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F8BA80102051DF7100A5B83A /* ResearchSuite.framework in Embed Frameworks */,
+				F8BA80102051DF7100A5B83A /* ResearchStack2.framework in Embed Frameworks */,
 				F8BA80142051DF7800A5B83A /* CardiorespiratoryFitness.framework in Embed Frameworks */,
-				F8BA800B2051DF6C00A5B83A /* ResearchSuiteUI.framework in Embed Frameworks */,
+				F8BA800B2051DF6C00A5B83A /* ResearchStack2UI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,8 +209,8 @@
 		F89FFDDD2059CF2B0089D8A7 /* CardiorespiratoryFitnessTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CardiorespiratoryFitnessTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F89FFDDE2059CF2C0089D8A7 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F89FFDDF2059CF2C0089D8A7 /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
-		F8BA7FB22051DA7C00A5B83A /* ResearchSuite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchSuite.xcodeproj; path = ../SageResearch/ResearchSuite/ResearchSuite.xcodeproj; sourceTree = "<group>"; };
-		F8BA7FC52051DA8F00A5B83A /* ResearchSuiteUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchSuiteUI.xcodeproj; path = ../SageResearch/ResearchSuiteUI/ResearchSuiteUI.xcodeproj; sourceTree = "<group>"; };
+		F8BA7FB22051DA7C00A5B83A /* ResearchStack2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchStack2.xcodeproj; path = ../SageResearch/ResearchStack2/ResearchStack2.xcodeproj; sourceTree = "<group>"; };
+		F8BA7FC52051DA8F00A5B83A /* ResearchStack2UI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchStack2UI.xcodeproj; path = ../SageResearch/ResearchStack2UI/ResearchStack2UI.xcodeproj; sourceTree = "<group>"; };
 		F8BA7FE02051DC2D00A5B83A /* CRFTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CRFTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8BA7FE22051DC2E00A5B83A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8BA7FE72051DC2E00A5B83A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -231,8 +231,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8BA7FD32051DAC700A5B83A /* ResearchSuite.framework in Frameworks */,
-				F8BA7FD22051DABF00A5B83A /* ResearchSuiteUI.framework in Frameworks */,
+				F8BA7FD32051DAC700A5B83A /* ResearchStack2.framework in Frameworks */,
+				F8BA7FD22051DABF00A5B83A /* ResearchStack2UI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,9 +251,9 @@
 				F880C17D2051FE7000ACB4D4 /* AVFoundation.framework in Frameworks */,
 				F880C17B2051FE6300ACB4D4 /* CoreLocation.framework in Frameworks */,
 				F880C1792051FE5900ACB4D4 /* CoreMotion.framework in Frameworks */,
-				F8BA800F2051DF7100A5B83A /* ResearchSuite.framework in Frameworks */,
+				F8BA800F2051DF7100A5B83A /* ResearchStack2.framework in Frameworks */,
 				F8BA80132051DF7800A5B83A /* CardiorespiratoryFitness.framework in Frameworks */,
-				F8BA800A2051DF6C00A5B83A /* ResearchSuiteUI.framework in Frameworks */,
+				F8BA800A2051DF6C00A5B83A /* ResearchStack2UI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,8 +404,8 @@
 				F880C17C2051FE7000ACB4D4 /* AVFoundation.framework */,
 				F880C17A2051FE6200ACB4D4 /* CoreLocation.framework */,
 				F880C1782051FE5900ACB4D4 /* CoreMotion.framework */,
-				F8BA7FC52051DA8F00A5B83A /* ResearchSuiteUI.xcodeproj */,
-				F8BA7FB22051DA7C00A5B83A /* ResearchSuite.xcodeproj */,
+				F8BA7FC52051DA8F00A5B83A /* ResearchStack2UI.xcodeproj */,
+				F8BA7FB22051DA7C00A5B83A /* ResearchStack2.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -413,11 +413,11 @@
 		F8BA7FB32051DA7C00A5B83A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F8BA7FBC2051DA7C00A5B83A /* ResearchSuite.framework */,
-				F8BA7FBE2051DA7C00A5B83A /* ResearchSuiteTests_iOS.xctest */,
-				F8BA7FC02051DA7C00A5B83A /* ResearchSuite.framework */,
-				F8BA7FC22051DA7C00A5B83A /* ResearchSuite.framework */,
-				F8BA7FC42051DA7C00A5B83A /* ResearchSuiteTests_tvOS.xctest */,
+				F8BA7FBC2051DA7C00A5B83A /* ResearchStack2.framework */,
+				F8BA7FBE2051DA7C00A5B83A /* ResearchStack2Tests_iOS.xctest */,
+				F8BA7FC02051DA7C00A5B83A /* ResearchStack2.framework */,
+				F8BA7FC22051DA7C00A5B83A /* ResearchStack2.framework */,
+				F8BA7FC42051DA7C00A5B83A /* ResearchStack2Tests_tvOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -425,9 +425,9 @@
 		F8BA7FC62051DA8F00A5B83A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F8BA7FCD2051DA9000A5B83A /* ResearchSuiteUI.framework */,
-				F8BA7FCF2051DA9000A5B83A /* ResearchSuiteUITests_iOS.xctest */,
-				F8BA7FD12051DA9000A5B83A /* ResearchSuiteUI.framework */,
+				F8BA7FCD2051DA9000A5B83A /* ResearchStack2UI.framework */,
+				F8BA7FCF2051DA9000A5B83A /* ResearchStack2UITests_iOS.xctest */,
+				F8BA7FD12051DA9000A5B83A /* ResearchStack2UI.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -599,11 +599,11 @@
 			projectReferences = (
 				{
 					ProductGroup = F8BA7FB32051DA7C00A5B83A /* Products */;
-					ProjectRef = F8BA7FB22051DA7C00A5B83A /* ResearchSuite.xcodeproj */;
+					ProjectRef = F8BA7FB22051DA7C00A5B83A /* ResearchStack2.xcodeproj */;
 				},
 				{
 					ProductGroup = F8BA7FC62051DA8F00A5B83A /* Products */;
-					ProjectRef = F8BA7FC52051DA8F00A5B83A /* ResearchSuiteUI.xcodeproj */;
+					ProjectRef = F8BA7FC52051DA8F00A5B83A /* ResearchStack2UI.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -617,59 +617,59 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		F8BA7FBC2051DA7C00A5B83A /* ResearchSuite.framework */ = {
+		F8BA7FBC2051DA7C00A5B83A /* ResearchStack2.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ResearchSuite.framework;
+			path = ResearchStack2.framework;
 			remoteRef = F8BA7FBB2051DA7C00A5B83A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F8BA7FBE2051DA7C00A5B83A /* ResearchSuiteTests_iOS.xctest */ = {
+		F8BA7FBE2051DA7C00A5B83A /* ResearchStack2Tests_iOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ResearchSuiteTests_iOS.xctest;
+			path = ResearchStack2Tests_iOS.xctest;
 			remoteRef = F8BA7FBD2051DA7C00A5B83A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F8BA7FC02051DA7C00A5B83A /* ResearchSuite.framework */ = {
+		F8BA7FC02051DA7C00A5B83A /* ResearchStack2.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ResearchSuite.framework;
+			path = ResearchStack2.framework;
 			remoteRef = F8BA7FBF2051DA7C00A5B83A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F8BA7FC22051DA7C00A5B83A /* ResearchSuite.framework */ = {
+		F8BA7FC22051DA7C00A5B83A /* ResearchStack2.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ResearchSuite.framework;
+			path = ResearchStack2.framework;
 			remoteRef = F8BA7FC12051DA7C00A5B83A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F8BA7FC42051DA7C00A5B83A /* ResearchSuiteTests_tvOS.xctest */ = {
+		F8BA7FC42051DA7C00A5B83A /* ResearchStack2Tests_tvOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ResearchSuiteTests_tvOS.xctest;
+			path = ResearchStack2Tests_tvOS.xctest;
 			remoteRef = F8BA7FC32051DA7C00A5B83A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F8BA7FCD2051DA9000A5B83A /* ResearchSuiteUI.framework */ = {
+		F8BA7FCD2051DA9000A5B83A /* ResearchStack2UI.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ResearchSuiteUI.framework;
+			path = ResearchStack2UI.framework;
 			remoteRef = F8BA7FCC2051DA9000A5B83A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F8BA7FCF2051DA9000A5B83A /* ResearchSuiteUITests_iOS.xctest */ = {
+		F8BA7FCF2051DA9000A5B83A /* ResearchStack2UITests_iOS.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ResearchSuiteUITests_iOS.xctest;
+			path = ResearchStack2UITests_iOS.xctest;
 			remoteRef = F8BA7FCE2051DA9000A5B83A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		F8BA7FD12051DA9000A5B83A /* ResearchSuiteUI.framework */ = {
+		F8BA7FD12051DA9000A5B83A /* ResearchStack2UI.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ResearchSuiteUI.framework;
+			path = ResearchStack2UI.framework;
 			remoteRef = F8BA7FD02051DA9000A5B83A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -788,12 +788,12 @@
 		};
 		F8BA800D2051DF6C00A5B83A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "ResearchSuiteUI (iOS)";
+			name = "ResearchStack2UI (iOS)";
 			targetProxy = F8BA800C2051DF6C00A5B83A /* PBXContainerItemProxy */;
 		};
 		F8BA80122051DF7100A5B83A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = "ResearchSuite (iOS)";
+			name = "ResearchStack2 (iOS)";
 			targetProxy = F8BA80112051DF7100A5B83A /* PBXContainerItemProxy */;
 		};
 		F8BA80162051DF7800A5B83A /* PBXTargetDependency */ = {
