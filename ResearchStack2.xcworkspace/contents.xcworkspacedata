@@ -5,10 +5,10 @@
       location = "group:RSDTestApp/RSDTestApp.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ResearchSuiteUI/ResearchSuiteUI.xcodeproj">
+      location = "group:ResearchStack2UI/ResearchStack2UI.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ResearchSuite/ResearchSuite.xcodeproj">
+      location = "group:ResearchStack2/ResearchStack2.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:RK1Translator/RK1Translator.xcodeproj">

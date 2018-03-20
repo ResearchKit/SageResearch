@@ -29,9 +29,9 @@
 		F880C1B62057182B00ACB4D4 /* RSDOverviewStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */; };
 		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
 		FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */; };
-		FFF2D9411FCF415E007258F8 /* ResearchSuiteUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2D9381FCF415E007258F8 /* ResearchSuiteUI.framework */; };
-		FFF2D9781FCF41F8007258F8 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FFF2D9791FCF41FA007258F8 /* ResearchSuiteUI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FFF2D9411FCF415E007258F8 /* ResearchStack2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2D9381FCF415E007258F8 /* ResearchStack2UI.framework */; };
+		FFF2D9781FCF41F8007258F8 /* ResearchStack2UI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchStack2UI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FFF2D9791FCF41FA007258F8 /* ResearchStack2UI.h in Headers */ = {isa = PBXBuildFile; fileRef = FF443E191F7AC21900F43BE7 /* ResearchStack2UI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFF2D9821FCF4504007258F8 /* RSDTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5C4C221F8C8B9100F311BA /* RSDTaskViewController.swift */; };
 		FFF2D9831FCF4504007258F8 /* RSDStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */; };
 		FFF2D9841FCF4509007258F8 /* RSDVoiceBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF55C4361FAB1732004EDB59 /* RSDVoiceBox.swift */; };
@@ -59,8 +59,8 @@
 		FFF2D99A1FCF4538007258F8 /* UIAlertController+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF58035D1F9E6ADE004346A8 /* UIAlertController+Utilities.swift */; };
 		FFF2D99B1FCF4F0B007258F8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF55C43A1FAB8897004EDB59 /* AVFoundation.framework */; };
 		FFF2D99C1FCF4F0F007258F8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF55C4381FAB861C004EDB59 /* AudioToolbox.framework */; };
-		FFF2D99E1FCF4F2C007258F8 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */; };
-		FFF2D99F1FCF4F40007258F8 /* ResearchSuite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2D9A01FCF4F40007258F8 /* ResearchSuite.framework */; };
+		FFF2D99E1FCF4F2C007258F8 /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF0472301F7AC4F90023DAD6 /* ResearchStack2.framework */; };
+		FFF2D99F1FCF4F40007258F8 /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF2D9A01FCF4F40007258F8 /* ResearchStack2.framework */; };
 		FFF2D9A11FCF4FC6007258F8 /* UIColor+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */; };
 		FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */; };
 		FFF2D9A41FCF4FC6007258F8 /* DefaultImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFF9D4C41FAFEF5400767C3B /* DefaultImages.xcassets */; };
@@ -75,7 +75,7 @@
 			containerPortal = FF443E0D1F7AC21900F43BE7 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FFF2D9371FCF415E007258F8;
-			remoteInfo = ResearchSuiteUI_iOS;
+			remoteInfo = ResearchStack2UI_iOS;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -87,7 +87,7 @@
 		F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDLoadingView.swift; sourceTree = "<group>"; };
 		F880C1B32057182B00ACB4D4 /* RSDOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDOverviewStepViewController.swift; sourceTree = "<group>"; };
 		F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDOverviewStepViewController.xib; sourceTree = "<group>"; };
-		FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF0472301F7AC4F90023DAD6 /* ResearchStack2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchStack2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utilities.swift"; sourceTree = "<group>"; };
 		FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnderlinedButton.swift; sourceTree = "<group>"; };
 		FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRoundedButton.swift; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 		FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepNavigationView.swift; sourceTree = "<group>"; };
 		FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepProgressView.swift; sourceTree = "<group>"; };
 		FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDShadowGradient.swift; sourceTree = "<group>"; };
-		FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchSuiteUI.h; sourceTree = "<group>"; };
+		FF443E191F7AC21900F43BE7 /* ResearchStack2UI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchStack2UI.h; sourceTree = "<group>"; };
 		FF478D911FD752E800493A49 /* RSDNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDNavigationController.swift; sourceTree = "<group>"; };
 		FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugStepViewController.swift; sourceTree = "<group>"; };
 		FF4A2D331F9679EC00484338 /* DebugStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebugStepViewController.xib; sourceTree = "<group>"; };
@@ -120,13 +120,13 @@
 		FFDD78101FAE96C70024BDD1 /* RSDCountdownStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDCountdownStepViewController.xib; sourceTree = "<group>"; };
 		FFDD781E1FAE990F0024BDD1 /* RSDActiveStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveStepViewController.swift; sourceTree = "<group>"; };
 		FFDD781F1FAE990F0024BDD1 /* RSDActiveStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDActiveStepViewController.xib; sourceTree = "<group>"; };
-		FFF2D9381FCF415E007258F8 /* ResearchSuiteUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchSuiteUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFF2D9381FCF415E007258F8 /* ResearchStack2UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchStack2UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFF2D93B1FCF415E007258F8 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		FFF2D9401FCF415E007258F8 /* ResearchSuiteUITests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchSuiteUITests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFF2D9401FCF415E007258F8 /* ResearchStack2UITests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchStack2UITests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFF2D9471FCF415E007258F8 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		FFF2D9701FCF41BF007258F8 /* ResearchSuiteUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchSuiteUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFF2D9701FCF41BF007258F8 /* ResearchStack2UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchStack2UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFF2D9731FCF41BF007258F8 /* Info-watchOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-watchOS.plist"; sourceTree = "<group>"; };
-		FFF2D9A01FCF4F40007258F8 /* ResearchSuite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchSuite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFF2D9A01FCF4F40007258F8 /* ResearchStack2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchStack2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFF9D4C41FAFEF5400767C3B /* DefaultImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DefaultImages.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFF2D99E1FCF4F2C007258F8 /* ResearchSuite.framework in Frameworks */,
+				FFF2D99E1FCF4F2C007258F8 /* ResearchStack2.framework in Frameworks */,
 				FFF2D99B1FCF4F0B007258F8 /* AVFoundation.framework in Frameworks */,
 				FFF2D99C1FCF4F0F007258F8 /* AudioToolbox.framework in Frameworks */,
 			);
@@ -145,7 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFF2D9411FCF415E007258F8 /* ResearchSuiteUI.framework in Frameworks */,
+				FFF2D9411FCF415E007258F8 /* ResearchStack2UI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,7 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFF2D99F1FCF4F40007258F8 /* ResearchSuite.framework in Frameworks */,
+				FFF2D99F1FCF4F40007258F8 /* ResearchStack2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,10 +163,10 @@
 		FF04722E1F7AC4F90023DAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FFF2D9A01FCF4F40007258F8 /* ResearchSuite.framework */,
+				FFF2D9A01FCF4F40007258F8 /* ResearchStack2.framework */,
 				FF55C43A1FAB8897004EDB59 /* AVFoundation.framework */,
 				FF55C4381FAB861C004EDB59 /* AudioToolbox.framework */,
-				FF0472301F7AC4F90023DAD6 /* ResearchSuite.framework */,
+				FF0472301F7AC4F90023DAD6 /* ResearchStack2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -184,8 +184,8 @@
 		FF443E0C1F7AC21900F43BE7 = {
 			isa = PBXGroup;
 			children = (
-				FF443E181F7AC21900F43BE7 /* ResearchSuiteUI */,
-				FF443E231F7AC21900F43BE7 /* ResearchSuiteUITests */,
+				FF443E181F7AC21900F43BE7 /* ResearchStack2UI */,
+				FF443E231F7AC21900F43BE7 /* ResearchStack2UITests */,
 				FF443E171F7AC21900F43BE7 /* Products */,
 				FF04722E1F7AC4F90023DAD6 /* Frameworks */,
 			);
@@ -194,31 +194,31 @@
 		FF443E171F7AC21900F43BE7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FFF2D9381FCF415E007258F8 /* ResearchSuiteUI.framework */,
-				FFF2D9401FCF415E007258F8 /* ResearchSuiteUITests_iOS.xctest */,
-				FFF2D9701FCF41BF007258F8 /* ResearchSuiteUI.framework */,
+				FFF2D9381FCF415E007258F8 /* ResearchStack2UI.framework */,
+				FFF2D9401FCF415E007258F8 /* ResearchStack2UITests_iOS.xctest */,
+				FFF2D9701FCF41BF007258F8 /* ResearchStack2UI.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FF443E181F7AC21900F43BE7 /* ResearchSuiteUI */ = {
+		FF443E181F7AC21900F43BE7 /* ResearchStack2UI */ = {
 			isa = PBXGroup;
 			children = (
 				80242B0E2018013E00FC4F44 /* README.md */,
-				FF443E191F7AC21900F43BE7 /* ResearchSuiteUI.h */,
+				FF443E191F7AC21900F43BE7 /* ResearchStack2UI.h */,
 				FF74A7DD1F7DA2EB0064A634 /* iOS */,
 				FFF2D97A1FCF422C007258F8 /* watchOS */,
 				FF25E8371F96ACD200BC09A8 /* Styleguide */,
 			);
-			path = ResearchSuiteUI;
+			path = ResearchStack2UI;
 			sourceTree = "<group>";
 		};
-		FF443E231F7AC21900F43BE7 /* ResearchSuiteUITests */ = {
+		FF443E231F7AC21900F43BE7 /* ResearchStack2UITests */ = {
 			isa = PBXGroup;
 			children = (
 				FFF2D9471FCF415E007258F8 /* Info-iOS.plist */,
 			);
-			path = ResearchSuiteUITests;
+			path = ResearchStack2UITests;
 			sourceTree = "<group>";
 		};
 		FF4A2D441F96A90200484338 /* Views */ = {
@@ -325,7 +325,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFF2D9781FCF41F8007258F8 /* ResearchSuiteUI.h in Headers */,
+				FFF2D9781FCF41F8007258F8 /* ResearchStack2UI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,16 +333,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFF2D9791FCF41FA007258F8 /* ResearchSuiteUI.h in Headers */,
+				FFF2D9791FCF41FA007258F8 /* ResearchStack2UI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		FFF2D9371FCF415E007258F8 /* ResearchSuiteUI (iOS) */ = {
+		FFF2D9371FCF415E007258F8 /* ResearchStack2UI (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFF2D94D1FCF415E007258F8 /* Build configuration list for PBXNativeTarget "ResearchSuiteUI (iOS)" */;
+			buildConfigurationList = FFF2D94D1FCF415E007258F8 /* Build configuration list for PBXNativeTarget "ResearchStack2UI (iOS)" */;
 			buildPhases = (
 				FFF2D9331FCF415E007258F8 /* Sources */,
 				FFF2D9341FCF415E007258F8 /* Frameworks */,
@@ -353,14 +353,14 @@
 			);
 			dependencies = (
 			);
-			name = "ResearchSuiteUI (iOS)";
-			productName = ResearchSuiteUI_iOS;
-			productReference = FFF2D9381FCF415E007258F8 /* ResearchSuiteUI.framework */;
+			name = "ResearchStack2UI (iOS)";
+			productName = ResearchStack2UI_iOS;
+			productReference = FFF2D9381FCF415E007258F8 /* ResearchStack2UI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		FFF2D93F1FCF415E007258F8 /* ResearchSuiteUITests_iOS */ = {
+		FFF2D93F1FCF415E007258F8 /* ResearchStack2UITests_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFF2D94E1FCF415E007258F8 /* Build configuration list for PBXNativeTarget "ResearchSuiteUITests_iOS" */;
+			buildConfigurationList = FFF2D94E1FCF415E007258F8 /* Build configuration list for PBXNativeTarget "ResearchStack2UITests_iOS" */;
 			buildPhases = (
 				FFF2D93C1FCF415E007258F8 /* Sources */,
 				FFF2D93D1FCF415E007258F8 /* Frameworks */,
@@ -371,14 +371,14 @@
 			dependencies = (
 				FFF2D9431FCF415E007258F8 /* PBXTargetDependency */,
 			);
-			name = ResearchSuiteUITests_iOS;
-			productName = ResearchSuiteUI_iOSTests;
-			productReference = FFF2D9401FCF415E007258F8 /* ResearchSuiteUITests_iOS.xctest */;
+			name = ResearchStack2UITests_iOS;
+			productName = ResearchStack2UI_iOSTests;
+			productReference = FFF2D9401FCF415E007258F8 /* ResearchStack2UITests_iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		FFF2D96F1FCF41BF007258F8 /* ResearchSuiteUI (watchOS) */ = {
+		FFF2D96F1FCF41BF007258F8 /* ResearchStack2UI (watchOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFF2D9751FCF41BF007258F8 /* Build configuration list for PBXNativeTarget "ResearchSuiteUI (watchOS)" */;
+			buildConfigurationList = FFF2D9751FCF41BF007258F8 /* Build configuration list for PBXNativeTarget "ResearchStack2UI (watchOS)" */;
 			buildPhases = (
 				FFF2D96B1FCF41BF007258F8 /* Sources */,
 				FFF2D96C1FCF41BF007258F8 /* Frameworks */,
@@ -389,9 +389,9 @@
 			);
 			dependencies = (
 			);
-			name = "ResearchSuiteUI (watchOS)";
-			productName = ResearchSuiteUI_watchOS;
-			productReference = FFF2D9701FCF41BF007258F8 /* ResearchSuiteUI.framework */;
+			name = "ResearchStack2UI (watchOS)";
+			productName = ResearchStack2UI_watchOS;
+			productReference = FFF2D9701FCF41BF007258F8 /* ResearchStack2UI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -423,7 +423,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FF443E101F7AC21900F43BE7 /* Build configuration list for PBXProject "ResearchSuiteUI" */;
+			buildConfigurationList = FF443E101F7AC21900F43BE7 /* Build configuration list for PBXProject "ResearchStack2UI" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -436,9 +436,9 @@
 			projectRoot = "";
 			targets = (
 				FF1446C11FBCF42600389F77 /* Documentation */,
-				FFF2D9371FCF415E007258F8 /* ResearchSuiteUI (iOS) */,
-				FFF2D93F1FCF415E007258F8 /* ResearchSuiteUITests_iOS */,
-				FFF2D96F1FCF41BF007258F8 /* ResearchSuiteUI (watchOS) */,
+				FFF2D9371FCF415E007258F8 /* ResearchStack2UI (iOS) */,
+				FFF2D93F1FCF415E007258F8 /* ResearchStack2UITests_iOS */,
+				FFF2D96F1FCF41BF007258F8 /* ResearchStack2UI (watchOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -549,7 +549,7 @@
 /* Begin PBXTargetDependency section */
 		FFF2D9431FCF415E007258F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FFF2D9371FCF415E007258F8 /* ResearchSuiteUI (iOS) */;
+			target = FFF2D9371FCF415E007258F8 /* ResearchStack2UI (iOS) */;
 			targetProxy = FFF2D9421FCF415E007258F8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -703,12 +703,12 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "ResearchSuiteUI/iOS/Info-iOS.plist";
+				INFOPLIST_FILE = "ResearchStack2UI/iOS/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUI-iOS";
-				PRODUCT_NAME = ResearchSuiteUI;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchStack2UI-iOS";
+				PRODUCT_NAME = ResearchStack2UI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -726,12 +726,12 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "ResearchSuiteUI/iOS/Info-iOS.plist";
+				INFOPLIST_FILE = "ResearchStack2UI/iOS/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUI-iOS";
-				PRODUCT_NAME = ResearchSuiteUI;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchStack2UI-iOS";
+				PRODUCT_NAME = ResearchStack2UI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -745,10 +745,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = "ResearchSuiteUITests/Info-iOS.plist";
+				INFOPLIST_FILE = "ResearchStack2UITests/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUI-iOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchStack2UI-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -761,10 +761,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4B822CZK9N;
-				INFOPLIST_FILE = "ResearchSuiteUITests/Info-iOS.plist";
+				INFOPLIST_FILE = "ResearchStack2UITests/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUI-iOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchStack2UI-iOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -782,11 +782,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "ResearchSuiteUI/watchOS/Info-watchOS.plist";
+				INFOPLIST_FILE = "ResearchStack2UI/watchOS/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUI-watchOS";
-				PRODUCT_NAME = ResearchSuiteUI;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchStack2UI-watchOS";
+				PRODUCT_NAME = ResearchStack2UI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -807,11 +807,11 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "ResearchSuiteUI/watchOS/Info-watchOS.plist";
+				INFOPLIST_FILE = "ResearchStack2UI/watchOS/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchSuiteUI-watchOS";
-				PRODUCT_NAME = ResearchSuiteUI;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchStack2UI-watchOS";
+				PRODUCT_NAME = ResearchStack2UI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -833,7 +833,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF443E101F7AC21900F43BE7 /* Build configuration list for PBXProject "ResearchSuiteUI" */ = {
+		FF443E101F7AC21900F43BE7 /* Build configuration list for PBXProject "ResearchStack2UI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF443E281F7AC21900F43BE7 /* Debug */,
@@ -842,7 +842,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFF2D94D1FCF415E007258F8 /* Build configuration list for PBXNativeTarget "ResearchSuiteUI (iOS)" */ = {
+		FFF2D94D1FCF415E007258F8 /* Build configuration list for PBXNativeTarget "ResearchStack2UI (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FFF2D9491FCF415E007258F8 /* Debug */,
@@ -851,7 +851,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFF2D94E1FCF415E007258F8 /* Build configuration list for PBXNativeTarget "ResearchSuiteUITests_iOS" */ = {
+		FFF2D94E1FCF415E007258F8 /* Build configuration list for PBXNativeTarget "ResearchStack2UITests_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FFF2D94B1FCF415E007258F8 /* Debug */,
@@ -860,7 +860,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFF2D9751FCF41BF007258F8 /* Build configuration list for PBXNativeTarget "ResearchSuiteUI (watchOS)" */ = {
+		FFF2D9751FCF41BF007258F8 /* Build configuration list for PBXNativeTarget "ResearchStack2UI (watchOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FFF2D9761FCF41BF007258F8 /* Debug */,
