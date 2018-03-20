@@ -1,523 +1,915 @@
 {
   "warnings": [
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/Array+Utilities.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/Array+Utilities.swift",
       "line": 34,
       "symbol": "RSDArrayExtension",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/Dictionary+Utilities.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/Dictionary+Utilities.swift",
       "line": 36,
       "symbol": "RSDDictionaryExtension",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDAnswerResultType.swift",
-      "line": 277,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/Localization.swift",
+      "line": 100,
+      "symbol": "LocalizationBundle.hash",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/Localization.swift",
+      "line": 104,
+      "symbol": "LocalizationBundle.isEqual(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAnswerResultType.swift",
+      "line": 294,
       "symbol": "RSDAnswerResultType.decodeDate(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDAnswerResultType.swift",
-      "line": 426,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAnswerResultType.swift",
+      "line": 449,
       "symbol": "RSDAnswerResultType.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDComparableSurveyRuleObject.swift",
-      "line": 55,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAsyncActionConfiguration.swift",
+      "line": 45,
+      "symbol": "RSDPermissionsConfiguration",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAsyncActionType.swift",
+      "line": 62,
+      "symbol": "RSDAsyncActionType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAsyncActionType.swift",
+      "line": 65,
+      "symbol": "RSDAsyncActionType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDCohortTrackingRule.swift",
+      "line": 95,
+      "symbol": "RSDCohortTrackingRule.init(initialCohorts:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDComparableSurveyRuleObject.swift",
+      "line": 59,
       "symbol": "RSDComparableSurveyRuleObject.matchingValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDDeviceType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDeviceType.swift",
       "line": 80,
       "symbol": "RSDDeviceType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDDeviceType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDeviceType.swift",
       "line": 83,
       "symbol": "RSDDeviceType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDDocumentable.swift",
-      "line": 43,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDistanceRecorder.swift",
+      "line": 145,
+      "symbol": "RSDDistanceRecorder.locationManager",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDistanceRecorder.swift",
+      "line": 486,
+      "symbol": "RSDDistanceRecord.totalDistance",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDistanceRecorder.swift",
+      "line": 490,
+      "symbol": "RSDDistanceRecord.course",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDistanceRecorder.swift",
+      "line": 493,
+      "symbol": "RSDDistanceRecord.speed",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDocumentable.swift",
+      "line": 50,
       "symbol": "RSDDocumentCreator",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDDocumentable.swift",
-      "line": 165,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDocumentable.swift",
+      "line": 249,
       "symbol": "RawRepresentable.stringValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
       "line": 59,
       "symbol": "RSDFactory.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
-      "line": 701,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
+      "line": 765,
       "symbol": "RSDFactoryDecoder.decode(_:from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
-      "line": 702,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
+      "line": 766,
       "symbol": "RSDFactoryDecoder.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
-      "line": 739,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
+      "line": 808,
       "symbol": "RSDFactoryEncoder.encode(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFactory.swift",
-      "line": 740,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
+      "line": 809,
       "symbol": "RSDFactoryEncoder.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormDataType.swift",
       "line": 95,
       "symbol": "RSDFormDataType.BaseType.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormDataType.swift",
       "line": 115,
       "symbol": "RSDFormDataType.CollectionType.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormDataType.swift",
       "line": 132,
       "symbol": "RSDFormDataType.MeasurementType.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormDataType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormDataType.swift",
       "line": 150,
       "symbol": "RSDFormDataType.MeasurementRange.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormUIHint.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormUIHint.swift",
       "line": 95,
       "symbol": "RSDFormUIHint.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDFormUIHint.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormUIHint.swift",
       "line": 98,
       "symbol": "RSDFormUIHint.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDGenericStepObject.swift",
+      "line": 58,
+      "symbol": "RSDGenericStepObject.init(identifier:stepType:userInfo:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
       "line": 50,
       "symbol": "RSDIdentifier.exit",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
       "line": 51,
       "symbol": "RSDIdentifier.nextSection",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
-      "line": 53,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "line": 52,
+      "symbol": "RSDIdentifier.nextStep",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "line": 54,
       "symbol": "RSDIdentifier.allGlobalIdentifiers()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
-      "line": 62,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "line": 63,
       "symbol": "RSDIdentifier.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDIdentifier.swift",
-      "line": 65,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "line": 66,
       "symbol": "RSDIdentifier.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDImageWrapper.swift",
-      "line": 173,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImagePickerStep.swift",
+      "line": 53,
+      "symbol": "RSDImagePickerMediaType.photo",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImagePickerStep.swift",
+      "line": 54,
+      "symbol": "RSDImagePickerMediaType.video",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImageWrapper.swift",
+      "line": 45,
+      "symbol": "RSDEmbeddedIconVendor.imageVendor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImageWrapper.swift",
+      "line": 179,
       "symbol": "RSDImageWrapper.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDImageWrapper.swift",
-      "line": 176,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImageWrapper.swift",
+      "line": 182,
       "symbol": "RSDImageWrapper.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDJSONValue.swift",
-      "line": 172,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDInputFieldObject.swift",
+      "line": 112,
+      "symbol": "RSDInputFieldObject.init(identifier:dataType:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDJSONValue.swift",
+      "line": 183,
       "symbol": "DateComponents.defaultFormatter()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDPickerDataSource.swift",
-      "line": 118,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMedicationTrackingStepNavigator.swift",
+      "line": 36,
+      "symbol": "RSDMedicationTrackingStepNavigator",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMedicationTrackingStepNavigator.swift",
+      "line": 38,
+      "symbol": "RSDMedicationTrackingStepNavigator.decodeItems(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMedicationTrackingStepNavigator.swift",
+      "line": 199,
+      "symbol": "RSDMedicationItem.init(identifier:sectionIdentifier:title:shortText:detail:icon:isExclusive:isContinuousInjection:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMedicationTrackingStepNavigator.swift",
+      "line": 311,
+      "symbol": "RSDMedicationTrackingResult.init(identifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMotionRecorder.swift",
+      "line": 462,
+      "symbol": "RSDVector.x",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMotionRecorder.swift",
+      "line": 463,
+      "symbol": "RSDVector.y",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMotionRecorder.swift",
+      "line": 464,
+      "symbol": "RSDVector.z",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDPickerDataSource.swift",
+      "line": 121,
       "symbol": "RSDImageChoicePickerDataSource",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDPickerDataSource.swift",
-      "line": 142,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDPickerDataSource.swift",
+      "line": 145,
       "symbol": "RSDNumberFormatterProtocol",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDRange.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDPopoverInputFieldObject.swift",
+      "line": 99,
+      "symbol": "RSDPopoverInputFieldObject.init(inputField:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDRange.swift",
       "line": null,
       "symbol": "RSDDurationRange",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDRange.swift",
-      "line": 119,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDRange.swift",
+      "line": 122,
       "symbol": "RSDDurationRange",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDResultType.swift",
-      "line": 74,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDResultType.swift",
+      "line": 80,
       "symbol": "RSDResultType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDResultType.swift",
-      "line": 77,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDResultType.swift",
+      "line": 83,
       "symbol": "RSDResultType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDStepType.swift",
-      "line": 81,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
+      "line": 162,
+      "symbol": "RSDWeeklyScheduleObject.init(timeOfDayString:daysOfWeek:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
+      "line": 303,
+      "symbol": "RSDWeekday.sunday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
+      "line": 304,
+      "symbol": "RSDWeekday.monday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
+      "line": 305,
+      "symbol": "RSDWeekday.tuesday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
+      "line": 306,
+      "symbol": "RSDWeekday.wednesday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
+      "line": 307,
+      "symbol": "RSDWeekday.thursday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
+      "line": 308,
+      "symbol": "RSDWeekday.friday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
+      "line": 309,
+      "symbol": "RSDWeekday.saturday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "line": 132,
+      "symbol": "RSDStandardPermission.camera",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "line": 133,
+      "symbol": "RSDStandardPermission.microphone",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "line": 134,
+      "symbol": "RSDStandardPermission.motion",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "line": 135,
+      "symbol": "RSDStandardPermission.photoLibrary",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "line": 136,
+      "symbol": "RSDStandardPermission.location",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "line": 137,
+      "symbol": "RSDStandardPermission.locationWhenInUse",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStepNavigatorType.swift",
+      "line": 63,
+      "symbol": "RSDStepNavigatorType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStepNavigatorType.swift",
+      "line": 66,
+      "symbol": "RSDStepNavigatorType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStepType.swift",
+      "line": 96,
       "symbol": "RSDStepType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDStepType.swift",
-      "line": 84,
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStepType.swift",
+      "line": 99,
       "symbol": "RSDStepType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTaskController.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskController.swift",
       "line": 47,
       "symbol": "RSDTaskFinishReason",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskInfoStepObject.swift",
+      "line": null,
+      "symbol": "RSDTaskInfoObject",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskInfoStepObject.swift",
+      "line": null,
+      "symbol": "RSDTaskInfoObject",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskInfoStepObject.swift",
+      "line": 36,
+      "symbol": "RSDTaskInfoObject",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskInfoStepObject.swift",
+      "line": 82,
+      "symbol": "RSDTaskInfoObject.init(with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
       "line": null,
       "symbol": "RSDCodableRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
       "line": null,
       "symbol": "RSDRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
       "line": 67,
       "symbol": "RSDTextValidator",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
       "line": 75,
       "symbol": "RSDRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
       "line": 83,
       "symbol": "RSDCodableRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.allCharacters",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.sentences",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.words",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 214,
       "symbol": "RSDTextAutocapitalizationType.textAutocapitalizationType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 231,
       "symbol": "RSDTextAutocorrectionType.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 231,
       "symbol": "RSDTextAutocorrectionType.no",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 231,
       "symbol": "RSDTextAutocorrectionType.yes",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 243,
       "symbol": "RSDTextAutocorrectionType.textAutocorrectionType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 260,
       "symbol": "RSDTextSpellCheckingType.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 260,
       "symbol": "RSDTextSpellCheckingType.no",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 260,
       "symbol": "RSDTextSpellCheckingType.yes",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 272,
       "symbol": "RSDTextSpellCheckingType.textSpellCheckingType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.URL",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.asciiCapable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.asciiCapableNumberPad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.decimalPad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.emailAddress",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.namePhonePad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.numberPad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.numbersAndPunctuation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.phonePad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.twitter",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.webSearch",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
       "line": 303,
       "symbol": "RSDKeyboardType.keyboardType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUIAction.swift",
-      "line": 162,
-      "symbol": "RSDUIActionType.==(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemDetailsStepObject.swift",
+      "line": 49,
+      "symbol": "RSDTrackedItemDetailsStepObject.previousAnswer",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUIAction.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
+      "line": 42,
+      "symbol": "RSDTrackedItemsStepNavigator.ItemsCodingKeys.items",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
+      "line": 42,
+      "symbol": "RSDTrackedItemsStepNavigator.ItemsCodingKeys.sections",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
+      "line": 47,
+      "symbol": "RSDTrackedItemsStepNavigator.StepIdentifiers.addDetails",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
+      "line": 47,
+      "symbol": "RSDTrackedItemsStepNavigator.StepIdentifiers.logging",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
+      "line": 47,
+      "symbol": "RSDTrackedItemsStepNavigator.StepIdentifiers.review",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
+      "line": 47,
+      "symbol": "RSDTrackedItemsStepNavigator.StepIdentifiers.selection",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
+      "line": 129,
+      "symbol": "RSDTrackedItemsStepNavigator.decodeItems(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedSelectionDataSource.swift",
+      "line": 82,
+      "symbol": "RSDTrackedSelectionDataSource.buildSections(step:initialResult:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedSelectionStepObject.swift",
+      "line": 252,
+      "symbol": "RSDTrackedSectionObject.init(identifier:text:detail:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedSelectionStepObject.swift",
+      "line": 317,
+      "symbol": "RSDTrackedItemObject.init(identifier:sectionIdentifier:title:shortText:detail:icon:isExclusive:addDetailsIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedSelectionStepObject.swift",
+      "line": 357,
+      "symbol": "RSDTrackedItemsResultObject.init(identifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUIAction.swift",
       "line": 165,
       "symbol": "RSDUIActionType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUIAction.swift",
+      "line": 168,
+      "symbol": "RSDUIActionType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUSMeasurementPickerDataSource.swift",
       "line": 42,
       "symbol": "RSDUSMeasurementPickerDataSource.converter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUSMeasurementPickerDataSource.swift",
       "line": 46,
       "symbol": "RSDUSMeasurementPickerDataSource.largeUnitBounds",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUSMeasurementPickerDataSource.swift",
       "line": 91,
       "symbol": "RSDUSHeightPickerDataSourceObject.converter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite/ResearchSuite/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUSMeasurementPickerDataSource.swift",
       "line": 161,
       "symbol": "RSDUSInfantMassPickerDataSourceObject.converter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchSuite"
+  "source_directory": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2"
 }
