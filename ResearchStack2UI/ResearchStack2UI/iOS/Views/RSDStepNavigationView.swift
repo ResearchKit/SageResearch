@@ -54,6 +54,20 @@ open class RSDStepNavigationView: UIView {
     /// Button for cancelling the task.
     @IBOutlet open var cancelButton: UIButton?
     
+    /// Return all the buttons in this navigation view.
+    open func allButtons() -> [UIButton] {
+        return Array(1...5).rsd_mapAndFilter { (idx) -> UIButton? in
+            switch idx {
+            case 1: return nextButton
+            case 2: return backButton
+            case 3: return skipButton
+            case 4: return learnMoreButton
+            case 5: return cancelButton
+            default: return nil
+            }
+        }
+    }
+    
     /// Should the navigation view show the back button?
     @IBInspectable open var isBackHidden: Bool = false {
         didSet {
@@ -67,6 +81,20 @@ open class RSDStepNavigationView: UIView {
         didSet {
             skipButton?.isHidden = isSkipHidden
             self.setNeedsUpdateConstraints()
+        }
+    }
+    
+    /// Should the navigation view subcomponents be displayed with a dark background and light tint on the
+    /// buttons and text?
+    @IBInspectable open var usesLightStyle: Bool = false {
+        didSet {
+            tintColor = usesLightStyle ? UIColor.rsd_underlinedButtonTextLight : UIColor.rsd_underlinedButtonTextDark
+            for button in allButtons() {
+                if let roundedButton = button as? RSDRoundedButton {
+                    roundedButton.backgroundColor = usesLightStyle ? UIColor.rsd_roundedButtonBackgroundLight : UIColor.rsd_roundedButtonBackgroundDark
+                    roundedButton.titleColor = usesLightStyle ? UIColor.rsd_roundedButtonTextLight : UIColor.rsd_roundedButtonTextDark
+                }
+            }
         }
     }
 }
@@ -109,6 +137,13 @@ open class RSDNavigationHeaderView: RSDStepNavigationView {
         }
     }
     
+    override open var usesLightStyle: Bool {
+        didSet {
+            progressView?.usesLightStyle = usesLightStyle
+            stepCountLabel?.textColor = usesLightStyle ? UIColor.rsd_stepCountLabelLight : UIColor.rsd_stepCountLabelDark
+        }
+    }
+    
     /// Layout constants. Subclasses can override to customize; otherwise the default private
     /// constants are used.
     open private(set) var constants: RSDNavigationHeaderLayoutConstants = DefaultNavigationHeaderLayoutConstants()
@@ -129,21 +164,8 @@ open class RSDNavigationHeaderView: RSDStepNavigationView {
         progressView!.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(progressView!)
         
-        stepCountLabel = UILabel()
-        stepCountLabel!.translatesAutoresizingMaskIntoConstraints = false
-        stepCountLabel!.font = UIFont.stepCountLabel
-        stepCountLabel!.numberOfLines = 1
-        stepCountLabel!.textAlignment = .center
-        stepCountLabel!.attributedText = progressView!.attributedStringForLabel()
-        stepCountLabel!.isHidden = isStepLabelHidden
-        
-        // Move the step count label to this view so that we can align it to center of *this* view.
-        self.addSubview(stepCountLabel!)
-        stepCountLabel!.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
-        stepCountLabel!.rsd_makeHeight(.greaterThanOrEqual, 0.0)
-        
-        // Add pointer to the progress label
-        progressView?.stepCountLabel = stepCountLabel
+        // Set the color style
+        progressView?.usesLightStyle = self.usesLightStyle
     }
 }
 
@@ -163,12 +185,12 @@ public protocol RSDNavigationHeaderLayoutConstants {
 
 /// Default constants.
 fileprivate struct DefaultNavigationHeaderLayoutConstants {
-    let topMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
-    let bottomMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenHeight()
+    let topMargin: CGFloat = CGFloat(18.0).rsd_iPadMultiplier(1.5)
+    let bottomMargin: CGFloat = CGFloat(18.0).rsd_iPadMultiplier(1.5)
     let sideMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenWidth()
-    let promptBottomMargin: CGFloat = CGFloat(10.0).rsd_proportionalToScreenHeight()
+    let promptBottomMargin: CGFloat = CGFloat(10.0).rsd_iPadMultiplier(1.5)
     let horizontalSpacing: CGFloat = CGFloat(16.0).rsd_iPadMultiplier(2)
-    let verticalSpacing: CGFloat = CGFloat(20.0).rsd_proportionalToScreenHeight()
+    let verticalSpacing: CGFloat = CGFloat(10.0).rsd_iPadMultiplier(1.5)
     let barButtonHeight: CGFloat = CGFloat(32.0).rsd_iPadMultiplier(1.5)
     let buttonToTop: CGFloat = CGFloat(12.0).rsd_iPadMultiplier(2)
     let imageViewHeight: CGFloat = CGFloat(100.0).rsd_proportionalToScreenHeight()
@@ -215,6 +237,15 @@ open class RSDStepHeaderView: RSDNavigationHeaderView {
     open var minumumHeight: CGFloat = 0.0 {
         didSet {
             setNeedsUpdateConstraints()
+        }
+    }
+    
+    /// Override to set text colors
+    override open var usesLightStyle: Bool {
+        didSet {
+            titleLabel?.textColor = usesLightStyle ? UIColor.rsd_headerTitleLabelLight : UIColor.rsd_headerTitleLabelDark
+            textLabel?.textColor = usesLightStyle ? UIColor.rsd_headerTextLabelLight : UIColor.rsd_headerTextLabelDark
+            detailLabel?.textColor = usesLightStyle ? UIColor.rsd_headerDetailLabelLight : UIColor.rsd_headerDetailLabelDark
         }
     }
 }
@@ -307,21 +338,21 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
     /// Convenience method for adding the title label if needed.
     open func addTitleLabelIfNeeded() {
         guard titleLabel == nil else { return }
-        titleLabel = addLabel(font: UIFont.headerViewHeaderLabel, color: UIColor.rsd_headerTitleLabel)
+        titleLabel = addLabel(font: UIFont.rsd_headerTitleLabel, color: UIColor.rsd_headerTitleLabelDark)
         titleLabel!.accessibilityTraits = UIAccessibilityTraitHeader
     }
     
     /// Convenience method for adding the text label if needed.
     open func addTextLabelIfNeeded() {
         guard textLabel == nil else { return }
-        textLabel = addLabel(font: UIFont.headerViewDetailsLabel, color: UIColor.rsd_headerTextLabel)
+        textLabel = addLabel(font: UIFont.rsd_headerTextLabel, color: UIColor.rsd_headerTextLabelDark)
         textLabel!.accessibilityTraits = UIAccessibilityTraitSummaryElement
     }
     
     /// Convenience method for adding the detail label if needed.
     open func addDetailLabelIfNeeded() {
         guard detailLabel == nil else { return }
-        detailLabel = addLabel(font: UIFont.headerViewPromptLabel, color: UIColor.rsd_headerDetailLabel)
+        detailLabel = addLabel(font: UIFont.rsd_headerDetailLabel, color: UIColor.rsd_headerDetailLabelDark)
     }
     
     open override func layoutSubviews() {

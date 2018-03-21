@@ -184,9 +184,9 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
         assertionFailure("This is not a valid method of changing the answer for this table data source")
     }
     
-    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws {
+    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
-            return
+            return (false, false)
         }
         
         // TODO: syoung 03/01/2018 If the user is de-selecting a tracked item that they selected in a
@@ -195,7 +195,7 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
         // adding a TODO comment to track that it needs to be implemented.
         
         // update selection for this group
-        try itemGroup.select(item, indexPath: indexPath)
+        let ret = try itemGroup.select(item, indexPath: indexPath)
         let selectedIdentifiers = itemGroups.rsd_mapAndFilter({ $0.answer as? [String] }).flatMap{$0}
         let items = (self.step as? RSDTrackedItemsStep)?.items ?? []
         
@@ -208,5 +208,7 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
         if let delegate = delegate {
             delegate.answersDidChange(in: indexPath.section)
         }
+        
+        return ret
     }
 }

@@ -1,6 +1,6 @@
 //
-//  UIColor+StyleGuide.swift
-//  RSDCatalog
+//  RSDStatusBarBackgroundView.swift
+//  ResearchStack2UI (iOS)
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -32,9 +32,43 @@
 //
 
 import UIKit
-import ResearchStack2UI
 
-/// This extension will override the color values set ResearchStack2UI.
-extension UIColor {
+@IBDesignable open class RSDStatusBarBackgroundView: UIView {
     
+    public func alignToStatusBar() {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.rsd_alignToSuperview([.leading, .trailing, .top], padding: 0)
+        self.rsd_align([.bottom], .equal, to: superview, [.topMargin], padding: 0)
+    }
+    
+    @IBInspectable open var overlayColor: UIColor = UIColor.rsd_statusBar {
+        didSet {
+            foregroundLayer.backgroundColor = overlayColor
+        }
+    }
+
+    private let foregroundLayer = UIView()
+    
+    public init() {
+        super.init(frame: CGRect.zero)
+        backgroundColor = UIColor.appBackgroundDark
+        commonInit()
+    }
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    func commonInit() {
+        self.addSubview(foregroundLayer)
+        foregroundLayer.backgroundColor = overlayColor
+        foregroundLayer.translatesAutoresizingMaskIntoConstraints = false
+        foregroundLayer.rsd_alignAllToSuperview(padding: 0.0)
+    }
 }

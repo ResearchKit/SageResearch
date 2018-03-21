@@ -97,14 +97,14 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
     /// - parameters:
     ///     - selected:   A `Bool` indicating if the item should be selected.
     ///     - indexPath:  The IndexPath of the item.
-    open func select(_ item: RSDChoiceTableItem, indexPath: IndexPath) throws {
+    open func select(_ item: RSDChoiceTableItem, indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let selectableItems = self.items as? [RSDChoiceTableItem] else {
             let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: nil, answerResult: answerType, debugDescription: "This input field does not support selection.")
             throw RSDInputFieldError.invalidType(context)
         }
         
         // To get the index of our item, add our `beginningRowIndex` to `indexPath.row`.
-        let deselectOthers = singleSelection || item.choice.isExclusive
+        let deselectOthers = singleSelection || item.choice.isExclusive || (selectableItems.first(where: { $0.choice.isExclusive && $0.selected }) != nil)
         let index =  indexPath.row - beginningRowIndex
         let selected = !item.selected
         
@@ -126,6 +126,8 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         } else {
             try setAnswer(answers)
         }
+        
+        return (selected, deselectOthers)
     }
 }
 

@@ -95,8 +95,9 @@ public protocol RSDTableDataSource : class {
     
     /// Select or deselect the answer option for a specific IndexPath.
     /// - parameter indexPath: The `IndexPath` that represents the `RSDTableItem` in the  table view.
+    /// - returns: `true` if the section needs to be reloaded, otherwise returns `false`.
     /// - throws: `RSDInputFieldError` if the selection is invalid.
-    func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws
+    func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool)
 }
 
 extension RSDTableDataSource {

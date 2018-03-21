@@ -255,5 +255,7 @@
                   {
                   "identifier" : "Whole body"
                   }
-                  ]
+                  ],
+    "selection": { "title": "What items would you like to track?",
+        "detail": "Select all that apply"},
 }

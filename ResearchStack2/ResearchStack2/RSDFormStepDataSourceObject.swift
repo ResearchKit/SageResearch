@@ -167,13 +167,14 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     /// Select or deselect the answer option for a specific IndexPath.
     /// - parameter indexPath: The `IndexPath` that represents the `RSDTableItem` in the  table view.
     /// - throws: `RSDInputFieldError` if the selection is invalid.
-    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws {
+    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
-            return
+            return (false, false)
         }
         
-        try itemGroup.select(item, indexPath: indexPath)
+        let ret = try itemGroup.select(item, indexPath: indexPath)
         _answerDidChange(for: itemGroup, at: indexPath)
+        return ret
     }
     
     private func _answerDidChange(for itemGroup: RSDInputFieldTableItemGroup, at indexPath: IndexPath) {
