@@ -41,7 +41,7 @@ import UIKit
         self.rsd_align([.bottom], .equal, to: superview, [.topMargin], padding: 0)
     }
     
-    @IBInspectable open var overlayColor: UIColor = UIColor.rsd_statusBar {
+    @IBInspectable open var overlayColor: UIColor = UIColor.rsd_statusBarOverlay {
         didSet {
             foregroundLayer.backgroundColor = overlayColor
         }

@@ -38,7 +38,7 @@ import UIKit
 @IBDesignable open class RSDCrosshatchView: UIView {
 
     /// The color of the shadow that is drawn as the background of this view.
-    @IBInspectable var crosshatchColor : UIColor = UIColor.appCrosshatchLight {
+    @IBInspectable var crosshatchColor : UIColor = UIColor.rsd_crosshatchLight {
         didSet {
             commonInit()
         }

@@ -35,28 +35,52 @@ import UIKit
 
 extension UIColor {
     
-    /// Override to set a primary tint color for the app.
+    /// Override to set a primary tint color for the app. This is used for as the default dark background
+    /// color for the app.
     @objc open class var primaryTintColor: UIColor {
-        return UIColor(hexString: "#5A478F")!
+        return UIColor(red: 80.0 / 255.0, green: 107.0 / 255.0, blue: 203.0 / 255.0, alpha: 1.0)
     }
     
     /// Override to set the "Light" primary tint color which can be used where the shade of the color should
-    /// be lighter than the primary color. This is used for selection state and the foreground on the
-    /// progress bar.
+    /// be lighter than the primary color, but still in the same family. This is used for selection state and
+    /// the foreground on the progress bar.
     @objc open class var lightPrimaryTintColor: UIColor {
-        return UIColor(hexString: "#907FBA")!
+        return primaryTintColor.withSaturationMultiplier(0.5)
     }
     
     /// Override to set the "Dark" primary tint color which can be used where the shade of the color should
     /// be darker than the primary color, but still in the same family. This is used for the background of
     /// the progress bar and a selected checkbox.
     @objc open class var darkPrimaryTintColor: UIColor {
-        return UIColor(hexString: "#332069")!
+        return primaryTintColor.withSaturationMultiplier(1.5)
     }
     
-    /// Override to set a secondary tint color for the app.
+    /// Override to set the "Very Dark" primary tint color which can be used where the shade of the color
+    /// should be much darker than the primary color, but still in the same family. This is used for the
+    /// background a completed progress dial on a dark background.
+    @objc open class var veryDarkPrimaryTintColor: UIColor {
+        return primaryTintColor.withSaturationMultiplier(2)
+    }
+    
+    /// Override to set a secondary tint color for the app. This is used for rounded buttons.
     @objc open class var secondaryTintColor: UIColor {
         return UIColor(red: 1.0, green: 136.0 / 255.0, blue: 117.0 / 255.0, alpha: 1.0)
+    }
+    
+    /// Override to set the dark gray color used throughout the app for elements on a light background.
+    @objc open class var appDarkGray: UIColor {
+        return UIColor(red: 65.0 / 255.0, green: 72.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
+    }
+    
+    /// Override to set the light gray color used throughout the app for elements on a light background.
+    @objc open class var appLightGray: UIColor {
+        return UIColor(red: 141.0 / 255.0, green: 147.0 / 255.0, blue: 161.0 / 255.0, alpha: 1.0)
+    }
+    
+    /// Override to set the very light gray color used throughout the app for elements such as line
+    /// separators.
+    @objc open class var appVeryLightGray: UIColor {
+        return UIColor(white: 237.0 / 255.0, alpha: 1.0)
     }
     
     
@@ -70,17 +94,18 @@ extension UIColor {
         return UIColor.primaryTintColor
     }
     
-    @objc open class var appCrosshatchLight: UIColor {
+    @objc open class var rsd_crosshatchLight: UIColor {
         return UIColor.appBackgroundLight.withAlphaComponent(0.3)
     }
     
-    @objc open class var appCrosshatchDark: UIColor {
+    @objc open class var rsd_crosshatchDark: UIColor {
         return UIColor.appBackgroundDark.withAlphaComponent(0.3)
     }
     
-    @objc open class var rsd_statusBar: UIColor {
+    @objc open class var rsd_statusBarOverlay: UIColor {
         return UIColor.black.withAlphaComponent(0.1)
     }
+    
     
     // MARK: App text - default colors
     
@@ -89,7 +114,7 @@ extension UIColor {
     }
     
     @objc open class var appTextDark: UIColor {
-        return UIColor.appDarkGrayText
+        return UIColor.appDarkGray
     }
     
     
@@ -100,7 +125,7 @@ extension UIColor {
     }
     
     @objc open class var rsd_underlinedButtonTextDark: UIColor {
-        return UIColor.appButtonTintBlue
+        return UIColor.darkPrimaryTintColor
     }
     
     
@@ -123,25 +148,69 @@ extension UIColor {
     }
     
     
-    // MARK: Dial colors
+    // MARK: Progress bar and ring colors
     
     @objc open class var rsd_dialRing : UIColor {
         return UIColor.lightPrimaryTintColor
+    }
+    
+    @objc open class var rsd_dialRingBackgroundLight: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var rsd_dialRingBackgroundDark: UIColor {
+        return UIColor.darkPrimaryTintColor
+    }
+    
+    @objc open class var rsd_dialRingInnerBackgroundLight: UIColor {
+        return UIColor.darkPrimaryTintColor
+    }
+    
+    @objc open class var rsd_dialRingInnerBackgroundDark: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var rsd_dialRingFinishedInnerBackgroundLight: UIColor {
+        return UIColor.veryDarkPrimaryTintColor
+    }
+    
+    @objc open class var rsd_dialRingFinishedInnerBackgroundDark: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var rsd_progressBar: UIColor {
+        return UIColor.lightPrimaryTintColor
+    }
+    
+    @objc open class var rsd_progressBarBackgroundLight: UIColor {
+        return UIColor.darkPrimaryTintColor
+    }
+    
+    @objc open class var rsd_progressBarBackgroundDark: UIColor {
+        return UIColor.darkPrimaryTintColor
+    }
+    
+    @objc open class var rsd_stepCountLabelLight: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var rsd_stepCountLabelDark: UIColor {
+        return UIColor.appDarkGray
     }
     
     
     // MARK: Generic step view controller - header view
     
     @objc open class var rsd_headerTitleLabelDark: UIColor {
-        return UIColor.appDarkGrayText
+        return UIColor.appDarkGray
     }
     
     @objc open class var rsd_headerTextLabelDark: UIColor {
-        return UIColor.appDarkGrayText
+        return UIColor.appDarkGray
     }
     
     @objc open class var rsd_headerDetailLabelDark: UIColor {
-        return UIColor.appLightGrayText
+        return UIColor.appLightGray
     }
     
     @objc open class var rsd_headerTitleLabelLight: UIColor {
@@ -157,29 +226,9 @@ extension UIColor {
     }
     
     @objc open class var rsd_footnoteLabel: UIColor {
-        return UIColor.appLightGrayText
-    }
-    
-    @objc open class var rsd_progressBar: UIColor {
-        return UIColor.lightPrimaryTintColor
-    }
-    
-    @objc open class var rsd_progressBarBackgroundLight: UIColor {
-        return UIColor.darkPrimaryTintColor
-    }
-    
-    @objc open class var rsd_progressBarBackgroundDark: UIColor {
-        return UIColor.darkPrimaryTintColor
+        return UIColor.appLightGray
     }
 
-    @objc open class var rsd_stepCountLabelLight: UIColor {
-        return UIColor.white
-    }
-    
-    @objc open class var rsd_stepCountLabelDark: UIColor {
-        return UIColor.appDarkGrayText
-    }
-    
     
     // MARK: Generic step view controller - choice cell
     
@@ -192,60 +241,37 @@ extension UIColor {
     }
 
     @objc open class var rsd_choiceCellLabel: UIColor {
-        return UIColor.appDarkGrayText
+        return UIColor.appDarkGray
     }
     
     @objc open class var rsd_choiceCellLabelHighlighted: UIColor {
-        return UIColor.appDarkGrayText
+        return UIColor.appDarkGray
     }
     
     @objc open class var rsd_choiceCellDetailLabel: UIColor {
-        return UIColor.appLightGrayText
+        return UIColor.appLightGray
     }
     
     @objc open class var rsd_choiceCellDetailLabelHighlighted: UIColor {
-        return UIColor.appLightGrayText
+        return UIColor.appLightGray
     }
     
     @objc open class var rsd_cellSeparatorLine: UIColor {
-        return UIColor(white: 237.0 / 255.0, alpha: 1.0)
+        return UIColor.appVeryLightGray
     }
     
     
     // MARK: Generic step view controller - text field cell
     
     @objc open class var rsd_textFieldCellText: UIColor {
-        return UIColor.appDarkGrayText
+        return UIColor.appDarkGray
     }
     
     @objc open class var rsd_textFieldCellBorder: UIColor {
-        return UIColor.appDarkGrayText
+        return UIColor.appDarkGray
     }
 
     @objc open class var rsd_textFieldCellLabel: UIColor {
-        return UIColor.appLightGrayText
-    }
-    
-    
-    // MARK: Shared style colors
-    
-    @objc open class var appDarkGrayText: UIColor {
-        return UIColor(red: 65.0 / 255.0, green: 72.0 / 255.0, blue: 89.0 / 255.0, alpha: 1.0)
-    }
-    
-    @objc open class var appLightGrayText: UIColor {
-        return UIColor(red: 141.0 / 255.0, green: 147.0 / 255.0, blue: 161.0 / 255.0, alpha: 1.0)
-    }
-    
-    @objc open class var appButtonTintBlue: UIColor {
-        return UIColor(red: 33.0 / 255.0, green: 150.0 / 255.0, blue: 243.0 / 255.0, alpha: 1.0)
-    }
-    
-    @objc open class var appTintGreen: UIColor {
-        return UIColor(red: 94.0 / 255.0, green: 173.0 / 255.0, blue: 87.0 / 255.0, alpha: 1.0)
-    }
-    
-    @objc open class var appSoftGreen: UIColor {
-        return UIColor(red: 104.0 / 255.0, green: 191.0 / 255.0, blue: 96.0 / 255.0, alpha: 1.0)
+        return UIColor.appLightGray
     }
 }
