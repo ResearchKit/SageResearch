@@ -90,6 +90,17 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
         self.iconName = iconName
         self.bundleIdentifier = bundleIdentifier
     }
+    
+    /// Default initializer for a button with an image.
+    /// - parameters:
+    ///     - iconName: The name of the image to display on the button.
+    ///     - bundle: The resource bundle that contains the image.
+    public init(iconName: String, bundle: Bundle? = nil) {
+        self.buttonTitle = nil
+        self.iconName = iconName
+        self.bundleIdentifier = bundle?.bundleIdentifier
+        self.factoryBundle = bundle
+    }
 }
 
 /// `RSDSkipToUIActionObject` implements an action that includes an identifier for a step to skip to if this

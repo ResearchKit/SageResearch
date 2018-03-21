@@ -117,6 +117,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             tableView.separatorStyle = .none
             tableView.rowHeight = UITableViewAutomaticDimension
             tableView.estimatedRowHeight = constants.defaultRowHeight
+            tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+            tableView.estimatedSectionHeaderHeight = constants.defaultSectionHeight
             
             view.addSubview(tableView)
             
@@ -129,6 +131,13 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         if self.navigationFooter == nil && shouldShowFooter {
             navigationFooter = RSDTableStepUIConfig.instantiateNavigationView()
+        }
+        if self.statusBarBackgroundView == nil && shouldShowHeader {
+            let statusView = RSDStatusBarBackgroundView()
+            statusView.backgroundColor = navigationHeader?.backgroundColor
+            view.addSubview(statusView)
+            statusView.alignToStatusBar()
+            statusBarBackgroundView = statusView
         }
     }
     
@@ -251,12 +260,6 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         tableData?.delegate = self
         
-        // Check if there are any titles
-        if tableData!.sections.count == 1 {
-            tableView.sectionHeaderHeight = 0.0
-            tableView.estimatedSectionHeaderHeight = 0.0
-        }
-        
         // after setting up the data source, check the enabled state of the forward button.
         self.answersDidChange(in: 0)
     }
@@ -292,6 +295,20 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
     }
     private var _registeredIdentifiers = Set<String>()
+    
+    /// Register the given reuse identifier for a section header or footer.  This is a factory method that
+    /// is called before dequeuing a table section view. Overrides of this method should first check to see
+    /// if the reuse identifier has already been registered and if not, do so by calling
+    /// `tableView.register(, forHeaderFooterViewReuseIdentifier:)` with either a nib or a class.
+    open func registerSectionReuseIdentifierIfNeeded(_ reuseIdentifier: String) {
+        guard !_registeredSectionIdentifiers.contains(reuseIdentifier) else { return }
+        _registeredSectionIdentifiers.insert(reuseIdentifier)
+        
+        // Currently the only style of section view supported is the choice section header.
+        tableView.register(RSDStepChoiceSectionHeader.self, forHeaderFooterViewReuseIdentifier: reuseIdentifier)
+    }
+    private var _registeredSectionIdentifiers = Set<String>()
+
     
     
     // MARK: View setup
@@ -423,14 +440,24 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         return cell
     }
     
-    /// Returns the section title (and subtitle if there is one) for this section.
-    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let title = tableData?.sections[section].title else { return nil }
-        if let detail = tableData?.sections[section].subtitle {
-            let separator = detail.hasPrefix("(") ? " " : " - "
-            return "\(title)\(separator)\(detail)"
-        } else {
-            return title
+    /// Dequeues a section header if the title for the section is non-nil.
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let sectionItem = tableData?.sections[section] else { return nil }
+        
+        if let title = sectionItem.title {
+            // Dequeue with the reuse identifier
+            let reuseIdentifier = "TableSectionHeader"
+            self.registerSectionReuseIdentifierIfNeeded(reuseIdentifier)
+            let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier)
+            if let header = cell as? RSDStepChoiceSectionHeader {
+                header.titleLabel.text = title
+                header.detailLabel.text = sectionItem.subtitle
+            }
+            return cell
+        }
+        else {
+            // Add a spacer
+            return UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: constants.defaultSectionHeight))
         }
     }
     
@@ -514,7 +541,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             else {
                 return
         }
-        choiceCell.choiceValueLabel.text = tableItem.choice.text
+        choiceCell.titleLabel.text = tableItem.choice.text
+        choiceCell.detailLabel.text = tableItem.choice.detail
         choiceCell.isSelected = tableItem.selected
     }
     
@@ -613,11 +641,19 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         
         if let item = tableData.tableItem(at: indexPath) as? RSDChoiceTableItem {
             do {
-                try tableData.selectAnswer(item: item, at: indexPath)
-                tableView.reloadSections(IndexSet(integer: indexPath.section), with: .none)
+                let response = try tableData.selectAnswer(item: item, at: indexPath)
+                if response.reloadSection {
+                    // reload the entire table - this will refresh the selection state for the items in this
+                    // section without confusing the constraints.
+                    tableView.reloadData()
+                } else {
+                    tableView.reloadRows(at: [indexPath], with: .none)
+                }
                 
                 // Dismiss other textField's keyboard
-                tableView.endEditing(false)
+                if self.activeTextField != nil {
+                    tableView.endEditing(false)
+                }
                 
             } catch let err {
                 assertionFailure("Unexpected error while selecting table row \(indexPath). \(err)")
@@ -942,7 +978,10 @@ extension RSDTableStepUIConfig {
     
     /// Instantiate an instance of the header view used by the `RSDTableStepViewController` table view.
     @objc open class func instantiateHeaderView() -> RSDStepHeaderView {
-        return RSDTableStepHeaderView()
+        let header =  RSDTableStepHeaderView()
+        header.backgroundColor = UIColor.appBackgroundDark
+        header.usesLightStyle = true
+        return header
     }
     
     /// Instantiate an instance of the footer view used by the `RSDTableStepViewController` table view.
@@ -960,6 +999,7 @@ extension RSDTableStepUIConfig {
 public protocol RSDTableStepLayoutConstants {
     var mainViewBottomMargin: CGFloat { get }
     var defaultRowHeight: CGFloat { get }
+    var defaultSectionHeight: CGFloat { get }
     var formStepMinHeaderHeight: CGFloat { get }
 }
 
@@ -968,7 +1008,8 @@ fileprivate struct RSDDefaultGenericStepLayoutConstants {
     private let kMainViewBottomMargin: CGFloat = 30.0
     
     public let mainViewBottomMargin: CGFloat
-    public let defaultRowHeight: CGFloat = 75.0
+    public let defaultRowHeight: CGFloat = 52.0
+    public let defaultSectionHeight: CGFloat = 20.0
     public let formStepMinHeaderHeight: CGFloat = 180
     
     init(numberOfSections: Int) {

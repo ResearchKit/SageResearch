@@ -134,5 +134,7 @@
                   "identifier" : "Monoamine Oxidase B inhibitors",
                   "detail" : "(MAO-B)"
                   }
-                  ]
+                  ],
+    "selection": { "title": "What items would you like to track?",
+        "detail": "Select all that apply"},
 }

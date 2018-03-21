@@ -79,7 +79,14 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
         self.itemGroups = groups
     }
     
-    open class func buildSections(step: RSDTrackedItemsStep, initialResult: RSDTrackedItemsResult?) -> ([RSDTableSection], [RSDChoicePickerTableItemGroup]) {
+    /// Overrridable class function for building the sections of the table.
+    /// - parameters:
+    ///     - step: The RSDTrackedSelectionStep for this data source.
+    ///     - initialResult: The initial result (if any).
+    /// - returns:
+    ///     - sections: The built table sections.
+    ///     - itemGroups: The associated item groups.
+    open class func buildSections(step: RSDTrackedItemsStep, initialResult: RSDTrackedItemsResult?) -> (sections: [RSDTableSection], itemGroups: [RSDChoicePickerTableItemGroup]) {
 
         let sectionItems = step.sections ?? []
         let dataType: RSDFormDataType = .collection(.multipleChoice, .string)
@@ -171,22 +178,40 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
     
     // MARK: RSDTableDataSource implementation
     
+    /// Retrieve the 'RSDTableItemGroup' for a specific IndexPath.
+    /// - parameter indexPath: The index path that represents the item group in the table view.
+    /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
     open func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
         guard indexPath.section < itemGroups.count else { return nil }
         return itemGroups[indexPath.section]
     }
     
+    /// Determine if all answers are valid. Also checks the case where answers are required but one has
+    /// not been provided.
+    /// - returns: A `Bool` indicating if all answers are valid.
     open func allAnswersValid() -> Bool {
         return self.trackingResult().selectedAnswers.count > 0
     }
     
+    /// Save an answer for a specific IndexPath.
+    /// - parameters:
+    ///     - answer:      The object to be save as the answer.
+    ///     - indexPath:   The `IndexPath` that represents the `RSDTableItem` in the table view.
+    /// - throws: `RSDInputFieldError` if the answer is invalid.
     open func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
         assertionFailure("This is not a valid method of changing the answer for this table data source")
     }
     
-    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws {
+    /// Select or deselect the answer option for a specific IndexPath.
+    /// - parameter indexPath: The `IndexPath` that represents the `RSDTableItem` in the  table view.
+    /// - returns:
+    ///     - isSelected: The new selection state of the selected item.
+    ///     - reloadSection: `true` if the section needs to be reloaded b/c other answers have changed,
+    ///                      otherwise returns `false`.
+    /// - throws: `RSDInputFieldError` if the selection is invalid.
+    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
-            return
+            return (false, false)
         }
         
         // TODO: syoung 03/01/2018 If the user is de-selecting a tracked item that they selected in a
@@ -195,7 +220,7 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
         // adding a TODO comment to track that it needs to be implemented.
         
         // update selection for this group
-        try itemGroup.select(item, indexPath: indexPath)
+        let ret = try itemGroup.select(item, indexPath: indexPath)
         let selectedIdentifiers = itemGroups.rsd_mapAndFilter({ $0.answer as? [String] }).flatMap{$0}
         let items = (self.step as? RSDTrackedItemsStep)?.items ?? []
         
@@ -208,5 +233,7 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
         if let delegate = delegate {
             delegate.answersDidChange(in: indexPath.section)
         }
+        
+        return ret
     }
 }

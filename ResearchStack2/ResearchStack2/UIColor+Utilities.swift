@@ -142,6 +142,18 @@ extension UIColor {
         
         return nil
     }
+    
+    /// Returns a color in the same color space as the receiver with the specified saturation percent.
+    /// - parameter multiplier: The multiplier for the saturation to either lighten or darken the color.
+    public func withSaturationMultiplier(_ multiplier: CGFloat, minimumSaturation: CGFloat = 0.2) -> UIColor {
+        var hue: CGFloat = 0
+        var sat: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        self.getHue(&hue, saturation: &sat, brightness: &brightness, alpha: &alpha)
+        let saturation = max(min(sat * multiplier, 1.0), minimumSaturation)
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
+    }
 }
 
 /// Private class used to store the ColorInfo pList.

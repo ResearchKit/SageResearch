@@ -121,7 +121,7 @@ open class RSDStepProgressView: UIView {
             mutableString.replaceCharacters(in: markerRange, with: currentString)
             let range = NSRange(location: markerRange.location, length: (currentString as NSString).length)
             let attributedString = NSMutableAttributedString(string: mutableString as String)
-            attributedString.addAttribute(.font, value: UIFont.boldStepCountLabel, range: range)
+            attributedString.addAttribute(.font, value: UIFont.rsd_boldStepCountLabel, range: range)
             
             return attributedString
         }

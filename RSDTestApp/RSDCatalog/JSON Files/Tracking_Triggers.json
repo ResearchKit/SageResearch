@@ -110,5 +110,7 @@
                "sectionIdentifier" : "Holistic treatments",
                "identifier" : "Homeopathic therapy"
                }
-               ]
+               ],
+    "selection": { "title": "What items would you like to track?",
+        "detail": "Select all that apply"},
 }

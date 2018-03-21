@@ -37,11 +37,4 @@ import ResearchStack2UI
 /// This extension will override the color values set ResearchStack2UI.
 extension UIColor {
     
-    @objc open class var primaryTintColor: UIColor? {
-        return UIColor(red: 80.0 / 255.0, green: 107.0 / 255.0, blue: 203.0 / 255.0, alpha: 1.0)
-    }
-    
-    @objc open class var secondaryTintColor: UIColor? {
-        return UIColor(red: 245.0 / 255.0, green: 135.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
-    }
 }

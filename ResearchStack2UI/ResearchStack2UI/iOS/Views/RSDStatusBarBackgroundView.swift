@@ -1,8 +1,8 @@
 //
-//  RSDCrosshatchView.swift
-//  ResearchStack2UI
+//  RSDStatusBarBackgroundView.swift
+//  ResearchStack2UI (iOS)
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,31 +33,30 @@
 
 import UIKit
 
-/// `RSDCrosshatchView` is a UI element for displaying a background that is two colors
-/// where the split is diagonal.
-@IBDesignable open class RSDCrosshatchView: UIView {
-
-    /// The color of the shadow that is drawn as the background of this view.
-    @IBInspectable var crosshatchColor : UIColor = UIColor.rsd_crosshatchLight {
+@IBDesignable open class RSDStatusBarBackgroundView: UIView {
+    
+    public func alignToStatusBar() {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.rsd_alignToSuperview([.leading, .trailing, .top], padding: 0)
+        self.rsd_align([.bottom], .equal, to: superview, [.topMargin], padding: 0)
+    }
+    
+    @IBInspectable open var overlayColor: UIColor = UIColor.rsd_statusBarOverlay {
         didSet {
-            commonInit()
+            foregroundLayer.backgroundColor = overlayColor
         }
     }
 
-    let subLayer = CAShapeLayer()
+    private let foregroundLayer = UIView()
     
     public init() {
         super.init(frame: CGRect.zero)
+        backgroundColor = UIColor.appBackgroundDark
         commonInit()
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
-    }
-    
-    override open func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
         commonInit()
     }
     
@@ -66,40 +65,10 @@ import UIKit
         commonInit()
     }
     
-    override open func layoutSubviews() {
-        super.layoutSubviews()
-        subLayer.frame = self.bounds
-    }
-    
     func commonInit() {
-        subLayer.frame = self.bounds
-        
-        // draw the path
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: self.bounds.size.height))
-        path.addLine(to: CGPoint(x: self.bounds.size.width, y: 0))
-        path.addLine(to:CGPoint(x: 0, y: 0))
-        path.close()
-        
-        // setup the sublayer
-        subLayer.path = path.cgPath
-        subLayer.fillRule = kCAFillRuleNonZero
-        subLayer.lineCap = kCALineCapButt
-        subLayer.lineDashPattern = nil
-        subLayer.lineDashPhase = 0.0
-        subLayer.lineJoin = kCALineJoinMiter
-        subLayer.lineWidth = 1.0
-        subLayer.miterLimit = 10.0
-        subLayer.fillColor = crosshatchColor.cgColor
-        subLayer.strokeColor = crosshatchColor.cgColor
-        
-        if (layer.sublayers?.count ?? 0) == 0 {
-            layer.addSublayer(subLayer)
-        }
-    }
-    
-    override open func layoutSublayers(of layer: CALayer) {
-        super.layoutSublayers(of: layer)
-        subLayer.frame = self.bounds
+        self.addSubview(foregroundLayer)
+        foregroundLayer.backgroundColor = overlayColor
+        foregroundLayer.translatesAutoresizingMaskIntoConstraints = false
+        foregroundLayer.rsd_alignAllToSuperview(padding: 0.0)
     }
 }

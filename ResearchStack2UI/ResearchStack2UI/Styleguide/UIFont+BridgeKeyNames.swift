@@ -43,47 +43,59 @@ extension UIFont {
     
     // MARK: Generic step view controller - header view labels
 
-    @objc open class var headerViewHeaderLabel: UIFont {
-        return UIFont.systemFont(ofSize: 23.0, weight: .regular)
+    @objc open class var rsd_headerTitleLabel: UIFont {
+        return UIFont.systemFont(ofSize: 24.0, weight: .bold)
     }
     
-    @objc open class var headerViewDetailsLabel: UIFont {
-        return UIFont.systemFont(ofSize: 17.0, weight: .regular)
+    @objc open class var rsd_headerTextLabel: UIFont {
+        return UIFont.systemFont(ofSize: 16.0, weight: .regular)
     }
     
-    @objc open class var headerViewPromptLabel: UIFont {
-        return UIFont.systemFont(ofSize: 15.0, weight: .regular)
+    @objc open class var rsd_headerDetailLabel: UIFont {
+        return UIFont.italicSystemFont(ofSize: 16.0)
     }
     
-    @objc open class var footnoteLabel: UIFont {
-        return UIFont.systemFont(ofSize: 15.0, weight: .regular)
+    @objc open class var rsd_footnoteLabel: UIFont {
+        return UIFont.italicSystemFont(ofSize: 16.0)
     }
 
-    @objc open class var stepCountLabel: UIFont {
-        return UIFont.systemFont(ofSize: 14.0, weight: .regular)
+    @objc open class var rsd_stepCountLabel: UIFont {
+        return UIFont.systemFont(ofSize: 12.0, weight: .bold)
     }
     
-    @objc open class var boldStepCountLabel: UIFont {
+    @objc open class var rsd_boldStepCountLabel: UIFont {
         return UIFont.systemFont(ofSize: 14.0, weight: .bold)
     }
     
     // MARK: Generic step view controller - choice cell
 
-    @objc open class var choiceCellLabel: UIFont {
-        return UIFont.systemFont(ofSize: 19.0, weight: .semibold)
+    @objc open class var rsd_choiceCellLabel: UIFont {
+        return UIFont.systemFont(ofSize: 16.0, weight: .regular)
+    }
+    
+    @objc open class var rsd_choiceCellDetailLabel: UIFont {
+        return UIFont.rsd_choiceCellLabel
+    }
+    
+    @objc open class var rsd_choiceSectionLabel: UIFont {
+        return UIFont.systemFont(ofSize: 18.0, weight: .bold)
+    }
+    
+    @objc open class var rsd_choiceSectionDetailLabel: UIFont {
+        return UIFont.rsd_choiceCellLabel
     }
     
     // MARK: Generic step view controller - text field cell
 
-    @objc open class var textFieldCellLabel: UIFont {
+    @objc open class var rsd_textFieldCellLabel: UIFont {
         return UIFont.systemFont(ofSize: 15.0, weight: .regular)
     }
 
-    @objc open class var textFieldCellText: UIFont {
+    @objc open class var rsd_textFieldCellText: UIFont {
         return UIFont.systemFont(ofSize: 19.0, weight: .regular)
     }
 
-    @objc open class var textFieldFeaturedCellText: UIFont {
+    @objc open class var rsd_textFieldFeaturedCellText: UIFont {
         return UIFont.systemFont(ofSize: 33.0, weight: .regular)
     }
 }

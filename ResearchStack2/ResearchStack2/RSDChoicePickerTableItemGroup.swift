@@ -34,8 +34,8 @@
 import Foundation
 
 
-/// `RSDChoicePickerTableItemGroup` subclasses `RSDInputFieldTableItemGroup` to implement a single or multiple choice
-/// question where the choices are presented as a list.
+/// `RSDChoicePickerTableItemGroup` subclasses `RSDInputFieldTableItemGroup` to implement a single or multiple
+/// choice question where the choices are presented as a list.
 open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
     
     /// Does the item group allow for multiple choices or is it single selection?
@@ -93,18 +93,24 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         }
     }
     
-    /// Select or de-select an item (answer) at a specific indexPath. This is used for text choice and boolean answers.
+    /// Select or de-select an item (answer) at a specific indexPath. This is used for text choice and boolean
+    /// answers.
     /// - parameters:
     ///     - selected:   A `Bool` indicating if the item should be selected.
     ///     - indexPath:  The IndexPath of the item.
-    open func select(_ item: RSDChoiceTableItem, indexPath: IndexPath) throws {
+    /// - returns:
+    ///     - isSelected: The new selection state of the selected item.
+    ///     - reloadSection: `true` if the section needs to be reloaded b/c other answers have changed,
+    ///                      otherwise returns `false`.
+    /// - throws: `RSDInputFieldError` if the selection is invalid.
+    open func select(_ item: RSDChoiceTableItem, indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let selectableItems = self.items as? [RSDChoiceTableItem] else {
             let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: nil, answerResult: answerType, debugDescription: "This input field does not support selection.")
             throw RSDInputFieldError.invalidType(context)
         }
         
         // To get the index of our item, add our `beginningRowIndex` to `indexPath.row`.
-        let deselectOthers = singleSelection || item.choice.isExclusive
+        let deselectOthers = singleSelection || item.choice.isExclusive || (selectableItems.first(where: { $0.choice.isExclusive && $0.selected }) != nil)
         let index =  indexPath.row - beginningRowIndex
         let selected = !item.selected
         
@@ -126,6 +132,8 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         } else {
             try setAnswer(answers)
         }
+        
+        return (selected, deselectOthers)
     }
 }
 

@@ -166,14 +166,19 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     
     /// Select or deselect the answer option for a specific IndexPath.
     /// - parameter indexPath: The `IndexPath` that represents the `RSDTableItem` in the  table view.
+    /// - returns:
+    ///     - isSelected: The new selection state of the selected item.
+    ///     - reloadSection: `true` if the section needs to be reloaded b/c other answers have changed,
+    ///                      otherwise returns `false`.
     /// - throws: `RSDInputFieldError` if the selection is invalid.
-    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws {
+    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
-            return
+            return (false, false)
         }
         
-        try itemGroup.select(item, indexPath: indexPath)
+        let ret = try itemGroup.select(item, indexPath: indexPath)
         _answerDidChange(for: itemGroup, at: indexPath)
+        return ret
     }
     
     private func _answerDidChange(for itemGroup: RSDInputFieldTableItemGroup, at indexPath: IndexPath) {
@@ -226,17 +231,18 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
             let itemGroup = instantiateTableItemGroup(for: item, beginningRowIndex: rowIndex)
             let needExclusiveSection = (itemGroup as? RSDInputFieldTableItemGroup)?.requiresExclusiveSection ?? false
             
-            // if we don't need an exclusive section and we have an existing section and it's not exclusive ('singleFormItem'),
-            // then add this item to that existing section, otherwise create a new one
+            // If we don't need an exclusive section and we have an existing section and it's not exclusive
+            // ('singleFormItem'), then add this item to that existing section, otherwise create a new one.
             if !needExclusiveSection, let lastSection = sectionBuilders.last, !lastSection.singleFormItem {
-                lastSection.title = nil
                 lastSection.appendGroup(itemGroup)
             }
             else {
                 let section = RSDTableSectionBuilder(sectionIndex: sectionBuilders.count, singleFormItem: needExclusiveSection)
                 section.appendGroup(itemGroup)
-                section.title = item.inputPrompt
-                section.subtitle = item.inputPromptDetail
+                if itemGroup is RSDChoicePickerTableItemGroup {
+                    section.title = item.inputPrompt
+                    section.subtitle = item.inputPromptDetail
+                }
                 sectionBuilders.append(section)
             }
         }

@@ -33,91 +33,149 @@
 
 import UIKit
 
-/// `RSDStepChoiceCell` is the base implementation for a selection table view cell of a form step.
-public class RSDStepChoiceCell: UITableViewCell {
-    
-    private let kShadowHeight: CGFloat = 5.0
-    private let kSideMargin = CGFloat(20.0).rsd_proportionalToScreenWidth()
-    private let kVertMargin: CGFloat = 10.0
-    private let kMinHeight: CGFloat = 75.0
+fileprivate let kSideMargin: CGFloat = 28.0
+fileprivate let kTopMargin: CGFloat = 20.0
+fileprivate let kBottomMargin: CGFloat = 12.0
+fileprivate let kSectionTopMargin: CGFloat = 40.0
 
-    var choiceValueLabel = UILabel()
+/// `RSDStepChoiceCell` is the base implementation for a selection table view cell of a form step.
+@IBDesignable public class RSDStepChoiceCell: UITableViewCell {
     
-    var shadowAlpha: CGFloat {
-        return isSelected ? 0.2 : 0.05
-    }
+    @IBOutlet public var titleLabel: UILabel!
+    @IBOutlet public var detailLabel: UILabel!
+    @IBOutlet public var separatorLine: UIView?
     
-    var bgColor: UIColor {
+    private var bgColor: UIColor {
         return isSelected ? UIColor.rsd_choiceCellBackgroundHighlighted : UIColor.rsd_choiceCellBackground
     }
     
-    var labelColor: UIColor {
+    private var labelColor: UIColor {
         return isSelected ? UIColor.rsd_choiceCellLabelHighlighted : UIColor.rsd_choiceCellLabel
     }
     
-    let shadowView: UIView = {
-        let rule = UIView()
-        rule.backgroundColor = UIColor.black
-        return rule
-    }()
+    private var detailLabelColor: UIColor {
+        return isSelected ? UIColor.rsd_choiceCellDetailLabelHighlighted : UIColor.rsd_choiceCellDetailLabel
+    }
     
     open override var isSelected: Bool {
         didSet {
             backgroundColor = bgColor
-            choiceValueLabel.textColor = labelColor
-            shadowView.alpha = shadowAlpha
+            titleLabel.textColor = labelColor
+            detailLabel?.textColor = detailLabelColor
         }
     }
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
-        commonInit()
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
-    open override func awakeFromNib() {
-        super.awakeFromNib()
-        commonInit()
-    }
-    
-    func commonInit() {
         
         self.selectionStyle = .none
         
-        contentView.addSubview(choiceValueLabel)
-        contentView.addSubview(shadowView)
+        // Add the title label
+        titleLabel = UILabel()
+        contentView.addSubview(titleLabel)
         
-        choiceValueLabel.translatesAutoresizingMaskIntoConstraints = false
-        shadowView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.numberOfLines = 0
+        titleLabel.font = UIFont.rsd_choiceCellLabel
+        titleLabel.textColor = labelColor
+        titleLabel.textAlignment = .left
+        titleLabel.rsd_alignToSuperview([.leading], padding: kSideMargin)
+        titleLabel.rsd_align([.trailing], .lessThanOrEqual, to: contentView, [.trailing], padding: kSideMargin, priority: .required)
+        titleLabel.rsd_alignToSuperview([.top], padding: kTopMargin, priority: UILayoutPriority(rawValue: 700))
         
-        choiceValueLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (kSideMargin * 2)
+        // Add the detail label
+        detailLabel = UILabel()
+        contentView.addSubview(detailLabel)
         
-        choiceValueLabel.numberOfLines = 0
-        choiceValueLabel.font = UIFont.choiceCellLabel
-        choiceValueLabel.textColor = labelColor
-        choiceValueLabel.textAlignment = .left
+        detailLabel.translatesAutoresizingMaskIntoConstraints = false
+        detailLabel.numberOfLines = 0
+        detailLabel.font = UIFont.rsd_choiceCellDetailLabel
+        detailLabel.textColor = detailLabelColor
+        detailLabel.textAlignment = .left
+        detailLabel.rsd_alignToSuperview([.leading], padding: kSideMargin)
+        detailLabel.rsd_align([.trailing], .lessThanOrEqual, to: contentView, [.trailing], padding: kSideMargin, priority: .required)
+        detailLabel.rsd_alignToSuperview([.bottom], padding: kBottomMargin)
+        detailLabel.rsd_alignBelow(view: titleLabel, padding: 2.0)
+        
+        // Add the line separator
+        separatorLine = UIView()
+        separatorLine!.backgroundColor = UIColor.rsd_cellSeparatorLine
+        contentView.addSubview(separatorLine!)
+        
+        separatorLine!.translatesAutoresizingMaskIntoConstraints = false
+        separatorLine!.rsd_alignToSuperview([.leading], padding: kSideMargin)
+        separatorLine!.rsd_alignToSuperview([.bottom, .trailing], padding: 0.0)
+        separatorLine?.rsd_makeHeight(.equal, 1.0)
         
         setNeedsUpdateConstraints()
     }
     
-    open override func updateConstraints() {
-        
-        NSLayoutConstraint.deactivate(self.constraints)
-        
-        choiceValueLabel.rsd_alignToSuperview([.leading, .trailing], padding: kSideMargin)
-        choiceValueLabel.rsd_alignToSuperview([.top], padding: kVertMargin)
-        
-        shadowView.rsd_makeHeight(.equal, kShadowHeight)
-        shadowView.rsd_alignToSuperview([.leading, .trailing, .bottom], padding: 0.0)
-        shadowView.rsd_alignBelow(view: choiceValueLabel, padding: kVertMargin)
-        
-        contentView.rsd_makeHeight(.greaterThanOrEqual, kMinHeight)
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+}
 
-        super.updateConstraints()
+/// `RSDStepChoiceSectionHeader` is the base implementation for a selection table view section header of a form step.
+@IBDesignable public class RSDStepChoiceSectionHeader: UITableViewHeaderFooterView {
+    
+    @IBOutlet public var titleLabel: UILabel!
+    @IBOutlet public var detailLabel: UILabel!
+    @IBOutlet public var separatorLine: UIView?
+    
+    override public init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        contentView.backgroundColor = UIColor.rsd_choiceCellBackground
+        
+        // Add the title label
+        titleLabel = UILabel()
+        contentView.addSubview(titleLabel)
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.numberOfLines = 0
+        titleLabel.font = UIFont.rsd_choiceSectionLabel
+        titleLabel.textColor = UIColor.rsd_choiceCellLabel
+        titleLabel.textAlignment = .left
+        titleLabel.rsd_alignToSuperview([.leading], padding: kSideMargin)
+        titleLabel.rsd_align([.trailing], .lessThanOrEqual, to: contentView, [.trailing], padding: kSideMargin, priority: .required)
+        titleLabel.rsd_alignToSuperview([.top], padding: kSectionTopMargin, priority: UILayoutPriority(rawValue: 700))
+        
+        // Add the detail label
+        detailLabel = UILabel()
+        contentView.addSubview(detailLabel)
+        
+        detailLabel.translatesAutoresizingMaskIntoConstraints = false
+        detailLabel.numberOfLines = 0
+        detailLabel.font = UIFont.rsd_choiceSectionDetailLabel
+        detailLabel.textColor = UIColor.rsd_choiceCellDetailLabel
+        detailLabel.textAlignment = .left
+        detailLabel.rsd_alignToSuperview([.leading], padding: kSideMargin)
+        detailLabel.rsd_align([.trailing], .lessThanOrEqual, to: contentView, [.trailing], padding: kSideMargin, priority: .required)
+        detailLabel.rsd_alignToSuperview([.bottom], padding: kBottomMargin)
+        detailLabel.rsd_alignBelow(view: titleLabel, padding: 2.0)
+        
+        // Add the line separator
+        separatorLine = UIView()
+        separatorLine!.backgroundColor = UIColor.rsd_cellSeparatorLine
+        contentView.addSubview(separatorLine!)
+        
+        separatorLine!.translatesAutoresizingMaskIntoConstraints = false
+        separatorLine!.rsd_alignToSuperview([.leading, .bottom, .trailing], padding: 0.0)
+        separatorLine?.rsd_makeHeight(.equal, 1.0)
+        
+        setNeedsUpdateConstraints()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    open override func awakeFromNib() {
+        super.awakeFromNib()
     }
 }
 
@@ -149,7 +207,7 @@ open class RSDStepTextFieldCell: UITableViewCell {
     open func setupViews() {
 
         // configure our field label
-        fieldLabel.font = UIFont.textFieldCellLabel
+        fieldLabel.font = UIFont.rsd_textFieldCellLabel
         fieldLabel.textColor = UIColor.rsd_textFieldCellLabel
         fieldLabel.numberOfLines = 1
         fieldLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (2 * constants.sideMargin)
@@ -159,7 +217,7 @@ open class RSDStepTextFieldCell: UITableViewCell {
         textField.autocorrectionType = .no
         
         // override defaults
-        textField.font = UIFont.textFieldCellText
+        textField.font = UIFont.rsd_textFieldCellText
         textField.textColor = UIColor.rsd_textFieldCellText
         textField.textAlignment = .left
         
@@ -264,7 +322,7 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
         super.setupViews()
         
         textField.textAlignment = .center
-        textField.font = UIFont.textFieldFeaturedCellText
+        textField.font = UIFont.rsd_textFieldFeaturedCellText
         
         // we don't want the field label
         fieldLabel.isHidden = true
@@ -345,8 +403,8 @@ public class RSDStepTextField: UITextField {
             label.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (kSideMargin * 2)
             
             label.numberOfLines = 0
-            label.font = UIFont.footnoteLabel
-            label.textColor = UIColor.rsd_headerTextLabel
+            label.font = UIFont.rsd_footnoteLabel
+            label.textColor = UIColor.rsd_footnoteLabel
             label.textAlignment = .left
             
             label.rsd_alignToSuperview([.leading, .trailing], padding: kSideMargin)

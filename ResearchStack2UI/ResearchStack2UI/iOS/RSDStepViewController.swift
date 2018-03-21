@@ -291,10 +291,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         if let (stepIndex, stepCount, _) = self.progress() {
             header.progressView?.totalSteps = stepCount
             header.progressView?.currentStep = stepIndex
-            if let colorTheme = themedStep?.colorTheme {
-                header.progressView?.usesLightStyle = colorTheme.usesLightStyle
-                header.stepCountLabel?.textColor = colorTheme.usesLightStyle ? UIColor.rsd_stepCountLabelLight : UIColor.rsd_stepCountLabelDark
-            }
             header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
         } else {
             header.shouldShowProgress = false
@@ -328,13 +324,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             stepHeader.titleLabel?.text = uiStep?.title
             stepHeader.textLabel?.text = uiStep?.text
             stepHeader.detailLabel?.text = uiStep?.detail
-            
-            if let colorTheme = themedStep?.colorTheme,
-                let foregroundColor = colorTheme.foregroundColor(compatibleWith: self.traitCollection) {
-                stepHeader.titleLabel?.textColor = foregroundColor
-                stepHeader.textLabel?.textColor = foregroundColor
-                stepHeader.detailLabel?.textColor = foregroundColor
-            }
         }
 
         header.setNeedsLayout()
@@ -372,7 +361,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
         
         if let usesLightStyle = usesLightStyle(isFooter: isFooter) {
-            navigationView.tintColor = usesLightStyle ? UIColor.rsd_underlinedButtonTextLight : UIColor.rsd_underlinedButtonTextDark
+            navigationView.usesLightStyle = usesLightStyle
         }
         
         navigationView.setNeedsLayout()
@@ -436,7 +425,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             // Otherwise, look at the action and show the default based on the type
             switch actionType {
             case .navigation(.cancel):
-                return RSDUIActionObject(buttonTitle: Localization.buttonCancel())
+                return RSDUIActionObject(iconName: "closeActivity", bundle: Bundle(for: RSDStepViewController.self))
             case .navigation(.goForward):
                 if self.step is RSDTaskInfoStep {
                     return RSDUIActionObject(buttonTitle: Localization.buttonGetStarted())
@@ -461,12 +450,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         if let action = btnAction {
             btn.setTitle(action.buttonTitle, for: .normal)
             btn.setImage(action.buttonIcon, for: .normal)
-        }
-        
-        if let roundedButton = btn as? RSDRoundedButton, let colorTheme = themedStep?.colorTheme, (usesLightStyle(isFooter: isFooter) ?? false) {
-            roundedButton.backgroundColor = UIColor.rsd_roundedButtonBackgroundLight
-            roundedButton.shadowColor = UIColor.rsd_roundedButtonShadowLight
-            roundedButton.titleColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection) ?? UIColor.rsd_roundedButtonTextLight
         }
 
         // If this is a goForward button, then there is some additional logic around

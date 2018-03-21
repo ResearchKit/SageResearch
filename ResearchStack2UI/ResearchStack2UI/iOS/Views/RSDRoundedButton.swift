@@ -69,14 +69,6 @@ import UIKit
             setNeedsDisplay()
         }
     }
-
-    /// The shadow color of the button.
-    @IBInspectable open var shadowColor: UIColor = UIColor.rsd_roundedButtonShadowDark {
-        didSet {
-            refreshView()
-            setNeedsDisplay()
-        }
-    }
     
     override open var isEnabled: Bool {
         didSet {
@@ -134,7 +126,6 @@ import UIKit
     open func setupDefaults() {
         // setup colors
         self.backgroundColor = UIColor.rsd_roundedButtonBackgroundDark
-        self.shadowColor = UIColor.rsd_roundedButtonShadowDark
         self.corners = RSDRoundedButton.defaultCornerRadius
         
         // setup text
@@ -167,22 +158,5 @@ import UIKit
         }
         
         layer.cornerRadius = corners
-        
-        // Draw bottom button shadow
-        let shadowRadius = corners * 1.2
-        let shadowHeight = CGFloat(3)
-        
-        // Make sure the shadow shows up outside the view's bounds
-        clipsToBounds = false
-        layer.masksToBounds = false
-        
-        layer.shadowColor = shadowColor.cgColor
-        layer.shadowOffset = CGSize(width: 0.0, height: shadowHeight)
-        layer.shadowOpacity = 1.0
-        layer.shadowRadius = 0.0 // this is actually blur radius
-        // User this as the shadow path, since it has a larger corner radius
-        // than the default layer's corner radius
-        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: shadowRadius)
-        layer.shadowPath = shadowPath.cgPath
     }
 }
