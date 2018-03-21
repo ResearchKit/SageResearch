@@ -231,17 +231,18 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
             let itemGroup = instantiateTableItemGroup(for: item, beginningRowIndex: rowIndex)
             let needExclusiveSection = (itemGroup as? RSDInputFieldTableItemGroup)?.requiresExclusiveSection ?? false
             
-            // if we don't need an exclusive section and we have an existing section and it's not exclusive ('singleFormItem'),
-            // then add this item to that existing section, otherwise create a new one
+            // If we don't need an exclusive section and we have an existing section and it's not exclusive
+            // ('singleFormItem'), then add this item to that existing section, otherwise create a new one.
             if !needExclusiveSection, let lastSection = sectionBuilders.last, !lastSection.singleFormItem {
-                lastSection.title = nil
                 lastSection.appendGroup(itemGroup)
             }
             else {
                 let section = RSDTableSectionBuilder(sectionIndex: sectionBuilders.count, singleFormItem: needExclusiveSection)
                 section.appendGroup(itemGroup)
-                section.title = item.inputPrompt
-                section.subtitle = item.inputPromptDetail
+                if itemGroup is RSDChoicePickerTableItemGroup {
+                    section.title = item.inputPrompt
+                    section.subtitle = item.inputPromptDetail
+                }
                 sectionBuilders.append(section)
             }
         }
