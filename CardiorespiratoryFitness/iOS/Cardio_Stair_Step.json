@@ -26,7 +26,7 @@
                            "actions"      : {
                                                "goForward":  { "buttonTitle": "Start" },
                                                "cancel":     { "iconName": "backArrowHeader" },
-                                               "skip":       { "buttonTitle": "Remind me later" },
+                                               "skip":       { "reminderIdentifier": "Cardio Stair Step" },
                                                "learnMore":  { "iconName": "infoIcon", "url": "Stair_Step.html" }
                                             },
                            },
