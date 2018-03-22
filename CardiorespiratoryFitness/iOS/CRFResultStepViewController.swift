@@ -32,8 +32,6 @@
 //
 
 import UIKit
-import ResearchSuiteUI
-import ResearchSuite
 
 open class CRFResultStepViewController: RSDStepViewController {
     
@@ -95,7 +93,7 @@ public class CRFCompletionResultStepViewController : CRFResultStepViewController
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        doneButton?.shadowColor = UIColor.rsd_roundedButtonShadowLight
+        doneButton?.setTitle(Localization.buttonDone(), for: .normal)
     }
 }
 

@@ -32,8 +32,6 @@
 //
 
 import UIKit
-import ResearchSuiteUI
-import ResearchSuite
 
 /// Custom subclass of the active step that can decode configuration details specific to the heart rate
 /// recorder used by this step view controller.

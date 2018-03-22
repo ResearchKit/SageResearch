@@ -33,7 +33,6 @@
 
 import Foundation
 import AVFoundation
-import ResearchSuite
 
 /// The camera settings to use for the heart rate recorder.
 public struct CRFCameraSettings : Codable, RSDResult, RSDArchivable {

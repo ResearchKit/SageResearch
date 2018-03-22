@@ -35,9 +35,7 @@
                            "type"                   : "instruction",
                            "colorTheme"             : {
                                                        "backgroundColor"        : "salmon",
-                                                       "foregroundColor"        : "white",
-                                                       "usesLightStyle"         : true
-                           },
+                                                       "usesLightStyle"         : true },
                            "image"                  : { "imageName": "healthRiskIcon",
                                                         "placementType": "iconBefore" },
                            "text"                   : "Do not attempt to complete this test if you have been told by your doctor that you should not participate in physical activity or exercise. Stop the test and talk to your doctor if any of the following symptoms occur: chest pain, dizziness, blurred vision, disorientation, excessive shortness of breath, severe nausea, severe fatigue, or severe headache.",

@@ -32,8 +32,6 @@
 //
 
 import UIKit
-import ResearchSuiteUI
-import ResearchSuite
 
 extension CRFHeartRateStep : RSDStepViewControllerVendor {
     

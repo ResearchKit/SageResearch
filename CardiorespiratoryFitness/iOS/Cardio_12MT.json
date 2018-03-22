@@ -44,7 +44,6 @@
                            "type"                   : "instruction",
                            "colorTheme"             : {
                                                        "backgroundColor"        : "salmon",
-                                                       "foregroundColor"        : "white",
                                                        "usesLightStyle"         : true },
                            "image"                  : { "imageName": "healthRiskIcon",
                                                         "placementType": "iconBefore" },
@@ -141,12 +140,13 @@
                            {
                            "identifier"     : "surveyAfter",
                            "type"           : "form",
-                           "text"           : "What, if anything, kept you from going further?",
+                           "title"          : "What, if anything, kept you from going further?",
                            "dataType"       : "singleChoice",
                            "choices"        : ["Nothing, was my best effort",
                                                "Feeling tired",
                                                "Pain or physical discomfort",
-                                               "Interrupted"]
+                                               "Interrupted"],
+                           "colorTheme"     : { "backgroundColor" : "white", "usesLightStyle" : false },
                            },
                            {
                            "identifier"   : "completion",

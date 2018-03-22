@@ -32,8 +32,6 @@
 //
 
 import UIKit
-import ResearchSuiteUI
-import ResearchSuite
 
 /// The step view controller for running the distance step in the 12 minute walk/run test or the 6 minute
 /// endurance test.

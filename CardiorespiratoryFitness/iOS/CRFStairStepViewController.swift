@@ -32,8 +32,6 @@
 //
 
 import UIKit
-import ResearchSuiteUI
-import ResearchSuite
 
 public class CRFStairStepViewController: RSDActiveStepViewController {
     

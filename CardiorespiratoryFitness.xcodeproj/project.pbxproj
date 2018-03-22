@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F82AE7F52064274A00952D74 /* UIColor+CRFDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7F42064274A00952D74 /* UIColor+CRFDefaults.swift */; };
 		F880C1202051F1E200ACB4D4 /* CRFFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */; };
 		F880C12F2051F2A700ACB4D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F880C12E2051F2A700ACB4D4 /* Images.xcassets */; };
 		F880C1312051F49400ACB4D4 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F880C1302051F49400ACB4D4 /* Colors.xcassets */; };
@@ -174,6 +175,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F82AE7F42064274A00952D74 /* UIColor+CRFDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+CRFDefaults.swift"; sourceTree = "<group>"; };
 		F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFFactory.swift; sourceTree = "<group>"; };
 		F880C12E2051F2A700ACB4D4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F880C1302051F49400ACB4D4 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -267,6 +269,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F82AE7EB2064270100952D74 /* Styleguide */ = {
+			isa = PBXGroup;
+			children = (
+				F82AE7F42064274A00952D74 /* UIColor+CRFDefaults.swift */,
+			);
+			path = Styleguide;
+			sourceTree = "<group>";
+		};
 		F880C10F2051F13800ACB4D4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +382,7 @@
 				F880C12D2051F25400ACB4D4 /* Shared Resources */,
 				F880C10F2051F13800ACB4D4 /* Model */,
 				F880C1182051F14C00ACB4D4 /* iOS */,
+				F82AE7EB2064270100952D74 /* Styleguide */,
 			);
 			path = CardiorespiratoryFitness;
 			sourceTree = "<group>";
@@ -729,6 +740,7 @@
 				F880C1542051F9FD00ACB4D4 /* CRFStairStepViewController.swift in Sources */,
 				F880C1562051F9FD00ACB4D4 /* CRFResultStepViewController.swift in Sources */,
 				F880C15B2051FA5F00ACB4D4 /* CRFHeartRateRecorder.swift in Sources */,
+				F82AE7F52064274A00952D74 /* UIColor+CRFDefaults.swift in Sources */,
 				F880C1202051F1E200ACB4D4 /* CRFFactory.swift in Sources */,
 				F880C18320520FBC00ACB4D4 /* CRFHeartRateSampleProcessor.swift in Sources */,
 				F880C1532051F9FD00ACB4D4 /* CRFHeartRateStepViewController.swift in Sources */,

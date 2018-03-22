@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import ResearchSuite
+import ResearchStack2
 
 public class CRFArchiveManager : NSObject, RSDDataArchiveManager {
     

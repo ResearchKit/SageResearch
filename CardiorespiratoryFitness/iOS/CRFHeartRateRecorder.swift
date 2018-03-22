@@ -33,7 +33,6 @@
 
 import Foundation
 import AVFoundation
-import ResearchSuite
 
 /// A hardcoded value used as the min confidence to include a recording.
 public let CRFMinConfidence = 0.5
@@ -193,7 +192,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         CRFHeartRateRecorder.current = nil
     }
     
-    private let processingQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.heartrate.processing")
+    private let processingQueue = DispatchQueue(label: "org.sagebase.CRF.heartrate.processing")
 
     private var _simulationTimer: Timer?
     private var _session: AVCaptureSession?
@@ -343,7 +342,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         let videoOutput = AVCaptureVideoDataOutput()
         
         // create a queue to run the capture on
-        let captureQueue = DispatchQueue(label: "org.sagebase.ResearchSuite.heartrate.capture.\(configuration.identifier)")
+        let captureQueue = DispatchQueue(label: "org.sagebase.CRF.heartrate.capture.\(configuration.identifier)")
         videoOutput.setSampleBufferDelegate(self, queue: captureQueue)
         
         // set up the video output
