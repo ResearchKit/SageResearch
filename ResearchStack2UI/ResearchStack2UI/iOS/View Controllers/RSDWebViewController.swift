@@ -41,6 +41,9 @@ open class RSDWebViewController: UIViewController, UIWebViewDelegate {
     /// The webview attached to this view controller.
     @IBOutlet var webView: UIWebView!
     
+    /// The loading indicator.
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
     /// The URL to load into the webview on `viewWillAppear()`.
     open var url: URL?
     
@@ -65,45 +68,55 @@ open class RSDWebViewController: UIViewController, UIWebViewDelegate {
     /// Override `viewDidLoad()` to instantiate a webview if there wasn't one created using a storyboard or nib.
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if (webView == nil) {
+        if activityIndicator == nil {
             self.view.backgroundColor = UIColor.white
+            activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+            self.view.addSubview(activityIndicator)
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            activityIndicator.rsd_alignCenterVertical(padding: 0)
+            activityIndicator.rsd_alignCenterHorizontal(padding: 0)
+            activityIndicator.hidesWhenStopped = true
+            activityIndicator.startAnimating()
+        }
+    }
+    
+    /// Override `viewDidAppear()` to load the webview on first appearance.
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        guard !_webviewLoaded else { return }
+        _webviewLoaded = true
+        
+        if webView == nil {
             let subview = UIWebView(frame: self.view.bounds)
-            self.view.addSubview(subview)
+            subview.translatesAutoresizingMaskIntoConstraints = false
+            self.view.insertSubview(subview, at: 0)
             subview.rsd_alignAllToSuperview(padding: 0)
             subview.delegate = self
             subview.dataDetectorTypes = .all
             subview.backgroundColor = UIColor.white
             self.webView = subview
         }
-    }
-    
-    /// Override `viewWillAppear()` to load the webview on first appearance.
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        if (!_webviewLoaded) {
-            _webviewLoaded = true
-            if let url = self.url {
-                let request = URLRequest(url: url)
-                webView.loadRequest(request)
-            }
-            else if let html = self.html {
-                // Include main bundle resourceURL as the baseURL so any stylesheets and images from the 
-                // bundle that are referenced in the HTML will load in the UIWebView.
-                webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
-            }
-            else if let resource = resourceTransformer {
-                do {
-                    let (data, _) = try resource.resourceData()
-                    if let html = String(data: data, encoding: String.Encoding.utf8) {
-                        webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
-                    } else {
-                        loadFailed()
-                    }
-                } catch let err {
-                    loadFailed(with: err)
+        if let url = self.url {
+            let request = URLRequest(url: url)
+            webView.loadRequest(request)
+        }
+        else if let html = self.html {
+            // Include main bundle resourceURL as the baseURL so any stylesheets and images from the
+            // bundle that are referenced in the HTML will load in the UIWebView.
+            webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
+        }
+        else if let resource = resourceTransformer {
+            do {
+                let (data, _) = try resource.resourceData()
+                if let html = String(data: data, encoding: String.Encoding.utf8) {
+                    webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
+                } else {
+                    loadFailed()
                 }
+            } catch let err {
+                loadFailed(with: err)
             }
         }
     }
@@ -134,5 +147,14 @@ open class RSDWebViewController: UIViewController, UIWebViewDelegate {
         else {
             return true
         }
+    }
+    
+    open func webViewDidFinishLoad(_ webView: UIWebView) {
+        self.activityIndicator.stopAnimating()
+    }
+    
+    open func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+        self.activityIndicator.stopAnimating()
+        self.loadFailed(with: error)
     }
 }
