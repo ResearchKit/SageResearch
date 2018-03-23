@@ -83,6 +83,8 @@ open class RSDOverviewStepViewController: RSDStepViewController {
                     self?._authStatus = status
                     if status.isDenied() {
                         self?.handleAuthorizationFailed(status: status, permission: permission)
+                    } else {
+                        self?.didFinishLoading()
                     }
                 }
             }
