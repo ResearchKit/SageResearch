@@ -81,7 +81,7 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
         self.textView?.backgroundColor = UIColor.clear
         
         self.navigationFooter?.backgroundColor = UIColor.appBackgroundLight
-        self.navigationFooter?.tintColor = UIColor.rsd_underlinedButtonTextDark
+        self.navigationFooter?.tintColor = UIColor.rsd_underlinedButtonText
         
         self.textView?.textColor = UIColor.appTextDark
         self.textView?.textContainerInset = UIEdgeInsets(top: 39, left: 43, bottom: 20, right: 43)

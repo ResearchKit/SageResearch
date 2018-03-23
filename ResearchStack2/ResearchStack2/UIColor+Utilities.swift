@@ -151,6 +151,7 @@ extension UIColor {
         var brightness: CGFloat = 0
         var alpha: CGFloat = 0
         self.getHue(&hue, saturation: &sat, brightness: &brightness, alpha: &alpha)
+        guard sat > 0, alpha > 0, brightness > 0 else { return self }
         let saturation = max(min(sat * multiplier, 1.0), minimumSaturation)
         return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
     }

@@ -48,7 +48,7 @@ extension UIFont {
     }
     
     @objc open class var rsd_headerTextLabel: UIFont {
-        return UIFont.systemFont(ofSize: 16.0, weight: .regular)
+        return UIFont.systemFont(ofSize: 18.0, weight: .semibold)
     }
     
     @objc open class var rsd_headerDetailLabel: UIFont {

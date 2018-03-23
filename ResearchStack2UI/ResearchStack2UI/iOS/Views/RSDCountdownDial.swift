@@ -90,10 +90,24 @@ public final class RSDCountdownDial: RSDProgressIndicator {
     
     /// The color of the circular ring that shows the track of the progress indicator.
     @IBInspectable
-    public var ringColor: UIColor = UIColor.rsd_dialRing {
+    public var progressColor: UIColor = UIColor.rsd_dialRing {
         didSet {
-            ringLayer?.strokeColor = ringColor.cgColor
+            dialLayer?.strokeColor = progressColor.cgColor
         }
+    }
+    
+    /// Should the element display with a light style of progress bar and label for use on a dark
+    /// background, or with a dark style of progress bar for use on a light background?
+    @IBInspectable
+    open var usesLightStyle: Bool = false {
+        didSet {
+            updateColorStyle()
+        }
+    }
+    
+    private func updateColorStyle() {
+        let ringColor = usesLightStyle ? UIColor.rsd_dialRingBackgroundLightStyle : UIColor.rsd_dialRingBackground
+        ringLayer?.strokeColor = ringColor.cgColor
     }
     
     /// The width of the circular ring that shows the track of the progress indicator.
@@ -173,12 +187,12 @@ public final class RSDCountdownDial: RSDProgressIndicator {
         backgroundColor = UIColor.clear
         
         ringLayer?.lineWidth = ringWidth
-        ringLayer?.strokeColor = ringColor.cgColor
+        ringLayer?.strokeColor = UIColor.rsd_dialRingBackground.cgColor
         ringLayer?.fillColor = UIColor.clear.cgColor
         
         dialLayer?.strokeEnd = progress
         dialLayer?.lineWidth = dialWidth
-        dialLayer?.strokeColor = tintColor.cgColor
+        dialLayer?.strokeColor = progressColor.cgColor
         dialLayer?.fillColor = UIColor.clear.cgColor
     }
     

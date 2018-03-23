@@ -68,7 +68,9 @@ public class RSDMotionAuthorization {
         let now = Date()
         pedometer!.queryPedometerData(from: now.addingTimeInterval(-2*60), to: now) { (_, error) in
             DispatchQueue.main.async {
-                if let err = error {
+                // Brittle work-around for limitations of getting "motion & fitness" authorization status. The 104 code is sometimes thrown
+                // even if the app has the proper permissions. Ignore it. syoung 03/22/2018
+                if let err = error, (err as NSError).code != 104 {
                     debugPrint("Failed to query pedometer: \(err)")
                     setCachedAuthorization(false)
                     let error = RSDPermissionError.notAuthorized(.motion, .denied)
