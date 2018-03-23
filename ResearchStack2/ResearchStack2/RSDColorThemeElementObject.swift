@@ -37,14 +37,13 @@ import Foundation
 /// given view as well as whether or not the foreground elements should use "light style".
 public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBundleInfo, Codable {
     let _backgroundColorName: String?
-    let _foregroundColorName: String?
     let _usesLightStyle: Bool?
     
     private enum CodingKeys: String, CodingKey {
         case _backgroundColorName = "backgroundColor"
-        case _foregroundColorName = "foregroundColor"
         case _usesLightStyle = "usesLightStyle"
         case bundleIdentifier
+        case colorStyle
     }
     
     /// The bundle identifier.
@@ -83,29 +82,16 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     }
     #endif
     
-    #if os(watchOS)
+    /// The color style to use for the header view.
+    public var colorStyle: [String : RSDColorStyle]?
     
-    /// **Available** for watchOS.
-    ///
-    /// The foreground color for this step. If undefined then the foreground color appropriate to the light
-    /// style will be used.
-    /// - returns: The color or `nil` if undefined.
-    public func foregroundColor() -> UIColor? {
-        guard let name = _foregroundColorName else { return nil }
-        return UIColor.rsd_color(named: name, in: bundle)
+    /// The color style to use for the given view component. If `nil` the default that is determined by the
+    /// step view controller will be used.
+    /// - parameter placement: The view placement of the element.
+    /// - returns: The color style (if any) defined for that element.
+    public func colorStyle(for placement: RSDColorPlacement) -> RSDColorStyle? {
+        return colorStyle?[placement.stringValue]
     }
-    #else
-    
-    /// **Available** for iOS and tvOS.
-    ///
-    /// The foreground color for this step. If undefined then the foreground color appropriate to the light
-    /// style will be used.
-    /// - returns: The color or `nil` if undefined.
-    public func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
-        guard let name = _foregroundColorName else { return nil }
-        return UIColor.rsd_color(named: name, in: bundle, compatibleWith: traitCollection)
-    }
-    #endif
     
     /// Default initializer.
     ///
@@ -124,11 +110,11 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     ///     - foregroundColorName: The name of the foreground color. Default = `nil`.
     ///     - bundleIdentifier: The bundle identifier for where to find the color asset or plist mapping
     ///       file. Default = `nil`.
-    public init(usesLightStyle: Bool = false, backgroundColorName: String?, foregroundColorName: String? = nil, bundleIdentifier: String? = nil) {
+    public init(usesLightStyle: Bool = false, backgroundColorName: String?, bundleIdentifier: String? = nil) {
         self._usesLightStyle = usesLightStyle
         self._backgroundColorName = backgroundColorName
-        self._foregroundColorName = foregroundColorName
         self.bundleIdentifier = bundleIdentifier
+        self.colorStyle = nil
     }
 }
 
@@ -139,7 +125,7 @@ extension RSDColorThemeElementObject : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [._backgroundColorName, ._foregroundColorName, ._usesLightStyle, .bundleIdentifier]
+        let codingKeys: [CodingKeys] = [._backgroundColorName, ._usesLightStyle, .bundleIdentifier, .colorStyle]
         return codingKeys
     }
     
@@ -149,11 +135,11 @@ extension RSDColorThemeElementObject : RSDDocumentableCodableObject {
             switch key {
             case ._backgroundColorName:
                 if idx != 0 { return false }
-            case ._foregroundColorName:
-                if idx != 1 { return false }
             case ._usesLightStyle:
-                if idx != 2 { return false }
+                if idx != 1 { return false }
             case .bundleIdentifier:
+                if idx != 2 { return false }
+            case .colorStyle:
                 if idx != 3 { return false }
             }
         }
@@ -162,7 +148,8 @@ extension RSDColorThemeElementObject : RSDDocumentableCodableObject {
     
     static func colorThemeExamples() -> [RSDColorThemeElementObject] {
         let colorThemeA = RSDColorThemeElementObject(usesLightStyle: true, backgroundColorName: "blueBlack")
-        let colorThemeB = RSDColorThemeElementObject(usesLightStyle: false, backgroundColorName: nil, foregroundColorName: "mintGreen", bundleIdentifier: "org.example.SharedCodeBundle")
+        var colorThemeB = RSDColorThemeElementObject(usesLightStyle: false, backgroundColorName: nil, bundleIdentifier: "org.example.SharedCodeBundle")
+        colorThemeB.colorStyle = ["header" : .lightBackground]
         return [colorThemeA, colorThemeB]
     }
     

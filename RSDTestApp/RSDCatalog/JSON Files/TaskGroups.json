@@ -66,6 +66,20 @@
             }]
  },
  {
+ "identifier": "colorExamples",
+ "title": "UI Themes",
+ "detail": "This task group includes examples the UI Themes.",
+ "icon": "activityIcon",
+ "tasks" : [{
+            "identifier": "colorThemes",
+            "title": "Colors",
+            "subtitle": "Activity for showing different examples of the use of color themes.",
+            "detail": "This is an example task for how to set up an activity that expressly defines the color themes.",
+            "icon": "activityIcon",
+            "taskTransformer" : { "resourceName": "Theme_Color" }
+            }]
+ },
+ {
      "identifier": "trackingExamples",
      "title": "Data Tracking",
      "detail": "This task group includes examples of tasks that track data.",
@@ -85,14 +99,6 @@
                 "detail": "This is an example task that allows the user to log events that they wish to track as triggers for their health condition.",
                 "icon": "activityIcon",
                 "taskTransformer" : { "resourceName": "Tracking_Triggers" }
-                },
-                {
-                "identifier": "Symptoms",
-                "title": "Symptoms",
-                "subtitle": "Task for logging symptoms.",
-                "detail": "This is an example task that allows the user to log events that they wish to track as symptoms of a given health condition that they are experiencing.",
-                "icon": "activityIcon",
-                "taskTransformer" : { "resourceName": "Tracking_Symptoms" }
                 }]
  }
 ]

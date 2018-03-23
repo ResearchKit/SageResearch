@@ -116,7 +116,7 @@ class TrackedSelectionDataSourceTests: XCTestCase {
         }
         do {
             // Select the answer
-            try dataSource.selectAnswer(item: choiceItem, at: indexPath)
+            let _ = try dataSource.selectAnswer(item: choiceItem, at: indexPath)
             if let result = dataSource.taskPath.result.findResult(with: dataSource.step.identifier) as? RSDTrackedItemsResult {
                 XCTAssertEqual(result.selectedIdentifiers, ["medC1"])
             } else {
@@ -124,7 +124,7 @@ class TrackedSelectionDataSourceTests: XCTestCase {
             }
             
             // Deselect the answer
-            try dataSource.selectAnswer(item: choiceItem, at: indexPath)
+            let _ = try dataSource.selectAnswer(item: choiceItem, at: indexPath)
             if let result = dataSource.taskPath.result.findResult(with: dataSource.step.identifier) as? RSDTrackedItemsResult {
                 XCTAssertEqual(result.selectedIdentifiers, [])
             } else {

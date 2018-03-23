@@ -29,7 +29,26 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FF8B531B1FCE678E006B6937"
+               BuildableName = "ResearchStack2Tests_iOS.xctest"
+               BlueprintName = "ResearchStack2Tests_iOS"
+               ReferencedContainer = "container:ResearchStack2.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "FF8B53131FCE678E006B6937"
+            BuildableName = "ResearchStack2.framework"
+            BlueprintName = "ResearchStack2 (iOS)"
+            ReferencedContainer = "container:ResearchStack2.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

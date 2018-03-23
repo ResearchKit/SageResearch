@@ -108,10 +108,11 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.appBackgroundLight
         
         if tableView == nil {
             tableView = UITableView(frame: view.bounds, style: .plain)
+            tableView.backgroundColor = self.view.backgroundColor
             tableView.delegate = self
             tableView.dataSource = self
             tableView.separatorStyle = .none
@@ -234,6 +235,14 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         
         // update the shadow (if needed)
         updateShadows()
+    }
+    
+    /// Override to set the background color of the table.
+    override open func setColorStyle(for placement: RSDColorPlacement, usesLightStyle: Bool, backgroundColor: UIColor) {
+        super.setColorStyle(for: placement, usesLightStyle: usesLightStyle, backgroundColor: backgroundColor)
+        if placement == .body {
+            self.tableView.backgroundColor = backgroundColor
+        }
     }
 
     
@@ -457,7 +466,9 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         else {
             // Add a spacer
-            return UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: constants.defaultSectionHeight))
+            let view =  UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: constants.defaultSectionHeight))
+            view.backgroundColor = UIColor.appBackgroundLight
+            return view
         }
     }
     
@@ -565,6 +576,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             
             let navView = type(of: footer).init()
             setupFooter(navView)
+            navView.backgroundColor = footer.backgroundColor
+            navView.usesLightStyle = footer.usesLightStyle
             
             // using auto layout to constrain the navView to fill its superview after adding it to the textfield
             // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
