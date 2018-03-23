@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDActiveStepViewController" customModule="ResearchSuiteUI" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDActiveStepViewController" customModule="ResearchStack2UI" customModuleProvider="target">
             <connections>
                 <outlet property="countdownDial" destination="NWt-B1-Ycq" id="zHn-FP-dNo"/>
                 <outlet property="instructionLabel" destination="VoM-5m-u1N" id="2DB-Ix-SKq"/>
@@ -20,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXI-K0-Z04" userLabel="Navigation Header" customClass="RSDNavigationHeaderView" customModule="ResearchSuiteUI" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IXI-K0-Z04" userLabel="Navigation Header" customClass="RSDNavigationHeaderView" customModule="ResearchStack2UI" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="32" width="375" height="45"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZz-7R-1np">
@@ -31,25 +35,28 @@
                             </constraints>
                             <state key="normal" image="closeActivity"/>
                         </button>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BSx-xc-6wX" customClass="RSDStepProgressView" customModule="ResearchSuiteUI">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BSx-xc-6wX" customClass="RSDStepProgressView" customModule="ResearchStack2UI" customModuleProvider="target">
                             <rect key="frame" x="64" y="12" width="295" height="8"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="8" placeholder="YES" id="hVl-gK-K7R"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="YES"/>
-                                <userDefinedRuntimeAttribute type="boolean" keyPath="usesLightStyle" value="NO"/>
-                                <userDefinedRuntimeAttribute type="number" keyPath="currentStep">
-                                    <integer key="value" value="1"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="progressLineHeight">
+                                    <real key="value" value="8"/>
                                 </userDefinedRuntimeAttribute>
                                 <userDefinedRuntimeAttribute type="number" keyPath="totalSteps">
                                     <integer key="value" value="10"/>
                                 </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="progressLineHeight">
-                                    <real key="value" value="8"/>
+                                <userDefinedRuntimeAttribute type="number" keyPath="currentStep">
+                                    <integer key="value" value="4"/>
                                 </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="usesLightStyle" value="NO"/>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="YES"/>
                             </userDefinedRuntimeAttributes>
+                            <connections>
+                                <outlet property="stepCountLabel" destination="32C-Qh-Lno" id="NNJ-fL-37f"/>
+                            </connections>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1 of 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="32C-Qh-Lno">
                             <rect key="frame" x="149.5" y="28" width="76" height="17"/>
@@ -68,6 +75,11 @@
                         <constraint firstItem="BSx-xc-6wX" firstAttribute="leading" secondItem="fZz-7R-1np" secondAttribute="trailing" constant="16" id="wzd-h4-FbT"/>
                         <constraint firstItem="32C-Qh-Lno" firstAttribute="top" secondItem="fZz-7R-1np" secondAttribute="bottom" constant="-4" id="zUo-FR-JcI"/>
                     </constraints>
+                    <connections>
+                        <outlet property="cancelButton" destination="fZz-7R-1np" id="pRs-JP-LY3"/>
+                        <outlet property="progressView" destination="BSx-xc-6wX" id="6I1-eo-9J7"/>
+                        <outlet property="stepCountLabel" destination="32C-Qh-Lno" id="g86-WO-VPp"/>
+                    </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gxz-wp-wUt">
                     <rect key="frame" x="0.0" y="85" width="375" height="173"/>
@@ -85,7 +97,7 @@
                         <constraint firstItem="VoM-5m-u1N" firstAttribute="centerX" secondItem="gxz-wp-wUt" secondAttribute="centerX" id="8PQ-cL-aPM"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NWt-B1-Ycq" customClass="RSDCountdownDial" customModule="ResearchSuiteUI" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NWt-B1-Ycq" customClass="RSDCountdownDial" customModule="ResearchStack2UI" customModuleProvider="target">
                     <rect key="frame" x="48" y="258" width="279" height="279"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>

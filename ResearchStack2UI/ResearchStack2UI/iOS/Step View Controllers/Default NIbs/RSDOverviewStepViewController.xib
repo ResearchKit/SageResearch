@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDOverviewStepViewController" customModule="ResearchSuiteUI" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDOverviewStepViewController" customModule="ResearchStack2UI" customModuleProvider="target">
             <connections>
                 <outlet property="navigationFooter" destination="ba4-iN-nqh" id="XGO-pw-ajQ"/>
                 <outlet property="navigationHeader" destination="Zba-wA-mTe" id="wRV-rc-lmz"/>
@@ -24,14 +24,14 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zba-wA-mTe" userLabel="Header" customClass="RSDStepHeaderView" customModule="ResearchSuiteUI">
-                    <rect key="frame" x="0.0" y="32" width="375" height="498.5"/>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zba-wA-mTe" userLabel="Header" customClass="RSDStepHeaderView" customModule="ResearchStack2UI" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="20" width="375" height="510.5"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nNr-9w-cB5" userLabel="Image Background">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="498.5"/>
+                            <rect key="frame" x="0.0" y="10" width="375" height="500.5"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Gua-Mv-uIu">
-                                    <rect key="frame" x="0.0" y="32" width="375" height="467"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="501"/>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojL-ZX-TXF">
                                     <rect key="frame" x="16" y="0.0" width="32" height="32"/>
@@ -62,8 +62,7 @@
                                     <state key="normal" image="infoIcon"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="Gua-Mv-uIu" firstAttribute="leading" secondItem="nNr-9w-cB5" secondAttribute="leading" id="0Xl-Vk-aKz"/>
                                 <constraint firstAttribute="bottom" secondItem="Gua-Mv-uIu" secondAttribute="bottom" id="32v-zq-NUR"/>
@@ -79,17 +78,17 @@
                                 <constraint firstAttribute="trailing" secondItem="Gua-Mv-uIu" secondAttribute="trailing" id="fx0-cS-ga0"/>
                                 <constraint firstItem="0RX-ZO-IQn" firstAttribute="top" secondItem="ICN-1z-1T7" secondAttribute="bottom" constant="8" id="oEb-V7-edx"/>
                                 <constraint firstItem="ojL-ZX-TXF" firstAttribute="top" secondItem="nNr-9w-cB5" secondAttribute="top" id="vS3-30-CNE"/>
-                                <constraint firstItem="Gua-Mv-uIu" firstAttribute="top" secondItem="nNr-9w-cB5" secondAttribute="top" constant="32" id="xcQ-Ja-gox"/>
+                                <constraint firstItem="Gua-Mv-uIu" firstAttribute="top" secondItem="nNr-9w-cB5" secondAttribute="top" id="xcQ-Ja-gox"/>
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="nNr-9w-cB5" firstAttribute="leading" secondItem="Zba-wA-mTe" secondAttribute="leading" id="3Jc-Dm-d5A"/>
                         <constraint firstAttribute="bottom" secondItem="nNr-9w-cB5" secondAttribute="bottom" id="QTH-af-EF1"/>
                         <constraint firstAttribute="trailing" secondItem="nNr-9w-cB5" secondAttribute="trailing" id="Td7-mU-PiX"/>
-                        <constraint firstItem="nNr-9w-cB5" firstAttribute="top" secondItem="Zba-wA-mTe" secondAttribute="top" id="hj4-cU-DhH"/>
+                        <constraint firstItem="nNr-9w-cB5" firstAttribute="top" secondItem="Zba-wA-mTe" secondAttribute="top" constant="10" id="hj4-cU-DhH"/>
                     </constraints>
                     <connections>
                         <outlet property="cancelButton" destination="ojL-ZX-TXF" id="aY0-34-igS"/>
@@ -99,19 +98,20 @@
                         <outlet property="titleLabel" destination="ICN-1z-1T7" id="C7R-X1-wy2"/>
                     </connections>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4F8-CD-ZuJ" userLabel="Status Background">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4F8-CD-ZuJ" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-iN-nqh" customClass="RSDGenericNavigationFooterView" customModule="ResearchSuiteUI">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-iN-nqh" customClass="RSDGenericNavigationFooterView" customModule="ResearchStack2UI" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="530.5" width="375" height="136.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="136.5" placeholder="YES" id="lcp-rN-Zri"/>
+                        <constraint firstAttribute="height" constant="136.5" id="lcp-rN-Zri"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkipHidden" value="NO"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="usesLightStyle" value="NO"/>
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
@@ -119,7 +119,7 @@
             <constraints>
                 <constraint firstItem="ba4-iN-nqh" firstAttribute="leading" secondItem="nk3-qh-C6E" secondAttribute="leading" id="1iW-HX-3Z2"/>
                 <constraint firstItem="Zba-wA-mTe" firstAttribute="trailing" secondItem="nk3-qh-C6E" secondAttribute="trailing" id="FC3-ia-TcH"/>
-                <constraint firstItem="Zba-wA-mTe" firstAttribute="top" secondItem="nk3-qh-C6E" secondAttribute="top" constant="12" id="Lnv-8G-or8"/>
+                <constraint firstItem="Zba-wA-mTe" firstAttribute="top" secondItem="nk3-qh-C6E" secondAttribute="top" id="Lnv-8G-or8"/>
                 <constraint firstItem="ba4-iN-nqh" firstAttribute="top" secondItem="Zba-wA-mTe" secondAttribute="bottom" id="N7i-Ng-0UG"/>
                 <constraint firstItem="Zba-wA-mTe" firstAttribute="top" secondItem="4F8-CD-ZuJ" secondAttribute="bottom" id="Obc-ON-aEd"/>
                 <constraint firstItem="4F8-CD-ZuJ" firstAttribute="leading" secondItem="nk3-qh-C6E" secondAttribute="leading" id="PGl-nI-fv0"/>
