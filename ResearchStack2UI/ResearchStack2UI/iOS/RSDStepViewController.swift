@@ -228,12 +228,12 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// A footer view that includes navigation elements.
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
     
-    /// The label for displaying step detail text.
+    /// The label for displaying step title text.
     open var stepTitleLabel: UILabel? {
         return self.navigationHeader?.titleLabel ?? self.navigationFooter?.titleLabel
     }
     
-    /// The label for displaying step detail text.
+    /// The label for displaying step text.
     open var stepTextLabel: UILabel? {
         return self.navigationHeader?.textLabel ?? self.navigationFooter?.textLabel
     }

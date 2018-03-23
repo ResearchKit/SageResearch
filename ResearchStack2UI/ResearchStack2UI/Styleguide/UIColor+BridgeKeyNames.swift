@@ -104,7 +104,7 @@ extension UIColor {
     
     /// Background color for views that should have a dark background.
     ///
-    /// Default = `UIColor.primaryTintColor`
+    /// Default = `UIColor.primaryTintColor`.
     @objc open class var appBackgroundDark: UIColor {
         return UIColor.primaryTintColor
     }

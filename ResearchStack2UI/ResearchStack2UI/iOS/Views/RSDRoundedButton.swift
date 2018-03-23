@@ -80,7 +80,7 @@ import UIKit
         }
     }
     
-    /// Should the button display using the "secondard" button style? This style is used for buttons that
+    /// Should the button display using the "secondary" button style? This style is used for buttons that
     /// are displayed inline with scrolling views for handling secondary actions.
     ///
     /// If `true`, then the button colors will be styled using the secondary colors for the rounded button.
