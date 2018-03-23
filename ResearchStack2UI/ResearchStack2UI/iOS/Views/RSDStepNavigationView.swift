@@ -54,6 +54,15 @@ open class RSDStepNavigationView: UIView {
     /// Button for cancelling the task.
     @IBOutlet open var cancelButton: UIButton?
     
+    /// The label for displaying the title.
+    @IBOutlet open var titleLabel: UILabel?
+    
+    /// The label for displaying step text.
+    @IBOutlet open var textLabel: UILabel?
+    
+    /// The label for displaying step detail text.
+    @IBOutlet open var detailLabel: UILabel?
+    
     /// Return all the buttons in this navigation view.
     open func allButtons() -> [UIButton] {
         return Array(1...5).rsd_mapAndFilter { (idx) -> UIButton? in
@@ -88,14 +97,20 @@ open class RSDStepNavigationView: UIView {
     /// buttons and text?
     @IBInspectable open var usesLightStyle: Bool = false {
         didSet {
-            tintColor = usesLightStyle ? UIColor.rsd_underlinedButtonTextLight : UIColor.rsd_underlinedButtonTextDark
-            for button in allButtons() {
-                if let roundedButton = button as? RSDRoundedButton {
-                    roundedButton.backgroundColor = usesLightStyle ? UIColor.rsd_roundedButtonBackgroundLight : UIColor.rsd_roundedButtonBackgroundDark
-                    roundedButton.titleColor = usesLightStyle ? UIColor.rsd_roundedButtonTextLight : UIColor.rsd_roundedButtonTextDark
-                }
+            updateLightStyle()
+        }
+    }
+    
+    fileprivate func updateLightStyle() {
+        tintColor = usesLightStyle ? UIColor.rsd_underlinedButtonTextLightStyle : UIColor.rsd_underlinedButtonText
+        for button in allButtons() {
+            if let roundedButton = button as? RSDRoundedButton {
+                roundedButton.usesLightStyle = usesLightStyle
             }
         }
+        titleLabel?.textColor = usesLightStyle ? UIColor.rsd_headerTitleLabelLightStyle : UIColor.rsd_headerTitleLabel
+        textLabel?.textColor = usesLightStyle ? UIColor.rsd_headerTextLabelLightStyle : UIColor.rsd_headerTextLabel
+        detailLabel?.textColor = usesLightStyle ? UIColor.rsd_headerDetailLabelLightStyle : UIColor.rsd_headerDetailLabel
     }
 }
 
@@ -137,11 +152,9 @@ open class RSDNavigationHeaderView: RSDStepNavigationView {
         }
     }
     
-    override open var usesLightStyle: Bool {
-        didSet {
-            progressView?.usesLightStyle = usesLightStyle
-            stepCountLabel?.textColor = usesLightStyle ? UIColor.rsd_stepCountLabelLight : UIColor.rsd_stepCountLabelDark
-        }
+    fileprivate override func updateLightStyle()  {
+        super.updateLightStyle()
+        progressView?.usesLightStyle = usesLightStyle
     }
     
     /// Layout constants. Subclasses can override to customize; otherwise the default private
@@ -210,15 +223,6 @@ open class RSDStepHeaderView: RSDNavigationHeaderView {
     /// The image view for displaying an image in the header.
     @IBOutlet open var imageView: UIImageView?
     
-    /// The label for displaying the title.
-    @IBOutlet open var titleLabel: UILabel?
-    
-    /// The label for displaying step text.
-    @IBOutlet open var textLabel: UILabel?
-    
-    /// The label for displaying step detail text.
-    @IBOutlet open var detailLabel: UILabel?
-    
     /// Whether or not the step header has an image.
     open var hasImage: Bool = false
     
@@ -237,15 +241,6 @@ open class RSDStepHeaderView: RSDNavigationHeaderView {
     open var minumumHeight: CGFloat = 0.0 {
         didSet {
             setNeedsUpdateConstraints()
-        }
-    }
-    
-    /// Override to set text colors
-    override open var usesLightStyle: Bool {
-        didSet {
-            titleLabel?.textColor = usesLightStyle ? UIColor.rsd_headerTitleLabelLight : UIColor.rsd_headerTitleLabelDark
-            textLabel?.textColor = usesLightStyle ? UIColor.rsd_headerTextLabelLight : UIColor.rsd_headerTextLabelDark
-            detailLabel?.textColor = usesLightStyle ? UIColor.rsd_headerDetailLabelLight : UIColor.rsd_headerDetailLabelDark
         }
     }
 }
@@ -292,6 +287,7 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         addTextLabelIfNeeded()
         addDetailLabelIfNeeded()
         
+        updateLightStyle()
         setNeedsUpdateConstraints()
     }
 
@@ -338,21 +334,21 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
     /// Convenience method for adding the title label if needed.
     open func addTitleLabelIfNeeded() {
         guard titleLabel == nil else { return }
-        titleLabel = addLabel(font: UIFont.rsd_headerTitleLabel, color: UIColor.rsd_headerTitleLabelDark)
+        titleLabel = addLabel(font: UIFont.rsd_headerTitleLabel, color: UIColor.rsd_headerTitleLabel)
         titleLabel!.accessibilityTraits = UIAccessibilityTraitHeader
     }
     
     /// Convenience method for adding the text label if needed.
     open func addTextLabelIfNeeded() {
         guard textLabel == nil else { return }
-        textLabel = addLabel(font: UIFont.rsd_headerTextLabel, color: UIColor.rsd_headerTextLabelDark)
+        textLabel = addLabel(font: UIFont.rsd_headerTextLabel, color: UIColor.rsd_headerTextLabel)
         textLabel!.accessibilityTraits = UIAccessibilityTraitSummaryElement
     }
     
     /// Convenience method for adding the detail label if needed.
     open func addDetailLabelIfNeeded() {
         guard detailLabel == nil else { return }
-        detailLabel = addLabel(font: UIFont.rsd_headerDetailLabel, color: UIColor.rsd_headerDetailLabelDark)
+        detailLabel = addLabel(font: UIFont.rsd_headerDetailLabel, color: UIColor.rsd_headerDetailLabel)
     }
     
     open override func layoutSubviews() {
@@ -468,7 +464,8 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         if lastView != nil {
             // align below last view. If the last view is the progressView, then we want our gap to be
             // the topMargin, otherwise it's verticalSpacing
-            let gap = (lastView == progressView) ? constants.topMargin : constants.verticalSpacing
+            let gap = (lastView == progressView) ? constants.topMargin :
+                ((lastView == imageView) ? 2 * constants.verticalSpacing : constants.verticalSpacing)
             _interactiveContraints.append(contentsOf:
                 view.rsd_alignBelow(view: lastView!, padding: gap))
         } else {
@@ -589,6 +586,7 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
         addBackButtonIfNeeded()
         addSkipButtonIfNeeded()
         addShadowIfNeeded()
+        updateLightStyle()
     }
     
     /// Layout constants. Subclasses can override to customize; otherwise the default private
@@ -598,7 +596,6 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
     /// Convenience method for adding a navigation button. The default method instantiates an `RSDRoundedButton`.
     open func addNavigationButton() -> UIButton {
         let button = RSDRoundedButton()
-        button.corners = RSDRoundedButton.defaultCornerRadius
         button.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(button)
         return button

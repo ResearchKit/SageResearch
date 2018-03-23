@@ -77,7 +77,19 @@ open class RSDStepProgressView: UIView {
     @IBInspectable
     open var usesLightStyle: Bool = false {
         didSet {
-            setNeedsUpdateConstraints()
+            updateColorStyle()
+        }
+    }
+    
+    private func updateColorStyle() {
+        // Update colors
+        progressView.backgroundColor = UIColor.rsd_progressBar
+        if usesLightStyle {
+            backgroundView.backgroundColor = UIColor.rsd_progressBarBackgroundLightStyle
+            stepCountLabel?.textColor = UIColor.rsd_stepCountLabelLightStyle
+        } else {
+            backgroundView.backgroundColor = UIColor.rsd_progressBarBackground
+            stepCountLabel?.textColor = UIColor.rsd_stepCountLabel
         }
     }
 
@@ -158,22 +170,13 @@ open class RSDStepProgressView: UIView {
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         progressView.translatesAutoresizingMaskIntoConstraints = false
 
+        updateColorStyle()
         setNeedsUpdateConstraints()
     }
     
     private var _interactiveContraints: [NSLayoutConstraint] = []
     
     open override func updateConstraints() {
-        
-        // Update colors
-        progressView.backgroundColor = UIColor.rsd_progressBar
-        if usesLightStyle {
-            backgroundView.backgroundColor = UIColor.rsd_progressBarBackgroundLight
-            stepCountLabel?.textColor = UIColor.rsd_stepCountLabelLight
-        } else {
-            backgroundView.backgroundColor = UIColor.rsd_progressBarBackgroundDark
-            stepCountLabel?.textColor = UIColor.rsd_stepCountLabelDark
-        }
         
         // Round the ends
         if hasRoundedEnds {

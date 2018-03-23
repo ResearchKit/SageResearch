@@ -228,6 +228,21 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// A footer view that includes navigation elements.
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
     
+    /// The label for displaying step detail text.
+    open var stepTitleLabel: UILabel? {
+        return self.navigationHeader?.titleLabel ?? self.navigationFooter?.titleLabel
+    }
+    
+    /// The label for displaying step detail text.
+    open var stepTextLabel: UILabel? {
+        return self.navigationHeader?.textLabel ?? self.navigationFooter?.textLabel
+    }
+    
+    /// The label for displaying step detail text.
+    open var stepDetailLabel: UILabel? {
+        return self.navigationHeader?.detailLabel ?? self.navigationFooter?.detailLabel
+    }
+    
     /// Convenience method for getting the "Next" button.
     open var nextButton: UIButton? {
         return registeredButtons[.navigation(.goForward)]?.first
@@ -251,6 +266,12 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// Set up the navigation header and footer. Additionally, set up the UI theme colors, UI images, and
     /// the step details such as the title, text, detail, and progress.
     open func setupViews() {
+        
+        // Set up label text.
+        stepTitleLabel?.text = uiStep?.title
+        stepTextLabel?.text = uiStep?.text
+        stepDetailLabel?.text = uiStep?.detail
+        
         if let header = self.navigationHeader {
             setupHeader(header)
         }
@@ -269,11 +290,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
         
         self.statusBarBackgroundView?.backgroundColor = backgroundColor
-        if self.hasTopBackgroundImage() {
-            (self.navigationHeader as? RSDStepHeaderView)?.imageView?.superview?.backgroundColor = backgroundColor
-        }
-        else {
-            self.navigationHeader?.backgroundColor = backgroundColor
+        self.navigationHeader?.backgroundColor = backgroundColor
+
+        // If this view does not have a top-background image theme, then set the color across the whole
+        // view. Otherwise, this will only adjust the top.
+        if !self.hasTopBackgroundImage() {
             self.view.backgroundColor = backgroundColor
             self.navigationFooter?.backgroundColor = backgroundColor
         }
@@ -319,11 +340,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
                     }
                 }
             }
-            
-            // setup label text
-            stepHeader.titleLabel?.text = uiStep?.title
-            stepHeader.textLabel?.text = uiStep?.text
-            stepHeader.detailLabel?.text = uiStep?.detail
         }
 
         header.setNeedsLayout()
@@ -360,8 +376,12 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         setupButton(navigationView.backButton, for: .navigation(.goBackward), isFooter: isFooter)
         setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
         
+        // Set the color style for this view.
         if let usesLightStyle = usesLightStyle(isFooter: isFooter) {
             navigationView.usesLightStyle = usesLightStyle
+            if !isFooter, let statusView = self.statusBarBackgroundView as? RSDStatusBarBackgroundView {
+                statusView.overlayColor = usesLightStyle ? UIColor.rsd_statusBarOverlayLightStyle : UIColor.rsd_statusBarOverlay
+            }
         }
         
         navigationView.setNeedsLayout()

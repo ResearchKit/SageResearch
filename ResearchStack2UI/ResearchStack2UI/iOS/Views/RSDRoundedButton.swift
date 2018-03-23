@@ -60,15 +60,6 @@ import UIKit
     public static let defaultHeight: CGFloat = 52.0
     public static let defaultWidthWith2Buttons: CGFloat = CGFloat(144.0).rsd_proportionalToScreenWidth(max: 160)
     public static let defaultWidthWith1Button: CGFloat = CGFloat(280.0).rsd_proportionalToScreenWidth(max: 320)
-    public static let defaultCornerRadius: CGFloat = defaultHeight / 2.0
-    
-    /// The corner radius of the button.
-    @IBInspectable open var corners: CGFloat = RSDRoundedButton.defaultCornerRadius {
-        didSet {
-            refreshView()
-            setNeedsDisplay()
-        }
-    }
     
     override open var isEnabled: Bool {
         didSet {
@@ -78,24 +69,59 @@ import UIKit
         }
     }
     
-    open var titleFont: UIFont? {
+    /// Should the button display using the "light" button style? Set this value to `true` for a button
+    /// that is displayed on a dark background (which results in "light" colored elements). By default,
+    /// this value is false, assuming a "light" colored background (white) which will display the "dark" UI
+    /// elements.
+    @IBInspectable
+    open var usesLightStyle: Bool = false {
         didSet {
-            guard let font = titleFont else { return }
-            titleLabel?.font = font
+            updateColorStyle()
         }
     }
     
-    open var titleColor: UIColor? {
+    /// Should the button display using the "secondard" button style? This style is used for buttons that
+    /// are displayed inline with scrolling views for handling secondary actions.
+    ///
+    /// If `true`, then the button colors will be styled using the secondary colors for the rounded button.
+    @IBInspectable
+    open var isSecondaryButton: Bool = false {
         didSet {
-            setTitleColor(titleColor, for: .normal)
+            updateColorStyle()
         }
+    }
+    
+    private func updateColorStyle() {
+        let titleColor: UIColor
+        if usesLightStyle {
+            if isSecondaryButton {
+                titleColor = UIColor.rsd_secondaryRoundedButtonTextLightStyle
+                self.backgroundColor = UIColor.rsd_secondaryRoundedButtonBackgroundLightStyle
+            } else {
+                titleColor = UIColor.rsd_roundedButtonTextLightStyle
+                self.backgroundColor = UIColor.rsd_roundedButtonBackgroundLightStyle
+            }
+        } else {
+            if isSecondaryButton {
+                titleColor = UIColor.rsd_secondaryRoundedButtonText
+                self.backgroundColor = UIColor.rsd_secondaryRoundedButtonBackground
+            } else {
+                titleColor = UIColor.rsd_roundedButtonText
+                self.backgroundColor = UIColor.rsd_roundedButtonBackground
+            }
+        }
+        setTitleColor(titleColor, for: .normal)
+
+    }
+    
+    open override func tintColorDidChange() {
+        super.tintColorDidChange()
+        updateColorStyle()
     }
     
     public required init() {
         let preferredWidth = RSDRoundedButton.defaultWidthWith1Button
         super.init(frame: CGRect(x: 0, y: 0, width: preferredWidth, height: RSDRoundedButton.defaultHeight))
-        
-        setupDefaults()
         
         // For the width, need to allow the preferred width to be overridden by the containing view.
         self.rsd_makeWidth(.lessThanOrEqual, RSDRoundedButton.defaultWidthWith1Button)
@@ -108,31 +134,12 @@ import UIKit
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        setupDefaults()
         commonInit()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
-    }
-    
-    override open func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        refreshView()
-        setNeedsDisplay()
-    }
-    
-    open func setupDefaults() {
-        // setup colors
-        self.backgroundColor = UIColor.rsd_roundedButtonBackgroundDark
-        self.corners = RSDRoundedButton.defaultCornerRadius
-        
-        // setup text
-        self.titleColor = UIColor.rsd_roundedButtonTextLight
-        setTitleColor(titleColor, for: .normal)
-        self.titleFont = UIFont.roundedButtonTitle
-        titleLabel?.font = titleFont
     }
 
     open func commonInit() {
@@ -143,20 +150,15 @@ import UIKit
         heightConstraint.priority = UILayoutPriority(rawValue: 950)
         heightConstraint.isActive = true
         
-        refreshView()
+        // Set the title font to the font for a rounded button
+        titleLabel?.font = UIFont.roundedButtonTitle
+        
+        // Update the color style
+        updateColorStyle()
     }
     
     override open func layoutSubviews() {
         super.layoutSubviews()
-        refreshView()
-    }
-    
-    func refreshView() {
-        guard self.alpha > 0.9 else {
-            layer.shadowOpacity = 0
-            return
-        }
-        
-        layer.cornerRadius = corners
+        layer.cornerRadius = self.bounds.height / 2.0
     }
 }
