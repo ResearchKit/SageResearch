@@ -34,6 +34,7 @@
 import UIKit
 
 fileprivate let kSideMargin: CGFloat = 28.0
+fileprivate let kSeparatorInsetMargin: CGFloat = 0.0
 fileprivate let kTopMargin: CGFloat = 20.0
 fileprivate let kBottomMargin: CGFloat = 12.0
 fileprivate let kSectionTopMargin: CGFloat = 40.0
@@ -59,7 +60,7 @@ fileprivate let kSectionTopMargin: CGFloat = 40.0
     
     open override var isSelected: Bool {
         didSet {
-            backgroundColor = bgColor
+            contentView.backgroundColor = bgColor
             titleLabel.textColor = labelColor
             detailLabel?.textColor = detailLabelColor
         }
@@ -69,6 +70,7 @@ fileprivate let kSectionTopMargin: CGFloat = 40.0
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = .none
+        self.backgroundColor = UIColor.appBackgroundLight
         
         // Add the title label
         titleLabel = UILabel()
@@ -103,7 +105,7 @@ fileprivate let kSectionTopMargin: CGFloat = 40.0
         contentView.addSubview(separatorLine!)
         
         separatorLine!.translatesAutoresizingMaskIntoConstraints = false
-        separatorLine!.rsd_alignToSuperview([.leading], padding: kSideMargin)
+        separatorLine!.rsd_alignToSuperview([.leading], padding: kSeparatorInsetMargin)
         separatorLine!.rsd_alignToSuperview([.bottom, .trailing], padding: 0.0)
         separatorLine?.rsd_makeHeight(.equal, 1.0)
         

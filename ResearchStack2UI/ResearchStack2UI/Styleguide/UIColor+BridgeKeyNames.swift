@@ -187,11 +187,11 @@ extension UIColor {
     /// MARK: Status bar
     
     @objc open class var rsd_statusBarOverlayLightStyle: UIColor {
-        return UIColor.clear
+        return UIColor.black.withAlphaComponent(0.1)
     }
     
     @objc open class var rsd_statusBarOverlay: UIColor {
-        return UIColor.black.withAlphaComponent(0.1)
+        return UIColor.clear
     }
 
     
@@ -264,7 +264,7 @@ extension UIColor {
     }
     
     @objc open class var rsd_progressBarBackground: UIColor {
-        return (darkPrimaryTintColor != rsd_progressBar) ? darkPrimaryTintColor : appVeryLightGray
+        return appVeryLightGray
     }
     
     @objc open class var rsd_stepCountLabelLightStyle: UIColor {

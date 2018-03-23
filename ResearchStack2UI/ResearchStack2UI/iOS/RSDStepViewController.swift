@@ -283,20 +283,48 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// Set up the background color using the `colorTheme` from the step. This method does nothing
     /// if the step does not conform to the `RSDThemedUIStep` protocol.
     open func setupBackgroundColorTheme() {
-        guard let colorTheme = themedStep?.colorTheme,
-            let backgroundColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection)
-            else {
-                return
-        }
+        guard let colorTheme = themedStep?.colorTheme else { return }
         
-        self.statusBarBackgroundView?.backgroundColor = backgroundColor
-        self.navigationHeader?.backgroundColor = backgroundColor
-
-        // If this view does not have a top-background image theme, then set the color across the whole
-        // view. Otherwise, this will only adjust the top.
-        if !self.hasTopBackgroundImage() {
+        let backgroundColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection)
+        
+        let placements: [RSDColorPlacement] = [.header, .body, .footer]
+        for placement in placements {
+            guard let colorStyle = self.colorStyle(for: placement, hasCustomBackgroundColor: backgroundColor != nil),
+                (colorStyle != .customBackground || (backgroundColor != nil))
+                else {
+                    continue
+            }
+            
+            // Get the color and foreground element style
+            switch colorStyle {
+            case .customBackground:
+                setColorStyle(for: placement, usesLightStyle: colorTheme.usesLightStyle, backgroundColor: backgroundColor!)
+            case .darkBackground:
+                setColorStyle(for: placement, usesLightStyle: true, backgroundColor: UIColor.appBackgroundDark)
+            case .lightBackground:
+                setColorStyle(for: placement, usesLightStyle: false, backgroundColor: UIColor.appBackgroundLight)
+            }
+        }
+    }
+    
+    /// Set the color style for the given placement elements. This allows overriding by subclasses to
+    /// customize the view style.
+    open func setColorStyle(for placement: RSDColorPlacement, usesLightStyle: Bool, backgroundColor: UIColor) {
+        switch placement {
+        case .header:
+            self.navigationHeader?.backgroundColor = backgroundColor
+            self.navigationHeader?.usesLightStyle = usesLightStyle
+            self.statusBarBackgroundView?.backgroundColor = backgroundColor
+            if let statusView = self.statusBarBackgroundView as? RSDStatusBarBackgroundView {
+                statusView.overlayColor = usesLightStyle ? UIColor.rsd_statusBarOverlayLightStyle : UIColor.rsd_statusBarOverlay
+            }
+            
+        case .body:
             self.view.backgroundColor = backgroundColor
+            
+        case .footer:
             self.navigationFooter?.backgroundColor = backgroundColor
+            self.navigationFooter?.usesLightStyle = usesLightStyle
         }
     }
     
@@ -376,14 +404,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         setupButton(navigationView.backButton, for: .navigation(.goBackward), isFooter: isFooter)
         setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
         
-        // Set the color style for this view.
-        if let usesLightStyle = usesLightStyle(isFooter: isFooter) {
-            navigationView.usesLightStyle = usesLightStyle
-            if !isFooter, let statusView = self.statusBarBackgroundView as? RSDStatusBarBackgroundView {
-                statusView.overlayColor = usesLightStyle ? UIColor.rsd_statusBarOverlayLightStyle : UIColor.rsd_statusBarOverlay
-            }
-        }
-        
         navigationView.setNeedsLayout()
         navigationView.setNeedsUpdateConstraints()
     }
@@ -397,13 +417,25 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
-    /// Should the navigation view be set up to use "light" theme style or "dark" theme style?
-    /// - parameter isFooter: Is this the footer?
-    /// - returns: `true` if this navigation view uses light style.
-    open func usesLightStyle(isFooter: Bool) -> Bool? {
+    /// What is the color style for the given placement?
+    /// - parameter placement: The view placement of the element.
+    /// - returns: The color style (if any) defined for that element.
+    open func colorStyle(for placement: RSDColorPlacement, hasCustomBackgroundColor: Bool) -> RSDColorStyle? {
         guard let colorTheme = themedStep?.colorTheme else { return nil }
-        let hasTopBackgroundImage = self.hasTopBackgroundImage()
-        return colorTheme.usesLightStyle && (!isFooter || !hasTopBackgroundImage)
+
+        if let colorStyle = colorTheme.colorStyle(for: placement), (colorStyle != .customBackground || hasCustomBackgroundColor) {
+            // Exit early if there is a specific color style defined.
+            return colorStyle
+        }
+        else if placement != .header && hasTopBackgroundImage() {
+            // If this is a footer and the view has a top background image, then the footer should be the
+            // light color background.
+            return .lightBackground
+        }
+        else if hasCustomBackgroundColor {
+            return .customBackground
+        }
+        return colorTheme.usesLightStyle ? .darkBackground : .lightBackground
     }
 
     /// Convenience method for setting up each of the buttons. This will set up color theme, add the

@@ -65,48 +65,63 @@ public protocol RSDViewThemeElement : RSDUIThemeElement {
     var storyboardIdentifier: String? { get }
 }
 
+/// An enum for the type of the color style to use for a given component.
+public enum RSDColorStyle: String, Codable {
+    
+    /// Uses the "light" background color.
+    case lightBackground
+    
+    /// Uses the "dark" background color.
+    case darkBackground
+    
+    /// Uses the custom background color defined by the theme.
+    case customBackground
+}
+
+/// An enum for part of the view to which a given color style should be applied.
+public enum RSDColorPlacement : String, Codable {
+    
+    /// The color applies to the header.
+    case header
+    
+    /// The color applies to the body of the view.
+    case body
+    
+    /// The color applies to the footer of the view.
+    case footer
+}
+
 /// `RSDColorThemeElement` tells the UI what the background color and foreground color are for a given view as
 /// well as whether or not the foreground elements should use "light style".
 public protocol RSDColorThemeElement : RSDUIThemeElement {
     
-
     #if os(watchOS)
     /// **Available** for watchOS.
     ///
-    /// The background color for this step. If undefined then the background color appropriate to the light
-    /// style will be used.
+    /// The background color for this step. If undefined then the background color will be determined by the
+    /// step view controller.
     /// - returns: The color or `nil` if undefined.
     func backgroundColor() -> UIColor?
     #else
     
     /// **Available** for iOS and tvOS.
     ///
-    /// The background color for this step. If undefined then the background color appropriate to the light
-    /// style will be used.
+    /// The background color for this step. If undefined then the background color will be determined by the
+    /// step view controller.
     /// - returns: The color or `nil` if undefined.
     func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor?
     #endif
     
-
-    #if os(watchOS)
-    /// **Available** for watchOS.
-    ///
-    /// The foreground color for this step. If undefined then the foreground color appropriate to the light
-    /// style will be used.
-    /// - returns: The color or `nil` if undefined.
-    func foregroundColor() -> UIColor?
-    #else
-    
-    /// **Available** for iOS and tvOS.
-    ///
-    /// The foreground color for this step. If undefined then the foreground color appropriate to the light
-    /// style will be used.
-    /// - returns: The color or `nil` if undefined.
-    func foregroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor?
-    #endif
-    
-    /// Hint for whether or not the view uses light style for things like the progress bar and navigation buttons.
+    /// Hint for whether or not the view uses light style for things like the progress bar and navigation
+    /// buttons. This is used primarily to denote whether or not the custom background color is "light" or
+    /// "dark". It will also be selectively applied if the color styles are undefined.
     var usesLightStyle: Bool { get }
+    
+    /// The color style to use for the given view component. If `nil` the default that is determined by the
+    /// step view controller will be used.
+    /// - parameter placement: The view placement of the element.
+    /// - returns: The color style (if any) defined for that element.
+    func colorStyle(for placement: RSDColorPlacement) -> RSDColorStyle?
 }
 
 /// A hint as to where the UI should place an image.

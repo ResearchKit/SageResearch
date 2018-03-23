@@ -1,0 +1,73 @@
+{
+    "identifier": "colorThemes",
+    "steps": [
+              {
+              "identifier": "selectOne_darkBackground",
+              "type": "form",
+              "title": "Single choice selection with a dark background and a white footer.",
+              "detail": "Select a single option",
+              "uiHint": "list",
+              "dataType": "singleChoice",
+              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"],
+              "colorTheme" : { "colorStyle" : { "header" : "darkBackground",
+                                                "body" : "darkBackground",
+                                                "footer" : "lightBackground" }}
+              },
+              {
+              "identifier": "selectOne_whiteBackground",
+              "type": "form",
+              "title": "Single choice selection with a light background.",
+              "detail": "Select a single option",
+              "uiHint": "list",
+              "dataType": "singleChoice",
+              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"],
+              "colorTheme" : { "usesLightStyle" : false }
+              },
+              {
+              "identifier": "selectOne_green",
+              "type": "form",
+              "title": "Single choice selection with a bright green color theme.",
+              "detail": "Select a single option",
+              "uiHint": "list",
+              "dataType": "singleChoice",
+              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"],
+              "colorTheme" : {
+                "backgroundColor": "darkGreen",
+                "usesLightStyle" : true,
+                "colorStyle" : {
+                    "header" : "customBackground",
+                    "body" : "darkBackground",
+                    "footer" : "lightBackground" }}
+              },
+              {
+              "identifier"         : "motion_darkBackground",
+              "type"               : "active",
+              "duration"           : 10,
+              "text"               : "Dial with a dark background",
+              "commands"           : ["transitionAutomatically"],
+              "colorTheme"         : { "usesLightStyle" : true }
+              },
+              {
+              "identifier"         : "motion_lightBackground",
+              "type"               : "active",
+              "duration"           : 10,
+              "text"               : "Dial with a light background",
+              "commands"           : ["transitionAutomatically"],
+              "colorTheme"         : { "usesLightStyle" : false }
+              },
+              {
+              "identifier"         : "image_darkBackground",
+              "type"               : "instruction",
+              "image"              : { "imageName": "exampleImage", "placementType": "iconBefore" },
+              "text"               : "Example with the image placed before the text and a dark background.",
+              "colorTheme"         : { "usesLightStyle" : true }
+              },
+              {
+              "identifier"         : "image_lightBackground",
+              "type"               : "instruction",
+              "image"              : { "imageName": "exampleImage", "placementType": "iconBefore" },
+              "text"               : "Example with the image placed before the text and a light background.",
+              "colorTheme"         : { "usesLightStyle" : false }
+              }
+    ]
+}
