@@ -92,7 +92,7 @@ public protocol RSDTrackedSection {
 
 /// A tracked item answer includes the answer details (including selection) that are tracked for
 /// this participant.
-public protocol RSDTrackedItemAnswer : Codable {
+public protocol RSDTrackedItemAnswer : Codable, RSDChoice {
     
     /// A identifier that maps to the associated `RSDTrackedItem`.
     var identifier: String { get }
@@ -102,7 +102,7 @@ public protocol RSDTrackedItemAnswer : Codable {
 }
 
 /// The tracked items result includes a list of all the answers for this tracked selection.
-public protocol RSDTrackedItemsResult : RSDAnswerResult, RSDCopyWithIdentifier {
+public protocol RSDTrackedItemsResult : RSDResult, RSDCopyWithIdentifier {
     
     /// A list of the currently selected items including any tracked details.
     var selectedAnswers: [RSDTrackedItemAnswer] { get }

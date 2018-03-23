@@ -45,7 +45,7 @@ open class RSDChoiceTableItem : RSDInputFieldTableItem {
     }
     
     /// Whether or not the choice is currently selected.
-    public var selected: Bool = false
+    open var selected: Bool = false
     
     /// Initialize a new RSDChoiceTableItem.
     /// parameters:

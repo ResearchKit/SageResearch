@@ -52,4 +52,26 @@ class RSDCatalogUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
+    
+    func testDataTracking() {
+        
+        let app = XCUIApplication()
+        let tablesQuery = app.tables
+        tablesQuery/*@START_MENU_TOKEN@*/.cells.staticTexts["Data Tracking"].press(forDuration: 0.6);/*[[".cells.staticTexts[\"Data Tracking\"]",".tap()",".press(forDuration: 0.6);",".staticTexts[\"Data Tracking\"]"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[1,0]]@END_MENU_TOKEN@*/
+        tablesQuery/*@START_MENU_TOKEN@*/.cells.staticTexts["Task for logging triggers."]/*[[".cells.staticTexts[\"Task for logging triggers.\"]",".staticTexts[\"Task for logging triggers.\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/.tap()
+        app.buttons["Get Started"].tap()
+
+        XCTAssertFalse(app.buttons["Next"].isEnabled)
+
+        tablesQuery/*@START_MENU_TOKEN@*/.cells.staticTexts["Cold"]/*[[".cells.staticTexts[\"Cold\"]",".staticTexts[\"Cold\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/.tap()
+        
+        XCTAssertTrue(app.buttons["Next"].isEnabled)
+
+        tablesQuery/*@START_MENU_TOKEN@*/.cells.staticTexts["Bedtime, early"]/*[[".cells.staticTexts[\"Bedtime, early\"]",".staticTexts[\"Bedtime, early\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/.swipeUp()
+        tablesQuery/*@START_MENU_TOKEN@*/.cells.staticTexts["Diet, vegetarian"].swipeLeft()/*[[".cells.staticTexts[\"Diet, vegetarian\"]",".swipeUp()",".swipeLeft()",".staticTexts[\"Diet, vegetarian\"]"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[1,0]]@END_MENU_TOKEN@*/
+        tablesQuery/*@START_MENU_TOKEN@*/.cells.staticTexts["Homeopathic therapy"]/*[[".cells.staticTexts[\"Homeopathic therapy\"]",".staticTexts[\"Homeopathic therapy\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/.tap()
+        app.buttons["Next"].tap()
+        app.buttons["Submit"].tap()
+
+    }
 }

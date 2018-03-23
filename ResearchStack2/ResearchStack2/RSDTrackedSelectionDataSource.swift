@@ -35,50 +35,8 @@ import Foundation
 
 /// `RSDTrackedSelectionDataSource` is a concrete implementation of the `RSDTableDataSource` protocol
 /// that is designed to be used with a `RSDTrackedItemsStep`.
-open class RSDTrackedSelectionDataSource : RSDTableDataSource {
+open class RSDTrackedSelectionDataSource : RSDTrackingDataSource {
 
-    /// The delegate associated with this data source.
-    open weak var delegate: RSDTableDataSourceDelegate?
-    
-    /// The step associated with this data source.
-    public let step: RSDStep
-    
-    /// The current task path.
-    public let taskPath: RSDTaskPath
-    
-    /// The table sections for this data source.
-    public let sections: [RSDTableSection]
-    
-    /// The list of item groups.
-    public let itemGroups: [RSDChoicePickerTableItemGroup]
-    
-    /// The initial result when the data source was first displayed.
-    public let initialResult: RSDTrackedItemsResult?
-    
-    /// Initialize a new `RSDFormStepDataSourceObject`.
-    /// - parameters:
-    ///     - step:             The RSDTrackedSelectionStep for this data source.
-    ///     - taskPath:         The current task path for this data source.
-    public init(step: RSDTrackedItemsStep, taskPath: RSDTaskPath) {
-        self.step = step
-        self.taskPath = taskPath
-        
-        // Look for an initial result in either the taskPath or on self.
-        var initialResult: RSDTrackedItemsResult?
-        if let result = step.result {
-            initialResult = result
-        }
-        else if let previousResult = taskPath.previousResults?.rsd_last(where: { $0.identifier == step.identifier }) as? RSDTrackedItemsResult {
-            initialResult = previousResult
-        }
-        self.initialResult = initialResult
-        
-        // build the sections and groups
-        let (sections, groups) = type(of: self).buildSections(step: step, initialResult: initialResult)
-        self.sections = sections
-        self.itemGroups = groups
-    }
-    
     /// Overrridable class function for building the sections of the table.
     /// - parameters:
     ///     - step: The RSDTrackedSelectionStep for this data source.
@@ -86,7 +44,7 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
     /// - returns:
     ///     - sections: The built table sections.
     ///     - itemGroups: The associated item groups.
-    open class func buildSections(step: RSDTrackedItemsStep, initialResult: RSDTrackedItemsResult?) -> (sections: [RSDTableSection], itemGroups: [RSDChoicePickerTableItemGroup]) {
+    override open class func buildSections(step: RSDTrackedItemsStep, initialResult: RSDTrackedItemsResult?) -> (sections: [RSDTableSection], itemGroups: [RSDTableItemGroup]) {
 
         let sectionItems = step.sections ?? []
         let dataType: RSDFormDataType = .collection(.multipleChoice, .string)
@@ -151,57 +109,6 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
         return (tableSections, itemGroups)
     }
     
-    // MARK: Selection management
-    
-    /// The tracking result associated with this data source. The default implementation is to search the
-    /// `taskPath` for a matching result and if that fails to return a new instance created using
-    /// `instantiateTrackingResult()`.
-    ///
-    /// - returns: The appropriate tracking result.
-    open func trackingResult() -> RSDTrackedItemsResult {
-        if let trackingResult = taskPath.result.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) as? RSDTrackedItemsResult {
-            return trackingResult
-        }
-        else {
-            return instantiateTrackingResult()
-        }
-    }
-    
-    /// Instantiate a tracking result of the appropriate object type for this data source.
-    /// The default implementation returns a new instance of `RSDTrackedItemsResultObject`.
-    ///
-    /// - returns: The appropriate tracking result.
-    open func instantiateTrackingResult() -> RSDTrackedItemsResult {
-        return self.step.instantiateStepResult() as? RSDTrackedItemsResult ??
-            RSDTrackedItemsResultObject(identifier: step.identifier)
-    }
-    
-    // MARK: RSDTableDataSource implementation
-    
-    /// Retrieve the 'RSDTableItemGroup' for a specific IndexPath.
-    /// - parameter indexPath: The index path that represents the item group in the table view.
-    /// - returns: The requested `RSDTableItemGroup`, or nil if it cannot be found.
-    open func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
-        guard indexPath.section < itemGroups.count else { return nil }
-        return itemGroups[indexPath.section]
-    }
-    
-    /// Determine if all answers are valid. Also checks the case where answers are required but one has
-    /// not been provided.
-    /// - returns: A `Bool` indicating if all answers are valid.
-    open func allAnswersValid() -> Bool {
-        return self.trackingResult().selectedAnswers.count > 0
-    }
-    
-    /// Save an answer for a specific IndexPath.
-    /// - parameters:
-    ///     - answer:      The object to be save as the answer.
-    ///     - indexPath:   The `IndexPath` that represents the `RSDTableItem` in the table view.
-    /// - throws: `RSDInputFieldError` if the answer is invalid.
-    open func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
-        assertionFailure("This is not a valid method of changing the answer for this table data source")
-    }
-    
     /// Select or deselect the answer option for a specific IndexPath.
     /// - parameter indexPath: The `IndexPath` that represents the `RSDTableItem` in the  table view.
     /// - returns:
@@ -209,19 +116,15 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
     ///     - reloadSection: `true` if the section needs to be reloaded b/c other answers have changed,
     ///                      otherwise returns `false`.
     /// - throws: `RSDInputFieldError` if the selection is invalid.
-    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
+    override open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
             return (false, false)
         }
         
-        // TODO: syoung 03/01/2018 If the user is de-selecting a tracked item that they selected in a
-        // previous run (and may have added details for it), then we want to alert them and confirm that
-        // this was not an accident. Not sure where to add this particular special-case requirement, but
-        // adding a TODO comment to track that it needs to be implemented.
-        
         // update selection for this group
         let ret = try itemGroup.select(item, indexPath: indexPath)
-        let selectedIdentifiers = itemGroups.flatMap({ $0.answer as? [String] }).flatMap{$0}
+        let choiceGroups = self.itemGroups.filter { $0 is RSDChoicePickerTableItemGroup } as! [RSDChoicePickerTableItemGroup]
+        let selectedIdentifiers = choiceGroups.flatMap({ $0.answer as? [String] }).flatMap{$0}
         let items = (self.step as? RSDTrackedItemsStep)?.items ?? []
         
         // Update the answers
