@@ -686,13 +686,13 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
         
         if isSkipHidden {
             _interactiveContraints.append(contentsOf:
-                nextButton!.rsd_alignToSuperview([.bottom], padding: constants.bottomMargin))
+                nextButton!.rsd_align([.bottom], .equal, to: nextButton!.superview, [.bottomMargin], padding: constants.bottomMargin))
         }
         else {
             _interactiveContraints.append(contentsOf:
                 skipButton!.rsd_alignBelow(view: nextButton!, padding: constants.verticalPadding))
             _interactiveContraints.append(contentsOf:
-                skipButton!.rsd_alignToSuperview([.bottom], padding: constants.bottomMargin))
+                skipButton!.rsd_align([.bottom], .equal, to: skipButton!.superview, [.bottomMargin], padding: constants.bottomMargin))
             _interactiveContraints.append(contentsOf:
                 skipButton!.rsd_alignToSuperview([.centerX], padding: 0))
         }
