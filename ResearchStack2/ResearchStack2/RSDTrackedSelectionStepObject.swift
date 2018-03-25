@@ -364,12 +364,27 @@ public struct RSDTrackedItemsResultObject : RSDTrackedItemsResult, Codable {
         return copy
     }
     
+    /// Convert the identifiers to `RSDIdentifier` objects sorted by the order of the identifiers in the items list.
     mutating public func updateSelected(to selectedIdentifiers: [String]?, with items: [RSDTrackedItem]) {
-        self.items = selectedIdentifiers?.map { RSDIdentifier(rawValue: $0) } ?? []
+        self.items = sort(selectedIdentifiers, with: items).map { RSDIdentifier(rawValue: $0) }
     }
     
     mutating public func updateDetails(to newValue: RSDTrackedItemAnswer) {
         // Do nothing
+    }
+}
+
+extension RSDTrackedItemsResult {
+    
+    /// Sort the given list of identifiers in the order given by the items.
+    public func sort(_ identifiers: [String]?, with items: [RSDTrackedItem]) -> [String] {
+        guard let identifiers = identifiers else {
+            return []
+        }
+        func positionOf(_ identifier: String) -> Int {
+            return items.index(where: { identifier == $0.identifier }) ?? items.count
+        }
+        return identifiers.sorted { positionOf($0) < positionOf($1) }
     }
 }
 

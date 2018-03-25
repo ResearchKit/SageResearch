@@ -71,6 +71,12 @@ class RSDCatalogUITests: XCTestCase {
         tablesQuery/*@START_MENU_TOKEN@*/.cells.staticTexts["Diet, vegetarian"].swipeLeft()/*[[".cells.staticTexts[\"Diet, vegetarian\"]",".swipeUp()",".swipeLeft()",".staticTexts[\"Diet, vegetarian\"]"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[1,0]]@END_MENU_TOKEN@*/
         tablesQuery/*@START_MENU_TOKEN@*/.cells.staticTexts["Homeopathic therapy"]/*[[".cells.staticTexts[\"Homeopathic therapy\"]",".staticTexts[\"Homeopathic therapy\"]"],[[[-1,1],[-1,0]]],[1]]@END_MENU_TOKEN@*/.tap()
         app.buttons["Next"].tap()
+        
+        XCTAssertFalse(app.buttons["Submit"].isEnabled)
+        
+        tablesQuery.cells.containing(.staticText, identifier:"Cold").buttons["Log"].tap()
+        
+        XCTAssertTrue(app.buttons["Submit"].isEnabled)
         app.buttons["Submit"].tap()
 
     }

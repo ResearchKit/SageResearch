@@ -1,8 +1,8 @@
 //
-//  RSDChoiceTableItem.swift
+//  RSDModalStepTableItem.swift
 //  ResearchStack2
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,29 +33,21 @@
 
 import Foundation
 
-/// `RSDChoiceTableItem` is used to represent a single row in a table where the user picks from a list of choices.
-open class RSDChoiceTableItem : RSDInputFieldTableItem {
+/// `RSDModalStepTableItem` is used to represent a item row that, when selected, should display a
+/// step view controller.
+open class RSDModalStepTableItem : RSDTableItem {
     
-    /// The choice for a single or multiple choice input field.
-    open private(set) var choice: RSDChoice
+    /// The action to link to the selection cell or button.
+    public let action: RSDUIAction
     
-    /// The answer associated with this choice
-    open override var answer: Any? {
-        return selected ? choice.answerValue : nil
-    }
-    
-    /// Whether or not the choice is currently selected.
-    open var selected: Bool = false
-    
-    /// Initialize a new RSDChoiceTableItem.
+    /// Initialize a new `RSDTextTableItem`.
     /// parameters:
-    ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides.
-    ///     - inputField:    The RSDInputField representing this tableItem.
-    ///     - uiHint:        The UI hint for this row of the table.
-    ///     - choice:        The choice for a single or multiple choice input field.
-    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, choice: RSDChoice) {
-        self.choice = choice
-        let identifier = (choice.answerValue != nil) ? "\(choice.answerValue!)" : "\(rowIndex)"
-        super.init(rowIndex: rowIndex, inputField: inputField, uiHint: uiHint, reuseIdentifier: nil, identifier: identifier)
+    ///     - identifier: The cell identifier.
+    ///     - rowIndex: The index of this item relative to all rows in the section in which this item resides.
+    ///     - reuseIdentifier: The string to use as the reuse identifier.
+    ///     - action: The action to link to the selection cell or button.
+    public init(identifier: String, rowIndex: Int, reuseIdentifier: String, action: RSDUIAction) {
+        self.action = action
+        super.init(identifier: identifier, rowIndex: rowIndex, reuseIdentifier: reuseIdentifier)
     }
 }

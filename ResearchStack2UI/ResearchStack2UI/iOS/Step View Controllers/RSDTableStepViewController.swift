@@ -3,7 +3,7 @@
 //  ResearchStack2UI
 //
 //  Created by Josh Bruhin on 5/16/17.
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -56,8 +56,8 @@ import UIKit
 /// fields). These steps will result in a `tableData` that has no sections and, therefore, no rows. So the
 /// tableView will simply have a headerView, no rows, and a footerView.
 ///
-open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RSDTableDataSourceDelegate, RSDPickerObserver {
-    
+open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate {
+
     /// The table view associated with this view controller. This will be created during `viewDidLoad()`
     /// with a default set up if it is `nil`. If this view controller is loaded from a nib or storyboard,
     /// then it should set this outlet using the interface builder.
@@ -250,12 +250,13 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// The UI hints that are supported by this view controller.
     open class var supportedUIHints: Set<RSDFormUIHint> {
-        return [.list, .textfield, .picker]
+        return [.list, .textfield, .picker, .modalButton, .logging]
     }
     
     /// Creates and assigns a new instance of the model. The default implementation will instantiate
     /// `RSDFormStepDataSourceObject` and set this as the `tableData`.
     open func setupModel() {
+        guard tableData == nil else { return }
         
         // Get the table data source from the step (if applicable)
         let supportedHints = type(of: self).supportedUIHints
@@ -298,6 +299,10 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             case .textfield, .picker:
                 let cellClass: AnyClass = isFeatured ? RSDStepTextFieldFeaturedCell.self : RSDStepTextFieldCell.self
                 tableView.register(cellClass, forCellReuseIdentifier: reuseIdentifier)
+            case .modalButton:
+                tableView.register(RSDModalButtonCell.self, forCellReuseIdentifier: reuseIdentifier)
+            case .logging:
+                tableView.register(RSDTrackedLoggingCell.nib, forCellReuseIdentifier: reuseIdentifier)
             default:
                 tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
             }
@@ -317,7 +322,6 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         tableView.register(RSDStepChoiceSectionHeader.self, forHeaderFooterViewReuseIdentifier: reuseIdentifier)
     }
     private var _registeredSectionIdentifiers = Set<String>()
-
     
     
     // MARK: View setup
@@ -413,7 +417,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         activeTextField = nil
         super.stop()
     }
-
+    
     
     // MARK: UITableView Datasource
     
@@ -467,7 +471,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         else {
             // Add a spacer
             let view =  UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: constants.defaultSectionHeight))
-            view.backgroundColor = UIColor.appBackgroundLight
+            view.backgroundColor = tableView.backgroundColor
             return view
         }
     }
@@ -514,47 +518,21 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     ///     - indexPath: The given index path.
     open func configure(cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
         
-        if let labelCell = cell as? RSDTextLabelCell {
-            configure(labelCell: labelCell, at: indexPath)
+        if let tableCell = cell as? RSDTableViewCell {
+            tableCell.indexPath = indexPath
+            tableCell.tableItem = tableData!.tableItem(at: indexPath)
+            tableCell.tableBackgroundColor = tableView.backgroundColor
         }
-        else if let imageCell = cell as? RSDImageViewCell {
-            configure(imageCell: imageCell, at: indexPath)
+        if let buttonCell = cell as? RSDButtonCell {
+            buttonCell.delegate = self
         }
-        else if let textFieldCell = cell as? RSDStepTextFieldCell {
+        if let styleCell = cell as? RSDViewColorStylable {
+            styleCell.usesLightStyle = self.usesLightStyle
+        }
+        
+        if let textFieldCell = cell as? RSDStepTextFieldCell {
             configure(textFieldCell: textFieldCell, at: indexPath)
         }
-        else if let choiceCell = cell as? RSDStepChoiceCell {
-            configure(choiceCell: choiceCell, at: indexPath)
-        }
-    }
-    
-    /// Configure a label cell.
-    func configure(labelCell: RSDTextLabelCell, at indexPath: IndexPath) {
-        guard let item = tableData?.tableItem(at: indexPath) as? RSDTextTableItem
-            else {
-                return
-        }
-        labelCell.label.text = item.text
-    }
-    
-    /// Configure an image cell.
-    func configure(imageCell: RSDImageViewCell, at indexPath: IndexPath) {
-        guard let item = tableData?.tableItem(at: indexPath) as? RSDImageTableItem
-            else {
-                return
-        }
-        imageCell.imageLoader = item.imageTheme
-    }
-    
-    /// Configure a choice cell.
-    func configure(choiceCell: RSDStepChoiceCell, at indexPath: IndexPath) {
-        guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDChoiceTableItem
-            else {
-                return
-        }
-        choiceCell.titleLabel.text = tableItem.choice.text
-        choiceCell.detailLabel.text = tableItem.choice.detail
-        choiceCell.isSelected = tableItem.selected
     }
     
     /// Configure a text field cell.
@@ -653,24 +631,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         guard let tableData = self.tableData else { return }
         
         if let item = tableData.tableItem(at: indexPath) as? RSDChoiceTableItem {
-            do {
-                let response = try tableData.selectAnswer(item: item, at: indexPath)
-                if response.reloadSection {
-                    // reload the entire table - this will refresh the selection state for the items in this
-                    // section without confusing the constraints.
-                    tableView.reloadData()
-                } else {
-                    tableView.reloadRows(at: [indexPath], with: .none)
-                }
-                
-                // Dismiss other textField's keyboard
-                if self.activeTextField != nil {
-                    tableView.endEditing(false)
-                }
-                
-            } catch let err {
-                assertionFailure("Unexpected error while selecting table row \(indexPath). \(err)")
-            }
+            didSelect(item: item, at: indexPath)
         }
         else {
             
@@ -680,6 +641,29 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             }
             
             tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+    func didSelect(item: RSDChoiceTableItem, at indexPath: IndexPath) {
+        guard let tableData = self.tableData else { return }
+
+        do {
+            let response = try tableData.selectAnswer(item: item, at: indexPath)
+            if response.reloadSection {
+                // reload the entire table - this will refresh the selection state for the items in this
+                // section without confusing the constraints.
+                tableView.reloadData()
+            } else {
+                tableView.reloadRows(at: [indexPath], with: .none)
+            }
+            
+            // Dismiss other textField's keyboard
+            if self.activeTextField != nil {
+                tableView.endEditing(false)
+            }
+            
+        } catch let err {
+            assertionFailure("Unexpected error while selecting table row \(indexPath). \(err)")
         }
     }
     
@@ -878,6 +862,35 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                              message: invalidMessage ?? message ?? Localization.localizedString("VALIDATION_ERROR_GENERIC"),
                              actionHandler: nil)
     }
+    
+    
+    /// MARK: RSDButtonCellDelegate
+    
+    open func didTapButton(on cell: RSDButtonCell) {
+        guard let tableItem = tableData?.tableItem(at: cell.indexPath) else {
+            assertionFailure("Cannot handle the button tap.")
+            return
+        }
+        
+        if let modalItem = tableItem as? RSDModalStepTableItem {
+            guard let source = tableData as? RSDModalStepDataSource,
+                let taskViewController = self.taskController as? RSDTaskViewController
+                else {
+                    assertionFailure("Cannot handle the button tap.")
+                    return
+            }
+            let step = source.step(for: modalItem)
+            let stepViewController = taskViewController.viewController(for: step)
+            source.willPresent(stepViewController, from: modalItem)
+            self.present(stepViewController, animated: true, completion: nil)
+        }
+        else if let choiceItem = tableItem as? RSDChoiceTableItem {
+            didSelect(item: choiceItem, at: cell.indexPath)
+        }
+        else {
+            assertionFailure("Cannot handle the button tap.")
+        }
+    }
 
     
     // MARK: RSDFormStepDataSourceDelegate implementation
@@ -890,6 +903,33 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         (activeTextField?.inputAccessoryView as? RSDNavigationFooterView)?.nextButton?.isEnabled = self.isForwardEnabled
     }
     
+    /// Called when the answers tracked by the data source change.
+    /// - parameters:
+    ///     - dataSource: The calling data source.
+    ///     - section: The section that changed.
+    open func tableDataSource(_ dataSource: RSDTableDataSource, didChangeAnswersIn section: Int) {
+        self.answersDidChange(in: section)
+    }
+    
+    /// Called by a `RSDModalStepDataSource` to dismiss the presented step view controller.
+    open func tableDataSource(_ dataSource: RSDTableDataSource, didFinishWith stepController: RSDStepController) {
+        guard let vc = stepController as? UIViewController else { return }
+        vc.dismiss(animated: true) { }
+    }
+    
+    /// Called *before* editing the table rows and sections.
+    open func tableDataSourceWillBeginUpdate(_ dataSource: RSDTableDataSource) {
+        self.tableView.beginUpdates()
+    }
+    
+    /// Called *after* editing the table rows and sections.
+    open func tableDataSourceDidEndUpdate(_ dataSource: RSDTableDataSource, addedRows:[IndexPath], removedRows:[IndexPath]) {
+        // finish updating the table
+        let animation: UITableViewRowAnimation = self.isVisible ? .automatic : .none
+        self.tableView.deleteRows(at: removedRows, with: animation)
+        self.tableView.insertRows(at: addedRows, with: animation)
+        self.tableView.endUpdates()
+    }
     
     // MARK: UIScrollView delegate
     
@@ -1022,7 +1062,7 @@ fileprivate struct RSDDefaultGenericStepLayoutConstants {
     
     public let mainViewBottomMargin: CGFloat
     public let defaultRowHeight: CGFloat = 52.0
-    public let defaultSectionHeight: CGFloat = 20.0
+    public let defaultSectionHeight: CGFloat = 1.0
     public let formStepMinHeaderHeight: CGFloat = 180
     
     init(numberOfSections: Int) {

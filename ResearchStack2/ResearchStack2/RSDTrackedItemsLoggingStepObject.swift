@@ -179,16 +179,12 @@ extension RSDCollectionResultObject : RSDTrackedItemsResult {
     
     /// Returns the subset of selected answers that conform to the tracked item answer.
     public var selectedAnswers: [RSDTrackedItemAnswer] {
-        return self.inputResults.rsd_mapAndFilter { $0 as? RSDTrackedItemAnswer }
+        return self.inputResults.flatMap { $0 as? RSDTrackedItemAnswer }
     }
     
     /// Adds a `RSDTrackedLoggingResultObject` for each identifier.
     public mutating func updateSelected(to selectedIdentifiers: [String]?, with items: [RSDTrackedItem]) {
-        guard let identifiers = selectedIdentifiers else {
-            self.inputResults = []
-            return
-        }
-        let results = identifiers.map { (identifier) -> RSDResult in
+        let results = sort(selectedIdentifiers, with: items).map { (identifier) -> RSDResult in
             if let result = self.inputResults.first(where: { $0.identifier == identifier }) {
                 return result
             }

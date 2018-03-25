@@ -55,7 +55,7 @@ import UIKit
 }
 
 /// `RSDRoundedButton` is a UI element for displaying navigation buttons in the footer area of a view.
-@IBDesignable open class RSDRoundedButton : RSDButton {
+@IBDesignable open class RSDRoundedButton : RSDButton, RSDViewColorStylable {
     
     public static let defaultHeight: CGFloat = 52.0
     public static let defaultWidthWith2Buttons: CGFloat = CGFloat(144.0).rsd_proportionalToScreenWidth(max: 160)
@@ -111,7 +111,6 @@ import UIKit
             }
         }
         setTitleColor(titleColor, for: .normal)
-
     }
     
     open override func tintColorDidChange() {
@@ -144,16 +143,14 @@ import UIKit
 
     open func commonInit() {
         
-        // In many cases, the below constraints will be overriden by the containing view, so we set the priority here to 950
-        // add default constraint for height
+        // Set the height to the standard height.
         let heightConstraint = self.heightAnchor.constraint(equalToConstant: RSDRoundedButton.defaultHeight)
-        heightConstraint.priority = UILayoutPriority(rawValue: 950)
         heightConstraint.isActive = true
         
-        // Set the title font to the font for a rounded button
+        // Set the title font to the font for a rounded button.
         titleLabel?.font = UIFont.roundedButtonTitle
         
-        // Update the color style
+        // Update the color style.
         updateColorStyle()
     }
     

@@ -34,32 +34,40 @@
 import Foundation
 
 /// `RSDTrackingDataSource` is an abstract class for handling shared data tracking.
-open class RSDTrackingDataSource : RSDTableDataSource {
+open class RSDTrackingDataSource : NSObject, RSDTableDataSource {
     
     /// The delegate associated with this data source.
     open weak var delegate: RSDTableDataSourceDelegate?
     
     /// The step associated with this data source.
-    public let step: RSDStep
+    public var step: RSDStep {
+        return trackedStep
+    }
     
     /// The current task path.
-    public let taskPath: RSDTaskPath
+    public private(set) var taskPath: RSDTaskPath!
     
     /// The table sections for this data source.
-    public let sections: [RSDTableSection]
+    public var sections: [RSDTableSection] {
+        return _sections
+    }
+    private var _sections: [RSDTableSection]
     
     /// The list of item groups.
-    public let itemGroups: [RSDTableItemGroup]
+    public private(set) var itemGroups: [RSDTableItemGroup]
     
     /// The initial result when the data source was first displayed.
     public let initialResult: RSDTrackedItemsResult?
+    
+    // The tracked step for this source.
+    public let trackedStep: RSDTrackedItemsStep
     
     /// Initialize a new `RSDFormStepDataSourceObject`.
     /// - parameters:
     ///     - step:             The RSDTrackedSelectionStep for this data source.
     ///     - taskPath:         The current task path for this data source.
     public init(step: RSDTrackedItemsStep, taskPath: RSDTaskPath) {
-        self.step = step
+        self.trackedStep = step
         self.taskPath = taskPath
         
         // Look for an initial result in either the taskPath or on self.
@@ -71,11 +79,29 @@ open class RSDTrackingDataSource : RSDTableDataSource {
             initialResult = previousResult
         }
         self.initialResult = initialResult
-        
+
         // build the sections and groups
         let (sections, groups) = type(of: self).buildSections(step: step, initialResult: initialResult)
-        self.sections = sections
+        self._sections = sections
         self.itemGroups = groups
+    }
+    
+    /// Reload the sections and groups for this table.
+    /// - parameter selectionResult: The updated selection result.
+    public func reloadDataSource(with selectionResult: RSDTrackedItemsResult) -> (addedRows: [IndexPath], removedRows: [IndexPath]) {
+        let (sections, groups) = type(of: self).buildSections(step: trackedStep, initialResult: selectionResult)
+        
+        // Get the previous and new items
+        let previousItems = Set(self.sections.flatMap { $0.tableItems })
+        let newItems = Set(sections.flatMap { $0.tableItems })
+        let addedRows = newItems.subtracting(previousItems).map { $0.indexPath }
+        let removedRows = previousItems.subtracting(newItems).map { $0.indexPath }
+        
+        // Update the current sections
+        self._sections = sections
+        self.itemGroups = groups
+        
+        return (addedRows, removedRows)
     }
     
     /// Overrridable class function for building the sections of the table.

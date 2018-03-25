@@ -62,7 +62,7 @@ open class RSDTrackedSelectionDataSource : RSDTrackingDataSource {
             group.sectionIndex = idx
             itemGroups.append(group)
             // table section
-            let tableSection = RSDTableSection(sectionIndex: idx, tableItems: group.items)
+            let tableSection = RSDTableSection(identifier: identifier, sectionIndex: idx, tableItems: group.items)
             tableSection.title = (section?.text ?? section?.identifier) ?? (
                 idx > 0 ? Localization.localizedString("OTHER_SECTION_TITLE") : nil
             )
@@ -133,9 +133,7 @@ open class RSDTrackedSelectionDataSource : RSDTrackingDataSource {
         self.taskPath.appendStepHistory(with: stepResult)
         
         // inform delegate that answers have changed
-        if let delegate = delegate {
-            delegate.answersDidChange(in: indexPath.section)
-        }
+        delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
         
         return ret
     }

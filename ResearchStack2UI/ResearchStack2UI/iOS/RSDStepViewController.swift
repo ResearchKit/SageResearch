@@ -162,6 +162,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// `viewDidAppear`. This flag is used to mark whether or not to call `performStartCommands()`.
     public private(set) var isFirstAppearance: Bool = true
     
+    /// Sets whether or not the body of the view uses light style.
+    public private(set) var usesLightStyle: Bool = false
+    
     /// Override `viewWillAppear` to call through to the delegate method and if this is the first
     /// appearance to set up the navigation, step details, and background color theme.
     open override func viewWillAppear(_ animated: Bool) {
@@ -329,6 +332,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             
         case .body:
             self.view.backgroundColor = backgroundColor
+            self.usesLightStyle = usesLightStyle
             
         case .footer:
             self.navigationFooter?.backgroundColor = backgroundColor

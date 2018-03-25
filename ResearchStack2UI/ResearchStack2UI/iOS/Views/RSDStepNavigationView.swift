@@ -2,7 +2,7 @@
 //  RSDStepNavigationView.swift
 //  ResearchStack2UI
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,11 +33,18 @@
 
 import UIKit
 
+/// A protocol that UIView subclasses can use to standardize the color of foreground elements.
+public protocol RSDViewColorStylable : class {
+    
+    /// Should the component use a light tint for display on a dark background?
+    var usesLightStyle: Bool { get set }
+}
+
 /// `RSDStepNavigationView` is a custom `UIView` to be included in a `RSDStepViewController`.
 /// It optionally contains references to standard step navigation UI including a next button,
 /// back button, skip button, learn more button, and cancel button.
 @IBDesignable
-open class RSDStepNavigationView: UIView {
+open class RSDStepNavigationView: UIView, RSDViewColorStylable {
     
     /// Button for navigating to the next step.
     @IBOutlet open var nextButton: UIButton?
@@ -535,7 +542,7 @@ public protocol RSDNavigationFooterLayoutConstants {
     var shadowHeight: CGFloat { get }
 }
 
-fileprivate struct DefaultNavigationFooterLayoutConstants {
+internal struct DefaultNavigationFooterLayoutConstants {
     let topMargin = CGFloat(16.0).rsd_proportionalToScreenHeight(max: 24.0)
     let bottomMargin = CGFloat(18.0)
     let horizontalPadding = CGFloat(20.0)
@@ -698,3 +705,6 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
         }
     }
 }
+
+
+

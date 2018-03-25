@@ -34,14 +34,16 @@
 import Foundation
 
 extension RSDFormUIHint {
+    
+    /// Display a cell appropriate to logging a timestamp.
     public static let logging: RSDFormUIHint = "logging"
 }
 
 /// `RSDTrackedLoggingDataSource` is a concrete implementation of the `RSDTableDataSource` protocol
 /// that is designed to be used with a `RSDTrackedItemsStep` intended for logging of items that were
 /// selected in a previous step.
-open class RSDTrackedLoggingDataSource : RSDTrackingDataSource {
-    
+open class RSDTrackedLoggingDataSource : RSDTrackingDataSource, RSDModalStepDataSource, RSDModalStepTaskControllerDelegate {
+
     /// Overrridable class function for building the sections of the table.
     /// - parameters:
     ///     - step: The RSDTrackedSelectionStep for this data source.
@@ -61,10 +63,17 @@ open class RSDTrackedLoggingDataSource : RSDTrackingDataSource {
             return RSDTrackedLoggingTableItem(rowIndex: idx, inputField: inputField, uiHint: .logging, choice: choice)
         }
         
-        let itemGroup  = RSDTableItemGroup(beginningRowIndex: 0, items: trackedItems)
-        let section = RSDTableSection(sectionIndex: 0, tableItems: trackedItems)
+        var itemGroups: [RSDTableItemGroup] = [RSDTableItemGroup(beginningRowIndex: 0, items: trackedItems)]
+        var sections: [RSDTableSection] = [RSDTableSection(identifier: "logging", sectionIndex: 0, tableItems: trackedItems)]
         
-        return ([section], [itemGroup])
+        let actionType: RSDUIActionType = .navigation(.addMore)
+        if let uiStep = step as? RSDUIActionHandler, let action = uiStep.action(for: actionType, on: step) {
+            let tableItem = RSDModalStepTableItem(identifier: actionType.stringValue, rowIndex: 0, reuseIdentifier: RSDFormUIHint.modalButton.stringValue, action: action)
+            itemGroups.append(RSDTableItemGroup(beginningRowIndex: 0, items: [tableItem]))
+            sections.append(RSDTableSection(identifier: "addMore", sectionIndex: 1, tableItems: [tableItem]))
+        }
+        
+        return (sections, itemGroups)
     }
     
     /// Override to mark the item as logged.
@@ -90,9 +99,7 @@ open class RSDTrackedLoggingDataSource : RSDTrackingDataSource {
         self.taskPath.appendStepHistory(with: stepResult)
         
         // inform delegate that answers have changed
-        if let delegate = delegate {
-            delegate.answersDidChange(in: indexPath.section)
-        }
+        delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
         
         return (true, false)
     }
@@ -102,15 +109,71 @@ open class RSDTrackedLoggingDataSource : RSDTrackingDataSource {
         return self.trackingResult().selectedAnswers.reduce(false, { $0 || $1.hasRequiredValues })
     }
     
-    /// Open the selection view controller and edit the selection of the items to track.
-    open func editSelectedItems() {
+    // MARK: RSDModalStepDataSource
+    
+    /// Returns the selection step.
+    open func step(for tableItem: RSDModalStepTableItem) -> RSDStep {
+        guard let step = (self.taskPath.task?.stepNavigator as? RSDTrackedItemsStepNavigator)?.getSelectionStep() as? RSDTrackedItemsStep
+            else {
+                assertionFailure("Expecting the task navigator to be a tracked items navigator.")
+            return RSDUIStepObject(identifier: tableItem.identifier)
+        }
+        step.result = self.trackingResult()
+        return step
+    }
+    
+    /// The calling table view controller will present a step view controller for the modal step. This method
+    /// should set up the task controller for the step and handle any other task management required before
+    /// presenting the step.
+    ///
+    /// - parameters:
+    ///     - stepController: The step controller that was instantiated to run the step.
+    ///     - tableItem: The table item that was selected.
+    open func willPresent(_ stepController: RSDStepController, from tableItem: RSDModalStepTableItem) {
+        guard let task = taskPath.task else {
+            assertionFailure("Failed to set the task controller because the current task is nil.")
+            return
+        }
         
-        // TODO: Implement syoung 03/23/2018
-        
-        // TODO: syoung 03/01/2018 If the user is de-selecting a tracked item that they selected in a
-        // previous run (and may have added details for it), then we want to alert them and confirm that
-        // this was not an accident. Not sure where to add this particular special-case requirement, but
-        // adding a TODO comment to track that it needs to be implemented.
+        // Set up the path and the task controller for the current step. For this case, we what a new task path that uses the task
+        // from *this* taskPath as it's source, but which does not directly edit this task path.
+        let path = RSDTaskPath(task: task)
+        path.currentStep = stepController.step
+        let taskController = RSDModalStepTaskController()
+        _currentTaskController = taskController
+        taskController.taskPath = path
+        taskController.stepController = stepController
+        taskController.delegate = self
+        stepController.taskController = taskController
+    }
+    
+    private var _currentTaskController: RSDModalStepTaskController?
+    
+    // MARK: RSDModalStepTaskControllerDelegate
+    
+    open func goForward(with taskController: RSDModalStepTaskController) {
+        if let result = taskController.taskPath.result.findResult(for: taskController.stepController.step) as? RSDTrackedItemsResult {
+
+            // Let the delegate know that things are changing.
+            self.delegate?.tableDataSourceWillBeginUpdate(self)
+            
+            // Update the result set for this source.
+            var stepResult = self.trackingResult()
+            stepResult.updateSelected(to: result.selectedIdentifiers, with: trackedStep.items)
+            self.taskPath.appendStepHistory(with: stepResult)
+            let changes = self.reloadDataSource(with: result)
+
+            // reload the table delegate.
+            self.delegate?.tableDataSourceDidEndUpdate(self, addedRows: changes.addedRows, removedRows: changes.removedRows)
+        }
+        self.delegate?.tableDataSource(self, didFinishWith: taskController.stepController)
+        _currentTaskController = nil
+    }
+    
+    /// Default behavior is to dismiss the view controller without changes.
+    open func goBack(with taskController: RSDModalStepTaskController) {
+        self.delegate?.tableDataSource(self, didFinishWith: taskController.stepController)
+        _currentTaskController = nil
     }
 }
 
@@ -119,11 +182,6 @@ open class RSDTrackedLoggingTableItem : RSDChoiceTableItem {
     
     /// The date when the event was logged.
     open var loggedDate: Date?
-    
-    /// The tracked item answer associated with the table item.
-    open var identifier: String {
-        return self.choice.answerValue as! String
-    }
 
     /// Override the answer to return the timestamp.
     open override var answer: Any? {

@@ -43,7 +43,7 @@ import UIKit
 /// displayed.
 ///
 @IBDesignable
-open class RSDStepProgressView: UIView {
+open class RSDStepProgressView: UIView, RSDViewColorStylable {
     
     /// A pointer to the label that should be updated with the current progress.
     @IBOutlet public weak var stepCountLabel: UILabel?
