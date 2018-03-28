@@ -1,0 +1,239 @@
+{
+    "identifier": "Walk And Balance",
+    "shouldHideActions": ["goBackward", "skip"],
+    "progressMarkers": ["walkInstructions", "volumnUp", "pantsWithPocket", "phoneInPocket.1", "walk", "turnAroundInstructions", "phoneInPocket.2"],
+    "steps": [{
+              "identifier": "introduction",
+              "type": "overview",
+              "title": "Walk and Balance",
+              "text": "In this activity you will be walking continuously at your normal pace for 30 seconds,  followed by standing still for 30 seconds.",
+              "permissions": [{
+                              "permissionType": "motion",
+                              "reason": "Access to Motion and Fitness sensors is required to measure your gait and balance."
+                              }],
+              "actions": {
+              "goForward": {
+              "buttonTitle": "Get started"
+              },
+              "skip": {
+              "reminderIdentifier": "Walk and Balance"
+              }
+              }
+              },
+              {
+              "identifier": "walkInstructions",
+              "type": "instruction",
+              "title": "First, walk for 30 seconds",
+              "text": "You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
+              "image": {
+              "imageNames": ["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4"],
+              "placementType": "topBackground",
+              "animationDuration": 2
+              },
+              "colorTheme": {
+              "usesLightStyle": true
+              },
+              "actions": {
+              "goForward": {
+              "buttonTitle": "Got it"
+              }
+              }
+              },
+              {
+              "identifier": "volumeUp",
+              "type": "instruction",
+              "title": "Turn the volume up",
+              "text": "Bring your phone with you and turn up your phone volume so you can hear the instructions while you are walking.",
+              "image": {
+              "imageName": "F-TurnUpVolume",
+              "placementType": "topBackground"
+              },
+              "colorTheme": {
+              "usesLightStyle": true
+              },
+              "actions": {
+              "goForward": {
+              "buttonTitle": "The phone’s volume is up"
+              }
+              }
+              },
+              {
+              "identifier": "pantsWithPocket",
+              "type": "instruction",
+              "title": "Pants with front pockets",
+              "text": "Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone.",
+              "image": {
+              "imageName": "F-PantsPocket",
+              "placementType": "topBackground"
+              },
+              "colorTheme": {
+              "usesLightStyle": true
+              },
+              "actions": {
+              "goForward": {
+              "buttonTitle": "I have front pockets"
+              }
+              }
+              },
+              {
+              "identifier": "phoneInPocket.1",
+              "type": "instruction",
+              "title": "Put the phone in your pocket",
+              "image": {
+              "imageNames": ["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
+              "placementType": "topBackground",
+              "animationDuration": 1.5
+              },
+              "colorTheme": {
+              "usesLightStyle": true
+              },
+              "text": "This test measures your leg movement. and you will need to put your phone in your front pocket.",
+              "actions": {
+              "goForward": {
+              "buttonTitle": "The phone is in a pocket"
+              }
+              }
+              },
+              {
+              "identifier": "walk",
+              "type": "section",
+              "asyncActions": [{
+                               "identifier": "motion",
+                               "type": "motion",
+                               "startStepIdentifier": "countdown",
+                               "requiresBackgroundAudio": true,
+                               "recorderTypes": ["accelerometer",
+                                                 "gyro"
+                                                 ]
+                               }],
+              "steps": [{
+                        "identifier": "countdown",
+                        "type": "countdown",
+                        "text": "Begin in...",
+                        "image": {
+                        "imageName": "F-Walking1",
+                        "placementType": "fullsizeBackground"
+                        },
+                        "colorTheme": {
+                        "usesLightStyle": true
+                        },
+                        "duration": 5,
+                        "commands": ["playSoundOnStart", "transitionAutomatically"],
+                        "spokenInstructions": {
+                        "start": "Place the phone in your pocket."
+                        }
+                        },
+                        {
+                        "identifier": "walk",
+                        "type": "active",
+                        "duration": 30,
+                        "image": {
+                        "imageName": "F-Walking1",
+                        "placementType": "fullsizeBackground"
+                        },
+                        "colorTheme": {
+                        "usesLightStyle": true
+                        },
+                        "commands": ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
+                        "spokenInstructions": {
+                        "start": "Walk back and forth.",
+                        "end": "Done! Please look at the phone for the next instructions."
+                        }
+                        }
+                        ]
+              },
+              {
+              "identifier": "turnAroundInstructions",
+              "type": "instruction",
+              "title": "Next, turn around and then stand still for 30 seconds",
+              "text": "You’ll turn 360 degrees and stand still, with your feet shoulder-width apart. Rest your arms by your side and try to avoid moving for 30 seconds.",
+              "image": {
+              "imageNames": ["F-Turning1", "F-Turning2", "F-Turning3", "F-Turning4", "F-Turning5", "F-Turning6", "F-Turning7", "F-Turning8", "F-Wait1", "F-Wait2", "F-Wait3"],
+              "placementType": "topBackground",
+              "animationDuration": 5
+              },
+              "colorTheme": {
+              "usesLightStyle": true
+              },
+              "actions": {
+              "goForward": {
+              "buttonTitle": "Got it"
+              }
+              }
+              },
+              {
+              "identifier": "phoneInPocket.2",
+              "type": "instruction",
+              "title": "Put the phone in your pocket",
+              "text": "This test measures your leg movement. and you will need to put your phone in your front pocket.",
+              "image": {
+              "imageNames": ["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
+              "placementType": "topBackground",
+              "animationDuration": 1.5
+              },
+              "colorTheme": {
+              "usesLightStyle": true
+              },
+              "actions": {
+              "goForward": {
+              "buttonTitle": "The phone is in a pocket"
+              }
+              }
+              },
+              {
+              "identifier": "balance",
+              "type": "section",
+              "asyncActions": [{
+                               "identifier": "motion",
+                               "type": "motion",
+                               "startStepIdentifier": "countdown",
+                               "requiresBackgroundAudio": true,
+                               "recorderTypes": ["accelerometer",
+                                                 "gyro"
+                                                 ]
+                               }],
+              "steps": [{
+                        "identifier": "countdown",
+                        "type": "countdown",
+                        "text": "Begin in...",
+                        "image": {
+                        "imageName": "F-Turning1",
+                        "placementType": "fullsizeBackground"
+                        },
+                        "colorTheme": {
+                        "usesLightStyle": true
+                        },
+                        "duration": 5,
+                        "commands": ["playSoundOnStart", "transitionAutomatically"],
+                        "spokenInstructions": {
+                        "start": "Place the phone in your pocket."
+                        }
+                        },
+                        {
+                        "identifier": "balance",
+                        "type": "active",
+                        "duration": 30,
+                        "image": {
+                        "imageName": "F-Turning1",
+                        "placementType": "fullsizeBackground"
+                        },
+                        "colorTheme": {
+                        "usesLightStyle": true
+                        },
+                        "commands": ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
+                        "spokenInstructions": {
+                        "start": "Turn around, then stand still with your feet shoulder width apart and your arms by your side.",
+                        "halfway": "Hold tight,\nyou’re almost there!",
+                        "end": "Great job,\nyou’re all done!"
+                        }
+                        }
+                        ]
+              },
+              {
+              "identifier": "completion",
+              "type": "completion",
+              "title": "Great job!",
+              "text": "You just completed your Walk and Balance activity."
+              }
+              ]
+}

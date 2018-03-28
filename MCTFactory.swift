@@ -1,5 +1,5 @@
 //
-//  MotorControl.h
+//  MCTFactory.swift
 //  MotorControl
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,15 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-//! Project version number for MotorControl.
-FOUNDATION_EXPORT double MotorControlVersionNumber;
-
-//! Project version string for MotorControl.
-FOUNDATION_EXPORT const unsigned char MotorControlVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <MotorControl/PublicHeader.h>
-
-@import ResearchStack2;
-
+open class MCTFactory : RSDFactory {
+    
+}
