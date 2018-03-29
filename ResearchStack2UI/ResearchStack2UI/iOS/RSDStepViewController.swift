@@ -228,6 +228,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// A footer view that includes navigation elements.
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
     
+    /// A view for the main body.
+    open var navigationBody: RSDStepNavigationView? {
+        return self.view as? RSDStepNavigationView
+    }
+    
     /// The label for displaying step title text.
     open var stepTitleLabel: UILabel? {
         return self.navigationHeader?.titleLabel ?? self.navigationFooter?.titleLabel
@@ -275,8 +280,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         if let header = self.navigationHeader {
             setupHeader(header)
         }
+        if let body = self.navigationBody {
+            setupNavigationView(body, placement: .body)
+        }
         if let footer = self.navigationFooter {
-            setupNavigationView(footer, isFooter: true)
+            setupFooter(footer)
         }
     }
     
@@ -334,7 +342,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// themes that are appropriate.
     /// - parameter header: The header view.
     open func setupHeader(_ header: RSDNavigationHeaderView) {
-        setupNavigationView(header, isFooter: false)
+        setupNavigationView(header, placement: .header)
 
         // setup progress
         if let (stepIndex, stepCount, _) = self.progress() {
@@ -343,31 +351,6 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
         } else {
             header.shouldShowProgress = false
-        }
-        
-        if let stepHeader = header as? RSDStepHeaderView {
-            
-            if let imageTheme = self.themedStep?.imageTheme, let imageView = stepHeader.imageView {
-                let placement = imageTheme.placementType ?? .iconBefore
-                if placement == .topBackground || placement == .iconBefore {
-                    stepHeader.hasImage = true
-                    if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
-                        let images = animatedImage.images(compatibleWith: self.traitCollection)
-                        if images.count > 1 {
-                            stepHeader.imageView?.animationDuration = animatedImage.animationDuration
-                            stepHeader.imageView?.animationImages = images
-                            stepHeader.imageView?.startAnimating()
-                        }
-                        else if let image = images.first {
-                            stepHeader.imageView?.image = image
-                        }
-                    } else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
-                        fetchLoader.fetchImage(for: imageView.bounds.size, callback: { [weak stepHeader] (_, img) in
-                            stepHeader?.image = img
-                        })
-                    }
-                }
-            }
         }
 
         header.setNeedsLayout()
@@ -378,7 +361,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// and any color themes that are appropriate.
     /// - parameter footer: The footer view.
     open func setupFooter(_ footer: RSDNavigationFooterView) {
-        setupNavigationView(footer, isFooter: true)
+        setupNavigationView(footer, placement: .footer)
     }
     
     /// Set up the navigation UI elements for the given view.  By default, this method will
@@ -389,7 +372,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// - parameters:
     ///     - navigationView: The view to set up.
     ///     - isFooter: Is this the footer?
-    open func setupNavigationView(_ navigationView: RSDStepNavigationView, isFooter: Bool) {
+    open func setupNavigationView(_ navigationView: RSDStepNavigationView, placement: RSDColorPlacement) {
         
         // Check if the back button and skip button should be hidden for this task
         // and if so, then do so at this level. Otherwise, the button doesn't layout properly.
@@ -398,11 +381,45 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         let skipHidden = self.shouldHideAction(for: .navigation(.skip))
         navigationView.isSkipHidden = skipHidden
         
+        let isFooter = (placement == .footer)
         setupButton(navigationView.cancelButton, for: .navigation(.cancel), isFooter: isFooter)
         setupButton(navigationView.learnMoreButton, for: .navigation(.learnMore), isFooter: isFooter)
         setupButton(navigationView.nextButton, for: .navigation(.goForward), isFooter: isFooter)
         setupButton(navigationView.backButton, for: .navigation(.goBackward), isFooter: isFooter)
         setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
+        
+        
+        if let imageTheme = self.themedStep?.imageTheme, let imageView = navigationView.imageView {
+            let imagePlacement = imageTheme.placementType ?? .iconBefore
+            let shouldSetImage: Bool = {
+                switch placement {
+                case .header:
+                    return imagePlacement == .topBackground || imagePlacement == .iconBefore
+                case .body:
+                    return imagePlacement == .fullsizeBackground || imagePlacement == .iconAfter
+                case .footer:
+                    return imagePlacement == .iconAfter
+                }
+            }()
+            if shouldSetImage {
+                navigationView.hasImage = true
+                if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
+                    let images = animatedImage.images(compatibleWith: self.traitCollection)
+                    if images.count > 1 {
+                        navigationView.imageView?.animationDuration = animatedImage.animationDuration
+                        navigationView.imageView?.animationImages = images
+                        navigationView.imageView?.startAnimating()
+                    }
+                    else if let image = images.first {
+                        navigationView.imageView?.image = image
+                    }
+                } else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
+                    fetchLoader.fetchImage(for: imageView.bounds.size, callback: { [weak navigationView] (_, img) in
+                        navigationView?.image = img
+                    })
+                }
+            }
+        }
         
         navigationView.setNeedsLayout()
         navigationView.setNeedsUpdateConstraints()
