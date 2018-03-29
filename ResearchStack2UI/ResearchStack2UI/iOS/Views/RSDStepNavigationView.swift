@@ -63,6 +63,22 @@ open class RSDStepNavigationView: UIView {
     /// The label for displaying step detail text.
     @IBOutlet open var detailLabel: UILabel?
     
+    /// The image view for displaying an image.
+    @IBOutlet open var imageView: UIImageView?
+    
+    /// Whether or not the view has an image.
+    open var hasImage: Bool = false
+    
+    /// The image to display in the view.
+    open var image: UIImage? {
+        get { return imageView?.image }
+        set {
+            imageView?.image = newValue
+            setNeedsUpdateConstraints()
+            updateConstraintsIfNeeded()
+        }
+    }
+    
     /// Return all the buttons in this navigation view.
     open func allButtons() -> [UIButton] {
         return Array(1...5).flatMap { (idx) -> UIButton? in
@@ -219,22 +235,6 @@ extension DefaultNavigationHeaderLayoutConstants : RSDNavigationHeaderLayoutCons
 /// an `RSDTableStepViewController`.
 @IBDesignable
 open class RSDStepHeaderView: RSDNavigationHeaderView {
-    
-    /// The image view for displaying an image in the header.
-    @IBOutlet open var imageView: UIImageView?
-    
-    /// Whether or not the step header has an image.
-    open var hasImage: Bool = false
-    
-    /// The image to display in the step header view.
-    open var image: UIImage? {
-        get { return imageView?.image }
-        set {
-            imageView?.image = newValue
-            setNeedsUpdateConstraints()
-            updateConstraintsIfNeeded()
-        }
-    }
     
     /// Causes the main view to be resized to this minimum height, if necessary. The extra needed height
     /// is added to and divided equally between the top margin and bottom margin of the main view.

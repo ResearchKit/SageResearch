@@ -49,7 +49,7 @@ open class RSDCountdownStepViewController: RSDStepViewController {
     @IBOutlet open var pauseButton: UIButton?
     
     /// This class overrides `didSet` to update the `countdownLabel` to the new value.
-    open override var countdown: Int {
+    override open var countdown: Int {
         didSet {
             countdownLabel?.text = numberFormatter.string(from: NSNumber(value: countdown))
         }
