@@ -148,16 +148,13 @@ open class RSDStepProgressView: UIView {
             let marker = "<CURRENT_STEP>"
             
             let format = Localization.localizedString("CURRENT_STEP_%@_OF_TOTAL_STEPS_%@")
-            var str = String.localizedStringWithFormat(format, marker, totalString)
-            if labelIsUppercase {
-                str = str.uppercased()
-            }
-            
+            let str = String.localizedStringWithFormat(format, marker, totalString)
             let mutableString = NSMutableString(string: str)
             let markerRange = mutableString.range(of: marker)
             mutableString.replaceCharacters(in: markerRange, with: currentString)
+            let fullStr : String = labelIsUppercase ? (mutableString as String).uppercased() : mutableString as String
             let range = NSRange(location: markerRange.location, length: (currentString as NSString).length)
-            let attributedString = NSMutableAttributedString(string: mutableString as String)
+            let attributedString = NSMutableAttributedString(string: fullStr)
             if labelCurrentStepIsBold {
                 attributedString.addAttribute(.font, value: UIFont.rsd_boldStepCountLabel, range: range)
             }
