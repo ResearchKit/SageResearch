@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		B587AC05206D654400542548 /* UIView+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC04206D654400542548 /* UIView+BridgeKeyNames.swift */; };
+		B587AC06206D654400542548 /* UIView+BridgeKeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC04206D654400542548 /* UIView+BridgeKeyNames.swift */; };
 		F802F3DC204DECA80027CB00 /* RSDImagePickerStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3DA204DECA80027CB00 /* RSDImagePickerStepViewController.swift */; };
 		F802F3DD204DECA80027CB00 /* RSDImagePickerStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F802F3DB204DECA80027CB00 /* RSDImagePickerStepViewController.xib */; };
 		F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */; };
@@ -82,6 +84,7 @@
 
 /* Begin PBXFileReference section */
 		80242B0E2018013E00FC4F44 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		B587AC04206D654400542548 /* UIView+BridgeKeyNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+BridgeKeyNames.swift"; sourceTree = "<group>"; };
 		F802F3DA204DECA80027CB00 /* RSDImagePickerStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImagePickerStepViewController.swift; sourceTree = "<group>"; };
 		F802F3DB204DECA80027CB00 /* RSDImagePickerStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDImagePickerStepViewController.xib; sourceTree = "<group>"; };
 		F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPickerViewProtocol.swift; sourceTree = "<group>"; };
@@ -178,6 +181,7 @@
 			children = (
 				FF25E83A1F96AEAC00BC09A8 /* UIColor+BridgeKeyNames.swift */,
 				FF25E83F1F96B5B200BC09A8 /* UIFont+BridgeKeyNames.swift */,
+				B587AC04206D654400542548 /* UIView+BridgeKeyNames.swift */,
 				FFF9D4C41FAFEF5400767C3B /* DefaultImages.xcassets */,
 			);
 			path = Styleguide;
@@ -509,6 +513,7 @@
 				FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
 				F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */,
 				F880C1B52057182B00ACB4D4 /* RSDOverviewStepViewController.swift in Sources */,
+				B587AC05206D654400542548 /* UIView+BridgeKeyNames.swift in Sources */,
 				FFF2D98C1FCF4527007258F8 /* RSDTableStepViewController.swift in Sources */,
 				FFF2D9981FCF4538007258F8 /* UIImage+Utilities.swift in Sources */,
 				FFF2D9991FCF4538007258F8 /* UIView+Layout.swift in Sources */,
@@ -543,6 +548,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B587AC06206D654400542548 /* UIView+BridgeKeyNames.swift in Sources */,
 				FFF2D9A61FCF4FC7007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
 				FFF2D9A51FCF4FC7007258F8 /* UIColor+BridgeKeyNames.swift in Sources */,
 			);
