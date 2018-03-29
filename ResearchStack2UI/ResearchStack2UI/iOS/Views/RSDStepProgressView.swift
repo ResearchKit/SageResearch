@@ -81,6 +81,28 @@ open class RSDStepProgressView: UIView {
         }
     }
     
+    /// Should the inner progress bar end be rounded on the right side?
+    open var hasRoundedProgressEnd: Bool = UIView.rsd_progressViewRoundedEnds {
+        didSet {
+            setNeedsUpdateConstraints()
+        }
+    }
+    
+    /// Should the label associated with the progress bar display all capital letters?
+    open var labelIsCapitalized: Bool = UIView.rsd_progressViewStepLabelCapitalized {
+        didSet {
+            updateLabel()
+        }
+    }
+    
+    /// Should the label associated with the progress bar display the current step number
+    /// as bolded?
+    open var labelCurrentStepIsBold: Bool = UIView.rsd_progressViewCurrentStepBolded {
+        didSet {
+            updateLabel()
+        }
+    }
+    
     private func updateColorStyle() {
         // Update colors
         progressView.backgroundColor = UIColor.rsd_progressBar
@@ -126,14 +148,19 @@ open class RSDStepProgressView: UIView {
             let marker = "<CURRENT_STEP>"
             
             let format = Localization.localizedString("CURRENT_STEP_%@_OF_TOTAL_STEPS_%@")
-            let str = String.localizedStringWithFormat(format, marker, totalString)
+            var str = String.localizedStringWithFormat(format, marker, totalString)
+            if labelIsCapitalized {
+                str = str.uppercased()
+            }
             
             let mutableString = NSMutableString(string: str)
             let markerRange = mutableString.range(of: marker)
             mutableString.replaceCharacters(in: markerRange, with: currentString)
             let range = NSRange(location: markerRange.location, length: (currentString as NSString).length)
             let attributedString = NSMutableAttributedString(string: mutableString as String)
-            attributedString.addAttribute(.font, value: UIFont.rsd_boldStepCountLabel, range: range)
+            if labelCurrentStepIsBold {
+                attributedString.addAttribute(.font, value: UIFont.rsd_boldStepCountLabel, range: range)
+            }
             
             return attributedString
         }
@@ -178,9 +205,10 @@ open class RSDStepProgressView: UIView {
     
     open override func updateConstraints() {
         
+        let radius = progressLineHeight / 2.0
         // Round the ends
         if hasRoundedEnds {
-            backgroundView.layer.cornerRadius = progressLineHeight / 2.0
+            backgroundView.layer.cornerRadius = radius
         } else {
             backgroundView.layer.cornerRadius = 0.0
         }
@@ -193,8 +221,17 @@ open class RSDStepProgressView: UIView {
         _interactiveContraints.append(contentsOf:
             backgroundView.rsd_makeHeight(.equal, progressLineHeight))
         
+        if hasRoundedProgressEnd {
+            progressView.layer.cornerRadius = radius
+            _interactiveContraints.append(contentsOf:
+                progressView.rsd_alignToSuperview([.leading], padding: -radius))
+        } else {
+            progressView.layer.cornerRadius = 0.0
+            _interactiveContraints.append(contentsOf:
+                progressView.rsd_alignToSuperview([.leading], padding: 0.0))
+        }
         _interactiveContraints.append(contentsOf:
-            progressView.rsd_alignToSuperview([.leading, .top, .bottom], padding: 0.0))
+            progressView.rsd_alignToSuperview([.top, .bottom], padding: 0.0))
         _interactiveContraints.append(contentsOf:
             progressView.rsd_makeWidthEqualToSuperview(multiplier: progress))
         
@@ -210,8 +247,12 @@ open class RSDStepProgressView: UIView {
                 progressView.setNeedsLayout()
             }
             
-            stepCountLabel?.attributedText = attributedStringForLabel()
+            updateLabel()
             setNeedsLayout()
         }
+    }
+    
+    func updateLabel() {
+        stepCountLabel?.attributedText = attributedStringForLabel()
     }
 }
