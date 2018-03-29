@@ -481,7 +481,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
     ///     - completion: The completion to call with the instantiated controllers.
     public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncActionController]) -> Void)) {
         // Get the controller for each configuration
-        let controllers = configurations.rsd_mapAndFilter { (configuration) -> RSDAsyncActionController? in
+        let controllers = configurations.flatMap { (configuration) -> RSDAsyncActionController? in
             guard let asyncController = self.asyncActionController(for: configuration) else {
                 debugPrint("Did not create controller for async config \(configuration)")
                 return nil

@@ -220,7 +220,7 @@ public class RSDMotionRecorder : RSDSampleRecorder {
     
     func recordDeviceMotionSample(_ data: CMDeviceMotion) {
         let frame = motionManager?.attitudeReferenceFrame ?? CMAttitudeReferenceFrame.xArbitraryZVertical
-        let samples = recorderTypes.rsd_mapAndFilter {
+        let samples = recorderTypes.flatMap {
             RSDMotionRecord(startUptime: startUptime, stepPath: currentStepPath, data: data, referenceFrame: frame, sensorType: $0) }
         self.writeSamples(samples)
     }

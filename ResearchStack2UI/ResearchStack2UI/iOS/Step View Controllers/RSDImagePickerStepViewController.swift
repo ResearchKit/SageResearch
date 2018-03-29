@@ -63,7 +63,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
         guard let types = UIImagePickerController.availableMediaTypes(for: self.sourceType) else { return [] }
         debugPrint(types)
         let rsdTypes = (self.step as? RSDImagePickerStep)?.mediaTypes ?? [.photo]
-        let mediaTypes = types.rsd_mapAndFilter { (typeString) -> MediaType? in
+        let mediaTypes = types.flatMap { (typeString) -> MediaType? in
             guard let mediaType = MediaType(rawValue: typeString), rsdTypes.contains(mediaType.rsdType)
                 else {
                     return nil

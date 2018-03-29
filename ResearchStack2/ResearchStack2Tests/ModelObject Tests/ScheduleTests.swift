@@ -80,10 +80,10 @@ class TrackingTests: XCTestCase {
         let weekdayOrder = weekdays.map { $0.rawValue }
         XCTAssertEqual(weekdayOrder, Array(1...7))
         
-        let names = weekdays.rsd_mapAndFilter { $0.text }
+        let names = weekdays.flatMap { $0.text }
         XCTAssertEqual(names, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"])
         
-        let shortNames = weekdays.rsd_mapAndFilter { $0.shortText }
+        let shortNames = weekdays.flatMap { $0.shortText }
         XCTAssertEqual(shortNames, ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"])
     }
     
@@ -97,7 +97,7 @@ class TrackingTests: XCTestCase {
         let weekdayOrder = weekdays.map { $0.rawValue }
         XCTAssertEqual(weekdayOrder, [2,3,4,5,6,7,1])
         
-        let names = weekdays.rsd_mapAndFilter { $0.text }
+        let names = weekdays.flatMap { $0.text }
         XCTAssertEqual(names, ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"])
     }
     
@@ -144,7 +144,7 @@ class TrackingTests: XCTestCase {
             XCTAssertNil(trigger.day)
             XCTAssertNil(trigger.weekdayOrdinal)
         }
-        let weekdays = triggers.rsd_mapAndFilterSet { $0.weekday}
+        let weekdays = triggers.rsd_flatMapSet { $0.weekday}
         XCTAssertEqual(weekdays, [2,4,6])
     }
     

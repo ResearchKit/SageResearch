@@ -37,7 +37,7 @@ extension Sequence {
     /// over `self`.
     /// - parameter transform: The method which returns either the transformed element or `nil` if filtered.
     /// - returns: A set of the transformed elements.
-    public func rsd_mapAndFilterSet<T : Hashable>(_ transform: (Self.Iterator.Element) throws -> T?) rethrows -> Set<T> {
+    public func rsd_flatMapSet<T : Hashable>(_ transform: (Self.Iterator.Element) throws -> T?) rethrows -> Set<T> {
         var result = Set<T>()
         for element in self {
             if let t = try transform(element) {
@@ -49,8 +49,12 @@ extension Sequence {
     
     /// Returns an `Array` containing the results of mapping and filtering `transform`
     /// over `self`.
+    ///
+    /// Deprecated: Use `flatMap()` instead.
+    ///
     /// - parameter transform: The method which returns either the transformed element or `nil` if filtered.
     /// - returns: An array of the transformed elements.
+    @available(*, deprecated)
     public func rsd_mapAndFilter<T>(_ transform: (Self.Iterator.Element) throws -> T?) rethrows -> [T] {
         var result = [T]()
         for element in self {

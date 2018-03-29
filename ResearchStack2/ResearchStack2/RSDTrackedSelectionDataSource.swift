@@ -221,7 +221,7 @@ open class RSDTrackedSelectionDataSource : RSDTableDataSource {
         
         // update selection for this group
         let ret = try itemGroup.select(item, indexPath: indexPath)
-        let selectedIdentifiers = itemGroups.rsd_mapAndFilter({ $0.answer as? [String] }).flatMap{$0}
+        let selectedIdentifiers = itemGroups.flatMap({ $0.answer as? [String] }).flatMap{$0}
         let items = (self.step as? RSDTrackedItemsStep)?.items ?? []
         
         // Update the answers

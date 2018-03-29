@@ -153,7 +153,7 @@ public struct RSDWeeklyScheduleObject : Codable, RSDSchedule {
         if let weekdays = value as? Array<RSDWeekday> {
             self.daysOfWeek = Set(weekdays)
         } else if let weekdays = value as? Array<Int> {
-            self.daysOfWeek = weekdays.rsd_mapAndFilterSet { RSDWeekday(rawValue: $0) }
+            self.daysOfWeek = weekdays.rsd_flatMapSet { RSDWeekday(rawValue: $0) }
         } else {
             self.daysOfWeek = RSDWeekday.all
         }
@@ -212,7 +212,7 @@ public class RSDWeeklyScheduleFormatter : Formatter {
             return _joinString(days: daysString, times: timesString, style: _style)
         } else {
             let formatterStyle = (_style == .medium) ? .short : _style
-            let schedules = weeklySchedules.rsd_mapAndFilter { (item) -> String? in
+            let schedules = weeklySchedules.flatMap { (item) -> String? in
                 let daysString = _joinedDays(item.daysOfWeek, style: formatterStyle)
                 let timesString = _joinedTimes([item])
                 return _joinString(days: daysString, times: timesString, style: formatterStyle)
@@ -223,7 +223,7 @@ public class RSDWeeklyScheduleFormatter : Formatter {
     
     /// Formatted string from a set of integers for each weekday.
     public func string(from days: Set<Int>) -> String? {
-        let daysOfWeek = days.rsd_mapAndFilterSet { RSDWeekday(rawValue: $0) }
+        let daysOfWeek = days.rsd_flatMapSet { RSDWeekday(rawValue: $0) }
         return _joinedDays(daysOfWeek, style: _style)
     }
     
@@ -268,7 +268,7 @@ public class RSDWeeklyScheduleFormatter : Formatter {
         let timeFormatter = DateFormatter()
         timeFormatter.dateStyle = .none
         timeFormatter.timeStyle = .short
-        let times = weeklySchedules.rsd_mapAndFilter {
+        let times = weeklySchedules.flatMap {
             $0.timeOfDay != nil ? timeFormatter.string(from: $0.timeOfDay!) : nil
         }
 

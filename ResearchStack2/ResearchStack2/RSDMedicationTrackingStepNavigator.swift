@@ -330,7 +330,7 @@ public struct RSDMedicationTrackingResult : Codable, RSDTrackedItemsResult {
 
         // Filter and replace the meds.
         var allIdentifiers = newIdentifiers
-        var meds = items.rsd_mapAndFilter { (item) -> RSDMedicationAnswer? in
+        var meds = items.flatMap { (item) -> RSDMedicationAnswer? in
             guard allIdentifiers.contains(item.identifier) else { return nil }
             allIdentifiers.remove(where: { $0 == item.identifier })
             var medication = getMedication(with: item.identifier)
