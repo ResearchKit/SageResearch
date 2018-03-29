@@ -42,10 +42,10 @@ extension UIView {
         return false
     }
     
-    /// Controls whether the progess view label is capitalized.
+    /// Controls whether the progess view label is uppercase
     /// Default = false
     /// - seealso: `RSDStepProgressView`
-    @objc open class var rsd_progressViewStepLabelCapitalized : Bool {
+    @objc open class var rsd_progressViewStepLabelUppercase : Bool {
         return false
     }
     

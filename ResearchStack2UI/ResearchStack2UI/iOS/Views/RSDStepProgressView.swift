@@ -89,7 +89,7 @@ open class RSDStepProgressView: UIView {
     }
     
     /// Should the label associated with the progress bar display all capital letters?
-    open var labelIsCapitalized: Bool = UIView.rsd_progressViewStepLabelCapitalized {
+    open var labelIsUppercase: Bool = UIView.rsd_progressViewStepLabelUppercase {
         didSet {
             updateLabel()
         }
@@ -149,7 +149,7 @@ open class RSDStepProgressView: UIView {
             
             let format = Localization.localizedString("CURRENT_STEP_%@_OF_TOTAL_STEPS_%@")
             var str = String.localizedStringWithFormat(format, marker, totalString)
-            if labelIsCapitalized {
+            if labelIsUppercase {
                 str = str.uppercased()
             }
             
@@ -252,7 +252,10 @@ open class RSDStepProgressView: UIView {
         }
     }
     
-    func updateLabel() {
+    /// Sets the text of the progress view label.
+    /// Default = attributedStringForLabel()
+    open func updateLabel() {
+        
         stepCountLabel?.attributedText = attributedStringForLabel()
     }
 }
