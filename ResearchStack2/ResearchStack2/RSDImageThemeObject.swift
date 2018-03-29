@@ -170,7 +170,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// The animated images to display.
     /// - returns: The images for this step.
     public func images() -> [UIImage] {
-        return imageNames.rsd_mapAndFilter {
+        return imageNames.flatMap {
             UIImage(named: $0)
         }
     }
@@ -182,7 +182,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// - parameter traitCollection: The trait collection.
     /// - returns: The images for this step.
     public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [UIImage] {
-        return imageNames.rsd_mapAndFilter {
+        return imageNames.flatMap {
             UIImage(named: $0, in: bundle, compatibleWith: traitCollection)
         }
     }

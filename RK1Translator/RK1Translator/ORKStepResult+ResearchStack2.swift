@@ -39,10 +39,10 @@ extension ORKStepResult : RSDCollectionResult {
     /// Map and filter `results` to/from `RSDResult`.
     public var inputResults: [RSDResult] {
         get {
-            return self.results?.rsd_mapAndFilter { $0 as? RSDResult } ?? []
+            return self.results?.flatMap { $0 as? RSDResult } ?? []
         }
         set(newValue) {
-            self.results = newValue.rsd_mapAndFilter { $0 as? ORKResult }
+            self.results = newValue.flatMap { $0 as? ORKResult }
         }
     }
     

@@ -99,7 +99,7 @@ public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, 
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         let unitSymbols = try container.decodeIfPresent(Set<String>.self, forKey: .durationUnits)
-        let durationUnits = unitSymbols?.rsd_mapAndFilterSet { UnitDuration(fromSymbol: $0)}
+        let durationUnits = unitSymbols?.rsd_flatMapSet { UnitDuration(fromSymbol: $0)}
         
         let baseUnitSymbol = try container.decodeIfPresent(String.self, forKey: .unit)
         let baseUnit = durationUnits?.min() ?? baseUnitSymbol?.unitDuration() ?? .seconds
