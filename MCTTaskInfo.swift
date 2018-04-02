@@ -62,7 +62,7 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
     /// The task identifier for this task.
     public let taskIdentifier: MCTTaskIdentifier
     
-    /// The task build for this info.
+    /// The task built for this info.
     public let task: RSDTaskObject
     
     private init(taskIdentifier: MCTTaskIdentifier, task: RSDTaskObject) {

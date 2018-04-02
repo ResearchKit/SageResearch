@@ -6,7 +6,7 @@
               "identifier": "introduction",
               "type": "overview",
               "title": "Walk and Balance",
-              "text": "In this activity you will be walking continuously at your normal pace for 30 seconds,  followed by standing still for 30 seconds.",
+              "text": "In this activity you will be walking continuously at your normal pace for 30 seconds, followed by standing still for 30 seconds.",
               "permissions": [{
                               "permissionType": "motion",
                               "reason": "Access to Motion and Fitness sensors is required to measure your gait and balance."
@@ -87,7 +87,7 @@
               "colorTheme": {
               "usesLightStyle": true
               },
-              "text": "This test measures your leg movement. and you will need to put your phone in your front pocket.",
+              "text": "This test measures your leg movement, and you will need to put your phone in your front pocket.",
               "actions": {
               "goForward": {
               "buttonTitle": "The phone is in a pocket"
@@ -165,7 +165,7 @@
               "identifier": "phoneInPocket.2",
               "type": "instruction",
               "title": "Put the phone in your pocket",
-              "text": "This test measures your leg movement. and you will need to put your phone in your front pocket.",
+              "text": "This test measures your leg movement, and you will need to put your phone in your front pocket.",
               "image": {
               "imageNames": ["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
               "placementType": "topBackground",
