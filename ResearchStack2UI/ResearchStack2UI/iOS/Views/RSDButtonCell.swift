@@ -40,7 +40,7 @@ public protocol RSDButtonCellDelegate : class {
     func didTapButton(on cell: RSDButtonCell)
 }
 
-/// `RSDButtonCell` is used to display a button
+/// `RSDButtonCell` is used to display a button.
 @IBDesignable open class RSDButtonCell : RSDTableViewCell {
     
     /// The callback delegate for the cell.

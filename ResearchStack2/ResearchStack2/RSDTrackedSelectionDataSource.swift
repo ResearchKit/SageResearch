@@ -37,7 +37,7 @@ import Foundation
 /// that is designed to be used with a `RSDTrackedItemsStep`.
 open class RSDTrackedSelectionDataSource : RSDTrackingDataSource {
 
-    /// Overrridable class function for building the sections of the table.
+    /// Overridable class function for building the sections of the table.
     /// - parameters:
     ///     - step: The RSDTrackedSelectionStep for this data source.
     ///     - initialResult: The initial result (if any).

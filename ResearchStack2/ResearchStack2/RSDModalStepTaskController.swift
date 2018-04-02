@@ -49,7 +49,7 @@ public protocol RSDModalStepTaskControllerDelegate : class {
 /// task path that is different from the task path pointer on the controlling data source. For example, if
 /// the data source includes a "edit" button that displays a modal step view controller that edits the
 /// results on the data source, but is described using a different step (and thus requires a different task
-/// path.
+/// path).
 open class RSDModalStepTaskController : NSObject, RSDTaskController {
     
     /// The task path - this needs to be set before the step controller is displayed.

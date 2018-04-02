@@ -44,7 +44,7 @@ extension RSDFormUIHint {
 /// selected in a previous step.
 open class RSDTrackedLoggingDataSource : RSDTrackingDataSource, RSDModalStepDataSource, RSDModalStepTaskControllerDelegate {
 
-    /// Overrridable class function for building the sections of the table.
+    /// Overridable class function for building the sections of the table.
     /// - parameters:
     ///     - step: The RSDTrackedSelectionStep for this data source.
     ///     - initialResult: The initial result (if any).

@@ -40,7 +40,7 @@ import Foundation
 /// selectable table item.
 open class RSDTableSection {
     
-    /// A unique identifier for the section
+    /// A unique identifier for the section.
     public let identifier: String
     
     /// The list of items included in this section.
