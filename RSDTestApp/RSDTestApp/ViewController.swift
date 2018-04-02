@@ -75,7 +75,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // dismiss the view controller
-        let outputDirectory = taskController.outputDirectory
+        let outputDirectory = taskController.taskPath.outputDirectory
         (taskController as? UIViewController)?.dismiss(animated: true) {
             self.offMainQueue.async {
                 self.deleteOutputDirectory(outputDirectory)
