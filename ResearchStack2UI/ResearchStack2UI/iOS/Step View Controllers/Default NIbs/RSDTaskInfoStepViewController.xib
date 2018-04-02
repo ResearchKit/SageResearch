@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDTaskInfoStepViewController" customModule="ResearchSuiteUI" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDTaskInfoStepViewController" customModule="ResearchStack2UI" customModuleProvider="target">
             <connections>
                 <outlet property="headerView" destination="8wa-PJ-D5V" id="FkB-Rp-8RX"/>
                 <outlet property="iconImageView" destination="f9b-na-BMG" id="8gM-17-snQ"/>
@@ -49,7 +49,7 @@
                                 <constraint firstAttribute="width" secondItem="f9b-na-BMG" secondAttribute="height" multiplier="1:1" id="jCO-oF-Le0"/>
                             </constraints>
                         </imageView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFJ-r8-XTd" userLabel="Shadow" customClass="RSDShadowGradient" customModule="ResearchSuiteUI" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFJ-r8-XTd" userLabel="Shadow" customClass="RSDShadowGradient" customModule="ResearchStack2UI" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="146" width="375" height="4"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -72,14 +72,14 @@
                         <constraint firstAttribute="bottom" secondItem="xFJ-r8-XTd" secondAttribute="bottom" id="zEM-Oy-lk3"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gi-Il-aWq" userLabel="Footer" customClass="RSDGenericNavigationFooterView" customModule="ResearchSuiteUI" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="578" width="375" height="89"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gi-Il-aWq" userLabel="Footer" customClass="RSDGenericNavigationFooterView" customModule="ResearchStack2UI" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="570" width="375" height="97"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </view>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bUp-7F-n7V">
-                    <rect key="frame" x="0.0" y="150" width="375" height="420"/>
+                    <rect key="frame" x="0.0" y="150" width="375" height="412"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <attributedString key="attributedText">
                         <fragment>

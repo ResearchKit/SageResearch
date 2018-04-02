@@ -63,20 +63,7 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     
     /// A path object used to track the current state of a running task.
     var taskPath: RSDTaskPath! { get set }
-    
-    /// The top-level result associated with this task.
-    var taskResult : RSDTaskResult! { get }
-    
-    /// The output directory used for any file results.
-    var outputDirectory: URL? { get }
-    
-    /// Property for getting/setting the main entry point for the task controller via the task.
-    var topLevelTask : RSDTask! { get set }
-    
-    /// Optional factory subclass that can be used to vend custom steps that are decoded
-    /// from a plist or json.
-    var factory: RSDFactory? { get }
-    
+
     /// Can this task go forward? If forward navigation is disabled, then the task isn't waiting for a result
     /// or a task fetch to enable forward navigation.
     var isForwardEnabled: Bool { get }
@@ -100,6 +87,14 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     /// The user has tapped the cancel button.
     /// - parameter shouldSave: Should the task progress be saved (if applicable).
     func handleTaskCancelled(shouldSave: Bool)
+}
+
+extension RSDTaskController {
+    
+    /// Convenience method for accessing the task path.
+    public var taskResult: RSDTaskResult! {
+        return self.taskPath?.result
+    }
 }
 
 /// `RSDTaskControllerDelegate` is responsible for processing the results of the task, providing some input into
@@ -154,6 +149,10 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
 /// To start a task, create an instance of a view controller that conforms to this protocol
 /// and set either the `topLevelTask` or the `topLevelTaskInfo`.
 public protocol RSDTaskUIController : RSDTaskController {
+    
+    /// Optional factory subclass that can be used to vend custom steps that are decoded
+    /// from a plist or json.
+    var factory: RSDFactory? { get }
     
     /// Returns the currently active step controller (if any).
     var currentStepController: RSDStepController? { get }

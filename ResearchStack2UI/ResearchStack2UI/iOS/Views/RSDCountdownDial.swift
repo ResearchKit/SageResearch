@@ -86,7 +86,7 @@ open class RSDProgressIndicator: UIView {
 /// `RSDCountdownDial` shows a circular dial indicator.
 /// - seealso: `RSDActiveStepViewController`
 @IBDesignable
-public final class RSDCountdownDial: RSDProgressIndicator {
+public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable {
     
     /// The color of the circular ring that shows the track of the progress indicator.
     @IBInspectable

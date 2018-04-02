@@ -136,14 +136,14 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // populate the results
-        self.result = taskController.taskResult
+        self.result = taskController.taskPath.result
         self.tableView.reloadData()
         
         // dismiss the view controller
         (taskController as? UIViewController)?.dismiss(animated: true) {
         }
         
-        var debugResult: String = taskController.taskResult.identifier
+        var debugResult: String = self.result!.identifier
         debugResult.append("\n\n=== Completed: \(reason) error:\(String(describing: error))")
         print(debugResult)
     }

@@ -2,7 +2,7 @@
 //  RSDFormStepDataSourceObject.swift
 //  ResearchStack2
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -47,7 +47,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     public let supportedHints: Set<RSDFormUIHint>
 
     /// The current task path.
-    public private(set) var taskPath: RSDTaskPath
+    public private(set) var taskPath: RSDTaskPath!
 
     /// The table sections for this data source.
     open private(set) var sections: [RSDTableSection] = []
@@ -193,9 +193,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         self.taskPath.appendStepHistory(with: stepResult)
         
         // inform delegate that answers have changed
-        if let delegate = delegate {
-            delegate.answersDidChange(in: indexPath.section)
-        }
+        delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
     }
     
     /// Determine if all answers are valid. Also checks the case where answers are required but one has not been provided.
@@ -259,7 +257,8 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
             items.append(RSDTextTableItem(rowIndex: items.count, text: footnote))
         }
         if items.count > 0 {
-            let section = RSDTableSection(sectionIndex: sections.count, tableItems: items)
+            let sectionIndex = sections.count
+            let section = RSDTableSection(identifier: "\(sectionIndex)", sectionIndex: sectionIndex, tableItems: items)
             sections.append(section)
         }
         
@@ -370,7 +369,7 @@ fileprivate class RSDTableSectionBuilder {
     
     var tableSection: RSDTableSection {
         let tableItems = itemGroups.map{$0.items}.flatMap{$0}
-        let section = RSDTableSection(sectionIndex: index, tableItems: tableItems)
+        let section = RSDTableSection(identifier: "\(index)", sectionIndex: index, tableItems: tableItems)
         section.title = title
         section.subtitle = subtitle
         return section

@@ -47,35 +47,41 @@ public struct RSDFormUIHint : RawRepresentable, Codable {
         self.rawValue = rawValue
     }
     
-    /// list with a checkbox next to each item
+    /// List with a checkbox next to each item.
     public static let checkbox: RSDFormUIHint = "checkbox"
     
-    /// drop-down with a textfield for "other"
+    /// Drop-down with a textfield for "other".
     public static let combobox: RSDFormUIHint = "combobox"
     
-    /// list
+    /// List of selectable cells.
     public static let list: RSDFormUIHint = "list"
     
-    /// multiple line text field
+    /// Multiple line text field.
     public static let multipleLine: RSDFormUIHint = "multipleLine"
     
-    /// picker wheel
+    /// Text field with a picker wheel as the keyboard.
     public static let picker: RSDFormUIHint = "picker"
     
-    /// Text entry using a modal popover box
+    /// Text entry using a modal popover box.
     public static let popover: RSDFormUIHint = "popover"
     
-    /// radio button
+    /// Radio button.
     public static let radioButton: RSDFormUIHint = "radioButton"
     
-    /// slider
+    /// Slider.
     public static let slider: RSDFormUIHint = "slider"
     
-    /// text field
+    /// Text field.
     public static let textfield: RSDFormUIHint = "textfield"
     
-    /// toggle (segmented) button
+    /// Toggle (segmented) button.
     public static let toggle: RSDFormUIHint = "toggle"
+    
+    /// Modal step displayed with a secondary button cell.
+    public static let modalButton: RSDFormUIHint = "modalButton"
+    
+    /// Modal step displayed with selection cell.
+    public static let modalSelection: RSDFormUIHint = "modalSelection"
 
     /// The standard type for this ui hint, if applicable.
     public var standardType: RSDFormUIHint? {
@@ -84,7 +90,7 @@ public struct RSDFormUIHint : RawRepresentable, Codable {
     
     /// A list of all the `RSDFormUIHint` values that are standard hints.
     public static var allStandardHints: Set<RSDFormUIHint> {
-        return [.checkbox, .combobox, .list, .multipleLine, .picker, .radioButton, .slider, .textfield, .toggle]
+        return [.checkbox, .combobox, .list, .multipleLine, .picker, .radioButton, .slider, .textfield, .toggle, .modalButton, .modalSelection]
     }
 }
 

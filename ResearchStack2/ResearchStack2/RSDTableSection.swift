@@ -40,6 +40,9 @@ import Foundation
 /// selectable table item.
 open class RSDTableSection {
     
+    /// A unique identifier for the section.
+    public let identifier: String
+    
     /// The list of items included in this section.
     open private(set) var tableItems: [RSDTableItem]
     
@@ -62,11 +65,35 @@ open class RSDTableSection {
     /// - parameters:
     ///     - sectionIndex: The table section index for this item.
     ///     - tableItems: The table items in this section.
-    public init(sectionIndex: Int, tableItems: [RSDTableItem]) {
+    public init(identifier: String, sectionIndex: Int, tableItems: [RSDTableItem]) {
+        self.identifier = identifier
         self.index = sectionIndex
         for item in tableItems {
             item.sectionIndex = sectionIndex
+            item.sectionIdentifier = identifier
         }
         self.tableItems = tableItems
+    }
+}
+
+extension RSDTableSection : CustomStringConvertible {
+
+    open var description: String {
+        var description = "<\(String(describing: type(of: self))) \(self.index) \(self.identifier)>"
+        if let title = self.title {
+            description.append(" \(title)")
+        }
+        for item in tableItems {
+            description.append("\n  \(String(describing: item))")
+        }
+        description.append("\n")
+        return description
+    }
+}
+
+extension RSDTableSection : Equatable {
+    
+    public static func ==(lhs: RSDTableSection, rhs: RSDTableSection) -> Bool {
+        return lhs.tableItems == rhs.tableItems && lhs.title == rhs.title
     }
 }

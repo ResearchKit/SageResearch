@@ -134,7 +134,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
         picker.didMove(toParentViewController: self)
     }
     
-    /// Overrridable method for creating a file identifier to use for saving the photo or video to the
+    /// Overridable method for creating a file identifier to use for saving the photo or video to the
     /// output directory.
     open func fileIdentifier() -> String {
         let sectionIdentifier = (self.taskController.taskPath.parentPath != nil) ?

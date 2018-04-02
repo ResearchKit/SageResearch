@@ -14,7 +14,14 @@
     },
     "logging": {
         "title": "Your triggers",
-        "actions": { "addMore": { "buttonTitle" : "Edit triggers" }}
+        "actions": { "addMore": { "buttonTitle" : "Edit triggers" }},
+        "colorTheme" : {
+            "colorStyle" : {
+                "header" : "darkBackground",
+                "body" : "darkBackground",
+                "footer" : "lightBackground"
+            }
+        }
     },
     "items" : [
                {

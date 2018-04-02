@@ -2,7 +2,7 @@
 //  RSDStepChoiceCell.swift
 //  ResearchStack2UI
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -39,12 +39,34 @@ fileprivate let kTopMargin: CGFloat = 20.0
 fileprivate let kBottomMargin: CGFloat = 12.0
 fileprivate let kSectionTopMargin: CGFloat = 40.0
 
+/// `RSDTableViewCell` is used to display a table cell that is linked to a `RSDTableItem`.
+@IBDesignable open class RSDTableViewCell : UITableViewCell {
+    
+    /// The index path of the cell.
+    public var indexPath: IndexPath!
+    
+    /// The table item associated with this cell.
+    open var tableItem: RSDTableItem!
+    
+    /// The background color of the containing table.
+    open var tableBackgroundColor: UIColor!
+}
+
 /// `RSDStepChoiceCell` is the base implementation for a selection table view cell of a form step.
-@IBDesignable public class RSDStepChoiceCell: UITableViewCell {
+@IBDesignable public class RSDStepChoiceCell: RSDTableViewCell {
     
     @IBOutlet public var titleLabel: UILabel!
     @IBOutlet public var detailLabel: UILabel!
     @IBOutlet public var separatorLine: UIView?
+    
+    override public var tableItem: RSDTableItem! {
+        didSet {
+            guard let item = tableItem as? RSDChoiceTableItem else { return }
+            titleLabel.text = item.choice.text
+            detailLabel.text = item.choice.detail
+            isSelected = item.selected
+        }
+    }
     
     private var bgColor: UIColor {
         return isSelected ? UIColor.rsd_choiceCellBackgroundHighlighted : UIColor.rsd_choiceCellBackground
@@ -366,7 +388,7 @@ public class RSDStepTextField: UITextField {
 }
 
 /// `RSDTextLabelCell` can be used to display a text element such as a footnote in a table.
-@IBDesignable open class RSDTextLabelCell : UITableViewCell {
+@IBDesignable open class RSDTextLabelCell : RSDTableViewCell {
     
     private let kSideMargin = CGFloat(20.0).rsd_proportionalToScreenWidth()
     private let kVertMargin: CGFloat = 10.0
@@ -374,6 +396,14 @@ public class RSDStepTextField: UITextField {
     
     /// The label used to display text using this cell.
     @IBOutlet public var label: UILabel!
+    
+    /// Set the label text.
+    override open var tableItem: RSDTableItem! {
+        didSet {
+            guard let item = tableItem as? RSDTextTableItem else { return }
+            label.text = item.text
+        }
+    }
     
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -420,13 +450,21 @@ public class RSDStepTextField: UITextField {
 }
 
 /// `RSDImageViewCell` can be used to display images amongst the table cells.
-@IBDesignable open class RSDImageViewCell : UITableViewCell {
+@IBDesignable open class RSDImageViewCell : RSDTableViewCell {
     
     private let kVertMargin: CGFloat = 10.0
     private let kImageViewHeight: CGFloat = CGFloat(150.0).rsd_proportionalToScreenWidth()
 
     /// The image view to load into.
     @IBOutlet public var iconView: UIImageView!
+    
+    /// Set the label text.
+    override open var tableItem: RSDTableItem! {
+        didSet {
+            guard let item = tableItem as? RSDImageTableItem else { return }
+            imageLoader = item.imageTheme
+        }
+    }
     
     /// Set the image loader for this cell. This will automatically load the image or animation.
     public var imageLoader: RSDImageThemeElement? {

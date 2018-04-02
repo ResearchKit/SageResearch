@@ -35,13 +35,13 @@ import Foundation
 
 /// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
-public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
+public struct RSDCollectionResultObject : RSDCollectionResult, Codable, RSDCopyWithIdentifier {
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
     
     /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    public let type: RSDResultType
+    public var type: RSDResultType
     
     /// The start date timestamp for the result.
     public var startDate: Date = Date()
@@ -98,6 +98,15 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable {
             let nestedEncoder = nestedContainer.superEncoder()
             try result.encode(to: nestedEncoder)
         }
+    }
+    
+    public func copy(with identifier: String) -> RSDCollectionResultObject {
+        var copy = RSDCollectionResultObject(identifier: identifier)
+        copy.startDate = self.startDate
+        copy.endDate = self.endDate
+        copy.type = self.type
+        copy.inputResults = self.inputResults
+        return copy
     }
 }
 

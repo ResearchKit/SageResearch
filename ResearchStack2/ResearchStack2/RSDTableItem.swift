@@ -36,11 +36,17 @@ import Foundation
 /// `RSDTableItem` can be used to represent the type of the row to display.
 open class RSDTableItem {
     
+    /// A unique identifier for the table item.
+    public let identifier: String
+    
     /// The index of this item relative to all rows in the section in which this item resides.
     public let rowIndex: Int
     
+    /// A unique identifier for the section.
+    public internal(set) var sectionIdentifier: String!
+    
     /// The section index for this group.
-    public var sectionIndex: Int = 0
+    public internal(set) var sectionIndex: Int = 0
     
     /// The string to use as the reuse identifier.
     public let reuseIdentifier: String
@@ -51,8 +57,12 @@ open class RSDTableItem {
     }
     
     /// Initialize a new RSDTableItem.
-    /// - parameter rowIndex: The index of this item relative to all rows in the section in which this item resides.
-    public init(rowIndex: Int, reuseIdentifier: String) {
+    /// - parameters:
+    ///     - identifier: The cell identifier.
+    ///     - rowIndex: The index of this item relative to all rows in the section in which this item resides.
+    ///     - reuseIdentifier: The string to use as the reuse identifier.
+    public init(identifier: String, rowIndex: Int, reuseIdentifier: String) {
+        self.identifier = identifier
         self.rowIndex = rowIndex
         self.reuseIdentifier = reuseIdentifier
     }
@@ -82,6 +92,24 @@ open class RSDTableItem {
     }
 }
 
+extension RSDTableItem : Hashable {
+    
+    public var hashValue: Int {
+        return self.identifier.hashValue ^ (self.sectionIdentifier?.hashValue ?? 0)
+    }
+    
+    public static func ==(lhs: RSDTableItem, rhs: RSDTableItem) -> Bool {
+        return lhs.identifier == rhs.identifier && lhs.sectionIdentifier == rhs.sectionIdentifier
+    }
+}
+
+extension RSDTableItem : CustomStringConvertible {
+    
+    open var description: String {
+        return "<\(String(describing: type(of: self))) \(rowIndex) {\(String(describing: self.sectionIdentifier)) : \(self.identifier)} >"
+    }
+}
+
 /// `RSDTextTableItem` is used to represent a item row that has static text.
 public final class RSDTextTableItem : RSDTableItem {
     
@@ -94,7 +122,7 @@ public final class RSDTextTableItem : RSDTableItem {
     ///     - text:          The text to display.
     public init(rowIndex: Int, text: String) {
         self.text = text
-        super.init(rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.label.rawValue)
+        super.init(identifier: text, rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.label.rawValue)
     }
 }
 
@@ -110,7 +138,7 @@ public final class RSDImageTableItem : RSDTableItem {
     ///     - imageTheme:    The image to display.
     public init(rowIndex: Int, imageTheme: RSDImageThemeElement) {
         self.imageTheme = imageTheme
-        super.init(rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.image.rawValue)
+        super.init(identifier: imageTheme.imageIdentifier, rowIndex: rowIndex, reuseIdentifier: RSDTableItem.ReuseIdentifier.image.rawValue)
     }
 }
 
@@ -134,13 +162,16 @@ open class RSDInputFieldTableItem : RSDTableItem {
     ///     - rowIndex:      The index of this item relative to all rows in the section in which this item resides.
     ///     - inputField:    The RSDInputField representing this tableItem.
     ///     - uiHint: The UI hint for this row of the table.
-    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, reuseIdentifier: String? = nil) {
+    ///     - reuseIdentifier: The string to use as the reuse identifier.
+    ///     - identifier: The cell identifier. If `nil`, then the inputField identifier will be used.
+    public init(rowIndex: Int, inputField: RSDInputField, uiHint: RSDFormUIHint, reuseIdentifier: String? = nil, identifier: String? = nil) {
         self.inputField = inputField
         self.uiHint = uiHint
         
         // If the reuse identifier isn't passed to the initializer then set it from the ui hint.
         let reuseId: String = reuseIdentifier ?? uiHint.stringValue
+        let itemId: String = identifier ?? inputField.identifier
         
-        super.init(rowIndex: rowIndex, reuseIdentifier: reuseId)
+        super.init(identifier: itemId, rowIndex: rowIndex, reuseIdentifier: reuseId)
     }
 }
