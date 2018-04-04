@@ -247,6 +247,14 @@ extension UIColor {
         return UIColor.lightPrimaryTintColor
     }
     
+    @objc open class var rsd_dialInnerBackground: UIColor {
+        return UIColor.clear
+    }
+    
+    @objc open class var rsd_dialInnerBackgroundLightStyle: UIColor {
+        return UIColor.clear
+    }
+    
     @objc open class var rsd_dialRingBackgroundLightStyle: UIColor {
         return UIColor.white
     }
