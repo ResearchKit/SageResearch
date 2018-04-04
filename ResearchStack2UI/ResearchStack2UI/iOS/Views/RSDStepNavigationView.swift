@@ -515,19 +515,19 @@ open class RSDNavigationFooterView: RSDStepNavigationView {
     /// An optional shadow gradient to use to display a shadow (used to indicate additional content below the fold).
     @IBOutlet open var shadowView: RSDShadowGradient?
     
-    /// Causes the drop shadow at the top of the view to be shown or hidden.
+    /// Should the footer view show a drop shadow above it?
+    /// Default = false
     /// If the value in app configuration is false, that overrides any attempt to set to true.
-    open var shouldShowShadow: Bool {
-        get {
-            return _shouldShowShadow
-        }
-        set {
+    @IBInspectable
+    open var shouldShowShadow: Bool = false {
+        didSet {
             let shadowEnabled = RSDTableStepUIConfig.shouldShowNavigationViewShadow()
-            _shouldShowShadow = shadowEnabled && newValue
+            _shouldShowShadow = shadowEnabled && shouldShowShadow
             self.shadowView?.isHidden = !_shouldShowShadow
             self.clipsToBounds = !_shouldShowShadow
         }
     }
+    
     private var _shouldShowShadow = false
 }
 

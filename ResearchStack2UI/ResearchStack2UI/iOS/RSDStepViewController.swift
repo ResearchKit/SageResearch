@@ -395,16 +395,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         
         if let imageTheme = self.themedStep?.imageTheme, let imageView = navigationView.imageView {
             let imagePlacement = imageTheme.placementType ?? .iconBefore
-            let shouldSetImage: Bool = {
-                switch placement {
-                case .header:
-                    return imagePlacement == .topBackground || imagePlacement == .iconBefore
-                case .body:
-                    return imagePlacement == .fullsizeBackground || imagePlacement == .iconAfter
-                case .footer:
-                    return imagePlacement == .iconAfter
-                }
-            }()
+            let shouldSetImage = shouldSetNavigationImage(for: placement, with: imagePlacement)
             if shouldSetImage {
                 navigationView.hasImage = true
                 if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
@@ -429,10 +420,11 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         navigationView.setNeedsUpdateConstraints()
     }
     
-    /// By default, this method will return `true` if the image theme uses a placement of `topBackground`.
+    /// By default, this method will return `true` if the image theme uses a placement
+    /// of `topBackground` or `topMarginBackground`.
     open func hasTopBackgroundImage() -> Bool {
         if let imageTheme = self.themedStep?.imageTheme, let placement = imageTheme.placementType {
-            return placement == .topBackground
+            return placement == .topBackground || placement == .topMarginBackground
         } else {
             return false
         }
@@ -529,6 +521,22 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         // loading state and whether or not any input fields are optional
         if actionType == .navigation(.goForward) {
             btn.isEnabled = isForwardEnabled
+        }
+    }
+    
+    /// Returns `true` if the given RSDColorPlacement and RSDImagePlacementType indicate that
+    /// this view controller should set an image, `false` otherwise.
+    /// Arguments:
+    ///     - placement:    the type of RSDColorPlacement that the view is using.
+    ///     - imagePlacement:   the type of RSDImagePlacementType that the view is using.
+    open func shouldSetNavigationImage(for placement: RSDColorPlacement, with imagePlacement: RSDImagePlacementType) -> Bool {
+        switch placement {
+        case .header:
+            return imagePlacement == .topBackground || imagePlacement == .topMarginBackground || imagePlacement == .iconBefore
+        case .body:
+            return imagePlacement == .fullsizeBackground || imagePlacement == .iconAfter
+        case .footer:
+            return imagePlacement == .iconAfter
         }
     }
     

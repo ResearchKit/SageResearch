@@ -147,7 +147,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     
     private func commonInit() {
         layer.masksToBounds = false
-        self.backgroundColor = UIColor.clear
+        self.backgroundColor = self.usesLightStyle ? UIColor.rsd_dialInnerBackgroundLightStyle : UIColor.rsd_dialInnerBackground
         self.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0, constant: 0.0).isActive = true
     }
     

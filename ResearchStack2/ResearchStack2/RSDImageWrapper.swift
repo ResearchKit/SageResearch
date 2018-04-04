@@ -121,7 +121,7 @@ public struct RSDImageWrapper {
         if let delegate = RSDImageWrapper.sharedDelegate {
             delegate.fetchImage(for: self, callback: callback)
         }
-        else if let image =  _embeddedImage() {
+        else if let image =  embeddedImage() {
             DispatchQueue.main.async {
                 callback(self.imageName, image)
             }
@@ -143,7 +143,7 @@ public struct RSDImageWrapper {
         }
     }
     
-    private func _embeddedImage() -> UIImage? {
+    public func embeddedImage() -> UIImage? {
         #if os(watchOS)
             return UIImage(named: imageName)
         #else
@@ -204,6 +204,7 @@ extension RSDImageWrapper : Decodable {
         let imageName = try container.decode(String.self)
         self.size = try RSDImageWrapper.validate(imageName: imageName, bundle: decoder.bundle)
         self.imageName = imageName
+        self.bundle = decoder.bundle
     }
 }
 
