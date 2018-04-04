@@ -526,7 +526,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     /// Returns `true` if the given RSDColorPlacement and RSDImagePlacementType indicate that
     /// this view controller should set an image, `false` otherwise.
-    /// Arguments:
+    /// - parameters:
     ///     - placement:    the type of RSDColorPlacement that the view is using.
     ///     - imagePlacement:   the type of RSDImagePlacementType that the view is using.
     open func shouldSetNavigationImage(for placement: RSDColorPlacement, with imagePlacement: RSDImagePlacementType) -> Bool {

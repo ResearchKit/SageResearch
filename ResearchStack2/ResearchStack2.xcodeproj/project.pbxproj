@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		B5581F5420756ABE00F224C6 /* RSDImagePlacementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */; };
+		B5581F5520756ABF00F224C6 /* RSDImagePlacementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */; };
 		B59FC2A82073439F002BFDB9 /* RSDImagePlacementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */; };
 		F802F3E3204DF2B80027CB00 /* RSDUIStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */; };
 		F802F3E4204DF2B80027CB00 /* RSDUIStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */; };
@@ -1941,6 +1943,7 @@
 				FF8B538A1FCE6C70006B6937 /* RSDFormDataType.swift in Sources */,
 				F8B17862202E22CC00B62416 /* RSDStandardAsyncActionConfiguration.swift in Sources */,
 				F8C28F29204F09CE00863F5F /* RSDDataArchiveManager.swift in Sources */,
+				B5581F5420756ABE00F224C6 /* RSDImagePlacementType.swift in Sources */,
 				FF8B53BC1FCE6C7B006B6937 /* RSDResourceTransformer.swift in Sources */,
 				F80CA5361FFEBEFE00E89C06 /* RSDChoicePickerTableItemGroup.swift in Sources */,
 				FF8B53871FCE6C70006B6937 /* RSDActiveUIStepCommand.swift in Sources */,
@@ -2086,6 +2089,7 @@
 				F88051A42011B43800B0FDDD /* RSDFraction.swift in Sources */,
 				F87F97C720059B100013D2DC /* RSDErrorResultObject.swift in Sources */,
 				FF8B53CF1FCE6C7B006B6937 /* RSDFormUIStep.swift in Sources */,
+				B5581F5520756ABF00F224C6 /* RSDImagePlacementType.swift in Sources */,
 				FF8B53D51FCE6C7B006B6937 /* RSDStep.swift in Sources */,
 				F810CF38202E2811009C49C9 /* RSDMotionRecorderConfiguration.swift in Sources */,
 				FF8B53931FCE6C71006B6937 /* RSDFormDataType.swift in Sources */,

@@ -1,8 +1,8 @@
 //
 //  RSDImagePlacementType.swift
-//  ResearchStack2 (iOS)
+//  ResearchStack2
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -52,10 +52,10 @@ public struct RSDImagePlacementType : RawRepresentable, Codable {
     /// Fullsize in the background.
     public static let fullsizeBackground: RSDImagePlacementType = "fullsizeBackground"
     
-    /// Top half of the background constraind to the safe area.
+    /// Top half of the background contrained to the top rather than to the safe area.
     public static let topBackground: RSDImagePlacementType = "topBackground"
     
-    /// Top half of the background contrained to the top rather than to the safe area.
+    /// Top half of the background constraind to the safe area.
     public static let topMarginBackground: RSDImagePlacementType = "topMarginBackground"
     
     public static func allStandardTypes() -> [RSDImagePlacementType] {
