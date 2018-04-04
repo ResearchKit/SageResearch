@@ -1329,10 +1329,10 @@
 				FF87CD8B1F844CE400084426 /* RSDFormUIHint.swift */,
 				F88051A12011B43700B0FDDD /* RSDFraction.swift */,
 				FF80B1381F7C244200582849 /* RSDIdentifier.swift */,
+				B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */,
 				FFF53EAC1FBF9562004211D2 /* RSDResultType.swift */,
 				FFD38DE61FBF805F004203D8 /* RSDStepType.swift */,
 				F8BAF41E2048DD35004B9406 /* RSDStepNavigatorType.swift */,
-				B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
