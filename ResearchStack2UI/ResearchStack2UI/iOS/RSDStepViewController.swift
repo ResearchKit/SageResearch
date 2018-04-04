@@ -238,17 +238,17 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     /// The label for displaying step title text.
     open var stepTitleLabel: UILabel? {
-        return self.navigationHeader?.titleLabel ?? self.navigationFooter?.titleLabel
+        return self.navigationBody?.titleLabel ?? self.navigationHeader?.titleLabel ?? self.navigationFooter?.titleLabel
     }
     
     /// The label for displaying step text.
     open var stepTextLabel: UILabel? {
-        return self.navigationHeader?.textLabel ?? self.navigationFooter?.textLabel
+        return self.navigationBody?.textLabel ?? self.navigationHeader?.textLabel ?? self.navigationFooter?.textLabel
     }
     
     /// The label for displaying step detail text.
     open var stepDetailLabel: UILabel? {
-        return self.navigationHeader?.detailLabel ?? self.navigationFooter?.detailLabel
+        return self.navigationBody?.detailLabel ?? self.navigationHeader?.detailLabel ?? self.navigationFooter?.detailLabel
     }
     
     /// Convenience method for getting the "Next" button.
