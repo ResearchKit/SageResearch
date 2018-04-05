@@ -33,6 +33,27 @@
 
 import Foundation
 
-open class MCTFactory : RSDFactory {
+extension RSDStepType {
     
+}
+
+open class MCTFactory : RSDFactory {
+        
+    /// Override the base factory to vend the MCTOverviewStepObject.
+    override open func decodeStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
+        switch type {
+        case .overview:
+            return try MCTOverviewStepObject(from: decoder)
+        default:
+            return try super.decodeStep(from: decoder, with: type)
+        }
+    }
+    
+//    /// Override the base factory to vend a motion section transformer.
+//    override open func decodeSectionStepTransformer(from decoder: Decoder) throws -> RSDSectionStepTransformer {
+//        guard let transformerType = try self.typeName(from: decoder), transformerType == RSDStepType.motion.stringValue else {
+//            return try super.decodeSectionStepTransformer(from: decoder)
+//        }
+//        return RSDResourceTransformerObject(resourceName: "MotionStep", bundle: Bundle(for: MCTFactory.self), classType: nil)
+//    }
 }

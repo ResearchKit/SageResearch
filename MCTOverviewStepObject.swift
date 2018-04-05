@@ -1,5 +1,5 @@
 //
-//  MotorControl.h
+//  MCTOverviewStepObject.swift
 //  MotorControl
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,14 +31,36 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-@import UIKit;
-@import ResearchStack2;
-@import ResearchStack2UI;
+import Foundation
 
-//! Project version number for MotorControl.
-FOUNDATION_EXPORT double MotorControlVersionNumber;
+open class MCTOverviewStepObject : RSDOverviewStepObject {
+    
+    private enum CodingKeys: String, CodingKey {
+        case icons
+    }
+    
+    open var icons: [MCTIconInfo]?
+    
+    /// Override the copy into method.
+    override open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
+        try super.copyInto(copy, userInfo: nil)
+        guard let subclassCopy = copy as? MCTOverviewStepObject else {
+            assertionFailure("Failed to copy into a class of expected type.")
+            return
+        }
+        subclassCopy.icons = self.icons
+    }
+    
+    /// Override the decoder to also decode the icon types that this step will display.
+    override open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
+        try super.decode(from: decoder, for: deviceType)
+        guard deviceType == nil else { return }
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.icons = try container.decodeIfPresent([MCTIconInfo].self, forKey: .icons)
+    }
+}
 
-//! Project version string for MotorControl.
-FOUNDATION_EXPORT const unsigned char MotorControlVersionString[];
-
-
+public struct MCTIconInfo : Codable {
+    public let title: String
+    public let icon: RSDImageWrapper
+}
