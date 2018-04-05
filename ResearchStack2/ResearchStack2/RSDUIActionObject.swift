@@ -95,7 +95,7 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
     /// - parameters:
     ///     - iconName: The name of the image to display on the button.
     ///     - bundle: The resource bundle that contains the image.
-    public init(iconName: String, bundle: Bundle? = nil) {
+    public init(iconName: String, bundle: Bundle?) {
         self.buttonTitle = nil
         self.iconName = iconName
         self.bundleIdentifier = bundle?.bundleIdentifier
