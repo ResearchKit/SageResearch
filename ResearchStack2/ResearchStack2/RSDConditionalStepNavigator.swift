@@ -184,16 +184,34 @@ extension RSDConditionalStepNavigator {
         return conditionalRule?.skipToStepIdentifier(before: returnStep, with: result, isPeeking: isPeeking)
     }
     
-    private func _nextStepIdentifier(after previousStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
-        guard let navigableStep = previousStep as? RSDNavigationRule,
-            let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking)
-            else {
-                // Check the conditional rule for a next step identifier
-                return _checkConditionalRules(after: previousStep, with: result, isPeeking: isPeeking)
+    private func _nextStepIdentifier(with parentResult: RSDTaskResult, isPeeking: Bool) -> String? {
+        guard let sectionStep = self as? RSDStep,
+              let taskResult = parentResult.findResult(for: sectionStep) as? RSDTaskResult,
+              let lastResult = taskResult.stepHistory.last,
+              let previousStep = self.step(with: lastResult.identifier)
+              else {
+                return nil
         }
-        // If this is a step that conforms to the RSDNavigationRule protocol and the next step is non-nil,
+        return _nextStepIdentifier(after: previousStep, with: taskResult, isPeeking: isPeeking)
+    }
+    
+    private func _nextStepIdentifier(after previousStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
+        // If this is a step that conforms to RSDConditionalStepNavigator and the next step is non-nil,
         // then return this as the next step identifier
-        return nextStepIdentifier
+        if let sectionStep = previousStep as? RSDConditionalStepNavigator,
+           let nextStepIdentifer = sectionStep._nextStepIdentifier(with: result, isPeeking: isPeeking) {
+            return nextStepIdentifer
+        }
+        else if let navigableStep = previousStep as? RSDNavigationRule,
+                let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking) {
+            // If this is a step that conforms to the RSDNavigationRule protocol and the next step is non-nil,
+            // then return this as the next step identifier
+            return nextStepIdentifier
+        }
+        else {
+            // Check the conditional rule for a next step identifier
+            return _checkConditionalRules(after: previousStep, with: result, isPeeking: isPeeking)
+        }
     }
     
     /// Should the task exit early from the entire task?
