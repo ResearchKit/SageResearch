@@ -42,7 +42,9 @@ open class MCTInstructionStepViewController : RSDStepViewController {
     @IBOutlet weak var topBackgroundConstraint: NSLayoutConstraint!
     
     /// Override viewDidLoad() to choose the appropriate constraint between
-    /// topMarginBackground and topBackground.
+    /// topMarginBackground and topBackground. This was done because some images
+    /// need to be constrained to the top of the phone, but others need to be constrained
+    /// to the safe area to ensure things like people's heads don't get chopped off.
     override open func viewDidLoad() {
         super.viewDidLoad()
         guard let placementType = (self.step as? RSDUIStepObject)?.imageTheme?.placementType else { return }
