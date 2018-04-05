@@ -276,4 +276,73 @@ class TaskControllerTests: XCTestCase {
         
         XCTAssertEqual(taskController.taskPath.stepPath, "introduction, step1, step2, step3")
     }
+    
+    
+    func testJumpBackward() {
+        var steps: [RSDStep] = []
+        let beforeSteps: [RSDStep] = TestStep.steps(from: ["introduction", "step1", "step2", "step3"])
+        steps.append(contentsOf: beforeSteps)
+        
+        var sectionSteps = TestStep.steps(from: ["stepA", "stepB", "stepC"])
+        var stepB = sectionSteps[1]
+        stepB.nextStepIdentifier = "stepA"
+        sectionSteps.remove(at: 1)
+        sectionSteps.insert(stepB, at: 1)
+        
+        steps.append(RSDSectionStepObject(identifier: "step4", steps: sectionSteps))
+        steps.append(RSDSectionStepObject(identifier: "step5", steps: TestStep.steps(from: ["stepX", "stepY", "stepZ"])))
+        steps.append(RSDSectionStepObject(identifier: "step6", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        let afterSteps: [RSDStep] = TestStep.steps(from: ["step7", "completion"])
+        steps.append(contentsOf: afterSteps)
+        
+        var navigator = TestConditionalNavigator(steps: steps)
+        navigator.progressMarkers = ["step1", "step2", "step3", "step4", "step5", "step6", "step7"]
+        
+        let task = TestTask(identifier: "test", stepNavigator: navigator)
+        
+        let taskController = TestTaskController()
+        taskController.topLevelTask = task
+        
+        // set up for the step controller
+        let _ = taskController.test_stepTo("stepB")
+        taskController.goForward()
+        
+        let stepTo = taskController.navigate_calledTo
+        XCTAssertNotNil(stepTo)
+        XCTAssertEqual(stepTo?.identifier, "stepA")
+    }
+    
+    func testJumpBackward_OutOfSection() {
+        var steps: [RSDStep] = []
+        let beforeSteps: [RSDStep] = TestStep.steps(from: ["introduction", "step1", "step2", "step3"])
+        steps.append(contentsOf: beforeSteps)
+        
+        var sectionSteps = TestStep.steps(from: ["stepA", "stepB", "stepC"])
+        var stepB = sectionSteps[1]
+        stepB.nextStepIdentifier = "step1"
+        sectionSteps.remove(at: 1)
+        sectionSteps.insert(stepB, at: 1)
+        
+        steps.append(RSDSectionStepObject(identifier: "step4", steps: sectionSteps))
+        steps.append(RSDSectionStepObject(identifier: "step5", steps: TestStep.steps(from: ["stepX", "stepY", "stepZ"])))
+        steps.append(RSDSectionStepObject(identifier: "step6", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        let afterSteps: [RSDStep] = TestStep.steps(from: ["step7", "completion"])
+        steps.append(contentsOf: afterSteps)
+        
+        var navigator = TestConditionalNavigator(steps: steps)
+        navigator.progressMarkers = ["step1", "step2", "step3", "step4", "step5", "step6", "step7"]
+        
+        let task = TestTask(identifier: "test", stepNavigator: navigator)
+        
+        let taskController = TestTaskController()
+        taskController.topLevelTask = task
+        
+        // set up for the step controller
+        let _ = taskController.test_stepTo("stepB")
+        taskController.goForward()
+        
+        let stepTo = taskController.navigate_calledTo
+        XCTAssertNotNil(stepTo)
+        XCTAssertEqual(stepTo?.identifier, "step1")
+    }
 }
