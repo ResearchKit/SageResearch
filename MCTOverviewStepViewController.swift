@@ -91,11 +91,11 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         _setHiddenAndScrollable(shouldShowInfo: shouldShowInfo)
     }
     
-    // Sets whether the components are hidden, and whether scrolling is enabled
-    // based on whether this view should be showing the full task info or the
-    // abbreviated version.
-    // Arguments:
-    //     - shouldShowInfo: Bool - true if the full task info should be shown, false otherwise
+    /// Sets whether the components are hidden, and whether scrolling is enabled
+    /// based on whether this view should be showing the full task info or the
+    /// abbreviated version.
+    /// - parameters:
+    ///     - shouldShowInfo:    true if the full task info should be shown, false otherwise
     private func _setHiddenAndScrollable(shouldShowInfo: Bool) {
         (self.view as? RSDStepNavigationView)?.textLabel?.isHidden = !shouldShowInfo
         for label in self.iconTitles! {
@@ -109,7 +109,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         self.navigationFooter?.shouldShowShadow = shouldShowInfo
     }
     
-    // The function that is called when the info button is tapped.
+    /// The function that is called when the info button is tapped.
     @IBAction
     private func infoButtonTapped(_ sender: UIButton) {
         let textLabel = (self.view as? RSDStepNavigationView)?.textLabel
