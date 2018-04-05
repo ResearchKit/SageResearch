@@ -37,27 +37,11 @@ open class MCTActiveStepViewController : RSDActiveStepViewController {
     
     @IBOutlet weak var restartButton: RSDRoundedButton!
     
-    /// What unit should the unit label display to the user?
-    @IBInspectable
-    open var unitLabelText : String? = nil {
-        didSet {
-            self.unitLabel?.text = unitLabelText
-        }
-    }
-    
-    /// This class overrides `didSet` to update the `countdownLabel` to the new value formatted as a time interval in seconds.
-    /// The `countdownFormatter` is used to format the string derived from this time interval.
-    override open var countdown: Int {
-        didSet {
-            self.countdownLabel?.text = countdownFormatter.string(from: TimeInterval(countdown))
-        }
-    }
-    
     /// Formatter for the countdown label.
-    /// Overriden to not display minutes when the minutes place would be 0.
+    /// Overriden to only display seconds.
     override lazy open var countdownFormatter : DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = countdown < 60 ? [.second] : [.minute, .second]
+        formatter.allowedUnits = [.second]
         formatter.unitsStyle = .positional
         formatter.zeroFormattingBehavior = [ .pad ]
         return formatter
@@ -66,6 +50,8 @@ open class MCTActiveStepViewController : RSDActiveStepViewController {
     /// Override viewWillAppear to also set the unitLabel text.
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // Attempted to split the DataComponentsFormatter into a number and a unit label, however
+        // DateComponentsFormatter doesn't actually translate into other languages.
         self.unitLabel?.text = "SECONDS REMAINING" // TODO rkolmos 03/30/2018 localize
         (self.step as? RSDActiveUIStepObject)?.nextStepIdentifier = nil
     }
@@ -76,6 +62,7 @@ open class MCTActiveStepViewController : RSDActiveStepViewController {
     
     /// Override skip forward to skip backward to the walk step.
     override open func skipForward() {
+        // TODO: rkolmos 04/05/2018 refactor ResearchStack2 to support linking an RSDUIAction to navigation
         guard let activeStep = self.step as? RSDActiveUIStepObject else { return }
         activeStep.nextStepIdentifier = "walk"
         super.skipForward()

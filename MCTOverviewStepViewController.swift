@@ -43,9 +43,11 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     @IBOutlet
     open var iconTitles: [UILabel]!
     
+    /// The button that when pressed displays the full task info.
     @IBOutlet
     open var infoButton: UIButton!
     
+    /// The scroll view that contains the elements which scroll.
     @IBOutlet
     open var scrollView: UIScrollView!
     
@@ -56,6 +58,8 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         super.viewWillAppear(animated)
         // Add the info button.
         
+        // This code assumes that either 1 or 3 icons will be displayed. In order to support
+        // other values other implementations should use a UICollectionView.
         for label in iconTitles! {
             label.text = nil
         }
@@ -76,18 +80,14 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         let defaults = UserDefaults.standard
         let timestampKey = "\(taskController.taskPath.identifier)_lastRun"
         let lastRun = defaults.object(forKey: timestampKey) as? Date
-        // The constant -2592000 represents one month in seconds.
-        let shouldShowInfo = lastRun == nil
-            || lastRun! < Date(timeIntervalSinceNow: -2592000)
+        let monthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+        let shouldShowInfo = lastRun == nil || lastRun! < monthAgo
         defaults.set(Date(), forKey: timestampKey)
-        if  shouldShowInfo {
-            /// The image view that is used to show the animation.
-            var animationView: UIImageView? {
-                return (self.navigationHeader as? RSDStepHeaderView)?.imageView
-            }
-            animationView?.stopAnimating()
+        /// The image view that is used to show the animation.
+        var animationView: UIImageView? {
+            return (self.navigationHeader as? RSDStepHeaderView)?.imageView
         }
-        
+        animationView?.stopAnimating()
         _setHiddenAndScrollable(shouldShowInfo: shouldShowInfo)
     }
     

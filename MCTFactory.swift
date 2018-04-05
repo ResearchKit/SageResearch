@@ -48,12 +48,4 @@ open class MCTFactory : RSDFactory {
             return try super.decodeStep(from: decoder, with: type)
         }
     }
-    
-//    /// Override the base factory to vend a motion section transformer.
-//    override open func decodeSectionStepTransformer(from decoder: Decoder) throws -> RSDSectionStepTransformer {
-//        guard let transformerType = try self.typeName(from: decoder), transformerType == RSDStepType.motion.stringValue else {
-//            return try super.decodeSectionStepTransformer(from: decoder)
-//        }
-//        return RSDResourceTransformerObject(resourceName: "MotionStep", bundle: Bundle(for: MCTFactory.self), classType: nil)
-//    }
 }
