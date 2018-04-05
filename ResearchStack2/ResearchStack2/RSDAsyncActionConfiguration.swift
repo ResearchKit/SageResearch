@@ -102,6 +102,13 @@ public protocol RSDRecorderConfiguration : RSDAsyncActionConfiguration {
     var requiresBackgroundAudio: Bool { get }
 }
 
+/// Extends `RSDRecorderConfiguration` for a recorder that might be restarted.
+public protocol RSDRestartableRecorderConfiguration : RSDRecorderConfiguration {
+    
+    /// Should the file used in a previous run of a recording be deleted?
+    var shouldDeletePrevious: Bool { get }
+}
+
 /// `RSDJSONRecorderConfigureation` is used to configure a recorder to record JSON samples.
 /// - seealso: `RSDSampleRecorder`
 public protocol RSDJSONRecorderConfiguration : RSDRecorderConfiguration {

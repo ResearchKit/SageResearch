@@ -577,7 +577,8 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     open func instantiateLogger(with identifier: String) throws -> RSDDataLogger? {
         let format = stringEncodingFormat()
         let ext = format?.fileExtension ?? "json"
-        let url = try RSDFileResultUtility.createFileURL(identifier: identifier, ext: ext, outputDirectory: outputDirectory)
+        let shouldDelete = (self.configuration as? RSDRestartableRecorderConfiguration)?.shouldDeletePrevious ?? false
+        let url = try RSDFileResultUtility.createFileURL(identifier: identifier, ext: ext, outputDirectory: outputDirectory, shouldDeletePrevious: shouldDelete)
         return try RSDRecordSampleLogger(identifier: identifier, url: url, usesRootDictionary: self.usesRootDictionary, stringEncodingFormat: format)
     }
     

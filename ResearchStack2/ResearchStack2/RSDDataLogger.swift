@@ -135,7 +135,7 @@ public class RSDFileResultUtility {
     ///     - outputDirectory: File URL for the directory in which to store generated data files.
     /// - returns: Scrubbed URL for the given identifier.
     /// - throws: An exception if the file directory cannot be created.
-    public static func createFileURL(identifier: String, ext: String, outputDirectory: URL) throws -> URL {
+    public static func createFileURL(identifier: String, ext: String, outputDirectory: URL, shouldDeletePrevious: Bool = false) throws -> URL {
 
         // create the directory if needed
         try FileManager.default.createDirectory(at: outputDirectory, withIntermediateDirectories: true, attributes: nil)
@@ -153,11 +153,20 @@ public class RSDFileResultUtility {
         let url = URL(fileURLWithPath: relativePath, relativeTo: outputDirectory)
         if !FileManager.default.fileExists(atPath: url.path) {
             return url
-        } else {
-            assertionFailure("A file already exists at \(filename).")
-            let uuidCode = UUID().uuidString.prefix(4)
-            return URL(fileURLWithPath: "\(filename)-\(uuidCode).\(ext)", relativeTo: outputDirectory)
         }
+        else if shouldDeletePrevious, FileManager.default.isDeletableFile(atPath: url.path) {
+            do {
+                try FileManager.default.removeItem(at: url)
+                return url
+            }
+            catch let err {
+                debugPrint("Failed to delete file. \(err)")
+            }
+        }
+        
+        assertionFailure("A file already exists at \(filename).")
+        let uuidCode = UUID().uuidString.prefix(4)
+        return URL(fileURLWithPath: "\(filename)-\(uuidCode).\(ext)", relativeTo: outputDirectory)
     }
     
     /// Convenience method for creating a file URL for a given reserved file name to use as the location

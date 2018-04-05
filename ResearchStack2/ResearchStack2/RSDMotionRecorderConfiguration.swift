@@ -150,7 +150,7 @@ public enum RSDMotionRecorderType : String, Codable, RSDStringEnumSet {
 ///            """.data(using: .utf8)! // our data in native (JSON) format
 /// ```
 @available(iOS 10.0, *)
-public struct RSDMotionRecorderConfiguration : RSDRecorderConfiguration, RSDAsyncActionControllerVendor, Codable {
+public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfiguration, RSDAsyncActionControllerVendor, Codable {
     
     /// A short string that uniquely identifies the asynchronous action within the task. If started
     /// asynchronously, then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.
@@ -166,6 +166,13 @@ public struct RSDMotionRecorderConfiguration : RSDRecorderConfiguration, RSDAsyn
     /// An identifier marking the step at which to stop the action. If `nil`, then the action will be
     /// stopped when the task is stopped.
     public var stopStepIdentifier: String?
+    
+    /// Should the file used in a previous run of a recording be deleted?
+    /// Default = `true`.
+    public var shouldDeletePrevious: Bool {
+        return _shouldDeletePrevious ?? true
+    }
+    private let _shouldDeletePrevious: Bool?
     
     /// Whether or not the recorder requires background audio. Default = `false`.
     ///
@@ -204,7 +211,7 @@ public struct RSDMotionRecorderConfiguration : RSDRecorderConfiguration, RSDAsyn
     public var usesCSVEncoding : Bool?
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio", usesCSVEncoding
+        case identifier, type, recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio", usesCSVEncoding, _shouldDeletePrevious = "shouldDeletePrevious"
     }
     
     /// Default initializer.
@@ -213,12 +220,13 @@ public struct RSDMotionRecorderConfiguration : RSDRecorderConfiguration, RSDAsyn
     ///     - recorderTypes: The `CoreMotion` device sensor types to include with this configuration.
     ///     - requiresBackgroundAudio: Whether or not the recorder requires background audio. Default = `false`.
     ///     - frequency: The sampling frequency of the motion sensors.
-    public init(identifier: String, recorderTypes: Set<RSDMotionRecorderType>?, requiresBackgroundAudio: Bool = false, frequency: Double? = nil) {
+    public init(identifier: String, recorderTypes: Set<RSDMotionRecorderType>?, requiresBackgroundAudio: Bool = false, frequency: Double? = nil, shouldDeletePrevious: Bool? = nil) {
         self.type = .motion
         self.identifier = identifier
         self.recorderTypes = recorderTypes
         self._requiresBackgroundAudio = requiresBackgroundAudio
         self.frequency = frequency
+        self._shouldDeletePrevious = shouldDeletePrevious
     }
     
     /// Do nothing. No validation is required for this recorder.
@@ -249,7 +257,7 @@ extension RSDMotionRecorderConfiguration : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .recorderTypes, .startStepIdentifier, .stopStepIdentifier, .frequency, ._requiresBackgroundAudio, .type, .usesCSVEncoding]
+        let codingKeys: [CodingKeys] = [.identifier, .recorderTypes, .startStepIdentifier, .stopStepIdentifier, .frequency, ._requiresBackgroundAudio, .type, .usesCSVEncoding, ._shouldDeletePrevious]
         return codingKeys
     }
     
@@ -273,9 +281,11 @@ extension RSDMotionRecorderConfiguration : RSDDocumentableCodableObject {
                 if idx != 6 { return false }
             case .usesCSVEncoding:
                 if idx != 7 { return false }
+            case ._shouldDeletePrevious:
+                if idx != 8 { return false }
             }
         }
-        return keys.count == 8
+        return keys.count == 9
     }
     
     static func examples() -> [Encodable] {
