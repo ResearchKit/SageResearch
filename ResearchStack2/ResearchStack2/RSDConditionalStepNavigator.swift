@@ -196,6 +196,8 @@ extension RSDConditionalStepNavigator {
     }
     
     private func _nextStepIdentifier(after previousStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
+        // If this is a step that conforms to RSDConditionalStepNavigator and the next step is non-nil,
+        // then return this as the next step identifier
         if let sectionStep = previousStep as? RSDConditionalStepNavigator,
            let nextStepIdentifer = sectionStep._nextStepIdentifier(with: result, isPeeking: isPeeking) {
             return nextStepIdentifer

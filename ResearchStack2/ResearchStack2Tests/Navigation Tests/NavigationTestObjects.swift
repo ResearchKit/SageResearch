@@ -36,15 +36,15 @@ import ResearchStack2
 
 struct TestStep : RSDStep, RSDNavigationRule {
     
-    func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
-        return self.nextStepIdentifier
-    }
-    
     let identifier: String
     var stepType: RSDStepType = .instruction
     var result: RSDResult?
     var validationError: Error?
     var nextStepIdentifier: String?
+    
+    func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
+        return self.nextStepIdentifier
+    }
     
     init(identifier: String) {
         self.identifier = identifier
