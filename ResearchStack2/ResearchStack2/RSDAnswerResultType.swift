@@ -248,7 +248,7 @@ extension RSDAnswerResultType {
         // special-case the ".codable" type to return a dictionary
         if baseType == .codable {
             let container = try decoder.container(keyedBy: AnyCodingKey.self)
-            return try container.decode(Dictionary<String, Any>.self)
+            return try container.rsd_decode(Dictionary<String, Any>.self)
         }
         
         // all other types are single value

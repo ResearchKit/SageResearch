@@ -36,7 +36,7 @@ import Foundation
 extension Dictionary {
     
     /// Use this dictionary to decode the given object type.
-    public func decode<T>(_ type: T.Type, bundle: Bundle? = nil) throws -> T where T : Decodable {
+    public func rsd_decode<T>(_ type: T.Type, bundle: Bundle? = nil) throws -> T where T : Decodable {
         let decoder = RSDFactory.shared.createJSONDecoder(bundle: bundle)
         let jsonData = try JSONSerialization.data(withJSONObject: self, options: [])
         let decodable = try decoder.decode(type, from: jsonData)
@@ -47,7 +47,7 @@ extension Dictionary {
 extension Array {
     
     /// Use this array to decode an array of objects of the given type.
-    public func decode<T>(_ type: Array<T>.Type, bundle: Bundle? = nil) throws -> Array<T> where T : Decodable {
+    public func rsd_decode<T>(_ type: Array<T>.Type, bundle: Bundle? = nil) throws -> Array<T> where T : Decodable {
         let decoder = RSDFactory.shared.createJSONDecoder(bundle: bundle)
         let jsonData = try JSONSerialization.data(withJSONObject: self, options: [])
         let decodable = try decoder.decode(type, from: jsonData)
@@ -59,7 +59,7 @@ extension RSDFactoryEncoder {
     
     /// Serialize a dictionary. This is a work-around for not being able to
     /// directly encode a generic dictionary.
-    func encode(_ value: Dictionary<String, Any>) throws -> Data {
+    func rsd_encode(_ value: Dictionary<String, Any>) throws -> Data {
         let dictionary = value.mapKeys { "\($0)" }
         let anyDictionary = AnyCodableDictionary(dictionary)
         let data = try self.encode(anyDictionary)
@@ -68,7 +68,7 @@ extension RSDFactoryEncoder {
     
     /// Serialize an array. This is a work-around for not being able to
     /// directly encode a generic dictionary.
-    func encode(_ value: Array<Any>) throws -> Data {
+    func rsd_encode(_ value: Array<Any>) throws -> Data {
         let anyArray = AnyCodableArray(value)
         let data = try self.encode(anyArray)
         return data
@@ -102,7 +102,7 @@ struct AnyCodableArray : Codable {
     
     public init(from decoder: Decoder) throws {
         var genericContainer = try decoder.unkeyedContainer()
-        self.array = try genericContainer.decode(Array<Any>.self)
+        self.array = try genericContainer.rsd_decode(Array<Any>.self)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -120,7 +120,7 @@ struct AnyCodableDictionary : Codable {
     
     public init(from decoder: Decoder) throws {
         let genericContainer = try decoder.container(keyedBy: AnyCodingKey.self)
-        self.dictionary = try genericContainer.decode(Dictionary<String, Any>.self)
+        self.dictionary = try genericContainer.rsd_decode(Dictionary<String, Any>.self)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -133,35 +133,35 @@ struct AnyCodableDictionary : Codable {
 extension KeyedDecodingContainer {
     
     /// Decode `Dictionary<String, Any>` for the given key.
-    func decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
+    func rsd_decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
         let container = try self.nestedContainer(keyedBy: AnyCodingKey.self, forKey: key)
-        return try container.decode(type)
+        return try container.rsd_decode(type)
     }
     
     /// Decode `Dictionary<String, Any>` for the given key if the dictionary is present for that key.
-    func decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
+    func rsd_decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
         guard contains(key) else {
             return nil
         }
-        return try decode(type, forKey: key)
+        return try rsd_decode(type, forKey: key)
     }
     
     /// Decode `Array<Any>` for the given key.
-    func decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
+    func rsd_decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
         var container = try self.nestedUnkeyedContainer(forKey: key)
-        return try container.decode(type)
+        return try container.rsd_decode(type)
     }
     
     /// Decode `Array<Any>` for the given key if the array is present for that key.
-    func decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
+    func rsd_decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
         guard contains(key) else {
             return nil
         }
-        return try decode(type, forKey: key)
+        return try rsd_decode(type, forKey: key)
     }
     
     /// Decode this container as a `Dictionary<String, Any>`.
-    func decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
+    func rsd_decode(_ type: Dictionary<String, Any>.Type) throws -> Dictionary<String, Any> {
         var dictionary = Dictionary<String, Any>()
         
         for key in allKeys {
@@ -177,11 +177,11 @@ extension KeyedDecodingContainer {
             else if let doubleValue = try? decode(Double.self, forKey: key) {
                 dictionary[key.stringValue] = doubleValue
             }
-            else if let nestedDictionary = try? decode(Dictionary<String, Any>.self, forKey: key) {
-                dictionary[key.stringValue] = nestedDictionary
+            else if let nestedDictionary = try? decode(AnyCodableDictionary.self, forKey: key) {
+                dictionary[key.stringValue] = nestedDictionary.dictionary
             }
-            else if let nestedArray = try? decode(Array<Any>.self, forKey: key) {
-                dictionary[key.stringValue] = nestedArray
+            else if let nestedArray = try? decode(AnyCodableArray.self, forKey: key) {
+                dictionary[key.stringValue] = nestedArray.array
             }
         }
         return dictionary
@@ -193,7 +193,7 @@ extension KeyedDecodingContainer {
 extension UnkeyedDecodingContainer {
     
     /// For the elements in the unkeyed contain, decode all the elements.
-    mutating func decode(_ type: Array<Any>.Type) throws -> Array<Any> {
+    mutating func rsd_decode(_ type: Array<Any>.Type) throws -> Array<Any> {
         var array: [Any] = []
         while isAtEnd == false {
             if let value = try? decode(Bool.self) {
@@ -204,10 +204,11 @@ extension UnkeyedDecodingContainer {
                 array.append(value)
             } else if let value = try? decode(String.self) {
                 array.append(value)
-            } else if let nestedDictionary = try? decode(Dictionary<String, Any>.self) {
-                array.append(nestedDictionary)
-            } else if let nestedArray = try? decode(Array<Any>.self) {
+            } else if let nestedArray = try? rsd_decode(Array<Any>.self) {
                 array.append(nestedArray)
+            } else {
+                let nestedDictionary = try decode(AnyCodableDictionary.self)
+                array.append(nestedDictionary.dictionary)
             }
         }
         return array

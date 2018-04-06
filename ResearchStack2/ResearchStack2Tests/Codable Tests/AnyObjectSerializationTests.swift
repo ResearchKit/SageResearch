@@ -76,7 +76,7 @@ class AnyObjectSerializationTests: XCTestCase {
             let encoder = RSDFactory.shared.createJSONEncoder()
             encoder.dataEncodingStrategy = .base64
             encoder.nonConformingFloatEncodingStrategy = .convertToString(positiveInfinity: "+inf", negativeInfinity: "-inf", nan: "NaN")
-            let jsonData = try encoder.encode(input)
+            let jsonData = try encoder.rsd_encode(input)
             
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
@@ -113,7 +113,7 @@ class AnyObjectSerializationTests: XCTestCase {
             }
             
             // Test convert to object
-            let object = try dictionary.decode(TestDecodable.self)
+            let object = try dictionary.rsd_decode(TestDecodable.self)
             
             XCTAssertEqual(object.string, "String")
             XCTAssertEqual(object.integer, 34)
@@ -144,7 +144,7 @@ class AnyObjectSerializationTests: XCTestCase {
                              "uuid" : uuid.uuidString,
                              "array" : ["cat", "dog", "duck"]]]
         do {
-            guard let object = try input.decode([TestDecodable].self).first
+            guard let object = try input.rsd_decode([TestDecodable].self).first
                 else {
                     XCTFail("Failed to decode object")
                     return
