@@ -787,7 +787,7 @@ public class RSDRecordSampleLogger : RSDDataLogger {
     /// - throws: Error if writing the sample fails because the wasn't enough memory on the device.
     public func writeSample(_ sample: RSDSampleRecord) throws {
         if let format = self.stringEncodingFormat {
-            let string = try sample.delimiterEncodedString(with: format.codingKeys(), delimiter: format.encodingSeparator)
+            let string = try sample.rsd_delimiterEncodedString(with: format.codingKeys(), delimiter: format.encodingSeparator)
             if sampleCount > 0 || startText.count > 0 {
                 try write("\n\(string)")
             } else {
@@ -799,7 +799,7 @@ public class RSDRecordSampleLogger : RSDDataLogger {
                 // If this is not the first sample then write a comma and line feed
                 try write(",\n")
             }
-            let data = try sample.jsonEncodedData()
+            let data = try sample.rsd_jsonEncodedData()
             try write(data)
         }
     }

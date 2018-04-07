@@ -122,10 +122,12 @@ open class RSDTrackedItemDetailsStepObject : RSDFormUIStepObject, RSDTrackedItem
                 let index = String(answerResult.identifier.suffix(from: period.upperBound))
                 if !scheduleIndexes.contains(index) {
                     var schedule = RSDWeeklyScheduleObject()
-                    let timeIdentifier = "\(FieldIdentifiers.timeOfDay).\(index)"
-                    schedule.setTime(from: collectionResult.findAnswerResult(with: timeIdentifier)?.value)
-                    let daysIdentifier = "\(FieldIdentifiers.daysOfWeek).\(index)"
-                    schedule.setWeekdays(from: collectionResult.findAnswerResult(with: daysIdentifier)?.value as? [Any])
+                    let timeIdentifier = "\(FieldIdentifiers.timeOfDay.stringValue).\(index)"
+                    let time = collectionResult.findAnswerResult(with: timeIdentifier)?.value
+                    schedule.setTime(from: time)
+                    let daysIdentifier = "\(FieldIdentifiers.daysOfWeek.stringValue).\(index)"
+                    let days = collectionResult.findAnswerResult(with: daysIdentifier)?.value as? [Any]
+                    schedule.setWeekdays(from: days)
                     schedules.append(schedule)
                     scheduleIndexes.append(index)
                 }

@@ -302,7 +302,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// - parameter encoder: The factory top-level encoder.
     /// - returns: The encoded result.
     public func encodeResult(to encoder: RSDFactoryEncoder) throws -> Data {
-        return try self.result.encodeObject(to: encoder)
+        return try self.result.rsd_encodeObject(to: encoder)
     }
         
     /// Delete the output directory on the file management queue. Do *not* call this method until the

@@ -92,7 +92,7 @@ public struct RSDGenericStepObject : RSDGenericStep, Decodable {
         
         // Store any additional information to a user info dictionary
         let genericContainer = try decoder.container(keyedBy: AnyCodingKey.self)
-        self.userInfo = try genericContainer.decode(Dictionary<String, Any>.self)
+        self.userInfo = try genericContainer.rsd_decode(Dictionary<String, Any>.self)
     }
     
     /// Instantiate a step result that is appropriate for this step. Default implementation will return a `RSDResultObject`.

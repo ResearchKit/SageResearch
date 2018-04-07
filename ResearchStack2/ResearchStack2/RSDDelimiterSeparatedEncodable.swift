@@ -53,7 +53,7 @@ extension RSDDelimiterSeparatedEncodable {
     
     /// The comma-separated string representing this object.
     public func delimiterEncodedString(with delimiter: String) throws -> String {
-        return try delimiterEncodedString(with: type(of: self).codingKeys(), delimiter: delimiter)
+        return try rsd_delimiterEncodedString(with: type(of: self).codingKeys(), delimiter: delimiter)
     }
 }
 
@@ -61,8 +61,8 @@ extension Encodable {
     
     /// Returns the comma-separated string representing this object.
     /// - parameter codingKeys: The codingKeys to use as mask for the comma-delimited list.
-    public func delimiterEncodedString(with codingKeys: [CodingKey], delimiter: String) throws -> String {
-        let dictionary = try self.jsonEncodedDictionary()
+    public func rsd_delimiterEncodedString(with codingKeys: [CodingKey], delimiter: String) throws -> String {
+        let dictionary = try self.rsd_jsonEncodedDictionary()
         let values: [String] = try codingKeys.map { (key) -> String in
             guard let value = dictionary[key.stringValue] else { return "" }
             if ((value is [Any]) || (value is [String : Any])) {
@@ -81,15 +81,15 @@ extension Encodable {
     
     /// Returns JSON-encoded data created by encoding this object using a JSON encoder created
     /// by the shared `RSDFactory` singleton.
-    public func jsonEncodedData() throws -> Data {
+    public func rsd_jsonEncodedData() throws -> Data {
         let jsonEncoder = RSDFactory.shared.createJSONEncoder()
-        return try self.encodeObject(to: jsonEncoder)
+        return try self.rsd_encodeObject(to: jsonEncoder)
     }
     
     /// Returns a JSON-encoded dictionary created by encoding this object using a JSON encoder
     /// created by the shared `RSDFactory` singleton.
-    public func jsonEncodedDictionary() throws -> [String : Any] {
-        let data = try self.jsonEncodedData()
+    public func rsd_jsonEncodedDictionary() throws -> [String : Any] {
+        let data = try self.rsd_jsonEncodedData()
         let json = try JSONSerialization.jsonObject(with: data, options: [])
         guard let dictionary = json as? [String : Any] else {
             let context = EncodingError.Context(codingPath: [], debugDescription: "Failed to encode the object into a dictionary.")
@@ -99,7 +99,7 @@ extension Encodable {
     }
     
     /// Encode the object using the factory encoder.
-    func encodeObject(to encoder: RSDFactoryEncoder) throws -> Data {
+    func rsd_encodeObject(to encoder: RSDFactoryEncoder) throws -> Data {
         let wrapper = _EncodableWrapper(encodable: self)
         return try encoder.encode(wrapper)
     }
