@@ -1,7 +1,7 @@
 {
     "identifier":"Tapping",
     "shouldHideActions":["goBackward", "skip"],
-    "progressMarkers":["fingerTappingInstructions", "tappingFirstHandInstruction", "completion"],
+    "progressMarkers":["fingerTappingInstructions", "phoneOnTableInstruction", "tappingFirstHandInstruction", "completion"],
     "steps":[
              {
                 "identifier":"introduction",
@@ -73,8 +73,7 @@
              {
                 "identifier": "handSelection",
                 "type": "handSelection",
-                "title": "Select which hands to use",
-                "text": "Which hands are you capable of doing this task with?",
+                "title": "Which hands are you capable of doing this task with?",
                 "uiHint": "list",
                 "dataType": "singleChoice.string",
                 "choices": [
@@ -148,73 +147,13 @@
              },
              {
                  "identifier":"left",
-                 "type":"section",
-                 "asyncActions":[
-                                 {
-                                     "identifier":"motion",
-                                     "type":"motion",
-                                     "startStepIdentifier":"countdown",
-                                     "requiresBackgroundAudio":true,
-                                     "recorderTypes":["accelerometer", "gyro"]
-                                 }
-                                ],
-                 "steps":[
-                          {
-                              "identifier":"active",
-                              "type":"active",
-                              "duration":30,
-                              "image":{
-                                  "imageName":"TapLeft1",
-                                  "placementType":"fullsizeBackground"
-                              },
-                              "colorTheme":{
-                                  "usesLightStyle":true
-                              },
-                              "viewTheme":{
-                                  "viewIdentifier":"Action",
-                                  "storyboardIdentifier":"ActiveTaskSteps"
-                              },
-                              "commands":["shouldDisableIdleTimer", "playSound"],
-                              "spokenInstructions":{
-                                  "start":"Tap the buttons with your LEFT hand"
-                              }
-                           }
-                        ]
+                 "type":"transform",
+                 "resourceTransformer": { "resourceName": "TappingSectionStep.json"}
              },
              {
                  "identifier":"right",
-                 "type":"section",
-                 "asyncActions":[
-                                 {
-                                     "identifier":"motion",
-                                     "type":"motion",
-                                     "startStepIdentifier":"countdown",
-                                     "requiresBackgroundAudio":true,
-                                     "recorderTypes":["accelerometer", "gyro"]
-                                 }
-                                ],
-                 "steps":[
-                          {
-                              "identifier":"active",
-                              "type":"active",
-                              "duration":30,
-                              "image":{
-                                  "imageName":"TapLeft1",
-                                  "placementType":"fullsizeBackground"
-                              },
-                              "colorTheme":{
-                                  "usesLightStyle":true
-                              },
-                              "viewTheme":{
-                                  "viewIdentifier":"Action",
-                                  "storyboardIdentifier":"ActiveTaskSteps"
-                              },
-                              "commands":["transitionAutomatically", "shouldDisableIdleTimer", "playSound"],
-                              "spokenInstructions":{
-                                  "start":"Tap the buttons with your RIGHT hand"
-                              }
-                           }
-                        ]
+                 "type":"transform",
+                 "resourceTransformer": { "resourceName": "TappingSectionStep.json"}
              },
              {
                  "identifier":"completion",

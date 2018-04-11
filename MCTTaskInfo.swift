@@ -76,11 +76,12 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
         
         // Pull the title, subtitle, and detail from the first step in the task resource.
         let factory = (RSDFactory.shared as? MCTFactory) ?? MCTFactory()
-        if let mTask = try? factory.decodeTask(with: taskIdentifier.resourceTransformer()),
-            let task = mTask as? RSDTaskObject {
-            self.task = task
-        } else {
-            fatalError("Failed to decode the task")
+        
+        do {
+            let mTask = try factory.decodeTask(with: taskIdentifier.resourceTransformer())
+            self.task = mTask as! RSDTaskObject
+        } catch let err {
+            fatalError("Failed to decode the task. \(err)")
         }
         
         if let step = (task.stepNavigator as? RSDConditionalStepNavigator)?.steps.first as? RSDUIStep {

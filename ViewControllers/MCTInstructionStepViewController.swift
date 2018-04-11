@@ -34,12 +34,25 @@
 import Foundation
 
 public protocol MCTHandStepController : RSDStepController {
+    
     /// isFirstAppearance should be `true` if this is the first time the view has appeared, and
     /// `false` otherwise
     var isFirstAppearance: Bool { get }
     
     /// Should return the image view from this view.
     var imageView: UIImageView? { get }
+    
+    /// The label for displaying step title text.
+    var stepTitleLabel: UILabel? { get }
+    
+    /// The label for displaying step text.
+    var stepTextLabel: UILabel? { get }
+    
+    /// The label for displaying step detail text.
+    var stepDetailLabel: UILabel? { get }
+    
+    /// Convenience property for casting the step to a `RSDUIStep`.
+    var uiStep: RSDUIStep? { get }
 }
 
 extension MCTHandStepController {
@@ -91,6 +104,19 @@ extension MCTHandStepController {
               direction == .right else { return }
         self.imageView?.transform = CGAffineTransform(scaleX: -1, y: 1)
     }
+    
+    /// Sets the title and text labels' text to a version of their text localized with
+    /// a string from the body direction that goes first. Expected is either ("LEFT" or "RIGHT").
+    public func updateLabelText() {
+        guard let direction = self.whichHand()?.rawValue.uppercased() else { return }
+        // TODO rkolmos 04/09/2018 localize and standardize with java implementation
+        if let titleFormat = self.uiStep?.title {
+            self.stepTitleLabel?.text = String.localizedStringWithFormat(titleFormat, direction)
+        }
+        if let textFormat = self.uiStep?.text {
+            self.stepTextLabel?.text = String.localizedStringWithFormat(textFormat, direction)
+        }
+    }
 }
 
 
@@ -118,28 +144,5 @@ open class MCTInstructionStepViewController : RSDStepViewController, MCTHandStep
     open func updateImagePlacementConstraints() {
         guard let placementType = self.themedStep?.imageTheme?.placementType else { return }
         scrollViewBackgroundHeightConstraint.constant = placementType == .topMarginBackground ? self.statusBarBackgroundView!.bounds.height : CGFloat(0)
-    }
-    
-    
-    /// Sets the title and text labels' text to a version of their text localized with
-    /// a string from the body direction that goes first. Expected is either ("LEFT" or "RIGHT").
-    open func updateLabelText() {
-        guard let direction = self.whichHand()?.rawValue.uppercased(),
-              let titleFormat = self.uiStep?.title,
-              let textFormat = self.uiStep?.text
-              else {
-               return
-        }
-        // TODO rkolmos 04/09/2018 localize and standardize with java implementation
-        self.stepTitleLabel?.text = String.localizedStringWithFormat(titleFormat, direction)
-        self.stepTextLabel?.text = String.localizedStringWithFormat(textFormat, direction)
-    }
-    
-    /// Flips the image if this view is for the right hand. Only flips the first time the view appears.
-    open func updateImage() {
-        guard let direction = self.whichHand(),
-              isFirstAppearance,
-              direction == .right else { return }
-        self.navigationHeader?.imageView?.transform = CGAffineTransform(scaleX: -1, y: 1)
     }
 }

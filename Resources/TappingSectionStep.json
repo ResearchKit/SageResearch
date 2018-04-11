@@ -1,0 +1,36 @@
+
+ {
+     "identifier":"tapping",
+     "type":"section",
+     "asyncActions":[
+                     {
+                         "identifier":"motion",
+                         "type":"motion",
+                         "requiresBackgroundAudio":true,
+                         "recorderTypes":["accelerometer", "gyro"]
+                     }
+                    ],
+     "steps":[
+              {
+                  "identifier": "tapping",
+                  "type":"active",
+                  "duration":30,
+                  "image":{
+                      "imageName":"TapLeft1",
+                      "placementType":"fullsizeBackground"
+                  },
+                  "colorTheme":{
+                      "usesLightStyle":true
+                  },
+                  "viewTheme":{
+                      "viewIdentifier":"Action",
+                      "storyboardIdentifier":"ActiveTaskSteps"
+                  },
+                  "commands":["shouldDisableIdleTimer", "playSound"],
+                  "spokenInstructions":{
+                      "start":"Tap the buttons with your %@ hand",
+                      "end":"Great job! You’ve finished tapping with your %@ hand."
+                  }
+               }
+            ]
+ }

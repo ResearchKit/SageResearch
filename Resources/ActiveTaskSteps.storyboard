@@ -312,16 +312,16 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CRK-Yd-4Pa" customClass="RSDCountdownDial" customModule="ResearchStack2UI">
-                                <rect key="frame" x="49" y="157.5" width="222" height="222"/>
+                                <rect key="frame" x="49.5" y="157.5" width="222" height="222"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gl-I3-Byg" userLabel="Unit Label">
-                                        <rect key="frame" x="73" y="157" width="75" height="19.5"/>
+                                        <rect key="frame" x="73.5" y="157" width="75" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoL-gH-k3I" userLabel="Second Count Label">
-                                        <rect key="frame" x="51" y="30" width="120" height="119.5"/>
+                                        <rect key="frame" x="50.5" y="30" width="120" height="119.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -414,12 +414,12 @@
                             <outlet property="cancelButton" destination="a9L-sM-gnJ" id="MT1-cq-JgO"/>
                             <outlet property="detailLabel" destination="Kqn-vH-L1X" id="2mg-33-xdX"/>
                             <outlet property="imageView" destination="Z9U-qL-Bij" id="ryn-uZ-yUd"/>
+                            <outlet property="titleLabel" destination="Kqn-vH-L1X" id="OFQ-tw-bQV"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="countdownDial" destination="CRK-Yd-4Pa" id="2Dh-85-TAK"/>
                         <outlet property="countdownLabel" destination="OoL-gH-k3I" id="1d8-Bi-iW4"/>
-                        <outlet property="instructionLabel" destination="Kqn-vH-L1X" id="6m3-pB-d5y"/>
                         <outlet property="navigationHeader" destination="mlx-p8-ccw" id="Tar-BD-bWd"/>
                         <outlet property="restartButton" destination="a9c-PV-TEq" id="ScN-Zz-O3d"/>
                         <outlet property="statusBarBackgroundView" destination="AQ2-43-2k3" id="WJC-SY-FIR"/>

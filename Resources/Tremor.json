@@ -47,8 +47,7 @@
              {
                 "identifier": "handSelection",
                 "type": "handSelection",
-                "title": "Select which hands to use",
-                "text": "Which hands are you capable of doing this task with?",
+                "title": "Which hands are you capable of doing this task with?",
                 "uiHint": "list",
                 "dataType": "singleChoice.string",
                 "choices": [
@@ -120,137 +119,13 @@
              },
              {
                  "identifier":"left",
-                 "type":"section",
-                 "asyncActions":[
-                                 {
-                                     "identifier":"motion",
-                                     "type":"motion",
-                                     "startStepIdentifier":"countdown",
-                                     "requiresBackgroundAudio":true,
-                                     "recorderTypes":["accelerometer", "gyro"]
-                                 }
-                                ],
-                 "steps":[
-                            {
-                                "identifier":"instruction",
-                                "type":"instruction",
-                                "title":"Hold the phone with your LEFT hand",
-                                "text":"With your hand in your lap, hold your phone still with the screen facing up.",
-                                "image":{
-                                    "imageName":"HoldPhone-Left",
-                                    "placementType":"topBackground"
-                                },
-                                "colorTheme":{
-                                    "colorStyle": {
-                                        "header": "darkBackground",
-                                        "body": "lightBackground",
-                                        "footer": "lightBackground"
-                                    }
-                                },
-                                "viewTheme":{
-                                    "viewIdentifier":"Instruction",
-                                    "storyboardIdentifier":"ActiveTaskSteps"
-                                },
-                                "actions":{
-                                    "goForward":{
-                                        "buttonTitle":"Hold phone"
-                                    }
-                                }
-                          },
-                          {
-                              "identifier":"active",
-                              "type":"active",
-                              "duration":30,
-                              "image":{
-                                  "imageName":"HoldPhone-Left",
-                                  "placementType":"fullsizeBackground"
-                              },
-                              "colorTheme":{
-                                  "usesLightStyle":true
-                              },
-                              "viewTheme":{
-                                  "viewIdentifier":"Action",
-                                  "storyboardIdentifier":"ActiveTaskSteps"
-                              },
-                              "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
-                              "actions":{
-                                  "skip":{
-                                      "skipToIdentifier":"countdown",
-                                      "buttonTitle": "Restart test"
-                                  }
-                              },
-                              "spokenInstructions":{
-                                  "start":"Hold the phone still in your LEFT hand."
-                              }
-                           }
-                        ]
+                 "type":"transform",
+                 "resourceTransformer": { "resourceName": "TremorSectionStep.json"}
              },
              {
                  "identifier":"right",
-                 "type":"section",
-                 "asyncActions":[
-                                 {
-                                     "identifier":"motion",
-                                     "type":"motion",
-                                     "startStepIdentifier":"countdown",
-                                     "requiresBackgroundAudio":true,
-                                     "recorderTypes":["accelerometer", "gyro"]
-                                 }
-                                ],
-                 "steps":[
-                            {
-                                "identifier":"instruction",
-                                "type":"instruction",
-                                "title":"Hold the phone with your %@ hand",
-                                "text":"With your hand in your lap, hold your phone still with the screen facing up.",
-                                "image":{
-                                    "imageName":"HoldPhone-Left",
-                                    "placementType":"topBackground"
-                                },
-                                "colorTheme":{
-                                    "colorStyle": {
-                                        "header": "darkBackground",
-                                        "body": "lightBackground",
-                                        "footer": "lightBackground"
-                                    }
-                                },
-                                "viewTheme":{
-                                    "viewIdentifier":"Instruction",
-                                    "storyboardIdentifier":"ActiveTaskSteps"
-                                },
-                                "actions":{
-                                    "goForward":{
-                                        "buttonTitle":"Hold phone"
-                                    }
-                                }
-                          },
-                          {
-                              "identifier":"active",
-                              "type":"active",
-                              "duration":30,
-                              "image":{
-                                  "imageName":"HoldPhone-Left",
-                                  "placementType":"fullsizeBackground"
-                              },
-                              "colorTheme":{
-                                  "usesLightStyle":true
-                              },
-                              "viewTheme":{
-                                  "viewIdentifier":"Action",
-                                  "storyboardIdentifier":"ActiveTaskSteps"
-                              },
-                              "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
-                              "actions":{
-                                  "skip":{
-                                      "skipToIdentifier":"countdown",
-                                      "buttonTitle": "Restart test"
-                                  }
-                              },
-                              "spokenInstructions":{
-                                  "start":"Hold the phone still in your RIGHT hand."
-                              }
-                           }
-                        ]
+                 "type":"transform",
+                 "resourceTransformer": { "resourceName": "TremorSectionStep.json"}
              },
              {
                  "identifier":"completion",
@@ -264,6 +139,9 @@
                  "viewTheme":{
                      "viewIdentifier":"Completion",
                      "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "spokenInstructions":{
+                     "start":"Great job, you are done with the Tremor test."
                  }
              }
         ]

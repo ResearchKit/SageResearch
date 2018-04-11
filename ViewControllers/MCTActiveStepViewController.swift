@@ -43,15 +43,19 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
     /// The restart test button.
     @IBOutlet weak var restartButton: RSDRoundedButton!
     
-    /// Formatter for the countdown label.
-    /// Overriden to only display seconds.
-    override lazy open var countdownFormatter : DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.second]
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = [ .pad ]
-        return formatter
-    }()
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Formatter for the countdown label.
+        // Overriden to only display seconds.
+        self.countdownFormatter = {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.second]
+            formatter.unitsStyle = .positional
+            formatter.zeroFormattingBehavior = [ .pad ]
+            return formatter
+        }()
+    }
     
     /// Override viewWillAppear to also set the unitLabel text.
     override open func viewWillAppear(_ animated: Bool) {
@@ -61,6 +65,9 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
         self.unitLabel?.text = "SECONDS REMAINING" // TODO rkolmos 03/30/2018 localize
         (self.step as? RSDActiveUIStepObject)?.nextStepIdentifier = nil
         self.updateImage()
+        self.updateLabelText()
+        self.view.setNeedsLayout()
+        self.view.setNeedsUpdateConstraints()
     }
     
     @IBAction func restartButtonTapped(_ sender: Any) {
@@ -73,5 +80,13 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
         guard let activeStep = self.step as? RSDActiveUIStepObject else { return }
         activeStep.nextStepIdentifier = "walk"
         super.skipForward()
+    }
+    
+    /// Override to return the instruction with the formatted text replaced.
+    override open func spokenInstruction(at duration: TimeInterval) -> String? {
+        guard let textFormat = super.spokenInstruction(at: duration) else { return nil }
+        guard let direction = self.whichHand()?.rawValue.uppercased() else { return textFormat }
+        // TODO rkolmos 04/09/2018 localize and standardize with java implementation
+        return String.localizedStringWithFormat(textFormat, direction)
     }
 }
