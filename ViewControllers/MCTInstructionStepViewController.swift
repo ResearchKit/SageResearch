@@ -33,11 +33,16 @@
 
 import Foundation
 
-public protocol MCTHandStepConroller : RSDStepController {
-
+public protocol MCTHandStepController : RSDStepController {
+    /// isFirstAppearance should be `true` if this is the first time the view has appeared, and
+    /// `false` otherwise
+    var isFirstAppearance: Bool { get }
+    
+    /// Should get the navigationHeader for this view.
+    var navigationHeader: RSDNavigationHeaderView? { get }
 }
 
-extension MCTHandStepConroller {
+extension MCTHandStepController {
     
     /// Returns the randomized order that the hands steps will execute in from the task result.
     public func handOrder() -> [MCTHandSelection]? {
@@ -64,10 +69,19 @@ extension MCTHandStepConroller {
         
         return nil
     }
+    
+    
+    /// Flips the image if this view is for the right hand. Only flips the first time the view appears.
+    public func updateImage() {
+        guard let direction = self.whichHand(),
+              self.isFirstAppearance,
+              direction == .right else { return }
+        self.navigationHeader?.imageView?.transform = CGAffineTransform(scaleX: -1, y: 1)
+    }
 }
 
 
-open class MCTInstructionStepViewController : RSDStepViewController, MCTHandStepConroller {
+open class MCTInstructionStepViewController : RSDStepViewController, MCTHandStepController {
     
     /// The constraint for the topBackground image placement.
     @IBOutlet weak var topBackgroundContraint: NSLayoutConstraint!
@@ -78,9 +92,9 @@ open class MCTInstructionStepViewController : RSDStepViewController, MCTHandStep
     /// Override viewWillAppear to update the label text, and image placement constraints.
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateLabelText()
-        updateImagePlacementConstraints()
-        updateImage()
+        self.updateLabelText()
+        self.updateImagePlacementConstraints()
+        self.updateImage()
         self.statusBarBackgroundView?.backgroundColor = UIColor.clear
     }
     

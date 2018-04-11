@@ -33,7 +33,7 @@
 
 import Foundation
 
-open class MCTActiveStepViewController : RSDActiveStepViewController {
+open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandStepController {
     
     @IBOutlet weak var restartButton: RSDRoundedButton!
     
@@ -54,6 +54,7 @@ open class MCTActiveStepViewController : RSDActiveStepViewController {
         // DateComponentsFormatter doesn't actually translate into other languages.
         self.unitLabel?.text = "SECONDS REMAINING" // TODO rkolmos 03/30/2018 localize
         (self.step as? RSDActiveUIStepObject)?.nextStepIdentifier = nil
+        self.updateImage()
     }
     
     @IBAction func restartButtonTapped(_ sender: Any) {
