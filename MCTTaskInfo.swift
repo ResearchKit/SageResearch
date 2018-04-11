@@ -40,10 +40,10 @@ public enum MCTTaskIdentifier : String, Codable {
     case walkAndBalance = "Walk and Balance"
     
     /// The tremor test.
-    //case tremor = "Tremor"
+    case tremor = "Tremor"
     
     /// The tapping test.
-    //case tapping = "Tapping"
+    case tapping = "Tapping"
     
     /// The default resource transformer for this task.
     public func resourceTransformer() -> RSDResourceTransformer {
@@ -52,7 +52,7 @@ public enum MCTTaskIdentifier : String, Codable {
     
     /// List of all the task identifiers.
     public static func all() -> [MCTTaskIdentifier] {
-        return [.walkAndBalance]//, .tremor, .tapping]
+        return [.walkAndBalance, .tremor, .tapping]
     }
 }
 
@@ -143,6 +143,10 @@ public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
         switch taskIdentifier {
         case .walkAndBalance:
             self.resourceName = "Walk_And_Balance"
+        case .tremor:
+            self.resourceName = "Tremor"
+        case .tapping:
+            self.resourceName = "Finger_Tapping"
         }
     }
     

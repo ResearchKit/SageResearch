@@ -57,9 +57,10 @@
                 "type":"instruction",
                 "title":"First, walk for 30 seconds",
                 "text":"You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
+                "isFirstRunOnly": true,
                 "image":{
                     "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4"],
-                    "placementType":"topBackground",
+                    "placementType":"topMarginBackground",
                     "animationDuration":2
                 },
                 "colorTheme":{
@@ -86,7 +87,7 @@
                 "text":"Bring your phone with you and turn up your phone volume so you can hear the instructions while you are walking.",
                 "image":{
                     "imageName":"F-TurnUpVolume",
-                    "placementType":"topBackground"
+                    "placementType":"topMarginBackground"
                 },
                 "colorTheme":{
                      "colorStyle": {
@@ -112,7 +113,7 @@
                  "text":"Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone.",
                  "image":{
                      "imageName":"F-PantsPocket",
-                     "placementType":"topMarginBackground"
+                     "placementType":"topBackground"
                  },
                  "colorTheme":{
                      "colorStyle": {
@@ -137,7 +138,7 @@
                  "title":"Put the phone in your pocket",
                  "image":{
                      "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
-                     "placementType":"topMarginBackground",
+                     "placementType":"topBackground",
                      "animationDuration":1.5
                  },
                  "colorTheme":{
@@ -225,9 +226,10 @@
                  "type":"instruction",
                  "title":"Next, turn around and then stand still for 30 seconds",
                  "text":"You’ll turn 360 degrees and stand still, with your feet shoulder-width apart. Rest your arms by your side and try to avoid moving for 30 seconds.",
+                 "isFirstRunOnly": true,
                  "image":{
                      "imageNames":["F-Turning1", "F-Turning2", "F-Turning3", "F-Turning4", "F-Turning5", "F-Turning6", "F-Turning7", "F-Turning8", "F-Wait1", "F-Wait2", "F-Wait3"],
-                     "placementType":"topBackground",
+                     "placementType":"topMarginBackground",
                      "animationDuration":5
                  },
                  "colorTheme":{
@@ -252,9 +254,10 @@
                  "type":"instruction",
                  "title":"Put the phone in your pocket",
                  "text":"This test measures your leg movement. and you will need to put your phone in your front pocket.",
+                 "isFirstRunOnly": true,
                  "image":{
                      "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
-                     "placementType":"topMarginBackground",
+                     "placementType":"topBackground",
                      "animationDuration":1.5
                  },
                  "colorTheme":{

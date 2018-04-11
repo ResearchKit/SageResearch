@@ -35,6 +35,8 @@ import Foundation
 
 open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     
+    public static let firstRunKey = "isFirstRun"
+    
     /// The image views to display the icons on.
     @IBOutlet
     open var iconImages: [UIImageView]!
@@ -80,22 +82,35 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         let defaults = UserDefaults.standard
         let timestampKey = "\(taskController.taskPath.identifier)_lastRun"
         let lastRun = defaults.object(forKey: timestampKey) as? Date
-        let monthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
-        let shouldShowInfo = lastRun == nil || lastRun! < monthAgo
+        let isFirstRun = lastRun == nil
+            || lastRun! < Date(timeIntervalSinceNow: -2592000)
+        _setIsFirstRunResult(isFirstRun: isFirstRun)
         defaults.set(Date(), forKey: timestampKey)
-        /// The image view that is used to show the animation.
-        var animationView: UIImageView? {
-            return (self.navigationHeader as? RSDStepHeaderView)?.imageView
+        if  isFirstRun {
+            /// The image view that is used to show the animation.
+            var animationView: UIImageView? {
+                return (self.navigationHeader as? RSDStepHeaderView)?.imageView
+            }
+            animationView?.stopAnimating()
         }
-        animationView?.stopAnimating()
-        _setHiddenAndScrollable(shouldShowInfo: shouldShowInfo)
+        
+        _setHiddenAndScrollable(shouldShowInfo: isFirstRun)
+    }
+    
+    /// Adds a result for whether or not this run represents a "first run", A "first run"
+    /// occurs anytime the user has never run the task before, or hasn't run the task in
+    /// one month.
+    private func _setIsFirstRunResult(isFirstRun: Bool) {
+        var stepResult = RSDAnswerResultObject(identifier: MCTOverviewStepViewController.firstRunKey, answerType: .boolean)
+        stepResult.value = isFirstRun
+        self.taskController.taskPath.appendStepHistory(with: stepResult)
     }
     
     /// Sets whether the components are hidden, and whether scrolling is enabled
     /// based on whether this view should be showing the full task info or the
     /// abbreviated version.
     /// - parameters:
-    ///     - shouldShowInfo:    true if the full task info should be shown, false otherwise
+    ///     - shouldShowInfo     - `true` if the full task info should be shown, `false` otherwise
     private func _setHiddenAndScrollable(shouldShowInfo: Bool) {
         (self.view as? RSDStepNavigationView)?.textLabel?.isHidden = !shouldShowInfo
         for label in self.iconTitles! {

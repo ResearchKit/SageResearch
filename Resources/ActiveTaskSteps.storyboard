@@ -81,14 +81,14 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Z0-fP-s42">
                                                                 <rect key="frame" x="0.0" y="0.0" width="92" height="101.5"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PantsWithPockets" translatesAutoresizingMaskIntoConstraints="NO" id="Fvh-Gn-0LG">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PantsWithPockets" translatesAutoresizingMaskIntoConstraints="NO" id="Fvh-Gn-0LG" userLabel="LeftIconView">
                                                                         <rect key="frame" x="12" y="0.5" width="68" height="68"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" secondItem="Fvh-Gn-0LG" secondAttribute="height" multiplier="1:1" id="vgz-oh-6gK"/>
                                                                             <constraint firstAttribute="width" constant="68" id="zGK-XI-fBi"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="PANTS WITH POCKETS" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uMr-HB-4JN">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="PANTS WITH POCKETS" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uMr-HB-4JN" userLabel="LeftIconTitle">
                                                                         <rect key="frame" x="0.0" y="68.5" width="92" height="33.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <nil key="textColor"/>
@@ -109,14 +109,14 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2OR-Zh-ThP">
                                                                 <rect key="frame" x="155" y="0.0" width="92" height="101.5"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PantsWithPockets" translatesAutoresizingMaskIntoConstraints="NO" id="auQ-9o-6iS">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PantsWithPockets" translatesAutoresizingMaskIntoConstraints="NO" id="auQ-9o-6iS" userLabel="CenterIconView">
                                                                         <rect key="frame" x="12" y="0.5" width="68" height="68"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" secondItem="auQ-9o-6iS" secondAttribute="height" multiplier="1:1" id="VBO-6v-IN4"/>
                                                                             <constraint firstAttribute="width" constant="68" id="wyd-yg-X2G"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PANTS WITH POCKETS" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmo-wY-0Cw">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PANTS WITH POCKETS" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmo-wY-0Cw" userLabel="CenterIconTitle">
                                                                         <rect key="frame" x="0.0" y="68.5" width="92" height="33.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <nil key="textColor"/>
@@ -137,14 +137,14 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7F2-UF-HQT">
                                                                 <rect key="frame" x="310" y="0.0" width="92" height="101.5"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PantsWithPockets" translatesAutoresizingMaskIntoConstraints="NO" id="rkf-gr-VXQ">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PantsWithPockets" translatesAutoresizingMaskIntoConstraints="NO" id="rkf-gr-VXQ" userLabel="RightIconView">
                                                                         <rect key="frame" x="12" y="0.5" width="68" height="68"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="68" id="De6-Lt-L83"/>
                                                                             <constraint firstAttribute="width" secondItem="rkf-gr-VXQ" secondAttribute="height" multiplier="1:1" id="zJl-wI-NRu"/>
                                                                         </constraints>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PANTS WITH POCKETS" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3a5-d7-ZyV">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PANTS WITH POCKETS" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3a5-d7-ZyV" userLabel="RightIconTitle">
                                                                         <rect key="frame" x="0.0" y="68.5" width="92" height="33.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                         <nil key="textColor"/>
@@ -516,10 +516,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WRp-vD-dIl" userLabel="Header" customClass="RSDStepHeaderView" customModule="ResearchStack2UI">
-                                <rect key="frame" x="0.0" y="20" width="320" height="222"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="243.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="dog.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="8Ic-xi-B4w">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="221.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="243"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -538,16 +538,16 @@
                                 <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnw-3v-fHb" customClass="RSDNavigationFooterView" customModule="ResearchStack2UI">
-                                <rect key="frame" x="0.0" y="242" width="320" height="326"/>
+                                <rect key="frame" x="0.0" y="263.5" width="320" height="304.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="You just completed a Walk and Balance activity." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTI-qh-bqI">
-                                        <rect key="frame" x="24" y="93" width="272" height="43"/>
+                                        <rect key="frame" x="24" y="93" width="272" height="21.5"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <color key="textColor" name="gunmetal"/>
                                         <color key="highlightedColor" name="black54"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vl9-XW-t8b" customClass="RSDRoundedButton" customModule="ResearchStack2UI">
-                                        <rect key="frame" x="24" y="256" width="272" height="52"/>
+                                        <rect key="frame" x="24" y="234.5" width="272" height="52"/>
                                         <color key="backgroundColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Done">
@@ -617,11 +617,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9q9-9M-kV3" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
-                                <rect key="frame" x="0.0" y="0.0" width="300" height="20"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcG-e9-ylT">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" bounces="NO" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="rcG-e9-ylT">
                                 <rect key="frame" x="0.0" y="20" width="300" height="680"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F8X-9S-6pY" userLabel="Content View">
@@ -730,6 +726,10 @@
                                 </constraints>
                                 <state key="normal" image="closeActivity"/>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9q9-9M-kV3" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKN-FP-EgA" customClass="RSDGenericNavigationFooterView" customModule="ResearchStack2UI">
                                 <rect key="frame" x="0.0" y="700" width="300" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -746,7 +746,7 @@
                         <color key="backgroundColor" red="0.34920102359999999" green="0.28064730760000001" blue="0.54699993130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="rcG-e9-ylT" firstAttribute="top" secondItem="9q9-9M-kV3" secondAttribute="top" priority="900" id="1Ya-bv-irV"/>
+                            <constraint firstItem="rcG-e9-ylT" firstAttribute="top" secondItem="5Cp-ii-wjf" secondAttribute="top" priority="900" id="1Ya-bv-irV"/>
                             <constraint firstItem="rcG-e9-ylT" firstAttribute="leading" secondItem="NNJ-I8-zvC" secondAttribute="leading" id="2BV-N7-60N"/>
                             <constraint firstItem="NNJ-I8-zvC" firstAttribute="trailing" secondItem="9q9-9M-kV3" secondAttribute="trailing" id="8gk-uj-Jz3"/>
                             <constraint firstItem="bKN-FP-EgA" firstAttribute="bottom" secondItem="NNJ-I8-zvC" secondAttribute="bottom" id="AfT-3V-0To"/>
@@ -774,8 +774,8 @@
                         <outlet property="navigationFooter" destination="bKN-FP-EgA" id="oTF-1k-Aex"/>
                         <outlet property="navigationHeader" destination="Vdq-35-6bm" id="4U9-YL-ACB"/>
                         <outlet property="statusBarBackgroundView" destination="9q9-9M-kV3" id="Pf1-t7-pfq"/>
-                        <outlet property="topBackgroundConstraint" destination="bR5-nj-pfh" id="0Ry-fF-XHj"/>
-                        <outlet property="topMarginBackgroundConstraint" destination="1Ya-bv-irV" id="eVM-Nn-FDW"/>
+                        <outlet property="topBackgroundContraint" destination="1Ya-bv-irV" id="eVM-Nn-FDW"/>
+                        <outlet property="topMarginBackgroundConstraint" destination="bR5-nj-pfh" id="0Ry-fF-XHj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZG9-jS-NNA" userLabel="First Responder" sceneMemberID="firstResponder"/>

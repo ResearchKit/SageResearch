@@ -1,0 +1,270 @@
+{
+    "identifier":"Tremor",
+    "shouldHideActions":["goBackward", "skip"],
+    "progressMarkers":["holdPhoneInstructions", "sitDownInstructions", "rightHandTremorTest"],
+    "steps":[
+             {
+                "identifier":"introduction",
+                "type":"overview",
+                "title":"Tremor Test",
+                "text":"In this activity you will be holding the phone in your lap for 30 seconds. You will do this with each hand.  Goal is to measure your tremors in your hand.",
+                "permissions":[
+                               {
+                                "permissionType":"motion",
+                                "reason":"Access to Motion and Fitness sensors is required to measure the phones steadiness in your hand."
+                               }
+                            ],
+                 "image":{
+                     "imageName":"Purple",
+                     "placementType":"topBackground"
+                 },
+                "icons": [
+                          {
+                            "icon":"ComfortablePlaceToSit",
+                            "title": "COMFORTABLE PLACE TO SIT"
+                          }
+                        ],
+                "actions":{
+                    "goForward":{
+                        "buttonTitle":"Get started"
+                    },
+                    "skip":{
+                        "reminderIdentifier":"Tremor"
+                    }
+                 },
+                 "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Overview",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 }
+             },
+             {
+                "identifier": "handSelection",
+                "type": "handSelection",
+                "title": "Select which hands to use",
+                "text": "Which hands are you capable of doing this task with?",
+                "uiHint": "list",
+                "dataType": "singleChoice.string",
+                "choices": [
+                    {
+                        "text": "I can only perform this activity with my LEFT hand.",
+                        "value": "left"
+                    },
+                    {
+                        "text": "I can only perform this activity with my RIGHT hand.",
+                        "value": "right"
+                    },
+                    {
+                        "text": "I can perform this activity with both hands.",
+                        "value": "both"
+                    }
+                ]
+             },
+             {
+                "identifier":"holdPhoneInstructions",
+                "type":"instruction",
+                "title":"Hold the phone still",
+                "text":"While sitting down with your feet resting flat on the floor, you will be holding the phone still in your lap for 30 seconds. You will do this first with one hand and then with your other hand.",
+                "image":{
+                    "imageName": "F-HoldPhone",
+                    "placementType":"topBackground"
+                },
+                "colorTheme":{
+                    "colorStyle": {
+                        "header": "darkBackground",
+                        "body": "lightBackground",
+                        "footer": "lightBackground"
+                    }
+                },
+                "viewTheme":{
+                    "viewIdentifier":"Instruction",
+                    "storyboardIdentifier":"ActiveTaskSteps"
+                },
+                "actions":{
+                    "goForward":{
+                        "buttonTitle":"Got it"
+                    }
+                }
+             },
+             {
+                "identifier":"sitDownInstruction",
+                "type":"instruction",
+                "title":"Sit down",
+                "text":"Find a spot to sit where you can have your feet resting flat on the floor.",
+                "image":{
+                    "imageName":"F-Sitting",
+                    "placementType":"topBackground"
+                },
+                "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                },
+                "viewTheme":{
+                    "viewIdentifier":"Instruction",
+                    "storyboardIdentifier":"ActiveTaskSteps"
+                },
+                "actions":{
+                    "goForward":{
+                        "buttonTitle":"Got a spot"
+                    }
+                }
+             },
+             {
+                 "identifier":"left",
+                 "type":"skippableHandSection",
+                 "asyncActions":[
+                                 {
+                                     "identifier":"motion",
+                                     "type":"motion",
+                                     "startStepIdentifier":"countdown",
+                                     "requiresBackgroundAudio":true,
+                                     "recorderTypes":["accelerometer", "gyro"]
+                                 }
+                                ],
+                 "steps":[
+                            {
+                                "identifier":"instruction",
+                                "type":"instruction",
+                                "title":"Hold the phone with your LEFT hand",
+                                "text":"With your hand in your lap, hold your phone still with the screen facing up.",
+                                "image":{
+                                    "imageName":"HoldPhone-Left",
+                                    "placementType":"topBackground"
+                                },
+                                "colorTheme":{
+                                    "colorStyle": {
+                                        "header": "darkBackground",
+                                        "body": "lightBackground",
+                                        "footer": "lightBackground"
+                                    }
+                                },
+                                "viewTheme":{
+                                    "viewIdentifier":"Instruction",
+                                    "storyboardIdentifier":"ActiveTaskSteps"
+                                },
+                                "actions":{
+                                    "goForward":{
+                                        "buttonTitle":"Hold phone"
+                                    }
+                                }
+                          },
+                          {
+                              "identifier":"active",
+                              "type":"active",
+                              "duration":30,
+                              "image":{
+                                  "imageName":"HoldPhone-Left",
+                                  "placementType":"fullsizeBackground"
+                              },
+                              "colorTheme":{
+                                  "usesLightStyle":true
+                              },
+                              "viewTheme":{
+                                  "viewIdentifier":"Action",
+                                  "storyboardIdentifier":"ActiveTaskSteps"
+                              },
+                              "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
+                              "actions":{
+                                  "skip":{
+                                      "skipToIdentifier":"countdown",
+                                      "buttonTitle": "Restart test"
+                                  }
+                              },
+                              "spokenInstructions":{
+                                  "start":"Hold the phone still in your LEFT hand."
+                              }
+                           }
+                        ]
+             },
+             {
+                 "identifier":"right",
+                 "type":"skippableHandSection",
+                 "asyncActions":[
+                                 {
+                                     "identifier":"motion",
+                                     "type":"motion",
+                                     "startStepIdentifier":"countdown",
+                                     "requiresBackgroundAudio":true,
+                                     "recorderTypes":["accelerometer", "gyro"]
+                                 }
+                                ],
+                 "steps":[
+                            {
+                                "identifier":"instruction",
+                                "type":"instruction",
+                                "title":"Hold the phone with your RIGHT hand",
+                                "text":"With your hand in your lap, hold your phone still with the screen facing up.",
+                                "image":{
+                                    "imageName":"HoldPhone-Right",
+                                    "placementType":"topBackground"
+                                },
+                                "colorTheme":{
+                                    "colorStyle": {
+                                        "header": "darkBackground",
+                                        "body": "lightBackground",
+                                        "footer": "lightBackground"
+                                    }
+                                },
+                                "viewTheme":{
+                                    "viewIdentifier":"Instruction",
+                                    "storyboardIdentifier":"ActiveTaskSteps"
+                                },
+                                "actions":{
+                                    "goForward":{
+                                        "buttonTitle":"Hold phone"
+                                    }
+                                }
+                          },
+                          {
+                              "identifier":"active",
+                              "type":"active",
+                              "duration":30,
+                              "image":{
+                                  "imageName":"HoldPhone-Right",
+                                  "placementType":"fullsizeBackground"
+                              },
+                              "colorTheme":{
+                                  "usesLightStyle":true
+                              },
+                              "viewTheme":{
+                                  "viewIdentifier":"Action",
+                                  "storyboardIdentifier":"ActiveTaskSteps"
+                              },
+                              "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
+                              "actions":{
+                                  "skip":{
+                                      "skipToIdentifier":"countdown",
+                                      "buttonTitle": "Restart test"
+                                  }
+                              },
+                              "spokenInstructions":{
+                                  "start":"Hold the phone still in your RIGHT hand."
+                              }
+                           }
+                        ]
+             },
+             {
+                 "identifier":"completion",
+                 "type":"completion",
+                 "title":"Great job!",
+                 "text":"You just completed your Tremor Test activity.",
+                 "image":{
+                     "imageName":"Completion-Tremor",
+                     "placementType":"topBackground"
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Completion",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 }
+             }
+        ]
+}

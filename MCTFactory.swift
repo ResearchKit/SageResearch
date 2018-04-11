@@ -34,16 +34,23 @@
 import Foundation
 
 extension RSDStepType {
-    
+    public static let handSelection: RSDStepType = "handSelection"
+    public static let skippableHandSection: RSDStepType = "skippableHandSection"
 }
 
 open class MCTFactory : RSDFactory {
         
-    /// Override the base factory to vend the MCTOverviewStepObject.
+    /// Override the base factory to vend the MCT step objects.
     override open func decodeStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
         switch type {
+        case .instruction:
+            return try MCTInstructionStepObject(from: decoder)
         case .overview:
             return try MCTOverviewStepObject(from: decoder)
+        case .handSelection:
+            return try MCTHandSelectionStepObject(from: decoder)
+        case .skippableHandSection:
+            return try RSDSectionStepObject(from: decoder)
         default:
             return try super.decodeStep(from: decoder, with: type)
         }

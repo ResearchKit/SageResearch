@@ -1,0 +1,234 @@
+{
+    "identifier":"Tapping",
+    "shouldHideActions":["goBackward", "skip"],
+    "progressMarkers":["fingerTappingInstructions", "tappingFirstHandInstruction", "completion"],
+    "steps":[
+             {
+                "identifier":"introduction",
+                "type":"overview",
+                "title":"Finger Tapping",
+                "text":"In this activity we will measure your finger tapping speed with each hand; this may reflect severity of motor systems in Parkinson’s Disease.",
+                "permissions":[
+                               {
+                                "permissionType":"motion",
+                                "reason":"Access to Motion and Fitness sensors is required to measure the phone's orientation"
+                               }
+                            ],
+                 "image":{
+                     "imageName":"TapLeft1",
+                     "placementType":"topBackground"
+                 },
+                "icons": [
+                          {
+                            "icon":"FlatSurface",
+                            "title": "A FLAT SURFACE"
+                          }
+                        ],
+                "actions":{
+                    "goForward":{
+                        "buttonTitle":"Get started"
+                    },
+                    "skip":{
+                        "reminderIdentifier":"Tapping"
+                    }
+                 },
+                 "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Overview",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 }
+             },
+             {
+                "identifier":"fingerTappingInstructions",
+                "type":"instruction",
+                "title":"You will finger tap for 30 seconds with each hand",
+                "text":"Speed of finger tapping can reflect severity of motor symptoms in Parkinson’s disease. This activity measures your tapping speed for each hand. Your medical provider may measure this differently.",
+                "image":{
+                    "imageName": "TapLeft1",
+                    "placementType":"topBackground"
+                },
+                "colorTheme":{
+                    "colorStyle": {
+                        "header": "darkBackground",
+                        "body": "lightBackground",
+                        "footer": "lightBackground"
+                    }
+                },
+                "viewTheme":{
+                    "viewIdentifier":"Instruction",
+                    "storyboardIdentifier":"ActiveTaskSteps"
+                },
+                "actions":{
+                    "goForward":{
+                        "buttonTitle":"Got it"
+                    }
+                }
+             },
+             {
+                "identifier": "handSelection",
+                "type": "handSelection",
+                "title": "Select which hands to use",
+                "text": "Which hands are you capable of doing this task with?",
+                "uiHint": "list",
+                "dataType": "singleChoice.string",
+                "choices": [
+                    {
+                        "text": "I can only perform this activity with my LEFT hand.",
+                        "value": "left"
+                    },
+                    {
+                        "text": "I can only perform this activity with my RIGHT hand.",
+                        "value": "right"
+                    },
+                    {
+                        "text": "I can perform this activity with both hands.",
+                        "value": "both"
+                    }
+                ]
+             },
+             {
+                "identifier":"phoneOnTableInstruction",
+                "type":"instruction",
+                "title":"Put the phone on a table",
+                "text":"Place your phone on a flat surface such as a table before you begin the activity.",
+                "image":{
+                    "imageNames": ["F-FlatSurface", "PlacePhone", "PhoneOnSurface"],
+                    "animationDuration": 3.0,
+                    "placementType": "topBackground"
+                },
+                "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                },
+                "viewTheme":{
+                    "viewIdentifier":"Instruction",
+                    "storyboardIdentifier":"ActiveTaskSteps"
+                },
+                "actions":{
+                    "goForward":{
+                        "buttonTitle":"Did it"
+                    }
+                }
+             },
+             {
+                "identifier":"tappingFirstHandInstruction",
+                "type":"instruction",
+                "title":"First, tap with your %@ hand",
+                "text": "Alternate tapping the buttons that appear with your index and middle finger of your %@ HAND. Keep tapping for 30 seconds for as fast as you can."
+                "image": {
+                    "imageNames": ["TapLeft1", "TapLeft2"],
+                    "animationDuration": 1.0,
+                    "placementType": "topBackground"
+                },
+                "colorTheme":{
+                    "colorStyle": {
+                        "header": "darkBackground",
+                        "body": "lightBackground",
+                        "footer": "lightBackground"
+                    }
+                },
+                "viewTheme":{
+                    "viewIdentifier":"Instruction",
+                    "storyboardIdentifier":"ActiveTaskSteps"
+                },
+                "actions":{
+                    "goForward":{
+                        "buttonTitle": "Start the test"
+                    }
+                },
+             },
+             {
+                 "identifier":"left",
+                 "type":"skippableHandSection",
+                 "asyncActions":[
+                                 {
+                                     "identifier":"motion",
+                                     "type":"motion",
+                                     "startStepIdentifier":"countdown",
+                                     "requiresBackgroundAudio":true,
+                                     "recorderTypes":["accelerometer", "gyro"]
+                                 }
+                                ],
+                 "steps":[
+                          {
+                              "identifier":"active",
+                              "type":"active",
+                              "duration":5,
+                              "image":{
+                                  "imageName":"TapLeft1",
+                                  "placementType":"fullsizeBackground"
+                              },
+                              "colorTheme":{
+                                  "usesLightStyle":true
+                              },
+                              "viewTheme":{
+                                  "viewIdentifier":"Action",
+                                  "storyboardIdentifier":"ActiveTaskSteps"
+                              },
+                              "commands":["shouldDisableIdleTimer", "playSound"],
+                              "spokenInstructions":{
+                                  "start":"Tap the buttons with your LEFT hand"
+                              }
+                           }
+                        ]
+             },
+             {
+                 "identifier":"right",
+                 "type":"skippableHandSection",
+                 "asyncActions":[
+                                 {
+                                     "identifier":"motion",
+                                     "type":"motion",
+                                     "startStepIdentifier":"countdown",
+                                     "requiresBackgroundAudio":true,
+                                     "recorderTypes":["accelerometer", "gyro"]
+                                 }
+                                ],
+                 "steps":[
+                          {
+                              "identifier":"active",
+                              "type":"active",
+                              "duration":5,
+                              "image":{
+                                  "imageName":"TapRight1",
+                                  "placementType":"fullsizeBackground"
+                              },
+                              "colorTheme":{
+                                  "usesLightStyle":true
+                              },
+                              "viewTheme":{
+                                  "viewIdentifier":"Action",
+                                  "storyboardIdentifier":"ActiveTaskSteps"
+                              },
+                              "commands":["transitionAutomatically", "shouldDisableIdleTimer", "playSound"],
+                              "spokenInstructions":{
+                                  "start":"Tap the buttons with your RIGHT hand"
+                              }
+                           }
+                        ]
+             },
+             {
+                 "identifier":"completion",
+                 "type":"completion",
+                 "title":"Great job!",
+                 "text":"You just completed your finger tapping activity.",
+                 "image":{
+                     "imageName":"Completion",
+                     "placementType":"topBackground"
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Completion",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 }
+             }
+        ]
+}
