@@ -95,15 +95,17 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, RSDCopySte
         var copySteps = self.steps
         if let decoder = decoder {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            var stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
-            while !stepsContainer.isAtEnd {
-                let stepDecoder = try stepsContainer.superDecoder()
-                let nestedContainer = try stepDecoder.container(keyedBy: CodingKeys.self)
-                let identifier = try nestedContainer.decode(String.self, forKey: .identifier)
-                if let idx = copySteps.index(where: { $0.identifier == identifier }),
-                    let copyableStep = copySteps[idx] as? RSDCopyStep {
-                    let replacementStep = try copyableStep.copy(with: identifier, decoder: stepDecoder)
-                    copySteps.replaceSubrange(idx...idx, with: [replacementStep])
+            if container.contains(.steps) {
+                var stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
+                while !stepsContainer.isAtEnd {
+                    let stepDecoder = try stepsContainer.superDecoder()
+                    let nestedContainer = try stepDecoder.container(keyedBy: CodingKeys.self)
+                    let identifier = try nestedContainer.decode(String.self, forKey: .identifier)
+                    if let idx = copySteps.index(where: { $0.identifier == identifier }),
+                        let copyableStep = copySteps[idx] as? RSDCopyStep {
+                        let replacementStep = try copyableStep.copy(with: identifier, decoder: stepDecoder)
+                        copySteps.replaceSubrange(idx...idx, with: [replacementStep])
+                    }
                 }
             }
         }
