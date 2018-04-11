@@ -90,6 +90,17 @@ extension RSDStepController {
         return self.taskController as? RSDTaskUIController
     }
     
+    /// Convenience var for accessing the step path.
+    public var stepPath: String {
+        return self.taskController?.taskPath.stepPath ?? ""
+    }
+    
+    /// Convenience method for accessing the step result associated with this step.
+    public func findStepResult() -> RSDResult? {
+        guard let step = self.step, let taskPath = self.taskController?.taskPath else { return nil }
+        return taskPath.result.findResult(for: step)
+    }
+    
     /// Conveniece method for getting the progress through the task for the current step with
     /// the current result.
     ///
