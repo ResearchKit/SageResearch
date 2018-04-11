@@ -11,7 +11,7 @@
                 "permissions":[
                                {
                                 "permissionType":"motion",
-                                "reason":"Access to Motion and Fitness sensors is required to measure the phone's orientation"
+                                "reason":"Access to Motion and Fitness sensors is required to measure the phone's orientation."
                                }
                             ],
                  "image":{
@@ -148,7 +148,7 @@
              },
              {
                  "identifier":"left",
-                 "type":"skippableHandSection",
+                 "type":"section",
                  "asyncActions":[
                                  {
                                      "identifier":"motion",
@@ -162,7 +162,7 @@
                           {
                               "identifier":"active",
                               "type":"active",
-                              "duration":5,
+                              "duration":30,
                               "image":{
                                   "imageName":"TapLeft1",
                                   "placementType":"fullsizeBackground"
@@ -183,7 +183,7 @@
              },
              {
                  "identifier":"right",
-                 "type":"skippableHandSection",
+                 "type":"section",
                  "asyncActions":[
                                  {
                                      "identifier":"motion",
@@ -197,9 +197,9 @@
                           {
                               "identifier":"active",
                               "type":"active",
-                              "duration":5,
+                              "duration":30,
                               "image":{
-                                  "imageName":"TapRight1",
+                                  "imageName":"TapLeft1",
                                   "placementType":"fullsizeBackground"
                               },
                               "colorTheme":{

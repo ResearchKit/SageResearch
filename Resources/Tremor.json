@@ -120,7 +120,7 @@
              },
              {
                  "identifier":"left",
-                 "type":"skippableHandSection",
+                 "type":"section",
                  "asyncActions":[
                                  {
                                      "identifier":"motion",
@@ -187,7 +187,7 @@
              },
              {
                  "identifier":"right",
-                 "type":"skippableHandSection",
+                 "type":"section",
                  "asyncActions":[
                                  {
                                      "identifier":"motion",

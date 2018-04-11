@@ -35,7 +35,6 @@ import Foundation
 
 extension RSDStepType {
     public static let handSelection: RSDStepType = "handSelection"
-    public static let skippableHandSection: RSDStepType = "skippableHandSection"
 }
 
 open class MCTFactory : RSDFactory {
@@ -49,8 +48,6 @@ open class MCTFactory : RSDFactory {
             return try MCTOverviewStepObject(from: decoder)
         case .handSelection:
             return try MCTHandSelectionStepObject(from: decoder)
-        case .skippableHandSection:
-            return try RSDSectionStepObject(from: decoder)
         default:
             return try super.decodeStep(from: decoder, with: type)
         }
