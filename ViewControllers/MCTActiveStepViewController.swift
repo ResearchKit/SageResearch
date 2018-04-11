@@ -35,6 +35,12 @@ import Foundation
 
 open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandStepController {
     
+    /// Retuns the imageView, in this case the image from the navigationHeader.
+    public var imageView: UIImageView? {
+        return self.navigationHeader?.imageView
+    }
+    
+    /// The restart test button.
     @IBOutlet weak var restartButton: RSDRoundedButton!
     
     /// Formatter for the countdown label.

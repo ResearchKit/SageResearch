@@ -38,8 +38,8 @@ public protocol MCTHandStepController : RSDStepController {
     /// `false` otherwise
     var isFirstAppearance: Bool { get }
     
-    /// Should get the navigationHeader for this view.
-    var navigationHeader: RSDNavigationHeaderView? { get }
+    /// Should return the image view from this view.
+    var imageView: UIImageView? { get }
 }
 
 extension MCTHandStepController {
@@ -76,12 +76,17 @@ extension MCTHandStepController {
         guard let direction = self.whichHand(),
               self.isFirstAppearance,
               direction == .right else { return }
-        self.navigationHeader?.imageView?.transform = CGAffineTransform(scaleX: -1, y: 1)
+        self.imageView?.transform = CGAffineTransform(scaleX: -1, y: 1)
     }
 }
 
 
 open class MCTInstructionStepViewController : RSDStepViewController, MCTHandStepController {
+    
+    /// Retuns the imageView, in this case the image from the navigationHeader.
+    public var imageView: UIImageView? {
+        return self.navigationHeader?.imageView
+    }
     
     /// The constraint for the topBackground image placement.
     @IBOutlet weak var topBackgroundContraint: NSLayoutConstraint!
