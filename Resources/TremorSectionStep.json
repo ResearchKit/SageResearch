@@ -17,7 +17,7 @@
                     "text":"With your hand in your lap, hold your phone still with the screen facing up.",
                     "image":{
                         "imageName":"HoldPhone-Left",
-                        "placementType":"topBackground"
+                        "placementType":"topMarginBackground"
                     },
                     "colorTheme":{
                         "colorStyle": {
