@@ -60,7 +60,7 @@
                   },
                   "title": "Hold the phone still in your %@ hand.",
                   "spokenInstructions":{
-                      "start":"With your %@ hand in your lap, Keep holding your phone with the screen facing up for 30 seconds.",
+                      "start":"With your %@ hand in your lap, keep holding your phone with the screen facing up for 30 seconds.",
                       "halfway":"Halfway done.",
                       "23":"Almost done."
                   }
