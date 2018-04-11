@@ -1,5 +1,5 @@
 //
-//  RSDTransformerStepObject.swift
+//  RSDStepTransformerObject.swift
 //  ResearchStack2
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
@@ -33,7 +33,7 @@
 
 import Foundation
 
-/// `RSDTransformerStepObject` is used in decoding a step with replacement properties for some or all of the steps in a
+/// `RSDStepTransformerObject` is used in decoding a step with replacement properties for some or all of the steps in a
 /// section that is defined using a different resource. The factory will convert this step into an appropriate
 /// `RSDSectionStep` from the decoded object.
 public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {

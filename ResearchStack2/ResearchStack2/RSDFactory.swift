@@ -286,7 +286,7 @@ open class RSDFactory {
         }
     }
     
-    /// Decode the step into a transfrom step. By default, this will create a `RSDTransformerStepObject`.
+    /// Decode the step into a transfrom step. By default, this will create a `RSDStepTransformerObject`.
     ///
     /// - parameter decoder: The decoder to use to instatiate the object.
     /// - returns: The step transform created from this decoder.
