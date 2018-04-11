@@ -180,21 +180,6 @@ open class RSDFactory {
     }
     
     
-    // MARK: Section Step Transformer factory
-    
-    /// Decode the section step transformer from this decoder. This method *must* return a section step
-    /// transformer object. The default implementation will return a `RSDResourceTransformerObject`.
-    ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
-    /// - returns: The object created from this decoder.
-    /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeSectionStepTransformer(from decoder: Decoder) throws -> RSDSectionStepTransformer {
-        let transformer = try RSDResourceTransformerObject(from: decoder)
-        transformer.factoryBundle = decoder.bundle
-        return transformer
-    }
-    
-    
     // MARK: Step navigator factory
     
     /// Decode the step navigator from this decoder. This method *must* return a step navigator.
@@ -306,35 +291,19 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instatiate the object.
     /// - returns: The step transform created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func transformStep(from decoder: Decoder) throws -> RSDTransformerStep {
-        return try RSDTransformerStepObject(from: decoder)
+    open func decodeStepTransformer(from decoder: Decoder) throws -> RSDStepTransformer {
+        return try RSDStepTransformerObject(from: decoder)
     }
     
-    /// Decode the transformable step. By default, this will create a `RSDSectionStepObject`.
+    /// Decode the transformable step. By default, this will return the `transformedStep` from a
+    /// `RSDStepTransformer`.
     ///
     /// - parameter decoder: The decoder to use to instatiate the object.
-    /// - returns: The section step created from transforming this decoder.
+    /// - returns: The step created from transforming this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTransformableStep(from decoder: Decoder) throws -> RSDStep {
-        
-        // Get the transformer and its steps
-        let transform = try self.transformStep(from: decoder)
-        var steps: [RSDStep] = try transform.sectionTransformer.transformSteps(with: self)
-        
-        // Replace any values as needed
-        if let replacementSteps = transform.replacementSteps {
-            steps = try steps.map({ (inputStep) -> RSDStep in
-                guard let replacementStep = replacementSteps.first(where: { $0.identifier == inputStep.identifier }),
-                    let copyableStep = inputStep as? RSDCopyStep
-                    else {
-                        return inputStep
-                }
-                let step = try copyableStep.copy(with: inputStep.identifier, userInfo: replacementStep.userInfo)
-                return step
-            })
-        }
-        
-        return RSDSectionStepObject(identifier: transform.identifier, steps: steps)
+        let transform = try self.decodeStepTransformer(from: decoder)
+        return transform.transformedStep
     }
     
     

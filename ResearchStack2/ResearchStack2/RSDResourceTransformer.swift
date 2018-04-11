@@ -84,7 +84,7 @@ extension RSDResourceConfig {
 
 /// `RSDResourceTransformer` is a protocol for getting either embedded resources or online resources.
 ///
-/// - seealso: `RSDSectionStepResourceTransformer` and `RSDTaskResourceTransformer`
+/// - seealso: `RSDStepResourceTransformer` and `RSDTaskResourceTransformer`
 ///
 public protocol RSDResourceTransformer: RSDDecodableBundleInfo {
     

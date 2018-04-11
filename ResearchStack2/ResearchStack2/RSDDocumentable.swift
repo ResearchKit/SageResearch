@@ -167,7 +167,7 @@ public struct RSDDocumentCreator {
         RSDSectionStepObject.self,
         RSDTrackedItemsReviewStepObject.self,
         RSDTrackedSelectionStepObject.self,
-        RSDTransformerStepObject.self,
+        RSDStepTransformerObject.self,
         RSDInputFieldObject.self,
         RSDChoiceInputFieldObject.self,
         RSDSchemaInfoObject.self,

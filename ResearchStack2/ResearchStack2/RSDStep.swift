@@ -92,8 +92,8 @@ public protocol RSDCopyStep : RSDStep, RSDCopyWithIdentifier {
     /// Copy the step to a new instance with the given identifier and user info.
     /// - parameters:
     ///     - identifier: The new identifier.
-    ///     - userInfo: A dictionary that can be used to set properties on a replacement step.
-    func copy(with identifier: String, userInfo: [String : Any]?) throws -> Self
+    ///     - decoder: A decoder that can be used to decode properties on this step.
+    func copy(with identifier: String, decoder: Decoder?) throws -> Self
 }
 
 /// `RSDGenericStep` is a step with key/value pairs decoded from a dictionary. This is the default step

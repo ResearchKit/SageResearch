@@ -35,8 +35,8 @@ import Foundation
 
 /// `RSDSectionStepObject` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
 /// step that includes an instruction step, countdown step, and activity step.
-public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable {
-    
+public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, RSDCopyStep, Decodable {
+
     private enum CodingKeys : String, CodingKey {
         case identifier, stepType = "type", steps, progressMarkers, asyncActions
     }
@@ -85,11 +85,36 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, Decodable 
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
     /// - parameter identifier: The new identifier.
     public func copy(with identifier: String) -> RSDSectionStepObject {
-        var copy = RSDSectionStepObject(identifier: identifier, steps: steps, type: self.stepType)
+        return try! copy(with: identifier, decoder: nil)
+    }
+    
+    /// Copy this step with replacement values from the given decoder (if any).
+    public func copy(with identifier: String, decoder: Decoder?) throws -> RSDSectionStepObject {
+        
+        // Look in the decoder for the replacement step properties.
+        var copySteps = self.steps
+        if let decoder = decoder {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            var stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
+            while !stepsContainer.isAtEnd {
+                let stepDecoder = try stepsContainer.superDecoder()
+                let nestedContainer = try stepDecoder.container(keyedBy: CodingKeys.self)
+                let identifier = try nestedContainer.decode(String.self, forKey: .identifier)
+                if let idx = copySteps.index(where: { $0.identifier == identifier }),
+                    let copyableStep = copySteps[idx] as? RSDCopyStep {
+                    let replacementStep = try copyableStep.copy(with: identifier, decoder: stepDecoder)
+                    copySteps.replaceSubrange(idx...idx, with: [replacementStep])
+                }
+            }
+        }
+        
+        // Copy self with replacement steps.
+        var copy = RSDSectionStepObject(identifier: identifier, steps: copySteps, type: self.stepType)
         copy.progressMarkers = self.progressMarkers
         copy.asyncActions = self.asyncActions
         return copy
     }
+
     
     /// Initialize from a `Decoder`. This implementation will query the `RSDFactory` attached to the decoder for the
     /// appropriate implementation for each step in the array.

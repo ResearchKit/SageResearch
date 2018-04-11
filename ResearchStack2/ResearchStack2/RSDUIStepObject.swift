@@ -119,31 +119,30 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
     /// - parameter identifier: The new identifier.
     public func copy(with identifier: String) -> Self {
-        return try! copy(with: identifier, userInfo: nil)
+        return try! copy(with: identifier, decoder: nil)
     }
     
     /// Copy the step to a new instance with the given identifier and user info.
     /// - parameters:
     ///     - identifier: The new identifier.
-    ///     - userInfo: A dictionary that can be used to set properties on a replacement step.
-    public func copy(with identifier: String, userInfo: [String : Any]?) throws -> Self {
+    ///     - decoder: A decoder that can be used to decode properties on this step.
+    public func copy(with identifier: String, decoder: Decoder?) throws -> Self {
         let copy = type(of: self).init(identifier: identifier, type: self.stepType)
-        try copyInto(copy as RSDUIStepObject, userInfo: userInfo)
+        self.copyInto(copy)
+        if let decoder = decoder {
+            try copy.decode(from: decoder, for: nil)
+        }
         return copy
     }
     
     /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
     /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
     /// This is a work-around.
-    open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
-        
-        copy.title = userInfo?[CodingKeys.title.stringValue] as? String ?? self.title
-        copy.text = userInfo?[CodingKeys.text.stringValue] as? String ?? self.text
-        copy.detail = userInfo?[CodingKeys.detail.stringValue] as? String ?? self.detail
-        copy.footnote = userInfo?[CodingKeys.footnote.stringValue] as? String ?? self.footnote
-
-        // TODO: syoung 02/26/2018 Use `Decodable` to support copying from dictionaries.
-        // https://github.com/ResearchKit/SageResearch/issues/42
+    open func copyInto(_ copy: RSDUIStepObject) {
+        copy.title = self.title
+        copy.text = self.text
+        copy.detail = self.detail
+        copy.footnote = self.footnote
         copy.viewTheme = self.viewTheme
         copy.colorTheme = self.colorTheme
         copy.imageTheme = self.imageTheme

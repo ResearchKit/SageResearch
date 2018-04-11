@@ -87,8 +87,8 @@ open class RSDTrackedItemDetailsStepObject : RSDFormUIStepObject, RSDTrackedItem
     }
     
     /// Override copy into to copy the schedule templates.
-    open override func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
-        try super.copyInto(copy, userInfo: userInfo)
+    open override func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
         guard let subclassCopy = copy as? RSDTrackedItemDetailsStepObject else {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
