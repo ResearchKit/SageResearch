@@ -42,8 +42,8 @@ open class MCTOverviewStepObject : RSDOverviewStepObject {
     open var icons: [MCTIconInfo]?
     
     /// Override the copy into method.
-    override open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
-        try super.copyInto(copy, userInfo: nil)
+    override open func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
         guard let subclassCopy = copy as? MCTOverviewStepObject else {
             assertionFailure("Failed to copy into a class of expected type.")
             return
