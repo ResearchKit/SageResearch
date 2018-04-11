@@ -98,16 +98,16 @@ open class RSDTrackedItemsReviewStepObject : RSDTrackedSelectionStepObject {
     }
     
     /// Override to set the properties of the subclass.
-    override open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
-        try super.copyInto(copy, userInfo: userInfo)
+    override open func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
         guard let subclassCopy = copy as? RSDTrackedItemsReviewStepObject else {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
-        subclassCopy.addDetailsTitle = userInfo?[CodingKeys.addDetailsTitle.stringValue] as? String ?? self.addDetailsTitle
-        subclassCopy.addDetailsSubtitle = userInfo?[CodingKeys.addDetailsSubtitle.stringValue] as? String ?? self.addDetailsSubtitle
-        subclassCopy.reviewTitle = userInfo?[CodingKeys.reviewTitle.stringValue] as? String ?? self.reviewTitle
-        subclassCopy.reviewSubtitle = userInfo?[CodingKeys.reviewSubtitle.stringValue] as? String ?? self.reviewSubtitle
+        subclassCopy.addDetailsTitle = self.addDetailsTitle
+        subclassCopy.addDetailsSubtitle = self.addDetailsSubtitle
+        subclassCopy.reviewTitle = self.reviewTitle
+        subclassCopy.reviewSubtitle = self.reviewSubtitle
     }
     
     // Overrides must be defined in the base implementation

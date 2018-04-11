@@ -157,13 +157,13 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     }
     
     /// Override to set the properties of the subclass.
-    override open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
-        try super.copyInto(copy, userInfo: userInfo)
+    override open func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
         guard let subclassCopy = copy as? RSDActiveUIStepObject else {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
-        subclassCopy.duration = userInfo?[CodingKeys.duration.stringValue] as? TimeInterval ?? self.duration
+        subclassCopy.duration = self.duration
         subclassCopy.commands = self.commands
         subclassCopy.requiresBackgroundAudio = self.requiresBackgroundAudio
         subclassCopy.spokenInstructions = self.spokenInstructions

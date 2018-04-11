@@ -126,14 +126,14 @@ open class RSDPopoverInputFieldObject : RSDFormUIStepObject, RSDPopoverInputFiel
         case prompt, promptDetail, placeholder
     }
     
-    open override func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
-        try super.copyInto(copy, userInfo: userInfo)
+    open override func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
         guard let subclassCopy = copy as? RSDPopoverInputFieldObject else {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
-        subclassCopy.inputPrompt = userInfo?[CodingKeys.prompt.stringValue] as? String ?? self.inputPrompt
-        subclassCopy.inputPromptDetail = userInfo?[CodingKeys.promptDetail.stringValue] as? String ?? self.inputPromptDetail
-        subclassCopy.placeholder = userInfo?[CodingKeys.placeholder.stringValue] as? String ?? self.placeholder
+        subclassCopy.inputPrompt = self.inputPrompt
+        subclassCopy.inputPromptDetail = self.inputPromptDetail
+        subclassCopy.placeholder = self.placeholder
     }
 }

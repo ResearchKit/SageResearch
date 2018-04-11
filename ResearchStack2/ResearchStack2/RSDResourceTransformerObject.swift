@@ -84,9 +84,6 @@ public final class RSDResourceTransformerObject : Codable {
 extension RSDResourceTransformerObject : RSDTaskResourceTransformer {
 }
 
-extension RSDResourceTransformerObject : RSDSectionStepResourceTransformer {
-}
-
 extension RSDResourceTransformerObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
