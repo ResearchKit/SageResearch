@@ -48,14 +48,4 @@ open class CRFFactory: RSDFactory {
             return try super.decodeStep(from: decoder, with: type)
         }
     }
-    
-    /// Override the base factory to vend a heart rate section transformer.
-    override open func decodeSectionStepTransformer(from decoder: Decoder) throws -> RSDSectionStepTransformer {
-        guard let transformerType = try self.typeName(from: decoder), transformerType == RSDStepType.heartRate.stringValue else {
-            return try super.decodeSectionStepTransformer(from: decoder)
-        }
-        return RSDResourceTransformerObject(resourceName: "HeartrateStep", bundle: Bundle(for: CRFFactory.self), classType: nil)
-    }
 }
-
-

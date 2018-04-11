@@ -139,7 +139,7 @@ public struct CRFCameraSettings : Codable, RSDResult, RSDArchivable {
     /// Build the archiveable or uploadable data for this result.
     public func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
         let manifest = RSDFileManifest(filename: self.identifier, timestamp: self.startDate, contentType: "application/json", identifier: self.identifier, stepPath: nil)
-        let data = try self.jsonEncodedData()
+        let data = try self.rsd_jsonEncodedData()
         return (manifest, data)
     }
 }

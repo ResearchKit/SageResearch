@@ -73,9 +73,12 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
         
         // Pull the title, subtitle, and detail from the first step in the task resource.
         let factory = (RSDFactory.shared as? CRFFactory) ?? CRFFactory()
-        let task = try! factory.decodeTask(with: taskIdentifier.resourceTransformer()) as! RSDTaskObject
-        self.task = task
-        
+        do {
+            let mTask = try factory.decodeTask(with: taskIdentifier.resourceTransformer())
+            self.task = mTask as! RSDTaskObject
+        } catch let err {
+            fatalError("Failed to decode the task. \(err)")
+        }
         if let step = (task.stepNavigator as? RSDConditionalStepNavigator)?.steps.first as? RSDUIStep {
             self.title = step.title
             self.subtitle = step.text

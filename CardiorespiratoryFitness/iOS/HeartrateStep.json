@@ -1,4 +1,6 @@
 {
+    "identifier"        : "heartRate",
+    "type"              : "section",
     "steps"             : [
                            {
                            "identifier"     : "instruction",

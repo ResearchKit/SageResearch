@@ -525,7 +525,7 @@ public struct CRFHeartRateSamplesResult : RSDResult, RSDArchivable {
     }
     
     public func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
-        let data = try self.jsonEncodedData()
+        let data = try self.rsd_jsonEncodedData()
         let filename = RSDFileResultUtility.filename(for: identifier)
         let manifest = RSDFileManifest(filename: filename, timestamp: self.endDate, contentType: "application/json", identifier: identifier, stepPath: stepPath)
         return (manifest, data)

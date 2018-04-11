@@ -73,14 +73,14 @@
                            {
                            "identifier"         : "heartRate.before",
                            "type"               : "transform",
-                           "replacementSteps"   : [{ "identifier"   : "instruction",
+                           "steps"   : [{ "identifier"   : "instruction",
                                                      "title"        : "Capture heart rate",
                                                    "text"         : "Use your finger to cover the camera and flash on the back of your phone."},
                                                    { "identifier" : "heartRate", "isResting"    : true },
                                                    { "identifier"   : "feedback",
                                                      "text"         : "Your pre run heart rate is" }
                                                    ],
-                           "sectionTransformer"    : { "type": "heartRate" }
+                           "resourceTransformer"    : { "resourceName": "HeartrateStep.json"}
                            },
                            {
                            "identifier"     : "run",
@@ -128,14 +128,14 @@
                            {
                            "identifier"         : "heartRate.after",
                            "type"               : "transform",
-                           "replacementSteps"   : [{ "identifier"   : "instruction",
+                           "steps"   : [{ "identifier"   : "instruction",
                                                    "title"        : "Stand still for 1 minute",
                                                    "text"         : "Almost done! Stand still for a minute to measure your heart rate recovery."},
                                                    { "identifier" : "heartRate", "isResting" : false },
                                                    { "identifier"   : "feedback",
                                                      "text"         : "Your heart rate changed to" }
                                                    ],
-                           "sectionTransformer"    : { "type": "heartRate" }
+                           "resourceTransformer"    : { "resourceName": "HeartrateStep.json"}
                            },
                            {
                            "identifier"     : "surveyAfter",

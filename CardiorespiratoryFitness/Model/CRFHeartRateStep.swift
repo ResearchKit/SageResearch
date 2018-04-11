@@ -66,14 +66,14 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRecorderConfiguration {
     }
     
     /// Override the copy into method.
-    override open func copyInto(_ copy: RSDUIStepObject, userInfo: [String : Any]?) throws {
-        try super.copyInto(copy, userInfo: nil)
+    override open func copyInto(_ copy: RSDUIStepObject) {
+        super.copyInto(copy)
         guard let subclassCopy = copy as? CRFHeartRateStep else {
             assertionFailure("Failed to copy into a class of expected type.")
             return
         }
-        subclassCopy.shouldSaveBuffer = (userInfo?[CodingKeys.shouldSaveBuffer.stringValue] as? Bool) ?? self.shouldSaveBuffer
-        subclassCopy.isResting = (userInfo?[CodingKeys.isResting.stringValue] as? Bool) ?? self.isResting
+        subclassCopy.shouldSaveBuffer = self.shouldSaveBuffer
+        subclassCopy.isResting = self.isResting 
     }
     
     /// Override to decode the configuration if there is one.
