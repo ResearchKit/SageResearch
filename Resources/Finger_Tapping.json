@@ -123,7 +123,7 @@
                 "identifier":"tappingFirstHandInstruction",
                 "type":"instruction",
                 "title":"First, tap with your %@ hand",
-                "text": "Alternate tapping the buttons that appear with your index and middle finger of your %@ HAND. Keep tapping for 30 seconds for as fast as you can."
+                "text": "Alternate tapping the buttons that appear with your index and middle finger of your %@ HAND. Keep tapping for 30 seconds for as fast as you can.",
                 "image": {
                     "imageNames": ["TapLeft1", "TapLeft2"],
                     "animationDuration": 1.0,
@@ -144,7 +144,7 @@
                     "goForward":{
                         "buttonTitle": "Start the test"
                     }
-                },
+                }
              },
              {
                  "identifier":"left",
