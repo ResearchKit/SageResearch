@@ -37,7 +37,21 @@ extension RSDStepType {
     public static let handSelection: RSDStepType = "handSelection"
 }
 
+fileprivate var _didAddLocalizationBundle: Bool = false
+
 open class MCTFactory : RSDFactory {
+    
+    /// Overrride initialization to add the strings file to the localization bundles.
+    public override init() {
+        super.init()
+        
+        // Add the localization bundle if this is a first init()
+        if !_didAddLocalizationBundle {
+            _didAddLocalizationBundle = true
+            let localizationBundle = LocalizationBundle(Bundle(for: MCTFactory.self))
+            Localization.insert(bundle: localizationBundle, at: 1)
+        }
+    }
         
     /// Override the base factory to vend the MCT step objects.
     override open func decodeStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
