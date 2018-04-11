@@ -567,7 +567,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// Momentarily disable the button.  This keeps a double-tap of a navigation button from
     /// triggering more than once. This is required b/c of how the UI handles the call to
     /// go forward/backward by calling a method that just looks at the current step.
-    private func momentarilyDisableButton(_ button: UIButton) {
+    public func momentarilyDisableButton(_ button: UIButton) {
         if let transitionButton = button as? RSDButton {
             transitionButton.isInTransition = true
         }
@@ -594,7 +594,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// this method as an override point or a target action for a subclass.
     @IBAction open func goForward() {
         performStopCommands()
-        _speakEndCommand {
+        speakEndCommand {
             self.taskController.goForward()
         }
     }
@@ -871,16 +871,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         // Always run the stop command
         stop()
     }
-    
-    private func _speakEndCommand(_ completion: @escaping (() -> Void)) {
-        if let instruction = self.activeStep?.spokenInstruction(at: Double.infinity) {
-            speakInstruction(instruction, at: Double.infinity, completion: { (_, _) in
-                completion()
-            })
-        } else {
-            completion()
-        }
-    }
+
     
     /// Play a sound. The default method will use the shared instance of `RSDAudioSoundPlayer`.
     /// - parameter sound: The sound to play.
@@ -911,12 +902,31 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         if nextInstruction > lastInstruction {
             for ii in (lastInstruction + 1)...nextInstruction {
                 let timeInterval = TimeInterval(ii)
-                if let instruction = self.activeStep?.spokenInstruction(at: timeInterval) {
+                if let instruction = self.spokenInstruction(at: timeInterval) {
                     speakInstruction(instruction, at: timeInterval, completion: nil)
                 }
             }
             lastInstruction = nextInstruction
         }
+    }
+    
+    /// Speak the "end" command (spoken instruction) and then call the completion once finished.
+    /// If the "end" command was previously spoken, then this will call the completion immediately.
+    public func speakEndCommand(_ completion: @escaping (() -> Void)) {
+        if !_hasSpokenEndInstruction, let instruction = self.spokenInstruction(at: Double.infinity) {
+            _hasSpokenEndInstruction = true
+            speakInstruction(instruction, at: Double.infinity, completion: { (_, _) in
+                completion()
+            })
+        } else {
+            completion()
+        }
+    }
+    private var _hasSpokenEndInstruction: Bool = false
+    
+    /// Returns the spoken instruction for a given time point. Default calls the active step spoken instruction.
+    open func spokenInstruction(at duration: TimeInterval) -> String? {
+        return self.activeStep?.spokenInstruction(at: duration)
     }
     
     /// Start the timer.
