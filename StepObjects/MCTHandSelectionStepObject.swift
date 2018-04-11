@@ -68,7 +68,6 @@ public class MCTHandSelectionDataSource : RSDFormStepDataSourceObject {
     /// Override the initial result to look for the user's previous answer to this quesiton in
     /// UserDefaults.
     override open var initialResult : RSDCollectionResult? {
-        /// TODO rkolmos 04/10/2018 fix this to not use string builders
         let initialResultKey : String = "\(self.taskPath.task!.identifier)_lastHandSelection"
         let defaults = UserDefaults.standard
         guard let handSelection = defaults.string(forKey: initialResultKey) else { return nil }
