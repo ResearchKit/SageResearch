@@ -37,6 +37,9 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     
     public static let firstRunKey = "isFirstRun"
     
+    /// The constraint that sets the scroll bar's top background view's height.
+    @IBOutlet weak var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
+    
     /// The image views to display the icons on.
     @IBOutlet
     open var iconImages: [UIImageView]!
@@ -58,8 +61,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     /// or not to show the full task info or an abbreviated screen.
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Add the info button.
-        
+        updateImagePlacementConstraints()
         // This code assumes that either 1 or 3 icons will be displayed. In order to support
         // other values other implementations should use a UICollectionView.
         for label in iconTitles! {
@@ -95,6 +97,13 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         }
         
         _setHiddenAndScrollable(shouldShowInfo: isFirstRun)
+    }
+    
+    /// Sets the height of the scroll views top background view depending on
+    /// the image placement type from this step.
+    open func updateImagePlacementConstraints() {
+        guard let placementType = self.themedStep?.imageTheme?.placementType else { return }
+        self.scrollViewBackgroundHeightConstraint.constant = placementType == .topMarginBackground ? self.statusBarBackgroundView!.bounds.height : CGFloat(0)
     }
     
     /// Adds a result for whether or not this run represents a "first run", A "first run"

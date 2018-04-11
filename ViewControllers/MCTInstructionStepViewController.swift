@@ -59,17 +59,30 @@ extension MCTHandStepController {
         return nil
     }
     
-    /// Returns which hand is being used for this step.
-    public func whichHand() -> MCTHandSelection? {
-        if let hand = MCTHandSelection(rawValue: self.taskController.taskPath.identifier) {
-            return hand
-        } else if let handOrder = self.handOrder() {
+    /// Returns whichever hand is next to perform this task.
+    public func nextHand() -> MCTHandSelection? {
+        if let handOrder = handOrder() {
+            var taskPath = self.taskController.taskPath
+            repeat {
+                if taskPath?.result.findResult(with: handOrder.first!.stringValue) != nil {
+                    return handOrder.last
+                }
+                
+                taskPath = taskPath?.parentPath
+            } while (taskPath != nil)
             return handOrder.first
         }
         
         return nil
     }
     
+    /// Returns which hand is being used for this step.
+    public func whichHand() -> MCTHandSelection? {
+        if let hand = MCTHandSelection(rawValue: self.taskController.taskPath.identifier) {
+            return hand
+        }
+        return nextHand()
+    }
     
     /// Flips the image if this view is for the right hand. Only flips the first time the view appears.
     public func updateImage() {
@@ -88,11 +101,8 @@ open class MCTInstructionStepViewController : RSDStepViewController, MCTHandStep
         return self.navigationHeader?.imageView
     }
     
-    /// The constraint for the topBackground image placement.
-    @IBOutlet weak var topBackgroundContraint: NSLayoutConstraint!
-    
-    /// The contraint for the topMarginBackground image placement.
-    @IBOutlet weak var topMarginBackgroundConstraint: NSLayoutConstraint!
+    /// The constraint that sets the scroll bar's top background view's height.
+    @IBOutlet weak var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
     
     /// Override viewWillAppear to update the label text, and image placement constraints.
     override open func viewWillAppear(_ animated: Bool) {
@@ -103,19 +113,13 @@ open class MCTInstructionStepViewController : RSDStepViewController, MCTHandStep
         self.statusBarBackgroundView?.backgroundColor = UIColor.clear
     }
     
-    /// Chooses between topMarginBackgroundConstraint and topBackground constraint depending on
+    /// Sets the height of the scroll views top background view depending on
     /// the image placement type from this step.
     open func updateImagePlacementConstraints() {
         guard let placementType = self.themedStep?.imageTheme?.placementType else { return }
-        switch placementType {
-        case .topMarginBackground:
-            topMarginBackgroundConstraint.isActive = true
-            topBackgroundContraint.isActive = false
-        default:
-            topBackgroundContraint.isActive = true
-            topMarginBackgroundConstraint.isActive = false
-        }
+        scrollViewBackgroundHeightConstraint.constant = placementType == .topMarginBackground ? self.statusBarBackgroundView!.bounds.height : CGFloat(0)
     }
+    
     
     /// Sets the title and text labels' text to a version of their text localized with
     /// a string from the body direction that goes first. Expected is either ("LEFT" or "RIGHT").

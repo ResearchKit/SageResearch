@@ -16,7 +16,7 @@
                             ],
                  "image":{
                      "imageName":"Purple",
-                     "placementType":"topBackground"
+                     "placementType":"topMarginBackground"
                  },
                 "icons": [
                           {
@@ -201,7 +201,7 @@
                             {
                                 "identifier":"instruction",
                                 "type":"instruction",
-                                "title":"Hold the phone with your RIGHT hand",
+                                "title":"Hold the phone with your %@ hand",
                                 "text":"With your hand in your lap, hold your phone still with the screen facing up.",
                                 "image":{
                                     "imageName":"HoldPhone-Left",
@@ -229,7 +229,7 @@
                               "type":"active",
                               "duration":30,
                               "image":{
-                                  "imageName":"HoldPhone-Right",
+                                  "imageName":"HoldPhone-Left",
                                   "placementType":"fullsizeBackground"
                               },
                               "colorTheme":{

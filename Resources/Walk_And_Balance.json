@@ -16,7 +16,7 @@
                             ],
                  "image":{
                      "imageName":"F-Walking2",
-                     "placementType":"topBackground"
+                     "placementType":"topMarginBackground"
                  },
                 "icons": [
                           {
