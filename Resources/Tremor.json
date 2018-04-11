@@ -204,7 +204,7 @@
                                 "title":"Hold the phone with your RIGHT hand",
                                 "text":"With your hand in your lap, hold your phone still with the screen facing up.",
                                 "image":{
-                                    "imageName":"HoldPhone-Right",
+                                    "imageName":"HoldPhone-Left",
                                     "placementType":"topBackground"
                                 },
                                 "colorTheme":{

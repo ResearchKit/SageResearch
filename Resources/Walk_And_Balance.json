@@ -297,6 +297,7 @@
                               "identifier":"countdown",
                               "type":"countdown",
                               "text":"Begin in...",
+                              "isFirstRunOnly": true,
                               "image":{
                                   "imageName":"F-Turning1",
                                   "placementType":"fullsizeBackground"

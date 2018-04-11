@@ -58,24 +58,22 @@ open class MCTInstructionStepObject : RSDActiveUIStepObject, RSDNavigationSkipRu
         return !isFirstRun
     }
     
-    /// Override decode to also decode whether this step is a first run only instruction.
-    /// If the "isFirstRunOnly" field is left out of the dictionary we are decoding, we default
-    /// to a value of `false`.
+    /// Override init to also decode whether this step is a first run only instruction.
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.isFirstRunOnly = try container.decodeIfPresent(Bool.self, forKey: .isFirstRunOnly)
         try super.init(from: decoder)
     }
     
-    /// Require method to initialize a MCTInstructionStepObject.
-    public required convenience init(identifier: String, type: RSDStepType?) {
-        self.init(identifier: identifier, type: type, isFirstRunOnly: false)
+    /// Override decode to also decoder whether this step is a first run only instruction.
+    override open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
+        try super.decode(from: decoder, for: deviceType)
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.isFirstRunOnly = try container.decodeIfPresent(Bool.self, forKey: .isFirstRunOnly)
     }
     
-    /// Allows an MCTInstructionStepObject to be initialized and the isFirstRunOnly
-    /// property can be set. Intended for testing purposes.
-    internal init(identifier: String, type: RSDStepType?, isFirstRunOnly: Bool) {
-        self.isFirstRunOnly = isFirstRunOnly
+    /// Require method to initialize a MCTInstructionStepObject.
+    public required init(identifier: String, type: RSDStepType?) {
         super.init(identifier: identifier, type: type)
     }
 }

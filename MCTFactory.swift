@@ -42,7 +42,7 @@ open class MCTFactory : RSDFactory {
     /// Override the base factory to vend the MCT step objects.
     override open func decodeStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
         switch type {
-        case .instruction:
+        case .instruction, .countdown:
             return try MCTInstructionStepObject(from: decoder)
         case .overview:
             return try MCTOverviewStepObject(from: decoder)
