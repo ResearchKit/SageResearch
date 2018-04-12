@@ -189,7 +189,7 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
                 var err: NSString?
                 formatter.getObjectValue(&obj, for: string, errorDescription: &err)
                 if err != nil {
-                    let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: (err as String!))
+                    let context = RSDInputFieldError.Context(identifier: inputField.identifier, value: answer, answerResult: answerType, debugDescription: (err! as String))
                     throw RSDInputFieldError.invalidFormatter(formatter, context)
                 } else {
                     return obj

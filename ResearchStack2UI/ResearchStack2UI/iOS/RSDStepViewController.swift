@@ -64,7 +64,7 @@ public protocol RSDStepViewControllerDelegate : RSDOptionalStepViewControllerDel
 public protocol RSDStepViewControllerProtocol : RSDStepController {
     
     /// The step view controller delegate.
-    weak var delegate: RSDStepViewControllerDelegate? { get set }
+    var delegate: RSDStepViewControllerDelegate? { get set }
 }
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
