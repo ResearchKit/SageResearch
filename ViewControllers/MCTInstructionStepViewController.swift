@@ -63,7 +63,7 @@ extension MCTHandStepController {
         repeat {
             if let handSelectionResult = taskPath?.result.findResult(with: MCTHandSelectionDataSource.selectionKey) as? RSDCollectionResult,
                let handOrder : [String] = handSelectionResult.findAnswerResult(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String] {
-               return handOrder.flatMap{ MCTHandSelection(rawValue: $0) }
+                return handOrder.compactMap{ MCTHandSelection(rawValue: $0) }
             }
         
             taskPath = taskPath?.parentPath
