@@ -119,7 +119,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
     /// Override view will appear to set the unit label text
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.unitLabel?.text = "TAP COUNT" // TODO rkolmos 04/11/2018 localize
+        self.unitLabel?.text = Localization.localizedString("TAP_COUNT_LABEL")
     }
     
     /// Override view did appear to set up the button rects.

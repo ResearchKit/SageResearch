@@ -34,5 +34,7 @@
 
 "TAP_BUTTON_TITLE" = "Tap"; // Accessibility title for the button tap
 
+"TAP_COUNT_LABEL" = "TAP COUNT";
+
 "TREMOR_CONTINUE_TO_%@" = "Continue to your %@ hand.";
 
