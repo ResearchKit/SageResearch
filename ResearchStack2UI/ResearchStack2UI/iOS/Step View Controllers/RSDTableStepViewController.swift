@@ -250,7 +250,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// The UI hints that are supported by this view controller.
     open class var supportedUIHints: Set<RSDFormUIHint> {
-        return [.list, .textfield, .picker, .modalButton, .logging]
+        return [.list, .textfield, .picker, .modalButton]
     }
     
     /// Creates and assigns a new instance of the model. The default implementation will instantiate
@@ -301,10 +301,14 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 tableView.register(cellClass, forCellReuseIdentifier: reuseIdentifier)
             case .modalButton:
                 tableView.register(RSDModalButtonCell.self, forCellReuseIdentifier: reuseIdentifier)
-            case .logging:
-                tableView.register(RSDTrackedLoggingCell.nib, forCellReuseIdentifier: reuseIdentifier)
             default:
-                tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+                // Look to see if this does not have a cell registered for the view and register a default
+                // instance. This will throw an assert if the cell is not registered, but will **not**
+                // crash production code.
+                if tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) == nil {
+                    assertionFailure("Failed to register the cell reuse identifier: \(reuseIdentifier)")
+                    tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+                }
             }
         }
     }

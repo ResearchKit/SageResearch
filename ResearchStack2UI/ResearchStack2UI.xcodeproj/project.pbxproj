@@ -30,8 +30,6 @@
 		F82F819B206B49D800F71AA8 /* RSDCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82F819A206B49D800F71AA8 /* RSDCheckmarkView.swift */; };
 		F880C1B52057182B00ACB4D4 /* RSDOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C1B32057182B00ACB4D4 /* RSDOverviewStepViewController.swift */; };
 		F880C1B62057182B00ACB4D4 /* RSDOverviewStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */; };
-		F8A204F9206A11CB004E2B5D /* RSDTrackedLoggingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A204F7206A11CB004E2B5D /* RSDTrackedLoggingCell.swift */; };
-		F8A204FA206A11CB004E2B5D /* RSDTrackedLoggingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A204F8206A11CB004E2B5D /* RSDTrackedLoggingCell.xib */; };
 		F8A204FC206AD242004E2B5D /* RSDButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */; };
 		F8D4813E20622896008EF629 /* RSDStatusBarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */; };
 		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
@@ -96,8 +94,6 @@
 		F82F819A206B49D800F71AA8 /* RSDCheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCheckmarkView.swift; sourceTree = "<group>"; };
 		F880C1B32057182B00ACB4D4 /* RSDOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDOverviewStepViewController.swift; sourceTree = "<group>"; };
 		F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDOverviewStepViewController.xib; sourceTree = "<group>"; };
-		F8A204F7206A11CB004E2B5D /* RSDTrackedLoggingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTrackedLoggingCell.swift; sourceTree = "<group>"; };
-		F8A204F8206A11CB004E2B5D /* RSDTrackedLoggingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDTrackedLoggingCell.xib; sourceTree = "<group>"; };
 		F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDButtonCell.swift; sourceTree = "<group>"; };
 		F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStatusBarBackgroundView.swift; sourceTree = "<group>"; };
 		FF0472301F7AC4F90023DAD6 /* ResearchStack2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchStack2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,14 +169,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F8A204F6206A1179004E2B5D /* Default Nibs */ = {
-			isa = PBXGroup;
-			children = (
-				F8A204F8206A11CB004E2B5D /* RSDTrackedLoggingCell.xib */,
-			);
-			name = "Default Nibs";
-			sourceTree = "<group>";
-		};
 		FF04722E1F7AC4F90023DAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,7 +234,6 @@
 		FF4A2D441F96A90200484338 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F8A204F6206A1179004E2B5D /* Default Nibs */,
 				F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */,
 				F82F819A206B49D800F71AA8 /* RSDCheckmarkView.swift */,
 				FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */,
@@ -259,7 +246,6 @@
 				FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */,
 				FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */,
 				FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */,
-				F8A204F7206A11CB004E2B5D /* RSDTrackedLoggingCell.swift */,
 				FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */,
 			);
 			path = Views;
@@ -475,7 +461,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8A204FA206A11CB004E2B5D /* RSDTrackedLoggingCell.xib in Resources */,
 				FFF2D9881FCF451C007258F8 /* RSDCountdownStepViewController.xib in Resources */,
 				F880C1B62057182B00ACB4D4 /* RSDOverviewStepViewController.xib in Resources */,
 				FFF2D9861FCF451C007258F8 /* DebugStepViewController.xib in Resources */,
@@ -536,7 +521,6 @@
 				F880C1B52057182B00ACB4D4 /* RSDOverviewStepViewController.swift in Sources */,
 				B587AC05206D654400542548 /* UIView+BridgeKeyNames.swift in Sources */,
 				FFF2D98C1FCF4527007258F8 /* RSDTableStepViewController.swift in Sources */,
-				F8A204F9206A11CB004E2B5D /* RSDTrackedLoggingCell.swift in Sources */,
 				FFF2D9981FCF4538007258F8 /* UIImage+Utilities.swift in Sources */,
 				FFF2D9991FCF4538007258F8 /* UIView+Layout.swift in Sources */,
 				FFF2D9941FCF4530007258F8 /* RSDStepNavigationView.swift in Sources */,

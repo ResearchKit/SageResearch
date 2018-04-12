@@ -47,15 +47,9 @@ public struct RSDStepNavigatorType : RawRepresentable, Codable {
     /// Defaults to creating a `RSDConditionalStepNavigatorObject`.
     public static let conditional: RSDStepNavigatorType = "conditional"
     
-    /// Defaults to creating a `RSDMedicationTrackingStepNavigator`.
-    public static let medicationTracking: RSDStepNavigatorType = "medicationTracking"
-    
-    /// Defaults to creating a `RSDTrackedItemsStepNavigator`.
-    public static let tracking: RSDStepNavigatorType = "tracking"
-    
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStepNavigatorType] {
-        return [.conditional, .tracking, .medicationTracking]
+        return [.conditional]
     }
 }
 

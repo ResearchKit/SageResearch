@@ -206,14 +206,7 @@ open class RSDFactory {
     /// - returns: The step navigator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStepNavigator(from decoder: Decoder, with type: RSDStepNavigatorType) throws -> RSDStepNavigator {
-        switch type {
-        case .medicationTracking:
-            return try RSDMedicationTrackingStepNavigator(from: decoder)
-        case .tracking:
-            return try RSDTrackedItemsStepNavigator(from: decoder)
-        default:
-            return try RSDConditionalStepNavigatorObject(from: decoder)
-        }
+        return try RSDConditionalStepNavigatorObject(from: decoder)
     }
     
 
@@ -274,8 +267,6 @@ open class RSDFactory {
             return try RSDFormUIStepObject(from: decoder)
         case .section:
             return try RSDSectionStepObject(from: decoder)
-        case .selection:
-            return try RSDTrackedSelectionStepObject(from: decoder)
         case .taskInfo:
             let taskInfo = try RSDTaskInfoObject(from: decoder)
             return RSDTaskInfoStepObject(with: taskInfo)
