@@ -55,7 +55,7 @@ public class MCTTappingStepObject: RSDActiveUIStepObject {
 }
 
 /// The tapping step view controller sets up gesture listeners that are used to track the button taps.
-public class MCTTappingStepViewController: RSDActiveStepViewController, MCTHandStepController {
+public class MCTTappingStepViewController: MCTActiveStepViewController {
     
     /// Button in the view on the left.
     @IBOutlet public var leftButton: UIButton!
@@ -65,11 +65,6 @@ public class MCTTappingStepViewController: RSDActiveStepViewController, MCTHandS
     
     /// Label for tracking the tapping count.
     @IBOutlet public var tappingCountLabel: UILabel!
-    
-    /// Return the image view to set.
-    public var imageView: UIImageView? {
-        return self.navigationBody?.imageView ?? self.navigationHeader?.imageView
-    }
     
     /// UIGestureRecognizer for taps outside the buttons.
     var touchDownRecognizer: UIGestureRecognizer!
@@ -121,10 +116,16 @@ public class MCTTappingStepViewController: RSDActiveStepViewController, MCTHandS
         self.nextButton?.isHidden = true
     }
     
+    /// Override view will appear to set the unit label text
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.unitLabel?.text = "TAP COUNT" // TODO rkolmos 04/11/2018 localize
+    }
+    
     /// Override view did appear to set up the button rects.
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        self.tappingCountLabel.text = countFormatter.string(from: NSNumber(value: _hitButtonCount))
         _viewSize = self.view.bounds.size
         _buttonRect1 = self.view.convert(leftButton.bounds, from: leftButton)
         _buttonRect2 = self.view.convert(rightButton.bounds, from: rightButton)

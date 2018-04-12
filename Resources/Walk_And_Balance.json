@@ -201,6 +201,7 @@
                           {
                               "identifier":"motion",
                               "type":"active",
+                              "title":"Walk back and forth",
                               "duration":30,
                               "image":{
                                   "imageName":"F-Walking1",
@@ -278,6 +279,28 @@
                  }
              },
              {
+                 "identifier":"countdown",
+                 "type":"countdown",
+                 "text":"Begin in...",
+                 "isFirstRunOnly": true,
+                 "image":{
+                     "imageName":"F-Turning1",
+                     "placementType":"fullsizeBackground"
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Countdown",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "colorTheme":{
+                     "usesLightStyle":true
+                 },
+                 "duration":5,
+                 "commands":["playSoundOnStart", "transitionAutomatically"],
+                 "spokenInstructions":{
+                     "start":"Place the phone in your pocket."
+                 }
+             },
+             {
                  "identifier":"balance",
                  "type":"section",
                  "asyncActions":[
@@ -294,30 +317,9 @@
                                  ],
                  "steps":[
                           {
-                              "identifier":"countdown",
-                              "type":"countdown",
-                              "text":"Begin in...",
-                              "isFirstRunOnly": true,
-                              "image":{
-                                  "imageName":"F-Turning1",
-                                  "placementType":"fullsizeBackground"
-                              },
-                              "viewTheme":{
-                                  "viewIdentifier":"Countdown",
-                                  "storyboardIdentifier":"ActiveTaskSteps"
-                              },
-                              "colorTheme":{
-                                  "usesLightStyle":true
-                              },
-                              "duration":5,
-                              "commands":["playSoundOnStart", "transitionAutomatically"],
-                              "spokenInstructions":{
-                                  "start":"Place the phone in your pocket."
-                              }
-                          },
-                          {
                               "identifier":"motion",
                               "type":"active",
+                              "title":"Turn around and then stand still",
                               "duration":30,
                               "image":{
                                   "imageName":"F-Turning1",

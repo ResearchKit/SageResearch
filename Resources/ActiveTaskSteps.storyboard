@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -29,7 +30,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="1040"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iS9-lR-8qX" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="450" height="843"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="450" height="843.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n41-Nm-4eq" customClass="RSDNavigationHeaderView" customModule="ResearchStack2UI">
                                                 <rect key="frame" x="0.0" y="0.0" width="450" height="550.5"/>
@@ -83,10 +84,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QAm-Gn-VW3" userLabel="Need Icon View">
-                                                <rect key="frame" x="24" y="721.5" width="402" height="101.5"/>
+                                                <rect key="frame" x="24" y="721.5" width="402" height="102"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="a0v-7m-UG4">
-                                                        <rect key="frame" x="0.0" y="0.5" width="402" height="101.5"/>
+                                                        <rect key="frame" x="0.0" y="1" width="402" height="101.5"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Z0-fP-s42">
                                                                 <rect key="frame" x="0.0" y="0.0" width="104" height="101.5"/>
@@ -312,16 +313,16 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CRK-Yd-4Pa" customClass="RSDCountdownDial" customModule="ResearchStack2UI">
-                                <rect key="frame" x="49.5" y="157.5" width="222" height="222"/>
+                                <rect key="frame" x="49" y="157.5" width="222" height="222"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gl-I3-Byg" userLabel="Unit Label">
-                                        <rect key="frame" x="73.5" y="157" width="75" height="19.5"/>
+                                        <rect key="frame" x="73" y="157" width="75" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoL-gH-k3I" userLabel="Second Count Label">
-                                        <rect key="frame" x="50.5" y="30" width="120" height="119.5"/>
+                                        <rect key="frame" x="51" y="30" width="120" height="119.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -347,7 +348,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Walk back and forth this is more text" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kqn-vH-L1X">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Walk back and forth this is more text" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kqn-vH-L1X" userLabel="Title Label">
                                 <rect key="frame" x="36" y="80" width="248" height="57.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -412,9 +413,8 @@
                         <viewLayoutGuide key="safeArea" id="Din-mI-TjC"/>
                         <connections>
                             <outlet property="cancelButton" destination="a9L-sM-gnJ" id="MT1-cq-JgO"/>
-                            <outlet property="detailLabel" destination="Kqn-vH-L1X" id="2mg-33-xdX"/>
                             <outlet property="imageView" destination="Z9U-qL-Bij" id="ryn-uZ-yUd"/>
-                            <outlet property="titleLabel" destination="Kqn-vH-L1X" id="OFQ-tw-bQV"/>
+                            <outlet property="titleLabel" destination="Kqn-vH-L1X" id="6QI-wl-HKA"/>
                         </connections>
                     </view>
                     <connections>
@@ -466,14 +466,17 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aga-Uj-SL9" userLabel="Countdown Label">
-                                <rect key="frame" x="122" y="206.5" width="76" height="155"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="130"/>
+                                <rect key="frame" x="131" y="244.5" width="58" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="pac-yq-KTx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="100"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Begin in..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9un-Qi-dJY" userLabel="Text Label">
-                                <rect key="frame" x="122" y="173.5" width="76" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="104.5" y="191.5" width="111" height="29"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -496,7 +499,7 @@
                             <constraint firstItem="Xev-7O-YDj" firstAttribute="leading" secondItem="ePz-9Y-VGg" secondAttribute="leading" id="GI9-CL-fbi"/>
                             <constraint firstItem="9Qh-cg-kfP" firstAttribute="centerX" secondItem="GS6-LM-X1w" secondAttribute="centerX" id="GjQ-Qf-tlx"/>
                             <constraint firstItem="Xev-7O-YDj" firstAttribute="top" secondItem="5aE-sq-nnA" secondAttribute="top" constant="-20" id="KLY-Bl-mRh"/>
-                            <constraint firstItem="aga-Uj-SL9" firstAttribute="top" secondItem="9un-Qi-dJY" secondAttribute="bottom" constant="12" id="MNe-wt-FAw"/>
+                            <constraint firstItem="aga-Uj-SL9" firstAttribute="top" secondItem="9un-Qi-dJY" secondAttribute="bottom" constant="24" id="MNe-wt-FAw"/>
                             <constraint firstItem="Xev-7O-YDj" firstAttribute="top" secondItem="G2D-5j-sDp" secondAttribute="bottom" id="Nsy-xu-VP6"/>
                             <constraint firstItem="ePz-9Y-VGg" firstAttribute="top" secondItem="Xev-7O-YDj" secondAttribute="top" constant="-70" id="SQV-OL-kKa"/>
                             <constraint firstItem="4ph-h6-gCc" firstAttribute="centerX" secondItem="GS6-LM-X1w" secondAttribute="centerX" id="UYS-u4-XZQ"/>
@@ -525,7 +528,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrE-1w-cA8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-849" y="-507"/>
+            <point key="canvasLocation" x="-849.375" y="-507.04225352112678"/>
         </scene>
         <!--Completion Step-->
         <scene sceneID="IvJ-Vm-kvE">
@@ -810,11 +813,151 @@
             </objects>
             <point key="canvasLocation" x="-729.375" y="-1437.6760563380283"/>
         </scene>
+        <!--Tapping Step View Controller-->
+        <scene sceneID="rfD-g5-qgL">
+            <objects>
+                <viewController storyboardIdentifier="Tapping" id="5TM-KJ-KKp" customClass="MCTTappingStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6ZJ-Gt-NcM" customClass="RSDStepHeaderView" customModule="ResearchStack2UI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TapLeft1" translatesAutoresizingMaskIntoConstraints="NO" id="ZOp-KL-twf" userLabel="Image View">
+                                <rect key="frame" x="0.0" y="-50" width="320" height="552"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ZOp-KL-twf" secondAttribute="height" multiplier="375:647" id="QCg-dA-PIv"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fwv-VO-V1z" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                                <viewLayoutGuide key="safeArea" id="kNw-UD-QJc"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="din-4l-hhu" customClass="RSDCountdownDial" customModule="ResearchStack2UI">
+                                <rect key="frame" x="57" y="157.5" width="206.5" height="206.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c07-hW-t1h" userLabel="Unit Label">
+                                        <rect key="frame" x="65.5" y="157" width="75.5" height="19.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2aM-cl-a66" userLabel="Second Count Label">
+                                        <rect key="frame" x="42.5" y="30" width="120" height="119.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="100"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="din-4l-hhu" secondAttribute="height" multiplier="1:1" placeholder="YES" id="Dcf-Tc-9YI"/>
+                                    <constraint firstItem="2aM-cl-a66" firstAttribute="top" secondItem="din-4l-hhu" secondAttribute="top" constant="30" id="RbC-ok-DNR"/>
+                                    <constraint firstItem="2aM-cl-a66" firstAttribute="centerX" secondItem="din-4l-hhu" secondAttribute="centerX" id="lJh-RQ-9Wi"/>
+                                    <constraint firstItem="c07-hW-t1h" firstAttribute="top" secondItem="2aM-cl-a66" secondAttribute="bottom" constant="8" id="nlB-zc-NMO"/>
+                                    <constraint firstItem="c07-hW-t1h" firstAttribute="centerX" secondItem="din-4l-hhu" secondAttribute="centerX" id="oyv-af-K7b"/>
+                                    <constraint firstAttribute="height" priority="500" constant="260" id="ybJ-MV-yAu"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="progress">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ringWidth">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="dialWidth">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Tap the buttons with your LEFT hand" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPl-h9-g1S" userLabel="Title Label">
+                                <rect key="frame" x="36" y="80" width="248" height="57.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1yh-RD-Z1x" userLabel="Cancel Button">
+                                <rect key="frame" x="20" y="40" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="1yh-RD-Z1x" secondAttribute="height" multiplier="1:1" id="GgG-wJ-hfy"/>
+                                    <constraint firstAttribute="width" constant="32" id="KuM-JU-zq2"/>
+                                </constraints>
+                                <state key="normal" image="closeActivity"/>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Fsc-bU-ApM">
+                                <rect key="frame" x="28" y="416" width="264" height="112"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MSP-pP-izs" userLabel="Left Tap" customClass="MCTTapButton" customModule="MotorControl" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="112" height="112"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="112" id="GpP-Ux-9DW"/>
+                                            <constraint firstAttribute="width" secondItem="MSP-pP-izs" secondAttribute="height" multiplier="1:1" id="P1v-vt-VoQ"/>
+                                        </constraints>
+                                        <state key="normal" title="Tap"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3YF-mb-7pX" userLabel="Right Tap" customClass="MCTTapButton" customModule="MotorControl" customModuleProvider="target">
+                                        <rect key="frame" x="152" y="0.0" width="112" height="112"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="3YF-mb-7pX" secondAttribute="height" multiplier="1:1" id="AaG-a3-2NH"/>
+                                        </constraints>
+                                        <state key="normal" title="Tap"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="3YF-mb-7pX" firstAttribute="height" secondItem="MSP-pP-izs" secondAttribute="height" id="8Ei-wb-z1Y"/>
+                                    <constraint firstAttribute="width" secondItem="MSP-pP-izs" secondAttribute="width" multiplier="2" constant="40" id="poi-fA-AXo"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.32568424940000001" green="0.25694268939999998" blue="0.52321022750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="0Dp-W3-5Yc" firstAttribute="leading" secondItem="1yh-RD-Z1x" secondAttribute="leading" constant="-20" id="287-QZ-GED"/>
+                            <constraint firstItem="fwv-VO-V1z" firstAttribute="leading" secondItem="0Dp-W3-5Yc" secondAttribute="leading" id="Auu-eb-zhk"/>
+                            <constraint firstItem="din-4l-hhu" firstAttribute="centerY" secondItem="6ZJ-Gt-NcM" secondAttribute="centerY" priority="500" constant="-30" id="CXh-tE-c2l"/>
+                            <constraint firstItem="FPl-h9-g1S" firstAttribute="leading" secondItem="6ZJ-Gt-NcM" secondAttribute="leading" constant="36" id="Ebo-0H-YJm"/>
+                            <constraint firstItem="din-4l-hhu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="FPl-h9-g1S" secondAttribute="bottom" constant="20" id="Jod-tR-hCH"/>
+                            <constraint firstItem="0Dp-W3-5Yc" firstAttribute="trailing" secondItem="ZOp-KL-twf" secondAttribute="trailing" id="Khb-dM-cuD"/>
+                            <constraint firstItem="fwv-VO-V1z" firstAttribute="trailing" secondItem="0Dp-W3-5Yc" secondAttribute="trailing" id="MM4-TU-xXR"/>
+                            <constraint firstItem="0Dp-W3-5Yc" firstAttribute="top" secondItem="fwv-VO-V1z" secondAttribute="bottom" id="MN3-wL-FXL"/>
+                            <constraint firstAttribute="bottom" secondItem="Fsc-bU-ApM" secondAttribute="bottom" constant="40" id="PBS-lk-5ux"/>
+                            <constraint firstItem="1yh-RD-Z1x" firstAttribute="width" secondItem="1yh-RD-Z1x" secondAttribute="height" multiplier="1:1" id="Pxs-hI-BIZ"/>
+                            <constraint firstItem="Fsc-bU-ApM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="din-4l-hhu" secondAttribute="bottom" constant="52" id="Pza-1s-SMj"/>
+                            <constraint firstItem="0Dp-W3-5Yc" firstAttribute="leading" secondItem="ZOp-KL-twf" secondAttribute="leading" id="QVj-9d-NbW"/>
+                            <constraint firstItem="din-4l-hhu" firstAttribute="centerX" secondItem="6ZJ-Gt-NcM" secondAttribute="centerX" id="SRC-tY-abY"/>
+                            <constraint firstItem="din-4l-hhu" firstAttribute="width" secondItem="din-4l-hhu" secondAttribute="height" multiplier="1:1" placeholder="YES" id="VMg-h2-K3H"/>
+                            <constraint firstItem="0Dp-W3-5Yc" firstAttribute="top" secondItem="ZOp-KL-twf" secondAttribute="top" constant="70" id="VPI-HC-WYS"/>
+                            <constraint firstItem="din-4l-hhu" firstAttribute="centerX" secondItem="6ZJ-Gt-NcM" secondAttribute="centerX" id="bMb-gE-PKw"/>
+                            <constraint firstItem="0Dp-W3-5Yc" firstAttribute="top" secondItem="FPl-h9-g1S" secondAttribute="top" constant="-60" id="d0c-Ab-9Yp"/>
+                            <constraint firstItem="Fsc-bU-ApM" firstAttribute="centerX" secondItem="6ZJ-Gt-NcM" secondAttribute="centerX" id="eeq-fJ-Nsw"/>
+                            <constraint firstAttribute="top" secondItem="fwv-VO-V1z" secondAttribute="top" id="ita-jr-Kfd"/>
+                            <constraint firstItem="0Dp-W3-5Yc" firstAttribute="trailing" secondItem="FPl-h9-g1S" secondAttribute="trailing" constant="36" id="lAA-xC-9NE"/>
+                            <constraint firstItem="0Dp-W3-5Yc" firstAttribute="top" secondItem="1yh-RD-Z1x" secondAttribute="top" constant="-20" id="pEn-Gm-pb7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0Dp-W3-5Yc"/>
+                        <connections>
+                            <outlet property="cancelButton" destination="1yh-RD-Z1x" id="oRO-2u-4oA"/>
+                            <outlet property="imageView" destination="ZOp-KL-twf" id="OBm-ww-bme"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="countdownDial" destination="din-4l-hhu" id="yf1-g9-fUN"/>
+                        <outlet property="countdownLabel" destination="2aM-cl-a66" id="F7K-b9-g5E"/>
+                        <outlet property="instructionLabel" destination="FPl-h9-g1S" id="hs6-1x-6Vh"/>
+                        <outlet property="leftButton" destination="MSP-pP-izs" id="cSg-yQ-sY2"/>
+                        <outlet property="navigationHeader" destination="6ZJ-Gt-NcM" id="NJQ-dA-V64"/>
+                        <outlet property="rightButton" destination="3YF-mb-7pX" id="Lgp-2p-JEd"/>
+                        <outlet property="statusBarBackgroundView" destination="fwv-VO-V1z" id="oio-w7-2nG"/>
+                        <outlet property="tappingCountLabel" destination="2aM-cl-a66" id="0L3-Bf-9cd"/>
+                        <outlet property="unitLabel" destination="c07-hW-t1h" id="xzZ-mx-w3L"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qbv-EH-UJX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1783" y="-467"/>
+        </scene>
     </scenes>
     <resources>
         <image name="F-Walking1" width="750" height="885"/>
         <image name="F-Walking2" width="750" height="885"/>
         <image name="PantsWithPockets" width="68" height="68"/>
+        <image name="TapLeft1" width="750" height="913"/>
         <image name="closeActivity" width="32" height="32"/>
         <image name="dog.jpg" width="750" height="500"/>
         <image name="infoIcon" width="32" height="32"/>

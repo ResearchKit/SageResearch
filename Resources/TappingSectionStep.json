@@ -23,7 +23,7 @@
                       "usesLightStyle":true
                   },
                   "viewTheme":{
-                      "viewIdentifier":"Action",
+                      "viewIdentifier":"Tapping",
                       "storyboardIdentifier":"ActiveTaskSteps"
                   },
                   "commands":["shouldDisableIdleTimer", "playSound"],

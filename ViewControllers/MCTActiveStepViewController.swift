@@ -37,7 +37,7 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
     
     /// Retuns the imageView, in this case the image from the navigationHeader.
     public var imageView: UIImageView? {
-        return self.navigationHeader?.imageView
+        return self.navigationHeader?.imageView ?? self.navigationBody?.imageView
     }
     
     /// The restart test button.
