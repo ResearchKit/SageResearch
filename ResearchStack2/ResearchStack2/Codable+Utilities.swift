@@ -77,7 +77,7 @@ extension RSDFactoryEncoder {
 
 /// `CodingKey` for converting a decoding container to a dictionary where any key in the
 /// dictionary is accessible.
-struct AnyCodingKey: CodingKey {
+public struct AnyCodingKey: CodingKey {
     public let stringValue: String
     public let intValue: Int?
     
@@ -93,7 +93,7 @@ struct AnyCodingKey: CodingKey {
 }
 
 /// Wrapper for any codable array.
-struct AnyCodableArray : Codable {
+public struct AnyCodableArray : Codable {
     let array : [Any]
     
     public init(_ array : [Any]) {
@@ -111,7 +111,7 @@ struct AnyCodableArray : Codable {
 }
 
 /// Wrapper for any codable dictionary.
-struct AnyCodableDictionary : Codable {
+public struct AnyCodableDictionary : Codable {
     public let dictionary : [String : Any]
     
     public init(_ dictionary : [String : Any]) {

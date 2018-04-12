@@ -64,25 +64,26 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     public let stepType: RSDStepType
     
     /// The primary text to display for the step in a localized string.
-    public var title: String?
+    open var title: String?
     
     /// Additional text to display for the step in a localized string.
     ///
     /// The additional text is often displayed in a smaller font below `title`. If you need to display a long
-    /// question, it can work well to keep the title short and put the additional content in the `text` property.
-    public var text: String?
+    /// question, it can work well to keep the title short and put the additional content in the `text`
+    /// property.
+    open var text: String?
     
     /// Additional detailed explanation for the step.
     ///
     /// The font size and display of this property will depend upon the device type.
-    public var detail: String?
+    open var detail: String?
     
     /// Additional text to display for the step in a localized string at the bottom of the view.
     ///
-    /// The footnote is intended to be displayed in a smaller font at the bottom of the screen. It is intended to be
-    /// used in order to include disclaimer, copyright, etc. that is important to display in the step but should not
-    /// distract from the main purpose of the step.
-    public var footnote: String?
+    /// The footnote is intended to be displayed in a smaller font at the bottom of the screen. It is intended
+    /// to be used in order to include disclaimer, copyright, etc. that is important to display in the step
+    /// but should not distract from the main purpose of the step.
+    open var footnote: String?
     
     /// The view info used to create a custom step.
     open var viewTheme: RSDViewThemeElement?
@@ -93,9 +94,10 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// The image theme.
     open var imageTheme: RSDImageThemeElement?
     
-    /// The next step to jump to. This is used where direct navigation is required. For example, to allow the task to display
-    /// information or a question on an alternate path and then exit the task. In that case, the main branch of navigation
-    /// will need to "jump" over the alternate path step and the alternate path step will need to "jump" to the "exit".
+    /// The next step to jump to. This is used where direct navigation is required. For example, to allow the
+    /// task to display information or a question on an alternate path and then exit the task. In that case,
+    /// the main branch of navigation will need to "jump" over the alternate path step and the alternate path
+    /// step will need to "jump" to the "exit".
     open var nextStepIdentifier: String?
     
     /// The navigation cohort rules to apply *before* displaying the step.
