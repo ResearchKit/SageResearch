@@ -15,7 +15,7 @@
                                }
                             ],
                  "image":{
-                     "imageName":"Purple",
+                     "imageName":"HoldPhone-Left",
                      "placementType":"topMarginBackground"
                  },
                 "icons": [
@@ -71,7 +71,7 @@
                 "title":"Hold the phone still",
                 "text":"While sitting down with your feet resting flat on the floor, you will be holding the phone still in your lap for 30 seconds. You will do this first with one hand and then with your other hand.",
                 "image":{
-                    "imageName": "F-HoldPhone",
+                    "imageName": "F-TremorHoldPhone",
                     "placementType":"topBackground"
                 },
                 "colorTheme":{
