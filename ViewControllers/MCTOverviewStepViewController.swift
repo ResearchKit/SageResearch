@@ -104,7 +104,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         self.view.layoutIfNeeded()
         self.statusBarBackgroundView?.layoutIfNeeded()
         if isFirstRun {
-            self._scroll()
+            self._scrollToBottom()
         } else if let titleLabel = self.stepTitleLabel {
             // We add a 30 pixel margin to the bottom of the title label so it isn't squished
             // up against the bottom of the scroll view.
@@ -160,7 +160,12 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         }
     }
     
+    // This variable was needed because the iPhone X lays out the subviews twice. The second
+    // time the height of the scroll view changes which messes up the scroll view offset. Storing
+    // the scroll view height is a way to compensate for this.
     private var _scrollViewHeight: CGFloat = 0 {
+        // 0 is an okay initial value becuase after the first time layoutSubviews() gets called,
+        //  the content offset gets recomputed anyway
         didSet {
             let change = _scrollViewHeight - oldValue
             var contentOffset = scrollView.contentOffset
@@ -192,14 +197,14 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
             for icon in self.iconImages! {
                 icon.alpha = 1
             }
-            self._scroll()
+            self._scrollToBottom()
         }) { (_) in
             self.navigationFooter?.shouldShowShadow = true
         }
     }
     
     // Makes the scroll view scroll all the way down.
-    private func _scroll() {
+    private func _scrollToBottom() {
         let frame = self.scrollView.convert(self.iconTitles[0].bounds, from: self.iconTitles[0])
         let shiftedFrame = frame.offsetBy(dx: 0, dy: 20)
         self.scrollView.scrollRectToVisible(shiftedFrame, animated: false)

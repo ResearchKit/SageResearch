@@ -40,6 +40,14 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
         return self.navigationHeader?.imageView ?? self.navigationBody?.imageView
     }
     
+    /// Overriden to also update the unit label text when the
+    /// countdown changes.
+    override open var countdown: Int {
+        didSet {
+            self.updateUnitLabelText()
+        }
+    }
+    
     /// The restart test button.
     @IBOutlet weak var restartButton: RSDRoundedButton!
     
@@ -62,12 +70,20 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
         super.viewWillAppear(animated)
         // Attempted to split the DataComponentsFormatter into a number and a unit label, however
         // DateComponentsFormatter doesn't actually translate into other languages.
-        self.unitLabel?.text = Localization.localizedString("ACTIVE_STEP_UNIT_LABEL")
         (self.step as? RSDActiveUIStepObject)?.nextStepIdentifier = nil
         self.updateImage()
         self.updateLabelText()
+        self.updateUnitLabelText()
         self.view.setNeedsLayout()
         self.view.setNeedsUpdateConstraints()
+    }
+    
+    /// Updates the unit label text. Choses between the plural and
+    /// singular label options (in English "SECONDS REMAINING" vs
+    /// "SECOND REMAINING").
+    open func updateUnitLabelText() {
+        let localizationKey = self.countdown == 1 ? "ACTIVE_STEP_UNIT_LABEL_SINGULAR" : "ACTIVE_STEP_UNIT_LABEL"
+        self.unitLabel?.text = Localization.localizedString(localizationKey)
     }
     
     @IBAction func restartButtonTapped(_ sender: Any) {
