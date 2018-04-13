@@ -426,11 +426,17 @@ extension RSDTaskUIController {
         
         // store the previous step and get the next step
         let previousStep = taskPath.currentStep
-        let nextStep = taskPath.task!.stepNavigator.step(after: previousStep, with: &taskPath.result)
+        let navigation = taskPath.task!.stepNavigator.step(after: previousStep, with: &taskPath.result)
 
         // save the previous step and look for a next step
-        guard let step = nextStep else {
+        guard let step = navigation.step else {
             _finishStoppingTaskPart1(previousStep: previousStep)
+            return
+        }
+        
+        // if navigation should be in reverse, move back and exit early.
+        if navigation.direction == .reverse, previousStep != nil {
+            _moveBack(to: step, from: previousStep!)
             return
         }
         

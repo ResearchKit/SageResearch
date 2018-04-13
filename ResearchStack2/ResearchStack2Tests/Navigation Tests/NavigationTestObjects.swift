@@ -2,7 +2,7 @@
 //  NavigationTests.swift
 //  ResearchStack2Tests
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -34,42 +34,56 @@
 import Foundation
 import ResearchStack2
 
-struct TestStep : RSDStep, RSDNavigationRule {
+public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule {
+
+    public let identifier: String
+    public var stepType: RSDStepType = .instruction
+    public var result: RSDResult?
+    public var validationError: Error?
+    public var nextStepIdentifier: String?
+    public var showBeforeIdentifier: String?
     
-    let identifier: String
-    var stepType: RSDStepType = .instruction
-    var result: RSDResult?
-    var validationError: Error?
-    var nextStepIdentifier: String?
-    
-    func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
+    public func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
+        if shouldSkipStep(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking) {
+            // Only use the next identifier if this step wasn't just skipped.
+            return nil
+        }
         return self.nextStepIdentifier
     }
     
-    init(identifier: String) {
+    
+    public func shouldSkipStep(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> Bool {
+        if let loopId = showBeforeIdentifier, result?.findResult(with: loopId) == nil {
+            // Skip this step if another step isn't yet in the result set.
+            return true
+        }
+        return false
+    }
+    
+    public init(identifier: String) {
         self.identifier = identifier
     }
     
-    static func steps(from identifiers: [String]) -> [TestStep] {
+    public static func steps(from identifiers: [String]) -> [TestStep] {
         return identifiers.map { TestStep(identifier: $0) }
     }
     
-    static func steps(from range: [Int]) -> [TestStep] {
+    public static func steps(from range: [Int]) -> [TestStep] {
         return range.map { TestStep(identifier: "step\($0)") }
     }
     
-    func instantiateStepResult() -> RSDResult {
+    public func instantiateStepResult() -> RSDResult {
         guard result == nil else { return result! }
         return RSDAnswerResultObject(identifier: identifier, answerType: .string)
     }
     
-    func validate() throws {
+    public func validate() throws {
         if let err = validationError {
             throw err
         }
     }
     
-    func copy(with identifier: String) -> TestStep {
+    public func copy(with identifier: String) -> TestStep {
         var copy = TestStep(identifier: identifier)
         copy.stepType = stepType
         copy.result = result
@@ -78,71 +92,71 @@ struct TestStep : RSDStep, RSDNavigationRule {
     }
 }
 
-struct TestConditionalNavigator: RSDConditionalStepNavigator {
+public struct TestConditionalNavigator: RSDConditionalStepNavigator {
     
-    let steps: [RSDStep]
-    var progressMarkers: [String]?
-    var conditionalRule: RSDConditionalRule?
+    public let steps: [RSDStep]
+    public var progressMarkers: [String]?
+    public var conditionalRule: RSDConditionalRule?
     
-    init(steps: [RSDStep]) {
+    public init(steps: [RSDStep]) {
         self.steps = steps
     }
 }
 
-struct TestTask : RSDTask {
+public struct TestTask : RSDTask {
     
-    let identifier: String
-    let stepNavigator: RSDStepNavigator
-    var copyright: String?
-    var schemaInfo: RSDSchemaInfo?
-    var asyncActions: [RSDAsyncActionConfiguration]?
+    public let identifier: String
+    public let stepNavigator: RSDStepNavigator
+    public var copyright: String?
+    public var schemaInfo: RSDSchemaInfo?
+    public var asyncActions: [RSDAsyncActionConfiguration]?
     
-    var taskResult: RSDTaskResult?
-    var validationError: Error?
+    public var taskResult: RSDTaskResult?
+    public var validationError: Error?
     
-    init(identifier: String, stepNavigator: RSDStepNavigator) {
+    public init(identifier: String, stepNavigator: RSDStepNavigator) {
         self.identifier = identifier
         self.stepNavigator = stepNavigator
     }
     
-    func instantiateTaskResult() -> RSDTaskResult {
+    public func instantiateTaskResult() -> RSDTaskResult {
         return taskResult ?? RSDTaskResultObject(identifier: identifier, schemaInfo: schemaInfo)
     }
     
-    func validate() throws {
+    public func validate() throws {
         if let err = validationError {
             throw err
         }
     }
     
-    func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
+    public func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction? {
         return nil
     }
     
-    func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
+    public func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
         return nil
     }
 }
 
-class TestStepController: NSObject, RSDStepController {
+public class TestStepController: NSObject, RSDStepController {
 
-    var taskController: RSDTaskController!
-    var step: RSDStep!
-    var hasStepBefore: Bool = true
-    var hasStepAfter: Bool = true
-    var isForwardEnabled: Bool = true
+    public var taskController: RSDTaskController!
+    public var step: RSDStep!
+    public var hasStepBefore: Bool = true
+    public var hasStepAfter: Bool = true
+    public var isForwardEnabled: Bool = true
     
-    var didFinishLoading_called: Bool = false
-    var goForward_called: Bool = false
-    var goBack_called: Bool = false
-    var skipForward_called: Bool = false
-    var cancel_called: Bool = false
+    public var didFinishLoading_called: Bool = false
+    public var goForward_called: Bool = false
+    public var goBack_called: Bool = false
+    public var skipForward_called: Bool = false
+    public var cancel_called: Bool = false
     
-    func didFinishLoading() {
+    public func didFinishLoading() {
         didFinishLoading_called = true
     }
     
-    func goForward() {
+    public func goForward() {
         goForward_called = true
     }
     
@@ -159,113 +173,113 @@ class TestStepController: NSObject, RSDStepController {
     }
 }
 
-class TestAsyncActionController: NSObject, RSDAsyncActionController {
+public class TestAsyncActionController: NSObject, RSDAsyncActionController {
     
-    var delegate: RSDAsyncActionControllerDelegate?
-    var status: RSDAsyncActionStatus = .idle
-    var isPaused: Bool = false
-    var result: RSDResult?
-    var error: Error?
-    let configuration: RSDAsyncActionConfiguration
-    let taskPath: RSDTaskPath
+    public var delegate: RSDAsyncActionControllerDelegate?
+    public var status: RSDAsyncActionStatus = .idle
+    public var isPaused: Bool = false
+    public var result: RSDResult?
+    public var error: Error?
+    public let configuration: RSDAsyncActionConfiguration
+    public let taskPath: RSDTaskPath
     
-    var moveTo_called = false
-    var moveTo_step: RSDStep?
-    var moveTo_taskPath: RSDTaskPath?
+    public var moveTo_called = false
+    public var moveTo_step: RSDStep?
+    public var moveTo_taskPath: RSDTaskPath?
     
-    init(with configuration: RSDAsyncActionConfiguration, at taskPath: RSDTaskPath) {
+    public init(with configuration: RSDAsyncActionConfiguration, at taskPath: RSDTaskPath) {
         self.configuration = configuration
         self.taskPath = taskPath
         super.init()
     }
 
-    func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
+    public func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         status = .permissionGranted
     }
     
-    func start(_ completion: RSDAsyncActionCompletionHandler?) {
+    public func start(_ completion: RSDAsyncActionCompletionHandler?) {
         status = .running
         completion?(self, nil, nil)
     }
     
-    func pause() {
+    public func pause() {
         isPaused = true
     }
     
-    func resume() {
+    public func resume() {
         isPaused = false
     }
     
-    func stop(_ completion: RSDAsyncActionCompletionHandler?) {
+    public func stop(_ completion: RSDAsyncActionCompletionHandler?) {
         status = .finished
         completion?(self, nil, nil)
     }
     
-    func cancel() {
+    public func cancel() {
         status = .cancelled
     }
     
-    func moveTo(step: RSDStep, taskPath: RSDTaskPath) {
+    public func moveTo(step: RSDStep, taskPath: RSDTaskPath) {
         moveTo_called = true
         moveTo_step = step
         moveTo_taskPath = taskPath
     }
 }
 
-class TestTaskController: NSObject, RSDTaskUIController {
+public class TestTaskController: NSObject, RSDTaskUIController {
 
-    var taskPath: RSDTaskPath!
-    var factory: RSDFactory?
-    var currentStepController: RSDStepController?
-    var canSaveTaskProgress: Bool = false
-    var shouldFetchSubtask: Bool = true
-    var shouldPageSectionSteps: Bool = true
+    public var taskPath: RSDTaskPath!
+    public var factory: RSDFactory?
+    public var currentStepController: RSDStepController?
+    public var canSaveTaskProgress: Bool = false
+    public var shouldFetchSubtask: Bool = true
+    public var shouldPageSectionSteps: Bool = true
     
-    var currentAsyncControllers: [RSDAsyncActionController] = []
+    public var currentAsyncControllers: [RSDAsyncActionController] = []
     
-    var shouldFetchSubtask_calledFor: RSDTaskInfoStep?
-    var shouldPageSectionSteps_calledFor: RSDSectionStep?
-    var showLoading_calledFor: RSDTaskInfoStep?
-    var handleFinishedLoading_called = false
-    var hideLoadingIfNeeded_called = false
-    var navigate_calledTo: RSDStep?
-    var navigate_calledFrom: RSDStep?
-    var navigate_calledDirection: RSDStepDirection?
-    var handleTaskFailure_calledWith: Error?
-    var handleTaskCompleted_called = false
-    var handleTaskResultReady_calledWith: RSDTaskPath?
-    var handleTaskCancelled_called = false
-    var handleTaskCancelled_shouldSave: Bool?
-    var addAsyncActions_called = false
-    var addAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
-    var startAsyncActions_called = false
-    var startAsyncActions_calledWith: [RSDAsyncActionController]?
-    var stopAsyncActions_called = false
-    var stopAsyncActions_calledWith: [RSDAsyncActionController]?
+    public var shouldFetchSubtask_calledFor: RSDTaskInfoStep?
+    public var shouldPageSectionSteps_calledFor: RSDSectionStep?
+    public var showLoading_calledFor: RSDTaskInfoStep?
+    public var handleFinishedLoading_called = false
+    public var hideLoadingIfNeeded_called = false
+    public var navigate_calledTo: RSDStep?
+    public var navigate_calledFrom: RSDStep?
+    public var navigate_calledDirection: RSDStepDirection?
+    public var handleTaskFailure_calledWith: Error?
+    public var handleTaskCompleted_called = false
+    public var handleTaskResultReady_calledWith: RSDTaskPath?
+    public var handleTaskCancelled_called = false
+    public var handleTaskCancelled_shouldSave: Bool?
+    public var addAsyncActions_called = false
+    public var addAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
+    public var startAsyncActions_called = false
+    public var startAsyncActions_calledWith: [RSDAsyncActionController]?
+    public var stopAsyncActions_called = false
+    public var stopAsyncActions_calledWith: [RSDAsyncActionController]?
     
-    func shouldFetchSubtask(for step: RSDTaskInfoStep) -> Bool {
+    public func shouldFetchSubtask(for step: RSDTaskInfoStep) -> Bool {
         shouldFetchSubtask_calledFor = step
         return shouldFetchSubtask
     }
     
-    func shouldPageSectionSteps(for step: RSDSectionStep) -> Bool {
+    public func shouldPageSectionSteps(for step: RSDSectionStep) -> Bool {
         shouldPageSectionSteps_calledFor = step
         return shouldPageSectionSteps
     }
     
-    func showLoading(for taskInfo: RSDTaskInfoStep) {
+    public func showLoading(for taskInfo: RSDTaskInfoStep) {
         showLoading_calledFor = taskInfo
     }
     
-    func handleFinishedLoading() {
+    public func handleFinishedLoading() {
         handleFinishedLoading_called = true
     }
     
-    func hideLoadingIfNeeded() {
+    public func hideLoadingIfNeeded() {
         hideLoadingIfNeeded_called = true
     }
     
-    func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
+    public func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
         navigate_calledTo = step
         navigate_calledFrom = previousStep
         navigate_calledDirection = direction
@@ -274,24 +288,24 @@ class TestTaskController: NSObject, RSDTaskUIController {
         }
     }
     
-    func handleTaskFailure(with error: Error) {
+    public func handleTaskFailure(with error: Error) {
         handleTaskFailure_calledWith = error
     }
     
-    func handleTaskCompleted() {
+    public func handleTaskCompleted() {
         handleTaskCompleted_called = true
     }
     
-    func handleTaskResultReady(with taskPath: RSDTaskPath) {
+    public func handleTaskResultReady(with taskPath: RSDTaskPath) {
         handleTaskResultReady_calledWith = taskPath
     }
     
-    func handleTaskCancelled(shouldSave: Bool) {
+    public func handleTaskCancelled(shouldSave: Bool) {
         handleTaskCancelled_called = true
         handleTaskCancelled_shouldSave = shouldSave
     }
     
-    func test_stepTo(_ stepIdentifier: String) -> RSDStep {
+    public func test_stepTo(_ stepIdentifier: String) -> RSDStep {
         var loopCount: Int = 0
         var nextStep: RSDStep? = taskPath.currentStep
         while nextStep?.identifier != stepIdentifier {
@@ -299,7 +313,8 @@ class TestTaskController: NSObject, RSDTaskUIController {
             if loopCount > 30 {
                 fatalError("Your test is in an infinite loop of Wacky madness.")
             }
-            nextStep = taskPath.task!.stepNavigator.step(after: nextStep, with: &taskPath.result)
+            let navigation = taskPath.task!.stepNavigator.step(after: nextStep, with: &taskPath.result)
+            nextStep = navigation.step
             if nextStep == nil {
                 if let parentPath = taskPath.parentPath {
                     parentPath.appendStepHistory(with: taskPath.result)
@@ -329,7 +344,7 @@ class TestTaskController: NSObject, RSDTaskUIController {
         return nextStep!
     }
     
-    func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncActionController]) -> Void)) {
+    public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncActionController]) -> Void)) {
         addAsyncActions_called = true
         addAsyncActions_calledWith = configurations
         DispatchQueue.main.async {
@@ -341,7 +356,7 @@ class TestTaskController: NSObject, RSDTaskUIController {
         }
     }
     
-    func startAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
+    public func startAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
         startAsyncActions_called = true
         startAsyncActions_calledWith = controllers
         DispatchQueue.main.async {
@@ -355,7 +370,7 @@ class TestTaskController: NSObject, RSDTaskUIController {
         }
     }
     
-    func stopAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
+    public func stopAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
         stopAsyncActions_called = true
         stopAsyncActions_calledWith = controllers
         DispatchQueue.main.async {

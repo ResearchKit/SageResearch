@@ -170,7 +170,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// The animated images to display.
     /// - returns: The images for this step.
     public func images() -> [UIImage] {
-        return imageNames.flatMap {
+        return imageNames.compactMap {
             UIImage(named: $0)
         }
     }

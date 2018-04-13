@@ -1,6 +1,6 @@
 //
-//  RSDCatalogUITests.swift
-//  RSDCatalogUITests
+//  ResearchStack2_UnitTest.h
+//  ResearchStack2-UnitTest
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -31,26 +31,13 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import XCTest
+#import <UIKit/UIKit.h>
 
-class RSDCatalogUITests: XCTestCase {
-        
-    override func setUp() {
-        super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
+//! Project version number for ResearchStack2_UnitTest.
+FOUNDATION_EXPORT double ResearchStack2_UnitTestVersionNumber;
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
- 
-}
+//! Project version string for ResearchStack2_UnitTest.
+FOUNDATION_EXPORT const unsigned char ResearchStack2_UnitTestVersionString[];
+
+#import <ResearchStack2_UnitTest/NSLocale+UnitTest.h>
+

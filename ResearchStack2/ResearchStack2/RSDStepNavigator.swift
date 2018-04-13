@@ -88,7 +88,7 @@ public protocol RSDStepNavigator {
     ///     - step:    The current step.
     ///     - result:  The current result set for this task.
     /// - returns: `true` if the task view controller should show a back button.
-    func step(after step: RSDStep?, with result: inout RSDTaskResult) -> RSDStep?
+    func step(after step: RSDStep?, with result: inout RSDTaskResult) -> (step: RSDStep?, direction: RSDStepDirection)
     
     /// Return the step to go to before the given step.
     ///

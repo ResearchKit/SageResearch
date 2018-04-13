@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F810CF3C202E3BB7009C49C9 /* Recorder_Distance.json in Resources */ = {isa = PBXBuildFile; fileRef = F810CF3B202E3BB7009C49C9 /* Recorder_Distance.json */; };
-		F8491124204A06D7007B4C77 /* Tracking_Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F8491123204A06D7007B4C77 /* Tracking_Triggers.json */; };
-		F8491126204A086D007B4C77 /* Tracking_Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = F8491125204A086D007B4C77 /* Tracking_Medication.json */; };
+		F87557632080808E00235078 /* ResearchStack2_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87557622080808E00235078 /* ResearchStack2_UnitTest.framework */; };
 		F88FE3CB2050640B00E33AC4 /* Image_Picker.json in Resources */ = {isa = PBXBuildFile; fileRef = F88FE3CA2050640A00E33AC4 /* Image_Picker.json */; };
 		F88FE3CD205071F700E33AC4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88FE3CC205071F700E33AC4 /* AVFoundation.framework */; };
 		F88FE3CF2050720100E33AC4 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88FE3CE2050720100E33AC4 /* Photos.framework */; };
@@ -97,8 +96,7 @@
 
 /* Begin PBXFileReference section */
 		F810CF3B202E3BB7009C49C9 /* Recorder_Distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Recorder_Distance.json; sourceTree = "<group>"; };
-		F8491123204A06D7007B4C77 /* Tracking_Triggers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tracking_Triggers.json; sourceTree = "<group>"; };
-		F8491125204A086D007B4C77 /* Tracking_Medication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tracking_Medication.json; sourceTree = "<group>"; };
+		F87557622080808E00235078 /* ResearchStack2_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchStack2_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F88FE3CA2050640A00E33AC4 /* Image_Picker.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Image_Picker.json; sourceTree = "<group>"; };
 		F88FE3CC205071F700E33AC4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F88FE3CE2050720100E33AC4 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -160,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F87557632080808E00235078 /* ResearchStack2_UnitTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,8 +228,6 @@
 				F88FE3CA2050640A00E33AC4 /* Image_Picker.json */,
 				F810CF3B202E3BB7009C49C9 /* Recorder_Distance.json */,
 				F8B177B4202CE10D00B62416 /* Recorder_Motion.json */,
-				F8491125204A086D007B4C77 /* Tracking_Medication.json */,
-				F8491123204A06D7007B4C77 /* Tracking_Triggers.json */,
 			);
 			path = "JSON Files";
 			sourceTree = "<group>";
@@ -255,6 +252,7 @@
 		F8B177E9202D330D00B62416 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F87557622080808E00235078 /* ResearchStack2_UnitTest.framework */,
 				F88FE3CE2050720100E33AC4 /* Photos.framework */,
 				F88FE3CC205071F700E33AC4 /* AVFoundation.framework */,
 				F8B17843202D82AB00B62416 /* CoreLocation.framework */,
@@ -402,7 +400,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
 					F8B17782202CD73B00B62416 = {
@@ -463,8 +461,6 @@
 			files = (
 				F8B17790202CD73B00B62416 /* LaunchScreen.storyboard in Resources */,
 				F88FE3CB2050640B00E33AC4 /* Image_Picker.json in Resources */,
-				F8491124204A06D7007B4C77 /* Tracking_Triggers.json in Resources */,
-				F8491126204A086D007B4C77 /* Tracking_Medication.json in Resources */,
 				F8B177BA202CE10E00B62416 /* FormStep_List.json in Resources */,
 				F8B177B8202CE10E00B62416 /* FormStep_Picker.json in Resources */,
 				F8B1778D202CD73B00B62416 /* Assets.xcassets in Resources */,
@@ -726,6 +722,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -733,6 +730,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -783,6 +781,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -790,6 +789,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
