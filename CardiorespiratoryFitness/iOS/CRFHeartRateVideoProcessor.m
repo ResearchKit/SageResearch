@@ -91,16 +91,16 @@ const double CRFRedThreshold = 40;
                 // From the client's perspective the movie recorder can asynchronously transition to an error state as
                 // the result of an append. Because of this we are lenient when samples are appended and we are no longer recording.
                 // Instead of throwing an exception we just release the sample buffers and return.
-                if (_status != MovieRecorderStatusRecording) {
+                if (self->_status != MovieRecorderStatusRecording) {
                     CFRelease(sampleBuffer);
                     return;
                 }
             }
 
-            if (_videoInput.readyForMoreMediaData) {
-                BOOL success = [_videoInput appendSampleBuffer:sampleBuffer];
+            if (self->_videoInput.readyForMoreMediaData) {
+                BOOL success = [self->_videoInput appendSampleBuffer:sampleBuffer];
                 if (!success) {
-                    NSError *error = _assetWriter.error;
+                    NSError *error = self->_assetWriter.error;
                     @synchronized(self) {
                         [self transitionToStatus:MovieRecorderStatusFailed error:error];
                     }
@@ -181,7 +181,7 @@ const double CRFRedThreshold = 40;
     
     // Alert the delegate
     dispatch_async(_delegateCallbackQueue, ^{
-        [_delegate processor:self didCaptureSample:sample];
+        [self->_delegate processor:self didCaptureSample:sample];
     });
 }
 
@@ -224,10 +224,10 @@ const double CRFRedThreshold = 40;
             
             NSError *error = nil;
             // AVAssetWriter will not write over an existing file.
-            [[NSFileManager defaultManager] removeItemAtURL:_videoURL error:NULL];
+            [[NSFileManager defaultManager] removeItemAtURL:self->_videoURL error:NULL];
             
             // Open a new asset writer
-            _assetWriter = [[AVAssetWriter alloc] initWithURL:_videoURL fileType:AVFileTypeQuickTimeMovie error:&error];
+            self->_assetWriter = [[AVAssetWriter alloc] initWithURL:self->_videoURL fileType:AVFileTypeQuickTimeMovie error:&error];
             
             // Create and add inputs
             if (!error) {
@@ -235,11 +235,11 @@ const double CRFRedThreshold = 40;
             }
             
             if (!error) {
-                BOOL success = [_assetWriter startWriting];
+                BOOL success = [self->_assetWriter startWriting];
                 if (!success) {
-                    error = _assetWriter.error;
+                    error = self->_assetWriter.error;
                 } else {
-                    [_assetWriter startSessionAtSourceTime:time];
+                    [self->_assetWriter startSessionAtSourceTime:time];
                 }
             }
             
@@ -265,8 +265,8 @@ const double CRFRedThreshold = 40;
         dispatch_async(_processingQueue, ^{
             [self teardownAssetWriterAndInputs];
             if (newStatus == MovieRecorderStatusFailed) {
-                [[NSFileManager defaultManager] removeItemAtURL:_videoURL error:NULL];
-                _videoURL = nil;
+                [[NSFileManager defaultManager] removeItemAtURL:self->_videoURL error:NULL];
+                self->_videoURL = nil;
             }
         });
     }
@@ -280,8 +280,8 @@ const double CRFRedThreshold = 40;
             @autoreleasepool {
                 switch (newStatus) {
                     case MovieRecorderStatusFailed:
-                        if ([_delegate respondsToSelector:@selector(processor:didFailToRecordWithError:)]) {
-                            [_delegate processor:self didFailToRecordWithError:error];
+                    if ([self->_delegate respondsToSelector:@selector(processor:didFailToRecordWithError:)]) {
+                        [self->_delegate processor:self didFailToRecordWithError:error];
                         }
                         break;
                     default:
@@ -324,7 +324,7 @@ const double CRFRedThreshold = 40;
         @autoreleasepool {
             @synchronized(self) {
                 // We may have transitioned to an error state as we appended inflight buffers. In that case there is nothing to do now.
-                if (_status != MovieRecorderStatusFinishingRecordingPart1) {
+                if (self->_status != MovieRecorderStatusFinishingRecordingPart1) {
                     return;
                 }
                 
@@ -334,9 +334,9 @@ const double CRFRedThreshold = 40;
                 [self transitionToStatus:MovieRecorderStatusFinishingRecordingPart2 error:nil];
             }
             
-            [_assetWriter finishWritingWithCompletionHandler:^{
+            [self->_assetWriter finishWritingWithCompletionHandler:^{
                 @synchronized(self) {
-                    NSError *error = _assetWriter.error;
+                    NSError *error = self->_assetWriter.error;
                     if (error) {
                         [self transitionToStatus:MovieRecorderStatusFailed error:error];
                     } else {

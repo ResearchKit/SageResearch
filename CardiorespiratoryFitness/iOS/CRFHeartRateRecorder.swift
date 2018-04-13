@@ -94,10 +94,10 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     }
     
     private func _meanHeartRate(_ minConfidence: Double) -> Double? {
-        let samples = bpmSamples.rsd_mapAndFilter({ (sample) -> Double? in
+        let samples = bpmSamples.compactMap { (sample) -> Double? in
             guard sample.confidence >= minConfidence else { return nil }
             return Double(bpm)
-        })
+        }
         guard samples.count > 0 else { return nil }
         return samples.mean()
     }
@@ -612,6 +612,7 @@ extension CRFPixelSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init()
         self.uptime = try container.decode(Double.self, forKey: .uptime)
         self.red = try container.decode(Double.self, forKey: .red)
         self.green = try container.decode(Double.self, forKey: .green)

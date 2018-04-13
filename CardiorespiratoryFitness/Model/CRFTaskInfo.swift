@@ -212,7 +212,7 @@ extension RSDTaskObject : CRFTask {
 
     private func heartRateSteps() -> [CRFHeartRateStep] {
         guard let navigator = self.stepNavigator as? RSDConditionalStepNavigator else { return [] }
-        let steps = navigator.steps.rsd_mapAndFilter { (step) -> CRFHeartRateStep? in
+        let steps = navigator.steps.compactMap { (step) -> CRFHeartRateStep? in
             if let hrStep = step as? CRFHeartRateStep {
                 return hrStep
             }
