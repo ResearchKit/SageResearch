@@ -35,7 +35,12 @@ import Foundation
 
 open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     
+    /// The key to store whether or not this is a first run in the task result under.
     public static let firstRunKey = "isFirstRun"
+    
+    /// The label which tells the user about the icons. Typically displays
+    /// "This is what you'll need".
+    @IBOutlet weak var iconViewLabel: UILabel!
     
     /// The constraint that sets the scroll bar's top background view's height.
     @IBOutlet weak var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
@@ -84,18 +89,30 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         let defaults = UserDefaults.standard
         let timestampKey = "\(taskController.taskPath.identifier)_lastRun"
         let lastRun = defaults.object(forKey: timestampKey) as? Date
-        let isFirstRun = lastRun == nil
-            || lastRun! < Date(timeIntervalSinceNow: -2592000)
-        _setIsFirstRunResult(isFirstRun: isFirstRun)
+        let monthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+        let isFirstRun = (lastRun == nil) || (lastRun! < monthAgo)
+        _setIsFirstRunResult(isFirstRun)
         defaults.set(Date(), forKey: timestampKey)
-        if  isFirstRun {
-            /// The image view that is used to show the animation.
-            var animationView: UIImageView? {
-                return (self.navigationHeader as? RSDStepHeaderView)?.imageView
-            }
-            animationView?.stopAnimating()
+        /// The image view that is used to show the animation.
+        var animationView: UIImageView? {
+            return (self.navigationHeader as? RSDStepHeaderView)?.imageView
         }
+        animationView?.stopAnimating()
         
+        // It is critical for the view to be entirely layed out before the next code executes,
+        // otherwise the scroll view offset may be computed incorrectly.
+        self.view.layoutIfNeeded()
+        self.statusBarBackgroundView?.layoutIfNeeded()
+        if isFirstRun {
+            self._scroll()
+        } else if let titleLabel = self.stepTitleLabel {
+            // We add a 30 pixel margin to the bottom of the title label so it isn't squished
+            // up against the bottom of the scroll view.
+            let frame = titleLabel.frame.offsetBy(dx: 0, dy: 30)
+            // On the SE this fixes the title label being chopped off, on larger screens this is
+            // expected to do nothing.
+            self.scrollView.scrollRectToVisible(frame, animated: false)
+        }
         _setHiddenAndScrollable(shouldShowInfo: isFirstRun)
     }
     
@@ -109,7 +126,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     /// Adds a result for whether or not this run represents a "first run", A "first run"
     /// occurs anytime the user has never run the task before, or hasn't run the task in
     /// one month.
-    private func _setIsFirstRunResult(isFirstRun: Bool) {
+    private func _setIsFirstRunResult(_ isFirstRun: Bool) {
         var stepResult = RSDAnswerResultObject(identifier: MCTOverviewStepViewController.firstRunKey, answerType: .boolean)
         stepResult.value = isFirstRun
         self.taskController.taskPath.appendStepHistory(with: stepResult)
@@ -122,6 +139,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     ///     - shouldShowInfo     - `true` if the full task info should be shown, `false` otherwise
     private func _setHiddenAndScrollable(shouldShowInfo: Bool) {
         (self.view as? RSDStepNavigationView)?.textLabel?.isHidden = !shouldShowInfo
+        self.iconViewLabel.isHidden = !shouldShowInfo
         for label in self.iconTitles! {
             label.isHidden = !shouldShowInfo
         }
@@ -133,11 +151,31 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         self.navigationFooter?.shouldShowShadow = shouldShowInfo
     }
     
+    /// Override view did layout subviews so that whenever the scroll view height changes,
+    /// the content offset is adjusted accordingly.
+    override open func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if _scrollViewHeight != scrollView.frame.height {
+            _scrollViewHeight = scrollView.frame.height
+        }
+    }
+    
+    private var _scrollViewHeight: CGFloat = 0 {
+        didSet {
+            let change = _scrollViewHeight - oldValue
+            var contentOffset = scrollView.contentOffset
+            // If the scroll view size decreased the content offset must increase, and vice versa
+            contentOffset.y = contentOffset.y - change
+            scrollView.setContentOffset(contentOffset, animated: false)
+        }
+    }
+    
     /// The function that is called when the info button is tapped.
     @IBAction
     private func infoButtonTapped(_ sender: UIButton) {
         let textLabel = (self.view as? RSDStepNavigationView)?.textLabel
         textLabel?.alpha = 0
+        self.iconViewLabel.alpha = 0
         for label in self.iconTitles! {
             label.alpha = 0
         }
@@ -147,15 +185,23 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         _setHiddenAndScrollable(shouldShowInfo: true)
         UIView.animate(withDuration: 0.3, animations: {
             textLabel?.alpha = 1
+            self.iconViewLabel.alpha = 1
             for label in self.iconTitles! {
                 label.alpha = 1
             }
             for icon in self.iconImages! {
                 icon.alpha = 1
             }
-            self.scrollView?.setContentOffset(CGPoint(x: 0, y: self.scrollView!.contentSize.height - self.scrollView!.bounds.height), animated: false)
+            self._scroll()
         }) { (_) in
             self.navigationFooter?.shouldShowShadow = true
         }
+    }
+    
+    // Makes the scroll view scroll all the way down.
+    private func _scroll() {
+        let frame = self.scrollView.convert(self.iconTitles[0].bounds, from: self.iconTitles[0])
+        let shiftedFrame = frame.offsetBy(dx: 0, dy: 20)
+        self.scrollView.scrollRectToVisible(shiftedFrame, animated: false)
     }
 }

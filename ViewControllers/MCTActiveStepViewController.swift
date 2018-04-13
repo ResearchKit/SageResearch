@@ -62,7 +62,7 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
         super.viewWillAppear(animated)
         // Attempted to split the DataComponentsFormatter into a number and a unit label, however
         // DateComponentsFormatter doesn't actually translate into other languages.
-        self.unitLabel?.text = "SECONDS REMAINING" // TODO rkolmos 03/30/2018 localize
+        self.unitLabel?.text = Localization.localizedString("ACTIVE_STEP_UNIT_LABEL")
         (self.step as? RSDActiveUIStepObject)?.nextStepIdentifier = nil
         self.updateImage()
         self.updateLabelText()

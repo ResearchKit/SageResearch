@@ -36,5 +36,7 @@
 
 "TAP_COUNT_LABEL" = "TAP COUNT";
 
+"ACTIVE_STEP_UNIT_LABEL" = "SECONDS REMAINING";
+
 "TREMOR_CONTINUE_TO_%@" = "Continue to your %@ hand.";
 
