@@ -34,16 +34,30 @@
 import Foundation
 import ResearchStack2
 
-struct TestStep : RSDStep, RSDNavigationRule {
-    
+struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule {
+
     let identifier: String
     var stepType: RSDStepType = .instruction
     var result: RSDResult?
     var validationError: Error?
     var nextStepIdentifier: String?
+    var showBeforeIdentifier: String?
     
     func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
+        if shouldSkipStep(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking) {
+            // Only use the next identifier if this step wasn't just skipped.
+            return nil
+        }
         return self.nextStepIdentifier
+    }
+    
+    
+    func shouldSkipStep(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> Bool {
+        if let loopId = showBeforeIdentifier, result?.findResult(with: loopId) == nil {
+            // Skip this step if another step isn't yet in the result set.
+            return true
+        }
+        return false
     }
     
     init(identifier: String) {
@@ -146,15 +160,15 @@ class TestStepController: NSObject, RSDStepController {
         goForward_called = true
     }
     
-    public func goBack() {
+    func goBack() {
         goBack_called = true
     }
     
-    public func skipForward() {
+    func skipForward() {
         skipForward_called = true
     }
     
-    public func cancel() {
+    func cancel() {
         cancel_called = true
     }
 }
@@ -299,7 +313,8 @@ class TestTaskController: NSObject, RSDTaskUIController {
             if loopCount > 30 {
                 fatalError("Your test is in an infinite loop of Wacky madness.")
             }
-            nextStep = taskPath.task!.stepNavigator.step(after: nextStep, with: &taskPath.result)
+            let navigation = taskPath.task!.stepNavigator.step(after: nextStep, with: &taskPath.result)
+            nextStep = navigation?.step
             if nextStep == nil {
                 if let parentPath = taskPath.parentPath {
                     parentPath.appendStepHistory(with: taskPath.result)

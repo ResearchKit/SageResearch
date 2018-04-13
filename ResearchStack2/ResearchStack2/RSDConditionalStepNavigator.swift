@@ -268,13 +268,14 @@ extension RSDConditionalStepNavigator {
     ///     - step:    The previous step or nil if this is the first step.
     ///     - result:  The current result set for this task.
     /// - returns: The next step to display or nil if this is the end of the task.
-    public func step(after step: RSDStep?, with result: inout RSDTaskResult) -> RSDStep? {
+    public func step(after step: RSDStep?, with result: inout RSDTaskResult) -> (step: RSDStep?, direction: RSDStepDirection)? {
         return _step(after: step, with: &result, isPeeking: false)
     }
     
-    private func _step(after step: RSDStep?, with result: inout RSDTaskResult, isPeeking: Bool) -> RSDStep? {
+    private func _step(after step: RSDStep?, with result: inout RSDTaskResult, isPeeking: Bool) -> (step: RSDStep?, direction: RSDStepDirection)? {
         
         var returnStep: RSDStep?
+        var stepDirection: RSDStepDirection = .forward
         var previousStep: RSDStep? = step
         var shouldSkip = false
         
@@ -286,7 +287,13 @@ extension RSDConditionalStepNavigator {
                     return nil
                 }
                 else {
-                    // Otherwise, get the step with that identifier
+                    // Since the conditional step navigator uses an ordered array of steps to determine the
+                    // step order, *if* the result set includes the next step identifier, then the navigation
+                    // must actually be going back to a previous step. This should only be applied to the case
+                    // where skip and next navigation rules are being applied. syoung 04/12/2018
+                    if result.findResult(with: nextIdentifier) != nil {
+                        stepDirection = .reverse
+                    }
                     returnStep = self.step(with: nextIdentifier)
                 }
             }
@@ -321,7 +328,7 @@ extension RSDConditionalStepNavigator {
             returnStep = conditionalRule.replacementStep(for: returnStep, with: result)
         }
         
-        return returnStep
+        return (returnStep, stepDirection)
     }
     
     /// Return the step to go to before the given step.
