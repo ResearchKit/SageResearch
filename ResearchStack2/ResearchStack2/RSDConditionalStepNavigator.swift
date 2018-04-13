@@ -268,8 +268,9 @@ extension RSDConditionalStepNavigator {
     ///     - step:    The previous step or nil if this is the first step.
     ///     - result:  The current result set for this task.
     /// - returns: The next step to display or nil if this is the end of the task.
-    public func step(after step: RSDStep?, with result: inout RSDTaskResult) -> (step: RSDStep?, direction: RSDStepDirection)? {
-        return _step(after: step, with: &result, isPeeking: false)
+    public func step(after step: RSDStep?, with result: inout RSDTaskResult) -> (step: RSDStep?, direction: RSDStepDirection) {
+        guard let ret = _step(after: step, with: &result, isPeeking: false) else { return (nil, .forward) }
+        return ret
     }
     
     private func _step(after step: RSDStep?, with result: inout RSDTaskResult, isPeeking: Bool) -> (step: RSDStep?, direction: RSDStepDirection)? {

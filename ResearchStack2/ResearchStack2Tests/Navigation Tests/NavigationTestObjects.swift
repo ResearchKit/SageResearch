@@ -314,7 +314,7 @@ public class TestTaskController: NSObject, RSDTaskUIController {
                 fatalError("Your test is in an infinite loop of Wacky madness.")
             }
             let navigation = taskPath.task!.stepNavigator.step(after: nextStep, with: &taskPath.result)
-            nextStep = navigation?.step
+            nextStep = navigation.step
             if nextStep == nil {
                 if let parentPath = taskPath.parentPath {
                     parentPath.appendStepHistory(with: taskPath.result)
