@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F810CF3C202E3BB7009C49C9 /* Recorder_Distance.json in Resources */ = {isa = PBXBuildFile; fileRef = F810CF3B202E3BB7009C49C9 /* Recorder_Distance.json */; };
+		F87557632080808E00235078 /* ResearchStack2_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87557622080808E00235078 /* ResearchStack2_UnitTest.framework */; };
 		F88FE3CB2050640B00E33AC4 /* Image_Picker.json in Resources */ = {isa = PBXBuildFile; fileRef = F88FE3CA2050640A00E33AC4 /* Image_Picker.json */; };
 		F88FE3CD205071F700E33AC4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88FE3CC205071F700E33AC4 /* AVFoundation.framework */; };
 		F88FE3CF2050720100E33AC4 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88FE3CE2050720100E33AC4 /* Photos.framework */; };
@@ -95,6 +96,7 @@
 
 /* Begin PBXFileReference section */
 		F810CF3B202E3BB7009C49C9 /* Recorder_Distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Recorder_Distance.json; sourceTree = "<group>"; };
+		F87557622080808E00235078 /* ResearchStack2_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchStack2_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F88FE3CA2050640A00E33AC4 /* Image_Picker.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Image_Picker.json; sourceTree = "<group>"; };
 		F88FE3CC205071F700E33AC4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F88FE3CE2050720100E33AC4 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -156,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F87557632080808E00235078 /* ResearchStack2_UnitTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +252,7 @@
 		F8B177E9202D330D00B62416 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F87557622080808E00235078 /* ResearchStack2_UnitTest.framework */,
 				F88FE3CE2050720100E33AC4 /* Photos.framework */,
 				F88FE3CC205071F700E33AC4 /* AVFoundation.framework */,
 				F8B17843202D82AB00B62416 /* CoreLocation.framework */,
