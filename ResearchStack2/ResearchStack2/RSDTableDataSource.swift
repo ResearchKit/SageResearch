@@ -75,7 +75,7 @@ public protocol RSDTableDataSourceDelegate: class, NSObjectProtocol {
 public protocol RSDTableDataSource : class {
     
     /// The delegate associated with this data source.
-    weak var delegate: RSDTableDataSourceDelegate? { get set }
+    var delegate: RSDTableDataSourceDelegate? { get set }
     
     /// The step associated with this data source.
     var step: RSDStep { get }

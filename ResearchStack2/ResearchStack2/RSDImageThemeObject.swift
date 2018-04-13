@@ -182,7 +182,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// - parameter traitCollection: The trait collection.
     /// - returns: The images for this step.
     public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [UIImage] {
-        return imageNames.flatMap {
+        return imageNames.compactMap {
             UIImage(named: $0, in: bundle, compatibleWith: traitCollection)
         }
     }

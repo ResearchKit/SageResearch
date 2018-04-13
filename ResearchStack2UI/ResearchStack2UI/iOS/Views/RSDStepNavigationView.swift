@@ -88,7 +88,7 @@ open class RSDStepNavigationView: UIView, RSDViewColorStylable {
     
     /// Return all the buttons in this navigation view.
     open func allButtons() -> [UIButton] {
-        return Array(1...5).flatMap { (idx) -> UIButton? in
+        return Array(1...5).compactMap { (idx) -> UIButton? in
             switch idx {
             case 1: return nextButton
             case 2: return backButton

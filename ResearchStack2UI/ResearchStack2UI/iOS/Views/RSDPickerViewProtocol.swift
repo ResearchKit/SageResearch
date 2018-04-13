@@ -150,7 +150,7 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
     public var answer: Any? {
         get {
             let components = self.pickerComponents()
-            let selections = components.flatMap { (pickerComponent) -> Int? in
+            let selections = components.compactMap { (pickerComponent) -> Int? in
                 let selectedRow = self.selectedRow(inComponent: pickerComponent) - rowOffset
                 return selectedRow >= 0 ? selectedRow : nil
             }

@@ -247,7 +247,7 @@ extension RSDComparable {
             }
             let array = value as? [Any] ?? [answerValue]
             let baseType = RSDAnswerResultType(baseType: answerType.baseType)
-            let ret = array.flatMap { self.convertValue(for: $0, with: baseType) }
+            let ret = array.compactMap { self.convertValue(for: $0, with: baseType) }
             return ret.count == array.count ? ret : nil
         }
 

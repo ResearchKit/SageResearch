@@ -90,7 +90,7 @@ extension RSDSurveyNavigationStep {
             allAnswersNil = allAnswersNil && (answerResult?.value == nil)
             if let surveyInput = inputField as? RSDSurveyInputField,
                 let rules = surveyInput.surveyRules {
-                let skipTos = rules.flatMap{ $0.evaluateRule(with: answerResult) }
+                let skipTos = rules.compactMap { $0.evaluateRule(with: answerResult) }
                 skipIdentifiers.formUnion(skipTos)
             }
         }

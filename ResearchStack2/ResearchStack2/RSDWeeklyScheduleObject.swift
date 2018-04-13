@@ -152,7 +152,7 @@ public class RSDWeeklyScheduleFormatter : Formatter {
             return _joinString(days: daysString, times: timesString, style: _style)
         } else {
             let formatterStyle = (_style == .medium) ? .short : _style
-            let schedules = weeklySchedules.flatMap { (item) -> String? in
+            let schedules = weeklySchedules.compactMap { (item) -> String? in
                 let daysString = _joinedDays(item.daysOfWeek, style: formatterStyle)
                 let timesString = _joinedTimes([item])
                 return _joinString(days: daysString, times: timesString, style: formatterStyle)
@@ -208,7 +208,7 @@ public class RSDWeeklyScheduleFormatter : Formatter {
         let timeFormatter = DateFormatter()
         timeFormatter.dateStyle = .none
         timeFormatter.timeStyle = .short
-        let times = weeklySchedules.flatMap {
+        let times = weeklySchedules.compactMap {
             $0.timeOfDay != nil ? timeFormatter.string(from: $0.timeOfDay!) : nil
         }
         

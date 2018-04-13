@@ -38,7 +38,7 @@ public protocol RSDStepController : class, NSObjectProtocol {
     
     /// Pointer back to the task controller that is displaying the step controller. The implementation
     /// of the task controller should set this pointer before displaying the step controller.
-    weak var taskController: RSDTaskController! { get set }
+    var taskController: RSDTaskController! { get set }
     
     /// A pointer to the step with the model information used to display and run the step. The
     /// implementation of the task controller should set this pointer before displaying the step controller.

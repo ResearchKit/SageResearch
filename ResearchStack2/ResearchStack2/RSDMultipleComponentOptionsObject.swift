@@ -93,7 +93,7 @@ extension RSDMultipleComponentOptions {
     /// - parameter selectedRows: The selected rows, where there is a selected row for each component.
     /// - returns: The answer created from the given array of selected rows.
     public func selectedAnswer(with selectedRows: [Int]) -> Any? {
-        let choices = selectedRows.enumerated().flatMap { (component, selectedRow) -> Any? in
+        let choices = selectedRows.enumerated().compactMap { (component, selectedRow) -> Any? in
             return self.choice(forRow: selectedRow, forComponent: component)?.answerValue
         }
         guard choices.count == self.numberOfComponents
@@ -113,7 +113,7 @@ extension RSDMultipleComponentOptions {
         guard answers.count == self.numberOfComponents else { return nil }
         
         // Filter through and look for the current answer
-        let selected: [Int] = answers.enumerated().flatMap { (component, value) -> Int? in
+        let selected: [Int] = answers.enumerated().compactMap { (component, value) -> Int? in
             return choices[component].index(where: { RSDObjectEquality($0.answerValue, value) })
         }
         
@@ -125,7 +125,7 @@ extension RSDMultipleComponentOptions {
     /// - returns: A text value for the answer to display to the user.
     public func textAnswer(from selectedAnswer: Any?) -> String? {
         guard let array = selectedRows(from: selectedAnswer) else { return nil }
-        let strings = array.enumerated().flatMap { choice(forRow: $0.element, forComponent: $0.offset)?.text }
+        let strings = array.enumerated().compactMap { choice(forRow: $0.element, forComponent: $0.offset)?.text }
         let separator = self.separator ?? " "
         return strings.joined(separator: separator)
     }

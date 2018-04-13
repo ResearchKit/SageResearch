@@ -97,7 +97,7 @@ public typealias RSDAsyncActionCompletionHandler = (RSDAsyncActionController, RS
 public protocol RSDAsyncActionController : class, NSObjectProtocol {
     
     /// Delegate callback for handling action completed or failed.
-    weak var delegate: RSDAsyncActionControllerDelegate? { get set }
+    var delegate: RSDAsyncActionControllerDelegate? { get set }
     
     /// The status of the controller.
     var status: RSDAsyncActionStatus { get }
