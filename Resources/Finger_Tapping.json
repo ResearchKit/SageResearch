@@ -159,14 +159,19 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "text":"You just completed your finger tapping activity.",
+                 "text":"You just completed",
                  "image":{
-                     "imageName":"Completion",
+                     "imageName":"Completion-FingerTapping",
                      "placementType":"topBackground"
                  },
                  "viewTheme":{
-                     "viewIdentifier":"Completion",
+                     "viewIdentifier":"Completion Tapping",
                      "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "actions": {
+                     "goForward":{
+                        "buttonTitle":"Done"
+                     }
                  }
              }
         ]

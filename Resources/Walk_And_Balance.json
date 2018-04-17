@@ -345,7 +345,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "text":"You just completed your Walk and Balance activity.",
+                 "text":"You just completed your %@ Walk and Balance activity.",
                  "image":{
                      "imageName":"Completion-WalkAndBalance",
                      "placementType":"topBackground"
@@ -353,6 +353,11 @@
                  "viewTheme":{
                      "viewIdentifier":"Completion",
                      "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "actions": {
+                     "goForward":{
+                        "buttonTitle":"Done"
+                     }
                  }
              }
         ]

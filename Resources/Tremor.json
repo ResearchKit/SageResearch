@@ -131,7 +131,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "text":"You just completed your Tremor Test activity.",
+                 "text":"You just completed your %@ Tremor Test activity.",
                  "image":{
                      "imageName":"Completion-Tremor",
                      "placementType":"topBackground"
@@ -142,6 +142,11 @@
                  },
                  "spokenInstructions":{
                      "start":"Great job, you are done with the Tremor test."
+                 },
+                 "actions": {
+                     "goForward":{
+                        "buttonTitle":"Done"
+                     }
                  }
              }
         ]
