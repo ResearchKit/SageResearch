@@ -116,6 +116,12 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         self.nextButton?.isHidden = true
     }
     
+    /// Override update unit label text to do nothing because the unit
+    /// label doesn't change after it is set.
+    override open func updateUnitLabelText() {
+        
+    }
+    
     /// Override view will appear to set the unit label text
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

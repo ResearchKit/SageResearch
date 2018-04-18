@@ -2,6 +2,8 @@
 //  MCTTappingCompletionViewController.swift
 //  MotorControl
 //
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
 //
@@ -33,7 +35,7 @@ import Foundation
 
 open class MCTTappingCompletionStepViewController : RSDStepViewController {
     
-    /// The constraint the makes both tapping count labels have equal height.
+    /// The constraint that makes both tapping count labels have equal height.
     @IBOutlet weak var labelHeightEqualityConstraint: NSLayoutConstraint!
     
     /// The constraint on the height of the right count label.
@@ -63,7 +65,7 @@ open class MCTTappingCompletionStepViewController : RSDStepViewController {
         self.updateLabels(leftCount: results.leftCount, rightCount: results.rightCount)
     }
     
-    /// Updates the text of both the labels display the tap count numbers, and the
+    /// Updates the text of both the labels displaying the tap count numbers, and the
     /// labels describing what these numbers mean (ie "LEFT HAND TAPS").
     open func updateLabels(leftCount: Int?, rightCount: Int?) {
         if leftCount != nil {
@@ -78,7 +80,7 @@ open class MCTTappingCompletionStepViewController : RSDStepViewController {
     }
     
     // Returns a tuple containing the number of taps from each hand. A hand that doesn't
-    // perform the activity will have `nil` returned as it's number of taps.
+    // perform the activity will have `nil` returned as its number of taps.
     private func _getTappingResults() -> (leftCount: Int?, rightCount: Int?) {
         let leftCount = _getTappingResult(with: "left")
         let rightCount = _getTappingResult(with: "right")
@@ -101,15 +103,11 @@ open class MCTTappingCompletionStepViewController : RSDStepViewController {
     // Hides the left and right results labels depinding on whether or not
     // they should be hidden.
     private func _hideViews(shouldHideLeft: Bool, shouldHideRight: Bool) {
-        if shouldHideLeft {
-            self.leftHeightConstraint.constant = CGFloat(0)
-        }
+        self.leftHeightConstraint.constant = shouldHideLeft ? CGFloat(0) : CGFloat(80)
         self.leftCountLabel.isHidden = shouldHideLeft
         self.leftUnitLabel.isHidden = shouldHideLeft
         
-        if shouldHideRight {
-            self.rightHeightConstraint.constant = CGFloat(0)
-        }
+        self.rightHeightConstraint.constant = shouldHideRight ? CGFloat(0) : CGFloat(80)
         self.rightCountLabel.isHidden = shouldHideRight
         self.rightUnitLabel.isHidden = shouldHideRight
         self.labelHeightEqualityConstraint.isActive = !(shouldHideLeft || shouldHideRight)

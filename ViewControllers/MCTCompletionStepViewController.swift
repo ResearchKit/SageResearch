@@ -35,7 +35,7 @@ import Foundation
 
 public class MCTCompletionStepViewController : RSDStepViewController {
 
-    /// Override viewWillAppear to add a gradient background to the image.
+    /// Override viewWillAppear to update the text label.
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateTextLabel()

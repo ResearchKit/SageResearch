@@ -37,7 +37,7 @@
 import Foundation
 import UIKit
 
-/// `RSDShadowGradient` is a UI element for adding a shadow gradient to a view.
+/// `MCTCompletionGradient` is a UI element for adding a shadow gradient to a view.
 @IBDesignable open class MCTCompletionGradient : UIView {
     
     /// The color that the gradient begins with.
