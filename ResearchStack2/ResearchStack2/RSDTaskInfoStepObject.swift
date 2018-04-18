@@ -119,7 +119,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
     public init(with taskInfo: RSDTaskInfo, taskTransformer: RSDTaskTransformer? = nil, stepType: RSDStepType = .taskInfo) {
         self.taskInfo = taskInfo
         self.taskTransformer = taskTransformer ?? taskInfo.resourceTransformer
-        self.stepType = .taskInfo
+        self.stepType = stepType
     }
     
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
