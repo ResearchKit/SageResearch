@@ -1,7 +1,7 @@
 {
     "identifier":"Walk And Balance",
     "shouldHideActions":["goBackward", "skip"],
-    "progressMarkers":["walkInstructions", "volumeUp", "pantsWithPocket","phoneInPocket.1","walk", "turnAroundInstructions", "phoneInPocket.2", "balance"],
+    "progressMarkers":["volumeUp", "pantsWithPocket","phoneInPocket.1","walk", "balance"],
     "steps":[
              {
                 "identifier":"introduction",
@@ -216,8 +216,9 @@
                               },
                               "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
                               "spokenInstructions":{
-                                  "start":"Walk back and forth.",
-                                  "end":"Done! Please look at the phone for the next instructions."
+                                  "start":"Walk for 30 seconds. If you need to turn back, turn gently around as if you are turning around a cone.",
+                                  "halfway":"Halfway done.",
+                                  "23":"Almost done."
                               }
                            }
                         ]
@@ -248,6 +249,9 @@
                      "goForward":{
                          "buttonTitle":"Got it"
                      }
+                 },
+                 "spokenInstructions":{
+                     "start":"Take your phone out to review the instructions for the balance test."
                  }
              },
              {
@@ -334,9 +338,9 @@
                                   "storyboardIdentifier":"ActiveTaskSteps"
                               },
                               "spokenInstructions":{
-                                  "start":"Turn around, then stand still with your feet shoulder width apart and your arms by your side.",
-                                  "halfway":"Hold tight,\nyou’re almost there!",
-                                  "end":"Great job,\nyou’re all done!"
+                                  "start":"Turn around 360 degress, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to not move.",
+                                  "halfway":"Halfway done.",
+                                  "23":"Almost done."
                               }
                        }
                 ]
@@ -358,6 +362,9 @@
                      "goForward":{
                         "buttonTitle":"Done"
                      }
+                 },
+                 "spokenInstructions":{
+                     "start":"Great job, you are done with the Walk and Balance test."
                  }
              }
         ]

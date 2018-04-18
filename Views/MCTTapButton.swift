@@ -43,4 +43,24 @@ import Foundation
         layer.borderColor = UIColor.white.cgColor
         layer.cornerRadius = self.bounds.height / 2.0
     }
+    
+    /// Override initializer to set the title to the localized button title.
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        self.commonInit()
+    }
+    
+    /// Override initializer to set the title to the localized button title.
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.commonInit()
+    }
+
+    /// Performs the operations common to all initializers of this class.
+    /// Default localizes the buttons title.
+    open func commonInit() {
+        let title = Localization.localizedString("TAP_BUTTON_TITLE")
+        self.setTitle(title, for: UIControlState.normal)
+    }
+
 }

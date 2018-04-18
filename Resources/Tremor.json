@@ -147,6 +147,9 @@
                      "goForward":{
                         "buttonTitle":"Done"
                      }
+                 },
+                 "spokenInstructions":{
+                     "start":"Great job, you are done with the Tremor test."
                  }
              }
         ]
