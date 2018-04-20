@@ -57,7 +57,7 @@ import Foundation
     }
 
     /// Performs the operations common to all initializers of this class.
-    /// Default localizes the buttons title.
+    /// Default localizes the button's title.
     open func commonInit() {
         let title = Localization.localizedString("TAP_BUTTON_TITLE")
         self.setTitle(title, for: UIControlState.normal)
