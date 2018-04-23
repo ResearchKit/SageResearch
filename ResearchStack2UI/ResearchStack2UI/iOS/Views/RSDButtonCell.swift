@@ -83,7 +83,7 @@ extension DefaultRSDButtonCellLayoutConstants : RSDButtonCellLayoutConstants {
 @IBDesignable open class RSDModalButtonCell : RSDButtonCell, RSDViewColorStylable {
     
     /// Should the subcomponents be displayed with a dark background and light tint on the buttons and text?
-    @IBInspectable open var usesLightStyle: Bool = false {
+    override open var usesLightStyle: Bool {
         didSet {
             guard let button = actionButton as? RSDRoundedButton else { return }
             button.usesLightStyle = usesLightStyle

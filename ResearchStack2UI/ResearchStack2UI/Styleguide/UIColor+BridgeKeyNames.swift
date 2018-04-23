@@ -376,4 +376,16 @@ extension UIColor {
     @objc open class var rsd_textFieldCellLabel: UIColor {
         return UIColor.appLightGray
     }
+    
+    @objc open class var rsd_textFieldCellTextLightStyle: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var rsd_textFieldCellBorderLightStyle: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var rsd_textFieldCellLabelLightStyle: UIColor {
+        return UIColor.white
+    }
 }
