@@ -50,6 +50,9 @@ fileprivate let kSectionTopMargin: CGFloat = 40.0
     
     /// The background color of the containing table.
     open var tableBackgroundColor: UIColor!
+    
+    /// Whether or not the table uses light style.
+    @IBInspectable open var usesLightStyle: Bool = false
 }
 
 /// `RSDStepChoiceCell` is the base implementation for a selection table view cell of a form step.
@@ -205,7 +208,7 @@ fileprivate let kSectionTopMargin: CGFloat = 40.0
 
 /// `RSDStepTextFieldCell` is the base implementation of a text field used to enter answers in a
 /// form step table view.
-open class RSDStepTextFieldCell: UITableViewCell {
+open class RSDStepTextFieldCell: RSDTableViewCell {
     
     /// The text field associated with this cell.
     public var textField: RSDStepTextField!
@@ -246,6 +249,30 @@ open class RSDStepTextFieldCell: UITableViewCell {
         textField.textAlignment = .left
         
         ruleView.backgroundColor = UIColor.rsd_textFieldCellBorder
+    }
+    
+    /// Override to set the content view background color to the color of the table background.
+    override open var tableBackgroundColor: UIColor! {
+        didSet {
+            self.contentView.backgroundColor = tableBackgroundColor
+        }
+    }
+    
+    /// Override to set the text element colors based on whether the color style calls for a dark background
+    /// with light elements or a light background with dark elements.
+    override open var usesLightStyle: Bool {
+        didSet {
+            if usesLightStyle {
+                fieldLabel.textColor = UIColor.rsd_textFieldCellLabelLightStyle
+                textField.textColor = UIColor.rsd_textFieldCellTextLightStyle
+                ruleView.backgroundColor = UIColor.rsd_textFieldCellBorderLightStyle
+            }
+            else {
+                fieldLabel.textColor = UIColor.rsd_textFieldCellLabel
+                textField.textColor = UIColor.rsd_textFieldCellText
+                ruleView.backgroundColor = UIColor.rsd_textFieldCellBorder
+            }
+        }
     }
     
     /// Set the string for the text field placeholder. View controllers should use this methods rather
@@ -328,7 +355,7 @@ public protocol RSDStepTextFieldCellLayoutConstants {
 fileprivate struct RSDDefaultStepTextFieldCellLayoutConstants {
     let verticalMargin: CGFloat = 10.0
     let verticalPadding: CGFloat = 7.0
-    let sideMargin = CGFloat(25.0).rsd_proportionalToScreenWidth()
+    let sideMargin: CGFloat = 24.0
 }
 
 extension RSDDefaultStepTextFieldCellLayoutConstants : RSDStepTextFieldCellLayoutConstants {
@@ -338,8 +365,6 @@ extension RSDDefaultStepTextFieldCellLayoutConstants : RSDStepTextFieldCellLayou
 /// use when there is a single input field on for the step.
 open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
     
-    private let kTextFieldWidth: CGFloat = 150.0
-
     /// Override `setupViews()` to increase the size of the text field.
     override open func setupViews() {
         
@@ -359,18 +384,7 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
         textField.rsd_removeSiblingAndAncestorConstraints()
         ruleView.rsd_removeSiblingAndAncestorConstraints()
         
-        // if we have a defined textField width, we use that and center the text field and ruleView horizontally.
-        // Otherwise, we pin left and right edges to the superview with some side margin
-        
-        if kTextFieldWidth > 0 {
-            
-            textField.rsd_makeWidth(.equal, kTextFieldWidth)
-            textField.rsd_alignCenterHorizontal(padding: 0.0)
-        } else {
-            
-            textField.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
-        }
-        
+        textField.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
         textField.rsd_alignToSuperview([.top], padding: constants.verticalMargin)
         
         ruleView.rsd_alignBelow(view: textField, padding: constants.verticalPadding)

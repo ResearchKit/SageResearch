@@ -526,6 +526,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             tableCell.indexPath = indexPath
             tableCell.tableItem = tableData!.tableItem(at: indexPath)
             tableCell.tableBackgroundColor = tableView.backgroundColor
+            tableCell.usesLightStyle = self.usesLightStyle
         }
         if let buttonCell = cell as? RSDButtonCell {
             buttonCell.delegate = self
