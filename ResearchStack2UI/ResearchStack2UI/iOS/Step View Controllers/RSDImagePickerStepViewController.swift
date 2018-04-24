@@ -35,6 +35,13 @@ import UIKit
 import Photos
 import AVFoundation
 
+extension RSDImagePickerStepObject : RSDStepViewControllerVendor {
+    
+    public func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)? {
+        return RSDImagePickerStepViewController(step: self)
+    }
+}
+
 open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     /// A label that can be used to display a message to the user if the image picker cannot open.
