@@ -2,8 +2,8 @@ notifications:
   email:
   - apple.builds@sagebase.org
 language: objective-c
-osx_image: xcode9.1
-xcode_project: ResearchStack2/ResearchStack2.xcodeproj
+osx_image: xcode9.2
+xcode_project: RSDTestApp/RSDTestApp.xcodeproj
 xcode_scheme: RSDCatalog
 cache:
 - bundler
