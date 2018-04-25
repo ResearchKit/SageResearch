@@ -32,13 +32,15 @@
 //
 
 import XCTest
-import ResearchStack2
+@testable import ResearchStack2
 
 class CodableResultObjectTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        // Use a statically defined timezone.
+        rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
     
     override func tearDown() {
@@ -51,8 +53,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00"
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30"
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -73,8 +75,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
 
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -86,8 +88,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "file",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "relativePath": "temp.json",
             "contentType": "application/json"
         }
@@ -120,8 +122,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "file")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             XCTAssertEqual(dictionary["relativePath"] as? String, "foo.json")
             XCTAssertEqual(dictionary["contentType"] as? String, "application/json")
             XCTAssertNil(dictionary["url"])
@@ -136,8 +138,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "string"}
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -164,8 +166,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
 
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -177,8 +179,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "string"},
             "value": "hello"
         }
@@ -206,8 +208,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             XCTAssertEqual(dictionary["value"] as? String, "hello")
             if let answerType = dictionary["answerType"] as? [String:Any] {
                 XCTAssertEqual(answerType["baseType"] as? String, "string")
@@ -226,8 +228,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "boolean"},
             "value": true
         }
@@ -255,8 +257,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             XCTAssertEqual(dictionary["value"] as? Bool, true)
             if let answerType = dictionary["answerType"] as? [String:Any] {
                 XCTAssertEqual(answerType["baseType"] as? String, "boolean")
@@ -275,8 +277,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "integer"},
             "value": 12
         }
@@ -304,8 +306,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             XCTAssertEqual(dictionary["value"] as? Int, 12)
             if let answerType = dictionary["answerType"] as? [String:Any] {
                 XCTAssertEqual(answerType["baseType"] as? String, "integer")
@@ -324,8 +326,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "decimal"},
             "value": 12.5
         }
@@ -353,8 +355,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             XCTAssertEqual(dictionary["value"] as? Double, 12.5)
             if let answerType = dictionary["answerType"] as? [String:Any] {
                 XCTAssertEqual(answerType["baseType"] as? String, "decimal")
@@ -373,8 +375,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "date", "dateFormat" : "yyyy-MM-dd"},
             "value": "2016-02-20"
         }
@@ -410,8 +412,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             XCTAssertEqual(dictionary["value"] as? String, "2016-02-20")
             if let answerType = dictionary["answerType"] as? [String:Any] {
                 XCTAssertEqual(answerType["baseType"] as? String, "date")
@@ -431,8 +433,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "string", "sequenceType" : "array"},
             "value": ["alpha", "beta", "gamma"]
         }
@@ -466,8 +468,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             if let values = dictionary["value"] as? [String] {
                 XCTAssertEqual(values, ["alpha", "beta", "gamma"])
             }
@@ -492,8 +494,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "integer", "sequenceType" : "array"},
             "value": [65, 47, 99]
         }
@@ -529,8 +531,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             if let values = dictionary["value"] as? [Int] {
                 XCTAssertEqual(values, [65, 47, 99])
             }
@@ -555,8 +557,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "decimal", "sequenceType" : "array"},
             "value": [65.3, 47.2, 99.8]
         }
@@ -592,8 +594,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             if let values = dictionary["value"] as? [Double] {
                 XCTAssertEqual(values, [65.3, 47.2, 99.8])
             }
@@ -618,8 +620,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "date", "sequenceType" : "array", "dateFormat" : "MM/yyyy"},
             "value": ["07/2013", "05/2017", "01/1999"]
         }
@@ -659,8 +661,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             if let values = dictionary["value"] as? [String] {
                 XCTAssertEqual(values, ["07/2013", "05/2017", "01/1999"])
             }
@@ -686,8 +688,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "integer", "sequenceType" : "array", "sequenceSeparator" : "-"},
             "value": "206-555-1212"
         }
@@ -721,8 +723,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             XCTAssertEqual(dictionary["value"] as? String, "206-555-1212")
             if let answerType = dictionary["answerType"] as? [String:Any] {
                 XCTAssertEqual(answerType["baseType"] as? String, "integer")
@@ -743,10 +745,10 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "date", "sequenceType" : "array", "sequenceSeparator" : ","},
-            "value": "2017-10-16T22:28:09.000-07:00,2017-10-16T22:30:09.000-07:00"
+            "value": "2017-10-16T22:28:09.000-02:30,2017-10-16T22:30:09.000-02:30"
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -764,7 +766,7 @@ class CodableResultObjectTests: XCTestCase {
             XCTAssertNotNil(object.value)
             if let array = object.value as? [Date] {
                 var calendar = Calendar(identifier: .iso8601)
-                calendar.timeZone = TimeZone(secondsFromGMT: -7 * 60 * 60)!
+                calendar.timeZone = rsd_ISO8601TimestampFormatter.timeZone
                 let calendarComponents: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute]
                 let comp = calendar.dateComponents(calendarComponents, from: array[0])
                 XCTAssertEqual(comp.year, 2017)
@@ -786,9 +788,9 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
-            XCTAssertEqual(dictionary["value"] as? String, "2017-10-16T22:28:09.000-07:00,2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
+            XCTAssertEqual(dictionary["value"] as? String, "2017-10-16T22:28:09.000-02:30,2017-10-16T22:30:09.000-02:30")
             if let answerType = dictionary["answerType"] as? [String:Any] {
                 XCTAssertEqual(answerType["baseType"] as? String, "date")
                 XCTAssertEqual(answerType["sequenceType"] as? String, "array")
@@ -808,8 +810,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "date", "sequenceType" : "dictionary", "dateFormat" : "HH:mm"},
             "value": { "breakfast": "08:20", "lunch": "12:40", "dinner": "19:10" }
         }
@@ -855,8 +857,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             if let values = dictionary["value"] as? [String : String] {
                 XCTAssertEqual(values["breakfast"], "08:20")
                 XCTAssertEqual(values["lunch"], "12:40")
@@ -884,8 +886,8 @@ class CodableResultObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "bar",
-            "startDate": "2017-10-16T22:28:09.000-07:00",
-            "endDate": "2017-10-16T22:30:09.000-07:00",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
             "answerType": {"baseType" : "string", "sequenceType" : "dictionary"},
             "value": { "breakfast": "oatmeal", "lunch": "soup", "dinner": "spaghetti" }
         }
@@ -922,8 +924,8 @@ class CodableResultObjectTests: XCTestCase {
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["type"] as? String, "bar")
-            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-07:00")
-            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-07:00")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
             if let values = dictionary["value"] as? [String : String] {
                 XCTAssertEqual(values["breakfast"], "oatmeal")
                 XCTAssertEqual(values["lunch"], "soup")
