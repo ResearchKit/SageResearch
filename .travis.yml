@@ -1,0 +1,32 @@
+notifications:
+  email:
+  - apple.builds@sagebase.org
+language: objective-c
+osx_image: xcode9.1
+xcode_project: CRFModuleValidation.xcodeproj
+xcode_scheme: CRFModuleValidation
+cache:
+- bundler
+before_install:
+- echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc
+install:
+- gem install bundler
+- bundle install
+script:
+- travis_wait 30 ./travis/build.sh
+deploy:
+  skip_cleanup: true
+  provider: s3
+  acl: public_read
+  bucket: ios-apps.sagebridge.org
+  local-dir: build
+  upload-dir: ci/$TRAVIS_XCODE_SCHEME/$TRAVIS_BRANCH
+  on:
+    all_branches: true
+  access_key_id: AKIAJ6YWVFOX3GHDXVRQ
+  secret_access_key:
+    secure: le7qrV01OnsQJ5C8ifTA3h9bVFzg2VlYiY7jep828lRBYIwOBpQl5x+CEBQKnCSW7IDkT7yVZCzJPRNRylclyUaIqWfSAznNQZktyF1Yzuwo6a4Zi/f0XxSUB3GxXR+k7187TeU9AOSC2SC8sXtGdmtv1vo2EUykItT4HX1+eupumOQUe8LdQyCHAN9VeRLJB58HAp08nR+pIyd89WgnNeMP0DquyYkElLEEFbn7OnaWBaiQLgc6LLwG2WozixDrzFV9mbv9u8kpl/BlZJF2OVDQN7mcxHiQSAQFPDYUKNxOBuKYZUI7jfpNqg6tIsC5fcv4Y68T9EtT+zAerc5HjlHh11rhdrrgVZrjGbqrETEZB0tuuNNdExFFIJYvUhkDOAYnT5wYrg/X+/6HvdG/r1ZJ7V1bO5OewcWuwDjyqtZZc/hxA+IgHhA9a73YxSE3Y67gkBmIg0DcFnZ6j1jWQsNkc/NUgd/70fKFpSXC56CV5p19Tu+FcAWEYZhJkiV3z1DAjTIZEqN63AJqiKUtWtnutrngUDbl+8iOIDpVPSmy2ejaoDaXv/OR/celhQssB3ytCajNnivlvKvXjraxJ0i1f5FzAl5OhmX5yCyPBkx3cDe6bX436FrWnIV2B9DuAW0uTjOr4ym4Wiu5wki+Bcm0rSeRbvTyPR2IXQ7YOoQ=
+branches:
+  only:
+  - master
+  - "/^stable-.*$/"
