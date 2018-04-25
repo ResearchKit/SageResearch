@@ -32,7 +32,7 @@
 //
 
 import XCTest
-import ResearchStack2
+@testable import ResearchStack2
 
 class CodableInputFieldObjectTests: XCTestCase {
     
@@ -41,6 +41,9 @@ class CodableInputFieldObjectTests: XCTestCase {
         
         // setup to have an image wrapper delegate set so the image wrapper won't crash
         RSDImageWrapper.sharedDelegate = TestImageWrapperDelegate()
+        
+        // Use a statically defined timezone.
+        rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
     
     override func tearDown() {
