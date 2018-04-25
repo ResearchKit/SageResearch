@@ -80,10 +80,10 @@ platform :ios do
 
   desc "Execute tests"
   lane :test do |options|
-    workspace = options[:workspace]
+    project = options[:project]
     scheme = options[:scheme]
     scan(
-      workspace: "#{workspace}",
+      project: "#{project}",
       scheme: "#{scheme}",
       clean: true
     )
@@ -91,9 +91,11 @@ platform :ios do
 
   desc "Archive and export app"
   lane :archive do |options|
+    project = options[:project]
     scheme = options[:scheme]
     export_method = options[:export_method]
     gym(
+      project: "#{project}",
       scheme: "#{scheme}",
       clean: true,
       include_bitcode: true,
@@ -106,24 +108,26 @@ platform :ios do
 
   desc "This lane is for CI bots to archive and export"
   lane :ci_archive do |options|
+    project = options[:project]
     scheme = options[:scheme]
     export_method = options[:export_method]
     keychains
     certificates
-    archive(scheme: "#{scheme}",export_method: "#{export_method}")
+    archive(project: "#{project}",scheme: "#{scheme}",export_method: "#{export_method}")
   end
 
   desc "Submit a new Build to appstore"
   lane :beta do |options|
+    project = options[:project]
     scheme = options[:scheme]
     export_method = options[:export_method]
     ensure_git_status_clean
     keychains
     certificates
     version_number = get_version_number(xcodeproj: "#{project}", target: "#{scheme}")
-    next_build_number = increment_build_number
-    archive(scheme: "#{scheme}", export_method: "#{export_method}")
-    commit_version_bump(xcodeproj: "#{scheme}.xcodeproj", message: "[skip ci] Version Bump")
+    next_build_number = increment_build_number(xcodeproj: "#{project}")
+    archive(project: "#{project}", scheme: "#{scheme}", export_method: "#{export_method}")
+    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Version Bump")
     add_git_tag(tag: "#{version_number}_#{next_build_number}")
     push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])
     testflight(ipa: "./build/#{scheme}.ipa", skip_submission: true)

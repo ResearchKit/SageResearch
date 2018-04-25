@@ -3,8 +3,8 @@ notifications:
   - apple.builds@sagebase.org
 language: objective-c
 osx_image: xcode9.1
-xcode_project: CRFModuleValidation.xcodeproj
-xcode_scheme: CRFModuleValidation
+xcode_project: ResearchStack2/ResearchStack2.xcodeproj
+xcode_scheme: RSDCatalog
 cache:
 - bundler
 before_install:
