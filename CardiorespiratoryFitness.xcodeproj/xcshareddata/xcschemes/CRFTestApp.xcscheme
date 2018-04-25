@@ -52,16 +52,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FF8B531B1FCE678E006B6937"
-               BuildableName = "ResearchStack2Tests_iOS.xctest"
-               BlueprintName = "ResearchStack2Tests_iOS"
-               ReferencedContainer = "container:../SageResearch/ResearchStack2/ResearchStack2.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "FFF2D93F1FCF415E007258F8"
                BuildableName = "ResearchStack2UITests_iOS.xctest"
                BlueprintName = "ResearchStack2UITests_iOS"
