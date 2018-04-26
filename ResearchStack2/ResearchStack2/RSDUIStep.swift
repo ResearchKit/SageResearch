@@ -103,7 +103,3 @@ public protocol RSDTableStep : RSDUIStep {
     /// - returns: A table data source that maps to the supported hints, or `nil` if it is not compatible.
     func instantiateDataSource(with taskPath: RSDTaskPath, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource?
 }
-
-
-
-

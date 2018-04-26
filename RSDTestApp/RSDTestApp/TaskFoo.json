@@ -15,7 +15,10 @@
               "actions": {
                       "goForward": {
                           "buttonTitle": "Go, Dogs!"
-                      }
+                      },
+                     "skip": { "buttonTitle": "Go to select one",
+                                "skipToIdentifier": "selectOne"
+                            }
                   }
               },
               {

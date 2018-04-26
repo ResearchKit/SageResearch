@@ -172,12 +172,20 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     
     // MARK: Navigation
     
-    /// Identifier for the next step to navigate to based on the current task result. All parameters are ignored by this
-    /// implementation of the navigation rule. Instead, this will return `nextStepIdentifier` if defined.
+    /// Identifier for the next step to navigate to based on the current task result. By default, if there is
+    /// a navigation `skipToIdentifier` for this step, then that will be honored. Otherwise, this will return
+    /// `nextStepIdentifier`.
     ///
     /// - returns: The identifier of the next step.
     open func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
-        return self.nextStepIdentifier
+        if let navigationResult = result?.findResult(for: self) as? RSDNavigationResult,
+            let skipTo = navigationResult.skipToIdentifier,
+            !isPeeking {
+            return skipTo
+        }
+        else {
+            return self.nextStepIdentifier
+        }
     }
     
     // MARK: Table source

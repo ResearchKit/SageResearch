@@ -103,10 +103,8 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
     }
 }
 
-/// `RSDSkipToUIActionObject` implements an action that includes an identifier for a step to skip to if this
-/// action is called. This is used by the `RSDConditionalStepNavigator` to navigate based on a `nil` result.
-/// - seealso: `RSDSurveyNavigationStep`
-public struct RSDSkipToUIActionObject : RSDEmbeddedResourceUIAction, RSDSkipToUIAction {
+/// `RSDNavigationUIActionObject` implements an action for navigating to another step in a task.
+public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavigationUIAction {
     
     private enum CodingKeys : String, CodingKey {
         case skipToIdentifier, buttonTitle, iconName, bundleIdentifier
@@ -135,22 +133,11 @@ public struct RSDSkipToUIActionObject : RSDEmbeddedResourceUIAction, RSDSkipToUI
         self.skipToIdentifier = skipToIdentifier
         self.buttonTitle = buttonTitle
     }
-    
-    /// Default initializer for a button with an image.
-    /// - parameters:
-    ///     - skipToIdentifier: The identifier for the step to skip to if the action is called.
-    ///     - iconName: The name of the image to display on the button.
-    ///     - bundleIdentifier: The bundle identifier for the resource bundle that contains the image.
-    public init(skipToIdentifier: String, iconName: String, bundleIdentifier: String? = nil) {
-        self.skipToIdentifier = skipToIdentifier
-        self.iconName = iconName
-        self.bundleIdentifier = bundleIdentifier
-    }
 }
 
 /// `RSDReminderUIActionObject` implements an action for setting up a local notification to remind
 /// the participant about doing a particular task later.
-public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction {
+public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDReminderUIAction {
     
     private enum CodingKeys : String, CodingKey {
         case reminderIdentifier, _buttonTitle = "buttonTitle", iconName, bundleIdentifier
@@ -242,7 +229,6 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
     }
 }
 
-
 extension RSDUIActionObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
@@ -280,7 +266,7 @@ extension RSDUIActionObject : RSDDocumentableCodableObject {
     }
 }
 
-extension RSDSkipToUIActionObject : RSDDocumentableCodableObject {
+extension RSDNavigationUIActionObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
         return allCodingKeys()
@@ -308,10 +294,9 @@ extension RSDSkipToUIActionObject : RSDDocumentableCodableObject {
         return keys.count == 4
     }
     
-    static func actionExamples() -> [RSDSkipToUIActionObject] {
-        let titleAction = RSDSkipToUIActionObject(skipToIdentifier: "nextSection", buttonTitle: "Go, Dogs! Go")
-        let imageAction = RSDSkipToUIActionObject(skipToIdentifier: "nextSection", iconName: "closeX", bundleIdentifier: "org.example.SharedResources")
-        return [titleAction, imageAction]
+    static func actionExamples() -> [RSDNavigationUIActionObject] {
+        let titleAction = RSDNavigationUIActionObject(skipToIdentifier: "nextSection", buttonTitle: "Go, Dogs! Go")
+        return [titleAction]
     }
     
     static func examples() -> [Encodable] {

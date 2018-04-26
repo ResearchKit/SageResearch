@@ -34,7 +34,7 @@
 import Foundation
 
 /// `RSDResultObject` is a concrete implementation of the base result associated with a task, step, or asynchronous action.
-public struct RSDResultObject : RSDResult, Codable {
+public struct RSDResultObject : RSDNavigationResult, Codable {
 
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
@@ -48,8 +48,12 @@ public struct RSDResultObject : RSDResult, Codable {
     /// The end date timestamp for the result.
     public var endDate: Date = Date()
     
+    /// The identifier for the step to go to following this result. If non-nil, then this will be used in
+    /// navigation handling.
+    public var skipToIdentifier: String?
+    
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, startDate, endDate
+        case identifier, type, startDate, endDate, skipToIdentifier
     }
     
     /// Default initializer for this object.
@@ -70,7 +74,7 @@ extension RSDResultObject : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate]
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .skipToIdentifier]
         return codingKeys
     }
     
@@ -86,9 +90,11 @@ extension RSDResultObject : RSDDocumentableCodableObject {
                 if idx != 2 { return false }
             case .endDate:
                 if idx != 3 { return false }
+            case .skipToIdentifier:
+                if idx != 4 { return false }
             }
         }
-        return keys.count == 4
+        return keys.count == 5
     }
     
     static func examples() -> [Encodable] {

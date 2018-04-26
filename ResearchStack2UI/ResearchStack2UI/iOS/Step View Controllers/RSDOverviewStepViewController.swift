@@ -47,7 +47,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
         _updateAuthorizationStatus()
         
         // If this is a reminder action then set that and keep a pointer to it.
-        self.reminderAction = self.action(for: .navigation(.skip)) as? RSDReminderUIActionObject
+        self.reminderAction = self.action(for: .navigation(.skip)) as? RSDReminderUIAction
         
         // Remove any previous reminder.
         if let reminderIdentifier = reminderAction?.reminderIdentifier {
@@ -114,7 +114,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
     // MARK: Reminder notification handling
     
     /// The reminder action associated with this step view controller.
-    open private(set) var reminderAction: RSDReminderUIActionObject?
+    open private(set) var reminderAction: RSDReminderUIAction?
     
     /// Override skipForward to check if this is a reminder action for the skip button.
     open override func skipForward() {

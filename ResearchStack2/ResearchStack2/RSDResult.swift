@@ -54,6 +54,14 @@ public protocol RSDResult : Encodable {
     var endDate: Date { get set }
 }
 
+/// A result that can be used to track a custom navigation as a result of user action.
+public protocol RSDNavigationResult : RSDResult {
+    
+    /// The identifier for the step to go to following this result. If non-nil, then this will be used in
+    /// navigation handling.
+    var skipToIdentifier: String? { get set }
+}
+
 /// `RSDTaskResult` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
 public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder {
@@ -145,7 +153,7 @@ extension RSDTaskResult  {
 
 /// `RSDCollectionResult` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
-public protocol RSDCollectionResult : RSDResult, RSDAnswerResultFinder {
+public protocol RSDCollectionResult : RSDNavigationResult, RSDAnswerResultFinder {
     
     /// The list of input results associated with this step. These are generally assumed to be answers to
     /// field inputs, but they are not required to implement the `RSDAnswerResult` protocol.

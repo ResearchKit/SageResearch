@@ -593,6 +593,10 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// When a user taps a Next button, the information passes through this method. You can use
     /// this method as an override point or a target action for a subclass.
     @IBAction open func goForward() {
+        guard !actionTapped(with: .navigation(.goForward)) else {
+            debugPrint("WARNING: The default action of the `goForward()` method is being overridden by the associated action.")
+            return
+        }
         performStopCommands()
         speakEndCommand {
             self.taskController.goForward()
@@ -605,13 +609,27 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// When a user taps the Back button, the information passes through this method. You can use
     /// this method as an override point or a target action for a subclass.
     @IBAction open func goBack() {
+        guard !actionTapped(with: .navigation(.goBackward)) else {
+            debugPrint("WARNING: The default action of the `goBack()` method is being overridden by the associated action.")
+            return
+        }
         stop()
         self.taskController.goBack()
     }
     
-    /// This method is called when the user taps the skip button. By default, it calls stop() to
-    /// stop the timer and then calls `goForward` on the task controller.
+    /// This method is called when the user taps the skip button. This method will call
+    /// `actionTapped(with: .navigation(.skip))` to handle marking the result of the action (if required by
+    /// the UI) and then will call `jumpForward()`.
     @IBAction open func skipForward() {
+        guard !actionTapped(with: .navigation(.skip)) else { return }
+        jumpForward()
+    }
+    
+    /// By default, this method calls stop() to stop the timer and then calls `goForward` on the task
+    /// controller. It is used to handle navigating away from the current step view controller in a manner
+    /// which requires custom navigation because the step has not "ended" normally. For example, this method
+    /// is called when a user taps the "skip" button.
+    open func jumpForward() {
         stop()
         self.taskController.goForward()
     }
@@ -620,6 +638,10 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// should be canceled (unless this is the first step in the task). If the user confirms exit, then
     /// `cancelTask` is called.
     @IBAction open func cancel() {
+        guard !actionTapped(with: .navigation(.cancel)) else {
+            debugPrint("WARNING: The default action of the `cancel()` method is being overridden by the associated action.")
+            return
+        }
         self.confirmCancel()
     }
     
@@ -643,15 +665,63 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// the learn more is an embedded HTML file or an online URL. It will instantiate `RSDWebViewController`
     /// and present it modally.
     @IBAction open func showLearnMore() {
-        guard let action = self.action(for: .navigation(.learnMore)) as? RSDResourceTransformer
+        guard actionTapped(with: .navigation(.learnMore))
             else {
                 self.presentAlertWithOk(title: nil, message: "Missing learn more action for this task", actionHandler: nil)
                 return
         }
+    }
+    
+    /// Perform any actions associated with a given action type. By default, this is called *before* any other
+    /// standard actions on a standard navigation are handled.
+    /// - parameter actionType: The user-invoked action.
+    /// - returns: `true` if the action was handled. If not handled, a default action associated with this
+    ///            action type should be triggered by the calling method.
+    open func actionTapped(with actionType: RSDUIActionType) -> Bool {
+        guard let action = self.action(for: actionType) else { return false }
         
-        let (webVC, navVC) = RSDWebViewController.instantiateController()
-        webVC.resourceTransformer = action
-        self.present(navVC, animated: true, completion: nil)
+        if let navAction = action as? RSDNavigationUIAction {
+            // For a navigation action, assign the skip identifier and jump forward.
+            assignSkipToIdentifier(navAction.skipToIdentifier)
+            jumpForward()
+            return true
+        }
+        else if let webAction = action as? RSDWebViewUIAction {
+            // For a webview action, present a web view modally.
+            let (webVC, navVC) = RSDWebViewController.instantiateController()
+            webVC.resourceTransformer = webAction
+            self.present(navVC, animated: true, completion: nil)
+            return true
+        }
+        else {
+            // No action handler was found for this
+            return false
+        }
+    }
+    
+    /// Mutate the current result by appending the results with a `skipToIdentifier`.
+    /// - parameter skipToIdentifier: The identifier of the step to go to next.
+    open func assignSkipToIdentifier(_ skipToIdentifier: String) {
+        
+        // Look to see if there is a navigation action that should be added based on the action handler.
+        guard let taskPath = self.taskController.taskPath,
+            let previousResult = taskPath.result.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) else {
+                return
+        }
+        
+        var navigationResult: RSDNavigationResult!
+        if let navResult = previousResult as? RSDNavigationResult {
+            // If this is a navigation result then set it as the navigation result.
+            navigationResult = navResult
+        }
+        else {
+            // Otherwise, replace the result with a collection result.
+            var collectionResult: RSDCollectionResult = RSDCollectionResultObject(identifier: self.step.identifier)
+            collectionResult.appendInputResults(with: previousResult)
+            navigationResult = collectionResult
+        }
+        navigationResult.skipToIdentifier = skipToIdentifier
+        taskPath.appendStepHistory(with: navigationResult)
     }
     
     /// Get the action for the given action type. The default implementation check the step, the delegate
@@ -664,8 +734,20 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// - parameter actionType: The action type to get.
     /// - returns: The action if found.
     open func action(for actionType: RSDUIActionType) -> RSDUIAction? {
-        guard step.identifier == self.step.identifier else { return nil }
+        guard step != nil else { return nil }
         
+        // Check the cached actions first.
+        if let cachedAction = _mappedActions[actionType] {
+            return cachedAction as? RSDUIAction
+        }
+        
+        // If not in the cache, then find it.
+        let ret = _findAction(for: actionType)
+        _mappedActions[actionType] = ret ?? NSNull()
+        return ret
+    }
+    
+    private func _findAction(for actionType: RSDUIActionType) -> RSDUIAction? {
         if let action = (self.step as? RSDUIActionHandler)?.action(for: actionType, on: step) {
             // Allow the step to override the default from the delegate
             return action
@@ -682,6 +764,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             return nil
         }
     }
+    
+    private var _mappedActions: [RSDUIActionType : Any] = [:]
     
     private func recursiveTaskAction(for actionType: RSDUIActionType) -> RSDUIAction? {
         var taskPath = self.taskController.taskPath
@@ -760,6 +844,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         } while (taskPath != nil)
         return nil
     }
+    
     
     // MARK: Permission handling
     

@@ -52,7 +52,7 @@ class SurveyRuleTests: XCTestCase {
         
         let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
         let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
-        let skipAction = RSDSkipToUIActionObject(skipToIdentifier: "bar", buttonTitle: "Prefer not to answer")
+        let skipAction = RSDNavigationUIActionObject(skipToIdentifier: "bar", buttonTitle: "Prefer not to answer")
         
         let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
         step.actions = [.navigation(.skip) : skipAction]
@@ -75,12 +75,31 @@ class SurveyRuleTests: XCTestCase {
         
         let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
         let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
-        let skipAction = RSDSkipToUIActionObject(skipToIdentifier: "bar", buttonTitle: "Prefer not to answer")
+        let skipAction = RSDNavigationUIActionObject(skipToIdentifier: "bar", buttonTitle: "Prefer not to answer")
         
         let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
         step.actions = [.navigation(.skip) : skipAction]
         
         let taskResult = createTaskResult(answerType: .integer, value: nil)
+        
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        XCTAssertNil(peekingIdentifier)
+        
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        XCTAssertEqual(navigatingIdentifier, "bar")
+    }
+    
+    func testSkipRule_NavigationResult() {
+
+        let step = RSDUIStepObject(identifier: "foo")
+        
+        var taskResult = RSDTaskResultObject(identifier: "boobaloo")
+        taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction1"))
+        taskResult.appendStepHistory(with: RSDResultObject(identifier: "instruction2"))
+        
+        var stepResult = RSDResultObject(identifier: "foo")
+        stepResult.skipToIdentifier = "bar"
+        taskResult.appendStepHistory(with: stepResult)
         
         let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
         XCTAssertNil(peekingIdentifier)

@@ -403,26 +403,61 @@ open class RSDFactory {
     
     /// Decode UI action from the given decoder.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameters:
+    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - actionType: The action type for this button.
+    ///     - objectType: The object type to which this action should be cast.
     /// - returns: The UI action created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
-        let decodedAction = try _decodeUIAction(from: decoder, for: actionType)
+        
+        let objType: RSDUIActionObjectType? = {
+            guard let str = try? self.typeName(from: decoder), let rawValue = str else { return nil }
+            return RSDUIActionObjectType(rawValue: rawValue)
+        }()
+        
+        let decodedAction = try _decodeUIAction(from: decoder, for: actionType, with: objType)
         guard let object = decodedAction as? RSDDecodableBundleInfo else { return decodedAction }
         var action = object
         action.factoryBundle = decoder.bundle
         return action as! RSDUIAction
     }
     
-    private func _decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
+    /// Decode UI action from the given decoder.
+    ///
+    /// - parameters:
+    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - objectType: The object type to which this action should be cast.
+    /// - returns: The UI action created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeUIAction(from decoder:Decoder, with objectType: RSDUIActionObjectType) throws -> RSDUIAction {
+        switch objectType {
+        case .navigation:
+            return try RSDNavigationUIActionObject(from: decoder)
+        case .reminder:
+            return try RSDReminderUIActionObject(from: decoder)
+        case .webView:
+            return try RSDWebViewUIActionObject(from: decoder)
+        default:
+            return try RSDUIActionObject(from: decoder)
+        }
+    }
+    
+    private func _decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType, with objectType: RSDUIActionObjectType?) throws -> RSDUIAction {
+        
+        // Look if there is a casting type for this object.
+        if let objType = objectType {
+            return try decodeUIAction(from: decoder, with: objType)
+        }
+        
         // check if the decoder can be used to decode a web-based action
         if actionType == .navigation(.learnMore) || actionType.customAction != nil,
             let webAction = try? RSDWebViewUIActionObject(from: decoder) {
             return webAction
         }
         // check if the decoder can be used to decode a known action
-        if actionType == .navigation(.skip) {
-            if let skipAction = try? RSDSkipToUIActionObject(from: decoder) {
+        if actionType == .navigation(.skip) || actionType.customAction != nil {
+            if let skipAction = try? RSDNavigationUIActionObject(from: decoder) {
                 return skipAction
             }
             else if let skipAction = try? RSDReminderUIActionObject(from: decoder) {

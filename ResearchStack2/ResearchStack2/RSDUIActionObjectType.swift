@@ -1,8 +1,8 @@
 //
-//  RSDResultType.swift
+//  RSDUIActionObjectType.swift
 //  ResearchStack2
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -30,11 +30,12 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+
 import Foundation
 
-/// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate
-/// result type.
-public struct RSDResultType : RawRepresentable, Codable {
+/// The type of the ui action. This is used to decode a `RSDUIAction` using a `RSDFactory`. It can also be used
+/// to customize the UI.
+public struct RSDUIActionObjectType : RawRepresentable, Codable {
     public typealias RawValue = String
     
     public private(set) var rawValue: String
@@ -43,58 +44,42 @@ public struct RSDResultType : RawRepresentable, Codable {
         self.rawValue = rawValue
     }
     
-    /// Defaults to creating a `RSDResult`.
-    public static let base: RSDResultType = "base"
+    /// Defaults to creating a `RSDUIActionObject`.
+    public static let defaultNavigation: RSDUIActionObjectType = "default"
     
-    /// Defaults to creating a `RSDAnswerResult`.
-    public static let answer: RSDResultType = "answer"
+    /// Defaults to creating a `RSDNavigationUIActionObject`.
+    public static let navigation: RSDUIActionObjectType = "navigation"
     
-    /// Defaults to creating a `RSDCollectionResult`.
-    public static let collection: RSDResultType = "collection"
+    /// Defaults to creating a `RSDReminderUIActionObject`.
+    public static let reminder: RSDUIActionObjectType = "reminder"
     
-    /// Defaults to creating a `RSDMedicationTrackingResult`.
-    public static let medication: RSDResultType = "medication"
+    /// Defaults to creating a `RSDWebViewUIActionObject`.
+    public static let webView: RSDUIActionObjectType = "webView"
     
-    /// Defaults to creating a `RSDSelectionResult`.
-    public static let selection: RSDResultType = "selection"
-    
-    /// Defaults to creating a `RSDTaskResult`.
-    public static let task: RSDResultType = "task"
-    
-    /// Defaults to creating a `RSDFileResult`.
-    public static let file: RSDResultType = "file"
-    
-    /// Defaults to creating a `RSDErrorResult`.
-    public static let error: RSDResultType = "error"
-    
-    /// Defaults to creating a `RSDNavigationResult`.
-    public static let navigation: RSDResultType = "navigation"
-    
-    /// List of all the standard types.
-    public static func allStandardTypes() -> [RSDResultType] {
-        return [.base, .answer, .collection, .task, .file, .error]
+    public static func allStandardTypes() -> [RSDUIActionObjectType] {
+        return [.defaultNavigation, .webView, .navigation, .reminder]
     }
 }
 
-extension RSDResultType : Equatable {
-    public static func ==(lhs: RSDResultType, rhs: RSDResultType) -> Bool {
+extension RSDUIActionObjectType : Equatable {
+    public static func ==(lhs: RSDUIActionObjectType, rhs: RSDUIActionObjectType) -> Bool {
         return lhs.rawValue == rhs.rawValue
     }
-    public static func ==(lhs: String, rhs: RSDResultType) -> Bool {
+    public static func ==(lhs: String, rhs: RSDUIActionObjectType) -> Bool {
         return lhs == rhs.rawValue
     }
-    public static func ==(lhs: RSDResultType, rhs: String) -> Bool {
+    public static func ==(lhs: RSDUIActionObjectType, rhs: String) -> Bool {
         return lhs.rawValue == rhs
     }
 }
 
-extension RSDResultType : Hashable {
+extension RSDUIActionObjectType : Hashable {
     public var hashValue : Int {
         return self.rawValue.hashValue
     }
 }
 
-extension RSDResultType : ExpressibleByStringLiteral {
+extension RSDUIActionObjectType : ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
     
     public init(stringLiteral value: String) {
@@ -102,8 +87,9 @@ extension RSDResultType : ExpressibleByStringLiteral {
     }
 }
 
-extension RSDResultType : RSDDocumentableStringEnum {
+extension RSDUIActionObjectType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }
 }
+

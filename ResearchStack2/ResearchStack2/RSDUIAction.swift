@@ -58,16 +58,23 @@ public protocol RSDWebViewUIAction : RSDUIAction, RSDResourceTransformer {
     var url: String { get }
 }
 
-/// `RSDSkipToUIAction` implements an extension of the base protocol where the action includes an identifier for
-/// a step to skip to if this action is called. This is used by the `RSDConditionalStepNavigator` to navigate
-/// based on a `nil` result.
-/// - seealso: `RSDSurveyNavigationStep`
-public protocol RSDSkipToUIAction : RSDUIAction {
+/// `RSDNavigationUIAction` implements an extension of the base protocol where the action includes an identifier
+/// for a step to navigate to if this action is called. This is used by the `RSDConditionalStepNavigator` to
+/// navigate based on the presence of a result with the given `resultIdentifier`.
+/// - seealso: `RSDNavigationRule`
+public protocol RSDNavigationUIAction : RSDUIAction {
     
     /// The identifier for the step to skip to if the action is called.
     var skipToIdentifier: String { get }
 }
 
+/// `RSDReminderUIAction` implements an action for setting up a local notification to remind
+/// the participant about doing a particular task later.
+public protocol RSDReminderUIAction : RSDUIAction {
+    
+    /// The identifier for a `UNNotificationRequest`.
+    var reminderIdentifier: String { get }
+}
 
 /// `RSDUIActionHandler` implements the custom actions of the step.
 public protocol RSDUIActionHandler {
@@ -89,115 +96,4 @@ public protocol RSDUIActionHandler {
     ///     - step:        The step that the action is on.
     /// - returns: Whether or not the button should be hidden or `nil` if there is no explicit action.
     func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool?
-}
-
-
-/// The `RSDUIActionType` enum describes standard navigation actions that are common to a
-/// given UI step. It is extendable using the custom field.
-///
-public enum RSDUIActionType {
-    
-    /// Standard navigation elements that are common to most steps.
-    case navigation(Navigation)
-    
-    /// Standard navigation elements that are common to most steps.
-    public enum Navigation : String {
-        
-        /// Navigate to the next step.
-        case goForward
-        
-        /// Navigate to the previous step.
-        case goBackward
-        
-        /// Skip the step and immediately go forward.
-        case skip
-        
-        /// Cancel the task.
-        case cancel
-        
-        /// Display additional information about the step.
-        case learnMore
-        
-        /// Used in selection to allow for a navigation that adds additional selection items.
-        case addMore
-    }
-    
-    /// A custom action on the step. Must be handled by the app.
-    case custom(String)
-    
-    /// The string for the custom action (if applicable).
-    public var customAction: String? {
-        if case .custom(let str) = self {
-            return str
-        } else {
-            return nil
-        }
-    }
-}
-
-extension RSDUIActionType: RawRepresentable, Codable {
-    public typealias RawValue = String
-    
-    public init(rawValue: RawValue) {
-        if let subtype = Navigation(rawValue: rawValue) {
-            self = .navigation(subtype)
-        }
-        else {
-            self = .custom(rawValue)
-        }
-    }
-    
-    public var rawValue: String {
-        switch (self) {
-        case .navigation(let value):
-            return value.rawValue
-            
-        case .custom(let value):
-            return value
-        }
-    }
-}
-
-extension RSDUIActionType : Equatable {
-    public static func ==(lhs: RSDUIActionType, rhs: RSDUIActionType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDUIActionType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDUIActionType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDUIActionType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
-extension RSDUIActionType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
-    }
-}
-
-extension RSDUIActionType : CodingKey {
-    public var stringValue: String {
-        return self.rawValue
-    }
-    
-    public init?(stringValue: String) {
-        self.init(rawValue: stringValue)
-    }
-    
-    public var intValue: Int? {
-        return nil
-    }
-    
-    public init?(intValue: Int) {
-        return nil
-    }
 }

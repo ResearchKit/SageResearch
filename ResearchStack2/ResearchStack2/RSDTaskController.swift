@@ -34,7 +34,7 @@
 import Foundation
 
 /// The direction of navigation for the steps.
-public enum RSDStepDirection : Int {
+public enum RSDStepDirection : Int, Codable {
     /// go back
     case reverse = -1
     /// initial step
