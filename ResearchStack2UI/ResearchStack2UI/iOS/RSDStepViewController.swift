@@ -716,7 +716,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
         else {
             // Otherwise, replace the result with a collection result.
-            var collectionResult: RSDCollectionResult = RSDCollectionResultObject(identifier: self.step.identifier)
+            var collectionResult = RSDCollectionResultObject(identifier: self.step.identifier)
             collectionResult.appendInputResults(with: previousResult)
             navigationResult = collectionResult
         }
