@@ -122,7 +122,7 @@ public protocol RSDTaskViewControllerDelegate : RSDOptionalTaskViewControllerDel
 
 /// Optional protocol that can be used to get the step view controller from the step rather than from the
 /// task view controller or delegate.
-public protocol RSDStepViewControllerVendor : RSDUIStep {
+public protocol RSDStepViewControllerVendor : RSDStep {
 
     /// Returns the view controller vended by the step.
     /// - parameter taskPath: The current task path to use to instantiate the view controller
@@ -257,9 +257,6 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
             activeStep.duration > 0,
             activeStep.commands.contains(.transitionAutomatically) {
             return RSDActiveStepViewController(step: step)
-        }
-        else if step.stepType == .imagePicker {
-            return RSDImagePickerStepViewController(step: step)
         }
         else if RSDTableStepViewController.doesSupport(step) {
             // If this step *can* be displayed using the generic step view controller, then default to that

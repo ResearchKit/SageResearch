@@ -103,8 +103,8 @@ class CodableStepObjectTests: XCTestCase {
             
             let skipAction = object.action(for: .navigation(.skip), on: object)
             XCTAssertNotNil(skipAction)
-            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.buttonTitle, "not applicable")
-            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.skipToIdentifier, "boo")
+            XCTAssertEqual((skipAction as? RSDNavigationUIActionObject)?.buttonTitle, "not applicable")
+            XCTAssertEqual((skipAction as? RSDNavigationUIActionObject)?.skipToIdentifier, "boo")
             
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
             
@@ -213,8 +213,8 @@ class CodableStepObjectTests: XCTestCase {
             
             let skipAction = object.action(for: .navigation(.skip), on: object)
             XCTAssertNotNil(skipAction)
-            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.buttonTitle, "not applicable")
-            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.skipToIdentifier, "boo")
+            XCTAssertEqual((skipAction as? RSDNavigationUIActionObject)?.buttonTitle, "not applicable")
+            XCTAssertEqual((skipAction as? RSDNavigationUIActionObject)?.skipToIdentifier, "boo")
             
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
             
@@ -459,8 +459,8 @@ class CodableStepObjectTests: XCTestCase {
             
             let skipAction = object.action(for: .navigation(.skip), on: object)
             XCTAssertNotNil(skipAction)
-            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.buttonTitle, "not applicable")
-            XCTAssertEqual((skipAction as? RSDSkipToUIActionObject)?.skipToIdentifier, "boo")
+            XCTAssertEqual((skipAction as? RSDNavigationUIActionObject)?.buttonTitle, "not applicable")
+            XCTAssertEqual((skipAction as? RSDNavigationUIActionObject)?.skipToIdentifier, "boo")
             
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
             

@@ -83,7 +83,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     
     /// Identifier to skip to if all input fields have nil answers.
     open var skipToIfNil: String? {
-        guard let skipAction = self.action(for: .navigation(.skip), on: self) as? RSDSkipToUIAction
+        guard let skipAction = self.action(for: .navigation(.skip), on: self) as? RSDNavigationUIAction
             else {
                 return nil
         }

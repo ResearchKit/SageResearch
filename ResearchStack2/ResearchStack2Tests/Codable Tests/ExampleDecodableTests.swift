@@ -55,8 +55,8 @@ class ExampleDecodableTests: XCTestCase {
         for objectType in documentCreator.allCodableObjects {
             
             let validKeys = objectType.validateAllKeysIncluded()
-            XCTAssertTrue(validKeys)
-            
+            XCTAssertTrue(validKeys, "\(objectType)")
+
             if !validKeys {
                 debugPrint(objectType)
             }

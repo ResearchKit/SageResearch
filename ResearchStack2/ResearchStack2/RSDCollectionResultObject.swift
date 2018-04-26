@@ -35,7 +35,7 @@ import Foundation
 
 /// `RSDCollectionResultObject` is used include multiple results associated with a single step or async action that
 /// may have more that one result.
-public struct RSDCollectionResultObject : RSDCollectionResult, Codable, RSDCopyWithIdentifier {
+public struct RSDCollectionResultObject : RSDCollectionResult, RSDNavigationResult, Codable, RSDCopyWithIdentifier {
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
@@ -53,6 +53,10 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable, RSDCopyW
     /// field inputs, but they are not required to implement the `RSDAnswerResult` protocol.
     public var inputResults: [RSDResult]
     
+    /// The identifier for the step to go to following this result. If non-nil, then this will be used in
+    /// navigation handling.
+    public var skipToIdentifier: String?
+    
     /// Default initializer for this object.
     ///
     /// - parameters:
@@ -64,7 +68,7 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable, RSDCopyW
     }
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, startDate, endDate, inputResults
+        case identifier, type, startDate, endDate, inputResults, skipToIdentifier
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated
@@ -75,6 +79,7 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable, RSDCopyW
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.identifier = try container.decode(String.self, forKey: .identifier)
+        self.skipToIdentifier = try container.decodeIfPresent(String.self, forKey: .skipToIdentifier)
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
         self.type = try container.decode(RSDResultType.self, forKey: .type)
@@ -92,6 +97,7 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable, RSDCopyW
         try container.encode(type, forKey: .type)
         try container.encode(startDate, forKey: .startDate)
         try container.encode(endDate, forKey: .endDate)
+        try container.encodeIfPresent(skipToIdentifier, forKey: .skipToIdentifier)
         
         var nestedContainer = container.nestedUnkeyedContainer(forKey: .inputResults)
         for result in inputResults {
@@ -106,6 +112,7 @@ public struct RSDCollectionResultObject : RSDCollectionResult, Codable, RSDCopyW
         copy.endDate = self.endDate
         copy.type = self.type
         copy.inputResults = self.inputResults
+        copy.skipToIdentifier = self.skipToIdentifier
         return copy
     }
 }
@@ -117,7 +124,7 @@ extension RSDCollectionResultObject : RSDDocumentableCodableObject {
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .inputResults]
+        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .inputResults, .skipToIdentifier]
         return codingKeys
     }
     
@@ -135,9 +142,11 @@ extension RSDCollectionResultObject : RSDDocumentableCodableObject {
                 if idx != 3 { return false }
             case .inputResults:
                 if idx != 4 { return false }
+            case .skipToIdentifier:
+                if idx != 5 { return false }
             }
         }
-        return keys.count == 5
+        return keys.count == 6
     }
     
     static func exampleResult() -> RSDCollectionResultObject {
