@@ -34,7 +34,7 @@
 import Foundation
 
 /// ISO 8601 timestamp formatter that includes time and date.
-let rsd_ISO8601TimestampFormatter: DateFormatter = {
+var rsd_ISO8601TimestampFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
     formatter.locale = Locale(identifier: "en_US_POSIX")

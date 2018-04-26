@@ -38,7 +38,9 @@ class CodableDistanceRecorderTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
+        // Use a statically defined timezone.
+        rsd_ISO8601TimestampFormatter.timeZone = TimeZone(secondsFromGMT: Int(-2.5 * 60 * 60))
     }
     
     override func tearDown() {
@@ -98,7 +100,7 @@ class CodableDistanceRecorderTests: XCTestCase {
             "uptime" : 37246.68689429167,
             "timestamp" : 1.2498140833340585,
             "stepPath" : "Cardio Stair Step/heartRate.after/heartRate",
-            "timestampDate" : "2018-01-30T15:13:20.597-08:00"
+            "timestampDate" : "2018-01-30T15:13:20.597-02:30"
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -121,7 +123,7 @@ class CodableDistanceRecorderTests: XCTestCase {
             XCTAssertEqual(dictionary["uptime"] as? Double, 37246.68689429167)
             XCTAssertEqual(dictionary["timestamp"] as? Double, 1.2498140833340585)
             XCTAssertEqual(dictionary["stepPath"] as? String, "Cardio Stair Step/heartRate.after/heartRate")
-            XCTAssertEqual(dictionary["timestampDate"] as? String, "2018-01-30T15:13:20.597-08:00")
+            XCTAssertEqual(dictionary["timestampDate"] as? String, "2018-01-30T15:13:20.597-02:30")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -140,7 +142,7 @@ class CodableDistanceRecorderTests: XCTestCase {
                  "course" : 76.873546882061802,
                  "totalDistance" : 63.484948023273581,
                  "speed" : 1.0289180278778076,
-                 "timestampDate" : "2018-01-04T23:49:34.135-08:00",
+                 "timestampDate" : "2018-01-04T23:49:34.135-02:30",
                  "timestamp" : 210.47070598602295,
                  "altitude" : 23.375564581136974
                 }
@@ -174,7 +176,7 @@ class CodableDistanceRecorderTests: XCTestCase {
             XCTAssertEqual(dictionary["uptime"] as? Double, 99652.677386361029)
             XCTAssertEqual(dictionary["timestamp"] as? Double, 210.47070598602295)
             XCTAssertEqual(dictionary["stepPath"] as? String, "Cardio 12MT/run/runDistance")
-            XCTAssertEqual(dictionary["timestampDate"] as? String, "2018-01-04T23:49:34.135-08:00")
+            XCTAssertEqual(dictionary["timestampDate"] as? String, "2018-01-04T23:49:34.135-02:30")
             XCTAssertEqual(dictionary["relativeDistance"] as? Double, 2.1164507282484935)
             XCTAssertEqual(dictionary["horizontalAccuracy"] as? Int, 6)
             XCTAssertEqual(dictionary["altitude"] as? Double, 23.375564581136974)
