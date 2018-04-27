@@ -186,6 +186,7 @@
 		F8C7D39A20915823007490BC /* RSDUIActionObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C7D39820915823007490BC /* RSDUIActionObjectType.swift */; };
 		F8C7D39B20915823007490BC /* RSDUIActionObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C7D39820915823007490BC /* RSDUIActionObjectType.swift */; };
 		F8C7D39D20915E67007490BC /* CodableUIActionObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C7D39C20915E67007490BC /* CodableUIActionObjectTests.swift */; };
+		F8C7D40B2092876B007490BC /* CodableTrackedDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C7D40A2092876B007490BC /* CodableTrackedDataTests.swift */; };
 		F8D074AE204FAC04006CDABB /* RecordSampleLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D074AD204FAC04006CDABB /* RecordSampleLoggerTests.swift */; };
 		F8D074B1204FBD0D006CDABB /* DataArchiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D074B0204FBD0D006CDABB /* DataArchiveTests.swift */; };
 		F8E94FE02058308B00752B7B /* RSDOverviewStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FDF2058308B00752B7B /* RSDOverviewStepObject.swift */; };
@@ -585,6 +586,7 @@
 		F8C7D394209155A9007490BC /* RSDUIActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionType.swift; sourceTree = "<group>"; };
 		F8C7D39820915823007490BC /* RSDUIActionObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionObjectType.swift; sourceTree = "<group>"; };
 		F8C7D39C20915E67007490BC /* CodableUIActionObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableUIActionObjectTests.swift; sourceTree = "<group>"; };
+		F8C7D40A2092876B007490BC /* CodableTrackedDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTrackedDataTests.swift; sourceTree = "<group>"; };
 		F8D074AD204FAC04006CDABB /* RecordSampleLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSampleLoggerTests.swift; sourceTree = "<group>"; };
 		F8D074B0204FBD0D006CDABB /* DataArchiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataArchiveTests.swift; sourceTree = "<group>"; };
 		F8E94FDF2058308B00752B7B /* RSDOverviewStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDOverviewStepObject.swift; sourceTree = "<group>"; };
@@ -1013,6 +1015,7 @@
 				FFD243291F9568C70083F458 /* CodableResultObjectTests.swift */,
 				FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */,
 				FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */,
+				F8C7D40A2092876B007490BC /* CodableTrackedDataTests.swift */,
 				F8C7D39C20915E67007490BC /* CodableUIActionObjectTests.swift */,
 				F8D074B0204FBD0D006CDABB /* DataArchiveTests.swift */,
 				FF87CD851F8413F700084426 /* FactoryTests.swift */,
@@ -1743,6 +1746,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8C7D40B2092876B007490BC /* CodableTrackedDataTests.swift in Sources */,
 				F8C7D39D20915E67007490BC /* CodableUIActionObjectTests.swift in Sources */,
 				F858D14B201BA67B00132325 /* MeasurementDurationTests.swift in Sources */,
 				FF633D751FCE7A6900CF2267 /* CodableResultObjectTests.swift in Sources */,
