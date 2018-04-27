@@ -786,26 +786,25 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Validate the text field value and save the answer if valid.
     @discardableResult
-    public func validateAndSave(textField: UITextField) -> Bool {
-        
-        guard let customTextField = textField as? RSDStepTextField,
+    public func validateAndSave(textField: UITextField? = nil) -> Bool {
+        guard let customTextField = (textField ?? activeTextField) as? RSDStepTextField,
             let indexPath = customTextField.indexPath else {
                 return false
         }
         
         let answer: Any? = {
-            if let picker = textField.inputView as? RSDPickerViewProtocol {
+            if let picker = customTextField.inputView as? RSDPickerViewProtocol {
                 return picker.answer
             } else {
-                return textField.text
+                return customTextField.text
             }
         }()
         
         // If this is a custom text field then update the text to match the
         // actual value stored in case it differs from the text entered.
         let success = saveAnswer(newValue: answer ?? NSNull(), at: indexPath)
-        if !success, let tableItem = tableItem(for: textField) {
-            textField.text = tableItem.answerText
+        if !success, let tableItem = tableItem(for: customTextField) {
+            customTextField.text = tableItem.answerText
         }
         return success
     }
