@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FF8B532F1FCE67AA006B6937"
-               BuildableName = "ResearchStack2.framework"
-               BlueprintName = "ResearchStack2 (watchOS)"
-               ReferencedContainer = "container:ResearchStack2.xcodeproj">
+               BuildableName = "Research.framework"
+               BlueprintName = "Research (watchOS)"
+               ReferencedContainer = "container:Research.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF8B532F1FCE67AA006B6937"
-            BuildableName = "ResearchStack2.framework"
-            BlueprintName = "ResearchStack2 (watchOS)"
-            ReferencedContainer = "container:ResearchStack2.xcodeproj">
+            BuildableName = "Research.framework"
+            BlueprintName = "Research (watchOS)"
+            ReferencedContainer = "container:Research.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -64,9 +64,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FF8B532F1FCE67AA006B6937"
-            BuildableName = "ResearchStack2.framework"
-            BlueprintName = "ResearchStack2 (watchOS)"
-            ReferencedContainer = "container:ResearchStack2.xcodeproj">
+            BuildableName = "Research.framework"
+            BlueprintName = "Research (watchOS)"
+            ReferencedContainer = "container:Research.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

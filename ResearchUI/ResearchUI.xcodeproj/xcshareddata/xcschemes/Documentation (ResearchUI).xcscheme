@@ -17,7 +17,7 @@
                BlueprintIdentifier = "FF1446C11FBCF42600389F77"
                BuildableName = "Documentation"
                BlueprintName = "Documentation"
-               ReferencedContainer = "container:ResearchStack2UI.xcodeproj">
+               ReferencedContainer = "container:ResearchUI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "FF1446C11FBCF42600389F77"
             BuildableName = "Documentation"
             BlueprintName = "Documentation"
-            ReferencedContainer = "container:ResearchStack2UI.xcodeproj">
+            ReferencedContainer = "container:ResearchUI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "FF1446C11FBCF42600389F77"
             BuildableName = "Documentation"
             BlueprintName = "Documentation"
-            ReferencedContainer = "container:ResearchStack2UI.xcodeproj">
+            ReferencedContainer = "container:ResearchUI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
