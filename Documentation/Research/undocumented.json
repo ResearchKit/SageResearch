@@ -1,915 +1,908 @@
 {
   "warnings": [
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/Array+Utilities.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/Array+Utilities.swift",
       "line": 34,
       "symbol": "RSDArrayExtension",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/Dictionary+Utilities.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/Codable+Utilities.swift",
+      "line": 99,
+      "symbol": "AnyCodableArray.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/Codable+Utilities.swift",
+      "line": 115,
+      "symbol": "AnyCodableDictionary.dictionary",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/Codable+Utilities.swift",
+      "line": 117,
+      "symbol": "AnyCodableDictionary.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/Dictionary+Utilities.swift",
       "line": 36,
       "symbol": "RSDDictionaryExtension",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/Localization.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/Localization.swift",
       "line": 100,
       "symbol": "LocalizationBundle.hash",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/Localization.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/Localization.swift",
       "line": 104,
       "symbol": "LocalizationBundle.isEqual(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAnswerResultType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDAnswerResultType.swift",
       "line": 294,
       "symbol": "RSDAnswerResultType.decodeDate(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAnswerResultType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDAnswerResultType.swift",
       "line": 449,
       "symbol": "RSDAnswerResultType.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAsyncActionConfiguration.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDAsyncActionConfiguration.swift",
       "line": 45,
       "symbol": "RSDPermissionsConfiguration",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAsyncActionType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDAsyncActionType.swift",
       "line": 62,
       "symbol": "RSDAsyncActionType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDAsyncActionType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDAsyncActionType.swift",
       "line": 65,
       "symbol": "RSDAsyncActionType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDCohortTrackingRule.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDChoiceObject.swift",
+      "line": 41,
+      "symbol": "RSDChoiceObject.Value",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDCohortTrackingRule.swift",
       "line": 95,
       "symbol": "RSDCohortTrackingRule.init(initialCohorts:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDComparableSurveyRuleObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDComparableSurveyRuleObject.swift",
+      "line": 39,
+      "symbol": "RSDComparableSurveyRuleObject.Value",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDComparableSurveyRuleObject.swift",
       "line": 59,
       "symbol": "RSDComparableSurveyRuleObject.matchingValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDeviceType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDDeviceType.swift",
       "line": 80,
       "symbol": "RSDDeviceType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDeviceType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDDeviceType.swift",
       "line": 83,
       "symbol": "RSDDeviceType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDistanceRecorder.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDDistanceRecorder.swift",
       "line": 145,
       "symbol": "RSDDistanceRecorder.locationManager",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDistanceRecorder.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDDistanceRecorder.swift",
       "line": 486,
       "symbol": "RSDDistanceRecord.totalDistance",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDistanceRecorder.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDDistanceRecorder.swift",
       "line": 490,
       "symbol": "RSDDistanceRecord.course",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDistanceRecorder.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDDistanceRecorder.swift",
       "line": 493,
       "symbol": "RSDDistanceRecord.speed",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDocumentable.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDDocumentable.swift",
       "line": 50,
       "symbol": "RSDDocumentCreator",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDDocumentable.swift",
-      "line": 249,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDDocumentable.swift",
+      "line": 241,
       "symbol": "RawRepresentable.stringValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFactory.swift",
       "line": 59,
       "symbol": "RSDFactory.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
-      "line": 765,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFactory.swift",
+      "line": 760,
       "symbol": "RSDFactoryDecoder.decode(_:from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
-      "line": 766,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFactory.swift",
+      "line": 761,
       "symbol": "RSDFactoryDecoder.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
-      "line": 808,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFactory.swift",
+      "line": 803,
       "symbol": "RSDFactoryEncoder.encode(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFactory.swift",
-      "line": 809,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFactory.swift",
+      "line": 804,
       "symbol": "RSDFactoryEncoder.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormDataType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFormDataType.swift",
       "line": 95,
       "symbol": "RSDFormDataType.BaseType.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormDataType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFormDataType.swift",
       "line": 115,
       "symbol": "RSDFormDataType.CollectionType.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormDataType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFormDataType.swift",
       "line": 132,
       "symbol": "RSDFormDataType.MeasurementType.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormDataType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFormDataType.swift",
       "line": 150,
       "symbol": "RSDFormDataType.MeasurementRange.allTypes()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormUIHint.swift",
-      "line": 95,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFormUIHint.swift",
+      "line": 101,
       "symbol": "RSDFormUIHint.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDFormUIHint.swift",
-      "line": 98,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDFormUIHint.swift",
+      "line": 104,
       "symbol": "RSDFormUIHint.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDGenericStepObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDGenericStepObject.swift",
       "line": 58,
       "symbol": "RSDGenericStepObject.init(identifier:stepType:userInfo:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDIdentifier.swift",
       "line": 50,
       "symbol": "RSDIdentifier.exit",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDIdentifier.swift",
       "line": 51,
       "symbol": "RSDIdentifier.nextSection",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDIdentifier.swift",
       "line": 52,
       "symbol": "RSDIdentifier.nextStep",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDIdentifier.swift",
       "line": 54,
       "symbol": "RSDIdentifier.allGlobalIdentifiers()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDIdentifier.swift",
       "line": 63,
       "symbol": "RSDIdentifier.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDIdentifier.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDIdentifier.swift",
       "line": 66,
       "symbol": "RSDIdentifier.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImagePickerStep.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDImagePickerStep.swift",
       "line": 53,
       "symbol": "RSDImagePickerMediaType.photo",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImagePickerStep.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDImagePickerStep.swift",
       "line": 54,
       "symbol": "RSDImagePickerMediaType.video",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImageWrapper.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDImagePlacementType.swift",
+      "line": 61,
+      "symbol": "RSDImagePlacementType.allStandardTypes()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDImagePlacementType.swift",
+      "line": 70,
+      "symbol": "RSDImagePlacementType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDImagePlacementType.swift",
+      "line": 73,
+      "symbol": "RSDImagePlacementType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDImageWrapper.swift",
       "line": 45,
       "symbol": "RSDEmbeddedIconVendor.imageVendor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImageWrapper.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDImageWrapper.swift",
+      "line": 146,
+      "symbol": "RSDImageWrapper.embeddedImage()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDImageWrapper.swift",
       "line": 179,
       "symbol": "RSDImageWrapper.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDImageWrapper.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDImageWrapper.swift",
       "line": 182,
       "symbol": "RSDImageWrapper.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDInputFieldObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDInputFieldObject.swift",
       "line": 112,
       "symbol": "RSDInputFieldObject.init(identifier:dataType:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDJSONValue.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDJSONValue.swift",
       "line": 183,
       "symbol": "DateComponents.defaultFormatter()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMedicationTrackingStepNavigator.swift",
-      "line": 36,
-      "symbol": "RSDMedicationTrackingStepNavigator",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMedicationTrackingStepNavigator.swift",
-      "line": 38,
-      "symbol": "RSDMedicationTrackingStepNavigator.decodeItems(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMedicationTrackingStepNavigator.swift",
-      "line": 199,
-      "symbol": "RSDMedicationItem.init(identifier:sectionIdentifier:title:shortText:detail:icon:isExclusive:isContinuousInjection:)",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDModalStepTaskController.swift",
+      "line": 64,
+      "symbol": "RSDModalStepTaskController.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMedicationTrackingStepNavigator.swift",
-      "line": 311,
-      "symbol": "RSDMedicationTrackingResult.init(identifier:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMotionRecorder.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDMotionRecorder.swift",
       "line": 462,
       "symbol": "RSDVector.x",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMotionRecorder.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDMotionRecorder.swift",
       "line": 463,
       "symbol": "RSDVector.y",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDMotionRecorder.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDMotionRecorder.swift",
       "line": 464,
       "symbol": "RSDVector.z",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDPickerDataSource.swift",
       "line": 121,
       "symbol": "RSDImageChoicePickerDataSource",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDPickerDataSource.swift",
       "line": 145,
       "symbol": "RSDNumberFormatterProtocol",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDPopoverInputFieldObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDPopoverInputFieldObject.swift",
       "line": 99,
       "symbol": "RSDPopoverInputFieldObject.init(inputField:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDRange.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDRange.swift",
       "line": null,
       "symbol": "RSDDurationRange",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDRange.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDRange.swift",
       "line": 122,
       "symbol": "RSDDurationRange",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDResultType.swift",
-      "line": 80,
-      "symbol": "RSDResultType.==(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDResultType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDResultType.swift",
       "line": 83,
       "symbol": "RSDResultType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
-      "line": 162,
-      "symbol": "RSDWeeklyScheduleObject.init(timeOfDayString:daysOfWeek:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDResultType.swift",
+      "line": 86,
+      "symbol": "RSDResultType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
-      "line": 303,
-      "symbol": "RSDWeekday.sunday",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDSampleRecorder.swift",
+      "line": 687,
+      "symbol": "CSVEncodingFormat.Key",
+      "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
-      "line": 304,
-      "symbol": "RSDWeekday.monday",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
-      "line": 305,
-      "symbol": "RSDWeekday.tuesday",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
-      "line": 306,
-      "symbol": "RSDWeekday.wednesday",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
-      "line": 307,
-      "symbol": "RSDWeekday.thursday",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
-      "line": 308,
-      "symbol": "RSDWeekday.friday",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDSchedule.swift",
-      "line": 309,
-      "symbol": "RSDWeekday.saturday",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStandardPermissionType.swift",
       "line": 132,
       "symbol": "RSDStandardPermission.camera",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStandardPermissionType.swift",
       "line": 133,
       "symbol": "RSDStandardPermission.microphone",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStandardPermissionType.swift",
       "line": 134,
       "symbol": "RSDStandardPermission.motion",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStandardPermissionType.swift",
       "line": 135,
       "symbol": "RSDStandardPermission.photoLibrary",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStandardPermissionType.swift",
       "line": 136,
       "symbol": "RSDStandardPermission.location",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStandardPermissionType.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStandardPermissionType.swift",
       "line": 137,
       "symbol": "RSDStandardPermission.locationWhenInUse",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStepNavigatorType.swift",
-      "line": 63,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStepNavigatorType.swift",
+      "line": 57,
       "symbol": "RSDStepNavigatorType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStepNavigatorType.swift",
-      "line": 66,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStepNavigatorType.swift",
+      "line": 60,
       "symbol": "RSDStepNavigatorType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStepType.swift",
-      "line": 96,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStepType.swift",
+      "line": 87,
       "symbol": "RSDStepType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDStepType.swift",
-      "line": 99,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDStepType.swift",
+      "line": 90,
       "symbol": "RSDStepType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskController.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTaskController.swift",
       "line": 47,
       "symbol": "RSDTaskFinishReason",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskInfoStepObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTaskInfoStepObject.swift",
       "line": null,
       "symbol": "RSDTaskInfoObject",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskInfoStepObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTaskInfoStepObject.swift",
       "line": null,
       "symbol": "RSDTaskInfoObject",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskInfoStepObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTaskInfoStepObject.swift",
       "line": 36,
       "symbol": "RSDTaskInfoObject",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTaskInfoStepObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTaskInfoStepObject.swift",
       "line": 82,
       "symbol": "RSDTaskInfoObject.init(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptions.swift",
       "line": null,
       "symbol": "RSDCodableRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptions.swift",
       "line": null,
       "symbol": "RSDRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptions.swift",
       "line": 67,
       "symbol": "RSDTextValidator",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptions.swift",
       "line": 75,
       "symbol": "RSDRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptions.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptions.swift",
       "line": 83,
       "symbol": "RSDCodableRegExMatchValidator",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.allCharacters",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.sentences",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 202,
       "symbol": "RSDTextAutocapitalizationType.words",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 214,
       "symbol": "RSDTextAutocapitalizationType.textAutocapitalizationType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 231,
       "symbol": "RSDTextAutocorrectionType.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 231,
       "symbol": "RSDTextAutocorrectionType.no",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 231,
       "symbol": "RSDTextAutocorrectionType.yes",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 243,
       "symbol": "RSDTextAutocorrectionType.textAutocorrectionType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 260,
       "symbol": "RSDTextSpellCheckingType.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 260,
       "symbol": "RSDTextSpellCheckingType.no",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 260,
       "symbol": "RSDTextSpellCheckingType.yes",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 272,
       "symbol": "RSDTextSpellCheckingType.textSpellCheckingType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.URL",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.asciiCapable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.asciiCapableNumberPad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.decimalPad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.emailAddress",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.namePhonePad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.numberPad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.numbersAndPunctuation",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.phonePad",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.twitter",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 291,
       "symbol": "RSDKeyboardType.webSearch",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTextFieldOptionsObject.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDTextFieldOptionsObject.swift",
       "line": 303,
       "symbol": "RSDKeyboardType.keyboardType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemDetailsStepObject.swift",
-      "line": 49,
-      "symbol": "RSDTrackedItemDetailsStepObject.previousAnswer",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUIActionObjectType.swift",
+      "line": 59,
+      "symbol": "RSDUIActionObjectType.allStandardTypes()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
-      "line": 42,
-      "symbol": "RSDTrackedItemsStepNavigator.ItemsCodingKeys.items",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUIActionObjectType.swift",
+      "line": 68,
+      "symbol": "RSDUIActionObjectType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
-      "line": 42,
-      "symbol": "RSDTrackedItemsStepNavigator.ItemsCodingKeys.sections",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUIActionObjectType.swift",
+      "line": 71,
+      "symbol": "RSDUIActionObjectType.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
-      "line": 47,
-      "symbol": "RSDTrackedItemsStepNavigator.StepIdentifiers.addDetails",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
-      "line": 47,
-      "symbol": "RSDTrackedItemsStepNavigator.StepIdentifiers.logging",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
-      "line": 47,
-      "symbol": "RSDTrackedItemsStepNavigator.StepIdentifiers.review",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
-      "line": 47,
-      "symbol": "RSDTrackedItemsStepNavigator.StepIdentifiers.selection",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedItemsStepNavigator.swift",
-      "line": 129,
-      "symbol": "RSDTrackedItemsStepNavigator.decodeItems(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedSelectionDataSource.swift",
-      "line": 82,
-      "symbol": "RSDTrackedSelectionDataSource.buildSections(step:initialResult:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedSelectionStepObject.swift",
-      "line": 252,
-      "symbol": "RSDTrackedSectionObject.init(identifier:text:detail:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedSelectionStepObject.swift",
-      "line": 317,
-      "symbol": "RSDTrackedItemObject.init(identifier:sectionIdentifier:title:shortText:detail:icon:isExclusive:addDetailsIdentifier:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDTrackedSelectionStepObject.swift",
-      "line": 357,
-      "symbol": "RSDTrackedItemsResultObject.init(identifier:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUIAction.swift",
-      "line": 165,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUIActionType.swift",
+      "line": 102,
       "symbol": "RSDUIActionType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUIAction.swift",
-      "line": 168,
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUIActionType.swift",
+      "line": 105,
       "symbol": "RSDUIActionType.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUSMeasurementPickerDataSource.swift",
+      "line": 39,
+      "symbol": "RSDUSMeasurementPickerDataSource.UnitType",
+      "symbol_kind": "source.lang.swift.decl.associatedtype",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUSMeasurementPickerDataSource.swift",
       "line": 42,
       "symbol": "RSDUSMeasurementPickerDataSource.converter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUSMeasurementPickerDataSource.swift",
       "line": 46,
       "symbol": "RSDUSMeasurementPickerDataSource.largeUnitBounds",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUSMeasurementPickerDataSource.swift",
       "line": 91,
       "symbol": "RSDUSHeightPickerDataSourceObject.converter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2/ResearchStack2/RSDUSMeasurementPickerDataSource.swift",
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDUSMeasurementPickerDataSource.swift",
       "line": 161,
       "symbol": "RSDUSInfantMassPickerDataSourceObject.converter",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDWeekday.swift",
+      "line": 40,
+      "symbol": "RSDWeekday.sunday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDWeekday.swift",
+      "line": 41,
+      "symbol": "RSDWeekday.monday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDWeekday.swift",
+      "line": 42,
+      "symbol": "RSDWeekday.tuesday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDWeekday.swift",
+      "line": 43,
+      "symbol": "RSDWeekday.wednesday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDWeekday.swift",
+      "line": 44,
+      "symbol": "RSDWeekday.thursday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDWeekday.swift",
+      "line": 45,
+      "symbol": "RSDWeekday.friday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDWeekday.swift",
+      "line": 46,
+      "symbol": "RSDWeekday.saturday",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research/Research/RSDWeeklyScheduleObject.swift",
+      "line": 102,
+      "symbol": "RSDWeeklyScheduleObject.init(timeOfDayString:daysOfWeek:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/syoung2/Documents/AppleCode/SageResearch/ResearchStack2"
+  "source_directory": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/Research"
 }
