@@ -41,5 +41,5 @@ FOUNDATION_EXPORT const unsigned char RK1TranslatorVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <RK1Translator/PublicHeader.h>
 @import ResearchKit;
-@import ResearchStack2;
+@import Research;
 

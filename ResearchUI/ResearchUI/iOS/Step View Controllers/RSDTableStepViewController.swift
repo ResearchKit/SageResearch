@@ -1,6 +1,6 @@
 //
 //  RSDTableStepViewController.swift
-//  ResearchStack2UI
+//  ResearchUI
 //
 //  Created by Josh Bruhin on 5/16/17.
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.

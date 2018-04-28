@@ -1,9 +1,9 @@
-# ResearchStack2
-ResearchStack2 contains the core logic for navigating Steps and Tasks to collect Results independently of any particular UI/UX implementation or back-end services. Key elements of this project are updating code to Swift 4 and creating a data model built around protocols, allowing the more modular composition of apps from independent components.
+# Research
+Research contains the core logic for navigating Steps and Tasks to collect Results independently of any particular UI/UX implementation or back-end services. Key elements of this project are updating code to Swift 4 and creating a data model built around protocols, allowing the more modular composition of apps from independent components.
 
 ## License
 
-ResearchStack2 is available under the BSD license:
+Research is available under the BSD license:
 
 Copyright (c) 2017-2018, Sage Bionetworks
 All rights reserved.

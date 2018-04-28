@@ -1,6 +1,6 @@
 //
-//  ResearchStack2_UnitTest.h
-//  ResearchStack2-UnitTest
+//  Research_UnitTest.h
+//  Research-UnitTest
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -33,11 +33,11 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for ResearchStack2_UnitTest.
-FOUNDATION_EXPORT double ResearchStack2_UnitTestVersionNumber;
+//! Project version number for Research_UnitTest.
+FOUNDATION_EXPORT double Research_UnitTestVersionNumber;
 
-//! Project version string for ResearchStack2_UnitTest.
-FOUNDATION_EXPORT const unsigned char ResearchStack2_UnitTestVersionString[];
+//! Project version string for Research_UnitTest.
+FOUNDATION_EXPORT const unsigned char Research_UnitTestVersionString[];
 
-#import <ResearchStack2_UnitTest/NSLocale+UnitTest.h>
+#import <Research_UnitTest/NSLocale+UnitTest.h>
 

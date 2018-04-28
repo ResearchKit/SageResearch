@@ -1,6 +1,6 @@
 //
 //  RSDDeviceType.swift
-//  ResearchStack2
+//  Research
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //

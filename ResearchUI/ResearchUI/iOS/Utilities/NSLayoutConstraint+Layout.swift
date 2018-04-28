@@ -1,6 +1,6 @@
 //
 //  NSLayoutConstraint+Layout.swift
-//  ResearchStack2UI
+//  ResearchUI
 //
 //  Created by Josh Bruhin on 5/26/17.
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.

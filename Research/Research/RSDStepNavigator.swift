@@ -1,6 +1,6 @@
 //
 //  RSDStepNavigator.swift
-//  ResearchStack2
+//  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
@@ -65,7 +65,7 @@ public protocol RSDStepNavigator {
     /// Given the current task result, is there a step after the current step?
     ///
     /// This method is checked when first displaying a step to determine if the UI should display
-    /// this as the last step. By default, the UI defined in ResearchStack2UI will change the text
+    /// this as the last step. By default, the UI defined in ResearchUI will change the text
     /// on the continue button from "Next" to "Done", unless customized.
     ///
     /// - note: the task result may or may not include a result for the given step.
@@ -79,7 +79,7 @@ public protocol RSDStepNavigator {
     /// Given the current task result, is there a step before the current step?
     ///
     /// This method is checked when first displaying a step to determine if the UI should display
-    /// this as the first step. By default, the UI defined in ResearchStack2UI will hide the "Back"
+    /// this as the first step. By default, the UI defined in ResearchUI will hide the "Back"
     /// button if there is no step before the given step.
     ///
     /// - note: the task result may or may not include a result for the given step.

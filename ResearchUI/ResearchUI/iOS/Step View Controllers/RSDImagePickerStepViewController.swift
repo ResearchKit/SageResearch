@@ -1,6 +1,6 @@
 //
 //  RSDImagePickerStepViewController.swift
-//  ResearchStack2UI (iOS)
+//  ResearchUI (iOS)
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -48,7 +48,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     @IBOutlet weak public var errorMessageLabel: UILabel?
     
     private let picker = UIImagePickerController()
-    private let processingQueue = DispatchQueue(label: "org.sagebase.ResearchStack2.camera.processing")
+    private let processingQueue = DispatchQueue(label: "org.sagebase.Research.camera.processing")
     
     /// The source for the image picker.
     open var sourceType: UIImagePickerControllerSourceType {

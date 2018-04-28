@@ -1,6 +1,6 @@
 //
 //  PickerDataSourceTests.swift
-//  ResearchStack2
+//  Research
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import ResearchStack2
+@testable import Research
 
 class PickerDataSourceTests: XCTestCase {
     

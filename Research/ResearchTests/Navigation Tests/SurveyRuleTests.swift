@@ -1,6 +1,6 @@
 //
 //  SurveyRuleTests.swift
-//  ResearchStack2Tests
+//  ResearchTests
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
@@ -34,7 +34,7 @@
 import Foundation
 
 import XCTest
-import ResearchStack2
+import Research
 
 class SurveyRuleTests: XCTestCase {
     

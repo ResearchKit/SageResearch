@@ -1,6 +1,6 @@
 //
 //  RSDCheckmarkView.swift
-//  ResearchStack2UI (iOS)
+//  ResearchUI (iOS)
 //
 //  Copyright © 2016-2018 Sage Bionetworks. All rights reserved.
 //

@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import ResearchStack2
+import Research
 
 /// Stub out a factory for this application. Any factory overrides that are used by the catalog
 /// can be declared here. This stub is intentional so that unit tests will all use this rather

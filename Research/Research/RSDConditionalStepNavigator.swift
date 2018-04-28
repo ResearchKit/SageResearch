@@ -1,6 +1,6 @@
 //
 //  RSDConditionalStepNavigator.swift
-//  ResearchStack2
+//  Research
 //
 //  Copyright © 2016-2018 Sage Bionetworks. All rights reserved.
 //
@@ -116,7 +116,7 @@ public protocol RSDConditionalRule {
 /// A conditional **replacement** rule is a conditional rule that needs to replace a given step with a
 /// different instance of a step under a set of conditions determined by the rule.
 ///
-/// - note: `ResearchStack2` does not currently implement any conditional replacement rule objects. The
+/// - note: `Research` does not currently implement any conditional replacement rule objects. The
 ///  replacement rule is included here for future implementation of data tracking across runs of a task.
 ///  (syoung 02/21/2018)
 public protocol RSDConditionalReplacementRule : RSDConditionalRule {
@@ -231,7 +231,7 @@ extension RSDConditionalStepNavigator {
     /// Given the current task result, is there a step after the current step?
     ///
     /// This method is checked when first displaying a step to determine if the UI should display
-    /// this as the last step. By default, the UI defined in ResearchStack2UI will change the text
+    /// this as the last step. By default, the UI defined in ResearchUI will change the text
     /// on the continue button from "Next" to "Done", unless customized.
     ///
     /// - note: the task result may or may not include a result for the given step.
@@ -248,7 +248,7 @@ extension RSDConditionalStepNavigator {
     /// Given the current task result, is there a step before the current step?
     ///
     /// This method is checked when first displaying a step to determine if the UI should display
-    /// this as the first step. By default, the UI defined in ResearchStack2UI will hide the "Back"
+    /// this as the first step. By default, the UI defined in ResearchUI will hide the "Back"
     /// button if there is no step before the given step.
     ///
     /// - note: the task result may or may not include a result for the given step.

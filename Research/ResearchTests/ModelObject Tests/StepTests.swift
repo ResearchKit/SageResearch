@@ -1,6 +1,6 @@
 //
 //  StepTests.swift
-//  ResearchStack2
+//  Research
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import ResearchStack2
+@testable import Research
 
 class StepTests: XCTestCase {
     
@@ -215,7 +215,7 @@ class StepTests: XCTestCase {
         taskInfo.detail = "detail"
         taskInfo.schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 6)
         var step = RSDTaskInfoStepObject(with: taskInfo)
-        step.taskTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: "org.sagebase.ResearchStack2Tests", classType: nil)
+        step.taskTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: "org.sagebase.ResearchTests", classType: nil)
 
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")

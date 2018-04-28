@@ -1,6 +1,6 @@
 //
 //  RecordSampleLoggerTests.swift
-//  ResearchStack2
+//  Research
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import ResearchStack2
+@testable import Research
 
 struct TestRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     let uptime: TimeInterval

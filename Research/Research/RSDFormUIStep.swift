@@ -1,6 +1,6 @@
 //
 //  RSDFormUIStep.swift
-//  ResearchStack2
+//  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
@@ -43,7 +43,7 @@ public protocol RSDFormUIStep: RSDUIStep {
 }
 
 /// `RSDInputField` is used to describe a form input and includes the data type and a possible hint to how
-/// the UI should be displayed. The ResearchStack2 framework uses `RSDFormUIStep` to represent questions to
+/// the UI should be displayed. The Research framework uses `RSDFormUIStep` to represent questions to
 /// ask the user. Each question must have at least one associated input field. An input field is validated
 /// when its owning step is validated.
 ///

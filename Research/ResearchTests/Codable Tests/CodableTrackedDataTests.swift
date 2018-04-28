@@ -1,6 +1,6 @@
 //
 //  CodableTrackedDataTests.swift
-//  ResearchStack2Tests_iOS
+//  ResearchTests_iOS
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
@@ -32,7 +32,7 @@
 //
 
 import XCTest
-@testable import ResearchStack2
+@testable import Research
 
 class CodableTrackedDataTests: XCTestCase {
     

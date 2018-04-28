@@ -1,6 +1,6 @@
 //
 //  RSDPopoverInputFieldObject.swift
-//  ResearchStack2
+//  Research
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //

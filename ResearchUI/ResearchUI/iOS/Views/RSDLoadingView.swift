@@ -1,6 +1,6 @@
 //
 //  RSDLoadingView.swift
-//  ResearchStack2UI (iOS)
+//  ResearchUI (iOS)
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //

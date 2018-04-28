@@ -33,7 +33,7 @@
 
 import XCTest
 @testable import RSDCatalog
-import ResearchStack2
+import Research
 
 class RSDCatalogTests: XCTestCase {
     

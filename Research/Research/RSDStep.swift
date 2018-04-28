@@ -1,6 +1,6 @@
 //
 //  RSDStep.swift
-//  ResearchStack2
+//  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //

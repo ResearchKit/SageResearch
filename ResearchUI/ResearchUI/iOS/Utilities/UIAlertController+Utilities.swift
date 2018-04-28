@@ -1,6 +1,6 @@
 //
 //  UIAlertController+Utilities.swift
-//  ResearchStack2UI
+//  ResearchUI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //

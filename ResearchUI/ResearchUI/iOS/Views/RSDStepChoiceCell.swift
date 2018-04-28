@@ -1,6 +1,6 @@
 //
 //  RSDStepChoiceCell.swift
-//  ResearchStack2UI
+//  ResearchUI
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //

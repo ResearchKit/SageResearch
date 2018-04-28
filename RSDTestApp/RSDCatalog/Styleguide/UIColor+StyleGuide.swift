@@ -32,9 +32,9 @@
 //
 
 import UIKit
-import ResearchStack2UI
+import ResearchUI
 
-/// This extension will override the color values set ResearchStack2UI.
+/// This extension will override the color values set ResearchUI.
 extension UIColor {
     
     
