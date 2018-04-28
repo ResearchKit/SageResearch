@@ -727,7 +727,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchUI-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchUI-iOS";
 				PRODUCT_NAME = ResearchUI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -750,7 +750,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchUI-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchUI-iOS";
 				PRODUCT_NAME = ResearchUI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -805,7 +805,7 @@
 				INFOPLIST_FILE = "ResearchUI/watchOS/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchUI-watchOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchUI-watchOS";
 				PRODUCT_NAME = ResearchUI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -830,7 +830,7 @@
 				INFOPLIST_FILE = "ResearchUI/watchOS/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.ResearchUI-watchOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchUI-watchOS";
 				PRODUCT_NAME = ResearchUI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;

@@ -2275,7 +2275,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.Research-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.Research-iOS";
 				PRODUCT_NAME = Research;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -2301,7 +2301,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.Research-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.Research-iOS";
 				PRODUCT_NAME = Research;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -2372,7 +2372,7 @@
 				INFOPLIST_FILE = "Research/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.Research-watchOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.Research-watchOS";
 				PRODUCT_NAME = Research;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -2400,7 +2400,7 @@
 				INFOPLIST_FILE = "Research/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.Research-watchOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.Research-watchOS";
 				PRODUCT_NAME = Research;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -2427,7 +2427,7 @@
 				INFOPLIST_FILE = "Research/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.Research-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.Research-tvOS";
 				PRODUCT_NAME = Research;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
@@ -2454,7 +2454,7 @@
 				INFOPLIST_FILE = "Research/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebase.Research-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.Research-tvOS";
 				PRODUCT_NAME = Research;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
