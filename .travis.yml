@@ -3,7 +3,7 @@ notifications:
   - apple.builds@sagebase.org
 language: objective-c
 osx_image: xcode9.3
-xcode_project: RSDTestApp/RSDTestApp.xcodeproj
+xcode_workspace: Research.xcworkspace
 xcode_scheme: RSDCatalog
 cache:
 - bundler
