@@ -23,7 +23,7 @@ platform :ios do
     ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"] = "KA9Z8R6M6K"
     ENV["APP_ID_RSDCATALOG"] = "org.sagebase.RSDCatalog"
     ENV["APP_ID_RSDTEST"] = "org.sagebase.RSDTest"
-    ENV["WORKSPACE"] = "Research.xcworkspace"
+    ENV["WORKSPACE"] = "./Research.xcworkspace"
   end
 
   desc "Create keychains to store certificates"
