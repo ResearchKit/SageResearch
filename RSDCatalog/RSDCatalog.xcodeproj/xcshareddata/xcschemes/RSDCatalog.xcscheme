@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F8B17782202CD73B00B62416"
+               BlueprintIdentifier = "F8D42A4E2095518400C6A4BC"
                BuildableName = "RSDCatalog.app"
                BlueprintName = "RSDCatalog"
-               ReferencedContainer = "container:RSDTestApp.xcodeproj">
+               ReferencedContainer = "container:RSDCatalog.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,20 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F8B17795202CD73B00B62416"
+               BlueprintIdentifier = "F8D42A622095518400C6A4BC"
                BuildableName = "RSDCatalogTests.xctest"
                BlueprintName = "RSDCatalogTests"
-               ReferencedContainer = "container:RSDTestApp.xcodeproj">
+               ReferencedContainer = "container:RSDCatalog.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F8B177A0202CD73B00B62416"
+               BlueprintIdentifier = "F8D42A6D2095518400C6A4BC"
                BuildableName = "RSDCatalogUITests.xctest"
                BlueprintName = "RSDCatalogUITests"
-               ReferencedContainer = "container:RSDTestApp.xcodeproj">
+               ReferencedContainer = "container:RSDCatalog.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -53,19 +53,29 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FF8B531B1FCE678E006B6937"
-               BuildableName = "ResearchSuiteTests_iOS.xctest"
-               BlueprintName = "ResearchSuiteTests_iOS"
-               ReferencedContainer = "container:../ResearchSuite/ResearchSuite.xcodeproj">
+               BuildableName = "ResearchTests_iOS.xctest"
+               BlueprintName = "ResearchTests_iOS"
+               ReferencedContainer = "container:../Research/Research.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FFF2D93F1FCF415E007258F8"
+               BuildableName = "ResearchUITests_iOS.xctest"
+               BlueprintName = "ResearchUITests_iOS"
+               ReferencedContainer = "container:../ResearchUI/ResearchUI.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F8B17782202CD73B00B62416"
+            BlueprintIdentifier = "F8D42A4E2095518400C6A4BC"
             BuildableName = "RSDCatalog.app"
             BlueprintName = "RSDCatalog"
-            ReferencedContainer = "container:RSDTestApp.xcodeproj">
+            ReferencedContainer = "container:RSDCatalog.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -85,10 +95,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F8B17782202CD73B00B62416"
+            BlueprintIdentifier = "F8D42A4E2095518400C6A4BC"
             BuildableName = "RSDCatalog.app"
             BlueprintName = "RSDCatalog"
-            ReferencedContainer = "container:RSDTestApp.xcodeproj">
+            ReferencedContainer = "container:RSDCatalog.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -104,10 +114,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F8B17782202CD73B00B62416"
+            BlueprintIdentifier = "F8D42A4E2095518400C6A4BC"
             BuildableName = "RSDCatalog.app"
             BlueprintName = "RSDCatalog"
-            ReferencedContainer = "container:RSDTestApp.xcodeproj">
+            ReferencedContainer = "container:RSDCatalog.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
