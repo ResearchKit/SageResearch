@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FF2415701F7AC31900D0BA5C"
+               BlueprintIdentifier = "F8373C8520964EC7004DD4E1"
                BuildableName = "RSDTestTests.xctest"
                BlueprintName = "RSDTestTests"
                ReferencedContainer = "container:RSDTest.xcodeproj">
@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FF24157B1F7AC31900D0BA5C"
+               BlueprintIdentifier = "F8373C7720964E82004DD4E1"
                BuildableName = "RSDTestUITests.xctest"
                BlueprintName = "RSDTestUITests"
                ReferencedContainer = "container:RSDTest.xcodeproj">
