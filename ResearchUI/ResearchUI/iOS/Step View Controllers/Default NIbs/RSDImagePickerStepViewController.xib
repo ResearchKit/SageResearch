@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDImagePickerStepViewController" customModule="ResearchStack2UI" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDImagePickerStepViewController" customModule="ResearchUI" customModuleProvider="target">
             <connections>
                 <outlet property="errorMessageLabel" destination="c2T-q4-MzI" id="L79-51-9Mh"/>
                 <outlet property="navigationFooter" destination="mdh-Of-vRY" id="8BV-y1-o6Z"/>
@@ -24,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdh-Of-vRY" customClass="RSDGenericNavigationFooterView" customModule="ResearchStack2UI" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdh-Of-vRY" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="578" width="375" height="89"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -34,7 +34,7 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSkipHidden" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9VU-My-bDb" userLabel="Navigation Header" customClass="RSDNavigationHeaderView" customModule="ResearchStack2UI" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9VU-My-bDb" userLabel="Navigation Header" customClass="RSDNavigationHeaderView" customModule="ResearchUI" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="32" width="375" height="45"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G45-O7-x6Q">

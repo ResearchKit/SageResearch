@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDOverviewStepViewController" customModule="ResearchStack2UI" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDOverviewStepViewController" customModule="ResearchUI" customModuleProvider="target">
             <connections>
                 <outlet property="navigationFooter" destination="ba4-iN-nqh" id="XGO-pw-ajQ"/>
                 <outlet property="navigationHeader" destination="Zba-wA-mTe" id="wRV-rc-lmz"/>
@@ -24,7 +24,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zba-wA-mTe" userLabel="Header" customClass="RSDStepHeaderView" customModule="ResearchStack2UI" customModuleProvider="target">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zba-wA-mTe" userLabel="Header" customClass="RSDStepHeaderView" customModule="ResearchUI" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="20" width="375" height="510.5"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nNr-9w-cB5" userLabel="Image Background">
@@ -98,11 +98,11 @@
                         <outlet property="titleLabel" destination="ICN-1z-1T7" id="C7R-X1-wy2"/>
                     </connections>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4F8-CD-ZuJ" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4F8-CD-ZuJ" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-iN-nqh" customClass="RSDGenericNavigationFooterView" customModule="ResearchStack2UI" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ba4-iN-nqh" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="530.5" width="375" height="136.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
