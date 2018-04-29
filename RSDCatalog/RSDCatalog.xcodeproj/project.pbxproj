@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F8373C9320964F60004DD4E1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8373C9220964F60004DD4E1 /* README.md */; };
 		F84DDB6D20955672009CC1B8 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6C20955628009CC1B8 /* Photos.framework */; };
 		F84DDB6E2095567C009CC1B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6B20955628009CC1B8 /* AVFoundation.framework */; };
 		F84DDB6F20955687009CC1B8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6920955628009CC1B8 /* CoreLocation.framework */; };
@@ -70,6 +71,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F8373C9220964F60004DD4E1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F84DDB6920955628009CC1B8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F84DDB6A20955628009CC1B8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		F84DDB6B20955628009CC1B8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -138,6 +140,7 @@
 		F8D42A462095518300C6A4BC = {
 			isa = PBXGroup;
 			children = (
+				F8373C9220964F60004DD4E1 /* README.md */,
 				F8D42A512095518400C6A4BC /* RSDCatalog */,
 				F8D42A662095518400C6A4BC /* RSDCatalogTests */,
 				F8D42A712095518400C6A4BC /* RSDCatalogUITests */,
@@ -349,6 +352,7 @@
 				F8D42A5A2095518400C6A4BC /* Assets.xcassets in Resources */,
 				F8D42A90209552CB00C6A4BC /* LaunchScreen.storyboard in Resources */,
 				F8D42A9B209552EC00C6A4BC /* Recorder_Motion.json in Resources */,
+				F8373C9320964F60004DD4E1 /* README.md in Resources */,
 				F8D42A9E209552EC00C6A4BC /* Theme_Color.json in Resources */,
 				F8D42AA2209552EC00C6A4BC /* Image_Picker.json in Resources */,
 				F8D42A9F209552EC00C6A4BC /* Recorder_Distance.json in Resources */,
