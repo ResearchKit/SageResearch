@@ -41,7 +41,7 @@
 		F8B17822202D4E8400B62416 /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B17826202D4E8C00B62416 /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42ABE2095555300C6A4BC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		FF24155D1F7AC31800D0BA5C /* RSDTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF24155D1F7AC31800D0BA5C /* RSDTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF2415601F7AC31800D0BA5C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF2415621F7AC31800D0BA5C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FF2415651F7AC31800D0BA5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -77,7 +77,7 @@
 			children = (
 				F8D42ABE2095555300C6A4BC /* Default-568h@2x.png */,
 				F8B1777D202CD31700B62416 /* README.md */,
-				FF24155F1F7AC31800D0BA5C /* RSDTestApp */,
+				FF24155F1F7AC31800D0BA5C /* RSDTest */,
 				FF24155E1F7AC31800D0BA5C /* Products */,
 				F8B17826202D4E8C00B62416 /* Research.framework */,
 				F8B17822202D4E8400B62416 /* ResearchUI.framework */,
@@ -88,12 +88,12 @@
 		FF24155E1F7AC31800D0BA5C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF24155D1F7AC31800D0BA5C /* RSDTestApp.app */,
+				FF24155D1F7AC31800D0BA5C /* RSDTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FF24155F1F7AC31800D0BA5C /* RSDTestApp */ = {
+		FF24155F1F7AC31800D0BA5C /* RSDTest */ = {
 			isa = PBXGroup;
 			children = (
 				FF2415601F7AC31800D0BA5C /* AppDelegate.swift */,
@@ -104,7 +104,7 @@
 				FFD0C0131F970BA700D5D349 /* Styleguide */,
 				FF24158E1F7AC34500D0BA5C /* Storyboards */,
 			);
-			path = RSDTestApp;
+			path = RSDTest;
 			sourceTree = "<group>";
 		};
 		FF24158E1F7AC34500D0BA5C /* Storyboards */ = {
@@ -127,9 +127,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FF24155C1F7AC31800D0BA5C /* RSDTestApp */ = {
+		FF24155C1F7AC31800D0BA5C /* RSDTest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FF2415851F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTestApp" */;
+			buildConfigurationList = FF2415851F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTest" */;
 			buildPhases = (
 				FF2415591F7AC31800D0BA5C /* Sources */,
 				FF24155A1F7AC31800D0BA5C /* Frameworks */,
@@ -140,9 +140,9 @@
 			);
 			dependencies = (
 			);
-			name = RSDTestApp;
-			productName = RSDTestApp;
-			productReference = FF24155D1F7AC31800D0BA5C /* RSDTestApp.app */;
+			name = RSDTest;
+			productName = RSDTest;
+			productReference = FF24155D1F7AC31800D0BA5C /* RSDTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -166,7 +166,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FF2415581F7AC31800D0BA5C /* Build configuration list for PBXProject "RSDTestApp" */;
+			buildConfigurationList = FF2415581F7AC31800D0BA5C /* Build configuration list for PBXProject "RSDTest" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -179,7 +179,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FF24155C1F7AC31800D0BA5C /* RSDTestApp */,
+				FF24155C1F7AC31800D0BA5C /* RSDTest */,
 			);
 		};
 /* End PBXProject section */
@@ -355,7 +355,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = RSDTestApp/Info.plist;
+				INFOPLIST_FILE = RSDTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTest;
@@ -378,7 +378,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = RSDTestApp/Info.plist;
+				INFOPLIST_FILE = RSDTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTest;
@@ -393,7 +393,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FF2415581F7AC31800D0BA5C /* Build configuration list for PBXProject "RSDTestApp" */ = {
+		FF2415581F7AC31800D0BA5C /* Build configuration list for PBXProject "RSDTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF2415831F7AC31900D0BA5C /* Debug */,
@@ -402,7 +402,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FF2415851F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTestApp" */ = {
+		FF2415851F7AC31900D0BA5C /* Build configuration list for PBXNativeTarget "RSDTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF2415861F7AC31900D0BA5C /* Debug */,
