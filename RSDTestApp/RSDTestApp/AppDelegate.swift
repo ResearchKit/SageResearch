@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  ResearchStack2TestApp
+//  ResearchTestApp
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //

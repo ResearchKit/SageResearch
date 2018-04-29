@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  ResearchStack2TestApp
+//  ResearchTestApp
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -32,8 +32,8 @@
 //
 
 import UIKit
-import ResearchStack2
-import ResearchStack2UI
+import Research
+import ResearchUI
 
 class ViewController: UIViewController, RSDTaskViewControllerDelegate {
 
@@ -60,7 +60,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     
     // Mark: RSDTaskViewControllerDelegate
     
-    let offMainQueue = DispatchQueue(label: "org.sagebase.ResearchStack2.Serialized.\(UUID())")
+    let offMainQueue = DispatchQueue(label: "org.sagebase.Research.Serialized.\(UUID())")
     
     open func deleteOutputDirectory(_ outputDirectory: URL?) {
         guard let outputDirectory = outputDirectory else { return }

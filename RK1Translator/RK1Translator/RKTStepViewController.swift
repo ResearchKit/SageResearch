@@ -32,10 +32,10 @@
 //
 
 import UIKit
-import ResearchStack2UI
+import ResearchUI
 
 /// `RKTStepViewController` extends `UINavigationController` with a pass-through implementation of
-/// `ORKStepViewController`. This can be used with the ResearchStack2UI implementation of `RSDTaskViewController`
+/// `ORKStepViewController`. This can be used with the ResearchUI implementation of `RSDTaskViewController`
 /// to wrap an `ORKStepViewController` for use as a view controller presented by the `RSDTaskViewController`.
 ///
 /// - seealso: `RSDStepViewControllerVendor`, `RSDTaskViewController`

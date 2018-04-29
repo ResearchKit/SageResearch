@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:RSDCatalog/RSDCatalog.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RSDTestApp/RSDTestApp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ResearchUI/ResearchUI.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Research/Research.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:RK1Translator/RK1Translator.xcodeproj">
+   </FileRef>
+</Workspace>

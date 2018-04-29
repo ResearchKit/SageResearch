@@ -1,5 +1,5 @@
 # RK1Translator
-RK1Translator implements a subset of the ResearchStack2 protocols. This framework does *not* directly implement all the steps, results, and tasks supported by ResearchKit 1.5 and is instead intended as an example for how a task may be set up to conform to these protocols.
+RK1Translator implements a subset of the Research protocols. This framework does *not* directly implement all the steps, results, and tasks supported by ResearchKit 1.5 and is instead intended as an example for how a task may be set up to conform to these protocols.
 
 This framework links to ResearchKit 1.5 without including the github repository as a submodule so that developers can use their own forks with this project more easily. Therefore, it is assumed that the ResearchKit repository will be at the same directory level as this repository.
 
