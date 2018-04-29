@@ -1,11 +1,9 @@
-# RSDTest
+# RSDCatalog
 
-RSDTest is set up to test that a light-weight app with no required permissions can be built and
-submitted to the Apple App Store without requiring set up of the unused privacy keys. Examples of
-form steps and instruction steps that *do not* use any additional frameworks such as HealthKit,
-CoreMotion, or CoreLocation can be added to this target when submitted as additions to the
-Research and ResearchUI frameworks, but submission of an example to this target is not
-required.
+RSDCatalog is set up as a catalog of example tasks for all the tasks, steps, async actions, etc. that
+are included in the Research and ResearchUI frameworks. When submitting an addition
+to these frameworks, as a part of your submission, please include an example in the catalog as a
+new task, add the task to the main task group JSON file, and add a UI Test to the UI test framework.
 
 ## License
 
