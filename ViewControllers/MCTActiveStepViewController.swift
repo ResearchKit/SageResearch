@@ -92,7 +92,7 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
     
     /// Override skip forward to skip backward to the walk step.
     override open func skipForward() {
-        // TODO: rkolmos 04/05/2018 refactor ResearchStack2 to support linking an RSDUIAction to navigation
+        // TODO: rkolmos 04/05/2018 refactor Research to support linking an RSDUIAction to navigation
         guard let activeStep = self.step as? RSDActiveUIStepObject else { return }
         activeStep.nextStepIdentifier = "walk"
         super.skipForward()

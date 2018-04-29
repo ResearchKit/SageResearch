@@ -32,8 +32,8 @@
 //
 
 @import UIKit;
-@import ResearchStack2;
-@import ResearchStack2UI;
+@import Research;
+@import ResearchUI;
 
 //! Project version number for MotorControl.
 FOUNDATION_EXPORT double MotorControlVersionNumber;
