@@ -31,6 +31,11 @@ Fetches provisioning profile and certificates from github repo
 fastlane ios test
 ```
 Execute tests
+### build
+```
+fastlane build
+```
+Build the scheme
 ### ios archive
 ```
 fastlane ios archive

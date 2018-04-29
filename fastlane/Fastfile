@@ -23,6 +23,7 @@ platform :ios do
     ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"] = "KA9Z8R6M6K"
     ENV["APP_ID_RSDCATALOG"] = "org.sagebase.RSDCatalog"
     ENV["APP_ID_RSDTEST"] = "org.sagebase.RSDTest"
+    ENV["WORKSPACE"] = "Research.xcworkspace"
   end
 
   desc "Create keychains to store certificates"
@@ -87,6 +88,15 @@ platform :ios do
     )
   end
 
+  desc "Build target"
+  lane :build do |options|
+    scheme = options[:scheme]
+    xcodebuild(
+      scheme: "#{scheme}",
+      workspace: ENV["WORKSPACE"]
+    )
+  end
+
   desc "Archive and export app"
   lane :archive do |options|
     scheme = options[:scheme]
@@ -111,6 +121,18 @@ platform :ios do
     archive(scheme: "#{scheme}",export_method: "#{export_method}")
   end
 
+  desc "Bump Framework Version"
+  lane :bump_framework do |options|
+    project = options[:project]
+    scheme = options[:scheme]
+    tag_name = options[:tag_name]
+    version_number = get_version_number(xcodeproj: "#{project}", target: "#{scheme}")
+    next_build_number = increment_build_number(xcodeproj: "#{project}")
+    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Version Bump")
+    add_git_tag(tag: "#{tag_name}_#{version_number}_#{next_build_number}")
+    push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])
+  end
+
   desc "Submit a new Build to appstore"
   lane :beta do |options|
     project = options[:project]
@@ -122,8 +144,8 @@ platform :ios do
     version_number = get_version_number(xcodeproj: "#{project}", target: "#{scheme}")
     next_build_number = increment_build_number(xcodeproj: "#{project}")
     archive(scheme: "#{scheme}", export_method: "#{export_method}")
-    commit_version_bump(xcodeproj: "#{scheme}".xcodeproj, message: "[skip ci] Version Bump")
-    add_git_tag(tag: "#{version_number}_#{next_build_number}")
+    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Version Bump")
+    add_git_tag(tag: "#{scheme}_#{version_number}_#{next_build_number}")
     push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])
     testflight(ipa: "./build/#{scheme}.ipa", skip_submission: true)
   end
