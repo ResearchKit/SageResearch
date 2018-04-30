@@ -1,0 +1,82 @@
+[
+ {
+    "identifier": "surveyExamples",
+    "title": "Surveys",
+    "detail": "This task group includes examples of surveys that are currently supported by the ResearchUI framework.",
+    "icon": "activityIcon",
+    "tasks" : [{
+               "identifier": "list",
+               "title": "List UI hint examples",
+               "subtitle": "Questions that use the `list` uiHint",
+               "detail": "The steps included in this task are all examples of RSDInputField objects that use the `list` RSDFormUIHint that are currently supported by the ResearchUI framework.",
+               "icon": "activityIcon",
+               "taskTransformer" : { "resourceName": "FormStep_List" }
+               },
+               {
+               "identifier": "picker",
+               "title": "Picker UI hint examples",
+               "subtitle": "Questions that use the `picker` uiHint",
+               "detail": "The steps included in this task are all examples of RSDInputField objects that use the `picker` RSDFormUIHint that are currently supported by the ResearchUI framework.",
+               "icon": "activityIcon",
+               "taskTransformer" : { "resourceName": "FormStep_Picker" }
+               },
+               {
+               "identifier": "textfield",
+               "title": "Textfield UI hint examples",
+               "subtitle": "Questions that use the `textfield` uiHint",
+               "detail": "The steps included in this task are all examples of RSDInputField objects that use the `textfield` RSDFormUIHint that are currently supported by the ResearchUI framework.",
+               "icon": "activityIcon",
+               "taskTransformer" : { "resourceName": "FormStep_Textfield" }
+               }]
+ },
+ {
+     "identifier": "recorderExamples",
+     "title": "Recorders",
+     "detail": "This task group includes examples of active tasks that include spoken instructions and recorders that are currently included in the Research and ResearchUI frameworks.",
+     "icon": "activityIcon",
+     "tasks" : [{
+                "identifier": "distance",
+                "title": "Distance Recorder",
+                "subtitle": "Activity for recording relative GPS location.",
+                "detail": "This is an example task for recording GPS distance data using the RSDDistanceRecorder. This task also includes using the voice synthesizer to include spoken instructions.",
+                "icon": "activityIcon",
+                "taskTransformer" : { "resourceName": "Recorder_Distance" }
+                },
+                {
+                "identifier": "motion",
+                "title": "Motion Recorder",
+                "subtitle": "Activity for recording motion sensor data.",
+                "detail": "This is an example task for recording motion sensor data using the RSDMotionRecorder. This task also includes using the voice synthesizer to include spoken instructions.",
+                "icon": "activityIcon",
+                "taskTransformer" : { "resourceName": "Recorder_Motion" }
+                }]
+ },
+ {
+ "identifier": "imageExamples",
+ "title": "Image/Video",
+ "detail": "This task group includes examples of image and video steps that are currently included in the Research and ResearchUI frameworks.",
+ "icon": "activityIcon",
+ "tasks" : [{
+            "identifier": "imagePicker",
+            "title": "Image Picker",
+            "subtitle": "Activity for selecting images.",
+            "detail": "This is an example task for selecting images either from your photo library or using the camera.",
+            "icon": "activityIcon",
+            "taskTransformer" : { "resourceName": "Image_Picker" }
+            }]
+ },
+ {
+ "identifier": "colorExamples",
+ "title": "UI Themes",
+ "detail": "This task group includes examples the UI Themes.",
+ "icon": "activityIcon",
+ "tasks" : [{
+            "identifier": "colorThemes",
+            "title": "Colors",
+            "subtitle": "Activity for showing different examples of the use of color themes.",
+            "detail": "This is an example task for how to set up an activity that expressly defines the color themes.",
+            "icon": "activityIcon",
+            "taskTransformer" : { "resourceName": "Theme_Color" }
+            }]
+ }
+]

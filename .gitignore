@@ -67,3 +67,11 @@ fastlane/screenshots
 fastlane/test_output
 .DS_Store
 /ResearchStack2.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+# bundle for ruby
+vendor/
+.bundle/
+
+# travis generated files
+travis*.log
+IDEWorkspaceChecks.plist

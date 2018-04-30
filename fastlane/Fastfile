@@ -1,0 +1,170 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://docs.fastlane.tools/actions
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.17.1"
+
+default_platform :ios
+
+platform :ios do
+  before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    ENV["MATCH_KEYCHAIN_NAME"] = "ios-build.keychain"
+    ENV["TEAM_SAGEBIO"] = "4B822CZK9N"
+    ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"] = "KA9Z8R6M6K"
+    ENV["APP_ID_RSDCATALOG"] = "org.sagebase.RSDCatalog"
+    ENV["APP_ID_RSDTEST"] = "org.sagebase.RSDTest"
+    ENV["WORKSPACE"] = "./Research.xcworkspace"
+  end
+
+  desc "Create keychains to store certificates"
+  lane :keychains do
+    create_keychain(
+      name: ENV["MATCH_KEYCHAIN_NAME"],
+      password: ENV["MATCH_PASSWORD"],
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      add_to_search_list: true
+    )
+  end
+
+  desc "Fetches provisioning profile and certificates from github repo"
+  lane :certificates do |options|
+    export_method = options[:export_method]
+    match(
+      git_branch: ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"],
+      type: "development",
+      app_identifier: ENV["APP_ID_RSDCATALOG"],
+      team_id: ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"],
+      keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+      keychain_password: ENV["MATCH_PASSWORD"],
+      readonly: true
+    )
+    match(
+      git_branch: ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"],
+      type: "appstore",
+      app_identifier: ENV["APP_ID_RSDCATALOG"],
+      team_id: ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"],
+      keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+      keychain_password: ENV["MATCH_PASSWORD"],
+      readonly: true
+    )
+    match(
+      git_branch: ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"],
+      type: "development",
+      app_identifier: ENV["APP_ID_RSDTEST"],
+      team_id: ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"],
+      keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+      keychain_password: ENV["MATCH_PASSWORD"],
+      readonly: true
+    )
+    match(
+      git_branch: ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"],
+      type: "appstore",
+      app_identifier: ENV["APP_ID_RSDTEST"],
+      team_id: ENV["TEAM_SAGEBIO_NOT_FOR_PROFIT"],
+      keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+      keychain_password: ENV["MATCH_PASSWORD"],
+      readonly: true
+    )
+  end
+
+  desc "Execute tests"
+  lane :test do |options|
+    scheme = options[:scheme]
+    scan(
+      scheme: "#{scheme}",
+      clean: true
+    )
+  end
+
+  desc "Build target"
+  lane :build do |options|
+    scheme = options[:scheme]
+    xcodebuild(
+      scheme: "#{scheme}",
+      workspace: ENV["WORKSPACE"]
+    )
+  end
+
+  desc "Archive and export app"
+  lane :archive do |options|
+    scheme = options[:scheme]
+    export_method = options[:export_method]
+    gym(
+      scheme: "#{scheme}",
+      clean: true,
+      include_bitcode: true,
+      output_directory: "./build",
+      output_name: "#{scheme}.ipa",
+      export_method: "#{export_method}",
+      destination: "generic/platform=iOS",
+    )
+  end
+
+  desc "This lane is for CI bots to archive and export"
+  lane :ci_archive do |options|
+    scheme = options[:scheme]
+    export_method = options[:export_method]
+    # keychains
+    certificates
+    archive(scheme: "#{scheme}",export_method: "#{export_method}")
+  end
+
+  desc "Bump Framework Version"
+  lane :bump_framework do |options|
+    project = options[:project]
+    scheme = options[:scheme]
+    tag_name = options[:tag_name]
+    jazzy(config: "#{tag_name}/jazzy_config.yml")
+    version_number = get_version_number(xcodeproj: "#{project}", target: "#{scheme}")
+    next_build_number = increment_build_number(xcodeproj: "#{project}")
+    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Version Bump")
+    add_git_tag(tag: "#{tag_name}_#{version_number}_#{next_build_number}")
+    push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])
+  end
+
+  desc "Submit a new Build to appstore"
+  lane :beta do |options|
+    project = options[:project]
+    scheme = options[:scheme]
+    export_method = options[:export_method]
+    ensure_git_status_clean
+    # keychains
+    certificates
+    version_number = get_version_number(xcodeproj: "#{project}", target: "#{scheme}")
+    next_build_number = increment_build_number(xcodeproj: "#{project}")
+    archive(scheme: "#{scheme}", export_method: "#{export_method}")
+    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Version Bump")
+    add_git_tag(tag: "#{scheme}_#{version_number}_#{next_build_number}")
+    push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])
+    testflight(ipa: "./build/#{scheme}.ipa", skip_submission: true)
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end

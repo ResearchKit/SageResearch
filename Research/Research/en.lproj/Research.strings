@@ -1,0 +1,137 @@
+/* 
+  Research.strings
+  Research
+
+    Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification,
+    are permitted provided that the following conditions are met:
+
+    1.  Redistributions of source code must retain the above copyright notice, this
+    list of conditions and the following disclaimer.
+
+    2.  Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation and/or
+    other materials provided with the distribution.
+
+    3.  Neither the name of the copyright holder(s) nor the names of any contributors
+    may be used to endorse or promote products derived from this software without
+    specific prior written permission. No license is granted to the trademarks of
+    the copyright holders even if such marks are included in this software.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+*/
+
+/* Boolean answer strings */
+"BOOL_NO" = "No";
+"BOOL_YES" = "Yes";
+
+/* Button titles */
+"BUTTON_OK" = "OK";
+"BUTTON_CANCEL" = "Cancel";
+"BUTTON_DONE" = "Done";
+"BUTTON_SUBMIT" = "Submit";
+"BUTTON_REVIEW" = "Review";
+"BUTTON_SAVE" = "Save";
+"BUTTON_EDIT" = "Edit";
+"BUTTON_CLOSE" = "Close";
+"BUTTON_GET_STARTED" = "Get Started";
+"BUTTON_LEARN_MORE" = "Learn more";
+"BUTTON_NEXT" = "Next";
+"BUTTON_BACK" = "Back";
+"BUTTON_SKIP" = "Prefer not to answer";
+"BUTTON_SKIP_TASK" = "I can't do this now";
+"BUTTON_PAUSE" = "Pause";
+"BUTTON_RESUME" = "Resume";
+"BUTTON_OPTION_SAVE" = "Save for Later";
+"BUTTON_OPTION_DISCARD" = "Discard Results";
+"BUTTON_OPTION_CONTINUE" = "Keep Going";
+
+/* Joining items */
+"TWO_ITEM_LIST_OR_FORMAT_%1$@_%2$@" = "%1$@ or %2$@"; // Format of a list with two items (For example, 'apples or oranges')
+"THREE_ITEM_LIST_OR_FORMAT_%1$@_%2$@_%3$@" = "%1$@, %2$@, or %3$@"; // Format of a list with three items (For example, 'apples, oranges, or bananas')
+"TWO_ITEM_LIST_AND_FORMAT_%1$@_%2$@" = "%1$@ and %2$@"; // Format of a list with two items (For example, 'apples and oranges')
+"THREE_ITEM_LIST_AND_FORMAT_%1$@_%2$@_%3$@" = "%1$@, %2$@, and %3$@"; // Format of a list with three items (For example, 'apples, oranges, and bananas')
+"LIST_FORMAT_DELIMITER"  = ", "; // Delimiter for a list of more than 3 items. Include whitespace as appropriate. (For example, 'foo, bar, goo, or boo')
+
+/* Task progress */
+"CURRENT_STEP_%@_OF_TOTAL_STEPS_%@" = "Step %1$@ of %2$@";  // Text for marking the current steps
+"MESSAGE_CONFIRM_CANCEL_TASK" = "Are you sure that you want to stop?";  // Message to show when confirming that tapping the close task button was intentional.
+
+/* Default placeholders to request answers in a questionnaire. */
+"PLACEHOLDER_TEXT_OR_NUMBER" = "Tap to answer";
+"NULL_ANSWER" = "Select an answer";
+"PLACEHOLDER_IMAGE_CHOICES" = "Tap to select";
+"PLACEHOLDER_LONG_TEXT" = "Tap to write";
+
+/* Validation Error Messages */
+"VALIDATION_ERROR_TITLE" = "Invalid Answer";
+"VALIDATION_ERROR_DATE_%@" = "Sorry, the date you entered is not in a recognized format. The expected format is %@";
+"VALIDATION_ERROR_NUMBER" = "Sorry, the number you entered is not in a recognized format.";
+"VALIDATION_ERROR_GENERIC" = "Sorry, the text you have entered is invalid."; // Generic message for invalid text entry
+"VALIDATION_ERROR_MAXLEN_%@" = "The text you entered exceeds the maximum character length of %@ characters.";
+"VALIDATION_ERROR_MIN_DATE_%@" = "The date entered is before %@.";
+"VALIDATION_ERROR_MAX_DATE_%@" = "The date entered is after %@.";
+"VALIDATION_ERROR_MIN_NUMBER_%@" = "The number entered is less than %@.";
+"VALIDATION_ERROR_MAX_NUMBER_%@" = "The number entered is more than %@.";
+"VALIDATION_ERROR_BLOOD_PRESSURE" = "Blood pressure must be entered as a string in the form of 120/90 (For example).";
+
+/* Time and Date */
+"SCHEDULE_EVERY_DAY" = "Every day";  // Word or phrase to use when showing a schedule that should be repeated daily.
+"SCHEDULE_FORMAT_%1$@_at_%2$@" = "%1$@ at %2$@"; // ex. "Thursday at 4:00 PM"
+"SCHEDULE_DAYS_OF_WEEK_DETAIL" = "Select all that apply";
+"SCHEDULE_TIME_PROMPT" = "Schedule";
+"SCHEDULE_DAYS_PROMPT" = "When do you take it at this time?";
+"ADD_ANOTHER_SCHEDULE_BUTTON" = "＋ Add another schedule";
+
+/* Medication Tracking */
+"OTHER_SECTION_TITLE" = "Other";
+"MEDICATION_SELECTION_TITLE" = "What medications are you taking?";
+"MEDICATION_SELECTION_DETAIL" = "Select all that apply";
+"MEDICATION_ADD_DETAILS_TITLE" = "Add medication details";
+"MEDICATION_ADD_DETAILS_DETAIL" = "Select to add your medication dosing information and schedule(s).";
+"MEDICATION_ADD_MORE_BUTTON" = "＋ Add medications";
+"MEDICATION_DOSAGE_PROMPT" = "Dosage";
+"MEDICATION_DOSAGE_PLACEHOLDER" = "e.g. 10/100 mg";    // Placeholder text for medication dosage.
+"MEDICATION_DAYS_OF_WEEK_TITLE_%1$@_at_%2$@" = "Which days do you take %1$@ at %2$@?"; // ex. "Advil at 7:00 AM"
+"MEDICATION_REVIEW_TITLE" = "Review medications";
+
+/* Logged item tracking */
+"LOG_BUTTON_TITLE" = "Log";
+"LOGGED_LABEL_TITLE" = "Logged";
+
+/* Image Picker */
+"CAMERA_NOT_AVAILABLE" = "This device does not support using the camera to capture images.";
+
+/* Permissions */
+"PHOTO_LIBRARY_PERMISSION_DENIED" = "You have not given this app permission to use the photo library. You can enable access in the Privacy Settings.";
+"PHOTO_LIBRARY_PERMISSION_RESTRICTED" = "Access to the photo library is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
+"CAMERA_PERMISSION_DENIED" = "You have not given this app permission to use the camera. You can enable access in the Privacy Settings.";
+"CAMERA_PERMISSION_RESTRICTED" = "Access to the camera is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
+"MICROPHONE_PERMISSION_DENIED" = "You have not given this app permission to use the microphone. You can enable access in the Privacy Settings.";
+"MICROPHONE_PERMISSION_RESTRICTED" = "Access to the microphone is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
+"LOCATION_IN_USE_PERMISSION_DENIED" = "You have not given this app permission to use location services (GPS). You can enable access in the Privacy Settings.";
+"LOCATION_BACKGROUND_PERMISSION_DENIED" = "You have not given this app permission to use location services (GPS) in the background. You can enable access in the Privacy Settings.";
+"LOCATION_PERMISSION_RESTRICTED" = "Access to the location services (GPS) is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
+"MOTION_PERMISSION_DENIED" = "You have not given this app permission to use the motion and fitness sensors. You can enable access in the Privacy Settings.";
+"GENERAL_PERMISSION_RESTRICTED" = "This activity requires access to permissions or settings that are restricted on this device.";
+
+/* Reminder Notifications */
+"REMINDER_BUTTON_TITLE" = "Remind me later";
+"REMINDER_AUTH_DENIED_TITLE" = "Cannot add reminder";
+"REMINDER_AUTH_DENIED_MESSAGE" = "This app does not have authorization to send you a reminder notification. Go to the 'Settings' app to change your permissions.";
+"REMINDER_CHOICE_NONE" = "Do not remind me";
+"REMINDER_CHOICE_IN_DURATION_%@" = "Remind me in %@";
+"REMINDER_CHOICE_SELECTION_PROMPT" = "When do you want a reminder?";
+"REMINDER_NOTIFICATION_WITH_TITLE_%@" = "Time to do the %@.";
+"REMINDER_NOTIFICATION_WITHOUT_TITLE" = "Time to perform your next task.";
