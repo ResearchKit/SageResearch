@@ -15,8 +15,9 @@
                                }
                             ],
                  "image":{
-                     "imageName":"F-Walking2",
-                     "placementType":"topMarginBackground"
+                     "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
+                     "placementType":"topMarginBackground",
+                     "animationDuration":2.5
                  },
                 "icons": [
                           {
@@ -59,9 +60,9 @@
                 "text":"You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
                 "isFirstRunOnly": true,
                 "image":{
-                    "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4"],
+                    "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
                     "placementType":"topMarginBackground",
-                    "animationDuration":2
+                    "animationDuration":2.5
                 },
                 "colorTheme":{
                     "colorStyle": {
