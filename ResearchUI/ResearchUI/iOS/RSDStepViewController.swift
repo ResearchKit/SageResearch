@@ -630,6 +630,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// which requires custom navigation because the step has not "ended" normally. For example, this method
     /// is called when a user taps the "skip" button.
     open func jumpForward() {
+        RSDSpeechSynthesizer.shared.stopTalking()
         stop()
         self.taskController.goForward()
     }
