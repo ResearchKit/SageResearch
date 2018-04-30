@@ -38,7 +38,7 @@ internal protocol MCTInternalStepController : RSDStepController {
 
 extension MCTInternalStepController {
     
-    /// Adds a result for whether or not this run represents a "first run", A "first run"
+    /// Adds a result for whether or not this run represents a "first run". A "first run"
     /// occurs anytime the user has never run the task before, or hasn't run the task in
     /// one month.
     internal func setIsFirstRunResult(_ isFirstRun: Bool) {
