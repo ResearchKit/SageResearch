@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import ResearchStack2UI
+import ResearchUI
 
 extension UIColor {
     

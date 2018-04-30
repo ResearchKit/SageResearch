@@ -33,8 +33,8 @@
 
 import UIKit
 import CardiorespiratoryFitness
-import ResearchStack2
-import ResearchStack2UI
+import Research
+import ResearchUI
 
 class TaskTableViewController: UITableViewController {
 
@@ -72,7 +72,7 @@ class TaskTableViewController: UITableViewController {
         flushTempDirectory()
     }
     
-    let offMainQueue = DispatchQueue(label: "org.sagebase.ResearchStack2.Serialized.\(UUID())")
+    let offMainQueue = DispatchQueue(label: "org.sagebase.Research.Serialized.\(UUID())")
     
     /// Flush the temporary directory contents.
     /// For the example app, we want to leave the output directory untouched *until*

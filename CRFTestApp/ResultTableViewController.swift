@@ -32,8 +32,8 @@
 //
 
 import UIKit
-import ResearchStack2UI
-import ResearchStack2
+import ResearchUI
+import Research
 
 class ResultTableViewController: UITableViewController, RSDTaskViewControllerDelegate {
 
