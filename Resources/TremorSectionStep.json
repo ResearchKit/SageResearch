@@ -54,8 +54,14 @@
                   "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
                   "actions":{
                       "skip":{
-                          "skipToIdentifier":"countdown",
+                          "type":"navigation",
+                          "skipToIdentifier":"tremor",
                           "buttonTitle": "Restart test"
+                      },
+                      "learnMore":{
+                          "type":"navigation",
+                          "skipToIdentifier": "holdPhoneInstructions",
+                          "buttonTitle": "Review instructions"
                       }
                   },
                   "title": "Hold the phone still in your %@ hand.",

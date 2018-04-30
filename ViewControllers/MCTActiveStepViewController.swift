@@ -33,6 +33,9 @@
 
 import Foundation
 
+extension RSDActiveStepViewController : MCTInternalStepController {
+}
+
 open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandStepController {
     
     /// Retuns the imageView, in this case the image from the navigationHeader.
@@ -86,16 +89,11 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
         self.unitLabel?.text = Localization.localizedString(localizationKey)
     }
     
-    @IBAction func restartButtonTapped(_ sender: Any) {
-        skipForward()
-    }
-    
-    /// Override skip forward to skip backward to the walk step.
-    override open func skipForward() {
-        // TODO: rkolmos 04/05/2018 refactor Research to support linking an RSDUIAction to navigation
-        guard let activeStep = self.step as? RSDActiveUIStepObject else { return }
-        activeStep.nextStepIdentifier = "walk"
-        super.skipForward()
+    /// Override show learn more to insert the first run answer result.
+    override open func showLearnMore() {
+        // Update the first run to show the full instructions.
+        setIsFirstRunResult(true)
+        super.showLearnMore()
     }
     
     /// Override to return the instruction with the formatted text replaced.

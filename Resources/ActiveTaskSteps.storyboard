@@ -325,7 +325,7 @@
                                 <rect key="frame" x="49.5" y="157.5" width="222" height="222"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gl-I3-Byg" userLabel="Unit Label">
-                                        <rect key="frame" x="73.5" y="157" width="75" height="19.5"/>
+                                        <rect key="frame" x="72.5" y="157" width="75" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -377,9 +377,6 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="restartButtonTapped:" destination="kx5-nS-n0F" eventType="touchUpInside" id="aK5-8q-QKh"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlT-Pj-FXY" userLabel="Review Button" customClass="RSDUnderlinedButton" customModule="ResearchUI">
                                 <rect key="frame" x="85.5" y="505.5" width="149" height="32.5"/>
@@ -423,14 +420,14 @@
                         <connections>
                             <outlet property="cancelButton" destination="a9L-sM-gnJ" id="MT1-cq-JgO"/>
                             <outlet property="imageView" destination="Z9U-qL-Bij" id="ryn-uZ-yUd"/>
+                            <outlet property="learnMoreButton" destination="xlT-Pj-FXY" id="kVE-3Y-FmK"/>
+                            <outlet property="skipButton" destination="a9c-PV-TEq" id="qAo-hZ-mc4"/>
                             <outlet property="titleLabel" destination="Kqn-vH-L1X" id="6QI-wl-HKA"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="countdownDial" destination="CRK-Yd-4Pa" id="2Dh-85-TAK"/>
                         <outlet property="countdownLabel" destination="OoL-gH-k3I" id="1d8-Bi-iW4"/>
-                        <outlet property="navigationHeader" destination="mlx-p8-ccw" id="Tar-BD-bWd"/>
-                        <outlet property="restartButton" destination="a9c-PV-TEq" id="ScN-Zz-O3d"/>
                         <outlet property="statusBarBackgroundView" destination="AQ2-43-2k3" id="WJC-SY-FIR"/>
                         <outlet property="unitLabel" destination="4Gl-I3-Byg" id="yfX-kv-8gw"/>
                     </connections>
@@ -442,7 +439,7 @@
         <!--Countdown Step View Controller-->
         <scene sceneID="SB1-Dp-A6s">
             <objects>
-                <viewController storyboardIdentifier="Countdown" id="DiW-Sz-hwr" customClass="RSDCountdownStepViewController" customModule="ResearchUI" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Countdown" id="DiW-Sz-hwr" customClass="MCTCountdownStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GS6-LM-X1w" customClass="RSDStepHeaderView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -524,12 +521,12 @@
                         <connections>
                             <outlet property="cancelButton" destination="5aE-sq-nnA" id="Nj8-tY-RPt"/>
                             <outlet property="imageView" destination="ePz-9Y-VGg" id="ocU-eT-z7M"/>
+                            <outlet property="learnMoreButton" destination="4ph-h6-gCc" id="h1e-7e-4E6"/>
                             <outlet property="textLabel" destination="9un-Qi-dJY" id="HWg-F6-vS8"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="countdownLabel" destination="aga-Uj-SL9" id="EgC-Wk-4IR"/>
-                        <outlet property="navigationHeader" destination="GS6-LM-X1w" id="t8J-ZS-sOm"/>
                         <outlet property="pauseButton" destination="9Qh-cg-kfP" id="Xzj-75-aMt"/>
                         <outlet property="statusBarBackgroundView" destination="G2D-5j-sDp" id="Pzl-58-s9e"/>
                     </connections>
@@ -918,9 +915,6 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="restartButtonTapped:" destination="kx5-nS-n0F" eventType="touchUpInside" id="a6M-Nz-mfp"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.32568424940000001" green="0.25694268939999998" blue="0.52321022750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

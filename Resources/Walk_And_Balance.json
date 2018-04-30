@@ -161,44 +161,38 @@
                  }
              },
              {
+                 "identifier":"countdown.1",
+                 "type":"countdown",
+                 "text":"Begin in...",
+                 "image":{
+                     "imageName":"F-Walking1",
+                     "placementType":"fullsizeBackground"
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Countdown",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "colorTheme":{
+                     "usesLightStyle":true
+                 },
+                 "duration":5,
+                 "commands":["playSoundOnStart", "transitionAutomatically"],
+                 "spokenInstructions":{
+                     "start":"Place the phone in your pocket."
+                 }
+             },
+             {
                  "identifier":"walk",
                  "type":"section",
                  "asyncActions":[
                                  {
                                      "identifier":"motion",
                                      "type":"motion",
-                                     "startStepIdentifier":"countdown",
                                      "requiresBackgroundAudio":true,
                                      "recorderTypes":["accelerometer", "gyro"]
                                  }
                                 ],
                  "steps":[
-                          {
-                              "identifier":"countdown",
-                              "type":"countdown",
-                              "text":"Begin in...",
-                              "image":{
-                                  "imageName":"F-Walking1",
-                                  "placementType":"fullsizeBackground"
-                              },
-                              "viewTheme":{
-                                  "viewIdentifier":"Countdown",
-                                  "storyboardIdentifier":"ActiveTaskSteps"
-                              },
-                              "colorTheme":{
-                                  "usesLightStyle":true
-                              },
-                              "duration":5,
-                              "commands":["playSoundOnStart", "transitionAutomatically"],
-                              "spokenInstructions":{
-                                  "start":"Place the phone in your pocket."
-                              },
-                              "actions":{
-                                  "skip":{
-                                      "skipToIdentifier":"countdown"
-                                  }
-                              }
-                          },
                           {
                               "identifier":"motion",
                               "type":"active",
@@ -214,6 +208,18 @@
                               "viewTheme":{
                                   "viewIdentifier":"Action",
                                   "storyboardIdentifier":"ActiveTaskSteps"
+                              },
+                              "actions":{
+                                  "skip":{
+                                      "type":"navigation",
+                                      "skipToIdentifier":"countdown.1",
+                                      "buttonTitle": "Restart test"
+                                  },
+                                  "learnMore":{
+                                      "type":"navigation",
+                                      "skipToIdentifier": "walkInstructions",
+                                      "buttonTitle": "Review instructions"
+                                  }
                               },
                               "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
                               "spokenInstructions":{
@@ -284,7 +290,7 @@
                  }
              },
              {
-                 "identifier":"countdown",
+                 "identifier":"countdown.2",
                  "type":"countdown",
                  "text":"Begin in...",
                  "isFirstRunOnly": true,
@@ -312,7 +318,6 @@
                                  {
                                  "identifier":"motion",
                                  "type":"motion",
-                                 "startStepIdentifier":"countdown",
                                  "requiresBackgroundAudio":true,
                                  "recorderTypes":[
                                                   "accelerometer",
@@ -337,6 +342,18 @@
                               "viewTheme":{
                                   "viewIdentifier":"Action",
                                   "storyboardIdentifier":"ActiveTaskSteps"
+                              },
+                              "actions":{
+                                  "skip":{
+                                      "type":"navigation",
+                                      "skipToIdentifier":"countdown.1",
+                                      "buttonTitle": "Restart test"
+                                  },
+                                  "learnMore":{
+                                      "type":"navigation",
+                                      "skipToIdentifier": "walkInstructions",
+                                      "buttonTitle": "Review instructions"
+                                  }
                               },
                               "spokenInstructions":{
                                   "start":"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to not move.",
