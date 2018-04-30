@@ -142,9 +142,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     /// Stops the animation view from animating.
     private func _stopAnimating() {
         /// The image view that is used to show the animation.
-        var animationView: UIImageView? {
-            return (self.navigationHeader as? RSDStepHeaderView)?.imageView
-        }
+        let animationView = (self.navigationHeader as? RSDStepHeaderView)?.imageView
         animationView?.stopAnimating()
     }
     
