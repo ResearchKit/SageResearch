@@ -101,6 +101,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
                 iconTitles[idx].text = iconInfo.title
             }
         }
+        
         // If this is the first time the activity has been done or it has been more than
         // a month since the last run we show the task info, otherwise we show a smaller
         // screen and provide an info button in case the user wants to see the info.
@@ -136,8 +137,6 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         guard let placementType = self.themedStep?.imageTheme?.placementType else { return }
         self.scrollViewBackgroundHeightConstraint.constant = placementType == .topMarginBackground ? self.statusBarBackgroundView!.bounds.height : CGFloat(0)
     }
-    
-
     
     /// Stops the animation view from animating.
     private func _stopAnimating() {
@@ -216,7 +215,6 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
             self.navigationFooter?.shouldShowShadow = true
         }
         
-        self._setIsFirstRunResult(true)
         self._stopAnimating()
     }
     
