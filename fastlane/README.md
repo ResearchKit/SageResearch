@@ -31,11 +31,11 @@ Fetches provisioning profile and certificates from github repo
 fastlane ios test
 ```
 Execute tests
-### build
+### ios build
 ```
-fastlane build
+fastlane ios build
 ```
-Build the scheme
+Build target
 ### ios archive
 ```
 fastlane ios archive
@@ -46,6 +46,16 @@ Archive and export app
 fastlane ios ci_archive
 ```
 This lane is for CI bots to archive and export
+### ios bump_all
+```
+fastlane ios bump_all
+```
+Bump both the framework projects
+### ios bump_framework
+```
+fastlane ios bump_framework
+```
+Bump Framework Version
 ### ios beta
 ```
 fastlane ios beta
