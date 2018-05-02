@@ -1,1223 +1,1167 @@
 {
   "warnings": [
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 182,
       "symbol": "UIColor.rsd_crosshatchDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 193,
       "symbol": "UIColor.rsd_statusBarOverlay",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 204,
       "symbol": "UIColor.rsd_underlinedButtonText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 215,
       "symbol": "UIColor.rsd_roundedButtonText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 219,
       "symbol": "UIColor.rsd_roundedButtonBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 223,
       "symbol": "UIColor.rsd_roundedButtonTextLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 227,
       "symbol": "UIColor.rsd_secondaryRoundedButtonBackground",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 231,
       "symbol": "UIColor.rsd_secondaryRoundedButtonText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 235,
       "symbol": "UIColor.rsd_secondaryRoundedButtonBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 239,
       "symbol": "UIColor.rsd_secondaryRoundedButtonTextLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 250,
       "symbol": "UIColor.rsd_dialInnerBackground",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 254,
       "symbol": "UIColor.rsd_dialInnerBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 258,
       "symbol": "UIColor.rsd_dialRingBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 262,
       "symbol": "UIColor.rsd_dialRingBackground",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 266,
       "symbol": "UIColor.rsd_progressBar",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 270,
       "symbol": "UIColor.rsd_progressBarBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 274,
       "symbol": "UIColor.rsd_progressBarBackground",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 278,
       "symbol": "UIColor.rsd_stepCountLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 282,
       "symbol": "UIColor.rsd_stepCountLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 310,
       "symbol": "UIColor.rsd_headerTextLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 314,
       "symbol": "UIColor.rsd_headerDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 318,
       "symbol": "UIColor.rsd_headerTitleLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 322,
       "symbol": "UIColor.rsd_headerTextLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 326,
       "symbol": "UIColor.rsd_headerDetailLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 330,
       "symbol": "UIColor.rsd_footnoteLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 341,
       "symbol": "UIColor.rsd_choiceCellBackgroundHighlighted",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 345,
       "symbol": "UIColor.rsd_choiceCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 349,
       "symbol": "UIColor.rsd_choiceCellLabelHighlighted",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 353,
       "symbol": "UIColor.rsd_choiceCellDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 357,
       "symbol": "UIColor.rsd_choiceCellDetailLabelHighlighted",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 361,
       "symbol": "UIColor.rsd_cellSeparatorLine",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 372,
       "symbol": "UIColor.rsd_textFieldCellBorder",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 376,
       "symbol": "UIColor.rsd_textFieldCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 380,
       "symbol": "UIColor.rsd_textFieldCellTextLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 384,
       "symbol": "UIColor.rsd_textFieldCellBorderLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
       "line": 388,
       "symbol": "UIColor.rsd_textFieldCellLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 40,
       "symbol": "UIFont.roundedButtonTitle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 46,
       "symbol": "UIFont.rsd_headerTitleLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 50,
       "symbol": "UIFont.rsd_headerTextLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 54,
       "symbol": "UIFont.rsd_headerDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 58,
       "symbol": "UIFont.rsd_footnoteLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 62,
       "symbol": "UIFont.rsd_stepCountLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 66,
       "symbol": "UIFont.rsd_boldStepCountLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 72,
       "symbol": "UIFont.rsd_choiceCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 76,
       "symbol": "UIFont.rsd_choiceCellDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 80,
       "symbol": "UIFont.rsd_choiceSectionLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 84,
       "symbol": "UIFont.rsd_choiceSectionDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 90,
       "symbol": "UIFont.rsd_textFieldCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 94,
       "symbol": "UIFont.rsd_textFieldCellText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 98,
       "symbol": "UIFont.rsd_textFieldFeaturedCellText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Audio/RSDVoiceBox.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Audio/RSDVoiceBox.swift",
       "line": 66,
       "symbol": "RSDSpeechSynthesizer.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 56,
-      "symbol": "UIPageViewController.setViewControllers(_:direction:animated:completion:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDImagePickerStepViewController.swift",
-      "line": 40,
-      "symbol": "RSDImagePickerStepObject.instantiateViewController(with:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDImagePickerStepViewController.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDImagePickerStepViewController.swift",
       "line": 45,
       "symbol": "RSDImagePickerStepViewController",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDImagePickerStepViewController.swift",
-      "line": 94,
-      "symbol": "RSDImagePickerStepViewController.MediaType",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDImagePickerStepViewController.swift",
-      "line": 95,
-      "symbol": "RSDImagePickerStepViewController.MediaType.photo",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDImagePickerStepViewController.swift",
-      "line": 96,
-      "symbol": "RSDImagePickerStepViewController.MediaType.video",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
       "line": 717,
       "symbol": "RSDTableStepViewController.pickerValueChanged(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
       "line": 1057,
       "symbol": "RSDTableStepLayoutConstants.mainViewBottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
       "line": 1058,
       "symbol": "RSDTableStepLayoutConstants.defaultRowHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
       "line": 1059,
       "symbol": "RSDTableStepLayoutConstants.defaultSectionHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
       "line": 1060,
       "symbol": "RSDTableStepLayoutConstants.formStepMinHeaderHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/View Controllers/RSDWebViewController.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/View Controllers/RSDWebViewController.swift",
       "line": 152,
       "symbol": "RSDWebViewController.webViewDidFinishLoad(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/View Controllers/RSDWebViewController.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/View Controllers/RSDWebViewController.swift",
       "line": 156,
       "symbol": "RSDWebViewController.webView(_:didFailLoadWithError:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
       "line": 57,
       "symbol": "RSDButtonCell.awakeFromNib()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
       "line": 69,
       "symbol": "RSDButtonCellLayoutConstants.topMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
       "line": 70,
       "symbol": "RSDButtonCellLayoutConstants.bottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
       "line": 71,
       "symbol": "RSDButtonCellLayoutConstants.sideMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
       "line": 83,
       "symbol": "RSDModalButtonCell",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
-      "line": 123,
-      "symbol": "RSDModalButtonCell.init(style:reuseIdentifier:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDButtonCell.swift",
-      "line": 128,
-      "symbol": "RSDModalButtonCell.init(coder:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
       "line": 89,
       "symbol": "RSDCheckmarkView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
       "line": 94,
       "symbol": "RSDCheckmarkView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
       "line": 110,
       "symbol": "RSDCheckmarkView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCountdownDial.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCountdownDial.swift",
       "line": 138,
       "symbol": "RSDCountdownDial.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCountdownDial.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCountdownDial.swift",
       "line": 143,
       "symbol": "RSDCountdownDial.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCountdownDial.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCountdownDial.swift",
       "line": 164,
       "symbol": "RSDCountdownDial.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 49,
       "symbol": "RSDCrosshatchView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 59,
       "symbol": "RSDCrosshatchView.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 64,
       "symbol": "RSDCrosshatchView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 69,
       "symbol": "RSDCrosshatchView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCrosshatchView.swift",
       "line": 101,
       "symbol": "RSDCrosshatchView.layoutSublayers(of:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDLoadingView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDLoadingView.swift",
       "line": 105,
       "symbol": "RSDLoadingView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
       "line": 53,
       "symbol": "RSDPickerObserver.pickerValueChanged(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
       "line": 90,
       "symbol": "RSDDatePicker.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
       "line": 408,
       "symbol": "RSDNumberPickerView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
       "line": 427,
       "symbol": "RSDNumberPickerView.numberOfComponents(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
       "line": 431,
       "symbol": "RSDNumberPickerView.pickerView(_:numberOfRowsInComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
       "line": 439,
       "symbol": "RSDNumberPickerView.pickerView(_:titleForRow:forComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
       "line": 444,
       "symbol": "RSDNumberPickerView.pickerView(_:didSelectRow:inComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 42,
       "symbol": "RSDButton.accessibilityTraits",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 60,
       "symbol": "RSDRoundedButton.defaultHeight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 61,
       "symbol": "RSDRoundedButton.defaultWidthWith2Buttons",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 62,
       "symbol": "RSDRoundedButton.defaultWidthWith1Button",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 64,
       "symbol": "RSDRoundedButton.isEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 116,
       "symbol": "RSDRoundedButton.tintColorDidChange()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 121,
       "symbol": "RSDRoundedButton.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 134,
       "symbol": "RSDRoundedButton.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 139,
       "symbol": "RSDRoundedButton.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 144,
       "symbol": "RSDRoundedButton.commonInit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDRoundedButton.swift",
       "line": 157,
       "symbol": "RSDRoundedButton.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
       "line": 62,
       "symbol": "RSDShadowGradient.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
       "line": 67,
       "symbol": "RSDShadowGradient.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
       "line": 72,
       "symbol": "RSDShadowGradient.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
       "line": 77,
       "symbol": "RSDShadowGradient.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
       "line": 82,
       "symbol": "RSDShadowGradient.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDShadowGradient.swift",
       "line": 101,
       "symbol": "RSDShadowGradient.layoutSublayers(of:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStatusBarBackgroundView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStatusBarBackgroundView.swift",
       "line": 59,
       "symbol": "RSDStatusBarBackgroundView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStatusBarBackgroundView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStatusBarBackgroundView.swift",
       "line": 65,
       "symbol": "RSDStatusBarBackgroundView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStatusBarBackgroundView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStatusBarBackgroundView.swift",
       "line": 70,
       "symbol": "RSDStatusBarBackgroundView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 61,
       "symbol": "RSDStepChoiceCell.titleLabel",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 62,
       "symbol": "RSDStepChoiceCell.detailLabel",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 63,
       "symbol": "RSDStepChoiceCell.separatorLine",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
-      "line": 65,
-      "symbol": "RSDStepChoiceCell.tableItem",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 86,
       "symbol": "RSDStepChoiceCell.isSelected",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 94,
       "symbol": "RSDStepChoiceCell.init(style:reuseIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 140,
       "symbol": "RSDStepChoiceCell.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 144,
       "symbol": "RSDStepChoiceCell.awakeFromNib()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 152,
       "symbol": "RSDStepChoiceSectionHeader.titleLabel",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 153,
       "symbol": "RSDStepChoiceSectionHeader.detailLabel",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 154,
       "symbol": "RSDStepChoiceSectionHeader.separatorLine",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 156,
       "symbol": "RSDStepChoiceSectionHeader.init(reuseIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 200,
       "symbol": "RSDStepChoiceSectionHeader.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 204,
       "symbol": "RSDStepChoiceSectionHeader.awakeFromNib()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 290,
       "symbol": "RSDStepTextFieldCell.init(style:reuseIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 295,
       "symbol": "RSDStepTextFieldCell.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 300,
       "symbol": "RSDStepTextFieldCell.awakeFromNib()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 322,
       "symbol": "RSDStepTextFieldCell.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 349,
       "symbol": "RSDStepTextFieldCellLayoutConstants.verticalMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 350,
       "symbol": "RSDStepTextFieldCellLayoutConstants.verticalPadding",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 351,
       "symbol": "RSDStepTextFieldCellLayoutConstants.sideMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 380,
       "symbol": "RSDStepTextFieldFeaturedCell.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 401,
       "symbol": "RSDStepTextField.indexPath",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 422,
       "symbol": "RSDTextLabelCell.init(style:reuseIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 427,
       "symbol": "RSDTextLabelCell.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 432,
       "symbol": "RSDTextLabelCell.awakeFromNib()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 513,
       "symbol": "RSDImageViewCell.init(style:reuseIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepChoiceCell.swift",
       "line": 518,
       "symbol": "RSDImageViewCell.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 210,
       "symbol": "RSDNavigationHeaderLayoutConstants.topMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 211,
       "symbol": "RSDNavigationHeaderLayoutConstants.bottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 212,
       "symbol": "RSDNavigationHeaderLayoutConstants.sideMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 213,
       "symbol": "RSDNavigationHeaderLayoutConstants.promptBottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 214,
       "symbol": "RSDNavigationHeaderLayoutConstants.horizontalSpacing",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 215,
       "symbol": "RSDNavigationHeaderLayoutConstants.verticalSpacing",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 216,
       "symbol": "RSDNavigationHeaderLayoutConstants.barButtonHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 217,
       "symbol": "RSDNavigationHeaderLayoutConstants.buttonToTop",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 218,
       "symbol": "RSDNavigationHeaderLayoutConstants.imageViewHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 219,
       "symbol": "RSDNavigationHeaderLayoutConstants.labelMaxLayoutWidth",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 272,
       "symbol": "RSDTableStepHeaderView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 278,
       "symbol": "RSDTableStepHeaderView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 283,
       "symbol": "RSDTableStepHeaderView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 361,
       "symbol": "RSDTableStepHeaderView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 370,
       "symbol": "RSDTableStepHeaderView.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 536,
       "symbol": "RSDNavigationFooterLayoutConstants.topMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 537,
       "symbol": "RSDNavigationFooterLayoutConstants.bottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 538,
       "symbol": "RSDNavigationFooterLayoutConstants.oneButtonSideMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 539,
       "symbol": "RSDNavigationFooterLayoutConstants.twoButtonSideMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 540,
       "symbol": "RSDNavigationFooterLayoutConstants.horizontalPadding",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 541,
       "symbol": "RSDNavigationFooterLayoutConstants.verticalPadding",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 542,
       "symbol": "RSDNavigationFooterLayoutConstants.shadowHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 569,
       "symbol": "RSDGenericNavigationFooterView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 575,
       "symbol": "RSDGenericNavigationFooterView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 580,
       "symbol": "RSDGenericNavigationFooterView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 585,
       "symbol": "RSDGenericNavigationFooterView.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepNavigationView.swift",
       "line": 650,
       "symbol": "RSDGenericNavigationFooterView.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepProgressView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepProgressView.swift",
       "line": 174,
       "symbol": "RSDStepProgressView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepProgressView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepProgressView.swift",
       "line": 179,
       "symbol": "RSDStepProgressView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepProgressView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepProgressView.swift",
       "line": 184,
       "symbol": "RSDStepProgressView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepProgressView.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepProgressView.swift",
       "line": 203,
       "symbol": "RSDStepProgressView.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 46,
       "symbol": "RSDUnderlinedButton.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 51,
       "symbol": "RSDUnderlinedButton.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 56,
       "symbol": "RSDUnderlinedButton.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 62,
       "symbol": "RSDUnderlinedButton.commonInit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
       "line": 67,
       "symbol": "RSDUnderlinedButton.tintColorDidChange()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/syoung2/Documents/AppleCode/mPower-2-iOS/BridgeApp-Apple-SDK/SageResearch/ResearchUI"
+  "source_directory": "/Users/travis/build/Sage-Bionetworks/SageResearch"
 }
