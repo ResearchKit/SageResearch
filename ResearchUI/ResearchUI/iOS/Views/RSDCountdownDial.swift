@@ -108,6 +108,8 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     private func updateColorStyle() {
         let ringColor = usesLightStyle ? UIColor.rsd_dialRingBackgroundLightStyle : UIColor.rsd_dialRingBackground
         ringLayer?.strokeColor = ringColor.cgColor
+        
+        self.backgroundColor = self.usesLightStyle ? UIColor.rsd_dialInnerBackgroundLightStyle : UIColor.rsd_dialInnerBackground
     }
     
     /// The width of the circular ring that shows the track of the progress indicator.
@@ -147,7 +149,6 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     
     private func commonInit() {
         layer.masksToBounds = false
-        self.backgroundColor = self.usesLightStyle ? UIColor.rsd_dialInnerBackgroundLightStyle : UIColor.rsd_dialInnerBackground
         self.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0, constant: 0.0).isActive = true
     }
     
@@ -187,8 +188,8 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
         backgroundColor = UIColor.clear
         
         ringLayer?.lineWidth = ringWidth
-        ringLayer?.strokeColor = UIColor.rsd_dialRingBackground.cgColor
         ringLayer?.fillColor = UIColor.clear.cgColor
+        updateColorStyle()
         
         dialLayer?.strokeEnd = progress
         dialLayer?.lineWidth = dialWidth
