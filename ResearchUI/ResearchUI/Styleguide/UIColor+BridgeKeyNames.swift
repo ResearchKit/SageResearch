@@ -85,6 +85,14 @@ extension UIColor {
         return secondaryTintColor.withSaturationMultiplier(1.2)
     }
     
+    /// Override to set a light secondary tint color for the app. This is used for rounded buttons when
+    /// highlighted.
+    ///
+    /// Default = `secondaryTintColor.withSaturationMultiplier(0.5)`.
+    @objc open class var lightSecondaryTintColor: UIColor {
+        return secondaryTintColor.withSaturationMultiplier(0.5)
+    }
+    
     
     /// MARK: App background - default colors
     ///
