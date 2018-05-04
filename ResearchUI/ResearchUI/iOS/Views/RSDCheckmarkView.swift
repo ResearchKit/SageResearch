@@ -39,7 +39,10 @@ fileprivate let defaultSize: CGFloat = 122
     /// The corner radius for the checkmark. Default == -1, which will result in a circle.
     @IBInspectable public var cornerRadius: CGFloat {
         get { return _cornerRadius ?? -1 }
-        set { _cornerRadius = (newValue >= 0) ? newValue : nil }
+        set {
+            _cornerRadius = (newValue >= 0) ? newValue : nil
+            self.layer.cornerRadius = _cornerRadius ?? _circleSize / 2
+        }
     }
     private var _cornerRadius: CGFloat?
     
