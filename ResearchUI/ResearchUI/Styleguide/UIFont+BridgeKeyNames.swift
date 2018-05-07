@@ -41,6 +41,13 @@ extension UIFont {
         return UIFont.systemFont(ofSize: 19.0, weight: .semibold)
     }
     
+    // MARK: Checkbox button
+    
+    @objc open class var rsd_checkboxButtonTitle: UIFont {
+        return UIFont.systemFont(ofSize: 16.0, weight: .regular)
+    }
+
+    
     // MARK: Generic step view controller - header view labels
 
     @objc open class var rsd_headerTitleLabel: UIFont {
