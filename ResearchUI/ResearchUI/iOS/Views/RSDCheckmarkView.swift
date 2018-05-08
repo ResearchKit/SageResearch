@@ -151,7 +151,7 @@ fileprivate let defaultSize: CGFloat = 122
 }
 
 /// A table cell that displays using a checkbox.
-@IBDesignable public final class RSDCheckboxTableCell : RSDTableViewCell {
+@IBDesignable public class RSDCheckboxTableCell : RSDTableViewCell {
     
     fileprivate let buttonView: RSDCheckboxButtonView
     
@@ -199,12 +199,27 @@ fileprivate let defaultSize: CGFloat = 122
         commonInit()
     }
     
-    private func commonInit() {
+    fileprivate func commonInit() {
         self.addSubview(buttonView)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.rsd_alignAllToSuperview(padding: 0)
         buttonView.isUserInteractionEnabled = false
         buttonView.isSelected = self.isSelected
+    }
+}
+
+/// A table cell that displays using a checkbox.
+@IBDesignable public class RSDRadioButtonTableCell : RSDCheckboxTableCell {
+    
+    override public var cornerRadius: CGFloat {
+        get { return checkboxHeight / 2.0 }
+        set { }
+    }
+    
+    override fileprivate func commonInit() {
+        super.commonInit()
+        buttonView.cornerRadius = checkboxHeight / 2.0
+        buttonView.viewChecked.checkmarkHidden = true
     }
 }
 
