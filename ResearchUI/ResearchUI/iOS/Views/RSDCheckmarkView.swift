@@ -150,12 +150,130 @@ fileprivate let defaultSize: CGFloat = 122
     }
 }
 
+/// A table cell that displays using a checkbox.
+@IBDesignable public final class RSDCheckboxTableCell : RSDTableViewCell {
+    
+    fileprivate let buttonView: RSDCheckboxButtonView
+    
+    /// The corner radius the checkbox.
+    @IBInspectable public var cornerRadius: CGFloat {
+        get { return buttonView.cornerRadius }
+        set { buttonView.cornerRadius = newValue }
+    }
+    
+    /// The background color of the checkbox when selected.
+    @IBInspectable public var selectedColor : UIColor {
+        get { return buttonView.selectedColor }
+        set { buttonView.selectedColor = newValue }
+    }
+    
+    /// The border color of the checkbox when selected.
+    @IBInspectable public var selectedBorderColor : UIColor {
+        get { return buttonView.selectedBorderColor }
+        set { buttonView.selectedBorderColor = newValue }
+    }
+    
+    override public var isSelected: Bool {
+        didSet {
+            buttonView.isSelected = self.isSelected
+        }
+    }
+    
+    override public var tableItem: RSDTableItem! {
+        didSet {
+            guard let item = tableItem as? RSDChoiceTableItem else { return }
+            buttonView.label.text = item.choice.text
+            isSelected = item.selected
+        }
+    }
+    
+    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        self.buttonView = RSDCheckboxButtonView(frame: .zero)
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        commonInit()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        self.buttonView = RSDCheckboxButtonView(frame: .zero)
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        self.addSubview(buttonView)
+        buttonView.translatesAutoresizingMaskIntoConstraints = false
+        buttonView.rsd_alignAllToSuperview(padding: 0)
+        buttonView.isUserInteractionEnabled = false
+        buttonView.isSelected = self.isSelected
+    }
+}
+
+
+/// A button that displays using a checkbox.
+@IBDesignable public final class RSDCheckboxButton : UIButton {
+    
+    fileprivate let buttonView: RSDCheckboxButtonView
+    
+    /// The corner radius the checkbox.
+    @IBInspectable public var cornerRadius: CGFloat {
+        get { return buttonView.cornerRadius }
+        set { buttonView.cornerRadius = newValue }
+    }
+    
+    /// The background color of the checkbox when selected.
+    @IBInspectable public var selectedColor : UIColor {
+        get { return buttonView.selectedColor }
+        set { buttonView.selectedColor = newValue }
+    }
+    
+    /// The border color of the checkbox when selected.
+    @IBInspectable public var selectedBorderColor : UIColor {
+        get { return buttonView.selectedBorderColor }
+        set { buttonView.selectedBorderColor = newValue }
+    }
+    
+    public override init(frame: CGRect) {
+        self.buttonView = RSDCheckboxButtonView(frame: frame)
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        self.buttonView = RSDCheckboxButtonView(frame: .zero)
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        
+        self.addSubview(buttonView)
+        buttonView.translatesAutoresizingMaskIntoConstraints = false
+        buttonView.rsd_alignAllToSuperview(padding: 0)
+        buttonView.isUserInteractionEnabled = false
+        
+        self.setTitleColor(UIColor.clear, for: .normal)
+        self.contentEdgeInsets = .zero
+        buttonView.label?.text = self.currentTitle
+        buttonView.isSelected = self.isSelected
+    }
+    
+    override public func setTitle(_ title: String?, for state: UIControlState) {
+        self.setTitleColor(UIColor.clear, for: .normal)
+        super.setTitle(title, for: state)
+        buttonView.label?.text = self.currentTitle
+    }
+    
+    override public var isSelected: Bool {
+        didSet {
+            buttonView.isSelected = self.isSelected
+        }
+    }
+}
+
 fileprivate let borderWidth: CGFloat = 1
 fileprivate let checkboxHeight: CGFloat = 32
 
-/// A button that displays using a checkbox.
-@IBDesignable
-public final class RSDCheckboxButton : UIButton {
+fileprivate class RSDCheckboxButtonView : UIView {
     
     fileprivate var checkboxContainer: UIView!
     fileprivate var viewChecked: RSDCheckmarkView!
@@ -163,44 +281,31 @@ public final class RSDCheckboxButton : UIButton {
     fileprivate var label: UILabel!
     
     /// The corner radius the checkbox. Default == 3.0
-    @IBInspectable public var cornerRadius: CGFloat = 3.0 {
+    var cornerRadius: CGFloat = 3.0 {
         didSet {
             updateCornerRadius()
         }
     }
     
     /// The background color of the checkbox when selected.
-    @IBInspectable public var selectedColor : UIColor = UIColor.darkPrimaryTintColor {
+    var selectedColor : UIColor = UIColor.darkPrimaryTintColor {
         didSet {
             viewChecked.backgroundColor = self.tintColor
         }
     }
     
     /// The border color of the checkbox when selected.
-    @IBInspectable public var selectedBorderColor : UIColor = UIColor.lightPrimaryTintColor {
+    var selectedBorderColor : UIColor = UIColor.lightPrimaryTintColor {
         didSet {
             viewChecked.layer.borderColor = selectedBorderColor.cgColor
         }
     }
     
     /// Is this checkbox for a control that is selected?
-    override public var isSelected: Bool {
+    var isSelected: Bool = false {
         didSet {
-            flip(animated: false)
+            refreshViews()
         }
-    }
-    
-    /// Animate the selection state.
-    public func setSelected(_ isSelected: Bool, animated: Bool) {
-        guard isSelected != self.isSelected else { return }
-        self.isSelected = isSelected
-        flip(animated: animated)
-    }
-    
-    override public func setTitle(_ title: String?, for state: UIControlState) {
-        self.setTitleColor(UIColor.clear, for: .normal)
-        super.setTitle(title, for: state)
-        self.label?.text = self.currentTitle
     }
     
     public override init(frame: CGRect) {
@@ -243,17 +348,14 @@ public final class RSDCheckboxButton : UIButton {
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.rsd_alignToSuperview([.trailing, .centerY], padding: 0)
         label.rsd_alignRightOf(view: checkboxContainer, padding: 10, priority: .required)
-        label.text = self.currentTitle
         label.font = UIFont.rsd_checkboxButtonTitle
         label.textColor = UIColor.appTextDark
         
         // hide the title label
         checkboxContainer.isUserInteractionEnabled = false
-        self.setTitleColor(UIColor.clear, for: .normal)
-        self.contentEdgeInsets = .zero
         
         updateCornerRadius()
-        flip(animated: false)
+        refreshViews()
     }
     
     private func updateCornerRadius() {
@@ -262,9 +364,9 @@ public final class RSDCheckboxButton : UIButton {
         self.layer.cornerRadius = self.cornerRadius
     }
     
-    private func flip(animated: Bool) {
-        viewUnchecked.isHidden = self.isSelected
-        viewChecked.isHidden = !self.isSelected
+    private func refreshViews() {
+        viewUnchecked?.isHidden = self.isSelected
+        viewChecked?.isHidden = !self.isSelected
     }
 }
 

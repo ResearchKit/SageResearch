@@ -250,7 +250,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// The UI hints that are supported by this view controller.
     open class var supportedUIHints: Set<RSDFormUIHint> {
-        return [.list, .textfield, .picker, .modalButton]
+        return [.list, .textfield, .picker, .checkbox, .modalButton]
     }
     
     /// Creates and assigns a new instance of the model. The default implementation will instantiate
@@ -294,6 +294,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             let isFeatured = formStep?.inputFields.count ?? 0 <= 1
             let reuseId = RSDFormUIHint(rawValue: reuseIdentifier)
             switch reuseId {
+            case .checkbox:
+                tableView.register(RSDCheckboxTableCell.self, forCellReuseIdentifier: reuseIdentifier)
             case .list:
                 tableView.register(RSDStepChoiceCell.self, forCellReuseIdentifier: reuseIdentifier)
             case .textfield, .picker:
