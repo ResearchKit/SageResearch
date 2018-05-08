@@ -149,3 +149,195 @@ fileprivate let defaultSize: CGFloat = 122
         _shapeLayer = shapeLayer
     }
 }
+
+fileprivate let borderWidth: CGFloat = 1
+fileprivate let checkboxHeight: CGFloat = 32
+
+/// A button that displays using a checkbox.
+@IBDesignable
+public final class RSDCheckboxButton : UIButton {
+    
+    fileprivate var checkboxContainer: UIView!
+    fileprivate var viewChecked: RSDCheckmarkView!
+    fileprivate var viewUnchecked: UncheckedView!
+    fileprivate var label: UILabel!
+    
+    /// The corner radius the checkbox. Default == 3.0
+    @IBInspectable public var cornerRadius: CGFloat = 3.0 {
+        didSet {
+            updateCornerRadius()
+        }
+    }
+    
+    /// The background color of the checkbox when selected.
+    @IBInspectable public var selectedColor : UIColor = UIColor.darkPrimaryTintColor {
+        didSet {
+            viewChecked.backgroundColor = self.tintColor
+        }
+    }
+    
+    /// The border color of the checkbox when selected.
+    @IBInspectable public var selectedBorderColor : UIColor = UIColor.lightPrimaryTintColor {
+        didSet {
+            viewChecked.layer.borderColor = selectedBorderColor.cgColor
+        }
+    }
+    
+    /// Is this checkbox for a control that is selected?
+    override public var isSelected: Bool {
+        didSet {
+            flip(animated: false)
+        }
+    }
+    
+    /// Animate the selection state.
+    public func setSelected(_ isSelected: Bool, animated: Bool) {
+        guard isSelected != self.isSelected else { return }
+        self.isSelected = isSelected
+        flip(animated: animated)
+    }
+    
+    override public func setTitle(_ title: String?, for state: UIControlState) {
+        self.setTitleColor(UIColor.clear, for: .normal)
+        super.setTitle(title, for: state)
+        self.label?.text = self.currentTitle
+    }
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        
+        checkboxContainer = UIView(frame: CGRect(x: 0, y: 0, width: checkboxHeight, height: checkboxHeight))
+        self.addSubview(checkboxContainer)
+        checkboxContainer.translatesAutoresizingMaskIntoConstraints = false
+        checkboxContainer.rsd_makeWidth(.equal, checkboxHeight)
+        checkboxContainer.rsd_makeHeight(.equal, checkboxHeight)
+        
+        viewUnchecked = UncheckedView(frame: self.bounds)
+        checkboxContainer.addSubview(viewUnchecked)
+        viewUnchecked.translatesAutoresizingMaskIntoConstraints = false
+        viewUnchecked.rsd_alignAllToSuperview(padding: 0)
+        
+        viewChecked = RSDCheckmarkView(frame: self.bounds)
+        checkboxContainer.addSubview(viewChecked)
+        viewChecked.translatesAutoresizingMaskIntoConstraints = false
+        viewChecked.rsd_alignAllToSuperview(padding: 0)
+        viewChecked.layer.borderWidth = borderWidth
+        viewChecked.backgroundColor = self.tintColor
+        
+        checkboxContainer.rsd_alignToSuperview([.leading, .top, .bottom], padding: 0)
+        checkboxContainer.rsd_alignToSuperview([.trailing], padding: 0, priority: .init(100))
+        
+        label = UILabel(frame: CGRect(x: 42, y: 0, width: 100, height: 32))
+        self.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        label.rsd_alignToSuperview([.trailing, .centerY], padding: 0)
+        label.rsd_alignRightOf(view: checkboxContainer, padding: 10, priority: .required)
+        label.text = self.currentTitle
+        label.font = UIFont.rsd_checkboxButtonTitle
+        label.textColor = UIColor.appTextDark
+        
+        // hide the title label
+        checkboxContainer.isUserInteractionEnabled = false
+        self.setTitleColor(UIColor.clear, for: .normal)
+        self.contentEdgeInsets = .zero
+        
+        updateCornerRadius()
+        flip(animated: false)
+    }
+    
+    private func updateCornerRadius() {
+        viewUnchecked.cornerRadius = self.cornerRadius
+        viewChecked.cornerRadius = self.cornerRadius
+        self.layer.cornerRadius = self.cornerRadius
+    }
+    
+    private func flip(animated: Bool) {
+        viewUnchecked.isHidden = self.isSelected
+        viewChecked.isHidden = !self.isSelected
+    }
+}
+
+@IBDesignable
+fileprivate class UncheckedView : UIView {
+    
+    fileprivate var borderColor: UIColor = UIColor.rsd_cellSeparatorLine {
+        didSet {
+            self.layer.borderColor = borderColor.cgColor
+        }
+    }
+    
+    /// The corner radius for the checkmark box.
+    fileprivate var cornerRadius: CGFloat = 3 {
+        didSet {
+            self.layer.cornerRadius = cornerRadius
+        }
+    }
+    
+    var _shadowLayer: CAShapeLayer!
+    var _shadowBounds: CGRect?
+    
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.layer.borderColor = borderColor.cgColor
+        self.layer.borderWidth = borderWidth
+        self.layer.cornerRadius = cornerRadius
+        
+        if _shadowBounds != self.bounds {
+            _shadowBounds = self.bounds
+            resetInnerShadow()
+        }
+    }
+    
+    // define function to add inner shadow
+    public func resetInnerShadow() {
+        
+        _shadowLayer?.removeFromSuperlayer()
+        
+        let shadowSize: CGFloat = 2.0
+        
+        // define and set a shaow layer
+        let shadowLayer = CAShapeLayer()
+        shadowLayer.frame = bounds
+        shadowLayer.shadowColor = borderColor.cgColor
+        shadowLayer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        shadowLayer.shadowOpacity = 0.5
+        shadowLayer.shadowRadius = shadowSize
+        shadowLayer.fillRule = kCAFillRuleEvenOdd
+        
+        // define shadow path
+        let shadowPath = CGMutablePath()
+        
+        // define outer rectangle to restrict drawing area
+        let insetRect = bounds.insetBy(dx: -shadowSize * 2.0, dy: -shadowSize * 2.0)
+        
+        // define inner rectangle for mask
+        let innerFrame: CGRect = CGRect(x: 0.0, y: 0.0, width: frame.size.width, height: frame.size.height)
+        
+        // add outer and inner rectangle to shadow path
+        shadowPath.addRect(insetRect)
+        shadowPath.addRect(innerFrame)
+        
+        // set shadow path as show layer's
+        shadowLayer.path = shadowPath
+        
+        // add shadow layer as a sublayer
+        self.layer.addSublayer(shadowLayer)
+        
+        // hide outside drawing area
+        self.clipsToBounds = true
+        
+        _shadowLayer = shadowLayer
+    }
+}
