@@ -300,8 +300,8 @@ fileprivate class UncheckedView : UIView {
         }
     }
     
-    // define function to add inner shadow
-    public func resetInnerShadow() {
+    /// define function to add inner shadow
+    private func resetInnerShadow() {
         
         _shadowLayer?.removeFromSuperlayer()
         
