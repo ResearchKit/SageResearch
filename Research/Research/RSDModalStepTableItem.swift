@@ -38,7 +38,7 @@ import Foundation
 open class RSDModalStepTableItem : RSDTableItem {
     
     /// The action to link to the selection cell or button.
-    public let action: RSDUIAction
+    public let action: RSDUIAction?
     
     /// Initialize a new `RSDTextTableItem`.
     /// parameters:
@@ -46,7 +46,7 @@ open class RSDModalStepTableItem : RSDTableItem {
     ///     - rowIndex: The index of this item relative to all rows in the section in which this item resides.
     ///     - reuseIdentifier: The string to use as the reuse identifier.
     ///     - action: The action to link to the selection cell or button.
-    public init(identifier: String, rowIndex: Int, reuseIdentifier: String, action: RSDUIAction) {
+    public init(identifier: String, rowIndex: Int, reuseIdentifier: String, action: RSDUIAction? = nil) {
         self.action = action
         super.init(identifier: identifier, rowIndex: rowIndex, reuseIdentifier: reuseIdentifier)
     }
