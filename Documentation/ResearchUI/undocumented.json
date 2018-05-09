@@ -2,252 +2,252 @@
   "warnings": [
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 182,
+      "line": 190,
       "symbol": "UIColor.rsd_crosshatchDark",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 193,
+      "line": 201,
       "symbol": "UIColor.rsd_statusBarOverlay",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 204,
+      "line": 212,
       "symbol": "UIColor.rsd_underlinedButtonText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 215,
+      "line": 223,
       "symbol": "UIColor.rsd_roundedButtonText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 219,
+      "line": 227,
       "symbol": "UIColor.rsd_roundedButtonBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 223,
+      "line": 231,
       "symbol": "UIColor.rsd_roundedButtonTextLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 227,
+      "line": 235,
       "symbol": "UIColor.rsd_secondaryRoundedButtonBackground",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 231,
+      "line": 239,
       "symbol": "UIColor.rsd_secondaryRoundedButtonText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 235,
+      "line": 243,
       "symbol": "UIColor.rsd_secondaryRoundedButtonBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 239,
+      "line": 247,
       "symbol": "UIColor.rsd_secondaryRoundedButtonTextLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 250,
+      "line": 258,
       "symbol": "UIColor.rsd_dialInnerBackground",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 254,
+      "line": 262,
       "symbol": "UIColor.rsd_dialInnerBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 258,
+      "line": 266,
       "symbol": "UIColor.rsd_dialRingBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 262,
+      "line": 270,
       "symbol": "UIColor.rsd_dialRingBackground",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 266,
+      "line": 274,
       "symbol": "UIColor.rsd_progressBar",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 270,
+      "line": 278,
       "symbol": "UIColor.rsd_progressBarBackgroundLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 274,
+      "line": 282,
       "symbol": "UIColor.rsd_progressBarBackground",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 278,
+      "line": 286,
       "symbol": "UIColor.rsd_stepCountLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 282,
+      "line": 290,
       "symbol": "UIColor.rsd_stepCountLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 310,
+      "line": 318,
       "symbol": "UIColor.rsd_headerTextLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 314,
+      "line": 322,
       "symbol": "UIColor.rsd_headerDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 318,
+      "line": 326,
       "symbol": "UIColor.rsd_headerTitleLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 322,
+      "line": 330,
       "symbol": "UIColor.rsd_headerTextLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 326,
+      "line": 334,
       "symbol": "UIColor.rsd_headerDetailLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 330,
+      "line": 338,
       "symbol": "UIColor.rsd_footnoteLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 341,
+      "line": 349,
       "symbol": "UIColor.rsd_choiceCellBackgroundHighlighted",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 345,
+      "line": 353,
       "symbol": "UIColor.rsd_choiceCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 349,
+      "line": 357,
       "symbol": "UIColor.rsd_choiceCellLabelHighlighted",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 353,
+      "line": 361,
       "symbol": "UIColor.rsd_choiceCellDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 357,
+      "line": 365,
       "symbol": "UIColor.rsd_choiceCellDetailLabelHighlighted",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 361,
+      "line": 369,
       "symbol": "UIColor.rsd_cellSeparatorLine",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 372,
+      "line": 380,
       "symbol": "UIColor.rsd_textFieldCellBorder",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 376,
+      "line": 384,
       "symbol": "UIColor.rsd_textFieldCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 380,
+      "line": 388,
       "symbol": "UIColor.rsd_textFieldCellTextLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 384,
+      "line": 392,
       "symbol": "UIColor.rsd_textFieldCellBorderLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIColor+BridgeKeyNames.swift",
-      "line": 388,
+      "line": 396,
       "symbol": "UIColor.rsd_textFieldCellLabelLightStyle",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
@@ -262,90 +262,97 @@
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
       "line": 46,
+      "symbol": "UIFont.rsd_checkboxButtonTitle",
+      "symbol_kind": "source.lang.swift.decl.var.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
+      "line": 53,
       "symbol": "UIFont.rsd_headerTitleLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 50,
+      "line": 57,
       "symbol": "UIFont.rsd_headerTextLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 54,
+      "line": 61,
       "symbol": "UIFont.rsd_headerDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 58,
+      "line": 65,
       "symbol": "UIFont.rsd_footnoteLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 62,
+      "line": 69,
       "symbol": "UIFont.rsd_stepCountLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 66,
+      "line": 73,
       "symbol": "UIFont.rsd_boldStepCountLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 72,
+      "line": 79,
       "symbol": "UIFont.rsd_choiceCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 76,
+      "line": 83,
       "symbol": "UIFont.rsd_choiceCellDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 80,
+      "line": 87,
       "symbol": "UIFont.rsd_choiceSectionLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 84,
+      "line": 91,
       "symbol": "UIFont.rsd_choiceSectionDetailLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 90,
+      "line": 97,
       "symbol": "UIFont.rsd_textFieldCellLabel",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 94,
+      "line": 101,
       "symbol": "UIFont.rsd_textFieldCellText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/Styleguide/UIFont+BridgeKeyNames.swift",
-      "line": 98,
+      "line": 105,
       "symbol": "UIFont.rsd_textFieldFeaturedCellText",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
@@ -366,35 +373,35 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 717,
+      "line": 738,
       "symbol": "RSDTableStepViewController.pickerValueChanged(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 1057,
+      "line": 1076,
       "symbol": "RSDTableStepLayoutConstants.mainViewBottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 1058,
+      "line": 1077,
       "symbol": "RSDTableStepLayoutConstants.defaultRowHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 1059,
+      "line": 1078,
       "symbol": "RSDTableStepLayoutConstants.defaultSectionHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 1060,
+      "line": 1079,
       "symbol": "RSDTableStepLayoutConstants.formStepMinHeaderHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -411,6 +418,13 @@
       "line": 156,
       "symbol": "RSDWebViewController.webView(_:didFailLoadWithError:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDBorderedTextView.swift",
+      "line": 37,
+      "symbol": "RSDBorderedTextView",
+      "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
@@ -450,42 +464,91 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
-      "line": 89,
+      "line": 92,
       "symbol": "RSDCheckmarkView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
-      "line": 94,
+      "line": 97,
       "symbol": "RSDCheckmarkView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
-      "line": 110,
+      "line": 113,
       "symbol": "RSDCheckmarkView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "line": 176,
+      "symbol": "RSDCheckboxTableCell.isSelected",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "line": 190,
+      "symbol": "RSDCheckboxTableCell.init(style:reuseIdentifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "line": 196,
+      "symbol": "RSDCheckboxTableCell.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "line": 250,
+      "symbol": "RSDCheckboxButton.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "line": 256,
+      "symbol": "RSDCheckboxButton.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "line": 275,
+      "symbol": "RSDCheckboxButton.setTitle(_:for:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCheckmarkView.swift",
+      "line": 281,
+      "symbol": "RSDCheckboxButton.isSelected",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 138,
+      "line": 140,
       "symbol": "RSDCountdownDial.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 143,
+      "line": 145,
       "symbol": "RSDCountdownDial.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 164,
+      "line": 165,
       "symbol": "RSDCountdownDial.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1124,6 +1187,34 @@
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDStepProgressView.swift",
       "line": 203,
       "symbol": "RSDStepProgressView.updateConstraints()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDToggleConstraintView.swift",
+      "line": 37,
+      "symbol": "RSDToggleConstraintView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDToggleConstraintView.swift",
+      "line": 105,
+      "symbol": "RSDDetailsChevronButton.isSelected",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDToggleConstraintView.swift",
+      "line": 117,
+      "symbol": "RSDDetailsChevronButton.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Views/RSDToggleConstraintView.swift",
+      "line": 122,
+      "symbol": "RSDDetailsChevronButton.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
