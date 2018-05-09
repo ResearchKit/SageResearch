@@ -104,12 +104,12 @@ extension DefaultRSDButtonCellLayoutConstants : RSDButtonCellLayoutConstants {
                 else {
                     return
             }
-            if let buttonTitle = modalItem.action.buttonTitle {
+            if let buttonTitle = modalItem.action?.buttonTitle {
                 actionButton.setTitle(buttonTitle, for: .normal)
             } else {
                 actionButton.setTitle("", for: .normal)
             }
-            if let buttonIcon = modalItem.action.buttonIcon {
+            if let buttonIcon = modalItem.action?.buttonIcon {
                 actionButton.setImage(buttonIcon, for: .normal)
             } else {
                 actionButton.setImage(nil, for: .normal)

@@ -1,6 +1,6 @@
 //
-//  RSDModalStepTableItem.swift
-//  Research
+//  RSDBorderedTextView.swift
+//  BridgeApp (iOS)
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -33,21 +33,28 @@
 
 import Foundation
 
-/// `RSDModalStepTableItem` is used to represent a item row that, when selected, should display a
-/// step view controller.
-open class RSDModalStepTableItem : RSDTableItem {
+@IBDesignable
+public final class RSDBorderedTextView : UITextView {
     
-    /// The action to link to the selection cell or button.
-    public let action: RSDUIAction?
+    /// The corner radius the checkbox. Default == 3.0
+    @IBInspectable public var cornerRadius: CGFloat = 3.0 {
+        didSet {
+            self.layer.cornerRadius = cornerRadius
+        }
+    }
     
-    /// Initialize a new `RSDTextTableItem`.
-    /// parameters:
-    ///     - identifier: The cell identifier.
-    ///     - rowIndex: The index of this item relative to all rows in the section in which this item resides.
-    ///     - reuseIdentifier: The string to use as the reuse identifier.
-    ///     - action: The action to link to the selection cell or button.
-    public init(identifier: String, rowIndex: Int, reuseIdentifier: String, action: RSDUIAction? = nil) {
-        self.action = action
-        super.init(identifier: identifier, rowIndex: rowIndex, reuseIdentifier: reuseIdentifier)
+    /// The border color.
+    @IBInspectable public var borderColor: UIColor = UIColor.rsd_cellSeparatorLine {
+        didSet {
+            self.layer.borderColor = borderColor.cgColor
+        }
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.layer.borderWidth = 1
+        self.layer.borderColor = borderColor.cgColor
+        self.layer.cornerRadius = cornerRadius
     }
 }

@@ -250,7 +250,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// The UI hints that are supported by this view controller.
     open class var supportedUIHints: Set<RSDFormUIHint> {
-        return [.list, .textfield, .picker, .modalButton]
+        return [.list, .textfield, .picker, .checkbox, .radioButton, .modalButton]
     }
     
     /// Creates and assigns a new instance of the model. The default implementation will instantiate
@@ -294,6 +294,10 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             let isFeatured = formStep?.inputFields.count ?? 0 <= 1
             let reuseId = RSDFormUIHint(rawValue: reuseIdentifier)
             switch reuseId {
+            case .checkbox:
+                tableView.register(RSDCheckboxTableCell.self, forCellReuseIdentifier: reuseIdentifier)
+            case .radioButton:
+                tableView.register(RSDRadioButtonTableCell.self, forCellReuseIdentifier: reuseIdentifier)
             case .list:
                 tableView.register(RSDStepChoiceCell.self, forCellReuseIdentifier: reuseIdentifier)
             case .textfield, .picker:
@@ -636,7 +640,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         guard let tableData = self.tableData else { return }
         
         if let item = tableData.tableItem(at: indexPath) as? RSDChoiceTableItem {
-            didSelect(item: item, at: indexPath)
+            didSelectChoiceItem(item, at: indexPath)
         }
         else {
             
@@ -649,7 +653,10 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
     }
     
-    func didSelect(item: RSDChoiceTableItem, at indexPath: IndexPath) {
+    // MARK: didSelect methods
+    
+    /// Called when a user action on a cell or button is linked to a choice item.
+    open func didSelectChoiceItem(_ item: RSDChoiceTableItem, at indexPath: IndexPath) {
         guard let tableData = self.tableData else { return }
 
         do {
@@ -670,6 +677,20 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         } catch let err {
             assertionFailure("Unexpected error while selecting table row \(indexPath). \(err)")
         }
+    }
+    
+    /// Called when a user action on a cell or button is linked to a modal item.
+    open func didSelectModalItem(_ modalItem: RSDModalStepTableItem, at indexPath: IndexPath) {
+        guard let source = tableData as? RSDModalStepDataSource,
+            let taskViewController = self.taskController as? RSDTaskViewController
+            else {
+                assertionFailure("Cannot handle the button tap.")
+                return
+        }
+        let step = source.step(for: modalItem)
+        let stepViewController = taskViewController.viewController(for: step)
+        source.willPresent(stepViewController, from: modalItem)
+        self.present(stepViewController, animated: true, completion: nil)
     }
     
     
@@ -884,19 +905,10 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         
         if let modalItem = tableItem as? RSDModalStepTableItem {
-            guard let source = tableData as? RSDModalStepDataSource,
-                let taskViewController = self.taskController as? RSDTaskViewController
-                else {
-                    assertionFailure("Cannot handle the button tap.")
-                    return
-            }
-            let step = source.step(for: modalItem)
-            let stepViewController = taskViewController.viewController(for: step)
-            source.willPresent(stepViewController, from: modalItem)
-            self.present(stepViewController, animated: true, completion: nil)
+            didSelectModalItem(modalItem, at: cell.indexPath)
         }
         else if let choiceItem = tableItem as? RSDChoiceTableItem {
-            didSelect(item: choiceItem, at: cell.indexPath)
+            didSelectChoiceItem(choiceItem, at: cell.indexPath)
         }
         else {
             assertionFailure("Cannot handle the button tap.")
