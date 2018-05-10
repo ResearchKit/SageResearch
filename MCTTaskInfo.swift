@@ -89,6 +89,13 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
             self.subtitle = step.text
             self.detail = step.detail
         }
+
+        // Get the task icon for this taskIdentifier
+        do {
+            self.icon = try RSDImageWrapper(imageName: "\(taskIdentifier)TaskIcon", bundle: Bundle(for: MCTFactory.self))
+        } catch let err {
+            print("Failed to load the task icon. \(err)")
+        }
     }
     
     /// The identifier is the task identifier for this task.
