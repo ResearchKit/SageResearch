@@ -32,14 +32,15 @@
 //
 
 import UIKit
+import WebKit
 
 /// `RSDWebViewController` is a simple view controller for showing a webview. The base-class implementation
 /// supports loading a web view from a URL, HTML string, or `RSDResourceTransformer`. It is assumed that
 /// the property will be set for one of these values.
-open class RSDWebViewController: UIViewController, UIWebViewDelegate {
+open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     
     /// The webview attached to this view controller.
-    @IBOutlet var webView: UIWebView!
+    @IBOutlet var webView: WKWebView!
     
     /// The loading indicator.
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -88,19 +89,19 @@ open class RSDWebViewController: UIViewController, UIWebViewDelegate {
         _webviewLoaded = true
         
         if webView == nil {
-            let subview = UIWebView(frame: self.view.bounds)
+            let configuration = webViewConfiguration()
+            let subview = WKWebView(frame: self.view.bounds, configuration: configuration)
             subview.translatesAutoresizingMaskIntoConstraints = false
             self.view.insertSubview(subview, at: 0)
             subview.rsd_alignAllToSuperview(padding: 0)
-            subview.delegate = self
-            subview.dataDetectorTypes = .all
+            subview.navigationDelegate = self
             subview.backgroundColor = UIColor.white
             self.webView = subview
         }
         
         if let url = self.url {
             let request = URLRequest(url: url)
-            webView.loadRequest(request)
+            webView.load(request)
         }
         else if let html = self.html {
             // Include main bundle resourceURL as the baseURL so any stylesheets and images from the
@@ -121,6 +122,13 @@ open class RSDWebViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
+    /// Set up the desired configuration for the webview. Default implementation activates all data detector types.
+    open func webViewConfiguration() -> WKWebViewConfiguration {
+        let configuration = WKWebViewConfiguration()
+        configuration.dataDetectorTypes = .all
+        return configuration
+    }
+    
     /// Failed to load the webview. Default implementation will print the error to the console but is otherwise silent.
     open func loadFailed(with error: Error? = nil) {
         if let err = error {
@@ -135,25 +143,24 @@ open class RSDWebViewController: UIViewController, UIWebViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: UIWebViewDelegate
+    // MARK: WKNavigationDelegate
     
     /// If the webview request is a clicked link then open using the `UIApplication.open()` method.
-    open func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-
-        if let url = request.url, (navigationType == .linkClicked) {
+    open func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url, navigationAction.navigationType == .linkActivated {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            return false
+            decisionHandler(.cancel)
         }
         else {
-            return true
+            decisionHandler(.allow)
         }
     }
     
-    open func webViewDidFinishLoad(_ webView: UIWebView) {
+    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.activityIndicator.stopAnimating()
     }
     
-    open func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
+    open func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self.activityIndicator.stopAnimating()
         self.loadFailed(with: error)
     }
