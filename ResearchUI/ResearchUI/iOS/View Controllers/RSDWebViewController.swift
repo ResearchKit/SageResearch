@@ -40,10 +40,10 @@ import WebKit
 open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     
     /// The webview attached to this view controller.
-    @IBOutlet var webView: WKWebView!
+    @IBOutlet public var webView: WKWebView!
     
     /// The loading indicator.
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet public var activityIndicator: UIActivityIndicatorView!
     
     /// The URL to load into the webview on `viewWillAppear()`.
     open var url: URL?
