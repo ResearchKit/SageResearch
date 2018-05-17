@@ -1,5 +1,5 @@
 {
-    "identifier":"Walk And Balance",
+    "identifier":"Walk and Balance",
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":["volumeUp", "pantsWithPocket","phoneInPocket.1","walk", "balance"],
     "steps":[

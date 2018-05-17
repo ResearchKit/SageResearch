@@ -54,6 +54,10 @@ public enum MCTTaskIdentifier : String, Codable {
     public static func all() -> [MCTTaskIdentifier] {
         return [.walkAndBalance, .tremor, .tapping]
     }
+    
+    public var identifier: RSDIdentifier {
+        return RSDIdentifier(rawValue: self.rawValue)
+    }
 }
 
 /// A task info object for the tasks included in this submodule.
