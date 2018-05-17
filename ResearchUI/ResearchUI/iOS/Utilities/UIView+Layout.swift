@@ -40,7 +40,7 @@ extension CGFloat {
     /// uses the small screen (320 wide) as a baseline. This is a much simpler alternative to
     /// defining a matrix with screen sizes and constants and achieves much the same result
     /// - parameter max: A maximum size to apply to the returned value.
-    func rsd_proportionalToScreenWidth(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
+    public func rsd_proportionalToScreenWidth(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
         let baseline = CGFloat(320.0)
         let ret = (UIScreen.main.bounds.size.width / baseline) * self
         return ret < max ? ret : max
@@ -51,7 +51,7 @@ extension CGFloat {
     /// (568 high) as a baseline. This is a much simpler alternative to defining a matrix
     /// with screen sizes and constants and achieves much the same result.
     /// - parameter max: A maximum size to apply to the returned value.
-    func rsd_proportionalToScreenHeight(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
+    public func rsd_proportionalToScreenHeight(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
         let baseline = CGFloat(568.0)
         let ret = (UIScreen.main.bounds.size.height / baseline) * self
         return ret < max ? ret : max
@@ -61,7 +61,7 @@ extension CGFloat {
     /// This method will apply the `multiplier` if and only if this is an iPad.
     /// - note: This does not check the size class of the view.
     /// - parameter multiplier: The value to multiply by if this is an iPad.
-    func rsd_iPadMultiplier(_ multiplier: CGFloat) -> CGFloat {
+    public func rsd_iPadMultiplier(_ multiplier: CGFloat) -> CGFloat {
         if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
             return self * multiplier
         } else {
@@ -404,7 +404,7 @@ extension UIView {
         }
     }
     
-    func isChildView(item : AnyObject?) -> Bool {
+    fileprivate func isChildView(item : AnyObject?) -> Bool {
         
         var isChild = false
         
@@ -428,7 +428,7 @@ extension UIView {
     ///     - attribute:   The 'NSLayoutAttribute' of the constaint to be returned.
     ///     - relation:    The 'NSLayoutRelation' of the constraint to be returned.
     /// - returns: The 'NSLayoutConstraint' matching the supplied constraint properties, if any.
-    open func rsd_constraint(for attribute: NSLayoutAttribute, relation: NSLayoutRelation) -> NSLayoutConstraint? {
+    public func rsd_constraint(for attribute: NSLayoutAttribute, relation: NSLayoutRelation) -> NSLayoutConstraint? {
         
         var theConstraints = Array<NSLayoutConstraint>()
         
