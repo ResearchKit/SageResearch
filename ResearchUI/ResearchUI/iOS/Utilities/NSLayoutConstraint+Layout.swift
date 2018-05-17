@@ -41,7 +41,7 @@ extension NSLayoutConstraint {
     /// properties and the new multiplier
     /// - parameter multiplier: The new multipler value.
     /// - returns: A new constraint with the new multiplier value.
-    func rsd_setMultiplier(multiplier:CGFloat) -> NSLayoutConstraint {
+    public func rsd_setMultiplier(multiplier:CGFloat) -> NSLayoutConstraint {
         
         NSLayoutConstraint.deactivate([self])
         
