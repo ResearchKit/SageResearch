@@ -111,7 +111,7 @@
                  "identifier":"pantsWithPocket",
                  "type":"instruction",
                  "title":"Pants with front pockets",
-                 "text":"Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone.",
+                 "text":"Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "image":{
                      "imageName":"F-PantsPocket",
                      "placementType":"topBackground"
@@ -129,7 +129,7 @@
                  },
                  "actions":{
                      "goForward":{
-                        "buttonTitle":"I have front pockets"
+                        "buttonTitle":"Got front pockets"
                      }
                  }
              },
@@ -153,10 +153,10 @@
                      "viewIdentifier":"Instruction",
                      "storyboardIdentifier":"ActiveTaskSteps"
                  },
-                 "text":"This test measures your leg movement. and you will need to put your phone in your front pocket.",
+                 "text":"This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "actions":{
                      "goForward":{
-                         "buttonTitle":"The phone is in a pocket"
+                         "buttonTitle":"Putting it in my pocket"
                      }
                  }
              },
@@ -265,7 +265,7 @@
                  "identifier":"phoneInPocket.2",
                  "type":"instruction",
                  "title":"Put the phone in your pocket",
-                 "text":"This test measures your leg movement. and you will need to put your phone in your front pocket.",
+                 "text":"This test measures how well you balance and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "isFirstRunOnly": true,
                  "image":{
                      "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
@@ -285,7 +285,7 @@
                  },
                  "actions":{
                      "goForward":{
-                         "buttonTitle":"The phone is in a pocket"
+                         "buttonTitle":"Putting it in my pocket"
                      }
                  }
              },
