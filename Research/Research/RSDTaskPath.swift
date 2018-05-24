@@ -50,6 +50,10 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// and the app needs to track what the scheduled timing is for the task.
     public var scheduleIdentifier: String?
     
+    /// The user info is a pointer to task data that is required to run this task. This is a
+    /// pointer so it can be anything needed by the task.
+    public var userInfo: [String : Any]?
+    
     //// String identifying the full path for this task.
     public var fullPath: String {
         let prefix = parentPath?.fullPath ?? ""

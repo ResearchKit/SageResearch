@@ -95,7 +95,7 @@ public protocol RSDDataArchive : class, NSObjectProtocol {
     /// Identifier for this task that can be mapped back to a notification. This may be the same
     /// as the task identifier, or it might be that a task is scheduled multiple times per day,
     /// and the app needs to track what the scheduled timing is for the task.
-    var scheduleIdentifier: String? { get set }
+    var scheduleIdentifier: String? { get }
     
     /// Should the data archive include inserting data for the given reserved filename?
     func shouldInsertData(for filename: RSDReservedFilename) -> Bool
@@ -109,6 +109,15 @@ public protocol RSDDataArchive : class, NSObjectProtocol {
     /// Mark the archive as completed.
     /// - parameter metadata: The metadata for this archive.
     func completeArchive(with metadata: RSDTaskMetadata) throws
+    
+    /// Returns an archivable object for the given result.
+    ///
+    /// - parameters:
+    ///     - result: The result to archive.
+    ///     - sectionIdentifier: The section identifier for the task.
+    ///     - stepPath: The full step path to the given result.
+    /// - returns: An archivable object or `nil` if the result should be skipped.
+    func archivableData(for result: RSDResult, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable?
 }
 
 /// An archivable result is an object wrapper for results that allows them to be transformed into
@@ -340,7 +349,7 @@ internal class TaskArchiver : NSObject {
         // Look to see if the result conforms to the archivable protocol or the collection
         // protocol. If it conforms to both, then *only* archive it at this level and do not
         // recurse into the result.
-        if let achivable = result as? RSDArchivable {
+        if let achivable = archive.archivableData(for: result, sectionIdentifier: sectionIdentifier, stepPath: stepPath) {
             do {
                 if let (manifest, data) = try achivable.buildArchiveData(at: stepPath) {
                     try self.archive?.insertDataIntoArchive(data, manifest: manifest)
