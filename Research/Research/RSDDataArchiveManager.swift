@@ -349,9 +349,9 @@ internal class TaskArchiver : NSObject {
         // Look to see if the result conforms to the archivable protocol or the collection
         // protocol. If it conforms to both, then *only* archive it at this level and do not
         // recurse into the result.
-        if let achivable = archive.archivableData(for: result, sectionIdentifier: sectionIdentifier, stepPath: stepPath) {
+        if let archivable = archive.archivableData(for: result, sectionIdentifier: sectionIdentifier, stepPath: stepPath) {
             do {
-                if let (manifest, data) = try achivable.buildArchiveData(at: stepPath) {
+                if let (manifest, data) = try archivable.buildArchiveData(at: stepPath) {
                     try self.archive?.insertDataIntoArchive(data, manifest: manifest)
                     self.files.insert(manifest)
                 }

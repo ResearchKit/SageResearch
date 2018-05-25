@@ -50,9 +50,11 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// and the app needs to track what the scheduled timing is for the task.
     public var scheduleIdentifier: String?
     
-    /// The user info is a pointer to task data that is required to run this task. This is a
-    /// pointer so it can be anything needed by the task.
-    public var userInfo: [String : Any]?
+    /// The user info is used to assign any kind of data to the task path for use by the task and/or
+    /// step controller. Because a task path may be instantiated using either a task info object or
+    /// by a task, it's possible that the `RSDTask` associated with the task has not yet been
+    /// instantiated.
+    public var userInfo: Any?
     
     //// String identifying the full path for this task.
     public var fullPath: String {
@@ -97,7 +99,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     public var didExitEarly: Bool = false
     
     /// A pointer to a parent path if this is subtask step.
-    public private(set) var parentPath: RSDTaskPath?
+    public private(set) weak var parentPath: RSDTaskPath?
     
     /// A pointer to the path sections visited
     public private(set) var childPaths: [String : RSDTaskPath] = [:]
