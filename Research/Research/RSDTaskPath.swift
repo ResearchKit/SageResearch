@@ -50,6 +50,12 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// and the app needs to track what the scheduled timing is for the task.
     public var scheduleIdentifier: String?
     
+    /// The user info is used to assign any kind of data to the task path for use by the task and/or
+    /// step controller. Because a task path may be instantiated using either a task info object or
+    /// by a task, it's possible that the `RSDTask` associated with the task has not yet been
+    /// instantiated.
+    public var userInfo: Any?
+    
     //// String identifying the full path for this task.
     public var fullPath: String {
         let prefix = parentPath?.fullPath ?? ""
@@ -93,7 +99,8 @@ public final class RSDTaskPath : NSObject, NSCopying {
     public var didExitEarly: Bool = false
     
     /// A pointer to a parent path if this is subtask step.
-    public private(set) var parentPath: RSDTaskPath?
+    public private(set) weak var parentPath: RSDTaskPath?
+    private var _strongParent: RSDTaskPath?
     
     /// A pointer to the path sections visited
     public private(set) var childPaths: [String : RSDTaskPath] = [:]
@@ -187,8 +194,20 @@ public final class RSDTaskPath : NSObject, NSCopying {
     private func commonInit(identifier: String, parentPath: RSDTaskPath?) {
         guard let parentPath = parentPath else { return }
         parentPath.childPaths[identifier] = self
-        self.parentPath = parentPath
+        retainParent(parentPath)
         self.previousResults = (parentPath.result.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
+    }
+    
+    /// Move up the parent chain by releasing the strong reference to the parent and returning it.
+    internal func releaseParent() -> RSDTaskPath? {
+        let parent = _strongParent
+        _strongParent = nil
+        return parent
+    }
+    
+    internal func retainParent(_ newParent: RSDTaskPath) {
+        self.parentPath = newParent
+        _strongParent = newParent
     }
     
     /// Fetch the task associated with this path. This method loads the task and sets up the

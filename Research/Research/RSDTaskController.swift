@@ -281,9 +281,9 @@ extension RSDTaskUIController {
     
     /// Convenience property for getting the top level task path.
     public var topLevelTaskPath : RSDTaskPath! {
-        var taskPath = self.taskPath
-        while taskPath?.parentPath != nil {
-            taskPath = taskPath!.parentPath!
+        var path = self.taskPath
+        while let nextPath = path?.parentPath {
+            path = nextPath
         }
         return taskPath
     }
@@ -479,10 +479,10 @@ extension RSDTaskUIController {
     }
     
     private func _moveToPreviousStep() {
-        guard let currentStep = taskPath.currentStep,
-            let step = taskPath.task!.stepNavigator.step(before: currentStep, with: &taskPath.result)
+        guard let currentStep = self.taskPath.currentStep,
+            let step = self.taskPath.task!.stepNavigator.step(before: currentStep, with: &taskPath.result)
             else {
-                if let parent = taskPath.parentPath {
+                if let parent = self.taskPath.releaseParent() {
                     // If the parent path is non-nil then go back up to the parent
                     self.taskPath = parent
                     _moveToPreviousStep()
@@ -510,6 +510,7 @@ extension RSDTaskUIController {
         if isSubtask, let childPath = self.taskPath.childPaths[step.identifier] {
             if let lastStep = childPath.currentStep {
                 self.taskPath.currentStep = step
+                childPath.retainParent(self.taskPath)
                 self.taskPath = childPath
                 _moveBack(to: lastStep, from: currentStep)
             } else if let lastStep = taskPath.task!.stepNavigator.step(before: step, with: &taskPath.result) {
@@ -600,14 +601,14 @@ extension RSDTaskUIController {
         let shouldExit = taskPath.task!.stepNavigator.shouldExit(after: previousStep, with: taskPath.result)
         
         // Look to see if there is a task path parent to go up to
-        if !shouldExit, let parent = taskPath.parentPath {
+        if !shouldExit, let parent = taskPath.releaseParent() {
             _moveUpThePath(from: previousStep, to: parent)
         }
         else {
             // move up the parent chain if we aren't already there
             var path = taskPath!
-            while path.parentPath != nil {
-                path = path.parentPath!
+            while let nextPath = path.releaseParent() {
+                path = nextPath
             }
             self.taskPath = path
             self.taskPath.didExitEarly = shouldExit
