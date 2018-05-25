@@ -100,6 +100,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     
     /// A pointer to a parent path if this is subtask step.
     public private(set) weak var parentPath: RSDTaskPath?
+    private var _strongParent: RSDTaskPath?
     
     /// A pointer to the path sections visited
     public private(set) var childPaths: [String : RSDTaskPath] = [:]
@@ -193,8 +194,20 @@ public final class RSDTaskPath : NSObject, NSCopying {
     private func commonInit(identifier: String, parentPath: RSDTaskPath?) {
         guard let parentPath = parentPath else { return }
         parentPath.childPaths[identifier] = self
-        self.parentPath = parentPath
+        retainParent(parentPath)
         self.previousResults = (parentPath.result.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
+    }
+    
+    /// Move up the parent chain by releasing the strong reference to the parent and returning it.
+    internal func releaseParent() -> RSDTaskPath? {
+        let parent = _strongParent
+        _strongParent = nil
+        return parent
+    }
+    
+    internal func retainParent(_ newParent: RSDTaskPath) {
+        self.parentPath = newParent
+        _strongParent = newParent
     }
     
     /// Fetch the task associated with this path. This method loads the task and sets up the
