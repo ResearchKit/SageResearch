@@ -54,7 +54,7 @@ extension RSDResultType {
 public struct MCTTappingResultObject : RSDResult, Encodable, RSDArchivable {
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, type, startDate, endDate, stepViewSize = "viewSize", buttonRect1 = "buttonRectLeft", buttonRect2 = "buttonRectRight", samples
+        case identifier, type, startDate, endDate, stepViewSize = "viewSize", buttonRect1 = "buttonRectLeft", buttonRect2 = "buttonRectRight", samples, tapCount
     }
 
     /// The identifier for the associated step.
@@ -110,6 +110,7 @@ public struct MCTTappingResultObject : RSDResult, Encodable, RSDArchivable {
         try container.encode(self.type, forKey: .type)
         try container.encode(self.startDate, forKey: .startDate)
         try container.encode(self.endDate, forKey: .endDate)
+        try container.encode(self.samples?.count ?? 0, forKey: .tapCount)
         try container.encode(NSStringFromCGSize(self.stepViewSize) as String, forKey: .stepViewSize)
         try container.encode(NSStringFromCGRect(self.buttonRect1) as String, forKey: .buttonRect1)
         try container.encode(NSStringFromCGRect(self.buttonRect2) as String, forKey: .buttonRect2)
