@@ -1,5 +1,5 @@
 {
-    "identifier":"Walk and Balance",
+    "identifier":"WalkAndBalance",
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":["volumeUp", "pantsWithPocket","phoneInPocket.1","walk", "balance"],
     "steps":[
@@ -38,7 +38,7 @@
                         "buttonTitle":"Get started"
                     },
                     "skip":{
-                        "reminderIdentifier":"Walk and Balance"
+                        "reminderIdentifier":"WalkAndBalance"
                     }
                  },
                  "colorTheme":{

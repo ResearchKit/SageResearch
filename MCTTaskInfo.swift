@@ -37,7 +37,7 @@ import Foundation
 public enum MCTTaskIdentifier : String, Codable {
     
     /// The walk and balance test.
-    case walkAndBalance = "Walk and Balance"
+    case walkAndBalance = "WalkAndBalance"
     
     /// The tremor test.
     case tremor = "Tremor"
@@ -96,7 +96,7 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
 
         // Get the task icon for this taskIdentifier
         do {
-            self.icon = try RSDImageWrapper(imageName: "\(taskIdentifier)TaskIcon", bundle: Bundle(for: MCTFactory.self))
+            self.icon = try RSDImageWrapper(imageName: "\(taskIdentifier.stringValue)TaskIcon", bundle: Bundle(for: MCTFactory.self))
         } catch let err {
             print("Failed to load the task icon. \(err)")
         }
