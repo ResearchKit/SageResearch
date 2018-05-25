@@ -44,7 +44,7 @@ public protocol RSDDataArchiveManager : class, NSObjectProtocol {
     func shouldContinueOnFail(for archive: RSDDataArchive, error: Error) -> Bool
     
     /// When archiving a task result, it is possible that the results of a task need to be split into
-    /// multiple archives; for example, when combining two or more activities within the same task. If the
+    /// multiple archives -- for example, when combining two or more activities within the same task. If the
     /// task result components should be added to the current archive, then the manager should return
     /// `currentArchive` as the response. If the task result *for this section* should be ignored, then the
     /// manager should return `nil`. This allows the application to only upload data that is needed by the
