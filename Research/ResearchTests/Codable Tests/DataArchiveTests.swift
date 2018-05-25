@@ -286,6 +286,7 @@ class TestArchiveManager: NSObject, RSDDataArchiveManager {
 }
 
 class TestDataArchive: NSObject, RSDDataArchive {
+
     let identifier: String
     var scheduleIdentifier: String?
     
@@ -309,5 +310,9 @@ class TestDataArchive: NSObject, RSDDataArchive {
     
     func completeArchive(with metadata: RSDTaskMetadata) throws {
         self.metadata = metadata
+    }
+    
+    func archivableData(for result: RSDResult, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable? {
+        return result as? RSDArchivable
     }
 }

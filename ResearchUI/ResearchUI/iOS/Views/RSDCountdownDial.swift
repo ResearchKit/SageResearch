@@ -129,12 +129,6 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
         }
     }
     
-    /// Override `tintColorDidChange()` to update the color of the progress indicator dial.
-    open override func tintColorDidChange() {
-        super.tintColorDidChange()
-        dialLayer?.strokeColor = tintColor.cgColor
-    }
-    
     // MARK: Initialize with constraints
     
     public override init(frame: CGRect) {
@@ -148,6 +142,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     }
     
     private func commonInit() {
+        backgroundColor = UIColor.clear
         layer.masksToBounds = false
         self.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0, constant: 0.0).isActive = true
     }
@@ -185,10 +180,9 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     private func _updateLayerProperties() {
         
         layer.masksToBounds = false
-        backgroundColor = UIColor.clear
         
         ringLayer?.lineWidth = ringWidth
-        ringLayer?.fillColor = UIColor.clear.cgColor
+        ringLayer?.fillColor = backgroundColor?.cgColor
         updateColorStyle()
         
         dialLayer?.strokeEnd = progress

@@ -44,7 +44,7 @@ public protocol RSDDataArchiveManager : class, NSObjectProtocol {
     func shouldContinueOnFail(for archive: RSDDataArchive, error: Error) -> Bool
     
     /// When archiving a task result, it is possible that the results of a task need to be split into
-    /// multiple archives; for example, when combining two or more activities within the same task. If the
+    /// multiple archives -- for example, when combining two or more activities within the same task. If the
     /// task result components should be added to the current archive, then the manager should return
     /// `currentArchive` as the response. If the task result *for this section* should be ignored, then the
     /// manager should return `nil`. This allows the application to only upload data that is needed by the
@@ -95,7 +95,7 @@ public protocol RSDDataArchive : class, NSObjectProtocol {
     /// Identifier for this task that can be mapped back to a notification. This may be the same
     /// as the task identifier, or it might be that a task is scheduled multiple times per day,
     /// and the app needs to track what the scheduled timing is for the task.
-    var scheduleIdentifier: String? { get set }
+    var scheduleIdentifier: String? { get }
     
     /// Should the data archive include inserting data for the given reserved filename?
     func shouldInsertData(for filename: RSDReservedFilename) -> Bool
@@ -109,6 +109,15 @@ public protocol RSDDataArchive : class, NSObjectProtocol {
     /// Mark the archive as completed.
     /// - parameter metadata: The metadata for this archive.
     func completeArchive(with metadata: RSDTaskMetadata) throws
+    
+    /// Returns an archivable object for the given result.
+    ///
+    /// - parameters:
+    ///     - result: The result to archive.
+    ///     - sectionIdentifier: The section identifier for the task.
+    ///     - stepPath: The full step path to the given result.
+    /// - returns: An archivable object or `nil` if the result should be skipped.
+    func archivableData(for result: RSDResult, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable?
 }
 
 /// An archivable result is an object wrapper for results that allows them to be transformed into
@@ -340,9 +349,9 @@ internal class TaskArchiver : NSObject {
         // Look to see if the result conforms to the archivable protocol or the collection
         // protocol. If it conforms to both, then *only* archive it at this level and do not
         // recurse into the result.
-        if let achivable = result as? RSDArchivable {
+        if let archivable = archive.archivableData(for: result, sectionIdentifier: sectionIdentifier, stepPath: stepPath) {
             do {
-                if let (manifest, data) = try achivable.buildArchiveData(at: stepPath) {
+                if let (manifest, data) = try archivable.buildArchiveData(at: stepPath) {
                     try self.archive?.insertDataIntoArchive(data, manifest: manifest)
                     self.files.insert(manifest)
                 }

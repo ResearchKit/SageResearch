@@ -92,8 +92,8 @@ public protocol RSDOptionalTaskViewControllerDelegate : class, NSObjectProtocol 
     ///       forward to the first step once the task is fetched.
     ///
     /// If not defined, then:
-    ///     * If and only if the task is a subtask where `estimatedFetchTime == 0`, then `showLoadingView()` will be called
-    ///       and the task will automatically forward to the first step once the task is fetched.
+    ///     * `showLoadingView()` will be called and the task will automatically forward to the first step once the task
+    ///       is fetched.
     ///
     /// - parameters:
     ///     - taskViewController: The calling `(UIViewController & RSDTaskController)` instance.
@@ -370,18 +370,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
     ///
     /// - parameter taskInfo: The task info for the task being fetched.
     open func showLoading(for taskInfo: RSDTaskInfoStep) {
-        // If loading a resource for a subtask or delegate overrides then do not show the task info.
-        // Instead, show the loading screen and return
-        let showLoading: Bool = {
-            if let autoForward = self.delegate?.taskViewController?(self, shouldShowTaskInfoFor: taskInfo) {
-                return !autoForward
-            } else {
-                return (self.taskPath.parentPath != nil) && (taskInfo.taskTransformer.estimatedFetchTime == 0)
-            }
-        }()
-        if showLoading {
-            self.showLoadingView()
-            return
+        // Only if the delegate specifically says to show the task info view, then do so. Otherwise, show loading
+        // and exit.
+        guard let showTaskInfo = self.delegate?.taskViewController?(self, shouldShowTaskInfoFor: taskInfo), showTaskInfo
+            else {
+                self.showLoadingView()
+                return
         }
         
         // Show the loading step

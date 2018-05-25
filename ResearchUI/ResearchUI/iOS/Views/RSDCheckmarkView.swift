@@ -202,7 +202,8 @@ fileprivate let defaultSize: CGFloat = 122
     fileprivate func commonInit() {
         self.addSubview(buttonView)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.rsd_alignAllToSuperview(padding: 0)
+        buttonView.rsd_alignToSuperview([.top, .bottom], padding: 12)
+        buttonView.rsd_alignToSuperview([.leading, .trailing], padding: 24)
         buttonView.isUserInteractionEnabled = false
         buttonView.isSelected = self.isSelected
     }
@@ -380,6 +381,8 @@ fileprivate class RSDCheckboxButtonView : UIView {
     }
     
     private func refreshViews() {
+        viewChecked.backgroundColor = self.tintColor
+        viewChecked.layer.borderColor = selectedBorderColor.cgColor
         viewUnchecked?.isHidden = self.isSelected
         viewChecked?.isHidden = !self.isSelected
     }
