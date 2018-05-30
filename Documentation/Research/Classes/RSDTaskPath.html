@@ -1168,6 +1168,36 @@ and the app needs to track what the scheduled timing is for the task.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8Research11RSDTaskPathC8userInfoypSgvp"></a>
+                    <a name="//apple_ref/swift/Property/userInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research11RSDTaskPathC8userInfoypSgvp">userInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The user info is used to assign any kind of data to the task path for use by the task and/or
+step controller. Because a task path may be instantiated using either a task info object or
+by a task, it&rsquo;s possible that the <code><a href="../Protocols/RSDTask.html">RSDTask</a></code> associated with the task has not yet been
+instantiated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8Research11RSDTaskPathC04fullC0SSvp"></a>
                     <a name="//apple_ref/swift/Property/fullPath" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research11RSDTaskPathC04fullC0SSvp">fullPath</a>
@@ -1439,9 +1469,9 @@ by a step view controller to load a result that was previously selected.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research11RSDTaskPathC06parentC0ACSgvp"></a>
+                    <a name="/s:8Research11RSDTaskPathC06parentC0ACSgXwvp"></a>
                     <a name="//apple_ref/swift/Property/parentPath" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research11RSDTaskPathC06parentC0ACSgvp">parentPath</a>
+                    <a class="token" href="#/s:8Research11RSDTaskPathC06parentC0ACSgXwvp">parentPath</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1456,7 +1486,7 @@ by a step view controller to load a result that was previously selected.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">parentPath</span><span class="p">:</span> <span class="kt">RSDTaskPath</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">parentPath</span><span class="p">:</span> <span class="kt">RSDTaskPath</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>

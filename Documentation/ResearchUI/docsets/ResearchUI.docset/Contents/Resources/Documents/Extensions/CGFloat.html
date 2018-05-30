@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RSDOptionalTaskViewControllerDelegate Protocol Reference</title>
+    <title>CGFloat Extension Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/RSDOptionalTaskViewControllerDelegate" class="dashAnchor"></a>
-    <a title="RSDOptionalTaskViewControllerDelegate Protocol Reference"></a>
+    <a name="//apple_ref/swift/Extension/CGFloat" class="dashAnchor"></a>
+    <a title="CGFloat Extension Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">ResearchUI Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">ResearchUI Reference</a>
         <img id="carat" src="../img/carat.png" />
-        RSDOptionalTaskViewControllerDelegate Protocol Reference
+        CGFloat Extension Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -286,17 +286,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>RSDOptionalTaskViewControllerDelegate</h1>
+            <h1>CGFloat</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDOptionalTaskViewControllerDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="kt">NSObjectProtocol</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">CGFloat</span></code></pre>
 
                 </div>
               </div>
-            <p><code>RSDOptionalTaskViewControllerDelegate</code> is a delegate protocol defined as <code>@objc</code> to allow the methods to be optionally
-implemented. As such, these methods cannot take Swift protocols as their paramenters.</p>
-
+            
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -304,9 +301,9 @@ implemented. As such, these methods cannot take Swift protocols as their paramen
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:viewControllerFor:"></a>
-                    <a name="//apple_ref/swift/Method/taskViewController(_:viewControllerFor:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:viewControllerFor:">taskViewController(_:viewControllerFor:)</a>
+                    <a name="/s:12CoreGraphics7CGFloatV10ResearchUIE29rsd_proportionalToScreenWidthA2C3max_tF"></a>
+                    <a name="//apple_ref/swift/Method/rsd_proportionalToScreenWidth(max:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CoreGraphics7CGFloatV10ResearchUIE29rsd_proportionalToScreenWidthA2C3max_tF">rsd_proportionalToScreenWidth(max:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -314,24 +311,17 @@ implemented. As such, these methods cannot take Swift protocols as their paramen
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Asks the delegate for a custom view controller for the specified step.</p>
-
-<p>If this method is implemented, the task view controller calls it to obtain a step view controller for the step.</p>
-
-<p>In most circumstances, the task view controller can determine which view controller to instantiate for a step.
-However, if you want to provide a specific view controller instance, you can call this method to do so.</p>
-
-<p>The delegate should provide a step view controller implementation for any custom step that does not implement
-either the <code><a href="../Protocols/RSDStepViewControllerVendor.html">RSDStepViewControllerVendor</a></code> protocol or the <code>RSDThemedUIStep</code> protocol where the <code>viewTheme</code> is
-non-nil.</p>
+                        <p>Occasionally we do want UI elements to be a little bigger or wider on bigger screens,
+such as with label widths. This can be used to increase values based on screen size. It
+uses the small screen (320 wide) as a baseline. This is a much simpler alternative to
+defining a matrix with screen sizes and constants and achieves much the same result</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">viewControllerFor</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rsd_proportionalToScreenWidth</span><span class="p">(</span><span class="nv">max</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="kt">CGFloat</span><span class="o">.</span><span class="n">greatestFiniteMagnitude</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
 
                         </div>
                       </div>
@@ -342,34 +332,17 @@ non-nil.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>taskViewController</em>
+                                <em>max</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The calling <code>(UIViewController &amp; RSDTaskController)</code> instance.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>step</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The step for which a view controller is requested. This will be an object that conforms to
-    the <code>RSDStep</code> protocol.</p>
+                                  <p>A maximum size to apply to the returned value.</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A custom view controller, or <code>nil</code> to request the default step controller for this step.</p>
                       </div>
                     </section>
                   </div>
@@ -377,9 +350,9 @@ non-nil.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:shouldShowTaskInfoFor:"></a>
-                    <a name="//apple_ref/swift/Method/taskViewController(_:shouldShowTaskInfoFor:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:shouldShowTaskInfoFor:">taskViewController(_:shouldShowTaskInfoFor:)</a>
+                    <a name="/s:12CoreGraphics7CGFloatV10ResearchUIE30rsd_proportionalToScreenHeightA2C3max_tF"></a>
+                    <a name="//apple_ref/swift/Method/rsd_proportionalToScreenHeight(max:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CoreGraphics7CGFloatV10ResearchUIE30rsd_proportionalToScreenHeightA2C3max_tF">rsd_proportionalToScreenHeight(max:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -387,25 +360,17 @@ non-nil.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Asks the delegate whether or not the task should show a view controller for the  <code>RSDTaskInfoStep</code>
-while the initial task is being fetched.</p>
-
-<p>If defined, then:
-    * If this function returns <code>true</code> then a view controller specific to the <code>RSDTaskInfoStep</code> will be displayed.
-    * If this function returns <code>false</code> then <code>showLoadingView()</code> will be called and the task will automatically
-      forward to the first step once the task is fetched.</p>
-
-<p>If not defined, then:
-    * <code>showLoadingView()</code> will be called and the task will automatically forward to the first step once the task
-      is fetched.</p>
+                        <p>Occasionally we want padding to be a little bigger or longer on bigger screens.
+This can be used to increase values based on screen size. It uses the small screen
+(568 high) as a baseline. This is a much simpler alternative to defining a matrix
+with screen sizes and constants and achieves much the same result.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">shouldShowTaskInfoFor</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rsd_proportionalToScreenHeight</span><span class="p">(</span><span class="nv">max</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="kt">CGFloat</span><span class="o">.</span><span class="n">greatestFiniteMagnitude</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
 
                         </div>
                       </div>
@@ -416,34 +381,17 @@ while the initial task is being fetched.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>taskViewController</em>
+                                <em>max</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The calling <code>(UIViewController &amp; RSDTaskController)</code> instance.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>step</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The step for which a view controller is requested. This will be an object that conforms to
-    the <code>RSDTaskInfoStep</code> protocol.</p>
+                                  <p>A maximum size to apply to the returned value.</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A <code>Bool</code> value indicating whether or not the task controller should show the task info step.</p>
                       </div>
                     </section>
                   </div>
@@ -451,9 +399,9 @@ while the initial task is being fetched.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:canSaveTaskProgress:"></a>
-                    <a name="//apple_ref/swift/Method/taskViewController(_:canSaveTaskProgress:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:canSaveTaskProgress:">taskViewController(_:canSaveTaskProgress:)</a>
+                    <a name="/s:12CoreGraphics7CGFloatV10ResearchUIE18rsd_iPadMultiplierA2CF"></a>
+                    <a name="//apple_ref/swift/Method/rsd_iPadMultiplier(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12CoreGraphics7CGFloatV10ResearchUIE18rsd_iPadMultiplierA2CF">rsd_iPadMultiplier(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -461,15 +409,20 @@ while the initial task is being fetched.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Asks the delegate whether or not the task progress can be saved and the task dismissed.</p>
+                        <p>Occasionally we want padding to be a little bigger or longer on bigger screens.
+This method will apply the <code>multiplier</code> if and only if this is an iPad.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This does not check the size class of the view.
+
+</div>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">canSaveTaskProgress</span> <span class="nv">for</span><span class="p">:</span> <span class="kt">RSDTaskPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rsd_iPadMultiplier</span><span class="p">(</span><span class="n">_</span> <span class="nv">multiplier</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
 
                         </div>
                       </div>
@@ -480,63 +433,12 @@ while the initial task is being fetched.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>taskViewController</em>
+                                <em>multiplier</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The task view controller.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p><code>true</code> if the task progress can be saved.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:saveTaskProgress:"></a>
-                    <a name="//apple_ref/swift/Method/taskViewController(_:saveTaskProgress:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:saveTaskProgress:">taskViewController(_:saveTaskProgress:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Save the task progress for the given task controller.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">saveTaskProgress</span> <span class="nv">for</span><span class="p">:</span> <span class="kt">RSDTaskPath</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>taskViewController</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The task view controller.</p>
+                                  <p>The value to multiply by if this is an iPad.</p>
                                 </div>
                               </td>
                             </tr>

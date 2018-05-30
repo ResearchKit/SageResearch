@@ -129,12 +129,6 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
         }
     }
     
-    /// Override `tintColorDidChange()` to update the color of the progress indicator dial.
-    open override func tintColorDidChange() {
-        super.tintColorDidChange()
-        dialLayer?.strokeColor = tintColor.cgColor
-    }
-    
     // MARK: Initialize with constraints
     
     public override init(frame: CGRect) {
@@ -148,6 +142,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     }
     
     private func commonInit() {
+        backgroundColor = UIColor.clear
         layer.masksToBounds = false
         self.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1.0, constant: 0.0).isActive = true
     }
@@ -161,23 +156,27 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     
     private var ringLayer: CAShapeLayer!
     private var dialLayer: CAShapeLayer!
+    private var _rect: CGRect?
     
     open override func layoutSubviews() {
         super.layoutSubviews()
         
-        if (ringLayer == nil) {
+        let bounds = self.layer.bounds
+        if _rect == nil || !bounds.equalTo(_rect!) {
+            ringLayer?.removeFromSuperlayer()
+            dialLayer?.removeFromSuperlayer()
+            _rect = bounds
+        
             ringLayer = CAShapeLayer()
             ringLayer.path = createCirclePath().cgPath
             layer.addSublayer(ringLayer)
-        }
-        ringLayer.frame = layer.bounds
-        
-        if (dialLayer == nil) {
+            ringLayer.frame = bounds
+            
             dialLayer = CAShapeLayer()
-            dialLayer.path = createCirclePath().cgPath
+            dialLayer.path = ringLayer.path
             layer.addSublayer(dialLayer)
+            dialLayer.frame = bounds
         }
-        dialLayer.frame = layer.bounds
 
         _updateLayerProperties()
     }
@@ -185,10 +184,9 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     private func _updateLayerProperties() {
         
         layer.masksToBounds = false
-        backgroundColor = UIColor.clear
         
         ringLayer?.lineWidth = ringWidth
-        ringLayer?.fillColor = UIColor.clear.cgColor
+        ringLayer?.fillColor = backgroundColor?.cgColor
         updateColorStyle()
         
         dialLayer?.strokeEnd = progress
