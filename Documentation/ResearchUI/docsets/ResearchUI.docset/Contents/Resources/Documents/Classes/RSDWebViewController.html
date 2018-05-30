@@ -172,6 +172,12 @@
             <a href="../Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="../Extensions/CGFloat.html">CGFloat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSLayoutConstraint.html">NSLayoutConstraint</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Extensions/RSDImagePickerStepObject.html">RSDImagePickerStepObject</a>
               </li>
               <li class="nav-group-task">
@@ -283,7 +289,7 @@
             <h1>RSDWebViewController</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDWebViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">UIWebViewDelegate</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDWebViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">WKNavigationDelegate</span></code></pre>
 
                 </div>
               </div>
@@ -295,6 +301,62 @@ the property will be set for one of these values.</p>
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDWebViewController(py)webView"></a>
+                    <a name="//apple_ref/swift/Property/webView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDWebViewController(py)webView">webView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The webview attached to this view controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBOutlet</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">webView</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDWebViewController(py)activityIndicator"></a>
+                    <a name="//apple_ref/swift/Property/activityIndicator" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDWebViewController(py)activityIndicator">activityIndicator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The loading indicator.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBOutlet</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">activityIndicator</span><span class="p">:</span> <span class="kt">UIActivityIndicatorView</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -472,6 +534,33 @@ navigation controller.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:10ResearchUI20RSDWebViewControllerC03webD13ConfigurationSo05WKWebdG0CyF"></a>
+                    <a name="//apple_ref/swift/Method/webViewConfiguration()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI20RSDWebViewControllerC03webD13ConfigurationSo05WKWebdG0CyF">webViewConfiguration()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set up the desired configuration for the webview. Default implementation activates all data detector types.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">webViewConfiguration</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">WKWebViewConfiguration</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:10ResearchUI20RSDWebViewControllerC10loadFailedys5Error_pSg4with_tF"></a>
                     <a name="//apple_ref/swift/Method/loadFailed(with:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:10ResearchUI20RSDWebViewControllerC10loadFailedys5Error_pSg4with_tF">loadFailed(with:)</a>
@@ -528,19 +617,19 @@ navigation controller.</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/UIWebViewDelegate"></a>
-                <a name="//apple_ref/swift/Section/UIWebViewDelegate" class="dashAnchor"></a>
-                <a href="#/UIWebViewDelegate">
-                  <h3 class="section-name">UIWebViewDelegate</h3>
+                <a name="/WKNavigationDelegate"></a>
+                <a name="//apple_ref/swift/Section/WKNavigationDelegate" class="dashAnchor"></a>
+                <a href="#/WKNavigationDelegate">
+                  <h3 class="section-name">WKNavigationDelegate</h3>
                 </a>
               </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDWebViewController(im)webView:shouldStartLoadWithRequest:navigationType:"></a>
-                    <a name="//apple_ref/swift/Method/webView(_:shouldStartLoadWith:navigationType:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDWebViewController(im)webView:shouldStartLoadWithRequest:navigationType:">webView(_:shouldStartLoadWith:navigationType:)</a>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDWebViewController(im)webView:decidePolicyForNavigationAction:decisionHandler:"></a>
+                    <a name="//apple_ref/swift/Method/webView(_:decidePolicyFor:decisionHandler:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDWebViewController(im)webView:decidePolicyForNavigationAction:decisionHandler:">webView(_:decidePolicyFor:decisionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -555,7 +644,7 @@ navigation controller.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">webView</span><span class="p">(</span><span class="n">_</span> <span class="nv">webView</span><span class="p">:</span> <span class="kt">UIWebView</span><span class="p">,</span> <span class="n">shouldStartLoadWith</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">URLRequest</span><span class="p">,</span> <span class="nv">navigationType</span><span class="p">:</span> <span class="kt">UIWebViewNavigationType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">webView</span><span class="p">(</span><span class="n">_</span> <span class="nv">webView</span><span class="p">:</span> <span class="kt">WKWebView</span><span class="p">,</span> <span class="n">decidePolicyFor</span> <span class="nv">navigationAction</span><span class="p">:</span> <span class="kt">WKNavigationAction</span><span class="p">,</span> <span class="nv">decisionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">WKNavigationActionPolicy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
