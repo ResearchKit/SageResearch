@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "tremorTaskIcon.png",
+      "filename" : "Tremor.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "tremorTaskIcon@2x.png",
+      "filename" : "Tremor@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "tremorTaskIcon@3x.png",
+      "filename" : "Tremor@3x.png",
       "scale" : "3x"
     }
   ],
