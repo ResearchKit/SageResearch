@@ -103,6 +103,50 @@ public struct TestConditionalNavigator: RSDConditionalStepNavigator {
     }
 }
 
+public class TestSubtaskStep : RSDTaskInfoStep, RSDTaskTransformer {
+
+    public let task: RSDTask
+    
+    public let taskInfo: RSDTaskInfo
+    
+    public init(task: RSDTask) {
+        self.task = task
+        var taskInfo = RSDTaskInfoObject(with: task.identifier)
+        taskInfo.schemaInfo = task.schemaInfo
+        self.taskInfo = taskInfo
+    }
+    
+    public var taskTransformer: RSDTaskTransformer! {
+        return self
+    }
+    
+    public var identifier: String {
+        return self.task.identifier
+    }
+    
+    public var stepType: RSDStepType {
+        return .taskInfo
+    }
+    
+    public func instantiateStepResult() -> RSDResult {
+        return task.instantiateTaskResult()
+    }
+    
+    public func validate() throws {
+        // Do nothing
+    }
+    
+    public var estimatedFetchTime: TimeInterval {
+        return 0
+    }
+    
+    public func fetchTask(with factory: RSDFactory, taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
+        DispatchQueue.main.async {
+            callback(taskIdentifier, self.task, nil)
+        }
+    }
+}
+
 public struct TestTask : RSDTask {
     
     public let identifier: String
@@ -325,10 +369,15 @@ public class TestTaskController: NSObject, RSDTaskUIController {
                 }
             } else {
                 taskPath.currentStep = nextStep
-                if let sectionStep = nextStep as? RSDSectionStep {
+                if let subtaskStep = nextStep as? TestSubtaskStep {
+                    self.taskPath = RSDTaskPath(task: subtaskStep.task, parentPath: self.taskPath)
+                    nextStep = nil
+                }
+                else if let sectionStep = nextStep as? RSDSectionStep {
                     self.taskPath = RSDTaskPath(task: sectionStep, parentPath: self.taskPath)
                     nextStep = nil
-                } else {
+                }
+                else {
                     let stepResult = nextStep!.instantiateStepResult()
                     if let answerResult = stepResult as? RSDAnswerResultObject,
                         answerResult.value == nil, answerResult.answerType == .string {
