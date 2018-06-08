@@ -640,7 +640,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         guard let tableData = self.tableData else { return }
         
         if let item = tableData.tableItem(at: indexPath) as? RSDChoiceTableItem {
-            didSelectChoiceItem(item, at: indexPath)
+            didSelectItem(item, at: indexPath)
         }
         else {
             
@@ -656,7 +656,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     // MARK: didSelect methods
     
     /// Called when a user action on a cell or button is linked to a choice item.
-    open func didSelectChoiceItem(_ item: RSDChoiceTableItem, at indexPath: IndexPath) {
+    open func didSelectItem(_ item: RSDTableItem, at indexPath: IndexPath) {
         guard let tableData = self.tableData else { return }
 
         do {
@@ -907,11 +907,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         if let modalItem = tableItem as? RSDModalStepTableItem {
             didSelectModalItem(modalItem, at: cell.indexPath)
         }
-        else if let choiceItem = tableItem as? RSDChoiceTableItem {
-            didSelectChoiceItem(choiceItem, at: cell.indexPath)
-        }
         else {
-            assertionFailure("Cannot handle the button tap.")
+            didSelectItem(tableItem, at: cell.indexPath)
         }
     }
 

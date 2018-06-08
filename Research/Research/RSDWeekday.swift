@@ -63,6 +63,14 @@ public enum RSDWeekday : Int, Codable, RSDIntEnumSet {
     }
 }
 
+extension RSDWeekday {
+    
+    public init(date: Date) {
+        let weekday = Calendar(identifier: .gregorian).component(.weekday, from: date)
+        self.init(rawValue: weekday)!
+    }
+}
+
 extension RSDWeekday : Comparable {
     
     /// Sort the weekdays based on the `firstWeekday` property of the current Locale.

@@ -167,6 +167,11 @@ public class RSDWeeklyScheduleFormatter : Formatter {
         return _joinedDays(daysOfWeek, style: _style)
     }
     
+    /// Formatted string from a set of weekday objects.
+    public func string(from daysOfWeek: Set<RSDWeekday>) -> String? {
+        return _joinedDays(daysOfWeek, style: _style)
+    }
+    
     private func _joinString(days: String?, times: String?, style: DateFormatter.Style) -> String? {
         if let days = days, let times = times {
             switch style {
