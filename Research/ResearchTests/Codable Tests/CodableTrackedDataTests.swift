@@ -190,7 +190,8 @@ class CodableTrackedDataTests: XCTestCase {
             let object = try decoder.decode(RSDWeeklyScheduleObject.self, from: json)
             
             XCTAssertEqual(object.daysOfWeek, [.sunday, .tuesday, .thursday])
-            XCTAssertNil(object.timeOfDay)
+            let timeOfDay = object.timeOfDay(on: Date())
+            XCTAssertNil(timeOfDay)
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
             return

@@ -116,7 +116,7 @@ extension RSDWeeklyScheduleObject : Hashable, Comparable {
     }
     
     public static func <(lhs: RSDWeeklyScheduleObject, rhs: RSDWeeklyScheduleObject) -> Bool {
-        guard let lTime = lhs.timeOfDayString else { return (rhs.timeOfDay != nil) }
+        guard let lTime = lhs.timeOfDayString else { return (rhs.timeOfDayString != nil) }
         guard let rTime = rhs.timeOfDayString else { return false }
         return lTime < rTime
     }
@@ -167,6 +167,11 @@ public class RSDWeeklyScheduleFormatter : Formatter {
         return _joinedDays(daysOfWeek, style: _style)
     }
     
+    /// Formatted string from a set of weekday objects.
+    public func string(from daysOfWeek: Set<RSDWeekday>) -> String? {
+        return _joinedDays(daysOfWeek, style: _style)
+    }
+    
     private func _joinString(days: String?, times: String?, style: DateFormatter.Style) -> String? {
         if let days = days, let times = times {
             switch style {
@@ -205,13 +210,7 @@ public class RSDWeeklyScheduleFormatter : Formatter {
     }
     
     private func _joinedTimes(_ weeklySchedules: [RSDWeeklyScheduleObject]) -> String? {
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateStyle = .none
-        timeFormatter.timeStyle = .short
-        let times = weeklySchedules.compactMap {
-            $0.timeOfDay != nil ? timeFormatter.string(from: $0.timeOfDay!) : nil
-        }
-        
+        let times = weeklySchedules.compactMap { $0.localizedTime() }
         if _style == .full || _style == .long {
             return Localization.localizedAndJoin(times)
         } else {

@@ -119,11 +119,11 @@ class TrackingTests: XCTestCase {
         var timeComponents = DateComponents()
         timeComponents.hour = 8
         timeComponents.minute = 0
-        item.timeComponents = timeComponents
+        item.setTime(from: timeComponents)
         XCTAssertEqual(item.timeOfDayString, "08:00")
         XCTAssertEqual(item.timeComponents, timeComponents)
         
-        item.timeOfDay = Date()
+        item.setTime(from: Date())
         XCTAssertNotNil(item.timeOfDayString)
         XCTAssertNotNil(item.timeOfDay)
         XCTAssertNotNil(item.timeComponents)
