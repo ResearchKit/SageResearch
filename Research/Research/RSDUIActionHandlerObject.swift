@@ -90,12 +90,14 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
     ///         // Example JSON for the `actions` coding.
     ///         let json = """
     ///            {
-    ///                "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
-    ///                             "cancel": { "iconName" : "closeX" },
-    ///                             "learnMore": { "iconName" : "infoIcon",
-    ///                                            "url" : "fooInfo" },
-    ///                             "skip": { "buttonTitle" : "not applicable",
-    ///                                        "skipToIdentifier": "boo"}
+    ///                "actions": { "goForward": { "type": "default", "buttonTitle" : "Go, Dogs! Go!" },
+    ///                             "cancel": { "type": "default", "iconName" : "closeX" },
+    ///                             "learnMore": {  "type": "webView",
+    ///                                             "iconName" : "infoIcon",
+    ///                                             "url" : "fooInfo" },
+    ///                             "skip": {   "type": "navigation", 
+    ///                                         "buttonTitle" : "not applicable",
+    ///                                         "skipToIdentifier": "boo"}
     ///                            },
     ///                "shouldHideActions": ["goBackward"]
     ///            }

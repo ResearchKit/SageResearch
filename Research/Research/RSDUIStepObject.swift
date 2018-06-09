@@ -202,7 +202,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     
     /// Initialize from a `Decoder`.
     ///
-    /// - note: The `imageTheme` can be decoded as a `RSDImageWrapper`, `RSDFetchableImageThemeElementObject`, or
+    /// - note: The `imageTheme` can be decoded as a `RSDFetchableImageThemeElementObject` or
     ///         `RSDAnimatedImageThemeElementObject`, depending upon the included dictionary.
     ///
     /// - example:
@@ -218,15 +218,12 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     ///                "detail": "This is a test.",
     ///                "footnote": "This is a footnote.",
     ///                "nextStepIdentifier": "boo",
-    ///                "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
-    ///                             "cancel": { "iconName" : "closeX" },
-    ///                             "learnMore": { "iconName" : "infoIcon",
-    ///                                            "url" : "fooInfo" },
-    ///                             "skip": { "buttonTitle" : "not applicable",
-    ///                                        "skipToIdentifier": "boo"}
+    ///                "actions": { "goForward": { "type": "default", "buttonTitle" : "Go, Dogs! Go!" },
+    ///                             "cancel": { "type": "default", "iconName" : "closeX" }
     ///                            },
     ///                "shouldHideActions": ["goBackward"],
-    ///                "image"  : {    "imageNames" : ["foo1", "foo2", "foo3", "foo4"],
+    ///                "image"  : {    "type" : "animated",
+    ///                                "imageNames" : ["foo1", "foo2", "foo3", "foo4"],
     ///                                "placementType" : "topBackground",
     ///                                "animationDuration" : 2,
     ///                                   },
@@ -249,21 +246,14 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     ///                "identifier"   : "goOutside",
     ///                "type"         : "instruction",
     ///                "title"        : "Go outside",
-    ///                "image"        : { "imageName": "goOutsideIcon", "placementType": "topBackground" },
+    ///                "image"        : {   "type" : "fetchable",
+    ///                                     "imageName": "goOutsideIcon",
+    ///                                     "placementType": "topBackground" },
     ///                "colorTheme"   : { "backgroundColor" : "robinsEggBlue", "usesLightStyle" : true },
-    ///                "actions"      : { "goForward": { "buttonTitle": "I am outside" }},
+    ///                "actions"      : { "goForward": { "type": "default", "buttonTitle": "I am outside" }},
     ///            }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
     ///
-    ///         // Example JSON for a step with an `RSDImageWrapper`.
-    ///         let json = """
-    ///            {
-    ///                "identifier"   : "blueDog",
-    ///                "type"         : "instruction",
-    ///                "title"        : "This is a blue dog",
-    ///                "image"        : "blueDog",
-    ///            }
-    ///            """.data(using: .utf8)! // our data in native (JSON) format
     ///     ```
     ///
     /// - parameter decoder: The decoder to use to decode this instance.
@@ -299,26 +289,21 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         self.text = try container.decodeIfPresent(String.self, forKey: .text) ?? self.text
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
-        
-        self.viewTheme = try _decodeResource(RSDViewThemeElementObject.self, forKey: .viewTheme, from: decoder) ?? self.viewTheme
-        self.colorTheme = try _decodeResource(RSDColorThemeElementObject.self, forKey: .colorTheme, from: decoder) ?? self.colorTheme
-
+    
         self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
         self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
         
+        if container.contains(.viewTheme) {
+            let nestedDecoder = try container.superDecoder(forKey: .viewTheme)
+            self.viewTheme = try decoder.factory.decodeViewThemeElement(from: nestedDecoder)
+        }
+        if container.contains(.colorTheme) {
+            let nestedDecoder = try container.superDecoder(forKey: .colorTheme)
+            self.colorTheme = try decoder.factory.decodeColorThemeElement(from: nestedDecoder)
+        }
         if container.contains(.imageTheme) {
             let nestedDecoder = try container.superDecoder(forKey: .imageTheme)
-            if let image = try? RSDImageWrapper(from: nestedDecoder) {
-                self.imageTheme = image
-            } else if let image = try? RSDFetchableImageThemeElementObject(from: nestedDecoder) {
-                var fetchableImage = image
-                fetchableImage.factoryBundle = decoder.bundle
-                self.imageTheme = fetchableImage
-            } else {
-                var animatedImage = try RSDAnimatedImageThemeElementObject(from: nestedDecoder)
-                animatedImage.factoryBundle = decoder.bundle
-                self.imageTheme = animatedImage
-            }
+            self.imageTheme = try decoder.factory.decodeImageThemeElement(from: nestedDecoder)
         }
         
         if deviceType == nil {
@@ -329,14 +314,6 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
                 try decode(from: subdecoder, for: preferredType)
             }
         }
-    }
-    
-    private func _decodeResource<T>(_ type: T.Type, forKey key: CodingKeys, from decoder: Decoder) throws -> T? where T : RSDDecodableBundleInfo {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard let object = try container.decodeIfPresent(type, forKey: key) else { return nil }
-        var resource = object
-        resource.factoryBundle = decoder.bundle
-        return resource
     }
     
     // Overrides must be defined in the base implementation
@@ -396,15 +373,18 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "nextStepIdentifier": "boo",
-            "actions": [ "goForward": [ "buttonTitle" : "Go, Dogs! Go!" ],
-                         "cancel": [ "iconName" : "closeX" ],
-                         "learnMore": [ "iconName" : "infoIcon",
+            "actions": [ "goForward": [ "type": "default", "buttonTitle" : "Go, Dogs! Go!" ],
+                         "cancel": [ "type": "default", "iconName" : "closeX" ],
+                         "learnMore": [ "type": "webView",
+                                        "iconName" : "infoIcon",
                                         "url" : "fooInfo" ],
-                         "skip": [ "buttonTitle" : "not applicable",
-                                   "skipToIdentifier": "boo"]
+                         "skip": [  "type": "navigation",
+                                    "buttonTitle" : "not applicable",
+                                    "skipToIdentifier": "boo"]
             ],
             "shouldHideActions": ["goBackward"],
-            "image"  : [    "imageNames" : ["foo1", "foo2", "foo3", "foo4"],
+            "image"  : [    "type" : "animated",
+                            "imageNames" : ["foo1", "foo2", "foo3", "foo4"],
                             "placementType" : "topBackground",
                             "animationDuration" : 2,
             ],
@@ -425,20 +405,14 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
             "identifier"   : "goOutside",
             "type"         : "instruction",
             "title"        : "Go outside",
-            "image"        : [ "imageName": "goOutsideIcon", "placementType": "topBackground" ],
+            "image"        : [  "type": "fetchable",
+                                "imageName": "goOutsideIcon",
+                                "placementType": "topBackground" ],
             "colorTheme"   : [ "backgroundColor" : "robinsEggBlue", "usesLightStyle" : true ],
-            "actions"      : [ "goForward": [ "buttonTitle": "I am outside" ]],
+            "actions"      : [ "goForward": [ "type": "default", "buttonTitle": "I am outside" ]],
             ]
         
-        // Example JSON for a step with an `RSDImageWrapper`.
-        let jsonC: [String : RSDJSONValue] = [
-            "identifier"   : "blueDog",
-            "type"         : "instruction",
-            "title"        : "This is a blue dog",
-            "image"        : "blueDog",
-            ]
-        
-        return [jsonA, jsonB, jsonC]
+        return [jsonA, jsonB]
     }
 }
 
