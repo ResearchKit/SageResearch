@@ -85,7 +85,7 @@ public class MCTHandSelectionDataSource : RSDFormStepDataSourceObject {
     }
     
     /// Override select answer to write the user's choice to UserDefaults, and to write a randomized handOrder result.
-    override open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
+    override open func selectAnswer(item: RSDTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         let ret = try super.selectAnswer(item: item, at: indexPath)
         guard let handSelection = _updateHandOrder()
                else {
