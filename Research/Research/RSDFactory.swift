@@ -410,10 +410,11 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
         guard let str = try? self.typeName(from: decoder), let typeName = str else {
+            let obj = try _deprecated_decodeUIAction(from: decoder, for: actionType)
             #if DEBUG
             throw RSDValidationError.undefinedClassType("\(self) does not support decoding a UI action without a `type` key defining a value for the the class name.")
             #else
-            return try _deprecated_decodeImageThemeElement(from: decoder)
+            return obj
             #endif
         }
         
@@ -490,12 +491,13 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeImageThemeElement(from decoder:Decoder) throws -> RSDImageThemeElement? {
         guard let str = try? self.typeName(from: decoder), let typeName = str else {
+            let obj = try _deprecated_decodeImageThemeElement(from: decoder)
             #if DEBUG
                 throw RSDValidationError.undefinedClassType("\(self) does not support decoding an image theme without a `type` key defining a value for the the class name.")
             #else
                 // Do not fail a release build. Instead, attempt to run against the deprecated method of
                 // decoding an image theme.
-                return try _deprecated_decodeImageThemeElement(from: decoder)
+                return obj
             #endif
         }
         
