@@ -16,6 +16,7 @@
                   "type":"active",
                   "duration":30,
                   "image":{
+                      "type":"fetchable",
                       "imageName":"TapLeft1",
                       "placementType":"fullsizeBackground"
                   },

@@ -15,6 +15,7 @@
                                }
                             ],
                  "image":{
+                     "type":"animated",
                      "imageNames":["TapLeft1", "TapLeft2"],
                      "placementType":"topBackground",
                      "animationDuration": 1
@@ -27,9 +28,11 @@
                         ],
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle":"Get started"
                     },
                     "skip":{
+                        "type":"reminder",
                         "reminderIdentifier":"Tapping"
                     }
                  },
@@ -51,6 +54,7 @@
                 "title":"You will finger tap for 30 seconds with each hand",
                 "text":"Speed of finger tapping can reflect severity of motor symptoms in Parkinson’s disease. This activity measures your tapping speed for each hand. Your medical provider may measure this differently.",
                 "image":{
+                     "type":"animated",
                      "imageNames":["TapLeft1", "TapLeft2"],
                      "placementType":"topBackground",
                      "animationDuration": 1
@@ -68,6 +72,7 @@
                 },
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle":"Got it"
                     }
                 }
@@ -99,6 +104,7 @@
                 "title":"Put the phone on a table",
                 "text":"Place your phone on a flat surface such as a table before you begin the activity.",
                 "image":{
+                    "type":"animated",
                     "imageNames": ["F-FlatSurface", "PlacePhone", "PhoneOnSurface"],
                     "animationDuration": 3.0,
                     "placementType": "topBackground"
@@ -116,6 +122,7 @@
                 },
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle":"Did it"
                     }
                 }
@@ -126,6 +133,7 @@
                 "title":"First, tap with your %@ hand",
                 "text": "Alternate tapping the buttons that appear with your index and middle finger of your %@ HAND. Keep tapping for 30 seconds for as fast as you can.",
                 "image": {
+                    "type":"animated",
                     "imageNames": ["TapLeft1", "TapLeft2"],
                     "animationDuration": 1.0,
                     "placementType": "topBackground"
@@ -143,6 +151,7 @@
                 },
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle": "Start the test"
                     }
                 }
@@ -163,6 +172,7 @@
                  "title":"Great job!",
                  "text":"You just completed",
                  "image":{
+                     "type":"fetchable",
                      "imageName":"Completion-FingerTapping",
                      "placementType":"topBackground"
                  },
@@ -172,6 +182,7 @@
                  },
                  "actions": {
                      "goForward":{
+                        "type":"default",
                         "buttonTitle":"Done"
                      }
                  }

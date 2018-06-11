@@ -15,6 +15,7 @@
                                }
                             ],
                  "image":{
+                     "type":"animated",
                      "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
                      "placementType":"topMarginBackground",
                      "animationDuration":2.5
@@ -35,9 +36,11 @@
                         ],
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle":"Get started"
                     },
                     "skip":{
+                        "type":"reminder",
                         "reminderIdentifier":"WalkAndBalance"
                     }
                  },
@@ -60,6 +63,7 @@
                 "text":"You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
                 "isFirstRunOnly": true,
                 "image":{
+                    "type":"animated",
                     "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
                     "placementType":"topMarginBackground",
                     "animationDuration":2.5
@@ -77,6 +81,7 @@
                 },
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle":"Got it"
                     }
                 }
@@ -87,6 +92,7 @@
                 "title":"Turn the volume up",
                 "text":"Bring your phone with you and turn up your phone volume so you can hear the instructions while you are walking.",
                 "image":{
+                    "type":"fetchable",
                     "imageName":"F-TurnUpVolume",
                     "placementType":"topMarginBackground"
                 },
@@ -103,6 +109,7 @@
                 },
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle":"The phone’s volume is up"
                     }
                 }
@@ -113,6 +120,7 @@
                  "title":"Pants with front pockets",
                  "text":"Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "image":{
+                     "type":"fetchable",
                      "imageName":"F-PantsPocket",
                      "placementType":"topBackground"
                  },
@@ -129,6 +137,7 @@
                  },
                  "actions":{
                      "goForward":{
+                        "type":"default",
                         "buttonTitle":"Got front pockets"
                      }
                  }
@@ -138,6 +147,7 @@
                  "type":"instruction",
                  "title":"Put the phone in your pocket",
                  "image":{
+                     "type":"animated",
                      "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
                      "placementType":"topBackground",
                      "animationDuration":1.5
@@ -156,6 +166,7 @@
                  "text":"This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "actions":{
                      "goForward":{
+                         "type":"default",
                          "buttonTitle":"Putting it in my pocket"
                      }
                  }
@@ -165,6 +176,7 @@
                  "type":"countdown",
                  "text":"Begin in...",
                  "image":{
+                     "type":"fetchable",
                      "imageName":"F-Walking1",
                      "placementType":"fullsizeBackground"
                  },
@@ -199,6 +211,7 @@
                               "title":"Walk back and forth",
                               "duration":30,
                               "image":{
+                                  "type":"fetchable",
                                   "imageName":"F-Walking1",
                                   "placementType":"fullsizeBackground"
                               },
@@ -237,6 +250,7 @@
                  "text":"You’ll turn 360 degrees and stand still, with your feet shoulder-width apart. Rest your arms by your side and try to avoid moving for 30 seconds.",
                  "isFirstRunOnly": true,
                  "image":{
+                     "type":"animated",
                      "imageNames":["F-Turning1", "F-Turning2", "F-Turning3", "F-Turning4", "F-Turning5", "F-Turning6", "F-Turning7", "F-Turning8", "F-Wait1", "F-Wait2", "F-Wait3"],
                      "placementType":"topMarginBackground",
                      "animationDuration":5
@@ -254,6 +268,7 @@
                  },
                  "actions":{
                      "goForward":{
+                         "type":"default",
                          "buttonTitle":"Got it"
                      }
                  },
@@ -268,6 +283,7 @@
                  "text":"This test measures how well you balance and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "isFirstRunOnly": true,
                  "image":{
+                     "type":"animated",
                      "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
                      "placementType":"topBackground",
                      "animationDuration":1.5
@@ -285,6 +301,7 @@
                  },
                  "actions":{
                      "goForward":{
+                         "type":"default",
                          "buttonTitle":"Putting it in my pocket"
                      }
                  }
@@ -295,6 +312,7 @@
                  "text":"Begin in...",
                  "isFirstRunOnly": true,
                  "image":{
+                     "type":"fetchable",
                      "imageName":"F-Turning1",
                      "placementType":"fullsizeBackground"
                  },
@@ -332,6 +350,7 @@
                               "title":"Turn around and then stand still",
                               "duration":30,
                               "image":{
+                                  "type":"fetchable",
                                   "imageName":"F-Turning1",
                                   "placementType":"fullsizeBackground"
                               },
@@ -369,6 +388,7 @@
                  "title":"Great job!",
                  "text":"You just completed your %@ Walk and Balance activity.",
                  "image":{
+                     "type":"fetchable",
                      "imageName":"Completion-WalkAndBalance",
                      "placementType":"topBackground"
                  },
@@ -378,6 +398,7 @@
                  },
                  "actions": {
                      "goForward":{
+                        "type":"default",
                         "buttonTitle":"Done"
                      }
                  },

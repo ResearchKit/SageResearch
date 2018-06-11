@@ -15,6 +15,7 @@
                                }
                             ],
                  "image":{
+                     "type":"fetchable",
                      "imageName":"HoldPhone-Left",
                      "placementType":"topMarginBackground"
                  },
@@ -26,9 +27,11 @@
                         ],
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle":"Get started"
                     },
                     "skip":{
+                        "type":"reminder",
                         "reminderIdentifier":"Tremor"
                     }
                  },
@@ -71,6 +74,7 @@
                 "title":"Hold the phone still",
                 "text":"While sitting down with your feet resting flat on the floor, you will be holding the phone still in your lap for 30 seconds. You will do this first with one hand and then with your other hand.",
                 "image":{
+                    "type":"fetchable",
                     "imageName": "F-TremorHoldPhone",
                     "placementType":"topBackground"
                 },
@@ -87,6 +91,7 @@
                 },
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle":"Got it"
                     }
                 }
@@ -97,6 +102,7 @@
                 "title":"Sit down",
                 "text":"Find a spot to sit where you can have your feet resting flat on the floor.",
                 "image":{
+                    "type":"fetchable",
                     "imageName":"F-Sitting",
                     "placementType":"topBackground"
                 },
@@ -113,6 +119,7 @@
                 },
                 "actions":{
                     "goForward":{
+                        "type":"default",
                         "buttonTitle":"Got a spot"
                     }
                 }
@@ -133,6 +140,7 @@
                  "title":"Great job!",
                  "text":"You just completed your %@ Tremor Test activity.",
                  "image":{
+                     "type":"fetchable",
                      "imageName":"Completion-Tremor",
                      "placementType":"topBackground"
                  },
@@ -145,6 +153,7 @@
                  },
                  "actions": {
                      "goForward":{
+                        "type":"default",
                         "buttonTitle":"Done"
                      }
                  },
