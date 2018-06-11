@@ -156,23 +156,27 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     
     private var ringLayer: CAShapeLayer!
     private var dialLayer: CAShapeLayer!
+    private var _rect: CGRect?
     
     open override func layoutSubviews() {
         super.layoutSubviews()
         
-        if (ringLayer == nil) {
+        let bounds = self.layer.bounds
+        if _rect == nil || !bounds.equalTo(_rect!) {
+            ringLayer?.removeFromSuperlayer()
+            dialLayer?.removeFromSuperlayer()
+            _rect = bounds
+        
             ringLayer = CAShapeLayer()
             ringLayer.path = createCirclePath().cgPath
             layer.addSublayer(ringLayer)
-        }
-        ringLayer.frame = layer.bounds
-        
-        if (dialLayer == nil) {
+            ringLayer.frame = bounds
+            
             dialLayer = CAShapeLayer()
-            dialLayer.path = createCirclePath().cgPath
+            dialLayer.path = ringLayer.path
             layer.addSublayer(dialLayer)
+            dialLayer.frame = bounds
         }
-        dialLayer.frame = layer.bounds
 
         _updateLayerProperties()
     }

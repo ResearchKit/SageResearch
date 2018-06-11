@@ -297,6 +297,12 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         updateLightStyle()
         setNeedsUpdateConstraints()
     }
+    
+    override open func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        commonInit()
+        setNeedsDisplay()
+    }
 
     /// Convenience method for adding a learn more button if needed.
     open func addLearnMoreIfNeeded() {

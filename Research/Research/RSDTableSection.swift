@@ -68,8 +68,9 @@ open class RSDTableSection {
     public init(identifier: String, sectionIndex: Int, tableItems: [RSDTableItem]) {
         self.identifier = identifier
         self.index = sectionIndex
-        for item in tableItems {
+        for (idx, item) in tableItems.enumerated() {
             item.sectionIndex = sectionIndex
+            item.rowIndex = idx
             item.sectionIdentifier = identifier
         }
         self.tableItems = tableItems

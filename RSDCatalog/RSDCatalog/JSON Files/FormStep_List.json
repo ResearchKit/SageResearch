@@ -1,7 +1,7 @@
 {
     "identifier": "list",
     "actions": {
-        "cancel": { "iconName": "closeActivity" }
+        "cancel": { "type": "default", "iconName": "closeActivity" }
     },
     "steps": [
               {

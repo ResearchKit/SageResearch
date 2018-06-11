@@ -54,13 +54,16 @@ class CodableUIActionObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "type": "instruction",
-            "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
-                         "cancel": { "iconName" : "closeX" },
-                         "learnMore": { "iconName" : "infoIcon",
+            "actions": { "goForward": { "type": "default", "buttonTitle" : "Go, Dogs! Go!" },
+                         "cancel": { "type": "default", "iconName" : "closeX" },
+                         "learnMore": { "type": "webView",
+                                        "iconName" : "infoIcon",
                                         "url" : "fooInfo" },
-                         "skip": {  "buttonTitle" : "not applicable",
+                         "skip": {  "type": "navigation",
+                                    "buttonTitle" : "not applicable",
                                     "skipToIdentifier": "boo"},
-                         "custom": { "buttonTitle" : "Custom Action" }
+                         "custom": { "type": "default",
+                                     "buttonTitle" : "Custom Action" }
                         }
         }
         """.data(using: .utf8)! // our data in native (JSON) format

@@ -1,7 +1,7 @@
 {
     "identifier": "foo",
     "actions": {
-        "cancel": { "iconName": "closeActivity" }
+        "cancel": { "type": "default", "iconName": "closeActivity" }
     },
     "shouldHideActions": ["skip"],
     "steps": [{
@@ -11,12 +11,17 @@
               "text": "This is the first step of the Foo task.",
               "detail": "On this screen you should see an image above the text with a picture of an envelop. There is also a short footnote. The button should say 'Go, Dogs!'. Tap it to continue.",
               "footnote": "This is a footnote.",
-              "image": "before",
+              "image": {  "type": "fetchable",
+                          "imageName": "before",
+                          "placementType": "iconBefore" },
               "actions": {
                       "goForward": {
+                          "type": "default",
                           "buttonTitle": "Go, Dogs!"
                       },
-                     "skip": { "buttonTitle": "Go to select one",
+                     "skip": {
+                                "type": "navigation",
+                                "buttonTitle": "Go to select one",
                                 "skipToIdentifier": "selectOne"
                             }
                   }
@@ -172,8 +177,10 @@
               "title": "Step 2",
               "text": "This is the second step in the Foo task.",
               "detail": "On this screen you should see an image below the text with a picture of a phone in a pocket. The next step after this one is an active step. When it starts, you should hear voice commands.",
-              "image": { "imageName": "phoneinpocketIllustration", "placementType": "iconAfter" },
-              "actions": { "goForward": { "buttonTitle": "Start" } }
+              "image": {    "type": "fetchable",
+                            "imageName": "phoneinpocketIllustration",
+                            "placementType": "iconAfter" },
+              "actions": { "goForward": { "type": "default", "buttonTitle": "Start" } }
               },
               {
               "identifier": "countdownStep",

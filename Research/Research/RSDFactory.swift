@@ -174,9 +174,7 @@ open class RSDFactory {
     /// - returns: The object created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTaskTransformer(from decoder: Decoder) throws -> RSDTaskTransformer {
-        let transformer = try RSDResourceTransformerObject(from: decoder)
-        transformer.factoryBundle = decoder.bundle
-        return transformer
+        return try _decodeResource(RSDResourceTransformerObject.self, from: decoder)
     }
     
     
@@ -396,8 +394,9 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeConditionalRule(from decoder:Decoder, with typeName: String) throws -> RSDConditionalRule? {
         // Base class does not implement the conditional rule
-            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a conditional rule.")
+        throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a conditional rule.")
     }
+    
     
     // MARK: UI action factory
     
@@ -410,17 +409,16 @@ open class RSDFactory {
     /// - returns: The UI action created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
+        guard let str = try? self.typeName(from: decoder), let typeName = str else {
+            #if DEBUG
+            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a UI action without a `type` key defining a value for the the class name.")
+            #else
+            return try _deprecated_decodeImageThemeElement(from: decoder)
+            #endif
+        }
         
-        let objType: RSDUIActionObjectType? = {
-            guard let str = try? self.typeName(from: decoder), let rawValue = str else { return nil }
-            return RSDUIActionObjectType(rawValue: rawValue)
-        }()
-        
-        let decodedAction = try _decodeUIAction(from: decoder, for: actionType, with: objType)
-        guard let object = decodedAction as? RSDDecodableBundleInfo else { return decodedAction }
-        var action = object
-        action.factoryBundle = decoder.bundle
-        return action as! RSDUIAction
+        let objType: RSDUIActionObjectType = RSDUIActionObjectType(rawValue: typeName)
+        return try decodeUIAction(from: decoder, with: objType)
     }
     
     /// Decode UI action from the given decoder.
@@ -433,38 +431,99 @@ open class RSDFactory {
     open func decodeUIAction(from decoder:Decoder, with objectType: RSDUIActionObjectType) throws -> RSDUIAction {
         switch objectType {
         case .navigation:
-            return try RSDNavigationUIActionObject(from: decoder)
+            return try _decodeResource(RSDNavigationUIActionObject.self, from: decoder)
         case .reminder:
-            return try RSDReminderUIActionObject(from: decoder)
+            return try _decodeResource(RSDReminderUIActionObject.self, from: decoder)
         case .webView:
-            return try RSDWebViewUIActionObject(from: decoder)
+            return try _decodeResource(RSDWebViewUIActionObject.self, from: decoder)
         default:
-            return try RSDUIActionObject(from: decoder)
+            return try _decodeResource(RSDUIActionObject.self, from: decoder)
         }
     }
     
-    private func _decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType, with objectType: RSDUIActionObjectType?) throws -> RSDUIAction {
-        
-        // Look if there is a casting type for this object.
-        if let objType = objectType {
-            return try decodeUIAction(from: decoder, with: objType)
-        }
-        
+    private func _deprecated_decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
         // check if the decoder can be used to decode a web-based action
         if actionType == .navigation(.learnMore) || actionType.customAction != nil,
-            let webAction = try? RSDWebViewUIActionObject(from: decoder) {
+            let webAction = try? _decodeResource(RSDWebViewUIActionObject.self, from: decoder) {
             return webAction
         }
         // check if the decoder can be used to decode a known action
         if actionType == .navigation(.skip) || actionType.customAction != nil {
-            if let skipAction = try? RSDNavigationUIActionObject(from: decoder) {
+            if let skipAction = try? _decodeResource(RSDNavigationUIActionObject.self, from: decoder) {
                 return skipAction
             }
-            else if let skipAction = try? RSDReminderUIActionObject(from: decoder) {
+            else if let skipAction = try? _decodeResource(RSDReminderUIActionObject.self, from: decoder) {
                 return skipAction
             }
         }
-        return try RSDUIActionObject(from: decoder)
+        return try _decodeResource(RSDUIActionObject.self, from: decoder)
+    }
+    
+    
+    // MARK: UI theme factory
+    
+    /// Decode UI color theme from the given decoder.
+    ///
+    /// - parameters:
+    ///     - decoder: The decoder to use to instatiate the object.
+    /// - returns: The UI color theme created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeColorThemeElement(from decoder:Decoder) throws -> RSDColorThemeElement? {
+        return try _decodeResource(RSDColorThemeElementObject.self, from: decoder)
+    }
+    
+    /// Decode UI view theme from the given decoder.
+    ///
+    /// - parameters:
+    ///     - decoder: The decoder to use to instatiate the object.
+    /// - returns: The UI view theme created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeViewThemeElement(from decoder:Decoder) throws -> RSDViewThemeElement? {
+        return try _decodeResource(RSDViewThemeElementObject.self, from: decoder)
+    }
+    
+    /// Decode UI image theme from the given decoder.
+    ///
+    /// - parameters:
+    ///     - decoder: The decoder to use to instatiate the object.
+    /// - returns: The UI image theme created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeImageThemeElement(from decoder:Decoder) throws -> RSDImageThemeElement? {
+        guard let str = try? self.typeName(from: decoder), let typeName = str else {
+            #if DEBUG
+                throw RSDValidationError.undefinedClassType("\(self) does not support decoding an image theme without a `type` key defining a value for the the class name.")
+            #else
+                // Do not fail a release build. Instead, attempt to run against the deprecated method of
+                // decoding an image theme.
+                return try _deprecated_decodeImageThemeElement(from: decoder)
+            #endif
+        }
+        
+        let type = RSDImageThemeElementType(rawValue: typeName)
+        switch type {
+        case .fetchable:
+            return try _decodeResource(RSDFetchableImageThemeElementObject.self, from: decoder)
+        case .animated:
+            return try _decodeResource(RSDAnimatedImageThemeElementObject.self, from: decoder)
+        default:
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a image theme element.")
+        }
+    }
+    
+    private func _deprecated_decodeImageThemeElement(from decoder:Decoder) throws -> RSDImageThemeElement {
+        if let image = try? RSDImageWrapper(from: decoder) {
+            return image
+        } else if let image = try? _decodeResource(RSDFetchableImageThemeElementObject.self, from: decoder) {
+            return image
+        } else {
+            return try _decodeResource(RSDAnimatedImageThemeElementObject.self, from: decoder)
+        }
+    }
+    
+    private func _decodeResource<T>(_ type: T.Type, from decoder: Decoder) throws -> T where T : RSDDecodableBundleInfo {
+        var resource = try T(from: decoder)
+        resource.factoryBundle = decoder.bundle
+        return resource
     }
     
     

@@ -58,14 +58,18 @@
               {
               "identifier"         : "image_darkBackground",
               "type"               : "instruction",
-              "image"              : { "imageName": "exampleImage", "placementType": "iconBefore" },
+              "image"              : {  "type": "fetchable",
+                                        "imageName": "exampleImage",
+                                        "placementType": "iconBefore" },
               "text"               : "Example with the image placed before the text and a dark background.",
               "colorTheme"         : { "usesLightStyle" : true }
               },
               {
               "identifier"         : "image_lightBackground",
               "type"               : "instruction",
-              "image"              : { "imageName": "exampleImage", "placementType": "iconBefore" },
+              "image"              : {  "type": "fetchable",
+                                        "imageName": "exampleImage",
+                                        "placementType": "iconBefore" },
               "text"               : "Example with the image placed before the text and a light background.",
               "colorTheme"         : { "usesLightStyle" : false }
               }

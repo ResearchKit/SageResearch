@@ -50,11 +50,15 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// and the app needs to track what the scheduled timing is for the task.
     public var scheduleIdentifier: String?
     
-    /// The user info is used to assign any kind of data to the task path for use by the task and/or
-    /// step controller. Because a task path may be instantiated using either a task info object or
-    /// by a task, it's possible that the `RSDTask` associated with the task has not yet been
-    /// instantiated.
-    public var userInfo: Any?
+    /// The tracking delegate is used to allow any task to reference a delegate that can be used to set up
+    /// the task using the results of a previous run. Because a task path may be instantiated using either a
+    /// task info object or by a task, it's possible that the `RSDTask` associated with the task has not yet
+    /// been instantiated when the top-level task path is created.
+    public weak var trackingDelegate: RSDTrackingDelegate? {
+        didSet {
+            self.setupTracking()
+        }
+    }
     
     //// String identifying the full path for this task.
     public var fullPath: String {
@@ -196,6 +200,8 @@ public final class RSDTaskPath : NSObject, NSCopying {
         parentPath.childPaths[identifier] = self
         retainParent(parentPath)
         self.previousResults = (parentPath.result.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
+        self.trackingDelegate = parentPath.trackingDelegate
+        self.setupTracking()
     }
     
     /// Move up the parent chain by releasing the strong reference to the parent and returning it.
@@ -208,6 +214,11 @@ public final class RSDTaskPath : NSObject, NSCopying {
     internal func retainParent(_ newParent: RSDTaskPath) {
         self.parentPath = newParent
         _strongParent = newParent
+    }
+    
+    internal func setupTracking() {
+        guard let navigator = self.task?.stepNavigator as? RSDTrackingStepNavigator else { return }
+        navigator.setupTracking(with: self)
     }
     
     /// Fetch the task associated with this path. This method loads the task and sets up the
@@ -237,6 +248,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
                     results.append(contentsOf: previousResult.asyncResults!)
                     strongSelf.result.asyncResults = results
                 }
+                strongSelf.setupTracking()
             }
             completion(strongSelf, error)
         }

@@ -171,12 +171,13 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     ///     - reloadSection: `true` if the section needs to be reloaded b/c other answers have changed,
     ///                      otherwise returns `false`.
     /// - throws: `RSDInputFieldError` if the selection is invalid.
-    open func selectAnswer(item: RSDChoiceTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
-        guard let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
+    open func selectAnswer(item: RSDTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
+        guard let choiceItem = item as? RSDChoiceTableItem,
+            let itemGroup = self.itemGroup(at: indexPath) as? RSDChoicePickerTableItemGroup else {
             return (false, false)
         }
         
-        let ret = try itemGroup.select(item, indexPath: indexPath)
+        let ret = try itemGroup.select(choiceItem, indexPath: indexPath)
         _answerDidChange(for: itemGroup, at: indexPath)
         return ret
     }
