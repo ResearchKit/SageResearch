@@ -796,7 +796,13 @@
                 <a href="../Protocols/RSDThemedUIStep.html">RSDThemedUIStep</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols.html#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTrackingStepNavigator.html">RSDTrackingStepNavigator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDUIAction.html">RSDUIAction</a>
@@ -937,6 +943,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDImagePlacementType.html">RSDImagePlacementType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDImageThemeElementType.html">RSDImageThemeElementType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDImageWrapper.html">RSDImageWrapper</a>
@@ -2723,6 +2732,182 @@ rule is included here for future implementation of data tracking.</p>
                       <div>
                         <h4>Return Value</h4>
                         <p>The UI action created from this decoder.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/UI%20theme%20factory"></a>
+                <a name="//apple_ref/swift/Section/UI theme factory" class="dashAnchor"></a>
+                <a href="#/UI%20theme%20factory">
+                  <h3 class="section-name">UI theme factory</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research10RSDFactoryC23decodeColorThemeElementAA08RSDColoreF0_pSgs7Decoder_p4from_tKF"></a>
+                    <a name="//apple_ref/swift/Method/decodeColorThemeElement(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research10RSDFactoryC23decodeColorThemeElementAA08RSDColoreF0_pSgs7Decoder_p4from_tKF">decodeColorThemeElement(from:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Decode UI color theme from the given decoder.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code>DecodingError</code> if the object cannot be decoded.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">decodeColorThemeElement</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDColorThemeElement.html">RSDColorThemeElement</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>decoder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The decoder to use to instatiate the object.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The UI color theme created from this decoder.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research10RSDFactoryC22decodeViewThemeElementAA07RSDVieweF0_pSgs7Decoder_p4from_tKF"></a>
+                    <a name="//apple_ref/swift/Method/decodeViewThemeElement(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research10RSDFactoryC22decodeViewThemeElementAA07RSDVieweF0_pSgs7Decoder_p4from_tKF">decodeViewThemeElement(from:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Decode UI view theme from the given decoder.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code>DecodingError</code> if the object cannot be decoded.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">decodeViewThemeElement</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDViewThemeElement.html">RSDViewThemeElement</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>decoder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The decoder to use to instatiate the object.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The UI view theme created from this decoder.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research10RSDFactoryC23decodeImageThemeElementAA08RSDImageeF0_pSgs7Decoder_p4from_tKF"></a>
+                    <a name="//apple_ref/swift/Method/decodeImageThemeElement(from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research10RSDFactoryC23decodeImageThemeElementAA08RSDImageeF0_pSgs7Decoder_p4from_tKF">decodeImageThemeElement(from:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Decode UI image theme from the given decoder.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code>DecodingError</code> if the object cannot be decoded.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">decodeImageThemeElement</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDImageThemeElement.html">RSDImageThemeElement</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>decoder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The decoder to use to instatiate the object.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The UI image theme created from this decoder.</p>
                       </div>
                     </section>
                   </div>

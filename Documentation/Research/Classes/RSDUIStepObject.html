@@ -796,7 +796,13 @@
                 <a href="../Protocols/RSDThemedUIStep.html">RSDThemedUIStep</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols.html#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTrackingStepNavigator.html">RSDTrackingStepNavigator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDUIAction.html">RSDUIAction</a>
@@ -937,6 +943,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDImagePlacementType.html">RSDImagePlacementType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDImageThemeElementType.html">RSDImageThemeElementType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDImageWrapper.html">RSDImageWrapper</a>
@@ -1828,7 +1837,7 @@ a navigation <code>skipToIdentifier</code> for this step, then that will be hono
                         <p>Initialize from a <code>Decoder</code>.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
-    <p>The <code><a href="../Classes/RSDUIStepObject.html#/s:8Research15RSDUIStepObjectC10imageThemeAA08RSDImageE7Element_pSgvp">imageTheme</a></code> can be decoded as a <code><a href="../Structs/RSDImageWrapper.html">RSDImageWrapper</a></code>, <code><a href="../Structs/RSDFetchableImageThemeElementObject.html">RSDFetchableImageThemeElementObject</a></code>, or
+    <p>The <code><a href="../Classes/RSDUIStepObject.html#/s:8Research15RSDUIStepObjectC10imageThemeAA08RSDImageE7Element_pSgvp">imageTheme</a></code> can be decoded as a <code><a href="../Structs/RSDFetchableImageThemeElementObject.html">RSDFetchableImageThemeElementObject</a></code> or
     <code><a href="../Structs/RSDAnimatedImageThemeElementObject.html">RSDAnimatedImageThemeElementObject</a></code>, depending upon the included dictionary.</p>
 
 </div>
@@ -1843,15 +1852,12 @@ a navigation <code>skipToIdentifier</code> for this step, then that will be hono
            "</span><span class="n">detail</span><span class="s">": "</span><span class="kt">This</span> <span class="k">is</span> <span class="n">a</span> <span class="n">test</span><span class="o">.</span><span class="s">",
            "</span><span class="n">footnote</span><span class="s">": "</span><span class="kt">This</span> <span class="k">is</span> <span class="n">a</span> <span class="n">footnote</span><span class="o">.</span><span class="s">",
            "</span><span class="n">nextStepIdentifier</span><span class="s">": "</span><span class="n">boo</span><span class="s">",
-           "</span><span class="n">actions</span><span class="s">": { "</span><span class="n">goForward</span><span class="s">": { "</span><span class="n">buttonTitle</span><span class="s">" : "</span><span class="kt">Go</span><span class="p">,</span> <span class="kt">Dogs</span><span class="o">!</span> <span class="kt">Go</span><span class="o">!</span><span class="s">" },
-                        "</span><span class="n">cancel</span><span class="s">": { "</span><span class="n">iconName</span><span class="s">" : "</span><span class="n">closeX</span><span class="s">" },
-                        "</span><span class="n">learnMore</span><span class="s">": { "</span><span class="n">iconName</span><span class="s">" : "</span><span class="n">infoIcon</span><span class="s">",
-                                       "</span><span class="n">url</span><span class="s">" : "</span><span class="n">fooInfo</span><span class="s">" },
-                        "</span><span class="n">skip</span><span class="s">": { "</span><span class="n">buttonTitle</span><span class="s">" : "</span><span class="n">not</span> <span class="n">applicable</span><span class="s">",
-                                   "</span><span class="n">skipToIdentifier</span><span class="s">": "</span><span class="n">boo</span><span class="s">"}
+           "</span><span class="n">actions</span><span class="s">": { "</span><span class="n">goForward</span><span class="s">": { "</span><span class="n">type</span><span class="s">": "</span><span class="k">default</span><span class="s">", "</span><span class="n">buttonTitle</span><span class="s">" : "</span><span class="kt">Go</span><span class="p">,</span> <span class="kt">Dogs</span><span class="o">!</span> <span class="kt">Go</span><span class="o">!</span><span class="s">" },
+                        "</span><span class="n">cancel</span><span class="s">": { "</span><span class="n">type</span><span class="s">": "</span><span class="k">default</span><span class="s">", "</span><span class="n">iconName</span><span class="s">" : "</span><span class="n">closeX</span><span class="s">" }
                        },
            "</span><span class="n">shouldHideActions</span><span class="s">": ["</span><span class="n">goBackward</span><span class="s">"],
-           "</span><span class="n">image</span><span class="s">"  : {    "</span><span class="n">imageNames</span><span class="s">" : ["</span><span class="n">foo1</span><span class="s">", "</span><span class="n">foo2</span><span class="s">", "</span><span class="n">foo3</span><span class="s">", "</span><span class="n">foo4</span><span class="s">"],
+           "</span><span class="n">image</span><span class="s">"  : {    "</span><span class="n">type</span><span class="s">" : "</span><span class="n">animated</span><span class="s">",
+                           "</span><span class="n">imageNames</span><span class="s">" : ["</span><span class="n">foo1</span><span class="s">", "</span><span class="n">foo2</span><span class="s">", "</span><span class="n">foo3</span><span class="s">", "</span><span class="n">foo4</span><span class="s">"],
                            "</span><span class="n">placementType</span><span class="s">" : "</span><span class="n">topBackground</span><span class="s">",
                            "</span><span class="n">animationDuration</span><span class="s">" : 2,
                               },
@@ -1874,21 +1880,14 @@ a navigation <code>skipToIdentifier</code> for this step, then that will be hono
            "</span><span class="n">identifier</span><span class="s">"   : "</span><span class="n">goOutside</span><span class="s">",
            "</span><span class="n">type</span><span class="s">"         : "</span><span class="n">instruction</span><span class="s">",
            "</span><span class="n">title</span><span class="s">"        : "</span><span class="kt">Go</span> <span class="n">outside</span><span class="s">",
-           "</span><span class="n">image</span><span class="s">"        : { "</span><span class="n">imageName</span><span class="s">": "</span><span class="n">goOutsideIcon</span><span class="s">", "</span><span class="n">placementType</span><span class="s">": "</span><span class="n">topBackground</span><span class="s">" },
+           "</span><span class="n">image</span><span class="s">"        : {   "</span><span class="n">type</span><span class="s">" : "</span><span class="n">fetchable</span><span class="s">",
+                                "</span><span class="n">imageName</span><span class="s">": "</span><span class="n">goOutsideIcon</span><span class="s">",
+                                "</span><span class="n">placementType</span><span class="s">": "</span><span class="n">topBackground</span><span class="s">" },
            "</span><span class="n">colorTheme</span><span class="s">"   : { "</span><span class="n">backgroundColor</span><span class="s">" : "</span><span class="n">robinsEggBlue</span><span class="s">", "</span><span class="n">usesLightStyle</span><span class="s">" : true },
-           "</span><span class="n">actions</span><span class="s">"      : { "</span><span class="n">goForward</span><span class="s">": { "</span><span class="n">buttonTitle</span><span class="s">": "</span><span class="kt">I</span> <span class="n">am</span> <span class="n">outside</span><span class="s">" }},
+           "</span><span class="n">actions</span><span class="s">"      : { "</span><span class="n">goForward</span><span class="s">": { "</span><span class="n">type</span><span class="s">": "</span><span class="k">default</span><span class="s">", "</span><span class="n">buttonTitle</span><span class="s">": "</span><span class="kt">I</span> <span class="n">am</span> <span class="n">outside</span><span class="s">" }},
        }
        """</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span> <span class="c1">// our data in native (JSON) format</span>
 
-    <span class="c1">// Example JSON for a step with an `RSDImageWrapper`.</span>
-    <span class="k">let</span> <span class="nv">json</span> <span class="o">=</span> <span class="s">"""
-       {
-           "</span><span class="n">identifier</span><span class="s">"   : "</span><span class="n">blueDog</span><span class="s">",
-           "</span><span class="n">type</span><span class="s">"         : "</span><span class="n">instruction</span><span class="s">",
-           "</span><span class="n">title</span><span class="s">"        : "</span><span class="kt">This</span> <span class="k">is</span> <span class="n">a</span> <span class="n">blue</span> <span class="n">dog</span><span class="s">",
-           "</span><span class="n">image</span><span class="s">"        : "</span><span class="n">blueDog</span><span class="s">",
-       }
-       """</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span> <span class="c1">// our data in native (JSON) format</span>
 </code></pre></li>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>

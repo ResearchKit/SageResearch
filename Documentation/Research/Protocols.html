@@ -796,7 +796,13 @@
                 <a href="Protocols/RSDThemedUIStep.html">RSDThemedUIStep</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols.html#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/RSDTrackingStepNavigator.html">RSDTrackingStepNavigator</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDUIAction.html">RSDUIAction</a>
@@ -937,6 +943,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/RSDImagePlacementType.html">RSDImagePlacementType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/RSDImageThemeElementType.html">RSDImageThemeElementType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/RSDImageWrapper.html">RSDImageWrapper</a>
@@ -3169,7 +3178,7 @@ shared interface for getting and setting the time of day and for setting up noti
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDSchedule</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDSchedule</span> <span class="p">:</span> <span class="kt">RSDScheduleTime</span></code></pre>
 
                         </div>
                       </div>
@@ -3563,6 +3572,62 @@ logical point <strong>after</strong> showing one or more initial screens.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDCopyStepNavigator</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDStepNavigator.html">RSDStepNavigator</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research19RSDTrackingDelegateP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDTrackingDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The tracking delegate is any class object that can be referenced using a <code>weak</code> reference.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDTrackingDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research24RSDTrackingStepNavigatorP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDTrackingStepNavigator" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research24RSDTrackingStepNavigatorP">RSDTrackingStepNavigator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The tracking step navigator is a step navigator that tracks user selection across different runs of a
+task.</p>
+
+                        <a href="Protocols/RSDTrackingStepNavigator.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDTrackingStepNavigator</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDStepNavigator.html">RSDStepNavigator</a></span></code></pre>
 
                         </div>
                       </div>
