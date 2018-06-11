@@ -4,7 +4,7 @@
         "identifier": "Distance Recorder",
         "revision": 1
     },
-    "actions"           : { "cancel": { "iconName": "closeActivity" }},
+    "actions"           : { "cancel": { "type": "default", "iconName": "closeActivity" }},
     "shouldHideActions" : ["goBackward", "skip"],
     "steps"             : [
                            {
