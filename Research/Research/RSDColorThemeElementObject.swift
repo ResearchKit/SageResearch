@@ -83,7 +83,7 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     #endif
     
     /// The color style to use for the header view.
-    public var colorStyle: [String : RSDColorStyle]?
+    var colorStyle: [String : RSDColorStyle]?
     
     /// The color style to use for the given view component. If `nil` the default that is determined by the
     /// step view controller will be used.
