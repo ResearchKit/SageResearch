@@ -62,13 +62,19 @@ class CodableStepObjectTests: XCTestCase {
             "text": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
-            "image": "before",
+            "image": {    "type": "fetchable",
+                          "imageName": "before",
+                          "placementType": "iconBefore" },
             "nextStepIdentifier": "boo",
-            "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
-                         "cancel": { "iconName" : "closeX" },
-                         "learnMore": { "iconName" : "infoIcon",
+            "actions": { "goForward": { "type" : "default",
+                                        "buttonTitle" : "Go, Dogs! Go!" },
+                         "cancel": { "type" : "default",
+                                     "iconName" : "closeX" },
+                         "learnMore": { "type" : "webView",
+                                        "iconName" : "infoIcon",
                                         "url" : "fooInfo" },
-                         "skip": { "buttonTitle" : "not applicable",
+                         "skip": {  "type": "navigation",
+                                    "buttonTitle" : "not applicable",
                                     "skipToIdentifier": "boo"}
                         },
             "shouldHideActions": ["goBackward", "skip"],
@@ -85,7 +91,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
-            XCTAssertEqual((object.imageTheme as? RSDImageWrapper)?.imageName, "before")
+            XCTAssertEqual((object.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "before")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
             
             let goForwardAction = object.action(for: .navigation(.goForward), on: object)
@@ -163,15 +169,19 @@ class CodableStepObjectTests: XCTestCase {
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
             "nextStepIdentifier": "boo",
-            "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
-                         "cancel": { "iconName" : "closeX" },
-                         "learnMore": { "iconName" : "infoIcon",
+            "actions": { "goForward": { "type": "default",
+                                        "buttonTitle" : "Go, Dogs! Go!" },
+                         "cancel": { "type": "default", "iconName" : "closeX" },
+                         "learnMore": { "type": "webView",
+                                        "iconName" : "infoIcon",
                                         "url" : "fooInfo" },
-                         "skip": { "buttonTitle" : "not applicable",
+                         "skip": {  "type": "navigation",
+                                    "buttonTitle" : "not applicable",
                                     "skipToIdentifier": "boo"}
                         },
             "shouldHideActions": ["goBackward"],
-            "image"  : {    "imageNames" : ["foo1", "foo2", "foo3", "foo4"],
+            "image"  : {    "type": "animated",
+                            "imageNames" : ["foo1", "foo2", "foo3", "foo4"],
                             "placementType" : "topBackground",
                             "animationDuration" : 2,
                                },
@@ -418,13 +428,17 @@ class CodableStepObjectTests: XCTestCase {
             "text": "Some text.",
             "detail": "This is a test.",
             "footnote": "This is a footnote.",
-            "image": "before",
+            "image": {  "type": "fetchable",
+                        "imageName": "before",
+                        "placementType": "iconBefore" },
             "nextStepIdentifier": "boo",
-            "actions": { "goForward": { "buttonTitle" : "Go, Dogs! Go!" },
-                         "cancel": { "iconName" : "closeX" },
-                         "learnMore": { "iconName" : "infoIcon",
+            "actions": { "goForward": { "type":"default", "buttonTitle" : "Go, Dogs! Go!" },
+                         "cancel": { "type":"default", "iconName" : "closeX" },
+                         "learnMore": { "type": "webView",
+                                        "iconName" : "infoIcon",
                                         "url" : "fooInfo" },
-                         "skip": { "buttonTitle" : "not applicable",
+                         "skip": {  "type": "navigation",
+                                    "buttonTitle" : "not applicable",
                                     "skipToIdentifier": "boo"}
                         },
             "shouldHideActions": ["goBackward", "skip"],
@@ -441,7 +455,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
-            XCTAssertEqual((object.imageTheme as? RSDImageWrapper)?.imageName, "before")
+            XCTAssertEqual((object.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "before")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
             
             let goForwardAction = object.action(for: .navigation(.goForward), on: object)

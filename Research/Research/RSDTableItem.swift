@@ -40,7 +40,7 @@ open class RSDTableItem {
     public let identifier: String
     
     /// The index of this item relative to all rows in the section in which this item resides.
-    public let rowIndex: Int
+    public var rowIndex: Int
     
     /// A unique identifier for the section.
     public internal(set) var sectionIdentifier: String!

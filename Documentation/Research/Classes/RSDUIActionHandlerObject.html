@@ -796,7 +796,13 @@
                 <a href="../Protocols/RSDThemedUIStep.html">RSDThemedUIStep</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols.html#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTrackingStepNavigator.html">RSDTrackingStepNavigator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDUIAction.html">RSDUIAction</a>
@@ -937,6 +943,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDImagePlacementType.html">RSDImagePlacementType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDImageThemeElementType.html">RSDImageThemeElementType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDImageWrapper.html">RSDImageWrapper</a>
@@ -1316,12 +1325,14 @@ with the decoder to decode the <code><a href="../Classes/RSDUIActionHandlerObjec
 <pre class="highlight swift"><code>    <span class="c1">// Example JSON for the `actions` coding.</span>
     <span class="k">let</span> <span class="nv">json</span> <span class="o">=</span> <span class="s">"""
        {
-           "</span><span class="n">actions</span><span class="s">": { "</span><span class="n">goForward</span><span class="s">": { "</span><span class="n">buttonTitle</span><span class="s">" : "</span><span class="kt">Go</span><span class="p">,</span> <span class="kt">Dogs</span><span class="o">!</span> <span class="kt">Go</span><span class="o">!</span><span class="s">" },
-                        "</span><span class="n">cancel</span><span class="s">": { "</span><span class="n">iconName</span><span class="s">" : "</span><span class="n">closeX</span><span class="s">" },
-                        "</span><span class="n">learnMore</span><span class="s">": { "</span><span class="n">iconName</span><span class="s">" : "</span><span class="n">infoIcon</span><span class="s">",
-                                       "</span><span class="n">url</span><span class="s">" : "</span><span class="n">fooInfo</span><span class="s">" },
-                        "</span><span class="n">skip</span><span class="s">": { "</span><span class="n">buttonTitle</span><span class="s">" : "</span><span class="n">not</span> <span class="n">applicable</span><span class="s">",
-                                   "</span><span class="n">skipToIdentifier</span><span class="s">": "</span><span class="n">boo</span><span class="s">"}
+           "</span><span class="n">actions</span><span class="s">": { "</span><span class="n">goForward</span><span class="s">": { "</span><span class="n">type</span><span class="s">": "</span><span class="k">default</span><span class="s">", "</span><span class="n">buttonTitle</span><span class="s">" : "</span><span class="kt">Go</span><span class="p">,</span> <span class="kt">Dogs</span><span class="o">!</span> <span class="kt">Go</span><span class="o">!</span><span class="s">" },
+                        "</span><span class="n">cancel</span><span class="s">": { "</span><span class="n">type</span><span class="s">": "</span><span class="k">default</span><span class="s">", "</span><span class="n">iconName</span><span class="s">" : "</span><span class="n">closeX</span><span class="s">" },
+                        "</span><span class="n">learnMore</span><span class="s">": {  "</span><span class="n">type</span><span class="s">": "</span><span class="n">webView</span><span class="s">",
+                                        "</span><span class="n">iconName</span><span class="s">" : "</span><span class="n">infoIcon</span><span class="s">",
+                                        "</span><span class="n">url</span><span class="s">" : "</span><span class="n">fooInfo</span><span class="s">" },
+                        "</span><span class="n">skip</span><span class="s">": {   "</span><span class="n">type</span><span class="s">": "</span><span class="n">navigation</span><span class="s">", 
+                                    "</span><span class="n">buttonTitle</span><span class="s">" : "</span><span class="n">not</span> <span class="n">applicable</span><span class="s">",
+                                    "</span><span class="n">skipToIdentifier</span><span class="s">": "</span><span class="n">boo</span><span class="s">"}
                        },
            "</span><span class="n">shouldHideActions</span><span class="s">": ["</span><span class="n">goBackward</span><span class="s">"]
        }

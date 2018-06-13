@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RSDTrackingStepNavigator Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/RSDTrackingStepNavigator" class="dashAnchor"></a>
+    <a title="RSDTrackingStepNavigator Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Research Docs</a></p>
+        <p class="header-right"><a href="https://github.com/ResearchKit/SageResearch.git"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Research Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        RSDTrackingStepNavigator Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Localization.html">Localization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LocalizationBundle.html">LocalizationBundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDActiveUIStepObject.html">RSDActiveUIStepObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDActiveUIStepObject/SpokenInstructionKeys.html">– SpokenInstructionKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDBooleanTableItemGroup.html">RSDBooleanTableItemGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDChoiceInputFieldObject.html">RSDChoiceInputFieldObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDChoicePickerTableItemGroup.html">RSDChoicePickerTableItemGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDCohortTrackingRule.html">RSDCohortTrackingRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDataLogger.html">RSDDataLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDateTableItemGroup.html">RSDDateTableItemGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDistanceRecorder.html">RSDDistanceRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDistanceRecorder/CRFResultIdentifier.html">– CRFResultIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDFactory.html">RSDFactory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDFileResultUtility.html">RSDFileResultUtility</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDFormStepDataSourceObject.html">RSDFormStepDataSourceObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDFormUIStepObject.html">RSDFormUIStepObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDHeightInputTableItem.html">RSDHeightInputTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDHumanMeasurementTableItemGroup.html">RSDHumanMeasurementTableItemGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDImageTableItem.html">RSDImageTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDInputFieldObject.html">RSDInputFieldObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDInputFieldTableItem.html">RSDInputFieldTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDInputFieldTableItemGroup.html">RSDInputFieldTableItemGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMassInputTableItem.html">RSDMassInputTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDModalStepTableItem.html">RSDModalStepTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDModalStepTaskController.html">RSDModalStepTaskController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMotionAuthorization.html">RSDMotionAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMotionRecorder.html">RSDMotionRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMultipleComponentInputFieldObject.html">RSDMultipleComponentInputFieldObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMultipleComponentTableItemGroup.html">RSDMultipleComponentTableItemGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDNumberInputTableItem.html">RSDNumberInputTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDNumberTableItemGroup.html">RSDNumberTableItemGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDOverviewStepObject.html">RSDOverviewStepObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDPopoverInputFieldObject.html">RSDPopoverInputFieldObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDRecordSampleLogger.html">RSDRecordSampleLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDRecordSampleLogger/RSDRecordSampleLoggerError.html">– RSDRecordSampleLoggerError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDResourceConfig.html">RSDResourceConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDResourceTransformerObject.html">RSDResourceTransformerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSampleRecorder/RecorderError.html">– RecorderError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableItem.html">RSDTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableItem/ReuseIdentifier.html">– ReuseIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableItemGroup.html">RSDTableItemGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableSection.html">RSDTableSection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTaskObject.html">RSDTaskObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTaskPath.html">RSDTaskPath</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTextFieldTableItemGroup.html">RSDTextFieldTableItemGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTextInputTableItem.html">RSDTextInputTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTextTableItem.html">RSDTextTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDUIActionHandlerObject.html">RSDUIActionHandlerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDUIStepObject.html">RSDUIStepObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDWeeklyScheduleFormatter.html">RSDWeeklyScheduleFormatter</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/RSDAsyncActionStatus.html">RSDAsyncActionStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDAttitudeReferenceFrame.html">RSDAttitudeReferenceFrame</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDAuthorizationStatus.html">RSDAuthorizationStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDCohortRuleOperator.html">RSDCohortRuleOperator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDColorPlacement.html">RSDColorPlacement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDColorStyle.html">RSDColorStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDDatePickerMode.html">RSDDatePickerMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDFormDataType.html">RSDFormDataType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDFormDataType/BaseType.html">– BaseType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDFormDataType/CollectionType.html">– CollectionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDFormDataType/MeasurementType.html">– MeasurementType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDFormDataType/MeasurementRange.html">– MeasurementRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums.html#/s:8Research23RSDImagePickerMediaTypeO">RSDImagePickerMediaType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDImagePickerSourceType.html">RSDImagePickerSourceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDInputFieldError.html">RSDInputFieldError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDInputFieldError.html#/s:8Research18RSDInputFieldErrorO7ContextV">– Context</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDKeyboardType.html">RSDKeyboardType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDMotionRecorderType.html">RSDMotionRecorderType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDPermissionError.html">RSDPermissionError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDReservedFilename.html">RSDReservedFilename</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDResourceTransformerError.html">RSDResourceTransformerError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDStandardPermissionType.html">RSDStandardPermissionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDStepDirection.html">RSDStepDirection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDSurveyRuleOperator.html">RSDSurveyRuleOperator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDTaskFetchError.html">RSDTaskFetchError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDTextAutocapitalizationType.html">RSDTextAutocapitalizationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDTextAutocorrectionType.html">RSDTextAutocorrectionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDTextSpellCheckingType.html">RSDTextSpellCheckingType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDUIActionType.html">RSDUIActionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDUIActionType/Navigation.html">– Navigation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDValidationError.html">RSDValidationError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDWeekday.html">RSDWeekday</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Bool.html">Bool</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CMAccelerometerData.html">CMAccelerometerData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CMGyroData.html">CMGyroData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CMMagnetometerData.html">CMMagnetometerData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Calendar.html">Calendar</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CodingUserInfoKey.html">CodingUserInfoKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Data.html">Data</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Date.html">Date</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/DateComponents.html">DateComponents</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Decoder.html">Decoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Dictionary.html">Dictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Double.html">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Encodable.html">Encodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Encoder.html">Encoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Float.html">Float</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int16.html">Int16</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int32.html">Int32</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int64.html">Int64</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Int8.html">Int8</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Measurement.html">Measurement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSArray.html">NSArray</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSCalendar.html">NSCalendar</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSCalendar/Unit.html">– Unit</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSData.html">NSData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSDate.html">NSDate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSDateComponents.html">NSDateComponents</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSDictionary.html">NSDictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSNull.html">NSNull</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSNumber.html">NSNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSString.html">NSString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSURL.html">NSURL</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSUUID.html">NSUUID</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NumberFormatter.html">NumberFormatter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDFraction.html">RSDFraction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDLengthFormatter.html">RSDLengthFormatter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDMassFormatter.html">RSDMassFormatter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Sequence.html">Sequence</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Set.html">Set</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIColor.html">UIColor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIImage.html">UIImage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UInt.html">UInt</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UInt16.html">UInt16</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UInt32.html">UInt32</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UInt64.html">UInt64</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UInt8.html">UInt8</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/URL.html">URL</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UUID.html">UUID</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UnitDuration.html">UnitDuration</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8Research17RSDObjectEqualitySbypSg_ACtF">RSDObjectEquality(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:8Research13RSDObjectHashSiypSgF">RSDObjectHash(_:)</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDActiveUIStep.html">RSDActiveUIStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDAnimatedImageThemeElement.html">RSDAnimatedImageThemeElement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDAnswerResult.html">RSDAnswerResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDAnswerResultFinder.html">RSDAnswerResultFinder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDArchivable.html">RSDArchivable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDAsyncActionConfiguration.html">RSDAsyncActionConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDAsyncActionController.html">RSDAsyncActionController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDAsyncActionControllerDelegate.html">RSDAsyncActionControllerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDAsyncActionControllerVendor.html">RSDAsyncActionControllerVendor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDChoice.html">RSDChoice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDChoiceOptions.html">RSDChoiceOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDChoicePickerDataSource.html">RSDChoicePickerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDCohortAssignmentStep.html">RSDCohortAssignmentStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDCohortNavigationRule.html">RSDCohortNavigationRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDCohortNavigationStep.html">RSDCohortNavigationStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDCollectionResult.html">RSDCollectionResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDColorThemeElement.html">RSDColorThemeElement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDComparable.html">RSDComparable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDComparableSurveyRule.html">RSDComparableSurveyRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDConditionalReplacementRule.html">RSDConditionalReplacementRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDConditionalRule.html">RSDConditionalRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDConditionalStepNavigator.html">RSDConditionalStepNavigator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDCopyInputField.html">RSDCopyInputField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDCopyStep.html">RSDCopyStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDCopyStepNavigator.html">RSDCopyStepNavigator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDCopyTask.html">RSDCopyTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDCopyWithIdentifier.html">RSDCopyWithIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDataArchive.html">RSDDataArchive</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDataArchiveManager.html">RSDDataArchiveManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDateCoder.html">RSDDateCoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDatePickerDataSource.html">RSDDatePickerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDateRange.html">RSDDateRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDecimalComparable.html">RSDDecimalComparable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDecodableBundleInfo.html">RSDDecodableBundleInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDecodableReplacement.html">RSDDecodableReplacement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDelimiterSeparatedEncodable.html">RSDDelimiterSeparatedEncodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDictionaryRepresentable.html">RSDDictionaryRepresentable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDEmbeddedIconVendor.html">RSDEmbeddedIconVendor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDEmbeddedResourceUIAction.html">RSDEmbeddedResourceUIAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDErrorResult.html">RSDErrorResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research17RSDFactoryDecoderP">RSDFactoryDecoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research17RSDFactoryEncoderP">RSDFactoryEncoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research29RSDFetchableImageThemeElementP">RSDFetchableImageThemeElement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDFileResult.html">RSDFileResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDFormUIStep.html">RSDFormUIStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDGenericStep.html">RSDGenericStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDImagePickerStep.html">RSDImagePickerStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDImageThemeElement.html">RSDImageThemeElement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDImageVendor.html">RSDImageVendor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDImageWrapperDelegate.html">RSDImageWrapperDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDInputField.html">RSDInputField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDIntEnumSet.html">RSDIntEnumSet</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDJSONNumber.html">RSDJSONNumber</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDJSONRecorderConfiguration.html">RSDJSONRecorderConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDJSONValue.html">RSDJSONValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDModalStepDataSource.html">RSDModalStepDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDModalStepTaskControllerDelegate.html">RSDModalStepTaskControllerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDMultipleComponentOptions.html">RSDMultipleComponentOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDMultipleComponentPickerDataSource.html">RSDMultipleComponentPickerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDMutableInputField.html">RSDMutableInputField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDNavigationBackRule.html">RSDNavigationBackRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDNavigationResult.html">RSDNavigationResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDNavigationRule.html">RSDNavigationRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDNavigationSkipRule.html">RSDNavigationSkipRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDNavigationUIAction.html">RSDNavigationUIAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDNumberPickerDataSource.html">RSDNumberPickerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDNumberRange.html">RSDNumberRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDObjectProtocol.html">RSDObjectProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDPermissionType.html">RSDPermissionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDPickerDataSource.html">RSDPickerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research20RSDPopoverInputFieldP">RSDPopoverInputField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research8RSDRangeP">RSDRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDRangeWithFormatter.html">RSDRangeWithFormatter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDRecorderConfiguration.html">RSDRecorderConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDReminderUIAction.html">RSDReminderUIAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDRequestConfiguration.html">RSDRequestConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDResourceTransformer.html">RSDResourceTransformer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDRestartableRecorderConfiguration.html">RSDRestartableRecorderConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDResult.html">RSDResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSchedule.html">RSDSchedule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSchemaInfo.html">RSDSchemaInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSectionStep.html">RSDSectionStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStandardPermissionsStep.html">RSDStandardPermissionsStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStep.html">RSDStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStepController.html">RSDStepController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStepNavigator.html">RSDStepNavigator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStepTransformer.html">RSDStepTransformer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStepValidator.html">RSDStepValidator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStringEnumSet.html">RSDStringEnumSet</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStringLiteralOptionSet.html">RSDStringLiteralOptionSet</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStringSeparatedEncodingFormat.html">RSDStringSeparatedEncodingFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSurveyInputField.html">RSDSurveyInputField</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSurveyNavigationStep.html">RSDSurveyNavigationStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSurveyRule.html">RSDSurveyRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTableDataSource.html">RSDTableDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTableDataSourceDelegate.html">RSDTableDataSourceDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTableStep.html">RSDTableStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTask.html">RSDTask</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskController.html">RSDTaskController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskControllerDelegate.html">RSDTaskControllerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskDataSource.html">RSDTaskDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskGroup.html">RSDTaskGroup</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskInfo.html">RSDTaskInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskInfoStep.html">RSDTaskInfoStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskResourceTransformer.html">RSDTaskResourceTransformer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskResult.html">RSDTaskResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskTransformer.html">RSDTaskTransformer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskUIController.html">RSDTaskUIController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTextFieldOptions.html">RSDTextFieldOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDThemedUIStep.html">RSDThemedUIStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTrackingStepNavigator.html">RSDTrackingStepNavigator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDUIAction.html">RSDUIAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDUIActionHandler.html">RSDUIActionHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDUIStep.html">RSDUIStep</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDUIThemeElement.html">RSDUIThemeElement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDUSMeasurementPickerDataSource.html">RSDUSMeasurementPickerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research9RSDVectorP">RSDVector</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDVectorData.html">RSDVectorData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDViewThemeElement.html">RSDViewThemeElement</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDWebViewUIAction.html">RSDWebViewUIAction</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AnyCodableArray.html">AnyCodableArray</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyCodableDictionary.html">AnyCodableDictionary</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AnyCodingKey.html">AnyCodingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CSVEncodingFormat.html">CSVEncodingFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDActiveUIStepCommand.html">RSDActiveUIStepCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAnimatedImageThemeElementObject.html">RSDAnimatedImageThemeElementObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAnswerResultObject.html">RSDAnswerResultObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAnswerResultType.html">RSDAnswerResultType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAnswerResultType/BaseType.html">– BaseType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAnswerResultType/SequenceType.html">– SequenceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAsyncActionType.html">RSDAsyncActionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAudioVisualAuthorization.html">RSDAudioVisualAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDChoiceObject.html">RSDChoiceObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDChoiceOptionsObject.html">RSDChoiceOptionsObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDCohortNavigationRuleObject.html">RSDCohortNavigationRuleObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDCollectionResultObject.html">RSDCollectionResultObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDColorThemeElementObject.html">RSDColorThemeElementObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDComparableSurveyRuleObject.html">RSDComparableSurveyRuleObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDConditionalStepNavigatorObject.html">RSDConditionalStepNavigatorObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDateCoderObject.html">RSDDateCoderObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDatePickerDataSourceObject.html">RSDDatePickerDataSourceObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDateRangeObject.html">RSDDateRangeObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDeviceType.html">RSDDeviceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDistanceRecord.html">RSDDistanceRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDistanceRecorderConfiguration.html">RSDDistanceRecorderConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDurationPickerDataSourceObject.html">RSDDurationPickerDataSourceObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDurationRangeObject.html">RSDDurationRangeObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDErrorResultObject.html">RSDErrorResultObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDFetchableImageThemeElementObject.html">RSDFetchableImageThemeElementObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDFileManifest.html">RSDFileManifest</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDFileResultObject.html">RSDFileResultObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDFormUIHint.html">RSDFormUIHint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDGenericStepObject.html">RSDGenericStepObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDIdentifier.html">RSDIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDImagePickerStepObject.html">RSDImagePickerStepObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDImagePlacementType.html">RSDImagePlacementType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDImageThemeElementType.html">RSDImageThemeElementType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDImageWrapper.html">RSDImageWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDLocationAuthorization.html">RSDLocationAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDMotionRecord.html">RSDMotionRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDMotionRecorderConfiguration.html">RSDMotionRecorderConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDMultipleComponentOptionsObject.html">RSDMultipleComponentOptionsObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDNavigationUIActionObject.html">RSDNavigationUIActionObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDNumberPickerDataSourceObject.html">RSDNumberPickerDataSourceObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDNumberRangeObject.html">RSDNumberRangeObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDPhotoLibraryAuthorization.html">RSDPhotoLibraryAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDRecordMarker.html">RSDRecordMarker</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDRegExValidatorObject.html">RSDRegExValidatorObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDReminderUIActionObject.html">RSDReminderUIActionObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDResourceType.html">RSDResourceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDResultObject.html">RSDResultObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDResultType.html">RSDResultType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDSchemaInfoObject.html">RSDSchemaInfoObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDSectionStepObject.html">RSDSectionStepObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDStandardAsyncActionConfiguration.html">RSDStandardAsyncActionConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDStandardPermission.html">RSDStandardPermission</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDStepNavigatorType.html">RSDStepNavigatorType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDStepTransformerObject.html">RSDStepTransformerObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDStepType.html">RSDStepType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDTaskGroupObject.html">RSDTaskGroupObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDTaskInfoStepObject.html">RSDTaskInfoStepObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDTaskMetadata.html">RSDTaskMetadata</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDTaskResultObject.html">RSDTaskResultObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDTextFieldOptionsObject.html">RSDTextFieldOptionsObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDUIActionObject.html">RSDUIActionObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDUIActionObjectType.html">RSDUIActionObjectType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDUSHeightPickerDataSourceObject.html">RSDUSHeightPickerDataSourceObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDUSInfantMassPickerDataSourceObject.html">RSDUSInfantMassPickerDataSourceObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDUnitConverter.html">RSDUnitConverter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDUnitConverter/USCustomaryUnitConverter.html">– USCustomaryUnitConverter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDViewThemeElementObject.html">RSDViewThemeElementObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDWebViewUIActionObject.html">RSDWebViewUIActionObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDWeeklyScheduleObject.html">RSDWeeklyScheduleObject</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:8Research31RSDAsyncActionCompletionHandlera">RSDAsyncActionCompletionHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:8Research29RSDTaskFetchCompletionHandlera">RSDTaskFetchCompletionHandler</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>RSDTrackingStepNavigator</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDTrackingStepNavigator</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/RSDStepNavigator.html">RSDStepNavigator</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>The tracking step navigator is a step navigator that tracks user selection across different runs of a
+task.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research24RSDTrackingStepNavigatorP13setupTrackingyAA11RSDTaskPathC4with_tF"></a>
+                    <a name="//apple_ref/swift/Method/setupTracking(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research24RSDTrackingStepNavigatorP13setupTrackingyAA11RSDTaskPathC4with_tF">setupTracking(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Set up tracking for this instance of a step navigator using the given task path.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setupTracking</span><span class="p">(</span><span class="n">with</span> <span class="nv">taskPath</span><span class="p">:</span> <span class="kt"><a href="../Classes/RSDTaskPath.html">RSDTaskPath</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017-2018 <a class="link" href="https://developer.sagebridge.org" target="_blank" rel="external">Sage Bionetworks</a>. All rights reserved.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

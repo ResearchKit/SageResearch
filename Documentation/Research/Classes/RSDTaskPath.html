@@ -796,7 +796,13 @@
                 <a href="../Protocols/RSDThemedUIStep.html">RSDThemedUIStep</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols.html#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTrackingStepNavigator.html">RSDTrackingStepNavigator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDUIAction.html">RSDUIAction</a>
@@ -937,6 +943,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDImagePlacementType.html">RSDImagePlacementType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDImageThemeElementType.html">RSDImageThemeElementType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDImageWrapper.html">RSDImageWrapper</a>
@@ -1168,9 +1177,9 @@ and the app needs to track what the scheduled timing is for the task.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research11RSDTaskPathC8userInfoypSgvp"></a>
-                    <a name="//apple_ref/swift/Property/userInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research11RSDTaskPathC8userInfoypSgvp">userInfo</a>
+                    <a name="/s:8Research11RSDTaskPathC16trackingDelegateAA011RSDTrackingE0_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/trackingDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research11RSDTaskPathC16trackingDelegateAA011RSDTrackingE0_pSgXwvp">trackingDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1178,17 +1187,17 @@ and the app needs to track what the scheduled timing is for the task.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The user info is used to assign any kind of data to the task path for use by the task and/or
-step controller. Because a task path may be instantiated using either a task info object or
-by a task, it&rsquo;s possible that the <code><a href="../Protocols/RSDTask.html">RSDTask</a></code> associated with the task has not yet been
-instantiated.</p>
+                        <p>The tracking delegate is used to allow any task to reference a delegate that can be used to set up
+the task using the results of a previous run. Because a task path may be instantiated using either a
+task info object or by a task, it&rsquo;s possible that the <code><a href="../Protocols/RSDTask.html">RSDTask</a></code> associated with the task has not yet
+been instantiated when the top-level task path is created.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">trackingDelegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>

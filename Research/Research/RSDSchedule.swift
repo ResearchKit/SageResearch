@@ -32,11 +32,16 @@
 //
 
 import Foundation
-//import UserNotifications
+
+public protocol RSDScheduleTime {
+    
+    /// The time of the day as a string with the format "HH:mm".
+    var timeOfDayString: String? { get }
+}
 
 /// The `RSDSchedule` protocol can be used to describe a local notification schedule. This provides a
 /// shared interface for getting and setting the time of day and for setting up notifications.
-public protocol RSDSchedule {
+public protocol RSDSchedule : RSDScheduleTime {
     
     /// The time of the day as a string with the format "HH:mm".
     var timeOfDayString: String? { get set }
@@ -49,46 +54,65 @@ public protocol RSDSchedule {
     func notificationTriggers() -> [DateComponents]
 }
 
-extension RSDSchedule {
+extension RSDScheduleTime {
     
-    /// The time of the day as a date.
-    public var timeOfDay: Date? {
-        get {
-            guard let tod = timeOfDayString else { return nil }
-            return RSDDateCoderObject.hourAndMinutesOnly.inputFormatter.date(from: tod)
-        }
-        set {
-            guard let tod = newValue else {
-                timeOfDayString = nil
-                return
-            }
-            timeOfDayString = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter.string(from: tod)
-        }
+    /// The time of the day for the schedule. This method will return a `Date` object on the same day as the
+    /// the input time but with the time set to the time described by the `timeOfDayString`. If the time of
+    /// day string is `nil` then this will also return nil.
+    ///
+    /// - parameter date: The date for which to set the time.
+    public func timeOfDay(on date:Date) -> Date? {
+        guard let timeComponents = self.timeComponents else { return nil }
+        let calendar = Calendar.iso8601
+        var components = calendar.dateComponents([.year, .month, .day], from: date)
+        components.hour = timeComponents.hour
+        components.minute = timeComponents.minute
+        return calendar.date(from: components)
     }
     
     /// The time components using the ISO8601 calendar.
     public var timeComponents: DateComponents? {
-        get {
-            guard let tod = self.timeOfDay else { return nil }
-            return Calendar.iso8601.dateComponents([.hour, .minute], from: tod)
+        guard let todString = timeOfDayString,
+            let tod = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter.date(from: todString)
+            else {
+                return nil
         }
-        set {
-            guard let tod = newValue, let hour = tod.hour, let minute = tod.minute else {
-                timeOfDayString = nil
-                return
-            }
-            timeOfDayString = String(format: "%02d:%02d", hour, minute)
-        }
+        return Calendar.iso8601.dateComponents([.hour, .minute], from: tod)
     }
     
+    /// Return the localized time text string using the given style.
+    public func localizedTime(with timeStyle: DateFormatter.Style = .short) -> String? {
+        guard let time = self.timeOfDay(on: Date()) else { return nil }
+        return DateFormatter.localizedString(from: time, dateStyle: .none, timeStyle: timeStyle)
+    }
+}
+
+extension RSDSchedule {
+
     /// Set the time by converting from Any.
     mutating public func setTime(from value: Any?) {
         if let dateValue = value as? Date {
-            self.timeOfDay = dateValue
+            self.setTimeOfDay(from: dateValue)
         } else if let dateComponents = value as? DateComponents {
-            self.timeComponents = dateComponents
+            self.setTimeComponents(from: dateComponents)
         } else {
             self.timeOfDayString = value as? String
         }
+    }
+    
+    mutating func setTimeOfDay(from date: Date?) {
+        guard let tod = date else {
+            self.timeOfDayString = nil
+            return
+        }
+        self.timeOfDayString = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter.string(from: tod)
+    }
+    
+    mutating func setTimeComponents(from dateComponents: DateComponents?) {
+        guard let tod = dateComponents, let hour = tod.hour, let minute = tod.minute else {
+            self.timeOfDayString = nil
+            return
+        }
+        self.timeOfDayString = String(format: "%02d:%02d", hour, minute)
     }
 }

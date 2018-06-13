@@ -796,7 +796,13 @@
                 <a href="../Protocols/RSDThemedUIStep.html">RSDThemedUIStep</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols.html#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTrackingStepNavigator.html">RSDTrackingStepNavigator</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDUIAction.html">RSDUIAction</a>
@@ -939,6 +945,9 @@
                 <a href="../Structs/RSDImagePlacementType.html">RSDImagePlacementType</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/RSDImageThemeElementType.html">RSDImageThemeElementType</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/RSDImageWrapper.html">RSDImageWrapper</a>
               </li>
               <li class="nav-group-task">
@@ -1067,7 +1076,7 @@
             <h1>RSDSchedule</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDSchedule</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDSchedule</span> <span class="p">:</span> <span class="kt">RSDScheduleTime</span></code></pre>
 
                 </div>
               </div>
@@ -1146,66 +1155,6 @@ shared interface for getting and setting the time of day and for setting up noti
             </div>
             <div class="task-group">
               <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research11RSDSchedulePAAE9timeOfDay10Foundation4DateVSgvp"></a>
-                    <a name="//apple_ref/swift/Property/timeOfDay" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research11RSDSchedulePAAE9timeOfDay10Foundation4DateVSgvp">timeOfDay</a>
-                    </code>
-                      <span class="declaration-note">
-                        Extension method
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The time of the day as a date.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">timeOfDay</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research11RSDSchedulePAAE14timeComponents10Foundation04DateD0VSgvp"></a>
-                    <a name="//apple_ref/swift/Property/timeComponents" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research11RSDSchedulePAAE14timeComponents10Foundation04DateD0VSgvp">timeComponents</a>
-                    </code>
-                      <span class="declaration-note">
-                        Extension method
-                      </span>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The time components using the ISO8601 calendar.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">timeComponents</span><span class="p">:</span> <span class="kt">DateComponents</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
                 <li class="item">
                   <div>
                     <code>
