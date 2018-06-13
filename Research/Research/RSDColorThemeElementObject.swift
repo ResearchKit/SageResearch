@@ -93,6 +93,13 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
         return colorStyle?[placement.stringValue]
     }
     
+    /// Set the color style for the given placement.
+    mutating public func setColorStyle(_ style: RSDColorStyle, for placement: RSDColorPlacement) {
+        var dictionary: [String : RSDColorStyle] = self.colorStyle ?? [:]
+        dictionary[placement.stringValue] = style
+        self.colorStyle = dictionary
+    }
+    
     /// Default initializer.
     ///
     /// - note: The color names used by this `Codable` object can be defined as either:
@@ -110,7 +117,7 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     ///     - foregroundColorName: The name of the foreground color. Default = `nil`.
     ///     - bundleIdentifier: The bundle identifier for where to find the color asset or plist mapping
     ///       file. Default = `nil`.
-    public init(usesLightStyle: Bool = false, backgroundColorName: String?, bundleIdentifier: String? = nil) {
+    public init(usesLightStyle: Bool = false, backgroundColorName: String? = nil, bundleIdentifier: String? = nil) {
         self._usesLightStyle = usesLightStyle
         self._backgroundColorName = backgroundColorName
         self.bundleIdentifier = bundleIdentifier
