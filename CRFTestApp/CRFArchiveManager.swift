@@ -65,7 +65,7 @@ public class CRFArchiveManager : NSObject, RSDDataArchiveManager {
 }
 
 public class CRFDataArchive : NSObject, RSDDataArchive {
-    
+
     public let identifier: String
     public var scheduleIdentifier: String?
     
@@ -99,6 +99,10 @@ public class CRFDataArchive : NSObject, RSDDataArchive {
         return true
     }
     
+    public func archivableData(for result: RSDResult, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable? {
+        return result as? RSDArchivable
+    }
+    
     public func insertDataIntoArchive(_ data: Data, manifest: RSDFileManifest) throws {
         guard !isComplete, !self.manifestList.contains(manifest) else {
             assertionFailure("Failed to add \(manifest.filename) : \(manifest)")
@@ -111,7 +115,9 @@ public class CRFDataArchive : NSObject, RSDDataArchive {
         
         if manifest.filename == "answers.json" {
             let json = String(data: data, encoding: .utf8)
-            print("answers.json:\n\(json!)")
+            #if DEBUG
+                print("answers.json:\n\(json!)")
+            #endif
         }
     }
     
@@ -119,7 +125,9 @@ public class CRFDataArchive : NSObject, RSDDataArchive {
         let encoder = RSDFactory.shared.createJSONEncoder()
         let jsonData = try encoder.encode(metadata)
         let json = String(data: jsonData, encoding: .utf8)
-        print("Archive complete. outputDirectory: \(outputDirectory)\n\n\(json!)")
+        #if DEBUG
+            print("Archive complete. outputDirectory: \(outputDirectory)\n\n\(json!)")
+        #endif
         isComplete = true
     }
 }

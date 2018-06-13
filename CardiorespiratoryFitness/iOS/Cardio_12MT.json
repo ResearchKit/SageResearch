@@ -1,6 +1,6 @@
 {
     "identifier"        : "Cardio 12MT",
-    "actions"           : { "cancel": { "iconName": "closeActivity" }},
+    "actions"           : { "cancel": { "type":"default", "iconName": "closeActivity" }},
     "shouldHideActions" : ["goBackward", "skip"],
     "progressMarkers"   : ["volumeUp", "goOutside", "heartRate.before", "run", "heartRate.after", "surveyAfter"],
     "asyncActions"      : [
@@ -19,6 +19,7 @@
                            "title"        : "12 Minute Distance Test",
                            "text"         : "15 minutes",
                            "image"  : {
+                                           "type":"animated",
                                            "imageNames" : ["12MinLarge1", "12MinLarge2", "12MinLarge3", "12MinLarge4"],
                                            "placementType" : "topBackground",
                                            "animationDuration" : 2,
@@ -33,10 +34,10 @@
                                                "reason" : "Access to your camera is required in order to measure your heart rate."
                                                }],
                            "actions"      : {
-                                               "goForward":  { "buttonTitle": "Start" },
-                                               "cancel":     { "iconName": "backArrowHeader" },
-                                               "skip":       { "reminderIdentifier": "Cardio 12MT" },
-                                               "learnMore":  { "iconName": "infoIcon", "url": "Cardio_12MT.html" }
+                                               "goForward":  { "type":"default", "buttonTitle": "Start" },
+                                               "cancel":     { "type":"default", "iconName": "backArrowHeader" },
+                                               "skip":       { "type":"reminder", "reminderIdentifier": "Cardio 12MT" },
+                                               "learnMore":  { "type":"webView", "iconName": "infoIcon", "url": "Cardio_12MT.html" }
                                             },
                            },
                            {
@@ -45,19 +46,20 @@
                            "colorTheme"             : {
                                                        "backgroundColor"        : "salmon",
                                                        "usesLightStyle"         : true },
-                           "image"                  : { "imageName": "healthRiskIcon",
+                           "image"                  : { "type":"fetchable",
+                                                        "imageName": "healthRiskIcon",
                                                         "placementType": "iconBefore" },
                            "text"                   : "Do not attempt to complete this test if you have been told by your doctor that you should not participate in physical activity or exercise. Stop the test and talk to your doctor if any of the following symptoms occur: chest pain, dizziness, blurred vision, disorientation, excessive shortness of breath, severe nausea, severe fatigue, or severe headache.",
-                           "actions"                : { "goForward": { "buttonTitle": "Got it" }}
+                           "actions"                : { "goForward": { "type":"default", "buttonTitle": "Got it" }}
                            },
                            {
                            "identifier"   : "volumeUp",
                            "type"         : "instruction",
                            "title"        : "Volume turned up?",
                            "text"         : "Bring your phone with you and turn up your phone volume so you can hear the instructions while you are moving.",
-                           "image"        : { "imageName": "volumeCheckIcon", "placementType": "topBackground" },
+                           "image"        : { "type":"fetchable", "imageName": "volumeCheckIcon", "placementType": "topBackground" },
                            "colorTheme"   : { "backgroundColor" : "perrywinkle", "usesLightStyle" : true },
-                           "actions"      : { "goForward": { "buttonTitle": "It’s turned on" }},
+                           "actions"      : { "goForward": { "type":"default", "buttonTitle": "It’s turned on" }},
                            "viewTheme"    : { "viewIdentifier": "Instruction", "storyboardIdentifier": "ActiveTaskSteps" }
                            },
                            {
@@ -65,9 +67,9 @@
                            "type"         : "instruction",
                            "title"        : "Go outside",
                            "text"         : "Start by going oustide and standing still to measure your resting heart rate before you start moving.",
-                           "image"        : { "imageName": "goOutsideIcon", "placementType": "topBackground" },
+                           "image"        : { "type":"fetchable", "imageName": "goOutsideIcon", "placementType": "topBackground" },
                            "colorTheme"   : { "backgroundColor" : "robinsEggBlue", "usesLightStyle" : true },
-                           "actions"      : { "goForward": { "buttonTitle": "I am outside" }},
+                           "actions"      : { "goForward": { "type":"default", "buttonTitle": "I am outside" }},
                            "viewTheme"    : { "viewIdentifier": "Instruction", "storyboardIdentifier": "ActiveTaskSteps" }
                            },
                            {
@@ -91,13 +93,13 @@
                                                "type"         : "instruction",
                                                "title"        : "Take your phone with you",
                                                "text"         : "Cover as much distance as you can on a flat course in 12 minutes by running or walking.",
-                                               "image"  : {
+                                               "image"  : { "type":"animated",
                                                                    "imageNames" : ["12MinSmall1", "12MinSmall2", "12MinSmall3", "12MinSmall4"],
                                                                    "placementType" : "topBackground",
                                                                    "animationDuration" : 2
                                                                    },
                                                "colorTheme"     : { "backgroundColor" : "sky", "usesLightStyle" : true },
-                                               "actions"        : { "goForward": { "iconName": "runStartButton" }},
+                                               "actions"        : { "goForward": { "type":"default", "iconName": "runStartButton" }},
                                                "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps" }
                                                },
                                                {

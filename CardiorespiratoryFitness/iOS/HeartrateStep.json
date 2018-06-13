@@ -6,6 +6,7 @@
                            "identifier"     : "instruction",
                            "type"           : "instruction",
                            "image"          : {
+                                               "type":"animated",
                                                "imageNames" : ["heartRateMeasurement1", "heartRateMeasurement2", "heartRateMeasurement3"],
                                                "placementType" : "topBackground",
                                                "animationDuration" : 2
@@ -13,7 +14,7 @@
                            "colorTheme"     : { "backgroundColor" : "macaroniAndCheese", "usesLightStyle" : true },
                            "title"          : "Capture heart rate",
                            "text"           : "Use your finger to cover the camera and flash on the back of your phone.",
-                           "actions"        : { "goForward": { "iconName": "captureStartButton" }},
+                           "actions"        : { "goForward": { "type":"default", "iconName": "captureStartButton" }},
                            "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps" }
                            },
                            {

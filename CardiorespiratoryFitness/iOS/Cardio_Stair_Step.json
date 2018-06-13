@@ -1,6 +1,6 @@
 {
     "identifier"        : "Cardio Stair Step",
-    "actions"           : { "cancel": { "iconName": "closeActivity"}},
+    "actions"           : { "cancel": { "type":"default", "iconName": "closeActivity"}},
     "shouldHideActions" : ["goBackward", "skip"],
     "progressMarkers"   : ["volumeUp", "heartRate.before", "stairStep", "heartRate.after"],
     "steps"             : [
@@ -10,6 +10,7 @@
                            "title"        : "3 Minute Stair Test",
                            "text"         : "5 minutes",
                            "image"  : {
+                                           "type":"animated",
                                            "imageNames" : ["stairStepLarge1", "stairStepLarge2", "stairStepLarge3", "stairStepLarge4"],
                                            "placementType" : "topBackground",
                                            "animationDuration" : 2
@@ -24,10 +25,10 @@
                                                }],
                            "colorTheme"     : { "backgroundColor" : "perrywinkleTwo", "usesLightStyle" : true },
                            "actions"      : {
-                                               "goForward":  { "buttonTitle": "Start" },
-                                               "cancel":     { "iconName": "backArrowHeader" },
-                                               "skip":       { "reminderIdentifier": "Cardio Stair Step" },
-                                               "learnMore":  { "iconName": "infoIcon", "url": "Stair_Step.html" }
+                                               "goForward":  { "type":"default", "buttonTitle": "Start" },
+                                               "cancel":     { "type":"default", "iconName": "backArrowHeader" },
+                                               "skip":       { "type":"reminder", "reminderIdentifier": "Cardio Stair Step" },
+                                               "learnMore":  { "type":"webView", "iconName": "infoIcon", "url": "Stair_Step.html" }
                                             },
                            },
                            {
@@ -36,19 +37,20 @@
                            "colorTheme"             : {
                                                        "backgroundColor"        : "salmon",
                                                        "usesLightStyle"         : true },
-                           "image"                  : { "imageName": "healthRiskIcon",
+                           "image"                  : { "type":"fetchable",
+                                                        "imageName": "healthRiskIcon",
                                                         "placementType": "iconBefore" },
                            "text"                   : "Do not attempt to complete this test if you have been told by your doctor that you should not participate in physical activity or exercise. Stop the test and talk to your doctor if any of the following symptoms occur: chest pain, dizziness, blurred vision, disorientation, excessive shortness of breath, severe nausea, severe fatigue, or severe headache.",
-                           "actions"                : { "goForward": { "buttonTitle": "Got it" }}
+                           "actions"                : { "goForward": { "type":"default", "buttonTitle": "Got it" }}
                            },
                            {
                            "identifier"   : "volumeUp",
                            "type"         : "instruction",
                            "title"        : "Volume turned up?",
                            "text"         : "Turn up your phone volume and turn off the mute switch so you can hear the instructions while you are moving.",
-                           "image"        : { "imageName": "volumeCheckIcon", "placementType": "topBackground" },
+                           "image"        : { "type":"fetchable", "imageName": "volumeCheckIcon", "placementType": "topBackground" },
                            "colorTheme"   : { "backgroundColor" : "perrywinkle", "usesLightStyle" : true },
-                           "actions"      : { "goForward": { "buttonTitle": "It’s turned on" }},
+                           "actions"      : { "goForward": { "type":"default", "buttonTitle": "It’s turned on" }},
                            "viewTheme"    : { "viewIdentifier": "Instruction", "storyboardIdentifier": "ActiveTaskSteps" }
                            },
                            {
@@ -82,13 +84,13 @@
                                                "type"         : "instruction",
                                                "title"        : "Please step with your phone",
                                                "text"         : "You will step up and down for 3 minutes. Try to step with the pace.",
-                                               "image"  : {
+                                               "image"  : { "type":"animated",
                                                                    "imageNames" : ["stairStepSmall1", "stairStepSmall2", "stairStepSmall3", "stairStepSmall4"],
                                                                    "placementType" : "topBackground",
                                                                    "animationDuration" : 2
                                                                    },
                                                "colorTheme"     : { "backgroundColor" : "perrywinkleTwo", "usesLightStyle" : true },
-                                               "actions"        : { "goForward": { "iconName": "stairStepButton" }},
+                                               "actions"        : { "goForward": { "type":"default", "iconName": "stairStepButton" }},
                                                "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps" }
                                                },
                                                {
@@ -103,7 +105,7 @@
                                                "type"               : "active",
                                                "duration"           : 180,
                                                "text"               : "Stand still",
-                                               "image"  : {
+                                               "image"  : { "type":"animated",
                                                                    "imageNames" : ["stairStepLarge1", "stairStepLarge2", "stairStepLarge3", "stairStepLarge4"],
                                                                    "placementType" : "topBackground",
                                                                    "animationDuration" : 2.5
