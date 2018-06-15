@@ -376,7 +376,8 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeConditionalRule(from decoder:Decoder) throws -> RSDConditionalRule? {
         guard let typeName = try typeName(from: decoder) else {
-            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a conditional rule without a `type` key defining a value for the the class name.")
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding a conditional rule without a `type` key defining a value for the the class name.")
+            throw DecodingError.keyNotFound(TypeKeys.type, context)
         }
         return try decodeConditionalRule(from: decoder, with: typeName)
     }
@@ -412,7 +413,8 @@ open class RSDFactory {
         guard let str = try? self.typeName(from: decoder), let typeName = str else {
             let obj = try _deprecated_decodeUIAction(from: decoder, for: actionType)
             #if DEBUG
-            throw RSDValidationError.undefinedClassType("\(self) does not support decoding a UI action without a `type` key defining a value for the the class name.")
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding a UI action without a `type` key defining a value for the the class name.")
+            throw DecodingError.keyNotFound(TypeKeys.type, context)
             #else
             return obj
             #endif
@@ -493,7 +495,8 @@ open class RSDFactory {
         guard let str = try? self.typeName(from: decoder), let typeName = str else {
             let obj = try _deprecated_decodeImageThemeElement(from: decoder)
             #if DEBUG
-                throw RSDValidationError.undefinedClassType("\(self) does not support decoding an image theme without a `type` key defining a value for the the class name.")
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding an image theme without a `type` key defining a value for the the class name.")
+            throw DecodingError.keyNotFound(TypeKeys.type, context)
             #else
                 // Do not fail a release build. Instead, attempt to run against the deprecated method of
                 // decoding an image theme.
@@ -508,7 +511,8 @@ open class RSDFactory {
         case .animated:
             return try _decodeResource(RSDAnimatedImageThemeElementObject.self, from: decoder)
         default:
-            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a image theme element.")
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support `\(typeName)` as a decodable class type for a image theme element.")
+            throw DecodingError.typeMismatch(RSDImageThemeElement.self, context)
         }
     }
     
@@ -542,7 +546,8 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeAsyncActionConfiguration(from decoder:Decoder) throws -> RSDAsyncActionConfiguration? {
         guard let typeName = try typeName(from: decoder) else {
-            throw RSDValidationError.undefinedClassType("\(self) does not support decoding an async action without a `type` key defining a value for the the class name.")
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding an async action without a `type` key defining a value for the the class name.")
+            throw DecodingError.keyNotFound(TypeKeys.type, context)
         }
         let config = try decodeAsyncActionConfiguration(from: decoder, with: typeName)
         try config?.validate()
