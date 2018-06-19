@@ -397,7 +397,7 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
 
 /// `RSDStepTextField` is a subclass of `UITextField` that keeps a reference to the index path
 /// associated with this text field.
-public class RSDStepTextField: UITextField {
+open class RSDStepTextField: UITextField {
     public var indexPath: IndexPath?
 }
 
