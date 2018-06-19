@@ -456,6 +456,11 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
             }
             else if height < minumumHeight {
                 
+                guard let _ = firstView else {
+                    assertionFailure("Header must contain a title, text, or detail, otherwise firstView will be nil")
+                    return
+                }
+                
                 // adjust our top and bottom margins
                 let topConstraint = firstView!.rsd_constraint(for: .top, relation: .equal)
                 let bottomConstraint = lastView!.rsd_constraint(for: .bottom, relation: .equal)
