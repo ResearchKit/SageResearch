@@ -442,16 +442,16 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         setupVerticalConstraints(textLabel)
         setupVerticalConstraints(learnMoreButton)
         
-        if lastView != nil {
+        if let lastView = lastView {
             if let detailLabel = detailLabel, shouldLayout(detailLabel) {
                 _interactiveContraints.append(contentsOf:
-                    detailLabel.rsd_alignBelow(view: lastView!, padding: constants.bottomMargin))
+                    detailLabel.rsd_alignBelow(view: lastView, padding: constants.bottomMargin))
                 _interactiveContraints.append(contentsOf:
                     detailLabel.rsd_alignToSuperview([.bottom], padding: constants.promptBottomMargin))
             }
             else {
                 _interactiveContraints.append(contentsOf:
-                    lastView!.rsd_alignToSuperview([.bottom], padding: constants.bottomMargin))
+                    lastView.rsd_alignToSuperview([.bottom], padding: constants.bottomMargin))
             }
             
             // check our minimum height
@@ -460,16 +460,11 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
                 NSLayoutConstraint.deactivate(self.constraints)
                 self.rsd_makeHeight(.equal, 0.0)
             }
-            else if height < minumumHeight {
-                
-                guard let _ = firstView else {
-                    assertionFailure("Header must contain a title, text, or detail, otherwise firstView will be nil")
-                    return
-                }
+            else if height < minumumHeight, let firstView = firstView {
                 
                 // adjust our top and bottom margins
-                let topConstraint = firstView!.rsd_constraint(for: .top, relation: .equal)
-                let bottomConstraint = lastView!.rsd_constraint(for: .bottom, relation: .equal)
+                let topConstraint = firstView.rsd_constraint(for: .top, relation: .equal)
+                let bottomConstraint = lastView.rsd_constraint(for: .bottom, relation: .equal)
                 
                 let marginIncrease = (minumumHeight - height) / 2
                 topConstraint?.constant += marginIncrease
