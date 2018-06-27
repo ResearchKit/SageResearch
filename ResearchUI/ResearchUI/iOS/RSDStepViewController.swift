@@ -184,6 +184,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         super.viewDidAppear(animated)
         delegate?.stepViewController(self, didAppear: animated)
         
+        // Reset the goForward() flag.
+        hasCalledGoForward = false
+        
         // setup the result (lazy load) to mark the startDate
         let _ = currentResult
         
@@ -597,11 +600,14 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             debugPrint("WARNING: The default action of the `goForward()` method is being overridden by the associated action.")
             return
         }
+        guard !hasCalledGoForward else { return }
+        hasCalledGoForward = true
         performStopCommands()
         speakEndCommand {
             self.taskController.goForward()
         }
     }
+    var hasCalledGoForward = false
     
     /// Navigates backward to the previous step. By default, it calls stop() to stop the timer
     /// and then calls `goBack` on the task controller.

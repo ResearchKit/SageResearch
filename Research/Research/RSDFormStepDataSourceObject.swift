@@ -238,7 +238,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
             else {
                 let section = RSDTableSectionBuilder(sectionIndex: sectionBuilders.count, singleFormItem: needExclusiveSection)
                 section.appendGroup(itemGroup)
-                if itemGroup is RSDChoicePickerTableItemGroup {
+                if let choiceGroup = itemGroup as? RSDChoicePickerTableItemGroup, choiceGroup.items.count > 1 {
                     section.title = item.inputPrompt
                     section.subtitle = item.inputPromptDetail
                 }
