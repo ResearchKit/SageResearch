@@ -80,6 +80,7 @@ public class RSDDatePicker : UIDatePicker, RSDPickerViewProtocol {
     public init(pickerSource: RSDDatePickerDataSource, indexPath: IndexPath) {
         super.init(frame: .zero)
         self.indexPath = indexPath
+        self.answer = pickerSource.defaultDate
         self.datePickerMode = pickerSource.datePickerMode.mode()
         self.maximumDate = pickerSource.maximumDate
         self.minimumDate = pickerSource.minimumDate
