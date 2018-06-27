@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14112" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -28,7 +28,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="1040"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iS9-lR-8qX" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="450" height="863.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="450" height="864.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n41-Nm-4eq" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                                 <rect key="frame" x="0.0" y="0.0" width="450" height="550.5"/>
@@ -82,10 +82,10 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QAm-Gn-VW3" userLabel="Need Icon View">
-                                                <rect key="frame" x="24" y="721.5" width="402" height="102"/>
+                                                <rect key="frame" x="24" y="721.5" width="402" height="103"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="a0v-7m-UG4">
-                                                        <rect key="frame" x="0.0" y="0.0" width="402" height="102.5"/>
+                                                        <rect key="frame" x="0.0" y="0.5" width="402" height="102.5"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Z0-fP-s42">
                                                                 <rect key="frame" x="0.0" y="0.0" width="89" height="102.5"/>
@@ -325,7 +325,7 @@
                                 <rect key="frame" x="49" y="157.5" width="222" height="222"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gl-I3-Byg" userLabel="Unit Label">
-                                        <rect key="frame" x="73" y="157" width="75" height="19.5"/>
+                                        <rect key="frame" x="73" y="157" width="75.5" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -369,6 +369,7 @@
                                     <constraint firstAttribute="width" constant="32" id="2hY-WZ-JOc"/>
                                     <constraint firstAttribute="width" secondItem="a9L-sM-gnJ" secondAttribute="height" multiplier="1:1" id="Veg-N4-yew"/>
                                 </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" image="closeActivity"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9c-PV-TEq" userLabel="Restart Button" customClass="RSDRoundedButton" customModule="ResearchUI">
@@ -380,6 +381,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlT-Pj-FXY" userLabel="Review Button" customClass="RSDUnderlinedButton" customModule="ResearchUI">
                                 <rect key="frame" x="85.5" y="505.5" width="149" height="32.5"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Review Instructions"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AQ2-43-2k3" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
@@ -455,6 +457,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="5aE-sq-nnA" secondAttribute="height" multiplier="1:1" id="laM-ZA-jPR"/>
                                 </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" image="closeActivity"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qh-cg-kfP" userLabel="Pause Button" customClass="RSDRoundedButton" customModule="ResearchUI">
@@ -487,6 +490,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ph-h6-gCc" customClass="RSDUnderlinedButton" customModule="ResearchUI">
                                 <rect key="frame" x="85.5" y="505.5" width="149" height="32.5"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Review Instructions"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2D-5j-sDp" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
@@ -600,7 +604,7 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Completion-WalkAndBalance" translatesAutoresizingMaskIntoConstraints="NO" id="8Ic-xi-B4w">
-                                <rect key="frame" x="53.5" y="41.5" width="213" height="165"/>
+                                <rect key="frame" x="53.5" y="42" width="213" height="165"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
@@ -836,16 +840,16 @@
                                 <viewLayoutGuide key="safeArea" id="kNw-UD-QJc"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="din-4l-hhu" customClass="RSDCountdownDial" customModule="ResearchUI">
-                                <rect key="frame" x="57" y="157.5" width="206.5" height="206.5"/>
+                                <rect key="frame" x="46" y="157.5" width="228.5" height="228.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c07-hW-t1h" userLabel="Unit Label">
-                                        <rect key="frame" x="65.5" y="157" width="75.5" height="19.5"/>
+                                        <rect key="frame" x="76.5" y="157" width="75.5" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2aM-cl-a66" userLabel="Second Count Label">
-                                        <rect key="frame" x="43" y="30" width="120" height="119.5"/>
+                                        <rect key="frame" x="53.5" y="30" width="120" height="119.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -883,6 +887,7 @@
                                     <constraint firstAttribute="width" secondItem="1yh-RD-Z1x" secondAttribute="height" multiplier="1:1" id="GgG-wJ-hfy"/>
                                     <constraint firstAttribute="width" constant="32" id="KuM-JU-zq2"/>
                                 </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" image="closeActivity"/>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="Fsc-bU-ApM">
@@ -910,7 +915,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKi-WA-f7L" userLabel="Next Button" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                <rect key="frame" x="28" y="416" width="264" height="52"/>
+                                <rect key="frame" x="28" y="476" width="264" height="52"/>
                                 <state key="normal" title="Continue"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
@@ -929,16 +934,16 @@
                             <constraint firstItem="0Dp-W3-5Yc" firstAttribute="top" secondItem="fwv-VO-V1z" secondAttribute="bottom" id="MN3-wL-FXL"/>
                             <constraint firstAttribute="bottom" secondItem="Fsc-bU-ApM" secondAttribute="bottom" constant="40" id="PBS-lk-5ux"/>
                             <constraint firstItem="1yh-RD-Z1x" firstAttribute="width" secondItem="1yh-RD-Z1x" secondAttribute="height" multiplier="1:1" id="Pxs-hI-BIZ"/>
-                            <constraint firstItem="Fsc-bU-ApM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="din-4l-hhu" secondAttribute="bottom" constant="52" id="Pza-1s-SMj"/>
+                            <constraint firstItem="Fsc-bU-ApM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="din-4l-hhu" secondAttribute="bottom" constant="30" id="Pza-1s-SMj"/>
                             <constraint firstItem="0Dp-W3-5Yc" firstAttribute="leading" secondItem="ZOp-KL-twf" secondAttribute="leading" id="QVj-9d-NbW"/>
                             <constraint firstItem="0Dp-W3-5Yc" firstAttribute="trailing" secondItem="pKi-WA-f7L" secondAttribute="trailing" constant="28" id="Qpp-G5-b25"/>
                             <constraint firstItem="din-4l-hhu" firstAttribute="centerX" secondItem="6ZJ-Gt-NcM" secondAttribute="centerX" id="SRC-tY-abY"/>
                             <constraint firstItem="din-4l-hhu" firstAttribute="width" secondItem="din-4l-hhu" secondAttribute="height" multiplier="1:1" placeholder="YES" id="VMg-h2-K3H"/>
                             <constraint firstItem="0Dp-W3-5Yc" firstAttribute="top" secondItem="ZOp-KL-twf" secondAttribute="top" constant="70" id="VPI-HC-WYS"/>
+                            <constraint firstItem="0Dp-W3-5Yc" firstAttribute="bottom" secondItem="pKi-WA-f7L" secondAttribute="bottom" constant="40" id="aM7-T9-6L5"/>
                             <constraint firstItem="din-4l-hhu" firstAttribute="centerX" secondItem="6ZJ-Gt-NcM" secondAttribute="centerX" id="bMb-gE-PKw"/>
                             <constraint firstItem="0Dp-W3-5Yc" firstAttribute="top" secondItem="FPl-h9-g1S" secondAttribute="top" constant="-60" id="d0c-Ab-9Yp"/>
                             <constraint firstItem="Fsc-bU-ApM" firstAttribute="centerX" secondItem="6ZJ-Gt-NcM" secondAttribute="centerX" id="eeq-fJ-Nsw"/>
-                            <constraint firstItem="pKi-WA-f7L" firstAttribute="top" secondItem="din-4l-hhu" secondAttribute="bottom" constant="52" id="fZr-g1-aB5"/>
                             <constraint firstAttribute="top" secondItem="fwv-VO-V1z" secondAttribute="top" id="ita-jr-Kfd"/>
                             <constraint firstItem="0Dp-W3-5Yc" firstAttribute="trailing" secondItem="FPl-h9-g1S" secondAttribute="trailing" constant="36" id="lAA-xC-9NE"/>
                             <constraint firstItem="0Dp-W3-5Yc" firstAttribute="top" secondItem="1yh-RD-Z1x" secondAttribute="top" constant="-20" id="pEn-Gm-pb7"/>
@@ -989,7 +994,7 @@
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Completion-FingerTapping" translatesAutoresizingMaskIntoConstraints="NO" id="MnJ-8J-B1y">
-                                        <rect key="frame" x="53.5" y="25.5" width="213" height="100.5"/>
+                                        <rect key="frame" x="53.5" y="25" width="213.5" height="101"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
