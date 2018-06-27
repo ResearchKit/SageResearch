@@ -242,7 +242,7 @@ extension RSDConditionalStepNavigator {
     /// - returns: `true` if the task view controller should show a next button.
     public func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
         var temp = result
-        return _step(after: step, with: &temp, isPeeking: true) != nil
+        return _step(after: step, with: &temp, isPeeking: true)?.step != nil
     }
 
     /// Given the current task result, is there a step before the current step?
