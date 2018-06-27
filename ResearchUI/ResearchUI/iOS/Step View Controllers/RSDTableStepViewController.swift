@@ -404,17 +404,11 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 return
         }
         
-        // If the textfield is valid, check to see if there is another item that is below this one
+        // If the textfield is valid, check to see if there is another item that is below this one and set
+        // that as the next responder if valid.
         if let indexPath = indexPath(for: textField),
-            let nextItem = tableData?.nextItem(after: indexPath) {
-            
-            // need to get our cell and tell its textField to become first responder
-            // but do *not* go forward.
-            if let customCell = tableView.cellForRow(at: nextItem.indexPath) as? RSDStepTextFieldCell {
-                customCell.textField.becomeFirstResponder()
-            } else {
-                textField.resignFirstResponder()
-            }
+            let nextResponder = self.nextResponder(after: indexPath) {
+            nextResponder.becomeFirstResponder()
         } else {
             // Finally, continue if this is the last field
             super.goForward()
@@ -650,6 +644,21 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             }
             
             tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+    /// Get the next responder (table cell or text field) for the next table item after the given index path.
+    /// - parameter indexPath: The index path of the next field.
+    /// - returns: The next responder or `nil` if this is the last item.
+    open func nextResponder(after indexPath: IndexPath) -> UIResponder? {
+        guard let nextItem = tableData?.nextItem(after: indexPath) else {
+            return nil
+        }
+        if let customCell = self.tableView.cellForRow(at: nextItem.indexPath) as? RSDStepTextFieldCell {
+            return customCell.textField
+        }
+        else {
+            return nextResponder(after: nextItem.indexPath)
         }
     }
     
