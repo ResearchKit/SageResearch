@@ -442,6 +442,10 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         setupVerticalConstraints(textLabel)
         setupVerticalConstraints(learnMoreButton)
         
+        if let finalVerticalView = setupFinalVerticalViews() {
+            lastView = finalVerticalView
+        }
+        
         if let lastView = lastView {
             if let detailLabel = detailLabel, shouldLayout(detailLabel) {
                 _interactiveContraints.append(contentsOf:
@@ -471,6 +475,12 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
                 bottomConstraint?.constant -= marginIncrease
             }
         }
+    }
+    
+    /// This function is available to sub-classes to append additional views as the last view in the navigation header
+    /// @return the final view that will be bound to the bottom of the navigation header superview, nil if none were added
+    open func setupFinalVerticalViews() -> UIView? {
+        return nil
     }
     
     private func applyVerticalConstraint(to view: UIView, lastView: UIView?) {
