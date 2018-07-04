@@ -384,9 +384,8 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         NSLayoutConstraint.deactivate(_interactiveContraints)
         _interactiveContraints.removeAll()
         
-        var firstView: UIView?
-        var lastView: UIView?
         var topView: UIView?
+        var lastView: UIView?
         
         if let cancelButton = cancelButton, shouldShowCloseButton, !cancelButton.isHidden {
             _interactiveContraints.append(contentsOf:
@@ -426,21 +425,10 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
             }
         }
         
-        func setupVerticalConstraints(_ nextView: UIView?) {
-            if let vw = nextView, shouldLayout(vw) {
-                applyVerticalConstraint(to: vw, lastView: lastView)
-                firstView = firstView == nil ? vw : firstView
-                lastView = vw
-            } else {
-                nextView?.isHidden = true
-            }
-        }
-        
-        // image view
-        setupVerticalConstraints(imageView)
-        setupVerticalConstraints(titleLabel)
-        setupVerticalConstraints(textLabel)
-        setupVerticalConstraints(learnMoreButton)
+        // Set up vertical stack constraints for associated views
+        let verticalViewResult = self.updateVerticalConstraints(currentLastView: lastView)
+        let firstView = verticalViewResult.firstView
+        lastView = verticalViewResult.lastView
         
         if let lastView = lastView {
             if let detailLabel = detailLabel, shouldLayout(detailLabel) {
@@ -471,6 +459,38 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
                 bottomConstraint?.constant -= marginIncrease
             }
         }
+    }
+    
+    /// Your subclass can override this function to add more vertically stacked views, either before or after all the
+    /// existing ones, depending on whether you add them before or after calling the `super` function. If you do,
+    /// you'll need to manage removing and re-adding the associated constraints in your override as well.
+    /// - parameter currentLastView: The last (vertical) view currently in the navigation header. If no views are
+    ///                              added in a subclass override of this function, this should be returned in the
+    ///                              lastView parameter.
+    /// - returns:  A tuple with the firstView and lastView that had vertical constraints applied. If none were
+    ///             applied, firstView will be nil, and lastView will be the same as currentLastView.
+    open func updateVerticalConstraints(currentLastView: UIView?) -> (firstView: UIView?, lastView: UIView?) {
+        
+        var firstView: UIView?
+        var lastView: UIView? = currentLastView
+        
+        func setupVerticalConstraints(_ nextView: UIView?) {
+            if let vw = nextView, shouldLayout(vw) {
+                applyVerticalConstraint(to: vw, lastView: lastView)
+                firstView = firstView == nil ? vw : firstView
+                lastView = vw
+            } else {
+                nextView?.isHidden = true
+            }
+        }
+        
+        // image view
+        setupVerticalConstraints(imageView)
+        setupVerticalConstraints(titleLabel)
+        setupVerticalConstraints(textLabel)
+        setupVerticalConstraints(learnMoreButton)
+        
+        return (firstView, lastView)
     }
     
     private func applyVerticalConstraint(to view: UIView, lastView: UIView?) {
