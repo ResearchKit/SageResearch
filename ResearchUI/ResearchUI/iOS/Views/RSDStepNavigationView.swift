@@ -384,9 +384,8 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         NSLayoutConstraint.deactivate(_interactiveContraints)
         _interactiveContraints.removeAll()
         
-        var firstView: UIView?
-        var lastView: UIView?
         var topView: UIView?
+        var lastView: UIView?
         
         if let cancelButton = cancelButton, shouldShowCloseButton, !cancelButton.isHidden {
             _interactiveContraints.append(contentsOf:
@@ -426,25 +425,10 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
             }
         }
         
-        func setupVerticalConstraints(_ nextView: UIView?) {
-            if let vw = nextView, shouldLayout(vw) {
-                applyVerticalConstraint(to: vw, lastView: lastView)
-                firstView = firstView == nil ? vw : firstView
-                lastView = vw
-            } else {
-                nextView?.isHidden = true
-            }
-        }
-        
-        // image view
-        setupVerticalConstraints(imageView)
-        setupVerticalConstraints(titleLabel)
-        setupVerticalConstraints(textLabel)
-        setupVerticalConstraints(learnMoreButton)
-        
-        if let finalVerticalView = setupFinalVerticalViews() {
-            lastView = finalVerticalView
-        }
+        // Set up vertical stack constraints for associated views
+        let verticalViewResult = self.updateVerticalConstraints(currentLastView: lastView)
+        let firstView = verticalViewResult.firstView
+        lastView = verticalViewResult.lastView
         
         if let lastView = lastView {
             if let detailLabel = detailLabel, shouldLayout(detailLabel) {
@@ -475,6 +459,34 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
                 bottomConstraint?.constant -= marginIncrease
             }
         }
+    }
+    
+    /// Set up the vertical constraints for the views that should be stacked vertically, like the imageView, titleLabel, textLabel, and learnMoreButton. You will need to remove previous constraints and re-add the ones associated with your vertically stacked view.
+    /// @param currentLastView the lastView that was added to the navigation header, if no views are added in this function, this should be returned.
+    /// @return (firstView, lastView) firstView that had vertical constraints applied, nil if none were applied
+    ///                               lastView that had vertical constraints applied, nil if none were applied
+    open func updateVerticalConstraints(currentLastView: UIView?) -> (firstView: UIView?, lastView: UIView?) {
+        
+        var firstView: UIView?
+        var lastView: UIView?
+        
+        func setupVerticalConstraints(_ nextView: UIView?) {
+            if let vw = nextView, shouldLayout(vw) {
+                applyVerticalConstraint(to: vw, lastView: lastView)
+                firstView = firstView == nil ? vw : firstView
+                lastView = vw
+            } else {
+                nextView?.isHidden = true
+            }
+        }
+        
+        // image view
+        setupVerticalConstraints(imageView)
+        setupVerticalConstraints(titleLabel)
+        setupVerticalConstraints(textLabel)
+        setupVerticalConstraints(learnMoreButton)
+        
+        return (firstView, lastView)
     }
     
     /// This function is available to sub-classes to append additional views as the last view in the navigation header
