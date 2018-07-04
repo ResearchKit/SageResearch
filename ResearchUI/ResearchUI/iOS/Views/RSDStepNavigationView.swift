@@ -461,14 +461,18 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         }
     }
     
-    /// Set up the vertical constraints for the views that should be stacked vertically, like the imageView, titleLabel, textLabel, and learnMoreButton. You will need to remove previous constraints and re-add the ones associated with your vertically stacked view.
-    /// @param currentLastView the lastView that was added to the navigation header, if no views are added in this function, this should be returned.
-    /// @return (firstView, lastView) firstView that had vertical constraints applied, nil if none were applied
-    ///                               lastView that had vertical constraints applied, nil if none were applied
+    /// Your subclass can override this function to add more vertically stacked views, either before or after all the
+    /// existing ones, depending on whether you add them before or after calling the `super` function. If you do,
+    /// you'll need to manage removing and re-adding the associated constraints in your override as well.
+    /// - parameter currentLastView: The last (vertical) view currently in the navigation header. If no views are
+    ///                              added in a subclass override of this function, this should be returned in the
+    ///                              lastView parameter.
+    /// - returns:  A tuple with the firstView and lastView that had vertical constraints applied. If none were
+    ///             applied, firstView will be nil, and lastView will be the same as currentLastView.
     open func updateVerticalConstraints(currentLastView: UIView?) -> (firstView: UIView?, lastView: UIView?) {
         
         var firstView: UIView?
-        var lastView: UIView?
+        var lastView: UIView? = currentLastView
         
         func setupVerticalConstraints(_ nextView: UIView?) {
             if let vw = nextView, shouldLayout(vw) {
@@ -487,12 +491,6 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         setupVerticalConstraints(learnMoreButton)
         
         return (firstView, lastView)
-    }
-    
-    /// This function is available to sub-classes to append additional views as the last view in the navigation header
-    /// @return the final view that will be bound to the bottom of the navigation header superview, nil if none were added
-    open func setupFinalVerticalViews() -> UIView? {
-        return nil
     }
     
     private func applyVerticalConstraint(to view: UIView, lastView: UIView?) {
