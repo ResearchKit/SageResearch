@@ -105,4 +105,14 @@ extension UIFont {
     @objc open class var rsd_textFieldFeaturedCellText: UIFont {
         return UIFont.systemFont(ofSize: 33.0, weight: .regular)
     }
+    
+    // MARK: Generic step view controller - text view cell
+    
+    @objc open class var rsd_textViewCellLabel: UIFont {
+        return UIFont.systemFont(ofSize: 15.0, weight: .regular)
+    }
+    
+    @objc open class var rsd_textViewCellText: UIFont {
+        return UIFont.systemFont(ofSize: 19.0, weight: .regular)
+    }
 }
