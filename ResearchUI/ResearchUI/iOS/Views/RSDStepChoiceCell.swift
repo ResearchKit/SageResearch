@@ -558,7 +558,6 @@ open class RSDStepTextField: UITextField, RSDStepTextInputView {
 
 /// `RSDStepTextView` is a subclass of `UITextView` that conforms to 'RSDStepTextInputView'
 open class RSDStepTextView: UITextView, RSDStepTextInputView {
-    public var picker: RSDPickerViewProtocol?
     public var currentText: String? {
         get {
             return self.text
