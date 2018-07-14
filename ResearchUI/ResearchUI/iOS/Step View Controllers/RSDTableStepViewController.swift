@@ -250,7 +250,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// The UI hints that are supported by this view controller.
     open class var supportedUIHints: Set<RSDFormUIHint> {
-        return [.list, .textfield, .picker, .checkbox, .radioButton, .modalButton]
+        return [.list, .textfield, .picker, .checkbox, .radioButton, .button]
     }
     
     /// Creates and assigns a new instance of the model. The default implementation will instantiate
@@ -303,7 +303,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             case .textfield, .picker:
                 let cellClass: AnyClass = isFeatured ? RSDStepTextFieldFeaturedCell.self : RSDStepTextFieldCell.self
                 tableView.register(cellClass, forCellReuseIdentifier: reuseIdentifier)
-            case .modalButton:
+            case .button:
                 tableView.register(RSDModalButtonCell.self, forCellReuseIdentifier: reuseIdentifier)
             default:
                 // Look to see if this does not have a cell registered for the view and register a default
