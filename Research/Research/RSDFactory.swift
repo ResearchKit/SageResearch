@@ -690,6 +690,7 @@ open class RSDFactory {
         })
         decoder.userInfo[.factory] = self
         decoder.userInfo[.bundle] = bundle
+        decoder.userInfo[.codingInfo] = RSDCodingInfo()
         return decoder
     }
     
@@ -699,6 +700,7 @@ open class RSDFactory {
         let decoder = PropertyListDecoder()
         decoder.userInfo[.factory] = self
         decoder.userInfo[.bundle] = bundle
+        decoder.userInfo[.codingInfo] = RSDCodingInfo()
         return decoder
     }
     
@@ -783,6 +785,7 @@ open class RSDFactory {
         })
         encoder.outputFormatting = .prettyPrinted
         encoder.userInfo[.factory] = self
+        encoder.userInfo[.codingInfo] = RSDCodingInfo()
         return encoder
     }
     
@@ -791,6 +794,7 @@ open class RSDFactory {
     open func createPropertyListEncoder() -> PropertyListEncoder {
         let encoder = PropertyListEncoder()
         encoder.userInfo[.factory] = self
+        encoder.userInfo[.codingInfo] = RSDCodingInfo()
         return encoder
     }
     
@@ -818,6 +822,9 @@ extension CodingUserInfoKey {
     
     /// The key for pointing to a specific bundle for the decoded resources.
     public static let bundle = CodingUserInfoKey(rawValue: "RSDFactory.bundle")!
+    
+    /// The key for pointing to mutable coding info.
+    public static let codingInfo = CodingUserInfoKey(rawValue: "RSDFactory.codingInfo")!
 }
 
 /// `JSONDecoder` and `PropertyListDecoder` do not share a common protocol so extend them to be
@@ -861,6 +868,11 @@ extension Decoder {
     public var bundle: Bundle? {
         return self.userInfo[.bundle] as? Bundle
     }
+    
+    /// The coding info object to use when decoding.
+    public var codingInfo: RSDCodingInfo? {
+        return self.userInfo[.codingInfo] as? RSDCodingInfo
+    }
 }
 
 /// `JSONEncoder` and `PropertyListEncoder` do not share a common protocol so extend them to be able
@@ -899,4 +911,15 @@ extension Encoder {
     public var taskDataSource: RSDTaskDataSource? {
         return self.userInfo[.taskDataSource] as? RSDTaskDataSource
     }
+    
+    /// The coding info object to use when encoding.
+    public var codingInfo: RSDCodingInfo? {
+        return self.userInfo[.codingInfo] as? RSDCodingInfo
+    }
+}
+
+/// `RSDCodingInfo` is used as a pointer to a mutable class that can be used to assign any info that must be
+/// mutated during the Decoding of an object.
+public class RSDCodingInfo {
+    public var userInfo : [CodingUserInfoKey : Any] = [:]
 }

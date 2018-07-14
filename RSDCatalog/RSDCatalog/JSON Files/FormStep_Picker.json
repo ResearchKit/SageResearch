@@ -8,48 +8,53 @@
               "type": "form",
               "title": "Single Choice",
               "text": "Select a single option",
-              "uiHint": "picker",
-              "dataType": "singleChoice",
-              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+              "inputFields": [{
+                              "uiHint": "picker",
+                              "dataType": "singleChoice",
+                              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+                              }]
               },
               {
               "identifier": "imageList",
               "type": "form",
               "title": "Single Choice with Images",
               "text": "Select a single option",
-              "uiHint": "picker",
-              "dataType": "singleChoice.integer",
-              "choices": [{
-                          "text": "delighted",
-                          "detail": "Nothing could be better!",
-                          "value": 1,
-                          "icon": "moodScale1"
-                          },
-                          {
-                          "text": "good",
-                          "detail": "Life is good.",
-                          "value": 2,
-                          "icon": "moodScale2"
-                          },
-                          {
-                          "text": "so-so",
-                          "detail": "Things are okay, I guess.",
-                          "value": 3,
-                          "icon": "moodScale3"
-                          },
-                          {
-                          "text": "sad",
-                          "detail": "I'm feeling a bit down.",
-                          "value": 4,
-                          "icon": "moodScale4"
-                          },
-                          {
-                          "text": "miserable",
-                          "detail": "I cry into my pillow every night.",
-                          "value": 5,
-                          "icon": "moodScale5"
-                          }
-                          ]
+              "inputFields": [
+                              {
+                              "uiHint": "picker",
+                              "dataType": "singleChoice.integer",
+                              "choices": [{
+                                          "text": "delighted",
+                                          "detail": "Nothing could be better!",
+                                          "value": 1,
+                                          "icon": "moodScale1"
+                                          },
+                                          {
+                                          "text": "good",
+                                          "detail": "Life is good.",
+                                          "value": 2,
+                                          "icon": "moodScale2"
+                                          },
+                                          {
+                                          "text": "so-so",
+                                          "detail": "Things are okay, I guess.",
+                                          "value": 3,
+                                          "icon": "moodScale3"
+                                          },
+                                          {
+                                          "text": "sad",
+                                          "detail": "I'm feeling a bit down.",
+                                          "value": 4,
+                                          "icon": "moodScale4"
+                                          },
+                                          {
+                                          "text": "miserable",
+                                          "detail": "I cry into my pillow every night.",
+                                          "value": 5,
+                                          "icon": "moodScale5"
+                                          }
+                                          ]
+                              }]
               },
               {
               "identifier": "multipleInputs",

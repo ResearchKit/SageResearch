@@ -6,31 +6,41 @@
               "type": "form",
               "title": "Single choice selection with a dark background and a white footer.",
               "detail": "Select a single option",
-              "uiHint": "list",
-              "dataType": "singleChoice",
-              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"],
-              "colorTheme" : { "colorStyle" : { "header" : "darkBackground",
-                                                "body" : "darkBackground",
-                                                "footer" : "lightBackground" }}
+              "colorTheme" : {
+                "colorStyle" : {
+                    "header" : "darkBackground",
+                    "body" : "darkBackground",
+                    "footer" : "lightBackground"
+                }
+              },
+              "inputFields": [{
+                              "uiHint": "list",
+                              "dataType": "singleChoice",
+                              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+                              }]
               },
               {
               "identifier": "selectOne_whiteBackground",
               "type": "form",
               "title": "Single choice selection with a light background.",
               "detail": "Select a single option",
-              "uiHint": "list",
-              "dataType": "singleChoice",
-              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"],
-              "colorTheme" : { "usesLightStyle" : false }
+              "colorTheme" : { "usesLightStyle" : false },
+              "inputFields": [{
+                              "uiHint": "list",
+                              "dataType": "singleChoice",
+                              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+                              }]
               },
               {
               "identifier": "selectOne_green",
               "type": "form",
               "title": "Single choice selection with a bright green color theme.",
               "detail": "Select a single option",
-              "uiHint": "list",
-              "dataType": "singleChoice",
-              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"],
+              "inputFields": [{
+                              "uiHint": "list",
+                              "dataType": "singleChoice",
+                              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+                              }],
               "colorTheme" : {
                 "backgroundColor": "darkGreen",
                 "usesLightStyle" : true,

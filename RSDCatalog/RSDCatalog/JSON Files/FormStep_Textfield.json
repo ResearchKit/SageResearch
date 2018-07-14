@@ -61,9 +61,11 @@
               "type": "form",
               "title": "Enter a year",
               "text": "Enter a year in the past.",
-              "dataType": "year",
-              "uiHint": "textfield",
-              "range": { "allowFuture": false }
+              "inputFields": [{
+                              "dataType": "year",
+                              "uiHint": "textfield",
+                              "range": { "allowFuture": false }
+                              }]
               }
               ]
 }

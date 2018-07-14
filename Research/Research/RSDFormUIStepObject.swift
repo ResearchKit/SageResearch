@@ -33,13 +33,20 @@
 
 import Foundation
 
+extension CodingUserInfoKey {
+    
+    /// The key for the current step identifier to use when decoding a form step input field that should
+    /// inherit the step identifier from the parent step.
+    public static let stepIdentifier = CodingUserInfoKey(rawValue: "RSDFormUIStepObject.stepIdentifier")!
+}
+
 /// `RSDFormUIStepObject` is a concrete implementation of the `RSDFormUIStep` and
 /// `RSDSurveyNavigationStep` protocols. It is a subclass of `RSDUIStepObject` and can be used to display
 /// a navigable survey.
 open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNavigationStep, RSDCohortAssignmentStep {
     
     private enum CodingKeys: String, CodingKey {
-        case inputFields
+        case inputFields, identifier
     }
 
     /// The `inputFields` array is used to hold a logical subgrouping of input fields.
@@ -121,10 +128,6 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     /// Initialize from a `Decoder`. This implementation will query the `RSDFactory` attached to the
     /// decoder for the appropriate implementation for each input field in the array.
     ///
-    /// - note: This method will also check for both an array of input fields and in order to support
-    /// existing serialization methods defined prior to the development of the Swift 4 `Decodable`
-    /// protocol, it will also recognize a single input field defined inline as a single question.
-    ///
     /// - example:
     ///
     ///     ```
@@ -159,18 +162,6 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     ///                            ]
     ///             }
     ///         """.data(using: .utf8)! // our data in native (JSON) format
-    ///
-    ///         // Example JSON dictionary that includes a multiple choice question where the input field
-    ///         // properties are defined inline and *not* using an array.
-    ///         let json = """
-    ///             {
-    ///             "identifier": "step3",
-    ///             "type": "form",
-    ///             "title": "Step 3",
-    ///             "dataType": "multipleChoice",
-    ///             "choices" : ["never", "sometimes", "often", "always"]
-    ///             }
-    ///         """.data(using: .utf8)! // our data in native (JSON) format
     ///     ```
     ///
     /// - parameter decoder: The decoder to use to decode this instance.
@@ -180,6 +171,13 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
 
         // Decode the input fields
         let factory = decoder.factory
+        
+        let previousIdentifier = decoder.codingInfo?.userInfo[.stepIdentifier]
+        if let identifier = try container.decodeIfPresent(String.self, forKey: .identifier) {
+            let codingInfo = decoder.codingInfo
+            codingInfo?.userInfo[.stepIdentifier] = identifier
+        }
+        
         var decodedFields : [RSDInputField] = []
         if container.contains(.inputFields) {
             var nestedContainer = try container.nestedUnkeyedContainer(forKey: .inputFields)
@@ -191,9 +189,16 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
             }
         }
         else if let field = try factory.decodeInputField(from: decoder) {
-            decodedFields.append(field)
+            #if DEBUG
+                let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "The `inputFields` keyword is required and inline decoding of a single input field is no longer supported.")
+                throw DecodingError.keyNotFound(CodingKeys.inputFields, context)
+            #else
+                decodedFields.append(field)
+            #endif
         }
         self.inputFields = decodedFields
+        
+        decoder.codingInfo?.userInfo[.stepIdentifier] = previousIdentifier
         
         try super.init(from: decoder)
     }
@@ -248,6 +253,8 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
             switch key {
             case .inputFields:
                 if idx != 0 { return false }
+            case .identifier:
+                break;
             }
         }
         return keys.count == 1
@@ -286,8 +293,10 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
              "identifier": "step3",
              "type": "form",
              "title": "Step 3",
-             "dataType": "multipleChoice",
-             "choices" : ["never", "sometimes", "often", "always"]
+             "inputFields": [[
+                "dataType": "multipleChoice",
+                "choices" : ["never", "sometimes", "often", "always"]
+                ]]
              ]
         
         return [jsonA, jsonB]

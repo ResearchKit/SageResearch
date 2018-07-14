@@ -397,8 +397,10 @@ class CodableStepObjectTests: XCTestCase {
           "identifier": "step3",
           "type": "form",
           "title": "Step 3",
-          "dataType": "multipleChoice",
-          "choices" : ["never", "sometimes", "often", "always"]
+          "inputFields": [{
+            "dataType": "multipleChoice",
+            "choices" : ["never", "sometimes", "often", "always"]
+            }]
           }
         """.data(using: .utf8)! // our data in native (JSON) format
         

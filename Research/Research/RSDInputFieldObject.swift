@@ -363,12 +363,21 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         let surveyRules = try type(of: self).surveyRules(from: decoder, dataType: dataType)
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        // Look to the form step for an identifier.
+        if !container.contains(.identifier),
+            let identifier = decoder.codingInfo?.userInfo[.stepIdentifier] as? String {
+            self.identifier = identifier
+        }
+        else {
+            self.identifier = try container.decode(String.self, forKey: .identifier)
+        }
+        
         self.dataType = dataType
         self.inputUIHint = uiHint
         self.range = range
         self.textFieldOptions = textFieldOptions
         self.surveyRules = surveyRules
-        self.identifier = try container.decode(String.self, forKey: .identifier)
         self.inputPrompt = try container.decodeIfPresent(String.self, forKey: .prompt)
         self.placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder)
         self.isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? false

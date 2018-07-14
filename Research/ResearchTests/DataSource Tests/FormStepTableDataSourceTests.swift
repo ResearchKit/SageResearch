@@ -52,9 +52,11 @@ class FormStepTableDataSourceTests: XCTestCase {
               {
               "identifier": "selectOne",
               "type": "form",
-              "uiHint": "list",
-              "dataType": "singleChoice",
-              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+              "inputFields": [{
+                  "uiHint": "list",
+                  "dataType": "singleChoice",
+                  "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+                }]
               }
         """.data(using: .utf8)! // our data in native (JSON) format
         
