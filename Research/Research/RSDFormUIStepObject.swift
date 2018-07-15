@@ -283,6 +283,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
                              ],
                              [
                              "identifier": "goo",
+                             "type": "choice",
                              "dataType": "multipleChoice",
                              "choices" : ["never", "sometimes", "often", "always"]
                              ]
@@ -294,6 +295,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
              "type": "form",
              "title": "Step 3",
              "inputFields": [[
+                "type": "choice",
                 "dataType": "multipleChoice",
                 "choices" : ["never", "sometimes", "often", "always"]
                 ]]

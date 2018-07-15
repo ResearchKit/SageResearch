@@ -41,6 +41,11 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         case choices, separator, defaultAnswer
     }
     
+    /// Override and return `.multipleComponent`.
+    override open var classType: RSDInputFieldType? {
+        return .multipleComponent
+    }
+    
     /// A list of choices for input fields that make up the multiple component option set.
     public private(set) var choices : [[RSDChoice]]
     
@@ -204,6 +209,7 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
     override class func examples() -> [[String : RSDJSONValue]] {
         let json: [String : RSDJSONValue] = [
             "identifier": "foo",
+            "type": "multipleComponent",
             "dataType": "multipleComponent",
             "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
         ]

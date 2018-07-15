@@ -53,6 +53,7 @@ class FormStepTableDataSourceTests: XCTestCase {
               "identifier": "selectOne",
               "type": "form",
               "inputFields": [{
+                  "type": "choice",
                   "uiHint": "list",
                   "dataType": "singleChoice",
                   "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
@@ -120,6 +121,7 @@ class FormStepTableDataSourceTests: XCTestCase {
                               },
                               {
                               "identifier": "multipleComponent",
+                              "type": "multipleComponent",
                               "dataType": "multipleComponent",
                               "prompt": "Pick a combination of colors and animals",
                               "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat", "duck"]]
@@ -131,7 +133,7 @@ class FormStepTableDataSourceTests: XCTestCase {
                               },
                               {
                               "identifier": "selectOne",
-                              "type": "form",
+                              "type": "choice",
                               "uiHint": "list",
                               "dataType": "singleChoice",
                               "choices": ["Alfa", "Bravo", "Charlie", "Delta"]

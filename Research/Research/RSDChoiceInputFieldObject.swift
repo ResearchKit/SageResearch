@@ -41,6 +41,11 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         case choices, defaultAnswer
     }
     
+    /// Override and return `.choice`.
+    override open var classType: RSDInputFieldType? {
+        return .choice
+    }
+    
     /// A list of choices for the input field.
     public private(set) var choices : [RSDChoice]
     
@@ -89,7 +94,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     ///        let json = """
     ///            {
     ///                "identifier": "foo",
-    ///                "type": "form",
+    ///                "type": "choice",
     ///                "prompt": "Choose a number",
     ///                "dataType": "singleChoice.decimal",
     ///                "uiHint": "picker",
@@ -111,7 +116,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     ///        let json = """
     ///              {
     ///              "identifier": "step3",
-    ///              "type": "form",
+    ///              "type": "choice",
     ///              "title": "Step 3",
     ///              "dataType": "multipleChoice",
     ///              "choices" : ["alpha", "beta", "charlie", "delta"]
@@ -123,7 +128,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     ///        let json = """
     ///            {
     ///            "identifier": "happiness",
-    ///            "type": "form",
+    ///            "type": "choice",
     ///            "title": "How happy are you?",
     ///            "dataType": "singleChoice.integer",
     ///            "defaultAnswer": 3,
@@ -165,7 +170,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     ///        let json = """
     ///            {
     ///                "identifier": "heightLimit",
-    ///                "type": "form",
+    ///                "type": "choice",
     ///                "prompt": "Are you tall?",
     ///                "dataType": "singleChoice.boolean",
     ///                "choices" : [{  "value" : true,
@@ -275,7 +280,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     override class func examples() -> [[String : RSDJSONValue]] {
         let jsonA: [String : RSDJSONValue] = [
                 "identifier": "foo",
-                "type": "form",
+                "type": "choice",
                 "prompt": "Choose a number",
                 "dataType": "singleChoice.decimal",
                 "uiHint": "picker",
@@ -294,8 +299,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         
         let jsonB: [String : RSDJSONValue] = [
               "identifier": "step3",
-              "type": "form",
-              "title": "Step 3",
+              "type": "choice",
+              "prompt": "Step 3",
               "dataType": "multipleChoice",
               "defaultAnswer": "alpha",
               "choices" : ["alpha", "beta", "charlie", "delta"]
@@ -303,8 +308,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         
         let jsonC: [String : RSDJSONValue] = [
             "identifier": "happiness",
-            "type": "form",
-            "title": "How happy are you?",
+            "type": "choice",
+            "prompt": "How happy are you?",
             "dataType": "singleChoice.integer",
             "defaultAnswer": 1,
             "choices": [[
@@ -341,7 +346,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         
         let jsonD: [String : RSDJSONValue] = [
                 "identifier": "heightLimit",
-                "type": "form",
+                "type": "choice",
                 "prompt": "Are you tall?",
                 "dataType": "singleChoice.boolean",
                 "defaultAnswer": true,
@@ -355,8 +360,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         
         let jsonE: [String : RSDJSONValue] = [
             "identifier": "happiness",
-            "type": "form",
-            "title": "How happy are you?",
+            "type": "choice",
+            "prompt": "How happy are you?",
             "dataType": "singleChoice.fraction",
             "defaultAnswer": "3/5",
             "choices": [[

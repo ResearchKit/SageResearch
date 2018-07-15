@@ -10,6 +10,7 @@
               "title": "Single Choice",
               "text": "Select a single option",
               "inputFields" : [{
+                                  "type": "choice",
                                   "uiHint": "list",
                                   "dataType": "singleChoice",
                                   "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
@@ -21,6 +22,7 @@
               "title": "Multiple Choice",
               "text": "Select as many as you want",
               "inputFields" : [{
+                                  "type": "choice",
                                   "uiHint": "list",
                                   "dataType": "multipleChoice.integer",
                                   "choices": [{
@@ -48,6 +50,7 @@
               "title": "Single Choice with Images",
               "text": "Select a single option",
               "inputFields" : [{
+                                  "type": "choice",
                                   "uiHint": "list",
                                   "dataType": "singleChoice.integer",
                                   "choices": [{

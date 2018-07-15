@@ -362,6 +362,7 @@ class CodableStepObjectTests: XCTestCase {
                           },
                           {
                            "identifier": "goo",
+                           "type": "choice",
                            "dataType": "multipleChoice",
                            "choices" : ["never", "sometimes", "often", "always"]
                           }]
@@ -398,6 +399,7 @@ class CodableStepObjectTests: XCTestCase {
           "type": "form",
           "title": "Step 3",
           "inputFields": [{
+            "type": "choice",
             "dataType": "multipleChoice",
             "choices" : ["never", "sometimes", "often", "always"]
             }]

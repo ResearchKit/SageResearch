@@ -9,6 +9,7 @@
               "title": "Single Choice",
               "text": "Select a single option",
               "inputFields": [{
+                              "type": "choice",
                               "uiHint": "picker",
                               "dataType": "singleChoice",
                               "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
@@ -21,6 +22,7 @@
               "text": "Select a single option",
               "inputFields": [
                               {
+                              "type": "choice",
                               "uiHint": "picker",
                               "dataType": "singleChoice.integer",
                               "choices": [{
@@ -82,6 +84,7 @@
                               },
                               {
                               "identifier": "multipleComponent",
+                              "type": "multipleComponent",
                               "dataType": "multipleComponent",
                               "prompt": "Pick a combination of colors and animals",
                               "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat", "duck"]]

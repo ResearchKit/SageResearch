@@ -305,8 +305,23 @@ open class RSDFactory {
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeInputField(from decoder: Decoder) throws -> RSDInputField? {
-        let dataType = try RSDInputFieldObject.dataType(from: decoder)
-        let inputField = try decodeInputField(from: decoder, with: dataType)
+        guard let name = try typeName(from: decoder) else {
+            #if DEBUG
+            let inputField = try RSDInputFieldObject(from: decoder)
+            if case .collection(_, _) = inputField.dataType {
+                let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                    debugDescription: "Collection data type input fields cannot be represented using the base class of `RSDInputFieldObject`.")
+                throw DecodingError.keyNotFound(TypeKeys.type, context)
+            }
+            else {
+                return inputField
+            }
+            #else
+            return try _deprecated_decodeInputField(from: decoder)
+            #endif
+        }
+        let type = RSDInputFieldType(rawValue: name)
+        let inputField = try decodeInputField(from: decoder, with: type)
         try inputField?.validate()
         return inputField
     }
@@ -315,11 +330,23 @@ open class RSDFactory {
     /// if the input field should be skipped.
     ///
     /// - parameters:
-    ///     - dataType:     The data type for this step.
     ///     - decoder:      The decoder to use to instatiate the object.
+    ///     - type:         The type for this input field.
     /// - returns: The input field (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeInputField(from decoder:Decoder, with dataType: RSDFormDataType) throws -> RSDInputField? {
+    open func decodeInputField(from decoder:Decoder, with type: RSDInputFieldType) throws -> RSDInputField? {
+        switch type {
+        case .multipleComponent:
+            return try RSDMultipleComponentInputFieldObject(from: decoder)
+        case .choice:
+            return try RSDChoiceInputFieldObject(from: decoder)
+        default:
+            return try RSDInputFieldObject(from: decoder)
+        }
+    }
+    
+    private func _deprecated_decodeInputField(from decoder:Decoder) throws -> RSDInputField? {
+        let dataType = try RSDInputFieldObject.dataType(from: decoder)
         switch dataType {
         case .collection(let collectionType, _):
             switch collectionType {
