@@ -146,6 +146,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     private enum CodingKeys : String, CodingKey {
         case identifier
         case prompt
+        case promptDetail
         case placeholder
         case classType = "type"
         case dataType
@@ -385,6 +386,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         self.textFieldOptions = textFieldOptions
         self.surveyRules = surveyRules
         self.inputPrompt = try container.decodeIfPresent(String.self, forKey: .prompt)
+        self.inputPromptDetail = try container.decodeIfPresent(String.self, forKey: .promptDetail)
         self.placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder)
         self.isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? false
         self.classType = try container.decodeIfPresent(RSDInputFieldType.self, forKey: .classType)
@@ -399,6 +401,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         try container.encodeIfPresent(self.classType, forKey: .classType)
         try container.encode(self.dataType, forKey: .dataType)
         try container.encodeIfPresent(inputPrompt, forKey: .prompt)
+        try container.encodeIfPresent(inputPromptDetail, forKey: .promptDetail)
         try container.encodeIfPresent(placeholder, forKey: .placeholder)
         try container.encodeIfPresent(inputUIHint, forKey: .uiHint)
         if let obj = self.range {
@@ -437,7 +440,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .prompt, .placeholder, .dataType, .uiHint, .isOptional, .textFieldOptions, .range, .surveyRules, .classType]
+        let codingKeys: [CodingKeys] = [.identifier, .prompt, .placeholder, .dataType, .uiHint, .isOptional, .textFieldOptions, .range, .surveyRules, .classType, .promptDetail]
         return codingKeys
     }
     
@@ -465,9 +468,11 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
                 if idx != 8 { return false }
             case .classType:
                 if idx != 9 { return false }
+            case .promptDetail:
+                if idx != 10 { return false }
             }
         }
-        return keys.count == 10
+        return keys.count == 11
     }
     
     class func examples() -> [[String : RSDJSONValue]] {
