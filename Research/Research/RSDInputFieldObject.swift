@@ -2,7 +2,7 @@
 //  RSDInputFieldObject.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -37,6 +37,20 @@ import Foundation
 /// an open class so that the decoding strategy can be used to support subclasses.
 ///
 open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDCopyInputField, Codable {
+    
+    private enum CodingKeys : String, CodingKey {
+        case identifier
+        case classType = "type"
+        case inputPrompt = "prompt"
+        case inputPromptDetail = "promptDetail"
+        case placeholder
+        case dataType
+        case inputUIHint = "uiHint"
+        case isOptional = "optional"
+        case textFieldOptions
+        case range
+        case surveyRules
+    }
 
     /// A short string that uniquely identifies the input field within the step. The identifier is reproduced in the
     /// results of a step result in the step history of a task result.
@@ -143,20 +157,6 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     open func validate() throws {
     }
     
-    private enum CodingKeys : String, CodingKey {
-        case identifier
-        case prompt
-        case promptDetail
-        case placeholder
-        case classType = "type"
-        case dataType
-        case uiHint
-        case isOptional = "optional"
-        case textFieldOptions
-        case range
-        case surveyRules
-    }
-    
     /// Class function for decoding the data type from the decoder. The default implementation will key to
     /// `CodingKeys.dataType`.
     ///
@@ -179,7 +179,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     ///           `RSDValidationError.invalidType` if it is not valid for this data type.
     open class func uiHint(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDFormUIHint? {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard let uiHint = try container.decodeIfPresent(RSDFormUIHint.self, forKey: .uiHint) else {
+        guard let uiHint = try container.decodeIfPresent(RSDFormUIHint.self, forKey: .inputUIHint) else {
             return nil
         }
         guard let standardType = uiHint.standardType else {
@@ -385,8 +385,8 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         self.range = range
         self.textFieldOptions = textFieldOptions
         self.surveyRules = surveyRules
-        self.inputPrompt = try container.decodeIfPresent(String.self, forKey: .prompt)
-        self.inputPromptDetail = try container.decodeIfPresent(String.self, forKey: .promptDetail)
+        self.inputPrompt = try container.decodeIfPresent(String.self, forKey: .inputPrompt)
+        self.inputPromptDetail = try container.decodeIfPresent(String.self, forKey: .inputPromptDetail)
         self.placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder)
         self.isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? false
         self.classType = try container.decodeIfPresent(RSDInputFieldType.self, forKey: .classType)
@@ -400,10 +400,10 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         try container.encode(self.identifier, forKey: .identifier)
         try container.encodeIfPresent(self.classType, forKey: .classType)
         try container.encode(self.dataType, forKey: .dataType)
-        try container.encodeIfPresent(inputPrompt, forKey: .prompt)
-        try container.encodeIfPresent(inputPromptDetail, forKey: .promptDetail)
+        try container.encodeIfPresent(inputPrompt, forKey: .inputPrompt)
+        try container.encodeIfPresent(inputPromptDetail, forKey: .inputPromptDetail)
         try container.encodeIfPresent(placeholder, forKey: .placeholder)
-        try container.encodeIfPresent(inputUIHint, forKey: .uiHint)
+        try container.encodeIfPresent(inputUIHint, forKey: .inputUIHint)
         if let obj = self.range {
             let nestedEncoder = container.superEncoder(forKey: .range)
             guard let encodable = obj as? Encodable else {
@@ -440,7 +440,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .prompt, .placeholder, .dataType, .uiHint, .isOptional, .textFieldOptions, .range, .surveyRules, .classType, .promptDetail]
+        let codingKeys: [CodingKeys] = [.identifier, .inputPrompt, .placeholder, .dataType, .inputUIHint, .isOptional, .textFieldOptions, .range, .surveyRules, .classType, .inputPromptDetail]
         return codingKeys
     }
     
@@ -450,13 +450,13 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             switch key {
             case .identifier:
                 if idx != 0 { return false }
-            case .prompt:
+            case .inputPrompt:
                 if idx != 1 { return false }
             case .placeholder:
                 if idx != 2 { return false }
             case .dataType:
                 if idx != 3 { return false }
-            case .uiHint:
+            case .inputUIHint:
                 if idx != 4 { return false }
             case .isOptional:
                 if idx != 5 { return false }
@@ -468,7 +468,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
                 if idx != 8 { return false }
             case .classType:
                 if idx != 9 { return false }
-            case .promptDetail:
+            case .inputPromptDetail:
                 if idx != 10 { return false }
             }
         }
