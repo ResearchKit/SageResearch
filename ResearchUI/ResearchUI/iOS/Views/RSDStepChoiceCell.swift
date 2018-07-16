@@ -543,7 +543,7 @@ public protocol RSDStepTextInputView: class {
     var indexPath: IndexPath? { get set }
 }
 
-/// `RSDStepTextField` is a subclass of `UITextField` that conforms to 'RSDStepTextInputView'
+/// `RSDStepTextField` is a subclass of `UITextField` that conforms to 'RSDStepTextInputView'.
 open class RSDStepTextField: UITextField, RSDStepTextInputView {
     public var currentText: String? {
         get {
@@ -556,7 +556,7 @@ open class RSDStepTextField: UITextField, RSDStepTextInputView {
     public var indexPath: IndexPath?
 }
 
-/// `RSDStepTextView` is a subclass of `UITextView` that conforms to 'RSDStepTextInputView'
+/// `RSDStepTextView` is a subclass of `UITextView` that conforms to 'RSDStepTextInputView'.
 open class RSDStepTextView: UITextView, RSDStepTextInputView {
     public var currentText: String? {
         get {
