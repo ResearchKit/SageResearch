@@ -80,8 +80,7 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
         return self.inputFields.reduce(true, { $0 && $1.isOptional })
     }
     
-    /// The data type returned is the first input field if there is only one input field include in this step,
-    /// otherwise it is a custom type.
+    /// Returns the data type from the first input field (if only one) or a custom type if more than one field.
     open var dataType: RSDFormDataType {
         if self.inputFields.count == 1 {
             return self.inputFields.first!.dataType
@@ -92,17 +91,27 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
         }
     }
     
-    /// Returns `nil` by default.
+    /// Returns the test options from the first input field (if only one) or `nil` if more than one field.
     open var textFieldOptions: RSDTextFieldOptions? {
-        return nil
+        if self.inputFields.count == 1 {
+            return self.inputFields.first!.textFieldOptions
+        }
+        else {
+            return nil
+        }
     }
     
-    /// Returns `nil` by default.
+    /// Returns the range from the first input field (if only one) or `nil` if more than one field.
     open var range: RSDRange? {
-        return nil
+        if self.inputFields.count == 1 {
+            return self.inputFields.first!.range
+        }
+        else {
+            return nil
+        }
     }
     
-    /// Returns the formatter from the first input field (if only one), otherwise will return `nil`.
+    /// Returns the formatter from the first input field (if only one) or `nil` if more than one field.
     open var formatter: Formatter? {
         if self.inputFields.count == 1 {
             return self.inputFields.first!.formatter
@@ -112,8 +121,8 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
         }
     }
     
-    /// Returns the pickerSource from the first input field (if only one), otherwise will return `nil`.
-    public var pickerSource: RSDPickerDataSource? {
+    /// Returns the picker source from the first input field (if only one) or `nil` if more than one field.
+    open var pickerSource: RSDPickerDataSource? {
         if self.inputFields.count == 1 {
             return self.inputFields.first!.pickerSource
         }
