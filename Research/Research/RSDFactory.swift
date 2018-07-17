@@ -128,7 +128,7 @@ open class RSDFactory {
     
     /// Decode the task info from this decoder. This method *must* return a task info object.
     /// The default implementation will return a `RSDTaskInfoStepObject`.
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The task info created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
@@ -140,7 +140,7 @@ open class RSDFactory {
     
     /// Decode the schema info from this decoder. This method *must* return a schema info object.
     /// The default implementation will return a `RSDSchemaInfoObject`.
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The schema info created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeSchemaInfo(from decoder: Decoder) throws -> RSDSchemaInfo {
@@ -170,7 +170,7 @@ open class RSDFactory {
     /// Decode the task transformer from this decoder. This method *must* return a task transformer
     /// object. The default implementation will return a `RSDResourceTransformerObject`.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The object created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTaskTransformer(from decoder: Decoder) throws -> RSDTaskTransformer {
@@ -184,7 +184,7 @@ open class RSDFactory {
     /// The default implementation will return a `RSDConditionalStepNavigatorObject` if the type
     /// is not in the decoder.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step navigator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStepNavigator(from decoder: Decoder) throws -> RSDStepNavigator {
@@ -199,7 +199,7 @@ open class RSDFactory {
     /// unrecognized type.
     ///
     /// - parameters:
-    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - decoder: The decoder to use to instantiate the object.
     ///     - type: The `RSDStepNavigatorType` to instantiate.
     /// - returns: The step navigator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
@@ -233,7 +233,7 @@ open class RSDFactory {
     /// For example, if the step does not apply for a task run on an Apple watch or
     /// iPad, but does apply to a task run on an iPhone.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder: Decoder) throws -> RSDStep? {
@@ -250,7 +250,7 @@ open class RSDFactory {
     ///
     /// - parameters:
     ///     - type:        The `StepType` to instantiate.
-    ///     - decoder:     The decoder to use to instatiate the object.
+    ///     - decoder:     The decoder to use to instantiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
@@ -277,7 +277,7 @@ open class RSDFactory {
     
     /// Decode the step into a transfrom step. By default, this will create a `RSDStepTransformerObject`.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step transform created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStepTransformer(from decoder: Decoder) throws -> RSDStepTransformer {
@@ -287,7 +287,7 @@ open class RSDFactory {
     /// Decode the transformable step. By default, this will return the `transformedStep` from a
     /// `RSDStepTransformer`.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step created from transforming this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTransformableStep(from decoder: Decoder) throws -> RSDStep {
@@ -301,7 +301,7 @@ open class RSDFactory {
     /// Decode the input field from this decoder. This method can be overridden to return `nil`
     /// if the input field should be skipped.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeInputField(from decoder: Decoder) throws -> RSDInputField? {
@@ -315,7 +315,7 @@ open class RSDFactory {
     /// if the input field should be skipped.
     ///
     /// - parameters:
-    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - decoder: The decoder to use to instantiate the object.
     ///     - dataType: The type for this input field.
     /// - returns: The input field (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
@@ -344,7 +344,7 @@ open class RSDFactory {
     /// Decode the text validator from this decoder. The default implementation will instantiate a
     /// `RSDRegExValidatorObject` from the decoder.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The text validator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeTextValidator(from decoder: Decoder) throws -> RSDTextValidator? {
@@ -357,7 +357,7 @@ open class RSDFactory {
     /// Decode a number formatter from this decoder. The default implementation will instantiate a  `NumberFormatter`
     /// from the decoder using the convenience method defined in an extension in this framework.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The number formatter created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeNumberFormatter(from decoder: Decoder) throws -> NumberFormatter {
@@ -374,7 +374,7 @@ open class RSDFactory {
     /// objects. The conditional rule is included here for future implementation of data tracking across
     /// runs of a task. (syoung 10/03/2017)
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The conditional rule (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeConditionalRule(from decoder:Decoder) throws -> RSDConditionalRule? {
@@ -393,7 +393,7 @@ open class RSDFactory {
     ///
     /// - parameters:
     ///     - typeName:     The string representing the class name for this conditional rule.
-    ///     - decoder:      The decoder to use to instatiate the object.
+    ///     - decoder:      The decoder to use to instantiate the object.
     /// - returns: The conditional rule (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeConditionalRule(from decoder:Decoder, with typeName: String) throws -> RSDConditionalRule? {
@@ -407,7 +407,7 @@ open class RSDFactory {
     /// Decode UI action from the given decoder.
     ///
     /// - parameters:
-    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - decoder: The decoder to use to instantiate the object.
     ///     - actionType: The action type for this button.
     ///     - objectType: The object type to which this action should be cast.
     /// - returns: The UI action created from this decoder.
@@ -430,7 +430,7 @@ open class RSDFactory {
     /// Decode UI action from the given decoder.
     ///
     /// - parameters:
-    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - decoder: The decoder to use to instantiate the object.
     ///     - objectType: The object type to which this action should be cast.
     /// - returns: The UI action created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
@@ -471,7 +471,7 @@ open class RSDFactory {
     /// Decode UI color theme from the given decoder.
     ///
     /// - parameters:
-    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - decoder: The decoder to use to instantiate the object.
     /// - returns: The UI color theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeColorThemeElement(from decoder:Decoder) throws -> RSDColorThemeElement? {
@@ -481,7 +481,7 @@ open class RSDFactory {
     /// Decode UI view theme from the given decoder.
     ///
     /// - parameters:
-    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - decoder: The decoder to use to instantiate the object.
     /// - returns: The UI view theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeViewThemeElement(from decoder:Decoder) throws -> RSDViewThemeElement? {
@@ -491,7 +491,7 @@ open class RSDFactory {
     /// Decode UI image theme from the given decoder.
     ///
     /// - parameters:
-    ///     - decoder: The decoder to use to instatiate the object.
+    ///     - decoder: The decoder to use to instantiate the object.
     /// - returns: The UI image theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeImageThemeElement(from decoder:Decoder) throws -> RSDImageThemeElement? {
@@ -544,7 +544,7 @@ open class RSDFactory {
     /// - note: The base factory does not currently support any async action objects. The factory method is
     /// included here for subclassing purposes. (syoung 10/03/2017)
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The configuration (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeAsyncActionConfiguration(from decoder:Decoder) throws -> RSDAsyncActionConfiguration? {
@@ -565,7 +565,7 @@ open class RSDFactory {
     ///
     /// - parameters:
     ///     - typeName:     The string representing the class name for this conditional rule.
-    ///     - decoder:      The decoder to use to instatiate the object.
+    ///     - decoder:      The decoder to use to instantiate the object.
     /// - returns: The configuration (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeAsyncActionConfiguration(from decoder:Decoder, with typeName: String) throws -> RSDAsyncActionConfiguration? {
@@ -603,7 +603,7 @@ open class RSDFactory {
     
     /// Decode the result from this decoder.
     ///
-    /// - parameter decoder: The decoder to use to instatiate the object.
+    /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeResult(from decoder: Decoder) throws -> RSDResult {
@@ -617,7 +617,7 @@ open class RSDFactory {
     ///
     /// - parameters:
     ///     - typeName:     The string representing the class name for this object.
-    ///     - decoder:      The decoder to use to instatiate the object.
+    ///     - decoder:      The decoder to use to instantiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeResult(from decoder: Decoder, with resultType: RSDResultType) throws -> RSDResult {
