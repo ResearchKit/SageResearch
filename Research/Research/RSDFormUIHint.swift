@@ -56,7 +56,7 @@ public struct RSDFormUIHint : RawRepresentable, Codable {
     /// List of selectable cells.
     public static let list: RSDFormUIHint = "list"
     
-    /// Multiple line text field.
+    /// Multiple line text view.
     public static let multipleLine: RSDFormUIHint = "multipleLine"
     
     /// Text field with a picker wheel as the keyboard.
