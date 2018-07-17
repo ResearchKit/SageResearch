@@ -47,6 +47,17 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     /// The default answer associated with this option set.
     open private(set) var defaultAnswer: Any?
     
+    /// Override `isOptional` to allow for "nil" behavior if there is only one choice. Otherwise, there isn't
+    /// really a way for the user to **not** select that choice.
+    override open var isOptional: Bool {
+        get {
+            return super.isOptional || self.choices.count <= 1
+        }
+        set {
+            super.isOptional = isOptional
+        }
+    }
+    
     /// Default initializer.
     ///
     /// - parameters:
