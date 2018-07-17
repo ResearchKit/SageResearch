@@ -40,11 +40,10 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     
     private enum CodingKeys : String, CodingKey {
         case identifier
-        case classType = "type"
         case inputPrompt = "prompt"
         case inputPromptDetail = "promptDetail"
         case placeholder
-        case dataType
+        case dataType = "type"
         case inputUIHint = "uiHint"
         case isOptional = "optional"
         case textFieldOptions
@@ -55,10 +54,6 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     /// A short string that uniquely identifies the input field within the step. The identifier is reproduced in the
     /// results of a step result in the step history of a task result.
     public let identifier: String
-    
-    /// The class type of the input field object. This is the keyword that is used to Decode the class using
-    /// the `RSDFactory`.
-    open private(set) var classType: RSDInputFieldType?
     
     /// The data type for this input field. The data type can have an associated ui hint.
     open private(set) var dataType: RSDFormDataType
@@ -225,7 +220,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             } else {
                 return try container.decodeIfPresent(RSDNumberRangeObject.self, forKey: .range)
             }
-        case .string, .boolean:
+        case .string, .boolean, .codable:
             return nil
         }
     }
@@ -278,7 +273,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     ///     "identifier": "foo",
     ///     "prompt": "Text",
     ///     "placeholder": "enter text",
-    ///     "dataType": "singleChoice.string",
+    ///     "type": "singleChoice.string",
     ///     "choices" : ["never", "sometimes", "often", "always"],
     ///     "matchingAnswer": "never"
     ///     }
@@ -289,7 +284,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     ///     ````
     ///        {
     ///            "identifier": "foo",
-    ///            "dataType": "integer",
+    ///            "type": "integer",
     ///            "uiHint": "slider",
     ///            "range" : { "minimumValue" : -2,
     ///                        "maximumValue" : 3,
@@ -331,28 +326,14 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
                 return try container.decode([RSDComparableSurveyRuleObject<RSDFraction>].self, forKey: .surveyRules)
             case .integer, .year:
                 return try container.decode([RSDComparableSurveyRuleObject<Int>].self, forKey: .surveyRules)
-            }
-        } else {
-            let rule: RSDSurveyRule?
-            switch dataType.baseType {
-            case .boolean:
-                rule = try? RSDComparableSurveyRuleObject<Bool>(from: decoder)
-            case .string:
-                rule = try? RSDComparableSurveyRuleObject<String>(from: decoder)
-            case .date:
-                rule = try? RSDComparableSurveyRuleObject<Date>(from: decoder)
-            case .decimal, .duration:
-                rule = try? RSDComparableSurveyRuleObject<Double>(from: decoder)
-            case .fraction:
-                rule = try? RSDComparableSurveyRuleObject<RSDFraction>(from: decoder)
-            case .integer, .year:
-                rule = try? RSDComparableSurveyRuleObject<Int>(from: decoder)
-            }
-            if rule != nil {
-                return [rule!]
+            case .codable:
+                var codingPath = decoder.codingPath
+                codingPath.append(CodingKeys.surveyRules)
+                let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Survey rules for a .codable data type are not supported.")
+                throw DecodingError.typeMismatch(Codable.self, context)
             }
         }
-        
+
         return nil
     }
     
@@ -389,7 +370,6 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         self.inputPromptDetail = try container.decodeIfPresent(String.self, forKey: .inputPromptDetail)
         self.placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder)
         self.isOptional = try container.decodeIfPresent(Bool.self, forKey: .isOptional) ?? false
-        self.classType = try container.decodeIfPresent(RSDInputFieldType.self, forKey: .classType)
     }
     
     /// Encode the object to the given encoder.
@@ -398,7 +378,6 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.identifier, forKey: .identifier)
-        try container.encodeIfPresent(self.classType, forKey: .classType)
         try container.encode(self.dataType, forKey: .dataType)
         try container.encodeIfPresent(inputPrompt, forKey: .inputPrompt)
         try container.encodeIfPresent(inputPromptDetail, forKey: .inputPromptDetail)
@@ -440,7 +419,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     }
     
     private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .inputPrompt, .placeholder, .dataType, .inputUIHint, .isOptional, .textFieldOptions, .range, .surveyRules, .classType, .inputPromptDetail]
+        let codingKeys: [CodingKeys] = [.identifier, .inputPrompt, .placeholder, .dataType, .inputUIHint, .isOptional, .textFieldOptions, .range, .surveyRules, .inputPromptDetail]
         return codingKeys
     }
     
@@ -466,31 +445,29 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
                 if idx != 7 { return false }
             case .surveyRules:
                 if idx != 8 { return false }
-            case .classType:
-                if idx != 9 { return false }
             case .inputPromptDetail:
-                if idx != 10 { return false }
+                if idx != 9 { return false }
             }
         }
-        return keys.count == 11
+        return keys.count == 10
     }
     
     class func examples() -> [[String : RSDJSONValue]] {
         
         let baseTypes = RSDFormDataType.BaseType.allTypes()
-        let examples = baseTypes.map { (baseType) -> [String : RSDJSONValue] in
+        let examples = baseTypes.compactMap { (baseType) -> [String : RSDJSONValue]? in
             switch baseType {
             case .boolean:
                 return [ "identifier" : "booleanExample",
                          "prompt" : "This is a boolean input field",
-                         "dataType" : "boolean",
+                         "type" : "boolean",
                          "uiHint" : "toggle",
                          "optional" : true]
             
             case .date:
                 return [ "identifier" : "dateExample",
                          "prompt" : "This is a date input field",
-                         "dataType" : "date",
+                         "type" : "date",
                          "uiHint" : "picker",
                          "placeholder" : "enter a date",
                          "range" : [ "minimumDate" : "2017-02-20",
@@ -499,7 +476,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             case .decimal:
                 return [ "identifier" : "decimalExample",
                          "prompt" : "This is a decimal input field",
-                         "dataType" : "decimal",
+                         "type" : "decimal",
                          "uiHint" : "slider",
                          "placeholder" : "select a numer",
                          "range" : [ "minimumValue" : -2.5,
@@ -516,7 +493,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             case .integer:
                 return [ "identifier" : "integerExample",
                          "prompt" : "This is a integer input field",
-                         "dataType" : "integer",
+                         "type" : "integer",
                          "uiHint" : "popover",
                          "placeholder" : "select a numer",
                          "range" : [ "minimumValue" : -10,
@@ -527,7 +504,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             case .fraction:
                 return [ "identifier" : "fractionExample",
                          "prompt" : "This is a fraction input field",
-                         "dataType" : "fraction",
+                         "type" : "fraction",
                          "uiHint" : "textfield",
                          "placeholderText" : "select a numer",
                          "range" : [ "minimumValue" : -1.0,
@@ -538,7 +515,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             case .duration:
                 return [ "identifier" : "timeIntervalExample",
                          "prompt" : "This is a time interval input field",
-                         "dataType" : "timeInterval",
+                         "type" : "timeInterval",
                          "uiHint" : "picker",
                          "placeholderText" : "select a time interval",
                          "range" : [ "minimumValue" : 0,
@@ -548,7 +525,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             case .year:
                 return [ "identifier" : "yearExample",
                          "prompt" : "This is a year input field",
-                         "dataType" : "year",
+                         "type" : "year",
                          "uiHint" : "textfield",
                          "placeholder" : "birth year",
                          "range" : [ "allowFuture" : false]]
@@ -556,9 +533,12 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             case .string:
                 return [ "identifier" : "stringExample",
                          "prompt" : "This is a string input field",
-                         "dataType" : "string",
+                         "type" : "string",
                          "placeholder" : "enter some text",
                          "textFieldOptions" : [ "keyboardType" : "asciiCapable"]]
+                
+            case .codable:
+                return nil
             }
         }
 

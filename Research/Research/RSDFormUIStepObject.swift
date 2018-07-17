@@ -142,7 +142,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     ///             "inputFields": [
     ///                             {
     ///                             "identifier": "foo",
-    ///                             "dataType": "date",
+    ///                             "type": "date",
     ///                             "uiHint": "picker",
     ///                             "prompt": "Foo",
     ///                             "range" : { "minimumDate" : "2017-02-20",
@@ -151,12 +151,12 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     ///                             },
     ///                             {
     ///                             "identifier": "bar",
-    ///                             "dataType": "integer",
+    ///                             "type": "integer",
     ///                             "prompt": "Bar"
     ///                             },
     ///                             {
     ///                             "identifier": "goo",
-    ///                             "dataType": "multipleChoice",
+    ///                             "type": "multipleChoice",
     ///                             "choices" : ["never", "sometimes", "often", "always"]
     ///                             }
     ///                            ]
@@ -269,7 +269,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
              "inputFields": [
                              [
                              "identifier": "foo",
-                             "dataType": "date",
+                             "type": "date",
                              "uiHint": "picker",
                              "prompt": "Foo",
                              "range" : [ "minimumDate" : "2017-02-20",
@@ -278,13 +278,12 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
                              ],
                              [
                              "identifier": "bar",
-                             "dataType": "integer",
+                             "type": "integer",
                              "prompt": "Bar"
                              ],
                              [
                              "identifier": "goo",
-                             "type": "choice",
-                             "dataType": "multipleChoice",
+                             "type": "multipleChoice",
                              "choices" : ["never", "sometimes", "often", "always"]
                              ]
                             ]
@@ -295,8 +294,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
              "type": "form",
              "title": "Step 3",
              "inputFields": [[
-                "type": "choice",
-                "dataType": "multipleChoice",
+                "type": "multipleChoice",
                 "choices" : ["never", "sometimes", "often", "always"]
                 ]]
              ]

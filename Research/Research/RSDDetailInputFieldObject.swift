@@ -80,14 +80,14 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
         return self.inputFields.reduce(true, { $0 && $1.isOptional })
     }
     
-    /// Returns the data type from the first input field (if only one) or a custom type if more than one field.
+    /// Returns the data type from the first input field (if only one) or `.detail(.codable)` if more than one
+    /// input field.
     open var dataType: RSDFormDataType {
         if self.inputFields.count == 1 {
             return self.inputFields.first!.dataType
         }
         else {
-            // Use `.string` as the base type b/c anything can be described as a String.
-            return .custom("detail", .string)
+            return .detail(.codable)
         }
     }
     
@@ -169,13 +169,13 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
     override class func examples() -> [[String : RSDJSONValue]] {
         let jsonA: [String : RSDJSONValue] = [
             "identifier": "step3",
-            "type": "form",
+            "type": "detail",
             "title": "Step 3",
             "text": "Some text.",
             "inputFields": [
                 [
                     "identifier": "foo",
-                    "dataType": "date",
+                    "type": "date",
                     "uiHint": "picker",
                     "prompt": "Foo",
                     "range" : [ "minimumDate" : "2017-02-20",
@@ -184,13 +184,12 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
                 ],
                 [
                     "identifier": "bar",
-                    "dataType": "integer",
+                    "type": "integer",
                     "prompt": "Bar"
                 ],
                 [
                     "identifier": "goo",
-                    "type": "choice",
-                    "dataType": "multipleChoice",
+                    "type": "multipleChoice",
                     "choices" : ["never", "sometimes", "often", "always"]
                 ]
             ]
@@ -198,7 +197,7 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
         
         let jsonB: [String : RSDJSONValue] = [
             "identifier": "step3",
-            "type": "form",
+            "type": "detail",
             "title": "Step 3",
             "prompt": "Select choice",
             "promptDetail": "more information",
@@ -206,8 +205,7 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
             "uiHint": "disclosureArrow",
             "transitionStyle": "horizontal",
             "inputFields": [[
-                "type": "choice",
-                "dataType": "multipleChoice",
+                "type": "multipleChoice",
                 "choices" : ["never", "sometimes", "often", "always"]
                 ]]
         ]

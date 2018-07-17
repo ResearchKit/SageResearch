@@ -9,9 +9,8 @@
               "title": "Single Choice",
               "text": "Select a single option",
               "inputFields": [{
-                              "type": "choice",
                               "uiHint": "picker",
-                              "dataType": "singleChoice",
+                              "type": "singleChoice",
                               "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
                               }]
               },
@@ -22,9 +21,8 @@
               "text": "Select a single option",
               "inputFields": [
                               {
-                              "type": "choice",
                               "uiHint": "picker",
-                              "dataType": "singleChoice.integer",
+                              "type": "singleChoice.integer",
                               "choices": [{
                                           "text": "delighted",
                                           "detail": "Nothing could be better!",
@@ -65,7 +63,7 @@
               "text": "These inputs use a picker view to select the answer.",
               "inputFields": [{
                               "identifier": "date",
-                              "dataType": "date",
+                              "type": "date",
                               "uiHint": "picker",
                               "prompt": "Pick a date in the future",
                               "range": {
@@ -75,7 +73,7 @@
                               },
                               {
                               "identifier": "number",
-                              "dataType": "integer",
+                              "type": "integer",
                               "prompt": "Pick a number between -2 and +3",
                               "uiHint": "picker",
                               "range" : {   "minimumValue" : -2,
@@ -85,13 +83,12 @@
                               {
                               "identifier": "multipleComponent",
                               "type": "multipleComponent",
-                              "dataType": "multipleComponent",
                               "prompt": "Pick a combination of colors and animals",
                               "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat", "duck"]]
                               },
                               {
                               "identifier": "duration",
-                              "dataType": "duration",
+                              "type": "duration",
                               "prompt": "Pick a time interval"
                               }
                               ]
@@ -103,13 +100,13 @@
               "text": "If your Locale is US, these will use a picker with US Customary units.",
               "inputFields": [{
                               "identifier": "heightAdult",
-                              "dataType": "height.adult",
+                              "type": "height.adult",
                               "uiHint": "picker",
                               "prompt": "Enter a height for an adult"
                               },
                               {
                               "identifier": "weightInfant",
-                              "dataType": "weight.infant",
+                              "type": "weight.infant",
                               "prompt": "Enter a weight for a baby",
                               "uiHint": "picker"
                               }

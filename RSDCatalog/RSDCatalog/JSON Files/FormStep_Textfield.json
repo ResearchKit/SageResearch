@@ -10,7 +10,7 @@
               "text": "These inputs use a formatter to parse the entered text.",
               "inputFields": [{
                               "identifier": "number",
-                              "dataType": "integer",
+                              "type": "integer",
                               "prompt": "Pick a number between -2 and +3",
                               "uiHint": "textfield",
                               "range" : {   "minimumValue" : -2,
@@ -19,7 +19,7 @@
                               },
                               {
                               "identifier": "duration",
-                              "dataType": "duration",
+                              "type": "duration",
                               "uiHint": "textfield",
                               "prompt": "Enter a duration of time."
                               }
@@ -32,25 +32,25 @@
               "text": "Enter height and weight in your current Locale.",
               "inputFields": [{
                               "identifier": "heightAdult",
-                              "dataType": "height.adult",
+                              "type": "height.adult",
                               "uiHint": "textfield",
                               "prompt": "Enter a height for an adult"
                               },
                               {
                               "identifier": "weightAdult",
-                              "dataType": "weight.adult",
+                              "type": "weight.adult",
                               "uiHint": "textfield",
                               "prompt": "Enter a weight for an adult"
                               },
                               {
                               "identifier": "heightInfant",
-                              "dataType": "height.infant",
+                              "type": "height.infant",
                               "uiHint": "textfield",
                               "prompt": "Enter a height for a baby"
                               },
                               {
                               "identifier": "weightInfant",
-                              "dataType": "weight.infant",
+                              "type": "weight.infant",
                               "uiHint": "textfield",
                               "prompt": "Enter a weight for a baby"
                               }
@@ -62,7 +62,7 @@
               "title": "Enter a year",
               "text": "Enter a year in the past.",
               "inputFields": [{
-                              "dataType": "year",
+                              "type": "year",
                               "uiHint": "textfield",
                               "range": { "allowFuture": false }
                               }]

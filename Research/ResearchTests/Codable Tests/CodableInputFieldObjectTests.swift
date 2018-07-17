@@ -170,7 +170,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "dataType": "multipleChoice",
+            "type": "multipleChoice",
             "choices" : ["never", "sometimes", "often", "always"]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -194,7 +194,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             }
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["dataType"] as? String, "multipleChoice.string")
+            XCTAssertEqual(dictionary["type"] as? String, "multipleChoice.string")
             XCTAssertEqual(dictionary["optional"] as? Bool, false)
             XCTAssertEqual((dictionary["choices"] as? [Any])?.count ?? 0, 4)
             
@@ -211,7 +211,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             "identifier": "foo",
             "prompt": "Text",
             "placeholder": "enter text",
-            "dataType": "singleChoice.integer",
+            "type": "singleChoice.integer",
             "uiHint": "picker",
             "optional": true,
             "choices" : [{  "value" : 0,
@@ -222,7 +222,7 @@ class CodableInputFieldObjectTests: XCTestCase {
                             "text" : "often"},
                          {  "value" : 3,
                             "text" : "always"}],
-            "matchingAnswer": 0
+            "surveyRules": [{ "matchingAnswer": 0}]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -258,7 +258,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
             XCTAssertEqual(dictionary["prompt"] as? String, "Text")
             XCTAssertEqual(dictionary["placeholder"] as? String, "enter text")
-            XCTAssertEqual(dictionary["dataType"] as? String, "singleChoice.integer")
+            XCTAssertEqual(dictionary["type"] as? String, "singleChoice.integer")
             XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
             XCTAssertEqual(dictionary["optional"] as? Bool, true)
             XCTAssertEqual((dictionary["choices"] as? [Any])?.count ?? 0, 4)
@@ -282,7 +282,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         {
             "identifier": "foo",
             "prompt": "Text",
-            "dataType": "singleChoice.fraction",
+            "type": "singleChoice.fraction",
             "choices" : ["1/25","1/50","1/125"]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -309,7 +309,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "dataType": "multipleComponent",
+            "type": "multipleComponent",
             "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -331,7 +331,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             }
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["dataType"] as? String, "multipleComponent.string")
+            XCTAssertEqual(dictionary["type"] as? String, "multipleComponent.string")
             XCTAssertEqual(dictionary["optional"] as? Bool, false)
             XCTAssertEqual((dictionary["choices"] as? [Any])?.count ?? 0, 2)
             
@@ -346,7 +346,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "dataType": "integer",
+            "type": "integer",
             "uiHint": "slider",
             "range" : { "minimumValue" : -2,
                         "maximumValue" : 3,
@@ -410,7 +410,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             }
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["dataType"] as? String, "integer")
+            XCTAssertEqual(dictionary["type"] as? String, "integer")
             XCTAssertEqual(dictionary["uiHint"] as? String, "slider")
             
             if let range = dictionary["range"] as? [String: Any] {
@@ -447,7 +447,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "dataType": "decimal",
+            "type": "decimal",
             "uiHint": "slider",
             "range" : { "minimumValue" : -2.5,
                         "maximumValue" : 3,
@@ -484,7 +484,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             }
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["dataType"] as? String, "decimal")
+            XCTAssertEqual(dictionary["type"] as? String, "decimal")
             XCTAssertEqual(dictionary["uiHint"] as? String, "slider")
             
             if let range = dictionary["range"] as? [String: Any] {
@@ -513,7 +513,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "dataType": "duration",
+            "type": "duration",
             "uiHint": "picker",
             "range" : { "minimumValue" : 15,
                         "maximumValue" : 360,
@@ -552,7 +552,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             }
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["dataType"] as? String, "duration")
+            XCTAssertEqual(dictionary["type"] as? String, "duration")
             XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
             
             if let range = dictionary["range"] as? [String: Any] {
@@ -581,7 +581,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "dataType": "date",
+            "type": "date",
             "uiHint": "picker",
             "range" : { "minimumDate" : "2017-02-20",
                         "maximumDate" : "2017-03-20",
@@ -630,7 +630,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             }
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["dataType"] as? String, "date")
+            XCTAssertEqual(dictionary["type"] as? String, "date")
             XCTAssertEqual(dictionary["uiHint"] as? String, "picker")
             
             if let range = dictionary["range"] as? [String: Any] {
@@ -653,7 +653,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "dataType": "string",
+            "type": "string",
             "uiHint": "textfield",
             "textFieldOptions" : {
                         "textValidator" : "[A:C]",
@@ -692,7 +692,7 @@ class CodableInputFieldObjectTests: XCTestCase {
             }
             
             XCTAssertEqual(dictionary["identifier"] as? String, "foo")
-            XCTAssertEqual(dictionary["dataType"] as? String, "string")
+            XCTAssertEqual(dictionary["type"] as? String, "string")
             XCTAssertEqual(dictionary["uiHint"] as? String, "textfield")
             
             if let textFieldOptions = dictionary["textFieldOptions"] as? [String: Any] {
@@ -717,7 +717,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "dataType": "string",
+            "type": "string",
             "uiHint": "textfield",
             "textFieldOptions" : {}
         }
@@ -741,6 +741,31 @@ class CodableInputFieldObjectTests: XCTestCase {
             else{
                 XCTFail("Failed to decode textFieldOptions")
             }
+            
+        } catch let err {
+            XCTFail("Failed to decode object: \(err)")
+            return
+        }
+    }
+    
+    func testDetailInputFieldObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "detail",
+            "inputFields":[{
+                "identifier": "foo",
+                "type": "string"}]
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDDetailInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .base(.string))
             
         } catch let err {
             XCTFail("Failed to decode object: \(err)")

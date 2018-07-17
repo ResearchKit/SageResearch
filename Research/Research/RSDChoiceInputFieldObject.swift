@@ -41,11 +41,6 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         case choices, defaultAnswer
     }
     
-    /// Override and return `.choice`.
-    override open var classType: RSDInputFieldType? {
-        return .choice
-    }
-    
     /// A list of choices for the input field.
     public private(set) var choices : [RSDChoice]
     
@@ -94,9 +89,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     ///        let json = """
     ///            {
     ///                "identifier": "foo",
-    ///                "type": "choice",
     ///                "prompt": "Choose a number",
-    ///                "dataType": "singleChoice.decimal",
+    ///                "type": "singleChoice.decimal",
     ///                "uiHint": "picker",
     ///                "choices" : [{  "value" : 0,
     ///                                "text" : "0"},
@@ -116,9 +110,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     ///        let json = """
     ///              {
     ///              "identifier": "step3",
-    ///              "type": "choice",
     ///              "title": "Step 3",
-    ///              "dataType": "multipleChoice",
+    ///              "type": "multipleChoice",
     ///              "choices" : ["alpha", "beta", "charlie", "delta"]
     ///              }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
@@ -128,9 +121,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     ///        let json = """
     ///            {
     ///            "identifier": "happiness",
-    ///            "type": "choice",
     ///            "title": "How happy are you?",
-    ///            "dataType": "singleChoice.integer",
+    ///            "type": "singleChoice.integer",
     ///            "defaultAnswer": 3,
     ///            "choices": [{
     ///                        "text": "delighted",
@@ -170,9 +162,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     ///        let json = """
     ///            {
     ///                "identifier": "heightLimit",
-    ///                "type": "choice",
     ///                "prompt": "Are you tall?",
-    ///                "dataType": "singleChoice.boolean",
+    ///                "type": "singleChoice.boolean",
     ///                "choices" : [{  "value" : true,
     ///                                "text" : "Yes"},
     ///                             {  "value" : false,
@@ -212,6 +203,9 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         case .string:
             choices = try container.decode([RSDChoiceObject<String>].self, forKey: .choices)
             defaultAnswer = try container.decodeIfPresent(String.self, forKey: .defaultAnswer)
+        case .codable:
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "`.codable` data type is not supported by this object.")
+            throw DecodingError.typeMismatch(Codable.self, context)
         }
         self.choices = choices
         
@@ -280,9 +274,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     override class func examples() -> [[String : RSDJSONValue]] {
         let jsonA: [String : RSDJSONValue] = [
                 "identifier": "foo",
-                "type": "choice",
                 "prompt": "Choose a number",
-                "dataType": "singleChoice.decimal",
+                "type": "singleChoice.decimal",
                 "uiHint": "picker",
                 "defaultAnswer": 1.2,
                 "choices" : [[  "value" : 0,
@@ -299,18 +292,16 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         
         let jsonB: [String : RSDJSONValue] = [
               "identifier": "step3",
-              "type": "choice",
               "prompt": "Step 3",
-              "dataType": "multipleChoice",
+              "type": "multipleChoice",
               "defaultAnswer": "alpha",
               "choices" : ["alpha", "beta", "charlie", "delta"]
               ]
         
         let jsonC: [String : RSDJSONValue] = [
             "identifier": "happiness",
-            "type": "choice",
             "prompt": "How happy are you?",
-            "dataType": "singleChoice.integer",
+            "type": "singleChoice.integer",
             "defaultAnswer": 1,
             "choices": [[
                         "text": "delighted",
@@ -346,9 +337,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         
         let jsonD: [String : RSDJSONValue] = [
                 "identifier": "heightLimit",
-                "type": "choice",
                 "prompt": "Are you tall?",
-                "dataType": "singleChoice.boolean",
+                "type": "singleChoice.boolean",
                 "defaultAnswer": true,
                 "choices" : [[  "value" : true,
                                 "text" : "Yes"],
@@ -360,9 +350,8 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         
         let jsonE: [String : RSDJSONValue] = [
             "identifier": "happiness",
-            "type": "choice",
             "prompt": "How happy are you?",
-            "dataType": "singleChoice.fraction",
+            "type": "singleChoice.fraction",
             "defaultAnswer": "3/5",
             "choices": [[
                             "text": "delighted",

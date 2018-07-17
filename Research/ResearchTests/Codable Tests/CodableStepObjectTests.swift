@@ -348,7 +348,7 @@ class CodableStepObjectTests: XCTestCase {
           "inputFields": [
                           {
                           "identifier": "foo",
-                          "dataType": "date",
+                          "type": "date",
                           "uiHint": "picker",
                           "prompt": "Foo",
                           "range" : { "minimumDate" : "2017-02-20",
@@ -357,15 +357,27 @@ class CodableStepObjectTests: XCTestCase {
                           },
                           {
                           "identifier": "bar",
-                          "dataType": "integer",
+                          "type": "integer",
                           "prompt": "Bar"
                           },
                           {
                            "identifier": "goo",
-                           "type": "choice",
-                           "dataType": "multipleChoice",
+                           "type": "multipleChoice",
                            "choices" : ["never", "sometimes", "often", "always"]
-                          }]
+                          },
+                          {
+                            "identifier": "detail",
+                            "type": "detail",
+                            "inputFields": [{
+                                "identifier": "fieldA",
+                                "type": "string"
+                            },
+                            {
+                                "identifier": "fieldB",
+                                "type": "integer"
+                            }]
+                          }
+                    ]
           }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -376,13 +388,20 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.identifier, "step3")
             XCTAssertEqual(object.title, "Step 3")
             XCTAssertEqual(object.text, "Some text.")
-            XCTAssertEqual(object.inputFields.count, 3)
+            XCTAssertEqual(object.inputFields.count, 4)
             
-            if object.inputFields.count == 3 {
+            if object.inputFields.count == 4 {
                 XCTAssertEqual(object.inputFields[0].dataType, .base(.date))
                 XCTAssertEqual(object.inputFields[1].dataType, .base(.integer))
                 XCTAssertEqual(object.inputFields[2].dataType, .collection(.multipleChoice, .string))
                 XCTAssertNotNil(object.inputFields[2] as? RSDChoiceInputFieldObject)
+            }
+            
+            if let detail = object.inputFields.last as? RSDDetailInputFieldObject {
+                XCTAssertEqual(detail.dataType, .detail(.codable))
+            }
+            else {
+                XCTFail("Failed to decode the detail input field type.")
             }
 
         } catch let err {
@@ -399,8 +418,7 @@ class CodableStepObjectTests: XCTestCase {
           "type": "form",
           "title": "Step 3",
           "inputFields": [{
-            "type": "choice",
-            "dataType": "multipleChoice",
+            "type": "multipleChoice",
             "choices" : ["never", "sometimes", "often", "always"]
             }]
           }

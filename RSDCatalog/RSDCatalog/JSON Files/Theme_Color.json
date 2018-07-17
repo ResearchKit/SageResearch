@@ -14,9 +14,8 @@
                 }
               },
               "inputFields": [{
-                              "type": "choice",
                               "uiHint": "list",
-                              "dataType": "singleChoice",
+                              "type": "singleChoice",
                               "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
                               }]
               },
@@ -27,9 +26,8 @@
               "detail": "Select a single option",
               "colorTheme" : { "usesLightStyle" : false },
               "inputFields": [{
-                              "type": "choice",
                               "uiHint": "list",
-                              "dataType": "singleChoice",
+                              "type": "singleChoice",
                               "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
                               }]
               },
@@ -39,9 +37,8 @@
               "title": "Single choice selection with a bright green color theme.",
               "detail": "Select a single option",
               "inputFields": [{
-                              "type": "choice",
                               "uiHint": "list",
-                              "dataType": "singleChoice",
+                              "type": "singleChoice",
                               "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
                               }],
               "colorTheme" : {

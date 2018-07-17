@@ -85,6 +85,9 @@ public struct RSDFormUIHint : RawRepresentable, Codable {
     
     /// Input field of a disclosure arrow cell that can be used to display a detail view.
     public static let disclosureArrow: RSDFormUIHint = "disclosureArrow"
+    
+    /// Input field for a "detail" that is displayed inline as a section.
+    public static let section: RSDFormUIHint = "section"
 
     /// The standard type for this ui hint, if applicable.
     public var standardType: RSDFormUIHint? {
