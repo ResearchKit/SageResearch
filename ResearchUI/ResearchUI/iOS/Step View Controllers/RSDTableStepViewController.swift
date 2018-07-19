@@ -157,31 +157,6 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         setupModel()
     }
     
-    /// Override `viewDidAppear()` to focus on the first text field if applicable.
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // TODO: jbruhin 7/13/18 - I would recommend removing this functionality. It seems that most of the
-        // time, the step has a header view with some relevant information or instructions. With this code,
-        // the user does not have time to read that info before the keyboard slides up and it scrolls out of view.
-        // On larger screens, the header may still be visible, which is nice. Maybe the code below can check
-        // to see if there's room and only become first responder if there is???
-        
-        // TODO: syoung 10/18/2017 Look into other ways of delaying the first responder call.
-        // https://github.com/ResearchKit/SageResearch/issues/10
-        //
-        // If the first row in our tableView has a textField, we want it to become the first responder
-        // automatically. We must do this after a delay because of how RSDTaskViewController presents
-        // these step view controllers, which is done via a UIPageViewController. Without the delay,
-        // the textField will NOT become the firstResponder.
-        //
-        // Use a 0.3 seconds delay to give transitions and animations plenty of time to complete.
-        let delay = DispatchTime.now() + .milliseconds(300)
-        DispatchQueue.main.asyncAfter(deadline: delay) {
-            self.checkForFirstCellTextInputView()
-        }
-    }
-    
     /// Override `viewWillDisappear()` to remove listeners and dismiss the keyboard.
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
