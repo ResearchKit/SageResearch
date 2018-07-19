@@ -200,7 +200,7 @@ fileprivate let defaultSize: CGFloat = 122
     }
     
     fileprivate func commonInit() {
-        self.addSubview(buttonView)
+        self.contentView.addSubview(buttonView)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.rsd_alignToSuperview([.top, .bottom], padding: 12)
         buttonView.rsd_alignToSuperview([.leading, .trailing], padding: 24)
@@ -341,6 +341,7 @@ fileprivate class RSDCheckboxButtonView : UIView {
         checkboxContainer.translatesAutoresizingMaskIntoConstraints = false
         checkboxContainer.rsd_makeWidth(.equal, checkboxHeight)
         checkboxContainer.rsd_makeHeight(.equal, checkboxHeight)
+        checkboxContainer.rsd_alignToSuperview([.leading, .centerY], padding: 0)
         
         viewUnchecked = UncheckedView(frame: self.bounds)
         checkboxContainer.addSubview(viewUnchecked)
@@ -354,18 +355,17 @@ fileprivate class RSDCheckboxButtonView : UIView {
         viewChecked.layer.borderWidth = borderWidth
         viewChecked.backgroundColor = self.tintColor
         
-        checkboxContainer.rsd_alignToSuperview([.leading, .top, .bottom], padding: 0)
-        checkboxContainer.rsd_alignToSuperview([.trailing], padding: 0, priority: .init(100))
-        
         label = UILabel(frame: CGRect(x: 42, y: 0, width: 100, height: 32))
         self.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
-        label.rsd_alignToSuperview([.trailing, .centerY], padding: 0)
+        label.rsd_alignToSuperview([.trailing, .bottom, .top], padding: 10, priority: .required)
         label.rsd_alignRightOf(view: checkboxContainer, padding: 10, priority: .required)
         label.font = UIFont.rsd_checkboxButtonTitle
         label.textColor = UIColor.appTextDark
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
         
         // hide the title label
         checkboxContainer.isUserInteractionEnabled = false
