@@ -69,7 +69,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     open var range: RSDRange?
     
     /// A Boolean value indicating whether the user can skip the input field without providing an answer.
-    open var isOptional: Bool = false
+    open var isOptional: Bool = true
     
     /// A list of survey rules associated with this input field.
     open var surveyRules: [RSDSurveyRule]?

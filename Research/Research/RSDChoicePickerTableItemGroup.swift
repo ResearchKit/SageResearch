@@ -192,4 +192,15 @@ public final class RSDBooleanTableItemGroup : RSDChoicePickerTableItemGroup {
         }
         try super.setAnswer(from: result)
     }
+    
+    /// Override to set the default answer to false if the checkbox is not checked.
+    public override func setDefaultAnswerIfValid() -> Bool {
+        if singleCheckbox && (self.answer is NSNull) {
+            try? super.setAnswer(false)
+            return true
+        }
+        else {
+            return false
+        }
+    }
 }
