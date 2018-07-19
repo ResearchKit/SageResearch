@@ -105,6 +105,28 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         try textItem.setAnswer(newValue)
     }
     
+    /// Set the default answer for the item group. The base class implementation does nothing.
+    /// - returns: `true` if the answer was updated and `false` if the answer was unchanged.
+    open func setDefaultAnswerIfValid() -> Bool {
+        // At this level, only the "date" has a default value.
+        guard self.items.count == 1,
+            let textItem = self.items.first as? RSDTextInputTableItem,
+            textItem.answer == nil,
+            let defaultDate = (textItem.pickerSource as? RSDDatePickerDataSource)?.defaultDate
+            else {
+                return false
+        }
+        
+        do {
+            try textItem.setAnswer(defaultDate)
+            return true
+        }
+        catch let err {
+            debugPrint("Failed to set the default answer: \(err)")
+            return false
+        }
+    }
+    
     /// Set the new answer value from a previous result. This will throw an error if the result isn't valid.
     /// Otherwise, it will set the answer.
     /// - parameter result: The result that *may* have a previous answer.

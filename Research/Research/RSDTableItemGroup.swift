@@ -51,7 +51,7 @@ open class RSDTableItemGroup {
     
     /// Determine if the current answer is valid. Also checks the case where answer is required but one has not
     /// been provided.
-    public var isAnswerValid: Bool {
+    open var isAnswerValid: Bool {
         return true
     }
     
