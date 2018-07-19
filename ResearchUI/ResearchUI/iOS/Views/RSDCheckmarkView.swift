@@ -65,6 +65,25 @@ fileprivate let defaultSize: CGFloat = 122
     }
     private var _checkmarkHidden: Bool = false
     
+    /// Override background color to instead set a layer that can be inset.
+    override public var backgroundColor: UIColor? {
+        get {
+            return _backgroundColor
+        }
+        set {
+            _backgroundColor = newValue
+            _backgroundLayer?.backgroundColor = _backgroundColor?.cgColor
+            super.backgroundColor = UIColor.white
+        }
+    }
+    private var _backgroundColor: UIColor?
+    
+    @IBInspectable public var backgroundInset: CGFloat = 1 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
     /// Animate drawing the checkmark. Calling this method does nothing if the checkmark is not hidden.
     public func drawCheckmark(_ animated:Bool) {
         guard _checkmarkHidden, animated else {
@@ -87,6 +106,7 @@ fileprivate let defaultSize: CGFloat = 122
     }
     
     fileprivate var _shapeLayer: CAShapeLayer!
+    fileprivate var _backgroundLayer: CALayer!
     fileprivate var _circleSize: CGFloat!
     
     public override init(frame: CGRect) {
@@ -101,6 +121,11 @@ fileprivate let defaultSize: CGFloat = 122
     
     fileprivate func commonInit() {
         
+        _backgroundLayer = CALayer()
+        _backgroundLayer.bounds = self.bounds
+        _backgroundLayer.backgroundColor = self.backgroundColor?.cgColor
+        self.layer.addSublayer(_backgroundLayer!)
+        
         _circleSize = min(self.bounds.size.width, self.bounds.size.height)
         updateShapeLayer()
         
@@ -112,14 +137,18 @@ fileprivate let defaultSize: CGFloat = 122
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        
+
         let circleSize = min(self.bounds.size.width, self.bounds.size.height)
         if circleSize != _circleSize {
             _circleSize = circleSize
             updateShapeLayer()
         }
         _shapeLayer.frame = self.layer.bounds
-        self.layer.cornerRadius = _cornerRadius ?? _circleSize / 2
+        self.layer.cornerRadius = _cornerRadius ?? 0
+        
+        _backgroundLayer.frame = self.layer.frame.insetBy(dx: self.backgroundInset, dy: self.backgroundInset)
+        _backgroundLayer.cornerRadius = (self.layer.cornerRadius < _circleSize / 2) ?
+            self.layer.cornerRadius : _backgroundLayer.frame.width / 2
     }
     
     func updateShapeLayer() {
@@ -221,6 +250,7 @@ fileprivate let defaultSize: CGFloat = 122
         super.commonInit()
         buttonView.cornerRadius = checkboxHeight / 2.0
         buttonView.viewChecked.checkmarkHidden = true
+        buttonView.viewChecked.backgroundInset = 3.0
     }
 }
 
