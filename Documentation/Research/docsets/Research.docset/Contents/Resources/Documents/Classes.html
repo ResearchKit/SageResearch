@@ -56,6 +56,9 @@
                 <a href="Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/RSDCohortTrackingRule.html">RSDCohortTrackingRule</a>
               </li>
               <li class="nav-group-task">
@@ -571,6 +574,9 @@
                 <a href="Protocols/RSDDelimiterSeparatedEncodable.html">RSDDelimiterSeparatedEncodable</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/RSDDetailInputField.html">RSDDetailInputField</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/RSDDictionaryRepresentable.html">RSDDictionaryRepresentable</a>
               </li>
               <li class="nav-group-task">
@@ -1027,6 +1033,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/RSDTextFieldOptionsObject.html">RSDTextFieldOptionsObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/RSDTransitionStyle.html">RSDTransitionStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/RSDUIActionObject.html">RSDUIActionObject</a>
@@ -1495,6 +1504,34 @@ override this factory to add custom elements required to run their task modules.
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDFactory</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research13RSDCodingInfoC"></a>
+                    <a name="//apple_ref/swift/Class/RSDCodingInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDCodingInfo</code> is used as a pointer to a mutable class that can be used to assign any info that must be
+mutated during the Decoding of an object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDCodingInfo</span></code></pre>
 
                         </div>
                       </div>
@@ -2130,7 +2167,8 @@ main view controller and using a modal presentation style to actually input the 
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDPopoverInputFieldObject</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDFormUIStepObject.html">RSDFormUIStepObject</a></span><span class="p">,</span> <span class="kt"><a href="Protocols.html#/s:8Research20RSDPopoverInputFieldP">RSDPopoverInputField</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDCopyInputField.html">RSDCopyInputField</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated)</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDPopoverInputFieldObject</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDFormUIStepObject.html">RSDFormUIStepObject</a></span><span class="p">,</span> <span class="kt"><a href="Protocols.html#/s:8Research20RSDPopoverInputFieldP">RSDPopoverInputField</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDCopyInputField.html">RSDCopyInputField</a></span></code></pre>
 
                         </div>
                       </div>
@@ -2224,7 +2262,7 @@ The transformer can be used to create an object decoded from an embedded resourc
                       <div class="abstract">
                         <p><code>RSDSampleRecorder</code> is a base-class implementation of a controller that is used to record samples.</p>
 
-<p>While it isn&rsquo;t prohibited to instatiate this class directly, this is <em>intended</em> as an abstract implementation
+<p>While it isn&rsquo;t prohibited to instantiate this class directly, this is <em>intended</em> as an abstract implementation
 for recording sample data from GPS location, accelerometers, etc.</p>
 
 <p>Using this base implementation allows for a consistent logging of shared sample data key words for the step path

@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDCohortTrackingRule.html">RSDCohortTrackingRule</a>
               </li>
               <li class="nav-group-task">
@@ -571,6 +574,9 @@
                 <a href="../Protocols/RSDDelimiterSeparatedEncodable.html">RSDDelimiterSeparatedEncodable</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDDetailInputField.html">RSDDetailInputField</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDDictionaryRepresentable.html">RSDDictionaryRepresentable</a>
               </li>
               <li class="nav-group-task">
@@ -1029,6 +1035,9 @@
                 <a href="../Structs/RSDTextFieldOptionsObject.html">RSDTextFieldOptionsObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/RSDTransitionStyle.html">RSDTransitionStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/RSDUIActionObject.html">RSDUIActionObject</a>
               </li>
               <li class="nav-group-task">
@@ -1444,13 +1453,6 @@ calls
                       <div class="abstract">
                         <p>Initialize from a <code>Decoder</code>. This implementation will query the <code><a href="../Classes/RSDFactory.html">RSDFactory</a></code> attached to the
 decoder for the appropriate implementation for each input field in the array.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    <p>This method will also check for both an array of input fields and in order to support
-existing serialization methods defined prior to the development of the Swift 4 <code>Decodable</code>
-protocol, it will also recognize a single input field defined inline as a single question.</p>
-
-</div>
 <li><p>example:</p>
 <pre class="highlight swift"><code>    <span class="c1">// Example JSON dictionary that includes a date, integer, and multiple choice question</span>
     <span class="c1">// defined in an array of dictionaries keyed to "inputFields".</span>
@@ -1463,7 +1465,7 @@ protocol, it will also recognize a single input field defined inline as a single
         "</span><span class="n">inputFields</span><span class="s">": [
                         {
                         "</span><span class="n">identifier</span><span class="s">": "</span><span class="n">foo</span><span class="s">",
-                        "</span><span class="n">dataType</span><span class="s">": "</span><span class="n">date</span><span class="s">",
+                        "</span><span class="n">type</span><span class="s">": "</span><span class="n">date</span><span class="s">",
                         "</span><span class="n">uiHint</span><span class="s">": "</span><span class="n">picker</span><span class="s">",
                         "</span><span class="n">prompt</span><span class="s">": "</span><span class="kt">Foo</span><span class="s">",
                         "</span><span class="n">range</span><span class="s">" : { "</span><span class="n">minimumDate</span><span class="s">" : "</span><span class="mi">2017</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">20</span><span class="s">",
@@ -1472,27 +1474,15 @@ protocol, it will also recognize a single input field defined inline as a single
                         },
                         {
                         "</span><span class="n">identifier</span><span class="s">": "</span><span class="n">bar</span><span class="s">",
-                        "</span><span class="n">dataType</span><span class="s">": "</span><span class="n">integer</span><span class="s">",
+                        "</span><span class="n">type</span><span class="s">": "</span><span class="n">integer</span><span class="s">",
                         "</span><span class="n">prompt</span><span class="s">": "</span><span class="kt">Bar</span><span class="s">"
                         },
                         {
                         "</span><span class="n">identifier</span><span class="s">": "</span><span class="n">goo</span><span class="s">",
-                        "</span><span class="n">dataType</span><span class="s">": "</span><span class="n">multipleChoice</span><span class="s">",
+                        "</span><span class="n">type</span><span class="s">": "</span><span class="n">multipleChoice</span><span class="s">",
                         "</span><span class="n">choices</span><span class="s">" : ["</span><span class="n">never</span><span class="s">", "</span><span class="n">sometimes</span><span class="s">", "</span><span class="n">often</span><span class="s">", "</span><span class="n">always</span><span class="s">"]
                         }
                        ]
-        }
-    """</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span> <span class="c1">// our data in native (JSON) format</span>
-
-    <span class="c1">// Example JSON dictionary that includes a multiple choice question where the input field</span>
-    <span class="c1">// properties are defined inline and *not* using an array.</span>
-    <span class="k">let</span> <span class="nv">json</span> <span class="o">=</span> <span class="s">"""
-        {
-        "</span><span class="n">identifier</span><span class="s">": "</span><span class="n">step3</span><span class="s">",
-        "</span><span class="n">type</span><span class="s">": "</span><span class="n">form</span><span class="s">",
-        "</span><span class="n">title</span><span class="s">": "</span><span class="kt">Step</span> <span class="mi">3</span><span class="s">",
-        "</span><span class="n">dataType</span><span class="s">": "</span><span class="n">multipleChoice</span><span class="s">",
-        "</span><span class="n">choices</span><span class="s">" : ["</span><span class="n">never</span><span class="s">", "</span><span class="n">sometimes</span><span class="s">", "</span><span class="n">often</span><span class="s">", "</span><span class="n">always</span><span class="s">"]
         }
     """</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span> <span class="c1">// our data in native (JSON) format</span>
 </code></pre></li>
