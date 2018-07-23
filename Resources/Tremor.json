@@ -51,22 +51,24 @@
                 "identifier": "handSelection",
                 "type": "handSelection",
                 "title": "Which hands are you capable of doing this task with?",
-                "uiHint": "list",
-                "dataType": "singleChoice.string",
-                "choices": [
-                    {
-                        "text": "I can only perform this activity with my LEFT hand.",
-                        "value": "left"
-                    },
-                    {
-                        "text": "I can only perform this activity with my RIGHT hand.",
-                        "value": "right"
-                    },
-                    {
-                        "text": "I can perform this activity with both hands.",
-                        "value": "both"
-                    }
-                ]
+                "inputFields":[{
+                                "uiHint": "list",
+                                "type": "singleChoice.string",
+                                "choices": [
+                                    {
+                                        "text": "I can only perform this activity with my LEFT hand.",
+                                        "value": "left"
+                                    },
+                                    {
+                                        "text": "I can only perform this activity with my RIGHT hand.",
+                                        "value": "right"
+                                    },
+                                    {
+                                        "text": "I can perform this activity with both hands.",
+                                        "value": "both"
+                                    }
+                                ]
+                            }]
              },
              {
                 "identifier":"holdPhoneInstructions",
