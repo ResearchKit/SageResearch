@@ -156,6 +156,16 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         super.init(identifier: identifier, type: type ?? .active)
     }
     
+    /// Initializer for setting the immutable next step identifier.
+    ///
+    /// - parameters:
+    ///     - identifier: A short string that uniquely identifies the step.
+    ///     - nextStepIdentifier: The next step to jump to. This is used where direct navigation is required.
+    ///     - type: The type of the step. Default = `RSDStepType.instruction`
+    public override init(identifier: String, nextStepIdentifier: String?, type: RSDStepType? = nil) {
+        super.init(identifier: identifier, nextStepIdentifier: nextStepIdentifier, type: type)
+    }
+    
     /// Override to set the properties of the subclass.
     override open func copyInto(_ copy: RSDUIStepObject) {
         super.copyInto(copy)

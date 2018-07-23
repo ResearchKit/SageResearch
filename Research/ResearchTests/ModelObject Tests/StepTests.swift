@@ -49,7 +49,7 @@ class StepTests: XCTestCase {
     // MARK: `copy(with:)`
     
     func testCopy_ActiveUIStepObject() {
-        let step = RSDActiveUIStepObject(identifier: "foo", type: "boo")
+        let step = RSDActiveUIStepObject(identifier: "foo", nextStepIdentifier: "bar", type: "boo")
         step.title = "title"
         step.text = "text"
         step.detail = "detail"
@@ -57,7 +57,6 @@ class StepTests: XCTestCase {
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorTheme = RSDColorThemeElementObject(backgroundColorName: "fooBlue")
         step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
-        step.nextStepIdentifier = "bar"
         step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
         step.shouldHideActions = [.navigation(.skip)]
         step.duration = 5
@@ -119,7 +118,6 @@ class StepTests: XCTestCase {
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorTheme = RSDColorThemeElementObject(backgroundColorName: "fooBlue")
         step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
-        step.nextStepIdentifier = "bar"
         step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
         step.shouldHideActions = [.navigation(.skip)]
         
@@ -133,7 +131,6 @@ class StepTests: XCTestCase {
         XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
         XCTAssertEqual((copy.colorTheme as? RSDColorThemeElementObject)?._backgroundColorName, "fooBlue")
         XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
-        XCTAssertEqual(copy.nextStepIdentifier, "bar")
         if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
             XCTAssertEqual(learnAction.url, "fooFile")
             XCTAssertEqual(learnAction.buttonTitle, "tap foo")
@@ -172,7 +169,7 @@ class StepTests: XCTestCase {
     }
     
     func testCopy_UIStepObject() {
-        let step = RSDUIStepObject(identifier: "foo", type: "boo")
+        let step = RSDUIStepObject(identifier: "foo", nextStepIdentifier: "bar", type: "boo")
         step.title = "title"
         step.text = "text"
         step.detail = "detail"
@@ -180,7 +177,6 @@ class StepTests: XCTestCase {
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorTheme = RSDColorThemeElementObject(backgroundColorName: "fooBlue")
         step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
-        step.nextStepIdentifier = "bar"
         step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
         step.shouldHideActions = [.navigation(.skip)]
         
