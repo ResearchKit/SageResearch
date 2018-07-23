@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RSDCountdownDial Class Reference</title>
+    <title>RSDStepTextViewCell Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/RSDCountdownDial" class="dashAnchor"></a>
-    <a title="RSDCountdownDial Class Reference"></a>
+    <a name="//apple_ref/swift/Class/RSDStepTextViewCell" class="dashAnchor"></a>
+    <a title="RSDStepTextViewCell Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">ResearchUI Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">ResearchUI Reference</a>
         <img id="carat" src="../img/carat.png" />
-        RSDCountdownDial Class Reference
+        RSDStepTextViewCell Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -298,20 +298,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>RSDCountdownDial</h1>
+            <h1>RSDStepTextViewCell</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCountdownDial</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDProgressIndicator.html">RSDProgressIndicator</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepTextViewCell</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDTableViewCell.html">RSDTableViewCell</a></span></code></pre>
 
                 </div>
               </div>
-            <p><code>RSDCountdownDial</code> shows a circular dial indicator.</p>
-<div class="aside aside-seealso">
-    <p class="aside-title">Seealso</p>
-    <code><a href="../Classes/RSDActiveStepViewController.html">RSDActiveStepViewController</a></code>
-
-</div>
+            <p><code>RSDStepTextViewCell</code> is the base implementation of a text view used to enter answers in a
+form step table view.</p>
 
           </section>
           <section class="section task-group-section">
@@ -320,9 +315,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)progressColor"></a>
-                    <a name="//apple_ref/swift/Property/progressColor" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)progressColor">progressColor</a>
+                    <a name="/s:10ResearchUI19RSDStepTextViewCellC04textE0SQyAA0cdE0CGvp"></a>
+                    <a name="//apple_ref/swift/Property/textView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI19RSDStepTextViewCellC04textE0SQyAA0cdE0CGvp">textView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -330,15 +325,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The color of the circular ring that shows the track of the progress indicator.</p>
+                        <p>The text field associated with this cell.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">progressColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">textView</span><span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepTextView">RSDStepTextView</a></span><span class="o">!</span></code></pre>
 
                         </div>
                       </div>
@@ -348,9 +342,145 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)usesLightStyle"></a>
+                    <a name="/s:10ResearchUI19RSDStepTextViewCellC9viewLabelSQySo7UILabelCGvp"></a>
+                    <a name="//apple_ref/swift/Property/viewLabel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI19RSDStepTextViewCellC9viewLabelSQySo7UILabelCGvp">viewLabel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The label used to display the prompt for the input field.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">viewLabel</span><span class="p">:</span> <span class="kt">UILabel</span><span class="o">!</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI19RSDStepTextViewCellC9constantsAA0cdeF15LayoutConstants_pvp"></a>
+                    <a name="//apple_ref/swift/Property/constants" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI19RSDStepTextViewCellC9constantsAA0cdeF15LayoutConstants_pvp">constants</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Layout constants. Subclasses can override to customize; otherwise the default private
+constants are used.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">constants</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:10ResearchUI34RSDStepTextViewCellLayoutConstantsP">RSDStepTextViewCellLayoutConstants</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI19RSDStepTextViewCellC15initializeViewsyyF"></a>
+                    <a name="//apple_ref/swift/Method/initializeViews()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI19RSDStepTextViewCellC15initializeViewsyyF">initializeViews()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create all the view elements. Subclasses can override to provide custom instances.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">initializeViews</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI19RSDStepTextViewCellC10setupViewsyyF"></a>
+                    <a name="//apple_ref/swift/Method/setupViews()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI19RSDStepTextViewCellC10setupViewsyyF">setupViews()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Define the subView properties.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setupViews</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI19RSDStepTextViewCellC20tableBackgroundColorSQySo7UIColorCGvp"></a>
+                    <a name="//apple_ref/swift/Property/tableBackgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI19RSDStepTextViewCellC20tableBackgroundColorSQySo7UIColorCGvp">tableBackgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to set the content view background color to the color of the table background.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">tableBackgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepTextViewCell(py)usesLightStyle"></a>
                     <a name="//apple_ref/swift/Property/usesLightStyle" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)usesLightStyle">usesLightStyle</a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepTextViewCell(py)usesLightStyle">usesLightStyle</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -358,115 +488,15 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Should the element display with a light style of progress bar and label for use on a dark
-background, or with a dark style of progress bar for use on a light background?</p>
+                        <p>Override to set the text element colors based on whether the color style calls for a dark background
+with light elements or a light background with dark elements.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
-<span class="kd">open</span> <span class="k">var</span> <span class="nv">usesLightStyle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)ringWidth"></a>
-                    <a name="//apple_ref/swift/Property/ringWidth" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)ringWidth">ringWidth</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The width of the circular ring that shows the track of the progress indicator.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">ringWidth</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)dialWidth"></a>
-                    <a name="//apple_ref/swift/Property/dialWidth" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)dialWidth">dialWidth</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The width of the dial (progress indicator).</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    The color of the dial is set using the <code>tintColor</code> property.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">dialWidth</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Draw%20the%20dial"></a>
-                <a name="//apple_ref/swift/Section/Draw the dial" class="dashAnchor"></a>
-                <a href="#/Draw%20the%20dial">
-                  <h3 class="section-name">Draw the dial</h3>
-                </a>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI16RSDCountdownDialC13progressLayerSQySo07CAShapeF0CGvp"></a>
-                    <a name="//apple_ref/swift/Property/progressLayer" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI16RSDCountdownDialC13progressLayerSQySo07CAShapeF0CGvp">progressLayer</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Override to implement progress layer.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">progressLayer</span><span class="p">:</span> <span class="kt">CAShapeLayer</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">usesLightStyle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>

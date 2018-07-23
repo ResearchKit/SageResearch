@@ -137,6 +137,12 @@
                 <a href="Classes/RSDStepTextFieldFeaturedCell.html">RSDStepTextFieldFeaturedCell</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepTextView">RSDStepTextView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RSDStepTextViewCell.html">RSDStepTextViewCell</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/RSDStepViewController.html">RSDStepViewController</a>
               </li>
               <li class="nav-group-task">
@@ -241,6 +247,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols.html#/s:10ResearchUI35RSDStepTextFieldCellLayoutConstantsP">RSDStepTextFieldCellLayoutConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols.html#/s:10ResearchUI20RSDStepTextInputViewP">RSDStepTextInputView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols.html#/s:10ResearchUI34RSDStepTextViewCellLayoutConstantsP">RSDStepTextViewCellLayoutConstants</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols.html#/s:10ResearchUI29RSDStepViewControllerDelegateP">RSDStepViewControllerDelegate</a>
@@ -627,7 +639,7 @@ tableView will simply have a headerView, no rows, and a footerView.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></span><span class="p">,</span> <span class="kt">UITableViewDataSource</span><span class="p">,</span> <span class="kt">UITableViewDelegate</span><span class="p">,</span> <span class="kt">UITextFieldDelegate</span><span class="p">,</span> <span class="kt">RSDTableDataSourceDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols.html#/c:@M@ResearchUI@objc(pl)RSDPickerObserver">RSDPickerObserver</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDButtonCellDelegate.html">RSDButtonCellDelegate</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></span><span class="p">,</span> <span class="kt">UITableViewDataSource</span><span class="p">,</span> <span class="kt">UITableViewDelegate</span><span class="p">,</span> <span class="kt">UITextFieldDelegate</span><span class="p">,</span> <span class="kt">UITextViewDelegate</span><span class="p">,</span> <span class="kt">RSDTableDataSourceDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols.html#/c:@M@ResearchUI@objc(pl)RSDPickerObserver">RSDPickerObserver</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDButtonCellDelegate.html">RSDButtonCellDelegate</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1372,6 +1384,35 @@ form step table view.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepTextViewCell"></a>
+                    <a name="//apple_ref/swift/Class/RSDStepTextViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepTextViewCell">RSDStepTextViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDStepTextViewCell</code> is the base implementation of a text view used to enter answers in a
+form step table view.</p>
+
+                        <a href="Classes/RSDStepTextViewCell.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepTextViewCell</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDTableViewCell.html">RSDTableViewCell</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@ResearchUI@objc(cs)RSDStepTextFieldFeaturedCell"></a>
                     <a name="//apple_ref/swift/Class/RSDStepTextFieldFeaturedCell" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepTextFieldFeaturedCell">RSDStepTextFieldFeaturedCell</a>
@@ -1411,15 +1452,41 @@ use when there is a single input field on for the step.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><code>RSDStepTextField</code> is a subclass of <code>UITextField</code> that keeps a reference to the index path
-associated with this text field.</p>
+                        <p><code>RSDStepTextField</code> is a subclass of <code>UITextField</code> that conforms to &lsquo;RSDStepTextInputView&rsquo;.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDStepTextField</span> <span class="p">:</span> <span class="kt">UITextField</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepTextField</span> <span class="p">:</span> <span class="kt">UITextField</span><span class="p">,</span> <span class="kt"><a href="Protocols.html#/s:10ResearchUI20RSDStepTextInputViewP">RSDStepTextInputView</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepTextView"></a>
+                    <a name="//apple_ref/swift/Class/RSDStepTextView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepTextView">RSDStepTextView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDStepTextView</code> is a subclass of <code>UITextView</code> that conforms to &lsquo;RSDStepTextInputView&rsquo;.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepTextView</span> <span class="p">:</span> <span class="kt">UITextView</span><span class="p">,</span> <span class="kt"><a href="Protocols.html#/s:10ResearchUI20RSDStepTextInputViewP">RSDStepTextInputView</a></span></code></pre>
 
                         </div>
                       </div>

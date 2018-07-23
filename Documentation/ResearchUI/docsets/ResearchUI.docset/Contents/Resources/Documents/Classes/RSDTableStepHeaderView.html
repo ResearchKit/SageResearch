@@ -137,6 +137,12 @@
                 <a href="../Classes/RSDStepTextFieldFeaturedCell.html">RSDStepTextFieldFeaturedCell</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepTextView">RSDStepTextView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepTextViewCell.html">RSDStepTextViewCell</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDStepViewController.html">RSDStepViewController</a>
               </li>
               <li class="nav-group-task">
@@ -241,6 +247,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols.html#/s:10ResearchUI35RSDStepTextFieldCellLayoutConstantsP">RSDStepTextFieldCellLayoutConstants</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:10ResearchUI20RSDStepTextInputViewP">RSDStepTextInputView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:10ResearchUI34RSDStepTextViewCellLayoutConstantsP">RSDStepTextViewCellLayoutConstants</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols.html#/s:10ResearchUI29RSDStepViewControllerDelegateP">RSDStepViewControllerDelegate</a>
@@ -472,6 +484,61 @@ or progressView, and providing a minimumHeight or customView.</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">addDetailLabelIfNeeded</span><span class="p">()</span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI22RSDTableStepHeaderViewC25updateVerticalConstraintsSo6UIViewCSg05firstF0_AG04lastF0tAG011currentLastF0_tF"></a>
+                    <a name="//apple_ref/swift/Method/updateVerticalConstraints(currentLastView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI22RSDTableStepHeaderViewC25updateVerticalConstraintsSo6UIViewCSg05firstF0_AG04lastF0tAG011currentLastF0_tF">updateVerticalConstraints(currentLastView:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Your subclass can override this function to add more vertically stacked views, either before or after all the
+existing ones, depending on whether you add them before or after calling the <code>super</code> function. If you do,
+you&rsquo;ll need to manage removing and re-adding the associated constraints in your override as well.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">updateVerticalConstraints</span><span class="p">(</span><span class="nv">currentLastView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nv">firstView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?,</span> <span class="nv">lastView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>currentLastView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The last (vertical) view currently in the navigation header. If no views are
+                         added in a subclass override of this function, this should be returned in the
+                         lastView parameter.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A tuple with the firstView and lastView that had vertical constraints applied. If none were
+        applied, firstView will be nil, and lastView will be the same as currentLastView.</p>
                       </div>
                     </section>
                   </div>
