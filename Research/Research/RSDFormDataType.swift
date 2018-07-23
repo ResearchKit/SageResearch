@@ -55,6 +55,10 @@ public enum RSDFormDataType {
     /// Default range is for an adult.
     case measurement(MeasurementType, MeasurementRange)
     
+    /// A "detail" form data type is a data type that represents an input field where the data entry uses a
+    /// detail that displays information using one or more input fields. The default base type is `.codable`.
+    case detail(BaseType)
+    
     /// Custom data types are undefined in the base SDK.
     case custom(String, BaseType)
     
@@ -92,8 +96,11 @@ public enum RSDFormDataType {
         /// to an `RSDDateRange` or `RSDNumberRange` to box the allowed values.
         case year
         
+        /// A `Codable` object. This is an object that can be represented using a JSON or XML dictionary.
+        case codable
+        
         public static func allTypes() -> [BaseType] {
-            return [.boolean, .date, .decimal, .fraction, .integer, .string, .duration, .year]
+            return [.boolean, .date, .decimal, .fraction, .integer, .string, .duration, .year, .codable]
         }
     }
     
@@ -174,6 +181,9 @@ public enum RSDFormDataType {
                 
             case .string:
                 return [.textfield, .multipleLine]
+            
+            case .codable:
+                return [.disclosureArrow, .button, .link]
             }
         
         case .collection(let collectionType, _):
@@ -192,6 +202,9 @@ public enum RSDFormDataType {
             case .height, .weight:
                 return [.picker, .textfield]
             }
+            
+        case .detail(_):
+            return [.disclosureArrow, .button, .link, .section]
 
         case .custom(_):
             return RSDFormUIHint.allStandardHints
@@ -229,6 +242,9 @@ public enum RSDFormDataType {
                 return .integer
             }
             
+        case .detail(let baseType):
+            return baseType
+            
         case .custom(_, let baseType):
             return baseType
         }
@@ -249,6 +265,8 @@ public enum RSDFormDataType {
             return .integer
         case .string:
             return .string
+        case .codable:
+            return .codable
         }
     }
     
@@ -266,6 +284,8 @@ public enum RSDFormDataType {
     }
 }
 
+fileprivate let kDetailCodingKey = "detail"
+
 extension RSDFormDataType: RawRepresentable, Codable {
     public typealias RawValue = String
     
@@ -282,11 +302,21 @@ extension RSDFormDataType: RawRepresentable, Codable {
             let range: MeasurementRange = ((split.count == 2) ? MeasurementRange(rawValue: split[1]) : nil) ?? .adult
             self = .measurement(measurementType, range)
         }
-        else if split.count == 2, let subtype = BaseType(rawValue: split[1]) {
-            self = .custom(split[0], subtype)
-        }
         else {
-            self = .custom(rawValue, .string)
+            let subtype: BaseType = {
+                guard split.count == 2, let subtype = BaseType(rawValue: split[1])
+                    else {
+                        return .codable
+                }
+                return subtype
+            }()
+            let typeValue = split[0]
+            if rawValue == kDetailCodingKey {
+                self = .detail(subtype)
+            }
+            else {
+                self = .custom(typeValue, subtype)
+            }
         }
     }
     
@@ -300,6 +330,9 @@ extension RSDFormDataType: RawRepresentable, Codable {
         
         case .measurement(let measurement, let range):
             return "\(measurement).\(range)"
+            
+        case .detail(let baseType):
+            return "\(kDetailCodingKey).\(baseType.rawValue)"
             
         case .custom(let value, let baseType):
             if baseType == .string {

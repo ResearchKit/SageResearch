@@ -117,6 +117,9 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
         case .date:
             choices = try container.decode([[RSDChoiceObject<Date>]].self, forKey: .choices)
             defaultAnswer = try container.decodeIfPresent(Date.self, forKey: .defaultAnswer)
+        case .codable:
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "`.codable` data type is not supported by this object.")
+            throw DecodingError.typeMismatch(Codable.self, context)
         }
         self.choices = choices
         
@@ -204,7 +207,7 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
     override class func examples() -> [[String : RSDJSONValue]] {
         let json: [String : RSDJSONValue] = [
             "identifier": "foo",
-            "dataType": "multipleComponent",
+            "type": "multipleComponent",
             "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
         ]
         return [json]

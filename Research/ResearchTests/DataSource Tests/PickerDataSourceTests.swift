@@ -51,7 +51,7 @@ class PickerDataSourceTests: XCTestCase {
         let json = """
         {
             "identifier": "foo",
-            "dataType": "multipleComponent",
+            "type": "multipleComponent",
             "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat"]]
         }
         """.data(using: .utf8)!

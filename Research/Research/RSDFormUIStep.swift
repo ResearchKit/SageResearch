@@ -102,7 +102,15 @@ public protocol RSDInputField {
 
 /// `RSDPopoverInputField` wraps the input field in a form step. This allows the data source used to display
 /// the input field to show a form step in a modal view controller.
+@available(*, deprecated)
 public protocol RSDPopoverInputField : RSDInputField, RSDFormUIStep {
+}
+
+/// `RSDDetailInputField` is an input field that can be presented as a step using the given transition style.
+public protocol RSDDetailInputField : RSDInputField, RSDUIStep {
+    
+    /// The transition style for showing the detail input.
+    var transitionStyle: RSDTransitionStyle? { get }
 }
 
 /// Extend the input field to a mutable type.

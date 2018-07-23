@@ -286,7 +286,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
             switch inputField.dataType.baseType {
             case .boolean:
                 return RSDBooleanTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
-            case .string:
+            case .string, .codable:
                 return RSDTextFieldTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
             case .date:
                 return RSDDateTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
