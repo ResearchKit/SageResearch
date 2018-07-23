@@ -77,6 +77,8 @@ public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder {
     var stepHistory: [RSDResult] { get set }
     
     /// A list of all the asynchronous results for this task. The list should include uniquely identified results.
+    /// The step history is used to describe the path you took to get to where you are going, whereas
+    /// the asynchronous results include any canonical results that are independent of path.
     var asyncResults: [RSDResult]? { get set }
 }
 
@@ -137,6 +139,8 @@ extension RSDTaskResult  {
     }
     
     /// Append the async results with the given result, replacing the previous instance with the same identifier.
+    /// The step history is used to describe the path you took to get to where you are going, whereas
+    /// the asynchronous results include any canonical results that are independent of path.
     /// - parameter result:  The result to add to the async results.
     mutating public func appendAsyncResult(with result: RSDResult) {
         if let idx = asyncResults?.index(where: { $0.identifier == result.identifier }) {
