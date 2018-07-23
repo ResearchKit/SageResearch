@@ -112,7 +112,8 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     ///                         parameter will be `true`.
     /// - returns: The identifier of the next step.
     open override func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
-        return self.evaluateSurveyRules(with: result, isPeeking: isPeeking) ?? self.nextStepIdentifier
+        return self.evaluateSurveyRules(with: result, isPeeking: isPeeking) ??
+            super.nextStepIdentifier(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking)
     }
     
     /// Evaluate the task result and return the set of cohorts to add and remove. Default implementation
