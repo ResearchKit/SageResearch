@@ -427,7 +427,7 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         
         // Set up vertical stack constraints for associated views
         let verticalViewResult = self.updateVerticalConstraints(currentLastView: lastView)
-        let firstView = verticalViewResult.firstView
+        let firstView = topView ?? verticalViewResult.firstView
         lastView = verticalViewResult.lastView
         
         if let lastView = lastView {
