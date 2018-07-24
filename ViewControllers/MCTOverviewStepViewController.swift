@@ -173,6 +173,30 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         }
     }
     
+    /// Override goForward to add in requesting permission to access the motion sensors before continuing.
+    /// This is done here b/c the researchers wanted the balance and walk to use separate recorders. This
+    /// means that the recorder isn't turned on (and thus asking for permission) until after the user has
+    /// put the device in their pocket. syoung 07/25/2018
+    override open func goForward() {
+        if RSDMotionAuthorization.authorizationStatus() == .notDetermined {
+            // Request permission to access the motion sensors **before** continuing.
+            RSDMotionAuthorization.requestAuthorization() { [weak self] (status, _) in
+                if status.isDenied() {
+                    self?.handleAuthorizationFailed(status: status, permission: .motion)
+                } else {
+                    self?._super_goForward()
+                }
+            }
+        }
+        else {
+            self._super_goForward()
+        }
+    }
+
+    func _super_goForward() {
+        super.goForward()
+    }
+    
     // This variable was needed because the iPhone X lays out the subviews twice. The second
     // time the height of the scroll view changes which messes up the scroll view offset. Storing
     // the scroll view height is a way to compensate for this.
