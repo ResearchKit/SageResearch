@@ -150,7 +150,7 @@ fileprivate let defaultSize: CGFloat = 122
         _shapeLayer.frame = self.layer.bounds
         self.layer.cornerRadius = _cornerRadius ?? 0
         
-        _backgroundLayer.frame = CGRect(x: self.backgroundInset, y: self.backgroundInset, width: self.bounds.size.width - (self.backgroundInset * 2), height: self.bounds.size.height - (self.backgroundInset * 2))
+        _backgroundLayer.frame = self.layer.bounds.insetBy(dx: self.backgroundInset, dy: self.backgroundInset)
         _backgroundLayer.cornerRadius = (self.layer.cornerRadius < _circleSize / 2) ?
             self.layer.cornerRadius : _backgroundLayer.frame.width / 2
     }
