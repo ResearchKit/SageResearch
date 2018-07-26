@@ -83,7 +83,7 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     #endif
     
     /// The color style to use for the header view.
-    public var colorStyle: [String : RSDColorStyle]?
+    var colorStyle: [String : RSDColorStyle]?
     
     /// The color style to use for the given view component. If `nil` the default that is determined by the
     /// step view controller will be used.
@@ -91,6 +91,13 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     /// - returns: The color style (if any) defined for that element.
     public func colorStyle(for placement: RSDColorPlacement) -> RSDColorStyle? {
         return colorStyle?[placement.stringValue]
+    }
+    
+    /// Set the color style for the given placement.
+    mutating public func setColorStyle(_ style: RSDColorStyle, for placement: RSDColorPlacement) {
+        var dictionary: [String : RSDColorStyle] = self.colorStyle ?? [:]
+        dictionary[placement.stringValue] = style
+        self.colorStyle = dictionary
     }
     
     /// Default initializer.
@@ -110,7 +117,7 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     ///     - foregroundColorName: The name of the foreground color. Default = `nil`.
     ///     - bundleIdentifier: The bundle identifier for where to find the color asset or plist mapping
     ///       file. Default = `nil`.
-    public init(usesLightStyle: Bool = false, backgroundColorName: String?, bundleIdentifier: String? = nil) {
+    public init(usesLightStyle: Bool = false, backgroundColorName: String? = nil, bundleIdentifier: String? = nil) {
         self._usesLightStyle = usesLightStyle
         self._backgroundColorName = backgroundColorName
         self.bundleIdentifier = bundleIdentifier

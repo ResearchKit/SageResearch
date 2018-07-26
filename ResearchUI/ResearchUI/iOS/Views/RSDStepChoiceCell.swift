@@ -344,6 +344,122 @@ open class RSDStepTextFieldCell: RSDTableViewCell {
     }
 }
 
+/// `RSDStepTextViewCell` is the base implementation of a text view used to enter answers in a
+/// form step table view.
+open class RSDStepTextViewCell: RSDTableViewCell {
+    
+    /// The text field associated with this cell.
+    public var textView: RSDStepTextView!
+    
+    /// The label used to display the prompt for the input field.
+    open var viewLabel: UILabel!
+    
+    /// Layout constants. Subclasses can override to customize; otherwise the default private
+    /// constants are used.
+    open private(set) var constants: RSDStepTextViewCellLayoutConstants = RSDDefaultStepTextViewCellLayoutConstants()
+    
+    /// Create all the view elements. Subclasses can override to provide custom instances.
+    open func initializeViews() {
+        textView = RSDStepTextView()
+        viewLabel = UILabel()
+    }
+    
+    /// Define the subView properties.
+    open func setupViews() {
+        
+        // configure our field label
+        viewLabel.font = UIFont.rsd_textViewCellLabel
+        viewLabel.textColor = UIColor.rsd_textViewCellLabel
+        viewLabel.numberOfLines = 1
+        viewLabel.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (2 * constants.sideMargin)
+        
+        // override defaults
+        textView.font = UIFont.rsd_textViewCellText
+        textView.textColor = UIColor.rsd_textViewCellText
+        textView.textAlignment = .left
+        
+        // configure layer
+        textView.layer.borderWidth = 1.0
+        textView.layer.cornerRadius = constants.borderRadius
+        
+        // configure the text inset
+        let inset = constants.textInset
+        textView.textContainerInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    }
+    
+    /// Override to set the content view background color to the color of the table background.
+    override open var tableBackgroundColor: UIColor! {
+        didSet {
+            self.contentView.backgroundColor = tableBackgroundColor
+        }
+    }
+    
+    /// Override to set the text element colors based on whether the color style calls for a dark background
+    /// with light elements or a light background with dark elements.
+    override open var usesLightStyle: Bool {
+        didSet {
+            if usesLightStyle {
+                viewLabel.textColor = UIColor.rsd_textViewCellLabelLightStyle
+                textView.textColor = UIColor.rsd_textViewCellTextLightStyle
+                textView.layer.borderColor = UIColor.rsd_textViewCellBorderLightStyle.cgColor
+            }
+            else {
+                viewLabel.textColor = UIColor.rsd_textViewCellLabel
+                textView.textColor = UIColor.rsd_textViewCellText
+                textView.layer.borderColor = UIColor.rsd_textViewCellBorder.cgColor
+            }
+        }
+    }
+    
+    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        commonInit()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    override open func awakeFromNib() {
+        super.awakeFromNib()
+        commonInit()
+    }
+    
+    func commonInit() {
+        
+        initializeViews()
+        
+        contentView.addSubview(textView)
+        contentView.addSubview(viewLabel)
+        
+        setupViews()
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        viewLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        setNeedsUpdateConstraints()
+    }
+    
+    override open func updateConstraints() {
+        
+        NSLayoutConstraint.deactivate(self.constraints)
+        
+        textView.rsd_removeSiblingAndAncestorConstraints()
+        
+        viewLabel.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
+        viewLabel.rsd_alignToSuperview([.top], padding: constants.verticalMargin)
+        
+        textView.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
+        textView.rsd_alignBelow(view: viewLabel, padding: constants.verticalPadding)
+        textView.rsd_makeHeight(.equal, constants.height)
+        
+        textView.rsd_alignToSuperview([.bottom], padding: constants.verticalMargin)
+        
+        super.updateConstraints()
+    }
+}
+
 /// `RSDStepTextFieldCellLayoutConstants` defines the layout constants used by a `RSDStepTextFieldCell`.
 public protocol RSDStepTextFieldCellLayoutConstants {
     var verticalMargin: CGFloat { get }
@@ -351,14 +467,37 @@ public protocol RSDStepTextFieldCellLayoutConstants {
     var sideMargin: CGFloat { get }
 }
 
-/// Default constants.
+/// `RSDStepTextViewCellLayoutConstants` defines the layout constants used by a `RSDStepTextViewCell`.
+public protocol RSDStepTextViewCellLayoutConstants {
+    var verticalMargin: CGFloat { get }
+    var verticalPadding: CGFloat { get }
+    var sideMargin: CGFloat { get }
+    var height: CGFloat { get }
+    var textInset: CGFloat { get }
+    var borderRadius: CGFloat { get }
+}
+
+/// Default constants used by a `RSDStepTextFieldCell`.
 fileprivate struct RSDDefaultStepTextFieldCellLayoutConstants {
     let verticalMargin: CGFloat = 10.0
     let verticalPadding: CGFloat = 7.0
     let sideMargin: CGFloat = 24.0
 }
 
+/// Default constants used by a `RSDStepTextViewCell`.
+fileprivate struct RSDDefaultStepTextViewCellLayoutConstants {
+    let verticalMargin: CGFloat = 10.0
+    let verticalPadding: CGFloat = 7.0
+    let sideMargin: CGFloat = 24.0
+    let height: CGFloat = 150.0
+    let textInset: CGFloat = 10.0
+    let borderRadius: CGFloat = 8.0
+}
+
 extension RSDDefaultStepTextFieldCellLayoutConstants : RSDStepTextFieldCellLayoutConstants {
+}
+
+extension RSDDefaultStepTextViewCellLayoutConstants : RSDStepTextViewCellLayoutConstants {
 }
 
 /// `RSDStepTextFieldFeaturedCell` is an implementation of the text field form step entry cell for
@@ -395,9 +534,38 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
     }
 }
 
-/// `RSDStepTextField` is a subclass of `UITextField` that keeps a reference to the index path
-/// associated with this text field.
-public class RSDStepTextField: UITextField {
+/// `RSDStepTextInputView` defines custom properties associated with a 'UITextView' or 'UITextField'
+/// and provides read only access to other common properties.
+public protocol RSDStepTextInputView: class {
+    var inputAccessoryView: UIView? { get }
+    var inputView: UIView? { get }
+    var currentText: String? { get set }
+    var indexPath: IndexPath? { get set }
+}
+
+/// `RSDStepTextField` is a subclass of `UITextField` that conforms to 'RSDStepTextInputView'.
+open class RSDStepTextField: UITextField, RSDStepTextInputView {
+    public var currentText: String? {
+        get {
+            return self.text
+        }
+        set {
+            self.text = currentText
+        }
+    }
+    public var indexPath: IndexPath?
+}
+
+/// `RSDStepTextView` is a subclass of `UITextView` that conforms to 'RSDStepTextInputView'.
+open class RSDStepTextView: UITextView, RSDStepTextInputView {
+    public var currentText: String? {
+        get {
+            return self.text
+        }
+        set {
+            self.text = currentText
+        }
+    }
     public var indexPath: IndexPath?
 }
 

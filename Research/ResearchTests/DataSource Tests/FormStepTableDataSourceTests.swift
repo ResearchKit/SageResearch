@@ -52,9 +52,11 @@ class FormStepTableDataSourceTests: XCTestCase {
               {
               "identifier": "selectOne",
               "type": "form",
-              "uiHint": "list",
-              "dataType": "singleChoice",
-              "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+              "inputFields": [{
+                  "uiHint": "list",
+                  "type": "singleChoice",
+                  "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
+                }]
               }
         """.data(using: .utf8)! // our data in native (JSON) format
         
@@ -99,7 +101,7 @@ class FormStepTableDataSourceTests: XCTestCase {
               "text": "These inputs use a picker view to select the answer.",
               "inputFields": [{
                               "identifier": "date",
-                              "dataType": "date",
+                              "type": "date",
                               "uiHint": "picker",
                               "prompt": "Pick a date in the future",
                               "range": {
@@ -109,7 +111,7 @@ class FormStepTableDataSourceTests: XCTestCase {
                               },
                               {
                               "identifier": "number",
-                              "dataType": "integer",
+                              "type": "integer",
                               "prompt": "Pick a number between -2 and +3",
                               "uiHint": "picker",
                               "range" : {   "minimumValue" : -2,
@@ -118,20 +120,19 @@ class FormStepTableDataSourceTests: XCTestCase {
                               },
                               {
                               "identifier": "multipleComponent",
-                              "dataType": "multipleComponent",
+                              "type": "multipleComponent",
                               "prompt": "Pick a combination of colors and animals",
                               "choices" : [["blue", "red", "green", "yellow"], ["dog", "cat", "rat", "duck"]]
                               },
                               {
                               "identifier": "duration",
-                              "dataType": "duration",
+                              "type": "duration",
                               "prompt": "Pick a time interval"
                               },
                               {
                               "identifier": "selectOne",
-                              "type": "form",
                               "uiHint": "list",
-                              "dataType": "singleChoice",
+                              "type": "singleChoice",
                               "choices": ["Alfa", "Bravo", "Charlie", "Delta"]
                               }
                               ]

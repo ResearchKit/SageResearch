@@ -65,6 +65,25 @@ fileprivate let defaultSize: CGFloat = 122
     }
     private var _checkmarkHidden: Bool = false
     
+    /// Override background color to instead set a layer that can be inset.
+    override public var backgroundColor: UIColor? {
+        get {
+            return _backgroundColor
+        }
+        set {
+            _backgroundColor = newValue
+            _backgroundLayer?.backgroundColor = _backgroundColor?.cgColor
+            super.backgroundColor = UIColor.white
+        }
+    }
+    private var _backgroundColor: UIColor?
+    
+    @IBInspectable public var backgroundInset: CGFloat = 1 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
     /// Animate drawing the checkmark. Calling this method does nothing if the checkmark is not hidden.
     public func drawCheckmark(_ animated:Bool) {
         guard _checkmarkHidden, animated else {
@@ -87,6 +106,7 @@ fileprivate let defaultSize: CGFloat = 122
     }
     
     fileprivate var _shapeLayer: CAShapeLayer!
+    fileprivate var _backgroundLayer: CALayer!
     fileprivate var _circleSize: CGFloat!
     
     public override init(frame: CGRect) {
@@ -101,10 +121,19 @@ fileprivate let defaultSize: CGFloat = 122
     
     fileprivate func commonInit() {
         
+        _backgroundLayer = CALayer()
+        _backgroundLayer.bounds = self.bounds
+        _backgroundLayer.backgroundColor = self.backgroundColor?.cgColor
+        self.layer.addSublayer(_backgroundLayer!)
+        
         _circleSize = min(self.bounds.size.width, self.bounds.size.height)
         updateShapeLayer()
         
-        self.layer.cornerRadius = _cornerRadius ?? _circleSize / 2
+        let defaultCornerRadius = _circleSize / 2
+        if _cornerRadius == nil {
+            _cornerRadius = defaultCornerRadius
+        }
+        self.layer.cornerRadius = _cornerRadius ?? defaultCornerRadius
 
         self.accessibilityTraits |= UIAccessibilityTraitImage
         self.isAccessibilityElement = true
@@ -112,14 +141,18 @@ fileprivate let defaultSize: CGFloat = 122
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        
+
         let circleSize = min(self.bounds.size.width, self.bounds.size.height)
         if circleSize != _circleSize {
             _circleSize = circleSize
             updateShapeLayer()
         }
         _shapeLayer.frame = self.layer.bounds
-        self.layer.cornerRadius = _cornerRadius ?? _circleSize / 2
+        self.layer.cornerRadius = _cornerRadius ?? 0
+        
+        _backgroundLayer.frame = self.layer.bounds.insetBy(dx: self.backgroundInset, dy: self.backgroundInset)
+        _backgroundLayer.cornerRadius = (self.layer.cornerRadius < _circleSize / 2) ?
+            self.layer.cornerRadius : _backgroundLayer.frame.width / 2
     }
     
     func updateShapeLayer() {
@@ -200,7 +233,7 @@ fileprivate let defaultSize: CGFloat = 122
     }
     
     fileprivate func commonInit() {
-        self.addSubview(buttonView)
+        self.contentView.addSubview(buttonView)
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.rsd_alignToSuperview([.top, .bottom], padding: 12)
         buttonView.rsd_alignToSuperview([.leading, .trailing], padding: 24)
@@ -221,6 +254,7 @@ fileprivate let defaultSize: CGFloat = 122
         super.commonInit()
         buttonView.cornerRadius = checkboxHeight / 2.0
         buttonView.viewChecked.checkmarkHidden = true
+        buttonView.viewChecked.backgroundInset = 3.0
     }
 }
 
@@ -341,6 +375,7 @@ fileprivate class RSDCheckboxButtonView : UIView {
         checkboxContainer.translatesAutoresizingMaskIntoConstraints = false
         checkboxContainer.rsd_makeWidth(.equal, checkboxHeight)
         checkboxContainer.rsd_makeHeight(.equal, checkboxHeight)
+        checkboxContainer.rsd_alignToSuperview([.leading, .centerY], padding: 0)
         
         viewUnchecked = UncheckedView(frame: self.bounds)
         checkboxContainer.addSubview(viewUnchecked)
@@ -354,18 +389,17 @@ fileprivate class RSDCheckboxButtonView : UIView {
         viewChecked.layer.borderWidth = borderWidth
         viewChecked.backgroundColor = self.tintColor
         
-        checkboxContainer.rsd_alignToSuperview([.leading, .top, .bottom], padding: 0)
-        checkboxContainer.rsd_alignToSuperview([.trailing], padding: 0, priority: .init(100))
-        
         label = UILabel(frame: CGRect(x: 42, y: 0, width: 100, height: 32))
         self.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
-        label.rsd_alignToSuperview([.trailing, .centerY], padding: 0)
+        label.rsd_alignToSuperview([.trailing, .bottom, .top], padding: 10, priority: .required)
         label.rsd_alignRightOf(view: checkboxContainer, padding: 10, priority: .required)
         label.font = UIFont.rsd_checkboxButtonTitle
         label.textColor = UIColor.appTextDark
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
         
         // hide the title label
         checkboxContainer.isUserInteractionEnabled = false

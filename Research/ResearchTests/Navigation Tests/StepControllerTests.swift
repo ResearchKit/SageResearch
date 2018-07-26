@@ -294,6 +294,9 @@ class StepControllerTests: XCTestCase {
         stepController.taskController = taskController
         stepController.step = step
         
+        let hasStepAfter = navigator.hasStep(after: step, with: taskController.taskResult)
+        XCTAssertFalse(hasStepAfter)
+        
         // For the completion step (which isn't in the markers and is *after* the markers)
         // the progress should be nil
         let progress = stepController.progress()

@@ -56,7 +56,7 @@ import UIKit
 /// fields). These steps will result in a `tableData` that has no sections and, therefore, no rows. So the
 /// tableView will simply have a headerView, no rows, and a footerView.
 ///
-open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate {
+open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate {
 
     /// The table view associated with this view controller. This will be created during `viewDidLoad()`
     /// with a default set up if it is `nil`. If this view controller is loaded from a nib or storyboard,
@@ -157,25 +157,6 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         setupModel()
     }
     
-    /// Override `viewDidAppear()` to focus on the first text field if applicable.
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // TODO: syoung 10/18/2017 Look into other ways of delaying the first responder call.
-        // https://github.com/ResearchKit/SageResearch/issues/10
-        //
-        // If the first row in our tableView has a textField, we want it to become the first responder
-        // automatically. We must do this after a delay because of how RSDTaskViewController presents
-        // these step view controllers, which is done via a UIPageViewController. Without the delay,
-        // the textField will NOT become the firstResponder.
-        //
-        // Use a 0.3 seconds delay to give transitions and animations plenty of time to complete.
-        let delay = DispatchTime.now() + .milliseconds(300)
-        DispatchQueue.main.asyncAfter(deadline: delay) {
-            self.checkForFirstCellTextField()
-        }
-    }
-    
     /// Override `viewWillDisappear()` to remove listeners and dismiss the keyboard.
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -250,7 +231,13 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// The UI hints that are supported by this view controller.
     open class var supportedUIHints: Set<RSDFormUIHint> {
-        return [.list, .textfield, .picker, .checkbox, .radioButton, .modalButton]
+        return [.list, 
+                .textfield, 
+                .multipleLine, 
+                .picker, 
+                .checkbox, 
+                .radioButton, 
+                .button]
     }
     
     /// Creates and assigns a new instance of the model. The default implementation will instantiate
@@ -303,7 +290,9 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             case .textfield, .picker:
                 let cellClass: AnyClass = isFeatured ? RSDStepTextFieldFeaturedCell.self : RSDStepTextFieldCell.self
                 tableView.register(cellClass, forCellReuseIdentifier: reuseIdentifier)
-            case .modalButton:
+            case .multipleLine:
+                tableView.register(RSDStepTextViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+            case .button:
                 tableView.register(RSDModalButtonCell.self, forCellReuseIdentifier: reuseIdentifier)
             default:
                 // Look to see if this does not have a cell registered for the view and register a default
@@ -393,28 +382,22 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     override open func goForward() {
         // If there isn't an active text field then just go forward
-        guard let textField = activeTextField else {
+        guard let activeTextInputView = activeTextInputView else {
             super.goForward()
             return
         }
 
-        // Otherwise validate the textfield and cancel the goForward if invalid
-        guard validateAndSave(textField: textField)
+        // Otherwise validate the text input view and cancel the goForward if invalid
+        guard validateAndSave(textInputView: activeTextInputView)
             else {
                 return
         }
         
-        // If the textfield is valid, check to see if there is another item that is below this one
-        if let indexPath = indexPath(for: textField),
-            let nextItem = tableData?.nextItem(after: indexPath) {
-            
-            // need to get our cell and tell its textField to become first responder
-            // but do *not* go forward.
-            if let customCell = tableView.cellForRow(at: nextItem.indexPath) as? RSDStepTextFieldCell {
-                customCell.textField.becomeFirstResponder()
-            } else {
-                textField.resignFirstResponder()
-            }
+        // If the textfield is valid, check to see if there is another item that is below this one and set
+        // that as the next responder if valid.
+        if let indexPath = activeTextInputView.indexPath,
+            let nextResponder = self.nextResponder(after: indexPath) {
+            nextResponder.becomeFirstResponder()
         } else {
             // Finally, continue if this is the last field
             super.goForward()
@@ -422,7 +405,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     }
     
     override open func stop() {
-        activeTextField = nil
+        activeTextInputView = nil
         super.stop()
     }
     
@@ -542,6 +525,46 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         if let textFieldCell = cell as? RSDStepTextFieldCell {
             configure(textFieldCell: textFieldCell, at: indexPath)
         }
+        if let textViewCell = cell as? RSDStepTextViewCell {
+            configure(textViewCell: textViewCell, at: indexPath)
+        }
+    }
+    
+    /// Configure a text view cell.
+    func configure(textViewCell: RSDStepTextViewCell, at indexPath: IndexPath) {
+        guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
+            let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
+            else {
+                return
+        }
+
+        // Always set the index path and delegate
+        textViewCell.textView.indexPath = indexPath
+        textViewCell.textView.delegate = self
+        textViewCell.selectionStyle = .none
+        
+        // Set up our keyboard accessory view, which is a standard navigationView but only if there
+        // isn't already a footer set for this cell.
+        if textViewCell.textView.inputAccessoryView == nil {
+            textViewCell.textView.inputAccessoryView = instantiateKeyboardAccessoryView()
+        }
+        
+        // use the keyboard properties defined for this step
+        if let textAnswerFormat = tableItem.textFieldOptions {
+            textViewCell.textView.keyboardType = textAnswerFormat.keyboardType.keyboardType()
+            textViewCell.textView.isSecureTextEntry = textAnswerFormat.isSecureTextEntry
+            textViewCell.textView.autocapitalizationType = textAnswerFormat.autocapitalizationType.textAutocapitalizationType()
+            textViewCell.textView.autocorrectionType = textAnswerFormat.autocorrectionType.textAutocorrectionType()
+            textViewCell.textView.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
+        }
+        
+        // if we have an answer, populate the text view
+        if itemGroup.isAnswerValid {
+            textViewCell.textView.text = tableItem.answerText
+        }
+        
+        // populate the field label
+        textViewCell.viewLabel.text = tableItem.inputField.inputPrompt
     }
     
     /// Configure a text field cell.
@@ -559,21 +582,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         
         // Set up our keyboard accessory view, which is a standard navigationView but only if there
         // isn't already a footer set for this cell.
-        if let footer = self.navigationFooter, textFieldCell.textField.inputAccessoryView == nil {
-            
-            let navView = type(of: footer).init()
-            setupFooter(navView)
-            navView.backgroundColor = footer.backgroundColor
-            navView.usesLightStyle = footer.usesLightStyle
-            
-            // using auto layout to constrain the navView to fill its superview after adding it to the textfield
-            // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
-            // navView and manually set its frame before assigning it to the text field
-            let navHeight = navView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-            let navWidth = UIScreen.main.bounds.size.width
-            navView.frame = CGRect(x: 0, y: 0, width: navWidth, height: navHeight)
-            
-            textFieldCell.textField.inputAccessoryView = navView
+        if textFieldCell.textField.inputAccessoryView == nil {
+            textFieldCell.textField.inputAccessoryView = instantiateKeyboardAccessoryView()
         }
         
         // use the keyboard properties defined for this step
@@ -606,6 +616,28 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         
         // populate the text field placeholder label
         textFieldCell.placeholder = tableItem.placeholder
+    }
+    
+    /// Instantiate a keyboard accessory view based on the current 'navigationFooter'.
+    open func instantiateKeyboardAccessoryView() -> UIView? {
+        
+        guard let footer = self.navigationFooter else {
+            return nil
+        }
+        
+        let navView = type(of: footer).init()
+        setupFooter(navView)
+        navView.backgroundColor = footer.backgroundColor
+        navView.usesLightStyle = footer.usesLightStyle
+        
+        // using auto layout to constrain the navView to fill its superview after adding it to the textfield
+        // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
+        // navView and manually set its frame before assigning it to the text field
+        let navHeight = navView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        let navWidth = UIScreen.main.bounds.size.width
+        navView.frame = CGRect(x: 0, y: 0, width: navWidth, height: navHeight)
+        
+        return navView
     }
     
     /// Instantiate the appropriate picker view for the given input item.
@@ -653,6 +685,21 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
     }
     
+    /// Get the next responder (table cell or text field) for the next table item after the given index path.
+    /// - parameter indexPath: The index path of the next field.
+    /// - returns: The next responder or `nil` if this is the last item.
+    open func nextResponder(after indexPath: IndexPath) -> UIResponder? {
+        guard let nextItem = tableData?.nextItem(after: indexPath) else {
+            return nil
+        }
+        if let customCell = self.tableView.cellForRow(at: nextItem.indexPath) as? RSDStepTextFieldCell {
+            return customCell.textField
+        }
+        else {
+            return nextResponder(after: nextItem.indexPath)
+        }
+    }
+    
     // MARK: didSelect methods
     
     /// Called when a user action on a cell or button is linked to a choice item.
@@ -670,7 +717,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             }
             
             // Dismiss other textField's keyboard
-            if self.activeTextField != nil {
+            if self.activeTextInputView != nil {
                 tableView.endEditing(false)
             }
             
@@ -693,16 +740,49 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         self.present(stepViewController, animated: true, completion: nil)
     }
     
+    // MARK: UITextView delegate
+
+    open func textViewDidBeginEditing(_ textView: UITextView) {
+        (textView.inputAccessoryView as? RSDNavigationFooterView)?.nextButton?.isEnabled = self.isForwardEnabled
+        if let textInputView = textView as? RSDStepTextInputView {
+            activeTextInputView = textInputView
+            scroll(to: textInputView.indexPath)
+        }
+    }
+    
+    open func textViewDidEndEditing(_ textView: UITextView) {
+        guard let textInputView = textView as? RSDStepTextInputView else {
+            return
+        }
+        
+        // clear the activeTextInputView if this is that textView
+        if let activeTextView = activeTextInputView as? UITextView,
+            textView === activeTextView {
+            // clear the active state
+            activeTextInputView = nil
+            validateAndSave(textInputView: textInputView)
+        }
+        
+        // scroll back to our saved offset
+        tableView.setContentOffset(CGPoint(x: 0.0, y: savedVerticalScrollOffet), animated: true)
+    }
+    
+    open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        didChangeTextInputView(textView as? RSDStepTextInputView)
+        return true
+    }
     
     // MARK: UITextField delegate
     
     /// When a text field gets focus, assign it as the active text field (to allow resigning active if the user taps the forward button)
     /// and scroll it into view above the keyboard.
     open func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField
-        (activeTextField?.inputAccessoryView as? RSDNavigationFooterView)?.nextButton?.isEnabled = self.isForwardEnabled
+        (textField.inputAccessoryView as? RSDNavigationFooterView)?.nextButton?.isEnabled = self.isForwardEnabled
         pickerValueChanged(textField)
-        scroll(to: textField)
+        if let textInputView = textField as? RSDStepTextInputView {
+            activeTextInputView = textInputView
+            scroll(to: textInputView.indexPath)
+        }
     }
     
     /// Resign first responder on "Enter" key tapped.
@@ -715,18 +795,23 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Enable the next button as soon as the text field entry has changed.
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        didChangeTextField(textField)
+        didChangeTextInputView(textField as? RSDStepTextInputView)
         return true
     }
     
     /// Validate and save the text field result.
     open func textFieldDidEndEditing(_ textField: UITextField) {
         
-        // clear the activeTextField if this is that textField
-        if textField === activeTextField {
+        guard let textInputView = textField as? RSDStepTextInputView else {
+            return
+        }
+        
+        // clear the activeTextInputView if this is that textField
+        if let activeTextField = activeTextInputView as? UITextField,
+            textField === activeTextField {
             // clear the active state
-            activeTextField = nil
-            validateAndSave(textField: textField)
+            activeTextInputView = nil
+            validateAndSave(textInputView: textInputView)
         }
         
         // scroll back to our saved offset
@@ -737,7 +822,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     @objc open func pickerValueChanged(_ sender: Any) {
         guard let picker = ((sender as? UITextField)?.inputView ?? sender) as? RSDPickerViewProtocol,
-            let textField = activeTextField as? RSDStepTextField,
+            let textField = activeTextInputView as? RSDStepTextField,
             picker.indexPath == textField.indexPath,
             let inputItem = self.tableData?.tableItem(at: picker.indexPath) as? RSDTextInputTableItem
             else {
@@ -745,59 +830,54 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         textField.text = inputItem.answerText(for: picker.answer)
         if picker.answer != nil {
-            didChangeTextField(textField)
+            didChangeTextInputView(textField)
         }
     }
     
     // Text field management
     
     private var savedVerticalScrollOffet: CGFloat = 0.0
-    private var activeTextField: UITextField?
+    private var activeTextInputView: RSDStepTextInputView?
     
-    private func didChangeTextField(_ textField: UITextField) {
+    private func didChangeTextInputView(_ textInputView: RSDStepTextInputView?) {
         // Always enable the next button once something has been entered
-        (textField.inputAccessoryView as? RSDStepNavigationView)?.nextButton?.isEnabled = true
+        (textInputView?.inputAccessoryView as? RSDStepNavigationView)?.nextButton?.isEnabled = true
     }
     
     /// Check if the first cell is a text field and if so, set it as the first responder.
-    private func checkForFirstCellTextField() {
+    private func checkForFirstCellTextInputView() {
         
         // Don't do anything if viewWillDisappear was called
         guard isVisible else { return }
         
-        // If the first row in our tableView has a textField, we want it to become the first responder
+        // If the first row in our tableView has a text input view, we want it to become the first responder
         // automatically. So, first see if our first row has a textField.
         guard let tableView = tableView,
-            let firstCell = tableView.visibleCells.first,
-            let textFieldCell = firstCell as? RSDStepTextFieldCell else {
+            let firstCell = tableView.visibleCells.first else {
                 return
         }
         
-        // Our first row is a textField, so tell it to become firstResponder.
-        textFieldCell.textField.becomeFirstResponder()
+        // If our first row is a text field or text view cell, tell it to become firstResponder.
+        if let textFieldCell = firstCell as? RSDStepTextFieldCell {
+            textFieldCell.textField.becomeFirstResponder()
+        }
+        else if let textViewCell = firstCell as? RSDStepTextViewCell {
+            textViewCell.textView.becomeFirstResponder()
+        }
     }
     
     /// scroll the text field into view above the keyboard.
-    private func scroll(to textField: UITextField?) {
-        guard let customField = textField as? RSDStepTextField, let indexPath = customField.indexPath else { return }
+    private func scroll(to indexPath: IndexPath?) {
+        guard let indexPath = indexPath else {
+            return
+        }
         savedVerticalScrollOffet = tableView.contentOffset.y
         tableView?.scrollToRow(at: indexPath, at: .middle, animated: true)
     }
 
-    /// Get the index path associated with a given text field.
-    public func indexPath(for textField: UITextField?) -> IndexPath? {
-        guard let customTextField = textField as? RSDStepTextField,
-            let indexPath = customTextField.indexPath
-            else {
-                return nil
-        }
-        return indexPath
-    }
-
     /// Get the table item associated with a given text field.
-    public func tableItem(for textField: UITextField?) -> RSDTextInputTableItem? {
-        guard let customTextField = textField as? RSDStepTextField,
-            let indexPath = customTextField.indexPath,
+    public func tableItem(for textInputView: RSDStepTextInputView) -> RSDTextInputTableItem? {
+        guard let indexPath = textInputView.indexPath,
             let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem?
             else {
                 return nil
@@ -807,32 +887,32 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Validate the text field value and save the answer if valid.
     @discardableResult
-    public func validateAndSave(textField: UITextField? = nil) -> Bool {
+    public func validateAndSave(textInputView: RSDStepTextInputView? = nil) -> Bool {
         // If there isn't an active text field, then return true.
-        guard let textField = (textField ?? activeTextField)
+        guard let textInputView = (textInputView ?? activeTextInputView)
             else {
                 return true
         }
         
-        // If the text field is not an RSDStepTextField then return false.
-        guard let customTextField = textField as? RSDStepTextField,
-            let indexPath = customTextField.indexPath else {
+        // If there is not indexPath saved return false.
+        guard let indexPath = textInputView.indexPath else {
                 return false
         }
 
         let answer: Any? = {
-            if let picker = customTextField.inputView as? RSDPickerViewProtocol {
+            if let picker = textInputView.inputView as? RSDPickerViewProtocol {
                 return picker.answer
-            } else {
-                return customTextField.text
+            }
+            else {
+                return textInputView.currentText
             }
         }()
         
         // If this is a custom text field then update the text to match the
         // actual value stored in case it differs from the text entered.
         let success = saveAnswer(newValue: answer ?? NSNull(), at: indexPath)
-        if !success, let tableItem = tableItem(for: customTextField) {
-            customTextField.text = tableItem.answerText
+        if !success, let tableItem = tableItem(for: textInputView) {
+            textInputView.currentText = tableItem.answerText
         }
         return success
     }
@@ -920,7 +1000,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     open func answersDidChange(in section: Int) {
         // update enabled state of next button
         navigationFooter?.nextButton?.isEnabled = self.isForwardEnabled
-        (activeTextField?.inputAccessoryView as? RSDNavigationFooterView)?.nextButton?.isEnabled = self.isForwardEnabled
+        (activeTextInputView?.inputAccessoryView as? RSDNavigationFooterView)?.nextButton?.isEnabled = self.isForwardEnabled
     }
     
     /// Called when the answers tracked by the data source change.
@@ -1019,9 +1099,9 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             // animate our updates
             self.view.layoutIfNeeded()
         }) { (_) in
-            if self.isVisible, let textfield = self.activeTextField {
+            if self.isVisible {
                 // need to scroll the tableView to the active textField since our tableView bounds have changed
-                self.scroll(to: textfield)
+                self.scroll(to: self.activeTextInputView?.indexPath)
             }
         }
     }

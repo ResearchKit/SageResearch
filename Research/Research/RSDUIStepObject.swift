@@ -98,7 +98,17 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// task to display information or a question on an alternate path and then exit the task. In that case,
     /// the main branch of navigation will need to "jump" over the alternate path step and the alternate path
     /// step will need to "jump" to the "exit".
-    open var nextStepIdentifier: String?
+    ///
+    /// This step is not intended for "optional" navigation where the result might change the intended
+    /// navigation. For the case where a user action might result in a different navigation path, you can
+    /// have the step controller set the step result to a result that implements `RSDNavigationResult` and
+    /// then set the `skipToIdentifier` on that result. `RSDResultObject` and `RSDCollectionResultObject`
+    /// both implement this protocol. The reason for doing this is that each time a step is visited in a
+    /// a navigation path, the **result** of that step is replaced with an immutable result and will **not**
+    /// use the previous result navigation unless specifically set by the step controller.
+    ///
+    /// - seealso: `RSDStepViewController.assignSkipToIdentifier()`
+    open private(set) var nextStepIdentifier: String?
     
     /// The navigation cohort rules to apply *before* displaying the step.
     public var beforeCohortRules: [RSDCohortNavigationRule]?
@@ -113,6 +123,21 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     public required init(identifier: String, type: RSDStepType? = nil) {
         self.identifier = identifier
         self.stepType = type ?? .instruction
+        self._initCompleted = false
+        super.init()
+        self._initCompleted = true
+    }
+    
+    /// Initializer for setting the immutable next step identifier.
+    ///
+    /// - parameters:
+    ///     - identifier: A short string that uniquely identifies the step.
+    ///     - nextStepIdentifier: The next step to jump to. This is used where direct navigation is required.
+    ///     - type: The type of the step. Default = `RSDStepType.instruction`
+    public init(identifier: String, nextStepIdentifier: String?, type: RSDStepType? = nil) {
+        self.identifier = identifier
+        self.stepType = type ?? .instruction
+        self.nextStepIdentifier = nextStepIdentifier
         self._initCompleted = false
         super.init()
         self._initCompleted = true

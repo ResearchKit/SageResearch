@@ -2,7 +2,7 @@
 
 [Sage Bionetworks](http://sagebionetworks.org) has spent four years developing mobile health study apps and played a role in supporting over 20 projects, using Research Kit as the basis for all of our iPhone development. Based on that experience, we have begun to generate a next-generation framework and are looking for the involvement of the broader Research Kit community to provide input on design goals and approaches, and contribute to development. This framework:
 
-- Keeps what is good and useful about ResearchKit, provides for a smooth transition from it, and allows ResearchKit 1.x components to be used as modules in ResearchSuite apps;
+- Keeps what is good and useful about ResearchKit, provides for a smooth transition from it, and allows ResearchKit 1.x components to be used as modules in Research apps;
 - Is based on modern technology (Swift 4);
 - Allows maximum flexibility in extending the core step/task navigation and results gathering functionality by defining a set of protocols and then providing a set of classes as concrete reference implementations;
 - Allows maximum flexibility in UI/UX design, first by separating generic UX logic control from platform-specific UI implementations, and also again by providing protocols and concrete reference implementations of those protocols;
@@ -15,9 +15,9 @@ This project represents the results to date and the ongoing implementation of th
 
 ## Documentation
 
-The core step/task navigation and results-gathering framework is currently called [ResearchSuite](https://ResearchKit.github.io/SageResearch/Documentation/ResearchSuite/index.html).
+The core step/task navigation and results-gathering framework is currently called [Research](https://ResearchKit.github.io/SageResearch/Documentation/Research/index.html).
 
-The UI/UX framework is called [ResearchSuiteUI](https://ResearchKit.github.io/SageResearch/Documentation/ResearchSuiteUI/index.html).
+The UI/UX framework is called [ResearchUI](https://ResearchKit.github.io/SageResearch/Documentation/ResearchUI/index.html).
 
 Our first (transitional) app and task module built with these new frameworks is [CRFModuleValidation](https://github.com/Sage-Bionetworks/CRFValidationApp). This work is being used in the [NIH All of Us study](https://allofus.nih.gov/) to clinically validate a smartphone-based measurement of cardiorespiratory fitness based on measuring an individual's heart rate response to exercise.
 

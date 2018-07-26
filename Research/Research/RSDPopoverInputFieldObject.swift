@@ -36,6 +36,7 @@ import Foundation
 /// `RSDPopoverInputFieldObject` is a wrapper for a form step that allows it to conform to the input field
 /// protocol. This is intended to allow a model that shows summary information about the input field in a
 /// main view controller and using a modal presentation style to actually input the fields.
+@available(*, deprecated)
 open class RSDPopoverInputFieldObject : RSDFormUIStepObject, RSDPopoverInputField, RSDCopyInputField {
     
     /// A localized string that displays a short text offering a hint to the user of the data to be entered

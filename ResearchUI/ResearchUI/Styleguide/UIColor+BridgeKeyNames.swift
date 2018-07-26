@@ -396,4 +396,30 @@ extension UIColor {
     @objc open class var rsd_textFieldCellLabelLightStyle: UIColor {
         return UIColor.white
     }
+
+    /// MARK: TextView cell
+    
+    @objc open class var rsd_textViewCellText: UIColor {
+        return UIColor.appDarkGray
+    }
+    
+    @objc open class var rsd_textViewCellBorder: UIColor {
+        return UIColor.appLightGray
+    }
+    
+    @objc open class var rsd_textViewCellLabel: UIColor {
+        return UIColor.appLightGray
+    }
+    
+    @objc open class var rsd_textViewCellTextLightStyle: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var rsd_textViewCellBorderLightStyle: UIColor {
+        return UIColor.white
+    }
+    
+    @objc open class var rsd_textViewCellLabelLightStyle: UIColor {
+        return UIColor.white
+    }
 }

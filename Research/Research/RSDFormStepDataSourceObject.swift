@@ -238,7 +238,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
             else {
                 let section = RSDTableSectionBuilder(sectionIndex: sectionBuilders.count, singleFormItem: needExclusiveSection)
                 section.appendGroup(itemGroup)
-                if itemGroup is RSDChoicePickerTableItemGroup {
+                if let choiceGroup = itemGroup as? RSDChoicePickerTableItemGroup, choiceGroup.items.count > 1 {
                     section.title = item.inputPrompt
                     section.subtitle = item.inputPromptDetail
                 }
@@ -286,7 +286,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
             switch inputField.dataType.baseType {
             case .boolean:
                 return RSDBooleanTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
-            case .string:
+            case .string, .codable:
                 return RSDTextFieldTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
             case .date:
                 return RSDDateTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
@@ -324,23 +324,34 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     /// a previous result. For example, a form should be populated with previous answers, but an active
     /// test should not.
     open func populateInitialResults() {
-        guard let results = self.initialResult?.inputResults, results.count > 0 else { return }
         
         var stepResult = self.collectionResult()
         var hasChanges: Bool = false
         
-        for result in results {
-            if let itemGroup = itemGroup(with: result.identifier) as? RSDInputFieldTableItemGroup {
-                do {
-                    try itemGroup.setAnswer(from: result)
-                    if let result = self.instantiateAnswerResult(for: itemGroup) {
-                        stepResult.appendInputResults(with: result)
-                        hasChanges = true
+        func appendResults(for itemGroup: RSDInputFieldTableItemGroup) {
+            guard let result = self.instantiateAnswerResult(for: itemGroup) else { return }
+            stepResult.appendInputResults(with: result)
+            hasChanges = true
+        }
+        
+        if let results = self.initialResult?.inputResults, results.count > 0 {
+            results.forEach { (result) in
+                if let itemGroup = itemGroup(with: result.identifier) as? RSDInputFieldTableItemGroup {
+                    do {
+                        try itemGroup.setAnswer(from: result)
+                        appendResults(for: itemGroup)
+                    } catch let err {
+                        // ignore error but do not save the result
+                        debugPrint("Failed to restore answer from result. \(err)")
                     }
-                } catch let err {
-                    // ignore error but do not save the result
-                    debugPrint("Failed to restore answer from result. \(err)")
                 }
+            }
+        }
+        
+        itemGroups.forEach {
+            if let itemGroup = $0 as? RSDInputFieldTableItemGroup,
+                itemGroup.setDefaultAnswerIfValid() {
+                appendResults(for: itemGroup)
             }
         }
         

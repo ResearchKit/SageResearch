@@ -1,8 +1,8 @@
 //
-//  RSDTableItemGroup.swift
+//  RSDUITransitionStyle.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,34 +33,51 @@
 
 import Foundation
 
-/// `RSDTableItemGroup` is a generic table item group object that can be used to display information in a tableview
-/// that does not have an associated input field.
-open class RSDTableItemGroup {
+/// The type of transition style to use for displaying a UI component.
+public struct RSDTransitionStyle : RawRepresentable, Codable {
+    public typealias RawValue = String
     
-    /// The list of items (or rows) included in this group. A table group can be used to represent one or more rows.
-    public let items: [RSDTableItem]
+    public private(set) var rawValue: String
     
-    /// The section index for this group.
-    public var sectionIndex: Int = 0
-    
-    /// The row index for the first row in the group.
-    public let beginningRowIndex: Int
-    
-    /// A unique identifier that can be used to track the group.
-    public let uuid = UUID()
-    
-    /// Determine if the current answer is valid. Also checks the case where answer is required but one has not
-    /// been provided.
-    open var isAnswerValid: Bool {
-        return true
+    public init(rawValue: String) {
+        self.rawValue = rawValue
     }
     
-    /// Default initializer.
-    /// - parameters:
-    ///     - beginningRowIndex: The row index for the first row in the group.
-    ///     - items: The list of items (or rows) included in this group.
-    public init(beginningRowIndex: Int, items: [RSDTableItem]) {
-        self.beginningRowIndex = beginningRowIndex
-        self.items = items
+    /// TODO: syoung 07/14/2018 Work with Robert and Joshua to determine appropriate terms.
+    
+    public static func allStandardTypes() -> [RSDTransitionStyle] {
+        return []
+    }
+}
+
+extension RSDTransitionStyle : Equatable {
+    public static func ==(lhs: RSDTransitionStyle, rhs: RSDTransitionStyle) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+    public static func ==(lhs: String, rhs: RSDTransitionStyle) -> Bool {
+        return lhs == rhs.rawValue
+    }
+    public static func ==(lhs: RSDTransitionStyle, rhs: String) -> Bool {
+        return lhs.rawValue == rhs
+    }
+}
+
+extension RSDTransitionStyle : Hashable {
+    public var hashValue : Int {
+        return self.rawValue.hashValue
+    }
+}
+
+extension RSDTransitionStyle : ExpressibleByStringLiteral {
+    public typealias StringLiteralType = String
+    
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+}
+
+extension RSDTransitionStyle : RSDDocumentableStringEnum {
+    static func allCodingKeys() -> [String] {
+        return allStandardTypes().map{ $0.rawValue }
     }
 }

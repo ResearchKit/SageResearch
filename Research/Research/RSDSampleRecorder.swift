@@ -112,7 +112,7 @@ public struct RSDRecordMarker : RSDSampleRecord {
 
 /// `RSDSampleRecorder` is a base-class implementation of a controller that is used to record samples.
 ///
-/// While it isn't prohibited to instatiate this class directly, this is *intended* as an abstract implementation
+/// While it isn't prohibited to instantiate this class directly, this is *intended* as an abstract implementation
 /// for recording sample data from GPS location, accelerometers, etc.
 ///
 /// Using this base implementation allows for a consistent logging of shared sample data key words for the step path
@@ -497,7 +497,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         return (self.configuration as? RSDJSONRecorderConfiguration)?.usesRootDictionary ?? false
     }
     
-    /// Instatiate a marker for recording step transitions as well as start and stop points.
+    /// instantiate a marker for recording step transitions as well as start and stop points.
     /// The default implementation will instantiate a `RSDRecordMarker`.
     ///
     /// - parameters:

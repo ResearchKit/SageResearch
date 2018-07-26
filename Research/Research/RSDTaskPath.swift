@@ -285,6 +285,8 @@ public final class RSDTaskPath : NSObject, NSCopying {
     }
     
     /// Append the async results with the given result, replacing the previous instance with the same identifier.
+    /// The step history is used to describe the path you took to get to where you are going, whereas
+    /// the asynchronous results include any canonical results that are independent of path.
     /// - parameter result:  The result to add to the async results.
     public func appendAsyncResult(with newResult: RSDResult) {
         result.appendAsyncResult(with: newResult)
