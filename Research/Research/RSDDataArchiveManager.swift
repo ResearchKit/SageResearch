@@ -221,7 +221,7 @@ public struct RSDTaskMetadata : Codable {
     /// - parameters:
     ///     - taskResult: The task result to use to pull information included in the top-level metadata.
     ///     - files: A list of files included with this metadata.
-    init(taskResult: RSDTaskResult, files: [RSDFileManifest]) {
+    public init(taskResult: RSDTaskResult, files: [RSDFileManifest]) {
         #if os(watchOS)
             let device = WKInterfaceDevice.current()
             self.deviceInfo = "\(device.machineName); \(device.systemName)/\(device.systemVersion)"
