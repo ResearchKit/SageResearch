@@ -204,8 +204,8 @@ extension UnkeyedDecodingContainer {
                 array.append(value)
             } else if let value = try? decode(String.self) {
                 array.append(value)
-            } else if let nestedArray = try? rsd_decode(Array<Any>.self) {
-                array.append(nestedArray)
+            } else if let nestedArray = try? decode(AnyCodableArray.self) {
+                array.append(nestedArray.array)
             } else {
                 let nestedDictionary = try decode(AnyCodableDictionary.self)
                 array.append(nestedDictionary.dictionary)
