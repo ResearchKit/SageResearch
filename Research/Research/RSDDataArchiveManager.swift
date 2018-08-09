@@ -33,8 +33,14 @@
 
 import Foundation
 
-/// The data archive manager controls vending a new archive (as appropriate) and handling state.
-public protocol RSDDataArchiveManager : class, NSObjectProtocol {
+/// The data archive manager controls vending a new archive (as appropriate) and handling state. It is a
+/// composite protocol of the methods defined using Swift, which are required but can include Swift objects
+/// and methods that conform to Objective-C protocols which allows for optional implementation of the
+/// included methods.
+public protocol RSDDataArchiveManager : RSDSwiftDataArchiveManager, RSDObjCDataArchiveManager {
+}
+
+public protocol RSDSwiftDataArchiveManager : class, NSObjectProtocol {
     
     /// Should the task result archiving be continued if there was an error adding data to the current
     /// archive?
@@ -64,6 +70,22 @@ public protocol RSDDataArchiveManager : class, NSObjectProtocol {
     /// When the completion handler is called, the `RSDTaskPath` will clean up the task by deleting the
     /// output directory.
     func handleArchiveFailure(taskPath: RSDTaskPath, error: Error, completion:@escaping (() -> Void))
+    
+}
+
+@objc public protocol RSDObjCDataArchiveManager : class, NSObjectProtocol {
+    
+    /// Returns the answer key for a given `RSDAnswerResult` to be included in the answer map. This allows
+    /// the manager to return a different key mapping than the default key. If not implemented or if the
+    /// returned `String` is `nil`, then the default of `"\(sectionIdentifier).\(result.identifier)"` will
+    /// be used.
+    ///
+    /// - parameters:
+    ///     - resultIdentifier: The identifier for the answer result.
+    ///     - sectionIdentifier: The identifier for the section (if any).
+    /// - returns: Key to use in the answer map or `nil` if undefined.
+    @objc optional
+    func answerKey(for resultIdentifier: String, with sectionIdentifier: String?) -> String?
 }
 
 /// A list of reserved filenames for data added to an archive that is keyed to a custom-built data file.
@@ -371,9 +393,13 @@ internal class TaskArchiver : NSObject {
         if let answerResult = result as? RSDAnswerResult {
             if let answer = answerResult.value, !(answer is NSNull) {
                 let answerIdentifier: String = {
-                    if let section = sectionIdentifier {
+                    if let key = self.manager.answerKey?(for: answerResult.identifier, with: sectionIdentifier) {
+                        return key
+                    }
+                    else if let section = sectionIdentifier {
                         return "\(section).\(result.identifier)"
-                    } else {
+                    }
+                    else {
                         return result.identifier
                     }
                 }()
