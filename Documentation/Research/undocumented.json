@@ -113,6 +113,20 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDataArchiveManager.swift",
+      "line": 43,
+      "symbol": "RSDSwiftDataArchiveManager",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDataArchiveManager.swift",
+      "line": 76,
+      "symbol": "RSDObjCDataArchiveManager",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDetailInputFieldObject.swift",
       "line": 36,
       "symbol": "RSDDetailInputFieldObject",
