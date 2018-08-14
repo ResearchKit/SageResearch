@@ -137,6 +137,12 @@
                 <a href="../Classes/RSDStepTextFieldFeaturedCell.html">RSDStepTextFieldFeaturedCell</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepTextView">RSDStepTextView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDStepTextViewCell.html">RSDStepTextViewCell</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDStepViewController.html">RSDStepViewController</a>
               </li>
               <li class="nav-group-task">
@@ -243,6 +249,12 @@
                 <a href="../Protocols.html#/s:10ResearchUI35RSDStepTextFieldCellLayoutConstantsP">RSDStepTextFieldCellLayoutConstants</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols.html#/s:10ResearchUI20RSDStepTextInputViewP">RSDStepTextInputView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:10ResearchUI34RSDStepTextViewCellLayoutConstantsP">RSDStepTextViewCellLayoutConstants</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols.html#/s:10ResearchUI29RSDStepViewControllerDelegateP">RSDStepViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -289,7 +301,7 @@
             <h1>RSDTableStepViewController</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableStepViewController</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDStepViewController.html">RSDStepViewController</a></span><span class="p">,</span> <span class="kt">UITableViewDataSource</span><span class="p">,</span> <span class="kt">UITableViewDelegate</span><span class="p">,</span> <span class="kt">UITextFieldDelegate</span><span class="p">,</span> <span class="kt">RSDTableDataSourceDelegate</span><span class="p">,</span> <span class="kt"><a href="../Protocols.html#/c:@M@ResearchUI@objc(pl)RSDPickerObserver">RSDPickerObserver</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDButtonCellDelegate.html">RSDButtonCellDelegate</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableStepViewController</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDStepViewController.html">RSDStepViewController</a></span><span class="p">,</span> <span class="kt">UITableViewDataSource</span><span class="p">,</span> <span class="kt">UITableViewDelegate</span><span class="p">,</span> <span class="kt">UITextFieldDelegate</span><span class="p">,</span> <span class="kt">UITextViewDelegate</span><span class="p">,</span> <span class="kt">RSDTableDataSourceDelegate</span><span class="p">,</span> <span class="kt"><a href="../Protocols.html#/c:@M@ResearchUI@objc(pl)RSDPickerObserver">RSDPickerObserver</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDButtonCellDelegate.html">RSDButtonCellDelegate</a></span></code></pre>
 
                 </div>
               </div>
@@ -548,33 +560,6 @@ listener.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">viewWillAppear</span><span class="p">(</span><span class="n">_</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDTableStepViewController(im)viewDidAppear:"></a>
-                    <a name="//apple_ref/swift/Method/viewDidAppear(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDTableStepViewController(im)viewDidAppear:">viewDidAppear(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Override <code>viewDidAppear()</code> to focus on the first text field if applicable.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">viewDidAppear</span><span class="p">(</span><span class="n">_</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1360,6 +1345,33 @@ an assertion and return a placeholder cell identifier.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:10ResearchUI26RSDTableStepViewControllerC028instantiateKeyboardAccessoryE0So6UIViewCSgyF"></a>
+                    <a name="//apple_ref/swift/Method/instantiateKeyboardAccessoryView()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI26RSDTableStepViewControllerC028instantiateKeyboardAccessoryE0So6UIViewCSgyF">instantiateKeyboardAccessoryView()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instantiate a keyboard accessory view based on the current &lsquo;navigationFooter&rsquo;.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">instantiateKeyboardAccessoryView</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UIView</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:10ResearchUI26RSDTableStepViewControllerC017instantiatePickerE0AA09RSDPickerE8Protocol_So6UIViewCXcSg0A021RSDTextInputTableItemC04textmO0_10Foundation9IndexPathV05indexS0tF"></a>
                     <a name="//apple_ref/swift/Method/instantiatePickerView(textInputItem:indexPath:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:10ResearchUI26RSDTableStepViewControllerC017instantiatePickerE0AA09RSDPickerE8Protocol_So6UIViewCXcSg0A021RSDTextInputTableItemC04textmO0_10Foundation9IndexPathV05indexS0tF">instantiatePickerView(textInputItem:indexPath:)</a>
@@ -1457,6 +1469,56 @@ an assertion and return a placeholder cell identifier.</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">didSelectRowAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI26RSDTableStepViewControllerC13nextResponderSo11UIResponderCSg10Foundation9IndexPathV5after_tF"></a>
+                    <a name="//apple_ref/swift/Method/nextResponder(after:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI26RSDTableStepViewControllerC13nextResponderSo11UIResponderCSg10Foundation9IndexPathV5after_tF">nextResponder(after:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get the next responder (table cell or text field) for the next table item after the given index path.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">nextResponder</span><span class="p">(</span><span class="n">after</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIResponder</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index path of the next field.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The next responder or <code>nil</code> if this is the last item.</p>
                       </div>
                     </section>
                   </div>
@@ -1649,36 +1711,9 @@ and scroll it into view above the keyboard.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10ResearchUI26RSDTableStepViewControllerC9indexPath10Foundation05IndexH0VSgSo11UITextFieldCSg3for_tF"></a>
-                    <a name="//apple_ref/swift/Method/indexPath(for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI26RSDTableStepViewControllerC9indexPath10Foundation05IndexH0VSgSo11UITextFieldCSg3for_tF">indexPath(for:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Get the index path associated with a given text field.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">indexPath</span><span class="p">(</span><span class="k">for</span> <span class="nv">textField</span><span class="p">:</span> <span class="kt">UITextField</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">IndexPath</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI26RSDTableStepViewControllerC9tableItem0A0017RSDTextInputTableH0CSgSo11UITextFieldCSg3for_tF"></a>
+                    <a name="/s:10ResearchUI26RSDTableStepViewControllerC9tableItem0A0017RSDTextInputTableH0CSgAA011RSDStepTextjE0_p3for_tF"></a>
                     <a name="//apple_ref/swift/Method/tableItem(for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI26RSDTableStepViewControllerC9tableItem0A0017RSDTextInputTableH0CSgSo11UITextFieldCSg3for_tF">tableItem(for:)</a>
+                    <a class="token" href="#/s:10ResearchUI26RSDTableStepViewControllerC9tableItem0A0017RSDTextInputTableH0CSgAA011RSDStepTextjE0_p3for_tF">tableItem(for:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1693,7 +1728,7 @@ and scroll it into view above the keyboard.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">tableItem</span><span class="p">(</span><span class="k">for</span> <span class="nv">textField</span><span class="p">:</span> <span class="kt">UITextField</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">RSDTextInputTableItem</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">tableItem</span><span class="p">(</span><span class="k">for</span> <span class="nv">textInputView</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:10ResearchUI20RSDStepTextInputViewP">RSDStepTextInputView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">RSDTextInputTableItem</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -1703,9 +1738,9 @@ and scroll it into view above the keyboard.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10ResearchUI26RSDTableStepViewControllerC15validateAndSaveSbSo11UITextFieldCSg04textK0_tF"></a>
-                    <a name="//apple_ref/swift/Method/validateAndSave(textField:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI26RSDTableStepViewControllerC15validateAndSaveSbSo11UITextFieldCSg04textK0_tF">validateAndSave(textField:)</a>
+                    <a name="/s:10ResearchUI26RSDTableStepViewControllerC15validateAndSaveSbAA016RSDStepTextInputE0_pSg04textlE0_tF"></a>
+                    <a name="//apple_ref/swift/Method/validateAndSave(textInputView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI26RSDTableStepViewControllerC15validateAndSaveSbAA016RSDStepTextInputE0_pSg04textlE0_tF">validateAndSave(textInputView:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1721,7 +1756,7 @@ and scroll it into view above the keyboard.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">validateAndSave</span><span class="p">(</span><span class="nv">textField</span><span class="p">:</span> <span class="kt">UITextField</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">validateAndSave</span><span class="p">(</span><span class="nv">textInputView</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:10ResearchUI20RSDStepTextInputViewP">RSDStepTextInputView</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
