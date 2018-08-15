@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDCohortTrackingRule.html">RSDCohortTrackingRule</a>
               </li>
               <li class="nav-group-task">
@@ -547,7 +550,7 @@
                 <a href="../Protocols/RSDDataArchive.html">RSDDataArchive</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDDataArchiveManager.html">RSDDataArchiveManager</a>
+                <a href="../Protocols.html#/s:8Research21RSDDataArchiveManagerP">RSDDataArchiveManager</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDDateCoder.html">RSDDateCoder</a>
@@ -569,6 +572,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDDelimiterSeparatedEncodable.html">RSDDelimiterSeparatedEncodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDetailInputField.html">RSDDetailInputField</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDDictionaryRepresentable.html">RSDDictionaryRepresentable</a>
@@ -1029,6 +1035,9 @@
                 <a href="../Structs/RSDTextFieldOptionsObject.html">RSDTextFieldOptionsObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/RSDTransitionStyle.html">RSDTransitionStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/RSDUIActionObject.html">RSDUIActionObject</a>
               </li>
               <li class="nav-group-task">
@@ -1135,6 +1144,34 @@ to include a list of choices for a multiple choice or single choice input field.
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">defaultAnswer</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research25RSDChoiceInputFieldObjectC10isOptionalSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isOptional" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research25RSDChoiceInputFieldObjectC10isOptionalSbvp">isOptional</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override <code>isOptional</code> to allow for <q>nil</q> behavior if there is only one choice. Otherwise, there isn&rsquo;t
+really a way for the user to <strong>not</strong> select that choice.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">isOptional</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1311,9 +1348,8 @@ decode a list of <code><a href="../Structs/RSDChoiceObject.html">RSDChoiceObject
    <span class="k">let</span> <span class="nv">json</span> <span class="o">=</span> <span class="s">"""
        {
            "</span><span class="n">identifier</span><span class="s">": "</span><span class="n">foo</span><span class="s">",
-           "</span><span class="n">type</span><span class="s">": "</span><span class="n">form</span><span class="s">",
            "</span><span class="n">prompt</span><span class="s">": "</span><span class="kt">Choose</span> <span class="n">a</span> <span class="n">number</span><span class="s">",
-           "</span><span class="n">dataType</span><span class="s">": "</span><span class="n">singleChoice</span><span class="o">.</span><span class="n">decimal</span><span class="s">",
+           "</span><span class="n">type</span><span class="s">": "</span><span class="n">singleChoice</span><span class="o">.</span><span class="n">decimal</span><span class="s">",
            "</span><span class="n">uiHint</span><span class="s">": "</span><span class="n">picker</span><span class="s">",
            "</span><span class="n">choices</span><span class="s">" : [{  "</span><span class="n">value</span><span class="s">" : 0,
                            "</span><span class="n">text</span><span class="s">" : "</span><span class="mi">0</span><span class="s">"},
@@ -1333,9 +1369,8 @@ decode a list of <code><a href="../Structs/RSDChoiceObject.html">RSDChoiceObject
    <span class="k">let</span> <span class="nv">json</span> <span class="o">=</span> <span class="s">"""
          {
          "</span><span class="n">identifier</span><span class="s">": "</span><span class="n">step3</span><span class="s">",
-         "</span><span class="n">type</span><span class="s">": "</span><span class="n">form</span><span class="s">",
          "</span><span class="n">title</span><span class="s">": "</span><span class="kt">Step</span> <span class="mi">3</span><span class="s">",
-         "</span><span class="n">dataType</span><span class="s">": "</span><span class="n">multipleChoice</span><span class="s">",
+         "</span><span class="n">type</span><span class="s">": "</span><span class="n">multipleChoice</span><span class="s">",
          "</span><span class="n">choices</span><span class="s">" : ["</span><span class="n">alpha</span><span class="s">", "</span><span class="n">beta</span><span class="s">", "</span><span class="n">charlie</span><span class="s">", "</span><span class="n">delta</span><span class="s">"]
          }
        """</span><span class="o">.</span><span class="nf">data</span><span class="p">(</span><span class="nv">using</span><span class="p">:</span> <span class="o">.</span><span class="n">utf8</span><span class="p">)</span><span class="o">!</span> <span class="c1">// our data in native (JSON) format</span>
@@ -1345,9 +1380,8 @@ decode a list of <code><a href="../Structs/RSDChoiceObject.html">RSDChoiceObject
    <span class="k">let</span> <span class="nv">json</span> <span class="o">=</span> <span class="s">"""
        {
        "</span><span class="n">identifier</span><span class="s">": "</span><span class="n">happiness</span><span class="s">",
-       "</span><span class="n">type</span><span class="s">": "</span><span class="n">form</span><span class="s">",
        "</span><span class="n">title</span><span class="s">": "</span><span class="kt">How</span> <span class="n">happy</span> <span class="n">are</span> <span class="n">you</span><span class="p">?</span><span class="s">",
-       "</span><span class="n">dataType</span><span class="s">": "</span><span class="n">singleChoice</span><span class="o">.</span><span class="n">integer</span><span class="s">",
+       "</span><span class="n">type</span><span class="s">": "</span><span class="n">singleChoice</span><span class="o">.</span><span class="n">integer</span><span class="s">",
        "</span><span class="n">defaultAnswer</span><span class="s">": 3,
        "</span><span class="n">choices</span><span class="s">": [{
                    "</span><span class="n">text</span><span class="s">": "</span><span class="n">delighted</span><span class="s">",
@@ -1387,9 +1421,8 @@ decode a list of <code><a href="../Structs/RSDChoiceObject.html">RSDChoiceObject
    <span class="k">let</span> <span class="nv">json</span> <span class="o">=</span> <span class="s">"""
        {
            "</span><span class="n">identifier</span><span class="s">": "</span><span class="n">heightLimit</span><span class="s">",
-           "</span><span class="n">type</span><span class="s">": "</span><span class="n">form</span><span class="s">",
            "</span><span class="n">prompt</span><span class="s">": "</span><span class="kt">Are</span> <span class="n">you</span> <span class="n">tall</span><span class="p">?</span><span class="s">",
-           "</span><span class="n">dataType</span><span class="s">": "</span><span class="n">singleChoice</span><span class="o">.</span><span class="n">boolean</span><span class="s">",
+           "</span><span class="n">type</span><span class="s">": "</span><span class="n">singleChoice</span><span class="o">.</span><span class="n">boolean</span><span class="s">",
            "</span><span class="n">choices</span><span class="s">" : [{  "</span><span class="n">value</span><span class="s">" : true,
                            "</span><span class="n">text</span><span class="s">" : "</span><span class="kt">Yes</span><span class="s">"},
                         {  "</span><span class="n">value</span><span class="s">" : false,

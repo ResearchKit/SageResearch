@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RSDDataArchiveManager Protocol Reference</title>
+    <title>RSDTransitionStyle Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/RSDDataArchiveManager" class="dashAnchor"></a>
-    <a title="RSDDataArchiveManager Protocol Reference"></a>
+    <a name="//apple_ref/swift/Struct/RSDTransitionStyle" class="dashAnchor"></a>
+    <a title="RSDTransitionStyle Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Research Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Research Reference</a>
         <img id="carat" src="../img/carat.png" />
-        RSDDataArchiveManager Protocol Reference
+        RSDTransitionStyle Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -54,6 +54,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDCohortTrackingRule.html">RSDCohortTrackingRule</a>
@@ -547,7 +550,7 @@
                 <a href="../Protocols/RSDDataArchive.html">RSDDataArchive</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDDataArchiveManager.html">RSDDataArchiveManager</a>
+                <a href="../Protocols.html#/s:8Research21RSDDataArchiveManagerP">RSDDataArchiveManager</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDDateCoder.html">RSDDateCoder</a>
@@ -569,6 +572,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDDelimiterSeparatedEncodable.html">RSDDelimiterSeparatedEncodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDetailInputField.html">RSDDetailInputField</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDDictionaryRepresentable.html">RSDDictionaryRepresentable</a>
@@ -1029,6 +1035,9 @@
                 <a href="../Structs/RSDTextFieldOptionsObject.html">RSDTextFieldOptionsObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/RSDTransitionStyle.html">RSDTransitionStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/RSDUIActionObject.html">RSDUIActionObject</a>
               </li>
               <li class="nav-group-task">
@@ -1073,14 +1082,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>RSDDataArchiveManager</h1>
+            <h1>RSDTransitionStyle</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDDataArchiveManager</span> <span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="kt">NSObjectProtocol</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">RSDTransitionStyle</span> <span class="p">:</span> <span class="kt">RawRepresentable</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
 
                 </div>
               </div>
-            <p>The data archive manager controls vending a new archive (as appropriate) and handling state.</p>
+            <p>The type of transition style to use for displaying a UI component.</p>
 
           </section>
           <section class="section task-group-section">
@@ -1089,9 +1098,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research21RSDDataArchiveManagerP20shouldContinueOnFailSbAA0bC0_p3for_s5Error_p5errortF"></a>
-                    <a name="//apple_ref/swift/Method/shouldContinueOnFail(for:error:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research21RSDDataArchiveManagerP20shouldContinueOnFailSbAA0bC0_p3for_s5Error_p5errortF">shouldContinueOnFail(for:error:)</a>
+                    <a name="/s:s16RawRepresentableP0A5Value"></a>
+                    <a name="//apple_ref/swift/Alias/RawValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s16RawRepresentableP0A5Value">RawValue</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1099,79 +1108,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Should the task result archiving be continued if there was an error adding data to the current
-archive?</p>
-
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">shouldContinueOnFail</span><span class="p">(</span><span class="k">for</span> <span class="nv">archive</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDDataArchive.html">RSDDataArchive</a></span><span class="p">,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>archive</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The current archive being built.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>error</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The encoding error that was thrown.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research21RSDDataArchiveManagerP12dataArchiverAA0bC0_pSgAA13RSDTaskResult_p3for_SSSg18scheduleIdentifierAF07currentC0tF"></a>
-                    <a name="//apple_ref/swift/Method/dataArchiver(for:scheduleIdentifier:currentArchive:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research21RSDDataArchiveManagerP12dataArchiverAA0bC0_pSgAA13RSDTaskResult_p3for_SSSg18scheduleIdentifierAF07currentC0tF">dataArchiver(for:scheduleIdentifier:currentArchive:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>When archiving a task result, it is possible that the results of a task need to be split into
-multiple archives &ndash; for example, when combining two or more activities within the same task. If the
-task result components should be added to the current archive, then the manager should return
-<code>currentArchive</code> as the response. If the task result <em>for this section</em> should be ignored, then the
-manager should return <code>nil</code>. This allows the application to only upload data that is needed by the
-study, and not include information that is ignored by <em>this</em> study, but may be of interest to other
-researchers using the same task protocol.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">dataArchiver</span><span class="p">(</span><span class="k">for</span> <span class="nv">taskResult</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDTaskResult.html">RSDTaskResult</a></span><span class="p">,</span> <span class="nv">scheduleIdentifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">currentArchive</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDDataArchive.html">RSDDataArchive</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDDataArchive.html">RSDDataArchive</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">RawValue</span> <span class="o">=</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -1181,9 +1124,9 @@ researchers using the same task protocol.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research21RSDDataArchiveManagerP16encryptAndUploadyAA11RSDTaskPathC04taskI0_SayAA0bC0_pG12dataArchivesyyc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/encryptAndUpload(taskPath:dataArchives:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research21RSDDataArchiveManagerP16encryptAndUploadyAA11RSDTaskPathC04taskI0_SayAA0bC0_pG12dataArchivesyyc10completiontF">encryptAndUpload(taskPath:dataArchives:completion:)</a>
+                    <a name="/s:s16RawRepresentableP8rawValue0aD0Qzvp"></a>
+                    <a name="//apple_ref/swift/Property/rawValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s16RawRepresentableP8rawValue0aD0Qzvp">rawValue</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1191,18 +1134,13 @@ researchers using the same task protocol.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Encrypt and upload the packaged archives. This method should encrypt and upload all the archives and
-then call the completion handler when upload is completed.</p>
-
-<p>When the completion handler is called, the <code><a href="../Classes/RSDTaskPath.html">RSDTaskPath</a></code> will clean up the task by deleting the
-output directory.</p>
-
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">encryptAndUpload</span><span class="p">(</span><span class="nv">taskPath</span><span class="p">:</span> <span class="kt"><a href="../Classes/RSDTaskPath.html">RSDTaskPath</a></span><span class="p">,</span> <span class="nv">dataArchives</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/RSDDataArchive.html">RSDDataArchive</a></span><span class="p">],</span> <span class="nv">completion</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">rawValue</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -1212,9 +1150,9 @@ output directory.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research21RSDDataArchiveManagerP06handleC7FailureyAA11RSDTaskPathC04taskH0_s5Error_p5erroryyc10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/handleArchiveFailure(taskPath:error:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research21RSDDataArchiveManagerP06handleC7FailureyAA11RSDTaskPathC04taskH0_s5Error_p5erroryyc10completiontF">handleArchiveFailure(taskPath:error:completion:)</a>
+                    <a name="/s:s16RawRepresentablePxSg0A5ValueQz03rawC0_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(rawValue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s16RawRepresentablePxSg0A5ValueQz03rawC0_tcfc">init(rawValue:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1222,17 +1160,156 @@ output directory.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Handle the failure to archive the results.</p>
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">rawValue</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
-<p>When the completion handler is called, the <code><a href="../Classes/RSDTaskPath.html">RSDTaskPath</a></code> will clean up the task by deleting the
-output directory.</p>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research18RSDTransitionStyleV16allStandardTypesSayACGyFZ"></a>
+                    <a name="//apple_ref/swift/Method/allStandardTypes()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research18RSDTransitionStyleV16allStandardTypesSayACGyFZ">allStandardTypes()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>TODO: syoung 07/14/2018 Work with Robert and Joshua to determine appropriate terms.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">handleArchiveFailure</span><span class="p">(</span><span class="nv">taskPath</span><span class="p">:</span> <span class="kt"><a href="../Classes/RSDTaskPath.html">RSDTaskPath</a></span><span class="p">,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span><span class="kd">@escaping</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">allStandardTypes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">RSDTransitionStyle</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s9EquatableP2eeoiSbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s9EquatableP2eeoiSbx_xtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">RSDTransitionStyle</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">RSDTransitionStyle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s8HashableP9hashValueSivp"></a>
+                    <a name="//apple_ref/swift/Property/hashValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s8HashableP9hashValueSivp">hashValue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">hashValue</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s26ExpressibleByStringLiteralP0cD4Type"></a>
+                    <a name="//apple_ref/swift/Alias/StringLiteralType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s26ExpressibleByStringLiteralP0cD4Type">StringLiteralType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">StringLiteralType</span> <span class="o">=</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s26ExpressibleByStringLiteralPx0cD4TypeQz06stringD0_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(stringLiteral:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s26ExpressibleByStringLiteralPx0cD4TypeQz06stringD0_tcfc">init(stringLiteral:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">stringLiteral</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

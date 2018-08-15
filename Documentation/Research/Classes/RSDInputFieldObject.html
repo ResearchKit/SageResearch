@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDCohortTrackingRule.html">RSDCohortTrackingRule</a>
               </li>
               <li class="nav-group-task">
@@ -547,7 +550,7 @@
                 <a href="../Protocols/RSDDataArchive.html">RSDDataArchive</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDDataArchiveManager.html">RSDDataArchiveManager</a>
+                <a href="../Protocols.html#/s:8Research21RSDDataArchiveManagerP">RSDDataArchiveManager</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDDateCoder.html">RSDDateCoder</a>
@@ -569,6 +572,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDDelimiterSeparatedEncodable.html">RSDDelimiterSeparatedEncodable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDDetailInputField.html">RSDDetailInputField</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDDictionaryRepresentable.html">RSDDictionaryRepresentable</a>
@@ -1027,6 +1033,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDTextFieldOptionsObject.html">RSDTextFieldOptionsObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDTransitionStyle.html">RSDTransitionStyle</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDUIActionObject.html">RSDUIActionObject</a>
@@ -1602,7 +1611,7 @@ This is a work-around.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Overridable class function for decoding the data type from the decoder. The default implementation will key to
+                        <p>Class function for decoding the data type from the decoder. The default implementation will key to
 <code>CodingKeys.dataType</code>.</p>
 <div class="aside aside-throws">
     <p class="aside-title">Throws</p>
@@ -1912,7 +1921,7 @@ contains the keys for a <code><a href="../Structs/RSDComparableSurveyRuleObject.
 <span class="s">"identifier"</span><span class="p">:</span> <span class="s">"foo"</span><span class="p">,</span>
 <span class="s">"prompt"</span><span class="p">:</span> <span class="s">"Text"</span><span class="p">,</span>
 <span class="s">"placeholder"</span><span class="p">:</span> <span class="s">"enter text"</span><span class="p">,</span>
-<span class="s">"dataType"</span><span class="p">:</span> <span class="s">"singleChoice.string"</span><span class="p">,</span>
+<span class="s">"type"</span><span class="p">:</span> <span class="s">"singleChoice.string"</span><span class="p">,</span>
 <span class="s">"choices"</span> <span class="p">:</span> <span class="p">[</span><span class="s">"never"</span><span class="p">,</span> <span class="s">"sometimes"</span><span class="p">,</span> <span class="s">"often"</span><span class="p">,</span> <span class="s">"always"</span><span class="p">],</span>
 <span class="s">"matchingAnswer"</span><span class="p">:</span> <span class="s">"never"</span>
 <span class="p">}</span>
@@ -1923,7 +1932,7 @@ contains the keys for a <code><a href="../Structs/RSDComparableSurveyRuleObject.
 <pre class="highlight swift"><code><span class="err">````</span>
    <span class="p">{</span>
        <span class="s">"identifier"</span><span class="p">:</span> <span class="s">"foo"</span><span class="p">,</span>
-       <span class="s">"dataType"</span><span class="p">:</span> <span class="s">"integer"</span><span class="p">,</span>
+       <span class="s">"type"</span><span class="p">:</span> <span class="s">"integer"</span><span class="p">,</span>
        <span class="s">"uiHint"</span><span class="p">:</span> <span class="s">"slider"</span><span class="p">,</span>
        <span class="s">"range"</span> <span class="p">:</span> <span class="p">{</span> <span class="s">"minimumValue"</span> <span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span>
                    <span class="s">"maximumValue"</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
