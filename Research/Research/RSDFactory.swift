@@ -59,9 +59,6 @@ open class RSDFactory {
     public init() {
     }
     
-    /// Optional data source for this factory.
-    public var taskDataSource: RSDTaskDataSource?
-    
     /// Optional shared tracking rules
     open var trackingRules: [RSDTrackingRule] = []
 
@@ -700,9 +697,6 @@ open class RSDFactory {
         if let schemaInfo = schemaInfo {
             decoder.userInfo[.schemaInfo] = schemaInfo
         }
-        if let dataSource = self.taskDataSource {
-            decoder.userInfo[.taskDataSource] = dataSource
-        }
         return decoder
     }
     
@@ -825,11 +819,6 @@ extension Decoder {
         return self.userInfo[.schemaInfo] as? RSDSchemaInfo
     }
     
-    /// The task data source to use when decoding.
-    public var taskDataSource: RSDTaskDataSource? {
-        return self.userInfo[.taskDataSource] as? RSDTaskDataSource
-    }
-    
     /// The default bundle to use for embedded resources.
     public var bundle: Bundle? {
         return self.userInfo[.bundle] as? Bundle
@@ -871,11 +860,6 @@ extension Encoder {
     /// The schema info to use when encoding.
     public var schemaInfo: RSDSchemaInfo? {
         return self.userInfo[.schemaInfo] as? RSDSchemaInfo
-    }
-    
-    /// The task data source to use when encoding.
-    public var taskDataSource: RSDTaskDataSource? {
-        return self.userInfo[.taskDataSource] as? RSDTaskDataSource
     }
     
     /// The coding info object to use when encoding.

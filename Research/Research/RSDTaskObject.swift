@@ -114,17 +114,7 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
         
         self.identifier = identifier
         self.copyright = try container.decodeIfPresent(String.self, forKey: .copyright)
-        
-        // Look for a schema info
-        let schemaInfo: RSDSchemaInfo?
-        if let info = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) {
-            schemaInfo = info
-        } else if let info = decoder.schemaInfo {
-            schemaInfo = info
-        } else {
-            schemaInfo = decoder.taskDataSource?.schemaInfo(with: identifier)
-        }
-        self.schemaInfo = schemaInfo
+        self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo
         
         // Get the step navigator
         let factory = decoder.factory
