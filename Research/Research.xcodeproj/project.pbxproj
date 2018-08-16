@@ -120,6 +120,9 @@
 		F8586AEB2011697700B2DF65 /* RSDFractionFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F8586AE52011697700B2DF65 /* RSDFractionFormatter.m */; };
 		F858D14B201BA67B00132325 /* MeasurementDurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */; };
 		F85B1AD6202C16D500B89AA4 /* CodableMotionRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */; };
+		F86A5F1421251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */; };
+		F86A5F1521251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */; };
+		F86A5F1621251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */; };
 		F875575A20807E2300235078 /* Research_UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F875575820807E2300235078 /* Research_UnitTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F875575E20807E3900235078 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F829F0F41FFC0B2B001B0680 /* NSLocale+UnitTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F875576020807E8B00235078 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
@@ -569,6 +572,7 @@
 		F8586AE52011697700B2DF65 /* RSDFractionFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDFractionFormatter.m; sourceTree = "<group>"; };
 		F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementDurationTests.swift; sourceTree = "<group>"; };
 		F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMotionRecorderTests.swift; sourceTree = "<group>"; };
+		F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCohortNavigationStep.swift; sourceTree = "<group>"; };
 		F875575620807E2300235078 /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F875575820807E2300235078 /* Research_UnitTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Research_UnitTest.h; sourceTree = "<group>"; };
 		F875575920807E2300235078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -772,6 +776,7 @@
 			isa = PBXGroup;
 			children = (
 				F802F3E6204DF3130027CB00 /* Form Step */,
+				F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */,
 				F802F3F2204DF8D40027CB00 /* RSDImagePickerStep.swift */,
 				FFBD07351FAA3E4B000CB34F /* RSDSectionStep.swift */,
 				FF72B2561F68646B004C6F15 /* RSDStep.swift */,
@@ -1697,6 +1702,7 @@
 				FF8B546C1FCE6CC5006B6937 /* RSDSchemaInfoObject.swift in Sources */,
 				F8E94FEC20585BE400752B7B /* RSDAudioVisualAuthorization.swift in Sources */,
 				FF8B537A1FCE6C62006B6937 /* RSDFactory.swift in Sources */,
+				F86A5F1421251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */,
 				FF8B54BB1FCE6D09006B6937 /* Codable+Utilities.swift in Sources */,
 				FF8B54E91FCE6D15006B6937 /* Date+ISO8601.swift in Sources */,
 				FF8B53B41FCE6C7A006B6937 /* RSDTaskGroup.swift in Sources */,
@@ -1826,6 +1832,7 @@
 				FF8B53BF1FCE6C7B006B6937 /* RSDSectionStep.swift in Sources */,
 				F802F3E4204DF2B80027CB00 /* RSDUIStep.swift in Sources */,
 				F8904D4A1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */,
+				F86A5F1521251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */,
 				FF8B53FD1FCE6C87006B6937 /* RSDResourceTransformerObject.swift in Sources */,
 				F80CA5201FFEB04B00E89C06 /* RSDChoiceOptionsObject.swift in Sources */,
 				FF8B54C61FCE6D0A006B6937 /* RSDStringLiteralOptionSet.swift in Sources */,
@@ -1989,6 +1996,7 @@
 				F8E94FE22058308B00752B7B /* RSDOverviewStepObject.swift in Sources */,
 				FF8B544E1FCE6CAA006B6937 /* RSDDurationRangeObject.swift in Sources */,
 				FF8B54811FCE6CD5006B6937 /* RSDTaskPath.swift in Sources */,
+				F86A5F1621251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */,
 				F825BA62207FD70000D29F60 /* RSDWeeklyScheduleObject.swift in Sources */,
 				FF8B54491FCE6CAA006B6937 /* RSDChoiceObject.swift in Sources */,
 				FF8B54B01FCE6CF8006B6937 /* RSDTableItemGroup.swift in Sources */,

@@ -363,43 +363,6 @@ open class RSDFactory {
     open func decodeNumberFormatter(from decoder: Decoder) throws -> NumberFormatter {
         return try NumberFormatter(from: decoder)
     }
-
-    
-    // MARK: Conditional rule factory
-    
-    /// Decode a conditional rule from the given decoder. This method can be overridden to return `nil`
-    /// if the conditional rule should be ignored for this platform.
-    ///
-    /// - note: The base factory does not currently support any conditional rule
-    /// objects. The conditional rule is included here for future implementation of data tracking across
-    /// runs of a task. (syoung 10/03/2017)
-    ///
-    /// - parameter decoder: The decoder to use to instantiate the object.
-    /// - returns: The conditional rule (if any) created from this decoder.
-    /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeConditionalRule(from decoder:Decoder) throws -> RSDConditionalRule? {
-        guard let typeName = try typeName(from: decoder) else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding a conditional rule without a `type` key defining a value for the the class name.")
-            throw DecodingError.keyNotFound(TypeKeys.type, context)
-        }
-        return try decodeConditionalRule(from: decoder, with: typeName)
-    }
-    
-    /// Decode a conditional rule from the given decoder. This method can be overridden to return `nil`
-    /// if the conditional rule should be ignored for this platform.
-    ///
-    /// - note: The base factory does not currently support any conditional rule objects. The conditional
-    /// rule is included here for future implementation of data tracking.
-    ///
-    /// - parameters:
-    ///     - typeName:     The string representing the class name for this conditional rule.
-    ///     - decoder:      The decoder to use to instantiate the object.
-    /// - returns: The conditional rule (if any) created from this decoder.
-    /// - throws: `DecodingError` if the object cannot be decoded.
-    open func decodeConditionalRule(from decoder:Decoder, with typeName: String) throws -> RSDConditionalRule? {
-        // Base class does not implement the conditional rule
-        throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a conditional rule.")
-    }
     
     
     // MARK: UI action factory
