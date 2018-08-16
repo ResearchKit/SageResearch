@@ -1,5 +1,5 @@
 //
-//  RSDResult.swift
+//  RSDAnswerResult.swift
 //  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
@@ -33,27 +33,41 @@
 
 import Foundation
 
-/// `RSDResult` is the base implementation for a result associated with a task, step, or asynchronous action.
+/// `RSDAnswerResult` is a result that can be described using a single value.
+public protocol RSDAnswerResult : RSDResult, RSDAnswerResultFinder {
+    
+    /// The answer type of the answer result. This includes coding information required to encode and
+    /// decode the value. The value is expected to conform to one of the coding types supported by the answer type.
+    var answerType: RSDAnswerResultType { get }
+    
+    /// The answer for the result.
+    var value: Any? { get }
+}
+
+extension RSDAnswerResult {
+    
+    /// This method will return `self` if the identifier matches the identifier of this result. Otherwise,
+    /// the method will return `nil`.
+    ///
+    /// - seealso: `RSDAnswerResultFinder`
+    ///
+    /// - parameter identifier: The identifier associated with the result.
+    /// - returns: The result or `nil` if not found.
+    public func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
+        return self.identifier == identifier ? self : nil
+    }
+}
+
+/// `RSDAnswerResultFinder` is a convenience protocol used to retrieve an answer result. It is used in
+/// survey navigation to find the result for a given input field.
 ///
-/// When running a task, there will be a result of some variety used to mark each step in the task. This is
-/// the base protocol. All the `RSDResult` objects are required to conform to the `Encodable` protocol to allow
-/// the app to store and upload results in a standardized way.
-///
-/// - note: The `RSDResult` protocol requires conformance to the `Encodable` protocol but does *not* require
-/// conformance to `Decodable`. This allows using class objects that cannot be extended to conform to the
-/// `Decodable` protocol, such as `ORKResult` classes.
-///
-public protocol RSDResult : Encodable {
+/// - seealso: `RSDSurveyNavigationStep`
+public protocol RSDAnswerResultFinder {
     
-    /// The identifier associated with the task, step, or asynchronous action.
-    var identifier: String { get }
-    
-    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    var type: RSDResultType { get }
-    
-    /// The start date timestamp for the result.
-    var startDate: Date { get set }
-    
-    /// The end date timestamp for the result.
-    var endDate: Date { get set }
+    /// Find an *answer* result within this result. This method will return `nil` if there is a result
+    /// but that result does **not** conform to to the `RSDAnswerResult` protocol.
+    ///
+    /// - parameter identifier: The identifier associated with the result.
+    /// - returns: The result or `nil` if not found.
+    func findAnswerResult(with identifier:String ) -> RSDAnswerResult?
 }

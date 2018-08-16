@@ -1,5 +1,5 @@
 //
-//  RSDResult.swift
+//  RSDFileResult.swift
 //  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
@@ -33,27 +33,38 @@
 
 import Foundation
 
-/// `RSDResult` is the base implementation for a result associated with a task, step, or asynchronous action.
-///
-/// When running a task, there will be a result of some variety used to mark each step in the task. This is
-/// the base protocol. All the `RSDResult` objects are required to conform to the `Encodable` protocol to allow
-/// the app to store and upload results in a standardized way.
-///
-/// - note: The `RSDResult` protocol requires conformance to the `Encodable` protocol but does *not* require
-/// conformance to `Decodable`. This allows using class objects that cannot be extended to conform to the
-/// `Decodable` protocol, such as `ORKResult` classes.
-///
-public protocol RSDResult : Encodable {
+
+/// `RSDFileResult` is a result that holds a pointer to a file url.
+public protocol RSDFileResult : RSDResult, RSDArchivable {
     
-    /// The identifier associated with the task, step, or asynchronous action.
-    var identifier: String { get }
+    /// The URL with the full path to the file-based result. This should *not*
+    /// be encoded in the file result if the results are encoded and uploaded
+    /// to a server. This is included for use in local file system management
+    /// **only**.
+    ///
+    /// - note: It is the responsibility of the developer to ensure that the
+    /// user's private data is managed securely.
+    var url: URL? { get set }
     
-    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    var type: RSDResultType { get }
+    /// The relative path to the file-based result. This should be the relative path
+    /// to the file within the `outputDirectory` of the associated `RSDTaskPath`.
+    var relativePath: String? { get }
     
-    /// The start date timestamp for the result.
-    var startDate: Date { get set }
+    /// The MIME content type of the result.
+    /// - example: `"application/json"`
+    var contentType: String? { get }
     
-    /// The end date timestamp for the result.
-    var endDate: Date { get set }
+    /// The system clock uptime when the recorder was started (if applicable).
+    var startUptime: TimeInterval? { get }
+}
+
+extension RSDFileResult {
+    
+    /// Build the archiveable or uploadable data for this result.
+    public func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
+        guard let filename = self.relativePath, let url = self.url else { return nil }
+        let manifest = RSDFileManifest(filename: filename, timestamp: self.startDate, contentType: self.contentType, identifier: self.identifier, stepPath: stepPath)
+        let data = try Data(contentsOf: url)
+        return (manifest, data)
+    }
 }

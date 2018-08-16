@@ -1,5 +1,5 @@
 //
-//  RSDResult.swift
+//  RSDErrorResult.swift
 //  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
@@ -33,27 +33,16 @@
 
 import Foundation
 
-/// `RSDResult` is the base implementation for a result associated with a task, step, or asynchronous action.
-///
-/// When running a task, there will be a result of some variety used to mark each step in the task. This is
-/// the base protocol. All the `RSDResult` objects are required to conform to the `Encodable` protocol to allow
-/// the app to store and upload results in a standardized way.
-///
-/// - note: The `RSDResult` protocol requires conformance to the `Encodable` protocol but does *not* require
-/// conformance to `Decodable`. This allows using class objects that cannot be extended to conform to the
-/// `Decodable` protocol, such as `ORKResult` classes.
-///
-public protocol RSDResult : Encodable {
+
+/// `RSDErrorResult` is a result that holds information about an error.
+public protocol RSDErrorResult : RSDResult {
     
-    /// The identifier associated with the task, step, or asynchronous action.
-    var identifier: String { get }
+    /// A description associated with an `NSError`.
+    var errorDescription: String { get }
     
-    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    var type: RSDResultType { get }
+    /// A domain associated with an `NSError`.
+    var errorDomain: String { get }
     
-    /// The start date timestamp for the result.
-    var startDate: Date { get set }
-    
-    /// The end date timestamp for the result.
-    var endDate: Date { get set }
+    /// The error code associated with an `NSError`.
+    var errorCode: Int { get }
 }
