@@ -43,7 +43,7 @@ public protocol RSDFileResult : RSDResult, RSDArchivable {
     /// **only**.
     ///
     /// - note: It is the responsibility of the developer to ensure that the
-    /// user's private data is managed securely.
+    /// participant's private data is managed securely.
     var url: URL? { get set }
     
     /// The relative path to the file-based result. This should be the relative path

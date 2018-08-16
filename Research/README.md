@@ -29,7 +29,7 @@ The structure of the task protocol is as follows:
     
 There are three main subprotocols to the `RSDStep` protocol. These have custom handling that is used by the `RSDTaskUIController` to determine how to navigate a step tree.  These include:
 
-1. `RSDUIStep` is used to define a single "display unit". Depending upon the available real-estate, more than one ui step may be displayed at a time. For example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
+1. `RSDUIStep` is used to define a single "display unit". Depending upon the available real-estate, more than one ui step may be displayed at a time -- for example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 2. `RSDSectionStep` is used to define a set of steps that are a logically grouped set of steps within a larger task. This protocol conforms to the `RSDStep`, `RSDTask`, and `RSDConditionalStepNavigator` protocols.
 3. `RSDTaskInfoStep` is used to display information about a task that can be displayed to the user while the task is fetched. This allows for the actual task to be fetched on demand from a web service or resource file.
 
@@ -48,17 +48,17 @@ The step navigator vends the steps and progress for a task. This framework inclu
 
 For the conditional step navigator, navigation is handled by querying both a list of `RSDTrackingRule` objects defined on `RSDFactory.shared` and by checking the steps for conformance to a set of navigation rules. Specifically, this framework includes:
 
-1. `RSDNavigationRule` which is can return a next step identifier that is then used to jump within the navigation.
-2. `RSDNavigationSkipRule` which allows the step to be skipped based on the current task result.
-3. `RSDNavigationBackRule` is used to block backward navigation.
-4. `RSDSurveyNavigationStep` defines navigation rules that this step would apply for a given task result based on the answer to input field entry.
+1. `RSDNavigationRule` returns a next step identifier that is then used to jump within the navigation.
+2. `RSDNavigationSkipRule` allows the step to be skipped based on the current task result.
+3. `RSDNavigationBackRule` can block backward navigation.
+4. `RSDSurveyNavigationStep` implements the logic of the `RSDNavigationRule` by using protocol extension to inspect the task result and compare the answers to a set of `RSDSurveyRule` objects.
 5. `RSDCohortNavigationStep` and `RSDCohortAssignmentStep` are used to navigate based on cohorts to which the participant has been added.
 
 The step results of navigating the task are added to the `RSDTaskResult` on the `stepHistory`. Results added to the step history are intended to be added sequentially in the order the steps were displayed to the user. A step result can be any result that conforms to the `RSDResult` protocol. These results should be uniquely defined by their `identifier` which matches the `identifier` for the step.
 
 ### `RSDAsyncActionConfiguration`
 
-`RSDAsyncActionConfiguration` objects define any configuration required for running a background action. For example, recording motion sensor information or pinging a weather service. Most of the work of setting up and running async actions is left to the specific application.
+`RSDAsyncActionConfiguration` objects define any configuration required for running a background action -- for example, recording motion sensor information or pinging a weather service. Most of the work of setting up and running async actions is left to the specific application.
 
 ### `RSDResult`
 
@@ -76,9 +76,9 @@ There are several protocols that inherit from `RSDResult` that are included in t
 
 ## Controller
 
-The default mechanism for running a task is to instantiate a controller that responds to either `RSDTaskController` or its sub-protocol, `RSDUITaskController`. There are no implementations for either of these protocols included within this framework, although [ResearchUI](../ResearchUI/index.html) project includes `RSDTaskViewController` which is a concrete implementation of `RSDUITaskController` that is designed to be used for iPhone applications.
+The default mechanism for running a task is to instantiate a controller that conforms to either `RSDTaskController` or its sub-protocol, `RSDUITaskController`. There are no implementations for either of these protocols included within this framework, although [ResearchUI](../ResearchUI/index.html) project includes `RSDTaskViewController` which is a concrete implementation of `RSDUITaskController` that is designed to be used for iPhone applications.
 
-Once an instance of either `RSDTaskViewController` or `RSDUITaskController` has been instantiated, as part of it's setup, it should instantiate a new instance of of  `RSDTaskPath` and use that object (and it's children) to manage the task state. `RSDUITaskController` is designed to use a protocol extension to manage most of the device-agnostic UX such as determining when to start/stop async actions, and managing step navigation including instantiating a new task path and result for each `RSDSectionStep` and `RSDTaskInfoStep` that is vended to it by the step navigator.
+Once an instance of either `RSDTaskViewController` or `RSDUITaskController` has been instantiated, as part of its setup, it should instantiate a new instance of of  `RSDTaskPath` and use that object (and its children) to manage the task state. `RSDUITaskController` is designed to use a protocol extension to manage most of the device-agnostic UX such as determining when to start/stop async actions, and managing step navigation including instantiating a new task path and result for each `RSDSectionStep` and `RSDTaskInfoStep` that is vended to it by the step navigator.
 
 The `RSDUITaskController` does not directly reference the `RSDStepController` and there are no implementations of the step controller that are included in the Research framework. The ResearchUI framework includes `RSDStepViewController` which is the base class implementation that is designed for use by iPhone applications. `RSDStepController` uses the protocol extension to add UX that is device-agnostic.
 

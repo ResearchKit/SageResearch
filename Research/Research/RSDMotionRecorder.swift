@@ -98,7 +98,7 @@ public class RSDMotionRecorder : RSDSampleRecorder {
     /// The motion queue is the operation queue that is used for the motion updates callback.
     private let motionQueue = OperationQueue()
     
-    /// Override to implement requesting permission to access the user's motion sensors.
+    /// Override to implement requesting permission to access the participant's motion sensors.
     override public func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         if RSDMotionAuthorization.authorizationStatus() == .authorized {
             self.updateStatus(to: .permissionGranted , error: nil)
