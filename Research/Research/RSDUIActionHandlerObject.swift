@@ -141,9 +141,10 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if let actions = self.actions {
             var nestedContainer = container.nestedContainer(keyedBy: RSDUIActionType.self, forKey: .actions)
-            for (key, action) in actions {
+            try actions.forEach { (key, action) in
+                guard let encodableAction = action as? Encodable else { return }
                 let objectEncoder = nestedContainer.superEncoder(forKey: key)
-                try action.encode(to: objectEncoder)
+                try encodableAction.encode(to: objectEncoder)
             }
         }
         try container.encodeIfPresent(shouldHideActions, forKey: .shouldHideActions)

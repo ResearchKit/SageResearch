@@ -65,7 +65,7 @@ public struct RSDWeeklyScheduleObject : Codable, RSDSchedule {
     /// Get an array of the date components to use to set up notification triggers. This will return a
     /// `DateComponents` for each day of the week, unless the reminder should be posted daily.
     ///
-    /// - note: The date components will *not* include the user's current timezone.
+    /// - note: The date components will *not* include the participant's current timezone.
     /// - returns: The date components to use to set up a trigger for each scheduling instance.
     public func notificationTriggers() -> [DateComponents] {
         guard let timeComponents = self.timeComponents

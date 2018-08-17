@@ -44,11 +44,6 @@ public protocol RSDSectionStep: RSDStep, RSDTask, RSDConditionalStepNavigator {
 
 extension RSDSectionStep {
     
-    /// Conditional rule is `nil` for a section step.
-    public var conditionalRule : RSDConditionalRule? {
-        return nil
-    }
-    
     /// Task info is `nil` for a section step.
     public var taskInfo: RSDTaskInfoStep? {
         return nil

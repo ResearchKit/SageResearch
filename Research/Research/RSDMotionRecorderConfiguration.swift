@@ -103,7 +103,7 @@ public enum RSDMotionRecorderType : String, Codable, RSDStringEnumSet {
     /// - seealso: https://developer.apple.com/documentation/coremotion/getting_processed_device_motion_data
     case rotationRate
     
-    /// Calculated vector for the user's acceleration in the coordinates of the device.
+    /// Calculated vector for the participant's acceleration in the coordinates of the device.
     /// This is the acceleration component after subtracting the gravity vector.
     ///
     /// This is included in the `CMDeviceMotion` data object.

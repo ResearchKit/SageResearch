@@ -64,10 +64,10 @@ class SurveyRuleTests: XCTestCase {
         let collectionResult = RSDCollectionResultObject(identifier: "foo")
         taskResult.appendStepHistory(with: collectionResult)
 
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "bar")
     }
     
@@ -82,10 +82,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: nil)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "bar")
     }
     
@@ -101,10 +101,10 @@ class SurveyRuleTests: XCTestCase {
         stepResult.skipToIdentifier = "bar"
         taskResult.appendStepHistory(with: stepResult)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "bar")
     }
     
@@ -125,10 +125,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: 2)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "equal")
     }
     
@@ -144,10 +144,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: 2)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "equal")
     }
     
@@ -163,10 +163,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: nil)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "skip")
     }
     
@@ -185,10 +185,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: 0)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "lessThan")
     }
     
@@ -207,10 +207,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: 4)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "greaterThan")
     }
     
@@ -229,10 +229,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: 3)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -251,10 +251,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: 1)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -273,10 +273,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: 1)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "lessThanEqual")
     }
     
@@ -293,10 +293,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: 3)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "notEqual")
     }
     
@@ -313,10 +313,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .integer, value: 2)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -337,10 +337,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .decimal, value: 2.0)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "equal")
     }
     
@@ -359,10 +359,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .decimal, value: 0.0)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "lessThan")
     }
     
@@ -381,10 +381,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .decimal, value: 4.0)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "greaterThan")
     }
     
@@ -403,10 +403,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .decimal, value: 3.0)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -425,10 +425,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .decimal, value: 1.0)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -447,10 +447,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .decimal, value: 1.0)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "lessThanEqual")
     }
     
@@ -467,10 +467,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .decimal, value: 3.0)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "notEqual")
     }
     
@@ -487,10 +487,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .decimal, value: 2.0)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
 
@@ -511,10 +511,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: "charlie")
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "equal")
     }
     
@@ -533,10 +533,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: "alpha")
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "lessThan")
     }
     
@@ -555,10 +555,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: "gamma")
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "greaterThan")
     }
     
@@ -577,10 +577,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: "delta")
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -599,10 +599,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: "beta")
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -621,10 +621,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: "beta")
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "lessThanEqual")
     }
     
@@ -641,10 +641,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: "hoover")
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "notEqual")
     }
     
@@ -661,10 +661,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: "charlie")
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -683,10 +683,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .boolean, value: true)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "equal")
     }
     
@@ -703,10 +703,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .boolean, value: false)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -723,10 +723,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .boolean, value: false)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertEqual(navigatingIdentifier, "notEqual")
     }
     
@@ -743,10 +743,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .boolean, value: true)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
     }
     
@@ -766,10 +766,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: "charlie")
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
         
         if let cohorts = step.cohortsToApply(with: taskResult) {
@@ -797,10 +797,10 @@ class SurveyRuleTests: XCTestCase {
         
         let taskResult = createTaskResult(answerType: .string, value: nil)
         
-        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: true)
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
         XCTAssertNil(peekingIdentifier)
         
-        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, conditionalRule: nil, isPeeking: false)
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
         XCTAssertNil(navigatingIdentifier)
         
         if let cohorts = step.cohortsToApply(with: taskResult) {

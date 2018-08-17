@@ -111,9 +111,9 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     ///                         step to set up UI display? If peeking at the next step then this
     ///                         parameter will be `true`.
     /// - returns: The identifier of the next step.
-    open override func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
+    open override func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
         return self.evaluateSurveyRules(with: result, isPeeking: isPeeking) ??
-            super.nextStepIdentifier(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking)
+            super.nextStepIdentifier(with: result, isPeeking: isPeeking)
     }
     
     /// Evaluate the task result and return the set of cohorts to add and remove. Default implementation

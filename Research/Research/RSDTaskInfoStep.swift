@@ -42,7 +42,7 @@ public enum RSDTaskFetchError : Error {
     /// Unknown error
     case unknown
     
-    /// The user's device is offline and a network connect is required to fetch the task.
+    /// The participant's device is offline and a network connect is required to fetch the task.
     case offline
 }
 

@@ -1,8 +1,8 @@
 //
-//  RSDTaskDataSource.swift
+//  RSDFileResult.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,16 +33,38 @@
 
 import Foundation
 
-/// `RSDTaskDataSource` is a data source that can be used by the factory to get info that should be included
-/// with a task result or used to display subgroups of a task.
-public protocol RSDTaskDataSource {
+
+/// `RSDFileResult` is a result that holds a pointer to a file url.
+public protocol RSDFileResult : RSDResult, RSDArchivable {
     
-    /// Fetch the task group with the given identifier.
-    func taskGroup(with identifier: String) -> RSDTaskGroup?
+    /// The URL with the full path to the file-based result. This should *not*
+    /// be encoded in the file result if the results are encoded and uploaded
+    /// to a server. This is included for use in local file system management
+    /// **only**.
+    ///
+    /// - note: It is the responsibility of the developer to ensure that the
+    /// participant's private data is managed securely.
+    var url: URL? { get set }
     
-    /// Fetch the task info with the given identifier.
-    func taskInfo(with identifier: String) -> RSDTaskInfoStep?
+    /// The relative path to the file-based result. This should be the relative path
+    /// to the file within the `outputDirectory` of the associated `RSDTaskPath`.
+    var relativePath: String? { get }
     
-    /// Fetch the schema info with the given identifier.
-    func schemaInfo(with identifier: String) -> RSDSchemaInfo?
+    /// The MIME content type of the result.
+    /// - example: `"application/json"`
+    var contentType: String? { get }
+    
+    /// The system clock uptime when the recorder was started (if applicable).
+    var startUptime: TimeInterval? { get }
+}
+
+extension RSDFileResult {
+    
+    /// Build the archiveable or uploadable data for this result.
+    public func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
+        guard let filename = self.relativePath, let url = self.url else { return nil }
+        let manifest = RSDFileManifest(filename: filename, timestamp: self.startDate, contentType: self.contentType, identifier: self.identifier, stepPath: stepPath)
+        let data = try Data(contentsOf: url)
+        return (manifest, data)
+    }
 }

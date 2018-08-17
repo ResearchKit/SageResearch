@@ -104,7 +104,7 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
 }
 
 /// `RSDNavigationUIActionObject` implements an action for navigating to another step in a task.
-public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavigationUIAction {
+public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavigationUIAction, Codable {
     
     private enum CodingKeys : String, CodingKey {
         case skipToIdentifier, buttonTitle, iconName, bundleIdentifier
@@ -137,7 +137,7 @@ public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavi
 
 /// `RSDReminderUIActionObject` implements an action for setting up a local notification to remind
 /// the participant about doing a particular task later.
-public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDReminderUIAction {
+public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDReminderUIAction, Codable {
     
     private enum CodingKeys : String, CodingKey {
         case reminderIdentifier, _buttonTitle = "buttonTitle", iconName, bundleIdentifier
@@ -173,7 +173,7 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDRemind
 
 /// `RSDWebViewUIActionObject` implements an action that includes a pointer to a url that can display in a
 /// webview. The url can either be fully qualified or optionally point to an embedded resource. 
-public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebViewUIAction {
+public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebViewUIAction, Codable {
 
     private enum CodingKeys : String, CodingKey {
         case  url, buttonTitle, iconName, bundleIdentifier
