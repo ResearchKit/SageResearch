@@ -69,4 +69,8 @@ extension UIColor {
     @objc open class var rsd_progressBarBackground: UIColor {
         return UIColor.appVeryLightGray
     }
+    
+    @objc open class var rsd_progressBar: UIColor {
+        return UIColor(named: "softGreen", in: Bundle(for: CRFFactory.self), compatibleWith: nil)!
+    }
 }

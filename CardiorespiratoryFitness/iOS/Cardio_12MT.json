@@ -1,6 +1,6 @@
 {
     "identifier"        : "Cardio 12MT",
-    "actions"           : { "cancel": { "type":"default", "iconName": "closeActivity" }},
+    "actions"           : { "cancel": { "type": "default", "iconName": "closeActivity" }},
     "shouldHideActions" : ["goBackward", "skip"],
     "progressMarkers"   : ["volumeUp", "goOutside", "heartRate.before", "run", "heartRate.after", "surveyAfter"],
     "asyncActions"      : [
@@ -122,7 +122,7 @@
                                                                        "700": "Almost done.",
                                                                        "countdown": "15",
                                                                        "end": "Stop running or walking."},
-                                               "colorTheme"         : { "usesLightStyle" : true },
+                                               "colorTheme"         : { "backgroundColor" : "clear", "usesLightStyle" : true },
                                                "viewTheme"          : { "viewIdentifier": "RunDistance", "storyboardIdentifier": "ActiveTaskSteps"}
                                                }
                                                ]
@@ -143,11 +143,13 @@
                            "identifier"     : "surveyAfter",
                            "type"           : "form",
                            "title"          : "What, if anything, kept you from going further?",
-                           "dataType"       : "singleChoice",
-                           "choices"        : ["Nothing, was my best effort",
-                                               "Feeling tired",
-                                               "Pain or physical discomfort",
-                                               "Interrupted"],
+                           "inputFields"    : [{
+                                               "type"       : "singleChoice",
+                                               "choices"        : ["Nothing, was my best effort",
+                                                                   "Feeling tired",
+                                                                   "Pain or physical discomfort",
+                                                                   "Interrupted"]
+                                              }],
                            "colorTheme"     : { "backgroundColor" : "white", "usesLightStyle" : false },
                            },
                            {
