@@ -39,7 +39,7 @@ import Foundation
 extension RSDSectionStepObject: RSDNavigationSkipRule, RSDNavigationRule {
     
     /// Returns `true` if this step should be skipped and `false` otherwise.
-    public func shouldSkipStep(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?, isPeeking: Bool) -> Bool {
+    public func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
         guard let myHand = MCTHandSelection(rawValue: self.identifier),
               let handSelectionResult = result?.findResult(with: MCTHandSelectionDataSource.selectionKey) as? RSDCollectionResult,
               let handOrder = handSelectionResult.findAnswerResult(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String]
@@ -63,7 +63,7 @@ extension RSDSectionStepObject: RSDNavigationSkipRule, RSDNavigationRule {
     }
     
     /// Returns the identifier of the step to go to after this step is completed, or skipped.
-    public func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
+    public func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
         guard let handSelectionResult = result?.findResult(with: MCTHandSelectionDataSource.selectionKey) as? RSDCollectionResult,
             let handOrder : [String] = handSelectionResult.findAnswerResult(with: MCTHandSelectionDataSource.handOrderKey )?.value as? [String]
             else {

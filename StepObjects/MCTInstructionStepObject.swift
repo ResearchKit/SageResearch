@@ -44,7 +44,7 @@ open class MCTInstructionStepObject : RSDActiveUIStepObject, RSDNavigationSkipRu
     /// Default: only returns `true` if the JSON file has isFirstRunOnly explicitly set
     /// to true, and the conditions for a first run are not met. See
     /// MCTOverviewStepViewController for more on what the conditions for a first run are.
-    public func shouldSkipStep(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> Bool {
+    public func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
         // if self.isFirstRunOnly == nil the JSON file probably left out this field so we
         // assume that this step will always be shown
         guard (self.isFirstRunOnly ?? false),
