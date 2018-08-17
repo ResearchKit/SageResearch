@@ -523,12 +523,6 @@
                 <a href="Protocols/RSDComparableSurveyRule.html">RSDComparableSurveyRule</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/RSDConditionalReplacementRule.html">RSDConditionalReplacementRule</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/RSDConditionalRule.html">RSDConditionalRule</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Protocols/RSDConditionalStepNavigator.html">RSDConditionalStepNavigator</a>
               </li>
               <li class="nav-group-task">
@@ -772,9 +766,6 @@
                 <a href="Protocols/RSDTaskControllerDelegate.html">RSDTaskControllerDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/RSDTaskDataSource.html">RSDTaskDataSource</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Protocols/RSDTaskGroup.html">RSDTaskGroup</a>
               </li>
               <li class="nav-group-task">
@@ -805,7 +796,7 @@
                 <a href="Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols.html#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
+                <a href="Protocols/RSDTrackingRule.html">RSDTrackingRule</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDTrackingStepNavigator.html">RSDTrackingStepNavigator</a>
@@ -1087,6 +1078,72 @@
 
           </section>
           <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research15RSDAnswerResultP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDAnswerResult" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research15RSDAnswerResultP">RSDAnswerResult</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDAnswerResult</code> is a result that can be described using a single value.</p>
+
+                        <a href="Protocols/RSDAnswerResult.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDAnswerResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDAnswerResultFinder.html">RSDAnswerResultFinder</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research21RSDAnswerResultFinderP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDAnswerResultFinder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research21RSDAnswerResultFinderP">RSDAnswerResultFinder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDAnswerResultFinder</code> is a convenience protocol used to retrieve an answer result. It is used in
+survey navigation to find the result for a given input field.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <code><a href="Protocols/RSDSurveyNavigationStep.html">RSDSurveyNavigationStep</a></code>
+
+</div>
+
+                        <a href="Protocols/RSDAnswerResultFinder.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDAnswerResultFinder</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div class="task-group">
               <ul>
                 <li class="item">
@@ -1622,6 +1679,35 @@ either <code><a href="Protocols/RSDTaskController.html">RSDTaskController</a></c
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8Research23RSDCohortNavigationStepP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDCohortNavigationStep" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research23RSDCohortNavigationStepP">RSDCohortNavigationStep</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A cohort navigation step is a step that carries information about navigation rules to apply either
+before or after displaying this step based on the currently applied cohorts.</p>
+
+                        <a href="Protocols/RSDCohortNavigationStep.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDCohortNavigationStep</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDStep.html">RSDStep</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8Research23RSDCohortAssignmentStepP"></a>
                     <a name="//apple_ref/swift/Protocol/RSDCohortAssignmentStep" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research23RSDCohortAssignmentStepP">RSDCohortAssignmentStep</a>
@@ -1677,12 +1763,16 @@ and if so where to skip to, based on the currently applied cohorts.</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research23RSDCohortNavigationStepP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDCohortNavigationStep" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research23RSDCohortNavigationStepP">RSDCohortNavigationStep</a>
+                    <a name="/s:8Research19RSDCollectionResultP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDCollectionResult" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research19RSDCollectionResultP">RSDCollectionResult</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1690,16 +1780,16 @@ and if so where to skip to, based on the currently applied cohorts.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A cohort navigation step is a step that carries information about navigation rules to apply either
-before or after displaying this step based on the currently applied cohorts.</p>
+                        <p><code>RSDCollectionResult</code> is used include multiple results associated with a single step or async action that
+may have more that one result.</p>
 
-                        <a href="Protocols/RSDCohortNavigationStep.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/RSDCollectionResult.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDCohortNavigationStep</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDStep.html">RSDStep</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDCollectionResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDAnswerResultFinder.html">RSDAnswerResultFinder</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1799,76 +1889,6 @@ step has a navigation rule and apply as necessary.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research18RSDConditionalRuleP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDConditionalRule" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research18RSDConditionalRuleP">RSDConditionalRule</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A conditional rule is appended to the navigable task to check a secondary source for whether or not
-the step should be displayed.</p>
-<div class="aside aside-seealso">
-    <p class="aside-title">Seealso</p>
-    <code>RSDCohortRule</code>
-
-</div>
-
-                        <a href="Protocols/RSDConditionalRule.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDConditionalRule</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research29RSDConditionalReplacementRuleP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDConditionalReplacementRule" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research29RSDConditionalReplacementRuleP">RSDConditionalReplacementRule</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A conditional <strong>replacement</strong> rule is a conditional rule that needs to replace a given step with a
-different instance of a step under a set of conditions determined by the rule.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    <code>Research</code> does not currently implement any conditional replacement rule objects. The
-replacement rule is included here for future implementation of data tracking across runs of a task.
-(syoung 02/21/2018)
-
-</div>
-
-                        <a href="Protocols/RSDConditionalReplacementRule.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDConditionalReplacementRule</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDConditionalRule.html">RSDConditionalRule</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:8Research15RSDTrackingRuleP"></a>
                     <a name="//apple_ref/swift/Protocol/RSDTrackingRule" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
@@ -1883,12 +1903,13 @@ replacement rule is included here for future implementation of data tracking acr
 end of the the overall task. By definition, these rules can mutate and should be handled using
 pointers rather than using structs.</p>
 
+                        <a href="Protocols/RSDTrackingRule.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDTrackingRule</span> <span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDConditionalRule.html">RSDConditionalRule</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDTrackingRule</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                         </div>
                       </div>
@@ -2273,6 +2294,38 @@ be parsed into a table, <strong>but</strong> the elements must all conform to si
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8Research14RSDErrorResultP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDErrorResult" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research14RSDErrorResultP">RSDErrorResult</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDErrorResult</code> is a result that holds information about an error.</p>
+
+                        <a href="Protocols/RSDErrorResult.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDErrorResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8Research17RSDFactoryDecoderP"></a>
                     <a name="//apple_ref/swift/Protocol/RSDFactoryDecoder" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research17RSDFactoryDecoderP">RSDFactoryDecoder</a>
@@ -2320,6 +2373,38 @@ to create the appropriate decoder and set the userInfo keys as needed.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDFactoryEncoder</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research13RSDFileResultP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDFileResult" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research13RSDFileResultP">RSDFileResult</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDFileResult</code> is a result that holds a pointer to a file url.</p>
+
+                        <a href="Protocols/RSDFileResult.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDFileResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDArchivable.html">RSDArchivable</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
 
                         </div>
                       </div>
@@ -2826,6 +2911,38 @@ values to a common schema.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8Research19RSDNavigationResultP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDNavigationResult" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research19RSDNavigationResultP">RSDNavigationResult</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A result that can be used to track a custom navigation as a result of user action.</p>
+
+                        <a href="Protocols/RSDNavigationResult.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDNavigationResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8Research22RSDDecodableBundleInfoP"></a>
                     <a name="//apple_ref/swift/Protocol/RSDDecodableBundleInfo" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research22RSDDecodableBundleInfoP">RSDDecodableBundleInfo</a>
@@ -2904,8 +3021,15 @@ values to a common schema.</p>
                         <p><code>RSDResult</code> is the base implementation for a result associated with a task, step, or asynchronous action.</p>
 
 <p>When running a task, there will be a result of some variety used to mark each step in the task. This is
-the base protocol. All the <code>RSDResult</code> objects are required to conform to the <code>Codable</code> protocol to allow
+the base protocol. All the <code>RSDResult</code> objects are required to conform to the <code>Encodable</code> protocol to allow
 the app to store and upload results in a standardized way.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The <code>RSDResult</code> protocol requires conformance to the <code>Encodable</code> protocol but does <em>not</em> require
+conformance to <code>Decodable</code>. This allows using class objects that cannot be extended to conform to the
+<code>Decodable</code> protocol, such as <code>ORKResult</code> classes.
+
+</div>
 
                         <a href="Protocols/RSDResult.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2914,210 +3038,6 @@ the app to store and upload results in a standardized way.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDResult</span> <span class="p">:</span> <span class="kt">Encodable</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research19RSDNavigationResultP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDNavigationResult" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research19RSDNavigationResultP">RSDNavigationResult</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A result that can be used to track a custom navigation as a result of user action.</p>
-
-                        <a href="Protocols/RSDNavigationResult.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDNavigationResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research13RSDTaskResultP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDTaskResult" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research13RSDTaskResultP">RSDTaskResult</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDTaskResult</code> is a result associated with a task. This object includes a step history, task run UUID,
-schema identifier, and asynchronous results.</p>
-
-                        <a href="Protocols/RSDTaskResult.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDTaskResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDAnswerResultFinder.html">RSDAnswerResultFinder</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research19RSDCollectionResultP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDCollectionResult" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research19RSDCollectionResultP">RSDCollectionResult</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDCollectionResult</code> is used include multiple results associated with a single step or async action that
-may have more that one result.</p>
-
-                        <a href="Protocols/RSDCollectionResult.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDCollectionResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDAnswerResultFinder.html">RSDAnswerResultFinder</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research13RSDFileResultP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDFileResult" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research13RSDFileResultP">RSDFileResult</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDFileResult</code> is a result that holds a pointer to a file url.</p>
-
-                        <a href="Protocols/RSDFileResult.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDFileResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDArchivable.html">RSDArchivable</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research14RSDErrorResultP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDErrorResult" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research14RSDErrorResultP">RSDErrorResult</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDErrorResult</code> is a result that holds information about an error.</p>
-
-                        <a href="Protocols/RSDErrorResult.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDErrorResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research21RSDAnswerResultFinderP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDAnswerResultFinder" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research21RSDAnswerResultFinderP">RSDAnswerResultFinder</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDAnswerResultFinder</code> is a convenience protocol used to retrieve an answer result. It is used in
-survey navigation to find the result for a given input field.</p>
-<div class="aside aside-seealso">
-    <p class="aside-title">Seealso</p>
-    <code><a href="Protocols/RSDSurveyNavigationStep.html">RSDSurveyNavigationStep</a></code>
-
-</div>
-
-                        <a href="Protocols/RSDAnswerResultFinder.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDAnswerResultFinder</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research15RSDAnswerResultP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDAnswerResult" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research15RSDAnswerResultP">RSDAnswerResult</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDAnswerResult</code> is a result that can be described using a single value.</p>
-
-                        <a href="Protocols/RSDAnswerResult.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDAnswerResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDAnswerResultFinder.html">RSDAnswerResultFinder</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
 
                         </div>
                       </div>
@@ -3970,9 +3890,9 @@ are decimals.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><code>RSDTableDataSource</code>: the internal model for a table view controller. It provides the
-UITableViewDataSource, manages and stores answers provided thru user input, and provides an RSDResult
-with those answers upon request.</p>
+                        <p><code>RSDTableDataSource</code> is the model for a table view controller. It provides the UITableViewDataSource,
+manages and stores answers provided through user input, and provides an <code><a href="Protocols/RSDResult.html">RSDResult</a></code> with those answers upon
+request.</p>
 
 <p>It also provides several convenience methods for saving or selecting answers, checking if all answers
 are valid, and retrieving specific model objects that may be needed by the view controller.</p>
@@ -4204,39 +4124,6 @@ and set either the <code>topLevelTask</code> or the <code>topLevelTaskInfo</code
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research17RSDTaskDataSourceP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDTaskDataSource" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research17RSDTaskDataSourceP">RSDTaskDataSource</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDTaskDataSource</code> is a data source that can be used by the factory to get info that should be included
-with a task result or used to display subgroups of a task.</p>
-
-                        <a href="Protocols/RSDTaskDataSource.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDTaskDataSource</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:8Research12RSDTaskGroupP"></a>
                     <a name="//apple_ref/swift/Protocol/RSDTaskGroup" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research12RSDTaskGroupP">RSDTaskGroup</a>
@@ -4323,6 +4210,39 @@ task is not fetched using an embedded resource or via a hardcoded task.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDTaskInfoStep</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDStep.html">RSDStep</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research13RSDTaskResultP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDTaskResult" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research13RSDTaskResultP">RSDTaskResult</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDTaskResult</code> is a result associated with a task. This object includes a step history, task run UUID,
+schema identifier, and asynchronous results.</p>
+
+                        <a href="Protocols/RSDTaskResult.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDTaskResult</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDAnswerResultFinder.html">RSDAnswerResultFinder</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDResult.html">RSDResult</a></span></code></pre>
 
                         </div>
                       </div>
@@ -4661,7 +4581,7 @@ given action of the UI.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDUIAction</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">Encodable</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDUIAction</span></code></pre>
 
                         </div>
                       </div>
@@ -4763,6 +4683,10 @@ the participant about doing a particular task later.</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
                 <li class="item">
                   <div>
                     <code>

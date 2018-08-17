@@ -523,12 +523,6 @@
                 <a href="../Protocols/RSDComparableSurveyRule.html">RSDComparableSurveyRule</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDConditionalReplacementRule.html">RSDConditionalReplacementRule</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Protocols/RSDConditionalRule.html">RSDConditionalRule</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Protocols/RSDConditionalStepNavigator.html">RSDConditionalStepNavigator</a>
               </li>
               <li class="nav-group-task">
@@ -772,9 +766,6 @@
                 <a href="../Protocols/RSDTaskControllerDelegate.html">RSDTaskControllerDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDTaskDataSource.html">RSDTaskDataSource</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Protocols/RSDTaskGroup.html">RSDTaskGroup</a>
               </li>
               <li class="nav-group-task">
@@ -805,7 +796,7 @@
                 <a href="../Protocols.html#/s:8Research19RSDTrackingDelegateP">RSDTrackingDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols.html#/s:8Research15RSDTrackingRuleP">RSDTrackingRule</a>
+                <a href="../Protocols/RSDTrackingRule.html">RSDTrackingRule</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDTrackingStepNavigator.html">RSDTrackingStepNavigator</a>
@@ -1092,8 +1083,15 @@
             <p><code>RSDResult</code> is the base implementation for a result associated with a task, step, or asynchronous action.</p>
 
 <p>When running a task, there will be a result of some variety used to mark each step in the task. This is
-the base protocol. All the <code>RSDResult</code> objects are required to conform to the <code>Codable</code> protocol to allow
+the base protocol. All the <code>RSDResult</code> objects are required to conform to the <code>Encodable</code> protocol to allow
 the app to store and upload results in a standardized way.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The <code>RSDResult</code> protocol requires conformance to the <code>Encodable</code> protocol but does <em>not</em> require
+conformance to <code>Decodable</code>. This allows using class objects that cannot be extended to conform to the
+<code>Decodable</code> protocol, such as <code>ORKResult</code> classes.
+
+</div>
 
           </section>
           <section class="section task-group-section">
