@@ -34,7 +34,7 @@
 import Foundation
 
 /// The weekday enum assigns an enum value to each day of the week and implements `Comparable` to allow
-/// for sorting the weekdays by the order appropriate for the user's current Locale.
+/// for sorting the weekdays by the order appropriate for the participant's current Locale.
 public enum RSDWeekday : Int, Codable, RSDIntEnumSet {
     
     case sunday = 1

@@ -43,8 +43,8 @@ public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule {
     public var nextStepIdentifier: String?
     public var showBeforeIdentifier: String?
     
-    public func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
-        if shouldSkipStep(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking) {
+    public func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
+        if shouldSkipStep(with: result, isPeeking: isPeeking) {
             // Only use the next identifier if this step wasn't just skipped.
             return nil
         }
@@ -52,7 +52,7 @@ public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule {
     }
     
     
-    public func shouldSkipStep(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> Bool {
+    public func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
         if let loopId = showBeforeIdentifier, result?.findResult(with: loopId) == nil {
             // Skip this step if another step isn't yet in the result set.
             return true
@@ -96,7 +96,6 @@ public struct TestConditionalNavigator: RSDConditionalStepNavigator {
     
     public let steps: [RSDStep]
     public var progressMarkers: [String]?
-    public var conditionalRule: RSDConditionalRule?
     
     public init(steps: [RSDStep]) {
         self.steps = steps

@@ -52,9 +52,9 @@ public protocol RSDTableDataSourceDelegate: class, NSObjectProtocol {
     func tableDataSource(_ dataSource: RSDTableDataSource, didFinishWith stepController: RSDStepController)
 }
 
-/// `RSDTableDataSource`: the internal model for a table view controller. It provides the
-/// UITableViewDataSource, manages and stores answers provided thru user input, and provides an RSDResult
-/// with those answers upon request.
+/// `RSDTableDataSource` is the model for a table view controller. It provides the UITableViewDataSource,
+/// manages and stores answers provided through user input, and provides an `RSDResult` with those answers upon
+/// request.
 ///
 /// It also provides several convenience methods for saving or selecting answers, checking if all answers
 /// are valid, and retrieving specific model objects that may be needed by the view controller.

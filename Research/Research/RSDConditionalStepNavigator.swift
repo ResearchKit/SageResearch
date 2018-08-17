@@ -43,12 +43,11 @@ public protocol RSDNavigationRule : RSDStep {
     ///
     /// - parameters:
     ///     - result:           The current task result.
-    ///     - conditionalRule:  The conditional rule associated with this task.
     ///     - isPeeking:        Is this navigation rule being called on a result for a step that is navigating
     ///                         forward or is it a step navigator that is peeking at the next step to set up UI
     ///                         display? If peeking at the next step then this parameter will be `true`.
     /// - returns: The identifier of the next step.
-    func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?, isPeeking: Bool) -> String?
+    func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String?
 }
 
 /// A navigation skip rule applies to this step to allow the step to be skipped.
@@ -59,12 +58,11 @@ public protocol RSDNavigationSkipRule : RSDStep {
     ///
     /// - parameters:
     ///     - result:           The current task result.
-    ///     - conditionalRule:  The conditional rule associated with this task.
     ///     - isPeeking:        Is this navigation rule being called on a result for a step that is navigating
     ///                         forward or is it a step navigator that is peeking at the next step to set up UI
     ///                         display? If peeking at the next step then this parameter will be `true`.
     /// - returns: `true` if the step should be skipped, otherwise `no`.
-    func shouldSkipStep(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?, isPeeking: Bool) -> Bool
+    func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool
 }
 
 /// A navigation back rule applies to this step to block backward navigation.
@@ -74,16 +72,14 @@ public protocol RSDNavigationBackRule : RSDStep {
     ///
     /// - parameters:
     ///     - result:           The current task result.
-    ///     - conditionalRule:  The conditional rule associated with this task.
     /// - returns: `true` if the backward navigation is allowed, otherwise `no`.
-    func allowsBackNavigation(with result: RSDTaskResult?, conditionalRule : RSDConditionalRule?) -> Bool
+    func allowsBackNavigation(with result: RSDTaskResult?) -> Bool
 }
 
-/// A conditional rule is appended to the navigable task to check a secondary source for whether or not
-/// the step should be displayed.
-///
-/// - seealso: `RSDCohortRule`
-public protocol RSDConditionalRule {
+/// A tracking rule is used to track changes that are applied during a task that should be saved at the
+/// end of the the overall task. By definition, these rules can mutate and should be handled using
+/// pointers rather than using structs.
+public protocol RSDTrackingRule : class {
     
     /// Asks the conditional rule what the identifier is for the next step to display after the given step
     /// is displayed.
@@ -113,40 +109,12 @@ public protocol RSDConditionalRule {
     func nextStepIdentifier(after step: RSDStep?, with result: RSDTaskResult?, isPeeking: Bool) -> String?
 }
 
-/// A conditional **replacement** rule is a conditional rule that needs to replace a given step with a
-/// different instance of a step under a set of conditions determined by the rule.
-///
-/// - note: `Research` does not currently implement any conditional replacement rule objects. The
-///  replacement rule is included here for future implementation of data tracking across runs of a task.
-///  (syoung 02/21/2018)
-public protocol RSDConditionalReplacementRule : RSDConditionalRule {
-    
-    /// Allows the conditional rule to mutate or replace the step that the navigation rules determine
-    /// should be the return step. This rule should return the original step if no replacement is
-    /// required. Returning `nil` indicates that the task should end.
-    ///
-    /// - parameters:
-    ///     - step:     The step that navigation has opted to return.
-    ///     - result:   The current task result.
-    /// - returns: The actual step to move to. If no action, then `step` should be returned.
-    func replacementStep(for step:RSDStep?, with result: RSDTaskResult?) -> RSDStep?
-}
-
-/// A tracking rule is used to track changes that are applied during a task that should be saved at the
-/// end of the the overall task. By definition, these rules can mutate and should be handled using
-/// pointers rather than using structs.
-public protocol RSDTrackingRule : class, RSDConditionalRule {
-}
-
 /// Implementation of a step navigator that will apply conditions and navigation based on the steps,
 /// navigation rules, and conditional rules associated with this navigator.
 public protocol RSDConditionalStepNavigator : RSDStepNavigator, RSDStepValidator {
     
     /// An ordered list of steps to run for this task.
     var steps : [RSDStep] { get }
-    
-    /// A conditional rule to optionally associate with this step navigator.
-    var conditionalRule : RSDConditionalRule? { get }
     
     /// A list of step markers to use for calculating progress. If defined, progress is calculated
     /// counting only those steps that are included in the progress markers rather than inspecting the
@@ -171,7 +139,7 @@ extension RSDConditionalStepNavigator {
                 return nextStepId
             }
         }
-        return self.conditionalRule?.nextStepIdentifier(after: previousStep, with: result, isPeeking: isPeeking)
+        return nil
     }
     
     private func _checkConditionalSkipRules(before returnStep: RSDStep?, with result: RSDTaskResult, isPeeking: Bool) -> String? {
@@ -181,7 +149,7 @@ extension RSDConditionalStepNavigator {
                 return nextStepId
             }
         }
-        return conditionalRule?.skipToStepIdentifier(before: returnStep, with: result, isPeeking: isPeeking)
+        return nil
     }
     
     private func _nextStepIdentifier(with parentResult: RSDTaskResult, isPeeking: Bool) -> String? {
@@ -203,7 +171,7 @@ extension RSDConditionalStepNavigator {
             return nextStepIdentifer
         }
         else if let navigableStep = previousStep as? RSDNavigationRule,
-                let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking) {
+                let nextStepIdentifier = navigableStep.nextStepIdentifier(with: result, isPeeking: isPeeking) {
             // If this is a step that conforms to the RSDNavigationRule protocol and the next step is non-nil,
             // then return this as the next step identifier
             return nextStepIdentifier
@@ -316,18 +284,13 @@ extension RSDConditionalStepNavigator {
                 }
             }
             if !shouldSkip, (returnStep != nil), let navigationSkipStep = returnStep as? RSDNavigationSkipRule {
-                shouldSkip = navigationSkipStep.shouldSkipStep(with: result, conditionalRule: conditionalRule, isPeeking: isPeeking)
+                shouldSkip = navigationSkipStep.shouldSkipStep(with: result, isPeeking: isPeeking)
             }
             if (shouldSkip) {
                 previousStep = returnStep
             }
             
         } while (shouldSkip)
-            
-        // If there is a conditionalRule, then check to see if the step should be mutated or replaced.
-        if let conditionalRule = self.conditionalRule as? RSDConditionalReplacementRule {
-            returnStep = conditionalRule.replacementStep(for: returnStep, with: result)
-        }
         
         return (returnStep, stepDirection)
     }
@@ -341,7 +304,7 @@ extension RSDConditionalStepNavigator {
     public func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep? {
         
         // Check if this step does not allow backwards navigation.
-        if let navRule = step as? RSDNavigationBackRule, !navRule.allowsBackNavigation(with: result, conditionalRule: conditionalRule) {
+        if let navRule = step as? RSDNavigationBackRule, !navRule.allowsBackNavigation(with: result) {
             return nil
         }
         

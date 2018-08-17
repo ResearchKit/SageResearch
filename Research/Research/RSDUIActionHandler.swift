@@ -1,5 +1,5 @@
 //
-//  RSDResult.swift
+//  RSDUIActionHandler.swift
 //  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
@@ -33,27 +33,25 @@
 
 import Foundation
 
-/// `RSDResult` is the base implementation for a result associated with a task, step, or asynchronous action.
-///
-/// When running a task, there will be a result of some variety used to mark each step in the task. This is
-/// the base protocol. All the `RSDResult` objects are required to conform to the `Encodable` protocol to allow
-/// the app to store and upload results in a standardized way.
-///
-/// - note: The `RSDResult` protocol requires conformance to the `Encodable` protocol but does *not* require
-/// conformance to `Decodable`. This allows using class objects that cannot be extended to conform to the
-/// `Decodable` protocol, such as `ORKResult` classes.
-///
-public protocol RSDResult : Encodable {
+
+/// `RSDUIActionHandler` implements the custom actions of the step.
+public protocol RSDUIActionHandler {
     
-    /// The identifier associated with the task, step, or asynchronous action.
-    var identifier: String { get }
+    /// Customizable actions to return for a given action type. The `RSDStepController` can use these to
+    /// customize the display of buttons to the user. If nil, `shouldHideAction()` will be called to
+    /// determine if the default action should be used or if the action button should be hidden.
+    ///
+    /// - parameters:
+    ///     - actionType:  The action type for the button.
+    ///     - step:        The step that the action is on.
+    /// - returns: A custom UI action for this button. If nil, the default action will be used.
+    func action(for actionType: RSDUIActionType, on step: RSDStep) -> RSDUIAction?
     
-    /// A String that indicates the type of the result. This is used to decode the result using a `RSDFactory`.
-    var type: RSDResultType { get }
-    
-    /// The start date timestamp for the result.
-    var startDate: Date { get set }
-    
-    /// The end date timestamp for the result.
-    var endDate: Date { get set }
+    /// Should the action button be hidden?
+    ///
+    /// - parameters:
+    ///     - actionType:  The action type for the button.
+    ///     - step:        The step that the action is on.
+    /// - returns: Whether or not the button should be hidden or `nil` if there is no explicit action.
+    func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool?
 }

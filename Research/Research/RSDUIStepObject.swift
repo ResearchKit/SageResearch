@@ -202,7 +202,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// `nextStepIdentifier`.
     ///
     /// - returns: The identifier of the next step.
-    open func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
+    open func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
         if let navigationResult = result?.findResult(for: self) as? RSDNavigationResult,
             let skipTo = navigationResult.skipToIdentifier,
             !isPeeking {

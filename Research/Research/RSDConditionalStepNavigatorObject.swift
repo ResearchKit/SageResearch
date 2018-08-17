@@ -43,9 +43,6 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
     /// An ordered list of steps to run for this task.
     public let steps : [RSDStep]
     
-    /// A conditional rule to optionally associate with this step navigator.
-    public var conditionalRule : RSDConditionalRule?
-    
     /// A list of step markers to use for calculating progress.
     public var progressMarkers : [String]?
     
@@ -79,7 +76,6 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
     
         // Create the navigator.
         var navigator = RSDConditionalStepNavigatorObject(with: steps)
-        navigator.conditionalRule = self.conditionalRule
         navigator.insertAfterIdentifier = step.identifier
         
         // Mutate the progress markers.
@@ -143,12 +139,6 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
         // Decode the steps
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
         self.steps = try factory.decodeSteps(from: stepsContainer)
-        
-        // Decode the conditional rule
-        if container.contains(.conditionalRule) {
-            let crDecoder = try container.superDecoder(forKey: .conditionalRule)
-            self.conditionalRule = try factory.decodeConditionalRule(from: crDecoder)
-        }
         
         // Decode the markers
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)

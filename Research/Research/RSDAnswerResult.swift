@@ -1,5 +1,5 @@
 //
-//  RSDSectionStep.swift
+//  RSDAnswerResult.swift
 //  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
@@ -33,50 +33,41 @@
 
 import Foundation
 
-
-/// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey
-/// or an active step that includes an instruction step, countdown step, and activity step.
-public protocol RSDSectionStep: RSDStep, RSDTask, RSDConditionalStepNavigator {
+/// `RSDAnswerResult` is a result that can be described using a single value.
+public protocol RSDAnswerResult : RSDResult, RSDAnswerResultFinder {
     
-    /// A list of the steps used to define this subgrouping of steps.
-    var steps: [RSDStep] { get }
+    /// The answer type of the answer result. This includes coding information required to encode and
+    /// decode the value. The value is expected to conform to one of the coding types supported by the answer type.
+    var answerType: RSDAnswerResultType { get }
+    
+    /// The answer for the result.
+    var value: Any? { get }
 }
 
-extension RSDSectionStep {
+extension RSDAnswerResult {
     
-    /// Task info is `nil` for a section step.
-    public var taskInfo: RSDTaskInfoStep? {
-        return nil
-    }
-    
-    /// Schema info is `nil` for a section step.
-    public var schemaInfo: RSDSchemaInfo? {
-        return nil
-    }
-    
-    /// The step navigator is `self` for a section step.
-    public var stepNavigator: RSDStepNavigator {
-        return self
-    }
-    
-    /// A section step returns a task result for both the step result and the task result
-    /// This method will throw an assert if the implementation of the section step does not
-    /// return a `RSDTaskResult` as its type.
-    public func instantiateTaskResult() -> RSDTaskResult {
-        let result = self.instantiateStepResult()
-        guard let taskResult = result as? RSDTaskResult else {
-            assertionFailure("Expected that a section step will return a result that conforms to RSDTaskResult protocol.")
-            return RSDTaskResultObject(identifier: identifier)
-        }
-        return taskResult
+    /// This method will return `self` if the identifier matches the identifier of this result. Otherwise,
+    /// the method will return `nil`.
+    ///
+    /// - seealso: `RSDAnswerResultFinder`
+    ///
+    /// - parameter identifier: The identifier associated with the result.
+    /// - returns: The result or `nil` if not found.
+    public func findAnswerResult(with identifier:String ) -> RSDAnswerResult? {
+        return self.identifier == identifier ? self : nil
     }
 }
 
-/// `RSDStepTransformer` is used in decoding a step with replacement properties for some or all of the
-/// properties that is defined using a different resource.
-public protocol RSDStepTransformer {
+/// `RSDAnswerResultFinder` is a convenience protocol used to retrieve an answer result. It is used in
+/// survey navigation to find the result for a given input field.
+///
+/// - seealso: `RSDSurveyNavigationStep`
+public protocol RSDAnswerResultFinder {
     
-    /// The step transformed by this object for inclusion into a task.
-    var transformedStep: RSDStep! { get }
+    /// Find an *answer* result within this result. This method will return `nil` if there is a result
+    /// but that result does **not** conform to to the `RSDAnswerResult` protocol.
+    ///
+    /// - parameter identifier: The identifier associated with the result.
+    /// - returns: The result or `nil` if not found.
+    func findAnswerResult(with identifier:String ) -> RSDAnswerResult?
 }
-

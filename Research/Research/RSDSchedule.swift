@@ -49,7 +49,7 @@ public protocol RSDSchedule : RSDScheduleTime {
     /// Get an array of the date components to use to set up notification triggers. This will return a
     /// `DateComponents` for each notification trigger that would be added to set notifications.
     ///
-    /// - note: The date components will *not* include the user's current timezone.
+    /// - note: The date components will *not* include the participant's current timezone.
     /// - returns: The date components to use to set up a trigger for each scheduling instance.
     func notificationTriggers() -> [DateComponents]
 }
