@@ -446,4 +446,46 @@ class TaskControllerTests: XCTestCase {
         XCTAssertNotNil(directionThird)
         XCTAssertEqual(directionThird, .forward)
     }
+    
+    func testCohortNavigation_SkipFirstStep() {
+        let step1 = RSDUIStepObject(identifier: "step1")
+        let step2 = RSDUIStepObject(identifier: "step2")
+        
+        let trackingRule = TestTrackingRule(skipTo: ["step1" : "step2"], next: [:], nextAfterNil: nil)
+        RSDFactory.shared.trackingRules = [trackingRule]
+        
+        var taskResult: RSDTaskResult = RSDTaskResultObject(identifier: "test")
+        let navigator = RSDConditionalStepNavigatorObject(with: [step1, step2])
+        let nextStep = navigator.step(after: nil, with: &taskResult)
+        XCTAssertEqual(nextStep.step?.identifier, "step2")
+        XCTAssertEqual(nextStep.direction, .forward)
+        
+        RSDFactory.shared.trackingRules = []
+    }
+}
+
+class TestTrackingRule : RSDTrackingRule {
+    
+    let skipTo: [String : String]
+    let nextAfterNil: String?
+    let next: [String : String]
+    
+    init(skipTo: [String : String], next: [String : String], nextAfterNil: String?) {
+        self.skipTo = skipTo
+        self.next = next
+        self.nextAfterNil = nextAfterNil
+    }
+    
+    func skipToStepIdentifier(before step: RSDStep, with result: RSDTaskResult?, isPeeking: Bool) -> String? {
+        return skipTo[step.identifier]
+    }
+    
+    func nextStepIdentifier(after step: RSDStep?, with result: RSDTaskResult?, isPeeking: Bool) -> String? {
+        if let identifier = step?.identifier {
+            return next[identifier]
+        }
+        else {
+            return nextAfterNil
+        }
+    }
 }
