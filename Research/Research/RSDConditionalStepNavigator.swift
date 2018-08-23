@@ -278,9 +278,9 @@ extension RSDConditionalStepNavigator {
             shouldSkip = false
             if let nextId = _checkConditionalSkipRules(before: returnStep, with: result, isPeeking: isPeeking) {
                 if nextId == RSDIdentifier.nextStep {
-                    shouldSkip = true
+                    returnStep = steps.rsd_next(after: {$0.identifier == returnStep?.identifier})
                 } else {
-                    returnStep = steps.rsd_next(after: {$0.identifier == nextId})
+                    returnStep = steps.first(where: {$0.identifier == nextId})
                 }
             }
             if !shouldSkip, (returnStep != nil), let navigationSkipStep = returnStep as? RSDNavigationSkipRule {
