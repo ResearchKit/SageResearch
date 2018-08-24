@@ -11,7 +11,7 @@
                 "permissions":[
                                {
                                 "permissionType":"motion",
-                                "reason":"Access to Motion and Fitness sensors is required to measure the phones steadiness in your hand."
+                                "reason":"Access to Motion and Fitness sensors is required to measure the phone's steadiness in your hand."
                                }
                             ],
                  "image":{

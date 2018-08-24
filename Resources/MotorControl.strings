@@ -49,3 +49,5 @@
 "TAPPING_COMPLETION_LEFT_UNIT_LABEL" = "LEFT HAND TAPS";
 
 "TAPPING_COMPLETION_RIGHT_UNIT_LABEL" = "RIGHT HAND TAPS";
+
+"MOTION_SENSOR_REQUIRED_FOR_TASK_MESSAGE" = "This activity requires the use of the motion sensors and cannot continue without this permssion.";

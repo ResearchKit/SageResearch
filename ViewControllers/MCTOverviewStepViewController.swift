@@ -178,23 +178,40 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     /// means that the recorder isn't turned on (and thus asking for permission) until after the user has
     /// put the device in their pocket. syoung 07/25/2018
     override open func goForward() {
-        if RSDMotionAuthorization.authorizationStatus() == .notDetermined {
+        let (status, permission) = self.checkAuthorizationStatus()
+        
+        switch status {
+        case .authorized:
+            self._super_goForward()
+            
+        case .notDetermined, .previouslyDenied:
             // Request permission to access the motion sensors **before** continuing.
             RSDMotionAuthorization.requestAuthorization() { [weak self] (status, _) in
                 if status.isDenied() {
-                    self?.handleAuthorizationFailed(status: status, permission: .motion)
+                    self?._handleUnauthorized(status, permission!)
                 } else {
                     self?._super_goForward()
                 }
             }
-        }
-        else {
-            self._super_goForward()
+
+        default:
+            self._handleUnauthorized(status, permission!)
         }
     }
 
     func _super_goForward() {
         super.goForward()
+    }
+    
+    func _handleUnauthorized(_ status: RSDAuthorizationStatus, _ permission: RSDStandardPermission) {
+        let settingsMessage = (status == .restricted) ? permission.restrictedMessage : permission.deniedMessage
+        let message: String = {
+            guard let reason = permission.reason else { return settingsMessage }
+            return "\(reason)\n\n\(settingsMessage)"
+        }()
+        self.presentAlertWithOk(title: "Not Authorized", message: message) { (_) in
+            self.cancelTask(shouldSave: false)
+        }
     }
     
     // This variable was needed because the iPhone X lays out the subviews twice. The second
