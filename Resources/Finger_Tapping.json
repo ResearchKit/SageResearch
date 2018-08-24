@@ -7,7 +7,7 @@
                 "identifier":"introduction",
                 "type":"overview",
                 "title":"Finger Tapping",
-                "text":"In this activity we will measure your finger tapping speed with each hand; this may reflect severity of motor systems in Parkinson’s Disease.",
+                "text":"In this activity we will measure your finger tapping speed with each hand; this may reflect severity of motor symptoms in Parkinson’s Disease.",
                 "permissions":[
                                {
                                 "permissionType":"motion",
