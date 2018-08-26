@@ -99,7 +99,7 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
     override open func spokenInstruction(at duration: TimeInterval) -> String? {
         guard let textFormat = super.spokenInstruction(at: duration) else { return nil }
         guard let direction = self.whichHand()?.rawValue.uppercased() else { return textFormat }
-        // TODO rkolmos 04/09/2018 localize and standardize with java implementation
+        // TODO: rkolmos 04/09/2018 localize and standardize with java implementation
         return String.localizedStringWithFormat(textFormat, direction)
     }
 }

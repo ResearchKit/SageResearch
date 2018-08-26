@@ -109,7 +109,7 @@ extension MCTHandStepController {
     /// a string from the body direction that goes first. Expected is either ("LEFT" or "RIGHT").
     public func updateLabelText() {
         guard let direction = self.whichHand()?.rawValue.uppercased() else { return }
-        // TODO rkolmos 04/09/2018 localize and standardize with java implementation
+        // TODO: rkolmos 04/09/2018 localize and standardize with java implementation
         if let titleFormat = self.uiStep?.title {
             self.stepTitleLabel?.text = String.localizedStringWithFormat(titleFormat, direction)
         }
