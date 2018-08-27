@@ -394,12 +394,17 @@ fileprivate class RSDCheckboxButtonView : UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
-        label.rsd_alignToSuperview([.trailing, .bottom, .top], padding: 10, priority: .required)
+        label.rsd_alignToSuperview([.trailing], padding: 10, priority: .required)
         label.rsd_alignRightOf(view: checkboxContainer, padding: 10, priority: .required)
         label.font = UIFont.rsd_checkboxButtonTitle
         label.textColor = UIColor.appTextDark
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.clipsToBounds = false
+        
+        // Align label to allow word wrapping, with centered text if single line.
+        label.rsd_align([.centerY], .equal, to: self, [.centerY], padding: 0, priority: .defaultHigh)
+        label.rsd_align([.top], .greaterThanOrEqual, to: viewUnchecked, [.top], padding: 0, priority: .required)
         
         // hide the title label
         checkboxContainer.isUserInteractionEnabled = false
