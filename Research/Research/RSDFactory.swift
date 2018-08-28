@@ -33,6 +33,10 @@
 
 import Foundation
 
+public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStringLiteral {
+    var stringValue: String { get }
+}
+
 /// `RSDFactory` handles customization of decoding the elements of a task. Applications should
 /// override this factory to add custom elements required to run their task modules.
 open class RSDFactory {

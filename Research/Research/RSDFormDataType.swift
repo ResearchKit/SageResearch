@@ -2,7 +2,7 @@
 //  RSDFormDataType.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -280,7 +280,8 @@ public enum RSDFormDataType {
         let allMeasurement: [RSDFormDataType] = MeasurementType.allTypes().map { (measurementType) -> [RSDFormDataType] in
             return MeasurementRange.allTypes().map { .measurement(measurementType, $0) }
         }.flatMap { $0 }
-        return [allBase, allCollection, allMeasurement].flatMap { $0 }
+        let allDetail: [RSDFormDataType] = baseTypes.map { .detail($0) }
+        return [allBase, allCollection, allMeasurement, allDetail].flatMap { $0 }
     }
 }
 
@@ -311,7 +312,7 @@ extension RSDFormDataType: RawRepresentable, Codable {
                 return subtype
             }()
             let typeValue = split[0]
-            if rawValue == kDetailCodingKey {
+            if typeValue == kDetailCodingKey {
                 self = .detail(subtype)
             }
             else {
@@ -329,10 +330,15 @@ extension RSDFormDataType: RawRepresentable, Codable {
             return "\(collectionType.rawValue).\(baseType.rawValue)"
         
         case .measurement(let measurement, let range):
-            return "\(measurement).\(range)"
+            return "\(measurement.rawValue).\(range.rawValue)"
             
         case .detail(let baseType):
-            return "\(kDetailCodingKey).\(baseType.rawValue)"
+            if baseType == .codable {
+                return kDetailCodingKey
+            }
+            else {
+                return "\(kDetailCodingKey).\(baseType.rawValue)"
+            }
             
         case .custom(let value, let baseType):
             if baseType == .string {

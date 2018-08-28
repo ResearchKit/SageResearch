@@ -52,7 +52,7 @@ public struct RSDIdentifier : RawRepresentable, Codable {
     public static let nextStep: RSDIdentifier = "nextStep"
     
     public static func allGlobalIdentifiers() -> [RSDIdentifier] {
-        return [.exit, .nextSection]
+        return [.exit, .nextSection, .nextStep]
     }
 }
 

@@ -226,7 +226,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// - parameters:
     ///     - factory: The factory to use to decode the task.
     ///     - completion: The callback handler to call when the task is loaded.
-    public func fetchTask(with factory:RSDFactory, completion: @escaping FetchCompletionHandler) {
+    public func fetchTask(with factory: RSDFactory, completion: @escaping FetchCompletionHandler) {
         guard !self.isLoading && self.task == nil else {
             debugPrint("\(self.description): Already loading task.")
             return

@@ -696,7 +696,13 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         else if let webAction = action as? RSDWebViewUIAction {
             // For a webview action, present a web view modally.
             let (webVC, navVC) = RSDWebViewController.instantiateController()
-            webVC.resourceTransformer = webAction
+            
+            if let transformer = webAction as? RSDResourceTransformer {
+                webVC.resourceTransformer = transformer
+            }
+            else {
+                webVC.url = URL(string: webAction.url)
+            }
             self.present(navVC, animated: true, completion: nil)
             return true
         }
@@ -777,7 +783,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     private func recursiveTaskAction(for actionType: RSDUIActionType) -> RSDUIAction? {
         var taskPath = self.taskController.taskPath
         repeat {
-            if let action = taskPath?.task?.action(for: actionType, on: step) {
+            if let actionHandler = taskPath?.task as? RSDUIActionHandler,
+                let action = actionHandler.action(for: actionType, on: step) {
                 return action
             }
             taskPath = taskPath?.parentPath
@@ -844,7 +851,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     private func recursiveTaskShouldHideAction(for actionType: RSDUIActionType) -> Bool? {
         var taskPath = self.taskController.taskPath
         repeat {
-            if let shouldHide = taskPath?.task?.shouldHideAction(for: actionType, on: step) {
+            if let actionHandler = taskPath?.task as? RSDUIActionHandler,
+                let shouldHide = actionHandler.shouldHideAction(for: actionType, on: step) {
                 return shouldHide
             }
             taskPath = taskPath?.parentPath

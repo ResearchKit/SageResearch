@@ -35,7 +35,7 @@ import Foundation
 
 /// `RSDSectionStepObject` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
 /// step that includes an instruction step, countdown step, and activity step.
-public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, RSDCopyStep, Decodable {
+public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator, RSDStepValidator, RSDCopyStep, Decodable {
 
     private enum CodingKeys : String, CodingKey {
         case identifier, stepType = "type", steps, progressMarkers, asyncActions

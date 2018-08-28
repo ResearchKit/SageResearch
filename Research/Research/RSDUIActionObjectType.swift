@@ -35,10 +35,9 @@ import Foundation
 
 /// The type of the ui action. This is used to decode a `RSDUIAction` using a `RSDFactory`. It can also be used
 /// to customize the UI.
-public struct RSDUIActionObjectType : RawRepresentable, Codable {
-    public typealias RawValue = String
+public struct RSDUIActionObjectType : RSDFactoryTypeRepresentable, Codable {
     
-    public private(set) var rawValue: String
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue

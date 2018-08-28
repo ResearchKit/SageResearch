@@ -2,7 +2,7 @@
 //  RSDFormUIHint.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -47,11 +47,20 @@ public struct RSDFormUIHint : RawRepresentable, Codable {
         self.rawValue = rawValue
     }
     
+    /// Input field of a button-style cell that can be used to display a detail view.
+    public static let button: RSDFormUIHint = "button"
+    
     /// List with a checkbox next to each item.
     public static let checkbox: RSDFormUIHint = "checkbox"
     
     /// Drop-down with a textfield for "other".
     public static let combobox: RSDFormUIHint = "combobox"
+    
+    /// Input field of a disclosure arrow cell that can be used to display a detail view.
+    public static let disclosureArrow: RSDFormUIHint = "disclosureArrow"
+    
+    /// Input field of a link-style cell that can be used to display a detail view.
+    public static let link: RSDFormUIHint = "link"
     
     /// List of selectable cells.
     public static let list: RSDFormUIHint = "list"
@@ -68,6 +77,9 @@ public struct RSDFormUIHint : RawRepresentable, Codable {
     /// Radio button.
     public static let radioButton: RSDFormUIHint = "radioButton"
     
+    /// Input field for a "detail" that is displayed inline as a section.
+    public static let section: RSDFormUIHint = "section"
+    
     /// Slider.
     public static let slider: RSDFormUIHint = "slider"
     
@@ -77,38 +89,11 @@ public struct RSDFormUIHint : RawRepresentable, Codable {
     /// Toggle (segmented) button.
     public static let toggle: RSDFormUIHint = "toggle"
     
-    /// Input field of a button-style cell that can be used to display a detail view.
-    public static let button: RSDFormUIHint = "button"
-    
-    /// Input field of a link-style cell that can be used to display a detail view.
-    public static let link: RSDFormUIHint = "link"
-    
-    /// Input field of a disclosure arrow cell that can be used to display a detail view.
-    public static let disclosureArrow: RSDFormUIHint = "disclosureArrow"
-    
-    /// Input field for a "detail" that is displayed inline as a section.
-    public static let section: RSDFormUIHint = "section"
-
-    /// The standard type for this ui hint, if applicable.
-    public var standardType: RSDFormUIHint? {
-        return RSDFormUIHint.allStandardHints.contains(self) ? self : nil
-    }
-    
     /// A list of all the `RSDFormUIHint` values that are standard hints.
     public static var allStandardHints: Set<RSDFormUIHint> {
-        return [.checkbox, .combobox, .list, .multipleLine, .picker, .radioButton, .slider, .textfield, .toggle, .button, .disclosureArrow, .link]
+        return [.button, .checkbox, .combobox, .disclosureArrow, .link, .list, .multipleLine, .picker,
+                .popover, .radioButton, .section, .slider, .textfield, .toggle]
     }
-}
-
-extension RSDFormUIHint {
-    
-    /// Modal step displayed with a secondary button cell.
-    @available(*, deprecated)
-    public static let modalButton: RSDFormUIHint = "modalButton"
-    
-    /// Modal step displayed with selection cell.
-    @available(*, deprecated)
-    public static let modalSelection: RSDFormUIHint = "modalSelection"
 }
 
 extension RSDFormUIHint : Equatable {

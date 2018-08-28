@@ -34,6 +34,17 @@
 import Foundation
 import UIKit
 
+/// `RSDAsyncActionControllerVendor` is an extension of the configuration protocol for configurations that
+/// know how to vend a new controller.
+///
+public protocol RSDAsyncActionControllerVendor : RSDAsyncActionConfiguration {
+    
+    /// Instantiate a controller appropriate to this configuration.
+    /// - parameter taskPath: The current task path to use to initialize the controller.
+    /// - returns: An async action controller or nil if the async action is not supported on this device.
+    func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController?
+}
+
 /// `RSDAsyncActionControllerDelegate` is the delegate protocol for `RSDAsyncActionController`.
 public protocol RSDAsyncActionControllerDelegate : class {
     

@@ -51,18 +51,3 @@ public protocol RSDImageVendor {
     ///     - callback:    The callback with the identifier and image, run on the main thread.
     func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void))
 }
-
-extension UIImage : RSDImageVendor {
-    
-    /// Returns `self.hash` as a string.
-    public var imageIdentifier: String {
-        return "\(self.hash)"
-    }
-    
-    /// Fetches self.
-    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
-        DispatchQueue.main.async {
-            callback(self.imageIdentifier, self)
-        }
-    }
-}
