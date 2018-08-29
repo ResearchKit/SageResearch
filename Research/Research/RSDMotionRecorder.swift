@@ -34,6 +34,16 @@
 import Foundation
 import CoreMotion
 
+extension RSDMotionRecorderConfiguration : RSDAsyncActionControllerVendor {
+    
+    /// Instantiate a `RSDMotionRecorder`.
+    /// - parameter taskPath: The current task path to use to initialize the controller.
+    /// - returns: A new instance of `RSDMotionRecorder`.
+    public func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController? {
+        return RSDMotionRecorder(configuration: self, taskPath: taskPath, outputDirectory: taskPath.outputDirectory)
+    }
+}
+
 /// `RSDMotionRecorder` is a subclass of `RSDSampleRecorder` that implements recording core motion
 /// sensor data.
 ///
