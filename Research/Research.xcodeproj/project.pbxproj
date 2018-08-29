@@ -278,8 +278,6 @@
 		F8BE114921360A94000AAB1E /* RSDInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE114821360A94000AAB1E /* RSDInputField.swift */; };
 		F8BE114A21360A94000AAB1E /* RSDInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE114821360A94000AAB1E /* RSDInputField.swift */; };
 		F8BE114B21360A94000AAB1E /* RSDInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BE114821360A94000AAB1E /* RSDInputField.swift */; };
-		F8BE1160213611A2000AAB1E /* RSDMotionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84205A5202BAB6B000614D6 /* RSDMotionRecorder.swift */; };
-		F8BE1161213611A2000AAB1E /* RSDMotionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84205A5202BAB6B000614D6 /* RSDMotionRecorder.swift */; };
 		F8C0A8CC20FB045C00EC758A /* RSDUITransitionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C0A8CB20FB045C00EC758A /* RSDUITransitionStyle.swift */; };
 		F8C0A8CD20FB045C00EC758A /* RSDUITransitionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C0A8CB20FB045C00EC758A /* RSDUITransitionStyle.swift */; };
 		F8C0A8CE20FB045C00EC758A /* RSDUITransitionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C0A8CB20FB045C00EC758A /* RSDUITransitionStyle.swift */; };
@@ -2262,7 +2260,6 @@
 				F8C7D396209155A9007490BC /* RSDUIActionType.swift in Sources */,
 				F8BE10DE2135E662000AAB1E /* RSDNavigationRule.swift in Sources */,
 				FF8B53FA1FCE6C87006B6937 /* RSDDateCoderObject.swift in Sources */,
-				F8BE1161213611A2000AAB1E /* RSDMotionRecorder.swift in Sources */,
 				F80CA53E1FFEC01300E89C06 /* RSDHumanMeasurementTableItemGroup.swift in Sources */,
 				FF8B53B91FCE6C7B006B6937 /* RSDDateCoder.swift in Sources */,
 				F8BE11222136023A000AAB1E /* RSDDecodableReplacement.swift in Sources */,
@@ -2401,7 +2398,6 @@
 				F8BE111F21360158000AAB1E /* RSDStepTransformer.swift in Sources */,
 				B5581F5520756ABF00F224C6 /* RSDImagePlacementType.swift in Sources */,
 				F82D11192125EAF300EA1A33 /* RSDCollectionResult.swift in Sources */,
-				F8BE1160213611A2000AAB1E /* RSDMotionRecorder.swift in Sources */,
 				FF8B53D51FCE6C7B006B6937 /* RSDStep.swift in Sources */,
 				F810CF38202E2811009C49C9 /* RSDMotionRecorderConfiguration.swift in Sources */,
 				FF8B53931FCE6C71006B6937 /* RSDFormDataType.swift in Sources */,
@@ -2651,6 +2647,7 @@
 		FF8B53251FCE678E006B6937 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
@@ -2677,6 +2674,7 @@
 		FF8B53261FCE678E006B6937 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
@@ -2804,6 +2802,7 @@
 		FF8B534F1FCE67C8006B6937 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
@@ -2831,6 +2830,7 @@
 		FF8B53501FCE67C8006B6937 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
