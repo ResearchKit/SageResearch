@@ -248,6 +248,9 @@ public struct RSDTaskMetadata : Codable {
             let device = WKInterfaceDevice.current()
             self.deviceInfo = "\(device.machineName); \(device.systemName)/\(device.systemVersion)"
             self.deviceTypeIdentifier = device.deviceTypeIdentifier
+        #elseif os(macOS)
+            self.deviceTypeIdentifier = "Mac"
+            self.deviceInfo = "Mac \(ProcessInfo().operatingSystemVersionString)"
         #else
             let device = UIDevice.current
             self.deviceInfo = "\(device.machineName); \(device.systemName)/\(device.systemVersion)"
@@ -450,7 +453,6 @@ extension Bundle {
 
 #if os(watchOS)
     import WatchKit
-    
     extension WKInterfaceDevice {
         
         /// An identifier for the device type pulled from the system info.
@@ -478,7 +480,13 @@ extension Bundle {
             }
         }
     }
+
+#elseif os(macOS)
+
+    import AppKit
+
 #else
+    import UIKit
     extension UIDevice {
         
         /// An identifier for the device type pulled from the system info.

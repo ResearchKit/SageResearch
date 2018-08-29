@@ -135,7 +135,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     
     func isMatching(_ itemGroup: RSDTableItemGroup, at indexPath: IndexPath) -> Bool {
         return itemGroup.sectionIndex == indexPath.section &&
-            (itemGroup.beginningRowIndex ... itemGroup.beginningRowIndex + (itemGroup.items.count - 1) ~= indexPath.row)
+            (itemGroup.beginningRowIndex ... itemGroup.beginningRowIndex + (itemGroup.items.count - 1) ~= indexPath.item)
     }
     
     /// Retrieve the 'RSDTableItemGroup' for a specific IndexPath.

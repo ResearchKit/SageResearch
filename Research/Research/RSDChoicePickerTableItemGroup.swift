@@ -109,9 +109,9 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
             throw RSDInputFieldError.invalidType(context)
         }
         
-        // To get the index of our item, add our `beginningRowIndex` to `indexPath.row`.
+        // To get the index of our item, add our `beginningRowIndex` to `indexPath.item`.
         let deselectOthers = singleSelection || item.choice.isExclusive || (selectableItems.first(where: { $0.choice.isExclusive && $0.selected }) != nil)
-        let index =  indexPath.row - beginningRowIndex
+        let index =  indexPath.item - beginningRowIndex
         let selected = !item.selected
         
         // If we selected an item and this is a single-selection group, then we iterate

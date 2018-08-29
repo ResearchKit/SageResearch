@@ -32,7 +32,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// An extension of `RSDImageWrapper` that implements the `RSDFetchableImageThemeElement` protocol
 /// with `nil` values for the properties of that protocol. This allows for coding an image on an
@@ -101,11 +105,13 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     /// - parameters:
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
+    public func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void)) {
         #if os(watchOS)
-            let fetchedImage = UIImage(named: imageName)
+            let fetchedImage = RSDImage(named: imageName)
+        #elseif os(macOS)
+            let fetchedImage = RSDImage(named: NSImage.Name(imageName))
         #else
-            let fetchedImage = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+            let fetchedImage = RSDImage(named: imageName, in: bundle, compatibleWith: nil)
         #endif
         DispatchQueue.main.async {
             callback(self.imageIdentifier, fetchedImage)
@@ -165,15 +171,28 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     
 
     #if os(watchOS)
-    /// **Available** for watchOS.
+    /// **Available** for watchOS and macOS.
     ///
     /// The animated images to display.
     /// - returns: The images for this step.
-    public func images() -> [UIImage] {
+    public func images() -> [RSDImage] {
         return imageNames.compactMap {
-            UIImage(named: $0)
+            RSDImage(named: $0)
         }
     }
+    
+    #elseif os(macOS)
+    
+    /// **Available** for macOS.
+    ///
+    /// The animated images to display.
+    /// - returns: The images for this step.
+    public func images() -> [RSDImage] {
+        return imageNames.compactMap {
+            RSDImage(named: NSImage.Name($0))
+        }
+    }
+    
     #else
     
     /// **Available** for iOS and tvOS.
@@ -181,9 +200,9 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// The animated images to display.
     /// - parameter traitCollection: The trait collection.
     /// - returns: The images for this step.
-    public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [UIImage] {
+    public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [RSDImage] {
         return imageNames.compactMap {
-            UIImage(named: $0, in: bundle, compatibleWith: traitCollection)
+            RSDImage(named: $0, in: bundle, compatibleWith: traitCollection)
         }
     }
     #endif
@@ -193,7 +212,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// - parameters:
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
+    public func fetchImage(for size: CGSize, callback: @escaping ((RSDImage?) -> Void)) {
         let fetchedImage = self.images().first
         DispatchQueue.main.async {
             callback(fetchedImage)

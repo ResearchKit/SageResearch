@@ -31,7 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 
 /// `RSDImageThemeElement` extends the UI step to include an image. 
@@ -60,18 +64,18 @@ public protocol RSDAnimatedImageThemeElement : RSDImageThemeElement {
     /// The animation duration.
     var animationDuration: TimeInterval { get }
     
-    #if os(watchOS)
-    /// **Available** for watchOS.
+    #if os(watchOS) || os(macOS)
+    /// **Available** for watchOS and macOS.
     ///
     /// The animated images to display.
     /// - returns: The images for this step.
-    func images() -> [UIImage]
-    #else
+    func images() -> [RSDImage]
     
+    #else
     /// **Available** for iOS and tvOS.
     ///
     /// The animated images to display.
     /// - returns: The images for this step.
-    func images(compatibleWith traitCollection: UITraitCollection?) -> [UIImage]
+    func images(compatibleWith traitCollection: UITraitCollection?) -> [RSDImage]
     #endif
 }

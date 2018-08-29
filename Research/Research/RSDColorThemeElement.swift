@@ -33,6 +33,12 @@
 
 import Foundation
 
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
+
 
 /// An enum for the type of the color style to use for a given component.
 public enum RSDColorStyle: String, Codable {
@@ -64,13 +70,13 @@ public enum RSDColorPlacement : String, Codable {
 /// well as whether or not the foreground elements should use "light style".
 public protocol RSDColorThemeElement : RSDUIThemeElement {
     
-    #if os(watchOS)
-    /// **Available** for watchOS.
+    #if os(watchOS) || os(macOS)
+    /// **Available** for watchOS and macOS.
     ///
     /// The background color for this step. If undefined then the background color will be determined by the
     /// step view controller.
     /// - returns: The color or `nil` if undefined.
-    func backgroundColor() -> UIColor?
+    func backgroundColor() -> RSDColor?
     #else
     
     /// **Available** for iOS and tvOS.
@@ -78,7 +84,7 @@ public protocol RSDColorThemeElement : RSDUIThemeElement {
     /// The background color for this step. If undefined then the background color will be determined by the
     /// step view controller.
     /// - returns: The color or `nil` if undefined.
-    func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor?
+    func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> RSDColor?
     #endif
     
     /// Hint for whether or not the view uses light style for things like the progress bar and navigation

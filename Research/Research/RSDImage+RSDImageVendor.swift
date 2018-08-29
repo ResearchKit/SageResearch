@@ -1,5 +1,5 @@
 //
-//  RSDImageVendor.swift
+//  RSDImage+RSDImageVendor.swift
 //  Research
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -37,20 +37,17 @@ import AppKit
 import UIKit
 #endif
 
-/// `RSDImageVendor` is a protocol for defining an abstract method for fetching an image.
-public protocol RSDImageVendor {
+extension RSDImage : RSDImageVendor {
     
-    /// A unique identifier that can be used to validate that the image shown in a reusable view
-    /// is the same image as the one fetched.
-    var imageIdentifier: String { get }
+    /// Returns `self.hash` as a string.
+    public var imageIdentifier: String {
+        return "\(self.hash)"
+    }
     
-    /// The size of the image.
-    var size: CGSize { get }
-    
-    /// Fetch the image.
-    ///
-    /// - parameters:
-    ///     - size:        The size of the image to return.
-    ///     - callback:    The callback with the identifier and image, run on the main thread.
-    func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void))
+    /// Fetches self.
+    public func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void)) {
+        DispatchQueue.main.async {
+            callback(self.imageIdentifier, self)
+        }
+    }
 }

@@ -1,5 +1,5 @@
 //
-//  UIImage+RSDImageVendor.swift
+//  RSDImage.swift
 //  Research
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,20 +31,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
-
-
-extension UIImage : RSDImageVendor {
-    
-    /// Returns `self.hash` as a string.
-    public var imageIdentifier: String {
-        return "\(self.hash)"
-    }
-    
-    /// Fetches self.
-    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
-        DispatchQueue.main.async {
-            callback(self.imageIdentifier, self)
-        }
-    }
-}
+#if os(macOS)
+import AppKit
+public typealias RSDImage = NSImage
+#else
+import UIKit
+public typealias RSDImage = UIImage
+#endif

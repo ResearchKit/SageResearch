@@ -143,7 +143,11 @@ public final class RSDTaskPath : NSObject, NSCopying {
                 let path = (tempDir as NSString).appendingPathComponent(dir)
                 if !FileManager.default.fileExists(atPath: path) {
                     do {
+                        #if os(macOS)
+                        try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [:])
+                        #else
                         try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [ .protectionKey : FileProtectionType.completeUntilFirstUserAuthentication ])
+                        #endif
                     } catch let error as NSError {
                         print ("Error creating file: \(error)")
                         return nil

@@ -31,7 +31,6 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
 
 /// The `RSDUIAction` protocol can be used to customize the title and image displayed for a
 /// given action of the UI.
@@ -43,6 +42,6 @@ public protocol RSDUIAction {
     var buttonTitle: String? { get }
     
     /// The icon to display on the button associated with this action.
-    var buttonIcon: UIImage? { get }
+    var buttonIcon: RSDImage? { get }
 }
 
