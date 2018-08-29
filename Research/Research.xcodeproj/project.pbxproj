@@ -1263,6 +1263,7 @@
 			children = (
 				F8F72434203DF20E00AC0E5B /* RSDCohortTrackingRule.swift */,
 				F8485C48203EA761007CE2B6 /* RSDSchedule.swift */,
+				F825BA63207FD75300D29F60 /* RSDWeekday.swift */,
 				F825BA5F207FD70000D29F60 /* RSDWeeklyScheduleObject.swift */,
 			);
 			name = Tracking;
@@ -1313,7 +1314,6 @@
 				FFDFF5CE1FC3EE5C009713E8 /* UIColor+Utilities.swift */,
 				FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */,
 				FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */,
-				F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1561,7 +1561,6 @@
 				F8C7D394209155A9007490BC /* RSDUIActionType.swift */,
 				F8C0A8CB20FB045C00EC758A /* RSDUITransitionStyle.swift */,
 				F8BE10C02135E19B000AAB1E /* RSDValidationError.swift */,
-				F825BA63207FD75300D29F60 /* RSDWeekday.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -1580,6 +1579,7 @@
 			isa = PBXGroup;
 			children = (
 				F829F0C91FF71E86001B0680 /* Formatters */,
+				F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */,
 				F8B42BE21FE9ABE200E23783 /* Localization.swift */,
 				FFFDB9611F99D4A500BA1348 /* Research.strings */,
 			);
