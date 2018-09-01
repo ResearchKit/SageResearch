@@ -35,13 +35,13 @@ import UIKit
 import CoreLocation
 import CoreMotion
 
-extension RSDDistanceRecorderConfiguration : RSDAsyncActionControllerVendor {
+extension RSDDistanceRecorderConfiguration : RSDAsyncActionVendor {
     
     /// Instantiate a `RSDDistanceRecorder` (iOS only).
     /// - parameter taskPath: The current task path to use to initialize the controller.
     /// - returns: A new instance of `RSDMotionRecorder` or `nil` if the platform does not
     ///            support distance recording.
-    public func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController? {
+    public func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncAction? {
         return RSDDistanceRecorder(configuration: self, taskPath: taskPath, outputDirectory: taskPath.outputDirectory)
     }
 }

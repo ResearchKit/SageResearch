@@ -103,7 +103,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         print(debugResult)
     }
     
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+    func taskController(_ taskController: RSDTaskController, asyncActionFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncAction? {
         return nil
     }
     

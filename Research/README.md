@@ -82,7 +82,7 @@ Once an instance of either `RSDTaskViewController` or `RSDUITaskController` has 
 
 The `RSDUITaskController` does not directly reference the `RSDStepController` and there are no implementations of the step controller that are included in the Research framework. The ResearchUI framework includes `RSDStepViewController` which is the base class implementation that is designed for use by iPhone applications. `RSDStepController` uses the protocol extension to add UX that is device-agnostic.
 
-The `RSDAsyncActionController` is a controller that can be used to run the async action associated with a given configuration. Currently, there are two concrete implementations of this protocol included within this framework; both `RSDDistanceRecorder` and `RSDMotionRecorder` are *only* included in the iOS build.
+The `RSDAsyncAction` is a controller that can be used to run the async action associated with a given configuration. Currently, there are two concrete implementations of this protocol included within this framework; both `RSDDistanceRecorder` and `RSDMotionRecorder` are *only* included in the iOS build.
 
 
 ## DataSource

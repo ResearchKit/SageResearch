@@ -217,9 +217,9 @@ public class TestStepController: NSObject, RSDStepController {
     }
 }
 
-public class TestAsyncActionController: NSObject, RSDAsyncActionController {
+public class TestAsyncActionController: NSObject, RSDAsyncAction {
     
-    public var delegate: RSDAsyncActionControllerDelegate?
+    public var delegate: RSDAsyncActionDelegate?
     public var status: RSDAsyncActionStatus = .idle
     public var isPaused: Bool = false
     public var result: RSDResult?
@@ -279,7 +279,7 @@ public class TestTaskController: NSObject, RSDTaskUIController {
     public var shouldFetchSubtask: Bool = true
     public var shouldPageSectionSteps: Bool = true
     
-    public var currentAsyncControllers: [RSDAsyncActionController] = []
+    public var currentAsyncControllers: [RSDAsyncAction] = []
     
     public var shouldFetchSubtask_calledFor: RSDTaskInfoStep?
     public var shouldPageSectionSteps_calledFor: RSDSectionStep?
@@ -297,9 +297,9 @@ public class TestTaskController: NSObject, RSDTaskUIController {
     public var addAsyncActions_called = false
     public var addAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
     public var startAsyncActions_called = false
-    public var startAsyncActions_calledWith: [RSDAsyncActionController]?
+    public var startAsyncActions_calledWith: [RSDAsyncAction]?
     public var stopAsyncActions_called = false
-    public var stopAsyncActions_calledWith: [RSDAsyncActionController]?
+    public var stopAsyncActions_calledWith: [RSDAsyncAction]?
     
     public func shouldFetchSubtask(for step: RSDTaskInfoStep) -> Bool {
         shouldFetchSubtask_calledFor = step
@@ -393,11 +393,11 @@ public class TestTaskController: NSObject, RSDTaskUIController {
         return nextStep!
     }
     
-    public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncActionController]) -> Void)) {
+    public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncAction]) -> Void)) {
         addAsyncActions_called = true
         addAsyncActions_calledWith = configurations
         DispatchQueue.main.async {
-            let controllers: [RSDAsyncActionController] = configurations.map {
+            let controllers: [RSDAsyncAction] = configurations.map {
                 return TestAsyncActionController(with: $0, at: self.taskPath)
             }
             self.currentAsyncControllers.append(contentsOf: controllers)
@@ -405,7 +405,7 @@ public class TestTaskController: NSObject, RSDTaskUIController {
         }
     }
     
-    public func startAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
+    public func startAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void)) {
         startAsyncActions_called = true
         startAsyncActions_calledWith = controllers
         DispatchQueue.main.async {
@@ -419,7 +419,7 @@ public class TestTaskController: NSObject, RSDTaskUIController {
         }
     }
     
-    public func stopAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void)) {
+    public func stopAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void)) {
         stopAsyncActions_called = true
         stopAsyncActions_calledWith = controllers
         DispatchQueue.main.async {

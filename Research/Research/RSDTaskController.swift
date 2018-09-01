@@ -130,18 +130,18 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
     ///     - taskPath:         The task path with the results for this task run.
     func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath)
     
-    /// Requests the `RSDAsyncActionController` for a given `RSDAsyncActionConfiguration`.
+    /// Requests the `RSDAsyncAction` for a given `RSDAsyncActionConfiguration`.
     ///
     /// The task controller should call this method when the task controller determines that an async action
     /// should be started. If this method returns `nil` then the task controller should check if the
-    /// `configuration` conforms to the `RSDAsyncActionControllerVendor` protocol and vend the controller
+    /// `configuration` conforms to the `RSDAsyncActionVendor` protocol and vend the controller
     /// returned by the `instantiateController()` method if applicable.
     ///
     /// - parameters:
     ///     - taskController:   The `RSDTaskController` instance that is returning the result.
     ///     - configuration:    The `RSDAsyncActionConfiguration` to be started.
-    /// - returns: An `RSDAsyncActionController` if available.
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController?
+    /// - returns: An `RSDAsyncAction` if available.
+    func taskController(_ taskController: RSDTaskController, asyncActionFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncAction?
 }
 
 /// `RSDTaskUIController` handles default implementations for running a task.
@@ -159,7 +159,7 @@ public protocol RSDTaskUIController : RSDTaskController {
     
     /// Returns a list of the async action controllers that are currently active. This includes controllers
     /// that are requesting permissions, starting, running, *and* stopping.
-    var currentAsyncControllers: [RSDAsyncActionController] { get }
+    var currentAsyncControllers: [RSDAsyncAction] { get }
     
     /// Should the protocol extension fetch the subtask from a task info object or does this
     /// implementation handle subtask step navigation using custom logic?
@@ -221,7 +221,7 @@ public protocol RSDTaskUIController : RSDTaskController {
     /// - parameters:
     ///     - configurations: The configurations to start.
     ///     - completion: The completion to call with the instantiated controllers.
-    func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncActionController]) -> Void))
+    func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncAction]) -> Void))
     
     /// Start the async action controllers. The protocol extension calls this method when an async action
     /// should be started directly *after* the step is presented.
@@ -229,14 +229,14 @@ public protocol RSDTaskUIController : RSDTaskController {
     /// The task controller needs to handle blocking any navigation changes until the async controllers are
     /// ready to proceed. Otherwise, the modal popup alert can be swallowed by the step change.
     ///
-    func startAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void))
+    func startAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void))
     
     /// Stop the async action controllers. The protocol extension does not directly implement stopping the
     /// async actions to allow customization of how the results are added to the task and whether or not
     /// forward navigation should be blocked until the completion handler is called. When the stop action
     /// is called, the view controller needs to handle stopping the controllers, adding the results, and
     /// showing a loading state until ready to move forward in the task navigation.
-    func stopAsyncActions(for controllers: [RSDAsyncActionController], showLoading: Bool, completion: @escaping (() -> Void))
+    func stopAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void))
 }
 
 extension RSDTaskUIController {
@@ -544,8 +544,8 @@ extension RSDTaskUIController {
         // Get which controllers should be stopped
         let isTaskComplete = (step.stepType == .completion) && !taskPath.task!.stepNavigator.hasStep(after: step, with: taskPath.result)
         let path = self.taskPath!
-        var excludedControllers: [RSDAsyncActionController] = []
-        var controllersToStop: [RSDAsyncActionController]?
+        var excludedControllers: [RSDAsyncAction] = []
+        var controllersToStop: [RSDAsyncAction]?
         if let stopStep = previousStep, let controllers = _asyncActionsToStop(after: stopStep, taskPath: path, isTaskComplete: isTaskComplete) {
             controllersToStop = controllers
             excludedControllers.append(contentsOf: controllers)
@@ -573,7 +573,7 @@ extension RSDTaskUIController {
         }
     }
     
-    private func _notifyAsyncControllers(to step: RSDStep, excludingControllers: [RSDAsyncActionController]) {
+    private func _notifyAsyncControllers(to step: RSDStep, excludingControllers: [RSDAsyncAction]) {
         let controllers = self.currentAsyncControllers.filter { (lhs) -> Bool in
             return (lhs.status <= .running) && !excludingControllers.contains(where: { $0.isEqual(lhs) })
         }
@@ -583,7 +583,7 @@ extension RSDTaskUIController {
         }
     }
     
-    private func _startIdleAsyncControllers(excludingControllers: [RSDAsyncActionController]) -> [RSDAsyncActionController] {
+    private func _startIdleAsyncControllers(excludingControllers: [RSDAsyncAction]) -> [RSDAsyncAction] {
         let controllers = self.currentAsyncControllers.filter { (lhs) -> Bool in
             return (lhs.status == .idle) && !excludingControllers.contains(where: { $0.isEqual(lhs) })
         }
@@ -682,7 +682,7 @@ extension RSDTaskUIController {
         return configs.count > 0 ? configs : nil
     }
     
-    private func _asyncActionsToStop(after step: RSDStep?, taskPath: RSDTaskPath, isTaskComplete: Bool) -> [RSDAsyncActionController]? {
+    private func _asyncActionsToStop(after step: RSDStep?, taskPath: RSDTaskPath, isTaskComplete: Bool) -> [RSDAsyncAction]? {
         let controllers = self.currentAsyncControllers.filter { (controller) -> Bool in
             // Verify that the controller is running
             guard controller.status <= .running else { return false }

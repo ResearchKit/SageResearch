@@ -121,7 +121,7 @@ public struct RSDRecordMarker : RSDSampleRecord {
 /// Using this base implementation allows for a consistent logging of shared sample data key words for the step path
 /// and the uptime. It implements the logic for writing to a file, tracking the uptime and start date, and provides
 /// a consistent implementation for error handling.
-open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
+open class RSDSampleRecorder : NSObject, RSDAsyncAction {
 
     /// Errors returned in the completion handler during `start()` when starting fails for timing reasons.
     public enum RecorderError : Error {
@@ -145,10 +145,10 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         self.collectionResult = RSDCollectionResultObject(identifier: configuration.identifier)
     }
     
-    // Mark: `RSDAsyncActionController` implementation
+    // Mark: `RSDAsyncAction` implementation
     
     /// Delegate callback for handling action completed or failed.
-    open weak var delegate: RSDAsyncActionControllerDelegate?
+    open weak var delegate: RSDAsyncActionDelegate?
     
     /// The configuration used to set up the controller.
     public let configuration: RSDAsyncActionConfiguration
@@ -309,7 +309,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// thread. The base class implementation will immediately call the completion handler.
     ///
     /// - remark: Override to implement custom permission handling.
-    /// - seealso: `RSDAsyncActionController.requestPermissions()`
+    /// - seealso: `RSDAsyncAction.requestPermissions()`
     /// - parameters:
     ///     - completion: The completion handler.
     open func requestPermissions(_ completion: @escaping RSDAsyncActionCompletionHandler) {
@@ -324,7 +324,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// thread. The base class implementation will immediately call the completion handler.
     ///
     /// - remark: Override to implement custom permission handling.
-    /// - seealso: `RSDAsyncActionController.requestPermissions(on:)`
+    /// - seealso: `RSDAsyncAction.requestPermissions(on:)`
     /// - parameters:
     ///     - viewController: The view controler that should be used to present any modal dialogs.
     ///     - completion: The completion handler.
@@ -341,7 +341,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// thread. The base class implementation will immediately call the completion handler.
     ///
     /// - remark: Override to implement custom permission handling.
-    /// - seealso: `RSDAsyncActionController.requestPermissions(on:)`
+    /// - seealso: `RSDAsyncAction.requestPermissions(on:)`
     /// - parameters:
     ///     - viewController: The view controler that should be used to present any modal dialogs.
     ///     - completion: The completion handler.
@@ -421,13 +421,13 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     
     /// This method can be called by either the logging file if there was a write error, or by the subclass
     /// if there was an error when attempting to record samples. The method will call the delegate method
-    /// `asyncActionController(_, didFailWith:)` asynchronously on the main queue and will call `cancel()`
+    /// `asyncAction(_, didFailWith:)` asynchronously on the main queue and will call `cancel()`
     /// synchronously on the current queue.
     open func didFail(with error: Error) {
         guard self.status <= .running else { return }
         _syncUpdateStatus(.failed, error: error)
         DispatchQueue.main.async {
-            self.delegate?.asyncActionController(self, didFailWith: error)
+            self.delegate?.asyncAction(self, didFailWith: error)
         }
         cancel()
     }

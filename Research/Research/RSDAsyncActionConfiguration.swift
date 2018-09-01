@@ -41,7 +41,7 @@ import Foundation
 /// anything else. It does include a step identifier that can be used to let the `RSDTaskController` know when
 /// to trigger the async action.
 ///
-/// - seealso: `RSDTaskController` and `RSDAsyncActionController`.
+/// - seealso: `RSDTaskController` and `RSDAsyncAction`.
 ///
 public protocol RSDAsyncActionConfiguration : RSDPermissionsConfiguration {
     

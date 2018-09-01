@@ -152,7 +152,7 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
         print("\n\n=== Ready to Save: \(taskPath.description)")
     }
     
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+    func taskController(_ taskController: RSDTaskController, asyncActionFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncAction? {
         return nil
     }
     
