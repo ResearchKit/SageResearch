@@ -53,7 +53,7 @@ class RSDTestTests: XCTestCase {
         let taskTransformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
         
         let expect = expectation(description: "Fetch Task Foo")
-        taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: "TaskFoo", schemaInfo:nil) { (identifier, task, err)  in
+        taskTransformer.fetchTask(with: "TaskFoo", schemaInfo:nil) { (identifier, task, err)  in
             if let task = task {
                 do {
                     try task.validate()

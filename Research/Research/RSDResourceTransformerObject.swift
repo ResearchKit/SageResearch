@@ -37,6 +37,10 @@ import Foundation
 /// The transformer can be used to create an object decoded from an embedded resource.
 public final class RSDResourceTransformerObject : Codable {
     
+    private enum CodingKeys: String, CodingKey {
+        case resourceName, bundleIdentifier, classType
+    }
+    
     /// Either a fully qualified URL string or else a relative reference to either an embedded resource or
     /// a relative URL defined globally by overriding the `RSDResourceConfig` class methods.
     public let resourceName: String
@@ -51,9 +55,8 @@ public final class RSDResourceTransformerObject : Codable {
     /// The default bundle from the factory used to decode this object.
     public var factoryBundle: Bundle? = nil
     
-    private enum CodingKeys: String, CodingKey {
-        case resourceName, bundleIdentifier, classType
-    }
+    /// The factory to use in decoding this object.
+    public var factory: RSDFactory = RSDFactory.shared
     
     /// Default initializer for creating the object.
     ///

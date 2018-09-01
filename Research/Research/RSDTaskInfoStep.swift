@@ -41,8 +41,4 @@ public protocol RSDTaskInfoStep : RSDStep {
     
     /// The task info for this step.
     var taskInfo: RSDTaskInfo { get }
-    
-    /// The task transformer for vending a task. Once this task step is added to a running task,
-    /// this value is expected to be non-nil and will fail if not set.
-    var taskTransformer: RSDTaskTransformer!  { get }
 }

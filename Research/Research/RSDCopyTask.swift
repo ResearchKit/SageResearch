@@ -56,14 +56,13 @@ extension RSDCopyTask {
     /// Fetch the task for this task info. Use the given factory to transform the task.
     ///
     /// - parameters:
-    ///     - factory: The factory to use for creating the task and steps.
     ///     - taskIdentifier: The task info for the task (if applicable).
     ///     - schemaInfo: The schema info for the task (if applicable).
     ///     - callback: The callback with the task or an error if the task failed, run on the main thread.
-    public func fetchTask(with factory: RSDFactory, taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
+    public func fetchTask(with taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
         DispatchQueue.main.async {
             let copy = self.copy(with: taskIdentifier, schemaInfo: schemaInfo)
-            callback(taskIdentifier, copy, nil)
+            callback(copy, nil)
         }
     }
 }

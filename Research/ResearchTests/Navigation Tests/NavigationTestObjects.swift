@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import Research
+@testable import Research
 import UIKit
 
 public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule {
@@ -140,9 +140,9 @@ public class TestSubtaskStep : RSDTaskInfoStep, RSDTaskTransformer {
         return 0
     }
     
-    public func fetchTask(with factory: RSDFactory, taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
+    public func fetchTask(with taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
         DispatchQueue.main.async {
-            callback(taskIdentifier, self.task, nil)
+            callback(self.task, nil)
         }
     }
 }

@@ -35,7 +35,7 @@ import Foundation
 
 
 /// A completion handler for fetching a task using the task info `fetchTask()` method.
-public typealias RSDTaskFetchCompletionHandler = (String, RSDTask?, Error?) -> Void
+public typealias RSDTaskFetchCompletionHandler = (RSDTask?, Error?) -> Void
 
 /// The possible errors thrown when fetching a task.
 public enum RSDTaskFetchError : Error {
@@ -63,5 +63,5 @@ public protocol RSDTaskTransformer : class {
     ///     - taskIdentifier: The task info for the task (if applicable).
     ///     - schemaInfo: The schema info for the task (if applicable).
     ///     - callback: The callback with the task or an error if the task failed, run on the main thread.
-    func fetchTask(with factory: RSDFactory, taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
+    func fetchTask(with taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler)
 }

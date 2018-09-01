@@ -400,7 +400,7 @@ extension RSDTaskUIController {
         }
         
         self.showLoading(for: taskInfo)
-        self.taskPath.fetchTask(with: self.factory ?? RSDFactory.shared) { [weak self] (path, error) in
+        self.taskPath.fetchTask { [weak self] (path, error) in
             guard let strongSelf = self, strongSelf.taskPath == path else { return }
             guard error == nil else {
                 strongSelf.handleTaskFailure(with: error ?? RSDTaskFetchError.unknown)

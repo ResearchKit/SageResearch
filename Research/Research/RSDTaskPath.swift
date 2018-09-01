@@ -33,11 +33,12 @@
 
 import Foundation
 
+
 /// `RSDTaskPath` is used to keep track of the current state of a running task.
 ///
 /// - seealso: `RSDTaskController`
 ///
-public final class RSDTaskPath : NSObject, NSCopying {
+open class RSDTaskPath : NSObject {
 
     /// The completion handler for a fetched task.
     public typealias FetchCompletionHandler = (RSDTaskPath, Error?) -> Void
@@ -76,6 +77,10 @@ public final class RSDTaskPath : NSObject, NSCopying {
     
     /// The task that is currently being run.
     public private(set) var task: RSDTask?
+    
+    open var taskRepository: RSDTaskRepository {
+        return RSDTaskRepository.shared
+    }
     
     /// Convenience method for accessing the top-level task path.
     public var topLevelTaskPath: RSDTaskPath {
@@ -179,7 +184,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// - parameters:
     ///     - task: The task to set for this path segment.
     ///     - parentPath: A pointer to the parent task path. Default is `nil`.
-    public init(task: RSDTask, parentPath: RSDTaskPath? = nil) {
+    init(task: RSDTask, parentPath: RSDTaskPath? = nil) {
         self.identifier = task.identifier
         self.task = task
         self.result = task.instantiateTaskResult()
@@ -191,7 +196,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// - parameters:
     ///     - taskInfo: The task info to set for this path segment.
     ///     - parentPath: A pointer to the parent task path. Default is `nil`.
-    public init(taskInfo: RSDTaskInfoStep, parentPath: RSDTaskPath? = nil) {
+    init(taskInfo: RSDTaskInfoStep, parentPath: RSDTaskPath? = nil) {
         self.identifier = taskInfo.identifier
         self.taskInfo = taskInfo
         self.result = RSDTaskResultObject(identifier: taskInfo.identifier)  // Create a temporary result
@@ -230,7 +235,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     /// - parameters:
     ///     - factory: The factory to use to decode the task.
     ///     - completion: The callback handler to call when the task is loaded.
-    public func fetchTask(with factory: RSDFactory, completion: @escaping FetchCompletionHandler) {
+    public func fetchTask(completion: @escaping FetchCompletionHandler) {
         guard !self.isLoading && self.task == nil else {
             debugPrint("\(self.description): Already loading task.")
             return
@@ -240,7 +245,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
         }
         
         self.isLoading = true
-        taskInfo.taskTransformer.fetchTask(with: factory, taskIdentifier: self.identifier, schemaInfo: taskInfo.taskInfo.schemaInfo) { [weak self] (info, task, error) in
+        self.taskRepository.fetchTask(for: taskInfo.taskInfo) { [weak self] (_, task, error) in
             guard let strongSelf = self else { return }
             strongSelf.isLoading = false
             if task != nil {
@@ -297,7 +302,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
     }
     
     /// The description of the path.
-    override public var description: String {
+    override open var description: String {
         return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
     }
     
@@ -314,21 +319,7 @@ public final class RSDTaskPath : NSObject, NSCopying {
         super.init()
     }
     
-    /// Implementation for copying a task path.
-    public func copy(with zone: NSZone? = nil) -> Any {
-        let result = (self.result as? NSCopying)?.copy(with: nil) as? RSDTaskResult ?? self.result
-        let taskInfo = (self.taskInfo as? NSCopying)?.copy(with: nil) as? RSDTaskInfoStep ?? self.taskInfo
-        let task = (self.task as? NSCopying)?.copy(with: nil) as? RSDTask ?? self.task
-        
-        let copy = type(of: self).init(with: self.identifier, result: result, taskInfo: taskInfo, task: task)
-        copy.scheduleIdentifier = self.scheduleIdentifier
-        copy.previousResults = self.previousResults?.map({ ($0 as? NSCopying)?.copy(with: nil) as? RSDResult ?? $0 })
-        copy.parentPath = self.parentPath?.copy() as? RSDTaskPath
-        copy.isCompleted = self.isCompleted
-        return copy
-    }
-    
-    
+
     // MARK: Task Finalization - The methods included in this section should **not** be called until the task is finished.
     
     /// A queue that can be used to serialize archiving and cleaning up the file output.
