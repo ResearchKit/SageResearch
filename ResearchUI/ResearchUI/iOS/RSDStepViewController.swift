@@ -113,17 +113,17 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     /// Convenience property for accessing the original result after navigating back or from a previous task run.
     open var originalResult: RSDResult? {
-        return taskController.taskPath.previousResults?.rsd_last(where: { $0.identifier == self.step.identifier })
+        return taskController.taskViewModel.previousResults?.rsd_last(where: { $0.identifier == self.step.identifier })
     }
     
     /// Returns the current result associated with this step. This property uses a lazy initializer to instantiate
     /// the result and append it to the step history if not found in the step history.
     lazy open var currentResult: RSDResult = {
-        if let lastResult = taskController.taskPath.result.stepHistory.last, lastResult.identifier == self.step.identifier {
+        if let lastResult = taskController.taskViewModel.result.stepHistory.last, lastResult.identifier == self.step.identifier {
             return lastResult
         } else {
             let result = self.step.instantiateStepResult()
-            taskController.taskPath.appendStepHistory(with: result)
+            taskController.taskViewModel.appendStepHistory(with: result)
             return result
         }
     }()
@@ -656,7 +656,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// this is the first step in the task. Otherwise, this method will return `true`.
     /// - returns: Whether or not to confirm the cancel action.
     open func shouldConfirmCancel() -> Bool {
-        return !self.taskController.taskPath.isFirstStep
+        return !self.taskController.taskViewModel.isFirstStep
     }
     
     /// Finish canceling the task. This is called once the cancel is confirmed by the user.
@@ -712,8 +712,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     open func assignSkipToIdentifier(_ skipToIdentifier: String) {
         
         // Look to see if there is a navigation action that should be added based on the action handler.
-        guard let taskPath = self.taskController.taskPath,
-            let previousResult = taskPath.result.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) else {
+        guard let taskViewModel = self.taskController.taskViewModel,
+            let previousResult = taskViewModel.result.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) else {
                 return
         }
         
@@ -729,7 +729,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             navigationResult = collectionResult
         }
         navigationResult.skipToIdentifier = skipToIdentifier
-        taskPath.appendStepHistory(with: navigationResult)
+        taskViewModel.appendStepHistory(with: navigationResult)
     }
     
     /// Get the action for the given action type. The default implementation check the step, the delegate
@@ -776,14 +776,14 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     private var _mappedActions: [RSDUIActionType : Any] = [:]
     
     private func recursiveTaskAction(for actionType: RSDUIActionType) -> RSDUIAction? {
-        var taskPath = self.taskController.taskPath
+        var taskViewModel = self.taskController.taskViewModel
         repeat {
-            if let actionHandler = taskPath?.task as? RSDUIActionHandler,
+            if let actionHandler = taskViewModel?.task as? RSDUIActionHandler,
                 let action = actionHandler.action(for: actionType, on: step) {
                 return action
             }
-            taskPath = taskPath?.parentPath
-        } while (taskPath != nil)
+            taskViewModel = taskViewModel?.parent
+        } while (taskViewModel != nil)
         return nil
     }
     
@@ -844,14 +844,14 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     private func recursiveTaskShouldHideAction(for actionType: RSDUIActionType) -> Bool? {
-        var taskPath = self.taskController.taskPath
+        var taskViewModel = self.taskController.taskViewModel
         repeat {
-            if let actionHandler = taskPath?.task as? RSDUIActionHandler,
+            if let actionHandler = taskViewModel?.task as? RSDUIActionHandler,
                 let shouldHide = actionHandler.shouldHideAction(for: actionType, on: step) {
                 return shouldHide
             }
-            taskPath = taskPath?.parentPath
-        } while (taskPath != nil)
+            taskViewModel = taskViewModel?.parent
+        } while (taskViewModel != nil)
         return nil
     }
     

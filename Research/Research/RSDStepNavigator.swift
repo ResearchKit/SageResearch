@@ -143,6 +143,6 @@ public protocol RSDTrackingDelegate : class {
 public protocol RSDTrackingStepNavigator : RSDStepNavigator {
     
     /// Set up tracking for this instance of a step navigator using the given task path.
-    func setupTracking(with taskPath: RSDTaskPath)
+    func setupTracking(with taskViewModel: RSDTaskViewModel)
 }
 

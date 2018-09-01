@@ -107,12 +107,12 @@ public protocol RSDOptionalTaskViewControllerDelegate : class, NSObjectProtocol 
     /// - parameter taskViewController: The task view controller.
     /// - returns: `true` if the task progress can be saved.
     @objc optional
-    func taskViewController(_ taskViewController: UIViewController, canSaveTaskProgress for: RSDTaskPath) -> Bool
+    func taskViewController(_ taskViewController: UIViewController, canSaveTaskProgress for: RSDTaskViewModel) -> Bool
     
     /// Save the task progress for the given task controller.
     /// - parameter taskViewController: The task view controller.
     @objc optional
-    func taskViewController(_ taskViewController: UIViewController, saveTaskProgress for: RSDTaskPath)
+    func taskViewController(_ taskViewController: UIViewController, saveTaskProgress for: RSDTaskViewModel)
 }
 
 /// `RSDTaskViewControllerDelegate` is an extension of the `RSDTaskControllerDelegate` protocol that also
@@ -125,15 +125,15 @@ public protocol RSDTaskViewControllerDelegate : RSDOptionalTaskViewControllerDel
 public protocol RSDStepViewControllerVendor : RSDStep {
 
     /// Returns the view controller vended by the step.
-    /// - parameter taskPath: The current task path to use to instantiate the view controller
+    /// - parameter taskViewModel: The current task path to use to instantiate the view controller
     /// - returns: The instantiated view controller or `nil` if there isn't one.
-    func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)?
+    func instantiateViewController(with taskViewModel: RSDTaskViewModel) -> (UIViewController & RSDStepController)?
 }
 
 /// `RSDTaskViewController` is the default implementation of task view controller that is suitable to the iPhone or iPad.
 /// The default implementation will display a series of steps using a `UIPageViewController`. This controller will also handle
 /// starting and stoping async actions and vending the appropriate step view controller for each step.
-open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, RSDAsyncActionDelegate, RSDLoadingViewControllerProtocol {
+open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, RSDAsyncActionDelegate, RSDLoadingViewControllerProtocol {
     
 
     /// The delegate for the task view controller.
@@ -168,16 +168,16 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
     
     /// Initializer for initializing a view controller that is not associated with a storyboard or nib.
     /// - parameter taskInfo: The task info (first step) to use to fetch the task to be run using this controller.
-    public init(taskInfo: RSDTaskInfoStep) {
+    public init(taskInfo: RSDTaskInfo) {
         super.init(nibName: nil, bundle: nil)
         self.topLevelTaskInfo = taskInfo
     }
     
     /// Initializer for initializing a view controller that is not associated with a storyboard or nib.
     /// - parameter task: The task to run using this controller.
-    public init(taskPath: RSDTaskPath) {
+    public init(taskViewModel: RSDTaskViewModel) {
         super.init(nibName: nil, bundle: nil)
-        self.taskPath = taskPath
+        self.taskViewModel = taskViewModel
     }
     
     // MARK: View controller vending
@@ -208,7 +208,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
             }
             return vc
         }
-        if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskPath) {
+        if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: self.taskViewModel) {
             return vc
         }
         return self.vendDefaultViewController(for: step)
@@ -288,7 +288,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
         if let controller = self.delegate?.taskController(self, asyncActionFor: configuration) {
             return controller
         } else if let vender = configuration as? RSDAsyncActionVendor {
-            return vender.instantiateController(with: self.taskPath)
+            return vender.instantiateController(with: self.taskViewModel)
         } else {
             return vendDefaultAsyncActionController(for: configuration)
         }
@@ -337,12 +337,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
     open var factory: RSDFactory?
     
     /// A mutable path object used to track the current state of a running task.
-    public var taskPath: RSDTaskPath!
+    public var taskViewModel: RSDTaskViewModel!
     
     /// Can the task progress be saved? This should only return `true` if the task result can be saved and
     /// the current progress can be restored.
     open var canSaveTaskProgress: Bool {
-        return self.delegate?.taskViewController?(self, canSaveTaskProgress: self.taskPath) ?? false
+        return self.delegate?.taskViewController?(self, canSaveTaskProgress: self.taskViewModel) ?? false
     }
 
     /// Returns the currently active step controller (if any).
@@ -369,19 +369,20 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
     /// Show a loading state while fetching the given task from the task info.
     ///
     /// - parameter taskInfo: The task info for the task being fetched.
-    open func showLoading(for taskInfo: RSDTaskInfoStep) {
+    open func showLoading(for taskInfo: RSDTaskInfo) {
         // Only if the delegate specifically says to show the task info view, then do so. Otherwise, show loading
         // and exit.
-        guard let showTaskInfo = self.delegate?.taskViewController?(self, shouldShowTaskInfoFor: taskInfo), showTaskInfo
+        let step = (taskInfo as? RSDTaskInfoStep) ?? RSDTaskInfoStepObject(with: taskInfo)
+        guard let showTaskInfo = self.delegate?.taskViewController?(self, shouldShowTaskInfoFor: step), showTaskInfo
             else {
                 self.showLoadingView()
                 return
         }
         
         // Show the loading step
-        let vc = viewController(for: taskInfo)
+        let vc = viewController(for: step)
         vc.taskController = self
-        let animated = (taskPath.parentPath != nil)
+        let animated = (taskViewModel.parent != nil)
         let direction: RSDStepDirection = animated ? .forward : .none
         pageViewController.setViewControllers([vc], direction: direction, animated: animated, completion: nil)
     }
@@ -443,15 +444,15 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
     /// This method is called when a task result is "ready" for upload, save, archive, etc. This method
     /// will be called when either (a) the task is ready to dismiss or (b) when the task is displaying
     /// the *last* completion step.
-    open func handleTaskResultReady(with taskPath: RSDTaskPath) {
-        delegate?.taskController(self, readyToSave: taskPath)
+    open func handleTaskResultReady(with taskViewModel: RSDTaskViewModel) {
+        delegate?.taskController(self, readyToSave: taskViewModel)
     }
     
     /// The user has tapped the cancel button.
     /// - parameter shouldSave: Should the task progress be saved (if applicable).
     open func handleTaskCancelled(shouldSave: Bool) {
         if shouldSave {
-            self.delegate?.taskViewController?(self, saveTaskProgress: self.taskPath.copy() as! RSDTaskPath)
+            self.delegate?.taskViewController?(self, saveTaskProgress: self.taskViewModel.copy() as! RSDTaskViewModel)
         }
         _stopAudioSession()
         cancelAllAsyncActions()
@@ -570,7 +571,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
                         controller.stop({ [weak self] (controller, result, error) in
                             self?._removeAsyncActionController(controller)
                             if let asyncResult = result {
-                                controller.taskPath.appendAsyncResult(with: asyncResult)
+                                controller.taskViewModel.appendAsyncResult(with: asyncResult)
                             }
                             if error != nil {
                                 self?._addErrorResult(for: controller, error: error!)
@@ -776,7 +777,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
             else if (controller.status == .finished), let asyncResult = result {
                 // If the async has returned with a result and the status is finished then add the result
                 // to the result set.
-                controller.taskPath.appendAsyncResult(with: asyncResult)
+                controller.taskViewModel.appendAsyncResult(with: asyncResult)
             }
             
             // If not running then remove from the managed list.
@@ -813,6 +814,6 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
         // Add error result to the task results.
         let identifier = "\(controller.configuration.identifier)_error"
         let errorResult = RSDErrorResultObject(identifier: identifier, error: error)
-        controller.taskPath.appendAsyncResult(with: errorResult)
+        controller.taskViewModel.appendAsyncResult(with: errorResult)
     }
 }

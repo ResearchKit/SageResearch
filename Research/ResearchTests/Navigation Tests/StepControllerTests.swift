@@ -2,7 +2,7 @@
 //  StepControllerTests.swift
 //  ResearchTests
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -51,16 +51,14 @@ class StepControllerTests: XCTestCase {
         let navigator = TestConditionalNavigator(steps: steps)
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
-        let taskController = TestTaskController()
-        taskController.topLevelTask = task
-        taskController.taskPath.appendStepHistory(with: steps[0].instantiateStepResult())
-        taskController.taskPath.appendStepHistory(with: steps[1].instantiateStepResult())
+        let taskViewModel = RSDTaskViewModel(task: task)
+        taskViewModel.appendStepHistory(with: steps[0].instantiateStepResult())
+        taskViewModel.appendStepHistory(with: steps[1].instantiateStepResult())
         
-        let stepController = TestStepController()
-        stepController.taskController = taskController
-        stepController.step = steps[1]
+        let step = steps[1]
+        let stepViewModel = RSDStepViewModel(step: step, parent: taskViewModel)
         
-        guard let progress = stepController.progress() else {
+        guard let progress = stepViewModel.progress() else {
             XCTFail("unexpected nil progress")
             return
         }
@@ -85,17 +83,16 @@ class StepControllerTests: XCTestCase {
 
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
-        let step = taskController.test_stepTo("introduction")
-        let stepController = TestStepController()
-        stepController.taskController = taskController
-        stepController.step = step
+        let _ = taskController.test_stepTo("introduction")
+        let stepViewModel = taskController.taskViewModel.currentNode as? RSDStepViewModel
+        XCTAssertNotNil(stepViewModel)
         
         // For the instruction step (which isn't in the markers and is *before* the markers)
         // the progress should be nil
-        let progress = stepController.progress()
+        let progress = stepViewModel?.progress()
         XCTAssertNil(progress)
     }
     
@@ -115,15 +112,14 @@ class StepControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
-        let step = taskController.test_stepTo("step2")
-        let stepController = TestStepController()
-        stepController.taskController = taskController
-        stepController.step = step
+        let _ = taskController.test_stepTo("step2")
+        let stepViewModel = taskController.taskViewModel.currentNode as? RSDStepViewModel
+        XCTAssertNotNil(stepViewModel)
         
-        guard let progress = stepController.progress() else {
+        guard let progress = stepViewModel?.progress() else {
             XCTFail("unexpected nil progress")
             return
         }
@@ -149,15 +145,14 @@ class StepControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
-        let step = taskController.test_stepTo("step7")
-        let stepController = TestStepController()
-        stepController.taskController = taskController
-        stepController.step = step
-        
-        guard let progress = stepController.progress() else {
+        let _ = taskController.test_stepTo("step7")
+        let stepViewModel = taskController.taskViewModel.currentNode as? RSDStepViewModel
+        XCTAssertNotNil(stepViewModel)
+
+        guard let progress = stepViewModel?.progress() else {
             XCTFail("unexpected nil progress")
             return
         }
@@ -171,7 +166,8 @@ class StepControllerTests: XCTestCase {
         var steps: [RSDStep] = []
         let beforeSteps: [RSDStep] = TestStep.steps(from: ["introduction", "step1", "step2", "step3"])
         steps.append(contentsOf: beforeSteps)
-        steps.append(RSDSectionStepObject(identifier: "step4", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        let step4 = RSDSectionStepObject(identifier: "step4", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"]))
+        steps.append(step4)
         steps.append(RSDSectionStepObject(identifier: "step5", steps: TestStep.steps(from: ["stepX", "stepY", "stepZ"])))
         steps.append(RSDSectionStepObject(identifier: "step6", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
         let afterSteps: [RSDStep] = TestStep.steps(from: ["step7", "completion"])
@@ -183,15 +179,20 @@ class StepControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
+        
+        // Test set up
+        let path = taskController.taskViewModel.pathComponent(for: step4)
+        XCTAssertNotNil(path)
+        XCTAssertNil(path?.stepController)
+        XCTAssertNotNil(path?.node.parent)
         
         // set up for the step controller
-        let step = taskController.test_stepTo("stepB")
-        let stepController = TestStepController()
-        stepController.taskController = taskController
-        stepController.step = step
+        let _ = taskController.test_stepTo("stepB")
+        let stepViewModel = taskController.taskViewModel.currentNode as? RSDStepViewModel
+        XCTAssertNotNil(stepViewModel)
         
-        guard let progress = stepController.progress() else {
+        guard let progress = stepViewModel?.progress() else {
             XCTFail("unexpected nil progress")
             return
         }
@@ -217,15 +218,14 @@ class StepControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
-        let step = taskController.test_stepTo("stepX")
-        let stepController = TestStepController()
-        stepController.taskController = taskController
-        stepController.step = step
+        let _ = taskController.test_stepTo("stepX")
+        let stepViewModel = taskController.taskViewModel.currentNode as? RSDStepViewModel
+        XCTAssertNotNil(stepViewModel)
         
-        guard let progress = stepController.progress() else {
+        guard let progress = stepViewModel?.progress() else {
             XCTFail("unexpected nil progress")
             return
         }
@@ -251,16 +251,15 @@ class StepControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("stepX")
-        let step = taskController.test_stepTo("stepC")
-        let stepController = TestStepController()
-        stepController.taskController = taskController
-        stepController.step = step
+        let _ = taskController.test_stepTo("stepC")
+        let stepViewModel = taskController.taskViewModel.currentNode as? RSDStepViewModel
+        XCTAssertNotNil(stepViewModel)
         
-        guard let progress = stepController.progress() else {
+        guard let progress = stepViewModel?.progress() else {
             XCTFail("unexpected nil progress")
             return
         }
@@ -286,20 +285,19 @@ class StepControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let step = taskController.test_stepTo("completion")
-        let stepController = TestStepController()
-        stepController.taskController = taskController
-        stepController.step = step
         
-        let hasStepAfter = navigator.hasStep(after: step, with: taskController.taskResult)
+        let hasStepAfter = navigator.hasStep(after: step, with: taskController.taskViewModel.taskResult)
         XCTAssertFalse(hasStepAfter)
         
         // For the completion step (which isn't in the markers and is *after* the markers)
         // the progress should be nil
-        let progress = stepController.progress()
+        let stepViewModel = taskController.taskViewModel.currentNode as? RSDStepViewModel
+        XCTAssertNotNil(stepViewModel)
+        let progress = stepViewModel?.progress()
         XCTAssertNil(progress)
     }
     

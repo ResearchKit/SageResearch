@@ -81,7 +81,7 @@ public protocol RSDTableDataSource : class {
     var step: RSDStep { get }
     
     /// The current task path.
-    var taskPath: RSDTaskPath! { get }
+    var taskViewModel: RSDTaskViewModel! { get }
     
     /// The table sections for this data source.
     var sections: [RSDTableSection] { get }

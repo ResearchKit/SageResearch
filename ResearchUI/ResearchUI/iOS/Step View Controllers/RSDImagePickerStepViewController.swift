@@ -37,7 +37,7 @@ import AVFoundation
 
 extension RSDImagePickerStepObject : RSDStepViewControllerVendor {
     
-    public func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)? {
+    public func instantiateViewController(with taskViewModel: RSDTaskViewModel) -> (UIViewController & RSDStepController)? {
         return RSDImagePickerStepViewController(step: self)
     }
 }
@@ -144,15 +144,15 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     /// Overridable method for creating a file identifier to use for saving the photo or video to the
     /// output directory.
     open func fileIdentifier() -> String {
-        let sectionIdentifier = (self.taskController.taskPath.parentPath != nil) ?
-            "\(self.taskController.taskPath.result.identifier)_" : ""
+        let sectionIdentifier = (self.taskController.taskViewModel.parent != nil) ?
+            "\(self.taskController.taskViewModel.result.identifier)_" : ""
         return "\(sectionIdentifier)\(self.step.identifier)_\(UUID().uuidString.prefix(4))"
     }
     
     /// Overridable method for saving the image result. The default behavior is to replace any existing
     /// results associated with this step with the new result.
     open func saveImageResult(_ result: RSDFileResult) {
-        self.taskController.taskPath.appendStepHistory(with: result)
+        self.taskController.taskViewModel.appendStepHistory(with: result)
     }
     
     // MARK: UIImagePickerControllerDelegate
@@ -197,7 +197,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
         var url: URL?
         do {
             url = try RSDFileResultUtility.createFileURL(identifier: fileIdentifier(), ext: "mov",
-                                                         outputDirectory: self.taskController.taskPath.outputDirectory)
+                                                         outputDirectory: self.taskController.taskViewModel.outputDirectory)
             _copyURL(at: chosenVideoURL, to: url!)
         } catch let error {
             debugPrint("Failed to save the camera image: \(error)")
@@ -216,7 +216,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
         do {
             if let imageData = UIImageJPEGRepresentation(chosenImage, compressionQuality) {
                 url = try RSDFileResultUtility.createFileURL(identifier: fileIdentifier(), ext: "jpeg",
-                                                             outputDirectory: self.taskController.taskPath.outputDirectory)
+                                                             outputDirectory: self.taskController.taskViewModel.outputDirectory)
                 _saveImage(imageData, to: url!)
             }
         } catch let error {
@@ -229,7 +229,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     func _addFileResult(_ url: URL?) {
         
         // Create the result and set it as the result for this step
-        var result: RSDFileResult = (taskController.taskPath.result.findResult(for: self.step) as? RSDFileResult) ?? RSDFileResultObject(identifier: self.step.identifier)
+        var result: RSDFileResult = (taskController.taskViewModel.result.findResult(for: self.step) as? RSDFileResult) ?? RSDFileResultObject(identifier: self.step.identifier)
         result.url = url
         saveImageResult(result)
         

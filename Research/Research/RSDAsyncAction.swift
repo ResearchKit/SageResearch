@@ -2,7 +2,7 @@
 //  RSDAsyncAction.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -43,9 +43,9 @@ import UIKit
 public protocol RSDAsyncActionVendor : RSDAsyncActionConfiguration {
     
     /// Instantiate a controller appropriate to this configuration.
-    /// - parameter taskPath: The current task path to use to initialize the controller.
+    /// - parameter taskViewModel: The current task path to use to initialize the controller.
     /// - returns: An async action controller or nil if the async action is not supported on this device.
-    func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncAction?
+    func instantiateController(with taskViewModel: RSDTaskViewModel) -> RSDAsyncAction?
 }
 
 /// `RSDAsyncActionDelegate` is the delegate protocol for `RSDAsyncAction`.
@@ -132,7 +132,7 @@ public protocol RSDAsyncAction : class, NSObjectProtocol {
     var configuration: RSDAsyncActionConfiguration { get }
     
     /// The associated task path to which the result should be attached.
-    var taskPath: RSDTaskPath { get }
+    var taskViewModel: RSDTaskViewModel { get }
     
     #if os(watchOS)
     
@@ -230,6 +230,6 @@ public protocol RSDAsyncAction : class, NSObjectProtocol {
     /// Let the controller know that the task will move to the given step.
     /// - parameters:
     ///     - step: The step that will be presented.
-    ///     - taskPath: The current state of the task.
-    func moveTo(step: RSDStep, taskPath: RSDTaskPath)
+    ///     - taskViewModel: The current state of the task.
+    func moveTo(step: RSDStep, taskViewModel: RSDTaskViewModel)
 }

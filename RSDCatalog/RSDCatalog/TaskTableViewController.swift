@@ -129,13 +129,12 @@ class TaskTableViewController: UITableViewController {
         
         guard let cell = sender as? UITableViewCell,
             let indexPath = self.tableView.indexPath(for: cell),
-            let vc = segue.destination as? ResultTableViewController,
-            let taskPath = taskGroup.instantiateTaskPath(for: taskGroup.tasks[indexPath.row])
+            let vc = segue.destination as? ResultTableViewController
             else {
                 return
         }
         let taskInfo = taskGroup.tasks[indexPath.row]
-        vc.taskPath = taskPath
+        vc.taskInfo = taskInfo
         vc.title = taskInfo.title ?? taskInfo.identifier
         vc.navigationItem.title = vc.title
     }

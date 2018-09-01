@@ -49,33 +49,33 @@ class DataArchiveTests: XCTestCase {
     }
     
     func testDataArchiver_SingleTask() {
-        let taskPath = buildTaskPath(identifier: "foo")
+        let taskViewModel = buildTaskViewModel(identifier: "foo")
         do {
-            let outputDir = taskPath.outputDirectory!
+            let outputDir = taskViewModel.outputDirectory!
             let asyncResult = try buildFileResult(identifier: "asyncFile", outputDirectory: outputDir)
-            taskPath.appendAsyncResult(with: asyncResult)
+            taskViewModel.appendAsyncResult(with: asyncResult)
             
             // check assumption
             XCTAssertTrue(FileManager.default.fileExists(atPath: outputDir.path))
             
             // add the first collection to the task path
-            taskPath.appendStepHistory(with: RSDResultObject(identifier: "step1"))
-            taskPath.appendStepHistory(with: RSDResultObject(identifier: "step2"))
-            taskPath.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
+            taskViewModel.appendStepHistory(with: RSDResultObject(identifier: "step1"))
+            taskViewModel.appendStepHistory(with: RSDResultObject(identifier: "step2"))
+            taskViewModel.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             
             // add the second collection as a subsection
             var sectionResult = RSDTaskResultObject(identifier: "sectionA")
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
-            taskPath.appendStepHistory(with: sectionResult)
+            taskViewModel.appendStepHistory(with: sectionResult)
 
             let manager = TestArchiveManager()
             let archive = TestDataArchive("foo")
-            manager.dataArchiverFor[taskPath.result.identifier] = archive
+            manager.dataArchiverFor[taskViewModel.taskResult.identifier] = archive
             
-            let expect = expectation(description: "Archive results \(taskPath.identifier)")
-            taskPath.archiveResults(with: manager) {
+            let expect = expectation(description: "Archive results \(taskViewModel.identifier)")
+            taskViewModel.archiveResults(with: manager) {
                 expect.fulfill()
             }
             waitForExpectations(timeout: 2) { (err) in
@@ -87,7 +87,7 @@ class DataArchiveTests: XCTestCase {
             
             // Check that the expected methods were called on the manager
             XCTAssertEqual(manager.encryptAndUpload_dataArchives?.first?.identifier, archive.identifier)
-            XCTAssertEqual(manager.encryptAndUpload_taskPath, taskPath)
+            XCTAssertEqual(manager.encryptAndUpload_taskPath, taskViewModel)
             XCTAssertNil(manager.handleArchiveFailure_error)
             XCTAssertNil(manager.shouldContinueOnFail_error)
             
@@ -124,35 +124,35 @@ class DataArchiveTests: XCTestCase {
     }
     
     func testDataArchiver_ComboTask() {
-        let taskPath = buildTaskPath(identifier: "foo")
+        let taskViewModel = buildTaskViewModel(identifier: "foo")
         do {
-            let outputDir = taskPath.outputDirectory!
+            let outputDir = taskViewModel.outputDirectory!
             let asyncResult = try buildFileResult(identifier: "asyncFile", outputDirectory: outputDir)
-            taskPath.appendAsyncResult(with: asyncResult)
+            taskViewModel.appendAsyncResult(with: asyncResult)
             
             // check assumption
             XCTAssertTrue(FileManager.default.fileExists(atPath: outputDir.path))
             
             // add the first collection to the task path
-            taskPath.appendStepHistory(with: RSDResultObject(identifier: "step1"))
-            taskPath.appendStepHistory(with: RSDResultObject(identifier: "step2"))
-            taskPath.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
+            taskViewModel.appendStepHistory(with: RSDResultObject(identifier: "step1"))
+            taskViewModel.appendStepHistory(with: RSDResultObject(identifier: "step2"))
+            taskViewModel.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             
             // add the second collection as a subsection
             var sectionResult = RSDTaskResultObject(identifier: "sectionA")
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
-            taskPath.appendStepHistory(with: sectionResult)
+            taskViewModel.appendStepHistory(with: sectionResult)
             
             let manager = TestArchiveManager()
             let mainArchive = TestDataArchive("foo")
             let subArchive = TestDataArchive("sectionA")
-            manager.dataArchiverFor[taskPath.result.identifier] = mainArchive
+            manager.dataArchiverFor[taskViewModel.taskResult.identifier] = mainArchive
             manager.dataArchiverFor["sectionA"] = subArchive
             
-            let expect = expectation(description: "Archive results \(taskPath.identifier)")
-            taskPath.archiveResults(with: manager) {
+            let expect = expectation(description: "Archive results \(taskViewModel.identifier)")
+            taskViewModel.archiveResults(with: manager) {
                 expect.fulfill()
             }
             waitForExpectations(timeout: 2) { (err) in
@@ -165,7 +165,7 @@ class DataArchiveTests: XCTestCase {
             // Check that the expected methods were called on the manager
             XCTAssertEqual(manager.encryptAndUpload_dataArchives?.first?.identifier, mainArchive.identifier)
             XCTAssertEqual(manager.encryptAndUpload_dataArchives?.last?.identifier, subArchive.identifier)
-            XCTAssertEqual(manager.encryptAndUpload_taskPath, taskPath)
+            XCTAssertEqual(manager.encryptAndUpload_taskPath, taskViewModel)
             XCTAssertNil(manager.handleArchiveFailure_error)
             XCTAssertNil(manager.shouldContinueOnFail_error)
             
@@ -209,10 +209,10 @@ class DataArchiveTests: XCTestCase {
     
     // Helper method
     
-    func buildTaskPath(identifier: String) -> RSDTaskPath {
+    func buildTaskViewModel(identifier: String) -> RSDTaskViewModel {
         let navigator = RSDConditionalStepNavigatorObject(with: [])
         let task = RSDTaskObject(identifier: identifier, stepNavigator: navigator)
-        return RSDTaskPath(task: task)
+        return RSDTaskViewModel(task: task)
     }
     
     func buildFileResult(identifier: String, outputDirectory: URL) throws -> RSDFileResultObject {
@@ -250,10 +250,10 @@ class TestArchiveManager: NSObject, RSDDataArchiveManager {
     var shouldContinueOnFail_archive: RSDDataArchive?
     var shouldContinueOnFail_error: Error?
     
-    var encryptAndUpload_taskPath: RSDTaskPath?
+    var encryptAndUpload_taskPath: RSDTaskViewModel?
     var encryptAndUpload_dataArchives: [RSDDataArchive]?
     
-    var handleArchiveFailure_taskPath: RSDTaskPath?
+    var handleArchiveFailure_taskPath: RSDTaskViewModel?
     var handleArchiveFailure_error: Error?
     
     func shouldContinueOnFail(for archive: RSDDataArchive, error: Error) -> Bool {
@@ -268,16 +268,16 @@ class TestArchiveManager: NSObject, RSDDataArchiveManager {
         return archive ?? currentArchive
     }
     
-    func encryptAndUpload(taskPath: RSDTaskPath, dataArchives: [RSDDataArchive], completion: @escaping (() -> Void)) {
-        encryptAndUpload_taskPath = taskPath
+    func encryptAndUpload(taskViewModel: RSDTaskViewModel, dataArchives: [RSDDataArchive], completion: @escaping (() -> Void)) {
+        encryptAndUpload_taskPath = taskViewModel
         encryptAndUpload_dataArchives = dataArchives
         DispatchQueue.main.async {
             completion()
         }
     }
     
-    func handleArchiveFailure(taskPath: RSDTaskPath, error: Error, completion: @escaping (() -> Void)) {
-        handleArchiveFailure_taskPath = taskPath
+    func handleArchiveFailure(taskViewModel: RSDTaskViewModel, error: Error, completion: @escaping (() -> Void)) {
+        handleArchiveFailure_taskPath = taskViewModel
         handleArchiveFailure_error = error
         DispatchQueue.main.async {
             completion()

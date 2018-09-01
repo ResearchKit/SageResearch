@@ -75,7 +75,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // dismiss the view controller
-        let outputDirectory = taskController.taskPath.outputDirectory
+        let outputDirectory = taskController.taskViewModel.outputDirectory
         (taskController as? UIViewController)?.dismiss(animated: true) {
             self.offMainQueue.async {
                 self.deleteOutputDirectory(outputDirectory)
@@ -87,12 +87,12 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         print(debugResult)
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        var debugResult: String = taskPath.description
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        var debugResult: String = taskViewModel.description
         
         do {
             let encoder = RSDFactory.shared.createJSONEncoder()
-            let taskJSON = try taskPath.encodeResult(to: encoder)
+            let taskJSON = try taskViewModel.encodeResult(to: encoder)
             if let string = String(data: taskJSON, encoding: .utf8) {
                 debugResult.append("\n\n\(string)")
             }

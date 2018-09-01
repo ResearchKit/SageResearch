@@ -27,7 +27,7 @@ The structure of the task protocol is as follows:
     
 ###  `RSDStep`
     
-There are three main subprotocols to the `RSDStep` protocol. These have custom handling that is used by the `RSDTaskUIController` to determine how to navigate a step tree.  These include:
+There are three main subprotocols to the `RSDStep` protocol. These have custom handling that is used by the `RSDTaskController` to determine how to navigate a step tree.  These include:
 
 1. `RSDUIStep` is used to define a single "display unit". Depending upon the available real-estate, more than one ui step may be displayed at a time -- for example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 2. `RSDSectionStep` is used to define a set of steps that are a logically grouped set of steps within a larger task. This protocol conforms to the `RSDStep`, `RSDTask`, and `RSDConditionalStepNavigator` protocols.
@@ -78,7 +78,7 @@ There are several protocols that inherit from `RSDResult` that are included in t
 
 The default mechanism for running a task is to instantiate a controller that conforms to either `RSDTaskController` or its sub-protocol, `RSDUITaskController`. There are no implementations for either of these protocols included within this framework, although [ResearchUI](../ResearchUI/index.html) project includes `RSDTaskViewController` which is a concrete implementation of `RSDUITaskController` that is designed to be used for iPhone applications.
 
-Once an instance of either `RSDTaskViewController` or `RSDUITaskController` has been instantiated, as part of its setup, it should instantiate a new instance of of  `RSDTaskPath` and use that object (and its children) to manage the task state. `RSDUITaskController` is designed to use a protocol extension to manage most of the device-agnostic UX such as determining when to start/stop async actions, and managing step navigation including instantiating a new task path and result for each `RSDSectionStep` and `RSDTaskInfoStep` that is vended to it by the step navigator.
+Once an instance of either `RSDTaskViewController` or `RSDUITaskController` has been instantiated, as part of its setup, it should instantiate a new instance of of  `RSDTaskViewModel` and use that object (and its children) to manage the task state. `RSDUITaskController` is designed to use a protocol extension to manage most of the device-agnostic UX such as determining when to start/stop async actions, and managing step navigation including instantiating a new task path and result for each `RSDSectionStep` and `RSDTaskInfoStep` that is vended to it by the step navigator.
 
 The `RSDUITaskController` does not directly reference the `RSDStepController` and there are no implementations of the step controller that are included in the Research framework. The ResearchUI framework includes `RSDStepViewController` which is the base class implementation that is designed for use by iPhone applications. `RSDStepController` uses the protocol extension to add UX that is device-agnostic.
 

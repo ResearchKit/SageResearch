@@ -115,7 +115,7 @@ open class RKTStepViewController:  UINavigationController, RSDStepController, RS
     
     /// Should confirm cancel if not the first step.
     open func shouldConfirmCancel() -> Bool {
-        return !self.taskController.taskPath.isFirstStep
+        return !self.taskController.taskViewModel.isFirstStep
     }
     
     /// Calls `taskController.handleTaskCancelled()`
@@ -138,7 +138,7 @@ open class RKTStepViewController:  UINavigationController, RSDStepController, RS
         // Mark the step view controller as finished
         if direction == .forward {
             if let stepResult = stepViewController.result {
-                self.taskController.taskPath.appendStepHistory(with: stepResult)
+                self.taskController.taskViewModel.appendStepHistory(with: stepResult)
             }
             self.taskController.goForward()
         } else {

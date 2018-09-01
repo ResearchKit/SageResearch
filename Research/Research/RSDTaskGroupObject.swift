@@ -55,18 +55,6 @@ public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodabl
     /// A list of the task references included in this group.
     public let tasks: [RSDTaskInfo]
     
-    /// Map the task info to the task info step and create a task path from the step.
-    /// - parameter taskInfo: The task info to map from.
-    /// - returns: A new task path.
-    public func instantiateTaskPath(for taskInfo: RSDTaskInfo) -> RSDTaskPath? {
-        guard let taskInfo = self.tasks.first(where: { $0.identifier == taskInfo.identifier })
-            else {
-                return nil
-        }
-        let step = RSDTaskInfoStepObject(with: taskInfo)
-        return RSDTaskPath(taskInfo: step)
-    }
-    
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the task group.

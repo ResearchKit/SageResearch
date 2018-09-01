@@ -47,7 +47,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     public let supportedHints: Set<RSDFormUIHint>
 
     /// The current task path.
-    public private(set) var taskPath: RSDTaskPath!
+    public private(set) var taskViewModel: RSDTaskViewModel!
 
     /// The table sections for this data source.
     open private(set) var sections: [RSDTableSection] = []
@@ -61,19 +61,19 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     /// Initialize a new `RSDFormStepDataSourceObject`.
     /// - parameters:
     ///     - step:             The RSDStep for this data source.
-    ///     - taskPath:         The current task path for this data source.
+    ///     - taskViewModel:         The current task path for this data source.
     ///     - supportedHints:   The supported UI hints for this data source.
-    public init(step: RSDStep, taskPath: RSDTaskPath, supportedHints: Set<RSDFormUIHint>? = nil) {
+    public init(step: RSDStep, taskViewModel: RSDTaskViewModel, supportedHints: Set<RSDFormUIHint>? = nil) {
         
         self.step = step
-        self.taskPath = taskPath
+        self.taskViewModel = taskViewModel
         self.supportedHints = supportedHints ?? RSDFormUIHint.allStandardHints
         
         // Set the initial result if available.
         if let result = initialResult {
             self.initialResult = result
         }
-        else if let previousResult = taskPath.previousResults?.rsd_last(where: { $0.identifier == step.identifier }) {
+        else if let previousResult = taskViewModel.previousResults?.rsd_last(where: { $0.identifier == step.identifier }) {
             if let collectionResult = (previousResult as? RSDCollectionResult) {
                 self.initialResult = collectionResult
             } else {
@@ -92,12 +92,12 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         populateInitialResults()
     }
     
-    /// The collection result associated with this data source. The default implementation is to search the `taskPath`
+    /// The collection result associated with this data source. The default implementation is to search the `taskViewModel`
     /// for a matching result and if that fails to return a new instance created using `instantiateCollectionResult()`.
     ///
     /// - returns: The appropriate collection result.
     open func collectionResult() -> RSDCollectionResult {
-        if let collectionResult = taskPath.result.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) as? RSDCollectionResult {
+        if let collectionResult = taskViewModel.taskResult.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) as? RSDCollectionResult {
             return collectionResult
         }
         else {
@@ -191,7 +191,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         } else {
             stepResult.removeInputResult(with: itemGroup.identifier)
         }
-        self.taskPath.appendStepHistory(with: stepResult)
+        self.taskViewModel.appendStepHistory(with: stepResult)
         
         // inform delegate that answers have changed
         delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
@@ -356,7 +356,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         }
         
         if hasChanges {
-            self.taskPath.appendStepHistory(with: stepResult)
+            self.taskViewModel.appendStepHistory(with: stepResult)
         }
     }
 }

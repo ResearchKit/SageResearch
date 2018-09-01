@@ -53,7 +53,7 @@ public protocol RSDModalStepTaskControllerDelegate : class {
 open class RSDModalStepTaskController : NSObject, RSDTaskController {
     
     /// The task path - this needs to be set before the step controller is displayed.
-    open var taskPath: RSDTaskPath!
+    open var taskViewModel: RSDTaskViewModel!
     
     /// The step controller managed by this task controller.
     open var stepController: RSDStepController!

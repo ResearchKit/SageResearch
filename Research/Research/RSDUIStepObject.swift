@@ -219,8 +219,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         return false
     }
     
-    open func instantiateDataSource(with taskPath: RSDTaskPath, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
-        return RSDFormStepDataSourceObject(step: self, taskPath: taskPath, supportedHints: supportedHints)
+    open func instantiateDataSource(with taskViewModel: RSDTaskViewModel, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        return RSDFormStepDataSourceObject(step: self, taskViewModel: taskViewModel, supportedHints: supportedHints)
     }
     
     // MARK: Decodable

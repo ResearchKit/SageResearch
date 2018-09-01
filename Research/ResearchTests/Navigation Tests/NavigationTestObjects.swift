@@ -103,21 +103,12 @@ public struct TestConditionalNavigator: RSDConditionalStepNavigator {
     }
 }
 
-public class TestSubtaskStep : RSDTaskInfoStep, RSDTaskTransformer {
+public class TestSubtaskStep : RSDSubtaskStep {
 
     public let task: RSDTask
     
-    public let taskInfo: RSDTaskInfo
-    
     public init(task: RSDTask) {
         self.task = task
-        var taskInfo = RSDTaskInfoObject(with: task.identifier)
-        taskInfo.schemaInfo = task.schemaInfo
-        self.taskInfo = taskInfo
-    }
-    
-    public var taskTransformer: RSDTaskTransformer! {
-        return self
     }
     
     public var identifier: String {
@@ -125,7 +116,7 @@ public class TestSubtaskStep : RSDTaskInfoStep, RSDTaskTransformer {
     }
     
     public var stepType: RSDStepType {
-        return .taskInfo
+        return .subtask
     }
     
     public func instantiateStepResult() -> RSDResult {
@@ -133,17 +124,7 @@ public class TestSubtaskStep : RSDTaskInfoStep, RSDTaskTransformer {
     }
     
     public func validate() throws {
-        // Do nothing
-    }
-    
-    public var estimatedFetchTime: TimeInterval {
-        return 0
-    }
-    
-    public func fetchTask(with taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
-        DispatchQueue.main.async {
-            callback(self.task, nil)
-        }
+        try self.task.validate()
     }
 }
 
@@ -184,36 +165,13 @@ public struct TestTask : RSDTask {
 
 public class TestStepController: NSObject, RSDStepController {
 
-    public var taskController: RSDTaskController!
-    public var step: RSDStep!
-    public var hasStepBefore: Bool = true
-    public var hasStepAfter: Bool = true
-    public var isForwardEnabled: Bool = true
+    public var taskController: RSDTaskController?
+    public var stepViewModel: RSDNodePathComponent!
     
     public var didFinishLoading_called: Bool = false
-    public var goForward_called: Bool = false
-    public var goBack_called: Bool = false
-    public var skipForward_called: Bool = false
-    public var cancel_called: Bool = false
     
     public func didFinishLoading() {
         didFinishLoading_called = true
-    }
-    
-    public func goForward() {
-        goForward_called = true
-    }
-    
-    public func goBack() {
-        goBack_called = true
-    }
-    
-    public func skipForward() {
-        skipForward_called = true
-    }
-    
-    public func cancel() {
-        cancel_called = true
     }
 }
 
@@ -225,15 +183,15 @@ public class TestAsyncActionController: NSObject, RSDAsyncAction {
     public var result: RSDResult?
     public var error: Error?
     public let configuration: RSDAsyncActionConfiguration
-    public let taskPath: RSDTaskPath
+    public let taskViewModel: RSDTaskViewModel
     
     public var moveTo_called = false
     public var moveTo_step: RSDStep?
-    public var moveTo_taskPath: RSDTaskPath?
+    public var moveTo_taskPath: RSDTaskViewModel?
     
-    public init(with configuration: RSDAsyncActionConfiguration, at taskPath: RSDTaskPath) {
+    public init(with configuration: RSDAsyncActionConfiguration, at taskViewModel: RSDTaskViewModel) {
         self.configuration = configuration
-        self.taskPath = taskPath
+        self.taskViewModel = taskViewModel
         super.init()
     }
 
@@ -263,37 +221,34 @@ public class TestAsyncActionController: NSObject, RSDAsyncAction {
         status = .cancelled
     }
     
-    public func moveTo(step: RSDStep, taskPath: RSDTaskPath) {
+    public func moveTo(step: RSDStep, taskViewModel: RSDTaskViewModel) {
         moveTo_called = true
         moveTo_step = step
-        moveTo_taskPath = taskPath
+        moveTo_taskPath = taskViewModel
     }
 }
 
-public class TestTaskController: NSObject, RSDTaskUIController {
+public class TestTaskController: NSObject, RSDTaskController {
 
-    public var taskPath: RSDTaskPath!
-    public var factory: RSDFactory?
-    public var currentStepController: RSDStepController?
-    public var canSaveTaskProgress: Bool = false
-    public var shouldFetchSubtask: Bool = true
-    public var shouldPageSectionSteps: Bool = true
+    public var taskViewModel: RSDTaskViewModel! {
+        didSet {
+            self.taskViewModel.taskController = self
+        }
+    }
     
+    public var currentStepController: RSDStepController?
     public var currentAsyncControllers: [RSDAsyncAction] = []
     
-    public var shouldFetchSubtask_calledFor: RSDTaskInfoStep?
-    public var shouldPageSectionSteps_calledFor: RSDSectionStep?
-    public var showLoading_calledFor: RSDTaskInfoStep?
+    public var show_calledTo: RSDStepController?
+    public var show_calledFrom: RSDStep?
+    public var show_calledDirection: RSDStepDirection?
+    public var handleTaskDidFinish_calledWith: RSDTaskFinishReason?
+    public var handleTaskDidFinish_calledError: Error?
+    public var showLoading_calledFor: RSDTaskInfo?
     public var handleFinishedLoading_called = false
     public var hideLoadingIfNeeded_called = false
-    public var navigate_calledTo: RSDStep?
-    public var navigate_calledFrom: RSDStep?
-    public var navigate_calledDirection: RSDStepDirection?
     public var handleTaskFailure_calledWith: Error?
-    public var handleTaskCompleted_called = false
-    public var handleTaskResultReady_calledWith: RSDTaskPath?
-    public var handleTaskCancelled_called = false
-    public var handleTaskCancelled_shouldSave: Bool?
+    public var handleTaskResultReady_calledWith: RSDTaskViewModel?
     public var addAsyncActions_called = false
     public var addAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
     public var startAsyncActions_called = false
@@ -301,17 +256,32 @@ public class TestTaskController: NSObject, RSDTaskUIController {
     public var stopAsyncActions_called = false
     public var stopAsyncActions_calledWith: [RSDAsyncAction]?
     
-    public func shouldFetchSubtask(for step: RSDTaskInfoStep) -> Bool {
-        shouldFetchSubtask_calledFor = step
-        return shouldFetchSubtask
+    public var handleTaskDidFinish_completionBlock: (() -> Void)?
+    
+    public func stepController(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepController? {
+        let stepController = TestStepController()
+        stepController.stepViewModel = RSDStepViewModel(step: step, parent: parent)
+        return stepController
     }
     
-    public func shouldPageSectionSteps(for step: RSDSectionStep) -> Bool {
-        shouldPageSectionSteps_calledFor = step
-        return shouldPageSectionSteps
+    public func show(_ stepController: RSDStepController, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
+        show_calledTo = stepController
+        show_calledFrom = previousStep
+        show_calledDirection = direction
+        DispatchQueue.main.async {
+            self.currentStepController = stepController
+            completion?(true)
+        }
     }
     
-    public func showLoading(for taskInfo: RSDTaskInfoStep) {
+    public func handleTaskDidFinish(with reason: RSDTaskFinishReason, error: Error?) {
+        handleTaskDidFinish_calledWith = reason
+        handleTaskDidFinish_calledError = error
+        handleTaskDidFinish_completionBlock?()
+        handleTaskDidFinish_completionBlock = nil
+    }
+    
+    public func showLoading(for taskInfo: RSDTaskInfo) {
         showLoading_calledFor = taskInfo
     }
     
@@ -323,82 +293,20 @@ public class TestTaskController: NSObject, RSDTaskUIController {
         hideLoadingIfNeeded_called = true
     }
     
-    public func navigate(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
-        navigate_calledTo = step
-        navigate_calledFrom = previousStep
-        navigate_calledDirection = direction
-        DispatchQueue.main.async {
-            completion?(true)
-        }
-    }
-    
     public func handleTaskFailure(with error: Error) {
         handleTaskFailure_calledWith = error
     }
     
-    public func handleTaskCompleted() {
-        handleTaskCompleted_called = true
+    public func handleTaskResultReady(with taskViewModel: RSDTaskViewModel) {
+        handleTaskResultReady_calledWith = taskViewModel
     }
-    
-    public func handleTaskResultReady(with taskPath: RSDTaskPath) {
-        handleTaskResultReady_calledWith = taskPath
-    }
-    
-    public func handleTaskCancelled(shouldSave: Bool) {
-        handleTaskCancelled_called = true
-        handleTaskCancelled_shouldSave = shouldSave
-    }
-    
-    public func test_stepTo(_ stepIdentifier: String) -> RSDStep {
-        var loopCount: Int = 0
-        var nextStep: RSDStep? = taskPath.currentStep
-        while nextStep?.identifier != stepIdentifier {
-            loopCount += 1
-            if loopCount > 30 {
-                fatalError("Your test is in an infinite loop of Wacky madness.")
-            }
-            let navigation = taskPath.task!.stepNavigator.step(after: nextStep, with: &taskPath.result)
-            nextStep = navigation.step
-            if nextStep == nil {
-                if let parentPath = taskPath.parentPath {
-                    parentPath.appendStepHistory(with: taskPath.result)
-                    self.taskPath = parentPath
-                    nextStep = parentPath.currentStep
-                } else {
-                    fatalError("Failed to step to \(stepIdentifier)")
-                }
-            } else {
-                taskPath.currentStep = nextStep
-                if let subtaskStep = nextStep as? TestSubtaskStep {
-                    self.taskPath = RSDTaskPath(task: subtaskStep.task, parentPath: self.taskPath)
-                    nextStep = nil
-                }
-                else if let sectionStep = nextStep as? RSDSectionStep {
-                    self.taskPath = RSDTaskPath(task: sectionStep, parentPath: self.taskPath)
-                    nextStep = nil
-                }
-                else {
-                    let stepResult = nextStep!.instantiateStepResult()
-                    if let answerResult = stepResult as? RSDAnswerResultObject,
-                        answerResult.value == nil, answerResult.answerType == .string {
-                        var aResult = answerResult
-                        aResult.value = nextStep!.identifier
-                        taskPath.appendStepHistory(with: aResult)
-                    } else {
-                        taskPath.appendStepHistory(with: stepResult)
-                    }
-                }
-            }
-        }
-        return nextStep!
-    }
-    
+
     public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncAction]) -> Void)) {
         addAsyncActions_called = true
         addAsyncActions_calledWith = configurations
         DispatchQueue.main.async {
             let controllers: [RSDAsyncAction] = configurations.map {
-                return TestAsyncActionController(with: $0, at: self.taskPath)
+                return TestAsyncActionController(with: $0, at: self.taskViewModel)
             }
             self.currentAsyncControllers.append(contentsOf: controllers)
             completion(controllers)
@@ -431,5 +339,42 @@ public class TestTaskController: NSObject, RSDTaskUIController {
             self.currentAsyncControllers = set.allObjects as! [TestAsyncActionController]
             completion()
         }
+    }
+    
+    public func goForward() {
+        self.taskViewModel.perform(actionType: .navigation(.goForward))
+        
+        // Add an answer result to the task path where the value is set equal to the step identifier. This is
+        // used to test forward/backward navigation.
+        if let node = self.taskViewModel.currentNode, let taskPath = node.currentTaskPath {
+            let stepResult = node.step.instantiateStepResult()
+            if let answerResult = stepResult as? RSDAnswerResultObject,
+                answerResult.value == nil, answerResult.answerType == .string {
+                var aResult = answerResult
+                aResult.value = node.identifier
+                taskPath.appendStepHistory(with: aResult)
+            } else {
+                taskPath.appendStepHistory(with: stepResult)
+            }
+        }
+    }
+    
+    public func goBack() {
+        self.taskViewModel.perform(actionType: .navigation(.goBackward))
+    }
+    
+    public func test_stepTo(_ stepIdentifier: String) -> RSDStep {
+        var loopCount: Int = 0
+        if self.taskViewModel.currentNode == nil {
+            self.goForward()
+        }
+        while let node = self.taskViewModel.currentNode, node.identifier != stepIdentifier {
+            loopCount += 1
+            if loopCount > 30 {
+                fatalError("Your test is in an infinite loop of Wacky madness.")
+            }
+            self.goForward()
+        }
+        return self.taskViewModel.currentNode!.step
     }
 }

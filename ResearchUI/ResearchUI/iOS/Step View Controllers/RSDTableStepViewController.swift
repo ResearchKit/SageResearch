@@ -45,7 +45,7 @@ import UIKit
 /// An instance of `RSDFormStepDataSource` is created by `setupModel()` and assigned to property
 /// `tableData`. This method is called by `viewWillAppear()` and serves as the `UITableViewDataSource`. The
 /// `tableData` also keeps track of answers that are derived from the user's input and it provides the
-/// `RSDResult` that is appended to the `RSDTaskPath` associated with this task.
+/// `RSDResult` that is appended to the `RSDTaskViewModel` associated with this task.
 ///
 /// This class is responsible for acquiring input from the user, validating it, and supplying it as an
 /// answer to to the model (tableData). This is typically done in delegate callbacks from various input
@@ -247,13 +247,13 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         
         // Get the table data source from the step (if applicable)
         let supportedHints = type(of: self).supportedUIHints
-        let taskPath = self.taskController.taskPath!
+        let taskViewModel = self.taskController.taskViewModel!
         if let tableStep = self.step as? RSDTableStep,
-            let source = tableStep.instantiateDataSource(with: taskPath, for: supportedHints)
+            let source = tableStep.instantiateDataSource(with: taskViewModel, for: supportedHints)
             {
             tableData = source
         } else {
-            tableData = RSDFormStepDataSourceObject(step: self.step, taskPath: taskPath, supportedHints: supportedHints)
+            tableData = RSDFormStepDataSourceObject(step: self.step, taskViewModel: taskViewModel, supportedHints: supportedHints)
         }
         tableData?.delegate = self
         
