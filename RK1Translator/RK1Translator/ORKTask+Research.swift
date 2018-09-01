@@ -45,7 +45,7 @@ extension ORKTask {
     
     public func hasStep(after step: RSDStep?, with result: RSDTaskResult) -> Bool {
         var temp = result
-        return self.step(after: step, with: &temp) != nil
+        return self.step(after: step, with: &temp).step != nil
     }
     
     public func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool {
@@ -53,21 +53,21 @@ extension ORKTask {
         return self.step(before: step, with: &temp) != nil
     }
     
-    public func step(after step: RSDStep?, with result: inout RSDTaskResult) -> (step: RSDStep?, direction: RSDStepDirection)? {
-        let taskResult = result as? ORKTaskResult ?? ORKTaskResult(identifier: self.identifier)
+    public func step(after step: RSDStep?, with result: inout RSDTaskResult) -> (step: RSDStep?, direction: RSDStepDirection) {
+        let taskResult = result as? ORKTaskResult ?? ORKTaskResult(from: result)
         let thisStep = step as? ORKStep
         let nextStep = self.step(after: thisStep, with: taskResult)
-        guard nextStep != nil else { return nil }
+        guard nextStep != nil else { return (nil, .forward) }
         guard let gotoStep = nextStep as? RSDStep
             else {
                 assertionFailure("\(nextStep!) does not implement the `RSDStep` protocol")
-                return nil
+                return (nil, .forward)
         }
         return (gotoStep, .forward)
     }
     
     public func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep? {
-        let taskResult = result as? ORKTaskResult ?? ORKTaskResult(identifier: self.identifier)
+        let taskResult = result as? ORKTaskResult ?? ORKTaskResult(from: result)
         let thisStep = step as? ORKStep
         let nextStep = self.step(before: thisStep, with: taskResult)
         guard nextStep != nil else { return nil }
@@ -120,7 +120,7 @@ extension ORKTask {
 }
 
 extension ORKOrderedTask : RSDTask, RSDStepNavigator {
-    
+
     public var copyright: String? {
         return nil
     }

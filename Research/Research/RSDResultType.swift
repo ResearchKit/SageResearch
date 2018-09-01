@@ -34,10 +34,9 @@ import Foundation
 
 /// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate
 /// result type.
-public struct RSDResultType : RawRepresentable, Codable {
-    public typealias RawValue = String
+public struct RSDResultType : RSDFactoryTypeRepresentable, Codable {
     
-    public private(set) var rawValue: String
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
@@ -51,12 +50,6 @@ public struct RSDResultType : RawRepresentable, Codable {
     
     /// Defaults to creating a `RSDCollectionResult`.
     public static let collection: RSDResultType = "collection"
-    
-    /// Defaults to creating a `RSDMedicationTrackingResult`.
-    public static let medication: RSDResultType = "medication"
-    
-    /// Defaults to creating a `RSDSelectionResult`.
-    public static let selection: RSDResultType = "selection"
     
     /// Defaults to creating a `RSDTaskResult`.
     public static let task: RSDResultType = "task"
@@ -72,7 +65,7 @@ public struct RSDResultType : RawRepresentable, Codable {
     
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDResultType] {
-        return [.base, .answer, .collection, .task, .file, .error]
+        return [.base, .answer, .collection, .task, .file, .error, .navigation]
     }
 }
 

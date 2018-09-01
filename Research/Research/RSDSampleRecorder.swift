@@ -31,8 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
 import UIKit
+#endif
 
 /// The `RSDSampleRecord` defines the properties that are included with all JSON logging samples.
 /// By defining a protocol, the logger can include markers for step transitions and the records
@@ -300,7 +303,6 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }
     
     #if os(watchOS)
-    
     /// **Available** for watchOS.
     ///
     /// This method should be called on the main thread with the completion handler also called on the main
@@ -314,6 +316,23 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         _syncUpdateStatus(.permissionGranted)
         completion(self, self.result, nil)
     }
+    
+    #elseif os(macOS)
+    /// **Available** for macOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. The base class implementation will immediately call the completion handler.
+    ///
+    /// - remark: Override to implement custom permission handling.
+    /// - seealso: `RSDAsyncActionController.requestPermissions(on:)`
+    /// - parameters:
+    ///     - viewController: The view controler that should be used to present any modal dialogs.
+    ///     - completion: The completion handler.
+    open func requestPermissions(on viewController: NSViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
+        _syncUpdateStatus(.permissionGranted)
+        completion(self, self.result, nil)
+    }
+    
     
     #else
     /// **Available** for iOS and tvOS.

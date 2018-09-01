@@ -31,7 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// `RSDEmbeddedResourceUIAction` is a convenience protocol for returning an image using an encodable strings for the
 /// name and bundle identifier.
@@ -44,12 +48,14 @@ public protocol RSDEmbeddedResourceUIAction: RSDUIAction, RSDDecodableBundleInfo
 extension RSDEmbeddedResourceUIAction {
     
     /// The icon to display on the button associated with this action.
-    public var buttonIcon: UIImage? {
+    public var buttonIcon: RSDImage? {
         guard let name = iconName else { return nil }
         #if os(watchOS)
-            return UIImage(named: name)
+            return RSDImage(named: name)
+        #elseif os(macOS)
+            return RSDImage(named: NSImage.Name(name))
         #else
-            return UIImage(named: name, in: bundle, compatibleWith: nil)
+            return RSDImage(named: name, in: bundle, compatibleWith: nil)
         #endif
     }
 }

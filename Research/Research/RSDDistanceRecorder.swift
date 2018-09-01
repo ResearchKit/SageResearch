@@ -31,9 +31,20 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import UIKit
 import CoreLocation
 import CoreMotion
+
+extension RSDDistanceRecorderConfiguration : RSDAsyncActionControllerVendor {
+    
+    /// Instantiate a `RSDDistanceRecorder` (iOS only).
+    /// - parameter taskPath: The current task path to use to initialize the controller.
+    /// - returns: A new instance of `RSDMotionRecorder` or `nil` if the platform does not
+    ///            support distance recording.
+    public func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController? {
+        return RSDDistanceRecorder(configuration: self, taskPath: taskPath, outputDirectory: taskPath.outputDirectory)
+    }
+}
 
 
 /// `RSDDistanceRecorder` is intended to be used for recording location where the participant is walking,

@@ -35,10 +35,9 @@ import Foundation
 
 /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
 /// the UI.
-public struct RSDStepNavigatorType : RawRepresentable, Codable {
-    public typealias RawValue = String
+public struct RSDStepNavigatorType : RSDFactoryTypeRepresentable, Codable {
     
-    public private(set) var rawValue: String
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue

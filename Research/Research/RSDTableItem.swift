@@ -53,7 +53,7 @@ open class RSDTableItem {
     
     /// Return the index path of the item.
     public var indexPath: IndexPath {
-        return IndexPath(row: rowIndex, section: sectionIndex)
+        return IndexPath(item: rowIndex, section: sectionIndex)
     }
     
     /// Initialize a new RSDTableItem.

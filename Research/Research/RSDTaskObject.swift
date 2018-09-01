@@ -191,12 +191,6 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
         return copy
     }
     
-    public func copyAndReplace(_ stepNavigator: RSDStepNavigator) -> Self {
-        let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
-        copyInto(copy as RSDTaskObject)
-        return copy
-    }
-    
     public func copy(with identifier: String) -> Self {
         let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
         copyInto(copy as RSDTaskObject)

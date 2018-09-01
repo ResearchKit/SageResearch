@@ -150,7 +150,7 @@ public enum RSDMotionRecorderType : String, Codable, RSDStringEnumSet {
 ///            """.data(using: .utf8)! // our data in native (JSON) format
 /// ```
 @available(iOS 10.0, *)
-public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfiguration, RSDAsyncActionControllerVendor, Codable {
+public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfiguration, Codable {
     
     /// A short string that uniquely identifies the asynchronous action within the task. If started
     /// asynchronously, then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.
@@ -232,18 +232,8 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     /// Do nothing. No validation is required for this recorder.
     public func validate() throws {
     }
-    
-    /// Instantiate a `RSDMotionRecorder`.
-    /// - parameter taskPath: The current task path to use to initialize the controller.
-    /// - returns: A new instance of `RSDMotionRecorder`.
-    public func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController? {
-        #if os(iOS)
-            return RSDMotionRecorder(configuration: self, taskPath: taskPath, outputDirectory: taskPath.outputDirectory)
-        #else
-            return nil
-        #endif
-    }
 }
+
 
 // Documentation and Tests
 

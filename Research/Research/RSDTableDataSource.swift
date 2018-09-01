@@ -142,7 +142,7 @@ extension RSDTableDataSource {
     /// - returns: The requested `RSDTableItem`, or nil if it cannot be found.
     public func tableItem(at indexPath: IndexPath) -> RSDTableItem? {
         guard indexPath.section < sections.count,
-            indexPath.row < sections[indexPath.section].tableItems.count
+            indexPath.item < sections[indexPath.section].tableItems.count
             else {
                 debugPrint("Failed to get index path: \(indexPath): \(sections.count) ")
                 if indexPath.section < sections.count {
@@ -150,7 +150,7 @@ extension RSDTableDataSource {
                 }
                 return nil
         }
-        return sections[indexPath.section].tableItems[indexPath.row]
+        return sections[indexPath.section].tableItems[indexPath.item]
     }
     
     /// Retrieve the next table item after the current one at the given index path.
@@ -158,8 +158,8 @@ extension RSDTableDataSource {
     /// - returns: The next `RSDTableItem` or `nil` if this was the last item.
     public func nextItem(after indexPath: IndexPath) -> RSDTableItem? {
         guard indexPath.section < sections.count else { return nil }
-        if indexPath.row + 1 < sections[indexPath.section].tableItems.count {
-            return sections[indexPath.section].tableItems[indexPath.row + 1]
+        if indexPath.item + 1 < sections[indexPath.section].tableItems.count {
+            return sections[indexPath.section].tableItems[indexPath.item + 1]
         } else if indexPath.section + 1 < sections.count {
             return sections[indexPath.section + 1].tableItems.first
         } else {

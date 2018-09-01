@@ -33,6 +33,15 @@
 
 import Foundation
 
+/// `RSDPermissionType` is a generic configuration object with information about a given permission.
+/// The permission type can be used by the app to handle gracefully requesting authorization from
+/// the user for access to sensors and hardware required by the app.
+public protocol RSDPermissionType {
+    
+    /// An identifier for the permission.
+    var identifier: String { get }
+}
+
 /// General-purpose enum for authorization status.
 public enum RSDAuthorizationStatus : Int {
     

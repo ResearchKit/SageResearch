@@ -37,8 +37,8 @@ import Foundation
 /// using an instance of `RSDFactory`.
 ///
 /// - seealso: `RSDAsyncActionConfiguration`
-public struct RSDAsyncActionType : RawRepresentable, Codable {
-    public private(set) var rawValue: String
+public struct RSDAsyncActionType : RSDFactoryTypeRepresentable, Codable {
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue

@@ -31,7 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// `RSDTextFieldOptionsObject` defines the options for a text field.
 ///
@@ -210,7 +214,7 @@ public enum RSDTextAutocapitalizationType : String, Codable, RSDStringEnumSet {
     }
 
     /// Return the `UITextAutocapitalizationType` that maps to this enum.
-    #if !os(watchOS)
+    #if os(iOS) || os(tvOS)
     public func textAutocapitalizationType() -> UITextAutocapitalizationType {
         guard let idx = RSDTextAutocapitalizationType.orderedSet.index(of: self),
             let type = UITextAutocapitalizationType(rawValue: Int(idx))
@@ -239,7 +243,7 @@ public enum RSDTextAutocorrectionType : String, Codable, RSDStringEnumSet {
     }
 
     /// Return the `UITextAutocorrectionType` that maps to this enum.
-    #if !os(watchOS)
+    #if os(iOS) || os(tvOS)
     public func textAutocorrectionType() -> UITextAutocorrectionType {
         guard let idx = RSDTextAutocorrectionType.orderedSet.index(of: self),
             let type = UITextAutocorrectionType(rawValue: Int(idx))
@@ -268,7 +272,7 @@ public enum RSDTextSpellCheckingType  : String, Codable, RSDStringEnumSet {
     }
 
     /// Return the `UITextSpellCheckingType` that maps to this enum.
-    #if !os(watchOS)
+    #if os(iOS) || os(tvOS)
     public func textSpellCheckingType() -> UITextSpellCheckingType {
         guard let idx = RSDTextSpellCheckingType.orderedSet.index(of: self),
             let type = UITextSpellCheckingType(rawValue: Int(idx))
@@ -299,7 +303,7 @@ public enum RSDKeyboardType  : String, Codable, RSDStringEnumSet {
     }
 
     /// Return the `UIKeyboardType` that maps to this enum.
-    #if !os(watchOS)
+    #if os(iOS) || os(tvOS)
     public func keyboardType() -> UIKeyboardType {
         guard let idx = RSDKeyboardType.orderedSet.index(of: self),
             let type = UIKeyboardType(rawValue: Int(idx))

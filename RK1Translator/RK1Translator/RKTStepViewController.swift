@@ -42,7 +42,7 @@ import ResearchUI
 open class RKTStepViewController:  UINavigationController, RSDStepController, RSDCancelActionController, ORKStepViewControllerDelegate {
     
     public override init(rootViewController: UIViewController) {
-        super.init(rootViewController: rootStepViewController)
+        super.init(rootViewController: rootViewController)
         (rootViewController as! ORKStepViewController).delegate = self
     }
     

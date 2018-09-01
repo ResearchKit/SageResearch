@@ -33,8 +33,9 @@
 
 import Foundation
 
-/// `RSDStepNavigator` is the model object used by the `RSDTaskController` to determine the order of
-/// presentation of the steps in a task.
+/// `RSDStepNavigator` is used by the `RSDTaskController` to determine the order of presentation of the steps
+/// in a task. The navigator should include navigation that is based on the input model and the results rather
+/// that depending upon the available real estate.
 ///
 /// - seealso: `RSDTask`, `RSDTaskController`, and `RSDConditionalStepNavigator`
 public protocol RSDStepNavigator {

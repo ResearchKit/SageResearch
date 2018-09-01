@@ -35,8 +35,8 @@ import Foundation
 
 /// The type of the ui action. This is used to decode a `RSDUIAction` using a `RSDFactory`. It can also be used
 /// to customize the UI.
-public struct RSDImageThemeElementType : RawRepresentable, Codable, Equatable {
-    public private(set) var rawValue: String
+public struct RSDImageThemeElementType : RSDFactoryTypeRepresentable, Codable, Equatable {
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue

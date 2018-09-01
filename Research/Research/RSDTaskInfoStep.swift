@@ -33,53 +33,6 @@
 
 import Foundation
 
-/// A completion handler for fetching a task using the task info `fetchTask()` method.
-public typealias RSDTaskFetchCompletionHandler = (String, RSDTask?, Error?) -> Void
-
-/// The possible errors thrown when fetching a task.
-public enum RSDTaskFetchError : Error {
-    
-    /// Unknown error
-    case unknown
-    
-    /// The participant's device is offline and a network connect is required to fetch the task.
-    case offline
-}
-
-/// `RSDTaskInfo` includes information to display about a task before the task is fetched.
-/// This can be used to display a collection of tasks and only load the task when selected
-/// by the participant.
-public protocol RSDTaskInfo : RSDCopyWithIdentifier {
-    
-    /// A short string that uniquely identifies the task.
-    var identifier: String { get }
-    
-    /// The primary text to display for the task in a localized string.
-    var title: String? { get }
-    
-    /// The subtitle text to display for the task in a localized string.
-    var subtitle: String? { get }
-    
-    /// Additional detail text to display for the task. Generally, this would be displayed
-    /// while the task is being fetched.
-    var detail: String? { get }
-    
-    /// The estimated number of minutes that the task will take. If `0`, then this is ignored.
-    var estimatedMinutes: Int { get }
-    
-    /// An icon image that can be used for displaying the choice.
-    var imageVendor: RSDImageVendor? { get }
-    
-    /// Optional schema info to pass with the task info for this task.
-    var schemaInfo: RSDSchemaInfo? { get }
-    
-    /// The resource transformer on `RSDTaskInfo` can be used in cases where the transformer is
-    /// loaded from a resource by the task info (when decoded). If the task info is used as the
-    /// information container for a **step** that loads the task using a service to fetch the
-    /// task, then this pointer can be `nil`.
-    var resourceTransformer : RSDTaskTransformer? { get }
-}
-
 /// `RSDTaskInfoStep` is a reference interface for information about the task. This includes
 /// information that can be displayed in a table or collection view before starting the task as
 /// well as information that is displayed while the task is being fetched in the case where the

@@ -51,7 +51,7 @@ import Foundation
 ///            """.data(using: .utf8)! // our data in native (JSON) format
 /// ```
 @available(iOS 10.0, *)
-public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, RSDAsyncActionControllerVendor, Codable {
+public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, Codable {
     
     /// A short string that uniquely identifies the asynchronous action within the task. If started
     /// asynchronously, then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.
@@ -110,18 +110,6 @@ public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, RSDAs
     
     /// Do nothing. No validation is required for this recorder.
     public func validate() throws {
-    }
-    
-    /// Instantiate a `RSDDistanceRecorder` (iOS only).
-    /// - parameter taskPath: The current task path to use to initialize the controller.
-    /// - returns: A new instance of `RSDMotionRecorder` or `nil` if the platform does not
-    ///            support distance recording.
-    public func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController? {
-        #if os(iOS)
-            return RSDDistanceRecorder(configuration: self, taskPath: taskPath, outputDirectory: taskPath.outputDirectory)
-        #else
-            return nil
-        #endif
     }
 }
 
