@@ -137,7 +137,7 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // populate the results
-        self.result = taskController.taskViewModel.result
+        self.result = taskController.taskViewModel.taskResult
         self.tableView.reloadData()
         
         // dismiss the view controller
@@ -151,10 +151,6 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
         print("\n\n=== Ready to Save: \(taskViewModel.description)")
-    }
-    
-    func taskController(_ taskController: RSDTaskController, asyncActionFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncAction? {
-        return nil
     }
     
     func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {

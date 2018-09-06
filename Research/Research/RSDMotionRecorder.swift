@@ -39,7 +39,7 @@ extension RSDMotionRecorderConfiguration : RSDAsyncActionVendor {
     /// Instantiate a `RSDMotionRecorder`.
     /// - parameter taskViewModel: The current task path to use to initialize the controller.
     /// - returns: A new instance of `RSDMotionRecorder`.
-    public func instantiateController(with taskViewModel: RSDTaskViewModel) -> RSDAsyncAction? {
+    public func instantiateController(with taskViewModel: RSDPathComponent) -> RSDAsyncAction? {
         return RSDMotionRecorder(configuration: self, taskViewModel: taskViewModel, outputDirectory: taskViewModel.outputDirectory)
     }
 }

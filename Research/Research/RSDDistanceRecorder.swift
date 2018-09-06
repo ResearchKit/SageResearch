@@ -41,7 +41,7 @@ extension RSDDistanceRecorderConfiguration : RSDAsyncActionVendor {
     /// - parameter taskViewModel: The current task path to use to initialize the controller.
     /// - returns: A new instance of `RSDMotionRecorder` or `nil` if the platform does not
     ///            support distance recording.
-    public func instantiateController(with taskViewModel: RSDTaskViewModel) -> RSDAsyncAction? {
+    public func instantiateController(with taskViewModel: RSDPathComponent) -> RSDAsyncAction? {
         return RSDDistanceRecorder(configuration: self, taskViewModel: taskViewModel, outputDirectory: taskViewModel.outputDirectory)
     }
 }
@@ -261,7 +261,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     /// Override to check if the step being moved to is the step when the participant's
     /// distance should be tracked and to add the pedometer reading once the participant
     /// is standing still.
-    override public func moveTo(step: RSDStep, taskViewModel: RSDTaskViewModel) {
+    override public func moveTo(step: RSDStep, taskViewModel: RSDPathComponent) {
         
         // Call super. This will update the step path and add a step change marker.
         super.moveTo(step: step, taskViewModel: taskViewModel)

@@ -215,12 +215,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     
     // MARK: Table source
     
-    open var hasImageChoices: Bool {
-        return false
-    }
-    
-    open func instantiateDataSource(with taskViewModel: RSDTaskViewModel, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
-        return RSDFormStepDataSourceObject(step: self, taskViewModel: taskViewModel, supportedHints: supportedHints)
+    open func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        return RSDFormStepDataSourceObject(step: self, parent: parent, supportedHints: supportedHints)
     }
     
     // MARK: Decodable

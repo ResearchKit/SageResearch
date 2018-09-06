@@ -240,9 +240,9 @@ open class RSDOverviewStepViewController: RSDStepViewController {
     
     /// Default initializer. This initializer will initialize using the `nibName` and `bundle` defined on this class.
     /// - parameter step: The step to set for this view controller.
-    public override init(step: RSDStep) {
+    public override init(step: RSDStep, parent: RSDPathComponent?) {
         super.init(nibName: type(of: self).nibName, bundle: type(of: self).bundle)
-        self.step = step
+        self.stepViewModel = self.instantiateStepViewModel(for: step, with: parent)
     }
     
     /// Initialize the class using the given nib and bundle.

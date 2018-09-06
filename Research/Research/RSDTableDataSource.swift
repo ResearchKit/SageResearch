@@ -72,16 +72,16 @@ public protocol RSDTableDataSourceDelegate: class, NSObjectProtocol {
 ///     answer options for the `RSDInputField`. The ItemGroup is responsible for storing/computing the
 ///     answers for its `RSDInputField`.
 ///
-public protocol RSDTableDataSource : class {
+public protocol RSDTableDataSource : RSDStepViewPathComponent {
     
     /// The delegate associated with this data source.
     var delegate: RSDTableDataSourceDelegate? { get set }
     
-    /// The step associated with this data source.
-    var step: RSDStep { get }
-    
-    /// The current task path.
-    var taskViewModel: RSDTaskViewModel! { get }
+//    /// The step associated with this data source.
+//    var step: RSDStep { get }
+//
+//    /// The current task path.
+//    var taskViewModel: RSDTaskViewModel! { get }
     
     /// The table sections for this data source.
     var sections: [RSDTableSection] { get }

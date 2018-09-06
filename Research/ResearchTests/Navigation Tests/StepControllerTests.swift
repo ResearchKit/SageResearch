@@ -52,8 +52,8 @@ class StepControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskViewModel = RSDTaskViewModel(task: task)
-        taskViewModel.appendStepHistory(with: steps[0].instantiateStepResult())
-        taskViewModel.appendStepHistory(with: steps[1].instantiateStepResult())
+        taskViewModel.taskResult.appendStepHistory(with: steps[0].instantiateStepResult())
+        taskViewModel.taskResult.appendStepHistory(with: steps[1].instantiateStepResult())
         
         let step = steps[1]
         let stepViewModel = RSDStepViewModel(step: step, parent: taskViewModel)

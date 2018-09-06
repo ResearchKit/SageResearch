@@ -64,7 +64,9 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     @IBOutlet open var tableView: UITableView!
     
     /// The data source for this table.
-    open var tableData: RSDTableDataSource?
+    open var tableData: RSDTableDataSource? {
+        return self.stepViewModel as? RSDTableDataSource
+    }
     
     /// Convenience property for accessing the form step (if casting the step to a `RSDFormUIStep` is
     /// applicable).
@@ -76,7 +78,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     open class func doesSupport(_ step: RSDStep) -> Bool {
         // Only UI steps are supported
         guard let _ = step as? RSDUIStep else { return false }
-        if let tableStep = step as? RSDTableStep {
+        if let tableStep = step as? RSDFormUIStep {
             // TODO: syoung 02/26/2018 Implement support for image selection.
             // https://github.com/ResearchKit/SageResearch/issues/11
             return !tableStep.hasImageChoices
@@ -240,22 +242,26 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 .button]
     }
     
+    /// Override and set to an appropriate `RSDTableDataSource` instance.
+    override open func instantiateStepViewModel(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepViewPathComponent {
+        let supportedHints = type(of: self).supportedUIHints
+        let tableData: RSDTableDataSource
+        if let tableStep = step as? RSDTableStep,
+            let source = tableStep.instantiateDataSource(with: parent, for: supportedHints)
+        {
+            tableData = source
+        } else {
+            tableData = RSDFormStepDataSourceObject(step: step, parent: parent, supportedHints: supportedHints)
+        }
+        tableData.delegate = self
+        return tableData
+    }
+    
     /// Creates and assigns a new instance of the model. The default implementation will instantiate
     /// `RSDFormStepDataSourceObject` and set this as the `tableData`.
     open func setupModel() {
-        guard tableData == nil else { return }
-        
-        // Get the table data source from the step (if applicable)
-        let supportedHints = type(of: self).supportedUIHints
-        let taskViewModel = self.taskController.taskViewModel!
-        if let tableStep = self.step as? RSDTableStep,
-            let source = tableStep.instantiateDataSource(with: taskViewModel, for: supportedHints)
-            {
-            tableData = source
-        } else {
-            tableData = RSDFormStepDataSourceObject(step: self.step, taskViewModel: taskViewModel, supportedHints: supportedHints)
-        }
-        tableData?.delegate = self
+        guard tableData == nil, let existingViewModel = self.stepViewModel else { return }
+        self.stepViewModel = self.instantiateStepViewModel(for: existingViewModel.step, with: existingViewModel.parent)
         
         // after setting up the data source, check the enabled state of the forward button.
         self.answersDidChange(in: 0)
@@ -728,16 +734,18 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Called when a user action on a cell or button is linked to a modal item.
     open func didSelectModalItem(_ modalItem: RSDModalStepTableItem, at indexPath: IndexPath) {
-        guard let source = tableData as? RSDModalStepDataSource,
-            let taskViewController = self.taskController as? RSDTaskViewController
-            else {
-                assertionFailure("Cannot handle the button tap.")
-                return
-        }
-        let step = source.step(for: modalItem)
-        let stepViewController = taskViewController.viewController(for: step)
-        source.willPresent(stepViewController, from: modalItem)
-        self.present(stepViewController, animated: true, completion: nil)
+        // TODO: syoung 09/06/2018 Implement modal step data source.
+        assertionFailure("TODO: FIXME!!!")
+//        guard let source = tableData as? RSDModalStepDataSource,
+//            let taskViewController = self.taskController as? RSDTaskViewController
+//            else {
+//                assertionFailure("Cannot handle the button tap.")
+//                return
+//        }
+//        let step = source.step(for: modalItem)
+//        let stepViewController = taskViewController.viewController(for: step)
+//        source.willPresent(stepViewController, from: modalItem)
+//        self.present(stepViewController, animated: true, completion: nil)
     }
     
     // MARK: UITextView delegate

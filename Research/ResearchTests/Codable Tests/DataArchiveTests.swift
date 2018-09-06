@@ -53,22 +53,22 @@ class DataArchiveTests: XCTestCase {
         do {
             let outputDir = taskViewModel.outputDirectory!
             let asyncResult = try buildFileResult(identifier: "asyncFile", outputDirectory: outputDir)
-            taskViewModel.appendAsyncResult(with: asyncResult)
+            taskViewModel.taskResult.appendAsyncResult(with: asyncResult)
             
             // check assumption
             XCTAssertTrue(FileManager.default.fileExists(atPath: outputDir.path))
             
             // add the first collection to the task path
-            taskViewModel.appendStepHistory(with: RSDResultObject(identifier: "step1"))
-            taskViewModel.appendStepHistory(with: RSDResultObject(identifier: "step2"))
-            taskViewModel.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
+            taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
+            taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
+            taskViewModel.taskResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             
             // add the second collection as a subsection
             var sectionResult = RSDTaskResultObject(identifier: "sectionA")
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
-            taskViewModel.appendStepHistory(with: sectionResult)
+            taskViewModel.taskResult.appendStepHistory(with: sectionResult)
 
             let manager = TestArchiveManager()
             let archive = TestDataArchive("foo")
@@ -128,22 +128,22 @@ class DataArchiveTests: XCTestCase {
         do {
             let outputDir = taskViewModel.outputDirectory!
             let asyncResult = try buildFileResult(identifier: "asyncFile", outputDirectory: outputDir)
-            taskViewModel.appendAsyncResult(with: asyncResult)
+            taskViewModel.taskResult.appendAsyncResult(with: asyncResult)
             
             // check assumption
             XCTAssertTrue(FileManager.default.fileExists(atPath: outputDir.path))
             
             // add the first collection to the task path
-            taskViewModel.appendStepHistory(with: RSDResultObject(identifier: "step1"))
-            taskViewModel.appendStepHistory(with: RSDResultObject(identifier: "step2"))
-            taskViewModel.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
+            taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
+            taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
+            taskViewModel.taskResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
             
             // add the second collection as a subsection
             var sectionResult = RSDTaskResultObject(identifier: "sectionA")
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
-            taskViewModel.appendStepHistory(with: sectionResult)
+            taskViewModel.taskResult.appendStepHistory(with: sectionResult)
             
             let manager = TestArchiveManager()
             let mainArchive = TestDataArchive("foo")

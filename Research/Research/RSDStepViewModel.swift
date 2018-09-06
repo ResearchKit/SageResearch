@@ -36,7 +36,7 @@ import Foundation
 /// Base class implementation for a step view model.
 ///
 /// - seealso: `RSDTaskViewModel`
-open class RSDStepViewModel : NSObject, RSDNodePathComponent {
+open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
     
     /// The step that backs this view model.
     public let step: RSDStep
@@ -70,11 +70,6 @@ open class RSDStepViewModel : NSObject, RSDNodePathComponent {
                 _taskResult = nil
             }
         }
-    }
-    
-    /// The parent task controller. Default returns `self.parent?.taskController`
-    public var taskController: RSDTaskController? {
-        return self.parent?.taskController
     }
     
     /// The task result is the task result from the parent, unless the parent is `nil` in which case it uses

@@ -45,7 +45,7 @@ public protocol RSDAsyncActionVendor : RSDAsyncActionConfiguration {
     /// Instantiate a controller appropriate to this configuration.
     /// - parameter taskViewModel: The current task path to use to initialize the controller.
     /// - returns: An async action controller or nil if the async action is not supported on this device.
-    func instantiateController(with taskViewModel: RSDTaskViewModel) -> RSDAsyncAction?
+    func instantiateController(with taskViewModel: RSDPathComponent) -> RSDAsyncAction?
 }
 
 /// `RSDAsyncActionDelegate` is the delegate protocol for `RSDAsyncAction`.
@@ -132,7 +132,7 @@ public protocol RSDAsyncAction : class, NSObjectProtocol {
     var configuration: RSDAsyncActionConfiguration { get }
     
     /// The associated task path to which the result should be attached.
-    var taskViewModel: RSDTaskViewModel { get }
+    var taskViewModel: RSDPathComponent { get }
     
     #if os(watchOS)
     
@@ -231,5 +231,5 @@ public protocol RSDAsyncAction : class, NSObjectProtocol {
     /// - parameters:
     ///     - step: The step that will be presented.
     ///     - taskViewModel: The current state of the task.
-    func moveTo(step: RSDStep, taskViewModel: RSDTaskViewModel)
+    func moveTo(step: RSDStep, taskViewModel: RSDPathComponent)
 }

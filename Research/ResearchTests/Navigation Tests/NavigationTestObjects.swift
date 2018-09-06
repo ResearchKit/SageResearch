@@ -164,9 +164,8 @@ public struct TestTask : RSDTask {
 }
 
 public class TestStepController: NSObject, RSDStepController {
-
-    public var taskController: RSDTaskController?
-    public var stepViewModel: RSDNodePathComponent!
+    
+    public var stepViewModel: RSDStepViewPathComponent!
     
     public var didFinishLoading_called: Bool = false
     
@@ -176,20 +175,20 @@ public class TestStepController: NSObject, RSDStepController {
 }
 
 public class TestAsyncActionController: NSObject, RSDAsyncAction {
-    
+
     public var delegate: RSDAsyncActionDelegate?
     public var status: RSDAsyncActionStatus = .idle
     public var isPaused: Bool = false
     public var result: RSDResult?
     public var error: Error?
     public let configuration: RSDAsyncActionConfiguration
-    public let taskViewModel: RSDTaskViewModel
+    public let taskViewModel: RSDPathComponent
     
     public var moveTo_called = false
     public var moveTo_step: RSDStep?
-    public var moveTo_taskPath: RSDTaskViewModel?
+    public var moveTo_taskPath: RSDPathComponent?
     
-    public init(with configuration: RSDAsyncActionConfiguration, at taskViewModel: RSDTaskViewModel) {
+    public init(with configuration: RSDAsyncActionConfiguration, at taskViewModel: RSDPathComponent) {
         self.configuration = configuration
         self.taskViewModel = taskViewModel
         super.init()
@@ -221,7 +220,7 @@ public class TestAsyncActionController: NSObject, RSDAsyncAction {
         status = .cancelled
     }
     
-    public func moveTo(step: RSDStep, taskViewModel: RSDTaskViewModel) {
+    public func moveTo(step: RSDStep, taskViewModel: RSDPathComponent) {
         moveTo_called = true
         moveTo_step = step
         moveTo_taskPath = taskViewModel
@@ -236,7 +235,6 @@ public class TestTaskController: NSObject, RSDTaskController {
         }
     }
     
-    public var currentStepController: RSDStepController?
     public var currentAsyncControllers: [RSDAsyncAction] = []
     
     public var show_calledTo: RSDStepController?
@@ -269,7 +267,6 @@ public class TestTaskController: NSObject, RSDTaskController {
         show_calledFrom = previousStep
         show_calledDirection = direction
         DispatchQueue.main.async {
-            self.currentStepController = stepController
             completion?(true)
         }
     }
@@ -301,12 +298,12 @@ public class TestTaskController: NSObject, RSDTaskController {
         handleTaskResultReady_calledWith = taskViewModel
     }
 
-    public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncAction]) -> Void)) {
+    public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([RSDAsyncAction]) -> Void)) {
         addAsyncActions_called = true
         addAsyncActions_calledWith = configurations
         DispatchQueue.main.async {
             let controllers: [RSDAsyncAction] = configurations.map {
-                return TestAsyncActionController(with: $0, at: self.taskViewModel)
+                return TestAsyncActionController(with: $0, at: path)
             }
             self.currentAsyncControllers.append(contentsOf: controllers)
             completion(controllers)
@@ -346,15 +343,15 @@ public class TestTaskController: NSObject, RSDTaskController {
         
         // Add an answer result to the task path where the value is set equal to the step identifier. This is
         // used to test forward/backward navigation.
-        if let node = self.taskViewModel.currentNode, let taskPath = node.currentTaskPath {
+        if let node = self.taskViewModel.currentNode {
             let stepResult = node.step.instantiateStepResult()
             if let answerResult = stepResult as? RSDAnswerResultObject,
                 answerResult.value == nil, answerResult.answerType == .string {
                 var aResult = answerResult
                 aResult.value = node.identifier
-                taskPath.appendStepHistory(with: aResult)
+                node.taskResult.appendStepHistory(with: aResult)
             } else {
-                taskPath.appendStepHistory(with: stepResult)
+                node.taskResult.appendStepHistory(with: stepResult)
             }
         }
     }

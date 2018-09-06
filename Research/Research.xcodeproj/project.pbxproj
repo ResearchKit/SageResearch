@@ -1184,6 +1184,7 @@
 			isa = PBXGroup;
 			children = (
 				F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */,
+				F8BE112D21360358000AAB1E /* RSDTableStep.swift */,
 				F8BE113A213607BE000AAB1E /* Active Steps */,
 				F8BE113921360775000AAB1E /* Forms */,
 				F8BE113B213607F6000AAB1E /* Themed UI */,
@@ -1365,7 +1366,6 @@
 			isa = PBXGroup;
 			children = (
 				F8FD56332141BD2200BA2FA6 /* Data Archiving */,
-				F8BE112C2136032E000AAB1E /* TableView Steps */,
 				F8BF134E213F97B0009505E5 /* RSDPathComponent.swift */,
 				FF8E5F441F8C36F400611C23 /* RSDTaskViewModel.swift */,
 				F8366D942140677600EBA88D /* RSDTaskStepNode.swift */,
@@ -1373,6 +1373,7 @@
 				F8366D8F214042F800EBA88D /* RSDStepViewModel.swift */,
 				FF5C4C1E1F8C874300F311BA /* RSDStepController.swift */,
 				F8BF1322213A3210009505E5 /* RSDTaskRepository.swift */,
+				F89E6E062043CB4A003D9E34 /* RSDTableDataSource.swift */,
 				FF8E5F461F8C3DA000611C23 /* RSDAsyncAction.swift */,
 			);
 			name = Presentation;
@@ -1415,15 +1416,6 @@
 				FF1D6D3D1F8311BE00B05349 /* RSDConditionalStepNavigatorObject.swift */,
 			);
 			name = Navigation;
-			sourceTree = "<group>";
-		};
-		F8BE112C2136032E000AAB1E /* TableView Steps */ = {
-			isa = PBXGroup;
-			children = (
-				F8BE112D21360358000AAB1E /* RSDTableStep.swift */,
-				F89E6E062043CB4A003D9E34 /* RSDTableDataSource.swift */,
-			);
-			name = "TableView Steps";
 			sourceTree = "<group>";
 		};
 		F8BE113921360775000AAB1E /* Forms */ = {

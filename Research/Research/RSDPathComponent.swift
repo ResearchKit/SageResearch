@@ -81,10 +81,7 @@ public protocol RSDPathComponent : class {
     
     /// The parent path component. If nil, this is the top-level path component.
     var parent : RSDPathComponent? { get }
-    
-    /// A pointer to the task controller that is running the task.
-    var taskController : RSDTaskController? { get }
-    
+
     /// The task result associated with this path component.
     var taskResult : RSDTaskResult { get set }
     
@@ -115,10 +112,35 @@ public protocol RSDNodePathComponent : RSDPathComponent {
     var step : RSDStep { get }
 }
 
+public protocol RSDStepViewPathComponent : RSDNodePathComponent {
+    
+    /// Method for getting the progress through the task for the current step with
+    /// the current result.
+    ///
+    /// - returns:
+    ///     - current: The current progress. This indicates progress within the task.
+    ///     - total: The total number of steps.
+    ///     - isEstimated: Whether or not the progress is an estimate (if the task has variable navigation)
+    func progress() -> (current: Int, total: Int, isEstimated: Bool)?
+    
+    /// An identifier string that can be appended to a step view controller to differentiate this step from
+    /// another instance in a different section.
+    func sectionIdentifier() -> String
+}
+
 public protocol RSDTaskPathComponent : RSDPathComponent {
+    
+    /// A pointer to the task controller that is running the task.
+    var taskController : RSDTaskController? { get }
     
     /// The task that is currently being run. This can be `nil` if the task has not yet been loaded.
     var task: RSDTask? { get }
+    
+    /// Is there previous step that this task can go back to?
+    var hasStepBefore: Bool { get }
+    
+    /// Is there a next step or is this the last step in the task?
+    var hasStepAfter: Bool { get }
     
     /// Move back up the path to the current step that has an associated view controller.
     func moveBackToCurrentStep(from previousStep: RSDStep)
@@ -129,19 +151,11 @@ public protocol RSDTaskPathComponent : RSDPathComponent {
     /// Move forward from this path subtask to the next step on the parent.
     func moveForwardToNextStep()
     
-    /// Append the result to the end of the step history, replacing the previous instance with the same
-    /// identifier and adding the previous instance to the previous results.
-    ///
-    /// - parameter newResult:  The result to add to the step history.
-    func appendStepHistory(with newResult: RSDResult)
-    
-    /// Append the async results with the given result, replacing the previous instance with the same identifier.
-    /// The step history is used to describe the path you took to get to where you are going, whereas
-    /// the asynchronous results include any canonical results that are independent of path.
-    ///
-    /// - parameter newResult:  The result to add to the async results.
-    func appendAsyncResult(with newResult: RSDResult)
+    /// Get the previous result for the given step.
+    func previousResult(for step: RSDStep) -> RSDResult?
 }
+
+
 
 extension RSDPathComponent {
     
@@ -162,29 +176,6 @@ extension RSDPathComponent {
             node = child
         }
         return node
-    }
-    
-    /// Convenience method for accessing the lowest-level task path.
-    public var currentTaskPath: RSDTaskPathComponent? {
-        if let start = self as? RSDTaskPathComponent {
-            // If this this node conforms to the task protocol, then start with it and look down the chain.
-            var taskPath = start
-            while let nextPath = taskPath.currentChild as? RSDTaskPathComponent {
-                taskPath = nextPath
-            }
-            return taskPath
-        }
-        else {
-            // Otherwise, go up the chain until the node above is a task node.
-            var node: RSDPathComponent = self
-            while let parent = node.parent {
-                node = parent
-                if let taskPath = node as? RSDTaskPathComponent {
-                    return taskPath
-                }
-            }
-            return nil
-        }
     }
     
     //// String identifying the full path for this task.
@@ -228,6 +219,38 @@ extension RSDPathComponent {
             }
         }
         return URL(fileURLWithPath: path, isDirectory: true)
+    }
+}
+
+extension RSDTaskPathComponent {
+    
+    /// Convenience method for accessing the lowest-level task path. This method uses recursion to look down
+    /// the path chain for the lowest task path.
+    public var currentTaskPath: RSDTaskPathComponent {
+        // If this this node conforms to the task protocol, then start with it and look down the chain.
+        var taskPath: RSDTaskPathComponent = self
+        while let nextPath = taskPath.currentChild as? RSDTaskPathComponent {
+            taskPath = nextPath
+        }
+        return taskPath
+    }
+}
+
+extension RSDStepViewPathComponent {
+    
+    /// Convenience method for accessing the task path component that presented this step view. This method
+    /// uses recursion to look up the path chain until it finds a path component that implements the
+    /// `RSDTaskPathComponent` protocol.
+    public var parentTaskPath: RSDTaskPathComponent? {
+        // Otherwise, go up the chain until the node above is a task node.
+        var node: RSDPathComponent = self
+        while let parent = node.parent {
+            node = parent
+            if let taskPath = node as? RSDTaskPathComponent {
+                return taskPath
+            }
+        }
+        return nil
     }
 }
 

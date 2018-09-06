@@ -35,19 +35,13 @@ import Foundation
 
 /// `RSDFormStepDataSourceObject` is a concrete implementation of the `RSDTableDataSource` protocol that is
 /// designed to be used to supply the data source for a form step.
-open class RSDFormStepDataSourceObject : RSDTableDataSource {
+open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
     
     /// The delegate associated with this data source.
     open weak var delegate: RSDTableDataSourceDelegate?
 
-    /// The step associated with this data source.
-    public let step: RSDStep
-
     /// The UI hints supported by this data source.
     public let supportedHints: Set<RSDFormUIHint>
-
-    /// The current task path.
-    public private(set) var taskViewModel: RSDTaskViewModel!
 
     /// The table sections for this data source.
     open private(set) var sections: [RSDTableSection] = []
@@ -63,17 +57,13 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     ///     - step:             The RSDStep for this data source.
     ///     - taskViewModel:         The current task path for this data source.
     ///     - supportedHints:   The supported UI hints for this data source.
-    public init(step: RSDStep, taskViewModel: RSDTaskViewModel, supportedHints: Set<RSDFormUIHint>? = nil) {
-        
-        self.step = step
-        self.taskViewModel = taskViewModel
+    public init(step: RSDStep, parent: RSDPathComponent?, supportedHints: Set<RSDFormUIHint>? = nil) {
         self.supportedHints = supportedHints ?? RSDFormUIHint.allStandardHints
+        super.init(step: step, parent: parent)
         
         // Set the initial result if available.
-        if let result = initialResult {
-            self.initialResult = result
-        }
-        else if let previousResult = taskViewModel.previousResults?.rsd_last(where: { $0.identifier == step.identifier }) {
+        if let taskViewModel = parent as? RSDTaskPathComponent,
+            let previousResult = taskViewModel.previousResult(for: step) {
             if let collectionResult = (previousResult as? RSDCollectionResult) {
                 self.initialResult = collectionResult
             } else {
@@ -97,7 +87,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     ///
     /// - returns: The appropriate collection result.
     open func collectionResult() -> RSDCollectionResult {
-        if let collectionResult = taskViewModel.taskResult.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) as? RSDCollectionResult {
+        if let collectionResult = taskResult.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) as? RSDCollectionResult {
             return collectionResult
         }
         else {
@@ -191,7 +181,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         } else {
             stepResult.removeInputResult(with: itemGroup.identifier)
         }
-        self.taskViewModel.appendStepHistory(with: stepResult)
+        self.taskResult.appendStepHistory(with: stepResult)
         
         // inform delegate that answers have changed
         delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
@@ -356,7 +346,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         }
         
         if hasChanges {
-            self.taskViewModel.appendStepHistory(with: stepResult)
+            self.taskResult.appendStepHistory(with: stepResult)
         }
     }
 }

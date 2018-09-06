@@ -221,10 +221,10 @@ class FormStepTableDataSourceTests: XCTestCase {
             let task = RSDTaskObject(identifier: "test", stepNavigator: navigator)
             let taskViewModel = RSDTaskViewModel(task: task)
             if let result = initialResult {
-                taskViewModel.appendStepHistory(with: result)
+                taskViewModel.taskResult.appendStepHistory(with: result)
             }
-            taskViewModel.appendStepHistory(with: step.instantiateStepResult())
-            return RSDFormStepDataSourceObject(step: step, taskViewModel: taskViewModel)
+            taskViewModel.taskResult.appendStepHistory(with: step.instantiateStepResult())
+            return RSDFormStepDataSourceObject(step: step, parent: taskViewModel)
         } catch let err {
             XCTFail("Failed to decode the step. \(err)")
             return nil

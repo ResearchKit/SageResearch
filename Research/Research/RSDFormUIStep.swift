@@ -41,3 +41,16 @@ public protocol RSDFormUIStep: RSDUIStep {
     /// such as birth month/year or given/family name.
     var inputFields: [RSDInputField] { get }
 }
+
+extension RSDFormUIStep {
+    
+    /// Look to the input fields and return true if any are choice type that include an image.
+    public var hasImageChoices: Bool {
+        for item in inputFields {
+            if let picker = item.pickerSource as? RSDChoiceOptions, picker.hasImages {
+                return true
+            }
+        }
+        return false
+    }
+}

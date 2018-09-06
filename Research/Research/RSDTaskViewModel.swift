@@ -74,10 +74,10 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     /// A weak pointer to the task controller.
     public var taskController : RSDTaskController? {
         get {
-            return self.parent?.taskController ?? _taskController
+            return self.rootPathComponent._taskController
         }
         set {
-            _taskController = newValue
+            self.rootPathComponent._taskController = newValue
         }
     }
     weak private var _taskController : RSDTaskController?
@@ -91,28 +91,10 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     // MARK: Lifecycle
     
     /// Initialize the task path with a task.
-    public init(task: RSDTask) {
-        self.identifier = task.identifier
-        self.task = task
-        self.taskResult = task.instantiateTaskResult()
-        super.init()
-        commonInit(identifier: task.identifier, parentPath: nil)
-    }
-    
-    /// Initialize the task path with a task info.
-    public init(taskInfo: RSDTaskInfo) {
-        self.identifier = taskInfo.identifier
-        self.taskInfo = taskInfo
-        self.taskResult = RSDTaskResultObject(identifier: taskInfo.identifier)  // Create a temporary result
-        super.init()
-        commonInit(identifier: taskInfo.identifier, parentPath: nil)
-    }
-        
-    /// Initialize the task path with a task.
     /// - parameters:
     ///     - task: The task to set for this path segment.
     ///     - parentPath: A pointer to the parent task path.
-    init(task: RSDTask, parentPath: RSDPathComponent) {
+    public init(task: RSDTask, parentPath: RSDPathComponent? = nil) {
         self.identifier = task.identifier
         self.task = task
         self.taskResult = task.instantiateTaskResult()
@@ -124,7 +106,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     /// - parameters:
     ///     - taskInfo: The task info to set for this path segment.
     ///     - parentPath: A pointer to the parent task path.
-    init(taskInfo: RSDTaskInfo, parentPath: RSDPathComponent) {
+    public init(taskInfo: RSDTaskInfo, parentPath: RSDPathComponent? = nil) {
         self.identifier = taskInfo.identifier
         self.taskInfo = taskInfo
         self.taskResult = RSDTaskResultObject(identifier: taskInfo.identifier)  // Create a temporary result
@@ -226,6 +208,19 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     
     // MARK: Path navigation
     
+    /// Should the step view controller confirm the cancel action? By default, this will return `false` if
+    /// this is the first step in the task. Otherwise, this method will return `true`.
+    /// - returns: Whether or not to confirm the cancel action.
+    open func shouldConfirmCancel() -> Bool {
+        return !self.isFirstStep
+    }
+    
+    /// Can the task progress be saved? This should only return `true` if the task result can be saved and
+    /// the current progress can be restored.
+    open func canSaveTaskProgress() -> Bool {
+        return false
+    }
+    
     /// This is a flag that can be used to mark whether or not the task is ready to be saved.
     open internal(set) var isCompleted: Bool = false
     
@@ -280,9 +275,9 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     /// Go forward to the next step. If the task is not loaded for the current point in the task path, then
     /// it will attempt to fetch it again.
     open func goForward() {
-        guard let viewModel = self.currentTaskPath! as? RSDTaskViewModel, viewModel == self
+        guard let viewModel = self.currentTaskPath as? RSDTaskViewModel, viewModel == self
             else {
-                self.currentTaskPath!.moveForwardToNextStep()
+                self.currentTaskPath.moveForwardToNextStep()
                 return
         }
         _goForward()
@@ -323,9 +318,9 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
         
         // If calling `goBack()` from the `taskViewController.taskViewModel`, that node is always the root
         // node, and may not be the node that is currently being navigated.
-        guard let viewModel = self.currentTaskPath! as? RSDTaskViewModel, viewModel == self
+        guard let viewModel = self.currentTaskPath as? RSDTaskViewModel, viewModel == self
             else {
-                self.currentTaskPath!.moveBackToPreviousStep()
+                self.currentTaskPath.moveBackToPreviousStep()
                 return
         }
         
@@ -334,8 +329,9 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     }
     
     /// Call through to the task controller to handle the task finished with a reason of `.cancelled`.
-    open func cancel() {
-        self.taskController?.handleTaskDidFinish(with: .cancelled, error: nil)
+    open func cancel(shouldSave: Bool = false) {
+        let reason: RSDTaskFinishReason = shouldSave ? .saved : .discarded
+        self.taskController?.handleTaskDidFinish(with: reason, error: nil)
     }
     
     /// Start the task if it is not currently loaded with a task or first step.
@@ -383,6 +379,15 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     
     /// Overridable factory method for returning a step controller for a given step.
     open func loadStepController(for step: RSDStep) -> RSDStepController? {
+        
+        // Before loading the step controller, add a new instance of the step result to the step history to
+        // indicate that the step was "visited" even if it was not displayed b/c the task controller didn't
+        // return a step controller.
+        if self.taskResult.findResult(for: step) == nil {
+            let stepResult = step.instantiateStepResult()
+            self.taskResult.appendStepHistory(with: stepResult)
+        }
+
         guard let stepController = self.taskController?.stepController(for: step, with: self)
             else {
                 return nil
@@ -433,9 +438,12 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     public private(set) var isLoading: Bool = false
     
     /// The repository to use to load a task.
-    open var taskRepository: RSDTaskRepository {
-        return self.rootPathComponent?.taskRepository ?? RSDTaskRepository.shared
-    }
+    lazy open var taskRepository: RSDTaskRepository = {
+        if let root = self.rootPathComponent, root != self {
+            return root.taskRepository
+        }
+        return RSDTaskRepository.shared
+    }()
     
     /// Fetch the task associated with this path. This method loads the task and sets up the
     /// task result once finished.
@@ -476,60 +484,53 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     
     /// Called when the task is successfully loaded.
     open func handleTaskLoaded() {
-        self.taskController?.handleFinishedLoading()
+        guard let taskController = self.taskController else {
+            assertionFailure("The base task view model is expecting a view controller. If none is provided, please use a subclass.")
+            return
+        }
+        taskController.handleFinishedLoading()
     }
     
     /// Called when the task is successfully loaded.
     open func handleTaskFailure(with error: Error) {
-        self.taskController?.handleTaskFailure(with: error)
+        guard let taskController = self.taskController else {
+            assertionFailure("The base task view model is expecting a view controller. If none is provided, please use a subclass.")
+            return
+        }
+        taskController.handleTaskFailure(with: error)
     }
     
     
     // MARK: Result management
     
-    /// A pointer to the path sections visited
+    /// A pointer to the path sections visited.
     internal var childPaths: [String : RSDNodePathComponent] = [:]
     
     /// A listing of step results that were removed from the task result. These results can be accessed
     /// by a step view controller to load a result that was previously selected.
     public private(set) var previousResults: [RSDResult]?
     
-    /// Append the result to the end of the step history, replacing the previous instance with the same
-    /// identifier and adding the previous instance to the previous results.
-    /// - parameter newResult:  The result to add to the step history.
-    public func appendStepHistory(with newResult: RSDResult) {
-        guard let previousResult = taskResult.appendStepHistory(with: newResult) else { return }
-        _appendPreviousResults(previousResult)
+    /// Get the previous result for the given step.
+    open func previousResult(for step: RSDStep) -> RSDResult? {
+        return self.previousResults?.rsd_last { $0.identifier == step.identifier }
     }
     
     /// Remove results from the step history from the result with the given identifier to the end of the
     /// array. Add these results to the previous results set.
     /// - parameter stepIdentifier:  The identifier of the result associated with the given step.
     func removeStepHistory(from stepIdentifier: String) {
-        guard let previous = taskResult.removeStepHistory(from: stepIdentifier) else { return }
-        for previousResult in previous {
-            _appendPreviousResults(previousResult)
-        }
-    }
-    
-    private func _appendPreviousResults(_ previousResult: RSDResult) {
-        if previousResults == nil {
-            previousResults = [previousResult]
+        guard let results = taskResult.removeStepHistory(from: stepIdentifier) else { return }
+        if self.previousResults == nil {
+            self.previousResults = results
         }
         else {
-            if let idx = previousResults!.index(where: { $0.identifier == previousResult.identifier }) {
-                previousResults!.remove(at: idx)
+            results.forEach { (previousResult) in
+                if let idx = self.previousResults!.index(where: { $0.identifier == previousResult.identifier }) {
+                    self.previousResults!.remove(at: idx)
+                }
+                self.previousResults!.append(previousResult)
             }
-            previousResults!.append(previousResult)
         }
-    }
-    
-    /// Append the async results with the given result, replacing the previous instance with the same identifier.
-    /// The step history is used to describe the path you took to get to where you are going, whereas
-    /// the asynchronous results include any canonical results that are independent of path.
-    /// - parameter result:  The result to add to the async results.
-    public func appendAsyncResult(with newResult: RSDResult) {
-        taskResult.appendAsyncResult(with: newResult)
     }
     
     
@@ -623,7 +624,7 @@ extension RSDTaskViewModel {
 
     private func _fetchTaskFromCurrentInfo() {
         guard !self.isLoading else {
-            debugPrint("Already loading \(self)")
+            print("Already loading \(self)")
             return
         }
         guard let taskInfo = self.taskInfo else {
@@ -679,7 +680,7 @@ extension RSDTaskViewModel {
             let taskController = self.taskController {
             // If there are action controllers to start then add them to the queue and get controllers
             // before transitioning to the next step.
-            taskController.addAsyncActions(with: asyncActions, completion: { [weak self] (_) in
+            taskController.addAsyncActions(with: asyncActions, path: self, completion: { [weak self] (_) in
                 DispatchQueue.main.async {
                     self?._moveToNextStepPart2(previousStep: previousStep, step: step)
                 }
@@ -730,14 +731,15 @@ extension RSDTaskViewModel {
     }
     
     private func _moveBack(to step: RSDStep, from currentStep: RSDStep) {
+        // Remove the step from the step history for this path segment.
+        self.removeStepHistory(from: step.identifier)
+        
+        // Get the previous path component.
         guard let (nextPath, stepController) = self.previousPathComponent(for: step)
             else {
                 _moveToPreviousStep(from: step, currentStep: currentStep)
                 return
         }
-        
-        // remove the step from the step history for this path segment
-        self.removeStepHistory(from: step.identifier)
         
         // Check if this is a subtask and go back within the subtask
         if let stepController = stepController {
@@ -756,16 +758,14 @@ extension RSDTaskViewModel {
         
         self.currentChild = stepController.stepViewModel
         let step = stepController.stepViewModel.step
-        let stepResult = stepController.stepViewModel.step.instantiateStepResult()
-        self.appendStepHistory(with: stepResult)
         guard let taskController = self.taskController
             else {
                 assertionFailure("Attempting to navigate without a task controller.")
                 return
         }
         
+        taskController.hideLoadingIfNeeded()
         taskController.show(stepController, from: previousStep, direction: direction) { [weak self] (finished) in
-            taskController.hideLoadingIfNeeded()
             self?._finishMoving(to: step, from: previousStep, direction: direction)
         }
     }
@@ -881,7 +881,7 @@ extension RSDTaskViewModel {
         _handleTaskReady()
         
         // If the parent path is non-nil then go back up to the parent
-        parent.appendStepHistory(with: self.taskResult)
+        parent.taskResult.appendStepHistory(with: self.taskResult)
         parent.moveForwardToNextStep()
     }
     

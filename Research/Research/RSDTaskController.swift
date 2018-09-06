@@ -46,7 +46,9 @@ public enum RSDStepDirection : Int, Codable {
 // The `RSDTaskFinishReason` value indicates why the task controller has finished the task.
 public enum RSDTaskFinishReason : Int {
     /// The task was canceled by the participant or the developer, and the participant asked to save the current result.
-    case cancelled
+    case saved
+    /// The task was canceled by the participant or the developer, and the participant asked to discard the current result.
+    case discarded
     /// The task has completed successfully, because all steps have been completed.
     case completed
     /// An error was detected during the current step.
@@ -106,9 +108,6 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     /// Returns a step controller appropriate to the given step. If this method returns `nil` then the step
     /// should be ignored.
     func stepController(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepController?
-    
-    /// Returns the currently active step controller (if any).
-    var currentStepController: RSDStepController? { get }
 
     /// Returns a list of the async action controllers that are currently active. This includes controllers
     /// that are requesting permissions, starting, running, *and* stopping.
@@ -161,8 +160,9 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     ///
     /// - parameters:
     ///     - configurations: The configurations to start.
+    ///     - path: The path component that is currently being navigated.
     ///     - completion: The completion to call with the instantiated controllers.
-    func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], completion: @escaping (([RSDAsyncAction]) -> Void))
+    func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([RSDAsyncAction]) -> Void))
 
     /// Start the async action controllers. The protocol extension calls this method when an async action
     /// should be started directly *after* the step is presented.
