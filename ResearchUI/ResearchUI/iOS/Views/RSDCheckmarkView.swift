@@ -375,7 +375,7 @@ fileprivate class RSDCheckboxButtonView : UIView {
         checkboxContainer.translatesAutoresizingMaskIntoConstraints = false
         checkboxContainer.rsd_makeWidth(.equal, checkboxHeight)
         checkboxContainer.rsd_makeHeight(.equal, checkboxHeight)
-        checkboxContainer.rsd_alignToSuperview([.leading, .centerY], padding: 0)
+        checkboxContainer.rsd_alignToSuperview([.leading, .top], padding: 0)
         
         viewUnchecked = UncheckedView(frame: self.bounds)
         checkboxContainer.addSubview(viewUnchecked)
@@ -403,8 +403,11 @@ fileprivate class RSDCheckboxButtonView : UIView {
         label.clipsToBounds = false
         
         // Align label to allow word wrapping, with centered text if single line.
-        label.rsd_align([.centerY], .equal, to: self, [.centerY], padding: 0, priority: .defaultHigh)
-        label.rsd_align([.top], .greaterThanOrEqual, to: viewUnchecked, [.top], padding: 0, priority: .required)
+        label.rsd_align([.centerY], .equal, to: checkboxContainer, [.centerY], padding: 0, priority: .defaultHigh)
+        label.rsd_align([.top], .greaterThanOrEqual, to: checkboxContainer, [.top], padding: 0, priority: .required)
+        label.rsd_align([.bottom], .lessThanOrEqual, to: self, [.bottom], padding: 0, priority: .required)
+        checkboxContainer.rsd_alignToSuperview([.bottom], padding: 0, priority: .defaultHigh)
+
         
         // hide the title label
         checkboxContainer.isUserInteractionEnabled = false
