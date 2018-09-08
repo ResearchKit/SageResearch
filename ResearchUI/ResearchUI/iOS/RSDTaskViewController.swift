@@ -708,7 +708,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
         // Start the background audio session
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(AVAudioSessionCategoryPlayback)
+            try session.setCategory(AVAudioSessionCategoryPlayback, with: .interruptSpokenAudioAndMixWithOthers)
             try session.setActive(true)
             audioSession = session
         }
@@ -729,8 +729,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskUIController, UIPageV
     /// Stop the audio session.
     private func _stopAudioSession() {
         do {
-            try audioSession?.setActive(false)
             audioSession = nil
+            try AVAudioSession.sharedInstance().setActive(false, with: .notifyOthersOnDeactivation)
         } catch let err {
             debugPrint("Failed to stop AV session. \(err)")
         }
