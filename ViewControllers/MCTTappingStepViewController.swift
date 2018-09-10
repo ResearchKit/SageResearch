@@ -194,6 +194,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         tappingResult.buttonRect2 = _buttonRect2
         tappingResult.stepViewSize = _viewSize
         tappingResult.samples = _samples
+        tappingResult.tapCount = _hitButtonCount
         
         if let collectionResult = previousResult as? RSDCollectionResult {
             // Add the tapping result to the collection result.
@@ -220,12 +221,24 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         _samples.append(sample)
         _lastSample[button] = sample
         
-        // update the tap count.
-        if button != .none {
+        // Update the tap count if the button is *not* the "none" case and either the previous button is nil
+        // or the previous button matches this button.
+        let nextButton: MCTTappingButtonIdentifier? = {
+            if let previousButton = _previousButton {
+                return (previousButton == .left) ? .right : .left
+            }
+            else {
+                return (button != .none) ? button : nil
+            }
+        }()
+        if let next = nextButton, next == button {
             _hitButtonCount += 1
-            self.tappingCountLabel.text = countFormatter.string(from: NSNumber(value: _hitButtonCount))
+            _previousButton = nextButton
         }
+        
+        self.tappingCountLabel.text = countFormatter.string(from: NSNumber(value: _hitButtonCount))
     }
+    private var _previousButton: MCTTappingButtonIdentifier?
     
     /// Handle the touch up event.
     func releaseTouch(_ touch: UITouch, on button: MCTTappingButtonIdentifier) {

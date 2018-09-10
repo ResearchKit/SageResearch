@@ -82,22 +82,22 @@ open class MCTTappingCompletionStepViewController : RSDStepViewController {
     // Returns a tuple containing the number of taps from each hand. A hand that doesn't
     // perform the activity will have `nil` returned as its number of taps.
     private func _getTappingResults() -> (leftCount: Int?, rightCount: Int?) {
-        let leftCount = _getTappingResult(with: "left")
-        let rightCount = _getTappingResult(with: "right")
+        let leftCount = _getTappingResult(with: .left)
+        let rightCount = _getTappingResult(with: .right)
         return (leftCount: leftCount, rightCount: rightCount)
     }
     
     // Returns the number of taps for the result with the given identifier.
     // identifier is typically expected to be either "left" or "right"
-    private func _getTappingResult(with identifier: String) -> Int? {
+    private func _getTappingResult(with identifier: MCTHandSelection) -> Int? {
         let taskResult = self.taskController.taskResult
-        guard let result = taskResult?.findResult(with: identifier) as? RSDTaskResult,
+        guard let result = taskResult?.findResult(with: identifier.stringValue) as? RSDTaskResult,
             let tappingResult = result.findResult(with: "tapping") as? MCTTappingResultObject
             else {
                 return nil
         }
         
-        return tappingResult.samples?.count
+        return tappingResult.tapCount
     }
     
     // Hides the left and right results labels depinding on whether or not

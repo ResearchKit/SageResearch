@@ -71,6 +71,9 @@ public struct MCTTappingResultObject : RSDResult, Encodable, RSDArchivable {
 
     /// An array of collected tapping samples.
     public internal(set) var samples: [MCTTappingSample]? = nil
+    
+    /// The tap count of hits that were within the buttons.
+    public internal(set) var tapCount: Int = 0
 
     /// The size of the bounds of the step view containing the tap targets.
     public internal(set) var stepViewSize: CGSize = .zero
@@ -110,7 +113,7 @@ public struct MCTTappingResultObject : RSDResult, Encodable, RSDArchivable {
         try container.encode(self.type, forKey: .type)
         try container.encode(self.startDate, forKey: .startDate)
         try container.encode(self.endDate, forKey: .endDate)
-        try container.encode(self.samples?.count ?? 0, forKey: .tapCount)
+        try container.encode(self.tapCount, forKey: .tapCount)
         try container.encode(NSStringFromCGSize(self.stepViewSize) as String, forKey: .stepViewSize)
         try container.encode(NSStringFromCGRect(self.buttonRect1) as String, forKey: .buttonRect1)
         try container.encode(NSStringFromCGRect(self.buttonRect2) as String, forKey: .buttonRect2)
