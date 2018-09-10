@@ -118,8 +118,6 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
         self.parent = parentPath
         guard let parent = parentPath else { return }
         self.previousResults = (parent.taskResult.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
-        self.trackingDelegate = parent.rootPathComponent?.trackingDelegate
-        self.setupTracking()
     }
     
         
@@ -223,6 +221,9 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     
     /// This is a flag that can be used to mark whether or not the task is ready to be saved.
     open internal(set) var isCompleted: Bool = false
+    
+    /// This is a flag that can be used to mark whether or not the task exited early.
+    open internal(set) var didExitEarly: Bool = false
     
     /// Is there a next step or is this the last step in the task?
     public var hasStepAfter: Bool {
@@ -362,7 +363,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     }
     
     /// Overridable factory method for returning a "hidden" task step node to use in subtask navigation.
-    open func instantiateTaskStepNode(for step: RSDStep) -> RSDTaskStepNode? {
+    open func instantiateTaskStepNode(for step: RSDStep) -> RSDNodePathComponent? {
         if let subtaskStep = step as? RSDTaskInfoStep {
             return RSDTaskStepNode(taskInfoStep: subtaskStep, parentPath: self)
         }
@@ -466,12 +467,14 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
             if task != nil {
                 strongSelf.task = task
                 let previousResult = strongSelf.taskResult
-                strongSelf.taskResult = task!.instantiateTaskResult()
+                var taskResult = task!.instantiateTaskResult()
                 if previousResult.asyncResults?.count ?? 0 > 0 {
                     var results = strongSelf.taskResult.asyncResults ?? []
                     results.append(contentsOf: previousResult.asyncResults!)
                     strongSelf.taskResult.asyncResults = results
                 }
+                taskResult.taskRunUUID = previousResult.taskRunUUID
+                strongSelf.taskResult = taskResult
             }
             if let err = error {
                 strongSelf.handleTaskFailure(with: err)
@@ -524,31 +527,20 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
             self.previousResults = results
         }
         else {
-            results.forEach { (previousResult) in
-                if let idx = self.previousResults!.index(where: { $0.identifier == previousResult.identifier }) {
-                    self.previousResults!.remove(at: idx)
-                }
-                self.previousResults!.append(previousResult)
-            }
+            results.forEach { self.append(previousResult: $0) }
         }
     }
     
-    
-    // MARK: Data tracking
-    
-    /// The tracking delegate is used to allow any task to reference a delegate that can be used to set up
-    /// the task using the results of a previous run. Because a task path may be instantiated using either a
-    /// task info object or by a task, it's possible that the `RSDTask` associated with the task has not yet
-    /// been instantiated when the top-level task path is created.
-    public weak var trackingDelegate: RSDTrackingDelegate? {
-        didSet {
-            self.setupTracking()
+    /// Append the previous result set with the given result.
+    open func append(previousResult: RSDResult) {
+        guard self.previousResults != nil else {
+            self.previousResults = [previousResult]
+            return
         }
-    }
-    
-    internal func setupTracking() {
-        guard let navigator = self.task?.stepNavigator as? RSDTrackingStepNavigator else { return }
-        navigator.setupTracking(with: self)
+        if let idx = self.previousResults!.index(where: { $0.identifier == previousResult.identifier }) {
+            self.previousResults!.remove(at: idx)
+        }
+        self.previousResults!.append(previousResult)
     }
     
 
@@ -890,6 +882,7 @@ extension RSDTaskViewModel {
             assertionFailure("This task path does not have a root task view model. Cannot complete.")
             return
         }
+        root.didExitEarly = didExitEarly
         root._handleTaskReady()
         let reason: RSDTaskFinishReason = didExitEarly ? .earlyExit : .completed
         root.taskController?.handleTaskDidFinish(with: reason, error: nil)

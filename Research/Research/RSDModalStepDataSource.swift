@@ -1,8 +1,8 @@
 //
-//  RSDTaskStepNode.swift
+//  RSDModalStepDataSource.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,43 +33,21 @@
 
 import Foundation
 
-/// `RSDTaskStepNode` is a subclass of `RSDTaskViewModel` that implements the `RSDNodePathComponent`
-/// protocol and holds a pointer to an associated "hidden" step. It is hidden in the sense that the
-/// base class navigation doesn't show this with a step view controller.
-open class RSDTaskStepNode : RSDTaskViewModel, RSDNodePathComponent {
+
+/// `RSDModalStepDataSource` extends `RSDTableDataSource` for a data source that includes entering
+/// information using a modal step.
+public protocol RSDModalStepDataSource : RSDTableDataSource {
     
-    /// The associated step used in navigation.
-    public let step : RSDStep
+    /// The taskViewModel to use to instantiate an appropriate view controller for the given modal step
+    /// table item.
+    ///
+    /// - parameter tableItem: The table item that was selected.
+    /// - returns: The step to display.
+    func taskViewModel(for tableItem: RSDModalStepTableItem) -> RSDTaskViewModel?
     
-    override open var identifier: String {
-        return step.identifier
-    }
-    
-    public init(sectionStep: RSDSectionStep, parentPath: RSDPathComponent) {
-        self.step = sectionStep
-        super.init(task: sectionStep, parentPath: parentPath)
-    }
-    
-    public init(taskInfoStep: RSDTaskInfoStep, parentPath: RSDPathComponent) {
-        self.step = taskInfoStep
-        super.init(taskInfo: taskInfoStep.taskInfo, parentPath: parentPath)
-    }
-    
-    public init(step: RSDStep, task: RSDTask, parentPath: RSDPathComponent) {
-        self.step = step
-        super.init(task: task, parentPath: parentPath)
-    }
-    
-    public init(node: RSDTaskStepNode) {
-        self.step = node.step
-        if let task = node.task {
-            super.init(task: task, parentPath: node.parent)
-        }
-        else if let taskInfo = node.taskInfo {
-            super.init(taskInfo: taskInfo, parentPath: node.parent)
-        }
-        else {
-            fatalError("Cannot instantiate without either a task or taskInfo set on the node.")
-        }
-    }
+    /// Save an answer from a subtask that was presented modally.
+    /// - parameters:
+    ///     - tableItem: The table item that was selected.
+    ///     - taskViewModel: The task view model from which to save the answers.
+    func saveAnswer(for tableItem: RSDModalStepTableItem, from taskViewModel: RSDTaskViewModel)
 }

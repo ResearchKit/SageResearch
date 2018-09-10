@@ -62,7 +62,7 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
         super.init(step: step, parent: parent)
         
         // Set the initial result if available.
-        if let taskViewModel = parent as? RSDTaskPathComponent,
+        if let taskViewModel = parent as? RSDHistoryPathComponent,
             let previousResult = taskViewModel.previousResult(for: step) {
             if let collectionResult = (previousResult as? RSDCollectionResult) {
                 self.initialResult = collectionResult

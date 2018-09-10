@@ -131,7 +131,7 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
     ///     - current: The current progress. This indicates progress within the task.
     ///     - total: The total number of steps.
     ///     - isEstimated: Whether or not the progress is an estimate (if the task has variable navigation)
-    public func progress() -> (current: Int, total: Int, isEstimated: Bool)? {
+    open func progress() -> (current: Int, total: Int, isEstimated: Bool)? {
         guard let path = self.parent as? RSDTaskPathComponent else { return nil }
 
         // Look up the task chain for a progress that is *not* estimated and return either the top level
@@ -151,7 +151,7 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
 
     /// An identifier string that can be appended to a step view controller to differentiate this step from
     /// another instance in a different section.
-    public func sectionIdentifier() -> String {
+    open func sectionIdentifier() -> String {
         let isSection = (self.parent?.parent != nil)
         return isSection ? "\(self.taskResult.identifier)_" : ""
     }

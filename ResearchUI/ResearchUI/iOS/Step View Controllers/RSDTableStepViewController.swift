@@ -56,7 +56,7 @@ import UIKit
 /// fields). These steps will result in a `tableData` that has no sections and, therefore, no rows. So the
 /// tableView will simply have a headerView, no rows, and a footerView.
 ///
-open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate {
+open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate, RSDTaskViewControllerDelegate {
 
     /// The table view associated with this view controller. This will be created during `viewDidLoad()`
     /// with a default set up if it is `nil`. If this view controller is loaded from a nib or storyboard,
@@ -734,19 +734,42 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Called when a user action on a cell or button is linked to a modal item.
     open func didSelectModalItem(_ modalItem: RSDModalStepTableItem, at indexPath: IndexPath) {
-        // TODO: syoung 09/06/2018 Implement modal step data source.
-        assertionFailure("TODO: FIXME!!!")
-//        guard let source = tableData as? RSDModalStepDataSource,
-//            let taskViewController = self.taskController as? RSDTaskViewController
-//            else {
-//                assertionFailure("Cannot handle the button tap.")
-//                return
-//        }
-//        let step = source.step(for: modalItem)
-//        let stepViewController = taskViewController.viewController(for: step)
-//        source.willPresent(stepViewController, from: modalItem)
-//        self.present(stepViewController, animated: true, completion: nil)
+        guard let source = tableData as? RSDModalStepDataSource,
+            let taskViewModel = source.taskViewModel(for: modalItem)
+            else {
+                assertionFailure("Cannot handle the button tap.")
+                return
+        }
+        
+        _source = source
+        _modalItem = modalItem
+        let vc = RSDTaskViewController(taskViewModel: taskViewModel)
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
     }
+    
+    private var _source: RSDModalStepDataSource?
+    private var _modalItem: RSDModalStepTableItem?
+    
+    
+    // MARK: RSDTaskViewControllerDelegate
+    
+    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        guard let vc = taskController as? UIViewController else {
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        vc.dismiss(animated: true) {
+            self._source = nil
+            self._modalItem = nil
+        }
+    }
+    
+    open func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        guard let source = _source, let modalItem = _modalItem else { return }
+        source.saveAnswer(for: modalItem, from: taskViewModel)
+    }
+    
     
     // MARK: UITextView delegate
 
@@ -1019,23 +1042,25 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         self.answersDidChange(in: section)
     }
     
-    /// Called by a `RSDModalStepDataSource` to dismiss the presented step view controller.
-    open func tableDataSource(_ dataSource: RSDTableDataSource, didFinishWith stepController: RSDStepController) {
-        guard let vc = stepController as? UIViewController else { return }
-        vc.dismiss(animated: true) { }
-    }
-    
     /// Called *before* editing the table rows and sections.
     open func tableDataSourceWillBeginUpdate(_ dataSource: RSDTableDataSource) {
         self.tableView.beginUpdates()
     }
     
+    /// Called to remove rows from a data source. Calls to this method should be wrapped within a begin/end
+    /// update.
+    open func tableDataSource(_ dataSource: RSDTableDataSource, didRemoveRows removedRows:[IndexPath], with animation: RSDUIRowAnimation) {
+        self.tableView.deleteRows(at: removedRows, with: animation.tableAnimation())
+    }
+    
+    /// Called to add rows to a data source. Calls to this method should be wrapped within a begin/end
+    /// update.
+    open func tableDataSource(_ dataSource: RSDTableDataSource, didAddRows addedRows:[IndexPath], with animation: RSDUIRowAnimation) {
+        self.tableView.insertRows(at: addedRows, with: animation.tableAnimation())
+    }
+    
     /// Called *after* editing the table rows and sections.
-    open func tableDataSourceDidEndUpdate(_ dataSource: RSDTableDataSource, addedRows:[IndexPath], removedRows:[IndexPath]) {
-        // finish updating the table
-        let animation: UITableViewRowAnimation = self.isVisible ? .automatic : .none
-        self.tableView.deleteRows(at: removedRows, with: animation)
-        self.tableView.insertRows(at: addedRows, with: animation)
+    open func tableDataSourceDidEndUpdate(_ dataSource: RSDTableDataSource) {
         self.tableView.endUpdates()
     }
     
@@ -1112,6 +1137,13 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 self.scroll(to: self.activeTextInputView?.indexPath)
             }
         }
+    }
+}
+
+extension RSDUIRowAnimation {
+    
+    public func tableAnimation() -> UITableViewRowAnimation {
+        return UITableViewRowAnimation(rawValue: self.rawValue) ?? .automatic
     }
 }
 

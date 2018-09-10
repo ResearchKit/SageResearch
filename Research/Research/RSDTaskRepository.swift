@@ -50,9 +50,10 @@ open class RSDTaskRepository : NSObject {
     open func fetchTask(for taskInfo: RSDTaskInfo, completion: @escaping FetchCompletionHandler) {
         do {
             let taskTransformer = try self.taskTransformer(for: taskInfo)
+            let schemaInfo = self.schemaInfo(for: taskInfo)
             let uuid = UUID()
             _taskTransformers[uuid] = taskTransformer
-            taskTransformer.fetchTask(with: taskInfo.identifier, schemaInfo: taskInfo.schemaInfo) { [weak self] (task, error) in
+            taskTransformer.fetchTask(with: taskInfo.identifier, schemaInfo: schemaInfo) { [weak self] (task, error) in
                 completion(taskInfo, task, error)
                 self?._taskTransformers[uuid] = nil
             }
@@ -61,6 +62,11 @@ open class RSDTaskRepository : NSObject {
                 completion(taskInfo, nil, error)
             }
         }
+    }
+    
+    /// Returns the schema to use for the given task info.
+    open func schemaInfo(for taskInfo: RSDTaskInfo) -> RSDSchemaInfo? {
+        return taskInfo.schemaInfo
     }
     
     /// Returns the task transformer for the given task info.

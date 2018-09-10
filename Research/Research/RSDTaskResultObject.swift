@@ -50,7 +50,7 @@ public struct RSDTaskResultObject : RSDTaskResult, Codable {
     public var endDate: Date = Date()
     
     /// A unique identifier for this task run.
-    public let taskRunUUID: UUID
+    public var taskRunUUID: UUID
     
     /// Schema info associated with this task.
     public var schemaInfo: RSDSchemaInfo?

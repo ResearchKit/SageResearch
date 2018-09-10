@@ -34,41 +34,6 @@
 import Foundation
 
 
-//
-//  RSDPathComponent.swift
-//  Research
-//
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without modification,
-// are permitted provided that the following conditions are met:
-//
-// 1.  Redistributions of source code must retain the above copyright notice, this
-// list of conditions and the following disclaimer.
-//
-// 2.  Redistributions in binary form must reproduce the above copyright notice,
-// this list of conditions and the following disclaimer in the documentation and/or
-// other materials provided with the distribution.
-//
-// 3.  Neither the name of the copyright holder(s) nor the names of any contributors
-// may be used to endorse or promote products derived from this software without
-// specific prior written permission. No license is granted to the trademarks of
-// the copyright holders even if such marks are included in this software.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
-// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-
-import Foundation
-
 /// A path component holds state for navigating and displaying a task with a UX that is appropriate to a
 /// given platform.
 public protocol RSDPathComponent : class {
@@ -126,9 +91,18 @@ public protocol RSDStepViewPathComponent : RSDNodePathComponent {
     /// An identifier string that can be appended to a step view controller to differentiate this step from
     /// another instance in a different section.
     func sectionIdentifier() -> String
+    
+    /// Convenience method for accessing the step result associated with this step.
+    func findStepResult() -> RSDResult?
 }
 
-public protocol RSDTaskPathComponent : RSDPathComponent {
+public protocol RSDHistoryPathComponent : RSDPathComponent {
+    
+    /// Get the previous result for the given step.
+    func previousResult(for step: RSDStep) -> RSDResult?
+}
+
+public protocol RSDTaskPathComponent : RSDHistoryPathComponent {
     
     /// A pointer to the task controller that is running the task.
     var taskController : RSDTaskController? { get }
@@ -150,9 +124,6 @@ public protocol RSDTaskPathComponent : RSDPathComponent {
     
     /// Move forward from this path subtask to the next step on the parent.
     func moveForwardToNextStep()
-    
-    /// Get the previous result for the given step.
-    func previousResult(for step: RSDStep) -> RSDResult?
 }
 
 
