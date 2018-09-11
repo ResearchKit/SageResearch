@@ -39,6 +39,25 @@
                     }
               },
               {
+                  "identifier":"countdown",
+                  "type":"countdown",
+                  "text":"Begin in...",
+                  "image":{
+                      "type":"fetchable",
+                      "imageName":"HoldPhone-Left",
+                      "placementType":"fullsizeBackground"
+                  },
+                  "viewTheme":{
+                      "viewIdentifier":"Countdown",
+                      "storyboardIdentifier":"ActiveTaskSteps"
+                  },
+                  "colorTheme":{
+                      "usesLightStyle":true
+                  },
+                  "duration":5,
+                  "commands":["playSoundOnStart", "transitionAutomatically"]
+              },
+              {
                   "identifier":"tremor",
                   "type":"active",
                   "duration":30,
