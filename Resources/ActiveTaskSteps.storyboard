@@ -322,16 +322,16 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CRK-Yd-4Pa" customClass="RSDCountdownDial" customModule="ResearchUI">
-                                <rect key="frame" x="49" y="157.5" width="222" height="222"/>
+                                <rect key="frame" x="49.5" y="157.5" width="222" height="222"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gl-I3-Byg" userLabel="Unit Label">
-                                        <rect key="frame" x="73" y="157" width="75.5" height="19.5"/>
+                                        <rect key="frame" x="72.5" y="157" width="75.5" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoL-gH-k3I" userLabel="Second Count Label">
-                                        <rect key="frame" x="51" y="30" width="120" height="119.5"/>
+                                        <rect key="frame" x="50.5" y="30" width="120" height="119.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -604,7 +604,7 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Completion-WalkAndBalance" translatesAutoresizingMaskIntoConstraints="NO" id="8Ic-xi-B4w">
-                                <rect key="frame" x="53.5" y="42" width="213" height="165"/>
+                                <rect key="frame" x="53.5" y="41.5" width="213" height="165"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
@@ -688,22 +688,12 @@
                                                                 <real key="value" value="8"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <outlet property="stepCountLabel" destination="nUb-F4-dW8" id="agl-ZL-W3B"/>
-                                                        </connections>
                                                     </view>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1 of 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUb-F4-dW8">
-                                                        <rect key="frame" x="105" y="338" width="90" height="21"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="ViV-jH-oXA" secondAttribute="bottom" id="2JW-O9-xcV"/>
                                                     <constraint firstItem="ViV-jH-oXA" firstAttribute="leading" secondItem="Vdq-35-6bm" secondAttribute="leading" id="99p-wP-bC1"/>
-                                                    <constraint firstItem="QjI-Xt-RjZ" firstAttribute="top" secondItem="nUb-F4-dW8" secondAttribute="bottom" constant="6" id="Com-lt-kN3"/>
                                                     <constraint firstItem="QjI-Xt-RjZ" firstAttribute="bottom" secondItem="ViV-jH-oXA" secondAttribute="bottom" id="Cp6-uc-yHG"/>
                                                     <constraint firstAttribute="trailing" secondItem="ViV-jH-oXA" secondAttribute="trailing" id="ILh-Kr-FKf"/>
                                                     <constraint firstItem="xm8-pm-Nnm" firstAttribute="leading" secondItem="Vdq-35-6bm" secondAttribute="leading" id="TMh-Ga-biM"/>
@@ -712,7 +702,6 @@
                                                     <constraint firstAttribute="trailing" secondItem="xm8-pm-Nnm" secondAttribute="trailing" id="etZ-tI-S8E"/>
                                                     <constraint firstItem="xm8-pm-Nnm" firstAttribute="top" secondItem="Vdq-35-6bm" secondAttribute="top" id="hiH-rz-33U"/>
                                                     <constraint firstAttribute="trailing" secondItem="QjI-Xt-RjZ" secondAttribute="trailing" id="pDe-uH-gaC"/>
-                                                    <constraint firstItem="nUb-F4-dW8" firstAttribute="centerX" secondItem="Vdq-35-6bm" secondAttribute="centerX" id="ys7-Vb-W4I"/>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="cancelButton" destination="gXb-Kx-BU4" id="Gnw-8b-p9r"/>
