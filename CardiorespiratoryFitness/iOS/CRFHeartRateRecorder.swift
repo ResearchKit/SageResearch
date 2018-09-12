@@ -40,7 +40,7 @@ public let CRFMinConfidence = 0.5
 /// The minimum "red level" (number of pixels that are "red" dominant) to qualify as having the lens covered.
 public let CRFMinRedLevel = 0.9
 
-public protocol CRFHeartRateRecorderDelegate : RSDAsyncActionControllerDelegate {
+public protocol CRFHeartRateRecorderDelegate : RSDAsyncActionDelegate {
     
     /// An optional view that can be used to show the user's finger while the lens is uncovered.
     var previewView: UIView! { get }
@@ -155,9 +155,9 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         
         // Append the camera settings - but append them to the top-level result
         // because we only want to include them once.
-        if let settings = self.heartRateConfiguration?.cameraSettings {
-            let topPath = self.taskPath.topLevelTaskPath
-            topPath.appendAsyncResult(with: settings)
+        if let settings = self.heartRateConfiguration?.cameraSettings,
+            let topPath = self.taskViewModel.rootPathComponent {
+            topPath.taskResult.appendAsyncResult(with: settings)
         }
         
         self._videoPreviewLayer?.removeFromSuperlayer()

@@ -129,7 +129,7 @@ class TaskTableViewController: UITableViewController {
         }
         
         let taskInfo = tasks[indexPath.row]
-        vc.taskPath = RSDTaskPath(task: taskInfo.task)
+        vc.taskViewModel = RSDTaskViewModel(task: taskInfo.task)
         vc.title = taskInfo.title ?? taskInfo.identifier
         vc.navigationItem.title = vc.title
     }

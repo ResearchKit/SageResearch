@@ -36,11 +36,11 @@ import UIKit
 extension CRFHeartRateStep : RSDStepViewControllerVendor {
     
     /// By default, return the task view controller from the storyboard.
-    public func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)? {
+    public func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
         let bundle = Bundle(for: CRFHeartRateStepViewController.self)
         let storyboard = UIStoryboard(name: "ActiveTaskSteps", bundle: bundle)
-        let vc = storyboard.instantiateViewController(withIdentifier: "HeartRate") as? (UIViewController & RSDStepController)
-        vc?.step = self
+        let vc = storyboard.instantiateViewController(withIdentifier: "HeartRate") as? CRFHeartRateStepViewController
+        vc?.stepViewModel = vc?.instantiateStepViewModel(for: self, with: parent)
         return vc
     }
 }
@@ -74,7 +74,7 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         var stepResult = self.collectionResult ?? RSDCollectionResultObject(identifier: self.step.identifier)
         stepResult.appendInputResults(with: result)
         self.collectionResult = stepResult
-        self.taskController.taskPath.appendStepHistory(with: stepResult)
+        self.stepViewModel.taskResult.appendStepHistory(with: stepResult)
     }
     
     /// Override `viewDidLoad` to set up the preview layer and hide the heart image.
@@ -99,12 +99,11 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
     }
     
     private func _startCamera() {
-        guard isVisible else { return }
+        guard isVisible, let taskPath = self.stepViewModel.parentTaskPath else { return }
         
         // Create a recorder that runs only during this step
-        let taskPath = self.taskController.taskPath!
         let config = (self.step as? CRFHeartRateStep) ?? CRFHeartRateStep(identifier: self.step.identifier)
-        bpmRecorder = CRFHeartRateRecorder(configuration: config, taskPath: taskPath, outputDirectory: taskPath.outputDirectory)
+        bpmRecorder = CRFHeartRateRecorder(configuration: config, taskViewModel: taskPath, outputDirectory: taskPath.outputDirectory)
         bpmRecorder!.delegate = self
         
         // add an observer for changes in the bpm
@@ -126,7 +125,8 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         }
         
         // start the recorders
-        self.taskUIController?.startAsyncActions(for: [bpmRecorder!], showLoading: false, completion:{})
+        let taskController = self.stepViewModel.rootPathComponent.taskController!
+        taskController.startAsyncActions(for: [bpmRecorder!], showLoading: false, completion:{})
     }
     
     public func didFinishStartingCamera() {
@@ -173,15 +173,17 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
             confidenceResult.value = bpm?.confidence
             addResult(confidenceResult)
             
-            let samplesResult = CRFHeartRateSamplesResult(identifier: "\(self.sectionIdentifier())samples", samples: recorder.bpmSamples)
+            let sectionIdentifier = self.stepViewModel.sectionIdentifier()
+            let samplesResult = CRFHeartRateSamplesResult(identifier: "\(sectionIdentifier)samples", samples: recorder.bpmSamples)
             addResult(samplesResult)
         }
         
         super.stop()
     }
     
-    public func asyncActionController(_ controller: RSDAsyncActionController, didFailWith error: Error) {
-        self.taskUIController?.handleTaskFailure(with: error)
+    public func asyncAction(_ controller: RSDAsyncAction, didFailWith error: Error) {
+        guard let taskController = self.stepViewModel.rootPathComponent.taskController else { return }
+        taskController.handleTaskFailure(with: error)
     }
     
     private var _bpmObserver: NSKeyValueObservation?

@@ -68,8 +68,7 @@ public class CRFHeartRateResultStepViewController: CRFResultStepViewController {
     override public var resultText: String? {
         
         let resultStepIdentifier = "heartRate"
-        let taskPath = self.taskController.taskPath!
-        let sResult = taskPath.result.stepHistory.first { $0.identifier == resultStepIdentifier}
+        let sResult = stepViewModel.taskResult.stepHistory.first { $0.identifier == resultStepIdentifier}
         guard let stepResult = sResult as? RSDCollectionResult
             else {
                 return nil
@@ -124,8 +123,7 @@ public class CRFRunDistanceResultStepViewController : CRFCompletionResultStepVie
     public var resultAnswer : NSNumber? {
         
         let resultStepIdentifier = "run"
-        let taskPath = self.taskController.taskPath!
-        let secResult = taskPath.result.stepHistory.first { $0.identifier == resultStepIdentifier}
+        let secResult = stepViewModel.taskResult.stepHistory.first { $0.identifier == resultStepIdentifier}
         guard let sectionResult = secResult as? RSDTaskResult
             else {
                 return nil
@@ -158,8 +156,7 @@ public class CRFStairStepResultStepViewController : CRFCompletionResultStepViewC
     
     func result(with identifier:String) -> Int? {
         
-        let taskPath = self.taskController.taskPath!
-        let secResult = taskPath.result.stepHistory.first { $0.identifier == identifier}
+        let secResult = stepViewModel.taskResult.stepHistory.first { $0.identifier == identifier}
         guard let sectionResult = secResult as? RSDTaskResult
             else {
                 return nil

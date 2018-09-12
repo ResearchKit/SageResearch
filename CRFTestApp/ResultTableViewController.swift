@@ -37,15 +37,15 @@ import Research
 
 class ResultTableViewController: UITableViewController, RSDTaskViewControllerDelegate {
 
-    var taskPath: RSDTaskPath?
+    var taskViewModel: RSDTaskViewModel?
     var result: RSDResult?
     var firstAppearance: Bool = true
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if firstAppearance, (self.result == nil), let taskPath = self.taskPath {
-            let taskViewController = RSDTaskViewController(taskPath: taskPath)
+        if firstAppearance, (self.result == nil), let taskViewModel = self.taskViewModel {
+            let taskViewController = RSDTaskViewController(taskViewModel: taskViewModel)
             taskViewController.delegate = self
             self.present(taskViewController, animated: true, completion: nil)
         }
@@ -136,27 +136,23 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // populate the results
-        self.result = taskController.taskResult
+        self.result = taskController.taskViewModel.taskResult
         self.tableView.reloadData()
         
         // dismiss the view controller
         (taskController as? UIViewController)?.dismiss(animated: true) {
         }
         
-        var debugResult: String = taskController.taskResult.identifier
+        var debugResult: String = self.result!.identifier
         debugResult.append("\n\n=== Completed: \(reason) error:\(String(describing: error))")
         print(debugResult)
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        print("\n\n=== Ready to Save: \(taskPath.description)")
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        print("\n\n=== Ready to Save: \(taskViewModel.description)")
         
-        taskPath.archiveResults(with: CRFArchiveManager.shared) {
+        taskViewModel.archiveResults(with: CRFArchiveManager.shared) {
         }
-    }
-    
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
     }
     
     func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {

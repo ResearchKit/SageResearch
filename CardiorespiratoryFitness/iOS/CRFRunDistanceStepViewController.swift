@@ -41,7 +41,10 @@ public class CRFRunDistanceStepViewController: RSDActiveStepViewController {
     
     /// The location recorder attached to this step.
     public var locationRecorder: RSDDistanceRecorder? {
-        return self.taskUIController?.currentAsyncControllers.first(where: { $0 is RSDDistanceRecorder }) as? RSDDistanceRecorder
+        guard let taskController = self.stepViewModel?.rootPathComponent.taskController else {
+            return nil
+        }
+        return taskController.currentAsyncControllers.first(where: { $0 is RSDDistanceRecorder }) as? RSDDistanceRecorder
     }
     
     /// Override the required permissions to return location if the super class returns nil.
@@ -92,7 +95,7 @@ public class CRFRunDistanceStepViewController: RSDActiveStepViewController {
         // Add the total distance as a result for display to the user
         var distanceResult = RSDAnswerResultObject(identifier: self.step.identifier, answerType: RSDAnswerResultType(baseType: .decimal))
         distanceResult.value = self.locationRecorder?.totalDistance
-        self.taskController.taskPath.appendStepHistory(with: distanceResult)
+        self.stepViewModel.taskResult.appendStepHistory(with: distanceResult)
         
         super.stop()
     }
