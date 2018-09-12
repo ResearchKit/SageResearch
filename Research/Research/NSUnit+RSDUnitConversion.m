@@ -33,20 +33,6 @@
 
 #import "NSUnit+RSDUnitConversion.h"
 
-@implementation NSUnit (RSDUnitConversion)
-
-+ (NSUnit * _Nullable)unitFromSymbol:(NSString *)symbol {
-    NSUnit *unit;
-    if ((unit = [NSUnitLength unitLengthFromSymbol: symbol])) {
-        return unit;
-    } else if ((unit = [NSUnitMass unitMassFromSymbol: symbol])) {
-        return unit;
-    }
-    return nil;
-}
-
-@end
-
 @implementation NSUnitLength (RSDUnitConversion)
 
 /// Convert the symbol into a unit of length.
