@@ -117,7 +117,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     private func commonInit(identifier: String, parentPath: RSDPathComponent?) {
         self.parent = parentPath
         guard let parent = parentPath else { return }
-        self.previousResults = (parent.taskResult.stepHistory.rsd_last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
+        self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
     }
     
         
@@ -509,7 +509,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     
     /// Get the previous result for the given step.
     open func previousResult(for step: RSDStep) -> RSDResult? {
-        return self.previousResults?.rsd_last { $0.identifier == step.identifier }
+        return self.previousResults?.last { $0.identifier == step.identifier }
     }
     
     /// Remove results from the step history from the result with the given identifier to the end of the

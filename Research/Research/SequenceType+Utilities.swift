@@ -47,28 +47,22 @@ extension Sequence {
         return result
     }
     
-    /// Returns an `Array` containing the results of mapping and filtering `transform`
-    /// over `self`.
-    ///
-    /// Deprecated: Use `flatMap()` instead.
-    ///
-    /// - parameter transform: The method which returns either the transformed element or `nil` if filtered.
-    /// - returns: An array of the transformed elements.
-    @available(*, deprecated)
-    public func rsd_mapAndFilter<T>(_ transform: (Self.Iterator.Element) throws -> T?) rethrows -> [T] {
-        var result = [T]()
-        for element in self {
-            if let t = try transform(element) {
-                result.append(t)
-            }
-        }
-        return result
-    }
-    
     /// Returns a `Dictionary` containing the results of mapping and filtering `transform`
     /// over `self` where the returned values are a key/value pair.
+    ///
+    /// Deprecated: Use `reduce(into:)` instead. For example,
+    /// ````
+    ///    let values = [("a", 234), ("b", 111), ("c", 21), ("d", 52)]
+    ///    let mappedDictionary = values.reduce(into: [String : Any]()) { (hashtable, value) in
+    ///        guard value.1 % 2 == 0 else { return }
+    ///        hashtable[value.0] = value.1
+    ///    }
+    ///    print(mappedDictionary)
+    /// ```
+    ///
     /// - parameter transform: The function used to transform the input sequence into a key/value pair
     /// - returns: A dictionary of key/value pairs.
+    @available(*, deprecated)
     public func rsd_filteredDictionary<Hashable, T>(_ transform: (Self.Iterator.Element) throws -> (Hashable, T)?) rethrows -> [Hashable: T] {
         var result = [Hashable:T]()
         for element in self {
@@ -80,8 +74,12 @@ extension Sequence {
     }
     
     /// Find the last element in the `Sequence` that matches the given criterion.
+    ///
+    /// Deprecated: Use `last(where:)` instead.
+    ///
     /// - parameter evaluate: The function to use to evaluate the search pattern.
     /// - returns: The element that matches the pattern, searching in reverse.
+    @available(*, deprecated)
     public func rsd_last(where evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
         for element in self.reversed() {
             if try evaluate(element) {

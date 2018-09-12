@@ -94,7 +94,7 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
     ///
     /// - returns: The appropriate collection result.
     open func collectionResult() -> RSDCollectionResult {
-        if let collectionResult = taskResult.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) as? RSDCollectionResult {
+        if let collectionResult = taskResult.stepHistory.last(where: { $0.identifier == step.identifier }) as? RSDCollectionResult {
             return collectionResult
         }
         else {
