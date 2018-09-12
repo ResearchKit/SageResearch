@@ -91,7 +91,7 @@ fileprivate let kSectionTopMargin: CGFloat = 40.0
         }
     }
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = .none
@@ -287,7 +287,7 @@ open class RSDStepTextFieldCell: RSDTableViewCell {
         }
     }
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
     }
@@ -411,7 +411,7 @@ open class RSDStepTextViewCell: RSDTableViewCell {
         }
     }
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
     }
@@ -587,7 +587,7 @@ open class RSDStepTextView: UITextView, RSDStepTextInputView {
         }
     }
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
     }
@@ -611,7 +611,7 @@ open class RSDStepTextView: UITextView, RSDStepTextInputView {
             label = UILabel()
             contentView.addSubview(label)
             
-            label.accessibilityTraits = UIAccessibilityTraitSummaryElement
+            label.accessibilityTraits = UIAccessibilityTraits.summaryElement
 
             label.translatesAutoresizingMaskIntoConstraints = false
             label.preferredMaxLayoutWidth = UIScreen.main.bounds.size.width - (kSideMargin * 2)
@@ -678,7 +678,7 @@ open class RSDStepTextView: UITextView, RSDStepTextInputView {
     }
     private var _imageIdentifier: String?
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
     }

@@ -75,7 +75,7 @@ import UIKit
     }
     
     /// Force all titles to be an attributed title.
-    override open func setTitle(_ title: String?, for state: UIControlState) {
+    override open func setTitle(_ title: String?, for state: UIControl.State) {
         super.setTitle(title, for: state)
         self.setAttributedTitle(attributedString(title), for: state)
     }
@@ -83,10 +83,10 @@ import UIKit
     /// Create an attributed string for this class.
     private func attributedString(_ title: String?) -> NSAttributedString? {
         if let titleUnwrapped = title {
-            let attributes: [NSAttributedStringKey : Any] = [
+            let attributes: [NSAttributedString.Key : Any] = [
                 .font : textFont,
                 .foregroundColor : self.tintColor,
-                .underlineStyle : NSUnderlineStyle.styleSingle.rawValue
+                .underlineStyle : NSUnderlineStyle.single.rawValue
             ]
             return NSAttributedString(string: titleUnwrapped, attributes: attributes)
         } else {

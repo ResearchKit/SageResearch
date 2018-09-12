@@ -96,7 +96,7 @@ fileprivate let defaultSize: CGFloat = 122
         
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.timingFunction = timing
-        animation.fillMode = kCAFillModeBoth
+        animation.fillMode = CAMediaTimingFillMode.both
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = 0.3
@@ -135,7 +135,7 @@ fileprivate let defaultSize: CGFloat = 122
         }
         self.layer.cornerRadius = _cornerRadius ?? defaultCornerRadius
 
-        self.accessibilityTraits |= UIAccessibilityTraitImage
+        self.accessibilityTraits |= UIAccessibilityTraits.image
         self.isAccessibilityElement = true
     }
     
@@ -171,8 +171,8 @@ fileprivate let defaultSize: CGFloat = 122
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.lineWidth = path.lineWidth
-        shapeLayer.lineCap = kCALineCapRound
-        shapeLayer.lineJoin = kCALineJoinRound
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
         shapeLayer.frame = self.layer.bounds
         shapeLayer.strokeColor = checkmarkColor.cgColor
         shapeLayer.backgroundColor = UIColor.clear.cgColor
@@ -220,7 +220,7 @@ fileprivate let defaultSize: CGFloat = 122
         }
     }
     
-    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.buttonView = RSDCheckboxButtonView(frame: .zero)
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
@@ -307,7 +307,7 @@ fileprivate let defaultSize: CGFloat = 122
         buttonView.isSelected = self.isSelected
     }
     
-    override public func setTitle(_ title: String?, for state: UIControlState) {
+    override public func setTitle(_ title: String?, for state: UIControl.State) {
         self.setTitleColor(UIColor.clear, for: .normal)
         super.setTitle(title, for: state)
         buttonView.label?.text = self.currentTitle
@@ -476,7 +476,7 @@ fileprivate class UncheckedView : UIView {
         shadowLayer.shadowOffset = CGSize(width: 0.0, height: 0.0)
         shadowLayer.shadowOpacity = 0.5
         shadowLayer.shadowRadius = shadowSize
-        shadowLayer.fillRule = kCAFillRuleEvenOdd
+        shadowLayer.fillRule = CAShapeLayerFillRule.evenOdd
         
         // define shadow path
         let shadowPath = CGMutablePath()

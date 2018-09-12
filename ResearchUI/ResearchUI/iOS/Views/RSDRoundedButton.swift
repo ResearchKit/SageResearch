@@ -44,7 +44,7 @@ import UIKit
             let traits = super.accessibilityTraits
             // Prevent VoiceOver from speaking "dimmed" when transitioning between pages.
             if self.isInTransition {
-                return traits & ~UIAccessibilityTraitNotEnabled
+                return traits & ~UIAccessibilityTraits.notEnabled
             }
             return traits
         }

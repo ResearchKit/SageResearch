@@ -183,7 +183,7 @@ fileprivate class ChevronFlipView : UIView {
             return
         }
         
-        let transitionOptions: UIViewAnimationOptions = [.transitionFlipFromBottom, .showHideTransitionViews]
+        let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromBottom, .showHideTransitionViews]
         let duration = 0.2
         
         UIView.transition(with: viewUp, duration: duration, options: transitionOptions, animations: {
@@ -263,8 +263,8 @@ fileprivate class ChevronView : UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.lineWidth = path.lineWidth
-        shapeLayer.lineCap = kCALineCapRound
-        shapeLayer.lineJoin = kCALineJoinMiter
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.miter
         shapeLayer.frame = self.layer.bounds
         shapeLayer.strokeColor = self.tintColor.cgColor
         shapeLayer.backgroundColor = UIColor.clear.cgColor

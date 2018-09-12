@@ -105,7 +105,7 @@ public class RSDDatePicker : UIDatePicker, RSDPickerViewProtocol {
 extension RSDDatePickerMode {
     
     /// The `UIDatePickerMode` that maps to this picker mode.
-    func mode() -> UIDatePickerMode {
+    func mode() -> UIDatePicker.Mode {
         switch self {
         case .date:
             return .date

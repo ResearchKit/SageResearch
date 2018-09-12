@@ -960,7 +960,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             _goForwardOnActive()
         } else {
             _playAlarm()
-            _activeObserver = NotificationCenter.default.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: OperationQueue.main, using: { [weak self] (_) in
+            _activeObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (_) in
                 self?._goForwardOnActive()
             })
         }

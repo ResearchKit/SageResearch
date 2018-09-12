@@ -66,7 +66,7 @@ open class RSDProgressIndicator: UIView {
         // We want to animate the strokeEnd property of the circleLayer
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.duration = animationDuration
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         
         // Animate from previous position to new position
         let position = max(min(newValue, 1.0), 0.0)
