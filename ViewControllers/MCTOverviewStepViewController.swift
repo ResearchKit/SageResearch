@@ -44,7 +44,7 @@ extension MCTInternalStepController {
     internal func setIsFirstRunResult(_ isFirstRun: Bool) {
         var firstRunResult = RSDAnswerResultObject(identifier: MCTOverviewStepViewController.firstRunKey, answerType: .boolean)
         firstRunResult.value = isFirstRun
-        self.taskController.taskPath.topLevelTaskPath.appendAsyncResult(with: firstRunResult)
+        self.stepViewModel.taskResult.appendAsyncResult(with: firstRunResult)
     }
 }
 
@@ -106,7 +106,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         // a month since the last run we show the task info, otherwise we show a smaller
         // screen and provide an info button in case the user wants to see the info.
         let defaults = UserDefaults.standard
-        let timestampKey = "\(taskController.taskPath.identifier)_lastRun"
+        let timestampKey = "\(stepViewModel.rootPathComponent.identifier)_lastRun"
         let lastRun = defaults.object(forKey: timestampKey) as? Date
         let monthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
         let isFirstRun = (lastRun == nil) || (lastRun! < monthAgo)

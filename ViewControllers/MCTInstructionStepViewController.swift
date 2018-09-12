@@ -59,14 +59,14 @@ extension MCTHandStepController {
     
     /// Returns the randomized order that the hands steps will execute in from the task result.
     public func handOrder() -> [MCTHandSelection]? {
-        var taskPath = self.taskController.taskPath
+        var taskPath: RSDPathComponent? = self.stepViewModel.parent
         repeat {
-            if let handSelectionResult = taskPath?.result.findResult(with: MCTHandSelectionDataSource.selectionKey) as? RSDCollectionResult,
+            if let handSelectionResult = taskPath?.taskResult.findResult(with: MCTHandSelectionDataSource.selectionKey) as? RSDCollectionResult,
                let handOrder : [String] = handSelectionResult.findAnswerResult(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String] {
                 return handOrder.compactMap{ MCTHandSelection(rawValue: $0) }
             }
         
-            taskPath = taskPath?.parentPath
+            taskPath = taskPath?.parent
         } while (taskPath != nil)
         
         return nil
@@ -75,13 +75,13 @@ extension MCTHandStepController {
     /// Returns whichever hand is next to perform this task.
     public func nextHand() -> MCTHandSelection? {
         if let handOrder = handOrder() {
-            var taskPath = self.taskController.taskPath
+            var taskPath: RSDPathComponent? = self.stepViewModel.parent
             repeat {
-                if taskPath?.result.findResult(with: handOrder.first!.stringValue) != nil {
+                if taskPath?.taskResult.findResult(with: handOrder.first!.stringValue) != nil {
                     return handOrder.last
                 }
                 
-                taskPath = taskPath?.parentPath
+                taskPath = taskPath?.parent
             } while (taskPath != nil)
             return handOrder.first
         }
@@ -91,7 +91,8 @@ extension MCTHandStepController {
     
     /// Returns which hand is being used for this step.
     public func whichHand() -> MCTHandSelection? {
-        if let hand = MCTHandSelection(rawValue: self.taskController.taskPath.identifier) {
+        if let handIdentifier = self.stepViewModel?.parentTaskPath?.identifier,
+            let hand = MCTHandSelection(rawValue: handIdentifier) {
             return hand
         }
         return nextHand()

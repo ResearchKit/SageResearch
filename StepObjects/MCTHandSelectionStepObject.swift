@@ -35,8 +35,9 @@ import Foundation
 
 /// A Subclass of RSDFormUIStepObject which uses MCTHandSelectionDataSource.
 public class MCTHandSelectionStepObject : RSDFormUIStepObject {
-    override public func instantiateDataSource(with taskPath: RSDTaskPath, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
-        return MCTHandSelectionDataSource(step: self, taskPath: taskPath, supportedHints: supportedHints)
+
+    override public func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        return MCTHandSelectionDataSource(step: self, parent: parent, supportedHints: supportedHints)
     }
 }
 
@@ -68,9 +69,8 @@ public class MCTHandSelectionDataSource : RSDFormStepDataSourceObject {
     /// Override the initial result to look for the user's previous answer to this quesiton in
     /// UserDefaults.
     override open var initialResult : RSDCollectionResult? {
-        let initialResultKey : String = "\(self.taskPath.task!.identifier)_lastHandSelection"
         let defaults = UserDefaults.standard
-        guard let handSelection = defaults.string(forKey: initialResultKey) else { return nil }
+        guard let handSelection = defaults.string(forKey: lastHandSelectionKey) else { return nil }
         var ret = self.instantiateCollectionResult()
         var answerResult = RSDAnswerResultObject(identifier: MCTHandSelectionDataSource.selectionKey, answerType: .string)
         answerResult.value = handSelection
@@ -94,9 +94,14 @@ public class MCTHandSelectionDataSource : RSDFormStepDataSourceObject {
         }
        
         let defaults = UserDefaults.standard
-        defaults.set(handSelection, forKey: "\(self.taskPath.task!.identifier)_lastHandSelection")
+        defaults.set(handSelection, forKey: lastHandSelectionKey)
 
         return ret
+    }
+    
+    private var lastHandSelectionKey: String {
+        let rootIdentifier = self.rootPathComponent.identifier
+        return "\(rootIdentifier)_lastHandSelection"
     }
     
     /// Writes a randomized hand order result to the task result.
@@ -120,7 +125,7 @@ public class MCTHandSelectionDataSource : RSDFormStepDataSourceObject {
         }
         
         stepResult.appendInputResults(with: handOrderResult)
-        self.taskPath.appendStepHistory(with: stepResult)
+        self.taskResult.appendStepHistory(with: stepResult)
         
         return handSelection
     }

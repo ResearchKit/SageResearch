@@ -37,7 +37,7 @@
 import UIKit
 
 /// Create a tapping step that will instantiate the tapping result and can load the storyboard view controller.
-public class MCTTappingStepObject: RSDActiveUIStepObject {
+public class MCTTappingStepObject: RSDActiveUIStepObject, RSDStepViewControllerVendor {
     
     /// Returns a new instance of a `MCTTappingResultObject`.
     public override func instantiateStepResult() -> RSDResult {
@@ -45,11 +45,11 @@ public class MCTTappingStepObject: RSDActiveUIStepObject {
     }
     
     /// By default, return the task view controller from the storyboard.
-    public func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)? {
+    public func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
         let bundle = Bundle(for: MCTTappingStepViewController.self)
         let storyboard = UIStoryboard(name: "ActiveTaskSteps", bundle: bundle)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Tapping") as? (UIViewController & RSDStepController)
-        vc?.step = self
+        let vc = storyboard.instantiateViewController(withIdentifier: "Tapping") as? MCTTappingStepViewController
+        vc?.stepViewModel = vc?.instantiateStepViewModel(for: self, with: parent)
         return vc
     }
 }
@@ -171,11 +171,12 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         // TODO: rkolmos 04/09/2018 localize and standardize with java implementation
         return String.localizedStringWithFormat(textFormat, direction)
     }
+
     
     /// Update the step result associated with this step view controller.
     func updateTappingResult() {
         
-        let previousResult = self.findStepResult()
+        let previousResult = self.stepViewModel.findStepResult()
         
         // Look for an existing tapping result, otherwise create new.
         var tappingResult: MCTTappingResultObject = {
@@ -200,10 +201,10 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
             // Add the tapping result to the collection result.
             var stepResult = collectionResult
             stepResult.appendInputResults(with: tappingResult)
-            self.taskController.taskPath.appendStepHistory(with: stepResult)
+            self.stepViewModel.taskResult.appendStepHistory(with: stepResult)
         } else {
             // Set the tapping result to the step history.
-            self.taskController.taskPath.appendStepHistory(with: tappingResult)
+            self.stepViewModel.taskResult.appendStepHistory(with: tappingResult)
         }
     }
     
@@ -214,7 +215,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         // create the sample and add to queue.
         let sample = MCTTappingSample(uptime: touch.timestamp,
                                       timestamp: touch.timestamp - _tappingStart,
-                                      stepPath: self.stepPath,
+                                      stepPath: self.stepViewModel.stepPath,
                                       buttonIdentifier: button,
                                       location: touch.location(in: self.view),
                                       duration: 0)

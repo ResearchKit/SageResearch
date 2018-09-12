@@ -90,8 +90,8 @@ open class MCTTappingCompletionStepViewController : RSDStepViewController {
     // Returns the number of taps for the result with the given identifier.
     // identifier is typically expected to be either "left" or "right"
     private func _getTappingResult(with identifier: MCTHandSelection) -> Int? {
-        let taskResult = self.taskController.taskResult
-        guard let result = taskResult?.findResult(with: identifier.stringValue) as? RSDTaskResult,
+        let taskResult = self.stepViewModel.taskResult
+        guard let result = taskResult.findResult(with: identifier.stringValue) as? RSDTaskResult,
             let tappingResult = result.findResult(with: "tapping") as? MCTTappingResultObject
             else {
                 return nil

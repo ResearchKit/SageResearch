@@ -45,7 +45,7 @@ public class MCTCompletionStepViewController : RSDStepViewController {
     /// has been completed. Also records the task's completion in UserDefaults.
     open func updateTextLabel() {
         let defaults = UserDefaults.standard
-        let taskIdentifier = self.taskController.taskPath.identifier
+        let taskIdentifier = self.stepViewModel.parentTaskPath!.identifier
         let userDefaultsKey = "\(taskIdentifier)_timesCompleted"
         let runCount = defaults.integer(forKey: userDefaultsKey) + 1
         let formatter = NumberFormatter()
