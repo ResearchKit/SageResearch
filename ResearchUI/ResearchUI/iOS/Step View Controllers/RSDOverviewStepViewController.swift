@@ -223,7 +223,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
                 self?._requestAuthorization()
             case .denied:
                 self?.handleNotificationAuthorizationDenied()
-            case .authorized:
+            case .authorized, .provisional:
                 self?.remindMeLater()
             }
         }
