@@ -47,7 +47,7 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
 
     /// The root view controller is assumed to be a `RSDStepController`.
     open var rootStepViewController : (UIViewController & RSDStepController)! {
-        return self.childViewControllers.first as! (UIViewController & RSDStepController)
+        return (self.childViewControllers.first as! (UIViewController & RSDStepController))
     }
     
     /// get/set `rootStepViewController.step`

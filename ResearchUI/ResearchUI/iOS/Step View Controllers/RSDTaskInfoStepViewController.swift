@@ -63,7 +63,7 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
     
     /// The `RSDTaskInfoStep` object with the information to display about this task. This can be displayed while the task is loading.
     public var taskInfoStep: RSDTaskInfoStep! {
-        return self.step as! RSDTaskInfoStep
+        return (self.step as! RSDTaskInfoStep)
     }
     
     // MARK: View appearance and set up
