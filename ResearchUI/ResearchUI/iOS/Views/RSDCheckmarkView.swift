@@ -135,7 +135,7 @@ fileprivate let defaultSize: CGFloat = 122
         }
         self.layer.cornerRadius = _cornerRadius ?? defaultCornerRadius
 
-        self.accessibilityTraits |= UIAccessibilityTraits.image
+        self.accessibilityTraits.formUnion(.image)
         self.isAccessibilityElement = true
     }
     

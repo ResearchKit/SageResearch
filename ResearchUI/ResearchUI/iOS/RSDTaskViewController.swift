@@ -708,7 +708,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         // Start the background audio session
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(convertFromAVAudioSessionCategory(AVAudioSession.Category.playback), with: .interruptSpokenAudioAndMixWithOthers)
+            if #available(iOS 12.0, *) {
+                try session.setCategory(.playback, mode: .voicePrompt, options: .interruptSpokenAudioAndMixWithOthers)
+            } else {
+                try session.setCategory(.playback, mode: .default, options: .mixWithOthers)
+            }
             try session.setActive(true)
             audioSession = session
         }
