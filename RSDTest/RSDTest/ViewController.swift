@@ -50,9 +50,9 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     }
 
     @IBAction func runFooTask(_ sender: Any) {
-        var taskInfoStep = RSDTaskInfoStepObject(with: RSDTaskInfoObject(with: "foo"))
-        taskInfoStep.taskTransformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
-        let taskViewController = RSDTaskViewController(taskInfo: taskInfoStep)
+        let transformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
+        let task = try! RSDFactory.shared.decodeTask(with: transformer)
+        let taskViewController = RSDTaskViewController(task: task)
         taskViewController.delegate = self
         self.present(taskViewController, animated: true, completion: nil)
     }
@@ -82,7 +82,7 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
             }
         }
         
-        var debugResult: String = taskController.taskResult.identifier
+        var debugResult: String = taskController.taskViewModel.taskResult.identifier
         debugResult.append("\n\n=== Completed: \(reason) error:\(String(describing: error))")
         print(debugResult)
     }
@@ -101,10 +101,6 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         }
         
         print(debugResult)
-    }
-    
-    func taskController(_ taskController: RSDTaskController, asyncActionFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncAction? {
-        return nil
     }
     
     func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {
