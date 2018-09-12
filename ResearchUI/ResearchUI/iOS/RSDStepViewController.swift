@@ -696,13 +696,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         else if let webAction = action as? RSDWebViewUIAction {
             // For a webview action, present a web view modally.
             let (webVC, navVC) = RSDWebViewController.instantiateController()
-            
-            if let transformer = webAction as? RSDResourceTransformer {
-                webVC.resourceTransformer = transformer
-            }
-            else {
-                webVC.url = URL(string: webAction.url)
-            }
+            webVC.resourceTransformer = webAction
+
             self.present(navVC, animated: true, completion: nil)
             return true
         }

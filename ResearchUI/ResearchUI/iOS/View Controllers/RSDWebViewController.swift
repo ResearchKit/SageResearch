@@ -109,15 +109,21 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
             webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
         }
         else if let resource = resourceTransformer {
-            do {
-                let (data, _) = try resource.resourceData()
-                if let html = String(data: data, encoding: String.Encoding.utf8) {
-                    webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
-                } else {
-                    loadFailed()
+            if resource.isOnlineResourceURL(), let url = URL(string: resource.resourceName) {
+                let request = URLRequest(url: url)
+                webView.load(request)
+            }
+            else {
+                do {
+                    let (data, _) = try resource.resourceData()
+                    if let html = String(data: data, encoding: String.Encoding.utf8) {
+                        webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
+                    } else {
+                        loadFailed()
+                    }
+                } catch let err {
+                    loadFailed(with: err)
                 }
-            } catch let err {
-                loadFailed(with: err)
             }
         }
     }
