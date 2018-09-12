@@ -60,7 +60,7 @@ import Foundation
     /// Default localizes the button's title.
     open func commonInit() {
         let title = Localization.localizedString("TAP_BUTTON_TITLE")
-        self.setTitle(title, for: UIControlState.normal)
+        self.setTitle(title, for: UIControl.State.normal)
     }
 
 }

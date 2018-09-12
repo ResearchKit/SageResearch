@@ -141,7 +141,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
             buttonTitle = Localization.localizedString("TAPPING_CONTINUE")
         }
         
-        self.nextButton?.setTitle(buttonTitle, for: UIControlState.normal)
+        self.nextButton?.setTitle(buttonTitle, for: UIControl.State.normal)
     }
     
     /// Override view did appear to set up the button rects.
@@ -312,7 +312,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         
         // Say the word "tap" if accessibility voice is turned on.
         if _lastTappedButton != buttonIdentifier {
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, Localization.localizedString("TAP_BUTTON_TITLE"))
+            UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: Localization.localizedString("TAP_BUTTON_TITLE"))
         }
         _lastTappedButton = buttonIdentifier
         

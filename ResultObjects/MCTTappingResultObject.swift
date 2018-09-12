@@ -114,9 +114,9 @@ public struct MCTTappingResultObject : RSDResult, Encodable, RSDArchivable {
         try container.encode(self.startDate, forKey: .startDate)
         try container.encode(self.endDate, forKey: .endDate)
         try container.encode(self.tapCount, forKey: .tapCount)
-        try container.encode(NSStringFromCGSize(self.stepViewSize) as String, forKey: .stepViewSize)
-        try container.encode(NSStringFromCGRect(self.buttonRect1) as String, forKey: .buttonRect1)
-        try container.encode(NSStringFromCGRect(self.buttonRect2) as String, forKey: .buttonRect2)
+        try container.encode(NSCoder.string(for: self.stepViewSize) as String, forKey: .stepViewSize)
+        try container.encode(NSCoder.string(for: self.buttonRect1) as String, forKey: .buttonRect1)
+        try container.encode(NSCoder.string(for: self.buttonRect2) as String, forKey: .buttonRect2)
         if let samples = self.samples {
             try container.encode(samples, forKey: .samples)
         }
