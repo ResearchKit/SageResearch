@@ -398,8 +398,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open func handleFinishedLoading() {
         // Forward the finished loading message to the RSDTaskInfoStepUIController (if present)
         // Otherwise, just go forward.
-        if let _ = self.currentStepController?.stepViewModel.step as? RSDTaskInfoStep {
-            self.currentStepController?.didFinishLoading()
+        if let _ = self.currentStepViewController?.stepViewModel.step as? RSDTaskInfoStep {
+            self.currentStepViewController?.didFinishLoading()
         } else {
             self.taskViewModel.goForward()
         }
@@ -421,11 +421,6 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///     - completion: The completion to call once the navigation animation has completed.
     public func show(_ stepController: RSDStepController, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
         let vc = stepController as! UIViewController
-        // Set the step view controller delegate if appropriate
-        if let stepDelegate = delegate as? RSDStepViewControllerDelegate,
-            let stepVC = vc as? RSDStepViewControllerProtocol, stepVC.delegate == nil {
-            stepVC.delegate = stepDelegate
-        }
         pageViewController.setViewControllers([vc], direction: direction, animated: true, completion: completion)
     }
     
@@ -662,18 +657,14 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     // MARK: UIPageViewControllerDataSource
     
     /// Returns the currently active step controller (if any).
-    public var currentStepController: RSDStepController? {
-        return pageViewController.childViewControllers.first as? RSDStepController
-    }
-    
-    /// Returns the currently active step controller (if any).
-    public var currentStepViewController: RSDStepViewController? {
-        return pageViewController.childViewControllers.first as? RSDStepViewController
+    public var currentStepViewController: (RSDStepController & UIViewController)? {
+        return pageViewController.childViewControllers.first as? (RSDStepController & UIViewController)
     }
     
     /// Respond to a gesture to go back. Always returns `nil` but will call `goBack()` if appropriate.
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let stepViewController = self.currentStepViewController, stepViewController.hasStepBefore
+        guard let stepViewController = self.currentStepViewController, let stepViewModel = stepViewController.stepViewModel,
+            stepViewModel.canNavigateBackward, stepViewModel.rootPathComponent.hasStepBefore
             else {
                 return nil
         }
@@ -683,8 +674,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     /// Respond to a gesture to go forward. Always returns `nil` but will call `goForward()` if appropriate.
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let stepViewController = self.currentStepViewController,
-            stepViewController.isForwardEnabled, stepViewController.hasStepAfter
+        guard let stepViewController = self.currentStepViewController, let stepViewModel = stepViewController.stepViewModel,
+            stepViewModel.isForwardEnabled, stepViewModel.rootPathComponent.hasStepAfter
             else {
                 return nil
         }

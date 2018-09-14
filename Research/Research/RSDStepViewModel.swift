@@ -73,7 +73,7 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
     }
     
     /// The task result is the task result from the parent, unless the parent is `nil` in which case it uses
-    /// a local variable.
+    /// a local instance variable.
     public var taskResult: RSDTaskResult {
         get {
             let taskResult = self.parent?.taskResult ?? _taskResult
@@ -93,15 +93,21 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
     }
     private var _taskResult: RSDTaskResult?
     
-    /// Is the "Next" button enabled? The default looks at the parent and if the parent is `nil` then it
-    /// will return `true`.
+    /// Is the "Next" button enabled? The default implementation will check if the parent node is non-nil and
+    /// return whether or not the parent has forward enabled, otherwise it will return `true`.
     open var isForwardEnabled: Bool {
         return self.parent?.isForwardEnabled ?? true
     }
     
-    /// Is backward navigation allowed? Default is to allow back navigation unless this is a completion step.
+    /// Is backward navigation allowed? Default is to allow backward navigation unless the `step.stepType` is
+    /// `.completion`.
     open var canNavigateBackward: Bool {
-        return self.step.stepType != .completion
+        return !shouldHideAction(for: .navigation(.goBackward)) && (self.step.stepType != .completion)
+    }
+    
+    /// Calls through to `!shouldHideAction(for: .navigation(.goForward))`
+    public var hasStepAfter: Bool {
+        return !shouldHideAction(for: .navigation(.goForward))
     }
     
     /// Returns the parent output directory.
@@ -130,7 +136,7 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
     /// - returns:
     ///     - current: The current progress. This indicates progress within the task.
     ///     - total: The total number of steps.
-    ///     - isEstimated: Whether or not the progress is an estimate (if the task has variable navigation)
+    ///     - isEstimated: Whether or not the progress is an estimate (if the task has variable navigation).
     open func progress() -> (current: Int, total: Int, isEstimated: Bool)? {
         guard let path = self.parent as? RSDTaskPathComponent else { return nil }
 
@@ -159,5 +165,122 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
     /// The description of the path.
     override open var description: String {
         return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
+    }
+    
+    // MARK: UIAction handling
+    
+    /// Convenience property for casting the step to a `RSDUIStep`.
+    public var uiStep: RSDUIStep? {
+        return step as? RSDUIStep
+    }
+    
+    /// Convenience property for casting the step to a `RSDActiveUIStep`.
+    public var activeStep: RSDActiveUIStep? {
+        return step as? RSDActiveUIStep
+    }
+    
+    /// Get the action for the given action type. The default implementation check the step, the delegate
+    /// and the task as follows:
+    /// - Query the step for an action.
+    /// - If that returns nil, it will then check the delegate.
+    /// - If that returns nil, it will look up the task path chain for an action.
+    /// - Finally, if not found it will return nil.
+    ///
+    /// - parameter actionType: The action type to get.
+    /// - returns: The action if found.
+    open func action(for actionType: RSDUIActionType) -> RSDUIAction? {        
+        // Check the cached actions first.
+        if let cachedAction = _mappedActions[actionType] {
+            return cachedAction as? RSDUIAction
+        }
+        
+        // If not in the cache, then find it.
+        let ret = _findAction(for: actionType)
+        _mappedActions[actionType] = ret ?? NSNull()
+        return ret
+    }
+    
+    private func _findAction(for actionType: RSDUIActionType) -> RSDUIAction? {
+        if let action = (self.step as? RSDUIActionHandler)?.action(for: actionType, on: step) {
+            // Allow the step to override the default from the delegate
+            return action
+        }
+        else if let action = recursiveTaskAction(for: actionType) {
+            // Finally check the task for a global action
+            return action
+        }
+        else {
+            return nil
+        }
+    }
+    
+    private var _mappedActions: [RSDUIActionType : Any] = [:]
+    
+    private func recursiveTaskAction(for actionType: RSDUIActionType) -> RSDUIAction? {
+        var parentPath: RSDPathComponent? = self.parent
+        while let path = parentPath {
+            if let taskPath = path as? RSDTaskPathComponent,
+                let actionHandler = taskPath.task as? RSDUIActionHandler,
+                let action = actionHandler.action(for: actionType, on: step) {
+                return action
+            }
+            parentPath = path.parent
+        }
+        return nil
+    }
+    
+    /// Should the action be hidden for the given action type?
+    ///
+    /// - The default implementation will first look to see if the step overrides and forces the
+    /// action to be hidden.
+    /// - If not, then the delegate will be queried next.
+    /// - If that does not return a value, then the task path will be checked.
+    ///
+    /// Finally, whether or not to hide the action will be determined based on the action type and
+    /// the state of the task as follows:
+    /// 1. `.navigation(.cancel)` - Always defaults to `false` (not hidden).
+    /// 2. `.navigation(.goForward)` - Hidden if the step is an active step that transitions automatically.
+    /// 3. `.navigation(.goBack)` - Hidden if the step is an active step that transitions automatically,
+    ///                             or if the task does not allow backward navigation.
+    /// 4. Others - Hidden if the `action()` is nil.
+    ///
+    /// - parameter actionType: The action type to get.
+    /// - returns: `true` if the action should be hidden.
+    open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
+        if let shouldHide = uiStep?.shouldHideAction(for: actionType, on: step) {
+            // Allow the step to override the default from the delegate
+            return shouldHide
+        }
+        else if let shouldHide = recursiveTaskShouldHideAction(for: actionType), self.action(for: actionType) == nil {
+            // Finally check if the task has any global settings
+            return shouldHide
+        }
+        else {
+            // Otherwise, look at the action and show the button based on the type
+            let transitionAutomatically = activeStep?.commands.contains(.transitionAutomatically) ?? false
+            switch actionType {
+            case .navigation(.cancel):
+                return false
+            case .navigation(.goForward):
+                return transitionAutomatically
+            case .navigation(.goBackward):
+                return !self.rootPathComponent.hasStepBefore || transitionAutomatically
+            default:
+                return self.action(for: actionType) == nil
+            }
+        }
+    }
+    
+    private func recursiveTaskShouldHideAction(for actionType: RSDUIActionType) -> Bool? {
+        var parentPath: RSDPathComponent? = self.parent
+        while let path = parentPath {
+            if let taskPath = path as? RSDTaskPathComponent,
+                let actionHandler = taskPath.task as? RSDUIActionHandler,
+                let shouldHide = actionHandler.shouldHideAction(for: actionType, on: step) {
+                return shouldHide
+            }
+            parentPath = path.parent
+        }
+        return nil
     }
 }

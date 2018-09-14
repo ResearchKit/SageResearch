@@ -172,7 +172,7 @@ internal class TaskArchiver : NSObject {
                     self.childArchives.append(contentsOf: archives)
                 }
                 else {
-                    // Otherwise, recuse into the task result and add its results to this archive.
+                    // Otherwise, recurse into the task result and add its results to this archive.
                     let path = (stepPath != nil) ? "\(stepPath!)/\(taskResult.identifier)" : taskResult.identifier
                     try recursiveAddFunc(taskResult.identifier, path, taskResult.stepHistory)
                     if let asyncResults = taskResult.asyncResults {

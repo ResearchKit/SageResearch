@@ -34,7 +34,8 @@
 import Foundation
 
 /// `RSDFormStepDataSourceObject` is a concrete implementation of the `RSDTableDataSource` protocol that is
-/// designed to be used to supply the data source for a form step.
+/// designed to be used to supply the data source for a form step. This class inherits from `RSDStepViewModel`
+/// to allow the table view controller to use this class as its `stepViewModel`.
 open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
     
     /// The delegate associated with this data source.
@@ -80,6 +81,12 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
         self.sections = sections
         self.itemGroups = groups
         populateInitialResults()
+    }
+    
+    /// Specifies whether the next button should be enabled based on the validity of the answers for
+    /// all form items.
+    override open var isForwardEnabled: Bool {
+        return super.isForwardEnabled && allAnswersValid()
     }
     
     /// The collection result associated with this data source. The default implementation is to search the `taskViewModel`

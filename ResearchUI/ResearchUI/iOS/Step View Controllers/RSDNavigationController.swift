@@ -64,4 +64,12 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
     public func didFinishLoading() {
         rootStepViewController.didFinishLoading()
     }
+    
+    public func goForward() {
+        rootStepViewController.goForward()
+    }
+    
+    public func goBack() {
+        rootStepViewController.goBack()
+    }
 }

@@ -164,13 +164,21 @@ public struct TestTask : RSDTask {
 }
 
 public class TestStepController: NSObject, RSDStepController {
-    
+
     public var stepViewModel: RSDStepViewPathComponent!
     
     public var didFinishLoading_called: Bool = false
     
     public func didFinishLoading() {
         didFinishLoading_called = true
+    }
+    
+    public func goForward() {
+        self.stepViewModel.perform(actionType: .navigation(.goForward))
+    }
+    
+    public func goBack() {
+        self.stepViewModel.perform(actionType: .navigation(.goBackward))
     }
 }
 

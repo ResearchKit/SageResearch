@@ -151,9 +151,17 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     
     /// Add async action controllers to the shared queue for the given configuations. It is up to the task
     /// controller to decide how to create the controllers and how to manage adding them to the
-    /// `currentStepController` array.
+    /// `currentAsyncControllers` array.
+    ///
+    /// Handling async actions is left to the view controller on Apple devices because this is commonly tied
+    /// to UI/UX and thread management that the view controller is best suited to determining as appropriate
+    /// for the given platform.
     ///
     /// The async actions should *not* be started. Instead they should be returned with `idle` status.
+    ///
+    /// The task controller needs to handle blocking any navigation changes until the async actions are
+    /// ready to proceed; meaning that navigation should be blocked until after required authorizations are
+    /// checked. Otherwise, the modal popup alert can be swallowed by the step change.
     ///
     /// - note: If creating the recorder might take time, the task controller should move creation to a
     /// background thread so that the main thread is not blocked.
@@ -164,19 +172,15 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     ///     - completion: The completion to call with the instantiated controllers.
     func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([RSDAsyncAction]) -> Void))
 
-    /// Start the async action controllers. The protocol extension calls this method when an async action
-    /// should be started directly *after* the step is presented.
-    ///
-    /// The task controller needs to handle blocking any navigation changes until the async controllers are
-    /// ready to proceed. Otherwise, the modal popup alert can be swallowed by the step change.
-    ///
+    /// Start the async actions. The protocol extension calls this method when an async action should be
+    /// started directly *after* the step is presented.
     func startAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void))
 
-    /// Stop the async action controllers. The protocol extension does not directly implement stopping the
-    /// async actions to allow customization of how the results are added to the task and whether or not
-    /// forward navigation should be blocked until the completion handler is called. When the stop action
-    /// is called, the view controller needs to handle stopping the controllers, adding the results, and
-    /// showing a loading state until ready to move forward in the task navigation.
+    /// Stop the async actions. The protocol extension does not directly implement stopping the async actions
+    /// to allow customization of how the results are added to the task and whether or not forward navigation
+    /// should be blocked until the completion handler is called. When the stop action is called, the view
+    /// controller needs to handle stopping the controllers, adding the results, and showing a loading state
+    /// until ready to move forward in the task navigation.
     func stopAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void))
 }
 

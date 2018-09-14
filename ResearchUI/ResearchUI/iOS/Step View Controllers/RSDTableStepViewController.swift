@@ -365,24 +365,6 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         // margin built into the headerView is enough
         return RSDDefaultGenericStepLayoutConstants(numberOfSections: tableView.numberOfSections)
     }
-
-    /// Specifies whether the next button should be enabled based on the validity of the answers for
-    /// all form items.
-    override open var isForwardEnabled: Bool {
-        if !super.isForwardEnabled {
-            // If super has forward disabled then return false
-            return false
-        } else if let allAnswersValid = tableData?.allAnswersValid() {
-            // Else if the tabledata has been set up then go with that answer
-            return allAnswersValid
-        } else if let inputFields = self.formStep?.inputFields, inputFields.count > 0 {
-            // are all the input fields optional?
-            return inputFields.reduce(true, { $0 && $1.isOptional })
-        } else {
-            // All checks pass. forward is enabled.
-            return true
-        }
-    }
     
     // MARK: Actions
     

@@ -50,14 +50,15 @@ public protocol RSDPathComponent : class {
     /// The task result associated with this path component.
     var taskResult : RSDTaskResult { get set }
     
-    /// Can this task go forward? If forward navigation is disabled, then the task isn't waiting for a result
+    /// Can this task go forward? If forward navigation is enabled, then the task isn't waiting for a result
     /// or a task fetch to enable forward navigation.
     var isForwardEnabled : Bool { get }
     
-    /// Can the path navigate backward up the chain?
+    /// Can the path navigate backward up the chain? This property should be set to `true` if and only if the
+    /// backwards navigation is blocked by this path component or its child path component.
     var canNavigateBackward : Bool { get }
     
-    /// File URL for the directory in which to store generated data files. Asyncronous actions with
+    /// File URL for the directory in which to store generated data files. Asynchronous actions with
     /// recorders (and potentially steps) can save data to files during the progress of the task.
     /// This property specifies where such data should be written.
     var outputDirectory : URL! { get }
@@ -77,6 +78,7 @@ public protocol RSDNodePathComponent : RSDPathComponent {
     var step : RSDStep { get }
 }
 
+/// A step view path component is used to present a step.
 public protocol RSDStepViewPathComponent : RSDNodePathComponent {
     
     /// Method for getting the progress through the task for the current step with
@@ -85,7 +87,7 @@ public protocol RSDStepViewPathComponent : RSDNodePathComponent {
     /// - returns:
     ///     - current: The current progress. This indicates progress within the task.
     ///     - total: The total number of steps.
-    ///     - isEstimated: Whether or not the progress is an estimate (if the task has variable navigation)
+    ///     - isEstimated: Whether or not the progress is an estimate (if the task has variable navigation).
     func progress() -> (current: Int, total: Int, isEstimated: Bool)?
     
     /// An identifier string that can be appended to a step view controller to differentiate this step from
@@ -94,14 +96,29 @@ public protocol RSDStepViewPathComponent : RSDNodePathComponent {
     
     /// Convenience method for accessing the step result associated with this step.
     func findStepResult() -> RSDResult?
+    
+    /// Get the action for the given action type. 
+    ///
+    /// - parameter actionType: The action type to get.
+    /// - returns: The action if found.
+    func action(for actionType: RSDUIActionType) -> RSDUIAction?
+    
+    /// Should the action be hidden for the given action type?
+    ///
+    /// - parameter actionType: The action type to get.
+    /// - returns: `true` if the action should be hidden.
+    func shouldHideAction(for actionType: RSDUIActionType) -> Bool
 }
 
+/// A history path component defines a method for returning the previous result from a step.
 public protocol RSDHistoryPathComponent : RSDPathComponent {
     
     /// Get the previous result for the given step.
     func previousResult(for step: RSDStep) -> RSDResult?
 }
 
+/// A task path component is a navigational path component that, depending upon the UI/UX, may not have an
+/// associated view controller.
 public protocol RSDTaskPathComponent : RSDHistoryPathComponent {
     
     /// A pointer to the task controller that is running the task.
@@ -110,11 +127,16 @@ public protocol RSDTaskPathComponent : RSDHistoryPathComponent {
     /// The task that is currently being run. This can be `nil` if the task has not yet been loaded.
     var task: RSDTask? { get }
     
+    /// Is there a next step or is this the last step in the task?
+    ///
+    /// While the default action for the forward navigation of the task is determined by the step navigator,
+    /// there are cases where the step view model or task view model that is presenting the task will override
+    /// the default navigation in response to a user action or failure such as failing to receive permissions
+    /// required to perform the task.
+    var hasStepAfter: Bool { get }
+    
     /// Is there previous step that this task can go back to?
     var hasStepBefore: Bool { get }
-    
-    /// Is there a next step or is this the last step in the task?
-    var hasStepAfter: Bool { get }
     
     /// Move back up the path to the current step that has an associated view controller.
     func moveBackToCurrentStep(from previousStep: RSDStep)
@@ -125,7 +147,6 @@ public protocol RSDTaskPathComponent : RSDHistoryPathComponent {
     /// Move forward from this path subtask to the next step on the parent.
     func moveForwardToNextStep()
 }
-
 
 
 extension RSDPathComponent {
@@ -149,7 +170,7 @@ extension RSDPathComponent {
         return node
     }
     
-    //// String identifying the full path for this task.
+    /// String identifying the full path for this task.
     public var fullPath: String {
         let prefix = parent?.fullPath ?? ""
         return (prefix as NSString).appendingPathComponent(identifier)
@@ -193,6 +214,7 @@ extension RSDPathComponent {
     }
 }
 
+
 extension RSDTaskPathComponent {
     
     /// Convenience method for accessing the lowest-level task path. This method uses recursion to look down
@@ -207,13 +229,14 @@ extension RSDTaskPathComponent {
     }
 }
 
+
 extension RSDStepViewPathComponent {
     
     /// Convenience method for accessing the task path component that presented this step view. This method
     /// uses recursion to look up the path chain until it finds a path component that implements the
     /// `RSDTaskPathComponent` protocol.
     public var parentTaskPath: RSDTaskPathComponent? {
-        // Otherwise, go up the chain until the node above is a task node.
+        // Go up the chain until the node above is a task node.
         var node: RSDPathComponent = self
         while let parent = node.parent {
             node = parent

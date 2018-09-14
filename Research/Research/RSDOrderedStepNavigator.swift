@@ -266,7 +266,7 @@ extension RSDOrderedStepNavigator {
     /// - returns:
     ///     - current:      The current progress. This indicates progress within the task.
     ///     - total:        The total number of steps.
-    ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation)
+    ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation).
     public func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)? {
         if let markers = self.progressMarkers {
             // Get the list of steps that have been shown and add the step under test in case this is

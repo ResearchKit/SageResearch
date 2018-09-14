@@ -137,7 +137,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     /// The result associated with this path component.
     public var taskResult: RSDTaskResult
     
-    /// Can this task go forward? If forward navigation is disabled, then the task isn't waiting for a result
+    /// Can this task go forward? If forward navigation is enabled, then the task isn't waiting for a result
     /// or a task fetch to enable forward navigation.
     open var isForwardEnabled: Bool {
         return self.task != nil
@@ -148,7 +148,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
         return self.currentChild?.canNavigateBackward ?? false
     }
     
-    /// File URL for the directory in which to store generated data files. Asyncronous actions with
+    /// File URL for the directory in which to store generated data files. Asynchronous actions with
     /// recorders (and potentially steps) can save data to files during the progress of the task.
     /// This property specifies where such data should be written.
     ///
@@ -494,7 +494,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
         taskController.handleFinishedLoading()
     }
     
-    /// Called when the task is successfully loaded.
+    /// Called when the task fails.
     open func handleTaskFailure(with error: Error) {
         guard let taskController = self.taskController else {
             assertionFailure("The base task view model is expecting a view controller. If none is provided, please use a subclass.")
