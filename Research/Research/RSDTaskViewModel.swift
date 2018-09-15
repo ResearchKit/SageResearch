@@ -309,14 +309,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     }
     
     /// Go back to the previous step.
-    ///
-    /// - note: This method will throw an assertion if there isn't a previous step.
     open func goBack() {
-        guard let _ = self.currentChild else {
-            assertionFailure("Cannot go backward with a nil current step. path = \(self)")
-            return
-        }
-        
         // If calling `goBack()` from the `taskViewController.taskViewModel`, that node is always the root
         // node, and may not be the node that is currently being navigated.
         guard let viewModel = self.currentTaskPath as? RSDTaskViewModel, viewModel == self
@@ -346,7 +339,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
         }
     }
     
-    /// For the given step, what is the next path component and step controller (if applicable) for this step.
+    /// For the given step, returns the next path component and step controller (if applicable) for this step.
     /// The base class implementation will return an `RSDTaskStepNode` for either a subtask step or a section
     /// step. For all other steps, it will request a step controller for the step from the task controller and
     /// return both the step controller with the loaded step view model.
@@ -358,6 +351,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
             return (stepController.stepViewModel, stepController)
         }
         else {
+            debugPrint("No view controller loaded for \(step)")
             return nil
         }
     }

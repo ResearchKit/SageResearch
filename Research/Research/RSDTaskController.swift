@@ -140,13 +140,18 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     /// - parameter error:   The error returned by the failed task fetch.
     func handleTaskFailure(with error: Error)
 
-    /// The task has completed, either as a result of all the steps being completed, because of an
-    /// early exit.
+    /// The task has completed.
+    ///
+    /// - parameters:
+    ///     - reason: The reason the task is finished.
+    ///     - error: The error, if any, that resulted in stopping the task early.
     func handleTaskDidFinish(with reason: RSDTaskFinishReason, error: Error?)
     
     /// This method is called when a task result is "ready" for upload, save, archive, etc. This method
     /// will be called when either (a) the task is ready to dismiss or (b) when the task is displaying
     /// the *last* completion step.
+    ///
+    /// - parameter taskViewModel: The root task view model for this task.
     func handleTaskResultReady(with taskViewModel: RSDTaskViewModel)
     
     /// Add async action controllers to the shared queue for the given configuations. It is up to the task
