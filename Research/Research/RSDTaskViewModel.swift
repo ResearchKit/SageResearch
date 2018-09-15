@@ -342,7 +342,7 @@ open class RSDTaskViewModel : NSObject, RSDTaskPathComponent {
     /// For the given step, returns the next path component and step controller (if applicable) for this step.
     /// The base class implementation will return an `RSDTaskStepNode` for either a subtask step or a section
     /// step. For all other steps, it will request a step controller for the step from the task controller and
-    /// return both the step controller with the loaded step view model.
+    /// return both the step controller and the loaded step view model as the `node`.
     open func pathComponent(for step: RSDStep) -> (node: RSDNodePathComponent, stepController: RSDStepController?)? {
         if let node = self.instantiateTaskStepNode(for: step) {
             return (node, nil)
