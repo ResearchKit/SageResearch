@@ -42,6 +42,7 @@ public struct RSDTaskMetadata : Codable {
     public let deviceInfo: String
     
     /// Specific model identifier of the device.
+    /// - example: "Apple Watch Series 1"
     public let deviceTypeIdentifier: String
     
     /// The name of the application.
