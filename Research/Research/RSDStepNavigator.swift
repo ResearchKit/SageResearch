@@ -107,7 +107,7 @@ public protocol RSDStepNavigator {
     /// - returns:
     ///     - current:      The current progress. This indicates progress within the task.
     ///     - total:        The total number of steps.
-    ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation)
+    ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation).
     func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)?
 }
 
@@ -133,16 +133,3 @@ public protocol RSDCopyStepNavigator : RSDStepNavigator {
     /// - returns: A copy of this navigator with the inserted section.
     func copyAndInsert(_ subtask: RSDTaskInfoStep) -> Self
 }
-
-/// The tracking delegate is any class object that can be referenced using a `weak` reference.
-public protocol RSDTrackingDelegate : class {
-}
-
-/// The tracking step navigator is a step navigator that tracks user selection across different runs of a
-/// task.
-public protocol RSDTrackingStepNavigator : RSDStepNavigator {
-    
-    /// Set up tracking for this instance of a step navigator using the given task path.
-    func setupTracking(with taskPath: RSDTaskPath)
-}
-

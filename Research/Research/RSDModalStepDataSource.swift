@@ -1,8 +1,8 @@
 //
-//  RSDTableStep.swift
+//  RSDModalStepDataSource.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -34,14 +34,20 @@
 import Foundation
 
 
-/// `RSDTableStep` is a UI step that can be displayed using a `UITableView`.
-public protocol RSDTableStep : RSDUIStep {
+/// `RSDModalStepDataSource` extends `RSDTableDataSource` for a data source that includes entering
+/// information using a modal step.
+public protocol RSDModalStepDataSource : RSDTableDataSource {
     
-    /// Instantiate an instance of the data source with the data source mapping to the included list of
-    /// supported ui hints.
+    /// The taskViewModel to use to instantiate an appropriate view controller for the given modal step
+    /// table item.
+    ///
+    /// - parameter tableItem: The table item that was selected.
+    /// - returns: The step to display.
+    func taskViewModel(for tableItem: RSDModalStepTableItem) -> RSDTaskViewModel?
+    
+    /// Save an answer from a subtask that was presented modally.
     /// - parameters:
-    ///     - parent: The taskViewModel for this table view controller.
-    ///     - supportedHints: The ui hints that are supported by the calling table view controller.
-    /// - returns: A table data source that maps to the supported hints, or `nil` if it is not compatible.
-    func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource?
+    ///     - tableItem: The table item that was selected.
+    ///     - taskViewModel: The task view model from which to save the answers.
+    func saveAnswer(for tableItem: RSDModalStepTableItem, from taskViewModel: RSDTaskViewModel)
 }

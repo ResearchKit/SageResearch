@@ -1,8 +1,8 @@
 //
-//  RSDAsyncActionController.swift
+//  RSDAsyncAction.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -37,25 +37,25 @@ import AppKit
 import UIKit
 #endif
 
-/// `RSDAsyncActionControllerVendor` is an extension of the configuration protocol for configurations that
+/// `RSDAsyncActionVendor` is an extension of the configuration protocol for configurations that
 /// know how to vend a new controller.
 ///
-public protocol RSDAsyncActionControllerVendor : RSDAsyncActionConfiguration {
+public protocol RSDAsyncActionVendor : RSDAsyncActionConfiguration {
     
     /// Instantiate a controller appropriate to this configuration.
-    /// - parameter taskPath: The current task path to use to initialize the controller.
+    /// - parameter taskViewModel: The current task path to use to initialize the controller.
     /// - returns: An async action controller or nil if the async action is not supported on this device.
-    func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController?
+    func instantiateController(with taskViewModel: RSDPathComponent) -> RSDAsyncAction?
 }
 
-/// `RSDAsyncActionControllerDelegate` is the delegate protocol for `RSDAsyncActionController`.
-public protocol RSDAsyncActionControllerDelegate : class {
+/// `RSDAsyncActionDelegate` is the delegate protocol for `RSDAsyncAction`.
+public protocol RSDAsyncActionDelegate : class {
     
     /// Method called when the controller fails. The delegate is responsible for handling the failure.
-    func asyncActionController(_ controller: RSDAsyncActionController, didFailWith error: Error)
+    func asyncAction(_ controller: RSDAsyncAction, didFailWith error: Error)
 }
 
-/// `RSDAsyncActionStatus` is an enum used to track the status of a `RSDAsyncActionController`.
+/// `RSDAsyncActionStatus` is an enum used to track the status of a `RSDAsyncAction`.
 @objc
 public enum RSDAsyncActionStatus : Int {
     
@@ -69,7 +69,7 @@ public enum RSDAsyncActionStatus : Int {
     /// Status if the controller has granted permission, but not yet been started.
     case permissionGranted
     
-    /// The controller is starting up. This is the state once `RSDAsyncActionController.start()` has been called
+    /// The controller is starting up. This is the state once `RSDAsyncAction.start()` has been called
     /// but before the recorder or request is running.
     case starting
     
@@ -105,13 +105,13 @@ extension RSDAsyncActionStatus : Comparable {
 }
 
 /// The completion handler for starting and stopping an async action.
-public typealias RSDAsyncActionCompletionHandler = (RSDAsyncActionController, RSDResult?, Error?) -> Void
+public typealias RSDAsyncActionCompletionHandler = (RSDAsyncAction, RSDResult?, Error?) -> Void
 
 /// A controller for an async action configuration.
-public protocol RSDAsyncActionController : class, NSObjectProtocol {
+public protocol RSDAsyncAction : class, NSObjectProtocol {
     
     /// Delegate callback for handling action completed or failed.
-    var delegate: RSDAsyncActionControllerDelegate? { get set }
+    var delegate: RSDAsyncActionDelegate? { get set }
     
     /// The status of the controller.
     var status: RSDAsyncActionStatus { get }
@@ -132,7 +132,7 @@ public protocol RSDAsyncActionController : class, NSObjectProtocol {
     var configuration: RSDAsyncActionConfiguration { get }
     
     /// The associated task path to which the result should be attached.
-    var taskPath: RSDTaskPath { get }
+    var taskViewModel: RSDPathComponent { get }
     
     #if os(watchOS)
     
@@ -230,6 +230,6 @@ public protocol RSDAsyncActionController : class, NSObjectProtocol {
     /// Let the controller know that the task will move to the given step.
     /// - parameters:
     ///     - step: The step that will be presented.
-    ///     - taskPath: The current state of the task.
-    func moveTo(step: RSDStep, taskPath: RSDTaskPath)
+    ///     - taskViewModel: The current state of the task.
+    func moveTo(step: RSDStep, taskViewModel: RSDPathComponent)
 }

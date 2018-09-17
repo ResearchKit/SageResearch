@@ -121,7 +121,7 @@ public struct RSDRecordMarker : RSDSampleRecord {
 /// Using this base implementation allows for a consistent logging of shared sample data key words for the step path
 /// and the uptime. It implements the logic for writing to a file, tracking the uptime and start date, and provides
 /// a consistent implementation for error handling.
-open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
+open class RSDSampleRecorder : NSObject, RSDAsyncAction {
 
     /// Errors returned in the completion handler during `start()` when starting fails for timing reasons.
     public enum RecorderError : Error {
@@ -136,25 +136,25 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// Default initializer.
     /// - parameters:
     ///     - configuration: The configuration used to set up the controller.
-    ///     - taskPath:
+    ///     - taskViewModel:
     ///     - outputDirectory: File URL for the directory in which to store generated data files.
-    public init(configuration: RSDAsyncActionConfiguration, taskPath: RSDTaskPath, outputDirectory: URL) {
+    public init(configuration: RSDAsyncActionConfiguration, taskViewModel: RSDPathComponent, outputDirectory: URL) {
         self.configuration = configuration
-        self.taskPath = taskPath
+        self.taskViewModel = taskViewModel
         self.outputDirectory = outputDirectory
         self.collectionResult = RSDCollectionResultObject(identifier: configuration.identifier)
     }
     
-    // Mark: `RSDAsyncActionController` implementation
+    // Mark: `RSDAsyncAction` implementation
     
     /// Delegate callback for handling action completed or failed.
-    open weak var delegate: RSDAsyncActionControllerDelegate?
+    open weak var delegate: RSDAsyncActionDelegate?
     
     /// The configuration used to set up the controller.
     public let configuration: RSDAsyncActionConfiguration
     
     /// The associated task path to which the result should be attached.
-    public let taskPath: RSDTaskPath
+    public let taskViewModel: RSDPathComponent
     
     /// The status of the recorder.
     ///
@@ -227,7 +227,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         
         self.loggerQueue.async {
             do {
-                try self._startLogger(at: self.taskPath)
+                try self._startLogger(at: self.taskViewModel)
                 DispatchQueue.main.async {
                     guard self.status < RSDAsyncActionStatus.finished else {
                         completion?(self, nil, RecorderError.finished)
@@ -298,8 +298,8 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// Let the controller know that the task has moved to the given step. This method is called by the task
     /// controller when the task transitions to a new step. The default implementation will update the
     /// `currentStepIdentifier` and `currentStepPath`, then it will add a marker to the logging files.
-    open func moveTo(step: RSDStep, taskPath: RSDTaskPath) {
-        _writeMarkers(step: step, taskPath: taskPath)
+    open func moveTo(step: RSDStep, taskViewModel: RSDPathComponent) {
+        _writeMarkers(step: step, taskViewModel: taskViewModel)
     }
     
     #if os(watchOS)
@@ -309,7 +309,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// thread. The base class implementation will immediately call the completion handler.
     ///
     /// - remark: Override to implement custom permission handling.
-    /// - seealso: `RSDAsyncActionController.requestPermissions()`
+    /// - seealso: `RSDAsyncAction.requestPermissions()`
     /// - parameters:
     ///     - completion: The completion handler.
     open func requestPermissions(_ completion: @escaping RSDAsyncActionCompletionHandler) {
@@ -324,7 +324,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// thread. The base class implementation will immediately call the completion handler.
     ///
     /// - remark: Override to implement custom permission handling.
-    /// - seealso: `RSDAsyncActionController.requestPermissions(on:)`
+    /// - seealso: `RSDAsyncAction.requestPermissions(on:)`
     /// - parameters:
     ///     - viewController: The view controler that should be used to present any modal dialogs.
     ///     - completion: The completion handler.
@@ -341,7 +341,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// thread. The base class implementation will immediately call the completion handler.
     ///
     /// - remark: Override to implement custom permission handling.
-    /// - seealso: `RSDAsyncActionController.requestPermissions(on:)`
+    /// - seealso: `RSDAsyncAction.requestPermissions(on:)`
     /// - parameters:
     ///     - viewController: The view controler that should be used to present any modal dialogs.
     ///     - completion: The completion handler.
@@ -421,13 +421,13 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     
     /// This method can be called by either the logging file if there was a write error, or by the subclass
     /// if there was an error when attempting to record samples. The method will call the delegate method
-    /// `asyncActionController(_, didFailWith:)` asynchronously on the main queue and will call `cancel()`
+    /// `asyncAction(_, didFailWith:)` asynchronously on the main queue and will call `cancel()`
     /// synchronously on the current queue.
     open func didFail(with error: Error) {
         guard self.status <= .running else { return }
         _syncUpdateStatus(.failed, error: error)
         DispatchQueue.main.async {
-            self.delegate?.asyncActionController(self, didFailWith: error)
+            self.delegate?.asyncAction(self, didFailWith: error)
         }
         cancel()
     }
@@ -501,7 +501,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// An identifier string that can be appended to a step view controller to differentiate this step from
     /// another instance in a different section.
     open var sectionIdentifier: String {
-        return (self.taskPath.parentPath != nil) ? "\(self.taskPath.result.identifier)_" : ""
+        return (self.taskViewModel.parent != nil) ? "\(self.taskViewModel.taskResult.identifier)_" : ""
     }
     
     /// File URL for the directory in which to store generated data files.
@@ -533,10 +533,10 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     ///
     /// - parameters:
     ///     - step: The current step.
-    ///     - taskPath: The current path.
-    open func updateMarker(step: RSDStep?, taskPath: RSDTaskPath) {
+    ///     - taskViewModel: The current path.
+    open func updateMarker(step: RSDStep?, taskViewModel: RSDPathComponent) {
         currentStepIdentifier = step?.identifier ?? ""
-        let path = taskPath.fullPath
+        let path = taskViewModel.fullPath
         currentStepPath = (path as NSString).appendingPathComponent(currentStepIdentifier)
     }
     
@@ -608,13 +608,13 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }
     
     /// Write a marker to each logging file.
-    private func _writeMarkers(step: RSDStep?, taskPath: RSDTaskPath) {
+    private func _writeMarkers(step: RSDStep?, taskViewModel: RSDPathComponent) {
         let uptime = ProcessInfo.processInfo.systemUptime
         let date = Date()
         self.loggerQueue.async {
             
             // Update the marker
-            self.updateMarker(step: step, taskPath: taskPath)
+            self.updateMarker(step: step, taskViewModel: taskViewModel)
             let stepPath = self.currentStepPath
             
             // Only write to the file if the recorder status indicates that the logging file is open
@@ -635,8 +635,9 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }
     
     /// Open log files. This method should be called on the `loggerQueue`.
-    private func _startLogger(at taskPath: RSDTaskPath) throws {
-        updateMarker(step: taskPath.currentStep ?? taskPath.parentPath?.currentStep, taskPath: taskPath)
+    private func _startLogger(at taskViewModel: RSDPathComponent) throws {
+        let step = taskViewModel.currentNode?.step
+        updateMarker(step: step, taskViewModel: taskViewModel)
         for identifier in self.loggerIdentifiers {
             guard let dataLogger = try instantiateLogger(with: identifier) else {
                 continue

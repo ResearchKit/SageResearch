@@ -78,15 +78,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
         super.init(identifier: identifier, type: type ?? .form)
     }
     
-    /// Look to the input fields and return true if any are choice type that include an image.
-    override open var hasImageChoices: Bool {
-        for item in inputFields {
-            if let picker = item.pickerSource as? RSDChoiceOptions, picker.hasImages {
-                return true
-            }
-        }
-        return false
-    }
+
     
     /// Identifier to skip to if all input fields have nil answers.
     open var skipToIfNil: String? {

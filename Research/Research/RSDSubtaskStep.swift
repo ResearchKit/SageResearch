@@ -1,5 +1,5 @@
 //
-//  RSDTableStep.swift
+//  RSDSubtaskStep.swift
 //  Research
 //
 //  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
@@ -33,15 +33,9 @@
 
 import Foundation
 
-
-/// `RSDTableStep` is a UI step that can be displayed using a `UITableView`.
-public protocol RSDTableStep : RSDUIStep {
+/// `RSDSubtaskStep` is a step that contains a task reference.
+public protocol RSDSubtaskStep : RSDStep {
     
-    /// Instantiate an instance of the data source with the data source mapping to the included list of
-    /// supported ui hints.
-    /// - parameters:
-    ///     - parent: The taskViewModel for this table view controller.
-    ///     - supportedHints: The ui hints that are supported by the calling table view controller.
-    /// - returns: A table data source that maps to the supported hints, or `nil` if it is not compatible.
-    func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource?
+    /// The task for this step.
+    var task: RSDTask { get }
 }

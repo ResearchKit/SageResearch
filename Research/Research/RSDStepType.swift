@@ -73,6 +73,9 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable {
     /// Defaults to creating a `RSDTaskInfoStep`.
     public static let taskInfo: RSDStepType = "taskInfo"
     
+    /// Defaults to creating a `RSDSubtaskStep`.
+    public static let subtask: RSDStepType = "subtask"
+    
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStepType] {
         return [.active, .completion, .countdown, .form, .imagePicker, .instruction, .overview, .section, .transform, .taskInfo]

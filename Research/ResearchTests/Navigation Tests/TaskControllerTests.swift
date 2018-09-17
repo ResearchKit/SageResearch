@@ -62,24 +62,29 @@ class TaskControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("stepX")
         taskController.goBack()
         
-        let stepTo = taskController.navigate_calledTo
+        let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.identifier, "stepC")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepC")
         
-        let direction = taskController.navigate_calledDirection
+        let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.reverse)
         
-        XCTAssertEqual(taskController.taskPath.stepPath, "stepA, stepB, stepC")
+        guard let currentNode = taskController.taskViewModel.currentNode else {
+            XCTFail("The current node should be non-nil")
+            return
+        }
+        
+        XCTAssertEqual(currentNode.stepPath, "stepA, stepB, stepC")
         
         // check that the path parent has the correct current step
-        let currentParentStep = taskController.taskPath?.parentPath?.currentStep
+        let currentParentStep = currentNode.parent
         XCTAssertNotNil(currentParentStep)
         XCTAssertEqual(currentParentStep?.identifier, "step4")
     }
@@ -100,24 +105,29 @@ class TaskControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("stepZ")
         taskController.goBack()
         
-        let stepTo = taskController.navigate_calledTo
+        let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.identifier, "stepY")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepY")
         
-        let direction = taskController.navigate_calledDirection
+        let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.reverse)
         
-        XCTAssertEqual(taskController.taskPath.stepPath, "stepX, stepY")
+        guard let currentNode = taskController.taskViewModel.currentNode else {
+            XCTFail("The current node should be non-nil")
+            return
+        }
+        
+        XCTAssertEqual(currentNode.stepPath, "stepX, stepY")
         
         // check that the path parent has the correct current step
-        let currentParentStep = taskController.taskPath?.parentPath?.currentStep
+        let currentParentStep = currentNode.parent
         XCTAssertNotNil(currentParentStep)
         XCTAssertEqual(currentParentStep?.identifier, "step5")
     }
@@ -138,33 +148,63 @@ class TaskControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("step3")
+        
+        // Check assumptions to see that the test controller is adding expected results to the step history.
+        guard let beforeStepHistory = taskController.taskViewModel.currentNode?.taskResult.stepHistory
+            else {
+              XCTFail("Failed to set up current node. Expecting non-nil value.")
+                return
+        }
+        
+        let beforeResult = beforeStepHistory.last
+        XCTAssertNotNil(beforeResult)
+        XCTAssertEqual(beforeResult?.identifier, "step3")
+        
+        let beforeResult2 = beforeStepHistory.first(where: { $0.identifier == "step2" })
+        XCTAssertNotNil(beforeResult2)
+        let beforeAnswerResult2 = beforeResult2 as? RSDAnswerResult
+        XCTAssertNotNil(beforeAnswerResult2)
+        XCTAssertEqual(beforeAnswerResult2?.value as? String, "step2")
+        
+        let beforeResult3 = beforeStepHistory.first(where: { $0.identifier == "step3" })
+        XCTAssertNotNil(beforeResult3)
+        let beforeAnswerResult3 = beforeResult3 as? RSDAnswerResult
+        XCTAssertNotNil(beforeAnswerResult3)
+        XCTAssertEqual(beforeAnswerResult3?.value as? String, "step3")
+        
+        // Now go back one step. The expectation is that the state tracking will move back to step2 and the
+        // previous answers to both step2 and step3 will be stored in the previous results.
         taskController.goBack()
         
-        let stepTo = taskController.navigate_calledTo
+        let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.identifier, "step2")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "step2")
         
-        let direction = taskController.navigate_calledDirection
+        let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.reverse)
         
-        XCTAssertEqual(taskController.taskPath.stepPath, "introduction, step1, step2")
+        XCTAssertEqual(taskController.taskViewModel.stepPath, "introduction, step1, step2")
         
-        let currentResult = taskController.taskPath.result.stepHistory.last
+        let currentResult = taskController.taskViewModel.currentNode?.taskResult.stepHistory.last
         XCTAssertNotNil(currentResult)
         XCTAssertEqual(currentResult?.identifier, "step2")
         
-        let previousResult2 = taskController.taskPath.previousResults?.first(where: { $0.identifier == "step2" })
+        let previousResult2 = taskController.taskViewModel.previousResults?.first(where: { $0.identifier == "step2" })
         XCTAssertNotNil(previousResult2)
-        XCTAssertEqual((previousResult2 as? RSDAnswerResult)?.value as? String, "step2")
+        let answerResult2 = previousResult2 as? RSDAnswerResult
+        XCTAssertNotNil(answerResult2)
+        XCTAssertEqual(answerResult2?.value as? String, "step2")
 
-        let previousResult3 = taskController.taskPath.previousResults?.first(where: { $0.identifier == "step3" })
+        let previousResult3 = taskController.taskViewModel.previousResults?.first(where: { $0.identifier == "step3" })
         XCTAssertNotNil(previousResult3)
-        XCTAssertEqual((previousResult3 as? RSDAnswerResult)?.value as? String, "step3")
+        let answerResult3 = previousResult3 as? RSDAnswerResult
+        XCTAssertNotNil(answerResult3)
+        XCTAssertEqual(answerResult3?.value as? String, "step3")
     }
     
     
@@ -184,24 +224,29 @@ class TaskControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("stepX")
         taskController.goForward()
         
-        let stepTo = taskController.navigate_calledTo
+        let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.identifier, "stepY")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepY")
         
-        let direction = taskController.navigate_calledDirection
+        let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.forward)
         
-        XCTAssertEqual(taskController.taskPath.stepPath, "stepX, stepY")
+        guard let currentNode = taskController.taskViewModel.currentNode else {
+            XCTFail("The current node should be non-nil")
+            return
+        }
+        
+        XCTAssertEqual(currentNode.stepPath, "stepX, stepY")
         
         // check that the path parent has the correct current step
-        let currentParentStep = taskController.taskPath?.parentPath?.currentStep
+        let currentParentStep = currentNode.parent
         XCTAssertNotNil(currentParentStep)
         XCTAssertEqual(currentParentStep?.identifier, "step5")
     }
@@ -222,24 +267,29 @@ class TaskControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("stepZ")
         taskController.goForward()
         
-        let stepTo = taskController.navigate_calledTo
+        let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.identifier, "stepA")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepA")
         
-        let direction = taskController.navigate_calledDirection
+        let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.forward)
         
-        XCTAssertEqual(taskController.taskPath.stepPath, "stepA")
+        guard let currentNode = taskController.taskViewModel.currentNode else {
+            XCTFail("The current node should be non-nil")
+            return
+        }
+        
+        XCTAssertEqual(currentNode.stepPath, "stepA")
         
         // check that the path parent has the correct current step
-        let currentParentStep = taskController.taskPath?.parentPath?.currentStep
+        let currentParentStep = currentNode.parent
         XCTAssertNotNil(currentParentStep)
         XCTAssertEqual(currentParentStep?.identifier, "step6")
     }
@@ -260,21 +310,21 @@ class TaskControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("step2")
         taskController.goForward()
         
-        let stepTo = taskController.navigate_calledTo
+        let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.identifier, "step3")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "step3")
         
-        let direction = taskController.navigate_calledDirection
+        let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction ?? RSDStepDirection.none, RSDStepDirection.forward)
         
-        XCTAssertEqual(taskController.taskPath.stepPath, "introduction, step1, step2, step3")
+        XCTAssertEqual(taskController.taskViewModel.stepPath, "introduction, step1, step2, step3")
     }
     
     
@@ -301,17 +351,17 @@ class TaskControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("stepB")
         taskController.goForward()
         
-        let stepTo = taskController.navigate_calledTo
+        let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.identifier, "stepA")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepA")
         
-        let direction = taskController.navigate_calledDirection
+        let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction, .reverse)
     }
@@ -339,17 +389,17 @@ class TaskControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("stepB")
         taskController.goForward()
         
-        let stepTo = taskController.navigate_calledTo
+        let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.identifier, "step1")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "step1")
         
-        let direction = taskController.navigate_calledDirection
+        let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction, .reverse)
     }
@@ -377,17 +427,17 @@ class TaskControllerTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("stepB")
         taskController.goForward()
         
-        let stepTo = taskController.navigate_calledTo
+        let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.identifier, "stepZ")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepZ")
         
-        let direction = taskController.navigate_calledDirection
+        let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
         XCTAssertEqual(direction, .reverse)
     }
@@ -406,43 +456,43 @@ class TaskControllerTests: XCTestCase {
         let navigator = TestConditionalNavigator(steps: steps)
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         let taskController = TestTaskController()
-        taskController.topLevelTask = task
+        taskController.task = task
         
         // set up for the step controller
         let _ = taskController.test_stepTo("introduction")
         taskController.goForward()
         
-        let stepToFirst = taskController.navigate_calledTo
+        let stepToFirst = taskController.show_calledTo
         XCTAssertNotNil(stepToFirst)
-        XCTAssertEqual(stepToFirst?.identifier, "step2")
+        XCTAssertEqual(stepToFirst?.stepViewModel?.identifier, "step2")
         
-        let directionFirst = taskController.navigate_calledDirection
+        let directionFirst = taskController.show_calledDirection
         XCTAssertNotNil(directionFirst)
         XCTAssertEqual(directionFirst, .forward)
         
-        taskController.navigate_calledTo = nil
-        taskController.navigate_calledDirection = nil
+        taskController.show_calledTo = nil
+        taskController.show_calledDirection = nil
         
         taskController.goForward()
         
-        let stepToSecond = taskController.navigate_calledTo
+        let stepToSecond = taskController.show_calledTo
         XCTAssertNotNil(stepToSecond)
-        XCTAssertEqual(stepToSecond?.identifier, "step1")
+        XCTAssertEqual(stepToSecond?.stepViewModel?.identifier, "step1")
         
-        let directionSecond = taskController.navigate_calledDirection
+        let directionSecond = taskController.show_calledDirection
         XCTAssertNotNil(directionSecond)
         XCTAssertEqual(directionSecond, .forward)
         
-        taskController.navigate_calledTo = nil
-        taskController.navigate_calledDirection = nil
+        taskController.show_calledTo = nil
+        taskController.show_calledDirection = nil
         
         taskController.goForward()
         
-        let stepToThird = taskController.navigate_calledTo
+        let stepToThird = taskController.show_calledTo
         XCTAssertNotNil(stepToThird)
-        XCTAssertEqual(stepToThird?.identifier, "step3")
+        XCTAssertEqual(stepToThird?.stepViewModel?.identifier, "step3")
         
-        let directionThird = taskController.navigate_calledDirection
+        let directionThird = taskController.show_calledDirection
         XCTAssertNotNil(directionThird)
         XCTAssertEqual(directionThird, .forward)
     }

@@ -33,6 +33,10 @@
 
 import Foundation
 
+public enum RSDUIRowAnimation : Int {
+    case fade, right, left, top, bottom, none, middle, automatic
+}
+
 /// Delegate for the data source.
 public protocol RSDTableDataSourceDelegate: class, NSObjectProtocol {
     
@@ -45,11 +49,16 @@ public protocol RSDTableDataSourceDelegate: class, NSObjectProtocol {
     /// Called *before* editing the table rows and sections.
     func tableDataSourceWillBeginUpdate(_ dataSource: RSDTableDataSource)
     
-    /// Called *after* editing the table rows and sections.
-    func tableDataSourceDidEndUpdate(_ dataSource: RSDTableDataSource, addedRows:[IndexPath], removedRows:[IndexPath])
+    /// Called to remove rows from a data source. Calls to this method should be wrapped within a begin/end
+    /// update.
+    func tableDataSource(_ dataSource: RSDTableDataSource, didRemoveRows removedRows:[IndexPath], with animation: RSDUIRowAnimation)
     
-    /// Called by a `RSDTableDataSource` to dismiss the presented step view controller.
-    func tableDataSource(_ dataSource: RSDTableDataSource, didFinishWith stepController: RSDStepController)
+    /// Called to add rows to a data source. Calls to this method should be wrapped within a begin/end
+    /// update.
+    func tableDataSource(_ dataSource: RSDTableDataSource, didAddRows addedRows:[IndexPath], with animation: RSDUIRowAnimation)
+    
+    /// Called *after* editing the table rows and sections.
+    func tableDataSourceDidEndUpdate(_ dataSource: RSDTableDataSource)
 }
 
 /// `RSDTableDataSource` is the model for a table view controller. It provides the UITableViewDataSource,
@@ -72,16 +81,10 @@ public protocol RSDTableDataSourceDelegate: class, NSObjectProtocol {
 ///     answer options for the `RSDInputField`. The ItemGroup is responsible for storing/computing the
 ///     answers for its `RSDInputField`.
 ///
-public protocol RSDTableDataSource : class {
+public protocol RSDTableDataSource : RSDStepViewPathComponent {
     
     /// The delegate associated with this data source.
     var delegate: RSDTableDataSourceDelegate? { get set }
-    
-    /// The step associated with this data source.
-    var step: RSDStep { get }
-    
-    /// The current task path.
-    var taskPath: RSDTaskPath! { get }
     
     /// The table sections for this data source.
     var sections: [RSDTableSection] { get }
@@ -113,26 +116,6 @@ public protocol RSDTableDataSource : class {
     ///                      otherwise returns `false`.
     /// - throws: `RSDInputFieldError` if the selection is invalid.
     func selectAnswer(item: RSDTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool)
-}
-
-/// `RSDModalStepDataSource` extends `RSDTableDataSource` for a data source that includes entering
-/// information using a modal step.
-public protocol RSDModalStepDataSource : RSDTableDataSource {
-    
-    /// The step to use to instantiate an appropriate view controller for the given modal step table item.
-    ///
-    /// - parameter tableItem: The table item that was selected.
-    /// - returns: The step to display.
-    func step(for tableItem: RSDModalStepTableItem) -> RSDStep
-    
-    /// The calling table view controller will present a step view controller for the modal step. This method
-    /// should set up the task controller for the step and handle any other task management required before
-    /// presenting the step.
-    ///
-    /// - parameters:
-    ///     - stepController: The step controller that was instantiated to run the step.
-    ///     - tableItem: The table item that was selected.
-    func willPresent(_ stepController: RSDStepController, from tableItem: RSDModalStepTableItem)
 }
 
 extension RSDTableDataSource {

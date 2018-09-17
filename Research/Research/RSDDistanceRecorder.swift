@@ -35,14 +35,14 @@ import UIKit
 import CoreLocation
 import CoreMotion
 
-extension RSDDistanceRecorderConfiguration : RSDAsyncActionControllerVendor {
+extension RSDDistanceRecorderConfiguration : RSDAsyncActionVendor {
     
     /// Instantiate a `RSDDistanceRecorder` (iOS only).
-    /// - parameter taskPath: The current task path to use to initialize the controller.
+    /// - parameter taskViewModel: The current task path to use to initialize the controller.
     /// - returns: A new instance of `RSDMotionRecorder` or `nil` if the platform does not
     ///            support distance recording.
-    public func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController? {
-        return RSDDistanceRecorder(configuration: self, taskPath: taskPath, outputDirectory: taskPath.outputDirectory)
+    public func instantiateController(with taskViewModel: RSDPathComponent) -> RSDAsyncAction? {
+        return RSDDistanceRecorder(configuration: self, taskViewModel: taskViewModel, outputDirectory: taskViewModel.outputDirectory)
     }
 }
 
@@ -261,10 +261,10 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     /// Override to check if the step being moved to is the step when the participant's
     /// distance should be tracked and to add the pedometer reading once the participant
     /// is standing still.
-    override public func moveTo(step: RSDStep, taskPath: RSDTaskPath) {
+    override public func moveTo(step: RSDStep, taskViewModel: RSDPathComponent) {
         
         // Call super. This will update the step path and add a step change marker.
-        super.moveTo(step: step, taskPath: taskPath)
+        super.moveTo(step: step, taskViewModel: taskViewModel)
         
         // Look to see if the configuration has a motion step and update state accordingly.
         if let motionStepId = self.locationConfiguration?.motionStepIdentifier {

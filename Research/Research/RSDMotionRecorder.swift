@@ -34,13 +34,13 @@
 import UIKit
 import CoreMotion
 
-extension RSDMotionRecorderConfiguration : RSDAsyncActionControllerVendor {
+extension RSDMotionRecorderConfiguration : RSDAsyncActionVendor {
     
     /// Instantiate a `RSDMotionRecorder`.
-    /// - parameter taskPath: The current task path to use to initialize the controller.
+    /// - parameter taskViewModel: The current task path to use to initialize the controller.
     /// - returns: A new instance of `RSDMotionRecorder`.
-    public func instantiateController(with taskPath: RSDTaskPath) -> RSDAsyncActionController? {
-        return RSDMotionRecorder(configuration: self, taskPath: taskPath, outputDirectory: taskPath.outputDirectory)
+    public func instantiateController(with taskViewModel: RSDPathComponent) -> RSDAsyncAction? {
+        return RSDMotionRecorder(configuration: self, taskViewModel: taskViewModel, outputDirectory: taskViewModel.outputDirectory)
     }
 }
 

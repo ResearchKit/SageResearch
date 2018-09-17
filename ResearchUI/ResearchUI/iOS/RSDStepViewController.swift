@@ -34,66 +34,35 @@
 import Foundation
 import AudioToolbox
 
-/// `RSDOptionalStepViewControllerDelegate` is a delegate protocol defined as `@objc` to allow the
-/// methods to be optionally implemented. As such, these methods cannot take Swift protocols as their
-/// paramenters.
-@objc
-public protocol RSDOptionalStepViewControllerDelegate : class, NSObjectProtocol {
-    
-    /// Called when the view is about to made visible.
-    func stepViewController(_ stepViewController: UIViewController, willAppear animated: Bool)
-    
-    /// Called when the view has been fully transitioned onto the screen.
-    func stepViewController(_ stepViewController: UIViewController, didAppear animated: Bool)
-    
-    ///  Called when the view is dismissed, covered, or otherwise hidden.
-    func stepViewController(_ stepViewController: UIViewController, willDisappear animated: Bool)
-    
-    /// Called after the view was dismissed, covered, or otherwise hidden.
-    func stepViewController(_ stepViewController: UIViewController, didDisappear animated: Bool)
-}
-
-/// `RSDStepViewControllerDelegate` is an extension of the `RSDUIActionHandler` protocol that also
-/// implements optional methods defined by `RSDOptionalStepViewControllerDelegate`.
-public protocol RSDStepViewControllerDelegate : RSDOptionalStepViewControllerDelegate, RSDUIActionHandler {
-}
-
-/// Protocol to allow setting the step view controller delegate on a view controller that may not
-/// inherit directly from UIViewController.
-/// - note: Any implementation should call the delegate methods during view appearance transitions.
-public protocol RSDStepViewControllerProtocol : RSDStepController {
-    
-    /// The step view controller delegate.
-    var delegate: RSDStepViewControllerDelegate? { get set }
-}
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
 /// UI architecture.
-open class RSDStepViewController : UIViewController, RSDStepViewControllerProtocol, RSDCancelActionController {
-
-    /// Pointer back to the task controller that is displaying the step controller. The implementation
-    /// of the task controller should set this pointer before displaying the step controller.
-    open weak var taskController: RSDTaskController!
+open class RSDStepViewController : UIViewController, RSDStepController, RSDCancelActionController {
     
-    /// The step view controller delegate.
-    open weak var delegate: RSDStepViewControllerDelegate?
-    
-    /// The step presented by the step view controller.
+    /// The stepViewModel presented by the step view controller.
     ///
-    /// If you use a storyboard to initialize the step view controller, `init(step:)` isn't called,
-    /// so you need to set the `step` property directly before the step view controller is presented.
+    /// If you use a storyboard to initialize the step view controller, `init(step:parent:)` isn't called,
+    /// so you need to set the `stepViewModel` property directly before the step view controller is presented.
     ///
-    /// Setting the value of `step` after the controller has been presented is an error that
-    /// generates an assertion. Modifying the value of `step` after the controller has been
+    /// Setting the value of `stepViewModel` after the controller has been presented is an error that
+    /// generates an assertion. Modifying the value of `stepViewModel` after the controller has been
     /// presented is an error that has undefined results.
-    ///
-    /// Subclasses that override the setter of this property must call super.
-    open var step: RSDStep! {
+    open var stepViewModel: RSDStepViewPathComponent! {
         didSet {
             if isVisible {
                 assertionFailure("Cannot set step after presenting step view controller")
             }
         }
+    }
+    
+    /// Instantiate a step view model appropriate to this step.
+    open func instantiateStepViewModel(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepViewPathComponent {
+        return RSDStepViewModel(step: step, parent: parent)
+    }
+    
+    /// Convenience property for accessing the step from the step view model.
+    public var step: RSDStep! {
+        return stepViewModel?.step
     }
     
     /// Convenience property for casting the step to a `RSDUIStep`.
@@ -111,19 +80,14 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         return step as? RSDActiveUIStep
     }
     
-    /// Convenience property for accessing the original result after navigating back or from a previous task run.
-    open var originalResult: RSDResult? {
-        return taskController.taskPath.previousResults?.rsd_last(where: { $0.identifier == self.step.identifier })
-    }
-    
     /// Returns the current result associated with this step. This property uses a lazy initializer to instantiate
     /// the result and append it to the step history if not found in the step history.
     lazy open var currentResult: RSDResult = {
-        if let lastResult = taskController.taskPath.result.stepHistory.last, lastResult.identifier == self.step.identifier {
+        if let lastResult = stepViewModel.taskResult.stepHistory.last, lastResult.identifier == self.step.identifier {
             return lastResult
         } else {
             let result = self.step.instantiateStepResult()
-            taskController.taskPath.appendStepHistory(with: result)
+            stepViewModel.taskResult.appendStepHistory(with: result)
             return result
         }
     }()
@@ -132,9 +96,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     
     /// Returns a new step view controller for the specified step.
     /// - parameter step: The step to be presented.
-    public init(step: RSDStep) {
+    public init(step: RSDStep, parent: RSDPathComponent?) {
         super.init(nibName: nil, bundle: nil)
-        self.step = step
+        self.stepViewModel = self.instantiateStepViewModel(for: step, with: parent)
     }
     
     /// Initialize the class using the given nib and bundle.
@@ -165,24 +129,21 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// Sets whether or not the body of the view uses light style.
     public private(set) var usesLightStyle: Bool = false
     
-    /// Override `viewWillAppear` to call through to the delegate method and if this is the first
-    /// appearance to set up the navigation, step details, and background color theme.
+    /// Override `viewWillAppear` to set up the navigation, step details, and background color theme if this
+    /// is the first appearance.
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        delegate?.stepViewController(self, willAppear: animated)
         if isFirstAppearance {
             setupViews()
             setupBackgroundColorTheme()
         }
     }
     
-    /// Override `viewDidAppear` to set the flag for `isVisible`, call the delegate, mark the result
-    /// `startDate`, perform the start commands, and if the active commands include disabling the
-    /// idle timer then do so in this method.
+    /// Override `viewDidAppear` to set the flag for `isVisible`, mark the result `startDate`, perform the
+    /// start commands, and if the active commands include disabling the idle timer then do so in this method.
     open override func viewDidAppear(_ animated: Bool) {
         isVisible = true
         super.viewDidAppear(animated)
-        delegate?.stepViewController(self, didAppear: animated)
         
         // Reset the goForward() flag.
         hasCalledGoForward = false
@@ -201,23 +162,17 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
     }
     
-    /// Override `viewWillDisappear` to set the `isVisible` flag, call the delegate, and enable
-    /// the idle timer if it was disabled in view will appear.
+    /// Override `viewWillDisappear` to set the `isVisible` flag and enable the idle timer if it was disabled
+    /// in view will appear.
     open override func viewWillDisappear(_ animated: Bool) {
         isVisible = false
         super.viewWillDisappear(animated)
-        delegate?.stepViewController(self, willDisappear: animated)
         
         if let commands = self.activeStep?.commands, commands.contains(.shouldDisableIdleTimer) {
             UIApplication.shared.isIdleTimerDisabled = false
         }
     }
     
-    /// Override `viewDidDisappear` to call the delegate.
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        delegate?.stepViewController(self, didDisappear: animated)
-    }
     
     // MARK: Navigation and Layout
     
@@ -260,8 +215,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     }
     
     /// Is forward navigation enabled? The default implementation will check the task controller.
-    open var isForwardEnabled: Bool {
-        return taskController.isForwardEnabled
+    public var isForwardEnabled: Bool {
+        return stepViewModel.isForwardEnabled
     }
     
     /// Callback from the task controller called on the current step controller when loading is finished
@@ -352,7 +307,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         setupNavigationView(header, placement: .header)
 
         // setup progress
-        if let (stepIndex, stepCount, _) = self.progress() {
+        if let (stepIndex, stepCount, _) = self.stepViewModel.progress() {
             header.progressView?.totalSteps = stepCount
             header.progressView?.currentStep = stepIndex
             header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
@@ -383,9 +338,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         
         // Check if the back button and skip button should be hidden for this task
         // and if so, then do so at this level. Otherwise, the button doesn't layout properly.
-        let backHiddened = self.shouldHideAction(for: .navigation(.goBackward))
+        let backHiddened = self.stepViewModel.shouldHideAction(for: .navigation(.goBackward))
         navigationView.isBackHidden = backHiddened
-        let skipHidden = self.shouldHideAction(for: .navigation(.skip))
+        let skipHidden = self.stepViewModel.shouldHideAction(for: .navigation(.skip))
         navigationView.isSkipHidden = skipHidden
         
         let isFooter = (placement == .footer)
@@ -488,8 +443,8 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         }
         
         // Set up whether or not the button is visible and it's text/image
-        btn.isHidden = self.shouldHideAction(for: actionType)
-        let btnAction: RSDUIAction? = self.action(for: actionType) ?? {
+        btn.isHidden = self.stepViewModel.shouldHideAction(for: actionType)
+        let btnAction: RSDUIAction? = self.stepViewModel.action(for: actionType) ?? {
             // Otherwise, look at the action and show the default based on the type
             switch actionType {
             case .navigation(.cancel):
@@ -497,13 +452,13 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             case .navigation(.goForward):
                 if self.step is RSDTaskInfoStep {
                     return RSDUIActionObject(buttonTitle: Localization.buttonGetStarted())
-                } else if self.taskController.hasStepAfter {
+                } else if (self.stepViewModel.parentTaskPath?.hasStepAfter ?? false ){
                     return RSDUIActionObject(buttonTitle: Localization.buttonNext())
                 } else {
                     return RSDUIActionObject(buttonTitle: Localization.buttonDone())
                 }                
             case .navigation(.goBackward):
-                return self.taskController.hasStepBefore ? RSDUIActionObject(buttonTitle: Localization.buttonBack()) : nil
+                return RSDUIActionObject(buttonTitle: Localization.buttonBack())
             case .navigation(.skip):
                 if self.step is RSDTaskInfoStep {
                     return RSDUIActionObject(buttonTitle: Localization.buttonSkipTask())
@@ -604,7 +559,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         hasCalledGoForward = true
         performStopCommands()
         speakEndCommand {
-            self.taskController.goForward()
+            self.stepViewModel.perform(actionType: .navigation(.goForward))
         }
     }
     var hasCalledGoForward = false
@@ -620,7 +575,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             return
         }
         stop()
-        self.taskController.goBack()
+        self.stepViewModel.perform(actionType: .navigation(.goBackward))
     }
     
     /// This method is called when the user taps the skip button. This method will call
@@ -638,7 +593,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     open func jumpForward() {
         RSDSpeechSynthesizer.shared.stopTalking()
         stop()
-        self.taskController.goForward()
+        self.stepViewModel.perform(actionType: .navigation(.goForward))
     }
     
     /// This method is called when the user taps the cancel button. By default, it confirms that the task
@@ -652,11 +607,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
         self.confirmCancel()
     }
     
-    /// Should the step view controller confirm the cancel action? By default, this will return `false` if
-    /// this is the first step in the task. Otherwise, this method will return `true`.
-    /// - returns: Whether or not to confirm the cancel action.
+    /// Call through to the task view model.
     open func shouldConfirmCancel() -> Bool {
-        return !self.taskController.taskPath.isFirstStep
+        return self.stepViewModel.rootPathComponent.shouldConfirmCancel()
     }
     
     /// Finish canceling the task. This is called once the cancel is confirmed by the user.
@@ -664,7 +617,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// - parameter shouldSave: Should the task progress be saved?
     open func cancelTask(shouldSave: Bool) {
         stop()
-        self.taskController.handleTaskCancelled(shouldSave: shouldSave)
+        self.stepViewModel.rootPathComponent.cancel(shouldSave: shouldSave)
     }
     
     /// This method is called when the user taps the "learn more" button. The default implementation
@@ -685,7 +638,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     /// - returns: `true` if the action was handled. If not handled, a default action associated with this
     ///            action type should be triggered by the calling method.
     open func actionTapped(with actionType: RSDUIActionType) -> Bool {
-        guard let action = self.action(for: actionType) else { return false }
+        guard let action = self.stepViewModel.action(for: actionType) else { return false }
         
         if let navAction = action as? RSDNavigationUIAction {
             // For a navigation action, assign the skip identifier and jump forward.
@@ -712,8 +665,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     open func assignSkipToIdentifier(_ skipToIdentifier: String) {
         
         // Look to see if there is a navigation action that should be added based on the action handler.
-        guard let taskPath = self.taskController.taskPath,
-            let previousResult = taskPath.result.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) else {
+        guard let previousResult = self.stepViewModel?.taskResult.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) else {
                 return
         }
         
@@ -729,130 +681,7 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
             navigationResult = collectionResult
         }
         navigationResult.skipToIdentifier = skipToIdentifier
-        taskPath.appendStepHistory(with: navigationResult)
-    }
-    
-    /// Get the action for the given action type. The default implementation check the step, the delegate
-    /// and the task as follows:
-    /// - Query the step for an action.
-    /// - If that returns nil, it will then check the delegate.
-    /// - If that returns nil, it will look up the task path chain for an action.
-    /// - Finally, if not found it will return nil.
-    ///
-    /// - parameter actionType: The action type to get.
-    /// - returns: The action if found.
-    open func action(for actionType: RSDUIActionType) -> RSDUIAction? {
-        guard step != nil else { return nil }
-        
-        // Check the cached actions first.
-        if let cachedAction = _mappedActions[actionType] {
-            return cachedAction as? RSDUIAction
-        }
-        
-        // If not in the cache, then find it.
-        let ret = _findAction(for: actionType)
-        _mappedActions[actionType] = ret ?? NSNull()
-        return ret
-    }
-    
-    private func _findAction(for actionType: RSDUIActionType) -> RSDUIAction? {
-        if let action = (self.step as? RSDUIActionHandler)?.action(for: actionType, on: step) {
-            // Allow the step to override the default from the delegate
-            return action
-        }
-        else if let action = self.delegate?.action(for: actionType, on: step) {
-            // If no override by the step then return the action from the delegate
-           return action
-        }
-        else if let action = recursiveTaskAction(for: actionType) {
-            // Finally check the task for a global action
-            return action
-        }
-        else {
-            return nil
-        }
-    }
-    
-    private var _mappedActions: [RSDUIActionType : Any] = [:]
-    
-    private func recursiveTaskAction(for actionType: RSDUIActionType) -> RSDUIAction? {
-        var taskPath = self.taskController.taskPath
-        repeat {
-            if let actionHandler = taskPath?.task as? RSDUIActionHandler,
-                let action = actionHandler.action(for: actionType, on: step) {
-                return action
-            }
-            taskPath = taskPath?.parentPath
-        } while (taskPath != nil)
-        return nil
-    }
-    
-    /// Calls through to `!shouldHideAction(for: .navigation(.goBackward))`
-    public var hasStepBefore: Bool {
-        return !shouldHideAction(for: .navigation(.goBackward))
-    }
-    
-    /// Calls through to `!shouldHideAction(for: .navigation(.goForward))`
-    public var hasStepAfter: Bool {
-        return !shouldHideAction(for: .navigation(.goForward))
-    }
-    
-    /// Should the action be hidden for the given action type?
-    ///
-    /// - The default implementation will first look to see if the step overrides and forces the
-    /// action to be hidden.
-    /// - If not, then the delegate will be queried next.
-    /// - If that does not return a value, then the task path will be checked.
-    ///
-    /// Finally, whether or not to hide the action will be determined based on the action type and
-    /// the state of the task as follows:
-    /// 1. `.navigation(.cancel)` - Always defaults to `false` (not hidden).
-    /// 2. `.navigation(.goForward)` - Hidden if the step is an active step that transitions automatically.
-    /// 3. `.navigation(.goBack)` - Hidden if the step is an active step that transitions automatically,
-    ///                             or if the task does not allow backward navigation.
-    /// 4. Others - Hidden if the `action()` is nil.
-    ///
-    /// - parameter actionType: The action type to get.
-    /// - returns: `true` if the action should be hidden.
-    open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
-        if let shouldHide = uiStep?.shouldHideAction(for: actionType, on: step) {
-            // Allow the step to override the default from the delegate
-            return shouldHide
-        }
-        else if let shouldHide = self.delegate?.shouldHideAction(for: actionType, on: step) {
-            // If no override by the step then return the action from the delegate if there is one
-            return shouldHide
-        }
-        else if let shouldHide = recursiveTaskShouldHideAction(for: actionType), self.action(for: actionType) == nil {
-            // Finally check if the task has any global settings
-            return shouldHide
-        }
-        else {
-            // Otherwise, look at the action and show the button based on the type
-            let transitionAutomatically = activeStep?.commands.contains(.transitionAutomatically) ?? false
-            switch actionType {
-            case .navigation(.cancel):
-                return false
-            case .navigation(.goForward):
-                return transitionAutomatically
-            case .navigation(.goBackward):
-                return !self.taskController.hasStepBefore || transitionAutomatically
-            default:
-                return self.action(for: actionType) == nil
-            }
-        }
-    }
-    
-    private func recursiveTaskShouldHideAction(for actionType: RSDUIActionType) -> Bool? {
-        var taskPath = self.taskController.taskPath
-        repeat {
-            if let actionHandler = taskPath?.task as? RSDUIActionHandler,
-                let shouldHide = actionHandler.shouldHideAction(for: actionType, on: step) {
-                return shouldHide
-            }
-            taskPath = taskPath?.parentPath
-        } while (taskPath != nil)
-        return nil
+        self.stepViewModel!.taskResult.appendStepHistory(with: navigationResult)
     }
     
     
@@ -985,8 +814,9 @@ open class RSDStepViewController : UIViewController, RSDStepViewControllerProtoc
     ///     - timeInterval: The time interval marker (ignored by default implementation).
     ///     - completion: A completion handler to call when the instruction has finished.
     open func speakInstruction(_ instruction: String, at timeInterval: TimeInterval, completion: RSDVoiceBoxCompletionHandler?) {
-        if self.activeStep?.requiresBackgroundAudio ?? false {
-            (self.taskController as? RSDTaskViewController)?.startBackgroundAudioSessionIfNeeded()
+        if self.activeStep?.requiresBackgroundAudio ?? false,
+            let taskController = self.stepViewModel.rootPathComponent.taskController as? RSDTaskViewController {
+            taskController.startBackgroundAudioSessionIfNeeded()
         }
         RSDSpeechSynthesizer.shared.speak(text: instruction, completion: completion)
     }
@@ -1196,7 +1026,7 @@ extension RSDCancelActionController {
         actions.append(discardResults)
         
         // Only add the option to save if the task controller supports it.
-        if self.taskController.canSaveTaskProgress {
+        if self.stepViewModel.rootPathComponent.canSaveTaskProgress() {
             let saveResults = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_SAVE"), style: .default) { (_) in
                 self.cancelTask(shouldSave: true)
             }

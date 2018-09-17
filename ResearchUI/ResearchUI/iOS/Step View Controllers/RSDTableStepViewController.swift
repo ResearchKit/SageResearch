@@ -45,7 +45,7 @@ import UIKit
 /// An instance of `RSDFormStepDataSource` is created by `setupModel()` and assigned to property
 /// `tableData`. This method is called by `viewWillAppear()` and serves as the `UITableViewDataSource`. The
 /// `tableData` also keeps track of answers that are derived from the user's input and it provides the
-/// `RSDResult` that is appended to the `RSDTaskPath` associated with this task.
+/// `RSDResult` that is appended to the `RSDTaskViewModel` associated with this task.
 ///
 /// This class is responsible for acquiring input from the user, validating it, and supplying it as an
 /// answer to to the model (tableData). This is typically done in delegate callbacks from various input
@@ -56,7 +56,7 @@ import UIKit
 /// fields). These steps will result in a `tableData` that has no sections and, therefore, no rows. So the
 /// tableView will simply have a headerView, no rows, and a footerView.
 ///
-open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate {
+open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate, RSDTaskViewControllerDelegate {
 
     /// The table view associated with this view controller. This will be created during `viewDidLoad()`
     /// with a default set up if it is `nil`. If this view controller is loaded from a nib or storyboard,
@@ -64,7 +64,9 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     @IBOutlet open var tableView: UITableView!
     
     /// The data source for this table.
-    open var tableData: RSDTableDataSource?
+    open var tableData: RSDTableDataSource? {
+        return self.stepViewModel as? RSDTableDataSource
+    }
     
     /// Convenience property for accessing the form step (if casting the step to a `RSDFormUIStep` is
     /// applicable).
@@ -76,7 +78,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     open class func doesSupport(_ step: RSDStep) -> Bool {
         // Only UI steps are supported
         guard let _ = step as? RSDUIStep else { return false }
-        if let tableStep = step as? RSDTableStep {
+        if let tableStep = step as? RSDFormUIStep {
             // TODO: syoung 02/26/2018 Implement support for image selection.
             // https://github.com/ResearchKit/SageResearch/issues/11
             return !tableStep.hasImageChoices
@@ -240,22 +242,26 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 .button]
     }
     
+    /// Override and set to an appropriate `RSDTableDataSource` instance.
+    override open func instantiateStepViewModel(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepViewPathComponent {
+        let supportedHints = type(of: self).supportedUIHints
+        let tableData: RSDTableDataSource
+        if let tableStep = step as? RSDTableStep,
+            let source = tableStep.instantiateDataSource(with: parent, for: supportedHints)
+        {
+            tableData = source
+        } else {
+            tableData = RSDFormStepDataSourceObject(step: step, parent: parent, supportedHints: supportedHints)
+        }
+        tableData.delegate = self
+        return tableData
+    }
+    
     /// Creates and assigns a new instance of the model. The default implementation will instantiate
     /// `RSDFormStepDataSourceObject` and set this as the `tableData`.
     open func setupModel() {
-        guard tableData == nil else { return }
-        
-        // Get the table data source from the step (if applicable)
-        let supportedHints = type(of: self).supportedUIHints
-        let taskPath = self.taskController.taskPath!
-        if let tableStep = self.step as? RSDTableStep,
-            let source = tableStep.instantiateDataSource(with: taskPath, for: supportedHints)
-            {
-            tableData = source
-        } else {
-            tableData = RSDFormStepDataSourceObject(step: self.step, taskPath: taskPath, supportedHints: supportedHints)
-        }
-        tableData?.delegate = self
+        guard tableData == nil, let existingViewModel = self.stepViewModel else { return }
+        self.stepViewModel = self.instantiateStepViewModel(for: existingViewModel.step, with: existingViewModel.parent)
         
         // after setting up the data source, check the enabled state of the forward button.
         self.answersDidChange(in: 0)
@@ -358,24 +364,6 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         // we only need some bottom margin if we have any table data (rows), otherwise, the bottom
         // margin built into the headerView is enough
         return RSDDefaultGenericStepLayoutConstants(numberOfSections: tableView.numberOfSections)
-    }
-
-    /// Specifies whether the next button should be enabled based on the validity of the answers for
-    /// all form items.
-    override open var isForwardEnabled: Bool {
-        if !super.isForwardEnabled {
-            // If super has forward disabled then return false
-            return false
-        } else if let allAnswersValid = tableData?.allAnswersValid() {
-            // Else if the tabledata has been set up then go with that answer
-            return allAnswersValid
-        } else if let inputFields = self.formStep?.inputFields, inputFields.count > 0 {
-            // are all the input fields optional?
-            return inputFields.reduce(true, { $0 && $1.isOptional })
-        } else {
-            // All checks pass. forward is enabled.
-            return true
-        }
     }
     
     // MARK: Actions
@@ -729,16 +717,41 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     /// Called when a user action on a cell or button is linked to a modal item.
     open func didSelectModalItem(_ modalItem: RSDModalStepTableItem, at indexPath: IndexPath) {
         guard let source = tableData as? RSDModalStepDataSource,
-            let taskViewController = self.taskController as? RSDTaskViewController
+            let taskViewModel = source.taskViewModel(for: modalItem)
             else {
                 assertionFailure("Cannot handle the button tap.")
                 return
         }
-        let step = source.step(for: modalItem)
-        let stepViewController = taskViewController.viewController(for: step)
-        source.willPresent(stepViewController, from: modalItem)
-        self.present(stepViewController, animated: true, completion: nil)
+        
+        _source = source
+        _modalItem = modalItem
+        let vc = RSDTaskViewController(taskViewModel: taskViewModel)
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
     }
+    
+    private var _source: RSDModalStepDataSource?
+    private var _modalItem: RSDModalStepTableItem?
+    
+    
+    // MARK: RSDTaskViewControllerDelegate
+    
+    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        guard let vc = taskController as? UIViewController else {
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        vc.dismiss(animated: true) {
+            self._source = nil
+            self._modalItem = nil
+        }
+    }
+    
+    open func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        guard let source = _source, let modalItem = _modalItem else { return }
+        source.saveAnswer(for: modalItem, from: taskViewModel)
+    }
+    
     
     // MARK: UITextView delegate
 
@@ -1011,23 +1024,25 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         self.answersDidChange(in: section)
     }
     
-    /// Called by a `RSDModalStepDataSource` to dismiss the presented step view controller.
-    open func tableDataSource(_ dataSource: RSDTableDataSource, didFinishWith stepController: RSDStepController) {
-        guard let vc = stepController as? UIViewController else { return }
-        vc.dismiss(animated: true) { }
-    }
-    
     /// Called *before* editing the table rows and sections.
     open func tableDataSourceWillBeginUpdate(_ dataSource: RSDTableDataSource) {
         self.tableView.beginUpdates()
     }
     
+    /// Called to remove rows from a data source. Calls to this method should be wrapped within a begin/end
+    /// update.
+    open func tableDataSource(_ dataSource: RSDTableDataSource, didRemoveRows removedRows:[IndexPath], with animation: RSDUIRowAnimation) {
+        self.tableView.deleteRows(at: removedRows, with: animation.tableAnimation())
+    }
+    
+    /// Called to add rows to a data source. Calls to this method should be wrapped within a begin/end
+    /// update.
+    open func tableDataSource(_ dataSource: RSDTableDataSource, didAddRows addedRows:[IndexPath], with animation: RSDUIRowAnimation) {
+        self.tableView.insertRows(at: addedRows, with: animation.tableAnimation())
+    }
+    
     /// Called *after* editing the table rows and sections.
-    open func tableDataSourceDidEndUpdate(_ dataSource: RSDTableDataSource, addedRows:[IndexPath], removedRows:[IndexPath]) {
-        // finish updating the table
-        let animation: UITableViewRowAnimation = self.isVisible ? .automatic : .none
-        self.tableView.deleteRows(at: removedRows, with: animation)
-        self.tableView.insertRows(at: addedRows, with: animation)
+    open func tableDataSourceDidEndUpdate(_ dataSource: RSDTableDataSource) {
         self.tableView.endUpdates()
     }
     
@@ -1104,6 +1119,13 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 self.scroll(to: self.activeTextInputView?.indexPath)
             }
         }
+    }
+}
+
+extension RSDUIRowAnimation {
+    
+    public func tableAnimation() -> UITableViewRowAnimation {
+        return UITableViewRowAnimation(rawValue: self.rawValue) ?? .automatic
     }
 }
 

@@ -34,10 +34,24 @@
 import UIKit
 import UserNotifications
 
+open class RSDOverviewStepViewModel: RSDStepViewModel {
+    
+    public fileprivate(set) var authorizationStatus: RSDAuthorizationStatus?
+    
+    /// Override the forward button to disable until the status is checked.
+    override open var isForwardEnabled: Bool {
+        return super.isForwardEnabled && !(authorizationStatus?.isDenied() ?? true)
+    }
+}
+
 /// `RSDOverviewStepViewController` is a customizable view controller that is designed to be the first view
 /// displayed for an active task that may require checking the user's permissions and allows the user to set
 /// a notification reminder to perform the task at a later time.
 open class RSDOverviewStepViewController: RSDStepViewController {
+    
+    override open func instantiateStepViewModel(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepViewPathComponent {
+        return RSDOverviewStepViewModel(step: step, parent: parent)
+    }
     
     /// Override viewDidAppear to set up notification handling.
     open override func viewDidAppear(_ animated: Bool) {
@@ -47,7 +61,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
         _updateAuthorizationStatus()
         
         // If this is a reminder action then set that and keep a pointer to it.
-        self.reminderAction = self.action(for: .navigation(.skip)) as? RSDReminderUIAction
+        self.reminderAction = self.stepViewModel.action(for: .navigation(.skip)) as? RSDReminderUIAction
         
         // Remove any previous reminder.
         if let reminderIdentifier = reminderAction?.reminderIdentifier {
@@ -57,13 +71,15 @@ open class RSDOverviewStepViewController: RSDStepViewController {
     
     
     // MARK: Permission handling
-    
-    /// Override the forward button to disable until the status is checked.
-    override open var isForwardEnabled: Bool {
-        return super.isForwardEnabled && !(_authStatus?.isDenied() ?? true)
+
+    private var _authStatus: RSDAuthorizationStatus? {
+        get {
+            return (self.stepViewModel as? RSDOverviewStepViewModel)?.authorizationStatus
+        }
+        set {
+            (self.stepViewModel as? RSDOverviewStepViewModel)?.authorizationStatus = newValue
+        }
     }
-    
-    private var _authStatus: RSDAuthorizationStatus?
     
     /// Check authorization status.
     private func _updateAuthorizationStatus() {
@@ -240,9 +256,9 @@ open class RSDOverviewStepViewController: RSDStepViewController {
     
     /// Default initializer. This initializer will initialize using the `nibName` and `bundle` defined on this class.
     /// - parameter step: The step to set for this view controller.
-    public override init(step: RSDStep) {
+    public override init(step: RSDStep, parent: RSDPathComponent?) {
         super.init(nibName: type(of: self).nibName, bundle: type(of: self).bundle)
-        self.step = step
+        self.stepViewModel = self.instantiateStepViewModel(for: step, with: parent)
     }
     
     /// Initialize the class using the given nib and bundle.

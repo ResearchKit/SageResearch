@@ -111,14 +111,10 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
     /// The type of the step.
     public let stepType: RSDStepType
     
-    /// The task transformer for vending a task.
-    public var taskTransformer: RSDTaskTransformer!
-    
     /// Default initializer.
     /// - parameter identifier: A short string that uniquely identifies the step.
-    public init(with taskInfo: RSDTaskInfo, taskTransformer: RSDTaskTransformer? = nil, stepType: RSDStepType = .taskInfo) {
+    public init(with taskInfo: RSDTaskInfo, stepType: RSDStepType = .taskInfo) {
         self.taskInfo = taskInfo
-        self.taskTransformer = taskTransformer ?? taskInfo.resourceTransformer
         self.stepType = stepType
     }
     
@@ -126,7 +122,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
     /// - parameter identifier: The new identifier.
     public func copy(with identifier: String) -> RSDTaskInfoStepObject {
         let taskInfo = self.taskInfo.copy(with: identifier)
-        return RSDTaskInfoStepObject(with: taskInfo, taskTransformer: taskTransformer, stepType: stepType)
+        return RSDTaskInfoStepObject(with: taskInfo, stepType: stepType)
     }
     
     /// Instantiate a step result that is appropriate for this step.
@@ -159,14 +155,6 @@ extension RSDTaskInfoObject : RSDTaskGroup {
     /// Returns `self` as the only item in the list.
     public var tasks: [RSDTaskInfo] {
         return [self]
-    }
-    
-    /// Map the task info to the task info step and create a task path from the step.
-    /// - parameter taskInfo: The task info to map from.
-    /// - returns: A new task path.
-    public func instantiateTaskPath(for taskInfo: RSDTaskInfo) -> RSDTaskPath? {
-        let step = RSDTaskInfoStepObject(with: self)
-        return RSDTaskPath(taskInfo: step)
     }
 }
 
