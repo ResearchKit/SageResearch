@@ -82,7 +82,7 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
         if let markers = self.progressMarkers {
             var progressMarkers = markers
             let searchRange = self.steps[..<idx].map { $0.identifier }
-            if let lastIdentifier = searchRange.rsd_last(where: { markers.contains($0) }),
+            if let lastIdentifier = searchRange.last(where: { markers.contains($0) }),
                 let progressIndex = markers.index(of: lastIdentifier) {
                 // If the marker is found then insert after it.
                 progressMarkers.insert(step.identifier, at: progressIndex + 1)

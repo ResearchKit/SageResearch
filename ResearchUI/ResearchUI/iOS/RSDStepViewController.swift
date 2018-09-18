@@ -665,7 +665,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     open func assignSkipToIdentifier(_ skipToIdentifier: String) {
         
         // Look to see if there is a navigation action that should be added based on the action handler.
-        guard let previousResult = self.stepViewModel?.taskResult.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) else {
+        guard let previousResult = self.stepViewModel?.taskResult.stepHistory.last(where: { $0.identifier == step.identifier }) else {
                 return
         }
         
@@ -960,7 +960,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             _goForwardOnActive()
         } else {
             _playAlarm()
-            _activeObserver = NotificationCenter.default.addObserver(forName: .UIApplicationDidBecomeActive, object: nil, queue: OperationQueue.main, using: { [weak self] (_) in
+            _activeObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (_) in
                 self?._goForwardOnActive()
             })
         }

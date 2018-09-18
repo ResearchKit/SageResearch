@@ -90,8 +90,8 @@ open class RSDSpeechSynthesizer : NSObject, RSDVoiceBox, AVSpeechSynthesizerDele
             stopTalking()
         }
         
-        if UIAccessibilityIsVoiceOverRunning() {
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, text)
+        if UIAccessibility.isVoiceOverRunning {
+            UIAccessibility.post(notification: UIAccessibility.Notification.announcement, argument: text)
         }
         
         let utterance = AVSpeechUtterance(string: text)

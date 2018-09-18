@@ -189,7 +189,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
         } else {
             content.body = Localization.localizedString("REMINDER_NOTIFICATION_WITHOUT_TITLE")
         }
-        content.sound = UNNotificationSound.default()
+        content.sound = UNNotificationSound.default
         if let bundleIdentifier = Bundle.main.bundleIdentifier {
             content.categoryIdentifier = "\(bundleIdentifier).RemindMeLater"
         }
@@ -223,7 +223,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
                 self?._requestAuthorization()
             case .denied:
                 self?.handleNotificationAuthorizationDenied()
-            case .authorized:
+            case .authorized, .provisional:
                 self?.remindMeLater()
             }
         }

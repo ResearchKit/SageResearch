@@ -84,7 +84,7 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
             self.transformedStep = try copyableStep.copy(with: identifier, decoder: decoder)
         }
         else if let copyableStep = stepDecoder.step as? RSDCopyWithIdentifier {
-            self.transformedStep = copyableStep.copy(with: identifier) as! RSDStep
+            self.transformedStep = (copyableStep.copy(with: identifier) as! RSDStep)
         }
         else {
             self.transformedStep = stepDecoder.step

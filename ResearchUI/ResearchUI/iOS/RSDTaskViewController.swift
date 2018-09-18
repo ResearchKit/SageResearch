@@ -54,7 +54,7 @@ public protocol RSDPageViewControllerProtocol {
 
 extension UIPageViewController : RSDPageViewControllerProtocol {
     public func setViewControllers(_ viewControllers: [UIViewController]?, direction: RSDStepDirection, animated: Bool, completion: ((Bool) -> Swift.Void)?) {
-        let pageDirection: UIPageViewControllerNavigationDirection = (direction == .reverse) ? .reverse : .forward
+        let pageDirection: UIPageViewController.NavigationDirection = (direction == .reverse) ? .reverse : .forward
         self.setViewControllers(viewControllers, direction: pageDirection, animated: animated && (direction != .none), completion: completion)
     }
 }
@@ -611,7 +611,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///
     /// - returns: If found, returns a view controller that conforms to `RSDPageViewControllerProtocol`.
     open func findPageViewController() -> (UIViewController & RSDPageViewControllerProtocol)? {
-        guard let vc = self.childViewControllers.first(where: { $0 is RSDPageViewControllerProtocol })
+        guard let vc = self.children.first(where: { $0 is RSDPageViewControllerProtocol })
             else {
                 return nil
         }
@@ -627,11 +627,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         // Set up the page view controller
         let pageVC = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         pageVC.edgesForExtendedLayout = UIRectEdge(rawValue: 0)
-        self.addChildViewController(pageVC)
+        self.addChild(pageVC)
         pageVC.view.frame = self.view.bounds
         self.view.addSubview(pageVC.view)
         pageVC.view.rsd_alignAllToSuperview(padding: 0)
-        pageVC.didMove(toParentViewController: self)
+        pageVC.didMove(toParent: self)
         return pageVC
     }
 
@@ -658,7 +658,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     /// Returns the currently active step controller (if any).
     public var currentStepViewController: (RSDStepController & UIViewController)? {
-        return pageViewController.childViewControllers.first as? (RSDStepController & UIViewController)
+        return pageViewController.children.first as? (RSDStepController & UIViewController)
     }
     
     /// Respond to a gesture to go back. Always returns `nil` but will call `goBack()` if appropriate.
@@ -708,7 +708,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         // Start the background audio session
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(AVAudioSessionCategoryPlayback, with: .interruptSpokenAudioAndMixWithOthers)
+            if #available(iOS 12.0, *) {
+                try session.setCategory(.playback, mode: .voicePrompt, options: .interruptSpokenAudioAndMixWithOthers)
+            } else {
+                try session.setCategory(.playback, mode: .default, options: .mixWithOthers)
+            }
             try session.setActive(true)
             audioSession = session
         }
@@ -730,7 +734,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     private func _stopAudioSession() {
         do {
             audioSession = nil
-            try AVAudioSession.sharedInstance().setActive(false, with: .notifyOthersOnDeactivation)
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         } catch let err {
             debugPrint("Failed to stop AV session. \(err)")
         }
@@ -815,4 +819,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         let errorResult = RSDErrorResultObject(identifier: identifier, error: error)
         controller.taskViewModel.taskResult.appendAsyncResult(with: errorResult)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
 }

@@ -118,9 +118,9 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             tableView.delegate = self
             tableView.dataSource = self
             tableView.separatorStyle = .none
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
             tableView.estimatedRowHeight = constants.defaultRowHeight
-            tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+            tableView.sectionHeaderHeight = UITableView.automaticDimension
             tableView.estimatedSectionHeaderHeight = constants.defaultSectionHeight
             
             view.addSubview(tableView)
@@ -153,7 +153,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         self.view.setNeedsLayout()
         
         // register for keyboard notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
         // Set up the model and view
         setupModel()
@@ -164,7 +164,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         super.viewWillDisappear(animated)
         
         // un-register for keyboard notifications
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         // Dismiss all textField's keyboard
         tableView?.endEditing(false)
@@ -181,7 +181,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         
         // need to save height of our nav view so it can be used to calculate the bottom inset (margin)
-        navigationViewHeight = navigationView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        navigationViewHeight = navigationView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         
         let totalHeight = tableView.contentSize.height + tableView.contentInset.top + navigationViewHeight
         let contentSizeExceedsTableHeight = totalHeight > tableView.frame.size.height
@@ -350,7 +350,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             // to get the tableView to size the headerView properly, we have to get the headerView height
             // and manually set the frame with that height. Do so only if the header is actually the
             // tableview's header and not a custom header.
-            let headerHeight = stepHeader.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            let headerHeight = stepHeader.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             stepHeader.frame = CGRect(x: 0, y: 0, width: tableView!.frame.size.width, height: headerHeight)
             tableView!.tableHeaderView = stepHeader
         }
@@ -621,7 +621,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         // using auto layout to constrain the navView to fill its superview after adding it to the textfield
         // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
         // navView and manually set its frame before assigning it to the text field
-        let navHeight = navView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        let navHeight = navView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         let navWidth = UIScreen.main.bounds.size.width
         navView.frame = CGRect(x: 0, y: 0, width: navWidth, height: navHeight)
         
@@ -1087,15 +1087,15 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     @objc func keyboardNotification(notification: NSNotification) {
         
         guard let userInfo = notification.userInfo,
-            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             else {
                 return
         }
         
-        let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-        let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
-        let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
-        let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+        let duration:TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+        let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
+        let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+        let animationCurve:UIView.AnimationOptions = UIView.AnimationOptions(rawValue: animationCurveRaw)
         if endFrame.origin.y >= UIScreen.main.bounds.size.height {
             // set the tableView bottom inset to default
             var inset = tableView.contentInset
@@ -1124,8 +1124,8 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
 
 extension RSDUIRowAnimation {
     
-    public func tableAnimation() -> UITableViewRowAnimation {
-        return UITableViewRowAnimation(rawValue: self.rawValue) ?? .automatic
+    public func tableAnimation() -> UITableView.RowAnimation {
+        return UITableView.RowAnimation(rawValue: self.rawValue) ?? .automatic
     }
 }
 

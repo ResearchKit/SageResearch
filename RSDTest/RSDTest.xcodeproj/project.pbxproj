@@ -207,11 +207,13 @@
 				TargetAttributes = {
 					F8373C8520964EC7004DD4E1 = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = FF24155C1F7AC31800D0BA5C;
 					};
 					FF24155C1F7AC31800D0BA5C = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -325,7 +327,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSDTest.app/RSDTest";
 			};
@@ -345,7 +347,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSDTest.app/RSDTest";
 			};
@@ -481,7 +483,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "877c46a3-e438-4856-ab71-0df11d8f51c4";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development: org.sagebase.RSDTest";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -504,7 +506,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "84a674c1-10a5-4b79-b2e8-05507424ffec";
 				PROVISIONING_PROFILE_SPECIFIER = "match Distribution: org.sagebase.RSDTest";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

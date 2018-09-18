@@ -66,9 +66,9 @@ extension RSDCollectionResult {
     /// Return a mapping of all the `RSDAnswerResult` objects in this collection as a mapping
     /// of the identifier to the value.
     public func answers() -> [String : Any] {
-        return self.inputResults.rsd_filteredDictionary { (result) -> (String, Any)? in
-            guard let answerResult = result as? RSDAnswerResult, let value = answerResult.value else { return nil }
-            return (answerResult.identifier, value)
+        return self.inputResults.reduce(into: [String : Any]()) { (hashtable, result) in
+            guard let answerResult = result as? RSDAnswerResult, let value = answerResult.value else { return }
+            hashtable[answerResult.identifier] = value
         }
     }
     

@@ -50,7 +50,7 @@ class TaskTableViewController: UITableViewController {
         super.viewDidLoad()
 
         // Use automatic hieght dimension
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         
         detailLabel.text = taskGroup.detail
     }
@@ -60,7 +60,7 @@ class TaskTableViewController: UITableViewController {
         
         // Dynamic sizing for the header view
         if let headerView = tableView.tableHeaderView {
-            let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             var headerFrame = headerView.frame
             
             // If we don't have this check, viewDidLayoutSubviews() will get

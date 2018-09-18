@@ -50,12 +50,12 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     private let processingQueue = DispatchQueue(label: "org.sagebase.Research.camera.processing")
     
     /// The source for the image picker.
-    open var sourceType: UIImagePickerControllerSourceType {
+    open var sourceType: UIImagePickerController.SourceType {
         return ((self.step as? RSDImagePickerStep)?.sourceType == .photoLibrary) ? .photoLibrary : .camera
     }
     
     /// The camera capture mode for the picker.
-    open var cameraCaptureMode: UIImagePickerControllerCameraCaptureMode {
+    open var cameraCaptureMode: UIImagePickerController.CameraCaptureMode {
         return mediaTypes.contains(.photo) ? .photo : .video
     }
     
@@ -133,11 +133,11 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
                 
         // Embed the picker in this view.
         picker.edgesForExtendedLayout = UIRectEdge(rawValue: 0)
-        self.addChildViewController(picker)
+        self.addChild(picker)
         picker.view.frame = self.view.bounds
         self.view.addSubview(picker.view)
         picker.view.rsd_alignAllToSuperview(padding: 0)
-        picker.didMove(toParentViewController: self)
+        picker.didMove(toParent: self)
     }
     
     /// Overridable method for creating a file identifier to use for saving the photo or video to the
@@ -166,8 +166,11 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     }
     
     /// When the image picker selects the image, the callback will save the image as an `RSDFileResult` and continue.
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let mType = info[UIImagePickerControllerMediaType] as? String, let mediaType = MediaType(rawValue: mType)
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        guard let mType = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.mediaType)] as? String, let mediaType = MediaType(rawValue: mType)
             else {
                 _captureFailed(info)
                 return
@@ -187,7 +190,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     }
     
     private func _didSelectVideo(_ info: [String : Any]) {
-        guard let chosenVideoURL = info[UIImagePickerControllerMediaURL] as? URL else {
+        guard let chosenVideoURL = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.mediaURL)] as? URL else {
             _captureFailed(info)
             return
         }
@@ -205,14 +208,14 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     }
     
     private func _didSelectImage(_ info: [String : Any]) {
-        guard let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+        guard let chosenImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage else {
             _captureFailed(info)
             return
         }
         
         var url: URL?
         do {
-            if let imageData = UIImageJPEGRepresentation(chosenImage, compressionQuality) {
+            if let imageData = chosenImage.jpegData(compressionQuality: compressionQuality) {
                 url = try RSDFileResultUtility.createFileURL(identifier: fileIdentifier(), ext: "jpeg",
                                                              outputDirectory: self.stepViewModel.outputDirectory)
                 _saveImage(imageData, to: url!)
@@ -289,4 +292,14 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }
