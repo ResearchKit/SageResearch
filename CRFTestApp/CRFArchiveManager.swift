@@ -126,7 +126,7 @@ public class CRFDataArchive : NSObject, RSDDataArchive {
         let jsonData = try encoder.encode(metadata)
         let json = String(data: jsonData, encoding: .utf8)
         #if DEBUG
-            print("Archive complete. outputDirectory: \(outputDirectory)\n\n\(json!)")
+        print("Archive complete. outputDirectory: \(String(describing: outputDirectory))\n\n\(json!)")
         #endif
         isComplete = true
     }

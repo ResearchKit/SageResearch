@@ -300,8 +300,8 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         captureDevice.activeFormat = currentFormat
         
         // Set the frame rate
-        captureDevice.activeVideoMinFrameDuration = CMTimeMake(1, _videoProcessor.frameRate)
-        captureDevice.activeVideoMaxFrameDuration = CMTimeMake(1, _videoProcessor.frameRate)
+        captureDevice.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: _videoProcessor.frameRate)
+        captureDevice.activeVideoMaxFrameDuration = CMTimeMake(value: 1, timescale: _videoProcessor.frameRate)
         
         // Belt & suspenders. For currently supported devices, HDR is not supported for the lowest
         // resolution format (which is what this recorder uses), but in case a device comes out that

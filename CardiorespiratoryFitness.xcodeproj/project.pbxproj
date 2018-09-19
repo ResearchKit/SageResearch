@@ -156,6 +156,13 @@
 			remoteGlobalIDString = F88725D82051C0F800A4B82F;
 			remoteInfo = CardiorespiratoryFitness;
 		};
+		F8EC751E2152C56100B529B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8BA7FB22051DA7C00A5B83A /* Research.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8BE123521370931000AAB1E;
+			remoteInfo = "Research (macOS)";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -427,6 +434,7 @@
 				F8BA7FBC2051DA7C00A5B83A /* Research.framework */,
 				F8BA7FC02051DA7C00A5B83A /* Research.framework */,
 				F8BA7FC22051DA7C00A5B83A /* Research.framework */,
+				F8EC751F2152C56100B529B3 /* Research.framework */,
 				F8BA7FBE2051DA7C00A5B83A /* ResearchTests_iOS.xctest */,
 				F87557D120811CA900235078 /* Research_UnitTest.framework */,
 			);
@@ -566,22 +574,23 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
 					F88725D82051C0F800A4B82F = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 					};
 					F88725E12051C0F900A4B82F = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = F8BA7FDF2051DC2D00A5B83A;
 					};
 					F8BA7FDF2051DC2D00A5B83A = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -591,6 +600,7 @@
 					};
 					F8BA7FF22051DC2E00A5B83A = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = F8BA7FDF2051DC2D00A5B83A;
 					};
@@ -682,6 +692,13 @@
 			fileType = wrapper.framework;
 			path = ResearchUI.framework;
 			remoteRef = F8BA7FD02051DA9000A5B83A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8EC751F2152C56100B529B3 /* Research.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Research.framework;
+			remoteRef = F8EC751E2152C56100B529B3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -973,7 +990,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -998,7 +1015,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1018,7 +1035,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CardiorespiratoryFitnessTests/Mock Objects/CardiorespiratoryFitnessTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CRFTestApp.app/CRFTestApp";
 			};
@@ -1038,7 +1055,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CardiorespiratoryFitnessTests/Mock Objects/CardiorespiratoryFitnessTests-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CRFTestApp.app/CRFTestApp";
 			};
@@ -1057,7 +1074,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "ee045a89-2e51-4fea-89b7-e804690a8052";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development org.sagebase.CRFTestApp";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1076,7 +1093,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "705f7195-fd35-442c-a194-b03990750397";
 				PROVISIONING_PROFILE_SPECIFIER = "match Distribution org.sagebase.CRFTestApp";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -1091,7 +1108,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.CRFTestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = CRFTestApp;
 			};
@@ -1107,7 +1124,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.CRFTestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = CRFTestApp;
 			};
