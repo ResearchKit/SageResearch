@@ -1,5 +1,5 @@
 {
-    "identifier"        : "Cardio 12MT",
+    "identifier"        : "Cardio12MT",
     "actions"           : { "cancel": { "type": "default", "iconName": "closeActivity" }},
     "shouldHideActions" : ["goBackward", "skip"],
     "progressMarkers"   : ["volumeUp", "goOutside", "heartRate.before", "run", "heartRate.after", "surveyAfter"],

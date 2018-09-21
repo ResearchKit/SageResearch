@@ -37,10 +37,10 @@ import Foundation
 public enum CRFTaskIdentifier : String, Codable, CaseIterable {
     
     /// The Cardio 12-minute Distance Test.
-    case cardio12MT = "Cardio 12MT"
+    case cardio12MT = "Cardio12MT"
     
     /// The Cardio Stair Step Test.
-    case cardioStairStep = "Cardio Stair Step"
+    case cardioStairStep = "CardioStairStep"
     
     /// The heart rate measurement only.
     case heartRateOnly = "HeartRate"

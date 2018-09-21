@@ -1,5 +1,5 @@
 {
-    "identifier"        : "Cardio Stair Step",
+    "identifier"        : "CardioStairStep",
     "actions"           : { "cancel": { "type":"default", "iconName": "closeActivity"}},
     "shouldHideActions" : ["goBackward", "skip"],
     "progressMarkers"   : ["volumeUp", "heartRate.before", "stairStep", "heartRate.after"],
