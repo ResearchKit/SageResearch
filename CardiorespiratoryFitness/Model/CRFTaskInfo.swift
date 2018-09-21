@@ -34,7 +34,7 @@
 import Foundation
 
 /// A list of all the tasks included in this module.
-public enum CRFTaskIdentifier : String, Codable {
+public enum CRFTaskIdentifier : String, Codable, CaseIterable {
     
     /// The Cardio 12-minute Distance Test.
     case cardio12MT = "Cardio 12MT"
@@ -42,14 +42,18 @@ public enum CRFTaskIdentifier : String, Codable {
     /// The Cardio Stair Step Test.
     case cardioStairStep = "Cardio Stair Step"
     
-    /// The default resource transformer for this task.
-    public func resourceTransformer() -> RSDResourceTransformer {
-        return CRFTaskTransformer(self)
-    }
+    /// The heart rate measurement only.
+    case heartRateOnly = "HeartRate"
     
-    /// List of all the task identifiers.
-    public static func all() -> [CRFTaskIdentifier] {
-        return [.cardio12MT, .cardioStairStep]
+    func task(with factory: CRFFactory) -> RSDTaskObject {
+        do {
+            let transformer = CRFTaskTransformer(self)
+            let mTask = try factory.decodeTask(with: transformer)
+            return mTask as! RSDTaskObject
+        }
+        catch let err {
+            fatalError("Failed to decode the task. \(err)")
+        }
     }
 }
 
@@ -73,12 +77,7 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
         
         // Pull the title, subtitle, and detail from the first step in the task resource.
         let factory = (RSDFactory.shared as? CRFFactory) ?? CRFFactory()
-        do {
-            let mTask = try factory.decodeTask(with: taskIdentifier.resourceTransformer())
-            self.task = mTask as! RSDTaskObject
-        } catch let err {
-            fatalError("Failed to decode the task. \(err)")
-        }
+        self.task = taskIdentifier.task(with: factory)
         if let step = (task.stepNavigator as? RSDConditionalStepNavigator)?.steps.first as? RSDUIStep {
             self.title = step.title
             self.subtitle = step.text
@@ -91,6 +90,8 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
             self.icon = try! RSDImageWrapper(imageName: "active12MinuteRun", bundle: Bundle(for: CRFFactory.self))
         case .cardioStairStep:
             self.icon = try! RSDImageWrapper(imageName: "activeStairStep", bundle: Bundle(for: CRFFactory.self))
+        case .heartRateOnly:
+            self.icon = try! RSDImageWrapper(imageName: "captureStartButton", bundle: Bundle(for: CRFFactory.self))
         }
     }
     
@@ -118,6 +119,8 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
             return 15
         case .cardioStairStep:
             return 5
+        case .heartRateOnly:
+            return 2
         }
     }
     
@@ -154,6 +157,8 @@ public struct CRFTaskTransformer : RSDResourceTransformer, Decodable {
             self.resourceName = "Cardio_12MT"
         case .cardioStairStep:
             self.resourceName = "Cardio_Stair_Step"
+        case .heartRateOnly:
+            self.resourceName = "HeartRate_Only"
         }
     }
     

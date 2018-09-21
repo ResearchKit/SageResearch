@@ -40,7 +40,7 @@ class TaskTableViewController: UITableViewController {
 
     @IBOutlet weak var detailLabel: UILabel!
     
-    var tasks = CRFTaskIdentifier.all().map { CRFTaskInfo($0) }
+    var tasks = CRFTaskIdentifier.allCases.map { CRFTaskInfo($0) }
     
     override func viewDidLoad() {
         super.viewDidLoad()

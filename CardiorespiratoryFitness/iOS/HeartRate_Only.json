@@ -1,0 +1,22 @@
+{
+    "identifier"        : "HeartRate",
+    "actions"           : { "cancel": { "type":"default", "iconName": "closeActivity"}},
+    "shouldHideActions" : ["goBackward", "skip"],
+    "asyncActions"      : [
+        {
+            "identifier"              : "motion",
+            "type"                    : "motion",
+            "startStepIdentifier"     : "heartRate",
+            "StopStepIdentifier"      : "heartRate",
+            "requiresBackgroundAudio" : true,
+            "recorderTypes"           : ["accelerometer", "gyro"]
+        }
+    ],
+    "type" : "transform",
+    "steps" : [{
+        "identifier" : "heartRate",
+        "isResting" : true,
+        "shouldSaveBuffer" : true
+    }],
+    "resourceTransformer" : { "resourceName": "HeartrateStep.json"}
+}

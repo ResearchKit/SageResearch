@@ -37,6 +37,12 @@ extension RSDStepType {
     static let heartRate: RSDStepType = "heartRate"
 }
 
+extension RSDStepNavigatorType {
+    
+    /// Defaults to transforming a navigator from a section.
+    public static let transform: RSDStepNavigatorType = "transform"
+}
+
 open class CRFFactory: RSDFactory {
 
     /// Override the base factory to vend the heart rate step.
@@ -46,6 +52,17 @@ open class CRFFactory: RSDFactory {
             return try CRFHeartRateStep(from: decoder)
         default:
             return try super.decodeStep(from: decoder, with: type)
+        }
+    }
+    
+    /// Override to implement custom step navigators.
+    override open func decodeStepNavigator(from decoder: Decoder, with type: RSDStepNavigatorType) throws -> RSDStepNavigator {
+        switch type {
+        case .transform:
+            let sectionStep = try self.decodeTransformableStep(from: decoder) as! RSDSectionStep
+            return sectionStep
+        default:
+            return try super.decodeStepNavigator(from: decoder, with: type)
         }
     }
 }
