@@ -37,7 +37,7 @@ import Foundation
 /// required to create a multiple component input field.
 open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultipleComponentOptions {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case choices, separator, defaultAnswer
     }
     
@@ -178,30 +178,9 @@ open class RSDMultipleComponentInputFieldObject : RSDInputFieldObject, RSDMultip
     
     override class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = allCodingKeys()
+        let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.choices, .separator, .defaultAnswer]
-        return codingKeys
-    }
-    
-    override class func validateAllKeysIncluded() -> Bool {
-        guard super.validateAllKeysIncluded() else { return false }
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .choices:
-                if idx != 0 { return false }
-            case .separator:
-                if idx != 1 { return false }
-            case .defaultAnswer:
-                if idx != 2 { return false }
-            }
-        }
-        return keys.count == 3
     }
     
     override class func examples() -> [[String : RSDJSONValue]] {

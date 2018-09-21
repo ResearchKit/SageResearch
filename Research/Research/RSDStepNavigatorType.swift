@@ -35,7 +35,7 @@ import Foundation
 
 /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
 /// the UI.
-public struct RSDStepNavigatorType : RSDFactoryTypeRepresentable, Codable {
+public struct RSDStepNavigatorType : RSDFactoryTypeRepresentable, Codable, Hashable {
     
     public let rawValue: String
     
@@ -49,21 +49,6 @@ public struct RSDStepNavigatorType : RSDFactoryTypeRepresentable, Codable {
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStepNavigatorType] {
         return [.conditional]
-    }
-}
-
-extension RSDStepNavigatorType : Equatable {
-    public static func ==(lhs: String, rhs: RSDStepNavigatorType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDStepNavigatorType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDStepNavigatorType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
     }
 }
 

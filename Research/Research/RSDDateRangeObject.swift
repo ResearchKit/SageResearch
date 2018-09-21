@@ -94,7 +94,7 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
         self.init(minimumDate: nil, maximumDate: nil, allowFuture: nil, allowPast: nil, minuteInterval: minuteInterval, dateCoder: dateCoder, defaultDate: defaultDate)
     }
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case minDate = "minimumDate", maxDate = "maximumDate", allowFuture, allowPast, minuteInterval, codingFormat, defaultDate
     }
     
@@ -194,37 +194,8 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
 extension RSDDateRangeObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
+        return CodingKeys.allCases
     }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.minDate, .maxDate, .allowFuture, .allowPast, .minuteInterval, .codingFormat, .defaultDate]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .minDate:
-                if idx != 0 { return false }
-            case .maxDate:
-                if idx != 1 { return false }
-            case .allowFuture:
-                if idx != 2 { return false }
-            case .allowPast:
-                if idx != 3 { return false }
-            case .minuteInterval:
-                if idx != 4 { return false }
-            case .codingFormat:
-                if idx != 5 { return false }
-            case .defaultDate:
-                if idx != 6 { return false }
-            }
-        }
-        return keys.count == 7
-    }
-    
     static func dateRangeExamples() -> [RSDDateRangeObject] {
         let minDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T00:00:00.000-07:00")!
         let maxDate = rsd_ISO8601TimestampFormatter.date(from: "2017-10-17T00:00:00.000-07:00")!

@@ -117,7 +117,7 @@ public struct RSDCohortNavigationRuleObject : RSDCohortNavigationRule, Codable {
     /// The identifier for the string to skip to.
     public let skipToIdentifier: String?
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case requiredCohorts, cohortOperator = "operator", skipToIdentifier
     }
     
@@ -146,27 +146,7 @@ extension RSDCohortRuleOperator : RSDDocumentableStringEnum {
 extension RSDCohortNavigationRuleObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.requiredCohorts, .cohortOperator, .skipToIdentifier]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .requiredCohorts:
-                if idx != 0 { return false }
-            case .cohortOperator:
-                if idx != 1 { return false }
-            case .skipToIdentifier:
-                if idx != 2 { return false }
-            }
-        }
-        return keys.count == 3
+        return CodingKeys.allCases
     }
     
     static func _examples() -> [RSDCohortNavigationRuleObject] {

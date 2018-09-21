@@ -37,7 +37,7 @@ import Foundation
 /// validation, and the order of display for the steps.
 public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, copyright, schemaInfo, asyncActions
     }
 
@@ -207,32 +207,9 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
     
     override class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = allCodingKeys()
+        let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .copyright, .schemaInfo, .asyncActions]
-        return codingKeys
-    }
-    
-    override class func validateAllKeysIncluded() -> Bool {
-        guard super.validateAllKeysIncluded() else { return false }
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .copyright:
-                if idx != 1 { return false }
-            case .schemaInfo:
-                if idx != 2 { return false }
-            case .asyncActions:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
     }
     
     class func examples() -> [[String : RSDJSONValue]] {

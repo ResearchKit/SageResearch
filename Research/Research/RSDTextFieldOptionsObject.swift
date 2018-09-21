@@ -67,7 +67,7 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
     /// Is the text field for password entry?
     public var isSecureTextEntry: Bool
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case textValidator, invalidMessage, maximumLength, isSecureTextEntry, autocapitalizationType, autocorrectionType, spellCheckingType, keyboardType
     }
     
@@ -158,37 +158,7 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
 extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.textValidator, .invalidMessage, .maximumLength, .isSecureTextEntry, .autocapitalizationType, .autocorrectionType, .spellCheckingType, .keyboardType]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .textValidator:
-                if idx != 0 { return false }
-            case .invalidMessage:
-                if idx != 1 { return false }
-            case .maximumLength:
-                if idx != 2 { return false }
-            case .isSecureTextEntry:
-                if idx != 3 { return false }
-            case .autocapitalizationType:
-                if idx != 4 { return false }
-            case .autocorrectionType:
-                if idx != 5 { return false }
-            case .spellCheckingType:
-                if idx != 6 { return false }
-            case .keyboardType:
-                if idx != 7 { return false }
-            }
-        }
-        return keys.count == 8
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {

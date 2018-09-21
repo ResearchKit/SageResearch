@@ -36,6 +36,10 @@ import Foundation
 /// `RSDStandardAsyncActionConfiguration` is a concrete implementation of `RSDRecorderConfiguration` that can be used to
 /// decode an async configuration for a recorder.
 public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Codable {
+    
+    private enum CodingKeys: String, CodingKey, CaseIterable {
+        case identifier, type, startStepIdentifier, stopStepIdentifier, _permissions = "permissions", _requiresBackgroundAudio = "requiresBackgroundAudio"
+    }
 
     /// A short string that uniquely identifies the asynchronous action within the task. If started asynchronously,
     /// then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.
@@ -51,10 +55,6 @@ public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Co
     /// An identifier marking the step at which to stop the action. If `nil`, then the action will be
     /// stopped when the task is stopped.
     public var stopStepIdentifier: String?
-    
-    private enum CodingKeys: String, CodingKey {
-        case identifier, type, startStepIdentifier, stopStepIdentifier, _permissions = "permissions", _requiresBackgroundAudio = "requiresBackgroundAudio"
-    }
     
     /// List of the permissions required for this action.
     public var permissionTypes: [RSDPermissionType] {
@@ -103,37 +103,11 @@ public struct RSDStandardAsyncActionConfiguration : RSDRecorderConfiguration, Co
 extension RSDStandardAsyncActionConfiguration : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startStepIdentifier, .stopStepIdentifier, ._permissions, ._requiresBackgroundAudio]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .type:
-                if idx != 1 { return false }
-            case .startStepIdentifier:
-                if idx != 2 { return false }
-            case .stopStepIdentifier:
-                if idx != 3 { return false }
-            case ._permissions:
-                if idx != 4 { return false }
-            case ._requiresBackgroundAudio:
-                if idx != 5 { return false }
-            }
-        }
-        return keys.count == 6
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {
-        let types = RSDStandardPermissionType.allStandardTypes()
+        let types = RSDStandardPermissionType.allCases
         return types.map { RSDStandardAsyncActionConfiguration(identifier: $0.rawValue, type: $0.asyncActionType, startStepIdentifier: "\($0.rawValue)StartStep", stopStepIdentifier: "\($0.rawValue)StopStep") }
     }
 }

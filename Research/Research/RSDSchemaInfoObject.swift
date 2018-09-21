@@ -34,7 +34,7 @@
 import Foundation
 
 /// `RSDSchemaInfoObject` is a concrete implementation of the `RSDSchemaInfo` protocol.
-public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable {
+public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable, Hashable {
     private let identifier: String
     private let revision: Int
     
@@ -48,7 +48,7 @@ public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable {
         return revision
     }
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier, revision
     }
     
@@ -62,41 +62,10 @@ public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable {
     }
 }
 
-extension RSDSchemaInfoObject : Equatable {
-    public static func ==(lhs: RSDSchemaInfoObject, rhs: RSDSchemaInfoObject) -> Bool {
-        return lhs.schemaIdentifier == rhs.schemaIdentifier &&
-            lhs.schemaVersion == rhs.schemaVersion
-    }
-}
-
-extension RSDSchemaInfoObject : Hashable {
-    public var hashValue : Int {
-        return (schemaIdentifier?.hashValue ?? 0) ^ schemaVersion
-    }
-}
-
 extension RSDSchemaInfoObject : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .revision]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .revision:
-                if idx != 1 { return false }
-            }
-        }
-        return keys.count == 2
+        return CodingKeys.allCases
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

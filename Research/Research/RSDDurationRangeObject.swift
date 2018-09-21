@@ -76,7 +76,7 @@ public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, 
         self.formatter = UnitDuration.defaultFormatter(for: units, baseUnit: baseUnit)
     }
 
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case minimumValue, maximumValue, stepInterval, unit, durationUnits
     }
     
@@ -327,31 +327,7 @@ extension NSCalendar.Unit {
 extension RSDDurationRangeObject : RSDDocumentableCodableObject {
 
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.minimumValue, .maximumValue, .stepInterval, .unit, .durationUnits]
-        return codingKeys
-    }
-
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .minimumValue:
-                if idx != 0 { return false }
-            case .maximumValue:
-                if idx != 1 { return false }
-            case .stepInterval:
-                if idx != 2 { return false }
-            case .unit:
-                if idx != 3 { return false }
-            case .durationUnits:
-                if idx != 4 { return false }
-            }
-        }
-        return keys.count == 5
+        return CodingKeys.allCases
     }
 
     static func rangeExamples() -> [RSDDurationRangeObject] {

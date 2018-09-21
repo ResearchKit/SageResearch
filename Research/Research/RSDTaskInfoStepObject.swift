@@ -35,7 +35,7 @@ import Foundation
 
 public struct RSDTaskInfoObject : RSDTaskInfo, RSDEmbeddedIconVendor, Decodable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, title, subtitle, detail, icon, _estimatedMinutes = "estimatedMinutes", _embeddedResource = "taskTransformer", _schemaInfoObject = "schemaInfo"
     }
     
@@ -161,37 +161,7 @@ extension RSDTaskInfoObject : RSDTaskGroup {
 extension RSDTaskInfoObject : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .title, .subtitle, .detail, .icon, ._estimatedMinutes, ._embeddedResource, ._schemaInfoObject]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .title:
-                if idx != 1 { return false }
-            case .subtitle:
-                if idx != 2 { return false }
-            case .detail:
-                if idx != 3 { return false }
-            case .icon:
-                if idx != 4 { return false }
-            case ._estimatedMinutes:
-                if idx != 5 { return false }
-            case ._embeddedResource:
-                if idx != 6 { return false }
-            case ._schemaInfoObject:
-                if idx != 7 { return false }
-            }
-        }
-        return keys.count == 8
+        return CodingKeys.allCases
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

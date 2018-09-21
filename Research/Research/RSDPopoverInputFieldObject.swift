@@ -123,7 +123,7 @@ open class RSDPopoverInputFieldObject : RSDFormUIStepObject, RSDPopoverInputFiel
         mutableField.inputPromptDetail = nil
     }
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case prompt, promptDetail, placeholder
     }
     

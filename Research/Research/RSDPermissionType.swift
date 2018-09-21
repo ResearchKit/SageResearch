@@ -72,7 +72,7 @@ public enum RSDAuthorizationStatus : Int {
 ///         this framework is to include a model that is platform-agnostic and can be used
 ///         independently of the device. (syoung 11/1/7/2017)
 ///
-public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
+public enum RSDStandardPermissionType: String, RSDPermissionType, Codable, CaseIterable {
     
     /// “Privacy - Camera Usage Description”
     /// Specifies the reason for your app to access the device’s camera.
@@ -113,16 +113,11 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable {
     public var asyncActionType: RSDAsyncActionType {
         return RSDAsyncActionType(rawValue: self.rawValue)
     }
-    
-    /// List of all the standard types.
-    public static func allStandardTypes() -> [RSDStandardPermissionType] {
-        return [.camera, .locationWhenInUse, .location, .microphone, .motion, .photoLibrary]
-    }
 }
 
 extension RSDStandardPermissionType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
-        return allStandardTypes().map{ $0.rawValue }
+        return allCases.map{ $0.rawValue }
     }
 }
 
@@ -130,7 +125,7 @@ extension RSDStandardPermissionType : RSDDocumentableStringEnum {
 /// the associated activity, task, or step.
 public struct RSDStandardPermission : Codable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case permissionType
         case title
         case reason

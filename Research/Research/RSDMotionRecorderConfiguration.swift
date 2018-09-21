@@ -210,7 +210,7 @@ public struct RSDMotionRecorderConfiguration : RSDRestartableRecorderConfigurati
     /// Set the flag to `true` to encode the samples as a CSV file.
     public var usesCSVEncoding : Bool?
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, type, recorderTypes, startStepIdentifier, stopStepIdentifier, frequency, _requiresBackgroundAudio = "requiresBackgroundAudio", usesCSVEncoding, _shouldDeletePrevious = "shouldDeletePrevious"
     }
     
@@ -243,39 +243,7 @@ extension RSDMotionRecorderType : RSDDocumentableStringEnum {
 extension RSDMotionRecorderConfiguration : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .recorderTypes, .startStepIdentifier, .stopStepIdentifier, .frequency, ._requiresBackgroundAudio, .type, .usesCSVEncoding, ._shouldDeletePrevious]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .recorderTypes:
-                if idx != 1 { return false }
-            case .startStepIdentifier:
-                if idx != 2 { return false }
-            case .stopStepIdentifier:
-                if idx != 3 { return false }
-            case .frequency:
-                if idx != 4 { return false }
-            case ._requiresBackgroundAudio:
-                if idx != 5 { return false }
-            case .type:
-                if idx != 6 { return false }
-            case .usesCSVEncoding:
-                if idx != 7 { return false }
-            case ._shouldDeletePrevious:
-                if idx != 8 { return false }
-            }
-        }
-        return keys.count == 9
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {

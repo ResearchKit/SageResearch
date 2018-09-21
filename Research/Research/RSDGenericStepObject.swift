@@ -41,7 +41,7 @@ import Foundation
 ///
 public struct RSDGenericStepObject : RSDGenericStep, Decodable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, stepType = "type"
     }
 

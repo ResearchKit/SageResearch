@@ -74,7 +74,7 @@ public struct RSDTaskResultObject : RSDTaskResult, Codable {
         self.type = .task
     }
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, type, startDate, endDate, taskRunUUID, schemaInfo, stepHistory, asyncResults
     }
     
@@ -138,37 +138,7 @@ public struct RSDTaskResultObject : RSDTaskResult, Codable {
 extension RSDTaskResultObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .taskRunUUID, .schemaInfo, .stepHistory, .asyncResults]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .type:
-                if idx != 1 { return false }
-            case .startDate:
-                if idx != 2 { return false }
-            case .endDate:
-                if idx != 3 { return false }
-            case .taskRunUUID:
-                if idx != 4 { return false }
-            case .schemaInfo:
-                if idx != 5 { return false }
-            case .stepHistory:
-                if idx != 6 { return false }
-            case .asyncResults:
-                if idx != 7 { return false }
-            }
-        }
-        return keys.count == 8
+        return CodingKeys.allCases
     }
     
     static func exampleResult() -> RSDTaskResultObject {

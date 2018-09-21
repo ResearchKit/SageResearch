@@ -108,7 +108,7 @@ public struct RSDRecordMarker : RSDSampleRecord {
     ///            "timestamp": 0
     ///        }
     ///     ```
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case uptime, stepPath, timestampDate, timestamp
     }
 }
@@ -863,29 +863,7 @@ public class RSDRecordSampleLogger : RSDDataLogger {
 extension RSDRecordMarker : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.uptime, .stepPath, .timestampDate, .timestamp]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .uptime:
-                if idx != 0 { return false }
-            case .stepPath:
-                if idx != 1 { return false }
-            case .timestampDate:
-                if idx != 2 { return false }
-            case .timestamp:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {

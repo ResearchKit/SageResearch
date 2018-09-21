@@ -41,9 +41,9 @@ import Foundation
 ///
 /// - seealso: `RSDAnswerResult` and `RSDFormDataType`
 ///
-public struct RSDAnswerResultType : Codable {
+public struct RSDAnswerResultType : Codable, Hashable, Equatable {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case baseType, sequenceType, formDataType, dateFormat, dateLocaleIdentifier, unit, sequenceSeparator
     }
     
@@ -66,11 +66,6 @@ public struct RSDAnswerResultType : Codable {
         case string
         /// Codable
         case codable
-        
-        /// List of all the base types
-        public static var all: Set<BaseType> {
-            return [.boolean, .data, .date, .decimal, .integer, .string, .codable]
-        }
     }
     
     /// The sequence type of the answer result. This is used to represent a multiple-choice
@@ -82,11 +77,6 @@ public struct RSDAnswerResultType : Codable {
         
         /// Dictionary
         case dictionary
-        
-        /// List of all the sequence types
-        public static  var all: Set<SequenceType> {
-            return [.array, .dictionary]
-        }
     }
     
     /// The base type for the answer.
@@ -163,21 +153,9 @@ public struct RSDAnswerResultType : Codable {
     
     /// Static type for a `RSDAnswerResultType` with a `Codable` base type.
     public static let codable = RSDAnswerResultType(baseType: .codable)
-}
 
-// MARK: Equatable and Hashable
-extension RSDAnswerResultType : Hashable, Equatable {
-    
     public var description: String {
         return "\(baseType)|\(String(describing:sequenceType))|\(String(describing:dateFormat))|\(String(describing:unit))|\(String(describing:sequenceSeparator))"
-    }
-    
-    public var hashValue: Int {
-        return description.hashValue
-    }
-    
-    public static func ==(lhs: RSDAnswerResultType, rhs: RSDAnswerResultType) -> Bool {
-        return lhs.description == rhs.description
     }
 }
 
@@ -193,34 +171,7 @@ extension RSDAnswerResultType.SequenceType : RSDDocumentableStringEnum {
 extension RSDAnswerResultType : RSDDocumentableCodableObject {
 
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        return [.baseType, .sequenceType, .formDataType, .dateFormat, .dateLocaleIdentifier, .unit, .sequenceSeparator]
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .baseType:
-                if idx != 0 { return false }
-            case .sequenceType:
-                if idx != 1 { return false }
-            case .formDataType:
-                if idx != 2 { return false }
-            case .dateFormat:
-                if idx != 3 { return false }
-            case .dateLocaleIdentifier:
-                if idx != 4 { return false }
-            case .unit:
-                if idx != 5 { return false }
-            case .sequenceSeparator:
-                if idx != 6 { return false }
-            }
-        }
-        return keys.count == 7
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {
@@ -231,10 +182,10 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
     static func examplesWithValues() -> [(answerType: RSDAnswerResultType, value: Any)] {
         var examples: [(RSDAnswerResultType, Any)] = []
 
-        let sequenceTypes = SequenceType.all
+        let sequenceTypes = SequenceType.allCases
         
         func addExamples(sequenceType: SequenceType?) {
-            let baseTypes = BaseType.all
+            let baseTypes = BaseType.allCases
             for baseType in baseTypes {
                 switch baseType {
                 case .boolean:

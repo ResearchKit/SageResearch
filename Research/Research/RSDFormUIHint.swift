@@ -38,61 +38,67 @@ import Foundation
 /// for an input field. Not all ui hints are applicable to all data types or devices, and therefore the ui hint
 /// may be ignored by the application displaying the input field to the user.
 ///
-public struct RSDFormUIHint : RawRepresentable, Codable {
-    public typealias RawValue = String
-    
-    public private(set) var rawValue: String
+public struct RSDFormUIHint : RawRepresentable, Codable, Hashable {
+
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
     
+    enum StandardHints : String, Codable, CaseIterable {
+        case button, checkbox, combobox, disclosureArrow, link, list, multipleLine, picker, popover, radioButton, section, slider, textfield, toggle
+        
+        var hint: RSDFormUIHint {
+            return RSDFormUIHint(rawValue: self.rawValue)
+        }
+    }
+    
     /// Input field of a button-style cell that can be used to display a detail view.
-    public static let button: RSDFormUIHint = "button"
+    public static let button = StandardHints.button.hint
     
     /// List with a checkbox next to each item.
-    public static let checkbox: RSDFormUIHint = "checkbox"
+    public static let checkbox = StandardHints.checkbox.hint
     
     /// Drop-down with a textfield for "other".
-    public static let combobox: RSDFormUIHint = "combobox"
+    public static let combobox = StandardHints.combobox.hint
     
     /// Input field of a disclosure arrow cell that can be used to display a detail view.
-    public static let disclosureArrow: RSDFormUIHint = "disclosureArrow"
+    public static let disclosureArrow = StandardHints.disclosureArrow.hint
     
     /// Input field of a link-style cell that can be used to display a detail view.
-    public static let link: RSDFormUIHint = "link"
+    public static let link = StandardHints.link.hint
     
     /// List of selectable cells.
-    public static let list: RSDFormUIHint = "list"
+    public static let list = StandardHints.list.hint
     
     /// Multiple line text view.
-    public static let multipleLine: RSDFormUIHint = "multipleLine"
+    public static let multipleLine = StandardHints.multipleLine.hint
     
     /// Text field with a picker wheel as the keyboard.
-    public static let picker: RSDFormUIHint = "picker"
+    public static let picker = StandardHints.picker.hint
     
     /// Text entry using a modal popover box.
-    public static let popover: RSDFormUIHint = "popover"
+    public static let popover = StandardHints.popover.hint
     
     /// Radio button.
-    public static let radioButton: RSDFormUIHint = "radioButton"
+    public static let radioButton = StandardHints.radioButton.hint
     
     /// Input field for a "detail" that is displayed inline as a section.
-    public static let section: RSDFormUIHint = "section"
+    public static let section = StandardHints.section.hint
     
     /// Slider.
-    public static let slider: RSDFormUIHint = "slider"
+    public static let slider = StandardHints.slider.hint
     
     /// Text field.
-    public static let textfield: RSDFormUIHint = "textfield"
+    public static let textfield = StandardHints.textfield.hint
     
     /// Toggle (segmented) button.
-    public static let toggle: RSDFormUIHint = "toggle"
+    public static let toggle = StandardHints.toggle.hint
     
     /// A list of all the `RSDFormUIHint` values that are standard hints.
     public static var allStandardHints: Set<RSDFormUIHint> {
-        return [.button, .checkbox, .combobox, .disclosureArrow, .link, .list, .multipleLine, .picker,
-                .popover, .radioButton, .section, .slider, .textfield, .toggle]
+        return Set(StandardHints.allCases.map { $0.hint })
     }
 }
 
@@ -108,15 +114,7 @@ extension RSDFormUIHint : Equatable {
     }
 }
 
-extension RSDFormUIHint : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
 extension RSDFormUIHint : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }
