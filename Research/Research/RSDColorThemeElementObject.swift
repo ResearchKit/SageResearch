@@ -43,7 +43,7 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     let _backgroundColorName: String?
     let _usesLightStyle: Bool?
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case _backgroundColorName = "backgroundColor"
         case _usesLightStyle = "usesLightStyle"
         case bundleIdentifier
@@ -132,29 +132,7 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
 extension RSDColorThemeElementObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [._backgroundColorName, ._usesLightStyle, .bundleIdentifier, .colorStyle]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case ._backgroundColorName:
-                if idx != 0 { return false }
-            case ._usesLightStyle:
-                if idx != 1 { return false }
-            case .bundleIdentifier:
-                if idx != 2 { return false }
-            case .colorStyle:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func colorThemeExamples() -> [RSDColorThemeElementObject] {

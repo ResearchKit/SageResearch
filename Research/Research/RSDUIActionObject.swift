@@ -64,7 +64,7 @@ extension RSDEmbeddedResourceUIAction {
 /// title and image displayed for a given action of the UI.
 public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case buttonTitle, iconName, bundleIdentifier
     }
     
@@ -112,7 +112,7 @@ public struct RSDUIActionObject : RSDEmbeddedResourceUIAction, Codable {
 /// `RSDNavigationUIActionObject` implements an action for navigating to another step in a task.
 public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavigationUIAction, Codable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case skipToIdentifier, buttonTitle, iconName, bundleIdentifier
     }
     
@@ -145,7 +145,7 @@ public struct RSDNavigationUIActionObject : RSDEmbeddedResourceUIAction, RSDNavi
 /// the participant about doing a particular task later.
 public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDReminderUIAction, Codable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case reminderIdentifier, _buttonTitle = "buttonTitle", iconName, bundleIdentifier
     }
     
@@ -181,7 +181,7 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDRemind
 /// webview. The url can either be fully qualified or optionally point to an embedded resource. 
 public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebViewUIAction, Codable {
 
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case  url, buttonTitle, iconName, bundleIdentifier
     }
     
@@ -238,28 +238,10 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
 extension RSDUIActionObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
+        return CodingKeys.allCases
     }
     
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.buttonTitle, .iconName, .bundleIdentifier]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .buttonTitle:
-                if idx != 0 { return false }
-            case .iconName:
-                if idx != 1 { return false }
-            case .bundleIdentifier:
-                if idx != 2 { return false }
-            }
-        }
-        return keys.count == 3
-    }
+
     
     static func actionExamples() -> [RSDUIActionObject] {
         let titleAction = RSDUIActionObject(buttonTitle: "Go, Dogs! Go")
@@ -275,29 +257,7 @@ extension RSDUIActionObject : RSDDocumentableCodableObject {
 extension RSDNavigationUIActionObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.buttonTitle, .iconName, .bundleIdentifier, .skipToIdentifier]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .buttonTitle:
-                if idx != 0 { return false }
-            case .iconName:
-                if idx != 1 { return false }
-            case .bundleIdentifier:
-                if idx != 2 { return false }
-            case .skipToIdentifier:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func actionExamples() -> [RSDNavigationUIActionObject] {
@@ -313,29 +273,7 @@ extension RSDNavigationUIActionObject : RSDDocumentableCodableObject {
 extension RSDWebViewUIActionObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.buttonTitle, .iconName, .bundleIdentifier, .url]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .buttonTitle:
-                if idx != 0 { return false }
-            case .iconName:
-                if idx != 1 { return false }
-            case .bundleIdentifier:
-                if idx != 2 { return false }
-            case .url:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func actionExamples() -> [RSDWebViewUIActionObject] {

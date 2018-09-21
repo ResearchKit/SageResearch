@@ -503,7 +503,7 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
     // Returns the speed of the location in m/s; `nil` if speed is invalid.
     public let speed: Double?
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case uptime, timestamp, stepPath, timestampDate, horizontalAccuracy, relativeDistance, latitude, longitude, verticalAccuracy, altitude, totalDistance, course, speed
     }
     
@@ -580,47 +580,7 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
 extension RSDDistanceRecord : RSDDocumentableCodableObject {
     
     public static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.uptime, .timestamp, .stepPath, .timestampDate, .horizontalAccuracy, .relativeDistance, .latitude, .longitude, .verticalAccuracy, .altitude, .totalDistance, .course, .speed]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .uptime:
-                if idx != 0 { return false }
-            case .timestamp:
-                if idx != 1 { return false }
-            case .stepPath:
-                if idx != 2 { return false }
-            case .timestampDate:
-                if idx != 3 { return false }
-            case .horizontalAccuracy:
-                if idx != 4 { return false }
-            case .relativeDistance:
-                if idx != 5 { return false }
-            case .latitude:
-                if idx != 6 { return false }
-            case .longitude:
-                if idx != 7 { return false }
-            case .verticalAccuracy:
-                if idx != 8 { return false }
-            case .altitude:
-                if idx != 9 { return false }
-            case .totalDistance:
-                if idx != 10 { return false }
-            case .course:
-                if idx != 11 { return false }
-            case .speed:
-                if idx != 12 { return false }
-            }
-        }
-        return keys.count == 13
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {

@@ -33,12 +33,12 @@
 
 import Foundation
 
+
+
 /// `RSDIdentifier` is intended to allow a developer to define constants for the identifiers
 /// that are used to define the tasks, steps, input fields, and async actions associated with
 /// a given task or task group.
-///
-/// - note: The base implementation includes "exit"
-public struct RSDIdentifier : RawRepresentable, Codable {
+public struct RSDIdentifier : RawRepresentable, Codable, Hashable {
     public typealias RawValue = String
     
     public private(set) var rawValue: String
@@ -47,12 +47,30 @@ public struct RSDIdentifier : RawRepresentable, Codable {
         self.rawValue = rawValue
     }
     
-    public static let exit: RSDIdentifier = "exit"
-    public static let nextSection: RSDIdentifier = "nextSection"
-    public static let nextStep: RSDIdentifier = "nextStep"
+    enum RestrictedIdentifiers : String, Codable, CaseIterable {
+        case exit, nextSection, nextStep
+    }
+    
+    public static let exit = RestrictedIdentifiers.exit.identifierValue
+    public static let nextSection = RestrictedIdentifiers.nextSection.identifierValue
+    public static let nextStep = RestrictedIdentifiers.nextStep.identifierValue
     
     public static func allGlobalIdentifiers() -> [RSDIdentifier] {
-        return [.exit, .nextSection, .nextStep]
+        return RestrictedIdentifiers.allCases.map { $0.identifierValue }
+    }
+}
+
+extension RawRepresentable where Self.RawValue == String {
+    
+    public var identifierValue: RSDIdentifier {
+        return RSDIdentifier(rawValue: self.rawValue)
+    }
+}
+
+extension RSDIdentifier : ExpressibleByStringLiteral {
+    
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
     }
 }
 
@@ -63,22 +81,14 @@ extension RSDIdentifier : Equatable {
     public static func ==(lhs: String, rhs: RSDIdentifier) -> Bool {
         return lhs == rhs.rawValue
     }
+    public static func ==(lhs: String?, rhs: RSDIdentifier) -> Bool {
+        return lhs == rhs.rawValue
+    }
     public static func ==(lhs: RSDIdentifier, rhs: String) -> Bool {
         return lhs.rawValue == rhs
     }
-}
-
-extension RSDIdentifier : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
-extension RSDIdentifier : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
+    public static func ==(lhs: RSDIdentifier, rhs: String?) -> Bool {
+        return lhs.rawValue == rhs
     }
 }
 

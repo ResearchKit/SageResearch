@@ -58,7 +58,7 @@ extension RSDImageWrapper : RSDFetchableImageThemeElement {
 /// `RSDFetchableImageThemeElementObject` is a `Codable` concrete implementation of `RSDFetchableImageThemeElement`.
 public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElement, RSDDecodableBundleInfo, Codable {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case imageName, bundleIdentifier, placementType, _size = "size"
     }
 
@@ -122,7 +122,7 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
 /// `RSDAnimatedImageThemeElementObject` is a `Codable` concrete implementation of `RSDAnimatedImageThemeElement`.
 public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDDecodableBundleInfo, Codable {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case imageNames, animationDuration, bundleIdentifier, placementType, _size = "size"
     }
     
@@ -239,29 +239,7 @@ struct RSDSizeWrapper : Codable {
 extension RSDFetchableImageThemeElementObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.imageName, .bundleIdentifier, .placementType, ._size]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .imageName:
-                if idx != 0 { return false }
-            case .bundleIdentifier:
-                if idx != 1 { return false }
-            case .placementType:
-                if idx != 2 { return false }
-            case ._size:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func imageThemeExamples() -> [RSDFetchableImageThemeElementObject] {
@@ -278,31 +256,7 @@ extension RSDFetchableImageThemeElementObject : RSDDocumentableCodableObject {
 extension RSDAnimatedImageThemeElementObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.imageNames, .animationDuration, .bundleIdentifier, .placementType, ._size]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .imageNames:
-                if idx != 0 { return false }
-            case .animationDuration:
-                if idx != 1 { return false }
-            case .bundleIdentifier:
-                if idx != 2 { return false }
-            case .placementType:
-                if idx != 3 { return false }
-            case ._size:
-                if idx != 4 { return false }
-            }
-        }
-        return keys.count == 5
+        return CodingKeys.allCases
     }
     
     static func imageThemeExamples() -> [RSDAnimatedImageThemeElementObject] {

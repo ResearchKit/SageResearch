@@ -93,7 +93,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
     
     // MARK: Codable
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case value, text, detail, icon, isExclusive
     }
 
@@ -160,31 +160,7 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
 extension RSDChoiceObject : RSDDocumentableDecodableObject {
 
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.value, .text, .detail, .icon, .isExclusive]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .value:
-                if idx != 0 { return false }
-            case .text:
-                if idx != 1 { return false }
-            case .detail:
-                if idx != 2 { return false }
-            case .icon:
-                if idx != 3 { return false }
-            case .isExclusive:
-                if idx != 4 { return false }
-            }
-        }
-        return keys.count == 5
+        return CodingKeys.allCases
     }
     
     static func exampleDictionary() -> [String : RSDJSONValue]? {

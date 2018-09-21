@@ -40,7 +40,7 @@ import UIKit
 /// A concrete implementation for a `RSDImagePickerStep`.
 public struct RSDImagePickerStepObject: RSDImagePickerStep, Codable {
 
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, stepType = "type", sourceType, mediaTypes
     }
     

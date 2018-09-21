@@ -53,6 +53,10 @@ import Foundation
 @available(iOS 10.0, *)
 public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, Codable {
     
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case identifier, type, motionStepIdentifier, startStepIdentifier, stopStepIdentifier, usesCSVEncoding
+    }
+    
     /// A short string that uniquely identifies the asynchronous action within the task. If started
     /// asynchronously, then the identifier maps to a result stored in `RSDTaskResult.asyncResults`.
     public let identifier: String
@@ -74,10 +78,6 @@ public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, Codab
     
     /// Set the flag to `true` to encode the samples as a CSV file.
     public var usesCSVEncoding : Bool?
-    
-    private enum CodingKeys : String, CodingKey {
-        case identifier, type, motionStepIdentifier, startStepIdentifier, stopStepIdentifier, usesCSVEncoding
-    }
     
     /// Default initializer.
     /// - parameters:
@@ -116,33 +116,7 @@ public struct RSDDistanceRecorderConfiguration : RSDRecorderConfiguration, Codab
 extension RSDDistanceRecorderConfiguration : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .motionStepIdentifier, .startStepIdentifier, .stopStepIdentifier, .usesCSVEncoding]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .type:
-                if idx != 1 { return false }
-            case .motionStepIdentifier:
-                if idx != 2 { return false }
-            case .startStepIdentifier:
-                if idx != 3 { return false }
-            case .stopStepIdentifier:
-                if idx != 4 { return false }
-            case .usesCSVEncoding:
-                if idx != 5 { return false }
-            }
-        }
-        return keys.count == 6
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {

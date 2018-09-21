@@ -34,7 +34,7 @@ import Foundation
 
 /// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate
 /// result type.
-public struct RSDResultType : RSDFactoryTypeRepresentable, Codable {
+public struct RSDResultType : RSDFactoryTypeRepresentable, Codable, Hashable {
     
     public let rawValue: String
     
@@ -69,27 +69,7 @@ public struct RSDResultType : RSDFactoryTypeRepresentable, Codable {
     }
 }
 
-extension RSDResultType : Equatable {
-    public static func ==(lhs: RSDResultType, rhs: RSDResultType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDResultType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDResultType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDResultType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
-extension RSDResultType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
+extension RSDResultType : ExpressibleByStringLiteral {    
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }

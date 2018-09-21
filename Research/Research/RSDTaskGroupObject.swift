@@ -36,7 +36,7 @@ import Foundation
 /// `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
 public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier, title, detail, icon, tasks
     }
 
@@ -123,31 +123,7 @@ public struct RSDTaskGroupObject : RSDTaskGroup, RSDEmbeddedIconVendor, Decodabl
 extension RSDTaskGroupObject : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .title, .detail, .icon, .tasks]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .title:
-                if idx != 1 { return false }
-            case .detail:
-                if idx != 2 { return false }
-            case .icon:
-                if idx != 3 { return false }
-            case .tasks:
-                if idx != 4 { return false }
-            }
-        }
-        return keys.count == 5
+        return CodingKeys.allCases
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

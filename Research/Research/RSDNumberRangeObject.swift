@@ -109,7 +109,7 @@ public struct RSDNumberRangeObject : RSDNumberRange, RSDRangeWithFormatter, Coda
         self.formatter = formatter
     }
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case minimumValue, maximumValue, stepInterval, unit, formatter
     }
     
@@ -174,31 +174,7 @@ public struct RSDNumberRangeObject : RSDNumberRange, RSDRangeWithFormatter, Coda
 extension RSDNumberRangeObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.minimumValue, .maximumValue, .stepInterval, .unit, .formatter]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .minimumValue:
-                if idx != 0 { return false }
-            case .maximumValue:
-                if idx != 1 { return false }
-            case .stepInterval:
-                if idx != 2 { return false }
-            case .unit:
-                if idx != 3 { return false }
-            case .formatter:
-                if idx != 4 { return false }
-            }
-        }
-        return keys.count == 5
+        return CodingKeys.allCases
     }
     
     static func numberRangeExamples() -> [RSDNumberRangeObject] {

@@ -37,7 +37,7 @@ import Foundation
 /// step that includes an instruction step, countdown step, and activity step.
 public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator, RSDStepValidator, RSDCopyStep, Decodable {
 
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, stepType = "type", steps, progressMarkers, asyncActions
     }
     
@@ -189,31 +189,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
 extension RSDSectionStepObject : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .stepType, .steps, .progressMarkers, .asyncActions]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .stepType:
-                if idx != 1 { return false }
-            case .steps:
-                if idx != 2 { return false }
-            case .progressMarkers:
-                if idx != 3 { return false }
-            case .asyncActions:
-                if idx != 4 { return false }
-            }
-        }
-        return keys.count == 5
+        return CodingKeys.allCases
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

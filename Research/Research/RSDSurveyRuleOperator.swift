@@ -65,11 +65,6 @@ public enum RSDSurveyRuleOperator: String, Codable, RSDStringEnumSet {
     /// `[2,4]` then this will evaluate to `true` and return the `skipIdentifier` because neither `2` nor
     /// `4` are in the set defined by the `matchingAnswer`.
     case otherThan          = "ot"
-    
-    /// List of all the operators.
-    public static var all: Set<RSDSurveyRuleOperator> {
-        return [.skip, .equal, .notEqual, .lessThan, .greaterThan, .lessThanEqual, .greaterThanEqual, .otherThan]
-    }
 }
 
 extension RSDSurveyRuleOperator : RSDDocumentableStringEnum {

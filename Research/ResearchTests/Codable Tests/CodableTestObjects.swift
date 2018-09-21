@@ -42,7 +42,7 @@ class BundleWrapper {
 
 struct TestResourceWrapper : RSDResourceTransformer, Codable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case resourceName, bundleIdentifier, classType
     }
     

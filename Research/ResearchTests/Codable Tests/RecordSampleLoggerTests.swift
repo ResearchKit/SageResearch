@@ -50,7 +50,7 @@ struct TestRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
         return nil
     }
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case uptime, stepPath, x, y, z, label
     }
     

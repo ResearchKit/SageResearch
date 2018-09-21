@@ -38,7 +38,7 @@ import Foundation
 ///
 open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDCopyInputField, Codable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier
         case inputPrompt = "prompt"
         case inputPromptDetail = "promptDetail"
@@ -391,46 +391,12 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     // Overrides must be defined in the base implementation
     
     class func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .inputPrompt, .placeholder, .dataType, .inputUIHint, .isOptional, .textFieldOptions, .range, .surveyRules, .inputPromptDetail]
-        return codingKeys
-    }
-    
-    class func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .inputPrompt:
-                if idx != 1 { return false }
-            case .placeholder:
-                if idx != 2 { return false }
-            case .dataType:
-                if idx != 3 { return false }
-            case .inputUIHint:
-                if idx != 4 { return false }
-            case .isOptional:
-                if idx != 5 { return false }
-            case .textFieldOptions:
-                if idx != 6 { return false }
-            case .range:
-                if idx != 7 { return false }
-            case .surveyRules:
-                if idx != 8 { return false }
-            case .inputPromptDetail:
-                if idx != 9 { return false }
-            }
-        }
-        return keys.count == 10
+        return CodingKeys.allCases
     }
     
     class func examples() -> [[String : RSDJSONValue]] {
         
-        let baseTypes = RSDFormDataType.BaseType.allTypes()
+        let baseTypes = RSDFormDataType.BaseType.allCases
         let examples = baseTypes.compactMap { (baseType) -> [String : RSDJSONValue]? in
             switch baseType {
             case .boolean:
