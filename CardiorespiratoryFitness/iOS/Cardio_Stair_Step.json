@@ -1,5 +1,5 @@
 {
-    "identifier"        : "CardioStairStep",
+    "identifier"        : "Cardio Stair Step",
     "actions"           : { "cancel": { "type":"default", "iconName": "closeActivity"}},
     "shouldHideActions" : ["goBackward", "skip"],
     "progressMarkers"   : ["volumeUp", "heartRate.before", "stairStep", "heartRate.after"],
@@ -55,15 +55,14 @@
                            },
                            {
                            "identifier"         : "heartRate.before",
-                           "type"               : "transform",
+                           "type"               : "heartRateSection",
                            "steps"   : [{ "identifier"   : "instruction",
                                                      "title"        : "Capture heart rate",
                                                    "text"         : "Use your finger to cover the camera and flash on the back of your phone."},
                                                    { "identifier" : "heartRate", "isResting"    : true },
                                                    { "identifier"   : "feedback",
                                                      "text"         : "Your heart rate is" }
-                                                   ],
-                           "resourceTransformer"    : { "resourceName": "HeartrateStep.json"}
+                                                   ]
                            },
                            {
                            "identifier"     : "stairStep",
@@ -119,15 +118,14 @@
                            },
                            {
                            "identifier"         : "heartRate.after",
-                           "type"               : "transform",
+                           "type"               : "heartRateSection",
                            "steps"   : [{ "identifier"   : "instruction",
                                                    "title"        : "Stand still for 1 minute",
                                                    "text"         : "Almost done! Stand still for a minute to measure your heart rate recovery."},
                                                    { "identifier" : "heartRate", "isResting" : false },
                                                    { "identifier"   : "feedback",
                                                      "text"         : "Your heart rate changed to" }
-                                                   ],
-                           "resourceTransformer"    : { "resourceName": "HeartrateStep.json"}
+                                                   ]
                            },
                            {
                            "identifier"   : "completion",

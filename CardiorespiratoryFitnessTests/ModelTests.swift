@@ -51,7 +51,7 @@ class ModelTests: XCTestCase {
         
         let taskInfo = CRFTaskInfo(.cardio12MT)
         
-        XCTAssertEqual(taskInfo.identifier, "Cardio12MT")
+        XCTAssertEqual(taskInfo.identifier, "Cardio 12MT")
         XCTAssertEqual(taskInfo.title, "12 Minute Distance Test")
         XCTAssertEqual(taskInfo.subtitle, "15 minutes")
         XCTAssertNil(taskInfo.detail)
@@ -63,7 +63,7 @@ class ModelTests: XCTestCase {
 
         let taskInfo = CRFTaskInfo(.cardioStairStep)
         
-        XCTAssertEqual(taskInfo.identifier, "CardioStairStep")
+        XCTAssertEqual(taskInfo.identifier, "Cardio Stair Step")
         XCTAssertEqual(taskInfo.title, "3 Minute Stair Test")
         XCTAssertEqual(taskInfo.subtitle, "5 minutes")
         XCTAssertNil(taskInfo.detail)

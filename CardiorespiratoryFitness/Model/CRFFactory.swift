@@ -34,7 +34,10 @@
 import UIKit
 
 extension RSDStepType {
+    
     static let heartRate: RSDStepType = "heartRate"
+    
+    static let heartRateSection: RSDStepType = "heartRateSection"
 }
 
 extension RSDStepNavigatorType {
@@ -50,6 +53,9 @@ open class CRFFactory: RSDFactory {
         switch type {
         case .heartRate:
             return try CRFHeartRateStep(from: decoder)
+        case .heartRateSection:
+            let transform = try CRFHeartRateTransformer(from: decoder)
+            return transform.transformedStep
         default:
             return try super.decodeStep(from: decoder, with: type)
         }

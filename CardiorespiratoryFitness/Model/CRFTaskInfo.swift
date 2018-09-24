@@ -37,13 +37,13 @@ import Foundation
 public enum CRFTaskIdentifier : String, Codable, CaseIterable {
     
     /// The Cardio 12-minute Distance Test.
-    case cardio12MT = "Cardio12MT"
+    case cardio12MT = "Cardio 12MT"
     
     /// The Cardio Stair Step Test.
-    case cardioStairStep = "CardioStairStep"
+    case cardioStairStep = "Cardio Stair Step"
     
     /// The heart rate measurement only.
-    case heartRateOnly = "HeartRate"
+    case heartRateOnly = "HeartRate Measurement"
     
     func task(with factory: CRFFactory) -> RSDTaskObject {
         do {
