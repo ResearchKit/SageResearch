@@ -35,6 +35,8 @@ import Foundation
 import Research
 
 public class CRFArchiveManager : NSObject, RSDDataArchiveManager {
+
+    
     
     static let shared = CRFArchiveManager()
     
@@ -54,13 +56,13 @@ public class CRFArchiveManager : NSObject, RSDDataArchiveManager {
         }
     }
     
-    public func encryptAndUpload(taskViewModel: RSDTaskViewModel, dataArchives: [RSDDataArchive], completion: @escaping (() -> Void)) {
+    public func encryptAndUpload(taskResult: RSDTaskResult, dataArchives: [RSDDataArchive], completion: @escaping (() -> Void)) {
         // Do nothing - this is only to test that archiving doesn't blow up. For an actual app, this archive manager would be
         // replaced with a manager that can handle the upload services.
     }
     
-    public func handleArchiveFailure(taskViewModel: RSDTaskViewModel, error: Error, completion: @escaping (() -> Void)) {
-        debugPrint("Failed to archive \(taskViewModel) : \(error)")
+    public func handleArchiveFailure(taskResult: RSDTaskResult, error: Error, completion: @escaping (() -> Void)) {
+        debugPrint("Failed to archive \(taskResult) : \(error)")
     }
 }
 
