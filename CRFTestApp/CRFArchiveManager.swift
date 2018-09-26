@@ -35,8 +35,6 @@ import Foundation
 import Research
 
 public class CRFArchiveManager : NSObject, RSDDataArchiveManager {
-
-    
     
     static let shared = CRFArchiveManager()
     
