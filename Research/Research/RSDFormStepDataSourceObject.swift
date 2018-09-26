@@ -77,7 +77,7 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
         }
         
         // Populate the sections and initial results.
-        let (sections, groups) = self.bulidSections()
+        let (sections, groups) = self.buildSections()
         self.sections = sections
         self.itemGroups = groups
         populateInitialResults()
@@ -207,7 +207,7 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
     
     /// Convenience method for building the sections of the table from the input fields.
     /// - returns: The sections for the table.
-    open func bulidSections() -> ([RSDTableSection], [RSDTableItemGroup]) {
+    open func buildSections() -> ([RSDTableSection], [RSDTableItemGroup]) {
         guard let uiStep = step as? RSDUIStep else { return ([], []) }
         
         var sectionBuilders: [RSDTableSectionBuilder] = []
