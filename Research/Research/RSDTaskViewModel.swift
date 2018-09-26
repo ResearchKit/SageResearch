@@ -113,6 +113,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         self.parent = parentPath
         guard let parent = parentPath else { return }
         self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
+        self.taskResult.taskRunUUID = parent.taskResult.taskRunUUID
     }
     
         
