@@ -87,7 +87,7 @@ class DataArchiveTests: XCTestCase {
             
             // Check that the expected methods were called on the manager
             XCTAssertEqual(manager.encryptAndUpload_dataArchives?.first?.identifier, archive.identifier)
-            XCTAssertEqual(manager.encryptAndUpload_taskPath, taskViewModel)
+            XCTAssertEqual(manager.encryptAndUpload_taskResult?.identifier, taskViewModel.identifier)
             XCTAssertNil(manager.handleArchiveFailure_error)
             XCTAssertNil(manager.shouldContinueOnFail_error)
             
@@ -165,7 +165,7 @@ class DataArchiveTests: XCTestCase {
             // Check that the expected methods were called on the manager
             XCTAssertEqual(manager.encryptAndUpload_dataArchives?.first?.identifier, mainArchive.identifier)
             XCTAssertEqual(manager.encryptAndUpload_dataArchives?.last?.identifier, subArchive.identifier)
-            XCTAssertEqual(manager.encryptAndUpload_taskPath, taskViewModel)
+            XCTAssertEqual(manager.encryptAndUpload_taskResult?.identifier, taskViewModel.identifier)
             XCTAssertNil(manager.handleArchiveFailure_error)
             XCTAssertNil(manager.shouldContinueOnFail_error)
             
@@ -250,10 +250,10 @@ class TestArchiveManager: NSObject, RSDDataArchiveManager {
     var shouldContinueOnFail_archive: RSDDataArchive?
     var shouldContinueOnFail_error: Error?
     
-    var encryptAndUpload_taskPath: RSDTaskViewModel?
+    var encryptAndUpload_taskResult: RSDTaskResult?
     var encryptAndUpload_dataArchives: [RSDDataArchive]?
     
-    var handleArchiveFailure_taskPath: RSDTaskViewModel?
+    var handleArchiveFailure_taskResult: RSDTaskResult?
     var handleArchiveFailure_error: Error?
     
     func shouldContinueOnFail(for archive: RSDDataArchive, error: Error) -> Bool {
@@ -268,16 +268,16 @@ class TestArchiveManager: NSObject, RSDDataArchiveManager {
         return archive ?? currentArchive
     }
     
-    func encryptAndUpload(taskViewModel: RSDTaskViewModel, dataArchives: [RSDDataArchive], completion: @escaping (() -> Void)) {
-        encryptAndUpload_taskPath = taskViewModel
+    func encryptAndUpload(taskResult: RSDTaskResult, dataArchives: [RSDDataArchive], completion: @escaping (() -> Void)) {
+        encryptAndUpload_taskResult = taskResult
         encryptAndUpload_dataArchives = dataArchives
         DispatchQueue.main.async {
             completion()
         }
     }
     
-    func handleArchiveFailure(taskViewModel: RSDTaskViewModel, error: Error, completion: @escaping (() -> Void)) {
-        handleArchiveFailure_taskPath = taskViewModel
+    func handleArchiveFailure(taskResult: RSDTaskResult, error: Error, completion: @escaping (() -> Void)) {
+        handleArchiveFailure_taskResult = taskResult
         handleArchiveFailure_error = error
         DispatchQueue.main.async {
             completion()

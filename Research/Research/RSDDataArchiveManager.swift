@@ -63,13 +63,13 @@ public protocol RSDSwiftDataArchiveManager : class, NSObjectProtocol {
     ///
     /// When the completion handler is called, the `RSDTaskViewModel` will clean up the task by deleting the
     /// output directory.
-    func encryptAndUpload(taskViewModel: RSDTaskViewModel, dataArchives: [RSDDataArchive], completion:@escaping (() -> Void))
+    func encryptAndUpload(taskResult: RSDTaskResult, dataArchives: [RSDDataArchive], completion:@escaping (() -> Void))
     
     /// Handle the failure to archive the results.
     ///
     /// When the completion handler is called, the `RSDTaskViewModel` will clean up the task by deleting the
     /// output directory.
-    func handleArchiveFailure(taskViewModel: RSDTaskViewModel, error: Error, completion:@escaping (() -> Void))
+    func handleArchiveFailure(taskResult: RSDTaskResult, error: Error, completion:@escaping (() -> Void))
     
 }
 
