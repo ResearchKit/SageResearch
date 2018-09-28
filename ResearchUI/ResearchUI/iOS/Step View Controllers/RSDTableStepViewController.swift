@@ -546,13 +546,11 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             textViewCell.textView.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
         }
         
-        // if we have an answer, populate the text view
-        if itemGroup.isAnswerValid {
-            textViewCell.textView.text = tableItem.answerText
-        }
-        
         // populate the field label
         textViewCell.viewLabel.text = tableItem.inputField.inputPrompt
+        
+        // Set the answer.
+        setTextAnswer(on: textViewCell, with: tableItem)
     }
     
     /// Configure a text field cell.
@@ -591,19 +589,46 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             picker?.observer = self
         }
 
-        // if we have an answer, populate the text field
-        if itemGroup.isAnswerValid {
-            textFieldCell.textField.text = tableItem.answerText
-            if let picker = textFieldCell.textField.inputView as? RSDPickerViewProtocol {
-                picker.answer = tableItem.answer
-            }
-        }
-        
         // populate the field label
         textFieldCell.fieldLabel.text = tableItem.inputField.inputPrompt
         
         // populate the text field placeholder label
         textFieldCell.placeholder = tableItem.placeholder
+        
+        // Set the answer.
+        setTextAnswer(on: textFieldCell, with: tableItem)
+    }
+    
+    /// For a given text input, refresh the answer from the table item to the cell. Typically, when saving
+    /// an answer for a user input, the value that was entered by the user should be kept. However, if the
+    /// controller modifies the answer for some reason, that updated value should be honored.
+    open func refreshAnswer(at indexPath: IndexPath) {
+        guard let tableItem = self.tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem,
+            let cell = self.tableView.cellForRow(at: tableItem.indexPath)
+            else {
+                debugPrint("WARNING: Could not update answer.")
+                return
+        }
+        
+        if let textFieldCell = cell as? RSDStepTextFieldCell {
+            setTextAnswer(on: textFieldCell, with: tableItem)
+        }
+        else if let textViewCell = cell as? RSDStepTextViewCell {
+            setTextAnswer(on: textViewCell, with: tableItem)
+        }
+        else {
+            assertionFailure("Could not cast \(cell) to a known text field type.")
+        }
+    }
+    
+    private func setTextAnswer(on textFieldCell: RSDStepTextFieldCell, with tableItem: RSDTextInputTableItem) {
+        textFieldCell.textField.text = tableItem.answerText
+        let picker = textFieldCell.textField.inputView as? RSDPickerViewProtocol
+        picker?.answer = tableItem.answer
+    }
+    
+    private func setTextAnswer(on textViewCell: RSDStepTextViewCell, with tableItem: RSDTextInputTableItem) {
+        textViewCell.textView.text = tableItem.answerText
     }
     
     /// Instantiate a keyboard accessory view based on the current 'navigationFooter'.
