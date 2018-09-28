@@ -152,11 +152,12 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
             return
         }
         
+        let newAnswer = (answer is NSNull) ? nil : answer
         if let tableItem = self.tableItem(at: indexPath) as? RSDTextInputTableItem {
             // If this is a text input table item then store the answer on the table item instead of on the group.
-            try tableItem.setAnswer(answer)
+            try tableItem.setAnswer(newAnswer)
         } else {
-            try itemGroup.setAnswer(answer)
+            try itemGroup.setAnswer(newAnswer)
         }
         _answerDidChange(for: itemGroup, at: indexPath)
     }
