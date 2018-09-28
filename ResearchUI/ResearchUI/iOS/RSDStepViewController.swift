@@ -307,12 +307,15 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         setupNavigationView(header, placement: .header)
 
         // setup progress
-        if let (stepIndex, stepCount, _) = self.stepViewModel.progress() {
+        if let (stepIndex, stepCount, isEstimated) = self.stepViewModel.progress() {
+            header.shouldShowProgress = true
             header.progressView?.totalSteps = stepCount
             header.progressView?.currentStep = stepIndex
             header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
+            header.isStepLabelHidden = isEstimated
         } else {
             header.shouldShowProgress = false
+            header.isStepLabelHidden = true
         }
 
         header.setNeedsLayout()
