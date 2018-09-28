@@ -84,7 +84,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     /// return the privately stored answer if set and if not, will look to see if the first table item is recognized as a table item
     /// that stores an answer on it.
     open var answer: Any {
-        return _answer ?? (self.items.first as? RSDTextInputTableItem)?.answer ?? NSNull()
+        return _answer ?? (self.items.first as? RSDTextInputTableItem)?.answer
     }
     private var _answer: Any?
     
