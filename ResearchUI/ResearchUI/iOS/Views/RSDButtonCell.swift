@@ -120,7 +120,7 @@ extension DefaultRSDButtonCellLayoutConstants : RSDButtonCellLayoutConstants {
     /// The constants used to set up the cell contraints.
     static var constants: RSDButtonCellLayoutConstants = DefaultRSDButtonCellLayoutConstants()
     
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
     }

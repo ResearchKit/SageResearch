@@ -16,7 +16,6 @@
 		F8250572202A7AB000AF9B76 /* ORKFileResult+Research.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250571202A7AB000AF9B76 /* ORKFileResult+Research.swift */; };
 		F8250574202A7BC000AF9B76 /* ORKTaskResult+Research.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250573202A7BC000AF9B76 /* ORKTaskResult+Research.swift */; };
 		F8250576202A7F9000AF9B76 /* ORKTask+Research.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250575202A7F9000AF9B76 /* ORKTask+Research.swift */; };
-		F844CC6D202AD53300272FEF /* RKTStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F844CC6C202AD53300272FEF /* RKTStepViewController.swift */; };
 		F844CC71202AD5CA00272FEF /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F844CC72202AD5CA00272FEF /* ResearchUI.framework */; };
 		F86DBD87202A5A460017A9F6 /* RK1Translator.h in Headers */ = {isa = PBXBuildFile; fileRef = F86DBD85202A5A460017A9F6 /* RK1Translator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -48,7 +47,6 @@
 		F8250571202A7AB000AF9B76 /* ORKFileResult+Research.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKFileResult+Research.swift"; sourceTree = "<group>"; };
 		F8250573202A7BC000AF9B76 /* ORKTaskResult+Research.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKTaskResult+Research.swift"; sourceTree = "<group>"; };
 		F8250575202A7F9000AF9B76 /* ORKTask+Research.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKTask+Research.swift"; sourceTree = "<group>"; };
-		F844CC6C202AD53300272FEF /* RKTStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKTStepViewController.swift; sourceTree = "<group>"; };
 		F844CC72202AD5CA00272FEF /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F86DBD82202A5A460017A9F6 /* RK1Translator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RK1Translator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F86DBD85202A5A460017A9F6 /* RK1Translator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RK1Translator.h; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				F8250558202A5E4700AF9B76 /* ORKInstructionStep+Research.swift */,
-				F844CC6C202AD53300272FEF /* RKTStepViewController.swift */,
 			);
 			name = Steps;
 			sourceTree = "<group>";
@@ -261,7 +258,6 @@
 				F8250574202A7BC000AF9B76 /* ORKTaskResult+Research.swift in Sources */,
 				F8250559202A5E4700AF9B76 /* ORKInstructionStep+Research.swift in Sources */,
 				F8250572202A7AB000AF9B76 /* ORKFileResult+Research.swift in Sources */,
-				F844CC6D202AD53300272FEF /* RKTStepViewController.swift in Sources */,
 				F8250576202A7F9000AF9B76 /* ORKTask+Research.swift in Sources */,
 				F8250560202A634300AF9B76 /* ORKQuestionResult+Research.swift in Sources */,
 				F8250570202A793000AF9B76 /* ORKStepResult+Research.swift in Sources */,
@@ -401,7 +397,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = RK1Translator/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RK1Translator;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -425,7 +421,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = RK1Translator/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RK1Translator;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

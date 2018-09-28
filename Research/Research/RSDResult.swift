@@ -57,3 +57,22 @@ public protocol RSDResult : Encodable {
     /// The end date timestamp for the result.
     var endDate: Date { get set }
 }
+
+extension RSDResult {
+    
+    func shortDescription() -> String {
+        if let answerResult = self as? RSDAnswerResult {
+            let valueString = (answerResult.value == nil) ? "nil" : "\(answerResult.value!)"
+            return "{\(self.identifier) : \(valueString))}"
+        }
+        else if let collectionResult = self as? RSDCollectionResult {
+            return "{\(self.identifier) : \(collectionResult.inputResults.map ({ $0.shortDescription() }))}"
+        }
+        else if let taskResult = self as? RSDTaskResult {
+            return "{\(self.identifier) : \(taskResult.stepHistory.map ({ $0.shortDescription() }))}"
+        }
+        else {
+            return self.identifier
+        }
+    }
+}

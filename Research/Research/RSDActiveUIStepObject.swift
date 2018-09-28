@@ -38,7 +38,7 @@ import Foundation
 /// the `RSDActiveUIStep` protocol to allow for spoken instruction.
 open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case duration, commands, requiresBackgroundAudio, spokenInstructions
     }
 
@@ -259,32 +259,9 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     
     override class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = allCodingKeys()
+        let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.duration, .commands, .requiresBackgroundAudio, .spokenInstructions]
-        return codingKeys
-    }
-    
-    override class func validateAllKeysIncluded() -> Bool {
-        guard super.validateAllKeysIncluded() else { return false }
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .duration:
-                if idx != 0 { return false }
-            case .commands:
-                if idx != 1 { return false }
-            case .requiresBackgroundAudio:
-                if idx != 2 { return false }
-            case .spokenInstructions:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
     }
 
     override class func examples() -> [[String : RSDJSONValue]] {

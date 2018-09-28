@@ -85,7 +85,7 @@ open class RSDLoadingView: UIView {
     }
     
     lazy var loadingIndicator: UIActivityIndicatorView = {
-        let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        let loadingIndicator = UIActivityIndicatorView(style: .whiteLarge)
         loadingIndicator.hidesWhenStopped = false
         loadingIndicator.stopAnimating()
         loadingIndicator.center = CGPoint(x: self.containerView.bounds.size.width / 2.0, y: self.containerView.bounds.size.height / 2.0)

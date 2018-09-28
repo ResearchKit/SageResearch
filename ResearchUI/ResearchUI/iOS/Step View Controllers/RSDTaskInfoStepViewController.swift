@@ -63,8 +63,7 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
     
     /// The `RSDTaskInfoStep` object with the information to display about this task. This can be displayed while the task is loading.
     public var taskInfoStep: RSDTaskInfoStep! {
-        get { return self.step as! RSDTaskInfoStep }
-        set { self.step = newValue}
+        return (self.step as! RSDTaskInfoStep)
     }
     
     // MARK: View appearance and set up
@@ -178,9 +177,9 @@ open class RSDTaskInfoStepViewController: RSDStepViewController, UITextViewDeleg
     
     /// Default initializer. This initializer will initialize using the `nibName` and `bundle` defined on this class.
     /// - parameter step: The step to set for this view controller.
-    public init(taskInfo: RSDTaskInfoStep) {
+    public init(taskInfo: RSDTaskInfoStep, parent: RSDPathComponent?) {
         super.init(nibName: type(of: self).nibName, bundle: type(of: self).bundle)
-        self.taskInfoStep = taskInfo
+        self.stepViewModel = self.instantiateStepViewModel(for: taskInfo, with: parent)
     }
     
     /// Initialize the class using the given nib and bundle.

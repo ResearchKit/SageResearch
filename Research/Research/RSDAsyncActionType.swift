@@ -37,8 +37,8 @@ import Foundation
 /// using an instance of `RSDFactory`.
 ///
 /// - seealso: `RSDAsyncActionConfiguration`
-public struct RSDAsyncActionType : RawRepresentable, Codable {
-    public private(set) var rawValue: String
+public struct RSDAsyncActionType : RSDFactoryTypeRepresentable, Codable, Hashable {
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
@@ -55,27 +55,7 @@ public struct RSDAsyncActionType : RawRepresentable, Codable {
     }
 }
 
-extension RSDAsyncActionType : Equatable {
-    public static func ==(lhs: RSDAsyncActionType, rhs: RSDAsyncActionType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDAsyncActionType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDAsyncActionType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDAsyncActionType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
-extension RSDAsyncActionType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
+extension RSDAsyncActionType : ExpressibleByStringLiteral {    
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }

@@ -33,8 +33,9 @@
 
 import Foundation
 
-/// `RSDStepNavigator` is the model object used by the `RSDTaskController` to determine the order of
-/// presentation of the steps in a task.
+/// `RSDStepNavigator` is used by the `RSDTaskController` to determine the order of presentation of the steps
+/// in a task. The navigator should include navigation that is based on the input model and the results rather
+/// that depending upon the available real estate.
 ///
 /// - seealso: `RSDTask`, `RSDTaskController`, and `RSDConditionalStepNavigator`
 public protocol RSDStepNavigator {
@@ -106,7 +107,7 @@ public protocol RSDStepNavigator {
     /// - returns:
     ///     - current:      The current progress. This indicates progress within the task.
     ///     - total:        The total number of steps.
-    ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation)
+    ///     - isEstimated:  Whether or not the progress is an estimate (if the task has variable navigation).
     func progress(for step: RSDStep, with result: RSDTaskResult?) -> (current: Int, total: Int, isEstimated: Bool)?
 }
 
@@ -132,16 +133,3 @@ public protocol RSDCopyStepNavigator : RSDStepNavigator {
     /// - returns: A copy of this navigator with the inserted section.
     func copyAndInsert(_ subtask: RSDTaskInfoStep) -> Self
 }
-
-/// The tracking delegate is any class object that can be referenced using a `weak` reference.
-public protocol RSDTrackingDelegate : class {
-}
-
-/// The tracking step navigator is a step navigator that tracks user selection across different runs of a
-/// task.
-public protocol RSDTrackingStepNavigator : RSDStepNavigator {
-    
-    /// Set up tracking for this instance of a step navigator using the given task path.
-    func setupTracking(with taskPath: RSDTaskPath)
-}
-

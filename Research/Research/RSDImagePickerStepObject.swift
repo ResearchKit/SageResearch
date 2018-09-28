@@ -31,12 +31,16 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#if os(macOS)
+import AppKit
+#else
 import UIKit
+#endif
 
 /// A concrete implementation for a `RSDImagePickerStep`.
 public struct RSDImagePickerStepObject: RSDImagePickerStep, Codable {
 
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, stepType = "type", sourceType, mediaTypes
     }
     

@@ -348,14 +348,14 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
     open func addTitleLabelIfNeeded() {
         guard titleLabel == nil else { return }
         titleLabel = addLabel(font: UIFont.rsd_headerTitleLabel, color: UIColor.rsd_headerTitleLabel)
-        titleLabel!.accessibilityTraits = UIAccessibilityTraitHeader
+        titleLabel!.accessibilityTraits = UIAccessibilityTraits.header
     }
     
     /// Convenience method for adding the text label if needed.
     open func addTextLabelIfNeeded() {
         guard textLabel == nil else { return }
         textLabel = addLabel(font: UIFont.rsd_headerTextLabel, color: UIColor.rsd_headerTextLabel)
-        textLabel!.accessibilityTraits = UIAccessibilityTraitSummaryElement
+        textLabel!.accessibilityTraits = UIAccessibilityTraits.summaryElement
     }
     
     /// Convenience method for adding the detail label if needed.
@@ -443,7 +443,7 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
             }
             
             // check our minimum height
-            let height = self.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            let height = self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             if height == 0 {
                 NSLayoutConstraint.deactivate(self.constraints)
                 self.rsd_makeHeight(.equal, 0.0)

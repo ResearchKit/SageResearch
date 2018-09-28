@@ -47,26 +47,16 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
 
     /// The root view controller is assumed to be a `RSDStepController`.
     open var rootStepViewController : (UIViewController & RSDStepController)! {
-        return self.childViewControllers.first as! (UIViewController & RSDStepController)
-    }
-    
-    /// get/set `rootStepViewController.taskController`
-    public var taskController: RSDTaskController! {
-        get {
-            return rootStepViewController.taskController
-        }
-        set(newValue) {
-            rootStepViewController.taskController = newValue
-        }
+        return (self.children.first as! (UIViewController & RSDStepController))
     }
     
     /// get/set `rootStepViewController.step`
-    public var step: RSDStep! {
+    public var stepViewModel: RSDStepViewPathComponent! {
         get {
-            return rootStepViewController.step
+            return rootStepViewController.stepViewModel
         }
         set(newValue) {
-            rootStepViewController.step = newValue
+            rootStepViewController.stepViewModel = newValue
         }
     }
     
@@ -75,38 +65,11 @@ open class RSDNavigationController : UINavigationController, RSDStepController {
         rootStepViewController.didFinishLoading()
     }
     
-    /// calls `rootStepViewController.isForwardEnabled`
-    public var isForwardEnabled: Bool {
-        return rootStepViewController.isForwardEnabled
-    }
-    
-    /// calls `rootStepViewController.goForward()`
     public func goForward() {
         rootStepViewController.goForward()
     }
     
-    /// calls `rootStepViewController.goBack()`
     public func goBack() {
         rootStepViewController.goBack()
-    }
-    
-    /// calls `rootStepViewController.skipForward()`
-    public func skipForward() {
-        rootStepViewController.skipForward()
-    }
-    
-    /// calls `rootStepViewController.cancel()`
-    public func cancel() {
-        rootStepViewController.cancel()
-    }
-    
-    /// Calls `rootStepViewController.hasStepBefore`
-    public var hasStepBefore: Bool {
-        return rootStepViewController.hasStepBefore
-    }
-    
-    /// Calls `rootStepViewController.hasStepAfter`
-    public var hasStepAfter: Bool {
-        return rootStepViewController.hasStepAfter
     }
 }

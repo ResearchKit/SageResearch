@@ -33,6 +33,48 @@
 
 import Foundation
 
+extension RSDAnswerResult {
+    
+    func orkResult() -> ORKResult {
+        if let result = self as? ORKResult {
+            return result
+        }
+        
+        if let sequenceType = self.answerType.sequenceType {
+            if sequenceType == .array {
+                if self.answerType.sequenceSeparator != nil {
+                    return ORKMultipleComponentQuestionResult(from: self)
+                }
+                else {
+                    return ORKChoiceQuestionResult(from: self)
+                }
+            }
+            else {
+                return ORKQuestionResult(identifier: self.identifier)
+            }
+        }
+        else {
+            switch self.answerType.baseType {
+            case .boolean:
+                return ORKBooleanQuestionResult(from: self)
+            case .decimal, .integer:
+                return ORKNumericQuestionResult(from: self)
+            case .string:
+                return ORKTextQuestionResult(from: self)
+            case .date:
+                if self.answerType.dateFormat == RSDDateCoderObject.timeOfDay.rawValue {
+                    return ORKTimeOfDayQuestionResult(from: self)
+                }
+                else {
+                    return ORKDateQuestionResult(from: self)
+                }
+            default:
+                return ORKQuestionResult(identifier: self.identifier)
+            }
+        }
+    }
+}
+
 /// The `ORKQuestionResult` extends the shared implementation of `RSDAnswerResult`.
 extension ORKQuestionResult { // : RSDAnswerResult
     
@@ -67,6 +109,13 @@ extension ORKQuestionResult { // : RSDAnswerResult
 
 extension ORKBooleanQuestionResult : RSDAnswerResult {
     
+    convenience init(from result: RSDAnswerResult) {
+        self.init(identifier: result.identifier)
+        self.startDate = result.startDate
+        self.endDate = result.endDate
+        self.booleanAnswer = (result.value as? NSNumber) ?? (result.value as? RSDJSONNumber)?.jsonNumber()
+    }
+    
     /// Returns `.boolean`
     public var answerType: RSDAnswerResultType {
         return .boolean
@@ -74,6 +123,14 @@ extension ORKBooleanQuestionResult : RSDAnswerResult {
 }
 
 extension ORKChoiceQuestionResult : RSDAnswerResult {
+    
+    convenience init(from result: RSDAnswerResult) {
+        self.init(identifier: result.identifier)
+        self.startDate = result.startDate
+        self.endDate = result.endDate
+        self.answer = result.value
+        self.questionType = .multipleChoice
+    }
     
     /// Returns a new instance of an answer result with a sequence type of `.array`
     /// and a base type of `.string`.
@@ -83,6 +140,19 @@ extension ORKChoiceQuestionResult : RSDAnswerResult {
 }
 
 extension ORKDateQuestionResult : RSDAnswerResult {
+    
+    convenience init(from result: RSDAnswerResult) {
+        self.init(identifier: result.identifier)
+        self.startDate = result.startDate
+        self.endDate = result.endDate
+        self.answer = result.value
+        if result.answerType.dateFormat == RSDDateCoderObject.dateOnly.rawValue {
+            self.questionType = .date
+        }
+        else {
+            self.questionType = .dateAndTime
+        }
+    }
     
     /// Returns `.date` or a new instance with a date-only format if this is a date-only result.
     public var answerType: RSDAnswerResultType {
@@ -97,6 +167,14 @@ extension ORKDateQuestionResult : RSDAnswerResult {
 
 extension ORKMultipleComponentQuestionResult : RSDAnswerResult {
     
+    convenience init(from result: RSDAnswerResult) {
+        self.init(identifier: result.identifier)
+        self.startDate = result.startDate
+        self.endDate = result.endDate
+        self.answer = result.value
+        self.separator = result.answerType.sequenceSeparator
+    }
+    
     /// Returns a new instance of an answer result with a sequence type of `.array`,
     /// a base type of `.string`, and a separator.
     public var answerType: RSDAnswerResultType {
@@ -106,21 +184,46 @@ extension ORKMultipleComponentQuestionResult : RSDAnswerResult {
 
 extension ORKNumericQuestionResult : RSDAnswerResult {
     
+    convenience init(from result: RSDAnswerResult) {
+        self.init(identifier: result.identifier)
+        self.startDate = result.startDate
+        self.endDate = result.endDate
+        self.numericAnswer = (result.value as? NSNumber) ?? (result.value as? RSDJSONNumber)?.jsonNumber()
+        self.questionType = (result.answerType.baseType == .integer) ? .integer : .decimal
+        self.unit = result.answerType.unit
+    }
+    
     /// Returns a new instance of an answer result with a base type of `.decimal` and a unit.
     public var answerType: RSDAnswerResultType {
-        return RSDAnswerResultType(baseType: .decimal, sequenceType: nil, formDataType: nil, dateFormat: nil, unit: unit)
+        switch self.questionType {
+        case .integer:
+             return RSDAnswerResultType(baseType: .integer, sequenceType: nil, formDataType: nil, dateFormat: nil, unit: unit)
+        default:
+            return RSDAnswerResultType(baseType: .decimal, sequenceType: nil, formDataType: nil, dateFormat: nil, unit: unit)
+        }
     }
 }
 
 extension ORKScaleQuestionResult : RSDAnswerResult {
     
-    /// Returns `.decimal`
     public var answerType: RSDAnswerResultType {
-        return .decimal
+        switch self.questionType {
+        case .integer:
+            return .integer
+        default:
+            return .decimal
+        }
     }
 }
 
 extension ORKTextQuestionResult : RSDAnswerResult {
+    
+    convenience init(from result: RSDAnswerResult) {
+        self.init(identifier: result.identifier)
+        self.startDate = result.startDate
+        self.endDate = result.endDate
+        self.answer = result.value
+    }
     
     /// Returns `.string`
     public var answerType: RSDAnswerResultType {
@@ -137,6 +240,13 @@ extension ORKTimeIntervalQuestionResult : RSDAnswerResult {
 }
 
 extension ORKTimeOfDayQuestionResult : RSDAnswerResult {
+    
+    convenience init(from result: RSDAnswerResult) {
+        self.init(identifier: result.identifier)
+        self.startDate = result.startDate
+        self.endDate = result.endDate
+        self.answer = result.value
+    }
     
     /// Returns `.date` with a date format coding of "HH:mm"
     public var answerType: RSDAnswerResultType {

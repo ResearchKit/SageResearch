@@ -44,9 +44,9 @@ class DebugStepViewController: RSDStepViewController {
     @IBOutlet var titleLabel: UILabel!
     
     /// Default initializer used to display "DebugStepViewController.xib" for the given step.
-    public override init(step: RSDStep) {
+    public override init(step: RSDStep, parent: RSDPathComponent?) {
         super.init(nibName: "DebugStepViewController", bundle: Bundle(for: DebugStepViewController.self))
-        self.step = step
+        self.stepViewModel = self.instantiateStepViewModel(for: step, with: parent)
     }
     
     /// Required initializer. Unused.

@@ -37,15 +37,16 @@ import Research
 
 class ResultTableViewController: UITableViewController, RSDTaskViewControllerDelegate {
 
-    var taskPath: RSDTaskPath?
+    var taskInfo: RSDTaskInfo!
     var result: RSDResult?
     var firstAppearance: Bool = true
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if firstAppearance, (self.result == nil), let taskPath = self.taskPath {
-            let taskViewController = RSDTaskViewController(taskPath: taskPath)
+        if firstAppearance, (self.result == nil), let taskInfo = self.taskInfo {
+            let taskViewModel = RSDTaskViewModel(taskInfo: taskInfo)
+            let taskViewController = RSDTaskViewController(taskViewModel: taskViewModel)
             taskViewController.delegate = self
             self.present(taskViewController, animated: true, completion: nil)
         }
@@ -136,7 +137,7 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // populate the results
-        self.result = taskController.taskPath.result
+        self.result = taskController.taskViewModel.taskResult
         self.tableView.reloadData()
         
         // dismiss the view controller
@@ -148,12 +149,8 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
         print(debugResult)
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        print("\n\n=== Ready to Save: \(taskPath.description)")
-    }
-    
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        print("\n\n=== Ready to Save: \(taskViewModel.description)")
     }
     
     func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {

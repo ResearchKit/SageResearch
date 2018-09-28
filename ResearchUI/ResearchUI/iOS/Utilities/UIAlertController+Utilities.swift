@@ -89,7 +89,7 @@ public extension RSDAlertPresenter {
     ///     - message:          The message to display in the popup.
     ///     - preferredStyle:   The preferred style of the alert.
     ///     - actions:          The actions to add to the alert controller.
-    public func presentAlertWithActions(title: String?, message: String, preferredStyle: UIAlertControllerStyle, actions: [UIAlertAction]) {
+    public func presentAlertWithActions(title: String?, message: String, preferredStyle: UIAlertController.Style, actions: [UIAlertAction]) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
         for action in actions {
             alert.addAction(action)

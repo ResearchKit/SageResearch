@@ -35,10 +35,9 @@ import Foundation
 
 /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
 /// the UI.
-public struct RSDStepType : RawRepresentable, Codable {
-    public typealias RawValue = String
+public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
     
-    public private(set) var rawValue: String
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
@@ -74,33 +73,16 @@ public struct RSDStepType : RawRepresentable, Codable {
     /// Defaults to creating a `RSDTaskInfoStep`.
     public static let taskInfo: RSDStepType = "taskInfo"
     
+    /// Defaults to creating a `RSDSubtaskStep`.
+    public static let subtask: RSDStepType = "subtask"
+    
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStepType] {
-        return [.active, .completion, .countdown, .form, .instruction, .section, .transform, .taskInfo]
-    }
-}
-
-extension RSDStepType : Equatable {
-    public static func ==(lhs: RSDStepType, rhs: RSDStepType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDStepType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDStepType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDStepType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
+        return [.active, .completion, .countdown, .form, .imagePicker, .instruction, .overview, .section, .transform, .taskInfo]
     }
 }
 
 extension RSDStepType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }

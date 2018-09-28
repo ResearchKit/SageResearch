@@ -31,7 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// `RSDTextFieldOptionsObject` defines the options for a text field.
 ///
@@ -63,7 +67,7 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
     /// Is the text field for password entry?
     public var isSecureTextEntry: Bool
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case textValidator, invalidMessage, maximumLength, isSecureTextEntry, autocapitalizationType, autocorrectionType, spellCheckingType, keyboardType
     }
     
@@ -154,37 +158,7 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
 extension RSDTextFieldOptionsObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.textValidator, .invalidMessage, .maximumLength, .isSecureTextEntry, .autocapitalizationType, .autocorrectionType, .spellCheckingType, .keyboardType]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .textValidator:
-                if idx != 0 { return false }
-            case .invalidMessage:
-                if idx != 1 { return false }
-            case .maximumLength:
-                if idx != 2 { return false }
-            case .isSecureTextEntry:
-                if idx != 3 { return false }
-            case .autocapitalizationType:
-                if idx != 4 { return false }
-            case .autocorrectionType:
-                if idx != 5 { return false }
-            case .spellCheckingType:
-                if idx != 6 { return false }
-            case .keyboardType:
-                if idx != 7 { return false }
-            }
-        }
-        return keys.count == 8
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {
@@ -210,7 +184,7 @@ public enum RSDTextAutocapitalizationType : String, Codable, RSDStringEnumSet {
     }
 
     /// Return the `UITextAutocapitalizationType` that maps to this enum.
-    #if !os(watchOS)
+    #if os(iOS) || os(tvOS)
     public func textAutocapitalizationType() -> UITextAutocapitalizationType {
         guard let idx = RSDTextAutocapitalizationType.orderedSet.index(of: self),
             let type = UITextAutocapitalizationType(rawValue: Int(idx))
@@ -239,7 +213,7 @@ public enum RSDTextAutocorrectionType : String, Codable, RSDStringEnumSet {
     }
 
     /// Return the `UITextAutocorrectionType` that maps to this enum.
-    #if !os(watchOS)
+    #if os(iOS) || os(tvOS)
     public func textAutocorrectionType() -> UITextAutocorrectionType {
         guard let idx = RSDTextAutocorrectionType.orderedSet.index(of: self),
             let type = UITextAutocorrectionType(rawValue: Int(idx))
@@ -268,7 +242,7 @@ public enum RSDTextSpellCheckingType  : String, Codable, RSDStringEnumSet {
     }
 
     /// Return the `UITextSpellCheckingType` that maps to this enum.
-    #if !os(watchOS)
+    #if os(iOS) || os(tvOS)
     public func textSpellCheckingType() -> UITextSpellCheckingType {
         guard let idx = RSDTextSpellCheckingType.orderedSet.index(of: self),
             let type = UITextSpellCheckingType(rawValue: Int(idx))
@@ -299,7 +273,7 @@ public enum RSDKeyboardType  : String, Codable, RSDStringEnumSet {
     }
 
     /// Return the `UIKeyboardType` that maps to this enum.
-    #if !os(watchOS)
+    #if os(iOS) || os(tvOS)
     public func keyboardType() -> UIKeyboardType {
         guard let idx = RSDKeyboardType.orderedSet.index(of: self),
             let type = UIKeyboardType(rawValue: Int(idx))

@@ -38,7 +38,7 @@ import Foundation
 /// collect the data needed for this task.
 open class RSDOverviewStepObject : RSDUIStepObject, RSDStandardPermissionsStep {
 
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case permissions
     }
     
@@ -79,26 +79,9 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDStandardPermissionsStep {
     
     override class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = allCodingKeys()
+        let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.permissions]
-        return codingKeys
-    }
-    
-    override class func validateAllKeysIncluded() -> Bool {
-        guard super.validateAllKeysIncluded() else { return false }
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .permissions:
-                if idx != 0 { return false }
-            }
-        }
-        return keys.count == 1
     }
     
     override class func examples() -> [[String : RSDJSONValue]] {

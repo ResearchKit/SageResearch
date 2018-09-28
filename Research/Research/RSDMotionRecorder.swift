@@ -31,8 +31,18 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
     
-import Foundation
+import UIKit
 import CoreMotion
+
+extension RSDMotionRecorderConfiguration : RSDAsyncActionVendor {
+    
+    /// Instantiate a `RSDMotionRecorder`.
+    /// - parameter taskViewModel: The current task path to use to initialize the controller.
+    /// - returns: A new instance of `RSDMotionRecorder`.
+    public func instantiateController(with taskViewModel: RSDPathComponent) -> RSDAsyncAction? {
+        return RSDMotionRecorder(configuration: self, taskViewModel: taskViewModel, outputDirectory: taskViewModel.outputDirectory)
+    }
+}
 
 /// `RSDMotionRecorder` is a subclass of `RSDSampleRecorder` that implements recording core motion
 /// sensor data.
@@ -332,7 +342,7 @@ public struct RSDMotionRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable 
     /// Used by the attitude quaternion.
     public let w: Double?
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case uptime, timestamp, stepPath, timestampDate, sensorType, eventAccuracy, referenceCoordinate, heading, x, y, z, w
     }
     
@@ -535,47 +545,9 @@ extension CMMagnetometerData : RSDVectorData {
 extension RSDMotionRecord : RSDDocumentableCodableObject {
     
     public static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
+        return CodingKeys.allCases
     }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.uptime, .timestamp, .stepPath, .timestampDate, .sensorType, .eventAccuracy, .referenceCoordinate, .heading, .x, .y, .z, .w]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .uptime:
-                if idx != 0 { return false }
-            case .timestamp:
-                if idx != 1 { return false }
-            case .stepPath:
-                if idx != 2 { return false }
-            case .timestampDate:
-                if idx != 3 { return false }
-            case .sensorType:
-                if idx != 4 { return false }
-            case .eventAccuracy:
-                if idx != 5 { return false }
-            case .referenceCoordinate:
-                if idx != 6 { return false }
-            case .heading:
-                if idx != 7 { return false }
-            case .x:
-                if idx != 8 { return false }
-            case .y:
-                if idx != 9 { return false }
-            case .z:
-                if idx != 10 { return false }
-            case .w:
-                if idx != 11 { return false }
-            }
-        }
-        return keys.count == 12
-    }
-    
+
     static func examples() -> [Encodable] {
         
         let uptime = ProcessInfo.processInfo.systemUptime

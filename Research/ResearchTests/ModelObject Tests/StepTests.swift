@@ -210,8 +210,7 @@ class StepTests: XCTestCase {
         taskInfo.subtitle = "subtitle"
         taskInfo.detail = "detail"
         taskInfo.schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 6)
-        var step = RSDTaskInfoStepObject(with: taskInfo)
-        step.taskTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: "org.sagebase.ResearchTests", classType: nil)
+        let step = RSDTaskInfoStepObject(with: taskInfo)
 
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")
@@ -220,11 +219,6 @@ class StepTests: XCTestCase {
         XCTAssertEqual(copy.taskInfo.detail, "detail")
         XCTAssertEqual(copy.taskInfo.schemaInfo?.schemaIdentifier, "bar")
         XCTAssertEqual(copy.taskInfo.schemaInfo?.schemaVersion, 6)
-        if let transformer = copy.taskTransformer as? RSDResourceTransformerObject {
-            XCTAssertEqual(transformer.resourceName, "FactoryTest_TaskFoo")
-        } else {
-            XCTFail("Failed to copy the task transformer.")
-        }
     }
     
     func testCopy_ConditionalStepNavigator_NilInsertAfter() {

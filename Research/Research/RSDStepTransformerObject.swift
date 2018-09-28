@@ -38,7 +38,7 @@ import Foundation
 /// `RSDSectionStep` from the decoded object.
 public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, resourceTransformer
     }
     
@@ -84,7 +84,7 @@ public struct RSDStepTransformerObject : RSDStepTransformer, Decodable {
             self.transformedStep = try copyableStep.copy(with: identifier, decoder: decoder)
         }
         else if let copyableStep = stepDecoder.step as? RSDCopyWithIdentifier {
-            self.transformedStep = copyableStep.copy(with: identifier) as! RSDStep
+            self.transformedStep = (copyableStep.copy(with: identifier) as! RSDStep)
         }
         else {
             self.transformedStep = stepDecoder.step
@@ -108,25 +108,7 @@ fileprivate struct _StepDecoder: Decodable {
 extension RSDStepTransformerObject : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .resourceTransformer]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .resourceTransformer:
-                if idx != 1 { return false }
-            }
-        }
-        return keys.count == 2
+        return CodingKeys.allCases
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

@@ -36,7 +36,7 @@ import Foundation
 /// `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
 public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, RSDCopyStepNavigator, Decodable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case steps, conditionalRule, progressMarkers, insertAfterIdentifier
     }
     
@@ -82,7 +82,7 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
         if let markers = self.progressMarkers {
             var progressMarkers = markers
             let searchRange = self.steps[..<idx].map { $0.identifier }
-            if let lastIdentifier = searchRange.rsd_last(where: { markers.contains($0) }),
+            if let lastIdentifier = searchRange.last(where: { markers.contains($0) }),
                 let progressIndex = markers.index(of: lastIdentifier) {
                 // If the marker is found then insert after it.
                 progressMarkers.insert(step.identifier, at: progressIndex + 1)
@@ -148,29 +148,7 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
 extension RSDConditionalStepNavigatorObject : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.steps, .conditionalRule, .progressMarkers, .insertAfterIdentifier]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .steps:
-                if idx != 0 { return false }
-            case .conditionalRule:
-                if idx != 1 { return false }
-            case .progressMarkers:
-                if idx != 2 { return false }
-            case .insertAfterIdentifier:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

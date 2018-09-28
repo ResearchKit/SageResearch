@@ -37,7 +37,7 @@ import Foundation
 /// validation, and the order of display for the steps.
 ///
 /// - seealso: `RSDTaskController` and `RSDTaskInfoStep`
-public protocol RSDTask : RSDUIActionHandler {
+public protocol RSDTask {
     
     /// A short string that uniquely identifies the task.
     var identifier: String { get }
@@ -82,44 +82,3 @@ extension RSDTask {
     }
 }
 
-/// An extension of the task to allow replacing the step navigator or inserting async actions.
-///
-/// - seealso: `RSDCopyStepNavigator`
-public protocol RSDCopyTask : RSDTask, RSDCopyWithIdentifier, RSDTaskTransformer {
-    
-    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
-    /// - parameters:
-    ///     - identifier: The new identifier.
-    ///     - schemaInfo: The schema info.
-    func copy(with identifier: String, schemaInfo: RSDSchemaInfo?) -> Self
-    
-    /// Return a copy of the task that includes the async action.
-    /// - parameter asyncAction: The async action configuration to insert.
-    func copyAndInsert(_ asyncAction: RSDAsyncActionConfiguration) -> Self
-    
-    /// Return a copy of the task that replaces the step navigator with the new copy.
-    /// - parameter stepNavigator: The step navigator to insert.
-    func copyAndReplace(_ stepNavigator: RSDStepNavigator) -> Self
-}
-
-extension RSDCopyTask {
-    
-    /// Returns `0`.
-    public var estimatedFetchTime: TimeInterval {
-        return 0
-    }
-    
-    /// Fetch the task for this task info. Use the given factory to transform the task.
-    ///
-    /// - parameters:
-    ///     - factory: The factory to use for creating the task and steps.
-    ///     - taskIdentifier: The task info for the task (if applicable).
-    ///     - schemaInfo: The schema info for the task (if applicable).
-    ///     - callback: The callback with the task or an error if the task failed, run on the main thread.
-    public func fetchTask(with factory: RSDFactory, taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
-        DispatchQueue.main.async {
-            let copy = self.copy(with: taskIdentifier, schemaInfo: schemaInfo)
-            callback(taskIdentifier, copy, nil)
-        }
-    }
-}

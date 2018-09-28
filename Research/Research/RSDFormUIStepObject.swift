@@ -45,7 +45,7 @@ extension CodingUserInfoKey {
 /// a navigable survey.
 open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNavigationStep, RSDCohortAssignmentStep {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case inputFields, identifier
     }
 
@@ -78,15 +78,7 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
         super.init(identifier: identifier, type: type ?? .form)
     }
     
-    /// Look to the input fields and return true if any are choice type that include an image.
-    override open var hasImageChoices: Bool {
-        for item in inputFields {
-            if let picker = item.pickerSource as? RSDChoiceOptions, picker.hasImages {
-                return true
-            }
-        }
-        return false
-    }
+
     
     /// Identifier to skip to if all input fields have nil answers.
     open var skipToIfNil: String? {
@@ -237,28 +229,9 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     
     override class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = allCodingKeys()
+        let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.inputFields]
-        return codingKeys
-    }
-    
-    override class func validateAllKeysIncluded() -> Bool {
-        guard super.validateAllKeysIncluded() else { return false }
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .inputFields:
-                if idx != 0 { return false }
-            case .identifier:
-                break;
-            }
-        }
-        return keys.count == 1
     }
     
     override class func examples() -> [[String : RSDJSONValue]] {

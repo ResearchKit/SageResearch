@@ -36,6 +36,13 @@ import Foundation
 /// The `ORKFileResult` implements the `RSDFileResult` protocol.
 extension ORKFileResult : RSDFileResult {
     
+    convenience init(from result: RSDFileResult) {
+        self.init(identifier: result.identifier)
+        self.startDate = result.startDate
+        self.endDate = result.endDate
+        self.fileURL = result.url
+    }
+    
     /// Returns `fileURL`.
     public var url: URL? {
         get {

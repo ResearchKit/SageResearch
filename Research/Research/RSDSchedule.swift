@@ -35,7 +35,7 @@ import Foundation
 
 public protocol RSDScheduleTime {
     
-    /// The time of the day as a string with the format "HH:mm".
+    /// The time of the day as a string with the format "HH:mm:ss" or "HH:mm".
     var timeOfDayString: String? { get }
 }
 
@@ -73,7 +73,8 @@ extension RSDScheduleTime {
     /// The time components using the ISO8601 calendar.
     public var timeComponents: DateComponents? {
         guard let todString = timeOfDayString,
-            let tod = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter.date(from: todString)
+            let tod = RSDDateCoderObject.hourAndMinutesOnly.inputFormatter.date(from: todString) ??
+                RSDDateCoderObject.timeOfDay.inputFormatter.date(from: todString)
             else {
                 return nil
         }

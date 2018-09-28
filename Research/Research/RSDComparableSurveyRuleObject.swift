@@ -72,7 +72,7 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
         self.cohort = cohort
     }
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case skipToIdentifier, matchingValue = "matchingAnswer", ruleOperator, cohort
     }
     
@@ -105,29 +105,7 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
 extension RSDComparableSurveyRuleObject : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.skipToIdentifier, .matchingValue, .ruleOperator, .cohort]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .skipToIdentifier:
-                if idx != 0 { return false }
-            case .matchingValue:
-                if idx != 1 { return false }
-            case .ruleOperator:
-                if idx != 2 { return false }
-            case .cohort:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

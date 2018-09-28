@@ -34,17 +34,11 @@
 import Foundation
 
 /// `RSDStringEnumSet` is a protocol for defining the set of all string values included in an enum.
-public protocol RSDStringEnumSet : Hashable, RawRepresentable where RawValue == String {
-    
-    /// The set that includes all the enum values.
-    static var all: Set<Self> { get }
+public protocol RSDStringEnumSet : Hashable, RawRepresentable, CaseIterable where RawValue == String {
 }
 
 /// `RSDIntEnumSet` is a protocol for defining the set of all int values included in an enum.
-public protocol RSDIntEnumSet : Hashable, RawRepresentable where RawValue == Int {
-    
-    /// The set that includes all the enum values.
-    static var all: Set<Self> { get }
+public protocol RSDIntEnumSet : Hashable, RawRepresentable, CaseIterable where RawValue == Int {
 }
 
 public struct RSDDocumentCreator {
@@ -191,7 +185,7 @@ protocol RSDDocumentableStringEnum : RSDDocumentable, Codable {
 /// Any enum set can represent its coding keys by mapping the raw value to a string.
 extension RSDStringEnumSet {
     static func allCodingKeys() -> [String] {
-        return self.all.map{ $0.rawValue }
+        return self.allCases.map{ $0.rawValue }
     }
 }
 
@@ -214,7 +208,7 @@ extension RSDIntEnumSet {
     }
     
     static func allCodingKeys() -> [Int] {
-        return self.all.map{ $0.rawValue }
+        return self.allCases.map{ $0.rawValue }
     }
 }
 
@@ -247,9 +241,6 @@ protocol RSDDocumentableObject : RSDDocumentable {
     
     /// A list of `CodingKey` values for all the `Decodable` properties on this object.
     static func codingKeys() -> [CodingKey]
-    
-    /// Method called during testing to validate that all the coding keys are included.
-    static func validateAllKeysIncluded() -> Bool
 }
 
 /// This is an internal protocol (accessible by test but not externally) that can be used to set up

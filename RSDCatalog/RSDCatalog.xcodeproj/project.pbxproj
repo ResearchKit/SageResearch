@@ -310,13 +310,16 @@
 				TargetAttributes = {
 					F8D42A4E2095518400C6A4BC = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 					};
 					F8D42A622095518400C6A4BC = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						TestTargetID = F8D42A4E2095518400C6A4BC;
 					};
 					F8D42A6D2095518400C6A4BC = {
 						CreatedOnToolsVersion = 9.3;
+						LastSwiftMigration = 1000;
 						TestTargetID = F8D42A4E2095518400C6A4BC;
 					};
 				};
@@ -575,7 +578,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6b2dcc3b-7c56-435c-bfc3-d556e8f752b9";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development org.sagebase.RSDCatalog";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -597,7 +600,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1f50e158-f7da-485a-8c7a-60ff43c903c2";
 				PROVISIONING_PROFILE_SPECIFIER = "match Distribution org.sagebase.RSDCatalog";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -617,7 +620,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDCatalogTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSDCatalog.app/RSDCatalog";
 			};
@@ -638,7 +641,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDCatalogTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSDCatalog.app/RSDCatalog";
 			};
@@ -658,7 +661,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDCatalogUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = RSDCatalog;
 			};
@@ -678,7 +681,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDCatalogUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = RSDCatalog;
 			};

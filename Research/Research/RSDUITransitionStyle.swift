@@ -34,10 +34,9 @@
 import Foundation
 
 /// The type of transition style to use for displaying a UI component.
-public struct RSDTransitionStyle : RawRepresentable, Codable {
-    public typealias RawValue = String
+public struct RSDTransitionStyle : RawRepresentable, Codable, Hashable {
     
-    public private(set) var rawValue: String
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
@@ -50,27 +49,7 @@ public struct RSDTransitionStyle : RawRepresentable, Codable {
     }
 }
 
-extension RSDTransitionStyle : Equatable {
-    public static func ==(lhs: RSDTransitionStyle, rhs: RSDTransitionStyle) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDTransitionStyle) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDTransitionStyle, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDTransitionStyle : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
 extension RSDTransitionStyle : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }

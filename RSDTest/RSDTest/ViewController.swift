@@ -50,9 +50,9 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     }
 
     @IBAction func runFooTask(_ sender: Any) {
-        var taskInfoStep = RSDTaskInfoStepObject(with: RSDTaskInfoObject(with: "foo"))
-        taskInfoStep.taskTransformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
-        let taskViewController = RSDTaskViewController(taskInfo: taskInfoStep)
+        let transformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
+        let task = try! RSDFactory.shared.decodeTask(with: transformer)
+        let taskViewController = RSDTaskViewController(task: task)
         taskViewController.delegate = self
         self.present(taskViewController, animated: true, completion: nil)
     }
@@ -75,24 +75,24 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
         // dismiss the view controller
-        let outputDirectory = taskController.taskPath.outputDirectory
+        let outputDirectory = taskController.taskViewModel.outputDirectory
         (taskController as? UIViewController)?.dismiss(animated: true) {
             self.offMainQueue.async {
                 self.deleteOutputDirectory(outputDirectory)
             }
         }
         
-        var debugResult: String = taskController.taskResult.identifier
+        var debugResult: String = taskController.taskViewModel.taskResult.identifier
         debugResult.append("\n\n=== Completed: \(reason) error:\(String(describing: error))")
         print(debugResult)
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        var debugResult: String = taskPath.description
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        var debugResult: String = taskViewModel.description
         
         do {
             let encoder = RSDFactory.shared.createJSONEncoder()
-            let taskJSON = try taskPath.encodeResult(to: encoder)
+            let taskJSON = try taskViewModel.encodeResult(to: encoder)
             if let string = String(data: taskJSON, encoding: .utf8) {
                 debugResult.append("\n\n\(string)")
             }
@@ -101,10 +101,6 @@ class ViewController: UIViewController, RSDTaskViewControllerDelegate {
         }
         
         print(debugResult)
-    }
-    
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
     }
     
     func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {

@@ -129,6 +129,3 @@ extension RSDSurveyNavigationStep {
     }
 }
 
-
-
-

@@ -63,20 +63,6 @@ class UnitConversionTests: XCTestCase {
         XCTAssertEqual(UnitMass(fromSymbol: "lb"), UnitMass.pounds)
     }
     
-    func testUnitFromSymbol() {
-        XCTAssertEqual(Unit(fromSymbol: "ft") as? UnitLength, UnitLength.feet)
-        XCTAssertEqual(Unit(fromSymbol: "in") as? UnitLength, UnitLength.inches)
-        XCTAssertEqual(Unit(fromSymbol: "yd") as? UnitLength, UnitLength.yards)
-        XCTAssertEqual(Unit(fromSymbol: "mm") as? UnitLength, UnitLength.millimeters)
-        XCTAssertEqual(Unit(fromSymbol: "cm") as? UnitLength, UnitLength.centimeters)
-        XCTAssertEqual(Unit(fromSymbol: "m") as? UnitLength, UnitLength.meters)
-        XCTAssertEqual(Unit(fromSymbol: "km") as? UnitLength, UnitLength.kilometers)
-        XCTAssertEqual(Unit(fromSymbol: "lb") as? UnitMass, UnitMass.pounds)
-        XCTAssertEqual(Unit(fromSymbol: "kg") as? UnitMass, UnitMass.kilograms)
-        XCTAssertEqual(Unit(fromSymbol: "oz") as? UnitMass, UnitMass.ounces)
-        XCTAssertEqual(Unit(fromSymbol: "lb") as? UnitMass, UnitMass.pounds)
-    }
-    
     func testFeetAndInchesConverter() {
         let converter = RSDUnitConverter.feetAndInches
         

@@ -31,7 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// `RSDColorThemeElementObject` tells the UI what the background color and foreground color are for a
 /// given view as well as whether or not the foreground elements should use "light style".
@@ -39,7 +43,7 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     let _backgroundColorName: String?
     let _usesLightStyle: Bool?
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case _backgroundColorName = "backgroundColor"
         case _usesLightStyle = "usesLightStyle"
         case bundleIdentifier
@@ -59,15 +63,15 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     }
     
     /// The background color for this step.
-    #if os(watchOS)
+    #if os(watchOS) || os(macOS)
     /// **Available** for watchOS.
     ///
     /// The background color for this step. If undefined then the background color appropriate to the light
     /// style will be used.
     /// - returns: The color or `nil` if undefined.
-    public func backgroundColor() -> UIColor? {
+    public func backgroundColor() -> RSDColor? {
         guard let name = _backgroundColorName else { return nil }
-        return UIColor.rsd_color(named: name, in: bundle)
+        return RSDColor.rsd_color(named: name, in: bundle)
     }
     #else
     
@@ -76,9 +80,9 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
     /// The background color for this step. If undefined then the background color appropriate to the light
     /// style will be used.
     /// - returns: The color or `nil` if undefined.
-    public func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> UIColor? {
+    public func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> RSDColor? {
         guard let name = _backgroundColorName else { return nil }
-        return UIColor.rsd_color(named: name, in: bundle, compatibleWith: traitCollection)
+        return RSDColor.rsd_color(named: name, in: bundle, compatibleWith: traitCollection)
     }
     #endif
     
@@ -128,29 +132,7 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
 extension RSDColorThemeElementObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [._backgroundColorName, ._usesLightStyle, .bundleIdentifier, .colorStyle]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case ._backgroundColorName:
-                if idx != 0 { return false }
-            case ._usesLightStyle:
-                if idx != 1 { return false }
-            case .bundleIdentifier:
-                if idx != 2 { return false }
-            case .colorStyle:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func colorThemeExamples() -> [RSDColorThemeElementObject] {

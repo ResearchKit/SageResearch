@@ -37,7 +37,7 @@ import Foundation
 /// the `RSDStepController`.
 public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundleInfo, Codable {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case viewIdentifier, bundleIdentifier, storyboardIdentifier
     }
     
@@ -71,27 +71,7 @@ public struct RSDViewThemeElementObject: RSDViewThemeElement, RSDDecodableBundle
 extension RSDViewThemeElementObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.viewIdentifier, .bundleIdentifier, .storyboardIdentifier]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .viewIdentifier:
-                if idx != 0 { return false }
-            case .bundleIdentifier:
-                if idx != 1 { return false }
-            case .storyboardIdentifier:
-                if idx != 2 { return false }
-            }
-        }
-        return keys.count == 3
+        return CodingKeys.allCases
     }
     
     static func viewThemeExamples() -> [RSDViewThemeElementObject] {

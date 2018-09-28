@@ -52,13 +52,4 @@ public protocol RSDTaskGroup {
     
     /// A list of the task references included in this group.
     var tasks: [RSDTaskInfo] { get }
-    
-    /// Instantiate a task path for the task info. This can either create a task path that
-    /// points at a `RSDTask` or a `RSDTaskInfoStep`. If it returns nil then the application
-    /// will need to have an alternate method of mapping a task info to a task path to start
-    /// a task run.
-    ///
-    /// - parameter taskInfo: The task info to map from.
-    /// - returns: A new task path.
-    func instantiateTaskPath(for taskInfo: RSDTaskInfo) -> RSDTaskPath?
 }

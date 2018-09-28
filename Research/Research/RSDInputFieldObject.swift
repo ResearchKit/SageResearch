@@ -38,7 +38,7 @@ import Foundation
 ///
 open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDCopyInputField, Codable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier
         case inputPrompt = "prompt"
         case inputPromptDetail = "promptDetail"
@@ -161,29 +161,6 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     open class func dataType(from decoder: Decoder) throws -> RSDFormDataType {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         return try container.decode(RSDFormDataType.self, forKey: .dataType)
-    }
-    
-    /// Overridable class function for decoding the uiHint from the decoder. The default implementation will key to
-    /// `CodingKeys.uiHint` and will check that the ui hint is valid for the given data type.
-    ///
-    /// - parameters:
-    ///     - decoder: The decoder used to decode this object.
-    ///     - dataType: The data type associated with this instance.
-    /// - returns: The UI Hint associated with this input field (if any).
-    /// - throws: `DecodingError` if the uiHint is not a `String`.
-    ///           `RSDValidationError.invalidType` if it is not valid for this data type.
-    open class func uiHint(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDFormUIHint? {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        guard let uiHint = try container.decodeIfPresent(RSDFormUIHint.self, forKey: .inputUIHint) else {
-            return nil
-        }
-        guard let standardType = uiHint.standardType else {
-            return uiHint
-        }
-        guard dataType.validStandardUIHints.contains(standardType) else {
-            throw RSDValidationError.invalidType("\(uiHint) is not a valid uiHint for \(dataType)")
-        }
-        return uiHint
     }
     
     /// Overridable class function for decoding the range from the decoder. The default implementation will key to
@@ -345,7 +322,6 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     public required init(from decoder: Decoder) throws {
         
         let dataType = try type(of: self).dataType(from: decoder)
-        let uiHint = try type(of: self).uiHint(from: decoder, for: dataType)
         let range = try type(of: self).range(from: decoder, dataType: dataType)
         let textFieldOptions = try type(of: self).textFieldOptions(from: decoder, dataType: dataType)
         let surveyRules = try type(of: self).surveyRules(from: decoder, dataType: dataType)
@@ -362,7 +338,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         }
         
         self.dataType = dataType
-        self.inputUIHint = uiHint
+        self.inputUIHint = try container.decodeIfPresent(RSDFormUIHint.self, forKey: .inputUIHint)
         self.range = range
         self.textFieldOptions = textFieldOptions
         self.surveyRules = surveyRules
@@ -415,46 +391,12 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     // Overrides must be defined in the base implementation
     
     class func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .inputPrompt, .placeholder, .dataType, .inputUIHint, .isOptional, .textFieldOptions, .range, .surveyRules, .inputPromptDetail]
-        return codingKeys
-    }
-    
-    class func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .inputPrompt:
-                if idx != 1 { return false }
-            case .placeholder:
-                if idx != 2 { return false }
-            case .dataType:
-                if idx != 3 { return false }
-            case .inputUIHint:
-                if idx != 4 { return false }
-            case .isOptional:
-                if idx != 5 { return false }
-            case .textFieldOptions:
-                if idx != 6 { return false }
-            case .range:
-                if idx != 7 { return false }
-            case .surveyRules:
-                if idx != 8 { return false }
-            case .inputPromptDetail:
-                if idx != 9 { return false }
-            }
-        }
-        return keys.count == 10
+        return CodingKeys.allCases
     }
     
     class func examples() -> [[String : RSDJSONValue]] {
         
-        let baseTypes = RSDFormDataType.BaseType.allTypes()
+        let baseTypes = RSDFormDataType.BaseType.allCases
         let examples = baseTypes.compactMap { (baseType) -> [String : RSDJSONValue]? in
             switch baseType {
             case .boolean:

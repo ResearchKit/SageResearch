@@ -36,9 +36,8 @@ import Photos
 import AVFoundation
 
 extension RSDImagePickerStepObject : RSDStepViewControllerVendor {
-    
-    public func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)? {
-        return RSDImagePickerStepViewController(step: self)
+    public func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
+        return RSDImagePickerStepViewController(step: self, parent: parent)
     }
 }
 
@@ -51,12 +50,12 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     private let processingQueue = DispatchQueue(label: "org.sagebase.Research.camera.processing")
     
     /// The source for the image picker.
-    open var sourceType: UIImagePickerControllerSourceType {
+    open var sourceType: UIImagePickerController.SourceType {
         return ((self.step as? RSDImagePickerStep)?.sourceType == .photoLibrary) ? .photoLibrary : .camera
     }
     
     /// The camera capture mode for the picker.
-    open var cameraCaptureMode: UIImagePickerControllerCameraCaptureMode {
+    open var cameraCaptureMode: UIImagePickerController.CameraCaptureMode {
         return mediaTypes.contains(.photo) ? .photo : .video
     }
     
@@ -134,25 +133,24 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
                 
         // Embed the picker in this view.
         picker.edgesForExtendedLayout = UIRectEdge(rawValue: 0)
-        self.addChildViewController(picker)
+        self.addChild(picker)
         picker.view.frame = self.view.bounds
         self.view.addSubview(picker.view)
         picker.view.rsd_alignAllToSuperview(padding: 0)
-        picker.didMove(toParentViewController: self)
+        picker.didMove(toParent: self)
     }
     
     /// Overridable method for creating a file identifier to use for saving the photo or video to the
     /// output directory.
     open func fileIdentifier() -> String {
-        let sectionIdentifier = (self.taskController.taskPath.parentPath != nil) ?
-            "\(self.taskController.taskPath.result.identifier)_" : ""
+        let sectionIdentifier = self.stepViewModel.sectionIdentifier()
         return "\(sectionIdentifier)\(self.step.identifier)_\(UUID().uuidString.prefix(4))"
     }
     
     /// Overridable method for saving the image result. The default behavior is to replace any existing
     /// results associated with this step with the new result.
     open func saveImageResult(_ result: RSDFileResult) {
-        self.taskController.taskPath.appendStepHistory(with: result)
+        self.stepViewModel.taskResult.appendStepHistory(with: result)
     }
     
     // MARK: UIImagePickerControllerDelegate
@@ -160,7 +158,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     /// Default behavior when the user taps cancel is to go back if there is a step to go back to. Otherwise,
     /// the view controller will cancel the task.
     open func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        if self.taskController.hasStepBefore {
+        if self.stepViewModel.parentTaskPath?.hasStepBefore ?? false {
             goBack()
         } else {
             cancel()
@@ -168,8 +166,11 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     }
     
     /// When the image picker selects the image, the callback will save the image as an `RSDFileResult` and continue.
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let mType = info[UIImagePickerControllerMediaType] as? String, let mediaType = MediaType(rawValue: mType)
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
+        guard let mType = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.mediaType)] as? String, let mediaType = MediaType(rawValue: mType)
             else {
                 _captureFailed(info)
                 return
@@ -189,7 +190,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     }
     
     private func _didSelectVideo(_ info: [String : Any]) {
-        guard let chosenVideoURL = info[UIImagePickerControllerMediaURL] as? URL else {
+        guard let chosenVideoURL = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.mediaURL)] as? URL else {
             _captureFailed(info)
             return
         }
@@ -197,7 +198,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
         var url: URL?
         do {
             url = try RSDFileResultUtility.createFileURL(identifier: fileIdentifier(), ext: "mov",
-                                                         outputDirectory: self.taskController.taskPath.outputDirectory)
+                                                         outputDirectory: self.stepViewModel.outputDirectory)
             _copyURL(at: chosenVideoURL, to: url!)
         } catch let error {
             debugPrint("Failed to save the camera image: \(error)")
@@ -207,16 +208,16 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     }
     
     private func _didSelectImage(_ info: [String : Any]) {
-        guard let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+        guard let chosenImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage else {
             _captureFailed(info)
             return
         }
         
         var url: URL?
         do {
-            if let imageData = UIImageJPEGRepresentation(chosenImage, compressionQuality) {
+            if let imageData = chosenImage.jpegData(compressionQuality: compressionQuality) {
                 url = try RSDFileResultUtility.createFileURL(identifier: fileIdentifier(), ext: "jpeg",
-                                                             outputDirectory: self.taskController.taskPath.outputDirectory)
+                                                             outputDirectory: self.stepViewModel.outputDirectory)
                 _saveImage(imageData, to: url!)
             }
         } catch let error {
@@ -229,7 +230,7 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     func _addFileResult(_ url: URL?) {
         
         // Create the result and set it as the result for this step
-        var result: RSDFileResult = (taskController.taskPath.result.findResult(for: self.step) as? RSDFileResult) ?? RSDFileResultObject(identifier: self.step.identifier)
+        var result: RSDFileResult = (self.stepViewModel.taskResult.findResult(for: self.step) as? RSDFileResult) ?? RSDFileResultObject(identifier: self.step.identifier)
         result.url = url
         saveImageResult(result)
         
@@ -272,9 +273,9 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     
     /// Default initializer. This initializer will initialize using the `nibName` and `bundle` defined on this class.
     /// - parameter step: The step to set for this view controller.
-    public override init(step: RSDStep) {
+    public override init(step: RSDStep, parent: RSDPathComponent?) {
         super.init(nibName: type(of: self).nibName, bundle: type(of: self).bundle)
-        self.step = step
+        self.stepViewModel = self.instantiateStepViewModel(for: step, with: parent)
     }
     
     /// Initialize the class using the given nib and bundle.
@@ -291,4 +292,14 @@ open class RSDImagePickerStepViewController: RSDStepViewController, UIImagePicke
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

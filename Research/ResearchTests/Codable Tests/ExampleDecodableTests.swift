@@ -54,13 +54,6 @@ class ExampleDecodableTests: XCTestCase {
         let documentCreator = RSDDocumentCreator()
         for objectType in documentCreator.allCodableObjects {
             
-            let validKeys = objectType.validateAllKeysIncluded()
-            XCTAssertTrue(validKeys, "\(objectType)")
-
-            if !validKeys {
-                debugPrint(objectType)
-            }
-            
             let encoder = RSDFactory.shared.createJSONEncoder()
             let decoder = RSDFactory.shared.createJSONDecoder()
             
@@ -81,10 +74,6 @@ class ExampleDecodableTests: XCTestCase {
     func testAllDecodableObjects() {
         let documentCreator = RSDDocumentCreator()
         for objectType in documentCreator.allDecodableObjects {
-            
-            debugPrint(objectType)
-            let validKeys = objectType.validateAllKeysIncluded()
-            XCTAssertTrue(validKeys, "\(objectType)")
             
             let decoder = RSDFactory.shared.createJSONDecoder()
             
