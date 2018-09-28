@@ -92,7 +92,7 @@ class TableItemTests: XCTestCase {
         do {
             try itemGroup.setAnswer("1.36")
             let answer = itemGroup.answer
-            XCTAssertEqual((answer as? NSNumber)?.doubleValue, 1.36, "\(itemGroup.answer)")
+            XCTAssertEqual((answer as? NSNumber)?.doubleValue, 1.36, "\(String(describing: itemGroup.answer))")
         } catch let error {
             XCTFail("Failed to set the answer to a valid answer. \(error)")
         }
@@ -143,7 +143,7 @@ class TableItemTests: XCTestCase {
         do {
             try itemGroup.setAnswer("1")
             let answer = itemGroup.answer
-            XCTAssertEqual((answer as? NSNumber)?.intValue, 1, "\(itemGroup.answer)")
+            XCTAssertEqual((answer as? NSNumber)?.intValue, 1, "\(String(describing: itemGroup.answer))")
         } catch let error {
             XCTFail("Failed to set the answer to a valid answer. \(error)")
         }
@@ -193,7 +193,7 @@ class TableItemTests: XCTestCase {
         do {
             try itemGroup.setAnswer("1980")
             let answer = itemGroup.answer
-            XCTAssertEqual((answer as? NSNumber)?.intValue, 1980, "\(itemGroup.answer)")
+            XCTAssertEqual((answer as? NSNumber)?.intValue, 1980, "\(String(describing: itemGroup.answer))")
         } catch let error {
             XCTFail("Failed to set the answer to a valid answer. \(error)")
         }
@@ -253,7 +253,7 @@ class TableItemTests: XCTestCase {
         do {
             try itemGroup.setAnswer("136/100")
             let answer = itemGroup.answer
-            XCTAssertEqual((answer as? NSNumber)?.doubleValue, 1.36, "\(itemGroup.answer)")
+            XCTAssertEqual((answer as? NSNumber)?.doubleValue, 1.36, "\(String(describing: itemGroup.answer))")
         } catch let error {
             XCTFail("Failed to set the answer to a valid answer. \(error)")
         }
@@ -319,7 +319,7 @@ class TableItemTests: XCTestCase {
         do {
             try itemGroup.setAnswer("2 hours, 50 minutes")
             let answer = itemGroup.answer
-            XCTAssertEqual((answer as? NSNumber)?.intValue, 170, "\(itemGroup.answer)")
+            XCTAssertEqual((answer as? NSNumber)?.intValue, 170, "\(String(describing: itemGroup.answer))")
         } catch let error {
             XCTFail("Failed to set the answer to a valid answer. \(error)")
         }
