@@ -80,10 +80,10 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         return inputField.identifier
     }
     
-    /// The answer for this item group. This is the answer stored to the `RSDAnswerResult`. The default implementation will
-    /// return the privately stored answer if set and if not, will look to see if the first table item is recognized as a table item
-    /// that stores an answer on it.
-    open var answer: Any {
+    /// The answer for this item group. This is the answer stored to the `RSDAnswerResult`. The default
+    /// implementation will return the privately stored answer if set and if not, will look to see if the
+    /// first table item is recognized as a table item that stores an answer on it.
+    open var answer: Any? {
         return _answer ?? (self.items.first as? RSDTextInputTableItem)?.answer
     }
     private var _answer: Any?
@@ -149,7 +149,7 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         let isOptional = self.items.reduce(self.inputField.isOptional) {
             $0 && (($1 as? RSDInputFieldTableItem)?.inputField.isOptional ?? true)
         }
-        return isOptional || !(self.answer is NSNull)
+        return isOptional || !((self.answer == nil) || (self.answer is NSNull))
     }
 }
 
