@@ -86,6 +86,11 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         self.progressLabel?.isHidden = true
         self.skipButton?.isHidden = true
         self.heartImageView?.isHidden = true
+        
+        let localizationBundle = LocalizationBundle(Bundle(for: CRFHeartRateStepViewController.self))
+        Localization.insert(bundle: localizationBundle, at: 1)
+    
+        self.instructionLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_START_TEXT")
     }
     
     public override func viewDidAppear(_ animated: Bool) {
@@ -212,14 +217,14 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
             self.loadingIndicator?.isHidden = true
             if isCoveringLens {
                 self._startCountdownIfNeeded()
+                self.instructionLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_CONTINUE_TEXT")
             } else {
                 // zero out the BPM to indicate to the user that they need to cover the flash
                 // and show the initial instruction.
                 self.progressLabel?.text = "--"
                 self._markTime = nil
-                if let instruction = self.activeStep?.spokenInstruction(at: 0) {
-                    self.instructionLabel?.text = instruction
-                }
+                self.vibrateDevice()
+                self.instructionLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_ERROR_TEXT")
             }
         }
     }

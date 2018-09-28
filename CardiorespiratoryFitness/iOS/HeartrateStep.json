@@ -20,19 +20,10 @@
                            {
                            "identifier"   : "heartRate",
                            "type"         : "heartRate",
-                           "text"         : "Gently cover both the camera and flash with your finger.",
-                           "detail"       : "Doing a great job of keeping your finger on the camera!",
                            "shouldHideActions": ["goBackward", "goForward"],
                            "duration": 60,
-                           "commands": ["playSound", "continueOnFinish", "shouldDisableIdleTimer"],
-                           "requiresBackgroundAudio": true,
-                           "spokenInstructions": {
-                                "0" : "Gently cover both the camera and flash with your finger.",
-                                "5": "Please keep still",
-                                "halfway": "You’re half way there!",
-                                "45": "Just 15 seconds left",
-                                "end": "You’re all done!"
-                           }
+                           "commands": ["vibrate", "continueOnFinish", "shouldDisableIdleTimer"],
+                           "requiresBackgroundAudio": true
                            },
                            {
                            "identifier"   : "feedback",
