@@ -35,3 +35,4 @@
 "HEARTRATE_CAPTURE_START_TEXT"    = "Gently cover both the camera and flash with your finger";
 "HEARTRATE_CAPTURE_CONTINUE_TEXT" = "Please keep your hands and body still";
 "HEARTRATE_CAPTURE_ERROR_TEXT"    = "Please place finger back on the camera and flash";
+"HEARTRATE_CAPTURE_%@_BPM"        = "%@ BPM";

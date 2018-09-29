@@ -264,15 +264,19 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
     
     private func _updateBPMLabel(_ bpm: Int) {
         if self.collectionResult?.inputResults.count ?? 0 == 0 {
-            // Add the starting heart rate as a result for display to the user
+            // Add the starting heart rate
             var bpmResult = RSDAnswerResultObject(identifier: "\(self.step.identifier)_start", answerType: RSDAnswerResultType(baseType: .decimal))
             bpmResult.value = bpmRecorder?.bpm
             addResult(bpmResult)
-        } else if !_encouragementGiven, let markTime = _markTime, (ProcessInfo.processInfo.systemUptime - markTime) > 40,
-            let continueText = self.uiStep?.detail {
-            _encouragementGiven = true
-            self.speakInstruction(continueText, at: 40, completion: nil)
         }
-        self.progressLabel?.text = numberFormatter.string(from: NSNumber(value: bpm))
+        // TODO: syoung 09/28/2018 Save for now in case UX changes again to include spoken "encouragement" text.
+        //    else if !_encouragementGiven, let markTime = _markTime, (ProcessInfo.processInfo.systemUptime - markTime) > 40,
+        //        let continueText = self.uiStep?.detail {
+        //        _encouragementGiven = true
+        //        self.speakInstruction(continueText, at: 40, completion: nil)
+        //    }
+        if let bpmString = numberFormatter.string(from: NSNumber(value: bpm)) {
+            self.progressLabel?.text = Localization.localizedStringWithFormatKey("HEARTRATE_CAPTURE_%@_BPM", bpmString)
+        }
     }
 }
