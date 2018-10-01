@@ -56,10 +56,6 @@
 		F8BA80132051DF7800A5B83A /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; };
 		F8BA80142051DF7800A5B83A /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8DA5E0A215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */; };
-		F8DA5E33215EE89800F7FF20 /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DA5E32215EE89800F7FF20 /* BridgeApp.framework */; };
-		F8DA5E34215EE89800F7FF20 /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8DA5E32215EE89800F7FF20 /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8DA5E3D215EE93E00F7FF20 /* BridgeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8DA5E3C215EE93E00F7FF20 /* BridgeSDK.framework */; };
-		F8DA5E3E215EE93E00F7FF20 /* BridgeSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8DA5E3C215EE93E00F7FF20 /* BridgeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8E4B5052060728F000E53D4 /* CRFArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */; };
 		F8F3678121596A8400A49F89 /* CRFHeartRateTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F3678021596A8400A49F89 /* CRFHeartRateTransformer.swift */; };
 /* End PBXBuildFile section */
@@ -180,8 +176,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F8BA80142051DF7800A5B83A /* CardiorespiratoryFitness.framework in Embed Frameworks */,
-				F8DA5E3E215EE93E00F7FF20 /* BridgeSDK.framework in Embed Frameworks */,
-				F8DA5E34215EE89800F7FF20 /* BridgeApp.framework in Embed Frameworks */,
 				F8061344215ED170001B1574 /* Research.framework in Embed Frameworks */,
 				F8061340215ED166001B1574 /* ResearchUI.framework in Embed Frameworks */,
 			);
@@ -243,8 +237,6 @@
 		F8BA80042051DCFC00A5B83A /* FileResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileResultViewController.swift; sourceTree = "<group>"; };
 		F8BA80062051DD0800A5B83A /* ResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewController.swift; sourceTree = "<group>"; };
 		F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CardiorespiratoryFitness.strings; sourceTree = "<group>"; };
-		F8DA5E32215EE89800F7FF20 /* BridgeApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8DA5E3C215EE93E00F7FF20 /* BridgeSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFArchiveManager.swift; sourceTree = "<group>"; };
 		F8F3678021596A8400A49F89 /* CRFHeartRateTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFHeartRateTransformer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -275,9 +267,7 @@
 				F8061343215ED170001B1574 /* Research.framework in Frameworks */,
 				F880C17B2051FE6300ACB4D4 /* CoreLocation.framework in Frameworks */,
 				F880C1792051FE5900ACB4D4 /* CoreMotion.framework in Frameworks */,
-				F8DA5E33215EE89800F7FF20 /* BridgeApp.framework in Frameworks */,
 				F8BA80132051DF7800A5B83A /* CardiorespiratoryFitness.framework in Frameworks */,
-				F8DA5E3D215EE93E00F7FF20 /* BridgeSDK.framework in Frameworks */,
 				F806133F215ED166001B1574 /* ResearchUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,8 +393,6 @@
 		F88725CF2051C0F800A4B82F = {
 			isa = PBXGroup;
 			children = (
-				F8DA5E3C215EE93E00F7FF20 /* BridgeSDK.framework */,
-				F8DA5E32215EE89800F7FF20 /* BridgeApp.framework */,
 				F88725DB2051C0F800A4B82F /* CardiorespiratoryFitness */,
 				F88725E62051C0F900A4B82F /* CardiorespiratoryFitnessTests */,
 				F8BA7FE12051DC2E00A5B83A /* CRFTestApp */,
