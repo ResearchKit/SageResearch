@@ -158,6 +158,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         self.copyInto(copy)
         if let decoder = decoder {
             try copy.decode(from: decoder, for: nil)
+            try copy.decodeActions(from: decoder)
         }
         return copy
     }
