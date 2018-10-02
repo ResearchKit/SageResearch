@@ -39,12 +39,32 @@ open class CRFResultStepViewController: RSDStepViewController {
     @IBOutlet public var resultLabel: UILabel!
     @IBOutlet public var unitLabel: UILabel?
     
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        _originalTitle = self.navigationHeader?.titleLabel?.text
+    }
+    
+    private var _originalTitle: String?
+    
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.navigationHeader?.titleLabel?.text = self.uiStep?.title ?? _originalTitle
         self.textLabel?.text = self.uiStep?.text
         self.resultLabel.text = resultText
         self.unitLabel?.text = unitText
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let title = self.navigationHeader?.titleLabel?.text,
+            let text = self.textLabel?.text,
+            let resultText = resultText {
+            let announcement = String.localizedStringWithFormat("%@ %@ %@ %@", title, text, resultText, (unitText ?? ""))
+            UIAccessibility.post(notification: .announcement, argument: announcement)
+        }
     }
     
     open var unitText: String? {
