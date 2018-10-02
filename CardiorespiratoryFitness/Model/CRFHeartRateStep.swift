@@ -35,10 +35,10 @@ import UIKit
 
 /// Custom subclass of the active step that can decode configuration details specific to the heart rate
 /// recorder used by this step view controller.
-open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRecorderConfiguration {
+open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfiguration {
 
     private enum CodingKeys : String, CodingKey {
-        case shouldSaveBuffer, cameraSettings, isResting
+        case shouldSaveBuffer, cameraSettings, isResting, shouldDeletePrevious
     }
     
     /// Should the log file include the full pixel matrix or just the averaged value?
@@ -49,6 +49,10 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRecorderConfiguration {
     
     /// Is this the resting heart rate?
     public var isResting: Bool = true
+    
+    /// Should the file used in a previous run of a recording be deleted?
+    /// Default = `true`.
+    public private(set) var shouldDeletePrevious: Bool = true
     
     /// This recorder requires permission to use the camera.
     public var permissionTypes: [RSDPermissionType] {
@@ -84,6 +88,7 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRecorderConfiguration {
             self.shouldSaveBuffer = try container.decodeIfPresent(Bool.self, forKey: .shouldSaveBuffer) ?? self.shouldSaveBuffer
             self.cameraSettings = try container.decodeIfPresent(CRFCameraSettings.self, forKey: .cameraSettings) ?? self.cameraSettings
             self.isResting = try container.decodeIfPresent(Bool.self, forKey: .isResting) ?? self.isResting
+            self.shouldDeletePrevious = try container.decodeIfPresent(Bool.self, forKey: .shouldDeletePrevious) ?? self.shouldDeletePrevious
         }
     }
     

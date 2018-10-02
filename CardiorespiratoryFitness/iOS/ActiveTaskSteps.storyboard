@@ -715,9 +715,11 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="4ov-7f-Yb9" firstAttribute="leading" secondItem="Cme-uq-pyz" secondAttribute="leading" constant="24" id="EED-zs-dmf"/>
+                                    <constraint firstItem="4ov-7f-Yb9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Cme-uq-pyz" secondAttribute="top" constant="6" id="Vgj-Hl-Hph"/>
                                     <constraint firstItem="4ov-7f-Yb9" firstAttribute="centerY" secondItem="Cme-uq-pyz" secondAttribute="centerY" id="WBL-oE-5Xc"/>
                                     <constraint firstAttribute="trailing" secondItem="4ov-7f-Yb9" secondAttribute="trailing" constant="24" id="eSl-sI-vh9"/>
-                                    <constraint firstAttribute="height" constant="160" id="yi6-QE-fhH"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4ov-7f-Yb9" secondAttribute="bottom" constant="6" id="yex-V6-VyA"/>
+                                    <constraint firstAttribute="height" priority="750" constant="160" id="yi6-QE-fhH"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s75-JE-o2a">
@@ -799,7 +801,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZDV-yn-0oD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1804" y="206"/>
+            <point key="canvasLocation" x="-1805.625" y="205.98591549295776"/>
         </scene>
         <!--Heart Rate Result Step View Controller-->
         <scene sceneID="D1g-8p-UV0">
@@ -1037,7 +1039,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVD-qs-xxl" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                        <rect key="frame" x="24" y="509" width="272" height="35"/>
+                                        <rect key="frame" x="24" y="492" width="272" height="52"/>
                                         <color key="backgroundColor" name="white"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <color key="tintColor" name="darkPastelGreenTwo"/>
@@ -1119,13 +1121,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="Your heart rate changed by" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIh-Jl-8y5">
-                                        <rect key="frame" x="24" y="310" width="272" height="86"/>
+                                        <rect key="frame" x="24" y="280" width="272" height="86"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <color key="textColor" name="white"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l2w-IM-GMs">
-                                        <rect key="frame" x="82.5" y="414" width="155" height="98"/>
+                                        <rect key="frame" x="82.5" y="384" width="155" height="98"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="65" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAS-tv-vtl">
                                                 <rect key="frame" x="0.0" y="0.0" width="97.5" height="98"/>
@@ -1151,7 +1153,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOO-0a-utf" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                        <rect key="frame" x="24" y="522" width="272" height="22"/>
+                                        <rect key="frame" x="24" y="492" width="272" height="52"/>
                                         <color key="backgroundColor" name="white"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <color key="tintColor" name="darkPastelGreenTwo"/>

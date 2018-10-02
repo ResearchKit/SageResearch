@@ -12,10 +12,10 @@
                                                "animationDuration" : 2
                                                },
                            "colorTheme"     : { "backgroundColor" : "macaroniAndCheese", "usesLightStyle" : true },
-                           "title"          : "Capture heart rate",
-                           "text"           : "Use your finger to cover the camera and flash on the back of your phone.",
-                           "actions"        : { "goForward": { "type":"default", "iconName": "captureStartButton" }},
-                           "viewTheme"      : { "viewIdentifier": "ActiveInstruction", "storyboardIdentifier": "ActiveTaskSteps" }
+                           "title"          : "Cover the flash and camera",
+                           "text"           : "Use your finger to cover the camera and flash on the back of your phone. Your fingernail should turn a little red once you cover the flash.",
+                           "actions"        : { "goForward": { "type":"default", "buttonTitle": "Measure heart rate" }},
+                           "viewTheme"      : { "viewIdentifier": "Instruction", "storyboardIdentifier": "ActiveTaskSteps" }
                            },
                            {
                            "identifier"   : "heartRate",
@@ -28,7 +28,7 @@
                            {
                            "identifier"   : "feedback",
                            "type"         : "completion",
-                           "title"        : "You’re all done!",
+                           "title"        : "Nicely done!",
                            "text"         : "Your heart rate is",
                            "viewTheme"   : { "viewIdentifier": "HeartRateResult", "storyboardIdentifier": "ActiveTaskSteps" }
                            }
