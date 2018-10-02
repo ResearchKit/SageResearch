@@ -43,42 +43,61 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
         self.rawValue = rawValue
     }
     
+    enum StandardType : String, Codable, CaseIterable {
+        
+        case active
+        case completion
+        case countdown
+        case form
+        case instruction
+        case imagePicker
+        case overview
+        case section
+        case transform
+        case taskInfo
+        case subtask
+        
+        var type: RSDStepType {
+            return RSDStepType(rawValue: self.rawValue)
+        }
+    }
+    
     /// Defaults to creating a `RSDActiveUIStepObject`.
-    public static let active: RSDStepType = "active"
+    public static let active = StandardType.active.type
     
     /// Defaults to creating a `RSDActiveUIStepObject` used to mark task completion.
-    public static let completion: RSDStepType = "completion"
+    public static let completion = StandardType.completion.type
     
     /// Defaults to creating a `RSDActiveUIStepObject` used as a countdown to an active step.
-    public static let countdown: RSDStepType = "countdown"
+    public static let countdown = StandardType.countdown.type
     
     /// Defaults to creating a `RSDFormUIStep`.
-    public static let form: RSDStepType = "form"
+    public static let form = StandardType.form.type
     
     /// Defaults to creating a `RSDImagePickerStep`.
-    public static let imagePicker: RSDStepType = "imagePicker"
+    public static let imagePicker = StandardType.imagePicker.type
     
     /// Defaults to creating a `RSDActiveUIStep`.
-    public static let instruction: RSDStepType = "instruction"
+    public static let instruction = StandardType.instruction.type
     
     /// Defaults to creating a `RSDOverviewStepObject`.
-    public static let overview: RSDStepType = "overview"
+    public static let overview = StandardType.overview.type
 
     /// Defaults to creating a `RSDSectionStep`.
-    public static let section: RSDStepType = "section"
+    public static let section = StandardType.section.type
     
     /// Defaults to creating a `RSDSectionStep` created using a `RSDTransformerStep`.
-    public static let transform: RSDStepType = "transform"
+    public static let transform = StandardType.transform.type
     
     /// Defaults to creating a `RSDTaskInfoStep`.
-    public static let taskInfo: RSDStepType = "taskInfo"
+    public static let taskInfo = StandardType.taskInfo.type
     
     /// Defaults to creating a `RSDSubtaskStep`.
-    public static let subtask: RSDStepType = "subtask"
+    public static let subtask = StandardType.subtask.type
     
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDStepType] {
-        return [.active, .completion, .countdown, .form, .imagePicker, .instruction, .overview, .section, .transform, .taskInfo]
+        return StandardType.allCases.map { $0.type }
     }
 }
 

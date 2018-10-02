@@ -1,8 +1,8 @@
 //
-//  RSDSubtaskStep.swift
+//  RSDSubtaskStepObject.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,24 +33,27 @@
 
 import Foundation
 
-/// `RSDSubtaskStep` is a step that contains a task reference.
-public protocol RSDSubtaskStep : RSDStep {
+public struct RSDSubtaskStepObject : RSDSubtaskStep, Decodable {
     
-    /// The task for this step.
-    var task: RSDTask { get }
-}
-
-extension RSDSubtaskStep {
-    
-    public var identifier: String {
-        return self.task.identifier
+    private enum CodingKeys: String, CodingKey {
+        case stepType = "type", task
     }
     
-    public func instantiateStepResult() -> RSDResult {
-        return task.instantiateTaskResult()
+    /// The task that backs this step.
+    public let task: RSDTask
+    
+    /// The step type.
+    public let stepType: RSDStepType
+    
+    public init(task: RSDTask, stepType: RSDStepType = .subtask) {
+        self.task = task
+        self.stepType = stepType
     }
     
-    public func validate() throws {
-        try self.task.validate()
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.stepType = try container.decodeIfPresent(RSDStepType.self, forKey: .stepType) ?? .subtask
+        let nestedDecoder = try container.superDecoder(forKey: .task)
+        self.task = try decoder.factory.decodeTask(from: nestedDecoder)
     }
 }

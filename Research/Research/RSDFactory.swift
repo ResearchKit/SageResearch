@@ -124,6 +124,15 @@ open class RSDFactory {
         return task
     }
     
+    /// Decode a task from the decoder.
+    ///
+    /// - parameter decoder: The decoder to use to instantiate the object.
+    /// - returns: The decoded task.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeTask(from decoder: Decoder) throws -> RSDTask {
+        return try RSDTaskObject(from: decoder)
+    }
+    
     
     // MARK: Task Info factory
     
@@ -255,7 +264,12 @@ open class RSDFactory {
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
-        switch (type) {
+        
+        guard let standardType = RSDStepType.StandardType(rawValue: type.rawValue)
+            else {
+                return try RSDGenericStepObject(from: decoder)
+        }
+        switch (standardType) {
         case .instruction, .completion, .active, .countdown:
             return try RSDActiveUIStepObject(from: decoder)
         case .overview:
@@ -271,8 +285,8 @@ open class RSDFactory {
             return RSDTaskInfoStepObject(with: taskInfo)
         case .transform:
             return try self.decodeTransformableStep(from: decoder)
-        default:
-            return try RSDGenericStepObject(from: decoder)
+        case .subtask:
+            return try RSDSubtaskStepObject(from: decoder)
         }
     }
     
