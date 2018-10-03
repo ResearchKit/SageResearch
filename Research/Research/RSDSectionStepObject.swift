@@ -93,6 +93,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
         
         // Look in the decoder for the replacement step properties.
         var copySteps = self.steps
+        var copyAsyncActions = self.asyncActions
         if let decoder = decoder {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             if container.contains(.steps) {
@@ -108,12 +109,13 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
                     }
                 }
             }
+            copyAsyncActions = try self.decodeAsyncActions(from: decoder, initialActions: copyAsyncActions)
         }
         
         // Copy self with replacement steps.
         var copy = RSDSectionStepObject(identifier: identifier, steps: copySteps, type: self.stepType)
         copy.progressMarkers = self.progressMarkers
-        copy.asyncActions = self.asyncActions
+        copy.asyncActions = copyAsyncActions
         return copy
     }
 
@@ -157,22 +159,26 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
         self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)
+        self.asyncActions = try self.decodeAsyncActions(from: decoder, initialActions: nil)
+    }
+    
+    private func decodeAsyncActions(from decoder: Decoder, initialActions: [RSDAsyncActionConfiguration]?) throws -> [RSDAsyncActionConfiguration]? {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.asyncActions) else { return initialActions }
         
-        // Decode the async actions
         let factory = decoder.factory
-        if container.contains(.asyncActions) {
-            var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
-            var decodedActions : [RSDAsyncActionConfiguration] = []
-            while !nestedContainer.isAtEnd {
-                let actionDecoder = try nestedContainer.superDecoder()
-                if let action = try factory.decodeAsyncActionConfiguration(from: actionDecoder) {
-                    decodedActions.append(action)
+        var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
+        var decodedActions : [RSDAsyncActionConfiguration] = initialActions ?? []
+        while !nestedContainer.isAtEnd {
+            let actionDecoder = try nestedContainer.superDecoder()
+            if let action = try factory.decodeAsyncActionConfiguration(from: actionDecoder) {
+                if let idx = decodedActions.index(where: { $0.identifier == action.identifier}) {
+                    decodedActions.remove(at: idx)
                 }
+                decodedActions.append(action)
             }
-            self.asyncActions = decodedActions
-        } else {
-            self.asyncActions = nil
         }
+        return decodedActions
     }
     
     /// Required implementation for `RSDTask`. This method always returns `nil`.
