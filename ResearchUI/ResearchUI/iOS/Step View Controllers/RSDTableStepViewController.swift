@@ -520,8 +520,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Configure a text view cell.
     func configure(textViewCell: RSDStepTextViewCell, at indexPath: IndexPath) {
-        guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
-            let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
+        guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
             else {
                 return
         }
@@ -555,8 +554,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Configure a text field cell.
     func configure(textFieldCell: RSDStepTextFieldCell, at indexPath: IndexPath) {
-        guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
-            let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
+        guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
             else {
                 return
         }
