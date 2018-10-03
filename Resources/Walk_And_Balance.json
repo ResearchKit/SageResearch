@@ -201,7 +201,7 @@
                                      "identifier":"motion",
                                      "type":"motion",
                                      "requiresBackgroundAudio":true,
-                                     "recorderTypes": ["accelerometer", "gyro", "gravity", "userAcceleration"]
+                                     "recorderTypes": ["accelerometer", "gyro", "gravity", "userAcceleration", "attitude", "rotationRate"]
                                  }
                                 ],
                  "steps":[
@@ -337,7 +337,7 @@
                                  "identifier":"motion",
                                  "type":"motion",
                                  "requiresBackgroundAudio":true,
-                                 "recorderTypes": ["accelerometer", "gyro", "gravity", "userAcceleration"]
+                                 "recorderTypes": ["accelerometer", "gyro", "gravity", "userAcceleration", "attitude", "rotationRate"]
                                  }
                                  ],
                  "steps":[
