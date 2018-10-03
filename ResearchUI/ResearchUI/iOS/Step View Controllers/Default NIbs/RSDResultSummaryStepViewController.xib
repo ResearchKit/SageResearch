@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDResultSummaryStepViewController" customModule="ResearchUI" customModuleProvider="target">
+            <connections>
+                <outlet property="navigationFooter" destination="Ncj-Lh-opD" id="7QX-VA-azy"/>
+                <outlet property="resultLabel" destination="u7S-h2-V5z" id="CzC-PM-oMh"/>
+                <outlet property="unitLabel" destination="NOS-Om-a3a" id="6GJ-7V-yE2"/>
+                <outlet property="view" destination="h4K-gB-JxX" id="nKF-TM-pRp"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="h4K-gB-JxX" customClass="RSDStepNavigationView" customModule="ResearchUI" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Great job!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q46-gO-dis">
+                    <rect key="frame" x="24" y="84" width="327" height="26.5"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="Your heart rate changed by" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktz-4l-Ucs">
+                    <rect key="frame" x="24" y="190.5" width="327" height="86"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyx-AS-zLy">
+                    <rect key="frame" x="110" y="290.5" width="155" height="98"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="65" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7S-h2-V5z">
+                            <rect key="frame" x="0.0" y="0.0" width="97.5" height="98"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="82"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BPM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NOS-Om-a3a">
+                            <rect key="frame" x="105.5" y="55" width="49.5" height="29"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="NOS-Om-a3a" firstAttribute="baseline" secondItem="u7S-h2-V5z" secondAttribute="baseline" id="7zA-lZ-f2h"/>
+                        <constraint firstAttribute="trailing" secondItem="NOS-Om-a3a" secondAttribute="trailing" id="AKr-kd-PPR"/>
+                        <constraint firstItem="NOS-Om-a3a" firstAttribute="leading" secondItem="u7S-h2-V5z" secondAttribute="trailing" constant="8" id="CaD-4h-BgC"/>
+                        <constraint firstAttribute="bottom" secondItem="u7S-h2-V5z" secondAttribute="bottom" id="Vqb-ek-ON0"/>
+                        <constraint firstItem="u7S-h2-V5z" firstAttribute="top" secondItem="pyx-AS-zLy" secondAttribute="top" id="Y3S-QS-6tw"/>
+                        <constraint firstItem="u7S-h2-V5z" firstAttribute="leading" secondItem="pyx-AS-zLy" secondAttribute="leading" id="e66-Ug-aeC"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ncj-Lh-opD" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="570" width="375" height="97"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkipHidden" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="q46-gO-dis" firstAttribute="leading" secondItem="eD5-PI-4qe" secondAttribute="leading" constant="24" id="5lB-xr-ty9"/>
+                <constraint firstItem="Ncj-Lh-opD" firstAttribute="trailing" secondItem="eD5-PI-4qe" secondAttribute="trailing" id="6Ba-JO-Rjz"/>
+                <constraint firstItem="eD5-PI-4qe" firstAttribute="trailing" secondItem="ktz-4l-Ucs" secondAttribute="trailing" constant="24" id="6EO-h6-UZS"/>
+                <constraint firstItem="ktz-4l-Ucs" firstAttribute="top" secondItem="q46-gO-dis" secondAttribute="bottom" constant="80" id="6N5-n3-Js4"/>
+                <constraint firstItem="Ncj-Lh-opD" firstAttribute="bottom" secondItem="eD5-PI-4qe" secondAttribute="bottom" id="6Zj-fd-Ewj"/>
+                <constraint firstItem="pyx-AS-zLy" firstAttribute="centerX" secondItem="h4K-gB-JxX" secondAttribute="centerX" id="AjT-aV-Ogv"/>
+                <constraint firstItem="eD5-PI-4qe" firstAttribute="trailing" secondItem="q46-gO-dis" secondAttribute="trailing" constant="24" id="AyW-Pk-Uc8"/>
+                <constraint firstItem="q46-gO-dis" firstAttribute="top" secondItem="eD5-PI-4qe" secondAttribute="top" constant="64" id="LBU-ae-uGD"/>
+                <constraint firstItem="pyx-AS-zLy" firstAttribute="top" secondItem="ktz-4l-Ucs" secondAttribute="bottom" constant="14" id="Teo-fF-Azx"/>
+                <constraint firstItem="ktz-4l-Ucs" firstAttribute="leading" secondItem="eD5-PI-4qe" secondAttribute="leading" constant="24" id="YMP-Mt-3vq"/>
+                <constraint firstItem="Ncj-Lh-opD" firstAttribute="leading" secondItem="eD5-PI-4qe" secondAttribute="leading" id="yMs-8S-MKh"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="eD5-PI-4qe"/>
+            <connections>
+                <outlet property="textLabel" destination="ktz-4l-Ucs" id="ElD-zu-8vc"/>
+                <outlet property="titleLabel" destination="q46-gO-dis" id="9KI-3j-qQA"/>
+            </connections>
+            <point key="canvasLocation" x="784.79999999999995" y="47.226386806596707"/>
+        </view>
+    </objects>
+</document>

@@ -33,6 +33,10 @@
 
 import Foundation
 
+extension RSDStepType {
+    fileprivate static let nullStepType: RSDStepType = "null"
+}
+
 /// `RSDUIStepObject` is the base class implementation for all UI display steps defined in this framework.
 /// Depending upon the available real-estate, more than one ui step may be displayed at a time. For
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
@@ -59,9 +63,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// of a step history.
     public let identifier: String
     
-    /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
-    /// the UI.
-    public let stepType: RSDStepType
+    /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to
+    /// customize the UI.
+    public private(set) var stepType: RSDStepType
     
     /// The primary text to display for the step in a localized string.
     open var title: String?
@@ -116,15 +120,29 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// The navigation cohort rules to apply *after* displaying the step.
     public var afterCohortRules: [RSDCohortNavigationRule]?
     
+    /// The default step type.
+    open class func defaultType() -> RSDStepType {
+        return .instruction
+    }
+    
+    private func commonInit() {
+        // Use of the `.nullStepType` as a placeholder is b/c of a limitation where type(of: self) cannot
+        // be accessed prior to initializing super and the stepType is required.
+        if self.stepType == .nullStepType {
+            self.stepType = type(of: self).defaultType()
+        }
+    }
+    
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.
     ///     - type: The type of the step. Default = `RSDStepType.instruction`
     public required init(identifier: String, type: RSDStepType? = nil) {
         self.identifier = identifier
-        self.stepType = type ?? .instruction
+        self.stepType = type ?? .nullStepType
         self._initCompleted = false
         super.init()
+        self.commonInit()
         self._initCompleted = true
     }
     
@@ -136,10 +154,11 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     ///     - type: The type of the step. Default = `RSDStepType.instruction`
     public init(identifier: String, nextStepIdentifier: String?, type: RSDStepType? = nil) {
         self.identifier = identifier
-        self.stepType = type ?? .instruction
+        self.stepType = type ?? .nullStepType
         self.nextStepIdentifier = nextStepIdentifier
         self._initCompleted = false
         super.init()
+        self.commonInit()
         self._initCompleted = true
     }
     
@@ -290,6 +309,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         self._initCompleted = false
         try super.init(from: decoder)
         try decode(from: decoder, for: nil)
+        self.commonInit()
         self._initCompleted = true
     }
     private var _initCompleted: Bool

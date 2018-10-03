@@ -111,20 +111,8 @@ public class TestSubtaskStep : RSDSubtaskStep {
         self.task = task
     }
     
-    public var identifier: String {
-        return self.task.identifier
-    }
-    
     public var stepType: RSDStepType {
         return .subtask
-    }
-    
-    public func instantiateStepResult() -> RSDResult {
-        return task.instantiateTaskResult()
-    }
-    
-    public func validate() throws {
-        try self.task.validate()
     }
 }
 

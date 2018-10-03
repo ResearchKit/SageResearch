@@ -1,8 +1,8 @@
 //
-//  RSDSubtaskStep.swift
+//  RSDResultSummaryStep.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,24 +33,12 @@
 
 import Foundation
 
-/// `RSDSubtaskStep` is a step that contains a task reference.
-public protocol RSDSubtaskStep : RSDStep {
+/// A result summary step is used to display a result that is calculated or measured earlier in the task.
+public protocol RSDResultSummaryStep : RSDUIStep {
     
-    /// The task for this step.
-    var task: RSDTask { get }
-}
-
-extension RSDSubtaskStep {
+    /// The identifier for the result to display.
+    var resultIdentifier: String? { get }
     
-    public var identifier: String {
-        return self.task.identifier
-    }
-    
-    public func instantiateStepResult() -> RSDResult {
-        return task.instantiateTaskResult()
-    }
-    
-    public func validate() throws {
-        try self.task.validate()
-    }
+    /// The localized unit to display for this result.
+    var unitText: String? { get }
 }

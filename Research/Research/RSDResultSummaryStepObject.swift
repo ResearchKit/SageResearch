@@ -1,5 +1,5 @@
 //
-//  RSDOverviewStepObject.swift
+//  RSDResultSummaryStepObject.swift
 //  Research
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,40 +31,62 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import UIKit
 
-/// `RSDOverviewStepObject` extends the `RSDUIStepObject` to include information about an activity including
-/// what permissions are required by this task. Without these preconditions, the task cannot measure or
-/// collect the data needed for this task.
-open class RSDOverviewStepObject : RSDUIStepObject, RSDStandardPermissionsStep {
-
-    private enum CodingKeys: String, CodingKey, CaseIterable {
-        case permissions
+/// A result summary step is used to display a result that is calculated or measured earlier in the task.
+open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep {
+    
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case unitText, resultIdentifier, formatter
     }
     
-    /// The permissions used by this task.
-    open var standardPermissions: [RSDStandardPermission]?
+    /// The localized unit text to display for this step.
+    open private(set) var unitText: String?
     
-    /// Default type is `.overview`.
+    /// the identifier for the answer result.
+    open private(set) var resultIdentifier: String?
+    
+    // MARK: Initializers
+    
+    public required init(identifier: String, type: RSDStepType? = nil) {
+        super.init(identifier: identifier, type: type)
+    }
+    
+    public required init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+    }
+    
+    public init(identifier: String, resultIdentifier: String, unitText: String? = nil) {
+        super.init(identifier: identifier, type: nil)
+        self.resultIdentifier = resultIdentifier
+        self.unitText = unitText
+    }
+    
+    
+    // MARK: Subclass copy and decoding.
+    
+    /// Default type is `.completion`.
     open override class func defaultType() -> RSDStepType {
-        return .overview
+        return .completion
     }
     
     /// Override to set the properties of the subclass.
     override open func copyInto(_ copy: RSDUIStepObject) {
         super.copyInto(copy)
-        guard let subclassCopy = copy as? RSDOverviewStepObject else {
+        guard let subclassCopy = copy as? RSDResultSummaryStepObject else {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
-        subclassCopy.standardPermissions = self.standardPermissions
+        subclassCopy.unitText = self.unitText
+        subclassCopy.resultIdentifier = self.resultIdentifier
     }
     
     /// Override the decoder per device type b/c the task may require a different set of permissions depending upon the device.
     open override func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
+        self.unitText = try container.decodeIfPresent(String.self, forKey: .unitText) ?? self.unitText
+        self.resultIdentifier = try container.decodeIfPresent(String.self, forKey: .resultIdentifier) ?? self.resultIdentifier
     }
     
     // Overrides must be defined in the base implementation
@@ -79,10 +101,11 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDStandardPermissionsStep {
     override class func examples() -> [[String : RSDJSONValue]] {
         let jsonA: [String : RSDJSONValue] = [
             "identifier": "foo",
-            "type": "active",
+            "type": "completion",
             "title": "Hello World!",
             "text": "Some text.",
-            "permissions" : [["permissionType": "location"]]
+            "resultIdentifier" : "boo",
+            "unitText" : "lala"
         ]
         
         return [jsonA]

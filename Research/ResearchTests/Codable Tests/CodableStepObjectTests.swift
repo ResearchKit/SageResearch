@@ -511,6 +511,36 @@ class CodableStepObjectTests: XCTestCase {
         }
     }
     
+    func testResultSummaryStepObject_Codable() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "completion",
+            "title": "Hello World!",
+            "text": "Some text.",
+            "unitText": "foos",
+            "resultIdentifier": "bar",
+            "formatter" : {"maximumDigits" : 3 }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDResultSummaryStepObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.title, "Hello World!")
+            XCTAssertEqual(object.text, "Some text.")
+            XCTAssertEqual(object.unitText, "foos")
+            XCTAssertEqual(object.resultIdentifier, "bar")
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+            return
+        }
+    }
+    
     
     func testSectionStepObject_Decodable() {
         let json = """
