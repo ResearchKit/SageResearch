@@ -77,26 +77,6 @@ public protocol RSDOptionalTaskViewControllerDelegate : class, NSObjectProtocol 
     ///
     /// - parameters:
     ///     - taskViewController: The calling `(UIViewController & RSDTaskController)` instance.
-    ///     - step: The step for which a view controller is requested. This will be an object that conforms to
-    ///             the `RSDStep` protocol.
-    /// - returns: A custom view controller, or `nil` to request the default step controller for this step.
-    @available(*, deprecated)
-    @objc optional
-    func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController?
-    
-    /// Asks the delegate for a custom view controller for the specified step.
-    ///
-    /// If this method is implemented, the task view controller calls it to obtain a step view controller for the step.
-    ///
-    /// In most circumstances, the task view controller can determine which view controller to instantiate for a step.
-    /// However, if you want to provide a specific view controller instance, you can call this method to do so.
-    ///
-    /// The delegate should provide a step view controller implementation for any custom step that does not implement
-    /// either the `RSDStepViewControllerVendor` protocol or the `RSDThemedUIStep` protocol where the `viewTheme` is
-    /// non-nil.
-    ///
-    /// - parameters:
-    ///     - taskViewController: The calling `(UIViewController & RSDTaskController)` instance.
     ///     - stepModel: The step and parent path component for this step.
     /// - returns: A custom view controller, or `nil` to request the default step controller for this step.
     @objc optional
@@ -225,14 +205,6 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         // Exit early if the delegate, step or storyboard returns a view controller
         if let vc = delegate?.taskViewController?(self, viewControllerForStep: RSDStepViewModel(step: step, parent: parent)) {
             return (vc as! RSDStepController)
-        }
-        // TODO: syoung 09/07/2018 remove the deprecated method once refactor is completed.
-        if let vc = delegate?.taskViewController?(self, viewControllerFor: step) {
-            let stepVC = vc as! RSDStepController
-            if stepVC.stepViewModel?.parent == nil, let stepViewModel = stepVC.stepViewModel as? RSDStepViewModel {
-                stepViewModel.parent = parent
-            }
-            return stepVC
         }
         if let viewTheme = (step as? RSDThemedUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme) {
             return vc
