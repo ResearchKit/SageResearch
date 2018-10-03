@@ -56,6 +56,7 @@
                            {
                            "identifier"         : "heartRate.before",
                            "type"               : "heartRateSection",
+                           "timing"             : "before",
                            "steps"   : [{ "identifier"   : "instruction",
                                                      "title"        : "Capture heart rate",
                                                    "text"         : "Use your finger to cover the camera and flash on the back of your phone."},
@@ -119,6 +120,7 @@
                            {
                            "identifier"         : "heartRate.after",
                            "type"               : "heartRateSection",
+                           "timing"             : "after",
                            "steps"   : [{ "identifier"   : "instruction",
                                                    "title"        : "Stand still for 1 minute",
                                                    "text"         : "Almost done! Stand still for a minute to measure your heart rate recovery."},

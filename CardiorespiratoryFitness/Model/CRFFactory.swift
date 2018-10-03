@@ -54,8 +54,7 @@ open class CRFFactory: RSDFactory {
         case .heartRate:
             return try CRFHeartRateStep(from: decoder)
         case .heartRateSection:
-            let transform = try CRFHeartRateTransformer(from: decoder)
-            return transform.transformedStep
+            return try CRFHeartRateSectionStep(from: decoder)
         default:
             return try super.decodeStep(from: decoder, with: type)
         }

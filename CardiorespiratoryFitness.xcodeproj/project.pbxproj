@@ -58,7 +58,7 @@
 		F8BA80142051DF7800A5B83A /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8DA5E0A215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */; };
 		F8E4B5052060728F000E53D4 /* CRFArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */; };
-		F8F3678121596A8400A49F89 /* CRFHeartRateTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F3678021596A8400A49F89 /* CRFHeartRateTransformer.swift */; };
+		F8F3678121596A8400A49F89 /* CRFHeartRateSectionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F3678021596A8400A49F89 /* CRFHeartRateSectionStep.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -240,7 +240,7 @@
 		F8BA80062051DD0800A5B83A /* ResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewController.swift; sourceTree = "<group>"; };
 		F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CardiorespiratoryFitness.strings; sourceTree = "<group>"; };
 		F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFArchiveManager.swift; sourceTree = "<group>"; };
-		F8F3678021596A8400A49F89 /* CRFHeartRateTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFHeartRateTransformer.swift; sourceTree = "<group>"; };
+		F8F3678021596A8400A49F89 /* CRFHeartRateSectionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFHeartRateSectionStep.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,7 +321,7 @@
 				F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */,
 				F89FFDDA205890F80089D8A7 /* CRFTaskInfo.swift */,
 				F880C17E2052081600ACB4D4 /* CRFHeartRateStep.swift */,
-				F8F3678021596A8400A49F89 /* CRFHeartRateTransformer.swift */,
+				F8F3678021596A8400A49F89 /* CRFHeartRateSectionStep.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -767,7 +767,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F880C17F2052081600ACB4D4 /* CRFHeartRateStep.swift in Sources */,
-				F8F3678121596A8400A49F89 /* CRFHeartRateTransformer.swift in Sources */,
+				F8F3678121596A8400A49F89 /* CRFHeartRateSectionStep.swift in Sources */,
 				F89FFDDB205890F80089D8A7 /* CRFTaskInfo.swift in Sources */,
 				F880C1542051F9FD00ACB4D4 /* CRFStairStepViewController.swift in Sources */,
 				F880C1562051F9FD00ACB4D4 /* CRFStairStepResultStepViewController.swift in Sources */,
