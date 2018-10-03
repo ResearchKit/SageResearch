@@ -153,6 +153,8 @@
                            {
                            "identifier"   : "completion",
                            "type"         : "completion",
+                           "title"        : "Great job!",
+                           "text"         : "You just went",
                            "viewTheme"    : { "viewIdentifier": "Completed12MT", "storyboardIdentifier": "ActiveTaskSteps" }
                            }
                            ]

@@ -30,6 +30,8 @@
                            "type"         : "completion",
                            "title"        : "Nicely done!",
                            "text"         : "Your heart rate is",
+                           "resultIdentifier": "heartRate",
+                           "unitText"       : "BPM",
                            "viewTheme"   : { "viewIdentifier": "HeartRateResult", "storyboardIdentifier": "ActiveTaskSteps" }
                            }
                            ]

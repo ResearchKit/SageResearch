@@ -803,11 +803,11 @@
             </objects>
             <point key="canvasLocation" x="-1805.625" y="205.98591549295776"/>
         </scene>
-        <!--Heart Rate Result Step View Controller-->
+        <!--Result Summary Step View Controller-->
         <scene sceneID="D1g-8p-UV0">
             <objects>
-                <viewController storyboardIdentifier="HeartRateResult" id="MOh-xR-sxc" customClass="CRFHeartRateResultStepViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="R8n-Xp-NIa">
+                <viewController storyboardIdentifier="HeartRateResult" id="MOh-xR-sxc" customClass="RSDResultSummaryStepViewController" customModule="ResearchUI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="R8n-Xp-NIa" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -967,12 +967,15 @@
                             <constraint firstItem="TCw-gq-Bqm" firstAttribute="trailing" secondItem="3S1-Ci-c5q" secondAttribute="trailing" id="xDX-tP-iVr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TCw-gq-Bqm"/>
+                        <connections>
+                            <outlet property="textLabel" destination="085-sQ-UA5" id="rYF-i0-IXp"/>
+                            <outlet property="titleLabel" destination="xkF-Cq-L5v" id="rwg-eD-SPJ"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="navigationFooter" destination="0QZ-pV-N3J" id="eXa-Mq-iHS"/>
                         <outlet property="navigationHeader" destination="zk1-GJ-Jml" id="EMn-tT-Pm5"/>
                         <outlet property="resultLabel" destination="zrU-lt-Md5" id="b6G-nI-0TT"/>
-                        <outlet property="textLabel" destination="085-sQ-UA5" id="saV-Mp-JAf"/>
                         <outlet property="unitLabel" destination="gtz-sj-e2M" id="cHh-17-lM3"/>
                     </connections>
                 </viewController>
@@ -984,7 +987,7 @@
         <scene sceneID="5Qs-b6-WnT">
             <objects>
                 <viewController storyboardIdentifier="Completed12MT" id="1nS-Gh-N0H" customClass="CRFRunDistanceResultStepViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="o8s-5a-jK1">
+                    <view key="view" contentMode="scaleToFill" id="o8s-5a-jK1" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1043,7 +1046,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVD-qs-xxl" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                        <rect key="frame" x="24" y="509" width="272" height="35"/>
+                                        <rect key="frame" x="24" y="492" width="272" height="52"/>
                                         <color key="backgroundColor" name="white"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <color key="tintColor" name="darkPastelGreenTwo"/>
@@ -1089,9 +1092,13 @@
                             <constraint firstItem="jte-er-8dD" firstAttribute="bottom" secondItem="hYm-xS-G9R" secondAttribute="bottom" id="pmb-7J-5Yt"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hYm-xS-G9R"/>
+                        <connections>
+                            <outlet property="nextButton" destination="TVD-qs-xxl" id="6bX-jK-CSI"/>
+                            <outlet property="textLabel" destination="Ow4-9h-rG1" id="erw-8X-dSL"/>
+                            <outlet property="titleLabel" destination="XQ2-tp-5pH" id="2VN-xQ-9dj"/>
+                        </connections>
                     </view>
                     <connections>
-                        <outlet property="doneButton" destination="TVD-qs-xxl" id="HIC-Cz-0I4"/>
                         <outlet property="resultLabel" destination="5f4-1I-Jje" id="6Im-Fu-A5H"/>
                         <outlet property="unitLabel" destination="wZY-CX-oiC" id="e41-0S-JLn"/>
                     </connections>
@@ -1104,7 +1111,7 @@
         <scene sceneID="3wc-dU-9uJ">
             <objects>
                 <viewController storyboardIdentifier="CompletedStairStep" id="PQJ-uW-gmG" customClass="CRFStairStepResultStepViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="f8M-aB-qop">
+                    <view key="view" contentMode="scaleToFill" id="f8M-aB-qop" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1125,13 +1132,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="Your heart rate changed by" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIh-Jl-8y5">
-                                        <rect key="frame" x="24" y="310" width="272" height="86"/>
+                                        <rect key="frame" x="24" y="280" width="272" height="86"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <color key="textColor" name="white"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l2w-IM-GMs">
-                                        <rect key="frame" x="82.5" y="414" width="155" height="98"/>
+                                        <rect key="frame" x="82.5" y="384" width="155" height="98"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="65" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAS-tv-vtl">
                                                 <rect key="frame" x="0.0" y="0.0" width="97.5" height="98"/>
@@ -1157,7 +1164,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOO-0a-utf" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                        <rect key="frame" x="24" y="522" width="272" height="22"/>
+                                        <rect key="frame" x="24" y="492" width="272" height="52"/>
                                         <color key="backgroundColor" name="white"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <color key="tintColor" name="darkPastelGreenTwo"/>
@@ -1203,10 +1210,15 @@
                             <constraint firstItem="gYa-Zc-hYV" firstAttribute="bottom" secondItem="wev-Cu-KGG" secondAttribute="bottom" id="wD8-Gn-MQd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wev-Cu-KGG"/>
+                        <connections>
+                            <outlet property="nextButton" destination="JOO-0a-utf" id="BDx-SU-vEX"/>
+                            <outlet property="textLabel" destination="kIh-Jl-8y5" id="Y1m-Nq-bdP"/>
+                            <outlet property="titleLabel" destination="bex-yS-KXh" id="fcI-hm-IaT"/>
+                        </connections>
                     </view>
                     <connections>
-                        <outlet property="doneButton" destination="JOO-0a-utf" id="qyY-wn-YZ8"/>
                         <outlet property="resultLabel" destination="aAS-tv-vtl" id="9sX-si-fzV"/>
+                        <outlet property="unitLabel" destination="kkm-vf-tGn" id="QjG-nI-ha0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uzw-jN-oSm" userLabel="First Responder" sceneMemberID="firstResponder"/>

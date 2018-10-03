@@ -77,7 +77,9 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
             return
         }
         subclassCopy.shouldSaveBuffer = self.shouldSaveBuffer
-        subclassCopy.isResting = self.isResting 
+        subclassCopy.isResting = self.isResting
+        subclassCopy.shouldDeletePrevious = self.shouldDeletePrevious
+        subclassCopy.cameraSettings = self.cameraSettings
     }
     
     /// Override to decode the configuration if there is one.

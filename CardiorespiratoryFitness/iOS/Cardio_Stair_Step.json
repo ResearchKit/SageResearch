@@ -130,6 +130,9 @@
                            {
                            "identifier"   : "completion",
                            "type"         : "completion",
+                           "title"        : "Great job!",
+                           "text"         : "Your heart rate changed by",
+                           "unitText"     : "BPM",
                            "viewTheme"    : { "viewIdentifier": "CompletedStairStep", "storyboardIdentifier": "ActiveTaskSteps" }
                            }
                            ]
