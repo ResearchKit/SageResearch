@@ -188,4 +188,32 @@ class StepViewModelTests: XCTestCase {
         stepXModel = RSDStepViewModel(step: stepX, parent: sectionA)
         sectionA.currentChild = stepXModel
     }
+    
+    func testResultSummaryStepViewModel_String() {
+        let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo")
+        var answerResult = RSDAnswerResultObject(identifier: "foo", answerType: .string)
+        answerResult.value = "blu"
+        var taskResult = RSDTaskResultObject(identifier: "magoo")
+        taskResult.stepHistory = [answerResult]
+        let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)
+        stepViewModel.taskResult = taskResult
+        
+        let resultText = stepViewModel.resultText
+        XCTAssertNotNil(resultText)
+        XCTAssertEqual(resultText, "blu")
+    }
+    
+    func testResultSummaryStepViewModel_Decimal() {
+        let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo")
+        var answerResult = RSDAnswerResultObject(identifier: "foo", answerType: .decimal)
+        answerResult.value = 1.234211
+        var taskResult = RSDTaskResultObject(identifier: "magoo")
+        taskResult.stepHistory = [answerResult]
+        let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)
+        stepViewModel.taskResult = taskResult
+        
+        let resultText = stepViewModel.resultText
+        XCTAssertNotNil(resultText)
+        XCTAssertEqual(resultText, "1")
+    }
 }

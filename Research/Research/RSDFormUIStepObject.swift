@@ -52,10 +52,15 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     /// The `inputFields` array is used to hold a logical subgrouping of input fields.
     open private(set) var inputFields: [RSDInputField]
     
+    /// Default type is `.form`.
+    open override class func defaultType() -> RSDStepType {
+        return .form
+    }
+    
     /// Initializer required for `copy(with:)` implementation.
     public required init(identifier: String, type: RSDStepType?) {
         self.inputFields = []
-        super.init(identifier: identifier, type: type ?? .form)
+        super.init(identifier: identifier, type: type)
     }
     
     /// Override to set the properties of the subclass.
@@ -75,10 +80,8 @@ open class RSDFormUIStepObject : RSDUIStepObject, RSDFormUIStep, RSDSurveyNaviga
     ///     - type: The type of the step. Default = `RSDStepType.form`
     public init(identifier: String, inputFields: [RSDInputField], type: RSDStepType? = nil) {
         self.inputFields = inputFields
-        super.init(identifier: identifier, type: type ?? .form)
+        super.init(identifier: identifier, type: type)
     }
-    
-
     
     /// Identifier to skip to if all input fields have nil answers.
     open var skipToIfNil: String? {

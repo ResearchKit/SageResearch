@@ -31,6 +31,8 @@
 		F855A14220A2505900C762C7 /* RSDToggleConstraintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F855A14120A2505900C762C7 /* RSDToggleConstraintView.swift */; };
 		F880C1B52057182B00ACB4D4 /* RSDOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C1B32057182B00ACB4D4 /* RSDOverviewStepViewController.swift */; };
 		F880C1B62057182B00ACB4D4 /* RSDOverviewStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */; };
+		F8864AE921642F3B00DF57CF /* RSDResultSummaryStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8864AE721642F3B00DF57CF /* RSDResultSummaryStepViewController.swift */; };
+		F8864AEA21642F3B00DF57CF /* RSDResultSummaryStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8864AE821642F3B00DF57CF /* RSDResultSummaryStepViewController.xib */; };
 		F8A204FC206AD242004E2B5D /* RSDButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */; };
 		F8D4813E20622896008EF629 /* RSDStatusBarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */; };
 		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
@@ -97,6 +99,8 @@
 		F855A14120A2505900C762C7 /* RSDToggleConstraintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDToggleConstraintView.swift; sourceTree = "<group>"; };
 		F880C1B32057182B00ACB4D4 /* RSDOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDOverviewStepViewController.swift; sourceTree = "<group>"; };
 		F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDOverviewStepViewController.xib; sourceTree = "<group>"; };
+		F8864AE721642F3B00DF57CF /* RSDResultSummaryStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultSummaryStepViewController.swift; sourceTree = "<group>"; };
+		F8864AE821642F3B00DF57CF /* RSDResultSummaryStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDResultSummaryStepViewController.xib; sourceTree = "<group>"; };
 		F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDButtonCell.swift; sourceTree = "<group>"; };
 		F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStatusBarBackgroundView.swift; sourceTree = "<group>"; };
 		FF0472301F7AC4F90023DAD6 /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -311,6 +315,7 @@
 				FF39E5231F972F5200C366FC /* RSDTableStepViewController.swift */,
 				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
 				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
+				F8864AE721642F3B00DF57CF /* RSDResultSummaryStepViewController.swift */,
 			);
 			path = "Step View Controllers";
 			sourceTree = "<group>";
@@ -323,6 +328,7 @@
 				FFDD78101FAE96C70024BDD1 /* RSDCountdownStepViewController.xib */,
 				F802F3DB204DECA80027CB00 /* RSDImagePickerStepViewController.xib */,
 				F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */,
+				F8864AE821642F3B00DF57CF /* RSDResultSummaryStepViewController.xib */,
 				FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */,
 			);
 			path = "Default NIbs";
@@ -467,6 +473,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8864AEA21642F3B00DF57CF /* RSDResultSummaryStepViewController.xib in Resources */,
 				FFF2D9881FCF451C007258F8 /* RSDCountdownStepViewController.xib in Resources */,
 				F880C1B62057182B00ACB4D4 /* RSDOverviewStepViewController.xib in Resources */,
 				FFF2D9861FCF451C007258F8 /* DebugStepViewController.xib in Resources */,
@@ -515,6 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8864AE921642F3B00DF57CF /* RSDResultSummaryStepViewController.swift in Sources */,
 				FFF2D98F1FCF4530007258F8 /* RSDCrosshatchView.swift in Sources */,
 				FFF2D9A11FCF4FC6007258F8 /* UIColor+BridgeKeyNames.swift in Sources */,
 				FFF2D9911FCF4530007258F8 /* RSDShadowGradient.swift in Sources */,

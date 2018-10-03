@@ -270,8 +270,10 @@ open class RSDFactory {
                 return try RSDGenericStepObject(from: decoder)
         }
         switch (standardType) {
-        case .instruction, .completion, .active, .countdown:
+        case .instruction, .active, .countdown:
             return try RSDActiveUIStepObject(from: decoder)
+        case .completion:
+            return try RSDResultSummaryStepObject(from: decoder)
         case .overview:
             return try RSDOverviewStepObject(from: decoder)
         case .imagePicker:

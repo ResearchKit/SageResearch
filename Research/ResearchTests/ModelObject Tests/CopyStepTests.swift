@@ -1,5 +1,5 @@
 //
-//  StepTests.swift
+//  CopyStepTests.swift
 //  Research
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -34,7 +34,7 @@
 import XCTest
 @testable import Research
 
-class StepTests: XCTestCase {
+class CopyStepTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -67,6 +67,75 @@ class StepTests: XCTestCase {
         step.afterCohortRules = [RSDCohortNavigationRuleObject(requiredCohorts: ["goo"], cohortOperator: nil, skipToIdentifier: nil)]
         
         let copy = step.copy(with: "bar")
+        XCTAssertEqual(copy.identifier, "bar")
+        XCTAssertEqual(copy.stepType, "boo")
+        XCTAssertEqual(copy.title, "title")
+        XCTAssertEqual(copy.text, "text")
+        XCTAssertEqual(copy.detail, "detail")
+        XCTAssertEqual(copy.footnote, "footnote")
+        XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
+        XCTAssertEqual((copy.colorTheme as? RSDColorThemeElementObject)?._backgroundColorName, "fooBlue")
+        XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
+        XCTAssertEqual(copy.nextStepIdentifier, "bar")
+        if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
+            XCTAssertEqual(learnAction.url, "fooFile")
+            XCTAssertEqual(learnAction.buttonTitle, "tap foo")
+        } else {
+            XCTFail("\(String(describing: copy.actions)) does not include expected learn more action")
+        }
+        if let shouldHideActions = copy.shouldHideActions {
+            XCTAssertEqual(shouldHideActions, [.navigation(.skip)])
+        } else {
+            XCTAssertNotNil(copy.shouldHideActions)
+        }
+        XCTAssertEqual(copy.duration, 5)
+        XCTAssertEqual(copy.commands, [.continueOnFinish])
+        if let spokenInstructions = copy.spokenInstructions {
+            XCTAssertEqual(spokenInstructions, [0 : "start"])
+        } else {
+            XCTAssertNotNil(copy.spokenInstructions)
+        }
+        XCTAssertTrue(copy.requiresBackgroundAudio)
+        if let cohort = copy.beforeCohortRules?.first {
+            XCTAssertEqual(cohort.requiredCohorts, ["boo"])
+        } else {
+            XCTAssertNotNil(copy.beforeCohortRules?.first)
+        }
+        if let cohort = copy.afterCohortRules?.first {
+            XCTAssertEqual(cohort.requiredCohorts, ["goo"])
+        } else {
+            XCTAssertNotNil(copy.beforeCohortRules?.first)
+        }
+    }
+    
+    func testCopyDefaultDecodable_ActiveUIStepObject() {
+        let step = RSDActiveUIStepObject(identifier: "foo", nextStepIdentifier: "bar", type: "boo")
+        step.title = "title"
+        step.text = "text"
+        step.detail = "detail"
+        step.footnote = "footnote"
+        step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
+        step.colorTheme = RSDColorThemeElementObject(backgroundColorName: "fooBlue")
+        step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
+        step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
+        step.shouldHideActions = [.navigation(.skip)]
+        step.duration = 5
+        step.commands = [.continueOnFinish]
+        step.spokenInstructions = [0 : "start"]
+        step.requiresBackgroundAudio = true
+        step.beforeCohortRules = [RSDCohortNavigationRuleObject(requiredCohorts: ["boo"], cohortOperator: nil, skipToIdentifier: nil)]
+        step.afterCohortRules = [RSDCohortNavigationRuleObject(requiredCohorts: ["goo"], cohortOperator: nil, skipToIdentifier: nil)]
+        
+        let json = """
+        {
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        guard let copy = self.copy(step: step, with: json) as? RSDActiveUIStepObject else {
+            XCTFail("Failed to copy decodable")
+            return
+        }
+        
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.stepType, "boo")
         XCTAssertEqual(copy.title, "title")
@@ -148,6 +217,86 @@ class StepTests: XCTestCase {
         XCTAssertEqual(copy.inputFields.first?.dataType, .base(.boolean))
     }
     
+    func testCopyDefaultDecodable_FormUIStepObject() {
+        let inputField = RSDInputFieldObject(identifier: "goo", dataType: .base(.boolean))
+        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField], type: "boo")
+        step.title = "title"
+        step.text = "text"
+        step.detail = "detail"
+        step.footnote = "footnote"
+        step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
+        step.colorTheme = RSDColorThemeElementObject(backgroundColorName: "fooBlue")
+        step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
+        step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
+        step.shouldHideActions = [.navigation(.skip)]
+        
+        let json = """
+        {
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        guard let copy = self.copy(step: step, with: json) as? RSDFormUIStepObject else {
+            XCTFail("Failed to copy decodable")
+            return
+        }
+        
+        XCTAssertEqual(copy.identifier, "bar")
+        XCTAssertEqual(copy.stepType, "boo")
+        XCTAssertEqual(copy.title, "title")
+        XCTAssertEqual(copy.text, "text")
+        XCTAssertEqual(copy.detail, "detail")
+        XCTAssertEqual(copy.footnote, "footnote")
+        XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
+        XCTAssertEqual((copy.colorTheme as? RSDColorThemeElementObject)?._backgroundColorName, "fooBlue")
+        XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
+        if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
+            XCTAssertEqual(learnAction.url, "fooFile")
+            XCTAssertEqual(learnAction.buttonTitle, "tap foo")
+        } else {
+            XCTFail("\(String(describing: copy.actions)) does not include expected learn more action")
+        }
+        if let shouldHideActions = copy.shouldHideActions {
+            XCTAssertEqual(shouldHideActions, [.navigation(.skip)])
+        } else {
+            XCTAssertNotNil(copy.shouldHideActions)
+        }
+        
+        XCTAssertEqual(copy.inputFields.count, 1)
+        XCTAssertEqual(copy.inputFields.first?.identifier, "goo")
+        XCTAssertEqual(copy.inputFields.first?.dataType, .base(.boolean))
+    }
+    
+    func testCopy_ResultSummaryStepObject() {
+        let step = RSDResultSummaryStepObject(identifier: "foo", resultIdentifier: "boo", unitText: "lala")
+        step.title = "title"
+        
+        let copy = step.copy(with: "bar")
+        XCTAssertEqual(copy.identifier, "bar")
+        XCTAssertEqual(copy.title, "title")
+        XCTAssertEqual(copy.resultIdentifier, "boo")
+        XCTAssertEqual(copy.unitText, "lala")
+    }
+    
+    func testCopyDefaultDecodable_ResultSummaryStepObject() {
+        let step = RSDResultSummaryStepObject(identifier: "foo", resultIdentifier: "boo", unitText: "lala")
+        step.title = "title"
+        
+        let json = """
+        {
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        guard let copy = self.copy(step: step, with: json) as? RSDResultSummaryStepObject else {
+            XCTFail("Failed to copy decodable")
+            return
+        }
+        
+        XCTAssertEqual(copy.identifier, "bar")
+        XCTAssertEqual(copy.title, "title")
+        XCTAssertEqual(copy.resultIdentifier, "boo")
+        XCTAssertEqual(copy.unitText, "lala")
+    }
+    
     func testCopy_SectionStepObject() {
         let uiStep = RSDUIStepObject(identifier: "goo", type: "boo")
 
@@ -156,6 +305,35 @@ class StepTests: XCTestCase {
         step.asyncActions = [RSDStandardAsyncActionConfiguration(identifier: "location", type: .distance, startStepIdentifier: nil, stopStepIdentifier: nil)]
 
         let copy = step.copy(with: "bar")
+        XCTAssertEqual(copy.identifier, "bar")
+        XCTAssertEqual(copy.stepType, "boo")
+        XCTAssertEqual(copy.steps.count, 1)
+        XCTAssertEqual(copy.steps.first?.identifier, "goo")
+        if let progressMarkers = copy.progressMarkers {
+            XCTAssertEqual(progressMarkers, ["goo"])
+        } else {
+            XCTAssertNotNil(copy.progressMarkers)
+        }
+        XCTAssertEqual((copy.asyncActions?.first as? RSDStandardAsyncActionConfiguration)?.identifier, "location")
+    }
+    
+    func testCopyDefaultDecodable_SectionStepObject() {
+        let uiStep = RSDUIStepObject(identifier: "goo", type: "boo")
+        
+        var step = RSDSectionStepObject(identifier: "foo", steps: [uiStep], type: "boo")
+        step.progressMarkers = ["goo"]
+        step.asyncActions = [RSDStandardAsyncActionConfiguration(identifier: "location", type: .distance, startStepIdentifier: nil, stopStepIdentifier: nil)]
+        
+        let json = """
+        {
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        guard let copy = self.copy(step: step, with: json) as? RSDSectionStepObject else {
+            XCTFail("Failed to copy decodable")
+            return
+        }
+        
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.stepType, "boo")
         XCTAssertEqual(copy.steps.count, 1)
@@ -181,6 +359,51 @@ class StepTests: XCTestCase {
         step.shouldHideActions = [.navigation(.skip)]
         
         let copy = step.copy(with: "bar")
+        XCTAssertEqual(copy.identifier, "bar")
+        XCTAssertEqual(copy.stepType, "boo")
+        XCTAssertEqual(copy.title, "title")
+        XCTAssertEqual(copy.text, "text")
+        XCTAssertEqual(copy.detail, "detail")
+        XCTAssertEqual(copy.footnote, "footnote")
+        XCTAssertEqual(copy.viewTheme?.viewIdentifier, "fooView")
+        XCTAssertEqual((copy.colorTheme as? RSDColorThemeElementObject)?._backgroundColorName, "fooBlue")
+        XCTAssertEqual((copy.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "fooIcon")
+        XCTAssertEqual(copy.nextStepIdentifier, "bar")
+        if let learnAction = copy.actions?[.navigation(.learnMore)] as? RSDWebViewUIActionObject {
+            XCTAssertEqual(learnAction.url, "fooFile")
+            XCTAssertEqual(learnAction.buttonTitle, "tap foo")
+        } else {
+            XCTFail("\(String(describing: copy.actions)) does not include expected learn more action")
+        }
+        if let shouldHideActions = copy.shouldHideActions {
+            XCTAssertEqual(shouldHideActions, [.navigation(.skip)])
+        } else {
+            XCTAssertNotNil(copy.shouldHideActions)
+        }
+    }
+    
+    func testCopyDefaultDecodable_UIStepObject() {
+        let step = RSDUIStepObject(identifier: "foo", nextStepIdentifier: "bar", type: "boo")
+        step.title = "title"
+        step.text = "text"
+        step.detail = "detail"
+        step.footnote = "footnote"
+        step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
+        step.colorTheme = RSDColorThemeElementObject(backgroundColorName: "fooBlue")
+        step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
+        step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
+        step.shouldHideActions = [.navigation(.skip)]
+        
+        let json = """
+        {
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        guard let copy = self.copy(step: step, with: json) as? RSDUIStepObject else {
+            XCTFail("Failed to copy decodable")
+            return
+        }
+        
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.stepType, "boo")
         XCTAssertEqual(copy.title, "title")
@@ -282,6 +505,35 @@ class StepTests: XCTestCase {
             XCTAssertEqual(markers, ["step1", "step2", "section", "step3", "step4"])
         } else {
             XCTFail("Failed to copy the progress markers")
+        }
+    }
+    
+    // MARK: Test decodable copy.
+
+    func copy(step: RSDCopyStep, with json: Data) -> RSDCopyStep? {
+        var ret: RSDCopyStep? = nil
+        CopyStepTests.unboxQueue.sync {
+            do {
+                _DecodableStepWrapper._unboxStep = step
+                let obj = try decoder.decode(_DecodableStepWrapper.self, from: json)
+                ret = obj.step
+            }
+            catch let err {
+                XCTFail("Failed to decode/copy the step. \(err)")
+            }
+        }
+        return ret
+    }
+    
+    static let unboxQueue = DispatchQueue(label: "org.sagebase.Research.CopyStepTests.unbox")
+    
+    fileprivate struct _DecodableStepWrapper : Decodable {
+        static var _unboxStep: RSDCopyStep!
+        
+        let step: RSDCopyStep
+        
+        init(from decoder: Decoder) throws {
+            self.step = try _DecodableStepWrapper._unboxStep.copy(with: "bar", decoder: decoder)
         }
     }
 }
