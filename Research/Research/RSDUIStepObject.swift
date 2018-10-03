@@ -127,7 +127,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     
     private func commonInit() {
         // Use of the `.nullStepType` as a placeholder is b/c of a limitation where type(of: self) cannot
-        // be accessed prior to initializing supoer and the stepType is required.
+        // be accessed prior to initializing super and the stepType is required.
         if self.stepType == .nullStepType {
             self.stepType = type(of: self).defaultType()
         }
