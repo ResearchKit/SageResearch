@@ -495,7 +495,7 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
     /// Returns the altitude of the location in meters. Can be positive (above sea level) or negative (below sea level).
     public let altitude: Double?
     
-    /// Sum of the relative distance measurements if the participant is suppose to be moving.
+    /// Sum of the relative distance measurements if the participant is supposed to be moving.
     /// Otherwise, this value will be `nil`.
     public let totalDistance: Double?
     
