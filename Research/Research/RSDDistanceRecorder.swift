@@ -472,10 +472,13 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
     /// The date timestamp when the measurement was taken.
     public let timestampDate: Date?
     
-    /// Returns the horizontal accuracy of the location; `nil` if the lateral location is invalid.
+    /// The Unix timestamp (seconds since 1970-01-01T00:00:00.000Z) when the measurement was taken.
+    public let timestampUnix: TimeInterval?
+    
+    /// Returns the horizontal accuracy of the location in meters; `nil` if the lateral location is invalid.
     public let horizontalAccuracy: Double?
     
-    /// Returns the lateral distance between the current location and the previous location.
+    /// Returns the lateral distance between the current location and the previous location in meters.
     public let relativeDistance: Double?
     
     /// Returns the latitude coordinate of the current location; `nil` if *only* relative distance
@@ -486,32 +489,40 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
     /// should be recorded.
     public let longitude: Double?
     
-    /// Returns the vertical accuracy of the location; `nil` if the altitude is invalid.
+    /// Returns the vertical accuracy of the location in meters; `nil` if the altitude is invalid.
     public let verticalAccuracy: Double?
     
-    /// Returns the altitude of the location. Can be positive (above sea level) or negative (below sea level).
+    /// Returns the altitude of the location in meters. Can be positive (above sea level) or negative (below sea level).
     public let altitude: Double?
     
-    // Sum of the relative distance measurements if the participant is suppose to be moving.
-    // Otherwise, this value will be `nil`.
+    /// Sum of the relative distance measurements if the participant is suppose to be moving.
+    /// Otherwise, this value will be `nil`.
     public let totalDistance: Double?
     
-    // Returns the course of the location in degrees true North; `nil` if course is invalid.
-    // - Range: 0.0 - 359.9 degrees, 0 being true North.
+    /// Returns the course of the location in degrees true North; `nil` if course is invalid.
+    /// - Range: 0.0 - 359.9 degrees, 0 being true North.
     public let course: Double?
     
-    // Returns the speed of the location in m/s; `nil` if speed is invalid.
+    /// Returns the bearing to the location from the previous location in radians (clockwise from) true North.
+    /// - Range: [0.0..2π), 0 being true North.
+    public let bearingRadians: Double?
+    
+    /// Returns the speed of the location in meters/second; `nil` if speed is invalid.
     public let speed: Double?
     
+    /// Returns the floor of the building where the location was recorded; `nil` if floor is not available.
+    public let floor: Int?
+    
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case uptime, timestamp, stepPath, timestampDate, horizontalAccuracy, relativeDistance, latitude, longitude, verticalAccuracy, altitude, totalDistance, course, speed
+        case uptime, timestamp, stepPath, timestampDate, timestampUnix, horizontalAccuracy, relativeDistance, latitude, longitude, verticalAccuracy, altitude, totalDistance, course, bearingRadians, speed, floor
     }
     
-    fileprivate init(uptime: TimeInterval, timestamp: TimeInterval?, stepPath: String, timestampDate: Date?, horizontalAccuracy: Double?, relativeDistance: Double?, latitude: Double?, longitude: Double?, verticalAccuracy: Double?, altitude: Double?, totalDistance: Double?, course: Double?, speed: Double?) {
+    fileprivate init(uptime: TimeInterval, timestamp: TimeInterval?, stepPath: String, timestampDate: Date?, timestampUnix: TimeInterval?, horizontalAccuracy: Double?, relativeDistance: Double?, latitude: Double?, longitude: Double?, verticalAccuracy: Double?, altitude: Double?, totalDistance: Double?, course: Double?, bearingRadians: Double?, speed: Double?, floor: Int?) {
         self.uptime = uptime
         self.timestamp = timestamp
         self.stepPath = stepPath
         self.timestampDate = timestampDate
+        self.timestampUnix = timestampUnix
         self.horizontalAccuracy = horizontalAccuracy
         self.relativeDistance = relativeDistance
         self.latitude = latitude
@@ -520,7 +531,9 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
         self.altitude = altitude
         self.totalDistance = totalDistance
         self.course = course
+        self.bearingRadians = bearingRadians
         self.speed = speed
+        self.floor = floor
     }
     
     /// Default initializer.
@@ -538,15 +551,19 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
         self.stepPath = stepPath
         self.totalDistance = totalDistance
         self.timestampDate = location.timestamp
+        self.timestampUnix = location.timestamp.timeIntervalSince1970
         self.speed = location.speed >= 0 ? location.speed : nil
         self.course = location.course >= 0 ? location.course : nil
+        self.floor = location.floor?.level
         
         // Record the horizontal accuracy and relative distance
         if location.horizontalAccuracy >= 0 {
             self.horizontalAccuracy = location.horizontalAccuracy
             if let previous = previousLocation, previous.horizontalAccuracy >= 0 {
+                self.bearingRadians = previous.rsd_bearingInRadians(to: location)
                 self.relativeDistance = location.distance(from: previous)
             } else {
+                self.bearingRadians = nil
                 self.relativeDistance = nil
             }
             if relativeDistanceOnly {
@@ -558,6 +575,7 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
             }
         } else {
             self.horizontalAccuracy = nil
+            self.bearingRadians = nil
             self.relativeDistance = nil
             self.latitude = nil
             self.longitude = nil
@@ -574,6 +592,29 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
     }
 }
 
+extension CLLocation {
+    static func rsd_toRadians(from degrees: CLLocationDegrees) -> Double {
+        return (degrees / 180.0) * .pi
+    }
+    
+    static func rsd_toDegrees(from radians: Double) -> CLLocationDegrees {
+        return (radians / .pi) * 180.0
+    }
+    
+    func rsd_bearingInRadians(to endLocation: CLLocation) -> Double {
+        // https://www.igismap.com/formula-to-find-bearing-or-heading-angle-between-two-points-latitude-longitude/
+        let theta_a = CLLocation.rsd_toRadians(from: self.coordinate.latitude)
+        let La = CLLocation.rsd_toRadians(from: self.coordinate.longitude)
+        let theta_b = CLLocation.rsd_toRadians(from: endLocation.coordinate.latitude)
+        let Lb = CLLocation.rsd_toRadians(from: endLocation.coordinate.longitude)
+        let delta_L = Lb - La
+        let X = cos(theta_b) * sin(delta_L)
+        let Y = cos(theta_a) * sin(theta_b) - sin(theta_a) * cos(theta_b) * cos(delta_L)
+        
+        return atan2(X, Y)
+    }
+}
+
 
 // Documentation and Tests
 
@@ -584,7 +625,8 @@ extension RSDDistanceRecord : RSDDocumentableCodableObject {
     }
     
     static func examples() -> [Encodable] {
-        let example = RSDDistanceRecord(uptime: 99494.629004376795, timestamp: 52.422324001789093, stepPath: "Cardio 12MT/run/runDistance", timestampDate: Date(), horizontalAccuracy: 6, relativeDistance: 2.1164507282484935, latitude: nil, longitude: nil, verticalAccuracy: 3, altitude: 23.375564581136974, totalDistance: 63.484948023273581, course: 76.873546882061802, speed: 1.0289180278778076)
+        let now = Date()
+        let example = RSDDistanceRecord(uptime: 99494.629004376795, timestamp: 52.422324001789093, stepPath: "Cardio 12MT/run/runDistance", timestampDate: now, timestampUnix: now.timeIntervalSince1970, horizontalAccuracy: 6, relativeDistance: 2.1164507282484935, latitude: nil, longitude: nil, verticalAccuracy: 3, altitude: 23.375564581136974, totalDistance: 63.484948023273581, course: 76.873546882061802, bearingRadians: 1.3416965, speed: 1.0289180278778076, floor: 3)
         
         return [example]
     }
