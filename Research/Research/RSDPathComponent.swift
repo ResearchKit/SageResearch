@@ -146,6 +146,9 @@ public protocol RSDTaskPathComponent : RSDHistoryPathComponent {
     
     /// Move forward from this path subtask to the next step on the parent.
     func moveForwardToNextStep()
+    
+    /// Move to the first step in this task path in the given direction.
+    func moveToFirstStep(from direction: RSDStepDirection)
 }
 
 
