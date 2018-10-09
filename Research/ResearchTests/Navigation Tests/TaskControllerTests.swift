@@ -328,7 +328,7 @@ class TaskControllerTests: XCTestCase {
     }
     
     
-    func testJumpBackward() {
+    func testJumpBackward_FromBToA() {
         var steps: [RSDStep] = []
         let beforeSteps: [RSDStep] = TestStep.steps(from: ["introduction", "step1", "step2", "step3"])
         steps.append(contentsOf: beforeSteps)
@@ -360,6 +360,42 @@ class TaskControllerTests: XCTestCase {
         let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepA")
+        
+        let direction = taskController.show_calledDirection
+        XCTAssertNotNil(direction)
+        XCTAssertEqual(direction, .reverse)
+    }
+    
+    func testJumpBackward_From7To5X() {
+        var steps: [RSDStep] = []
+        let beforeSteps: [RSDStep] = TestStep.steps(from: ["introduction", "step1", "step2", "step3"])
+        steps.append(contentsOf: beforeSteps)
+        steps.append(RSDSectionStepObject(identifier: "step4", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        steps.append(RSDSectionStepObject(identifier: "step5", steps: TestStep.steps(from: ["stepX", "stepY", "stepZ"])))
+        steps.append(RSDSectionStepObject(identifier: "step6", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        
+        var afterSteps: [TestStep] = TestStep.steps(from: ["step7", "completion"])
+        var step7 = afterSteps[0]
+        step7.nextStepIdentifier = "step5"
+        afterSteps.remove(at: 0)
+        afterSteps.insert(step7, at: 0)
+        steps.append(contentsOf: afterSteps)
+        
+        var navigator = TestConditionalNavigator(steps: steps)
+        navigator.progressMarkers = ["step1", "step2", "step3", "step4", "step5", "step6", "step7"]
+        
+        let task = TestTask(identifier: "test", stepNavigator: navigator)
+        
+        let taskController = TestTaskController()
+        taskController.task = task
+        
+        // set up for the step controller
+        let _ = taskController.test_stepTo("step7")
+        taskController.goForward()
+        
+        let stepTo = taskController.show_calledTo
+        XCTAssertNotNil(stepTo)
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepX")
         
         let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)
@@ -435,7 +471,7 @@ class TaskControllerTests: XCTestCase {
         
         let stepTo = taskController.show_calledTo
         XCTAssertNotNil(stepTo)
-        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepZ")
+        XCTAssertEqual(stepTo?.stepViewModel?.identifier, "stepX")
         
         let direction = taskController.show_calledDirection
         XCTAssertNotNil(direction)

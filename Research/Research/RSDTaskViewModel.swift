@@ -33,11 +33,6 @@
 
 import Foundation
 
-/// `RSDTaskPath` has been renamed as `RSDTaskViewModel`.
-@available(*,deprecated)
-public final class RSDTaskPath : RSDTaskViewModel {
-}
-
 /// The TaskViewModel is a base class implementation of the presentation layer for managing a task. It uses
 /// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model–view–viewmodel) design pattern to
 /// separate out the UX functionality of running a task for a given device category from the UI and from the
@@ -277,7 +272,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         _goForward()
     }
     
-    private func _goForward() {
+    private func _goForward(_ direction: RSDStepDirection? = nil) {
         
         guard self.task != nil else {
             _fetchTaskFromCurrentInfo()
@@ -298,7 +293,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         }
         
         // move to the next step
-        _moveToNextStep()
+        _moveToNextStep(direction)
     }
     
     /// Go back to the previous step.
@@ -417,6 +412,11 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     /// Move back from this path subtask to the previous step on the parent.
     open func moveBackToPreviousStep() {
         _moveToPreviousStep()
+    }
+    
+    /// Move to the first step in this task path in the given direction.
+    open func moveToFirstStep(from direction: RSDStepDirection) {
+        _goForward(direction)
     }
     
     
@@ -570,7 +570,7 @@ extension RSDTaskViewModel {
         self.fetchTask()
     }
     
-    private func _moveToNextStep() {
+    private func _moveToNextStep(_ direction: RSDStepDirection? = nil) {
         guard let task = self.task else {
             assertionFailure("Attempting to go forward without a task loaded.")
             return
@@ -587,16 +587,17 @@ extension RSDTaskViewModel {
         }
         
         // store the previous step and get the next step
-        _moveToNextStep(from: self.currentStep)
+        _moveToNextStep(from: self.currentStep, direction)
     }
     
-    private func _moveToNextStep(from previousStep: RSDStep?) {
+    private func _moveToNextStep(from previousStep: RSDStep?, _ direction: RSDStepDirection?) {
         guard let task = self.task else {
             assertionFailure("Attempting to go forward without a task loaded.")
             return
         }
         
         let navigation = task.stepNavigator.step(after: previousStep, with: &self.taskResult)
+        let navDirection = direction ?? navigation.direction
         
         // save the previous step and look for a next step
         guard let step = navigation.step else {
@@ -604,10 +605,9 @@ extension RSDTaskViewModel {
             return
         }
         
-        // if navigation should be in reverse, move back and exit early.
-        if navigation.direction == .reverse, previousStep != nil {
-            _moveBack(to: step, from: previousStep!)
-            return
+        // if navigation should be in reverse, then remove the step history before continuing.
+        if navigation.direction == .reverse {
+            self.removeStepHistory(from: step.identifier)
         }
         
         let isFirstSubtaskStep = (self.currentStep == nil)
@@ -617,32 +617,37 @@ extension RSDTaskViewModel {
             // before transitioning to the next step.
             taskController.addAsyncActions(with: asyncActions, path: self, completion: { [weak self] (_) in
                 DispatchQueue.main.async {
-                    self?._moveToNextStepPart2(previousStep: previousStep, step: step)
+                    self?._moveToNextStepPart2(previousStep: previousStep, step: step, direction: navDirection)
                 }
             })
             return
         }
         
-        _moveToNextStepPart2(previousStep: previousStep, step: step)
+        _moveToNextStepPart2(previousStep: previousStep, step: step, direction: navDirection)
     }
     
-    private func _moveToNextStepPart2(previousStep: RSDStep?, step: RSDStep) {
+    private func _moveToNextStepPart2(previousStep: RSDStep?, step: RSDStep, direction: RSDStepDirection) {
         guard let (nextPath, stepController) = self.pathComponent(for: step)
             else {
                 // skip the step.
-                _moveToNextStep(from: step)
+                _moveToNextStep(from: step, direction)
                 return
         }
 
         if let stepController = stepController {
             let isFirstTaskStep = (self.currentStep == nil && self.parent == nil)
-            let direction: RSDStepDirection = isFirstTaskStep ? .none : .forward
+            let direction: RSDStepDirection = isFirstTaskStep ? .none : direction
             _move(to: stepController, from: previousStep, direction: direction)
         }
         else {
             self.currentChild = nextPath
             self.childPaths[nextPath.identifier] = nextPath
-            nextPath.perform(actionType: .navigation(.goForward))
+            if let taskPath = nextPath as? RSDTaskPathComponent {
+                taskPath.moveToFirstStep(from: direction)
+            }
+            else {
+                nextPath.perform(actionType: .navigation(.goForward))
+            }
         }
     }
     
