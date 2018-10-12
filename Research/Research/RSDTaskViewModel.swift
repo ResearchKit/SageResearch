@@ -34,7 +34,7 @@
 import Foundation
 
 /// The TaskViewModel is a base class implementation of the presentation layer for managing a task. It uses
-/// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model–view–viewmodel) design pattern to
+/// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model-view-viewmodel) design pattern to
 /// separate out the UX functionality of running a task for a given device category from the UI and from the
 /// domain layer.
 ///

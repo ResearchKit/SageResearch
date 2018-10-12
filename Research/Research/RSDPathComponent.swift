@@ -197,7 +197,7 @@ extension RSDPathComponent {
     }
     
     /// Create an output directory.
-    func createOutputDirectory() -> URL? {
+    public func createOutputDirectory() -> URL? {
         let tempDir = NSTemporaryDirectory()
         let dir = self.taskResult.taskRunUUID.uuidString
         let path = (tempDir as NSString).appendingPathComponent(dir)
