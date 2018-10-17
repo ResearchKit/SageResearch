@@ -250,6 +250,10 @@ public class RSDMotionRecorder : RSDSampleRecorder {
                     switch motionType {
                     case .accelerometer:
                         motionManager.stopAccelerometerUpdates()
+                    case .gyro:
+                        motionManager.stopGyroUpdates()
+                    case .magnetometer:
+                        motionManager.stopMagnetometerUpdates()
                     default:
                         motionManager.stopDeviceMotionUpdates()
                     }
