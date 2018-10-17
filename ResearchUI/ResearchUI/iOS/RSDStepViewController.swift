@@ -746,15 +746,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         return 1
     }
     
-    /// The system uptime for when the step was started. This is used by the timer to determine when to
+    /// The clock uptime for when the step was started. This is used by the timer to determine when to
     /// speak the next instruction and to set the value of the countdown.
-    public private(set) var startUptime: TimeInterval?
+    public var clock: RSDClock?
     
-    /// The system uptime for when the step was paused.
-    public private(set) var pauseUptime: TimeInterval?
-    
-    /// The system uptime for when the step was finished.
-    public private(set) var completedUptime: TimeInterval?
+    /// The clock uptime for when the step was finished.
+    private var completedUptime: TimeInterval?
     
     private var timer: Timer?
     private var lastInstruction: Int = -1
@@ -863,10 +860,9 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     
     private func _startTimer() {
-        if startUptime == nil {
-            startUptime = ProcessInfo.processInfo.systemUptime
+        if clock == nil {
+            clock = RSDClock()
         }
-        pauseUptime = nil
         timer?.invalidate()
         if usesTimer {
             timer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true, block: { [weak self] (_) in
@@ -887,18 +883,13 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     /// Pause the timer.
     open func pause() {
-        if pauseUptime == nil {
-            pauseUptime = ProcessInfo.processInfo.systemUptime
-        }
+        clock?.pause()
         _stopTimer()
     }
     
     /// Resume the timer.
     open func resume() {
-        if let pauseTime = pauseUptime, let startTime = startUptime {
-            startUptime = ProcessInfo.processInfo.systemUptime - pauseTime + startTime
-        }
-        pauseUptime = nil
+        clock?.resume()
         _startTimer()
     }
     
@@ -922,8 +913,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// If the timer fires and the step is still running, it will check to see if there is
     /// a vocal instruction to speak since the last firing of the timer.
     open func timerFired() {
-        guard let uptime = startUptime, completedUptime == nil else { return }
-        let duration = ProcessInfo.processInfo.systemUptime - uptime
+        guard completedUptime == nil, let duration = self.clock?.runningDuration() else { return }
         
         if let stepDuration = self.activeStep?.duration, stepDuration > 0,
             let commands = self.activeStep?.commands, commands.contains(.continueOnFinish),
@@ -958,7 +948,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     private func stepCompleted() {
         guard completedUptime == nil else { return }
-        completedUptime = ProcessInfo.processInfo.systemUptime
+        completedUptime = RSDClock.uptime()
         if UIApplication.shared.applicationState == .active {
             _goForwardOnActive()
         } else {

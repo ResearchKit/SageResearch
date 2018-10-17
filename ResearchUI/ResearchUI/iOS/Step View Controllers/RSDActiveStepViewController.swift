@@ -124,16 +124,16 @@ open class RSDActiveStepViewController: RSDStepViewController {
     // MARK: Dial progress indicator
     
     private func _pauseProgress() {
-        guard let stepDuration = self.activeStep?.duration, let uptime = self.startUptime
+        guard let stepDuration = self.activeStep?.duration, let duration = self.clock?.runningDuration()
             else {
                 return
         }
-        let duration = ProcessInfo.processInfo.systemUptime - uptime
         self.countdownDial?.progress = CGFloat(duration / stepDuration)
     }
     
     private func _startProgressAnimation() {
-        guard pauseUptime == nil, let stepDuration = self.activeStep?.duration, let uptime = self.startUptime
+        guard let stepDuration = self.activeStep?.duration,
+            let clock = self.clock, !clock.isPaused
             else {
                 debugPrint("Start progress animation called before uptime validated.")
                 return
@@ -141,7 +141,7 @@ open class RSDActiveStepViewController: RSDStepViewController {
         
         // calculate how much time has already passed since the step timer
         // was started.
-        let duration = ProcessInfo.processInfo.systemUptime - uptime
+        let duration = clock.runningDuration()
         
         // For shorter duration intervals,the animation will run more smoothly if it
         // is only fired once. For longer running steps, use a shorter interval to

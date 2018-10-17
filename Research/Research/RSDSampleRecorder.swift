@@ -43,35 +43,50 @@ import UIKit
 /// the requirements of the research study.
 public protocol RSDSampleRecord : Codable {
     
-    /// The clock uptime. On Apple OS platforms, this is the time interval since the computer clock was rolled or started.
-    ///
-    /// This is included to allow the results from different files to be cross-referenced (for a given run of a task)
-    /// using a shared time stamp.
-    ///
-    /// - seealso: `ProcessInfo.processInfo.systemUptime`.
-    var uptime: TimeInterval { get }
-    
     /// An identifier marking the current step.
     ///
-    /// This is a path marker where the path components are separated by a '/' character. This path includes the task
-    /// identifier and any sections or subtasks for the full path to the current step.
+    /// This is a path marker where the path components are separated by a '/' character. This path includes
+    /// the task identifier and any sections or subtasks for the full path to the current step.
     var stepPath: String { get }
     
-    /// The date timestamp when the measurement was taken (if available). This should be included for the first entry to
-    /// mark the start of the recording. Other than to mark step changes, the `timestampDate` is optional and should only
-    /// be included if required by the research study.
+    /// The date timestamp when the measurement was taken (if available). This should be included for the
+    /// first entry to mark the start of the recording. Other than to mark step changes, the `timestampDate`
+    /// is optional and should only be included if required by the research study.
     var timestampDate: Date? { get }
     
-    /// Relative time to when the recorder was started. This is included for compatibility to existing research studies
-    /// that expect the timestamp to be a time interval since the start of the recording.
+    /// A timestamp that is relative to the system uptime.
+    ///
+    /// This should be included for the first entry to mark the start of the recording. Other than to mark
+    /// step changes, the `timestamp` is optional and should only be included if required by the research
+    /// study.
+    ///
+    /// On Apple devices, this is the timestamp used to mark sensors that run in the foreground only such as
+    /// video processing and motion sensors.
+    ///
+    /// -seealso: `ProcessInfo.processInfo.systemUptime`
     var timestamp: TimeInterval? { get }
+}
+
+extension RSDSampleRecord {
+    
+    /// All sample records should include either `timestampDate` or `timestamp`.
+    func validate() throws {
+        guard (timestampDate != nil) || (timestamp != nil) else {
+            let message = "Expected either timestamp or timestampDate to be non-nil"
+            assertionFailure(message)
+            throw RSDValidationError.unexpectedNullObject(message)
+        }
+    }
 }
 
 /// `RSDRecordMarker` is a concrete implementation of `RSDSampleRecord` that can be used to mark the step transitions
 /// for a recording.
 public struct RSDRecordMarker : RSDSampleRecord {
     
-    /// The clock uptime.
+    /// The clock uptime. On Apple OS platforms, this is the time interval since the device was rebooted or
+    /// the clock rolled.
+    ///
+    /// - seealso: `RSDClock.uptime()`
     public let uptime: TimeInterval
     
     /// An identifier marking the current step.
@@ -80,7 +95,9 @@ public struct RSDRecordMarker : RSDSampleRecord {
     /// The date timestamp when the measurement was taken (if available).
     public let timestampDate: Date?
     
-    /// Relative time to when the recorder was started.
+    /// The relative timestamp used by this recorder.
+    ///
+    /// -seealso: `ProcessInfo.processInfo.systemUptime`
     public let timestamp: TimeInterval?
     
     /// Default initializer.
@@ -221,8 +238,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
         
         // Set paused to false and set the start uptime and timestamp
         isPaused = false
-        startUptime = ProcessInfo.processInfo.systemUptime
-        startDate = Date()
+        clock = RSDClock()
         _syncUpdateStatus(.starting)
         
         self.loggerQueue.async {
@@ -372,11 +388,13 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
     /// to point at a different implementation of the `RSDCollectionResult` protocol.
     open private(set) var collectionResult: RSDCollectionResult
     
-    /// The system clock time when the recorder was started.
-    public private(set) var startUptime: TimeInterval = ProcessInfo.processInfo.systemUptime
+    /// The clock for this recorder.
+    open private(set) var clock: RSDClock = RSDClock()
     
     /// The date timestamp for when the recorder was started.
-    public private(set) var startDate: Date = Date()
+    public var startDate: Date {
+        return clock.startDate
+    }
     
     /// The identifier for tracking the current step.
     public private(set) var currentStepIdentifier: String = ""
@@ -521,12 +539,13 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
     ///
     /// - parameters:
     ///     - uptime: The system clock time.
+    ///     - timestamp: Relative timestamp for this recorder.
     ///     - date: The timestamp date.
     ///     - stepPath: The step path.
     ///     - loggerIdentifier: The identifier for the logger for which to create the marker.
     /// - returns: A sample to add to the log file that can be used as a step transition marker.
-    open func instantiateMarker(uptime: TimeInterval, date: Date, stepPath: String, loggerIdentifier:String) -> RSDSampleRecord {
-        return RSDRecordMarker(uptime: uptime, timestamp: uptime - self.startUptime, date: date, stepPath: stepPath)
+    open func instantiateMarker(uptime: TimeInterval, timestamp: TimeInterval, date: Date, stepPath: String, loggerIdentifier:String) -> RSDSampleRecord {
+        return RSDRecordMarker(uptime: uptime, timestamp: timestamp, date: date, stepPath: stepPath)
     }
     
     /// Update the current step and step path.
@@ -609,7 +628,8 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
     
     /// Write a marker to each logging file.
     private func _writeMarkers(step: RSDStep?, taskViewModel: RSDPathComponent) {
-        let uptime = ProcessInfo.processInfo.systemUptime
+        let uptime = RSDClock.uptime()
+        let timestamp = ProcessInfo.processInfo.systemUptime
         let date = Date()
         self.loggerQueue.async {
             
@@ -623,7 +643,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
             do {
                 for (identifier, dataLogger) in self.loggers {
                     guard let logger = dataLogger as? RSDRecordSampleLogger else { continue }
-                    let marker = self.instantiateMarker(uptime: uptime, date: date, stepPath: stepPath, loggerIdentifier: identifier)
+                    let marker = self.instantiateMarker(uptime: uptime, timestamp: timestamp, date: date, stepPath: stepPath, loggerIdentifier: identifier)
                     try logger.writeSample(marker)
                 }
             } catch let err {
@@ -644,7 +664,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
             }
             loggers[identifier] = dataLogger
             if let logger = dataLogger as? RSDRecordSampleLogger {
-                let marker = instantiateMarker(uptime: startUptime, date: startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
+                let marker = instantiateMarker(uptime: self.clock.startUptime, timestamp: self.clock.startSystemUptime, date: self.clock.startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
                 try logger.writeSample(marker)
             }
         }
@@ -662,7 +682,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
                 fileResult.startDate = self.startDate
                 fileResult.endDate = Date()
                 fileResult.url = logger.url
-                fileResult.startUptime = self.startUptime
+                fileResult.startUptime = self.clock.startSystemUptime
                 fileResult.contentType = logger.contentType
                 self.appendResults(fileResult)
             }
