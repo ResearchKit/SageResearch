@@ -82,7 +82,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         var minConfidence: Double = 0.9
         repeat {
             if let bpm = _meanHeartRate(minConfidence) {
-                return CRFHeartRateBPMSample(uptime: startUptime, bpm: bpm, confidence: minConfidence)
+                return CRFHeartRateBPMSample(timestamp: self.clock.startSystemUptime, bpm: bpm, confidence: minConfidence)
             }
             minConfidence -= 0.1
         } while minConfidence >= CRFMinConfidence
@@ -90,7 +90,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         // Just average all and return both average confidence and average bpm
         let meanBPM = Double(self.bpmSamples.map({ $0.bpm }).sum()) / Double(self.bpmSamples.count)
         let confidence = self.bpmSamples.map({ $0.confidence }).mean()
-        return CRFHeartRateBPMSample(uptime: startUptime, bpm: meanBPM, confidence: confidence)
+        return CRFHeartRateBPMSample(timestamp: self.clock.startSystemUptime, bpm: meanBPM, confidence: confidence)
     }
     
     private func _meanHeartRate(_ minConfidence: Double) -> Double? {
@@ -146,11 +146,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         
         // Force turning off the flash
         if let captureDevice = _captureDevice {
-            do {
-                try captureDevice.lockForConfiguration()
-                captureDevice.torchMode = .auto
-                captureDevice.unlockForConfiguration()
-            } catch {}
+            _turnOffTorch(for: captureDevice)
         }
         
         // Append the camera settings - but append them to the top-level result
@@ -176,7 +172,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             fileResult.startDate = self.startDate
             fileResult.endDate = Date()
             fileResult.url = url
-            fileResult.startUptime = self.startUptime
+            fileResult.startUptime = self.clock.startSystemUptime
             fileResult.contentType = "video/mp4"
             self.appendResults(fileResult)
 
@@ -204,8 +200,21 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     private var _videoProcessor: CRFHeartRateVideoProcessor!
     
     deinit {
+        if let captureDevice = _captureDevice {
+            _turnOffTorch(for: captureDevice)
+        }
         _session?.stopRunning()
         _simulationTimer?.invalidate()
+    }
+    
+    private func _turnOffTorch(for captureDevice: AVCaptureDevice) {
+        DispatchQueue.main.async {
+            do {
+                try captureDevice.lockForConfiguration()
+                captureDevice.torchMode = .auto
+                captureDevice.unlockForConfiguration()
+            } catch {}
+        }
     }
     
     private func _getCaptureDevice() -> AVCaptureDevice? {
@@ -228,7 +237,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             else {
                 return
         }
-        let time = CMTime(seconds: self.startUptime, preferredTimescale: 1000000000)
+        let time = CMTime(seconds: self.clock.startSystemUptime, preferredTimescale: 1000000000)
         _videoProcessor.startRecording(to: url, startTime: time, formatDescription: formatDescription)
     }
     
@@ -293,9 +302,6 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         // Tell the device to use the max frame rate.
         try captureDevice.lockForConfiguration()
         
-        // Turn on the flash
-        captureDevice.torchMode = .on
-        
         // Set the format
         captureDevice.activeFormat = currentFormat
         
@@ -335,6 +341,9 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             let gains = captureDevice.deviceWhiteBalanceGains(for: wb)
             captureDevice.setWhiteBalanceModeLocked(with: gains, completionHandler: nil)
         }
+        
+        // Turn on the flash
+        try captureDevice.setTorchModeOn(level: AVCaptureDevice.maxAvailableTorchLevel)
 
         captureDevice.unlockForConfiguration()
         
@@ -367,20 +376,21 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     }
     
     private func _fireSimulationTimer() {
-        let uptime = ProcessInfo.processInfo.systemUptime
-        guard uptime - startUptime > 2 else { return }
-        guard uptime - startUptime > Double(CRFHeartRateSettleSeconds + CRFHeartRateWindowSeconds) else {
+        let duration = self.clock.runningDuration()
+        guard duration > 2 else { return }
+        guard duration > Double(CRFHeartRateSettleSeconds + CRFHeartRateWindowSeconds) else {
             if !isCoveringLens {
                 isCoveringLens = true
             }
             return
         }
-        if Int(uptime - self.startUptime) % 5 == 0 {
+        if Int(duration) % 5 == 0 {
             self.sampleProcessingQueue.async {
                 let heartRate: Double = 65
                 let confidence = 0.75
                 
-                let bpmSample = CRFHeartRateBPMSample(uptime: uptime, bpm: heartRate, confidence: confidence)
+                let timestamp = self.clock.startSystemUptime + duration
+                let bpmSample = CRFHeartRateBPMSample(timestamp: timestamp, bpm: heartRate, confidence: confidence)
                 self.bpmSamples.append(bpmSample)
                 
                 if confidence > CRFMinConfidence {
@@ -395,7 +405,31 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     
     // MARK: AVCaptureVideoDataOutputSampleBufferDelegate
     
+    private var _flashRetryCount = 0
+    private var _flashTime: Double?
+    
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        
+        // Check that the flash is on (sometime it doesn't turn on when it is suppose to).
+        if self.status <= .running, let device = _captureDevice, device.torchMode != .on {
+            let time = RSDClock.uptime()
+            if (_flashTime == nil) || (time - _flashTime! >= 0.5) {
+                _flashTime = time
+                _flashRetryCount += 1
+                debugPrint("Flash not ON. retry=\(_flashRetryCount), status=\(self.status)")
+                DispatchQueue.main.async {
+                    do {
+                        try device.lockForConfiguration()
+                        try device.setTorchModeOn(level: AVCaptureDevice.maxAvailableTorchLevel)
+                        device.unlockForConfiguration()
+                    } catch let err {
+                        self.didFail(with: err)
+                    }
+                }
+            }
+            return
+        }
+        
         self.crfDelegate?.didFinishStartingCamera()
         _videoProcessor.appendVideoSampleBuffer(sampleBuffer)
     }
@@ -409,7 +443,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     private func _recordColor(_ sample: CRFPixelSample) {
         
         // mark a change in whether or not the lens is covered
-        let coveringLens = sample.isCoveringLens()
+        let coveringLens = sample.isCoveringLens
         if coveringLens != self.isCoveringLens {
             DispatchQueue.main.async {
                 self.isCoveringLens = coveringLens
@@ -423,24 +457,13 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             }
         }
         
-        // If not covering the lens then check that everything is still on
-        if !coveringLens, let device = _captureDevice, device.torchMode != .on {
-            do {
-                try device.lockForConfiguration()
-                device.torchMode = .on
-                device.unlockForConfiguration()
-            } catch let err {
-                self.didFail(with: err)
-            }
-        }
-        
         // Process the pixel sample.
         _processSample(sample)
         
         // Add the sample to the logging queue and write in 1 second batches.
         _loggingSamples.append(sample)
         if _loggingSamples.count >= _videoProcessor.frameRate {
-            let samples = _loggingSamples.sorted(by: { $0.uptime < $1.uptime })
+            let samples = _loggingSamples.sorted(by: { $0.presentationTimestamp < $1.presentationTimestamp })
             _loggingSamples.removeAll()
             self.writeSamples(samples)
         }
@@ -462,7 +485,6 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     
     /// Add the sample.
     func _processSample(_ sample: CRFPixelSample) {
-        guard sample.isCoveringLens() else { return }
         arrayMutatingQueue.async {
             
             // append the samples
@@ -472,29 +494,36 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             let windowLength = Int(CRFHeartRateWindowSeconds) * Int(self._videoProcessor.frameRate)
             if self.pixelSamples.count >= windowLength {
                 
-                // Set flag that the samples are being processed
+                // set flag that the samples are being processed
                 self.isProcessing = true
                 
-                // get the red channel and the uptime then remove the first half the samples
+                // get the red and green channels and the uptime
                 let halfLength = windowLength / 2
-                let uptime = self.pixelSamples[Int(halfLength)].uptime
-                let channel = self.pixelSamples[..<windowLength].map { $0.red }
+                let timestamp = self.pixelSamples[Int(halfLength)].presentationTimestamp
+                let redChannel = self.pixelSamples[..<windowLength].map { $0.red }
+                let greenChannel = self.pixelSamples[..<windowLength].map { $0.green }
+                
+                // remove the samples that are outside the window or 1 second
+                
                 self.pixelSamples.removeSubrange(..<halfLength)
                 
                 self.sampleProcessingQueue.async {
                     
-                    let (heartRate, confidence) = calculateHeartRate(channel)
+                    let red = calculateHeartRate(redChannel)
+                    let green = calculateHeartRate(greenChannel)
+                    let pixelChannel: CRFPixelChannel = (red.confidence > green.confidence) ? .red : .green
+                    let (bpm, confidence) = (red.confidence > green.confidence) ? red : green
                     
-                    let bpmSample = CRFHeartRateBPMSample(uptime: uptime, bpm: heartRate, confidence: confidence)
+                    let bpmSample = CRFHeartRateBPMSample(timestamp: timestamp, bpm: bpm, confidence: confidence, channel: pixelChannel)
                     self.bpmSamples.append(bpmSample)
                     self.isProcessing = false
+                    print("red bpm=\(red.heartRate), confidence=\(red.confidence)")
+                    print("green bpm=\(green.heartRate), confidence=\(green.confidence)")
                     
-                    if confidence > CRFMinConfidence {
-                        DispatchQueue.main.async {
-                            self.confidence = confidence
-                            // Converting the calculated heart rate as an Int will not truncate b/c the Double was already rounded.
-                            self.bpm = Int(heartRate)
-                        }
+                    DispatchQueue.main.async {
+                        self.confidence = confidence
+                        // Converting the calculated heart rate as an Int will not truncate b/c the Double was already rounded.
+                        self.bpm = Int(bpm)
                     }
                 }
             }
@@ -532,14 +561,18 @@ public struct CRFHeartRateSamplesResult : RSDResult, RSDArchivable {
     }
 }
 
+public enum CRFPixelChannel : String, Codable {
+    case red, green, blue
+}
+
 public struct CRFHeartRateBPMSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     
-    private enum CodingKeys : String, CodingKey {
-        case uptime, bpm, confidence
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case timestamp, bpm, confidence, channel
     }
     
     /// The uptime marker for the bpm sample.
-    public let uptime: TimeInterval
+    public let timestamp: TimeInterval?
     
     /// The calculated BPM for this sample.
     public let bpm: Double
@@ -547,10 +580,13 @@ public struct CRFHeartRateBPMSample : RSDSampleRecord, RSDDelimiterSeparatedEnco
     /// The confidence in the calculated BPM for this sample.
     public let confidence: Double
     
-    init(uptime: TimeInterval, bpm: Double, confidence: Double) {
-        self.uptime = uptime
+    public let channel: CRFPixelChannel?
+    
+    init(timestamp: TimeInterval, bpm: Double, confidence: Double, channel: CRFPixelChannel? = nil) {
+        self.timestamp = timestamp
         self.bpm = bpm
         self.confidence = confidence
+        self.channel = channel
     }
     
     public static func codingKeys() -> [CodingKey] {
@@ -558,46 +594,24 @@ public struct CRFHeartRateBPMSample : RSDSampleRecord, RSDDelimiterSeparatedEnco
     }
     
     private static func _codingKeys() -> [CodingKeys] {
-        return [.uptime, .bpm, .confidence]
+        return CodingKeys.allCases
     }
     
     // Ignored
     
-    public var timestamp: TimeInterval? { return nil }
     public var timestampDate: Date? { return nil }
     public var stepPath: String { return "" }
 }
 
 extension CRFPixelSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     
-    private enum CodingKeys : String, CodingKey {
-        case uptime, timestamp, red, green, blue, redLevel
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case presentationTimestamp = "timestamp", red, green, blue, isCoveringLens
     }
     
-    /// Is the user's finger covering the lens?
-    public func isCoveringLens() -> Bool {
-        // If the red level isn't high enough then exit with false.
-        guard (redLevel >= CRFMinRedLevel) && (red > green) && (red > blue)
-            else {
-                return false
-        }
-        
-        // Calculate hue and saturation.
-        let minValue = min(green, blue)
-        let maxValue = red
-        let delta = maxValue - minValue
-        var hue = 60 * ((green - blue) / delta)
-        if (hue < 0) {
-            hue += 360
-        }
-        let saturation = delta / maxValue
-        
-        // Look for the hue to be in the red zone and the saturation to be fairly high.
-        return (hue <= 30 || hue >= 350) && (saturation >= 0.7)
-    }
-    
+    /// Because `CRFPixelSample` is a C struct, it must use a non-nil property for the timestamp.
     public var timestamp: TimeInterval? {
-        return self.uptime - (CRFHeartRateRecorder.current?.startUptime ?? 0)
+        return self.presentationTimestamp;
     }
     
     // MARK: Encoding and Decoding
@@ -607,27 +621,26 @@ extension CRFPixelSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     }
     
     private static func _codingKeys() -> [CodingKeys] {
-        return [.uptime, .timestamp, .red, .blue, .green, .redLevel]
+        return CodingKeys.allCases
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init()
-        self.uptime = try container.decode(Double.self, forKey: .uptime)
+        self.presentationTimestamp = try container.decode(Double.self, forKey: .presentationTimestamp)
         self.red = try container.decode(Double.self, forKey: .red)
         self.green = try container.decode(Double.self, forKey: .green)
         self.blue = try container.decode(Double.self, forKey: .blue)
-        self.redLevel = try container.decode(Double.self, forKey: .redLevel)
+        self.isCoveringLens = try container.decode(Bool.self, forKey: .isCoveringLens)
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.uptime, forKey: .uptime)
-        try container.encode(self.timestamp!, forKey: .timestamp)
+        try container.encode(self.presentationTimestamp, forKey: .presentationTimestamp)
         try container.encode(self.red, forKey: .red)
         try container.encode(self.green, forKey: .green)
         try container.encode(self.blue, forKey: .blue)
-        try container.encode(self.redLevel, forKey: .redLevel)
+        try container.encode(self.isCoveringLens, forKey: .isCoveringLens)
     }
     
     // Ignored

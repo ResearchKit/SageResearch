@@ -37,11 +37,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 struct CRFPixelSample {
-    double uptime;
+    double presentationTimestamp;
     double red;
     double green;
     double blue;
-    double redLevel;
+    double redSD;
+    bool isCoveringLens;
 };
 
 @class CRFHeartRateVideoProcessor;

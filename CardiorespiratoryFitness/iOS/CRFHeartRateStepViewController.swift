@@ -118,7 +118,7 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         
         // add an observer for changes in the bpm
         _bpmObserver = bpmRecorder!.observe(\.bpm, changeHandler: { [weak self] (recorder, _) in
-            self?._updateBPMLabelOnMainQueue(recorder.bpm)
+            self?._updateBPMLabelOnMainQueue(recorder.bpm, recorder.confidence)
         })
         
         // Setup a listener to start the timer when the lens is covered.
@@ -203,7 +203,7 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         if _markTime == nil {
             _markTime = ProcessInfo.processInfo.systemUptime
         }
-        guard startUptime == nil else { return }
+        guard self.clock == nil else { return }
         self.start()
         _startAnimatingHeart()
     }
@@ -244,9 +244,9 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         UIAccessibility.post(notification: .announcement, argument: instruction)
     }
     
-    private func _updateBPMLabelOnMainQueue(_ bpm: Int) {
+    private func _updateBPMLabelOnMainQueue(_ bpm: Int, _ confidence: Double) {
         DispatchQueue.main.async {
-            self._updateBPMLabel(bpm)
+            self.updateBPMLabel(bpm, confidence)
         }
     }
     
@@ -260,7 +260,12 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
     private var _encouragementGiven: Bool = false
     private var _markTime: TimeInterval?
     
-    private func _updateBPMLabel(_ bpm: Int) {
+    private func updateBPMLabel(_ bpm: Int, _ confidence: Double) {
+        guard confidence >= CRFMinConfidence else {
+            alertUserLowConfidence()
+            return
+        }
+        
         if self.collectionResult?.inputResults.count ?? 0 == 0 {
             // Add the starting heart rate
             var bpmResult = RSDAnswerResultObject(identifier: "\(self.step.identifier)_start", answerType: RSDAnswerResultType(baseType: .decimal))
@@ -276,5 +281,9 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         if let bpmString = numberFormatter.string(from: NSNumber(value: bpm)) {
             self.progressLabel?.text = Localization.localizedStringWithFormatKey("HEARTRATE_CAPTURE_%@_BPM", bpmString)
         }
+    }
+    
+    private func alertUserLowConfidence() {
+        self.progressLabel?.text = "--"
     }
 }

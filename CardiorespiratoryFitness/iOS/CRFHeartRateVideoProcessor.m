@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger, MovieRecorderStatus) {
 
 const int CRFHeartRateResolutionWidth = 192;    // lowest resolution on an iPhone 6
 const int CRFHeartRateResolutionHeight = 144;   // lowest resolution on an iPhone 6
-const double CRFRedThreshold = 40;
+const long CRFRedStdDevThreshold = 15.0;
 
 @implementation CRFHeartRateVideoProcessor {
     dispatch_queue_t _processingQueue;
@@ -113,13 +113,13 @@ const double CRFRedThreshold = 40;
     });
 }
 
-- (void)processSampleBuffer:(CMSampleBufferRef)sampleBuffer {
+- (BOOL)processSampleBuffer:(CMSampleBufferRef)sampleBuffer {
     CMTime pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
     CVImageBufferRef cvimgRef = CMSampleBufferGetImageBuffer(sampleBuffer);
-    [self processImageBuffer:cvimgRef timestamp:pts];
+    return [self processImageBuffer:cvimgRef timestamp:pts];
 }
 
-- (void)processImageBuffer:(CVImageBufferRef)cvimgRef timestamp:(CMTime)pts {
+- (BOOL)processImageBuffer:(CVImageBufferRef)cvimgRef timestamp:(CMTime)pts {
     
     // Lock the image buffer
     CVPixelBufferLockBaseAddress(cvimgRef,0);
@@ -134,16 +134,18 @@ const double CRFRedThreshold = 40;
 
     // Calculate average
     double r = 0, g = 0, b = 0;
-    long redCount = 0;
     
     long widthScaleFactor = 1;
     long heightScaleFactor = 1;
     if ((width > CRFHeartRateResolutionWidth) && (height > CRFHeartRateResolutionHeight)) {
-        // Belt & Suspenders: If at some point there is a camera released without 420v format
-        // then this will downsample the resolution to 192x144 (with round number scaling)
+        // Downsample the resolution to approximately 192x144 (with round number scaling).
         widthScaleFactor = floor((double)width / (double)CRFHeartRateResolutionWidth);
         heightScaleFactor = floor((double)height / (double)CRFHeartRateResolutionHeight);
     }
+    long size = (width/widthScaleFactor + widthScaleFactor) * (height/heightScaleFactor + heightScaleFactor);
+    
+    double rValues[size];
+    long count = 0;
     
     // Get the average rgb values for the entire image.
     for (int y = 0; y < height; y += heightScaleFactor) {
@@ -152,10 +154,8 @@ const double CRFRedThreshold = 40;
             double green = buf[x + 1];
             double blue = buf[x];
             
-            double h = [self getRedHueFromRed:red green:green blue:blue];
-            if (h >= 0) {
-                redCount++;
-            }
+            rValues[count] = (double)red;
+            count++;
             
             r += red;
             g += green;
@@ -163,42 +163,37 @@ const double CRFRedThreshold = 40;
         }
         buf += bprow;
     }
-    r /= 255 * (double)((width * height) / (widthScaleFactor * heightScaleFactor));
-    g /= 255 * (double)((width * height) / (widthScaleFactor * heightScaleFactor));
-    b /= 255 * (double)((width * height) / (widthScaleFactor * heightScaleFactor));
-    double redLevel = redCount / (double)((width * height) / (widthScaleFactor * heightScaleFactor));
+
+    r /= (double)count;
+    g /= (double)count;
+    b /= (double)count;
+    
+    double rDiffSum = 0;
+    for (long ii = 0; ii < count; ii++) {
+        double rDiff = rValues[ii] - r;
+        rDiffSum += (rDiff * rDiff);
+    }
+    double redSD = sqrt(rDiffSum / (double)(count - 1));
+    BOOL isCoveringLens = (redSD <= CRFRedStdDevThreshold);
     
     // Unlock the image buffer
     CVPixelBufferUnlockBaseAddress(cvimgRef,0);
     
     // Create a struct to return the pixel average
     struct CRFPixelSample sample;
-    sample.uptime = (double)(pts.value) / (double)(pts.timescale);
-    sample.red = r;
-    sample.green = g;
-    sample.blue = b;
-    sample.redLevel = redLevel;
+    sample.presentationTimestamp = (double)(pts.value) / (double)(pts.timescale);
+    sample.red = r / 255.0;
+    sample.green = g / 255.0;
+    sample.blue = b / 255.0;
+    sample.redSD = redSD;
+    sample.isCoveringLens = isCoveringLens;
     
     // Alert the delegate
     dispatch_async(_delegateCallbackQueue, ^{
         [self->_delegate processor:self didCaptureSample:sample];
     });
-}
-
-- (double)getRedHueFromRed:(double)r green:(double)g blue:(double)b {
-    if ((r < g) || (r < b)) {
-        return -1;
-    }
-    double min = MIN(g, b);
-    double delta = r - min;
-    if (delta < CRFRedThreshold) {
-        return -1;
-    }
-    double hue = 60*((g - b) / delta);
-    if (hue < 0) {
-        hue += 360;
-    }
-    return hue;
+    
+    return isCoveringLens;
 }
 
 #pragma mark - Video recording
