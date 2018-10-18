@@ -209,7 +209,7 @@ public class RSDMotionRecorder : RSDSampleRecorder {
     }
     
     func recordRawSample(_ data: RSDVectorData) {
-        let sample = RSDMotionRecord(stepPath: currentStepPath, data: data)
+        let sample = RSDMotionRecord(stepPath: currentStepPath, data: data, referenceClock: self.clock)
         self.writeSample(sample)
     }
     
@@ -231,7 +231,7 @@ public class RSDMotionRecorder : RSDSampleRecorder {
     func recordDeviceMotionSample(_ data: CMDeviceMotion) {
         let frame = motionManager?.attitudeReferenceFrame ?? CMAttitudeReferenceFrame.xArbitraryZVertical
         let samples = recorderTypes.compactMap {
-            RSDMotionRecord(stepPath: currentStepPath, data: data, referenceFrame: frame, sensorType: $0)
+            RSDMotionRecord(stepPath: currentStepPath, data: data, referenceFrame: frame, sensorType: $0, referenceClock: self.clock)
         }
         self.writeSamples(samples)
     }
@@ -285,7 +285,6 @@ public class RSDMotionRecorder : RSDSampleRecorder {
 ///        func testMotionRecord_Attitude() {
 ///            let json = """
 ///                {
-///                    "uptime" : 37246.68689429167,
 ///                    "timestamp" : 1.2498140833340585,
 ///                    "stepPath" : "Cardio Stair Step/heartRate.after/heartRate",
 ///                    "sensorType" : "attitude",
@@ -303,7 +302,10 @@ public class RSDMotionRecorder : RSDSampleRecorder {
 /// - seealso: "CodableMotionRecorderTests.swift" unit tests for additional examples.
 public struct RSDMotionRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     
-    /// System uptime.
+    /// System clock time.
+    public let uptime: TimeInterval?
+    
+    /// Time that the system has been awake since last reboot.
     public let timestamp: TimeInterval?
     
     /// An identifier marking the current step.
@@ -341,10 +343,11 @@ public struct RSDMotionRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable 
     public let w: Double?
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case timestamp, stepPath, timestampDate, sensorType, eventAccuracy, referenceCoordinate, heading, x, y, z, w
+        case uptime, timestamp, stepPath, timestampDate, sensorType, eventAccuracy, referenceCoordinate, heading, x, y, z, w
     }
     
-    fileprivate init(timestamp: TimeInterval?, stepPath: String, timestampDate: Date?, sensorType: RSDMotionRecorderType?, eventAccuracy: Int?, referenceCoordinate: RSDAttitudeReferenceFrame?, heading: Double?, x: Double?, y: Double?, z: Double?, w: Double?) {
+    fileprivate init(uptime: TimeInterval?, timestamp: TimeInterval?, stepPath: String, timestampDate: Date?, sensorType: RSDMotionRecorderType?, eventAccuracy: Int?, referenceCoordinate: RSDAttitudeReferenceFrame?, heading: Double?, x: Double?, y: Double?, z: Double?, w: Double?) {
+        self.uptime = uptime
         self.timestamp = timestamp
         self.stepPath = stepPath
         self.timestampDate = timestampDate
@@ -363,8 +366,9 @@ public struct RSDMotionRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable 
     ///     - startUptime: System clock uptime when the recorder was started.
     ///     - stepPath: The current step path.
     ///     - data: The raw sensor data to record.
-    public init(stepPath: String, data: RSDVectorData) {
+    public init(stepPath: String, data: RSDVectorData, referenceClock: RSDClock? = nil) {
         
+        self.uptime = referenceClock?.relativeUptime(to: data.timestamp)
         self.timestamp = data.timestamp
         self.stepPath = stepPath
         self.timestampDate = nil
@@ -386,7 +390,7 @@ public struct RSDMotionRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable 
     ///     - data: The `CMDeviceMotion` data sample from which to record information.
     ///     - referenceFrame: The `CMAttitudeReferenceFrame` for this recording.
     ///     - sensorType: The recorder type for which to record the vector.
-    public init?(stepPath: String, data: CMDeviceMotion, referenceFrame: CMAttitudeReferenceFrame, sensorType: RSDMotionRecorderType) {
+    public init?(stepPath: String, data: CMDeviceMotion, referenceFrame: CMAttitudeReferenceFrame, sensorType: RSDMotionRecorderType, referenceClock: RSDClock? = nil) {
         
         var eventAccuracy: Int?
         var referenceCoordinate: RSDAttitudeReferenceFrame?
@@ -424,6 +428,7 @@ public struct RSDMotionRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable 
             return nil
         }
         
+        self.uptime = referenceClock?.relativeUptime(to: data.timestamp)
         self.timestamp = data.timestamp
         self.stepPath = stepPath
         self.timestampDate = nil
@@ -545,16 +550,17 @@ extension RSDMotionRecord : RSDDocumentableCodableObject {
 
     static func examples() -> [Encodable] {
         
+        let uptime = RSDClock.uptime()
         let timestamp = ProcessInfo.processInfo.systemUptime
         
-        let gyro = RSDMotionRecord(timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .gyro, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
-        let accelerometer = RSDMotionRecord(timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .accelerometer, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
-        let magnetometer = RSDMotionRecord(timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .magnetometer, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
-        let gravity = RSDMotionRecord(timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .gravity, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
-        let userAccel = RSDMotionRecord(timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .userAcceleration, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
-        let rotationRate = RSDMotionRecord(timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .userAcceleration, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
-        let attitude = RSDMotionRecord(timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .attitude, eventAccuracy: nil, referenceCoordinate: .xArbitraryZVertical, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: 1)
-        let magneticField = RSDMotionRecord(timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .magneticField, eventAccuracy: 4, referenceCoordinate: nil, heading: 270, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: 1)
+        let gyro = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .gyro, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
+        let accelerometer = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .accelerometer, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
+        let magnetometer = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .magnetometer, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
+        let gravity = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .gravity, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
+        let userAccel = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .userAcceleration, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
+        let rotationRate = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .userAcceleration, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
+        let attitude = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .attitude, eventAccuracy: nil, referenceCoordinate: .xArbitraryZVertical, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: 1)
+        let magneticField = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .magneticField, eventAccuracy: 4, referenceCoordinate: nil, heading: 270, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: 1)
         
         return [gyro, accelerometer, magnetometer, gravity, userAccel, rotationRate, attitude, magneticField]
     }
