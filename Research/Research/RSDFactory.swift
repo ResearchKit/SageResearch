@@ -659,6 +659,8 @@ open class RSDFactory {
         return rsd_ISO8601TimestampFormatter
     }
     
+    open var nonConformingCodingStrategy: (positiveInfinity: String, negativeInfinity: String, nan: String)
+        = ("Infinity", "-Infinity", "NaN")
 
     // MARK: Decoder
 
@@ -674,6 +676,9 @@ open class RSDFactory {
         decoder.userInfo[.factory] = self
         decoder.userInfo[.bundle] = bundle
         decoder.userInfo[.codingInfo] = RSDCodingInfo()
+        decoder.nonConformingFloatDecodingStrategy = .convertFromString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
+                                                                        negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
+                                                                        nan: nonConformingCodingStrategy.nan)
         return decoder
     }
     
@@ -766,6 +771,9 @@ open class RSDFactory {
         encoder.outputFormatting = .prettyPrinted
         encoder.userInfo[.factory] = self
         encoder.userInfo[.codingInfo] = RSDCodingInfo()
+        encoder.nonConformingFloatEncodingStrategy = .convertToString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
+                                                                        negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
+                                                                        nan: nonConformingCodingStrategy.nan)
         return encoder
     }
     
@@ -783,6 +791,7 @@ open class RSDFactory {
     open func encodeString(from date: Date, codingPath: [CodingKey]) -> String {
         return timestampFormatter.string(from: date)
     }
+    
 }
 
 /// Extension of CodingUserInfoKey to add keys used by the Codable objects in this framework.

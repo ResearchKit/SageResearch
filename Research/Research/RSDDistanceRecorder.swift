@@ -319,7 +319,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
             
                 // Calculate time interval since start time
                 let timeInterval = location.timestamp.timeIntervalSince(self.startDate)
-                let uptime = self.startUptime + timeInterval
+                let uptime = self.clock.startUptime + timeInterval
 
                 // Update the total distance
                 let distance = self._updateTotalDistance(location)
@@ -459,9 +459,9 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
 ///                """.data(using: .utf8)! // our data in native (JSON) format
 /// ```
 public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable {
-
-    /// The clock uptime.
-    public let uptime: TimeInterval
+    
+    /// The absolute clock time.
+    public let uptime: TimeInterval?
     
     /// Relative time to when the recorder was started.
     public let timestamp: TimeInterval?
@@ -517,7 +517,7 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
         case uptime, timestamp, stepPath, timestampDate, timestampUnix, horizontalAccuracy, relativeDistance, latitude, longitude, verticalAccuracy, altitude, totalDistance, course, bearingRadians, speed, floor
     }
     
-    fileprivate init(uptime: TimeInterval, timestamp: TimeInterval?, stepPath: String, timestampDate: Date?, timestampUnix: TimeInterval?, horizontalAccuracy: Double?, relativeDistance: Double?, latitude: Double?, longitude: Double?, verticalAccuracy: Double?, altitude: Double?, totalDistance: Double?, course: Double?, bearingRadians: Double?, speed: Double?, floor: Int?) {
+    fileprivate init(uptime: TimeInterval?, timestamp: TimeInterval?, stepPath: String, timestampDate: Date?, timestampUnix: TimeInterval?, horizontalAccuracy: Double?, relativeDistance: Double?, latitude: Double?, longitude: Double?, verticalAccuracy: Double?, altitude: Double?, totalDistance: Double?, course: Double?, bearingRadians: Double?, speed: Double?, floor: Int?) {
         self.uptime = uptime
         self.timestamp = timestamp
         self.stepPath = stepPath
@@ -545,7 +545,7 @@ public struct RSDDistanceRecord: RSDSampleRecord, RSDDelimiterSeparatedEncodable
     ///     - previousLocation: The previous `CLLocation` or `nil` if this is the first sample.
     ///     - totalDistance: Sum of the relative distance measurements.
     ///     - relativeDistanceOnly: Whether or not **only** relative distance should be recorded. Default = `true`
-    public init(uptime: TimeInterval, timestamp: TimeInterval, stepPath: String, location: CLLocation, previousLocation: CLLocation?, totalDistance: Double?, relativeDistanceOnly: Bool = true) {
+    public init(uptime: TimeInterval?, timestamp: TimeInterval?, stepPath: String, location: CLLocation, previousLocation: CLLocation?, totalDistance: Double?, relativeDistanceOnly: Bool = true) {
         self.uptime = uptime
         self.timestamp = timestamp
         self.stepPath = stepPath
