@@ -7,7 +7,7 @@
             "identifier"              : "motion",
             "type"                    : "motion",
             "startStepIdentifier"     : "heartRate",
-            "StopStepIdentifier"      : "heartRate",
+            "stopStepIdentifier"      : "heartRate",
             "requiresBackgroundAudio" : true,
             "recorderTypes"           : ["accelerometer", "gyro"]
         }
