@@ -522,6 +522,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     
     @objc private func _learnMoreTapped(_ sender: UIButton) {
+        momentarilyDisableButton(sender)
         self.showLearnMore()
     }
     
@@ -594,8 +595,10 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// which requires custom navigation because the step has not "ended" normally. For example, this method
     /// is called when a user taps the "skip" button.
     open func jumpForward() {
-        RSDSpeechSynthesizer.shared.stopTalking()
-        stop()
+        if RSDSpeechSynthesizer.shared.isSpeaking {
+            RSDSpeechSynthesizer.shared.stopTalking()
+        }
+        self.stop()
         self.stepViewModel.perform(actionType: .navigation(.goForward))
     }
     
@@ -644,9 +647,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         guard let action = self.stepViewModel.action(for: actionType) else { return false }
         
         if let navAction = action as? RSDNavigationUIAction {
-            // For a navigation action, assign the skip identifier and jump forward.
-            assignSkipToIdentifier(navAction.skipToIdentifier)
-            jumpForward()
+            // TODO: syoung 10/19/2018 FIXME! Replace the UIPageViewController with a more performant parent view controller.
+            // The iPhone X takes a *really* long time to animate in reverse. Show a loading view.
+            (self.taskController as? RSDTaskViewController)?.showLoadingView()
+            DispatchQueue.main.async {
+                // For a navigation action, assign the skip identifier and jump forward.
+                self.assignSkipToIdentifier(navAction.skipToIdentifier)
+                self.jumpForward()
+            }
             return true
         }
         else if let webAction = action as? RSDWebViewUIAction {

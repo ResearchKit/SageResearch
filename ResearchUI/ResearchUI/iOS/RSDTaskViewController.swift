@@ -393,7 +393,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///     - completion: The completion to call once the navigation animation has completed.
     public func show(_ stepController: RSDStepController, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
         let vc = stepController as! UIViewController
-        pageViewController.setViewControllers([vc], direction: direction, animated: true, completion: completion)
+        pageViewController.setViewControllers([vc], direction: direction, animated: true) { (finished) in
+            self.hideLoadingIfNeeded()
+            completion?(finished)
+        }
     }
     
     /// Failed to fetch the task from the current task path. Handle the error. A retry can be fired
