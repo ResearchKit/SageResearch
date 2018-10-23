@@ -78,28 +78,13 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     public func meanHeartRate() -> CRFHeartRateBPMSample? {
         guard self.bpmSamples.count > 0 else { return nil }
         
-        // Look for a mean value filtering out the low-confidence values
-        var minConfidence: Double = 0.9
-        repeat {
-            if let bpm = _meanHeartRate(minConfidence) {
-                return CRFHeartRateBPMSample(timestamp: self.clock.startSystemUptime, bpm: bpm, confidence: minConfidence)
-            }
-            minConfidence -= 0.1
-        } while minConfidence >= CRFMinConfidence
+        let highConfidenceSamples = self.bpmSamples.filter { $0.confidence >= CRFMinConfidence }
+        let samples = highConfidenceSamples.count > 0 ? highConfidenceSamples : self.bpmSamples
         
         // Just average all and return both average confidence and average bpm
-        let meanBPM = Double(self.bpmSamples.map({ $0.bpm }).sum()) / Double(self.bpmSamples.count)
-        let confidence = self.bpmSamples.map({ $0.confidence }).mean()
+        let meanBPM = samples.map({ $0.bpm }).mean()
+        let confidence = samples.map({ $0.confidence }).mean()
         return CRFHeartRateBPMSample(timestamp: self.clock.startSystemUptime, bpm: meanBPM, confidence: confidence)
-    }
-    
-    private func _meanHeartRate(_ minConfidence: Double) -> Double? {
-        let samples = bpmSamples.compactMap { (sample) -> Double? in
-            guard sample.confidence >= minConfidence else { return nil }
-            return Double(bpm)
-        }
-        guard samples.count > 0 else { return nil }
-        return samples.mean()
     }
     
     public override func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
@@ -416,7 +401,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             if (_flashTime == nil) || (time - _flashTime! >= 0.5) {
                 _flashTime = time
                 _flashRetryCount += 1
-                debugPrint("Flash not ON. retry=\(_flashRetryCount), status=\(self.status)")
+                debugPrint("Flash not ON. retry=\(_flashRetryCount), status=\(self.status.rawValue)")
                 DispatchQueue.main.async {
                     do {
                         try device.lockForConfiguration()
@@ -491,7 +476,8 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             self.pixelSamples.append(sample)
             
             // look to see if we have enough to process a bpm
-            let windowLength = Int(CRFHeartRateWindowSeconds) * Int(self._videoProcessor.frameRate)
+            let secondLength = Int(self._videoProcessor.frameRate)
+            let windowLength = Int(CRFHeartRateWindowSeconds) * secondLength
             if self.pixelSamples.count >= windowLength {
                 
                 // set flag that the samples are being processed
@@ -499,16 +485,15 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
                 
                 // get the red and green channels and the uptime
                 let halfLength = windowLength / 2
-                let timestamp = self.pixelSamples[Int(halfLength)].presentationTimestamp
-                let redChannel = self.pixelSamples[..<windowLength].map { $0.red }
-                let greenChannel = self.pixelSamples[..<windowLength].map { $0.green }
-                
-                // remove the samples that are outside the window or 1 second
-                
-                self.pixelSamples.removeSubrange(..<halfLength)
+                let samples = self.pixelSamples.suffix(windowLength)
+                let timestamp = samples[Int(halfLength)].presentationTimestamp
+                let removeLength = (self.confidence >= CRFMinConfidence) ? halfLength : secondLength
+                self.pixelSamples.removeSubrange(..<removeLength)
                 
                 self.sampleProcessingQueue.async {
                     
+                    let redChannel = samples.map { $0.red }
+                    let greenChannel = samples.map { $0.green }
                     let red = calculateHeartRate(redChannel)
                     let green = calculateHeartRate(greenChannel)
                     let pixelChannel: CRFPixelChannel = (red.confidence > green.confidence) ? .red : .green
@@ -517,8 +502,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
                     let bpmSample = CRFHeartRateBPMSample(timestamp: timestamp, bpm: bpm, confidence: confidence, channel: pixelChannel)
                     self.bpmSamples.append(bpmSample)
                     self.isProcessing = false
-                    print("red bpm=\(red.heartRate), confidence=\(red.confidence)")
-                    print("green bpm=\(green.heartRate), confidence=\(green.confidence)")
+                    print("\(pixelChannel) bpm=\(bpm), confidence=\(confidence)")
                     
                     DispatchQueue.main.async {
                         self.confidence = confidence
