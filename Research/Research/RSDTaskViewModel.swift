@@ -595,7 +595,7 @@ extension RSDTaskViewModel {
             assertionFailure("Attempting to go forward without a task loaded.")
             return
         }
-        
+    
         let navigation = task.stepNavigator.step(after: previousStep, with: &self.taskResult)
         let navDirection = direction ?? navigation.direction
         
@@ -704,7 +704,6 @@ extension RSDTaskViewModel {
                 return
         }
         
-        taskController.hideLoadingIfNeeded()
         taskController.show(stepController, from: previousStep, direction: direction) { [weak self] (finished) in
             self?._finishMoving(to: step, from: previousStep, direction: direction)
         }
