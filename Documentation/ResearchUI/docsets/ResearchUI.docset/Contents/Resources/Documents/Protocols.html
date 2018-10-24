@@ -228,9 +228,6 @@
                 <a href="Protocols.html#/s:10ResearchUI34RSDNavigationHeaderLayoutConstantsP">RSDNavigationHeaderLayoutConstants</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/RSDOptionalStepViewControllerDelegate.html">RSDOptionalStepViewControllerDelegate</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Protocols/RSDOptionalTaskViewControllerDelegate.html">RSDOptionalTaskViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -253,12 +250,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols.html#/s:10ResearchUI34RSDStepTextViewCellLayoutConstantsP">RSDStepTextViewCellLayoutConstants</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols.html#/s:10ResearchUI29RSDStepViewControllerDelegateP">RSDStepViewControllerDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/RSDStepViewControllerProtocol.html">RSDStepViewControllerProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDStepViewControllerVendor.html">RSDStepViewControllerVendor</a>
@@ -370,99 +361,6 @@ the running of a task.</p>
             </div>
             <div class="task-group">
               <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(pl)RSDOptionalStepViewControllerDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDOptionalStepViewControllerDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(pl)RSDOptionalStepViewControllerDelegate">RSDOptionalStepViewControllerDelegate</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDOptionalStepViewControllerDelegate</code> is a delegate protocol defined as <code>@objc</code> to allow the
-methods to be optionally implemented. As such, these methods cannot take Swift protocols as their
-paramenters.</p>
-
-                        <a href="Protocols/RSDOptionalStepViewControllerDelegate.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDOptionalStepViewControllerDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="kt">NSObjectProtocol</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI29RSDStepViewControllerDelegateP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDStepViewControllerDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI29RSDStepViewControllerDelegateP">RSDStepViewControllerDelegate</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDStepViewControllerDelegate</code> is an extension of the <code>RSDUIActionHandler</code> protocol that also
-implements optional methods defined by <code><a href="Protocols/RSDOptionalStepViewControllerDelegate.html">RSDOptionalStepViewControllerDelegate</a></code>.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDStepViewControllerDelegate</span> <span class="p">:</span> <span class="kt">RSDUIActionHandler</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDOptionalStepViewControllerDelegate.html">RSDOptionalStepViewControllerDelegate</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI29RSDStepViewControllerProtocolP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDStepViewControllerProtocol" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI29RSDStepViewControllerProtocolP">RSDStepViewControllerProtocol</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Protocol to allow setting the step view controller delegate on a view controller that may not
-inherit directly from UIViewController.</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    Any implementation should call the delegate methods during view appearance transitions.
-
-</div>
-
-                        <a href="Protocols/RSDStepViewControllerProtocol.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDStepViewControllerProtocol</span> <span class="p">:</span> <span class="kt">RSDStepController</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
                 <li class="item">
                   <div>
                     <code>
