@@ -2185,9 +2185,9 @@ and vibrations will still fire if the AVAudioSession is set up to do so.
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10ResearchUI21RSDStepViewControllerC11startUptimeSdSgvp"></a>
-                    <a name="//apple_ref/swift/Property/startUptime" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI21RSDStepViewControllerC11startUptimeSdSgvp">startUptime</a>
+                    <a name="/s:10ResearchUI21RSDStepViewControllerC5clock0A08RSDClockCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/clock" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI21RSDStepViewControllerC5clock0A08RSDClockCSgvp">clock</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2195,7 +2195,7 @@ and vibrations will still fire if the AVAudioSession is set up to do so.
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The system uptime for when the step was started. This is used by the timer to determine when to
+                        <p>The clock uptime for when the step was started. This is used by the timer to determine when to
 speak the next instruction and to set the value of the countdown.</p>
 
                       </div>
@@ -2203,61 +2203,7 @@ speak the next instruction and to set the value of the countdown.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">startUptime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI21RSDStepViewControllerC11pauseUptimeSdSgvp"></a>
-                    <a name="//apple_ref/swift/Property/pauseUptime" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI21RSDStepViewControllerC11pauseUptimeSdSgvp">pauseUptime</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The system uptime for when the step was paused.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">pauseUptime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI21RSDStepViewControllerC15completedUptimeSdSgvp"></a>
-                    <a name="//apple_ref/swift/Property/completedUptime" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI21RSDStepViewControllerC15completedUptimeSdSgvp">completedUptime</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The system uptime for when the step was finished.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">completedUptime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">clock</span><span class="p">:</span> <span class="kt">RSDClock</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
