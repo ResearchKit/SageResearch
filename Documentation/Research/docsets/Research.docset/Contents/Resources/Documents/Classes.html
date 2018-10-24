@@ -56,6 +56,9 @@
                 <a href="Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/RSDClock.html">RSDClock</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
               </li>
               <li class="nav-group-task">
@@ -146,6 +149,9 @@
                 <a href="Classes/RSDResourceTransformerObject.html">RSDResourceTransformerObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/RSDResultSummaryStepObject.html">RSDResultSummaryStepObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/RSDSampleRecorder.html">RSDSampleRecorder</a>
               </li>
               <li class="nav-group-task">
@@ -168,9 +174,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RSDTaskObject.html">RSDTaskObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes.html#/c:@M@Research@objc(cs)RSDTaskPath">RSDTaskPath</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RSDTaskRepository.html">RSDTaskRepository</a>
@@ -716,6 +719,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDResult.html">RSDResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/RSDResultSummaryStep.html">RSDResultSummaryStep</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDSampleRecord.html">RSDSampleRecord</a>
@@ -1319,6 +1325,45 @@ choice question where the choices are presented as a list.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDChoiceTableItem</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDInputFieldTableItem.html">RSDInputFieldTableItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research8RSDClockC"></a>
+                    <a name="//apple_ref/swift/Class/RSDClock" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research8RSDClockC">RSDClock</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The purpose of this struct is to allow using a normalized <q>uptime</q> for processes that may need to track
+the time while the device is asleep. This clock <q>stopwatch</q> will keep running even when the device has
+gone to sleep.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <a href="https://stackoverflow.com/questions/12488481/getting-ios-system-uptime-that-doesnt-pause-when-asleep/45068046#45068046">https://stackoverflow.com/questions/12488481/getting-ios-system-uptime-that-doesnt-pause-when-asleep/45068046#45068046</a>
+
+</div>
+
+                        <a href="Classes/RSDClock.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDClock</span></code></pre>
 
                         </div>
                       </div>
@@ -2228,6 +2273,38 @@ The transformer can be used to create an object decoded from an embedded resourc
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8Research26RSDResultSummaryStepObjectC"></a>
+                    <a name="//apple_ref/swift/Class/RSDResultSummaryStepObject" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research26RSDResultSummaryStepObjectC">RSDResultSummaryStepObject</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A result summary step is used to display a result that is calculated or measured earlier in the task.</p>
+
+                        <a href="Classes/RSDResultSummaryStepObject.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDResultSummaryStepObject</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDActiveUIStepObject.html">RSDActiveUIStepObject</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDResultSummaryStep.html">RSDResultSummaryStep</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@Research@objc(cs)RSDSampleRecorder"></a>
                     <a name="//apple_ref/swift/Class/RSDSampleRecorder" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@Research@objc(cs)RSDSampleRecorder">RSDSampleRecorder</a>
@@ -2647,34 +2724,6 @@ base class navigation doesn&rsquo;t show this with a step view controller.</p>
             </div>
             <div class="task-group">
               <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@Research@objc(cs)RSDTaskPath"></a>
-                    <a name="//apple_ref/swift/Class/RSDTaskPath" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Research@objc(cs)RSDTaskPath">RSDTaskPath</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDTaskPath</code> has been renamed as <code><a href="Classes/RSDTaskViewModel.html">RSDTaskViewModel</a></code>.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated)</span>
-<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDTaskPath</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDTaskViewModel.html">RSDTaskViewModel</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
                 <li class="item">
                   <div>
                     <code>

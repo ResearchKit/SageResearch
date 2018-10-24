@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDClock.html">RSDClock</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
               </li>
               <li class="nav-group-task">
@@ -146,6 +149,9 @@
                 <a href="../Classes/RSDResourceTransformerObject.html">RSDResourceTransformerObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDResultSummaryStepObject.html">RSDResultSummaryStepObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a>
               </li>
               <li class="nav-group-task">
@@ -168,9 +174,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTaskObject.html">RSDTaskObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes.html#/c:@M@Research@objc(cs)RSDTaskPath">RSDTaskPath</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTaskRepository.html">RSDTaskRepository</a>
@@ -716,6 +719,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDResult.html">RSDResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDResultSummaryStep.html">RSDResultSummaryStep</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a>
@@ -1457,7 +1463,7 @@ following actions:</p>
 <ol>
 <li>Check to see if the recorder is already running or has been cancelled and will call the completion
 handler with an error if that is the case.</li>
-<li>Update the <code><a href="../Classes/RSDSampleRecorder.html#/s:8Research17RSDSampleRecorderC11startUptimeSdvp">startUptime</a></code> and <code><a href="../Classes/RSDSampleRecorder.html#/s:8Research17RSDSampleRecorderC9startDate10Foundation0E0Vvp">startDate</a></code> to the current time.</li>
+<li>Update the <code>startUptime</code> and <code><a href="../Classes/RSDSampleRecorder.html#/s:8Research17RSDSampleRecorderC9startDate10Foundation0E0Vvp">startDate</a></code> to the current time.</li>
 <li>Open a file for logging samples.</li>
 <li>If and only if the logging file was successfully opened, then call <code>startRecorder()</code> asynchronously
 on the main queue.</li>
@@ -1844,9 +1850,9 @@ to point at a different implementation of the <code><a href="../Protocols/RSDCol
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research17RSDSampleRecorderC11startUptimeSdvp"></a>
-                    <a name="//apple_ref/swift/Property/startUptime" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research17RSDSampleRecorderC11startUptimeSdvp">startUptime</a>
+                    <a name="/s:8Research17RSDSampleRecorderC5clockAA8RSDClockCvp"></a>
+                    <a name="//apple_ref/swift/Property/clock" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research17RSDSampleRecorderC5clockAA8RSDClockCvp">clock</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1854,14 +1860,14 @@ to point at a different implementation of the <code><a href="../Protocols/RSDCol
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The system clock time when the recorder was started.</p>
+                        <p>The clock for this recorder.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">startUptime</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">clock</span><span class="p">:</span> <span class="kt"><a href="../Classes/RSDClock.html">RSDClock</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1888,7 +1894,7 @@ to point at a different implementation of the <code><a href="../Protocols/RSDCol
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">startDate</span><span class="p">:</span> <span class="kt">Date</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">startDate</span><span class="p">:</span> <span class="kt">Date</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2400,9 +2406,9 @@ be added to that array.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research17RSDSampleRecorderC17instantiateMarker6uptime4date8stepPath16loggerIdentifierAA0B6Record_pSd_10Foundation4DateVS2StF"></a>
-                    <a name="//apple_ref/swift/Method/instantiateMarker(uptime:date:stepPath:loggerIdentifier:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research17RSDSampleRecorderC17instantiateMarker6uptime4date8stepPath16loggerIdentifierAA0B6Record_pSd_10Foundation4DateVS2StF">instantiateMarker(uptime:date:stepPath:loggerIdentifier:)</a>
+                    <a name="/s:8Research17RSDSampleRecorderC17instantiateMarker6uptime9timestamp4date8stepPath16loggerIdentifierAA0B6Record_pSd_Sd10Foundation4DateVS2StF"></a>
+                    <a name="//apple_ref/swift/Method/instantiateMarker(uptime:timestamp:date:stepPath:loggerIdentifier:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research17RSDSampleRecorderC17instantiateMarker6uptime9timestamp4date8stepPath16loggerIdentifierAA0B6Record_pSd_Sd10Foundation4DateVS2StF">instantiateMarker(uptime:timestamp:date:stepPath:loggerIdentifier:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2418,7 +2424,7 @@ The default implementation will instantiate a <code><a href="../Structs/RSDRecor
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">instantiateMarker</span><span class="p">(</span><span class="nv">uptime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span> <span class="nv">stepPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">loggerIdentifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">instantiateMarker</span><span class="p">(</span><span class="nv">uptime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">timestamp</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">date</span><span class="p">:</span> <span class="kt">Date</span><span class="p">,</span> <span class="nv">stepPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">loggerIdentifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a></span></code></pre>
 
                         </div>
                       </div>
@@ -2435,6 +2441,18 @@ The default implementation will instantiate a <code><a href="../Structs/RSDRecor
                               <td>
                                 <div>
                                   <p>The system clock time.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>timestamp</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Relative timestamp for this recorder.</p>
                                 </div>
                               </td>
                             </tr>

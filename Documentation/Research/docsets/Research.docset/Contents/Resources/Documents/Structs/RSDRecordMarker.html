@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDClock.html">RSDClock</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
               </li>
               <li class="nav-group-task">
@@ -146,6 +149,9 @@
                 <a href="../Classes/RSDResourceTransformerObject.html">RSDResourceTransformerObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDResultSummaryStepObject.html">RSDResultSummaryStepObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a>
               </li>
               <li class="nav-group-task">
@@ -168,9 +174,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTaskObject.html">RSDTaskObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes.html#/c:@M@Research@objc(cs)RSDTaskPath">RSDTaskPath</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTaskRepository.html">RSDTaskRepository</a>
@@ -718,6 +721,9 @@
                 <a href="../Protocols/RSDResult.html">RSDResult</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDResultSummaryStep.html">RSDResultSummaryStep</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a>
               </li>
               <li class="nav-group-task">
@@ -1124,7 +1130,13 @@ for a recording.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The clock uptime.</p>
+                        <p>The clock uptime. On Apple OS platforms, this is the time interval since the device was rebooted or
+the clock rolled.</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <code><a href="../Classes/RSDClock.html#/s:8Research8RSDClockC6uptimeSdyFZ">RSDClock.uptime()</a></code>
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -1205,7 +1217,9 @@ for a recording.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Relative time to when the recorder was started.</p>
+                        <p>The relative timestamp used by this recorder.</p>
+
+<p>-seealso: <code>ProcessInfo.processInfo.systemUptime</code></p>
 
                       </div>
                       <div class="declaration">

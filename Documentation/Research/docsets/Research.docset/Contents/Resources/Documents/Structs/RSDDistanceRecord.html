@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDClock.html">RSDClock</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
               </li>
               <li class="nav-group-task">
@@ -146,6 +149,9 @@
                 <a href="../Classes/RSDResourceTransformerObject.html">RSDResourceTransformerObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDResultSummaryStepObject.html">RSDResultSummaryStepObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a>
               </li>
               <li class="nav-group-task">
@@ -168,9 +174,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTaskObject.html">RSDTaskObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes.html#/c:@M@Research@objc(cs)RSDTaskPath">RSDTaskPath</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTaskRepository.html">RSDTaskRepository</a>
@@ -718,6 +721,9 @@
                 <a href="../Protocols/RSDResult.html">RSDResult</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDResultSummaryStep.html">RSDResultSummaryStep</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a>
               </li>
               <li class="nav-group-task">
@@ -1135,9 +1141,9 @@ to record CoreLocation samples for use in determining distance travelled.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research17RSDDistanceRecordV6uptimeSdvp"></a>
+                    <a name="/s:8Research17RSDDistanceRecordV6uptimeSdSgvp"></a>
                     <a name="//apple_ref/swift/Property/uptime" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research17RSDDistanceRecordV6uptimeSdvp">uptime</a>
+                    <a class="token" href="#/s:8Research17RSDDistanceRecordV6uptimeSdSgvp">uptime</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1145,14 +1151,14 @@ to record CoreLocation samples for use in determining distance travelled.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The clock uptime.</p>
+                        <p>The absolute clock time.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">uptime</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">uptime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -1243,6 +1249,33 @@ to record CoreLocation samples for use in determining distance travelled.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8Research17RSDDistanceRecordV13timestampUnixSdSgvp"></a>
+                    <a name="//apple_ref/swift/Property/timestampUnix" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research17RSDDistanceRecordV13timestampUnixSdSgvp">timestampUnix</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The Unix timestamp (seconds since 1970-01-01T00:00:00.000Z) when the measurement was taken.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">timestampUnix</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8Research17RSDDistanceRecordV18horizontalAccuracySdSgvp"></a>
                     <a name="//apple_ref/swift/Property/horizontalAccuracy" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research17RSDDistanceRecordV18horizontalAccuracySdSgvp">horizontalAccuracy</a>
@@ -1253,7 +1286,7 @@ to record CoreLocation samples for use in determining distance travelled.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the horizontal accuracy of the location; <code>nil</code> if the lateral location is invalid.</p>
+                        <p>Returns the horizontal accuracy of the location in meters; <code>nil</code> if the lateral location is invalid.</p>
 
                       </div>
                       <div class="declaration">
@@ -1280,7 +1313,7 @@ to record CoreLocation samples for use in determining distance travelled.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the lateral distance between the current location and the previous location.</p>
+                        <p>Returns the lateral distance between the current location and the previous location in meters.</p>
 
                       </div>
                       <div class="declaration">
@@ -1363,7 +1396,7 @@ should be recorded.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the vertical accuracy of the location; <code>nil</code> if the altitude is invalid.</p>
+                        <p>Returns the vertical accuracy of the location in meters; <code>nil</code> if the altitude is invalid.</p>
 
                       </div>
                       <div class="declaration">
@@ -1390,7 +1423,7 @@ should be recorded.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the altitude of the location. Can be positive (above sea level) or negative (below sea level).</p>
+                        <p>Returns the altitude of the location in meters. Can be positive (above sea level) or negative (below sea level).</p>
 
                       </div>
                       <div class="declaration">
@@ -1407,9 +1440,153 @@ should be recorded.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research17RSDDistanceRecordV6uptime9timestamp8stepPath8location16previousLocation13totalDistance08relativeL4OnlyACSd_SdSSSo10CLLocationCALSgSdSgSbtcfc"></a>
+                    <a name="/s:8Research17RSDDistanceRecordV13totalDistanceSdSgvp"></a>
+                    <a name="//apple_ref/swift/Property/totalDistance" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research17RSDDistanceRecordV13totalDistanceSdSgvp">totalDistance</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sum of the relative distance measurements if the participant is supposed to be moving.
+Otherwise, this value will be <code>nil</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">totalDistance</span><span class="p">:</span> <span class="kt">Double</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research17RSDDistanceRecordV6courseSdSgvp"></a>
+                    <a name="//apple_ref/swift/Property/course" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research17RSDDistanceRecordV6courseSdSgvp">course</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the course of the location in degrees true North; <code>nil</code> if course is invalid.</p>
+
+<ul>
+<li>Range: 0.0 - 359.9 degrees, 0 being true North.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">course</span><span class="p">:</span> <span class="kt">Double</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research17RSDDistanceRecordV14bearingRadiansSdSgvp"></a>
+                    <a name="//apple_ref/swift/Property/bearingRadians" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research17RSDDistanceRecordV14bearingRadiansSdSgvp">bearingRadians</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the bearing to the location from the previous location in radians (clockwise from) true North.</p>
+
+<ul>
+<li>Range: [0.0..2π), 0 being true North.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">bearingRadians</span><span class="p">:</span> <span class="kt">Double</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research17RSDDistanceRecordV5speedSdSgvp"></a>
+                    <a name="//apple_ref/swift/Property/speed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research17RSDDistanceRecordV5speedSdSgvp">speed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the speed of the location in meters/second; <code>nil</code> if speed is invalid.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">speed</span><span class="p">:</span> <span class="kt">Double</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research17RSDDistanceRecordV5floorSiSgvp"></a>
+                    <a name="//apple_ref/swift/Property/floor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research17RSDDistanceRecordV5floorSiSgvp">floor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the floor of the building where the location was recorded; <code>nil</code> if floor is not available.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">floor</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research17RSDDistanceRecordV6uptime9timestamp8stepPath8location16previousLocation13totalDistance08relativeL4OnlyACSdSg_AKSSSo10CLLocationCAMSgAKSbtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(uptime:timestamp:stepPath:location:previousLocation:totalDistance:relativeDistanceOnly:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research17RSDDistanceRecordV6uptime9timestamp8stepPath8location16previousLocation13totalDistance08relativeL4OnlyACSd_SdSSSo10CLLocationCALSgSdSgSbtcfc">init(uptime:timestamp:stepPath:location:previousLocation:totalDistance:relativeDistanceOnly:)</a>
+                    <a class="token" href="#/s:8Research17RSDDistanceRecordV6uptime9timestamp8stepPath8location16previousLocation13totalDistance08relativeL4OnlyACSdSg_AKSSSo10CLLocationCAMSgAKSbtcfc">init(uptime:timestamp:stepPath:location:previousLocation:totalDistance:relativeDistanceOnly:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1424,7 +1601,7 @@ should be recorded.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uptime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">timestamp</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">stepPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">location</span><span class="p">:</span> <span class="kt">CLLocation</span><span class="p">,</span> <span class="nv">previousLocation</span><span class="p">:</span> <span class="kt">CLLocation</span><span class="p">?,</span> <span class="nv">totalDistance</span><span class="p">:</span> <span class="kt">Double</span><span class="p">?,</span> <span class="nv">relativeDistanceOnly</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">uptime</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">?,</span> <span class="nv">timestamp</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">?,</span> <span class="nv">stepPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">location</span><span class="p">:</span> <span class="kt">CLLocation</span><span class="p">,</span> <span class="nv">previousLocation</span><span class="p">:</span> <span class="kt">CLLocation</span><span class="p">?,</span> <span class="nv">totalDistance</span><span class="p">:</span> <span class="kt">Double</span><span class="p">?,</span> <span class="nv">relativeDistanceOnly</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

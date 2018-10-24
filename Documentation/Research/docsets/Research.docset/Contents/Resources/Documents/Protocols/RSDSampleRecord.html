@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoiceTableItem.html">RSDChoiceTableItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDClock.html">RSDClock</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
               </li>
               <li class="nav-group-task">
@@ -146,6 +149,9 @@
                 <a href="../Classes/RSDResourceTransformerObject.html">RSDResourceTransformerObject</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDResultSummaryStepObject.html">RSDResultSummaryStepObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a>
               </li>
               <li class="nav-group-task">
@@ -168,9 +174,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTaskObject.html">RSDTaskObject</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes.html#/c:@M@Research@objc(cs)RSDTaskPath">RSDTaskPath</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTaskRepository.html">RSDTaskRepository</a>
@@ -718,6 +721,9 @@
                 <a href="../Protocols/RSDResult.html">RSDResult</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDResultSummaryStep.html">RSDResultSummaryStep</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a>
               </li>
               <li class="nav-group-task">
@@ -1116,41 +1122,6 @@ the requirements of the research study.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research15RSDSampleRecordP6uptimeSdvp"></a>
-                    <a name="//apple_ref/swift/Property/uptime" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research15RSDSampleRecordP6uptimeSdvp">uptime</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The clock uptime. On Apple OS platforms, this is the time interval since the computer clock was rolled or started.</p>
-
-<p>This is included to allow the results from different files to be cross-referenced (for a given run of a task)
-using a shared time stamp.</p>
-<div class="aside aside-seealso">
-    <p class="aside-title">Seealso</p>
-    <code>ProcessInfo.processInfo.systemUptime</code>.
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">uptime</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:8Research15RSDSampleRecordP8stepPathSSvp"></a>
                     <a name="//apple_ref/swift/Property/stepPath" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research15RSDSampleRecordP8stepPathSSvp">stepPath</a>
@@ -1163,8 +1134,8 @@ using a shared time stamp.</p>
                       <div class="abstract">
                         <p>An identifier marking the current step.</p>
 
-<p>This is a path marker where the path components are separated by a &lsquo;/&rsquo; character. This path includes the task
-identifier and any sections or subtasks for the full path to the current step.</p>
+<p>This is a path marker where the path components are separated by a &lsquo;/&rsquo; character. This path includes
+the task identifier and any sections or subtasks for the full path to the current step.</p>
 
                       </div>
                       <div class="declaration">
@@ -1191,9 +1162,9 @@ identifier and any sections or subtasks for the full path to the current step.</
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The date timestamp when the measurement was taken (if available). This should be included for the first entry to
-mark the start of the recording. Other than to mark step changes, the <code>timestampDate</code> is optional and should only
-be included if required by the research study.</p>
+                        <p>The date timestamp when the measurement was taken (if available). This should be included for the
+first entry to mark the start of the recording. Other than to mark step changes, the <code>timestampDate</code>
+is optional and should only be included if required by the research study.</p>
 
                       </div>
                       <div class="declaration">
@@ -1220,8 +1191,16 @@ be included if required by the research study.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Relative time to when the recorder was started. This is included for compatibility to existing research studies
-that expect the timestamp to be a time interval since the start of the recording.</p>
+                        <p>A timestamp that is relative to the system uptime.</p>
+
+<p>This should be included for the first entry to mark the start of the recording. Other than to mark
+step changes, the <code>timestamp</code> is optional and should only be included if required by the research
+study.</p>
+
+<p>On Apple devices, this is the timestamp used to mark sensors that run in the foreground only such as
+video processing and motion sensors.</p>
+
+<p>-seealso: <code>ProcessInfo.processInfo.systemUptime</code></p>
 
                       </div>
                       <div class="declaration">
