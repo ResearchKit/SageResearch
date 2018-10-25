@@ -698,6 +698,34 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     // MARK: Permission handling
     
+    /// Show an alert to the user to let them know that authorization has failed.
+    open func handleAuthorizationFailed(status: RSDAuthorizationStatus, permission: RSDStandardPermission) {
+
+        let settingsMessage = (status == .restricted) ? permission.restrictedMessage : permission.deniedMessage
+        let message: String = {
+            guard let reason = permission.reason else { return settingsMessage }
+            return "\(reason)\n\n\(settingsMessage)"
+        }()
+        let title = Localization.localizedString("NOT_AUTHORIZED")
+        
+        var actions = [UIAlertAction]()
+        
+        if let url = URL(string:UIApplication.openSettingsURLString),
+            UIApplication.shared.canOpenURL(url) {
+            let settingsAction = UIAlertAction(title: Localization.localizedString("GOTO_SETTINGS"), style: .default) { (_) in
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            actions.append(settingsAction)
+        }
+        
+        let okAction = UIAlertAction(title: Localization.buttonOK(), style: .default) { (_) in
+            self.cancelTask(shouldSave: false)
+        }
+        actions.append(okAction)
+        
+        self.presentAlertWithActions(title: title, message: message, preferredStyle: .alert, actions: actions)
+    }
+    
     /// The authorization status for this view controller.
     open func checkAuthorizationStatus() -> (status: RSDAuthorizationStatus, permission: RSDStandardPermission?)  {
         guard let permissions = self.requiredPermissions(), permissions.count > 0 else {

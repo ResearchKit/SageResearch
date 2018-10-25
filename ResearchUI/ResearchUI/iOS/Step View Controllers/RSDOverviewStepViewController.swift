@@ -90,6 +90,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
         // to the participant why the permission is needed. The purpose of this check is to exit the task
         // early if the task cannot run and requires changing permission state.
         let (status, permission) = self.checkAuthorizationStatus()
+        
         _authStatus = status
         if status.isDenied(), let permission = permission {
             if (permission.permissionType == .motion) && (status == .previouslyDenied) {
@@ -115,15 +116,9 @@ open class RSDOverviewStepViewController: RSDStepViewController {
     
     /// Present an alert letting the user know that they do not have authorizations that are required to run
     /// this task.
-    open func handleAuthorizationFailed(status: RSDAuthorizationStatus, permission: RSDStandardPermission) {
+    override open func handleAuthorizationFailed(status: RSDAuthorizationStatus, permission: RSDStandardPermission) {
         _authStatus = status
-        
-        let settingsMessage = (status == .restricted) ? permission.restrictedMessage : permission.deniedMessage
-        let message: String = {
-            guard let reason = permission.reason else { return settingsMessage }
-            return "\(reason)\n\n\(settingsMessage)"
-        }()
-        self.presentAlertWithOk(title: "Not Authorized", message: message, actionHandler: nil)
+        super.handleAuthorizationFailed(status: status, permission: permission)
     }
     
 
