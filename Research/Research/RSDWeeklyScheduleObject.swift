@@ -47,7 +47,7 @@ import Foundation
 /// ```
 public struct RSDWeeklyScheduleObject : Codable, RSDSchedule {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case daysOfWeek, timeOfDayString = "timeOfDay"
     }
     
@@ -238,25 +238,7 @@ public class RSDWeeklyScheduleFormatter : Formatter {
 extension RSDWeeklyScheduleObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.daysOfWeek, .timeOfDayString]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .daysOfWeek:
-                if idx != 0 { return false }
-            case .timeOfDayString:
-                if idx != 1 { return false }
-            }
-        }
-        return keys.count == 2
+        return CodingKeys.allCases
     }
     
     static func _examples() -> [RSDWeeklyScheduleObject] {

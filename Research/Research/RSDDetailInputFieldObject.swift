@@ -35,7 +35,7 @@ import Foundation
 
 open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case transitionStyle
         case inputPrompt = "prompt"
         case inputPromptDetail = "promptDetail"
@@ -135,35 +135,9 @@ open class RSDDetailInputFieldObject : RSDFormUIStepObject, RSDDetailInputField 
     
     override class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = allCodingKeys()
+        let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.transitionStyle, .inputPrompt, .inputPromptDetail, .placeholder, .inputUIHint]
-        return codingKeys
-    }
-    
-    override class func validateAllKeysIncluded() -> Bool {
-        guard super.validateAllKeysIncluded() else { return false }
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .transitionStyle:
-                if idx != 0 { return false }
-            case .inputPrompt:
-                if idx != 1 { return false }
-            case .inputPromptDetail:
-                if idx != 2 { return false }
-            case .placeholder:
-                if idx != 3 { return false }
-            case .inputUIHint:
-                if idx != 4 { return false }
-                break;
-            }
-        }
-        return keys.count == 5
     }
     
     override class func examples() -> [[String : RSDJSONValue]] {

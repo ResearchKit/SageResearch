@@ -60,7 +60,7 @@ class RSDCatalogTests: XCTestCase {
                 for taskInfo in taskGroup.tasks {
                     if let taskTransformer = taskInfo.resourceTransformer {
                         let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
-                        taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: taskInfo.identifier, schemaInfo:taskInfo.schemaInfo) { (identifier, task, err)  in
+                        taskTransformer.fetchTask(with: taskInfo.identifier, schemaInfo:taskInfo.schemaInfo) { (task, err)  in
                             if let task = task {
                                 do {
                                     try task.validate()
@@ -68,7 +68,7 @@ class RSDCatalogTests: XCTestCase {
                                     XCTFail("Failed to validate task \(task.identifier): \(err)")
                                 }
                             } else {
-                                XCTFail("Failed to decode task \(identifier): \(String(describing: err))")
+                                XCTFail("Failed to decode task \(taskInfo.identifier): \(String(describing: err))")
                             }
                             expect.fulfill()
                         }

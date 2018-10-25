@@ -35,6 +35,10 @@ import Foundation
 
 /// `RSDAnswerResultObject` is a concrete implementation of a result that can be described using a single value.
 public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
+    
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case identifier, type, startDate, endDate, answerType, value, questionText
+    }
 
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
@@ -55,6 +59,9 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
     /// The answer for the result.
     public var value: Any?
     
+    /// The question text for the form step (if applicable).
+    public var questionText: String? = nil
+    
     /// Default initializer for this object.
     ///
     /// - parameters:
@@ -66,10 +73,6 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
         self.type = .answer
     }
     
-    private enum CodingKeys : String, CodingKey {
-        case identifier, type, startDate, endDate, answerType, value
-    }
-    
     /// Initialize from a `Decoder`.
     /// - parameter decoder: The decoder to use to decode this instance.
     /// - throws: `DecodingError`
@@ -79,6 +82,7 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
         self.type = try container.decode(RSDResultType.self, forKey: .type)
+        self.questionText = try container.decodeIfPresent(String.self, forKey: .questionText)
         
         let answerType = try container.decode(RSDAnswerResultType.self, forKey: .answerType)
         self.answerType = answerType
@@ -97,6 +101,7 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
         try container.encode(type, forKey: .type)
         try container.encode(startDate, forKey: .startDate)
         try container.encode(endDate, forKey: .endDate)
+        try container.encodeIfPresent(self.questionText, forKey: .questionText)
         
         try container.encode(answerType, forKey: .answerType)
         if let obj = value {
@@ -109,33 +114,7 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
 extension RSDAnswerResultObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .answerType, .value]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .type:
-                if idx != 1 { return false }
-            case .startDate:
-                if idx != 2 { return false }
-            case .endDate:
-                if idx != 3 { return false }
-            case .answerType:
-                if idx != 4 { return false }
-            case .value:
-                if idx != 5 { return false }
-            }
-        }
-        return keys.count == 6
+        return CodingKeys.allCases
     }
     
     static func answerResultExamples() -> [RSDAnswerResultObject] {

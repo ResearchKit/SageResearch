@@ -84,14 +84,13 @@ class FactoryTests: XCTestCase {
     }
     
     func testFetchTask() {
-
-        var taskInfo = RSDTaskInfoObject(with: "foo")
-        let schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 3)
-        taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: BundleWrapper.bundleIdentifier!, classType: nil)
-        let taskStep = RSDTaskInfoStepObject(with: taskInfo)
         
-        let expect = expectation(description: "Fetch Task \(taskInfo.identifier)")
-        taskStep.taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: taskInfo.identifier, schemaInfo: schemaInfo) { (_, task, err)  in
+        let taskIdentifier = "foo"
+        let schemaInfo = RSDSchemaInfoObject(identifier: "bar", revision: 3)
+        let resourceTransformer = RSDResourceTransformerObject(resourceName: "FactoryTest_TaskFoo", bundleIdentifier: BundleWrapper.bundleIdentifier!, classType: nil)
+        
+        let expect = expectation(description: "Fetch Task \(taskIdentifier)")
+        resourceTransformer.fetchTask(with: taskIdentifier, schemaInfo: schemaInfo) { (task, err)  in
             if let task = task {
                 
                 // Check identifiers

@@ -35,9 +35,9 @@ import Foundation
 
 /// `RSDSectionStepObject` is used to define a logical subgrouping of steps such as a section in a longer survey or an active
 /// step that includes an instruction step, countdown step, and activity step.
-public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, RSDCopyStep, Decodable {
+public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator, RSDStepValidator, RSDCopyStep, Decodable {
 
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, stepType = "type", steps, progressMarkers, asyncActions
     }
     
@@ -93,6 +93,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, RSDCopySte
         
         // Look in the decoder for the replacement step properties.
         var copySteps = self.steps
+        var copyAsyncActions = self.asyncActions
         if let decoder = decoder {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             if container.contains(.steps) {
@@ -108,12 +109,13 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, RSDCopySte
                     }
                 }
             }
+            copyAsyncActions = try self.decodeAsyncActions(from: decoder, initialActions: copyAsyncActions)
         }
         
         // Copy self with replacement steps.
         var copy = RSDSectionStepObject(identifier: identifier, steps: copySteps, type: self.stepType)
         copy.progressMarkers = self.progressMarkers
-        copy.asyncActions = self.asyncActions
+        copy.asyncActions = copyAsyncActions
         return copy
     }
 
@@ -157,22 +159,26 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, RSDCopySte
         let stepsContainer = try container.nestedUnkeyedContainer(forKey: .steps)
         self.steps = try decoder.factory.decodeSteps(from: stepsContainer)
         self.progressMarkers = try container.decodeIfPresent([String].self, forKey: .progressMarkers)
+        self.asyncActions = try self.decodeAsyncActions(from: decoder, initialActions: nil)
+    }
+    
+    private func decodeAsyncActions(from decoder: Decoder, initialActions: [RSDAsyncActionConfiguration]?) throws -> [RSDAsyncActionConfiguration]? {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        guard container.contains(.asyncActions) else { return initialActions }
         
-        // Decode the async actions
         let factory = decoder.factory
-        if container.contains(.asyncActions) {
-            var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
-            var decodedActions : [RSDAsyncActionConfiguration] = []
-            while !nestedContainer.isAtEnd {
-                let actionDecoder = try nestedContainer.superDecoder()
-                if let action = try factory.decodeAsyncActionConfiguration(from: actionDecoder) {
-                    decodedActions.append(action)
+        var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .asyncActions)
+        var decodedActions : [RSDAsyncActionConfiguration] = initialActions ?? []
+        while !nestedContainer.isAtEnd {
+            let actionDecoder = try nestedContainer.superDecoder()
+            if let action = try factory.decodeAsyncActionConfiguration(from: actionDecoder) {
+                if let idx = decodedActions.index(where: { $0.identifier == action.identifier}) {
+                    decodedActions.remove(at: idx)
                 }
+                decodedActions.append(action)
             }
-            self.asyncActions = decodedActions
-        } else {
-            self.asyncActions = nil
         }
+        return decodedActions
     }
     
     /// Required implementation for `RSDTask`. This method always returns `nil`.
@@ -189,31 +195,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDStepValidator, RSDCopySte
 extension RSDSectionStepObject : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .stepType, .steps, .progressMarkers, .asyncActions]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .stepType:
-                if idx != 1 { return false }
-            case .steps:
-                if idx != 2 { return false }
-            case .progressMarkers:
-                if idx != 3 { return false }
-            case .asyncActions:
-                if idx != 4 { return false }
-            }
-        }
-        return keys.count == 5
+        return CodingKeys.allCases
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

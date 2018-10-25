@@ -33,6 +33,10 @@
 
 import Foundation
 
+public protocol RSDFactoryTypeRepresentable : RawRepresentable, ExpressibleByStringLiteral {
+    var stringValue: String { get }
+}
+
 /// `RSDFactory` handles customization of decoding the elements of a task. Applications should
 /// override this factory to add custom elements required to run their task modules.
 open class RSDFactory {
@@ -118,6 +122,15 @@ open class RSDFactory {
         let task = try decoder.decode(RSDTaskObject.self, from: data)
         try task.validate()
         return task
+    }
+    
+    /// Decode a task from the decoder.
+    ///
+    /// - parameter decoder: The decoder to use to instantiate the object.
+    /// - returns: The decoded task.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeTask(from decoder: Decoder) throws -> RSDTask {
+        return try RSDTaskObject(from: decoder)
     }
     
     
@@ -251,9 +264,16 @@ open class RSDFactory {
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     open func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
-        switch (type) {
-        case .instruction, .completion, .active, .countdown:
+        
+        guard let standardType = RSDStepType.StandardType(rawValue: type.rawValue)
+            else {
+                return try RSDGenericStepObject(from: decoder)
+        }
+        switch (standardType) {
+        case .instruction, .active, .countdown:
             return try RSDActiveUIStepObject(from: decoder)
+        case .completion:
+            return try RSDResultSummaryStepObject(from: decoder)
         case .overview:
             return try RSDOverviewStepObject(from: decoder)
         case .imagePicker:
@@ -267,8 +287,8 @@ open class RSDFactory {
             return RSDTaskInfoStepObject(with: taskInfo)
         case .transform:
             return try self.decodeTransformableStep(from: decoder)
-        default:
-            return try RSDGenericStepObject(from: decoder)
+        case .subtask:
+            return try RSDSubtaskStepObject(from: decoder)
         }
     }
     
@@ -639,6 +659,8 @@ open class RSDFactory {
         return rsd_ISO8601TimestampFormatter
     }
     
+    open var nonConformingCodingStrategy: (positiveInfinity: String, negativeInfinity: String, nan: String)
+        = ("Infinity", "-Infinity", "NaN")
 
     // MARK: Decoder
 
@@ -654,6 +676,9 @@ open class RSDFactory {
         decoder.userInfo[.factory] = self
         decoder.userInfo[.bundle] = bundle
         decoder.userInfo[.codingInfo] = RSDCodingInfo()
+        decoder.nonConformingFloatDecodingStrategy = .convertFromString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
+                                                                        negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
+                                                                        nan: nonConformingCodingStrategy.nan)
         return decoder
     }
     
@@ -746,6 +771,9 @@ open class RSDFactory {
         encoder.outputFormatting = .prettyPrinted
         encoder.userInfo[.factory] = self
         encoder.userInfo[.codingInfo] = RSDCodingInfo()
+        encoder.nonConformingFloatEncodingStrategy = .convertToString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
+                                                                        negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
+                                                                        nan: nonConformingCodingStrategy.nan)
         return encoder
     }
     
@@ -763,6 +791,7 @@ open class RSDFactory {
     open func encodeString(from date: Date, codingPath: [CodingKey]) -> String {
         return timestampFormatter.string(from: date)
     }
+    
 }
 
 /// Extension of CodingUserInfoKey to add keys used by the Codable objects in this framework.

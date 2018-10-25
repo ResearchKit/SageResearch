@@ -52,7 +52,7 @@ public struct RSDResultObject : RSDNavigationResult, Codable {
     /// navigation handling.
     public var skipToIdentifier: String?
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, type, startDate, endDate, skipToIdentifier
     }
     
@@ -70,31 +70,7 @@ public struct RSDResultObject : RSDNavigationResult, Codable {
 extension RSDResultObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .skipToIdentifier]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .type:
-                if idx != 1 { return false }
-            case .startDate:
-                if idx != 2 { return false }
-            case .endDate:
-                if idx != 3 { return false }
-            case .skipToIdentifier:
-                if idx != 4 { return false }
-            }
-        }
-        return keys.count == 5
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {

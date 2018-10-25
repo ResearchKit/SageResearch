@@ -2,7 +2,7 @@
 //  RSDActiveUIStepObject.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -38,7 +38,7 @@ import Foundation
 /// the `RSDActiveUIStep` protocol to allow for spoken instruction.
 open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case duration, commands, requiresBackgroundAudio, spokenInstructions
     }
 
@@ -148,22 +148,9 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     
     // MARK: Coding (spoken instructions requires special handling and Codable auto-synthesis does not work with subclassing)
     
-    /// Default initializer.
-    /// - parameters:
-    ///     - identifier: A short string that uniquely identifies the step.
-    ///     - type: The type of the step. Default = `RSDStepType.active`
-    public required init(identifier: String, type: RSDStepType? = nil) {
-        super.init(identifier: identifier, type: type ?? .active)
-    }
-    
-    /// Initializer for setting the immutable next step identifier.
-    ///
-    /// - parameters:
-    ///     - identifier: A short string that uniquely identifies the step.
-    ///     - nextStepIdentifier: The next step to jump to. This is used where direct navigation is required.
-    ///     - type: The type of the step. Default = `RSDStepType.instruction`
-    public override init(identifier: String, nextStepIdentifier: String?, type: RSDStepType? = nil) {
-        super.init(identifier: identifier, nextStepIdentifier: nextStepIdentifier, type: type)
+    /// Default type is `.active`.
+    open override class func defaultType() -> RSDStepType {
+        return .active
     }
     
     /// Override to set the properties of the subclass.
@@ -179,7 +166,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         subclassCopy.spokenInstructions = self.spokenInstructions
     }
     
-    /// Initialize from a `Decoder`.
+    /// Override to set the properties on this instance.
     ///
     /// - example:
     ///
@@ -203,17 +190,17 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     ///
     ///     ```
     ///
-    /// - parameter decoder: The decoder to use to decode this instance.
-    /// - throws: `DecodingError`
-    public required init(from decoder: Decoder) throws {
+    open override func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
+        try super.decode(from: decoder, for: deviceType)
+    
         let container = try decoder.container(keyedBy: CodingKeys.self)
         var stepDuration: TimeInterval = 0
         if let duration = try container.decodeIfPresent(Double.self, forKey: .duration) {
             self.duration = duration
             stepDuration = duration
         }
-        self.requiresBackgroundAudio = try container.decodeIfPresent(Bool.self, forKey: .requiresBackgroundAudio) ?? false
-        self.commands = try container.decodeIfPresent(RSDActiveUIStepCommand.self, forKey: .commands) ?? .defaultCommands
+        self.requiresBackgroundAudio = try container.decodeIfPresent(Bool.self, forKey: .requiresBackgroundAudio) ?? self.requiresBackgroundAudio
+        self.commands = try container.decodeIfPresent(RSDActiveUIStepCommand.self, forKey: .commands) ?? self.commands
         if let dictionary = try container.decodeIfPresent([String : String].self, forKey: .spokenInstructions) {
             
             // Map the json deserialized dictionary into the `spokenInstructions` dictionary.
@@ -251,40 +238,15 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
                         
             self.spokenInstructions = instructions
         }
-        
-        try super.init(from: decoder)
     }
     
     // Overrides must be defined in the base implementation
     
     override class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = allCodingKeys()
+        let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.duration, .commands, .requiresBackgroundAudio, .spokenInstructions]
-        return codingKeys
-    }
-    
-    override class func validateAllKeysIncluded() -> Bool {
-        guard super.validateAllKeysIncluded() else { return false }
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .duration:
-                if idx != 0 { return false }
-            case .commands:
-                if idx != 1 { return false }
-            case .requiresBackgroundAudio:
-                if idx != 2 { return false }
-            case .spokenInstructions:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
     }
 
     override class func examples() -> [[String : RSDJSONValue]] {

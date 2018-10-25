@@ -31,8 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
-
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// `RSDPickerDataSource` includes information that can be used to build a picker UI element.
 public protocol RSDPickerDataSource {

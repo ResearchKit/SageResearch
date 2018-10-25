@@ -100,10 +100,11 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
     open func answerText(for answer: Any?) -> String? {
         if let text = pickerSource?.textAnswer(from: answer) ?? formatter?.string(for: answer) {
             return text
-        } else if let anyAnswer = answer {
+        } else if let anyAnswer = answer, !(anyAnswer is NSNull) {
             return String(describing: anyAnswer)
+        } else {
+            return nil
         }
-        return nil
     }
     
     /// Set the new answer value. This will throw an error if the value isn't valid. Otherwise, it will

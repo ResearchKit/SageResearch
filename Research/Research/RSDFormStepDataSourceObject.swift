@@ -34,20 +34,15 @@
 import Foundation
 
 /// `RSDFormStepDataSourceObject` is a concrete implementation of the `RSDTableDataSource` protocol that is
-/// designed to be used to supply the data source for a form step.
-open class RSDFormStepDataSourceObject : RSDTableDataSource {
+/// designed to be used to supply the data source for a form step. This class inherits from `RSDStepViewModel`
+/// to allow the table view controller to use this class as its `stepViewModel`.
+open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
     
     /// The delegate associated with this data source.
     open weak var delegate: RSDTableDataSourceDelegate?
 
-    /// The step associated with this data source.
-    public let step: RSDStep
-
     /// The UI hints supported by this data source.
     public let supportedHints: Set<RSDFormUIHint>
-
-    /// The current task path.
-    public private(set) var taskPath: RSDTaskPath!
 
     /// The table sections for this data source.
     open private(set) var sections: [RSDTableSection] = []
@@ -61,19 +56,15 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     /// Initialize a new `RSDFormStepDataSourceObject`.
     /// - parameters:
     ///     - step:             The RSDStep for this data source.
-    ///     - taskPath:         The current task path for this data source.
+    ///     - taskViewModel:         The current task path for this data source.
     ///     - supportedHints:   The supported UI hints for this data source.
-    public init(step: RSDStep, taskPath: RSDTaskPath, supportedHints: Set<RSDFormUIHint>? = nil) {
-        
-        self.step = step
-        self.taskPath = taskPath
+    public init(step: RSDStep, parent: RSDPathComponent?, supportedHints: Set<RSDFormUIHint>? = nil) {
         self.supportedHints = supportedHints ?? RSDFormUIHint.allStandardHints
+        super.init(step: step, parent: parent)
         
         // Set the initial result if available.
-        if let result = initialResult {
-            self.initialResult = result
-        }
-        else if let previousResult = taskPath.previousResults?.rsd_last(where: { $0.identifier == step.identifier }) {
+        if let taskViewModel = parent as? RSDHistoryPathComponent,
+            let previousResult = taskViewModel.previousResult(for: step) {
             if let collectionResult = (previousResult as? RSDCollectionResult) {
                 self.initialResult = collectionResult
             } else {
@@ -86,18 +77,24 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         }
         
         // Populate the sections and initial results.
-        let (sections, groups) = self.bulidSections()
+        let (sections, groups) = self.buildSections()
         self.sections = sections
         self.itemGroups = groups
         populateInitialResults()
     }
     
-    /// The collection result associated with this data source. The default implementation is to search the `taskPath`
+    /// Specifies whether the next button should be enabled based on the validity of the answers for
+    /// all form items.
+    override open var isForwardEnabled: Bool {
+        return super.isForwardEnabled && allAnswersValid()
+    }
+    
+    /// The collection result associated with this data source. The default implementation is to search the `taskViewModel`
     /// for a matching result and if that fails to return a new instance created using `instantiateCollectionResult()`.
     ///
     /// - returns: The appropriate collection result.
     open func collectionResult() -> RSDCollectionResult {
-        if let collectionResult = taskPath.result.stepHistory.rsd_last(where: { $0.identifier == step.identifier }) as? RSDCollectionResult {
+        if let collectionResult = taskResult.stepHistory.last(where: { $0.identifier == step.identifier }) as? RSDCollectionResult {
             return collectionResult
         }
         else {
@@ -135,7 +132,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     
     func isMatching(_ itemGroup: RSDTableItemGroup, at indexPath: IndexPath) -> Bool {
         return itemGroup.sectionIndex == indexPath.section &&
-            (itemGroup.beginningRowIndex ... itemGroup.beginningRowIndex + (itemGroup.items.count - 1) ~= indexPath.row)
+            (itemGroup.beginningRowIndex ... itemGroup.beginningRowIndex + (itemGroup.items.count - 1) ~= indexPath.item)
     }
     
     /// Retrieve the 'RSDTableItemGroup' for a specific IndexPath.
@@ -155,11 +152,12 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
             return
         }
         
+        let newAnswer = (answer is NSNull) ? nil : answer
         if let tableItem = self.tableItem(at: indexPath) as? RSDTextInputTableItem {
             // If this is a text input table item then store the answer on the table item instead of on the group.
-            try tableItem.setAnswer(answer)
+            try tableItem.setAnswer(newAnswer)
         } else {
-            try itemGroup.setAnswer(answer)
+            try itemGroup.setAnswer(newAnswer)
         }
         _answerDidChange(for: itemGroup, at: indexPath)
     }
@@ -191,7 +189,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         } else {
             stepResult.removeInputResult(with: itemGroup.identifier)
         }
-        self.taskPath.appendStepHistory(with: stepResult)
+        self.taskResult.appendStepHistory(with: stepResult)
         
         // inform delegate that answers have changed
         delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
@@ -210,7 +208,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
     
     /// Convenience method for building the sections of the table from the input fields.
     /// - returns: The sections for the table.
-    open func bulidSections() -> ([RSDTableSection], [RSDTableItemGroup]) {
+    open func buildSections() -> ([RSDTableSection], [RSDTableItemGroup]) {
         guard let uiStep = step as? RSDUIStep else { return ([], []) }
         
         var sectionBuilders: [RSDTableSectionBuilder] = []
@@ -356,7 +354,7 @@ open class RSDFormStepDataSourceObject : RSDTableDataSource {
         }
         
         if hasChanges {
-            self.taskPath.appendStepHistory(with: stepResult)
+            self.taskResult.appendStepHistory(with: stepResult)
         }
     }
 }

@@ -70,21 +70,6 @@ public protocol RSDStep {
     func validate() throws
 }
 
-/// A light-weight protocol for copying objects with a new identifier.
-public protocol RSDCopyWithIdentifier {
-    
-    /// Copy the step to a new instance with the given identifier, but otherwise, equal.
-    /// - parameter identifier: The new identifier.
-    func copy(with identifier: String) -> Self
-}
-
-/// A light-weight protocol for replacing the mutable properties on a class with values from a decoder.
-public protocol RSDDecodableReplacement : class {
-    
-    /// Decode from the given decoder, replacing mutable properties on self with those from the decoder.
-    func decode(from decoder: Decoder) throws
-}
-
 /// `RSDCopyStep` is a step that supports creating a copy of itself that has specified properties mutated
 /// to return a new instance and/or includes mutated properties.
 public protocol RSDCopyStep : RSDStep, RSDCopyWithIdentifier {

@@ -228,9 +228,6 @@
                 <a href="../Protocols.html#/s:10ResearchUI34RSDNavigationHeaderLayoutConstantsP">RSDNavigationHeaderLayoutConstants</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDOptionalStepViewControllerDelegate.html">RSDOptionalStepViewControllerDelegate</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Protocols/RSDOptionalTaskViewControllerDelegate.html">RSDOptionalTaskViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -253,12 +250,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols.html#/s:10ResearchUI34RSDStepTextViewCellLayoutConstantsP">RSDStepTextViewCellLayoutConstants</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Protocols.html#/s:10ResearchUI29RSDStepViewControllerDelegateP">RSDStepViewControllerDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Protocols/RSDStepViewControllerProtocol.html">RSDStepViewControllerProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDStepViewControllerVendor.html">RSDStepViewControllerVendor</a>
@@ -316,9 +307,9 @@ implemented. As such, these methods cannot take Swift protocols as their paramen
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:viewControllerFor:"></a>
-                    <a name="//apple_ref/swift/Method/taskViewController(_:viewControllerFor:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:viewControllerFor:">taskViewController(_:viewControllerFor:)</a>
+                    <a name="/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:viewControllerForStep:"></a>
+                    <a name="//apple_ref/swift/Method/taskViewController(_:viewControllerForStep:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:viewControllerForStep:">taskViewController(_:viewControllerForStep:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -343,7 +334,7 @@ non-nil.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">viewControllerFor</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span><span class="p">?</span></code></pre>
+<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">viewControllerForStep</span> <span class="nv">stepModel</span><span class="p">:</span> <span class="kt">RSDStepViewModel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -366,13 +357,12 @@ non-nil.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>step</em>
+                                <em>stepModel</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The step for which a view controller is requested. This will be an object that conforms to
-    the <code>RSDStep</code> protocol.</p>
+                                  <p>The step and parent path component for this step.</p>
                                 </div>
                               </td>
                             </tr>
@@ -456,104 +446,6 @@ while the initial task is being fetched.</p>
                       <div>
                         <h4>Return Value</h4>
                         <p>A <code>Bool</code> value indicating whether or not the task controller should show the task info step.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:canSaveTaskProgress:"></a>
-                    <a name="//apple_ref/swift/Method/taskViewController(_:canSaveTaskProgress:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:canSaveTaskProgress:">taskViewController(_:canSaveTaskProgress:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Asks the delegate whether or not the task progress can be saved and the task dismissed.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">canSaveTaskProgress</span> <span class="nv">for</span><span class="p">:</span> <span class="kt">RSDTaskPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>taskViewController</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The task view controller.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p><code>true</code> if the task progress can be saved.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:saveTaskProgress:"></a>
-                    <a name="//apple_ref/swift/Method/taskViewController(_:saveTaskProgress:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(pl)RSDOptionalTaskViewControllerDelegate(im)taskViewController:saveTaskProgress:">taskViewController(_:saveTaskProgress:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Save the task progress for the given task controller.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">optional</span> <span class="kd">func</span> <span class="nf">taskViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">taskViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">saveTaskProgress</span> <span class="nv">for</span><span class="p">:</span> <span class="kt">RSDTaskPath</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>taskViewController</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The task view controller.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>

@@ -96,7 +96,7 @@ fileprivate let defaultSize: CGFloat = 122
         
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.timingFunction = timing
-        animation.fillMode = kCAFillModeBoth
+        animation.fillMode = CAMediaTimingFillMode.both
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = 0.3
@@ -135,7 +135,7 @@ fileprivate let defaultSize: CGFloat = 122
         }
         self.layer.cornerRadius = _cornerRadius ?? defaultCornerRadius
 
-        self.accessibilityTraits |= UIAccessibilityTraitImage
+        self.accessibilityTraits.formUnion(.image)
         self.isAccessibilityElement = true
     }
     
@@ -171,8 +171,8 @@ fileprivate let defaultSize: CGFloat = 122
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.lineWidth = path.lineWidth
-        shapeLayer.lineCap = kCALineCapRound
-        shapeLayer.lineJoin = kCALineJoinRound
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
         shapeLayer.frame = self.layer.bounds
         shapeLayer.strokeColor = checkmarkColor.cgColor
         shapeLayer.backgroundColor = UIColor.clear.cgColor
@@ -220,7 +220,7 @@ fileprivate let defaultSize: CGFloat = 122
         }
     }
     
-    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.buttonView = RSDCheckboxButtonView(frame: .zero)
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
@@ -307,7 +307,7 @@ fileprivate let defaultSize: CGFloat = 122
         buttonView.isSelected = self.isSelected
     }
     
-    override public func setTitle(_ title: String?, for state: UIControlState) {
+    override public func setTitle(_ title: String?, for state: UIControl.State) {
         self.setTitleColor(UIColor.clear, for: .normal)
         super.setTitle(title, for: state)
         buttonView.label?.text = self.currentTitle
@@ -375,7 +375,7 @@ fileprivate class RSDCheckboxButtonView : UIView {
         checkboxContainer.translatesAutoresizingMaskIntoConstraints = false
         checkboxContainer.rsd_makeWidth(.equal, checkboxHeight)
         checkboxContainer.rsd_makeHeight(.equal, checkboxHeight)
-        checkboxContainer.rsd_alignToSuperview([.leading, .centerY], padding: 0)
+        checkboxContainer.rsd_alignToSuperview([.leading, .top], padding: 0)
         
         viewUnchecked = UncheckedView(frame: self.bounds)
         checkboxContainer.addSubview(viewUnchecked)
@@ -394,12 +394,20 @@ fileprivate class RSDCheckboxButtonView : UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
-        label.rsd_alignToSuperview([.trailing, .bottom, .top], padding: 10, priority: .required)
+        label.rsd_alignToSuperview([.trailing], padding: 10, priority: .required)
         label.rsd_alignRightOf(view: checkboxContainer, padding: 10, priority: .required)
         label.font = UIFont.rsd_checkboxButtonTitle
         label.textColor = UIColor.appTextDark
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.clipsToBounds = false
+        
+        // Align label to allow word wrapping, with centered text if single line.
+        label.rsd_align([.centerY], .equal, to: checkboxContainer, [.centerY], padding: 0, priority: .defaultHigh)
+        label.rsd_align([.top], .greaterThanOrEqual, to: checkboxContainer, [.top], padding: 0, priority: .required)
+        label.rsd_align([.bottom], .lessThanOrEqual, to: self, [.bottom], padding: 0, priority: .required)
+        checkboxContainer.rsd_alignToSuperview([.bottom], padding: 0, priority: .defaultHigh)
+
         
         // hide the title label
         checkboxContainer.isUserInteractionEnabled = false
@@ -468,7 +476,7 @@ fileprivate class UncheckedView : UIView {
         shadowLayer.shadowOffset = CGSize(width: 0.0, height: 0.0)
         shadowLayer.shadowOpacity = 0.5
         shadowLayer.shadowRadius = shadowSize
-        shadowLayer.fillRule = kCAFillRuleEvenOdd
+        shadowLayer.fillRule = CAShapeLayerFillRule.evenOdd
         
         // define shadow path
         let shadowPath = CGMutablePath()

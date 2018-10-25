@@ -50,23 +50,12 @@ class RSDTestTests: XCTestCase {
     /// Test decoding all the task info objects.
     func testDecodeJSON() {
 
-        let taskTransformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
-        
-        let expect = expectation(description: "Fetch Task Foo")
-        taskTransformer.fetchTask(with: RSDFactory(), taskIdentifier: "TaskFoo", schemaInfo:nil) { (identifier, task, err)  in
-            if let task = task {
-                do {
-                    try task.validate()
-                } catch let err {
-                    XCTFail("Failed to validate task \(task.identifier): \(err)")
-                }
-            } else {
-                XCTFail("Failed to decode task \(identifier): \(String(describing: err))")
-            }
-            expect.fulfill()
-        }
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
+        do {
+            let taskTransformer = RSDResourceTransformerObject(resourceName: "TaskFoo")
+            let task = try RSDFactory.shared.decodeTask(with: taskTransformer)
+            try task.validate()
+        } catch let err {
+            XCTFail("Failed to decode or validate task: \(err)")
         }
     }
 }

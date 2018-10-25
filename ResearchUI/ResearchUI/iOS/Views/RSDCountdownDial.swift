@@ -66,7 +66,7 @@ open class RSDProgressIndicator: UIView {
         // We want to animate the strokeEnd property of the circleLayer
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.duration = animationDuration
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         
         // Animate from previous position to new position
         let position = max(min(newValue, 1.0), 0.0)
@@ -99,7 +99,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     /// Should the element display with a light style of progress bar and label for use on a dark
     /// background, or with a dark style of progress bar for use on a light background?
     @IBInspectable
-    open var usesLightStyle: Bool = false {
+    public var usesLightStyle: Bool = false {
         didSet {
             updateColorStyle()
         }
@@ -158,7 +158,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     private var dialLayer: CAShapeLayer!
     private var _rect: CGRect?
     
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         
         let bounds = self.layer.bounds

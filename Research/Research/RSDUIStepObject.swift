@@ -33,6 +33,10 @@
 
 import Foundation
 
+extension RSDStepType {
+    fileprivate static let nullStepType: RSDStepType = "null"
+}
+
 /// `RSDUIStepObject` is the base class implementation for all UI display steps defined in this framework.
 /// Depending upon the available real-estate, more than one ui step may be displayed at a time. For
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
@@ -40,7 +44,7 @@ import Foundation
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
 open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement {
 
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier
         case stepType = "type"
         case title
@@ -59,9 +63,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// of a step history.
     public let identifier: String
     
-    /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to customize
-    /// the UI.
-    public let stepType: RSDStepType
+    /// The type of the step. This is used to decode the step using a `RSDFactory`. It can also be used to
+    /// customize the UI.
+    public private(set) var stepType: RSDStepType
     
     /// The primary text to display for the step in a localized string.
     open var title: String?
@@ -116,15 +120,29 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// The navigation cohort rules to apply *after* displaying the step.
     public var afterCohortRules: [RSDCohortNavigationRule]?
     
+    /// The default step type.
+    open class func defaultType() -> RSDStepType {
+        return .instruction
+    }
+    
+    private func commonInit() {
+        // Use of the `.nullStepType` as a placeholder is b/c of a limitation where type(of: self) cannot
+        // be accessed prior to initializing super and the stepType is required.
+        if self.stepType == .nullStepType {
+            self.stepType = type(of: self).defaultType()
+        }
+    }
+    
     /// Default initializer.
     /// - parameters:
     ///     - identifier: A short string that uniquely identifies the step.
     ///     - type: The type of the step. Default = `RSDStepType.instruction`
     public required init(identifier: String, type: RSDStepType? = nil) {
         self.identifier = identifier
-        self.stepType = type ?? .instruction
+        self.stepType = type ?? .nullStepType
         self._initCompleted = false
         super.init()
+        self.commonInit()
         self._initCompleted = true
     }
     
@@ -136,10 +154,11 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     ///     - type: The type of the step. Default = `RSDStepType.instruction`
     public init(identifier: String, nextStepIdentifier: String?, type: RSDStepType? = nil) {
         self.identifier = identifier
-        self.stepType = type ?? .instruction
+        self.stepType = type ?? .nullStepType
         self.nextStepIdentifier = nextStepIdentifier
         self._initCompleted = false
         super.init()
+        self.commonInit()
         self._initCompleted = true
     }
     
@@ -158,6 +177,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         self.copyInto(copy)
         if let decoder = decoder {
             try copy.decode(from: decoder, for: nil)
+            try copy.decodeActions(from: decoder)
         }
         return copy
     }
@@ -215,12 +235,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     
     // MARK: Table source
     
-    open var hasImageChoices: Bool {
-        return false
-    }
-    
-    open func instantiateDataSource(with taskPath: RSDTaskPath, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
-        return RSDFormStepDataSourceObject(step: self, taskPath: taskPath, supportedHints: supportedHints)
+    open func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        return RSDFormStepDataSourceObject(step: self, parent: parent, supportedHints: supportedHints)
     }
     
     // MARK: Decodable
@@ -293,6 +309,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         self._initCompleted = false
         try super.init(from: decoder)
         try decode(from: decoder, for: nil)
+        self.commonInit()
         self._initCompleted = true
     }
     private var _initCompleted: Bool
@@ -345,48 +362,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     
     override class func codingKeys() -> [CodingKey] {
         var keys = super.codingKeys()
-        let thisKeys: [CodingKey] = allCodingKeys()
+        let thisKeys: [CodingKey] = CodingKeys.allCases
         keys.append(contentsOf: thisKeys)
         return keys
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .stepType, .title, .text, .detail, .footnote, .nextStepIdentifier, .viewTheme, .colorTheme, .imageTheme, .beforeCohortRules, .afterCohortRules]
-        return codingKeys
-    }
-    
-    override class func validateAllKeysIncluded() -> Bool {
-        guard super.validateAllKeysIncluded() else { return false }
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .stepType:
-                if idx != 1 { return false }
-            case .title:
-                if idx != 2 { return false }
-            case .text:
-                if idx != 3 { return false }
-            case .detail:
-                if idx != 4 { return false }
-            case .footnote:
-                if idx != 5 { return false }
-            case .nextStepIdentifier:
-                if idx != 6 { return false }
-            case .viewTheme:
-                if idx != 7 { return false }
-            case .colorTheme:
-                if idx != 8 { return false }
-            case .imageTheme:
-                if idx != 9 { return false }
-            case .beforeCohortRules:
-                if idx != 10 { return false }
-            case .afterCohortRules:
-                if idx != 11 { return false }
-            }
-        }
-        return keys.count == 12
     }
     
     class func examples() -> [[String : RSDJSONValue]] {

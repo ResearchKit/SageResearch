@@ -31,8 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
 import UIKit
+#endif
 
 /// The `RSDSampleRecord` defines the properties that are included with all JSON logging samples.
 /// By defining a protocol, the logger can include markers for step transitions and the records
@@ -40,35 +43,50 @@ import UIKit
 /// the requirements of the research study.
 public protocol RSDSampleRecord : Codable {
     
-    /// The clock uptime. On Apple OS platforms, this is the time interval since the computer clock was rolled or started.
-    ///
-    /// This is included to allow the results from different files to be cross-referenced (for a given run of a task)
-    /// using a shared time stamp.
-    ///
-    /// - seealso: `ProcessInfo.processInfo.systemUptime`.
-    var uptime: TimeInterval { get }
-    
     /// An identifier marking the current step.
     ///
-    /// This is a path marker where the path components are separated by a '/' character. This path includes the task
-    /// identifier and any sections or subtasks for the full path to the current step.
+    /// This is a path marker where the path components are separated by a '/' character. This path includes
+    /// the task identifier and any sections or subtasks for the full path to the current step.
     var stepPath: String { get }
     
-    /// The date timestamp when the measurement was taken (if available). This should be included for the first entry to
-    /// mark the start of the recording. Other than to mark step changes, the `timestampDate` is optional and should only
-    /// be included if required by the research study.
+    /// The date timestamp when the measurement was taken (if available). This should be included for the
+    /// first entry to mark the start of the recording. Other than to mark step changes, the `timestampDate`
+    /// is optional and should only be included if required by the research study.
     var timestampDate: Date? { get }
     
-    /// Relative time to when the recorder was started. This is included for compatibility to existing research studies
-    /// that expect the timestamp to be a time interval since the start of the recording.
+    /// A timestamp that is relative to the system uptime.
+    ///
+    /// This should be included for the first entry to mark the start of the recording. Other than to mark
+    /// step changes, the `timestamp` is optional and should only be included if required by the research
+    /// study.
+    ///
+    /// On Apple devices, this is the timestamp used to mark sensors that run in the foreground only such as
+    /// video processing and motion sensors.
+    ///
+    /// -seealso: `ProcessInfo.processInfo.systemUptime`
     var timestamp: TimeInterval? { get }
+}
+
+extension RSDSampleRecord {
+    
+    /// All sample records should include either `timestampDate` or `timestamp`.
+    func validate() throws {
+        guard (timestampDate != nil) || (timestamp != nil) else {
+            let message = "Expected either timestamp or timestampDate to be non-nil"
+            assertionFailure(message)
+            throw RSDValidationError.unexpectedNullObject(message)
+        }
+    }
 }
 
 /// `RSDRecordMarker` is a concrete implementation of `RSDSampleRecord` that can be used to mark the step transitions
 /// for a recording.
 public struct RSDRecordMarker : RSDSampleRecord {
     
-    /// The clock uptime.
+    /// The clock uptime. On Apple OS platforms, this is the time interval since the device was rebooted or
+    /// the clock rolled.
+    ///
+    /// - seealso: `RSDClock.uptime()`
     public let uptime: TimeInterval
     
     /// An identifier marking the current step.
@@ -77,7 +95,9 @@ public struct RSDRecordMarker : RSDSampleRecord {
     /// The date timestamp when the measurement was taken (if available).
     public let timestampDate: Date?
     
-    /// Relative time to when the recorder was started.
+    /// The relative timestamp used by this recorder.
+    ///
+    /// -seealso: `ProcessInfo.processInfo.systemUptime`
     public let timestamp: TimeInterval?
     
     /// Default initializer.
@@ -105,7 +125,7 @@ public struct RSDRecordMarker : RSDSampleRecord {
     ///            "timestamp": 0
     ///        }
     ///     ```
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case uptime, stepPath, timestampDate, timestamp
     }
 }
@@ -118,7 +138,7 @@ public struct RSDRecordMarker : RSDSampleRecord {
 /// Using this base implementation allows for a consistent logging of shared sample data key words for the step path
 /// and the uptime. It implements the logic for writing to a file, tracking the uptime and start date, and provides
 /// a consistent implementation for error handling.
-open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
+open class RSDSampleRecorder : NSObject, RSDAsyncAction {
 
     /// Errors returned in the completion handler during `start()` when starting fails for timing reasons.
     public enum RecorderError : Error {
@@ -133,25 +153,25 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// Default initializer.
     /// - parameters:
     ///     - configuration: The configuration used to set up the controller.
-    ///     - taskPath:
+    ///     - taskViewModel:
     ///     - outputDirectory: File URL for the directory in which to store generated data files.
-    public init(configuration: RSDAsyncActionConfiguration, taskPath: RSDTaskPath, outputDirectory: URL) {
+    public init(configuration: RSDAsyncActionConfiguration, taskViewModel: RSDPathComponent, outputDirectory: URL) {
         self.configuration = configuration
-        self.taskPath = taskPath
+        self.taskViewModel = taskViewModel
         self.outputDirectory = outputDirectory
         self.collectionResult = RSDCollectionResultObject(identifier: configuration.identifier)
     }
     
-    // Mark: `RSDAsyncActionController` implementation
+    // Mark: `RSDAsyncAction` implementation
     
     /// Delegate callback for handling action completed or failed.
-    open weak var delegate: RSDAsyncActionControllerDelegate?
+    open weak var delegate: RSDAsyncActionDelegate?
     
     /// The configuration used to set up the controller.
     public let configuration: RSDAsyncActionConfiguration
     
     /// The associated task path to which the result should be attached.
-    public let taskPath: RSDTaskPath
+    public let taskViewModel: RSDPathComponent
     
     /// The status of the recorder.
     ///
@@ -218,13 +238,12 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
         
         // Set paused to false and set the start uptime and timestamp
         isPaused = false
-        startUptime = ProcessInfo.processInfo.systemUptime
-        startDate = Date()
+        clock = RSDClock()
         _syncUpdateStatus(.starting)
         
         self.loggerQueue.async {
             do {
-                try self._startLogger(at: self.taskPath)
+                try self._startLogger(at: self.taskViewModel)
                 DispatchQueue.main.async {
                     guard self.status < RSDAsyncActionStatus.finished else {
                         completion?(self, nil, RecorderError.finished)
@@ -295,25 +314,41 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// Let the controller know that the task has moved to the given step. This method is called by the task
     /// controller when the task transitions to a new step. The default implementation will update the
     /// `currentStepIdentifier` and `currentStepPath`, then it will add a marker to the logging files.
-    open func moveTo(step: RSDStep, taskPath: RSDTaskPath) {
-        _writeMarkers(step: step, taskPath: taskPath)
+    open func moveTo(step: RSDStep, taskViewModel: RSDPathComponent) {
+        _writeMarkers(step: step, taskViewModel: taskViewModel)
     }
     
     #if os(watchOS)
-    
     /// **Available** for watchOS.
     ///
     /// This method should be called on the main thread with the completion handler also called on the main
     /// thread. The base class implementation will immediately call the completion handler.
     ///
     /// - remark: Override to implement custom permission handling.
-    /// - seealso: `RSDAsyncActionController.requestPermissions()`
+    /// - seealso: `RSDAsyncAction.requestPermissions()`
     /// - parameters:
     ///     - completion: The completion handler.
     open func requestPermissions(_ completion: @escaping RSDAsyncActionCompletionHandler) {
         _syncUpdateStatus(.permissionGranted)
         completion(self, self.result, nil)
     }
+    
+    #elseif os(macOS)
+    /// **Available** for macOS.
+    ///
+    /// This method should be called on the main thread with the completion handler also called on the main
+    /// thread. The base class implementation will immediately call the completion handler.
+    ///
+    /// - remark: Override to implement custom permission handling.
+    /// - seealso: `RSDAsyncAction.requestPermissions(on:)`
+    /// - parameters:
+    ///     - viewController: The view controler that should be used to present any modal dialogs.
+    ///     - completion: The completion handler.
+    open func requestPermissions(on viewController: NSViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
+        _syncUpdateStatus(.permissionGranted)
+        completion(self, self.result, nil)
+    }
+    
     
     #else
     /// **Available** for iOS and tvOS.
@@ -322,7 +357,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// thread. The base class implementation will immediately call the completion handler.
     ///
     /// - remark: Override to implement custom permission handling.
-    /// - seealso: `RSDAsyncActionController.requestPermissions(on:)`
+    /// - seealso: `RSDAsyncAction.requestPermissions(on:)`
     /// - parameters:
     ///     - viewController: The view controler that should be used to present any modal dialogs.
     ///     - completion: The completion handler.
@@ -353,11 +388,13 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// to point at a different implementation of the `RSDCollectionResult` protocol.
     open private(set) var collectionResult: RSDCollectionResult
     
-    /// The system clock time when the recorder was started.
-    public private(set) var startUptime: TimeInterval = ProcessInfo.processInfo.systemUptime
+    /// The clock for this recorder.
+    open private(set) var clock: RSDClock = RSDClock()
     
     /// The date timestamp for when the recorder was started.
-    public private(set) var startDate: Date = Date()
+    public var startDate: Date {
+        return clock.startDate
+    }
     
     /// The identifier for tracking the current step.
     public private(set) var currentStepIdentifier: String = ""
@@ -402,13 +439,13 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     
     /// This method can be called by either the logging file if there was a write error, or by the subclass
     /// if there was an error when attempting to record samples. The method will call the delegate method
-    /// `asyncActionController(_, didFailWith:)` asynchronously on the main queue and will call `cancel()`
+    /// `asyncAction(_, didFailWith:)` asynchronously on the main queue and will call `cancel()`
     /// synchronously on the current queue.
     open func didFail(with error: Error) {
         guard self.status <= .running else { return }
         _syncUpdateStatus(.failed, error: error)
         DispatchQueue.main.async {
-            self.delegate?.asyncActionController(self, didFailWith: error)
+            self.delegate?.asyncAction(self, didFailWith: error)
         }
         cancel()
     }
@@ -482,7 +519,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     /// An identifier string that can be appended to a step view controller to differentiate this step from
     /// another instance in a different section.
     open var sectionIdentifier: String {
-        return (self.taskPath.parentPath != nil) ? "\(self.taskPath.result.identifier)_" : ""
+        return (self.taskViewModel.parent != nil) ? "\(self.taskViewModel.taskResult.identifier)_" : ""
     }
     
     /// File URL for the directory in which to store generated data files.
@@ -502,22 +539,23 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     ///
     /// - parameters:
     ///     - uptime: The system clock time.
+    ///     - timestamp: Relative timestamp for this recorder.
     ///     - date: The timestamp date.
     ///     - stepPath: The step path.
     ///     - loggerIdentifier: The identifier for the logger for which to create the marker.
     /// - returns: A sample to add to the log file that can be used as a step transition marker.
-    open func instantiateMarker(uptime: TimeInterval, date: Date, stepPath: String, loggerIdentifier:String) -> RSDSampleRecord {
-        return RSDRecordMarker(uptime: uptime, timestamp: uptime - self.startUptime, date: date, stepPath: stepPath)
+    open func instantiateMarker(uptime: TimeInterval, timestamp: TimeInterval, date: Date, stepPath: String, loggerIdentifier:String) -> RSDSampleRecord {
+        return RSDRecordMarker(uptime: uptime, timestamp: timestamp, date: date, stepPath: stepPath)
     }
     
     /// Update the current step and step path.
     ///
     /// - parameters:
     ///     - step: The current step.
-    ///     - taskPath: The current path.
-    open func updateMarker(step: RSDStep?, taskPath: RSDTaskPath) {
+    ///     - taskViewModel: The current path.
+    open func updateMarker(step: RSDStep?, taskViewModel: RSDPathComponent) {
         currentStepIdentifier = step?.identifier ?? ""
-        let path = taskPath.fullPath
+        let path = taskViewModel.fullPath
         currentStepPath = (path as NSString).appendingPathComponent(currentStepIdentifier)
     }
     
@@ -589,13 +627,14 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }
     
     /// Write a marker to each logging file.
-    private func _writeMarkers(step: RSDStep?, taskPath: RSDTaskPath) {
-        let uptime = ProcessInfo.processInfo.systemUptime
+    private func _writeMarkers(step: RSDStep?, taskViewModel: RSDPathComponent) {
+        let uptime = RSDClock.uptime()
+        let timestamp = ProcessInfo.processInfo.systemUptime
         let date = Date()
         self.loggerQueue.async {
             
             // Update the marker
-            self.updateMarker(step: step, taskPath: taskPath)
+            self.updateMarker(step: step, taskViewModel: taskViewModel)
             let stepPath = self.currentStepPath
             
             // Only write to the file if the recorder status indicates that the logging file is open
@@ -604,7 +643,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
             do {
                 for (identifier, dataLogger) in self.loggers {
                     guard let logger = dataLogger as? RSDRecordSampleLogger else { continue }
-                    let marker = self.instantiateMarker(uptime: uptime, date: date, stepPath: stepPath, loggerIdentifier: identifier)
+                    let marker = self.instantiateMarker(uptime: uptime, timestamp: timestamp, date: date, stepPath: stepPath, loggerIdentifier: identifier)
                     try logger.writeSample(marker)
                 }
             } catch let err {
@@ -616,15 +655,16 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
     }
     
     /// Open log files. This method should be called on the `loggerQueue`.
-    private func _startLogger(at taskPath: RSDTaskPath) throws {
-        updateMarker(step: taskPath.currentStep ?? taskPath.parentPath?.currentStep, taskPath: taskPath)
+    private func _startLogger(at taskViewModel: RSDPathComponent) throws {
+        let step = taskViewModel.currentNode?.step
+        updateMarker(step: step, taskViewModel: taskViewModel)
         for identifier in self.loggerIdentifiers {
             guard let dataLogger = try instantiateLogger(with: identifier) else {
                 continue
             }
             loggers[identifier] = dataLogger
             if let logger = dataLogger as? RSDRecordSampleLogger {
-                let marker = instantiateMarker(uptime: startUptime, date: startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
+                let marker = instantiateMarker(uptime: self.clock.startUptime, timestamp: self.clock.startSystemUptime, date: self.clock.startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
                 try logger.writeSample(marker)
             }
         }
@@ -642,7 +682,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncActionController {
                 fileResult.startDate = self.startDate
                 fileResult.endDate = Date()
                 fileResult.url = logger.url
-                fileResult.startUptime = self.startUptime
+                fileResult.startUptime = self.clock.startSystemUptime
                 fileResult.contentType = logger.contentType
                 self.appendResults(fileResult)
             }
@@ -843,29 +883,7 @@ public class RSDRecordSampleLogger : RSDDataLogger {
 extension RSDRecordMarker : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.uptime, .stepPath, .timestampDate, .timestamp]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .uptime:
-                if idx != 0 { return false }
-            case .stepPath:
-                if idx != 1 { return false }
-            case .timestampDate:
-                if idx != 2 { return false }
-            case .timestamp:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func examples() -> [Encodable] {

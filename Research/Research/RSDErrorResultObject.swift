@@ -57,7 +57,7 @@ public struct RSDErrorResultObject : RSDErrorResult, Codable {
     /// The error code associated with an `NSError`.
     public let errorCode: Int
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, type, startDate, endDate, errorDescription, errorDomain, errorCode
     }
     
@@ -95,35 +95,7 @@ public struct RSDErrorResultObject : RSDErrorResult, Codable {
 extension RSDErrorResultObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .errorDescription, .errorDomain, .errorCode]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .type:
-                if idx != 1 { return false }
-            case .startDate:
-                if idx != 2 { return false }
-            case .endDate:
-                if idx != 3 { return false }
-            case .errorDescription:
-                if idx != 4 { return false }
-            case .errorDomain:
-                if idx != 5 { return false }
-            case .errorCode:
-                if idx != 6 { return false }
-            }
-        }
-        return keys.count == 7
+        return CodingKeys.allCases
     }
     
     static func exampleResult() -> RSDErrorResultObject {

@@ -31,8 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
-
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// `RSDImageVendor` is a protocol for defining an abstract method for fetching an image.
 public protocol RSDImageVendor {
@@ -49,20 +52,5 @@ public protocol RSDImageVendor {
     /// - parameters:
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the identifier and image, run on the main thread.
-    func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void))
-}
-
-extension UIImage : RSDImageVendor {
-    
-    /// Returns `self.hash` as a string.
-    public var imageIdentifier: String {
-        return "\(self.hash)"
-    }
-    
-    /// Fetches self.
-    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
-        DispatchQueue.main.async {
-            callback(self.imageIdentifier, self)
-        }
-    }
+    func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void))
 }

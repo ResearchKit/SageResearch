@@ -35,10 +35,9 @@ import Foundation
 
 /// The type of the ui action. This is used to decode a `RSDUIAction` using a `RSDFactory`. It can also be used
 /// to customize the UI.
-public struct RSDUIActionObjectType : RawRepresentable, Codable {
-    public typealias RawValue = String
+public struct RSDUIActionObjectType : RSDFactoryTypeRepresentable, Codable, Hashable {
     
-    public private(set) var rawValue: String
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
@@ -61,27 +60,7 @@ public struct RSDUIActionObjectType : RawRepresentable, Codable {
     }
 }
 
-extension RSDUIActionObjectType : Equatable {
-    public static func ==(lhs: RSDUIActionObjectType, rhs: RSDUIActionObjectType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDUIActionObjectType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDUIActionObjectType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDUIActionObjectType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
-extension RSDUIActionObjectType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
+extension RSDUIActionObjectType : ExpressibleByStringLiteral {    
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }

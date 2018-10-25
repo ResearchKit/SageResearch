@@ -47,7 +47,7 @@ public protocol RSDFileResult : RSDResult, RSDArchivable {
     var url: URL? { get set }
     
     /// The relative path to the file-based result. This should be the relative path
-    /// to the file within the `outputDirectory` of the associated `RSDTaskPath`.
+    /// to the file within the `outputDirectory` of the associated `RSDTaskViewModel`.
     var relativePath: String? { get }
     
     /// The MIME content type of the result.

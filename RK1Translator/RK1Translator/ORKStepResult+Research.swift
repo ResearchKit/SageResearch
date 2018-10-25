@@ -33,16 +33,47 @@
 
 import Foundation
 
+func _orkResult(from rsdResult: RSDResult) -> ORKResult {
+    if let result = rsdResult as? ORKResult {
+        return result
+    }
+    else if let result = rsdResult as? RSDAnswerResult {
+        return result.orkResult()
+    }
+    else if let result = rsdResult as? RSDFileResult {
+        return ORKFileResult(from: result)
+    }
+    else {
+        let result = ORKResult(identifier: rsdResult.identifier)
+        result.startDate = rsdResult.startDate
+        result.endDate = rsdResult.endDate
+        return result
+    }
+}
+
 /// The `ORKStepResult` implements the `RSDCollectionResult` protocol.
 extension ORKStepResult : RSDCollectionResult {
+    
+    public convenience init(from result: RSDResult) {
+        self.init(identifier: result.identifier)
+        if let collectionResult = result as? RSDCollectionResult {
+            self.results = collectionResult.inputResults.map { _orkResult(from: $0) }
+        }
+        else if let taskResult = result as? RSDTaskResult {
+            self.results = taskResult.stepHistory.map { _orkResult(from: $0) }
+        }
+        else {
+            self.results = [_orkResult(from: result)]
+        }
+    }
     
     /// Map and filter `results` to/from `RSDResult`.
     public var inputResults: [RSDResult] {
         get {
-            return self.results?.flatMap { $0 as? RSDResult } ?? []
+            return self.results?.compactMap { $0 as? RSDResult } ?? []
         }
         set(newValue) {
-            self.results = newValue.flatMap { $0 as? ORKResult }
+            self.results = newValue.compactMap { $0 as? ORKResult }
         }
     }
     

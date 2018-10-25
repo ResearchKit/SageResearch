@@ -39,6 +39,11 @@ fileprivate var _asyncResults: [UUID : [RSDResult]] = [:]
 /// The `ORKStepResult` implements the `RSDCollectionResult` protocol.
 extension ORKTaskResult : RSDTaskResult {
     
+    public convenience init(from taskResult: RSDTaskResult) {
+        self.init(identifier: taskResult.identifier)
+        self.results = taskResult.stepHistory.map { ORKStepResult(from: $0) }
+    }
+    
     /// Schema info is stored to a private static var.
     public var schemaInfo: RSDSchemaInfo? {
         get {
@@ -52,10 +57,10 @@ extension ORKTaskResult : RSDTaskResult {
     /// step history is mapped to `results`.
     public var stepHistory: [RSDResult] {
         get {
-            return self.results?.flatMap { $0 as? RSDResult } ?? []
+            return self.results?.compactMap { $0 as? RSDResult } ?? []
         }
         set(newValue) {
-            self.results = newValue.flatMap { $0 as? ORKResult }
+            self.results = newValue.compactMap { $0 as? ORKResult }
         }
     }
     

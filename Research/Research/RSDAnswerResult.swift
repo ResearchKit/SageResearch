@@ -42,6 +42,9 @@ public protocol RSDAnswerResult : RSDResult, RSDAnswerResultFinder {
     
     /// The answer for the result.
     var value: Any? { get }
+    
+    /// The question associated with this answer in localized text.
+    var questionText: String? { get }
 }
 
 extension RSDAnswerResult {

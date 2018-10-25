@@ -68,7 +68,7 @@ public struct RSDFileResultObject : RSDFileResult, Codable {
     /// The MIME content type of the result.
     public var contentType: String?
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, type, startDate, endDate, startUptime, relativePath, contentType
     }
     
@@ -86,35 +86,7 @@ public struct RSDFileResultObject : RSDFileResult, Codable {
 extension RSDFileResultObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .type, .startDate, .endDate, .startUptime, .relativePath, .contentType]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .type:
-                if idx != 1 { return false }
-            case .startDate:
-                if idx != 2 { return false }
-            case .endDate:
-                if idx != 3 { return false }
-            case .startUptime:
-                if idx != 4 { return false }
-            case .relativePath:
-                if idx != 5 { return false }
-            case .contentType:
-                if idx != 6 { return false }
-            }
-        }
-        return keys.count == 7
+        return CodingKeys.allCases
     }
     
     static func exampleResult() -> RSDFileResultObject {

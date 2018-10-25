@@ -2,7 +2,7 @@
 //  RSDDeviceType.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -38,10 +38,9 @@ import Foundation
 ///
 /// - note: This is not currently used and may be deprecated.
 ///
-public struct RSDDeviceType : RawRepresentable, Codable {
-    public typealias RawValue = String
+public struct RSDDeviceType : RSDFactoryTypeRepresentable, Codable, Hashable {
     
-    public private(set) var rawValue: String
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
@@ -61,39 +60,19 @@ public struct RSDDeviceType : RawRepresentable, Codable {
     
     /// A watch is a device that is worn on a person's wrist. (Apple Watch)
     public static let watch: RSDDeviceType = "watch"
-}
-
-extension RSDDeviceType : RSDStringEnumSet {
-    /// List of all the standard types.
-    public static var all: Set<RSDDeviceType> {
+    
+    public static func allStandardKeys() -> [RSDDeviceType] {
         return [.computer, .phone, .tablet, .tv, .watch]
     }
 }
 
 extension RSDDeviceType : RSDDocumentableStringEnum {
-}
-
-extension RSDDeviceType : Equatable {
-    public static func ==(lhs: RSDDeviceType, rhs: RSDDeviceType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDDeviceType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDDeviceType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
+    static func allCodingKeys() -> [String] {
+        return allStandardKeys().map { $0.rawValue }
     }
 }
 
-extension RSDDeviceType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
-extension RSDDeviceType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
+extension RSDDeviceType : ExpressibleByStringLiteral {    
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }

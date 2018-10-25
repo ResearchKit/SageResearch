@@ -32,7 +32,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// An extension of `RSDImageWrapper` that implements the `RSDFetchableImageThemeElement` protocol
 /// with `nil` values for the properties of that protocol. This allows for coding an image on an
@@ -54,7 +58,7 @@ extension RSDImageWrapper : RSDFetchableImageThemeElement {
 /// `RSDFetchableImageThemeElementObject` is a `Codable` concrete implementation of `RSDFetchableImageThemeElement`.
 public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElement, RSDDecodableBundleInfo, Codable {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case imageName, bundleIdentifier, placementType, _size = "size"
     }
 
@@ -101,11 +105,13 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     /// - parameters:
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
+    public func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void)) {
         #if os(watchOS)
-            let fetchedImage = UIImage(named: imageName)
+            let fetchedImage = RSDImage(named: imageName)
+        #elseif os(macOS)
+            let fetchedImage = RSDImage(named: NSImage.Name(imageName))
         #else
-            let fetchedImage = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+            let fetchedImage = RSDImage(named: imageName, in: bundle, compatibleWith: nil)
         #endif
         DispatchQueue.main.async {
             callback(self.imageIdentifier, fetchedImage)
@@ -116,7 +122,7 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
 /// `RSDAnimatedImageThemeElementObject` is a `Codable` concrete implementation of `RSDAnimatedImageThemeElement`.
 public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDDecodableBundleInfo, Codable {
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case imageNames, animationDuration, bundleIdentifier, placementType, _size = "size"
     }
     
@@ -165,15 +171,28 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     
 
     #if os(watchOS)
-    /// **Available** for watchOS.
+    /// **Available** for watchOS and macOS.
     ///
     /// The animated images to display.
     /// - returns: The images for this step.
-    public func images() -> [UIImage] {
+    public func images() -> [RSDImage] {
         return imageNames.compactMap {
-            UIImage(named: $0)
+            RSDImage(named: $0)
         }
     }
+    
+    #elseif os(macOS)
+    
+    /// **Available** for macOS.
+    ///
+    /// The animated images to display.
+    /// - returns: The images for this step.
+    public func images() -> [RSDImage] {
+        return imageNames.compactMap {
+            RSDImage(named: NSImage.Name($0))
+        }
+    }
+    
     #else
     
     /// **Available** for iOS and tvOS.
@@ -181,9 +200,9 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// The animated images to display.
     /// - parameter traitCollection: The trait collection.
     /// - returns: The images for this step.
-    public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [UIImage] {
+    public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [RSDImage] {
         return imageNames.compactMap {
-            UIImage(named: $0, in: bundle, compatibleWith: traitCollection)
+            RSDImage(named: $0, in: bundle, compatibleWith: traitCollection)
         }
     }
     #endif
@@ -193,7 +212,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// - parameters:
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((UIImage?) -> Void)) {
+    public func fetchImage(for size: CGSize, callback: @escaping ((RSDImage?) -> Void)) {
         let fetchedImage = self.images().first
         DispatchQueue.main.async {
             callback(fetchedImage)
@@ -220,29 +239,7 @@ struct RSDSizeWrapper : Codable {
 extension RSDFetchableImageThemeElementObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.imageName, .bundleIdentifier, .placementType, ._size]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .imageName:
-                if idx != 0 { return false }
-            case .bundleIdentifier:
-                if idx != 1 { return false }
-            case .placementType:
-                if idx != 2 { return false }
-            case ._size:
-                if idx != 3 { return false }
-            }
-        }
-        return keys.count == 4
+        return CodingKeys.allCases
     }
     
     static func imageThemeExamples() -> [RSDFetchableImageThemeElementObject] {
@@ -259,31 +256,7 @@ extension RSDFetchableImageThemeElementObject : RSDDocumentableCodableObject {
 extension RSDAnimatedImageThemeElementObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.imageNames, .animationDuration, .bundleIdentifier, .placementType, ._size]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .imageNames:
-                if idx != 0 { return false }
-            case .animationDuration:
-                if idx != 1 { return false }
-            case .bundleIdentifier:
-                if idx != 2 { return false }
-            case .placementType:
-                if idx != 3 { return false }
-            case ._size:
-                if idx != 4 { return false }
-            }
-        }
-        return keys.count == 5
+        return CodingKeys.allCases
     }
     
     static func imageThemeExamples() -> [RSDAnimatedImageThemeElementObject] {

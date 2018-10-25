@@ -35,7 +35,7 @@ import Foundation
 
 public struct RSDTaskInfoObject : RSDTaskInfo, RSDEmbeddedIconVendor, Decodable {
     
-    private enum CodingKeys : String, CodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, title, subtitle, detail, icon, _estimatedMinutes = "estimatedMinutes", _embeddedResource = "taskTransformer", _schemaInfoObject = "schemaInfo"
     }
     
@@ -111,14 +111,10 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
     /// The type of the step.
     public let stepType: RSDStepType
     
-    /// The task transformer for vending a task.
-    public var taskTransformer: RSDTaskTransformer!
-    
     /// Default initializer.
     /// - parameter identifier: A short string that uniquely identifies the step.
-    public init(with taskInfo: RSDTaskInfo, taskTransformer: RSDTaskTransformer? = nil, stepType: RSDStepType = .taskInfo) {
+    public init(with taskInfo: RSDTaskInfo, stepType: RSDStepType = .taskInfo) {
         self.taskInfo = taskInfo
-        self.taskTransformer = taskTransformer ?? taskInfo.resourceTransformer
         self.stepType = stepType
     }
     
@@ -126,7 +122,7 @@ public struct RSDTaskInfoStepObject : RSDTaskInfoStep {
     /// - parameter identifier: The new identifier.
     public func copy(with identifier: String) -> RSDTaskInfoStepObject {
         let taskInfo = self.taskInfo.copy(with: identifier)
-        return RSDTaskInfoStepObject(with: taskInfo, taskTransformer: taskTransformer, stepType: stepType)
+        return RSDTaskInfoStepObject(with: taskInfo, stepType: stepType)
     }
     
     /// Instantiate a step result that is appropriate for this step.
@@ -160,50 +156,12 @@ extension RSDTaskInfoObject : RSDTaskGroup {
     public var tasks: [RSDTaskInfo] {
         return [self]
     }
-    
-    /// Map the task info to the task info step and create a task path from the step.
-    /// - parameter taskInfo: The task info to map from.
-    /// - returns: A new task path.
-    public func instantiateTaskPath(for taskInfo: RSDTaskInfo) -> RSDTaskPath? {
-        let step = RSDTaskInfoStepObject(with: self)
-        return RSDTaskPath(taskInfo: step)
-    }
 }
 
 extension RSDTaskInfoObject : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.identifier, .title, .subtitle, .detail, .icon, ._estimatedMinutes, ._embeddedResource, ._schemaInfoObject]
-        return codingKeys
-    }
-    
-    static func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .identifier:
-                if idx != 0 { return false }
-            case .title:
-                if idx != 1 { return false }
-            case .subtitle:
-                if idx != 2 { return false }
-            case .detail:
-                if idx != 3 { return false }
-            case .icon:
-                if idx != 4 { return false }
-            case ._estimatedMinutes:
-                if idx != 5 { return false }
-            case ._embeddedResource:
-                if idx != 6 { return false }
-            case ._schemaInfoObject:
-                if idx != 7 { return false }
-            }
-        }
-        return keys.count == 8
+        return CodingKeys.allCases
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

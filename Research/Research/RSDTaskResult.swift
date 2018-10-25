@@ -39,7 +39,7 @@ import Foundation
 public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder {
     
     /// A unique identifier for this task run.
-    var taskRunUUID: UUID { get }
+    var taskRunUUID: UUID { get set }
     
     /// Schema info associated with this task.
     var schemaInfo: RSDSchemaInfo? { get set }

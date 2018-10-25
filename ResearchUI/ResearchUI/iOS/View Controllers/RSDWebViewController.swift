@@ -71,7 +71,7 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         if activityIndicator == nil {
             self.view.backgroundColor = UIColor.white
-            activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+            activityIndicator = UIActivityIndicatorView(style: .gray)
             self.view.addSubview(activityIndicator)
             activityIndicator.translatesAutoresizingMaskIntoConstraints = false
             activityIndicator.rsd_alignCenterVertical(padding: 0)
@@ -109,15 +109,21 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
             webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
         }
         else if let resource = resourceTransformer {
-            do {
-                let (data, _) = try resource.resourceData()
-                if let html = String(data: data, encoding: String.Encoding.utf8) {
-                    webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
-                } else {
-                    loadFailed()
+            if resource.isOnlineResourceURL(), let url = URL(string: resource.resourceName) {
+                let request = URLRequest(url: url)
+                webView.load(request)
+            }
+            else {
+                do {
+                    let (data, _) = try resource.resourceData()
+                    if let html = String(data: data, encoding: String.Encoding.utf8) {
+                        webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
+                    } else {
+                        loadFailed()
+                    }
+                } catch let err {
+                    loadFailed(with: err)
                 }
-            } catch let err {
-                loadFailed(with: err)
             }
         }
     }
@@ -148,7 +154,7 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     /// If the webview request is a clicked link then open using the `UIApplication.open()` method.
     open func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let url = navigationAction.request.url, navigationAction.navigationType == .linkActivated {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             decisionHandler(.cancel)
         }
         else {
@@ -164,4 +170,9 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
         self.activityIndicator.stopAnimating()
         self.loadFailed(with: error)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

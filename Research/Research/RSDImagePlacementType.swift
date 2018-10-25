@@ -34,56 +34,43 @@
 import Foundation
 
 /// A hint as to where the UI should place an image.
-public struct RSDImagePlacementType : RawRepresentable, Codable {
-    public typealias RawValue = String
+public struct RSDImagePlacementType : RawRepresentable, Codable, Hashable {
     
-    public private(set) var rawValue: String
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
     }
     
+    enum StandardTypes : String, Codable, CaseIterable {
+        case iconBefore, iconAfter, fullsizeBackground, topBackground, topMarginBackground
+        
+        var imagePlacementType: RSDImagePlacementType {
+            return RSDImagePlacementType(rawValue: self.rawValue)
+        }
+    }
+    
     /// Smaller presentation of an icon image before the content.
-    public static let iconBefore: RSDImagePlacementType = "iconBefore"
+    public static let iconBefore = StandardTypes.iconBefore.imagePlacementType
     
     /// Smaller presentation of an icon image after the content.
-    public static let iconAfter: RSDImagePlacementType = "iconAfter"
+    public static let iconAfter = StandardTypes.iconAfter.imagePlacementType
     
     /// Fullsize in the background.
-    public static let fullsizeBackground: RSDImagePlacementType = "fullsizeBackground"
+    public static let fullsizeBackground = StandardTypes.fullsizeBackground.imagePlacementType
     
     /// Top half of the background contrained to the top rather than to the safe area.
-    public static let topBackground: RSDImagePlacementType = "topBackground"
+    public static let topBackground = StandardTypes.topBackground.imagePlacementType
     
     /// Top half of the background constraind to the safe area.
-    public static let topMarginBackground: RSDImagePlacementType = "topMarginBackground"
+    public static let topMarginBackground = StandardTypes.topMarginBackground.imagePlacementType
     
     public static func allStandardTypes() -> [RSDImagePlacementType] {
-        return [.iconBefore, .iconAfter, .fullsizeBackground, .topBackground, .topMarginBackground]
-    }
-}
-
-extension RSDImagePlacementType : Equatable {
-    public static func ==(lhs: RSDImagePlacementType, rhs: RSDImagePlacementType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDImagePlacementType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDImagePlacementType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDImagePlacementType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
+        return StandardTypes.allCases.map { $0.imagePlacementType }
     }
 }
 
 extension RSDImagePlacementType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }

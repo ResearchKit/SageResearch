@@ -34,10 +34,9 @@ import Foundation
 
 /// `RSDResultType` is an extendable string enum used by `RSDFactory` to create the appropriate
 /// result type.
-public struct RSDResultType : RawRepresentable, Codable {
-    public typealias RawValue = String
+public struct RSDResultType : RSDFactoryTypeRepresentable, Codable, Hashable {
     
-    public private(set) var rawValue: String
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
@@ -51,12 +50,6 @@ public struct RSDResultType : RawRepresentable, Codable {
     
     /// Defaults to creating a `RSDCollectionResult`.
     public static let collection: RSDResultType = "collection"
-    
-    /// Defaults to creating a `RSDMedicationTrackingResult`.
-    public static let medication: RSDResultType = "medication"
-    
-    /// Defaults to creating a `RSDSelectionResult`.
-    public static let selection: RSDResultType = "selection"
     
     /// Defaults to creating a `RSDTaskResult`.
     public static let task: RSDResultType = "task"
@@ -72,31 +65,11 @@ public struct RSDResultType : RawRepresentable, Codable {
     
     /// List of all the standard types.
     public static func allStandardTypes() -> [RSDResultType] {
-        return [.base, .answer, .collection, .task, .file, .error]
+        return [.base, .answer, .collection, .task, .file, .error, .navigation]
     }
 }
 
-extension RSDResultType : Equatable {
-    public static func ==(lhs: RSDResultType, rhs: RSDResultType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-    public static func ==(lhs: String, rhs: RSDResultType) -> Bool {
-        return lhs == rhs.rawValue
-    }
-    public static func ==(lhs: RSDResultType, rhs: String) -> Bool {
-        return lhs.rawValue == rhs
-    }
-}
-
-extension RSDResultType : Hashable {
-    public var hashValue : Int {
-        return self.rawValue.hashValue
-    }
-}
-
-extension RSDResultType : ExpressibleByStringLiteral {
-    public typealias StringLiteralType = String
-    
+extension RSDResultType : ExpressibleByStringLiteral {    
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }

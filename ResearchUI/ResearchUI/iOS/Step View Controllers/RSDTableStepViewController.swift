@@ -45,7 +45,7 @@ import UIKit
 /// An instance of `RSDFormStepDataSource` is created by `setupModel()` and assigned to property
 /// `tableData`. This method is called by `viewWillAppear()` and serves as the `UITableViewDataSource`. The
 /// `tableData` also keeps track of answers that are derived from the user's input and it provides the
-/// `RSDResult` that is appended to the `RSDTaskPath` associated with this task.
+/// `RSDResult` that is appended to the `RSDTaskViewModel` associated with this task.
 ///
 /// This class is responsible for acquiring input from the user, validating it, and supplying it as an
 /// answer to to the model (tableData). This is typically done in delegate callbacks from various input
@@ -56,7 +56,7 @@ import UIKit
 /// fields). These steps will result in a `tableData` that has no sections and, therefore, no rows. So the
 /// tableView will simply have a headerView, no rows, and a footerView.
 ///
-open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate {
+open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, RSDTableDataSourceDelegate, RSDPickerObserver, RSDButtonCellDelegate, RSDTaskViewControllerDelegate {
 
     /// The table view associated with this view controller. This will be created during `viewDidLoad()`
     /// with a default set up if it is `nil`. If this view controller is loaded from a nib or storyboard,
@@ -64,7 +64,9 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     @IBOutlet open var tableView: UITableView!
     
     /// The data source for this table.
-    open var tableData: RSDTableDataSource?
+    open var tableData: RSDTableDataSource? {
+        return self.stepViewModel as? RSDTableDataSource
+    }
     
     /// Convenience property for accessing the form step (if casting the step to a `RSDFormUIStep` is
     /// applicable).
@@ -76,7 +78,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     open class func doesSupport(_ step: RSDStep) -> Bool {
         // Only UI steps are supported
         guard let _ = step as? RSDUIStep else { return false }
-        if let tableStep = step as? RSDTableStep {
+        if let tableStep = step as? RSDFormUIStep {
             // TODO: syoung 02/26/2018 Implement support for image selection.
             // https://github.com/ResearchKit/SageResearch/issues/11
             return !tableStep.hasImageChoices
@@ -116,9 +118,9 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             tableView.delegate = self
             tableView.dataSource = self
             tableView.separatorStyle = .none
-            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.rowHeight = UITableView.automaticDimension
             tableView.estimatedRowHeight = constants.defaultRowHeight
-            tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+            tableView.sectionHeaderHeight = UITableView.automaticDimension
             tableView.estimatedSectionHeaderHeight = constants.defaultSectionHeight
             
             view.addSubview(tableView)
@@ -151,7 +153,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         self.view.setNeedsLayout()
         
         // register for keyboard notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
 
         // Set up the model and view
         setupModel()
@@ -162,7 +164,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         super.viewWillDisappear(animated)
         
         // un-register for keyboard notifications
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         // Dismiss all textField's keyboard
         tableView?.endEditing(false)
@@ -179,7 +181,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         }
         
         // need to save height of our nav view so it can be used to calculate the bottom inset (margin)
-        navigationViewHeight = navigationView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        navigationViewHeight = navigationView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         
         let totalHeight = tableView.contentSize.height + tableView.contentInset.top + navigationViewHeight
         let contentSizeExceedsTableHeight = totalHeight > tableView.frame.size.height
@@ -240,22 +242,26 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 .button]
     }
     
+    /// Override and set to an appropriate `RSDTableDataSource` instance.
+    override open func instantiateStepViewModel(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepViewPathComponent {
+        let supportedHints = type(of: self).supportedUIHints
+        let tableData: RSDTableDataSource
+        if let tableStep = step as? RSDTableStep,
+            let source = tableStep.instantiateDataSource(with: parent, for: supportedHints)
+        {
+            tableData = source
+        } else {
+            tableData = RSDFormStepDataSourceObject(step: step, parent: parent, supportedHints: supportedHints)
+        }
+        tableData.delegate = self
+        return tableData
+    }
+    
     /// Creates and assigns a new instance of the model. The default implementation will instantiate
     /// `RSDFormStepDataSourceObject` and set this as the `tableData`.
     open func setupModel() {
-        guard tableData == nil else { return }
-        
-        // Get the table data source from the step (if applicable)
-        let supportedHints = type(of: self).supportedUIHints
-        let taskPath = self.taskController.taskPath!
-        if let tableStep = self.step as? RSDTableStep,
-            let source = tableStep.instantiateDataSource(with: taskPath, for: supportedHints)
-            {
-            tableData = source
-        } else {
-            tableData = RSDFormStepDataSourceObject(step: self.step, taskPath: taskPath, supportedHints: supportedHints)
-        }
-        tableData?.delegate = self
+        guard tableData == nil, let existingViewModel = self.stepViewModel else { return }
+        self.stepViewModel = self.instantiateStepViewModel(for: existingViewModel.step, with: existingViewModel.parent)
         
         // after setting up the data source, check the enabled state of the forward button.
         self.answersDidChange(in: 0)
@@ -344,7 +350,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             // to get the tableView to size the headerView properly, we have to get the headerView height
             // and manually set the frame with that height. Do so only if the header is actually the
             // tableview's header and not a custom header.
-            let headerHeight = stepHeader.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            let headerHeight = stepHeader.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             stepHeader.frame = CGRect(x: 0, y: 0, width: tableView!.frame.size.width, height: headerHeight)
             tableView!.tableHeaderView = stepHeader
         }
@@ -358,24 +364,6 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         // we only need some bottom margin if we have any table data (rows), otherwise, the bottom
         // margin built into the headerView is enough
         return RSDDefaultGenericStepLayoutConstants(numberOfSections: tableView.numberOfSections)
-    }
-
-    /// Specifies whether the next button should be enabled based on the validity of the answers for
-    /// all form items.
-    override open var isForwardEnabled: Bool {
-        if !super.isForwardEnabled {
-            // If super has forward disabled then return false
-            return false
-        } else if let allAnswersValid = tableData?.allAnswersValid() {
-            // Else if the tabledata has been set up then go with that answer
-            return allAnswersValid
-        } else if let inputFields = self.formStep?.inputFields, inputFields.count > 0 {
-            // are all the input fields optional?
-            return inputFields.reduce(true, { $0 && $1.isOptional })
-        } else {
-            // All checks pass. forward is enabled.
-            return true
-        }
     }
     
     // MARK: Actions
@@ -532,8 +520,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Configure a text view cell.
     func configure(textViewCell: RSDStepTextViewCell, at indexPath: IndexPath) {
-        guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
-            let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
+        guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
             else {
                 return
         }
@@ -558,19 +545,16 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             textViewCell.textView.spellCheckingType = textAnswerFormat.spellCheckingType.textSpellCheckingType()
         }
         
-        // if we have an answer, populate the text view
-        if itemGroup.isAnswerValid {
-            textViewCell.textView.text = tableItem.answerText
-        }
-        
         // populate the field label
         textViewCell.viewLabel.text = tableItem.inputField.inputPrompt
+        
+        // Set the answer.
+        setTextAnswer(on: textViewCell, with: tableItem)
     }
     
     /// Configure a text field cell.
     func configure(textFieldCell: RSDStepTextFieldCell, at indexPath: IndexPath) {
-        guard let itemGroup = tableData?.itemGroup(at: indexPath) as? RSDInputFieldTableItemGroup,
-            let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
+        guard let tableItem = tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem
             else {
                 return
         }
@@ -603,19 +587,46 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             picker?.observer = self
         }
 
-        // if we have an answer, populate the text field
-        if itemGroup.isAnswerValid {
-            textFieldCell.textField.text = tableItem.answerText
-            if let picker = textFieldCell.textField.inputView as? RSDPickerViewProtocol {
-                picker.answer = tableItem.answer
-            }
-        }
-        
         // populate the field label
         textFieldCell.fieldLabel.text = tableItem.inputField.inputPrompt
         
         // populate the text field placeholder label
         textFieldCell.placeholder = tableItem.placeholder
+        
+        // Set the answer.
+        setTextAnswer(on: textFieldCell, with: tableItem)
+    }
+    
+    /// For a given text input, refresh the answer from the table item to the cell. Typically, when saving
+    /// an answer for a user input, the value that was entered by the user should be kept. However, if the
+    /// controller modifies the answer for some reason, that updated value should be honored.
+    open func refreshAnswer(at indexPath: IndexPath) {
+        guard let tableItem = self.tableData?.tableItem(at: indexPath) as? RSDTextInputTableItem,
+            let cell = self.tableView.cellForRow(at: tableItem.indexPath)
+            else {
+                debugPrint("WARNING: Could not update answer.")
+                return
+        }
+        
+        if let textFieldCell = cell as? RSDStepTextFieldCell {
+            setTextAnswer(on: textFieldCell, with: tableItem)
+        }
+        else if let textViewCell = cell as? RSDStepTextViewCell {
+            setTextAnswer(on: textViewCell, with: tableItem)
+        }
+        else {
+            assertionFailure("Could not cast \(cell) to a known text field type.")
+        }
+    }
+    
+    private func setTextAnswer(on textFieldCell: RSDStepTextFieldCell, with tableItem: RSDTextInputTableItem) {
+        textFieldCell.textField.text = tableItem.answerText
+        let picker = textFieldCell.textField.inputView as? RSDPickerViewProtocol
+        picker?.answer = tableItem.answer
+    }
+    
+    private func setTextAnswer(on textViewCell: RSDStepTextViewCell, with tableItem: RSDTextInputTableItem) {
+        textViewCell.textView.text = tableItem.answerText
     }
     
     /// Instantiate a keyboard accessory view based on the current 'navigationFooter'.
@@ -633,7 +644,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         // using auto layout to constrain the navView to fill its superview after adding it to the textfield
         // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
         // navView and manually set its frame before assigning it to the text field
-        let navHeight = navView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        let navHeight = navView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         let navWidth = UIScreen.main.bounds.size.width
         navView.frame = CGRect(x: 0, y: 0, width: navWidth, height: navHeight)
         
@@ -729,16 +740,41 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     /// Called when a user action on a cell or button is linked to a modal item.
     open func didSelectModalItem(_ modalItem: RSDModalStepTableItem, at indexPath: IndexPath) {
         guard let source = tableData as? RSDModalStepDataSource,
-            let taskViewController = self.taskController as? RSDTaskViewController
+            let taskViewModel = source.taskViewModel(for: modalItem)
             else {
                 assertionFailure("Cannot handle the button tap.")
                 return
         }
-        let step = source.step(for: modalItem)
-        let stepViewController = taskViewController.viewController(for: step)
-        source.willPresent(stepViewController, from: modalItem)
-        self.present(stepViewController, animated: true, completion: nil)
+        
+        _source = source
+        _modalItem = modalItem
+        let vc = RSDTaskViewController(taskViewModel: taskViewModel)
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
     }
+    
+    private var _source: RSDModalStepDataSource?
+    private var _modalItem: RSDModalStepTableItem?
+    
+    
+    // MARK: RSDTaskViewControllerDelegate
+    
+    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        guard let vc = taskController as? UIViewController else {
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        vc.dismiss(animated: true) {
+            self._source = nil
+            self._modalItem = nil
+        }
+    }
+    
+    open func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        guard let source = _source, let modalItem = _modalItem else { return }
+        source.saveAnswer(for: modalItem, from: taskViewModel)
+    }
+    
     
     // MARK: UITextView delegate
 
@@ -1011,23 +1047,25 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         self.answersDidChange(in: section)
     }
     
-    /// Called by a `RSDModalStepDataSource` to dismiss the presented step view controller.
-    open func tableDataSource(_ dataSource: RSDTableDataSource, didFinishWith stepController: RSDStepController) {
-        guard let vc = stepController as? UIViewController else { return }
-        vc.dismiss(animated: true) { }
-    }
-    
     /// Called *before* editing the table rows and sections.
     open func tableDataSourceWillBeginUpdate(_ dataSource: RSDTableDataSource) {
         self.tableView.beginUpdates()
     }
     
+    /// Called to remove rows from a data source. Calls to this method should be wrapped within a begin/end
+    /// update.
+    open func tableDataSource(_ dataSource: RSDTableDataSource, didRemoveRows removedRows:[IndexPath], with animation: RSDUIRowAnimation) {
+        self.tableView.deleteRows(at: removedRows, with: animation.tableAnimation())
+    }
+    
+    /// Called to add rows to a data source. Calls to this method should be wrapped within a begin/end
+    /// update.
+    open func tableDataSource(_ dataSource: RSDTableDataSource, didAddRows addedRows:[IndexPath], with animation: RSDUIRowAnimation) {
+        self.tableView.insertRows(at: addedRows, with: animation.tableAnimation())
+    }
+    
     /// Called *after* editing the table rows and sections.
-    open func tableDataSourceDidEndUpdate(_ dataSource: RSDTableDataSource, addedRows:[IndexPath], removedRows:[IndexPath]) {
-        // finish updating the table
-        let animation: UITableViewRowAnimation = self.isVisible ? .automatic : .none
-        self.tableView.deleteRows(at: removedRows, with: animation)
-        self.tableView.insertRows(at: addedRows, with: animation)
+    open func tableDataSourceDidEndUpdate(_ dataSource: RSDTableDataSource) {
         self.tableView.endUpdates()
     }
     
@@ -1072,15 +1110,15 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     @objc func keyboardNotification(notification: NSNotification) {
         
         guard let userInfo = notification.userInfo,
-            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             else {
                 return
         }
         
-        let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-        let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
-        let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
-        let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+        let duration:TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+        let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
+        let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+        let animationCurve:UIView.AnimationOptions = UIView.AnimationOptions(rawValue: animationCurveRaw)
         if endFrame.origin.y >= UIScreen.main.bounds.size.height {
             // set the tableView bottom inset to default
             var inset = tableView.contentInset
@@ -1104,6 +1142,13 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                 self.scroll(to: self.activeTextInputView?.indexPath)
             }
         }
+    }
+}
+
+extension RSDUIRowAnimation {
+    
+    public func tableAnimation() -> UITableView.RowAnimation {
+        return UITableView.RowAnimation(rawValue: self.rawValue) ?? .automatic
     }
 }
 

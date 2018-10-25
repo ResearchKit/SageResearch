@@ -36,7 +36,7 @@ import Foundation
 
 /// `RSDSectionStep` is used to define a logical subgrouping of steps such as a section in a longer survey
 /// or an active step that includes an instruction step, countdown step, and activity step.
-public protocol RSDSectionStep: RSDStep, RSDTask, RSDConditionalStepNavigator {
+public protocol RSDSectionStep: RSDStep, RSDTask, RSDStepNavigator {
     
     /// A list of the steps used to define this subgrouping of steps.
     var steps: [RSDStep] { get }
@@ -70,13 +70,5 @@ extension RSDSectionStep {
         }
         return taskResult
     }
-}
-
-/// `RSDStepTransformer` is used in decoding a step with replacement properties for some or all of the
-/// properties that is defined using a different resource.
-public protocol RSDStepTransformer {
-    
-    /// The step transformed by this object for inclusion into a task.
-    var transformedStep: RSDStep! { get }
 }
 

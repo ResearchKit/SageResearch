@@ -83,11 +83,11 @@ import UIKit
         
         // setup the sublayer
         subLayer.path = path.cgPath
-        subLayer.fillRule = kCAFillRuleNonZero
-        subLayer.lineCap = kCALineCapButt
+        subLayer.fillRule = CAShapeLayerFillRule.nonZero
+        subLayer.lineCap = CAShapeLayerLineCap.butt
         subLayer.lineDashPattern = nil
         subLayer.lineDashPhase = 0.0
-        subLayer.lineJoin = kCALineJoinMiter
+        subLayer.lineJoin = CAShapeLayerLineJoin.miter
         subLayer.lineWidth = 1.0
         subLayer.miterLimit = 10.0
         subLayer.fillColor = crosshatchColor.cgColor

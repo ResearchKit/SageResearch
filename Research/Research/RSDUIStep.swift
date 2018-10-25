@@ -62,44 +62,4 @@ public protocol RSDUIStep: RSDStep, RSDUIActionHandler {
     var footnote: String? { get }
 }
 
-/// `RSDActiveUIStep` extends the `RSDUIStep` to include a duration and commands. This is used for the case
-/// where an `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also
-/// implement the `RSDActiveUIStep` protocol to allow for spoken instruction.
-public protocol RSDActiveUIStep: RSDUIStep {
-    
-    /// The duration of time to run the step. If `0`, then this value is ignored.
-    var duration: TimeInterval { get }
-    
-    /// The set of commands to apply to this active step. These indicate actions to fire at the beginning
-    /// and end of the step such as playing a sound as well as whether or not to automatically start and
-    /// finish the step.
-    var commands: RSDActiveUIStepCommand { get }
-    
-    /// Whether or not the step uses audio, such as the speech synthesizer, that should play whether or not
-    /// the user has the mute switch turned on.
-    var requiresBackgroundAudio: Bool { get }
-    
-    /// Localized text that represents an instructional voice prompt. Instructional speech begins when the
-    /// step passes the time indicated by the given time.  If `timeInterval` is greater than or equal to
-    /// `duration` or is equal to `Double.infinity`, then the spoken instruction returned should be for
-    /// when the step is finished.
-    ///
-    /// - parameter timeInterval: The time interval at which to speak the instruction.
-    /// - returns: The localized instruction to speak or `nil` if there isn't an instruction.
-    func spokenInstruction(at timeInterval: TimeInterval) -> String?
-}
 
-/// `RSDTableStep` is a UI step that can be displayed using a `UITableView`.
-public protocol RSDTableStep : RSDUIStep {
-    
-    /// Does this step require support for image choices?
-    var hasImageChoices: Bool { get }
-    
-    /// Instantiate an instance of the data source with the data source mapping to the included list of
-    /// supported ui hints.
-    /// - parameters:
-    ///     - taskPath: The taskPath for this table view controller.
-    ///     - supportedHints: The ui hints that are supported by the calling table view controller.
-    /// - returns: A table data source that maps to the supported hints, or `nil` if it is not compatible.
-    func instantiateDataSource(with taskPath: RSDTaskPath, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource?
-}

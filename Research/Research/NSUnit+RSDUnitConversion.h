@@ -35,14 +35,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSUnit (RSDUnitConversion)
-
-/// Convert the symbol into a unit of the appropriate subtype (if found).
-/// @param symbol   The symbol for the unit.
-+ (NSUnit * _Nullable)unitFromSymbol:(NSString *)symbol;
-
-@end
-
 @interface NSUnitLength (RSDUnitConversion)
 
 /// Convert the symbol into a unit of length.

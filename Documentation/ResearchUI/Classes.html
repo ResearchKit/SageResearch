@@ -228,9 +228,6 @@
                 <a href="Protocols.html#/s:10ResearchUI34RSDNavigationHeaderLayoutConstantsP">RSDNavigationHeaderLayoutConstants</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/RSDOptionalStepViewControllerDelegate.html">RSDOptionalStepViewControllerDelegate</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Protocols/RSDOptionalTaskViewControllerDelegate.html">RSDOptionalTaskViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -253,12 +250,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols.html#/s:10ResearchUI34RSDStepTextViewCellLayoutConstantsP">RSDStepTextViewCellLayoutConstants</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols.html#/s:10ResearchUI29RSDStepViewControllerDelegateP">RSDStepViewControllerDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/RSDStepViewControllerProtocol.html">RSDStepViewControllerProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDStepViewControllerVendor.html">RSDStepViewControllerVendor</a>
@@ -393,7 +384,7 @@ UI architecture.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDStepViewControllerProtocol.html">RSDStepViewControllerProtocol</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDCancelActionController.html">RSDCancelActionController</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">RSDStepController</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDCancelActionController.html">RSDCancelActionController</a></span></code></pre>
 
                         </div>
                       </div>
@@ -427,7 +418,7 @@ starting and stoping async actions and vending the appropriate step view control
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTaskViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">RSDTaskUIController</span><span class="p">,</span> <span class="kt">UIPageViewControllerDelegate</span><span class="p">,</span> <span class="kt">UIPageViewControllerDataSource</span><span class="p">,</span> <span class="kt">RSDAsyncActionControllerDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDLoadingViewControllerProtocol.html">RSDLoadingViewControllerProtocol</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTaskViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">RSDTaskController</span><span class="p">,</span> <span class="kt">UIPageViewControllerDelegate</span><span class="p">,</span> <span class="kt">UIPageViewControllerDataSource</span><span class="p">,</span> <span class="kt">RSDAsyncActionDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDLoadingViewControllerProtocol.html">RSDLoadingViewControllerProtocol</a></span></code></pre>
 
                         </div>
                       </div>
@@ -460,7 +451,7 @@ used during a walk step to indicate to the user how long they have been walking 
 walk before the step is complete.</p>
 <div class="aside aside-seealso">
     <p class="aside-title">Seealso</p>
-    <code><a href="Classes/RSDTaskViewController.html#/s:10ResearchUI21RSDTaskViewControllerC011vendDefaultdE00A007RSDStepE0_So06UIViewE0CXcAE0H0_p3for_tF">RSDTaskViewController.vendDefaultViewController(for:)</a></code>
+    <code>RSDTaskViewController.vendDefaultViewController(for:)</code>
 
 </div>
 
@@ -500,7 +491,7 @@ walk before the step is complete.</p>
 that can be used to show a numeric countdown (5-4-3-2-1) and a <code>pauseButton</code> that can be used to pause the countdown timer.</p>
 <div class="aside aside-seealso">
     <p class="aside-title">Seealso</p>
-    <code><a href="Classes/RSDTaskViewController.html#/s:10ResearchUI21RSDTaskViewControllerC011vendDefaultdE00A007RSDStepE0_So06UIViewE0CXcAE0H0_p3for_tF">RSDTaskViewController.vendDefaultViewController(for:)</a></code>
+    <code>RSDTaskViewController.vendDefaultViewController(for:)</code>
 
 </div>
 
@@ -622,7 +613,7 @@ associated <code>RSDStep</code>, which is expected to be set before presenting t
 <p>An instance of <code>RSDFormStepDataSource</code> is created by <code>setupModel()</code> and assigned to property
 <code>tableData</code>. This method is called by <code>viewWillAppear()</code> and serves as the <code>UITableViewDataSource</code>. The
 <code>tableData</code> also keeps track of answers that are derived from the user&rsquo;s input and it provides the
-<code>RSDResult</code> that is appended to the <code>RSDTaskPath</code> associated with this task.</p>
+<code>RSDResult</code> that is appended to the <code>RSDTaskViewModel</code> associated with this task.</p>
 
 <p>This class is responsible for acquiring input from the user, validating it, and supplying it as an
 answer to to the model (tableData). This is typically done in delegate callbacks from various input
@@ -639,7 +630,7 @@ tableView will simply have a headerView, no rows, and a footerView.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></span><span class="p">,</span> <span class="kt">UITableViewDataSource</span><span class="p">,</span> <span class="kt">UITableViewDelegate</span><span class="p">,</span> <span class="kt">UITextFieldDelegate</span><span class="p">,</span> <span class="kt">UITextViewDelegate</span><span class="p">,</span> <span class="kt">RSDTableDataSourceDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols.html#/c:@M@ResearchUI@objc(pl)RSDPickerObserver">RSDPickerObserver</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDButtonCellDelegate.html">RSDButtonCellDelegate</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></span><span class="p">,</span> <span class="kt">UITableViewDataSource</span><span class="p">,</span> <span class="kt">UITableViewDelegate</span><span class="p">,</span> <span class="kt">UITextFieldDelegate</span><span class="p">,</span> <span class="kt">UITextViewDelegate</span><span class="p">,</span> <span class="kt">RSDTableDataSourceDelegate</span><span class="p">,</span> <span class="kt"><a href="Protocols.html#/c:@M@ResearchUI@objc(pl)RSDPickerObserver">RSDPickerObserver</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDButtonCellDelegate.html">RSDButtonCellDelegate</a></span><span class="p">,</span> <span class="kt"><a href="Protocols.html#/s:10ResearchUI29RSDTaskViewControllerDelegateP">RSDTaskViewControllerDelegate</a></span></code></pre>
 
                         </div>
                       </div>
@@ -703,7 +694,7 @@ used during a walk step to indicate to the user how long they have been walking 
 walk before the step is complete.</p>
 <div class="aside aside-seealso">
     <p class="aside-title">Seealso</p>
-    <code><a href="Classes/RSDTaskViewController.html#/s:10ResearchUI21RSDTaskViewControllerC011vendDefaultdE00A007RSDStepE0_So06UIViewE0CXcAE0H0_p3for_tF">RSDTaskViewController.vendDefaultViewController(for:)</a></code>
+    <code>RSDTaskViewController.vendDefaultViewController(for:)</code>
 
 </div>
 

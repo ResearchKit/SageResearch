@@ -31,7 +31,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 /// `RSDEmbeddedIconVendor` is a convenience protocol for fetching an codable image using an optional
 /// `RSDImageWrapper`. This protocol implements an extension method to fetch the icon.
@@ -58,7 +62,7 @@ public protocol RSDImageWrapperDelegate {
     ///     - size:        The size of the image to return.
     ///     - imageName:   The name of the image
     ///     - callback:    The callback with the image, run on the main thread.
-    func fetchImage(for imageWrapper: RSDImageWrapper, callback: @escaping ((String?, UIImage?) -> Void))
+    func fetchImage(for imageWrapper: RSDImageWrapper, callback: @escaping ((String?, RSDImage?) -> Void))
 }
 
 /// `RSDImageWrapper` vends an image. It does not handle image caching. If your app using a custom image caching,
@@ -97,18 +101,37 @@ public struct RSDImageWrapper {
         // there is a delegate. Otherwise, this is not a valid string and the wrapper doesn't know how to fetch
         // an image with it.
         guard sharedDelegate == nil else { return .zero }
-        if let image = UIImage(named: imageName){
+        #if os(macOS)
+        if let image = RSDImage(named: NSImage.Name(imageName)) {
             return image.size
         }
-        #if os(watchOS)
+        #else
+        if let image = RSDImage(named: imageName) {
+            return image.size
+        }
+        #endif
+        #if os(watchOS) || os(macOS)
             throw RSDValidationError.invalidImageName("Invalid image name: \(imageName). Cannot use images on the watch that are not included in the main bundle.")
         #else
-            guard let bundle = bundle ?? RSDResourceConfig.resourceBundle(for: imageName),
-                let _ = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+            guard let image = imageFromBundle(imageName, bundle:bundle)
                 else {
                     throw RSDValidationError.invalidImageName("Invalid image name: \(imageName)")
             }
-            return .zero
+            return image.size
+        #endif
+    }
+    
+    static func imageFromBundle(_ imageName: String, bundle: Bundle?) -> RSDImage? {
+        guard let bundle = bundle ?? RSDResourceConfig.resourceBundle(for: imageName)
+            else {
+                return nil
+        }
+        #if os(macOS)
+            return bundle.image(forResource: NSImage.Name(imageName))
+        #elseif os(iOS) || os(tvOS)
+            return RSDImage(named: imageName, in: bundle, compatibleWith: nil)
+        #else
+            return nil
         #endif
     }
     
@@ -117,7 +140,7 @@ public struct RSDImageWrapper {
     /// - parameters:
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
-    public func fetchImage(for size: CGSize, callback: @escaping ((String?, UIImage?) -> Void)) {
+    public func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void)) {
         if let delegate = RSDImageWrapper.sharedDelegate {
             delegate.fetchImage(for: self, callback: callback)
         }
@@ -129,7 +152,7 @@ public struct RSDImageWrapper {
         else if let url = URL(string: self.imageName) {
             let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 60)
             let task = URLSession.shared.dataTask(with: request) {(data, _, _) in
-                    let image: UIImage? = (data != nil) ? UIImage(data: data!) : nil
+                    let image: RSDImage? = (data != nil) ? RSDImage(data: data!) : nil
                     DispatchQueue.main.async {
                         callback(self.imageName, image)
                     }
@@ -143,11 +166,13 @@ public struct RSDImageWrapper {
         }
     }
     
-    public func embeddedImage() -> UIImage? {
+    public func embeddedImage() -> RSDImage? {
         #if os(watchOS)
-            return UIImage(named: imageName)
+            return RSDImage(named: imageName)
+        #elseif os(macOS)
+            return RSDImage(named: NSImage.Name(imageName))
         #else
-            return UIImage(named: imageName, in: bundle, compatibleWith: nil) 
+            return RSDImage(named: imageName, in: bundle, compatibleWith: nil) 
         #endif
     }
 }

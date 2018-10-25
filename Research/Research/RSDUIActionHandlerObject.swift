@@ -77,7 +77,7 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
     
     // MARK: Codable (must implement in base class in order for the overriding classes to work)
     
-    private enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
         case actions, shouldHideActions
     }
     
@@ -151,24 +151,6 @@ open class RSDUIActionHandlerObject : RSDUIActionHandler {
     }
     
     class func codingKeys() -> [CodingKey] {
-        return allCodingKeys()
-    }
-    
-    private static func allCodingKeys() -> [CodingKeys] {
-        let codingKeys: [CodingKeys] = [.actions, .shouldHideActions]
-        return codingKeys
-    }
-    
-    class func validateAllKeysIncluded() -> Bool {
-        let keys: [CodingKeys] = allCodingKeys()
-        for (idx, key) in keys.enumerated() {
-            switch key {
-            case .actions:
-                if idx != 0 { return false }
-            case .shouldHideActions:
-                if idx != 1 { return false }
-            }
-        }
-        return keys.count == 2
+        return CodingKeys.allCases
     }
 }
