@@ -44,6 +44,18 @@ extension RSDMotionRecorderConfiguration : RSDAsyncActionVendor {
     }
 }
 
+extension Notification.Name {
+    /// Notification name posted by a `RSDMotionRecorder` instance when it is starting. If you intend to
+    /// listen for this notification in order to shut down passive motion recorders, you must pass
+    /// nil for the operation queue so it gets handled synchronously on the calling queue.
+    public static let RSDMotionRecorderWillStart = Notification.Name(rawValue: "RSDMotionRecorderWillStart")
+}
+
+extension RSDIdentifier {
+    /// Identifier key used to pass a reference to the RSDMotionRecorder instance in the above notification's userInfo.
+    public static let motionRecorderInstance: RSDIdentifier = "motionRecorderInstance"
+}
+
 /// `RSDMotionRecorder` is a subclass of `RSDSampleRecorder` that implements recording core motion
 /// sensor data.
 ///
@@ -57,7 +69,10 @@ extension RSDMotionRecorderConfiguration : RSDAsyncActionVendor {
 /// - seealso: `RSDMotionRecorderType`, `RSDMotionRecorderConfiguration`, and `RSDMotionRecord`.
 @available(iOS 10.0, *)
 public class RSDMotionRecorder : RSDSampleRecorder {
-
+    /// The currently-running instance, if any. You should confirm that this is nil
+    /// (on the main queue) before starting a passive recorder instance.
+    public static var current: RSDMotionRecorder?
+    
     /// The most recent device motion sample. This property is updated on the motion queue.
     /// This is an `@objc dynamic` property so that listeners can be set up using KVO to
     /// observe changes to this property.
@@ -130,6 +145,9 @@ public class RSDMotionRecorder : RSDSampleRecorder {
             return
         }
         
+        // Tell the world that a new motion recorder instance is running.
+        NotificationCenter.default.post(name: .RSDMotionRecorderWillStart, object: self, userInfo: [RSDIdentifier.motionRecorderInstance: self])
+        
         // Call completion before starting all the sensors
         // then add a block to the main queue to start the sensors
         // on the next run loop.
@@ -141,7 +159,8 @@ public class RSDMotionRecorder : RSDSampleRecorder {
     
     private func _startNextRunLoop() {
         guard self.status <= .running else { return }
-        
+        RSDMotionRecorder.current = self
+
         // set up the motion manager and the frequency
         let updateInterval: TimeInterval = 1.0 / self.frequency
         let motionManager = CMMotionManager()
@@ -259,6 +278,7 @@ public class RSDMotionRecorder : RSDSampleRecorder {
                     }
                 }
             }
+            RSDMotionRecorder.current = nil
             self.motionManager = nil
             
             // and then call finished.
