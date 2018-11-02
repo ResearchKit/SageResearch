@@ -278,7 +278,9 @@ public class RSDMotionRecorder : RSDSampleRecorder {
                     }
                 }
             }
-            RSDMotionRecorder.current = nil
+            if RSDMotionRecorder.current == self {
+                RSDMotionRecorder.current = nil
+            }
             self.motionManager = nil
             
             // and then call finished.
