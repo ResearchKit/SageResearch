@@ -75,7 +75,7 @@ class DataArchiveTests: XCTestCase {
             manager.dataArchiverFor[taskViewModel.taskResult.identifier] = archive
             
             let expect = expectation(description: "Archive results \(taskViewModel.identifier)")
-            taskViewModel.archiveResults(with: manager) {
+            taskViewModel.archiveResults(with: manager) { (err) in
                 expect.fulfill()
             }
             waitForExpectations(timeout: 2) { (err) in
@@ -152,7 +152,7 @@ class DataArchiveTests: XCTestCase {
             manager.dataArchiverFor["sectionA"] = subArchive
             
             let expect = expectation(description: "Archive results \(taskViewModel.identifier)")
-            taskViewModel.archiveResults(with: manager) {
+            taskViewModel.archiveResults(with: manager) { (err) in
                 expect.fulfill()
             }
             waitForExpectations(timeout: 2) { (err) in

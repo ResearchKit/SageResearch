@@ -39,7 +39,7 @@ extension RSDDistanceRecorderConfiguration : RSDAsyncActionVendor {
     
     /// Instantiate a `RSDDistanceRecorder` (iOS only).
     /// - parameter taskViewModel: The current task path to use to initialize the controller.
-    /// - returns: A new instance of `RSDMotionRecorder` or `nil` if the platform does not
+    /// - returns: A new instance of `RSDDistanceRecorder` or `nil` if the platform does not
     ///            support distance recording.
     public func instantiateController(with taskViewModel: RSDPathComponent) -> RSDAsyncAction? {
         return RSDDistanceRecorder(configuration: self, taskViewModel: taskViewModel, outputDirectory: taskViewModel.outputDirectory)
