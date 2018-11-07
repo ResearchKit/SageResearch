@@ -188,30 +188,19 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
             // Request permission to access the motion sensors **before** continuing.
             RSDMotionAuthorization.requestAuthorization() { [weak self] (status, _) in
                 if status.isDenied() {
-                    self?._handleUnauthorized(status, permission!)
+                    self?.handleAuthorizationFailed(status: status, permission: permission!)
                 } else {
                     self?._super_goForward()
                 }
             }
 
         default:
-            self._handleUnauthorized(status, permission!)
+            self.handleAuthorizationFailed(status: status, permission: permission!)
         }
     }
 
     func _super_goForward() {
         super.goForward()
-    }
-    
-    func _handleUnauthorized(_ status: RSDAuthorizationStatus, _ permission: RSDStandardPermission) {
-        let settingsMessage = (status == .restricted) ? permission.restrictedMessage : permission.deniedMessage
-        let message: String = {
-            guard let reason = permission.reason else { return settingsMessage }
-            return "\(reason)\n\n\(settingsMessage)"
-        }()
-        self.presentAlertWithOk(title: "Not Authorized", message: message) { (_) in
-            self.cancelTask(shouldSave: false)
-        }
     }
     
     // This variable was needed because the iPhone X lays out the subviews twice. The second
