@@ -387,21 +387,21 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDMotionRecorder.swift",
-      "line": 472,
+      "line": 498,
       "symbol": "RSDVector.x",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDMotionRecorder.swift",
-      "line": 473,
+      "line": 499,
       "symbol": "RSDVector.y",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDMotionRecorder.swift",
-      "line": 474,
+      "line": 500,
       "symbol": "RSDVector.z",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
