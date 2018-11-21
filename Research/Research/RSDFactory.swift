@@ -96,6 +96,7 @@ open class RSDFactory {
     ///     - schemaInfo: The schema info for the task.
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDTaskResourceTransformer`
     open func decodeTask(with resourceTransformer: RSDResourceTransformer, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil) throws -> RSDTask {
         let (data, type) = try resourceTransformer.resourceData()
         return try decodeTask(with: data,
@@ -117,6 +118,7 @@ open class RSDFactory {
     ///     - schemaInfo:      The schema info for the task.
     /// - returns: The decoded task.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDTaskResourceTransformer`
     open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, bundle: Bundle? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo, bundle: bundle)
         let task = try decoder.decode(RSDTaskObject.self, from: data)
@@ -141,6 +143,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The task info created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDTaskGroupObject`
     open func decodeTaskInfo(from decoder: Decoder) throws -> RSDTaskInfo {
         return try RSDTaskInfoObject(from: decoder)
     }
@@ -153,6 +156,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The schema info created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDTaskResultObject`
     open func decodeSchemaInfo(from decoder: Decoder) throws -> RSDSchemaInfo {
         return try RSDSchemaInfoObject(from: decoder)
     }
@@ -197,6 +201,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step navigator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDTaskObject`
     open func decodeStepNavigator(from decoder: Decoder) throws -> RSDStepNavigator {
         guard let name = try typeName(from: decoder) else {
             return try RSDConditionalStepNavigatorObject(from: decoder)
@@ -225,6 +230,7 @@ open class RSDFactory {
     /// - parameter container: The unkeyed container with the steps.
     /// - returns: An array of the steps.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDConditionalStepNavigatorObject`, `RSDSectionStepObject`
     public func decodeSteps(from container: UnkeyedDecodingContainer) throws -> [RSDStep] {
         var steps : [RSDStep] = []
         var stepsContainer = container
@@ -321,6 +327,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The step (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDFormUIStepObject`
     open func decodeInputField(from decoder: Decoder) throws -> RSDInputField? {
         let dataType = try RSDInputFieldObject.dataType(from: decoder)
         let inputField = try decodeInputField(from: decoder, with: dataType)
@@ -408,6 +415,7 @@ open class RSDFactory {
     ///     - dataType: The data type associated with this instance.
     /// - returns: An array of survey rules.
     /// - throws: `DecodingError`
+    /// - seealso: `RSDInputFieldObject`
     open func decodeSurveyRules(from rulesContainer: UnkeyedDecodingContainer, for dataType: RSDFormDataType) throws -> [RSDSurveyRule] {
         var container = rulesContainer
         var surveyRules = [RSDSurveyRule]()
@@ -460,6 +468,7 @@ open class RSDFactory {
     ///     - dataType: The data type associated with this instance.
     /// - returns: An appropriate instance of `RSDRange`.
     /// - throws: `DecodingError`
+    /// - seealso: `RSDInputFieldObject`
     open func decodeRange(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDRange? {
         switch dataType.baseType {
         case .integer, .decimal, .fraction:
@@ -494,6 +503,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The text validator created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDTextFieldOptionsObject`
     open func decodeTextValidator(from decoder: Decoder) throws -> RSDTextValidator? {
         return try RSDRegExValidatorObject(from: decoder)
     }
@@ -507,6 +517,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The number formatter created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDNumberRangeObject`
     open func decodeNumberFormatter(from decoder: Decoder) throws -> NumberFormatter {
         return try NumberFormatter(from: decoder)
     }
@@ -522,6 +533,7 @@ open class RSDFactory {
     ///     - objectType: The object type to which this action should be cast.
     /// - returns: The UI action created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDUIActionHandlerObject`
     open func decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
         guard let str = try? self.typeName(from: decoder), let typeName = str else {
             let obj = try _deprecated_decodeUIAction(from: decoder, for: actionType)
@@ -584,6 +596,7 @@ open class RSDFactory {
     ///     - decoder: The decoder to use to instantiate the object.
     /// - returns: The UI color theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDUIStepObject`
     open func decodeColorThemeElement(from decoder:Decoder) throws -> RSDColorThemeElement? {
         return try _decodeResource(RSDColorThemeElementObject.self, from: decoder)
     }
@@ -594,6 +607,7 @@ open class RSDFactory {
     ///     - decoder: The decoder to use to instantiate the object.
     /// - returns: The UI view theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDUIStepObject`
     open func decodeViewThemeElement(from decoder:Decoder) throws -> RSDViewThemeElement? {
         return try _decodeResource(RSDViewThemeElementObject.self, from: decoder)
     }
@@ -604,6 +618,7 @@ open class RSDFactory {
     ///     - decoder: The decoder to use to instantiate the object.
     /// - returns: The UI image theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDUIStepObject`
     open func decodeImageThemeElement(from decoder:Decoder) throws -> RSDImageThemeElement? {
         guard let str = try? self.typeName(from: decoder), let typeName = str else {
             let obj = try _deprecated_decodeImageThemeElement(from: decoder)
@@ -657,6 +672,7 @@ open class RSDFactory {
     /// - parameter decoder: The decoder to use to instantiate the object.
     /// - returns: The configuration (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDTaskObject`, `RSDSectionStepObject`
     open func decodeAsyncActionConfiguration(from decoder:Decoder) throws -> RSDAsyncActionConfiguration? {
         guard let typeName = try typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding an async action without a `type` key defining a value for the the class name.")
@@ -700,6 +716,7 @@ open class RSDFactory {
     /// - parameter container: The unkeyed container with the results.
     /// - returns: An array of the results.
     /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDTaskResultObject`, `RSDCollectionResultObject`
     public func decodeResults(from container: UnkeyedDecodingContainer) throws -> [RSDResult] {
         var results : [RSDResult] = []
         var mutableContainer = container
@@ -789,6 +806,7 @@ open class RSDFactory {
         return rsd_ISO8601TimestampFormatter
     }
     
+    /// The default coding strategy to use for non-conforming elements.
     open var nonConformingCodingStrategy: (positiveInfinity: String, negativeInfinity: String, nan: String)
         = ("Infinity", "-Infinity", "NaN")
 
