@@ -177,7 +177,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDChoiceInputFieldObject.self, from: json)
+            let object = try decoder.decode(RSDChoiceInputFieldObject<String>.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.dataType, .collection(.multipleChoice, .string))
@@ -228,7 +228,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDChoiceInputFieldObject.self, from: json)
+            let object = try decoder.decode(RSDChoiceInputFieldObject<Int>.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.inputPrompt, "Text")
@@ -289,7 +289,7 @@ class CodableInputFieldObjectTests: XCTestCase {
         
         do {
             
-            let object = try decoder.decode(RSDChoiceInputFieldObject.self, from: json)
+            let object = try decoder.decode(RSDChoiceInputFieldObject<RSDFraction>.self, from: json)
             
             XCTAssertEqual(object.identifier, "foo")
             XCTAssertEqual(object.inputPrompt, "Text")

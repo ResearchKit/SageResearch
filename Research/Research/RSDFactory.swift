@@ -344,7 +344,24 @@ open class RSDFactory {
                 return try RSDMultipleComponentInputFieldObject(from: decoder)
                 
             case .multipleChoice, .singleChoice:
-                return try RSDChoiceInputFieldObject(from: decoder)
+                switch dataType.baseType {
+                case .boolean:
+                    return try RSDChoiceInputFieldObject<Bool>(from: decoder)
+                case .string:
+                    return try RSDChoiceInputFieldObject<String>(from: decoder)
+                case .date:
+                    return try RSDChoiceInputFieldObject<Date>(from: decoder)
+                case .decimal, .duration:
+                    return try RSDChoiceInputFieldObject<Double>(from: decoder)
+                case .fraction:
+                    return try RSDChoiceInputFieldObject<RSDFraction>(from: decoder)
+                case .integer, .year:
+                    return try RSDChoiceInputFieldObject<Int>(from: decoder)
+                case .codable:
+                    let codingPath = decoder.codingPath
+                    let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Input field choices for a .codable data type are not supported by this factory: \(self).")
+                    throw DecodingError.typeMismatch(Codable.self, context)
+                }
             }
             
         case .detail(_):
@@ -493,7 +510,7 @@ open class RSDFactory {
     open func decodeNumberFormatter(from decoder: Decoder) throws -> NumberFormatter {
         return try NumberFormatter(from: decoder)
     }
-    
+
     
     // MARK: UI action factory
     

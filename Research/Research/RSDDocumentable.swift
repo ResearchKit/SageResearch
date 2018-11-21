@@ -81,12 +81,6 @@ public struct RSDDocumentCreator {
             RSDWeekday.self,
             ]
         
-        #if os(iOS)
-            let iOSEnums: [RSDDocumentableIntEnum.Type] = [
-                ]
-            allEnums.append(contentsOf: iOSEnums)
-        #endif
-        
         return allEnums
     }()
     
@@ -148,6 +142,7 @@ public struct RSDDocumentCreator {
         RSDComparableSurveyRuleObject<Date>.self,
         RSDComparableSurveyRuleObject<Double>.self,
         RSDComparableSurveyRuleObject<Int>.self,
+        RSDComparableSurveyRuleObject<RSDFraction>.self,
         RSDUIStepObject.self,
         RSDActiveUIStepObject.self,
         RSDFormUIStepObject.self,
@@ -157,7 +152,12 @@ public struct RSDDocumentCreator {
         RSDStepTransformerObject.self,
         RSDInputFieldObject.self,
         RSDDetailInputFieldObject.self,
-        RSDChoiceInputFieldObject.self,
+        RSDChoiceInputFieldObject<Bool>.self,
+        RSDChoiceInputFieldObject<String>.self,
+        RSDChoiceInputFieldObject<Date>.self,
+        RSDChoiceInputFieldObject<Double>.self,
+        RSDChoiceInputFieldObject<Int>.self,
+        RSDComparableSurveyRuleObject<RSDFraction>.self,
         RSDMultipleComponentInputFieldObject.self,
         RSDSchemaInfoObject.self,
         RSDConditionalStepNavigatorObject.self,

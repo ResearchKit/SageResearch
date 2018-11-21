@@ -146,7 +146,12 @@ extension RSDComparable {
         // Otherwise, look at the base type
         switch answerType.baseType {
         case .string:
-            return "\(answerValue)" as NSString
+            if let comparableValue = answerValue as? CustomStringConvertible {
+                return comparableValue.description
+            }
+            else {
+                return "\(answerValue)" as NSString
+            }
         case .date:
             if let date = answerValue as? NSDate {
                 return date
