@@ -158,48 +158,9 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     /// - parameter decoder: The decoder used to decode this object.
     /// - returns: The decoded `RSDFormDataType` data type.
     /// - throws: `DecodingError` if the data type field is missing or is not a `String`.
-    open class func dataType(from decoder: Decoder) throws -> RSDFormDataType {
+    public final class func dataType(from decoder: Decoder) throws -> RSDFormDataType {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         return try container.decode(RSDFormDataType.self, forKey: .dataType)
-    }
-    
-    /// Overridable class function for decoding the range from the decoder. The default implementation will key to
-    /// `CodingKeys.range` and will decode a range object appropriate to the data type.
-    ///
-    /// | RSDFormDataType.BaseType      | Type of range to decode                                    |
-    /// |-------------------------------|:----------------------------------------------------------:|
-    /// | .integer, .decimal, .fraction | `RSDNumberRangeObject`                                     |
-    /// | .date                         | `RSDDateRangeObject`                                       |
-    /// | .year                         | `RSDDateRangeObject` or `RSDNumberRangeObject`             |
-    /// | .duration                     | `RSDDurationRangeObject`                                   |
-    ///
-    /// - parameters:
-    ///     - decoder: The decoder used to decode this object.
-    ///     - dataType: The data type associated with this instance.
-    /// - returns: An appropriate instance of `RSDRange` or `nil` if none is present.
-    /// - throws: `DecodingError`
-    open class func range(from decoder: Decoder, dataType: RSDFormDataType) throws -> RSDRange? {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        switch dataType.baseType {
-        case .integer, .decimal, .fraction:
-            return try container.decodeIfPresent(RSDNumberRangeObject.self, forKey: .range)
-        case .duration:
-            return try container.decodeIfPresent(RSDDurationRangeObject.self, forKey: .range)
-        case .date:
-            return try container.decodeIfPresent(RSDDateRangeObject.self, forKey: .range)
-        case .year:
-            // For a year data type, we first need to check if there is a min/max range set using the date
-            // and if so, return that. The decoder could fail to find any property keys and not fail to
-            // decode because everything in the range is optional.
-            if let dateRange = try container.decodeIfPresent(RSDDateRangeObject.self, forKey: .range),
-                (dateRange.minimumDate != nil || dateRange.maximumDate != nil) {
-                return dateRange
-            } else {
-                return try container.decodeIfPresent(RSDNumberRangeObject.self, forKey: .range)
-            }
-        case .string, .boolean, .codable:
-            return nil
-        }
     }
     
     /// Overridable class function for decoding the `RSDTextFieldOptions` from the decoder. The default implementation
@@ -233,87 +194,6 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
         }
     }
     
-    /// Overridable class function for decoding a list of survey rules from the decoder for this instance.
-    /// The default implementation will check the container for a keyed array using `CodingKeys.surveyRules`
-    /// and will instantiate a list of `RSDComparableSurveyRuleObject` instances appropriate to the `BaseType`
-    /// of the given data type.
-    ///
-    /// If there isn't a list keyed to `CodingKeys.surveyRules` then the decoder will be tested to see if it
-    /// contains the keys for a `RSDComparableSurveyRuleObject` instance.
-    ///
-    /// - example:
-    ///
-    /// The following will decode as a `RSDComparableSurveyRuleObject<String>` because of the "matchingAnswer" key.
-    ///
-    ///     ````
-    ///     {
-    ///     "identifier": "foo",
-    ///     "prompt": "Text",
-    ///     "placeholder": "enter text",
-    ///     "type": "singleChoice.string",
-    ///     "choices" : ["never", "sometimes", "often", "always"],
-    ///     "matchingAnswer": "never"
-    ///     }
-    ///     ````
-    ///
-    /// The following will decode as an array of `[RSDComparableSurveyRuleObject<Int>]` because of the "surveyRules" key.
-    ///
-    ///     ````
-    ///        {
-    ///            "identifier": "foo",
-    ///            "type": "integer",
-    ///            "uiHint": "slider",
-    ///            "range" : { "minimumValue" : -2,
-    ///                        "maximumValue" : 3,
-    ///                        "stepInterval" : 1,
-    ///                        "unit" : "feet" },
-    ///            "surveyRules" : [
-    ///                            {
-    ///                            "skipToIdentifier": "lessThan",
-    ///                            "ruleOperator": "lt",
-    ///                            "matchingAnswer": 0
-    ///                            },
-    ///                            {
-    ///                            "skipToIdentifier": "greaterThan",
-    ///                            "ruleOperator": "gt",
-    ///                            "matchingAnswer": 1
-    ///                            }
-    ///                            ]
-    ///        }
-    ///     ````
-    ///
-    /// - parameters:
-    ///     - decoder: The decoder used to decode this object.
-    ///     - dataType: The data type associated with this instance.
-    /// - returns: An array of `RSDComparableSurveyRuleObject` objects or `nil` if none are present.
-    /// - throws: `DecodingError`
-    open class func surveyRules(from decoder: Decoder, dataType: RSDFormDataType) throws -> [RSDSurveyRule]? {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        if container.contains(.surveyRules) {
-            switch dataType.baseType {
-            case .boolean:
-                return try container.decode([RSDComparableSurveyRuleObject<Bool>].self, forKey: .surveyRules)
-            case .string:
-                return try container.decode([RSDComparableSurveyRuleObject<String>].self, forKey: .surveyRules)
-            case .date:
-                return try container.decode([RSDComparableSurveyRuleObject<Date>].self, forKey: .surveyRules)
-            case .decimal, .duration:
-                return try container.decode([RSDComparableSurveyRuleObject<Double>].self, forKey: .surveyRules)
-            case .fraction:
-                return try container.decode([RSDComparableSurveyRuleObject<RSDFraction>].self, forKey: .surveyRules)
-            case .integer, .year:
-                return try container.decode([RSDComparableSurveyRuleObject<Int>].self, forKey: .surveyRules)
-            case .codable:
-                var codingPath = decoder.codingPath
-                codingPath.append(CodingKeys.surveyRules)
-                let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Survey rules for a .codable data type are not supported.")
-                throw DecodingError.typeMismatch(Codable.self, context)
-            }
-        }
-
-        return nil
-    }
-    
     /// Initialize from a `Decoder`. This decoding method will decode all the properties for this
     /// input field.
     ///
@@ -322,11 +202,8 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
     public required init(from decoder: Decoder) throws {
         
         let dataType = try type(of: self).dataType(from: decoder)
-        let range = try type(of: self).range(from: decoder, dataType: dataType)
-        let textFieldOptions = try type(of: self).textFieldOptions(from: decoder, dataType: dataType)
-        let surveyRules = try type(of: self).surveyRules(from: decoder, dataType: dataType)
-
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let factory = decoder.factory
         
         // Look to the form step for an identifier.
         if !container.contains(.identifier),
@@ -337,11 +214,27 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             self.identifier = try container.decode(String.self, forKey: .identifier)
         }
         
+        // Decode the survey rules from the factory.
+        if container.contains(.surveyRules) {
+            let nestedContainer = try container.nestedUnkeyedContainer(forKey: .surveyRules)
+            self.surveyRules = try factory.decodeSurveyRules(from: nestedContainer, for: dataType)
+        }
+        else {
+             self.surveyRules = nil
+        }
+        
+        // Decode the range from the factory.
+        if container.contains(.range) {
+            let nestedDecoder = try container.superDecoder(forKey: .range)
+            self.range = try factory.decodeRange(from: nestedDecoder, for: dataType)
+        }
+        else {
+            self.range = nil
+        }
+        
         self.dataType = dataType
         self.inputUIHint = try container.decodeIfPresent(RSDFormUIHint.self, forKey: .inputUIHint)
-        self.range = range
-        self.textFieldOptions = textFieldOptions
-        self.surveyRules = surveyRules
+        self.textFieldOptions = try type(of: self).textFieldOptions(from: decoder, dataType: dataType)
         self.inputPrompt = try container.decodeIfPresent(String.self, forKey: .inputPrompt)
         self.inputPromptDetail = try container.decodeIfPresent(String.self, forKey: .inputPromptDetail)
         self.placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder)
@@ -457,7 +350,7 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
             case .duration:
                 return [ "identifier" : "timeIntervalExample",
                          "prompt" : "This is a time interval input field",
-                         "type" : "timeInterval",
+                         "type" : "duration",
                          "uiHint" : "picker",
                          "placeholderText" : "select a time interval",
                          "range" : [ "minimumValue" : 0,

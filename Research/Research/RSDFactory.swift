@@ -356,6 +356,119 @@ open class RSDFactory {
     }
     
     
+    // MARK: Survey rules
+    
+    /// Overridable function for decoding a list of survey rules from the decoder a given input field.
+    /// The default implementation will instantiate a list of `RSDComparableSurveyRuleObject` instances
+    /// appropriate to the `BaseType` of the given data type.
+    ///
+    /// - example:
+    ///
+    /// The following will decode as an array of `[RSDComparableSurveyRuleObject<Int>]` because of the
+    /// "surveyRules" key.
+    ///
+    ///     ````
+    ///        {
+    ///            "identifier": "foo",
+    ///            "type": "integer",
+    ///            "surveyRules" : [
+    ///                            {
+    ///                            "skipToIdentifier": "lessThan",
+    ///                            "ruleOperator": "lt",
+    ///                            "matchingAnswer": 0
+    ///                            },
+    ///                            {
+    ///                            "skipToIdentifier": "greaterThan",
+    ///                            "ruleOperator": "gt",
+    ///                            "matchingAnswer": 1
+    ///                            }
+    ///                            ]
+    ///        }
+    ///     ````
+    ///
+    /// - parameters:
+    ///     - rulesContainer: The unkeyed container for the survey rules.
+    ///     - dataType: The data type associated with this instance.
+    /// - returns: An array of survey rules.
+    /// - throws: `DecodingError`
+    open func decodeSurveyRules(from rulesContainer: UnkeyedDecodingContainer, for dataType: RSDFormDataType) throws -> [RSDSurveyRule] {
+        var container = rulesContainer
+        var surveyRules = [RSDSurveyRule]()
+        while !container.isAtEnd {
+            let nestedDecoder = try container.superDecoder()
+            let surveyRule = try self.decodeSurveyRule(from: nestedDecoder, for: dataType)
+            surveyRules.append(surveyRule)
+        }
+        return surveyRules
+    }
+    
+    /// Overridable factory method for returning a survey rule. By default, this will return a
+    /// `RSDComparableSurveyRuleObject` appropriate to the base type of the data type.
+    open func decodeSurveyRule(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDSurveyRule {
+        switch dataType.baseType {
+        case .boolean:
+            return try RSDComparableSurveyRuleObject<Bool>(from: decoder)
+        case .string:
+            return try RSDComparableSurveyRuleObject<String>(from: decoder)
+        case .date:
+            return try RSDComparableSurveyRuleObject<Date>(from: decoder)
+        case .decimal, .duration:
+            return try RSDComparableSurveyRuleObject<Double>(from: decoder)
+        case .fraction:
+            return try RSDComparableSurveyRuleObject<RSDFraction>(from: decoder)
+        case .integer, .year:
+            return try RSDComparableSurveyRuleObject<Int>(from: decoder)
+        case .codable:
+            let codingPath = decoder.codingPath
+            let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Survey rules for a .codable data type are not supported.")
+            throw DecodingError.typeMismatch(Codable.self, context)
+        }
+    }
+    
+    
+    // MARK: Range factory
+    
+    /// Overridable  function for decoding the range from the decoder. The default implementation will
+    /// decode a range object appropriate to the data type.
+    ///
+    /// | RSDFormDataType.BaseType      | Type of range to decode                                    |
+    /// |-------------------------------|:----------------------------------------------------------:|
+    /// | .integer, .decimal, .fraction | `RSDNumberRangeObject`                                     |
+    /// | .date                         | `RSDDateRangeObject`                                       |
+    /// | .year                         | `RSDDateRangeObject` or `RSDNumberRangeObject`             |
+    /// | .duration                     | `RSDDurationRangeObject`                                   |
+    ///
+    /// - parameters:
+    ///     - decoder: The decoder used to decode this object.
+    ///     - dataType: The data type associated with this instance.
+    /// - returns: An appropriate instance of `RSDRange`.
+    /// - throws: `DecodingError`
+    open func decodeRange(from decoder: Decoder, for dataType: RSDFormDataType) throws -> RSDRange? {
+        switch dataType.baseType {
+        case .integer, .decimal, .fraction:
+            return try RSDNumberRangeObject(from: decoder)
+        case .duration:
+            return try RSDDurationRangeObject(from: decoder)
+        case .date:
+            return try RSDDateRangeObject(from: decoder)
+        case .year:
+            // For a year data type, we first need to check if there is a min/max range set using the date
+            // and if so, return that. The decoder could fail to find any property keys and not fail to
+            // decode because everything in the range is optional.
+            if let dateRange = try? RSDDateRangeObject(from: decoder),
+                (dateRange.minimumDate != nil || dateRange.maximumDate != nil) {
+                return dateRange
+            } else {
+                return try RSDNumberRangeObject(from: decoder)
+            }
+        case .string, .boolean, .codable:
+            let codingPath = decoder.codingPath
+            let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Ranges for a \(dataType.baseType) data type are not supported.")
+            throw DecodingError.typeMismatch(Codable.self, context)
+        }
+    }
+    
+    
     // MARK: Text Validator factory
     
     /// Decode the text validator from this decoder. The default implementation will instantiate a
