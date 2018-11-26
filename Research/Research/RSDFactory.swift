@@ -382,14 +382,13 @@ open class RSDFactory {
     
     // MARK: Survey rules
     
-    /// Overridable function for decoding a list of survey rules from the decoder a given input field.
-    /// The default implementation will instantiate a list of `RSDComparableSurveyRuleObject` instances
+    /// Overridable function for decoding a list of survey rules from an unkeyed container for a given data
+    /// type. The default implementation will instantiate a list of `RSDComparableSurveyRuleObject` instances
     /// appropriate to the `BaseType` of the given data type.
     ///
     /// - example:
     ///
-    /// The following will decode as an array of `[RSDComparableSurveyRuleObject<Int>]` because of the
-    /// "surveyRules" key.
+    /// The following will decode the "surveyRules" key as an array of `[RSDComparableSurveyRuleObject<Int>]`.
     ///
     ///     ````
     ///        {

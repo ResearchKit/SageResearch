@@ -348,11 +348,11 @@ open class RSDInputFieldObject : RSDSurveyInputField, RSDMutableInputField, RSDC
                          "matchingAnswer" : 0]
                 
             case .duration:
-                return [ "identifier" : "timeIntervalExample",
-                         "prompt" : "This is a time interval input field",
+                return [ "identifier" : "durationExample",
+                         "prompt" : "This is a duration input field",
                          "type" : "duration",
                          "uiHint" : "picker",
-                         "placeholderText" : "select a time interval",
+                         "placeholderText" : "Select a duration",
                          "range" : [ "minimumValue" : 0,
                                      "maximumValue" : 26,
                                      "unit" : "minute"]]
