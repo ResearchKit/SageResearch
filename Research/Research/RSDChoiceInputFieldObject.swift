@@ -35,12 +35,7 @@ import Foundation
 
 /// `RSDChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses `RSDInputFieldObject`
 /// to include a list of choices for a multiple choice or single choice input field.
-open class RSDChoiceInputFieldObject<T : Codable> : RSDInputFieldObject, RSDChoiceOptions {
-    public typealias Value = T
-    
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case choices, defaultAnswer
-    }
+open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     
     /// A list of choices for the input field.
     public private(set) var choices : [RSDChoice]
@@ -82,6 +77,66 @@ open class RSDChoiceInputFieldObject<T : Codable> : RSDInputFieldObject, RSDChoi
     
     override open func copyInto(_ copy: RSDInputFieldObject) {
         guard let subclassCopy = copy as? RSDChoiceInputFieldObject else {
+            assertionFailure("Failed to cast the class to the subclass.")
+            return
+        }
+        subclassCopy.choices = self.choices
+        subclassCopy.defaultAnswer = self.defaultAnswer
+    }
+    
+    /// Support for non-typed decoding of a choice list.
+    open class func decodeChoices(from decoder: Decoder) throws -> [RSDChoice] {
+        let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Base implementation does not support decoding the choices.")
+        throw DecodingError.typeMismatch([RSDChoice].self, context)
+    }
+    
+    /// Decoding is not supported.
+    public required init(from decoder: Decoder) throws {
+        self.choices = try type(of: self).decodeChoices(from: decoder)
+        try super.init(from: decoder)
+    }
+    
+    /// Encoding is not supported.
+    override open func encode(to encoder: Encoder) throws {
+        let context = EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "Encoding not supported for this subclass.")
+        throw EncodingError.invalidValue(self, context)
+    }
+}
+
+/// `RSDCodableChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses `RSDInputFieldObject`
+/// to include a list of choices for a multiple choice or single choice input field.
+public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputFieldObject, RSDChoiceOptions {
+    public typealias Value = T
+    
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case choices, defaultAnswer
+    }
+    
+    /// A list of choices for the input field.
+    public private(set) var choices : [RSDChoice]
+    
+    /// The default answer associated with this option set.
+    public private(set) var defaultAnswer: Any?
+    
+    /// Override `isOptional` to allow for "nil" behavior if there is only one choice. Otherwise, there isn't
+    /// really a way for the user to **not** select that choice.
+    override public var isOptional: Bool {
+        get {
+            return super.isOptional || self.choices.count <= 1
+        }
+        set {
+            super.isOptional = isOptional
+        }
+    }
+    
+    /// This is a required initializer for copying, but the choices will be an empty array.
+    public required init(identifier: String, dataType: RSDFormDataType) {
+        self.choices = []
+        super.init(identifier: identifier, dataType: dataType)
+    }
+    
+    override public func copyInto(_ copy: RSDInputFieldObject) {
+        guard let subclassCopy = copy as? RSDCodableChoiceInputFieldObject else {
             assertionFailure("Failed to cast the class to the subclass.")
             return
         }
@@ -200,7 +255,7 @@ open class RSDChoiceInputFieldObject<T : Codable> : RSDInputFieldObject, RSDChoi
     /// Encode the result to the given encoder.
     /// - parameter encoder: The encoder to use to encode this instance.
     /// - throws: `EncodingError`
-    override open func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
         var container = encoder.container(keyedBy: CodingKeys.self)
 
