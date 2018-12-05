@@ -353,17 +353,17 @@ open class RSDFactory {
             case .multipleChoice, .singleChoice:
                 switch dataType.baseType {
                 case .boolean:
-                    return try RSDChoiceInputFieldObject<Bool>(from: decoder)
+                    return try RSDCodableChoiceInputFieldObject<Bool>(from: decoder)
                 case .string:
-                    return try RSDChoiceInputFieldObject<String>(from: decoder)
+                    return try RSDCodableChoiceInputFieldObject<String>(from: decoder)
                 case .date:
-                    return try RSDChoiceInputFieldObject<Date>(from: decoder)
+                    return try RSDCodableChoiceInputFieldObject<Date>(from: decoder)
                 case .decimal, .duration:
-                    return try RSDChoiceInputFieldObject<Double>(from: decoder)
+                    return try RSDCodableChoiceInputFieldObject<Double>(from: decoder)
                 case .fraction:
-                    return try RSDChoiceInputFieldObject<RSDFraction>(from: decoder)
+                    return try RSDCodableChoiceInputFieldObject<RSDFraction>(from: decoder)
                 case .integer, .year:
-                    return try RSDChoiceInputFieldObject<Int>(from: decoder)
+                    return try RSDCodableChoiceInputFieldObject<Int>(from: decoder)
                 case .codable:
                     let codingPath = decoder.codingPath
                     let context = DecodingError.Context(codingPath: codingPath, debugDescription: "Input field choices for a .codable data type are not supported by this factory: \(self).")

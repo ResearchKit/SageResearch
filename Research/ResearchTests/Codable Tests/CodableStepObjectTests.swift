@@ -394,7 +394,7 @@ class CodableStepObjectTests: XCTestCase {
                 XCTAssertEqual(object.inputFields[0].dataType, .base(.date))
                 XCTAssertEqual(object.inputFields[1].dataType, .base(.integer))
                 XCTAssertEqual(object.inputFields[2].dataType, .collection(.multipleChoice, .string))
-                XCTAssertNotNil(object.inputFields[2] as? RSDChoiceInputFieldObject<String>)
+                XCTAssertNotNil(object.inputFields[2] as? RSDCodableChoiceInputFieldObject<String>)
             }
             
             if let detail = object.inputFields.last as? RSDDetailInputFieldObject {
@@ -432,7 +432,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.title, "Step 3")
             XCTAssertEqual(object.inputFields.count, 1)
             XCTAssertEqual(object.inputFields.first?.dataType, .collection(.multipleChoice, .string))
-            XCTAssertNotNil(object.inputFields.first as? RSDChoiceInputFieldObject<String>)
+            XCTAssertNotNil(object.inputFields.first as? RSDCodableChoiceInputFieldObject<String>)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
