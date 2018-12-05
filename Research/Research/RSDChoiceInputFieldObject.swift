@@ -33,8 +33,10 @@
 
 import Foundation
 
-/// `RSDChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses `RSDInputFieldObject`
-/// to include a list of choices for a multiple choice or single choice input field.
+/// `RSDChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses
+/// `RSDInputFieldObject` to include a list of choices for a multiple choice or single choice input field. It
+/// is intended to be instantiated with a list of choices but can be subclassed to decode the choices using
+/// a custom decoder.
 open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     
     /// A list of choices for the input field.
@@ -90,7 +92,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
         throw DecodingError.typeMismatch([RSDChoice].self, context)
     }
     
-    /// Decoding is not supported.
+    /// Decoding is not supported without overriding `decodeChoices()`.
     public required init(from decoder: Decoder) throws {
         self.choices = try type(of: self).decodeChoices(from: decoder)
         try super.init(from: decoder)
@@ -103,8 +105,10 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     }
 }
 
-/// `RSDCodableChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses `RSDInputFieldObject`
-/// to include a list of choices for a multiple choice or single choice input field.
+/// `RSDCodableChoiceInputFieldObject` is a concrete implementation of `RSDChoiceInputField` that subclasses
+/// `RSDInputFieldObject` to include a list of choices for a multiple choice or single choice input field.
+/// It is designed to be used by `RSDFactory` or a subclass to encode and decode the choices as a typed array
+/// of `RSDChoiceObject` objects.
 public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputFieldObject, RSDChoiceOptions {
     public typealias Value = T
     
