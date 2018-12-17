@@ -133,6 +133,11 @@ class TaskTableViewController: UITableViewController {
         vc.title = taskInfo.title ?? taskInfo.identifier
         vc.navigationItem.title = vc.title
     }
+    
+    @IBAction func doneTapped(_ sender: Any) {
+        self.dismiss(animated: true) {}
+    }
+    
 }
 
 class ImageTableViewCell : UITableViewCell {
