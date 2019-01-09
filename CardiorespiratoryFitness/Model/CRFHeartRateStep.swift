@@ -42,7 +42,7 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
     }
     
     /// Should the log file include the full pixel matrix or just the averaged value?
-    public var shouldSaveBuffer: Bool = false
+    public var shouldSaveBuffer: Bool = true    // TODO: syoung 01/08/2019 Turn off default for saving the buffer.
     
     /// The camera settings.
     public var cameraSettings : CRFCameraSettings = CRFCameraSettings()

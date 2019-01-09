@@ -83,7 +83,10 @@ const long CRFRedStdDevThreshold = 15.0;
     dispatch_async(_processingQueue, ^{
         @autoreleasepool {
             
+            // TODO: syoung 01/08/2019 Check that the lens is covered and do not record video.
+            
             // Process the sample
+            //BOOL isLensCovered =
             [self processSampleBuffer:sampleBuffer];
             
             // Now, look to see if this sample should be saved to video
@@ -101,6 +104,7 @@ const long CRFRedStdDevThreshold = 15.0;
                 BOOL success = [self->_videoInput appendSampleBuffer:sampleBuffer];
                 if (!success) {
                     NSError *error = self->_assetWriter.error;
+                    NSLog( @"video input failed to append buffer sample. %@", error);
                     @synchronized(self) {
                         [self transitionToStatus:MovieRecorderStatusFailed error:error];
                     }
@@ -203,6 +207,7 @@ const long CRFRedStdDevThreshold = 15.0;
 - (void)startRecordingToURL:(NSURL *)url startTime:(CMTime)time formatDescription:(CMFormatDescriptionRef)formatDescription {
     NSParameterAssert(url != nil);
     NSParameterAssert(formatDescription != nil);
+    NSLog(@"Starting video recording to %@", url);
     
     @synchronized(self) {
         if (_status != MovieRecorderStatusIdle) {
