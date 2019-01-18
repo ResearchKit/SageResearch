@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F830840C21F2686C0055F9B8 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F830840B21F2686C0055F9B8 /* MotorControl.framework */; };
+		F830840D21F2686C0055F9B8 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F830840B21F2686C0055F9B8 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8373C9320964F60004DD4E1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8373C9220964F60004DD4E1 /* README.md */; };
 		F84DDB6D20955672009CC1B8 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6C20955628009CC1B8 /* Photos.framework */; };
 		F84DDB6E2095567C009CC1B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6B20955628009CC1B8 /* AVFoundation.framework */; };
@@ -62,6 +64,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F830840D21F2686C0055F9B8 /* MotorControl.framework in Embed Frameworks */,
 				F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */,
 				F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */,
 			);
@@ -71,6 +74,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F830840B21F2686C0055F9B8 /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8373C9220964F60004DD4E1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F84DDB6920955628009CC1B8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F84DDB6A20955628009CC1B8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -116,6 +120,7 @@
 				F84DDB6E2095567C009CC1B8 /* AVFoundation.framework in Frameworks */,
 				F84DDB6D20955672009CC1B8 /* Photos.framework in Frameworks */,
 				F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */,
+				F830840C21F2686C0055F9B8 /* MotorControl.framework in Frameworks */,
 				F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,6 +238,7 @@
 			children = (
 				F8D42AB52095550C00C6A4BC /* Research.framework */,
 				F8D42AB72095550C00C6A4BC /* ResearchUI.framework */,
+				F830840B21F2686C0055F9B8 /* MotorControl.framework */,
 				F84DDB6C20955628009CC1B8 /* Photos.framework */,
 				F84DDB6B20955628009CC1B8 /* AVFoundation.framework */,
 				F84DDB6920955628009CC1B8 /* CoreLocation.framework */,

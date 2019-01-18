@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F813D6E921BB40D900795664"
+               BuildableName = "MotorControlTests.xctest"
+               BlueprintName = "MotorControlTests"
+               ReferencedContainer = "container:MotorControl.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F813D6E021BB40D900795664"
+            BuildableName = "MotorControl.framework"
+            BlueprintName = "MotorControl"
+            ReferencedContainer = "container:MotorControl.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
