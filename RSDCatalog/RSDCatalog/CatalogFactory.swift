@@ -33,11 +33,62 @@
 
 import Foundation
 import Research
+import MotorControl
 
 /// Stub out a factory for this application. Any factory overrides that are used by the catalog
 /// can be declared here. This stub is intentional so that unit tests will all use this rather
 /// than risk adding it later and having unit tests fail to match the app logic b/c they do not
 /// reference the preferred factory.
 class CatalogFactory : RSDFactory {
+    
+    // TODO: syoung 01/18/2019 Refactor the way factories work to allow registering different factories
+    // for different tasks. For now, just shoehorn it in there.
+    func decodeTaskGroups(from jsonData: Data) throws -> [RSDTaskGroup] {
+        let jsonDecoder = createJSONDecoder()
+        let taskGroups = try jsonDecoder.decode(TaskGroupDecoder.self, from: jsonData)
+        return taskGroups.taskGroups
+    }
+}
+
+
+struct TaskGroupDecoder : Decodable {
+    
+    private enum CodingKeys: String, CodingKey, CaseIterable {
+        case taskGroups
+    }
+    
+    enum TaskGroupType: String, Decodable {
+        case motorControl
+    }
+    
+    let taskGroups: [RSDTaskGroup]
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let factory = decoder.factory
+        
+        var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .taskGroups)
+        var decodedTasks : [RSDTaskGroup] = []
+        while !nestedContainer.isAtEnd {
+            let taskDecoder = try nestedContainer.superDecoder()
+            let task: RSDTaskGroup
+            if let type = try factory.typeName(from: taskDecoder) {
+                guard let groupType = TaskGroupType(rawValue: type) else {
+                    let context = DecodingError.Context(codingPath: taskDecoder.codingPath, debugDescription: "Group type not recognized")
+                    throw DecodingError.dataCorrupted(context)
+                }
+                switch (groupType) {
+                case .motorControl:
+                    task = try MCTTaskGroup(from: taskDecoder)
+                }
+            }
+            else {
+                task = try RSDTaskGroupObject(from: taskDecoder)
+                
+            }
+            decodedTasks.append(task)
+        }
+        self.taskGroups = decodedTasks
+    }
     
 }

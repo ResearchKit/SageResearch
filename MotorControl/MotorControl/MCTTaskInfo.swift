@@ -183,3 +183,26 @@ public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
         return nil
     }
 }
+
+/// `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
+public struct MCTTaskGroup : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
+    
+    private enum CodingKeys: String, CodingKey, CaseIterable {
+        case identifier, title, detail, icon
+    }
+    
+    /// A short string that uniquely identifies the task group.
+    public let identifier: String
+    
+    /// The primary text to display for the task group in a localized string.
+    public let title: String?
+    
+    /// Additional detail text to display for the task group in a localized string.
+    public let detail: String?
+    
+    /// The optional `RSDImageWrapper` with the pointer to the image.
+    public let icon: RSDImageWrapper?
+
+    /// The task group object is 
+    public let tasks: [RSDTaskInfo] = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
+}

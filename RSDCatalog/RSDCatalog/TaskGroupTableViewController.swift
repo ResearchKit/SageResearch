@@ -34,10 +34,11 @@
 import UIKit
 import Research
 
+
 class TaskGroupTableViewController: UITableViewController {
 
     /// The list of task groups included in this catalog.
-    var taskGroups: [RSDTaskGroupObject]!
+    var taskGroups: [RSDTaskGroup]!
     
     override func viewDidLoad() {
         
@@ -47,10 +48,10 @@ class TaskGroupTableViewController: UITableViewController {
             assertionFailure("Failed to open the TaskGroups JSON")
             return
         }
-        RSDFactory.shared = CatalogFactory()
-        let jsonDecoder = RSDFactory.shared.createJSONDecoder()
+        let catalogFactory = CatalogFactory()
+        RSDFactory.shared = catalogFactory
         do {
-            taskGroups = try jsonDecoder.decode([RSDTaskGroupObject].self, from: jsonData)
+            taskGroups = try catalogFactory.decodeTaskGroups(from: jsonData)
         } catch let err {
             assertionFailure("Failed to decode the TaskGroups JSON: \(err)")
         }
@@ -104,4 +105,6 @@ class ImageTableViewCell : UITableViewCell {
     @IBOutlet weak var subtitleLabel: UILabel?
     
 }
+
+
 
