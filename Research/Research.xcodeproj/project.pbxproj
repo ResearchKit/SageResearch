@@ -101,7 +101,6 @@
 		F829F0E71FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = F829F0E21FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m */; };
 		F829F0E81FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = F829F0E21FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m */; };
 		F829F0EA1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F829F0E91FFB4620001B0680 /* PickerDataSourceTests.swift */; };
-		F829F0F61FFC0B2B001B0680 /* NSLocale+UnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */; };
 		F82B1AC120365D5B00FEA16D /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82B1AC020365D5B00FEA16D /* RSDImageVendor.swift */; };
 		F82B1AC220365D5B00FEA16D /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82B1AC020365D5B00FEA16D /* RSDImageVendor.swift */; };
 		F82B1AC320365D5B00FEA16D /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82B1AC020365D5B00FEA16D /* RSDImageVendor.swift */; };
@@ -123,6 +122,7 @@
 		F82D111F212602A700EA1A33 /* RSDNavigationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82D111E212602A700EA1A33 /* RSDNavigationResult.swift */; };
 		F82D1120212602A700EA1A33 /* RSDNavigationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82D111E212602A700EA1A33 /* RSDNavigationResult.swift */; };
 		F82D1121212602A700EA1A33 /* RSDNavigationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82D111E212602A700EA1A33 /* RSDNavigationResult.swift */; };
+		F830841621F2A97A0055F9B8 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F875575620807E2300235078 /* Research_UnitTest.framework */; };
 		F8366D90214042F800EBA88D /* RSDStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8366D8F214042F800EBA88D /* RSDStepViewModel.swift */; };
 		F8366D91214042F800EBA88D /* RSDStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8366D8F214042F800EBA88D /* RSDStepViewModel.swift */; };
 		F8366D92214042F800EBA88D /* RSDStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8366D8F214042F800EBA88D /* RSDStepViewModel.swift */; };
@@ -587,7 +587,6 @@
 		FF633D771FCE7A6900CF2267 /* CodableTaskObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDAE9E21F9082E4001D0CC0 /* CodableTaskObjectTests.swift */; };
 		FF633D781FCE7A6900CF2267 /* FactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF87CD851F8413F700084426 /* FactoryTests.swift */; };
 		FF633D791FCE7A6900CF2267 /* ExampleDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDFF5C41FC38150009713E8 /* ExampleDecodableTests.swift */; };
-		FF633D881FCE7A7300CF2267 /* NavigationTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF411FBB86870018D87F /* NavigationTestObjects.swift */; };
 		FF633D891FCE7A7300CF2267 /* StepControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF421FBB86870018D87F /* StepControllerTests.swift */; };
 		FF633D8A1FCE7A7300CF2267 /* SurveyRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2ACF451FBB8C790018D87F /* SurveyRuleTests.swift */; };
 		FF633D8B1FCE7A7300CF2267 /* TaskControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */; };
@@ -907,7 +906,6 @@
 		F829F0E21FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSUnit+RSDUnitConversion.m"; sourceTree = "<group>"; };
 		F829F0E91FFB4620001B0680 /* PickerDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerDataSourceTests.swift; sourceTree = "<group>"; };
 		F829F0EC1FFC0544001B0680 /* ResearchTests_iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ResearchTests_iOS-Bridging-Header.h"; sourceTree = "<group>"; };
-		F829F0ED1FFC0544001B0680 /* ResearchTests_tvOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ResearchTests_tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		F829F0F41FFC0B2B001B0680 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
 		F82B1AC020365D5B00FEA16D /* RSDImageVendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImageVendor.swift; sourceTree = "<group>"; };
@@ -1159,6 +1157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F830841621F2A97A0055F9B8 /* Research_UnitTest.framework in Frameworks */,
 				FF8B531D1FCE678E006B6937 /* Research.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1299,15 +1298,6 @@
 			name = Formatters;
 			sourceTree = "<group>";
 		};
-		F829F0F31FFC0B0A001B0680 /* Mock Objects */ = {
-			isa = PBXGroup;
-			children = (
-				F829F0F41FFC0B2B001B0680 /* NSLocale+UnitTest.h */,
-				F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */,
-			);
-			path = "Mock Objects";
-			sourceTree = "<group>";
-		};
 		F82D1122212603C800EA1A33 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -1370,6 +1360,9 @@
 			isa = PBXGroup;
 			children = (
 				F875575820807E2300235078 /* Research_UnitTest.h */,
+				FF2ACF411FBB86870018D87F /* NavigationTestObjects.swift */,
+				F829F0F41FFC0B2B001B0680 /* NSLocale+UnitTest.h */,
+				F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */,
 				F875575920807E2300235078 /* Info.plist */,
 			);
 			path = "Research-UnitTest";
@@ -1563,7 +1556,6 @@
 		FF2ACF401FBB86870018D87F /* Navigation Tests */ = {
 			isa = PBXGroup;
 			children = (
-				FF2ACF411FBB86870018D87F /* NavigationTestObjects.swift */,
 				FF2ACF421FBB86870018D87F /* StepControllerTests.swift */,
 				FF2ACF451FBB8C790018D87F /* SurveyRuleTests.swift */,
 				FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */,
@@ -1686,8 +1678,6 @@
 				FF8B53231FCE678E006B6937 /* Info-iOS.plist */,
 				FF8B534C1FCE67C8006B6937 /* Info-tvOS.plist */,
 				F829F0EC1FFC0544001B0680 /* ResearchTests_iOS-Bridging-Header.h */,
-				F829F0ED1FFC0544001B0680 /* ResearchTests_tvOS-Bridging-Header.h */,
-				F829F0F31FFC0B0A001B0680 /* Mock Objects */,
 				FF87CD821F84110800084426 /* Test files */,
 				FF2DA6181F96E7C4006F83C4 /* Codable Tests */,
 				F829F0C41FF71C45001B0680 /* DataSource Tests */,
@@ -2620,7 +2610,6 @@
 				FF633D741FCE7A6900CF2267 /* CodableInputFieldObjectTests.swift in Sources */,
 				FF633D891FCE7A7300CF2267 /* StepControllerTests.swift in Sources */,
 				F8BAF41320488CCA004B9406 /* FormStepTableDataSourceTests.swift in Sources */,
-				FF633D881FCE7A7300CF2267 /* NavigationTestObjects.swift in Sources */,
 				FF633D771FCE7A6900CF2267 /* CodableTaskObjectTests.swift in Sources */,
 				F829F0C61FF71C7B001B0680 /* FormatterTests.swift in Sources */,
 				F84A2F782178FABB0079C92C /* ClockTests.swift in Sources */,
@@ -2633,7 +2622,6 @@
 				FF633D791FCE7A6900CF2267 /* ExampleDecodableTests.swift in Sources */,
 				F810CF3A202E34C6009C49C9 /* CodableDistanceRecorderTests.swift in Sources */,
 				FF633D761FCE7A6900CF2267 /* CodableStepObjectTests.swift in Sources */,
-				F829F0F61FFC0B2B001B0680 /* NSLocale+UnitTest.m in Sources */,
 				FF633D8B1FCE7A7300CF2267 /* TaskControllerTests.swift in Sources */,
 				F829F0DF1FF887C3001B0680 /* UnitConversionTests.swift in Sources */,
 			);
