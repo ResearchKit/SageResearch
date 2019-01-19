@@ -41,7 +41,7 @@ fileprivate var _didAddLocalizationBundle: Bool = false
 
 open class MCTFactory : RSDFactory {
     
-    /// Overrride initialization to add the strings file to the localization bundles.
+    /// Override initialization to add the strings file to the localization bundles.
     public override init() {
         super.init()
         

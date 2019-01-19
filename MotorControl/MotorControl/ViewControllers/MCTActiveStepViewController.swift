@@ -80,7 +80,7 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
         self.view.setNeedsUpdateConstraints()
     }
     
-    /// Updates the unit label text. Choses between the plural and
+    /// Updates the unit label text. Chooses between the plural and
     /// singular label options (in English "SECONDS REMAINING" vs
     /// "SECOND REMAINING").
     open func updateUnitLabelText() {

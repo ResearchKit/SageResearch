@@ -2,6 +2,8 @@
 //  MCTInstructionStepObject.swift
 //  MotorControl
 //
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
 //
@@ -65,7 +67,7 @@ open class MCTInstructionStepObject : RSDActiveUIStepObject, RSDNavigationSkipRu
         try super.init(from: decoder)
     }
     
-    /// Override decode to also decoder whether this step is a first run only instruction.
+    /// Override decode to also decode whether this step is a first run only instruction.
     override open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)

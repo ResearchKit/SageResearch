@@ -44,7 +44,7 @@ public class MCTTappingStepObject: RSDActiveUIStepObject, RSDStepViewControllerV
         return MCTTappingResultObject(identifier: self.identifier)
     }
     
-    /// By default, return the task view controller from the storyboard.
+    /// By default, returns the task view controller from the storyboard.
     public func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
         let bundle = Bundle(for: MCTTappingStepViewController.self)
         let storyboard = UIStoryboard(name: "ActiveTaskSteps", bundle: bundle)
@@ -122,7 +122,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         
     }
     
-    /// Override view will appear to set the unit label text
+    /// Override view will appear to set the unit label text.
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.unitLabel?.text = Localization.localizedString("TAP_COUNT_LABEL")

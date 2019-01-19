@@ -33,7 +33,7 @@
 
 import Foundation
 
-/// Extend RSDSectionStepObject to implements navigation rules for each hand. These sections are
+/// Extend RSDSectionStepObject to implement navigation rules for each hand. These sections are
 /// intended to be used when a study has results from the left and right side of the body, and
 /// needs to randomize which order tests are done in.
 extension RSDSectionStepObject: RSDNavigationSkipRule, RSDNavigationRule {

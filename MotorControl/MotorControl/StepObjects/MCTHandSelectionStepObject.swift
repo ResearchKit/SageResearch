@@ -66,7 +66,7 @@ public class MCTHandSelectionDataSource : RSDFormStepDataSourceObject {
     /// Key for which hands the user said they could use in the task result.
     public static let selectionKey = "handSelection"
     
-    /// Override the initial result to look for the user's previous answer to this quesiton in
+    /// Override the initial result to look for the user's previous answer to this question in
     /// UserDefaults.
     override open var initialResult : RSDCollectionResult? {
         let defaults = UserDefaults.standard
