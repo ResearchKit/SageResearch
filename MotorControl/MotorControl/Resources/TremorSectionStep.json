@@ -1,0 +1,97 @@
+{
+     "identifier":"tremor",
+     "type":"section",
+     "asyncActions":[
+                     {
+                         "identifier":"motion",
+                         "type":"motion",
+                         "requiresBackgroundAudio":true,
+                         "recorderTypes":["accelerometer", "gyro", "gravity", "userAcceleration", "attitude", "rotationRate"]
+                     }
+                    ],
+     "steps":[
+                {
+                    "identifier":"instruction",
+                    "type":"instruction",
+                    "title":"Hold the phone with your %@ hand",
+                    "text":"With your hand in your lap, hold your phone still with the screen facing up.",
+                    "image":{
+                        "type":"fetchable",
+                        "imageName":"HoldPhone-Left",
+                        "placementType":"topMarginBackground"
+                    },
+                    "colorTheme":{
+                        "colorStyle": {
+                            "header": "darkBackground",
+                            "body": "lightBackground",
+                            "footer": "lightBackground"
+                        }
+                    },
+                    "viewTheme":{
+                        "viewIdentifier":"Instruction",
+                        "storyboardIdentifier":"ActiveTaskSteps"
+                    },
+                    "actions":{
+                        "goForward":{
+                            "type":"default",
+                            "buttonTitle":"Hold phone"
+                        }
+                    }
+              },
+              {
+                  "identifier":"countdown",
+                  "type":"countdown",
+                  "text":"Begin in...",
+                  "image":{
+                      "type":"fetchable",
+                      "imageName":"HoldPhone-Left",
+                      "placementType":"fullsizeBackground"
+                  },
+                  "viewTheme":{
+                      "viewIdentifier":"Countdown",
+                      "storyboardIdentifier":"ActiveTaskSteps"
+                  },
+                  "colorTheme":{
+                      "usesLightStyle":true
+                  },
+                  "duration":5,
+                  "commands":["playSoundOnStart", "transitionAutomatically"]
+              },
+              {
+                  "identifier":"tremor",
+                  "type":"active",
+                  "duration":30,
+                  "image":{
+                      "type":"fetchable",
+                      "imageName":"HoldPhone-Left",
+                      "placementType":"fullsizeBackground"
+                  },
+                  "colorTheme":{
+                      "usesLightStyle":true
+                  },
+                  "viewTheme":{
+                      "viewIdentifier":"Action",
+                      "storyboardIdentifier":"ActiveTaskSteps"
+                  },
+                  "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
+                  "actions":{
+                      "skip":{
+                          "type":"navigation",
+                          "skipToIdentifier":"tremor",
+                          "buttonTitle": "Restart test"
+                      },
+                      "learnMore":{
+                          "type":"navigation",
+                          "skipToIdentifier": "holdPhoneInstructions",
+                          "buttonTitle": "Review instructions"
+                      }
+                  },
+                  "title": "Hold the phone still in your %@ hand.",
+                  "spokenInstructions":{
+                      "start":"With your %@ hand in your lap, keep holding your phone with the screen facing up for 30 seconds.",
+                      "halfway":"Halfway done.",
+                      "23":"Almost done."
+                  }
+               }
+            ]
+ }

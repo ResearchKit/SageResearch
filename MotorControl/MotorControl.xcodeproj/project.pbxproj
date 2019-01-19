@@ -1,0 +1,638 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F813D6EB21BB40D900795664 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F813D6E121BB40D900795664 /* MotorControl.framework */; };
+		F813D6F221BB40D900795664 /* MotorControl.h in Headers */ = {isa = PBXBuildFile; fileRef = F813D6E421BB40D900795664 /* MotorControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F813D6FE21BB416C00795664 /* MCTTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F813D6FC21BB416C00795664 /* MCTTaskInfo.swift */; };
+		F813D6FF21BB416C00795664 /* MCTFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F813D6FD21BB416C00795664 /* MCTFactory.swift */; };
+		F813D70E21BB419E00795664 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F813D70C21BB419D00795664 /* NavigationTests.swift */; };
+		F813D70F21BB419E00795664 /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F813D70D21BB419E00795664 /* ResourceTests.swift */; };
+		F8E3B7FA21BB45010004284E /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7F921BB45010004284E /* Research.framework */; };
+		F8E3B7FC21BB450B0004284E /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7FB21BB450B0004284E /* ResearchUI.framework */; };
+		F8E3B80821BB45630004284E /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B80721BB45630004284E /* Research_UnitTest.framework */; };
+		F8E3B81221BB46590004284E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B80A21BB46590004284E /* Images.xcassets */; };
+		F8E3B81321BB46590004284E /* TappingSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B80B21BB46590004284E /* TappingSectionStep.json */; };
+		F8E3B81421BB46590004284E /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B80C21BB46590004284E /* Tremor.json */; };
+		F8E3B81521BB46590004284E /* ActiveTaskSteps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B80D21BB46590004284E /* ActiveTaskSteps.storyboard */; };
+		F8E3B81621BB46590004284E /* MotorControl.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B80E21BB46590004284E /* MotorControl.strings */; };
+		F8E3B81721BB46590004284E /* TremorSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B80F21BB46590004284E /* TremorSectionStep.json */; };
+		F8E3B81821BB46590004284E /* Walk_And_Balance.json in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B81021BB46590004284E /* Walk_And_Balance.json */; };
+		F8E3B81921BB46590004284E /* Finger_Tapping.json in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B81121BB46590004284E /* Finger_Tapping.json */; };
+		F8E3B81C21BB46BA0004284E /* MCTTappingResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B81B21BB46BA0004284E /* MCTTappingResultObject.swift */; };
+		F8E3B82221BB46F00004284E /* MCTInstructionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B81E21BB46F00004284E /* MCTInstructionStepObject.swift */; };
+		F8E3B82321BB46F00004284E /* MCTSkippableSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B81F21BB46F00004284E /* MCTSkippableSectionStepObject.swift */; };
+		F8E3B82421BB46F00004284E /* MCTHandSelectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82021BB46F00004284E /* MCTHandSelectionStepObject.swift */; };
+		F8E3B82521BB46F00004284E /* MCTOverviewStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82121BB46F00004284E /* MCTOverviewStepObject.swift */; };
+		F8E3B82E21BB472B0004284E /* MCTCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82721BB472B0004284E /* MCTCompletionStepViewController.swift */; };
+		F8E3B82F21BB472B0004284E /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82821BB472B0004284E /* MCTCountdownStepViewController.swift */; };
+		F8E3B83021BB472B0004284E /* MCTInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82921BB472B0004284E /* MCTInstructionStepViewController.swift */; };
+		F8E3B83121BB472B0004284E /* MCTOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82A21BB472B0004284E /* MCTOverviewStepViewController.swift */; };
+		F8E3B83221BB472B0004284E /* MCTActiveStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82B21BB472B0004284E /* MCTActiveStepViewController.swift */; };
+		F8E3B83321BB472B0004284E /* MCTTappingCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82C21BB472B0004284E /* MCTTappingCompletionStepViewController.swift */; };
+		F8E3B83421BB472B0004284E /* MCTTappingStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82D21BB472B0004284E /* MCTTappingStepViewController.swift */; };
+		F8E3B83821BB474F0004284E /* MCTTapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B83621BB474F0004284E /* MCTTapButton.swift */; };
+		F8E3B83921BB474F0004284E /* MCTCompletionGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B83721BB474F0004284E /* MCTCompletionGradient.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F813D6EC21BB40D900795664 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F813D6D821BB40D900795664 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F813D6E021BB40D900795664;
+			remoteInfo = MotorControl;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F813D6E121BB40D900795664 /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F813D6E421BB40D900795664 /* MotorControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MotorControl.h; sourceTree = "<group>"; };
+		F813D6E521BB40D900795664 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F813D6EA21BB40D900795664 /* MotorControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MotorControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F813D6F121BB40D900795664 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F813D6FC21BB416C00795664 /* MCTTaskInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTaskInfo.swift; sourceTree = "<group>"; };
+		F813D6FD21BB416C00795664 /* MCTFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTFactory.swift; sourceTree = "<group>"; };
+		F813D70B21BB419D00795664 /* MotorControlTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MotorControlTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		F813D70C21BB419D00795664 /* NavigationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
+		F813D70D21BB419E00795664 /* ResourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
+		F8E3B7F921BB45010004284E /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8E3B7FB21BB450B0004284E /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8E3B80721BB45630004284E /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8E3B80A21BB46590004284E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MotorControl/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		F8E3B80B21BB46590004284E /* TappingSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = TappingSectionStep.json; path = MotorControl/Resources/TappingSectionStep.json; sourceTree = SOURCE_ROOT; };
+		F8E3B80C21BB46590004284E /* Tremor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Tremor.json; path = MotorControl/Resources/Tremor.json; sourceTree = SOURCE_ROOT; };
+		F8E3B80D21BB46590004284E /* ActiveTaskSteps.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ActiveTaskSteps.storyboard; path = MotorControl/Resources/ActiveTaskSteps.storyboard; sourceTree = SOURCE_ROOT; };
+		F8E3B80E21BB46590004284E /* MotorControl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = MotorControl.strings; path = MotorControl/Resources/MotorControl.strings; sourceTree = SOURCE_ROOT; };
+		F8E3B80F21BB46590004284E /* TremorSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = TremorSectionStep.json; path = MotorControl/Resources/TremorSectionStep.json; sourceTree = SOURCE_ROOT; };
+		F8E3B81021BB46590004284E /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Walk_And_Balance.json; path = MotorControl/Resources/Walk_And_Balance.json; sourceTree = SOURCE_ROOT; };
+		F8E3B81121BB46590004284E /* Finger_Tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Finger_Tapping.json; path = MotorControl/Resources/Finger_Tapping.json; sourceTree = SOURCE_ROOT; };
+		F8E3B81B21BB46BA0004284E /* MCTTappingResultObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTappingResultObject.swift; sourceTree = "<group>"; };
+		F8E3B81E21BB46F00004284E /* MCTInstructionStepObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepObject.swift; sourceTree = "<group>"; };
+		F8E3B81F21BB46F00004284E /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
+		F8E3B82021BB46F00004284E /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
+		F8E3B82121BB46F00004284E /* MCTOverviewStepObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTOverviewStepObject.swift; sourceTree = "<group>"; };
+		F8E3B82721BB472B0004284E /* MCTCompletionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTCompletionStepViewController.swift; sourceTree = "<group>"; };
+		F8E3B82821BB472B0004284E /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
+		F8E3B82921BB472B0004284E /* MCTInstructionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepViewController.swift; sourceTree = "<group>"; };
+		F8E3B82A21BB472B0004284E /* MCTOverviewStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTOverviewStepViewController.swift; sourceTree = "<group>"; };
+		F8E3B82B21BB472B0004284E /* MCTActiveStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTActiveStepViewController.swift; sourceTree = "<group>"; };
+		F8E3B82C21BB472B0004284E /* MCTTappingCompletionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTappingCompletionStepViewController.swift; sourceTree = "<group>"; };
+		F8E3B82D21BB472B0004284E /* MCTTappingStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTappingStepViewController.swift; sourceTree = "<group>"; };
+		F8E3B83621BB474F0004284E /* MCTTapButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTapButton.swift; sourceTree = "<group>"; };
+		F8E3B83721BB474F0004284E /* MCTCompletionGradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTCompletionGradient.swift; sourceTree = "<group>"; };
+		F8E3B83A21BB48690004284E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F813D6DE21BB40D900795664 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8E3B7FC21BB450B0004284E /* ResearchUI.framework in Frameworks */,
+				F8E3B7FA21BB45010004284E /* Research.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F813D6E721BB40D900795664 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8E3B80821BB45630004284E /* Research_UnitTest.framework in Frameworks */,
+				F813D6EB21BB40D900795664 /* MotorControl.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F813D6D721BB40D900795664 = {
+			isa = PBXGroup;
+			children = (
+				F813D6E321BB40D900795664 /* MotorControl */,
+				F813D6EE21BB40D900795664 /* MotorControlTests */,
+				F813D6E221BB40D900795664 /* Products */,
+				F8E3B7F821BB45010004284E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F813D6E221BB40D900795664 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F813D6E121BB40D900795664 /* MotorControl.framework */,
+				F813D6EA21BB40D900795664 /* MotorControlTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F813D6E321BB40D900795664 /* MotorControl */ = {
+			isa = PBXGroup;
+			children = (
+				F813D6E421BB40D900795664 /* MotorControl.h */,
+				F8E3B83A21BB48690004284E /* README.md */,
+				F813D6FD21BB416C00795664 /* MCTFactory.swift */,
+				F813D6FC21BB416C00795664 /* MCTTaskInfo.swift */,
+				F813D6E521BB40D900795664 /* Info.plist */,
+				F8E3B81D21BB46CD0004284E /* StepObjects */,
+				F8E3B81A21BB466D0004284E /* ResultObjects */,
+				F8E3B82621BB47030004284E /* ViewControllers */,
+				F8E3B83521BB47350004284E /* Views */,
+				F8E3B80921BB46250004284E /* Resources */,
+			);
+			path = MotorControl;
+			sourceTree = "<group>";
+		};
+		F813D6EE21BB40D900795664 /* MotorControlTests */ = {
+			isa = PBXGroup;
+			children = (
+				F813D70B21BB419D00795664 /* MotorControlTests-Bridging-Header.h */,
+				F813D70C21BB419D00795664 /* NavigationTests.swift */,
+				F813D70D21BB419E00795664 /* ResourceTests.swift */,
+				F813D6F121BB40D900795664 /* Info.plist */,
+			);
+			path = MotorControlTests;
+			sourceTree = "<group>";
+		};
+		F8E3B7F821BB45010004284E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F8E3B80721BB45630004284E /* Research_UnitTest.framework */,
+				F8E3B7FB21BB450B0004284E /* ResearchUI.framework */,
+				F8E3B7F921BB45010004284E /* Research.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F8E3B80921BB46250004284E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F8E3B80D21BB46590004284E /* ActiveTaskSteps.storyboard */,
+				F8E3B81121BB46590004284E /* Finger_Tapping.json */,
+				F8E3B80A21BB46590004284E /* Images.xcassets */,
+				F8E3B80E21BB46590004284E /* MotorControl.strings */,
+				F8E3B80B21BB46590004284E /* TappingSectionStep.json */,
+				F8E3B80C21BB46590004284E /* Tremor.json */,
+				F8E3B80F21BB46590004284E /* TremorSectionStep.json */,
+				F8E3B81021BB46590004284E /* Walk_And_Balance.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F8E3B81A21BB466D0004284E /* ResultObjects */ = {
+			isa = PBXGroup;
+			children = (
+				F8E3B81B21BB46BA0004284E /* MCTTappingResultObject.swift */,
+			);
+			path = ResultObjects;
+			sourceTree = "<group>";
+		};
+		F8E3B81D21BB46CD0004284E /* StepObjects */ = {
+			isa = PBXGroup;
+			children = (
+				F8E3B82021BB46F00004284E /* MCTHandSelectionStepObject.swift */,
+				F8E3B81E21BB46F00004284E /* MCTInstructionStepObject.swift */,
+				F8E3B82121BB46F00004284E /* MCTOverviewStepObject.swift */,
+				F8E3B81F21BB46F00004284E /* MCTSkippableSectionStepObject.swift */,
+			);
+			path = StepObjects;
+			sourceTree = "<group>";
+		};
+		F8E3B82621BB47030004284E /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F8E3B82B21BB472B0004284E /* MCTActiveStepViewController.swift */,
+				F8E3B82721BB472B0004284E /* MCTCompletionStepViewController.swift */,
+				F8E3B82821BB472B0004284E /* MCTCountdownStepViewController.swift */,
+				F8E3B82921BB472B0004284E /* MCTInstructionStepViewController.swift */,
+				F8E3B82A21BB472B0004284E /* MCTOverviewStepViewController.swift */,
+				F8E3B82C21BB472B0004284E /* MCTTappingCompletionStepViewController.swift */,
+				F8E3B82D21BB472B0004284E /* MCTTappingStepViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F8E3B83521BB47350004284E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F8E3B83721BB474F0004284E /* MCTCompletionGradient.swift */,
+				F8E3B83621BB474F0004284E /* MCTTapButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F813D6DC21BB40D900795664 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F813D6F221BB40D900795664 /* MotorControl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F813D6E021BB40D900795664 /* MotorControl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F813D6F521BB40D900795664 /* Build configuration list for PBXNativeTarget "MotorControl" */;
+			buildPhases = (
+				F813D6DC21BB40D900795664 /* Headers */,
+				F813D6DD21BB40D900795664 /* Sources */,
+				F813D6DE21BB40D900795664 /* Frameworks */,
+				F813D6DF21BB40D900795664 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MotorControl;
+			productName = MotorControl;
+			productReference = F813D6E121BB40D900795664 /* MotorControl.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F813D6E921BB40D900795664 /* MotorControlTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F813D6F821BB40D900795664 /* Build configuration list for PBXNativeTarget "MotorControlTests" */;
+			buildPhases = (
+				F813D6E621BB40D900795664 /* Sources */,
+				F813D6E721BB40D900795664 /* Frameworks */,
+				F813D6E821BB40D900795664 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F813D6ED21BB40D900795664 /* PBXTargetDependency */,
+			);
+			name = MotorControlTests;
+			productName = MotorControlTests;
+			productReference = F813D6EA21BB40D900795664 /* MotorControlTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F813D6D821BB40D900795664 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = "Sage Bionetworks";
+				TargetAttributes = {
+					F813D6E021BB40D900795664 = {
+						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
+					};
+					F813D6E921BB40D900795664 = {
+						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
+					};
+				};
+			};
+			buildConfigurationList = F813D6DB21BB40D900795664 /* Build configuration list for PBXProject "MotorControl" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F813D6D721BB40D900795664;
+			productRefGroup = F813D6E221BB40D900795664 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F813D6E021BB40D900795664 /* MotorControl */,
+				F813D6E921BB40D900795664 /* MotorControlTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F813D6DF21BB40D900795664 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8E3B81921BB46590004284E /* Finger_Tapping.json in Resources */,
+				F8E3B81621BB46590004284E /* MotorControl.strings in Resources */,
+				F8E3B81221BB46590004284E /* Images.xcassets in Resources */,
+				F8E3B81721BB46590004284E /* TremorSectionStep.json in Resources */,
+				F8E3B81321BB46590004284E /* TappingSectionStep.json in Resources */,
+				F8E3B81821BB46590004284E /* Walk_And_Balance.json in Resources */,
+				F8E3B81421BB46590004284E /* Tremor.json in Resources */,
+				F8E3B81521BB46590004284E /* ActiveTaskSteps.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F813D6E821BB40D900795664 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F813D6DD21BB40D900795664 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8E3B82421BB46F00004284E /* MCTHandSelectionStepObject.swift in Sources */,
+				F8E3B83221BB472B0004284E /* MCTActiveStepViewController.swift in Sources */,
+				F8E3B83921BB474F0004284E /* MCTCompletionGradient.swift in Sources */,
+				F8E3B83121BB472B0004284E /* MCTOverviewStepViewController.swift in Sources */,
+				F8E3B83421BB472B0004284E /* MCTTappingStepViewController.swift in Sources */,
+				F8E3B82E21BB472B0004284E /* MCTCompletionStepViewController.swift in Sources */,
+				F8E3B83021BB472B0004284E /* MCTInstructionStepViewController.swift in Sources */,
+				F8E3B83821BB474F0004284E /* MCTTapButton.swift in Sources */,
+				F8E3B82521BB46F00004284E /* MCTOverviewStepObject.swift in Sources */,
+				F8E3B82321BB46F00004284E /* MCTSkippableSectionStepObject.swift in Sources */,
+				F8E3B81C21BB46BA0004284E /* MCTTappingResultObject.swift in Sources */,
+				F813D6FE21BB416C00795664 /* MCTTaskInfo.swift in Sources */,
+				F8E3B82221BB46F00004284E /* MCTInstructionStepObject.swift in Sources */,
+				F813D6FF21BB416C00795664 /* MCTFactory.swift in Sources */,
+				F8E3B82F21BB472B0004284E /* MCTCountdownStepViewController.swift in Sources */,
+				F8E3B83321BB472B0004284E /* MCTTappingCompletionStepViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F813D6E621BB40D900795664 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F813D70E21BB419E00795664 /* NavigationTests.swift in Sources */,
+				F813D70F21BB419E00795664 /* ResourceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F813D6ED21BB40D900795664 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F813D6E021BB40D900795664 /* MotorControl */;
+			targetProxy = F813D6EC21BB40D900795664 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		F813D6F321BB40D900795664 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F813D6F421BB40D900795664 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		F813D6F621BB40D900795664 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MotorControl/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControl;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F813D6F721BB40D900795664 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MotorControl/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControl;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F813D6F921BB40D900795664 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = MotorControlTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F813D6FA21BB40D900795664 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = MotorControlTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F813D6DB21BB40D900795664 /* Build configuration list for PBXProject "MotorControl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F813D6F321BB40D900795664 /* Debug */,
+				F813D6F421BB40D900795664 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F813D6F521BB40D900795664 /* Build configuration list for PBXNativeTarget "MotorControl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F813D6F621BB40D900795664 /* Debug */,
+				F813D6F721BB40D900795664 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F813D6F821BB40D900795664 /* Build configuration list for PBXNativeTarget "MotorControlTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F813D6F921BB40D900795664 /* Debug */,
+				F813D6FA21BB40D900795664 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F813D6D821BB40D900795664 /* Project object */;
+}

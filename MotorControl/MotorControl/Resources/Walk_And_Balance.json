@@ -1,0 +1,407 @@
+{
+    "identifier":"WalkAndBalance",
+    "shouldHideActions":["goBackward", "skip"],
+    "progressMarkers":["volumeUp", "pantsWithPocket","phoneInPocket.1","walk", "balance"],
+    "steps":[
+             {
+                "identifier":"introduction",
+                "type":"overview",
+                "title":"Walk and Balance",
+                "text":"In this activity you will be walking continuously at your normal pace for 30 seconds,  followed by standing still for 30 seconds.",
+                "permissions":[
+                               {
+                                "permissionType":"motion",
+                                "reason":"Access to Motion and Fitness sensors is required to measure your gait and balance."
+                               }
+                            ],
+                 "image":{
+                     "type":"animated",
+                     "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
+                     "placementType":"topMarginBackground",
+                     "animationDuration":2.5
+                 },
+                "icons": [
+                          {
+                            "icon":"SmoothSurface",
+                            "title": "A SMOOTH SURFACE"
+                          },
+                          {
+                            "icon":"PantsWithPockets",
+                            "title": "PANTS WITH POCKETS"
+                          },
+                          {
+                            "icon":"WalkingShoes",
+                            "title": "WALKING SHOES"
+                          }
+                        ],
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Get started"
+                    },
+                    "skip":{
+                        "type":"reminder",
+                        "reminderIdentifier":"WalkAndBalance"
+                    }
+                 },
+                 "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Overview",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 }
+             },
+             {
+                "identifier":"walkInstructions",
+                "type":"instruction",
+                "title":"First, walk for 30 seconds",
+                "text":"You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
+                "isFirstRunOnly": true,
+                "image":{
+                    "type":"animated",
+                    "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
+                    "placementType":"topMarginBackground",
+                    "animationDuration":2.5
+                },
+                "colorTheme":{
+                    "colorStyle": {
+                        "header": "darkBackground",
+                        "body": "lightBackground",
+                        "footer": "lightBackground"
+                    }
+                },
+                "viewTheme":{
+                    "viewIdentifier":"Instruction",
+                    "storyboardIdentifier":"ActiveTaskSteps"
+                },
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Got it"
+                    }
+                }
+             },
+             {
+                "identifier":"volumeUp",
+                "type":"instruction",
+                "title":"Turn the volume up",
+                "text":"Bring your phone with you and turn up your phone volume so you can hear the instructions while you are walking.",
+                "image":{
+                    "type":"fetchable",
+                    "imageName":"F-TurnUpVolume",
+                    "placementType":"topMarginBackground"
+                },
+                "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                },
+                "viewTheme":{
+                    "viewIdentifier":"Instruction",
+                    "storyboardIdentifier":"ActiveTaskSteps"
+                },
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"The phone’s volume is up"
+                    }
+                }
+             },
+             {
+                 "identifier":"pantsWithPocket",
+                 "type":"instruction",
+                 "title":"Pants with front pockets",
+                 "text":"Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone. If you do not have pockets you can place the phone in the waistband of your pants.",
+                 "image":{
+                     "type":"fetchable",
+                     "imageName":"F-PantsPocket",
+                     "placementType":"topBackground"
+                 },
+                 "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Instruction",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "actions":{
+                     "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Got front pockets"
+                     }
+                 }
+             },
+             {
+                 "identifier":"phoneInPocket.1",
+                 "type":"instruction",
+                 "title":"Put the phone in your pocket",
+                 "image":{
+                     "type":"animated",
+                     "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
+                     "placementType":"topBackground",
+                     "animationDuration":1.5
+                 },
+                 "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Instruction",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "text":"This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
+                 "actions":{
+                     "goForward":{
+                         "type":"default",
+                         "buttonTitle":"Putting it in my pocket"
+                     }
+                 }
+             },
+             {
+                 "identifier":"countdown.1",
+                 "type":"countdown",
+                 "text":"Begin in...",
+                 "image":{
+                     "type":"fetchable",
+                     "imageName":"F-Walking1",
+                     "placementType":"fullsizeBackground"
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Countdown",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "colorTheme":{
+                     "usesLightStyle":true
+                 },
+                 "duration":5,
+                 "commands":["playSoundOnStart", "transitionAutomatically"],
+                 "spokenInstructions":{
+                     "start":"Place the phone in your pocket."
+                 }
+             },
+             {
+                 "identifier":"walk",
+                 "type":"section",
+                 "asyncActions":[
+                                 {
+                                     "identifier":"motion",
+                                     "type":"motion",
+                                     "requiresBackgroundAudio":true,
+                                     "recorderTypes": ["accelerometer", "gyro", "gravity", "userAcceleration", "attitude", "rotationRate"]
+                                 }
+                                ],
+                 "steps":[
+                          {
+                              "identifier":"motion",
+                              "type":"active",
+                              "title":"Walk back and forth",
+                              "duration":30,
+                              "image":{
+                                  "type":"fetchable",
+                                  "imageName":"F-Walking1",
+                                  "placementType":"fullsizeBackground"
+                              },
+                              "colorTheme":{
+                                  "usesLightStyle":true
+                              },
+                              "viewTheme":{
+                                  "viewIdentifier":"Action",
+                                  "storyboardIdentifier":"ActiveTaskSteps"
+                              },
+                              "actions":{
+                                  "skip":{
+                                      "type":"navigation",
+                                      "skipToIdentifier":"countdown.1",
+                                      "buttonTitle": "Restart test"
+                                  },
+                                  "learnMore":{
+                                      "type":"navigation",
+                                      "skipToIdentifier": "walkInstructions",
+                                      "buttonTitle": "Review instructions"
+                                  }
+                              },
+                              "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
+                              "spokenInstructions":{
+                                  "start":"Walk for 30 seconds. If you need to turn back, turn gently around as if you are turning around a cone.",
+                                  "halfway":"Halfway done.",
+                                  "23":"Almost done."
+                              }
+                           }
+                        ]
+             },
+             {
+                 "identifier":"turnAroundInstructions",
+                 "type":"instruction",
+                 "title":"Turn around, and then stand still for the remainder of the 30 seconds",
+                 "text":"You’ll turn 360 degrees and stand still, with your feet shoulder-width apart. Rest your arms by your side and try to avoid moving for the remainder of the 30 seconds.",
+                 "isFirstRunOnly": true,
+                 "image":{
+                     "type":"animated",
+                     "imageNames":["F-Turning1", "F-Turning2", "F-Turning3", "F-Turning4", "F-Turning5", "F-Turning6", "F-Turning7", "F-Turning8", "F-Wait1", "F-Wait2", "F-Wait3"],
+                     "placementType":"topMarginBackground",
+                     "animationDuration":5
+                 },
+                 "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Instruction",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "actions":{
+                     "goForward":{
+                         "type":"default",
+                         "buttonTitle":"Got it"
+                     }
+                 },
+                 "spokenInstructions":{
+                     "start":"Take your phone out to review the instructions for the balance test."
+                 }
+             },
+             {
+                 "identifier":"phoneInPocket.2",
+                 "type":"instruction",
+                 "title":"Put the phone in your pocket",
+                 "text":"This test measures how well you balance and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
+                 "isFirstRunOnly": true,
+                 "image":{
+                     "type":"animated",
+                     "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
+                     "placementType":"topBackground",
+                     "animationDuration":1.5
+                 },
+                 "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Instruction",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "actions":{
+                     "goForward":{
+                         "type":"default",
+                         "buttonTitle":"Putting it in my pocket"
+                     }
+                 }
+             },
+             {
+                 "identifier":"countdown.2",
+                 "type":"countdown",
+                 "text":"Begin in...",
+                 "isFirstRunOnly": true,
+                 "image":{
+                     "type":"fetchable",
+                     "imageName":"F-Turning1",
+                     "placementType":"fullsizeBackground"
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Countdown",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "colorTheme":{
+                     "usesLightStyle":true
+                 },
+                 "duration":5,
+                 "commands":["playSoundOnStart", "transitionAutomatically"],
+                 "spokenInstructions":{
+                     "start":"Place the phone in your pocket."
+                 }
+             },
+             {
+                 "identifier":"balance",
+                 "type":"section",
+                 "asyncActions":[
+                                 {
+                                 "identifier":"motion",
+                                 "type":"motion",
+                                 "requiresBackgroundAudio":true,
+                                 "recorderTypes": ["accelerometer", "gyro", "gravity", "userAcceleration", "attitude", "rotationRate"]
+                                 }
+                                 ],
+                 "steps":[
+                          {
+                              "identifier":"motion",
+                              "type":"active",
+                              "title":"Turn around and then stand still",
+                              "duration":30,
+                              "image":{
+                                  "type":"fetchable",
+                                  "imageName":"F-Turning1",
+                                  "placementType":"fullsizeBackground"
+                              },
+                              "colorTheme":{
+                                  "usesLightStyle":true
+                              },
+                              "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
+                              "viewTheme":{
+                                  "viewIdentifier":"Action",
+                                  "storyboardIdentifier":"ActiveTaskSteps"
+                              },
+                              "actions":{
+                                  "skip":{
+                                      "type":"navigation",
+                                      "skipToIdentifier":"countdown.1",
+                                      "buttonTitle": "Restart test"
+                                  },
+                                  "learnMore":{
+                                      "type":"navigation",
+                                      "skipToIdentifier": "walkInstructions",
+                                      "buttonTitle": "Review instructions"
+                                  }
+                              },
+                              "spokenInstructions":{
+                                  "start":"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to not move.",
+                                  "halfway":"Halfway done.",
+                                  "23":"Almost done."
+                              }
+                       }
+                ]
+             },
+             {
+                 "identifier":"completion",
+                 "type":"completion",
+                 "title":"Great job!",
+                 "text":"You just completed your %@ Walk and Balance activity.",
+                 "image":{
+                     "type":"fetchable",
+                     "imageName":"Completion-WalkAndBalance",
+                     "placementType":"topBackground"
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Completion",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "actions": {
+                     "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Done"
+                     }
+                 },
+                 "spokenInstructions":{
+                     "start":"Great job, you are done with the Walk and Balance test."
+                 }
+             }
+        ]
+}
