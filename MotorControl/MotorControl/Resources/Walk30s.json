@@ -16,9 +16,9 @@
             ],
             "image":{
                 "type":"animated",
-                "imageNames":["F-Walking1", "F-Walking2", "F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
+                "imageNames":["PsorcastWalk1", "PsorcastWalk2", "PsorcastWalk3", "PsorcastWalk4", "PsorcastWalk5","PsorcastWalk6", "PsorcastWalk7", "PsorcastWalk8", "PsorcastWalk9", "PsorcastWalk10"],
                 "placementType":"topMarginBackground",
-                "animationDuration":2.5
+                "animationDuration":5.0
             },
             "icons": [
                 {
@@ -64,9 +64,9 @@
             "isFirstRunOnly": false,
             "image":{
                 "type":"animated",
-                "imageNames":["F-Walking1", "F-Walking2", "F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
+                "imageNames":["PsorcastWalk1", "PsorcastWalk2", "PsorcastWalk3", "PsorcastWalk4", "PsorcastWalk5","PsorcastWalk6", "PsorcastWalk7", "PsorcastWalk8", "PsorcastWalk9", "PsorcastWalk10"],
                 "placementType":"topMarginBackground",
-                "animationDuration":2.5
+                "animationDuration":5.0
             },
             "colorTheme":{
                 "colorStyle": {
