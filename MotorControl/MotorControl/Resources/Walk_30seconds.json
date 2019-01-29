@@ -7,7 +7,7 @@
             "identifier":"introduction",
             "type":"overview",
             "title":"30 Second Walk",
-            "text":"In this activity you will be walking continuously at your normal pace for 30 seconds",
+            "text":"In this activity, you will be walking continuously at your normal pace for 30 seconds.",
             "permissions":[
                 {
                     "permissionType":"motion",
@@ -16,7 +16,7 @@
             ],
             "image":{
                 "type":"animated",
-                "imageNames":["PsorcastWalk1", "PsorcastWalk2", "PsorcastWalk3", "PsorcastWalk4", "PsorcastWalk5","PsorcastWalk6", "PsorcastWalk7", "PsorcastWalk8", "PsorcastWalk9", "PsorcastWalk10"],
+                "imageNames":["Walk30Seconds01", "Walk30Seconds02", "Walk30Seconds03", "Walk30Seconds04", "Walk30Seconds05","Walk30Seconds06", "Walk30Seconds07", "Walk30Seconds08", "Walk30Seconds09", "Walk30Seconds10"],
                 "placementType":"topMarginBackground",
                 "animationDuration":5.0
             },
@@ -64,7 +64,7 @@
             "isFirstRunOnly": false,
             "image":{
                 "type":"animated",
-                "imageNames":["PsorcastWalk1", "PsorcastWalk2", "PsorcastWalk3", "PsorcastWalk4", "PsorcastWalk5","PsorcastWalk6", "PsorcastWalk7", "PsorcastWalk8", "PsorcastWalk9", "PsorcastWalk10"],
+                "imageNames":["Walk30Seconds01", "Walk30Seconds02", "Walk30Seconds03", "Walk30Seconds04", "Walk30Seconds05","Walk30Seconds06", "Walk30Seconds07", "Walk30Seconds08", "Walk30Seconds09", "Walk30Seconds10"],
                 "placementType":"topMarginBackground",
                 "animationDuration":5.0
             },
