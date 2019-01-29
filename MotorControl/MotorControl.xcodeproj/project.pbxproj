@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4498285B21F5216300C1A8C3 /* Walk30s.json in Resources */ = {isa = PBXBuildFile; fileRef = 4498285A21F5216300C1A8C3 /* Walk30s.json */; };
+		4498285B21F5216300C1A8C3 /* Walk_30seconds.json in Resources */ = {isa = PBXBuildFile; fileRef = 4498285A21F5216300C1A8C3 /* Walk_30seconds.json */; };
 		F813D6EB21BB40D900795664 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F813D6E121BB40D900795664 /* MotorControl.framework */; };
 		F813D6F221BB40D900795664 /* MotorControl.h in Headers */ = {isa = PBXBuildFile; fileRef = F813D6E421BB40D900795664 /* MotorControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F813D6FE21BB416C00795664 /* MCTTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F813D6FC21BB416C00795664 /* MCTTaskInfo.swift */; };
@@ -52,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4498285A21F5216300C1A8C3 /* Walk30s.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Walk30s.json; sourceTree = "<group>"; };
+		4498285A21F5216300C1A8C3 /* Walk_30seconds.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Walk_30seconds.json; sourceTree = "<group>"; };
 		F813D6E121BB40D900795664 /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F813D6E421BB40D900795664 /* MotorControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MotorControl.h; sourceTree = "<group>"; };
 		F813D6E521BB40D900795664 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 				F8E3B80C21BB46590004284E /* Tremor.json */,
 				F8E3B80F21BB46590004284E /* TremorSectionStep.json */,
 				F8E3B81021BB46590004284E /* Walk_And_Balance.json */,
-				4498285A21F5216300C1A8C3 /* Walk30s.json */,
+				4498285A21F5216300C1A8C3 /* Walk_30seconds.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -327,7 +327,7 @@
 				F8E3B81721BB46590004284E /* TremorSectionStep.json in Resources */,
 				F8E3B81321BB46590004284E /* TappingSectionStep.json in Resources */,
 				F8E3B81821BB46590004284E /* Walk_And_Balance.json in Resources */,
-				4498285B21F5216300C1A8C3 /* Walk30s.json in Resources */,
+				4498285B21F5216300C1A8C3 /* Walk_30seconds.json in Resources */,
 				F8E3B81421BB46590004284E /* Tremor.json in Resources */,
 				F8E3B81521BB46590004284E /* ActiveTaskSteps.storyboard in Resources */,
 			);
