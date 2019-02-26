@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F806133D215ED0D5001B1574 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8061332215ED0B0001B1574 /* Research.framework */; };
-		F806133E215ED0D5001B1574 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8061322215ED0AA001B1574 /* ResearchUI.framework */; };
-		F806133F215ED166001B1574 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8061322215ED0AA001B1574 /* ResearchUI.framework */; };
-		F8061340215ED166001B1574 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8061322215ED0AA001B1574 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8061343215ED170001B1574 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8061332215ED0B0001B1574 /* Research.framework */; };
-		F8061344215ED170001B1574 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8061332215ED0B0001B1574 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F80D320321546A0B00E881CB /* HeartRate_Only.json in Resources */ = {isa = PBXBuildFile; fileRef = F80D31F921546A0B00E881CB /* HeartRate_Only.json */; };
 		F82AE7F52064274A00952D74 /* UIColor+CRFDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7F42064274A00952D74 /* UIColor+CRFDefaults.swift */; };
 		F880C1202051F1E200ACB4D4 /* CRFFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */; };
@@ -32,9 +26,6 @@
 		F880C1752051FCD400ACB4D4 /* ActiveTaskSteps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F880C16E2051FCD400ACB4D4 /* ActiveTaskSteps.storyboard */; };
 		F880C1762051FCD400ACB4D4 /* Stair_Step.html in Resources */ = {isa = PBXBuildFile; fileRef = F880C16F2051FCD400ACB4D4 /* Stair_Step.html */; };
 		F880C1772051FCD400ACB4D4 /* Cardio_12MT.html in Resources */ = {isa = PBXBuildFile; fileRef = F880C1702051FCD400ACB4D4 /* Cardio_12MT.html */; };
-		F880C1792051FE5900ACB4D4 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F880C1782051FE5900ACB4D4 /* CoreMotion.framework */; };
-		F880C17B2051FE6300ACB4D4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F880C17A2051FE6200ACB4D4 /* CoreLocation.framework */; };
-		F880C17D2051FE7000ACB4D4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F880C17C2051FE7000ACB4D4 /* AVFoundation.framework */; };
 		F880C17F2052081600ACB4D4 /* CRFHeartRateStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C17E2052081600ACB4D4 /* CRFHeartRateStep.swift */; };
 		F880C18120520CF500ACB4D4 /* CRFCameraSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C18020520CF500ACB4D4 /* CRFCameraSettings.swift */; };
 		F880C18320520FBC00ACB4D4 /* CRFHeartRateSampleProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C18220520FBC00ACB4D4 /* CRFHeartRateSampleProcessor.swift */; };
@@ -46,121 +37,14 @@
 		F89FFDD920588B5C0089D8A7 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDD820588B5C0089D8A7 /* ModelTests.swift */; };
 		F89FFDDB205890F80089D8A7 /* CRFTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDDA205890F80089D8A7 /* CRFTaskInfo.swift */; };
 		F89FFDE02059CF2C0089D8A7 /* NSLocale+UnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDDF2059CF2C0089D8A7 /* NSLocale+UnitTest.m */; };
-		F8BA7FE32051DC2E00A5B83A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA7FE22051DC2E00A5B83A /* AppDelegate.swift */; };
-		F8BA7FE82051DC2E00A5B83A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8BA7FE62051DC2E00A5B83A /* Main.storyboard */; };
-		F8BA7FEA2051DC2E00A5B83A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8BA7FE92051DC2E00A5B83A /* Assets.xcassets */; };
-		F8BA7FED2051DC2E00A5B83A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8BA7FEB2051DC2E00A5B83A /* LaunchScreen.storyboard */; };
-		F8BA7FF82051DC2E00A5B83A /* CRFTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA7FF72051DC2E00A5B83A /* CRFTestAppUITests.swift */; };
-		F8BA80012051DCAE00A5B83A /* TaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA80002051DCAE00A5B83A /* TaskTableViewController.swift */; };
-		F8BA80052051DCFC00A5B83A /* FileResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA80042051DCFC00A5B83A /* FileResultViewController.swift */; };
-		F8BA80072051DD0800A5B83A /* ResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8BA80062051DD0800A5B83A /* ResultTableViewController.swift */; };
-		F8BA80132051DF7800A5B83A /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; };
-		F8BA80142051DF7800A5B83A /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5036D2225E2CD005F1C0C /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5036C2225E2CD005F1C0C /* Research.framework */; };
+		F8A5036F2225E2D8005F1C0C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5036E2225E2D8005F1C0C /* ResearchUI.framework */; };
 		F8DA5E0A215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */; };
-		F8E4B5052060728F000E53D4 /* CRFArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */; };
 		F8F3678121596A8400A49F89 /* CRFHeartRateSectionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F3678021596A8400A49F89 /* CRFHeartRateSectionStep.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F8061321215ED0AA001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F806131A215ED0AA001B1574 /* ResearchUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FFF2D9381FCF415E007258F8;
-			remoteInfo = "ResearchUI (iOS)";
-		};
-		F8061323215ED0AA001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F806131A215ED0AA001B1574 /* ResearchUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FFF2D9401FCF415E007258F8;
-			remoteInfo = ResearchUITests_iOS;
-		};
-		F8061325215ED0AA001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F806131A215ED0AA001B1574 /* ResearchUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FFF2D9701FCF41BF007258F8;
-			remoteInfo = "ResearchUI (watchOS)";
-		};
-		F8061331215ED0B0001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8061327215ED0B0001B1574 /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF8B53141FCE678E006B6937;
-			remoteInfo = "Research (iOS)";
-		};
-		F8061333215ED0B0001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8061327215ED0B0001B1574 /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF8B53301FCE67AA006B6937;
-			remoteInfo = "Research (watchOS)";
-		};
-		F8061335215ED0B0001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8061327215ED0B0001B1574 /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF8B533D1FCE67C7006B6937;
-			remoteInfo = "Research (tvOS)";
-		};
-		F8061337215ED0B0001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8061327215ED0B0001B1574 /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8BE123521370931000AAB1E;
-			remoteInfo = "Research (macOS)";
-		};
-		F8061339215ED0B0001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8061327215ED0B0001B1574 /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF8B531C1FCE678E006B6937;
-			remoteInfo = ResearchTests_iOS;
-		};
-		F806133B215ED0B0001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8061327215ED0B0001B1574 /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F875575620807E2300235078;
-			remoteInfo = "Research-UnitTest";
-		};
-		F8061341215ED166001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F806131A215ED0AA001B1574 /* ResearchUI.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FFF2D9371FCF415E007258F8;
-			remoteInfo = "ResearchUI (iOS)";
-		};
-		F8061345215ED170001B1574 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8061327215ED0B0001B1574 /* Research.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FF8B53131FCE678E006B6937;
-			remoteInfo = "Research (iOS)";
-		};
-		F880C1862053106500ACB4D4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F88725D02051C0F800A4B82F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8BA7FDF2051DC2D00A5B83A;
-			remoteInfo = CRFTestApp;
-		};
 		F88725E42051C0F900A4B82F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F88725D02051C0F800A4B82F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F88725D82051C0F800A4B82F;
-			remoteInfo = CardiorespiratoryFitness;
-		};
-		F8BA7FF42051DC2E00A5B83A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F88725D02051C0F800A4B82F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8BA7FDF2051DC2D00A5B83A;
-			remoteInfo = CRFTestApp;
-		};
-		F8BA80152051DF7800A5B83A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F88725D02051C0F800A4B82F /* Project object */;
 			proxyType = 1;
@@ -169,25 +53,7 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		F8BA800E2051DF6C00A5B83A /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				F8BA80142051DF7800A5B83A /* CardiorespiratoryFitness.framework in Embed Frameworks */,
-				F8061344215ED170001B1574 /* Research.framework in Embed Frameworks */,
-				F8061340215ED166001B1574 /* ResearchUI.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		F806131A215ED0AA001B1574 /* ResearchUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchUI.xcodeproj; path = ../BridgeApp/SageResearch/ResearchUI/ResearchUI.xcodeproj; sourceTree = "<group>"; };
-		F8061327215ED0B0001B1574 /* Research.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Research.xcodeproj; path = ../BridgeApp/SageResearch/Research/Research.xcodeproj; sourceTree = "<group>"; };
 		F80D31F921546A0B00E881CB /* HeartRate_Only.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = HeartRate_Only.json; sourceTree = "<group>"; };
 		F82AE7F42064274A00952D74 /* UIColor+CRFDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+CRFDefaults.swift"; sourceTree = "<group>"; };
 		F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFFactory.swift; sourceTree = "<group>"; };
@@ -226,13 +92,13 @@
 		F89FFDDD2059CF2B0089D8A7 /* CardiorespiratoryFitnessTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CardiorespiratoryFitnessTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F89FFDDE2059CF2C0089D8A7 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F89FFDDF2059CF2C0089D8A7 /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
-		F8BA7FE02051DC2D00A5B83A /* CRFTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CRFTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5036C2225E2CD005F1C0C /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5036E2225E2D8005F1C0C /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8BA7FE22051DC2E00A5B83A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8BA7FE72051DC2E00A5B83A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F8BA7FE92051DC2E00A5B83A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F8BA7FEC2051DC2E00A5B83A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F8BA7FEE2051DC2E00A5B83A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8BA7FF32051DC2E00A5B83A /* CRFTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRFTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8BA7FF72051DC2E00A5B83A /* CRFTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTestAppUITests.swift; sourceTree = "<group>"; };
 		F8BA7FF92051DC2E00A5B83A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8BA80002051DCAE00A5B83A /* TaskTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewController.swift; sourceTree = "<group>"; };
@@ -248,8 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F806133D215ED0D5001B1574 /* Research.framework in Frameworks */,
-				F806133E215ED0D5001B1574 /* ResearchUI.framework in Frameworks */,
+				F8A5036F2225E2D8005F1C0C /* ResearchUI.framework in Frameworks */,
+				F8A5036D2225E2CD005F1C0C /* Research.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,52 +127,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8BA7FDD2051DC2D00A5B83A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F880C17D2051FE7000ACB4D4 /* AVFoundation.framework in Frameworks */,
-				F8061343215ED170001B1574 /* Research.framework in Frameworks */,
-				F880C17B2051FE6300ACB4D4 /* CoreLocation.framework in Frameworks */,
-				F880C1792051FE5900ACB4D4 /* CoreMotion.framework in Frameworks */,
-				F8BA80132051DF7800A5B83A /* CardiorespiratoryFitness.framework in Frameworks */,
-				F806133F215ED166001B1574 /* ResearchUI.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8BA7FF02051DC2E00A5B83A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F806131B215ED0AA001B1574 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F8061322215ED0AA001B1574 /* ResearchUI.framework */,
-				F8061324215ED0AA001B1574 /* ResearchUITests_iOS.xctest */,
-				F8061326215ED0AA001B1574 /* ResearchUI.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		F8061328215ED0B0001B1574 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F8061332215ED0B0001B1574 /* Research.framework */,
-				F8061334215ED0B0001B1574 /* Research.framework */,
-				F8061336215ED0B0001B1574 /* Research.framework */,
-				F8061338215ED0B0001B1574 /* Research.framework */,
-				F806133A215ED0B0001B1574 /* ResearchTests_iOS.xctest */,
-				F806133C215ED0B0001B1574 /* Research_UnitTest.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		F82AE7EB2064270100952D74 /* Styleguide */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,8 +233,6 @@
 			children = (
 				F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */,
 				F88725E22051C0F900A4B82F /* CardiorespiratoryFitnessTests.xctest */,
-				F8BA7FE02051DC2D00A5B83A /* CRFTestApp.app */,
-				F8BA7FF32051DC2E00A5B83A /* CRFTestAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -454,8 +275,8 @@
 		F8BA7FA42051D9CC00A5B83A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F8061327215ED0B0001B1574 /* Research.xcodeproj */,
-				F806131A215ED0AA001B1574 /* ResearchUI.xcodeproj */,
+				F8A5036E2225E2D8005F1C0C /* ResearchUI.framework */,
+				F8A5036C2225E2CD005F1C0C /* Research.framework */,
 				F880C17C2051FE7000ACB4D4 /* AVFoundation.framework */,
 				F880C17A2051FE6200ACB4D4 /* CoreLocation.framework */,
 				F880C1782051FE5900ACB4D4 /* CoreMotion.framework */,
@@ -533,51 +354,11 @@
 			);
 			dependencies = (
 				F88725E52051C0F900A4B82F /* PBXTargetDependency */,
-				F880C1872053106500ACB4D4 /* PBXTargetDependency */,
 			);
 			name = CardiorespiratoryFitnessTests;
 			productName = CardiorespiratoryFitnessTests;
 			productReference = F88725E22051C0F900A4B82F /* CardiorespiratoryFitnessTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		F8BA7FDF2051DC2D00A5B83A /* CRFTestApp */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F8BA7FFA2051DC2E00A5B83A /* Build configuration list for PBXNativeTarget "CRFTestApp" */;
-			buildPhases = (
-				F8BA7FDC2051DC2D00A5B83A /* Sources */,
-				F8BA7FDD2051DC2D00A5B83A /* Frameworks */,
-				F8BA7FDE2051DC2D00A5B83A /* Resources */,
-				F8BA800E2051DF6C00A5B83A /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F8BA80162051DF7800A5B83A /* PBXTargetDependency */,
-				F8061342215ED166001B1574 /* PBXTargetDependency */,
-				F8061346215ED170001B1574 /* PBXTargetDependency */,
-			);
-			name = CRFTestApp;
-			productName = CRFTestApp;
-			productReference = F8BA7FE02051DC2D00A5B83A /* CRFTestApp.app */;
-			productType = "com.apple.product-type.application";
-		};
-		F8BA7FF22051DC2E00A5B83A /* CRFTestAppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F8BA7FFD2051DC2E00A5B83A /* Build configuration list for PBXNativeTarget "CRFTestAppUITests" */;
-			buildPhases = (
-				F8BA7FEF2051DC2E00A5B83A /* Sources */,
-				F8BA7FF02051DC2E00A5B83A /* Frameworks */,
-				F8BA7FF12051DC2E00A5B83A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F8BA7FF52051DC2E00A5B83A /* PBXTargetDependency */,
-			);
-			name = CRFTestAppUITests;
-			productName = CRFTestAppUITests;
-			productReference = F8BA7FF32051DC2E00A5B83A /* CRFTestAppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -598,23 +379,6 @@
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
-						TestTargetID = F8BA7FDF2051DC2D00A5B83A;
-					};
-					F8BA7FDF2051DC2D00A5B83A = {
-						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1000;
-						ProvisioningStyle = Manual;
-						SystemCapabilities = {
-							com.apple.BackgroundModes = {
-								enabled = 1;
-							};
-						};
-					};
-					F8BA7FF22051DC2E00A5B83A = {
-						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1000;
-						ProvisioningStyle = Automatic;
-						TestTargetID = F8BA7FDF2051DC2D00A5B83A;
 					};
 				};
 			};
@@ -629,91 +393,13 @@
 			mainGroup = F88725CF2051C0F800A4B82F;
 			productRefGroup = F88725DA2051C0F800A4B82F /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F8061328215ED0B0001B1574 /* Products */;
-					ProjectRef = F8061327215ED0B0001B1574 /* Research.xcodeproj */;
-				},
-				{
-					ProductGroup = F806131B215ED0AA001B1574 /* Products */;
-					ProjectRef = F806131A215ED0AA001B1574 /* ResearchUI.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F88725D82051C0F800A4B82F /* CardiorespiratoryFitness */,
 				F88725E12051C0F900A4B82F /* CardiorespiratoryFitnessTests */,
-				F8BA7FDF2051DC2D00A5B83A /* CRFTestApp */,
-				F8BA7FF22051DC2E00A5B83A /* CRFTestAppUITests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		F8061322215ED0AA001B1574 /* ResearchUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ResearchUI.framework;
-			remoteRef = F8061321215ED0AA001B1574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8061324215ED0AA001B1574 /* ResearchUITests_iOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ResearchUITests_iOS.xctest;
-			remoteRef = F8061323215ED0AA001B1574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8061326215ED0AA001B1574 /* ResearchUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ResearchUI.framework;
-			remoteRef = F8061325215ED0AA001B1574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8061332215ED0B0001B1574 /* Research.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research.framework;
-			remoteRef = F8061331215ED0B0001B1574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8061334215ED0B0001B1574 /* Research.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research.framework;
-			remoteRef = F8061333215ED0B0001B1574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8061336215ED0B0001B1574 /* Research.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research.framework;
-			remoteRef = F8061335215ED0B0001B1574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8061338215ED0B0001B1574 /* Research.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research.framework;
-			remoteRef = F8061337215ED0B0001B1574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F806133A215ED0B0001B1574 /* ResearchTests_iOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ResearchTests_iOS.xctest;
-			remoteRef = F8061339215ED0B0001B1574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F806133C215ED0B0001B1574 /* Research_UnitTest.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research_UnitTest.framework;
-			remoteRef = F806133B215ED0B0001B1574 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F88725D72051C0F800A4B82F /* Resources */ = {
@@ -739,23 +425,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F880C18A205320B800ACB4D4 /* red_input_1d.txt in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8BA7FDE2051DC2D00A5B83A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8BA7FED2051DC2E00A5B83A /* LaunchScreen.storyboard in Resources */,
-				F8BA7FEA2051DC2E00A5B83A /* Assets.xcassets in Resources */,
-				F8BA7FE82051DC2E00A5B83A /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8BA7FF12051DC2E00A5B83A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,58 +462,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8BA7FDC2051DC2D00A5B83A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8BA80012051DCAE00A5B83A /* TaskTableViewController.swift in Sources */,
-				F8E4B5052060728F000E53D4 /* CRFArchiveManager.swift in Sources */,
-				F8BA80072051DD0800A5B83A /* ResultTableViewController.swift in Sources */,
-				F8BA7FE32051DC2E00A5B83A /* AppDelegate.swift in Sources */,
-				F8BA80052051DCFC00A5B83A /* FileResultViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8BA7FEF2051DC2E00A5B83A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8BA7FF82051DC2E00A5B83A /* CRFTestAppUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F8061342215ED166001B1574 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ResearchUI (iOS)";
-			targetProxy = F8061341215ED166001B1574 /* PBXContainerItemProxy */;
-		};
-		F8061346215ED170001B1574 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Research (iOS)";
-			targetProxy = F8061345215ED170001B1574 /* PBXContainerItemProxy */;
-		};
-		F880C1872053106500ACB4D4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8BA7FDF2051DC2D00A5B83A /* CRFTestApp */;
-			targetProxy = F880C1862053106500ACB4D4 /* PBXContainerItemProxy */;
-		};
 		F88725E52051C0F900A4B82F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F88725D82051C0F800A4B82F /* CardiorespiratoryFitness */;
 			targetProxy = F88725E42051C0F900A4B82F /* PBXContainerItemProxy */;
-		};
-		F8BA7FF52051DC2E00A5B83A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8BA7FDF2051DC2D00A5B83A /* CRFTestApp */;
-			targetProxy = F8BA7FF42051DC2E00A5B83A /* PBXContainerItemProxy */;
-		};
-		F8BA80162051DF7800A5B83A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F88725D82051C0F800A4B82F /* CardiorespiratoryFitness */;
-			targetProxy = F8BA80152051DF7800A5B83A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1053,7 +677,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CRFTestApp.app/CRFTestApp";
 			};
 			name = Debug;
 		};
@@ -1073,76 +696,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "CardiorespiratoryFitnessTests/Mock Objects/CardiorespiratoryFitnessTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CRFTestApp.app/CRFTestApp";
-			};
-			name = Release;
-		};
-		F8BA7FFB2051DC2E00A5B83A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				INFOPLIST_FILE = CRFTestApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.CRFTestApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee045a89-2e51-4fea-89b7-e804690a8052";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development org.sagebase.CRFTestApp";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
-		F8BA7FFC2051DC2E00A5B83A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				INFOPLIST_FILE = CRFTestApp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.CRFTestApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "705f7195-fd35-442c-a194-b03990750397";
-				PROVISIONING_PROFILE_SPECIFIER = "match Distribution org.sagebase.CRFTestApp";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		F8BA7FFE2051DC2E00A5B83A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				INFOPLIST_FILE = CRFTestAppUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.CRFTestAppUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = CRFTestApp;
-			};
-			name = Debug;
-		};
-		F8BA7FFF2051DC2E00A5B83A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				INFOPLIST_FILE = CRFTestAppUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.CRFTestAppUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = CRFTestApp;
 			};
 			name = Release;
 		};
@@ -1172,24 +725,6 @@
 			buildConfigurations = (
 				F88725F12051C0F900A4B82F /* Debug */,
 				F88725F22051C0F900A4B82F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F8BA7FFA2051DC2E00A5B83A /* Build configuration list for PBXNativeTarget "CRFTestApp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F8BA7FFB2051DC2E00A5B83A /* Debug */,
-				F8BA7FFC2051DC2E00A5B83A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F8BA7FFD2051DC2E00A5B83A /* Build configuration list for PBXNativeTarget "CRFTestAppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F8BA7FFE2051DC2E00A5B83A /* Debug */,
-				F8BA7FFF2051DC2E00A5B83A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
