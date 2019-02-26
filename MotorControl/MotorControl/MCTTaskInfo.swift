@@ -34,7 +34,7 @@
 import Foundation
 
 /// A list of all the tasks included in this module.
-public enum MCTTaskIdentifier : String, Codable {
+public enum MCTTaskIdentifier : String, Codable, CaseIterable {
     
     /// The walk and balance test.
     case walkAndBalance = "WalkAndBalance"
@@ -48,11 +48,6 @@ public enum MCTTaskIdentifier : String, Codable {
     /// The default resource transformer for this task.
     public func resourceTransformer() -> RSDResourceTransformer {
         return MCTTaskTransformer(self)
-    }
-    
-    /// List of all the task identifiers.
-    public static func all() -> [MCTTaskIdentifier] {
-        return [.walkAndBalance, .tremor, .tapping]
     }
     
     public var identifier: RSDIdentifier {
@@ -204,5 +199,5 @@ public struct MCTTaskGroup : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
     public let icon: RSDImageWrapper?
 
     /// The task group object is 
-    public let tasks: [RSDTaskInfo] = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
+    public let tasks: [RSDTaskInfo] = MCTTaskIdentifier.allCases.map { MCTTaskInfo($0) }
 }

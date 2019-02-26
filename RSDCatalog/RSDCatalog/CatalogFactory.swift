@@ -34,6 +34,7 @@
 import Foundation
 import Research
 import MotorControl
+import CardiorespiratoryFitness
 
 /// Stub out a factory for this application. Any factory overrides that are used by the catalog
 /// can be declared here. This stub is intentional so that unit tests will all use this rather
@@ -59,6 +60,7 @@ struct TaskGroupDecoder : Decodable {
     
     enum TaskGroupType: String, Decodable {
         case motorControl
+        case crf
     }
     
     let taskGroups: [RSDTaskGroup]
@@ -80,6 +82,8 @@ struct TaskGroupDecoder : Decodable {
                 switch (groupType) {
                 case .motorControl:
                     task = try MCTTaskGroup(from: taskDecoder)
+                case .crf:
+                    task = try CRFTaskGroup(from: taskDecoder)
                 }
             }
             else {
