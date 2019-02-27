@@ -48,7 +48,7 @@ class ResourceTests: XCTestCase {
     
     func testDecodeTasks() {
         // Check that the JSON is decoding properly.
-        for taskIdentifier in MCTTaskIdentifier.all() {
+        for taskIdentifier in MCTTaskIdentifier.allCases {
             let factory = MCTFactory()
             do {
                 let taskTransformer = taskIdentifier.resourceTransformer()

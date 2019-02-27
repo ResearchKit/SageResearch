@@ -156,12 +156,6 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     
     func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {
         // TODO: syoung 01/18/2019 clean up JSON and Factory stuff for showing the intro step.
-        if let taskStep = step as? RSDTaskInfoStepObject,
-            let _ = taskStep.taskInfo as? MCTTaskInfo {
-            return false
-        }
-        else {
-            return true
-        }
+        return false
     }
 }
