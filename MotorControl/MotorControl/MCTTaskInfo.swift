@@ -45,8 +45,10 @@ public enum MCTTaskIdentifier : String, Codable, CaseIterable {
     /// The tapping test.
     case tapping = "Tapping"
     
-    /// 30 second walk test that is the first half of walk and balance test. This can used for gait analysis without the balance component, and would allow for a cross-comparability of the data with other studies using Walk and Balance.
-    case walk30s = "Walk30Seconds"
+    /// The 30 second walk test that is the first half of walk and balance test. This can used for gait
+    /// analysis without the balance component, and would allow for cross-comparability of the data with
+    /// other studies using Walk and Balance.
+    case walk30Seconds = "Walk30Seconds"
     
     /// The default resource transformer for this task.
     public func resourceTransformer() -> RSDResourceTransformer {
@@ -157,7 +159,7 @@ public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
             self.resourceName = "Tremor"
         case .tapping:
             self.resourceName = "Finger_Tapping"
-        case .walk30s:
+        case .walk30Seconds:
             self.resourceName = "Walk_30seconds"
         }
     }
