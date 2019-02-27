@@ -94,18 +94,7 @@
 		F89FFDDF2059CF2C0089D8A7 /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
 		F8A5036C2225E2CD005F1C0C /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A5036E2225E2D8005F1C0C /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8BA7FE22051DC2E00A5B83A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F8BA7FE72051DC2E00A5B83A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		F8BA7FE92051DC2E00A5B83A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F8BA7FEC2051DC2E00A5B83A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		F8BA7FEE2051DC2E00A5B83A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8BA7FF72051DC2E00A5B83A /* CRFTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTestAppUITests.swift; sourceTree = "<group>"; };
-		F8BA7FF92051DC2E00A5B83A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8BA80002051DCAE00A5B83A /* TaskTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewController.swift; sourceTree = "<group>"; };
-		F8BA80042051DCFC00A5B83A /* FileResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileResultViewController.swift; sourceTree = "<group>"; };
-		F8BA80062051DD0800A5B83A /* ResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewController.swift; sourceTree = "<group>"; };
 		F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CardiorespiratoryFitness.strings; sourceTree = "<group>"; };
-		F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFArchiveManager.swift; sourceTree = "<group>"; };
 		F8F3678021596A8400A49F89 /* CRFHeartRateSectionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFHeartRateSectionStep.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,8 +210,6 @@
 			children = (
 				F88725DB2051C0F800A4B82F /* CardiorespiratoryFitness */,
 				F88725E62051C0F900A4B82F /* CardiorespiratoryFitnessTests */,
-				F8BA7FE12051DC2E00A5B83A /* CRFTestApp */,
-				F8BA7FF62051DC2E00A5B83A /* CRFTestAppUITests */,
 				F8BA7FA42051D9CC00A5B83A /* Frameworks */,
 				F88725DA2051C0F800A4B82F /* Products */,
 			);
@@ -282,31 +269,6 @@
 				F880C1782051FE5900ACB4D4 /* CoreMotion.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F8BA7FE12051DC2E00A5B83A /* CRFTestApp */ = {
-			isa = PBXGroup;
-			children = (
-				F8BA7FE22051DC2E00A5B83A /* AppDelegate.swift */,
-				F8E4B5042060728F000E53D4 /* CRFArchiveManager.swift */,
-				F8BA80002051DCAE00A5B83A /* TaskTableViewController.swift */,
-				F8BA80042051DCFC00A5B83A /* FileResultViewController.swift */,
-				F8BA80062051DD0800A5B83A /* ResultTableViewController.swift */,
-				F8BA7FE62051DC2E00A5B83A /* Main.storyboard */,
-				F8BA7FE92051DC2E00A5B83A /* Assets.xcassets */,
-				F8BA7FEB2051DC2E00A5B83A /* LaunchScreen.storyboard */,
-				F8BA7FEE2051DC2E00A5B83A /* Info.plist */,
-			);
-			path = CRFTestApp;
-			sourceTree = "<group>";
-		};
-		F8BA7FF62051DC2E00A5B83A /* CRFTestAppUITests */ = {
-			isa = PBXGroup;
-			children = (
-				F8BA7FF72051DC2E00A5B83A /* CRFTestAppUITests.swift */,
-				F8BA7FF92051DC2E00A5B83A /* Info.plist */,
-			);
-			path = CRFTestAppUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -471,25 +433,6 @@
 			targetProxy = F88725E42051C0F900A4B82F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		F8BA7FE62051DC2E00A5B83A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F8BA7FE72051DC2E00A5B83A /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		F8BA7FEB2051DC2E00A5B83A /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F8BA7FEC2051DC2E00A5B83A /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F88725EB2051C0F900A4B82F /* Debug */ = {
