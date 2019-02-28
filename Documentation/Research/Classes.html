@@ -59,6 +59,9 @@
                 <a href="Classes/RSDClock.html">RSDClock</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/RSDCodableChoiceInputFieldObject.html">RSDCodableChoiceInputFieldObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
               </li>
               <li class="nav-group-task">
@@ -1228,8 +1231,10 @@ the <code><a href="Protocols/RSDActiveUIStep.html">RSDActiveUIStep</a></code> pr
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><code>RSDChoiceInputFieldObject</code> is a concrete implementation of <code>RSDChoiceInputField</code> that subclasses <code><a href="Classes/RSDInputFieldObject.html">RSDInputFieldObject</a></code>
-to include a list of choices for a multiple choice or single choice input field.</p>
+                        <p><code>RSDChoiceInputFieldObject</code> is a concrete implementation of <code>RSDChoiceInputField</code> that subclasses
+<code><a href="Classes/RSDInputFieldObject.html">RSDInputFieldObject</a></code> to include a list of choices for a multiple choice or single choice input field. It
+is intended to be instantiated with a list of choices but can be subclassed to decode the choices using
+a custom decoder.</p>
 
                         <a href="Classes/RSDChoiceInputFieldObject.html" class="slightly-smaller">See more</a>
                       </div>
@@ -1238,6 +1243,37 @@ to include a list of choices for a multiple choice or single choice input field.
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDChoiceInputFieldObject</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDInputFieldObject.html">RSDInputFieldObject</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDChoiceOptions.html">RSDChoiceOptions</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research32RSDCodableChoiceInputFieldObjectC"></a>
+                    <a name="//apple_ref/swift/Class/RSDCodableChoiceInputFieldObject" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research32RSDCodableChoiceInputFieldObjectC">RSDCodableChoiceInputFieldObject</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDCodableChoiceInputFieldObject</code> is a concrete implementation of <code>RSDChoiceInputField</code> that subclasses
+<code><a href="Classes/RSDInputFieldObject.html">RSDInputFieldObject</a></code> to include a list of choices for a multiple choice or single choice input field.
+It is designed to be used by <code><a href="Classes/RSDFactory.html">RSDFactory</a></code> or a subclass to encode and decode the choices as a typed array
+of <code><a href="Structs/RSDChoiceObject.html">RSDChoiceObject</a></code> objects.</p>
+
+                        <a href="Classes/RSDCodableChoiceInputFieldObject.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCodableChoiceInputFieldObject</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDInputFieldObject.html">RSDInputFieldObject</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDChoiceOptions.html">RSDChoiceOptions</a></span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt">Encodable</span></code></pre>
 
                         </div>
                       </div>

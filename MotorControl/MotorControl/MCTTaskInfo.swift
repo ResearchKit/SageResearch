@@ -34,7 +34,7 @@
 import Foundation
 
 /// A list of all the tasks included in this module.
-public enum MCTTaskIdentifier : String, Codable {
+public enum MCTTaskIdentifier : String, Codable, CaseIterable {
     
     /// The walk and balance test.
     case walkAndBalance = "WalkAndBalance"
@@ -45,17 +45,14 @@ public enum MCTTaskIdentifier : String, Codable {
     /// The tapping test.
     case tapping = "Tapping"
     
-    /// 30 second walk test that is the first half of walk and balance test. This can used for gait analysis without the balance component, and would allow for a cross-comparability of the data with other studies using Walk and Balance.
-    case walk30s = "Walk30Seconds"
+    /// The 30 second walk test that is the first half of walk and balance test. This can used for gait
+    /// analysis without the balance component, and would allow for cross-comparability of the data with
+    /// other studies using Walk and Balance.
+    case walk30Seconds = "Walk30Seconds"
     
     /// The default resource transformer for this task.
     public func resourceTransformer() -> RSDResourceTransformer {
         return MCTTaskTransformer(self)
-    }
-    
-    /// List of all the task identifiers.
-    public static func all() -> [MCTTaskIdentifier] {
-        return [.walkAndBalance, .tremor, .tapping, .walk30s]
     }
     
     public var identifier: RSDIdentifier {
@@ -162,7 +159,7 @@ public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
             self.resourceName = "Tremor"
         case .tapping:
             self.resourceName = "Finger_Tapping"
-        case .walk30s:
+        case .walk30Seconds:
             self.resourceName = "Walk_30seconds"
         }
     }
@@ -209,5 +206,5 @@ public struct MCTTaskGroup : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
     public let icon: RSDImageWrapper?
 
     /// The task group object is 
-    public let tasks: [RSDTaskInfo] = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
+    public let tasks: [RSDTaskInfo] = MCTTaskIdentifier.allCases.map { MCTTaskInfo($0) }
 }

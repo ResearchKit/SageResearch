@@ -59,6 +59,9 @@
                 <a href="../Classes/RSDClock.html">RSDClock</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDCodableChoiceInputFieldObject.html">RSDCodableChoiceInputFieldObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/s:8Research13RSDCodingInfoC">RSDCodingInfo</a>
               </li>
               <li class="nav-group-task">
@@ -1651,7 +1654,7 @@ This is a work-around.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">dataType</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/RSDFormDataType.html">RSDFormDataType</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">dataType</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/RSDFormDataType.html">RSDFormDataType</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1677,98 +1680,6 @@ This is a work-around.</p>
                       <div>
                         <h4>Return Value</h4>
                         <p>The decoded <code><a href="../Enums/RSDFormDataType.html">RSDFormDataType</a></code> data type.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research19RSDInputFieldObjectC5range4from8dataTypeAA8RSDRange_pSgs7Decoder_p_AA011RSDFormDataH0OtKFZ"></a>
-                    <a name="//apple_ref/swift/Method/range(from:dataType:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research19RSDInputFieldObjectC5range4from8dataTypeAA8RSDRange_pSgs7Decoder_p_AA011RSDFormDataH0OtKFZ">range(from:dataType:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Overridable class function for decoding the range from the decoder. The default implementation will key to
-<code>CodingKeys.range</code> and will decode a range object appropriate to the data type.</p>
-
-<table><thead>
-<tr>
-<th>RSDFormDataType.BaseType</th>
-<th style="text-align: center">Type of range to decode</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>.integer, .decimal, .fraction</td>
-<td style="text-align: center"><code><a href="../Structs/RSDNumberRangeObject.html">RSDNumberRangeObject</a></code></td>
-</tr>
-<tr>
-<td>.date</td>
-<td style="text-align: center"><code><a href="../Structs/RSDDateRangeObject.html">RSDDateRangeObject</a></code></td>
-</tr>
-<tr>
-<td>.year</td>
-<td style="text-align: center"><code><a href="../Structs/RSDDateRangeObject.html">RSDDateRangeObject</a></code> or <code><a href="../Structs/RSDNumberRangeObject.html">RSDNumberRangeObject</a></code></td>
-</tr>
-<tr>
-<td>.duration</td>
-<td style="text-align: center"><code><a href="../Structs/RSDDurationRangeObject.html">RSDDurationRangeObject</a></code></td>
-</tr>
-</tbody></table>
-<div class="aside aside-throws">
-    <p class="aside-title">Throws</p>
-    <code>DecodingError</code>
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">range</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">,</span> <span class="nv">dataType</span><span class="p">:</span> <span class="kt"><a href="../Enums/RSDFormDataType.html">RSDFormDataType</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols.html#/s:8Research8RSDRangeP">RSDRange</a></span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>decoder</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The decoder used to decode this object.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>dataType</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The data type associated with this instance.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>An appropriate instance of <code><a href="../Protocols.html#/s:8Research8RSDRangeP">RSDRange</a></code> or <code>nil</code> if none is present.</p>
                       </div>
                     </section>
                   </div>
@@ -1844,122 +1755,6 @@ a <code>decimalPad</code> keyboard type.</p>
                       <div>
                         <h4>Return Value</h4>
                         <p>An appropriate instance of <code><a href="../Protocols/RSDTextFieldOptions.html">RSDTextFieldOptions</a></code> or <code>nil</code> if none is present.</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:8Research19RSDInputFieldObjectC11surveyRules4from8dataTypeSayAA13RSDSurveyRule_pGSgs7Decoder_p_AA011RSDFormDataI0OtKFZ"></a>
-                    <a name="//apple_ref/swift/Method/surveyRules(from:dataType:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research19RSDInputFieldObjectC11surveyRules4from8dataTypeSayAA13RSDSurveyRule_pGSgs7Decoder_p_AA011RSDFormDataI0OtKFZ">surveyRules(from:dataType:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Overridable class function for decoding a list of survey rules from the decoder for this instance.
-The default implementation will check the container for a keyed array using <code>CodingKeys.surveyRules</code>
-and will instantiate a list of <code><a href="../Structs/RSDComparableSurveyRuleObject.html">RSDComparableSurveyRuleObject</a></code> instances appropriate to the <code>BaseType</code>
-of the given data type.</p>
-
-<p>If there isn&rsquo;t a list keyed to <code>CodingKeys.surveyRules</code> then the decoder will be tested to see if it
-contains the keys for a <code><a href="../Structs/RSDComparableSurveyRuleObject.html">RSDComparableSurveyRuleObject</a></code> instance.</p>
-
-<ul>
-<li>example:</li>
-</ul>
-
-<p>The following will decode as a <code><a href="../Structs/RSDComparableSurveyRuleObject.html">RSDComparableSurveyRuleObject&lt;String&gt;</a></code> because of the <q>matchingAnswer</q> key.</p>
-<pre class="highlight swift"><code><span class="err">````</span>
-<span class="p">{</span>
-<span class="s">"identifier"</span><span class="p">:</span> <span class="s">"foo"</span><span class="p">,</span>
-<span class="s">"prompt"</span><span class="p">:</span> <span class="s">"Text"</span><span class="p">,</span>
-<span class="s">"placeholder"</span><span class="p">:</span> <span class="s">"enter text"</span><span class="p">,</span>
-<span class="s">"type"</span><span class="p">:</span> <span class="s">"singleChoice.string"</span><span class="p">,</span>
-<span class="s">"choices"</span> <span class="p">:</span> <span class="p">[</span><span class="s">"never"</span><span class="p">,</span> <span class="s">"sometimes"</span><span class="p">,</span> <span class="s">"often"</span><span class="p">,</span> <span class="s">"always"</span><span class="p">],</span>
-<span class="s">"matchingAnswer"</span><span class="p">:</span> <span class="s">"never"</span>
-<span class="p">}</span>
-<span class="err">````</span>
-</code></pre>
-
-<p>The following will decode as an array of <code>[RSDComparableSurveyRuleObject&lt;Int&gt;]</code> because of the <q>surveyRules</q> key.</p>
-<pre class="highlight swift"><code><span class="err">````</span>
-   <span class="p">{</span>
-       <span class="s">"identifier"</span><span class="p">:</span> <span class="s">"foo"</span><span class="p">,</span>
-       <span class="s">"type"</span><span class="p">:</span> <span class="s">"integer"</span><span class="p">,</span>
-       <span class="s">"uiHint"</span><span class="p">:</span> <span class="s">"slider"</span><span class="p">,</span>
-       <span class="s">"range"</span> <span class="p">:</span> <span class="p">{</span> <span class="s">"minimumValue"</span> <span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span>
-                   <span class="s">"maximumValue"</span> <span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                   <span class="s">"stepInterval"</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                   <span class="s">"unit"</span> <span class="p">:</span> <span class="s">"feet"</span> <span class="p">},</span>
-       <span class="s">"surveyRules"</span> <span class="p">:</span> <span class="p">[</span>
-                       <span class="p">{</span>
-                       <span class="s">"skipToIdentifier"</span><span class="p">:</span> <span class="s">"lessThan"</span><span class="p">,</span>
-                       <span class="s">"ruleOperator"</span><span class="p">:</span> <span class="s">"lt"</span><span class="p">,</span>
-                       <span class="s">"matchingAnswer"</span><span class="p">:</span> <span class="mi">0</span>
-                       <span class="p">},</span>
-                       <span class="p">{</span>
-                       <span class="s">"skipToIdentifier"</span><span class="p">:</span> <span class="s">"greaterThan"</span><span class="p">,</span>
-                       <span class="s">"ruleOperator"</span><span class="p">:</span> <span class="s">"gt"</span><span class="p">,</span>
-                       <span class="s">"matchingAnswer"</span><span class="p">:</span> <span class="mi">1</span>
-                       <span class="p">}</span>
-                       <span class="p">]</span>
-   <span class="p">}</span>
-<span class="err">````</span>
-</code></pre>
-<div class="aside aside-throws">
-    <p class="aside-title">Throws</p>
-    <code>DecodingError</code>
-
-</div>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kd">func</span> <span class="nf">surveyRules</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">Decoder</span><span class="p">,</span> <span class="nv">dataType</span><span class="p">:</span> <span class="kt"><a href="../Enums/RSDFormDataType.html">RSDFormDataType</a></span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Protocols/RSDSurveyRule.html">RSDSurveyRule</a></span><span class="p">]?</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>decoder</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The decoder used to decode this object.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>dataType</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The data type associated with this instance.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>An array of <code><a href="../Structs/RSDComparableSurveyRuleObject.html">RSDComparableSurveyRuleObject</a></code> objects or <code>nil</code> if none are present.</p>
                       </div>
                     </section>
                   </div>

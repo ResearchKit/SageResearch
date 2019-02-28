@@ -1,0 +1,15 @@
+{
+  "info" : {
+    "author" : "zeplin",
+    "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
+  },
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "infoIcon.pdf"
+    }
+  ]
+}
