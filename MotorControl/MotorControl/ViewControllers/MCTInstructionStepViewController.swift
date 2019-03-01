@@ -128,8 +128,32 @@ open class MCTInstructionStepViewController : RSDStepViewController, MCTHandStep
         return self.navigationHeader?.imageView
     }
     
+    /// Scrollview for the image and instruction text.
+    @IBOutlet var scrollView: UIScrollView!
+    
     /// The constraint that sets the scroll bar's top background view's height.
-    @IBOutlet weak var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
+    
+    /// The constraint that sets the image height. This needs to be adjusted for smaller screens.
+    @IBOutlet var imageHeightConstraint: NSLayoutConstraint!
+    
+    /// A view that is used to mark the height of the text instruction area.
+    @IBOutlet var instructionTextView: UIView!
+    
+    /// Save the previously calculated instruction height.
+    private var _instructionHeight: CGFloat = 0
+    
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if _instructionHeight != instructionTextView.bounds.height {
+            _instructionHeight = instructionTextView.bounds.height
+            let remainingHeight = self.scrollView.bounds.height - _instructionHeight - scrollViewBackgroundHeightConstraint.constant
+            self.imageHeightConstraint.constant = max(remainingHeight, self.view.bounds.height / 2)
+            self.view.setNeedsUpdateConstraints()
+            self.view.setNeedsLayout()
+        }
+    }
     
     /// Override viewWillAppear to update the label text, and image placement constraints.
     override open func viewWillAppear(_ animated: Bool) {

@@ -16,7 +16,7 @@
             ],
             "image":{
                 "type":"animated",
-                "imageNames":["Walk30Seconds01", "Walk30Seconds02", "Walk30Seconds03", "Walk30Seconds04", "Walk30Seconds05","Walk30Seconds06", "Walk30Seconds07", "Walk30Seconds08", "Walk30Seconds09", "Walk30Seconds10"],
+                "imageNames":["Walking-1", "Walking-2", "Walking-3", "Walking-4", "Walking-5", "Walking-6", "Walking-7", "Walking-8", "Walking-9", "Walking-10", "Walking-11", "Walking-12"],
                 "placementType":"topMarginBackground",
                 "animationDuration":5.0
             },
@@ -61,12 +61,12 @@
             "type":"instruction",
             "title":"Walk for 30 seconds",
             "text":"You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around, then turn around as if you are walking around a cone.",
-            "isFirstRunOnly": false,
+            "isFirstRunOnly": true,
             "image":{
                 "type":"animated",
-                "imageNames":["Walk30Seconds01", "Walk30Seconds02", "Walk30Seconds03", "Walk30Seconds04", "Walk30Seconds05","Walk30Seconds06", "Walk30Seconds07", "Walk30Seconds08", "Walk30Seconds09", "Walk30Seconds10"],
+                "imageNames":["Walking-1", "Walking-2", "Walking-3", "Walking-4", "Walking-5", "Walking-6", "Walking-7", "Walking-8", "Walking-9", "Walking-10", "Walking-11", "Walking-12"],
                 "placementType":"topMarginBackground",
-                "animationDuration":5.0
+                "animationDuration":6.0
             },
             "colorTheme":{
                 "colorStyle": {
@@ -93,7 +93,7 @@
             "text":"Bring your phone with you and turn up your phone volume so you can hear the instructions while you are walking.",
             "image":{
                 "type":"fetchable",
-                "imageName":"F-TurnUpVolume",
+                "imageName":"TurnUpVolume",
                 "placementType":"topMarginBackground"
             },
             "colorTheme":{
@@ -121,7 +121,7 @@
             "text":"Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone. If you do not have pockets, you can place the phone in the waistband of your pants.",
             "image":{
                 "type":"fetchable",
-                "imageName":"F-PantsPocket",
+                "imageName":"PantsWPocket",
                 "placementType":"topBackground"
             },
             "colorTheme":{
@@ -148,13 +148,13 @@
             "title":"Put the phone in your pocket",
             "image":{
                 "type":"animated",
-                "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
+                "imageNames":["PhoneInPocket-1", "PhoneInPocket-2", "PhoneInPocket-3"],
                 "placementType":"topBackground",
                 "animationDuration":1.5
             },
             "colorTheme":{
                 "colorStyle": {
-                    "header": "darkBackground",
+                    "header": "lightBackground",
                     "body": "lightBackground",
                     "footer": "lightBackground"
                 }
@@ -163,7 +163,7 @@
                 "viewIdentifier":"Instruction",
                 "storyboardIdentifier":"ActiveTaskSteps"
             },
-            "text":"This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
+            "text":"This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets, you can place the phone in the waistband of your pants.",
             "actions":{
                 "goForward":{
                     "type":"default",
@@ -177,7 +177,7 @@
             "text":"Begin in...",
             "image":{
                 "type":"fetchable",
-                "imageName":"F-Walking1",
+                "imageName":"Walking-10",
                 "placementType":"fullsizeBackground"
             },
             "viewTheme":{
@@ -212,7 +212,7 @@
                     "duration":30,
                     "image":{
                         "type":"fetchable",
-                        "imageName":"F-Walking1",
+                        "imageName":"Walking-10",
                         "placementType":"fullsizeBackground"
                     },
                     "colorTheme":{

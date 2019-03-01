@@ -109,15 +109,18 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         let timestampKey = "\(stepViewModel.rootPathComponent.identifier)_lastRun"
         let lastRun = defaults.object(forKey: timestampKey) as? Date
         let monthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
-        let isFirstRun = (lastRun == nil) || (lastRun! < monthAgo)
+        let isFirstRun = ((lastRun == nil) || (lastRun! < monthAgo))
         setIsFirstRunResult(isFirstRun)
+        
+        // TODO: syoung 03/01/2019 FIXME!! This should not be set until the task is completed.
         defaults.set(Date(), forKey: timestampKey)
         
         // It is critical for the view to be entirely layed out before the next code executes,
         // otherwise the scroll view offset may be computed incorrectly.
         self.view.layoutIfNeeded()
         self.statusBarBackgroundView?.layoutIfNeeded()
-        if isFirstRun {
+        let shouldShowInfo = isFirstRun || RSDStudyConfiguration.shared.alwaysShowFullInstructions
+        if shouldShowInfo {
             self._scrollToBottom()
             self._stopAnimating()
         } else if let titleLabel = self.stepTitleLabel {
@@ -128,7 +131,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
             // expected to do nothing.
             self.scrollView.scrollRectToVisible(frame, animated: false)
         }
-        _setHiddenAndScrollable(shouldShowInfo: isFirstRun)
+        _setHiddenAndScrollable(shouldShowInfo: shouldShowInfo)
     }
     
     /// Sets the height of the scroll views top background view depending on
