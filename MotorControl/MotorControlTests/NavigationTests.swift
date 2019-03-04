@@ -72,9 +72,13 @@ class NavigationTests: XCTestCase {
     var taskController : TestTaskController!
     var steps : [RSDStep]!
     var handSelection : [String]!
-    
+    var previousFrequency : RSDFrequencyType!
     
     override func setUp() {
+        
+        previousFrequency = RSDStudyConfiguration.shared.fullInstructionsFrequency
+        RSDStudyConfiguration.shared.fullInstructionsFrequency = .standard(.monthly)
+        
         self.steps = []
         let firstSteps : [RSDStep] = TestStep.steps(from: ["overview", "instruction"])
         self.steps.append(contentsOf: firstSteps)
@@ -101,6 +105,7 @@ class NavigationTests: XCTestCase {
     override func tearDown() {
         self.taskController = nil
         self.steps = nil
+        RSDStudyConfiguration.shared.fullInstructionsFrequency = previousFrequency
         super.tearDown()
     }
     

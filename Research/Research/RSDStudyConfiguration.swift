@@ -34,24 +34,32 @@
 import Foundation
 
 /// The study configuration is intended as a shared singleton that contains any information that should be
-/// applied to the entire study which may effect the presentation of a given module.
+/// applied to the entire study that may effect the presentation of a given module.
 open class RSDStudyConfiguration {
     
     /// Singleton for the study configuration for a given app.
     public static var shared: RSDStudyConfiguration = RSDStudyConfiguration()
     
-    /// Should each run of the app display full instructions or can the instructions be abbreviated for
-    /// subsequent runs.
+    /// How often should a given task be displayed to the user with the full instructions?
+    /// (Default = `always`)
     ///
-    /// Setting this flag to `true` will result in modules that use this flag showing the full instruction
-    /// sequence for every run. This can be used both to test the instruction flow as well as for a case
-    /// where a study uses the same mobile device for multiple participants.
+    /// Setting this flag to `always` will result in modules that use this flag showing the full instruction
+    /// sequence for every run. This can be used both to test the instruction flow as well as where a study
+    /// uses the same mobile device for multiple participants and needs to display the instructions every
+    /// time.
     ///
-    /// Setting this flag to `false` will result in modules that use this flag showing an abbreviated set of
-    /// instructions for subsequent runs so that complicated and/or lengthy instructions can be limited to
-    /// only being displayed sometimes (first run, on demand, etc.) rather than every time the *same* user
-    /// runs the module.
+    /// Setting this flag to another value will result in modules that use this flag showing an abbreviated
+    /// set of instructions for subsequent runs so that complicated and/or lengthy instructions can be
+    /// limited to only being displayed sometimes (first run, on demand, etc.) rather than every time the
+    /// *same* user runs the module. For this case, the frequency with which the app shows the full
+    /// instructions is determined by the frequency type. For example, if set to `monthly` then the user is
+    /// shown the full instructions once per month.
     ///
-    public var alwaysShowFullInstructions : Bool = true
+    public var fullInstructionsFrequency : RSDFrequencyType = .standard(.always)
+    
+    /// - seealso: `fullInstructionsFrequency`
+    public var alwaysShowFullInstructions : Bool {
+        return self.fullInstructionsFrequency == .standard(.always)
+    }
     
 }

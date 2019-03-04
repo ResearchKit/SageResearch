@@ -562,6 +562,10 @@
 		F8FCB9882229E9620011F27F /* RSDStudyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCB9862229E9620011F27F /* RSDStudyConfiguration.swift */; };
 		F8FCB9892229E9620011F27F /* RSDStudyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCB9862229E9620011F27F /* RSDStudyConfiguration.swift */; };
 		F8FCB98A2229E9620011F27F /* RSDStudyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCB9862229E9620011F27F /* RSDStudyConfiguration.swift */; };
+		F8FCB98E222D9F510011F27F /* RSDFrequencyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCB98D222D9F510011F27F /* RSDFrequencyType.swift */; };
+		F8FCB98F222D9F510011F27F /* RSDFrequencyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCB98D222D9F510011F27F /* RSDFrequencyType.swift */; };
+		F8FCB990222D9F510011F27F /* RSDFrequencyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCB98D222D9F510011F27F /* RSDFrequencyType.swift */; };
+		F8FCB991222D9F510011F27F /* RSDFrequencyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCB98D222D9F510011F27F /* RSDFrequencyType.swift */; };
 		F8FCE05F203F46EC00616CE8 /* ScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FCE05E203F46EC00616CE8 /* ScheduleTests.swift */; };
 		F8FD56352141BD5100BA2FA6 /* RSDTaskMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56342141BD5100BA2FA6 /* RSDTaskMetadata.swift */; };
 		F8FD56362141BD5100BA2FA6 /* RSDTaskMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56342141BD5100BA2FA6 /* RSDTaskMetadata.swift */; };
@@ -1015,6 +1019,7 @@
 		F8F9544120239E8F00347940 /* RSDDateRangeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDateRangeObject.swift; sourceTree = "<group>"; };
 		F8F9544520239ED400347940 /* RSDNumberRangeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDNumberRangeObject.swift; sourceTree = "<group>"; };
 		F8FCB9862229E9620011F27F /* RSDStudyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStudyConfiguration.swift; sourceTree = "<group>"; };
+		F8FCB98D222D9F510011F27F /* RSDFrequencyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFrequencyType.swift; sourceTree = "<group>"; };
 		F8FCE05E203F46EC00616CE8 /* ScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTests.swift; sourceTree = "<group>"; };
 		F8FD56342141BD5100BA2FA6 /* RSDTaskMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskMetadata.swift; sourceTree = "<group>"; };
 		F8FD56392141BDE000BA2FA6 /* RSDFileManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileManifest.swift; sourceTree = "<group>"; };
@@ -1844,6 +1849,7 @@
 				F8C7D394209155A9007490BC /* RSDUIActionType.swift */,
 				F8C0A8CB20FB045C00EC758A /* RSDUITransitionStyle.swift */,
 				F8BE10C02135E19B000AAB1E /* RSDValidationError.swift */,
+				F8FCB98D222D9F510011F27F /* RSDFrequencyType.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -2266,6 +2272,7 @@
 				F8BE12C421371B21000AAB1E /* RSDDateCoderObject.swift in Sources */,
 				F8BE12B221371A41000AAB1E /* RSDUIActionObjectType.swift in Sources */,
 				F8BE12EB21371B56000AAB1E /* RSDTaskObject.swift in Sources */,
+				F8FCB991222D9F510011F27F /* RSDFrequencyType.swift in Sources */,
 				F8BE1280213719EC000AAB1E /* RSDComparable.swift in Sources */,
 				F8BE12D121371B33000AAB1E /* RSDAnswerResultType+Codable.swift in Sources */,
 				F8BE129D21371A1C000AAB1E /* RSDPickerDataSource.swift in Sources */,
@@ -2588,6 +2595,7 @@
 				F8BE113D2136081E000AAB1E /* RSDViewThemeElement.swift in Sources */,
 				F82D11132125EA9F00EA1A33 /* RSDFileResult.swift in Sources */,
 				F8BE1129213602DB000AAB1E /* RSDActiveUIStep.swift in Sources */,
+				F8FCB98E222D9F510011F27F /* RSDFrequencyType.swift in Sources */,
 				FF8B53F61FCE6C86006B6937 /* RSDDateCoderObject.swift in Sources */,
 				FF8B53A41FCE6C7A006B6937 /* RSDDateCoder.swift in Sources */,
 				F8FD563A2141BDE000BA2FA6 /* RSDFileManifest.swift in Sources */,
@@ -2813,6 +2821,7 @@
 				F8BF1350213F97B0009505E5 /* RSDPathComponent.swift in Sources */,
 				F8864AD82163F96500DF57CF /* RSDResultSummaryStep.swift in Sources */,
 				FF8B54161FCE6C99006B6937 /* RSDResultObject.swift in Sources */,
+				F8FCB98F222D9F510011F27F /* RSDFrequencyType.swift in Sources */,
 				FF8B53FC1FCE6C87006B6937 /* RSDRegExValidatorObject.swift in Sources */,
 				FF8B53CB1FCE6C7B006B6937 /* RSDThemedUIStep.swift in Sources */,
 				FF8B54C21FCE6D0A006B6937 /* NumberFormatter+Codable.swift in Sources */,
@@ -2912,6 +2921,7 @@
 				F8BE11172135FF45000AAB1E /* RSDNavigationUIAction.swift in Sources */,
 				FF8B53DB1FCE6C7B006B6937 /* RSDTaskInfoStep.swift in Sources */,
 				F8864AD92163F96500DF57CF /* RSDResultSummaryStep.swift in Sources */,
+				F8FCB990222D9F510011F27F /* RSDFrequencyType.swift in Sources */,
 				FF8B54881FCE6CDC006B6937 /* RSDStepController.swift in Sources */,
 				FF8B54AC1FCE6CF8006B6937 /* RSDInputFieldError.swift in Sources */,
 				F8F367E7215B404A00A49F89 /* RSDTaskState.swift in Sources */,
