@@ -16,9 +16,9 @@
                             ],
                  "image":{
                      "type":"animated",
-                     "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
+                     "imageNames":["Walking-1", "Walking-2", "Walking-3", "Walking-4", "Walking-5", "Walking-6", "Walking-7", "Walking-8", "Walking-9", "Walking-10", "Walking-11", "Walking-12"],
                      "placementType":"topMarginBackground",
-                     "animationDuration":2.5
+                     "animationDuration":6.0
                  },
                 "icons": [
                           {
@@ -64,9 +64,9 @@
                 "isFirstRunOnly": true,
                 "image":{
                     "type":"animated",
-                    "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
+                    "imageNames":["Walking-1", "Walking-2", "Walking-3", "Walking-4", "Walking-5", "Walking-6", "Walking-7", "Walking-8", "Walking-9", "Walking-10", "Walking-11", "Walking-12"],
                     "placementType":"topMarginBackground",
-                    "animationDuration":2.5
+                    "animationDuration":6.0
                 },
                 "colorTheme":{
                     "colorStyle": {
@@ -93,7 +93,7 @@
                 "text":"Bring your phone with you and turn up your phone volume so you can hear the instructions while you are walking.",
                 "image":{
                     "type":"fetchable",
-                    "imageName":"F-TurnUpVolume",
+                    "imageName":"TurnUpVolume",
                     "placementType":"topMarginBackground"
                 },
                 "colorTheme":{
@@ -121,7 +121,7 @@
                  "text":"Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "image":{
                      "type":"fetchable",
-                     "imageName":"F-PantsPocket",
+                     "imageName":"PantsWPocket",
                      "placementType":"topBackground"
                  },
                  "colorTheme":{
@@ -148,13 +148,13 @@
                  "title":"Put the phone in your pocket",
                  "image":{
                      "type":"animated",
-                     "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
+                     "imageNames":["PhoneInPocket-1", "PhoneInPocket-2", "PhoneInPocket-3"],
                      "placementType":"topBackground",
                      "animationDuration":1.5
                  },
                  "colorTheme":{
                      "colorStyle": {
-                         "header": "darkBackground",
+                         "header": "lightBackground",
                          "body": "lightBackground",
                          "footer": "lightBackground"
                      }
@@ -177,7 +177,7 @@
                  "text":"Begin in...",
                  "image":{
                      "type":"fetchable",
-                     "imageName":"F-Walking1",
+                     "imageName":"Walking-10",
                      "placementType":"fullsizeBackground"
                  },
                  "viewTheme":{
@@ -212,7 +212,7 @@
                               "duration":30,
                               "image":{
                                   "type":"fetchable",
-                                  "imageName":"F-Walking1",
+                                  "imageName":"Walking-10",
                                   "placementType":"fullsizeBackground"
                               },
                               "colorTheme":{
@@ -251,9 +251,10 @@
                  "isFirstRunOnly": true,
                  "image":{
                      "type":"animated",
-                     "imageNames":["F-Turning1", "F-Turning2", "F-Turning3", "F-Turning4", "F-Turning5", "F-Turning6", "F-Turning7", "F-Turning8", "F-Wait1", "F-Wait2", "F-Wait3"],
+                     "imageNames":["Balance-1","Balance-1","Balance-1","Balance-2","Balance-3","Balance-4","Balance-5","Balance-6","Balance-7","Balance-8","Balance-9","Balance-10","Balance-11"],
                      "placementType":"topMarginBackground",
-                     "animationDuration":5
+                     "animationRepeatCount":1,
+                     "animationDuration":6.5
                  },
                  "colorTheme":{
                      "colorStyle": {
@@ -284,13 +285,13 @@
                  "isFirstRunOnly": true,
                  "image":{
                      "type":"animated",
-                     "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
+                     "imageNames":["PhoneInPocket-1", "PhoneInPocket-2", "PhoneInPocket-3"],
                      "placementType":"topBackground",
                      "animationDuration":1.5
                  },
                  "colorTheme":{
                      "colorStyle": {
-                         "header": "darkBackground",
+                         "header": "lightBackground",
                          "body": "lightBackground",
                          "footer": "lightBackground"
                      }
@@ -313,7 +314,7 @@
                  "isFirstRunOnly": true,
                  "image":{
                      "type":"fetchable",
-                     "imageName":"F-Turning1",
+                     "imageName":"Balance-1",
                      "placementType":"fullsizeBackground"
                  },
                  "viewTheme":{
@@ -348,7 +349,7 @@
                               "duration":30,
                               "image":{
                                   "type":"fetchable",
-                                  "imageName":"F-Turning1",
+                                  "imageName":"Balance-1",
                                   "placementType":"fullsizeBackground"
                               },
                               "colorTheme":{

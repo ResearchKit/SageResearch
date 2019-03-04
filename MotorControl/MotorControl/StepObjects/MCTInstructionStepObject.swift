@@ -49,7 +49,8 @@ open class MCTInstructionStepObject : RSDActiveUIStepObject, RSDNavigationSkipRu
     public func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
         // if self.isFirstRunOnly == nil the JSON file probably left out this field so we
         // assume that this step will always be shown
-        guard (self.isFirstRunOnly ?? false),
+        guard !RSDStudyConfiguration.shared.alwaysShowFullInstructions,
+              (self.isFirstRunOnly ?? false),
               let isFirstRunResult = result?.asyncResults?.first(where: { $0.identifier == MCTOverviewStepViewController.firstRunKey}) as? RSDAnswerResult,
               let isFirstRun = isFirstRunResult.value as? Bool
             else {

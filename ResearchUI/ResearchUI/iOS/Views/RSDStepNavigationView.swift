@@ -570,7 +570,7 @@ public protocol RSDNavigationFooterLayoutConstants {
 
 internal struct DefaultNavigationFooterLayoutConstants {
     let topMargin = CGFloat(16.0).rsd_proportionalToScreenHeight(max: 24.0)
-    let bottomMargin = CGFloat(18.0)
+    let bottomMargin = CGFloat(12.0).rsd_proportionalToScreenHeight(max: 24.0)
     let horizontalPadding = CGFloat(20.0)
     let verticalPadding = CGFloat(18.0)
     let oneButtonSideMargin = CGFloat(24.0)

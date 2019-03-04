@@ -361,12 +361,17 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
                 navigationView.hasImage = true
                 if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
                     let images = animatedImage.images(compatibleWith: self.traitCollection)
+                    // If there is more than one image in the collection, then animate them.
                     if images.count > 1 {
                         navigationView.imageView?.animationDuration = animatedImage.animationDuration
                         navigationView.imageView?.animationImages = images
+                        if let repeatCount = animatedImage.animationRepeatCount {
+                            navigationView.imageView?.animationRepeatCount = repeatCount
+                        }
                         navigationView.imageView?.startAnimating()
                     }
-                    else if let image = images.first {
+                    // Always set the last image as the one to show when/if the animation ends.
+                    if let image = images.last {
                         navigationView.imageView?.image = image
                     }
                 } else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
