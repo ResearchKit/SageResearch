@@ -134,7 +134,7 @@ extension RSDFraction : RSDJSONNumber {
 
 extension RSDFraction : RSDJSONValue {
     
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return self.jsonNumber() ?? NSNull()
     }
 }
