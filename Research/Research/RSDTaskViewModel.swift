@@ -61,6 +61,13 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     /// The task that is currently being run.
     public private(set) var task: RSDTask?
     
+    /// The data manager for accessing previous runs of the task.
+    public weak var dataManager: RSDDataStorageManager? {
+        didSet {
+            setupDataTracking()
+        }
+    }
+    
     /// A weak pointer to the task controller.
     public var taskController : RSDTaskController? {
         get {
@@ -90,6 +97,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         let taskResult = task.instantiateTaskResult()
         super.init(taskResult: taskResult)
         commonInit(identifier: task.identifier, parentPath: parentPath)
+        setupDataTracking()
     }
     
     /// Initialize the task path with a task.
@@ -107,6 +115,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     private func commonInit(identifier: String, parentPath: RSDPathComponent?) {
         self.parent = parentPath
         guard let parent = parentPath else { return }
+        self.dataManager = (parent as? RSDHistoryPathComponent)?.dataManager
         self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
         self.taskResult.taskRunUUID = parent.taskResult.taskRunUUID
     }
@@ -478,7 +487,34 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             assertionFailure("The base task view model is expecting a view controller. If none is provided, please use a subclass.")
             return
         }
+        setupDataTracking()
         taskController.handleFinishedLoading()
+    }
+    
+    /// The data tracker (if any) for this task.
+    open var dataTracker: RSDTrackingTask? {
+        return self.task as? RSDTrackingTask
+    }
+    
+    /// Called when the task is loaded and when the`dataManager` is set.
+    open func setupDataTracking() {
+        guard let task = self.task,
+            let taskData = self.dataManager?.previousTaskData(for: RSDIdentifier(rawValue: task.identifier))
+            else {
+                return
+        }
+        self.dataTracker?.setupTask(with: taskData, for: self)
+    }
+    
+    /// Called when the task is finished and ready to move to the next subtask.
+    open func saveDataTracking() {
+        guard let manager = self.dataManager,
+            let tracker = self.dataTracker,
+            let data = tracker.taskData(for: self.taskResult)
+            else {
+                return
+        }
+        manager.saveTaskData(data, from: self.taskResult)
     }
     
     /// Called when the task fails.
@@ -558,6 +594,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
 
 }
 
+// Private navigation methods.
 extension RSDTaskViewModel {
 
     private func _fetchTaskFromCurrentInfo() {
@@ -843,6 +880,7 @@ extension RSDTaskViewModel {
         // Mark the task end date and isCompleted
         self.taskResult.endDate = Date()
         self.isCompleted = true
+        self.saveDataTracking()
         if self.parent == nil, let taskController = self.taskController {
             // ONLY send the message to save the results if this is the end of the task.
             taskController.handleTaskResultReady(with: self)

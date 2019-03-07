@@ -113,6 +113,9 @@ public protocol RSDStepViewPathComponent : RSDNodePathComponent {
 /// A history path component defines a method for returning the previous result from a step.
 public protocol RSDHistoryPathComponent : RSDPathComponent {
     
+    /// The data manager should be implemented as a weak reference.
+    var dataManager: RSDDataStorageManager? { get set }
+    
     /// Get the previous result for the given step.
     func previousResult(for step: RSDStep) -> RSDResult?
 }
