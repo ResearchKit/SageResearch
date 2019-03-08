@@ -2,7 +2,7 @@
 //  RSDIdentifier.swift
 //  Research
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -48,12 +48,28 @@ public struct RSDIdentifier : RawRepresentable, Codable, Hashable {
     }
     
     enum RestrictedIdentifiers : String, Codable, CaseIterable {
-        case exit, nextSection, nextStep
+        case exit, nextSection, nextStep, abbreviatedInstructions, taskRunCount, taskExitReason
     }
     
+    /// Exit the activity.
     public static let exit = RestrictedIdentifiers.exit.identifierValue
+    
+    /// Continue to the next section.
     public static let nextSection = RestrictedIdentifiers.nextSection.identifierValue
+    
+    /// Continue to the next step.
     public static let nextStep = RestrictedIdentifiers.nextStep.identifierValue
+    
+    /// Identifier for an async result that indicates whether or not to display the abbreviated instructions
+    /// for a given task run.
+    public static let abbreviatedInstructions = RestrictedIdentifiers.abbreviatedInstructions.identifierValue
+    
+    /// Identifier for an async result that indicates the number of times the task has been run. Default
+    /// behavior is to increment this result in the `RSDTaskViewModel` when the view model is instantiated.
+    public static let taskRunCount = RestrictedIdentifiers.taskRunCount.identifierValue
+    
+    /// Identifier for an async result that indicates the reason why a task was exited.
+    public static let taskExitReason = RestrictedIdentifiers.taskRunCount.identifierValue
     
     public static func allGlobalIdentifiers() -> [RSDIdentifier] {
         return RestrictedIdentifiers.allCases.map { $0.identifierValue }

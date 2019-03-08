@@ -445,6 +445,8 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
                 btn.addTarget(self, action: #selector(_cancelTapped), for: .touchUpInside)
             case .navigation(.learnMore):
                 btn.addTarget(self, action: #selector(_learnMoreTapped), for: .touchUpInside)
+            case .navigation(.reviewInstructions):
+                btn.addTarget(self, action: #selector(_reviewInstructionsTapped), for: .touchUpInside)
             default:
                 break
             }
@@ -529,6 +531,11 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     @objc private func _learnMoreTapped(_ sender: UIButton) {
         momentarilyDisableButton(sender)
         self.showLearnMore()
+    }
+    
+    @objc private func _reviewInstructionsTapped(_ sender: UIButton) {
+        momentarilyDisableButton(sender)
+        self.showReviewInstructions()
     }
     
     /// Momentarily disable the button.  This keeps a double-tap of a navigation button from
@@ -637,6 +644,21 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// and present it modally.
     @IBAction open func showLearnMore() {
         guard actionTapped(with: .navigation(.learnMore))
+            else {
+                self.presentAlertWithOk(title: nil, message: "Missing learn more action for this task", actionHandler: nil)
+                return
+        }
+    }
+    
+    
+    /// This method is called when the user taps the "review instructions" button. The default implementation
+    /// will check if the review action is an `RSDNavigationUIAction` and if so, will navigate back to that
+    /// instruction, setting a value in the async results, marking that abbreviated instructions should *not*
+    /// be shown.
+    @IBAction open func showReviewInstructions() {
+        // Reset the instructions to always be displayed
+        self.stepViewModel.rootPathComponent.shouldShowAbbreviatedInstructions = false
+        guard actionTapped(with: .navigation(.reviewInstructions))
             else {
                 self.presentAlertWithOk(title: nil, message: "Missing learn more action for this task", actionHandler: nil)
                 return
