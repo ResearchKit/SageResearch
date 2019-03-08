@@ -121,7 +121,7 @@ class FactoryTests: XCTestCase {
         }
         
         waitForExpectations(timeout: 10) { (err) in
-            print(String(describing: err))
+            XCTAssertNil(err)
         }
     }
 

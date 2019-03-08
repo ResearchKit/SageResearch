@@ -79,7 +79,7 @@ class DataArchiveTests: XCTestCase {
                 expect.fulfill()
             }
             waitForExpectations(timeout: 2) { (err) in
-                print(String(describing: err))
+                XCTAssertNil(err)
             }
             
             // Check that the file result was deleted
@@ -156,7 +156,7 @@ class DataArchiveTests: XCTestCase {
                 expect.fulfill()
             }
             waitForExpectations(timeout: 2) { (err) in
-                print(String(describing: err))
+                XCTAssertNil(err)
             }
             
             // Check that the file result was deleted
