@@ -594,6 +594,79 @@ class TaskControllerTests: XCTestCase {
         XCTAssertEqual(dataStore.saveTaskData_called.count, 1)
         XCTAssertNotNil(taskController.handleTaskResultReady_calledWith)
     }
+    
+    func testAbbreviatedInstructions_ToCompletion() {
+        
+        var steps: [RSDStep] = []
+        steps.append(TestStep(identifier: "introduction"))
+        var step1 = TestStep(identifier: "step1")
+        step1.fullInstructionsOnly = true
+        steps.append(step1)
+        let beforeSteps: [RSDStep] = TestStep.steps(from: ["step2", "step3"])
+        steps.append(contentsOf: beforeSteps)
+        steps.append(RSDSectionStepObject(identifier: "step4", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        var step5Steps: [RSDStep] = []
+        var stepX = TestStep(identifier: "stepX")
+        stepX.fullInstructionsOnly = true
+        step5Steps.append(stepX)
+        var stepY = TestStep(identifier: "stepY")
+        stepY.fullInstructionsOnly = true
+        step5Steps.append(stepY)
+        step5Steps.append(TestStep(identifier: "stepZ"))
+        steps.append(RSDSectionStepObject(identifier: "step5", steps: step5Steps))
+        steps.append(RSDSectionStepObject(identifier: "step6", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        steps.append(TestStep(identifier: "step7"))
+        var completionStep = TestStep(identifier: "completion")
+        completionStep.stepType = .completion
+        steps.append(completionStep)
+        
+        RSDStudyConfiguration.shared.fullInstructionsFrequency = .daily
+        
+        let navigator = TestConditionalNavigator(steps: steps)
+        let task = TestTask(identifier: "test", stepNavigator: navigator)
+        let taskController = TestTaskController()
+        taskController.task = task
+        
+        let dataStore = TestDataStoreManager()
+        let previousRunTimestamp = Date(timeIntervalSinceNow: -1 * 60 * 60)
+        dataStore.previous[RSDIdentifier(rawValue: "test")] = TestData(identifier: "test", timestampDate: previousRunTimestamp, json: "foo")
+        taskController.taskViewModel.dataManager = dataStore
+        
+        // Check that the task view model is using abbreviated instructions
+        XCTAssertTrue(taskController.taskViewModel.shouldShowAbbreviatedInstructions ?? true)
+        
+        // check that after stepping to step 7, the data store has not been called
+        let _ = taskController.test_stepTo("step7")
+        
+        let expect = expectation(description: "Task ready to save")
+        taskController.handleTaskResultReady_completionBlock = {
+            expect.fulfill()
+        }
+        
+        let _ = taskController.test_stepTo("completion")
+        
+        waitForExpectations(timeout: 2) { (err) in
+            XCTAssertNil(err)
+        }
+        
+        XCTAssertNotNil(taskController.handleTaskResultReady_calledWith)
+        
+        let taskResult = taskController.taskViewModel.taskResult
+        let expectedTop = ["introduction", "step2", "step3", "step4", "step5", "step6", "step7", "completion"]
+        let topLevel = taskResult.stepHistory.map { $0.identifier }
+        XCTAssertEqual(topLevel, expectedTop)
+        
+        if let taskResult5 = taskResult.findResult(with: "step5") as? RSDTaskResult {
+            let expected5 = ["stepZ"]
+            let history5 = taskResult5.stepHistory.map { $0.identifier }
+            XCTAssertEqual(history5, expected5)
+        }
+        else {
+            XCTFail("Failed to retrieve step 5")
+        }
+        
+        RSDStudyConfiguration.shared.fullInstructionsFrequency = .always
+    }
 }
 
 class TestDataStoreManager : NSObject, RSDDataStorageManager {

@@ -92,4 +92,9 @@ extension RSDImagePickerStep {
             return [.photoLibrary]
         }
     }
+    
+    /// The image picker always requires the permissions.
+    public var requestIfNeeded: Bool {
+        return true
+    }
 }

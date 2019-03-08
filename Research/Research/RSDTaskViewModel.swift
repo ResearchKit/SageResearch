@@ -68,6 +68,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         }
     }
     
+    /// Should the task only display an abbreviated set of instruction steps?
+    open var shouldShowAbbreviatedInstructions: Bool?
+    
     /// A weak pointer to the task controller.
     public var taskController : RSDTaskController? {
         get {
@@ -118,6 +121,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         self.dataManager = (parent as? RSDHistoryPathComponent)?.dataManager
         self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
         self.taskResult.taskRunUUID = parent.taskResult.taskRunUUID
+        if let _ = self.task as? RSDSectionStep {
+            self.shouldShowAbbreviatedInstructions = (parentPath as? RSDTaskViewModel)?.shouldShowAbbreviatedInstructions
+        }
     }
     
         
@@ -504,6 +510,10 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
                 return
         }
         self.dataTracker?.setupTask(with: taskData, for: self)
+        if shouldShowAbbreviatedInstructions == nil, let timestamp = taskData.timestampDate {
+            let frequency = RSDStudyConfiguration.shared.fullInstructionsFrequency
+            shouldShowAbbreviatedInstructions = frequency.withinDuration(between: timestamp, and: Date())
+        }
     }
     
     /// Called when the task is finished and ready to move to the next subtask.
@@ -594,7 +604,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
 
 }
 
-// Private navigation methods.
+// Private nativgation methods.
 extension RSDTaskViewModel {
 
     private func _fetchTaskFromCurrentInfo() {
@@ -636,7 +646,13 @@ extension RSDTaskViewModel {
             return
         }
     
-        let navigation = task.stepNavigator.step(after: previousStep, with: &self.taskResult)
+        var navigation = task.stepNavigator.step(after: previousStep, with: &self.taskResult)
+        while let instruction = navigation.step as? RSDInstructionStep,
+            instruction.fullInstructionsOnly,
+            (shouldShowAbbreviatedInstructions ?? false) {
+            navigation = task.stepNavigator.step(after: navigation.step, with: &self.taskResult)
+        }
+        
         let navDirection = direction ?? navigation.direction
         
         // save the previous step and look for a next step

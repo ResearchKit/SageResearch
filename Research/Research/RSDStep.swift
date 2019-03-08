@@ -2,7 +2,7 @@
 //  RSDStep.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -96,6 +96,10 @@ public protocol RSDStandardPermissionsStep : RSDStep, RSDPermissionsConfiguratio
     
     /// The permissions used by this task.
     var standardPermissions: [RSDStandardPermission]? { get }
+    
+    /// Should the step request the listed permissions before continuing to the next step, or should the
+    /// step only check that none of the listed permissions have been denied or restricted?
+    var requestIfNeeded: Bool { get }
 }
 
 extension RSDStandardPermissionsStep {

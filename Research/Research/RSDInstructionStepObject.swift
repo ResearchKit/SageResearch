@@ -1,8 +1,8 @@
 //
-//  RSDOverviewStepObject.swift
+//  RSDInstructionStepObject.swift
 //  Research
 //
-//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,22 +33,27 @@
 
 import Foundation
 
-/// `RSDOverviewStepObject` extends the `RSDUIStepObject` to include information about an activity including
-/// what permissions are required by this task. Without these preconditions, the task cannot measure or
-/// collect the data needed for this task.
-open class RSDOverviewStepObject : RSDInstructionStepObject {
 
+/// `RSDInstructionStepObject` extends the `RSDUIStepObject` to include additional information about an
+/// active task. Specifically, this step is used to show instructions, including describing required
+/// permissions that may need to be requested within the context of this step.
+open class RSDInstructionStepObject : RSDUIStepObject, RSDStandardPermissionsStep, RSDInstructionStep {
+    
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case icons
+        case permissions, requestIfNeeded, fullInstructionsOnly
     }
     
-    /// The icons that are used to define the list of things you will need for an active task.
-    open var icons: [RSDIconInfo]?
+    /// The permissions used by this task.
+    open var standardPermissions: [RSDStandardPermission]?
     
-    /// Default type is `.overview`.
-    open override class func defaultType() -> RSDStepType {
-        return .overview
-    }
+    /// Should the step request the listed permissions before continuing to the next step, or should the
+    /// step only check that none of the listed permissions have been denied or restricted?
+    /// (Default == `false`)
+    open var requestIfNeeded: Bool = false
+    
+    /// Should this step be displayed if and only if the flag has been set for displaying the full
+    /// instructions? 
+    open var fullInstructionsOnly: Bool = false
     
     /// Override to set the properties of the subclass.
     override open func copyInto(_ copy: RSDUIStepObject) {
@@ -57,14 +62,18 @@ open class RSDOverviewStepObject : RSDInstructionStepObject {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
-        subclassCopy.icons = self.icons
+        subclassCopy.standardPermissions = self.standardPermissions
+        subclassCopy.requestIfNeeded = self.requestIfNeeded
+        subclassCopy.fullInstructionsOnly = self.fullInstructionsOnly
     }
     
     /// Override the decoder per device type b/c the task may require a different set of permissions depending upon the device.
     open override func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.icons = try container.decodeIfPresent([RSDIconInfo].self, forKey: .icons) ?? self.icons
+        self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
+        self.requestIfNeeded = try container.decodeIfPresent(Bool.self, forKey: .requestIfNeeded) ?? self.requestIfNeeded
+        self.fullInstructionsOnly = try container.decodeIfPresent(Bool.self, forKey: .fullInstructionsOnly) ?? self.fullInstructionsOnly
     }
     
     // Overrides must be defined in the base implementation
@@ -83,7 +92,8 @@ open class RSDOverviewStepObject : RSDInstructionStepObject {
             "title": "Hello World!",
             "text": "Some text.",
             "permissions" : [["permissionType": "location"]],
-            "icons": [ [ "icon":"Foo1", "title": "A SMOOTH SURFACE"] ]
+            "requestIfNeeded" : true,
+            "fullInstructionsOnly" : true
         ]
         
         return [jsonA]
