@@ -45,7 +45,6 @@ public protocol RSDTaskData {
     /// for this task.
     var timestampDate: Date? { get }
     
-    /// Return a JSON type object. Elements may be any one of the JSON types
-    /// (NSNull, NSNumber, String, Array, [String : Any]).
+    /// Return a JSON type object. Elements may be any one of the serializable JSON types.
     var json: RSDJSONSerializable { get }
 }

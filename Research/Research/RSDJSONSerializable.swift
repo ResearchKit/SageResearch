@@ -33,8 +33,8 @@
 
 import Foundation
 
-/// Castinng for any a JSON type object. Elements may be any one of the JSON types
-/// (NSNull, NSNumber, String, Array, [String : Any]).
+/// Casting for any a JSON type object. Elements may be any one of the JSON types
+/// (NSNull, NSNumber, String, Array<RSDJSONSerializable>, Dictionary<String : RSDJSONSerializable>).
 ///
 /// - note: `NSArray` and `NSDictionary` do not implement this protocol b/c they cannot be extended using
 /// a generic `where` clause. 

@@ -190,7 +190,7 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     /// and if so, will return the task data from the navigator.
     ///
     /// Otherwise, the task will *only* build a score if this task object has the property `usesTrackedData`
-    /// set to true and the method `instantiateScoreBuilder()` is returns to a score builder.
+    /// set to true and the method `instantiateScoreBuilder()` returns a score builder.
     ///
     open func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
         if let tracker = self.stepNavigator as? RSDTrackingTask {

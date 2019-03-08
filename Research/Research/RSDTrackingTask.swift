@@ -34,8 +34,8 @@
 import Foundation
 
 /// The tracking task protocol is intended for tasks that use scoring data from a previous task run to
-/// influence the results for subsequent runs of the same task by a given participant. `RSDTaskViewModel`
-/// will check a task for conformance to this method when the view model is initialized.
+/// inform subsequent runs of the same task by a given participant. `RSDTaskViewModel` will check a task for
+/// conformance to this method when the view model is initialized.
 ///
 /// - note: Because sometimes it is actually the step navigator attached to a task that uses the previous
 /// run data, the tracking task does *not* inherit from `RSDTask`.
