@@ -2,7 +2,7 @@
 //  RSDUIStepObject.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -42,7 +42,7 @@ extension RSDStepType {
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, RSDStandardPermissionsStep, RSDInstructionStep {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier
@@ -51,7 +51,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         case text
         case detail
         case footnote
+        case fullInstructionsOnly
         case nextStepIdentifier
+        case permissions
         case viewTheme
         case colorTheme
         case imageTheme = "image"
@@ -88,6 +90,13 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// to be used in order to include disclaimer, copyright, etc. that is important to display in the step
     /// but should not distract from the main purpose of the step.
     open var footnote: String?
+    
+    /// The permissions used by this task that are described by this step.
+    open var standardPermissions: [RSDStandardPermission]?
+    
+    /// Should this step be displayed if and only if the flag has been set for displaying the full
+    /// instructions?
+    open var fullInstructionsOnly: Bool = false
     
     /// The view info used to create a custom step.
     open var viewTheme: RSDViewThemeElement?
@@ -198,6 +207,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         copy.shouldHideActions = self.shouldHideActions
         copy.beforeCohortRules = self.beforeCohortRules
         copy.afterCohortRules = self.afterCohortRules
+        copy.standardPermissions = self.standardPermissions
+        copy.fullInstructionsOnly = self.fullInstructionsOnly
     }
 
     // MARK: Result management
@@ -331,6 +342,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         self.text = try container.decodeIfPresent(String.self, forKey: .text) ?? self.text
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
+        self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
+        self.fullInstructionsOnly = try container.decodeIfPresent(Bool.self, forKey: .fullInstructionsOnly) ?? self.fullInstructionsOnly
     
         self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
         self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
@@ -400,7 +413,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
                                     "operator" : "any" ]],
             "afterCohortRules" : [[ "requiredCohorts" : ["boo", "goo"],
                                     "skipToIdentifier" : "blueGu",
-                                    "operator" : "any" ]]
+                                    "operator" : "any" ]],
+            "permissions" : [["permissionType": "location"]],
+            "fullInstructionsOnly" : true
         ]
         
         // Example JSON for a step with an `RSDFetchableImageThemeElement`.

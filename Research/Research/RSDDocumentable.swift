@@ -146,7 +146,6 @@ public struct RSDDocumentCreator {
         RSDUIStepObject.self,
         RSDActiveUIStepObject.self,
         RSDFormUIStepObject.self,
-        RSDInstructionStepObject.self,
         RSDOverviewStepObject.self,
         RSDResultSummaryStepObject.self,
         RSDSectionStepObject.self,

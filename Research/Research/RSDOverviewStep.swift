@@ -1,8 +1,8 @@
 //
-//  MCTCountdownStepViewController.swift
-//  MotorControl
+//  RSDOverviewStep.swift
+//  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,18 +33,11 @@
 
 import Foundation
 
-open class MCTCountdownStepViewController : RSDCountdownStepViewController, MCTHandStepController {
+/// `RSDOverviewStep` extends the `RSDUIStep` to include general overview information about an activity
+/// including what permissions are required by this task. Without these preconditions, the task cannot
+/// measure or collect the data needed for this task.
+public protocol RSDOverviewStep : RSDUIStep, RSDStandardPermissionsStep {
     
-    /// Retuns the imageView, in this case the image from the navigationHeader.
-    public var imageView: UIImageView? {
-        return self.navigationHeader?.imageView ?? self.navigationBody?.imageView
-    }
-    
-    /// Override viewWillAppear to also set the unitLabel text.
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.updateImage()
-        self.view.setNeedsLayout()
-        self.view.setNeedsUpdateConstraints()
-    }
+    /// The icons that are used to define the list of things you will need for an active task.
+    var icons: [RSDIconInfo]? { get }
 }

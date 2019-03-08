@@ -33,50 +33,6 @@
 
 import Foundation
 
-open class MCTInstructionStepObject : RSDActiveUIStepObject, RSDNavigationSkipRule {
-    private enum CodingKeys: String, CodingKey {
-        case isFirstRunOnly
-    }
-    
-    /// Should this instruction step be dispalyed only when the user hasn't
-    /// performed this task in a while?
-    public internal(set) var isFirstRunOnly : Bool?
-    
-    /// Returns `true` if this step should be skipped, `false` otherwise.
-    /// Default: only returns `true` if the JSON file has isFirstRunOnly explicitly set
-    /// to true, and the conditions for a first run are not met. See
-    /// MCTOverviewStepViewController for more on what the conditions for a first run are.
-    public func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
-        // if self.isFirstRunOnly == nil the JSON file probably left out this field so we
-        // assume that this step will always be shown
-        guard !RSDStudyConfiguration.shared.alwaysShowFullInstructions,
-              (self.isFirstRunOnly ?? false),
-              let isFirstRunResult = result?.asyncResults?.first(where: { $0.identifier == MCTOverviewStepViewController.firstRunKey}) as? RSDAnswerResult,
-              let isFirstRun = isFirstRunResult.value as? Bool
-            else {
-            return false
-        }
-        
-        // returns true if this isn't a first run and false otherwise.
-        return !isFirstRun
-    }
-    
-    /// Override init to also decode whether this step is a first run only instruction.
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.isFirstRunOnly = try container.decodeIfPresent(Bool.self, forKey: .isFirstRunOnly)
-        try super.init(from: decoder)
-    }
-    
-    /// Override decode to also decode whether this step is a first run only instruction.
-    override open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
-        try super.decode(from: decoder, for: deviceType)
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.isFirstRunOnly = try container.decodeIfPresent(Bool.self, forKey: .isFirstRunOnly)
-    }
-    
-    /// Require method to initialize a MCTInstructionStepObject.
-    public required init(identifier: String, type: RSDStepType?) {
-        super.init(identifier: identifier, type: type)
-    }
+open class MCTInstructionStepObject : RSDInstructionStepObject {
+
 }

@@ -12,7 +12,7 @@
      "steps":[
                 {
                     "identifier":"instruction",
-                    "type":"instruction",
+                    "type":"handInstruction",
                     "title":"Hold the phone with your %@ hand",
                     "text":"With your hand in your lap, hold your phone still with the screen facing up.",
                     "image":{
@@ -26,10 +26,6 @@
                             "body": "lightBackground",
                             "footer": "lightBackground"
                         }
-                    },
-                    "viewTheme":{
-                        "viewIdentifier":"Instruction",
-                        "storyboardIdentifier":"ActiveTaskSteps"
                     },
                     "actions":{
                         "goForward":{

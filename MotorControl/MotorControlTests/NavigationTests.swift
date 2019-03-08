@@ -127,8 +127,8 @@ class NavigationTests: XCTestCase {
     }
     
     private func _insertIsFirstRunResult(for taskController: TestTaskController, isFirstRun: Bool) {
-        var answerResult = RSDAnswerResultObject(identifier: "isFirstRun", answerType: .boolean)
-        answerResult.value = isFirstRun
+        var answerResult = RSDAnswerResultObject(identifier: "abbreviatedInstructions", answerType: .boolean)
+        answerResult.value = !isFirstRun
         self.taskController.taskViewModel.taskResult.appendAsyncResult(with: answerResult)
     }
     
@@ -137,7 +137,7 @@ class NavigationTests: XCTestCase {
         let firstSteps : [RSDStep] = TestStep.steps(from: ["first"])
         self.steps.append(contentsOf: firstSteps)
         let firstRunOnly = MCTInstructionStepObject(identifier: "instructionFirstRunOnly", type: .instruction)
-        firstRunOnly.isFirstRunOnly = true
+        firstRunOnly.fullInstructionsOnly = true
         self.steps.append(firstRunOnly)
         self.steps.append(MCTInstructionStepObject(identifier: "instructionNotFirstRunOnly", type: .instruction))
         let finalSteps : [RSDStep] = TestStep.steps(from: ["completion"])

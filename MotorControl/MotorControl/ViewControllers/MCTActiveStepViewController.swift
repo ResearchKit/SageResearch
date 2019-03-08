@@ -33,9 +33,6 @@
 
 import Foundation
 
-extension RSDActiveStepViewController : MCTInternalStepController {
-}
-
 open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandStepController {
     
     /// Retuns the imageView, in this case the image from the navigationHeader.
@@ -86,13 +83,6 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
     open func updateUnitLabelText() {
         let localizationKey = self.countdown == 1 ? "ACTIVE_STEP_UNIT_LABEL_SINGULAR" : "ACTIVE_STEP_UNIT_LABEL"
         self.unitLabel?.text = Localization.localizedString(localizationKey)
-    }
-    
-    /// Override show learn more to insert the first run answer result.
-    override open func showLearnMore() {
-        // Update the first run to show the full instructions.
-        setIsFirstRunResult(true)
-        super.showLearnMore()
     }
     
     /// Override to return the instruction with the formatted text replaced.

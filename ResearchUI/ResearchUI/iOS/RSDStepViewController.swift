@@ -283,7 +283,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         case .header:
             self.navigationHeader?.backgroundColor = backgroundColor
             self.navigationHeader?.usesLightStyle = usesLightStyle
-            self.statusBarBackgroundView?.backgroundColor = backgroundColor
+            if let placement = self.themedStep?.imageTheme?.placementType, placement == .topBackground {
+                self.statusBarBackgroundView?.backgroundColor = UIColor.clear
+            }
+            else {
+                self.statusBarBackgroundView?.backgroundColor = backgroundColor
+            }
             if let statusView = self.statusBarBackgroundView as? RSDStatusBarBackgroundView {
                 statusView.overlayColor = usesLightStyle ? UIColor.rsd_statusBarOverlayLightStyle : UIColor.rsd_statusBarOverlay
             }
@@ -352,7 +357,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         setupButton(navigationView.nextButton, for: .navigation(.goForward), isFooter: isFooter)
         setupButton(navigationView.backButton, for: .navigation(.goBackward), isFooter: isFooter)
         setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
-        
+        setupButton(navigationView.reviewInstructionsButton, for: .navigation(.reviewInstructions), isFooter: isFooter)
         
         if let imageTheme = self.themedStep?.imageTheme, let imageView = navigationView.imageView {
             let imagePlacement = imageTheme.placementType ?? .iconBefore

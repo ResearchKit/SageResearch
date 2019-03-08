@@ -1,5 +1,5 @@
 //
-//  MCTInstructionStepViewController.swift
+//  MCTHandInstructionStepViewController.swift
 //  MotorControl
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -120,54 +120,21 @@ extension MCTHandStepController {
     }
 }
 
+extension MCTHandInstructionStepObject : RSDStepViewControllerVendor {
+    
+    /// By default, return the task view controller from the storyboard.
+    public func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
+        let vc = MCTHandInstructionStepViewController(step: self, parent: parent)
+        return vc
+    }
+}
 
-open class MCTInstructionStepViewController : RSDStepViewController, MCTHandStepController {
-    
-    /// Retuns the imageView, in this case the image from the navigationHeader.
-    public var imageView: UIImageView? {
-        return self.navigationHeader?.imageView
-    }
-    
-    /// Scrollview for the image and instruction text.
-    @IBOutlet var scrollView: UIScrollView!
-    
-    /// The constraint that sets the scroll bar's top background view's height.
-    @IBOutlet var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
-    
-    /// The constraint that sets the image height. This needs to be adjusted for smaller screens.
-    @IBOutlet var imageHeightConstraint: NSLayoutConstraint!
-    
-    /// A view that is used to mark the height of the text instruction area.
-    @IBOutlet var instructionTextView: UIView!
-    
-    /// Save the previously calculated instruction height.
-    private var _instructionHeight: CGFloat = 0
-    
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        if _instructionHeight != instructionTextView.bounds.height {
-            _instructionHeight = instructionTextView.bounds.height
-            let remainingHeight = self.scrollView.bounds.height - _instructionHeight - scrollViewBackgroundHeightConstraint.constant
-            self.imageHeightConstraint.constant = max(remainingHeight, self.view.bounds.height / 2)
-            self.view.setNeedsUpdateConstraints()
-            self.view.setNeedsLayout()
-        }
-    }
+open class MCTHandInstructionStepViewController : RSDInstructionStepViewController, MCTHandStepController {
     
     /// Override viewWillAppear to update the label text, and image placement constraints.
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateLabelText()
-        self.updateImagePlacementConstraints()
         self.updateImage()
-        self.statusBarBackgroundView?.backgroundColor = UIColor.clear
-    }
-    
-    /// Sets the height of the scroll views top background view depending on
-    /// the image placement type from this step.
-    open func updateImagePlacementConstraints() {
-        guard let placementType = self.themedStep?.imageTheme?.placementType else { return }
-        scrollViewBackgroundHeightConstraint.constant = placementType == .topMarginBackground ? self.statusBarBackgroundView!.bounds.height : CGFloat(0)
     }
 }

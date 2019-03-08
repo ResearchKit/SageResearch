@@ -259,6 +259,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             activeStep.commands.contains(.transitionAutomatically) {
             return RSDActiveStepViewController(step: step, parent: parent)
         }
+        else if RSDInstructionStepViewController.doesSupport(step) {
+            return RSDInstructionStepViewController(step: step, parent: parent)
+        }
         else if RSDTableStepViewController.doesSupport(step) {
             // If this step *can* be displayed using the generic step view controller, then default to that
             // rather than the using the debug step.

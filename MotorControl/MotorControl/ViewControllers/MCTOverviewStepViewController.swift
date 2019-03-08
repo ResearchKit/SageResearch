@@ -33,28 +33,7 @@
 
 import Foundation
 
-internal protocol MCTInternalStepController : RSDStepController {
-}
-
-extension MCTInternalStepController {
-    
-    /// Adds a result for whether or not this run represents a "first run". A "first run"
-    /// occurs anytime the user has never run the task before, or hasn't run the task in
-    /// one month.
-    internal func setIsFirstRunResult(_ isFirstRun: Bool) {
-        var firstRunResult = RSDAnswerResultObject(identifier: MCTOverviewStepViewController.firstRunKey, answerType: .boolean)
-        firstRunResult.value = isFirstRun
-        self.stepViewModel.taskResult.appendAsyncResult(with: firstRunResult)
-    }
-}
-
-extension MCTOverviewStepViewController : MCTInternalStepController {
-}
-
 open class MCTOverviewStepViewController : RSDOverviewStepViewController {
-    
-    /// The key to store whether or not this is a first run in the task result under.
-    public static let firstRunKey = "isFirstRun"
     
     /// The label which tells the user about the icons. Typically displays
     /// "This is what you'll need".
@@ -95,31 +74,18 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
             icon.image = nil
         }
         
-        if let icons = (self.step as? MCTOverviewStepObject)?.icons {
+        if let icons = (self.step as? RSDOverviewStep)?.icons {
             for (idx, iconInfo) in icons.enumerated() {
-                iconImages[idx].image = iconInfo.icon.embeddedImage()
+                iconImages[idx].image = iconInfo.icon?.embeddedImage()
                 iconTitles[idx].text = iconInfo.title
             }
         }
-        
-        // If this is the first time the activity has been done or it has been more than
-        // a month since the last run we show the task info, otherwise we show a smaller
-        // screen and provide an info button in case the user wants to see the info.
-        let defaults = UserDefaults.standard
-        let timestampKey = "\(stepViewModel.rootPathComponent.identifier)_lastRun"
-        let lastRun = defaults.object(forKey: timestampKey) as? Date
-        let monthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
-        let isFirstRun = ((lastRun == nil) || (lastRun! < monthAgo))
-        setIsFirstRunResult(isFirstRun)
-        
-        // TODO: syoung 03/01/2019 FIXME!! This should not be set until the task is completed.
-        defaults.set(Date(), forKey: timestampKey)
         
         // It is critical for the view to be entirely layed out before the next code executes,
         // otherwise the scroll view offset may be computed incorrectly.
         self.view.layoutIfNeeded()
         self.statusBarBackgroundView?.layoutIfNeeded()
-        let shouldShowInfo = isFirstRun || RSDStudyConfiguration.shared.alwaysShowFullInstructions
+        let shouldShowInfo = !(self.stepViewModel.rootPathComponent.shouldShowAbbreviatedInstructions ?? false)
         if shouldShowInfo {
             self._scrollToBottom()
             self._stopAnimating()

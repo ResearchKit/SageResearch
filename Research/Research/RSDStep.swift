@@ -88,24 +88,3 @@ public protocol RSDGenericStep : RSDStep {
     /// The decoded dictionary.
     var userInfo: [String : Any] { get }
 }
-
-/// `RSDPermissionsStep` extends the `RSDUIStep` to include information about an activity including
-/// what permissions are required by this step or task. Without these preconditions, the task cannot
-/// measure or collect the data needed for this task.
-public protocol RSDStandardPermissionsStep : RSDStep, RSDPermissionsConfiguration {
-    
-    /// The permissions used by this task.
-    var standardPermissions: [RSDStandardPermission]? { get }
-    
-    /// Should the step request the listed permissions before continuing to the next step, or should the
-    /// step only check that none of the listed permissions have been denied or restricted?
-    var requestIfNeeded: Bool { get }
-}
-
-extension RSDStandardPermissionsStep {
-    
-    /// List of the permissions required for this action.
-    public var permissionTypes: [RSDPermissionType] {
-        return standardPermissions?.map { $0.permissionType } ?? []
-    }
-}

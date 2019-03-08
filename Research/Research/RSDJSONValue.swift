@@ -44,7 +44,7 @@ public protocol RSDDictionaryRepresentable {
 /// Protocol for converting objects to JSON serializable objects.
 public protocol RSDJSONValue {
     
-    /// Return a JSON-type object. Elements may be any one of the JSON types (NSNull, NSNumber, String, Array, [String : Any]).
+    /// Return a JSON-type object. Elements may be any one of the JSON types.
     func jsonObject() -> RSDJSONSerializable
     
     /// Encode the object.

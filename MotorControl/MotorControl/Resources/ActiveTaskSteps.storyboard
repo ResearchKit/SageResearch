@@ -370,14 +370,14 @@
                                 <state key="normal" image="closeActivity"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9c-PV-TEq" userLabel="Restart Button" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                <rect key="frame" x="28" y="423.5" width="264" height="52"/>
+                                <rect key="frame" x="28" y="448" width="264" height="30"/>
                                 <state key="normal" title="Restart Test"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlT-Pj-FXY" userLabel="Review Button" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                                <rect key="frame" x="85.5" y="505.5" width="149" height="32.5"/>
+                                <rect key="frame" x="93" y="508" width="134" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Review Instructions"/>
@@ -421,7 +421,7 @@
                         <connections>
                             <outlet property="cancelButton" destination="a9L-sM-gnJ" id="MT1-cq-JgO"/>
                             <outlet property="imageView" destination="Z9U-qL-Bij" id="ryn-uZ-yUd"/>
-                            <outlet property="learnMoreButton" destination="xlT-Pj-FXY" id="kVE-3Y-FmK"/>
+                            <outlet property="reviewInstructionsButton" destination="xlT-Pj-FXY" id="Y3N-hK-JHN"/>
                             <outlet property="skipButton" destination="a9c-PV-TEq" id="qAo-hZ-mc4"/>
                             <outlet property="titleLabel" destination="Kqn-vH-L1X" id="6QI-wl-HKA"/>
                         </connections>
@@ -457,7 +457,7 @@
                                 <state key="normal" image="closeActivity"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qh-cg-kfP" userLabel="Pause Button" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                <rect key="frame" x="28" y="423.5" width="264" height="52"/>
+                                <rect key="frame" x="28" y="444" width="264" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Pause">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -485,7 +485,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ph-h6-gCc" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                                <rect key="frame" x="85.5" y="505.5" width="149" height="32.5"/>
+                                <rect key="frame" x="93" y="508" width="134" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Review Instructions"/>
                             </button>
@@ -522,7 +522,7 @@
                         <connections>
                             <outlet property="cancelButton" destination="5aE-sq-nnA" id="Nj8-tY-RPt"/>
                             <outlet property="imageView" destination="ePz-9Y-VGg" id="ocU-eT-z7M"/>
-                            <outlet property="learnMoreButton" destination="4ph-h6-gCc" id="h1e-7e-4E6"/>
+                            <outlet property="reviewInstructionsButton" destination="4ph-h6-gCc" id="8BD-54-58p"/>
                             <outlet property="textLabel" destination="9un-Qi-dJY" id="HWg-F6-vS8"/>
                         </connections>
                     </view>
@@ -640,7 +640,7 @@
         <!--Instruction Step-->
         <scene sceneID="Eb5-7g-8Os">
             <objects>
-                <viewController storyboardIdentifier="Instruction" title="Task Info Step" id="egW-fK-mOE" userLabel="Instruction Step" customClass="MCTInstructionStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Instruction" title="Task Info Step" id="egW-fK-mOE" userLabel="Instruction Step" customClass="MCTHandInstructionStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Cp-ii-wjf" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -912,7 +912,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKi-WA-f7L" userLabel="Next Button" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                <rect key="frame" x="28" y="476" width="264" height="52"/>
+                                <rect key="frame" x="28" y="498" width="264" height="30"/>
                                 <state key="normal" title="Continue"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
@@ -1130,8 +1130,8 @@
         <image name="Completion-WalkAndBalance" width="221" height="158"/>
         <image name="PantsWithPockets" width="68" height="68"/>
         <image name="TapLeft1" width="750" height="913"/>
-        <image name="Walking-10" width="1695" height="1335"/>
-        <image name="Walking-4" width="1695" height="1335"/>
+        <image name="Walking-10" width="1694" height="1334"/>
+        <image name="Walking-4" width="1694" height="1334"/>
         <image name="closeActivity" width="32" height="32"/>
         <image name="infoIcon" width="32" height="32"/>
     </resources>
