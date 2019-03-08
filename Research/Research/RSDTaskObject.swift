@@ -35,20 +35,20 @@ import Foundation
 
 /// `RSDTaskObject` is the interface for running a task. It includes information about how to calculate progress,
 /// validation, and the order of display for the steps.
-public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
+open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, copyright, schemaInfo, asyncActions
+        case identifier, copyright, schemaInfo, asyncActions, usesTrackedData
     }
 
     /// A short string that uniquely identifies the task.
     public let identifier: String
     
     /// Copyright information about the task.
-    public var copyright: String?
+    open private(set) var copyright: String?
     
     /// Information about the result schema.
-    public var schemaInfo: RSDSchemaInfo?
+    open private(set) var schemaInfo: RSDSchemaInfo?
     
     /// The step navigator for this task.
     public let stepNavigator: RSDStepNavigator
@@ -56,17 +56,22 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
     /// A list of asynchronous actions to run on the task.
     public let asyncActions: [RSDAsyncActionConfiguration]?
     
+    /// Does this task use stored data and/or include a scoring at this level?
+    public let usesTrackedData: Bool
+    
     /// Default initializer.
     /// - parameters:
     ///     - taskInfo: Additional information about the task.
     ///     - stepNavigator: The step navigator for this task.
     ///     - schemaInfo: Information about the result schema.
     ///     - asyncActions: A list of asynchronous actions to run on the task.
-    public required init(identifier: String, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
+    ///     - usesTrackedData: Does this task use stored data and/or include a scoring at this level?
+    public required init(identifier: String, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil, usesTrackedData: Bool = false) {
         self.identifier = identifier
         self.schemaInfo = schemaInfo
         self.stepNavigator = stepNavigator
         self.asyncActions = asyncActions
+        self.usesTrackedData = false
         super.init()
     }
     
@@ -77,6 +82,7 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
     ///        let json = """
     ///            {
     ///            "identifier" : "foo",
+    ///            "usesTrackedData" : false,
     ///            "schemaInfo" : {
     ///                            "identifier" : "foo.1.2",
     ///                            "revision" : 3 },
@@ -115,6 +121,7 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
         self.identifier = identifier
         self.copyright = try container.decodeIfPresent(String.self, forKey: .copyright)
         self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo
+        self.usesTrackedData = try container.decodeIfPresent(Bool.self, forKey: .usesTrackedData) ?? false
         
         // Get the step navigator
         let factory = decoder.factory
@@ -144,13 +151,13 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
     /// Instantiate a task result that is appropriate for this task.
     ///
     /// - returns: A task result for this task.
-    public func instantiateTaskResult() -> RSDTaskResult {
+    open func instantiateTaskResult() -> RSDTaskResult {
         return RSDTaskResultObject(identifier: self.identifier, schemaInfo: self.schemaInfo)
     }
     
     /// Validate the task to check for any model configuration that should throw an error.
     /// - throws: An error appropriate to the failed validation.
-    public func validate() throws {
+    open func validate() throws {
         // Check if the step navigator implements step validation
         if let stepValidator = stepNavigator as? RSDStepValidator {
             try stepValidator.stepValidation()
@@ -174,6 +181,61 @@ public class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, Decodable {
         }
     }
     
+    
+    // MARK:  RSDDataTracker {
+    
+    /// Returns the task data for this task result.
+    ///
+    /// The default implementation will first look to see if the `stepNavigator` implements `RSDTaskData`
+    /// and if so, will return the task data from the navigator.
+    ///
+    /// Otherwise, the task will *only* build a score if this task object has the property `usesTrackedData`
+    /// set to true and the method `instantiateScoreBuilder()` returns a score builder.
+    ///
+    open func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
+        if let tracker = self.stepNavigator as? RSDTrackingTask {
+            return tracker.taskData(for: taskResult)
+        }
+        
+        // Only return task data if the task uses it to influence the results.
+        guard usesTrackedData,
+            let scoreBuilder = instantiateScoreBuilder(),
+            let score = scoreBuilder.getScoringData(from: taskResult)
+            else {
+                return nil
+        }
+    
+        return TaskData(identifier: self.identifier, timestampDate: taskResult.endDate, json: score)
+    }
+    
+    /// Setup the data tracker. In the default implementation, the task object only acts as a pass-through
+    /// for the step navigator if that object implements the protocol.
+    open func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
+        if let tracker = self.stepNavigator as? RSDTrackingTask {
+            tracker.setupTask(with: data, for: path)
+        }
+    }
+    
+    /// Instantiate the score builder to use to build the task data for this task result.
+    ///
+    /// The default behavior is to use a simple recursive builder that will look for results that implement
+    /// either `RSDScoringResult` or `RSDAnswerResult` and return either a dictionary or array as applicable
+    /// if more than one score is found at any given level of subtask result or collection result. For
+    /// a more detailed description, go code spelunking into the unit tests for `RecursiveScoreBuilder`.
+    ///
+    /// This method is only called if the step navigator attached to this task does not implement the
+    /// `RSDTrackingTask` protocol.
+    ///
+    open func instantiateScoreBuilder() -> RSDScoreBuilder? {
+        return RecursiveScoreBuilder()
+    }
+    
+    struct TaskData : RSDTaskData {
+        let identifier: String
+        let timestampDate: Date?
+        let json: RSDJSONSerializable
+    }
+
     
     // MARK: Copy methods
     

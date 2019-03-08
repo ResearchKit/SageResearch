@@ -548,6 +548,87 @@ class TaskControllerTests: XCTestCase {
         
         RSDFactory.shared.trackingRules = []
     }
+    
+    func testDataTrackingNavigation_ToCompletion() {
+        var steps: [RSDStep] = []
+        let beforeSteps: [RSDStep] = TestStep.steps(from: ["introduction", "step1", "step2", "step3"])
+        steps.append(contentsOf: beforeSteps)
+        steps.append(RSDSectionStepObject(identifier: "step4", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        steps.append(RSDSectionStepObject(identifier: "step5", steps: TestStep.steps(from: ["stepX", "stepY", "stepZ"])))
+        steps.append(RSDSectionStepObject(identifier: "step6", steps: TestStep.steps(from: ["stepA", "stepB", "stepC"])))
+        steps.append(TestStep(identifier: "step7"))
+        var completionStep = TestStep(identifier: "completion")
+        completionStep.stepType = .completion
+        steps.append(completionStep)
+        
+        let navigator = TestConditionalNavigator(steps: steps)
+        var task = TestTask(identifier: "test", stepNavigator: navigator)
+        let tracker = TestTracker()
+        task.tracker = tracker
+        
+        let taskController = TestTaskController()
+        taskController.task = task
+        
+        let dataStore = TestDataStoreManager()
+        dataStore.previous[RSDIdentifier(rawValue: "test")] = TestData(identifier: "test", timestampDate: Date(), json: "foo")
+        taskController.taskViewModel.dataManager = dataStore
+        
+        // Check that the setup method was called as expected
+        XCTAssertNotNil(tracker.setupTask_called)
+        
+        // check that after stepping to step 7, the data store has not been called
+        let _ = taskController.test_stepTo("step7")
+        XCTAssertEqual(dataStore.saveTaskData_called.count, 0)
+        
+        let expect = expectation(description: "Task ready to save")
+        taskController.handleTaskResultReady_completionBlock = {
+            expect.fulfill()
+        }
+        
+        let _ = taskController.test_stepTo("completion")
+        
+        waitForExpectations(timeout: 2) { (err) in
+            XCTAssertNil(err)
+        }
+        
+        XCTAssertEqual(dataStore.saveTaskData_called.count, 1)
+        XCTAssertNotNil(taskController.handleTaskResultReady_calledWith)
+    }
+}
+
+class TestDataStoreManager : NSObject, RSDDataStorageManager {
+    
+    var previous: [RSDIdentifier : RSDTaskData] = [:]
+    var saveTaskData_called: [(data: RSDTaskData, taskResult: RSDTaskResult?)] = []
+    
+    func previousTaskData(for taskIdentifier: RSDIdentifier) -> RSDTaskData? {
+        return previous[taskIdentifier]
+    }
+    
+    func saveTaskData(_ data: RSDTaskData, from taskResult: RSDTaskResult?) {
+        saveTaskData_called.append((data, taskResult))
+    }
+}
+
+class TestTracker : RSDTrackingTask {
+
+    var setupTask_called: (data: RSDTaskData?, path: RSDTaskPathComponent)?
+    
+    func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
+        let scoreBuilder = RecursiveScoreBuilder()
+        guard let score = scoreBuilder.getScoringData(from: taskResult) else { return nil }
+        return RSDTaskObject.TaskData(identifier: taskResult.identifier, timestampDate: taskResult.endDate, json: score)
+    }
+    
+    func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
+        setupTask_called = (data, path)
+    }
+}
+
+struct TestData : RSDTaskData {
+    let identifier: String
+    let timestampDate: Date?
+    let json: RSDJSONSerializable
 }
 
 class TestTrackingRule : RSDTrackingRule {

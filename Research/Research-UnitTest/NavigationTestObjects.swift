@@ -116,7 +116,7 @@ public class TestSubtaskStep : RSDSubtaskStep {
     }
 }
 
-public struct TestTask : RSDTask {
+public struct TestTask : RSDTask, RSDTrackingTask {
     
     public let identifier: String
     public let stepNavigator: RSDStepNavigator
@@ -126,6 +126,7 @@ public struct TestTask : RSDTask {
     
     public var taskResult: RSDTaskResult?
     public var validationError: Error?
+    public var tracker: RSDTrackingTask?
     
     public init(identifier: String, stepNavigator: RSDStepNavigator) {
         self.identifier = identifier
@@ -148,6 +149,14 @@ public struct TestTask : RSDTask {
     
     public func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep) -> Bool? {
         return nil
+    }
+    
+    public func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
+        return tracker?.taskData(for: taskResult)
+    }
+    
+    public func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
+        tracker?.setupTask(with: data, for: path)
     }
 }
 
@@ -251,6 +260,7 @@ public class TestTaskController: NSObject, RSDTaskController {
     public var stopAsyncActions_calledWith: [RSDAsyncAction]?
     
     public var handleTaskDidFinish_completionBlock: (() -> Void)?
+    public var handleTaskResultReady_completionBlock: (() -> Void)?
     
     public func stepController(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepController? {
         let stepController = TestStepController()
@@ -292,6 +302,8 @@ public class TestTaskController: NSObject, RSDTaskController {
     
     public func handleTaskResultReady(with taskViewModel: RSDTaskViewModel) {
         handleTaskResultReady_calledWith = taskViewModel
+        handleTaskResultReady_completionBlock?()
+        handleTaskResultReady_completionBlock = nil
     }
 
     public func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([RSDAsyncAction]) -> Void)) {
