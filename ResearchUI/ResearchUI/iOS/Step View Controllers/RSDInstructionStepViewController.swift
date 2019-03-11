@@ -34,6 +34,8 @@
 
 import UIKit
 
+/// `RSDInstructionStepViewController` is a custom step view controller that is intended to be used with the
+/// `RSDInstructionStepViewController.nib` file. This is the default view controller for steps that
 open class RSDInstructionStepViewController: RSDStepViewController {
 
     /// Retuns the imageView, in this case the image from the navigationHeader.
@@ -56,9 +58,38 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     /// Save the previously calculated instruction height.
     private var _instructionHeight: CGFloat = 0
     
+    /// Override `viewDidLayoutSubviews` to set up resizing the image to balance the the space provided to
+    /// the image verse the space provided for the text.
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        updateImageHeightConstraintIfNeeded()
+    }
+    
+    /// Override `viewWillAppear` to update image placement constraints.
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.updateImagePlacementConstraintsIfNeeded()
+    }
+    
+    /// Sets the height of the scrollview's top background view depending on the image placement type from
+    /// this step. Default behavior is to constrain the scrollview to be under the status bar if the placement
+    /// type is `.topMarginBackground`.
+    open func updateImagePlacementConstraintsIfNeeded() {
+        guard let placementType = self.themedStep?.imageTheme?.placementType else { return }
+        let constant = (placementType == .topMarginBackground) ?
+            (self.statusBarBackgroundView?.bounds.height ?? CGFloat(0)) : CGFloat(0)
+        if constant != scrollViewBackgroundHeightConstraint.constant {
+            scrollViewBackgroundHeightConstraint.constant = constant
+            self.view.setNeedsUpdateConstraints()
+            self.view.setNeedsLayout()
+        }
+    }
+    
+    /// Update the image height constraint to balance the the space provided to the image versus the space
+    /// provided for the text. The default is to look at the overall screen height and size the image to take
+    /// up half the space if the text does not fit (iPhone SE) or resize to take the remaining space if the
+    /// image is for a longer screen (iPhone X).
+    open func updateImageHeightConstraintIfNeeded() {
         if _instructionHeight != instructionTextView.bounds.height {
             _instructionHeight = instructionTextView.bounds.height
             let remainingHeight = self.scrollView.bounds.height - _instructionHeight - scrollViewBackgroundHeightConstraint.constant
@@ -66,19 +97,6 @@ open class RSDInstructionStepViewController: RSDStepViewController {
             self.view.setNeedsUpdateConstraints()
             self.view.setNeedsLayout()
         }
-    }
-    
-    /// Override viewWillAppear to update the label text, and image placement constraints.
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.updateImagePlacementConstraints()
-    }
-    
-    /// Sets the height of the scroll views top background view depending on
-    /// the image placement type from this step.
-    open func updateImagePlacementConstraints() {
-        guard let placementType = self.themedStep?.imageTheme?.placementType else { return }
-        scrollViewBackgroundHeightConstraint.constant = placementType == .topMarginBackground ? self.statusBarBackgroundView!.bounds.height : CGFloat(0)
     }
     
     
@@ -93,7 +111,7 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     /// implementation for the nib or storyboard.
     open class func doesSupport(_ step: RSDStep) -> Bool {
         
-        // Must have a top background image
+        // Must have a top background image.
         guard let themedStep = step as? RSDThemedUIStep,
             let imageTheme = themedStep.imageTheme,
             let placement = imageTheme.placementType
@@ -101,9 +119,17 @@ open class RSDInstructionStepViewController: RSDStepViewController {
                 return false
         }
         
-        // Form input fields are not supported
+        // Form input fields are not supported.
         if let formStep = step as? RSDFormUIStep, formStep.inputFields.count > 0 {
             return false
+        }
+        
+        // Footnotes and custom buttons are not supported.
+        guard (themedStep.footnote == nil),
+            (themedStep.shouldHideAction(for: .navigation(.learnMore), on: step) ?? true),
+            (themedStep.shouldHideAction(for: .navigation(.reviewInstructions), on: step) ?? true)
+            else {
+                return false
         }
         
         return (placement == .topBackground || placement == .topMarginBackground)

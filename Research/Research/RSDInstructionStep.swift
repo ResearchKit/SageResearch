@@ -33,7 +33,7 @@
 
 import Foundation
 
-/// This is a custom-type of UI step that is used to show instructions, permissions and/or a countdown for a
+/// This is a custom type of UI step that is used to show instructions, permissions, and/or a countdown for a
 /// task.
 public protocol RSDInstructionStep : RSDStep {
     

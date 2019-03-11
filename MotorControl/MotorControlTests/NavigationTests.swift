@@ -77,7 +77,7 @@ class NavigationTests: XCTestCase {
     override func setUp() {
         
         previousFrequency = RSDStudyConfiguration.shared.fullInstructionsFrequency
-        RSDStudyConfiguration.shared.fullInstructionsFrequency = .standard(.monthly)
+        RSDStudyConfiguration.shared.fullInstructionsFrequency = .monthly
         
         self.steps = []
         let firstSteps : [RSDStep] = TestStep.steps(from: ["overview", "instruction"])
@@ -126,20 +126,14 @@ class NavigationTests: XCTestCase {
         self.taskController.taskViewModel.taskResult.appendStepHistory(with: collectionResult)
     }
     
-    private func _insertIsFirstRunResult(for taskController: TestTaskController, isFirstRun: Bool) {
-        var answerResult = RSDAnswerResultObject(identifier: "abbreviatedInstructions", answerType: .boolean)
-        answerResult.value = !isFirstRun
-        self.taskController.taskViewModel.taskResult.appendAsyncResult(with: answerResult)
-    }
-    
     private func _setupInstructionStepTest() {
         self.steps = []
         let firstSteps : [RSDStep] = TestStep.steps(from: ["first"])
         self.steps.append(contentsOf: firstSteps)
-        let firstRunOnly = MCTInstructionStepObject(identifier: "instructionFirstRunOnly", type: .instruction)
+        let firstRunOnly = RSDUIStepObject(identifier: "instructionFirstRunOnly", type: .instruction)
         firstRunOnly.fullInstructionsOnly = true
         self.steps.append(firstRunOnly)
-        self.steps.append(MCTInstructionStepObject(identifier: "instructionNotFirstRunOnly", type: .instruction))
+        self.steps.append(RSDUIStepObject(identifier: "instructionNotFirstRunOnly", type: .instruction))
         let finalSteps : [RSDStep] = TestStep.steps(from: ["completion"])
         self.steps.append(contentsOf: finalSteps)
         self.taskController = TestTaskController()
@@ -276,7 +270,7 @@ class NavigationTests: XCTestCase {
     
     public func testInstructionStep_firstRun() {
         _setupInstructionStepTest()
-        _insertIsFirstRunResult(for: self.taskController, isFirstRun: true)
+        self.taskController.taskViewModel.shouldShowAbbreviatedInstructions = false
         let _ = self.taskController.test_stepTo("first")
         // Go forward, shouldn't skip the instructionFirstRunOnly
         self.taskController.goForward()
@@ -297,7 +291,7 @@ class NavigationTests: XCTestCase {
     
     public func testInstructionStep_notFirstRun() {
         _setupInstructionStepTest()
-        _insertIsFirstRunResult(for: self.taskController, isFirstRun: false)
+        self.taskController.taskViewModel.shouldShowAbbreviatedInstructions = true
         let _ = self.taskController.test_stepTo("first")
         // Go forward, should skip the instructionFirstRunOnly
         self.taskController.goForward()

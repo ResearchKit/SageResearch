@@ -604,7 +604,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
 
 }
 
-// Private nativgation methods.
+// Private navigation methods.
 extension RSDTaskViewModel {
 
     private func _fetchTaskFromCurrentInfo() {

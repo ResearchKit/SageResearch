@@ -19,7 +19,7 @@ public enum RSDFrequencyType: String, CaseIterable {
     case biannual
     case annual
     
-    /// Is the given date range within the duration window for the given frequency.
+    /// Is the given date range within the duration window for the given frequency?
     /// - returns: `true` if `date1 + frequency > date2`
     public func withinDuration(between date1: Date, and date2: Date) -> Bool {
         let calendar = Calendar.init(identifier: .iso8601)
