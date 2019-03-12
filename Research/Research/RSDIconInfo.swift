@@ -1,8 +1,8 @@
 //
-//  MCTCountdownStepViewController.swift
-//  MotorControl
+//  RSDIconInfo.swift
+//  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,18 +33,15 @@
 
 import Foundation
 
-open class MCTCountdownStepViewController : RSDCountdownStepViewController, MCTHandStepController {
+/// The icon info is a simple image holder that also contains a title and subtitle for the image.
+public struct RSDIconInfo : Codable {
     
-    /// Retuns the imageView, in this case the image from the navigationHeader.
-    public var imageView: UIImageView? {
-        return self.navigationHeader?.imageView ?? self.navigationBody?.imageView
-    }
+    /// Title for the image.
+    public let title: String
     
-    /// Override viewWillAppear to also set the unitLabel text.
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.updateImage()
-        self.view.setNeedsLayout()
-        self.view.setNeedsUpdateConstraints()
-    }
+    /// Subtitle for the image.
+    public let subtitle: String?
+    
+    /// The icon for this info object.
+    public let icon: RSDImageWrapper?
 }

@@ -1,5 +1,6 @@
 {
     "identifier":"Tapping",
+    "usesTrackedData":true,
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":["fingerTappingInstructions", "phoneOnTableInstruction", "tappingFirstHandInstruction", "completion"],
     "steps":[
@@ -104,7 +105,7 @@
              },
              {
                 "identifier":"phoneOnTableInstruction",
-                "type":"instruction",
+                "type":"handInstruction",
                 "title":"Put the phone on a table",
                 "text":"Place your phone on a flat surface such as a table before you begin the activity.",
                 "image":{
@@ -133,7 +134,7 @@
              },
              {
                 "identifier":"tappingFirstHandInstruction",
-                "type":"instruction",
+                "type":"handInstruction",
                 "title":"First, tap with your %@ hand",
                 "text": "Alternate tapping the buttons that appear with your index and middle finger of your %@ HAND. Keep tapping for 30 seconds for as fast as you can.",
                 "image": {

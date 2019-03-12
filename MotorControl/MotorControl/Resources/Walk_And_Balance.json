@@ -1,5 +1,6 @@
 {
     "identifier":"WalkAndBalance",
+    "usesTrackedData":true,
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":["volumeUp", "pantsWithPocket","phoneInPocket.1","walk", "balance"],
     "steps":[
@@ -61,7 +62,7 @@
                 "type":"instruction",
                 "title":"First, walk for 30 seconds",
                 "text":"You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
-                "isFirstRunOnly": true,
+                "fullInstructionsOnly": true,
                 "image":{
                     "type":"animated",
                     "imageNames":["Walking-1", "Walking-2", "Walking-3", "Walking-4", "Walking-5", "Walking-6", "Walking-7", "Walking-8", "Walking-9", "Walking-10", "Walking-11", "Walking-12"],
@@ -74,10 +75,6 @@
                         "body": "lightBackground",
                         "footer": "lightBackground"
                     }
-                },
-                "viewTheme":{
-                    "viewIdentifier":"Instruction",
-                    "storyboardIdentifier":"ActiveTaskSteps"
                 },
                 "actions":{
                     "goForward":{
@@ -103,10 +100,6 @@
                          "footer": "lightBackground"
                      }
                 },
-                "viewTheme":{
-                    "viewIdentifier":"Instruction",
-                    "storyboardIdentifier":"ActiveTaskSteps"
-                },
                 "actions":{
                     "goForward":{
                         "type":"default",
@@ -131,10 +124,6 @@
                          "footer": "lightBackground"
                      }
                  },
-                 "viewTheme":{
-                     "viewIdentifier":"Instruction",
-                     "storyboardIdentifier":"ActiveTaskSteps"
-                 },
                  "actions":{
                      "goForward":{
                         "type":"default",
@@ -158,10 +147,6 @@
                          "body": "lightBackground",
                          "footer": "lightBackground"
                      }
-                 },
-                 "viewTheme":{
-                     "viewIdentifier":"Instruction",
-                     "storyboardIdentifier":"ActiveTaskSteps"
                  },
                  "text":"This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "actions":{
@@ -228,7 +213,7 @@
                                       "skipToIdentifier":"countdown.1",
                                       "buttonTitle": "Restart test"
                                   },
-                                  "learnMore":{
+                                  "reviewInstructions":{
                                       "type":"navigation",
                                       "skipToIdentifier": "walkInstructions",
                                       "buttonTitle": "Review instructions"
@@ -248,7 +233,7 @@
                  "type":"instruction",
                  "title":"Turn around, and then stand still for the remainder of the 30 seconds",
                  "text":"You’ll turn 360 degrees and stand still, with your feet shoulder-width apart. Rest your arms by your side and try to avoid moving for the remainder of the 30 seconds.",
-                 "isFirstRunOnly": true,
+                 "fullInstructionsOnly": true,
                  "image":{
                      "type":"animated",
                      "imageNames":["Balance-1","Balance-1","Balance-1","Balance-2","Balance-3","Balance-4","Balance-5","Balance-6","Balance-7","Balance-8","Balance-9","Balance-10","Balance-11"],
@@ -262,10 +247,6 @@
                          "body": "lightBackground",
                          "footer": "lightBackground"
                      }
-                 },
-                 "viewTheme":{
-                     "viewIdentifier":"Instruction",
-                     "storyboardIdentifier":"ActiveTaskSteps"
                  },
                  "actions":{
                      "goForward":{
@@ -282,7 +263,7 @@
                  "type":"instruction",
                  "title":"Put the phone in your pocket",
                  "text":"This test measures how well you balance and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
-                 "isFirstRunOnly": true,
+                 "fullInstructionsOnly": true,
                  "image":{
                      "type":"animated",
                      "imageNames":["PhoneInPocket-1", "PhoneInPocket-2", "PhoneInPocket-3"],
@@ -296,10 +277,6 @@
                          "footer": "lightBackground"
                      }
                  },
-                 "viewTheme":{
-                     "viewIdentifier":"Instruction",
-                     "storyboardIdentifier":"ActiveTaskSteps"
-                 },
                  "actions":{
                      "goForward":{
                          "type":"default",
@@ -311,7 +288,7 @@
                  "identifier":"countdown.2",
                  "type":"countdown",
                  "text":"Begin in...",
-                 "isFirstRunOnly": true,
+                 "fullInstructionsOnly": true,
                  "image":{
                      "type":"fetchable",
                      "imageName":"Balance-1",
@@ -366,7 +343,7 @@
                                       "skipToIdentifier":"countdown.1",
                                       "buttonTitle": "Restart test"
                                   },
-                                  "learnMore":{
+                                  "reviewInstructions":{
                                       "type":"navigation",
                                       "skipToIdentifier": "walkInstructions",
                                       "buttonTitle": "Review instructions"

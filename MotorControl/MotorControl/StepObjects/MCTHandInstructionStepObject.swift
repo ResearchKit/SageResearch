@@ -1,8 +1,8 @@
 //
-//  MCTOverviewStepObject.swift
+//  MCTHandInstructionStepObject.swift
 //  MotorControl
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,34 +33,7 @@
 
 import Foundation
 
-open class MCTOverviewStepObject : RSDOverviewStepObject {
-    
-    private enum CodingKeys: String, CodingKey {
-        case icons
-    }
-    
-    open var icons: [MCTIconInfo]?
-    
-    /// Override the copy into method.
-    override open func copyInto(_ copy: RSDUIStepObject) {
-        super.copyInto(copy)
-        guard let subclassCopy = copy as? MCTOverviewStepObject else {
-            assertionFailure("Failed to copy into a class of expected type.")
-            return
-        }
-        subclassCopy.icons = self.icons
-    }
-    
-    /// Override the decoder to also decode the icon types that this step will display.
-    override open func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
-        try super.decode(from: decoder, for: deviceType)
-        guard deviceType == nil else { return }
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.icons = try container.decodeIfPresent([MCTIconInfo].self, forKey: .icons)
-    }
-}
-
-public struct MCTIconInfo : Codable {
-    public let title: String
-    public let icon: RSDImageWrapper
+/// The hand instruction step is a custom step that allows adding functionality to the base step to allow
+/// using the same step object for both the right and left hand.
+public class MCTHandInstructionStepObject : RSDUIStepObject {
 }

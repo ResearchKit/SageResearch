@@ -1,8 +1,8 @@
 //
-//  MCTCountdownStepViewController.swift
-//  MotorControl
+//  RSDInstructionStep.swift
+//  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,18 +33,11 @@
 
 import Foundation
 
-open class MCTCountdownStepViewController : RSDCountdownStepViewController, MCTHandStepController {
+/// This is a custom type of UI step that is used to show instructions, permissions, and/or a countdown for a
+/// task.
+public protocol RSDInstructionStep : RSDStep {
     
-    /// Retuns the imageView, in this case the image from the navigationHeader.
-    public var imageView: UIImageView? {
-        return self.navigationHeader?.imageView ?? self.navigationBody?.imageView
-    }
-    
-    /// Override viewWillAppear to also set the unitLabel text.
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.updateImage()
-        self.view.setNeedsLayout()
-        self.view.setNeedsUpdateConstraints()
-    }
+    /// Should this step be displayed if and only if the flag has been set for displaying the full
+    /// instructions?
+    var fullInstructionsOnly: Bool  { get }
 }

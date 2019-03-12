@@ -1,5 +1,6 @@
 {
     "identifier":"Walk30s",
+    "usesTrackedData":true,
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":["volumeUp", "pantsWithPocket","phoneInPocket.1","walk"],
     "steps":[
@@ -61,7 +62,7 @@
             "type":"instruction",
             "title":"Walk for 30 seconds",
             "text":"You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around, then turn around as if you are walking around a cone.",
-            "isFirstRunOnly": true,
+            "fullInstructionsOnly": true,
             "image":{
                 "type":"animated",
                 "imageNames":["Walking-1", "Walking-2", "Walking-3", "Walking-4", "Walking-5", "Walking-6", "Walking-7", "Walking-8", "Walking-9", "Walking-10", "Walking-11", "Walking-12"],
@@ -74,10 +75,6 @@
                     "body": "lightBackground",
                     "footer": "lightBackground"
                 }
-            },
-            "viewTheme":{
-                "viewIdentifier":"Instruction",
-                "storyboardIdentifier":"ActiveTaskSteps"
             },
             "actions":{
                 "goForward":{
@@ -103,10 +100,6 @@
                     "footer": "lightBackground"
                 }
             },
-            "viewTheme":{
-                "viewIdentifier":"Instruction",
-                "storyboardIdentifier":"ActiveTaskSteps"
-            },
             "actions":{
                 "goForward":{
                     "type":"default",
@@ -131,10 +124,6 @@
                     "footer": "lightBackground"
                 }
             },
-            "viewTheme":{
-                "viewIdentifier":"Instruction",
-                "storyboardIdentifier":"ActiveTaskSteps"
-            },
             "actions":{
                 "goForward":{
                     "type":"default",
@@ -158,10 +147,6 @@
                     "body": "lightBackground",
                     "footer": "lightBackground"
                 }
-            },
-            "viewTheme":{
-                "viewIdentifier":"Instruction",
-                "storyboardIdentifier":"ActiveTaskSteps"
             },
             "text":"This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets, you can place the phone in the waistband of your pants.",
             "actions":{
@@ -228,7 +213,7 @@
                             "skipToIdentifier":"countdown.1",
                             "buttonTitle": "Restart test"
                         },
-                        "learnMore":{
+                        "reviewInstructions":{
                             "type":"navigation",
                             "skipToIdentifier": "walkInstructions",
                             "buttonTitle": "Review instructions"

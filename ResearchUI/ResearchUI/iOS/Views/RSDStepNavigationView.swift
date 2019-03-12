@@ -58,6 +58,9 @@ open class RSDStepNavigationView: UIView, RSDViewColorStylable {
     /// Button for showing learn more info about the step or task.
     @IBOutlet open var learnMoreButton: UIButton?
     
+    /// Button for reviewing instructions for the task.
+    @IBOutlet open var reviewInstructionsButton: UIButton?
+    
     /// Button for cancelling the task.
     @IBOutlet open var cancelButton: UIButton?
     

@@ -9,58 +9,48 @@
 import Foundation
 
 /// The frequency type can be used to indicate the frequency with which to do something within the app.
-public enum RSDFrequencyType {
+public enum RSDFrequencyType: String, CaseIterable {
     
-    case standard(Standard)
+    case always
+    case daily
+    case weekly
+    case monthly
+    case quarterly
+    case biannual
+    case annual
     
-    /// Standard set of frequencies defined within this framework.
-    public enum Standard : String, CaseIterable {
-        case always
-        case daily
-        case weekly
-        case monthly
-        case quarterly
-        case biannual
-        case annual
-    }
-    
-    /// A custom frequency. Must be handled by the app.
-    case custom(String)
-    
-    /// The string for the custom action (if applicable).
-    public var customAction: String? {
-        if case .custom(let str) = self {
-            return str
-        } else {
-            return nil
-        }
+    /// Is the given date range within the duration window for the given frequency?
+    /// - returns: `true` if `date1 + frequency > date2`
+    public func withinDuration(between date1: Date, and date2: Date) -> Bool {
+        let calendar = Calendar.init(identifier: .iso8601)
+        let next: Date? = {
+            switch self {
+            case .always:
+                return nil
+            case .daily:
+                return calendar.date(byAdding: .day, value: 1, to: date1)
+            case .weekly:
+                return calendar.date(byAdding: .day, value: 7, to: date1)
+            case .monthly:
+                return calendar.date(byAdding: .month, value: 1, to: date1)
+            case .quarterly:
+                return calendar.date(byAdding: .month, value: 3, to: date1)
+            case .biannual:
+                return calendar.date(byAdding: .month, value: 6, to: date1)
+            case .annual:
+                return calendar.date(byAdding: .year, value: 1, to: date1)
+            }
+        }()
+        guard let windowEnd = next else { return false }
+        return windowEnd > date2
     }
 }
 
 extension RSDFrequencyType: RawRepresentable, Codable, Hashable {
-    
-    public init(rawValue: String) {
-        if let subtype = Standard(rawValue: rawValue) {
-            self = .standard(subtype)
-        }
-        else {
-            self = .custom(rawValue)
-        }
-    }
-    
-    public var rawValue: String {
-        switch (self) {
-        case .standard(let value):
-            return value.rawValue
-            
-        case .custom(let value):
-            return value
-        }
-    }
 }
 
 extension RSDFrequencyType : ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
-        self.init(rawValue: value)
+        self = RSDFrequencyType(rawValue: value) ?? .always
     }
 }

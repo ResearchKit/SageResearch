@@ -55,11 +55,10 @@ open class RSDStudyConfiguration {
     /// instructions is determined by the frequency type. For example, if set to `monthly` then the user is
     /// shown the full instructions once per month.
     ///
-    public var fullInstructionsFrequency : RSDFrequencyType = .standard(.always)
+    open var fullInstructionsFrequency : RSDFrequencyType = .always
     
-    /// - seealso: `fullInstructionsFrequency`
-    public var alwaysShowFullInstructions : Bool {
-        return self.fullInstructionsFrequency == .standard(.always)
+    /// - seealso: `fullInstructionsFrequency` and `savePreviousTaskRun`
+    open var alwaysShowFullInstructions : Bool {
+        return self.fullInstructionsFrequency == .always
     }
-    
 }

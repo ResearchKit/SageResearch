@@ -131,6 +131,8 @@ public struct RSDStandardPermission : Codable {
         case reason
         case _restrictedMessage = "restrictedMessage"
         case _deniedMessage = "deniedMessage"
+        case _requestIfNeeded = "requestIfNeeded"
+        case _isOptional = "optional"
     }
     
     public static let camera = RSDStandardPermission(permissionType: .camera)
@@ -141,12 +143,14 @@ public struct RSDStandardPermission : Codable {
     public static let locationWhenInUse = RSDStandardPermission(permissionType: .locationWhenInUse)
 
     /// Default initializer.
-    public init(permissionType : RSDStandardPermissionType, title: String? = nil, reason: String? = nil, deniedMessage: String? = nil, restrictedMessage: String? = nil) {
+    public init(permissionType : RSDStandardPermissionType, title: String? = nil, reason: String? = nil, deniedMessage: String? = nil, restrictedMessage: String? = nil, requestIfNeeded: Bool = true, isOptional: Bool = false) {
         self.permissionType = permissionType
         self.title = title
         self.reason = reason
         self._deniedMessage = deniedMessage
         self._restrictedMessage = restrictedMessage
+        self._requestIfNeeded = requestIfNeeded
+        self._isOptional = isOptional
     }
     
     /// The permission type for this permission.
@@ -157,6 +161,33 @@ public struct RSDStandardPermission : Codable {
     
     /// Additional reason for requiring the permission.
     public let reason: String?
+    
+    /// Should the step request the listed permissions before continuing to the next step? (Default == `true`)
+    ///
+    /// This flag can be used to optionally show an instruction step that will display information to a user
+    /// concerning why a permission is being requested. This is allowed to add additional clarity to the user
+    /// about the requirements of a given task that cannot be explained satisfactorily by the OS alert.
+    public var requestIfNeeded: Bool {
+        return _requestIfNeeded ?? true
+    }
+    private let _requestIfNeeded: Bool?
+    
+    /// Is the permission optional for a given task? (Default == `false`, ie. required)
+    ///
+    /// - example:
+    ///
+    /// Test A requires the motion sensors to calculate the results, in which case this permission should be
+    /// required and the participant should be blocked from performing the task if the permission is not
+    /// included.
+    ///
+    /// Test B uses the motion sensors (if available) to inform the results but can still receive valuable
+    /// information about the participant without them. In this case, the permission is optional and the
+    /// participant should be allowed to continue without permission to access the motion sensors.
+    ///
+    public var isOptional: Bool {
+        return _isOptional ?? false
+    }
+    private let _isOptional: Bool?
     
     /// The message to show when displaying an alert that the user cannot run a step or task because their
     /// access is restricted.

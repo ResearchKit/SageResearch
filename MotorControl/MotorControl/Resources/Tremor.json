@@ -1,5 +1,6 @@
 {
     "identifier":"Tremor",
+    "usesTrackedData":true,
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":[],
     "steps":[
@@ -87,10 +88,6 @@
                         "footer": "lightBackground"
                     }
                 },
-                "viewTheme":{
-                    "viewIdentifier":"Instruction",
-                    "storyboardIdentifier":"ActiveTaskSteps"
-                },
                 "actions":{
                     "goForward":{
                         "type":"default",
@@ -114,10 +111,6 @@
                          "body": "lightBackground",
                          "footer": "lightBackground"
                      }
-                },
-                "viewTheme":{
-                    "viewIdentifier":"Instruction",
-                    "storyboardIdentifier":"ActiveTaskSteps"
                 },
                 "actions":{
                     "goForward":{

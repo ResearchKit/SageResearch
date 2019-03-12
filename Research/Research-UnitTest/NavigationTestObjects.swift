@@ -35,14 +35,15 @@ import Foundation
 @testable import Research
 import UIKit
 
-public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule {
-
+public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDInstructionStep {
+    
     public let identifier: String
     public var stepType: RSDStepType = .instruction
     public var result: RSDResult?
     public var validationError: Error?
     public var nextStepIdentifier: String?
     public var showBeforeIdentifier: String?
+    public var fullInstructionsOnly: Bool = false
     
     public func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
         if shouldSkipStep(with: result, isPeeking: isPeeking) {
@@ -51,7 +52,6 @@ public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule {
         }
         return self.nextStepIdentifier
     }
-    
     
     public func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
         if let loopId = showBeforeIdentifier, result?.findResult(with: loopId) == nil {
