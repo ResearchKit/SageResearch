@@ -239,6 +239,17 @@ open class RSDOverviewStepViewController: RSDStepViewController {
     
     // MARK: Initialization
     
+    class func initializeStepViewController(step: RSDStep, parent: RSDPathComponent?) -> RSDOverviewStepViewController {
+        // Must have a top background image.
+        if let uiStep = step as? RSDUIStep,
+            let _ = uiStep.action(for: .navigation(.learnMore), on: step) as? RSDWebViewUIAction {
+            return RSDOverviewStepViewController(step: step, parent: parent)
+        }
+        else {
+            return RSDScrollingOverviewStepViewController(step: step, parent: parent)
+        }
+    }
+    
     /// The default nib name to use when instantiating the view controller using `init(step:)`.
     open class var nibName: String {
         return String(describing: RSDOverviewStepViewController.self)

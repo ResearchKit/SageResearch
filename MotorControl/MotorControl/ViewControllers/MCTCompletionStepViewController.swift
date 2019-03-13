@@ -42,19 +42,23 @@ public class MCTCompletionStepViewController : RSDStepViewController {
     }
 
     /// Updates the text label to display the count of the number of times this task
-    /// has been completed. Also records the task's completion in UserDefaults.
-    open func updateTextLabel() {
-        let defaults = UserDefaults.standard
-        let taskIdentifier = self.stepViewModel.parentTaskPath!.identifier
-        let userDefaultsKey = "\(taskIdentifier)_timesCompleted"
-        let runCount = defaults.integer(forKey: userDefaultsKey) + 1
+    /// has been completed.
+    public func updateTextLabel() {
+        // Check that there is a key into the strings table or else exist early
+        guard let textKey = (self.step as? RSDUIStep)?.text else { return }
+        let defaultText = Localization.localizedString(textKey)
+        guard textKey != defaultText else { return }
+        
         let formatter = NumberFormatter()
         formatter.numberStyle = .ordinal
-        if let textFormat = (self.step as? RSDUIStep)?.text,
-           let ordinal = formatter.string(from: NSNumber(value: runCount)) {
+        if RSDStudyConfiguration.shared.isParticipantDevice,
+            let task = self.stepViewModel.rootPathComponent.task as? MCTTaskObject,
+            let ordinal = formatter.string(from: NSNumber(value: task.runCount)) {
+            let textFormat = "\(textKey)_%@"
             self.stepTextLabel?.text = Localization.localizedStringWithFormatKey(textFormat, ordinal)
         }
-        
-        defaults.set(runCount, forKey: userDefaultsKey)
+        else {
+            self.stepTextLabel?.text = defaultText
+        }
     }
 }

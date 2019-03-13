@@ -51,3 +51,10 @@
 "TAPPING_COMPLETION_RIGHT_UNIT_LABEL" = "RIGHT HAND TAPS";
 
 "MOTION_SENSOR_REQUIRED_FOR_TASK_MESSAGE" = "This activity requires the use of the motion sensors and cannot continue without this permssion.";
+
+"WALK_30_COMPLETION_%@" = "You just completed your %@ 30 Second Walk activity.";
+"WALK_30_COMPLETION" = "You have completed the 30 Second Walk activity.";
+"WALK_BALANCE_COMPLETION_%@" = "You just completed your %@ Walk and Balance activity.";
+"WALK_BALANCE_COMPLETION" = "You have completed the Walk and Balance activity.";
+"TREMOR_COMPLETION_%@" = "You just completed your %@ Tremor Test activity.";
+"TREMOR_COMPLETION" = "You have completed the Tremor Test activity.";

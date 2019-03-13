@@ -60,15 +60,10 @@ public struct RSDIdentifier : RawRepresentable, Codable, Hashable {
     /// Continue to the next step.
     public static let nextStep = RestrictedIdentifiers.nextStep.identifierValue
     
-    /// Identifier for an async result that indicates whether or not to display the abbreviated instructions
-    /// for a given task run.
-    public static let abbreviatedInstructions = RestrictedIdentifiers.abbreviatedInstructions.identifierValue
-    
-    /// Identifier for an async result that indicates the number of times the task has been run. Default
-    /// behavior is to increment this result in the `RSDTaskViewModel` when the view model is instantiated.
+    /// Identifier for a result that indicates the number of times the task has been run.
     public static let taskRunCount = RestrictedIdentifiers.taskRunCount.identifierValue
     
-    /// Identifier for an async result that indicates the reason why a task was exited.
+    /// Identifier for a result that indicates the reason why a task was exited.
     public static let taskExitReason = RestrictedIdentifiers.taskRunCount.identifierValue
     
     public static func allGlobalIdentifiers() -> [RSDIdentifier] {

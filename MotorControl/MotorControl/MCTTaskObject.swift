@@ -1,8 +1,8 @@
 //
-//  MCTFactory.swift
+//  MCTTaskObject.swift
 //  MotorControl
 //
-//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,43 +33,27 @@
 
 import Foundation
 
-extension RSDStepType {
-    public static let handSelection: RSDStepType = "handSelection"
-    public static let handInstruction: RSDStepType = "handInstruction"
-}
-
-fileprivate var _didAddLocalizationBundle: Bool = false
-
-open class MCTFactory : RSDFactory {
+class MCTTaskObject: RSDTaskObject {
     
-    /// Override initialization to add the strings file to the localization bundles.
-    public override init() {
-        super.init()
-        
-        // Add the localization bundle if this is a first init()
-        if !_didAddLocalizationBundle {
-            _didAddLocalizationBundle = true
-            let localizationBundle = LocalizationBundle(Bundle(for: MCTFactory.self))
-            Localization.insert(bundle: localizationBundle, at: 1)
-        }
+    internal var runCount: Int = 1
+    
+    /// Override the task setup to allow setting the run count.
+    override func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
+        guard let dictionary = data?.json as? [String : Any] else { return }
+        self.runCount = ((dictionary[RSDIdentifier.taskRunCount.stringValue] as? Int) ?? 0) + 1
     }
-        
-    /// Override the base factory to vend the MCT step objects.
-    override open func decodeStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
-        switch type { 
-        case .handSelection:
-            return try MCTHandSelectionStepObject(from: decoder)
-        case .handInstruction:
-            return try MCTHandInstructionStepObject(from: decoder)
-        default:
-            return try super.decodeStep(from: decoder, with: type)
-        }
+
+    /// Override the taskData builder to add the run count.
+    override func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
+        let data = super.taskData(for: taskResult)
+        var json: [String : RSDJSONSerializable] = (data?.json as? [String : RSDJSONSerializable]) ?? [:]
+        json[RSDIdentifier.taskRunCount.stringValue] = runCount
+        return TaskData(identifier: self.identifier, timestampDate: taskResult.endDate, json: json)
     }
     
-    /// Override the task decoder to vend an `MCTTaskObject`.
-    override open func decodeTask(with data: Data, from decoder: RSDFactoryDecoder) throws -> RSDTask {
-        let task = try decoder.decode(MCTTaskObject.self, from: data)
-        try task.validate()
-        return task
+    struct TaskData : RSDTaskData {
+        let identifier: String
+        let timestampDate: Date?
+        let json: RSDJSONSerializable
     }
 }
