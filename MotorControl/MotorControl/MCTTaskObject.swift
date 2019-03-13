@@ -37,13 +37,13 @@ class MCTTaskObject: RSDTaskObject {
     
     internal var runCount: Int = 1
     
-    /// Override the task setup to allow setting the runn count.
+    /// Override the task setup to allow setting the run count.
     override func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
         guard let dictionary = data?.json as? [String : Any] else { return }
         self.runCount = ((dictionary[RSDIdentifier.taskRunCount.stringValue] as? Int) ?? 0) + 1
     }
 
-    /// Override the taskData builder to add the run count.s
+    /// Override the taskData builder to add the run count.
     override func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
         let data = super.taskData(for: taskResult)
         var json: [String : RSDJSONSerializable] = (data?.json as? [String : RSDJSONSerializable]) ?? [:]

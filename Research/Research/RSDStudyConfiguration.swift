@@ -64,6 +64,6 @@ open class RSDStudyConfiguration {
     
     /// Is this device tied to a single participant or is the device being used in a study where there is a
     /// single mobile device that is being used to run tasks for multiple participants, such as a device used
-    /// as part of a Phase 1 or Preclinical trial. (Default == `true`)
+    /// as part of a Phase 1 or Preclinical trial? (Default == `true`)
     open var isParticipantDevice : Bool = true
 }
