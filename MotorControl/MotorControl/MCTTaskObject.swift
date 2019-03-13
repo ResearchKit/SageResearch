@@ -1,8 +1,8 @@
 //
-//  MCTCompletionStepViewController.swift
+//  MCTTaskObject.swift
 //  MotorControl
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,32 +33,27 @@
 
 import Foundation
 
-public class MCTCompletionStepViewController : RSDStepViewController {
-
-    /// Override viewWillAppear to update the text label.
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.updateTextLabel()
+class MCTTaskObject: RSDTaskObject {
+    
+    internal var runCount: Int = 1
+    
+    /// Override the task setup to allow setting the runn count.
+    override func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
+        guard let dictionary = data?.json as? [String : Any] else { return }
+        self.runCount = ((dictionary[RSDIdentifier.taskRunCount.stringValue] as? Int) ?? 0) + 1
     }
 
-    /// Updates the text label to display the count of the number of times this task
-    /// has been completed.
-    open func updateTextLabel() {
-        // Check that there is a key into the strings table or else exist early
-        guard let textKey = (self.step as? RSDUIStep)?.text else { return }
-        let defaultText = Localization.localizedString(textKey)
-        guard textKey != defaultText else { return }
-        
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .ordinal
-        if RSDStudyConfiguration.shared.isParticipantDevice,
-            let task = self.stepViewModel.rootPathComponent.task as? MCTTaskObject,
-            let ordinal = formatter.string(from: NSNumber(value: task.runCount)) {
-            let textFormat = "\(textKey)_%@"
-            self.stepTextLabel?.text = Localization.localizedStringWithFormatKey(textFormat, ordinal)
-        }
-        else {
-            self.stepTextLabel?.text = defaultText
-        }
+    /// Override the taskData builder to add the run count.s
+    override func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
+        let data = super.taskData(for: taskResult)
+        var json: [String : RSDJSONSerializable] = (data?.json as? [String : RSDJSONSerializable]) ?? [:]
+        json[RSDIdentifier.taskRunCount.stringValue] = runCount
+        return TaskData(identifier: self.identifier, timestampDate: taskResult.endDate, json: json)
+    }
+    
+    struct TaskData : RSDTaskData {
+        let identifier: String
+        let timestampDate: Date?
+        let json: RSDJSONSerializable
     }
 }

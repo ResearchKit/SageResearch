@@ -361,7 +361,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "text":"You just completed your %@ Walk and Balance activity.",
+                 "text":"WALK_BALANCE_COMPLETION",
                  "image":{
                      "type":"fetchable",
                      "imageName":"Completion-WalkAndBalance",

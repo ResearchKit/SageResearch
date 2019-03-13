@@ -232,7 +232,7 @@
             "identifier":"completion",
             "type":"completion",
             "title":"Great job!",
-            "text":"You just completed your %@ 30 Second Walk activity.",
+            "text":"WALK_30_COMPLETION",
             "image":{
                 "type":"fetchable",
                 "imageName":"Completion-WalkAndBalance",

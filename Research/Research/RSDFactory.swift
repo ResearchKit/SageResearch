@@ -121,6 +121,17 @@ open class RSDFactory {
     /// - seealso: `RSDTaskResourceTransformer`
     open func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, bundle: Bundle? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo, bundle: bundle)
+        return try decodeTask(with: data, from: decoder)
+    }
+    
+    /// Decode a task from the decoder.
+    ///
+    /// - parameters:
+    ///     - data:    The data to use to decode the object.
+    ///     - decoder: The decoder to use to instantiate the object.
+    /// - returns: The decoded task.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    open func decodeTask(with data: Data, from decoder: RSDFactoryDecoder) throws -> RSDTask {
         let task = try decoder.decode(RSDTaskObject.self, from: data)
         try task.validate()
         return task

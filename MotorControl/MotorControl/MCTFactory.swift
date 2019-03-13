@@ -2,7 +2,7 @@
 //  MCTFactory.swift
 //  MotorControl
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -64,5 +64,12 @@ open class MCTFactory : RSDFactory {
         default:
             return try super.decodeStep(from: decoder, with: type)
         }
+    }
+    
+    /// Override the task decoder to vend an `MCTTaskObject`.
+    override open func decodeTask(with data: Data, from decoder: RSDFactoryDecoder) throws -> RSDTask {
+        let task = try decoder.decode(MCTTaskObject.self, from: data)
+        try task.validate()
+        return task
     }
 }

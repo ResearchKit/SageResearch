@@ -133,7 +133,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "text":"You just completed your %@ Tremor Test activity.",
+                 "text":"TREMOR_COMPLETION",
                  "image":{
                      "type":"fetchable",
                      "imageName":"Completion-Tremor",
