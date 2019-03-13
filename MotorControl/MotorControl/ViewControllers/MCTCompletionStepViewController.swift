@@ -43,7 +43,7 @@ public class MCTCompletionStepViewController : RSDStepViewController {
 
     /// Updates the text label to display the count of the number of times this task
     /// has been completed.
-    open func updateTextLabel() {
+    public func updateTextLabel() {
         // Check that there is a key into the strings table or else exist early
         guard let textKey = (self.step as? RSDUIStep)?.text else { return }
         let defaultText = Localization.localizedString(textKey)

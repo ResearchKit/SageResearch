@@ -51,10 +51,6 @@
                          "body": "lightBackground",
                          "footer": "lightBackground"
                      }
-                 },
-                 "viewTheme":{
-                     "viewIdentifier":"Overview",
-                     "storyboardIdentifier":"ActiveTaskSteps"
                  }
              },
              {

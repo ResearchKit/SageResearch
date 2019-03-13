@@ -1,8 +1,8 @@
 //
-//  MCTOverviewStepViewController.swift
-//  MotorControl
+//  RSDScrollingOverviewStepViewController.swift
+//  ResearchUI (iOS)
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,16 +31,20 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import UIKit
 
-open class MCTOverviewStepViewController : RSDOverviewStepViewController {
-    
+/// The scrolling overview step view controller is a custom subclass of the overview step view controller
+/// that uses a scrollview to allow showing detailed overview instructions.
+open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController {
+
     /// The label which tells the user about the icons. Typically displays
     /// "This is what you'll need".
-    @IBOutlet weak var iconViewLabel: UILabel!
+    @IBOutlet
+    open weak var iconViewLabel: UILabel!
     
     /// The constraint that sets the scroll bar's top background view's height.
-    @IBOutlet weak var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
+    @IBOutlet
+    open weak var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
     
     /// The image views to display the icons on.
     @IBOutlet
@@ -64,6 +68,8 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateImagePlacementConstraints()
+        
+        // TODO: syoung 03/12/2019 Change to using a collection view.
         // This code assumes that either 1 or 3 icons will be displayed. In order to support
         // other values other implementations should use a UICollectionView.
         for label in iconTitles! {
@@ -162,12 +168,12 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
                     self?._super_goForward()
                 }
             }
-
+            
         default:
             self.handleAuthorizationFailed(status: status, permission: permission!)
         }
     }
-
+    
     func _super_goForward() {
         super.goForward()
     }
@@ -223,4 +229,17 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         let shiftedFrame = frame.offsetBy(dx: 0, dy: 20)
         self.scrollView.scrollRectToVisible(shiftedFrame, animated: false)
     }
+    
+    // MARK: Initialization
+    
+    /// The default nib name to use when instantiating the view controller using `init(step:)`.
+    override open class var nibName: String {
+        return String(describing: RSDScrollingOverviewStepViewController.self)
+    }
+    
+    /// The default bundle to use when instantiating the view controller using `init(step:)`.
+    override open class var bundle: Bundle {
+        return Bundle(for: RSDScrollingOverviewStepViewController.self)
+    }
+
 }

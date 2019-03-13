@@ -788,7 +788,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     /// The permissions required for this step.
     open func requiredPermissions() -> [RSDStandardPermission]? {
-        return (self.step as? RSDStandardPermissionsStep)?.standardPermissions
+        return (self.step as? RSDStandardPermissionsStep)?.standardPermissions?.filter { !$0.isOptional }
+    }
+    
+    /// The permissions that are requested as a part of this step.
+    open func requestPermissions() -> [RSDStandardPermission]? {
+        return (self.step as? RSDStandardPermissionsStep)?.standardPermissions?.filter { $0.requestIfNeeded }
     }
     
     

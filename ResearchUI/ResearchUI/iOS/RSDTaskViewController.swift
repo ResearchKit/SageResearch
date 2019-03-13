@@ -245,7 +245,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///            if undefined.
     open func vendDefaultViewController(for step: RSDStep, with parent: RSDPathComponent?) -> (UIViewController & RSDStepController) {
         if step.stepType == .overview {
-            return RSDOverviewStepViewController(step: step, parent: parent)
+            return RSDOverviewStepViewController.initializeStepViewController(step: step, parent: parent)
         }
         else if let taskInfo = step as? RSDTaskInfoStep {
             return RSDTaskInfoStepViewController(taskInfo: taskInfo, parent: parent)

@@ -36,7 +36,7 @@ import Foundation
 /// `RSDOverviewStepObject` extends the `RSDUIStepObject` to include information about an activity including
 /// what permissions are required by this task. Without these preconditions, the task cannot measure or
 /// collect the data needed for this task.
-open class RSDOverviewStepObject : RSDUIStepObject {
+open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case icons

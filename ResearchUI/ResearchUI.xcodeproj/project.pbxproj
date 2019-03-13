@@ -36,6 +36,8 @@
 		F8864AE921642F3B00DF57CF /* RSDResultSummaryStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8864AE721642F3B00DF57CF /* RSDResultSummaryStepViewController.swift */; };
 		F8864AEA21642F3B00DF57CF /* RSDResultSummaryStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8864AE821642F3B00DF57CF /* RSDResultSummaryStepViewController.xib */; };
 		F8A204FC206AD242004E2B5D /* RSDButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */; };
+		F8C36BD122389511000E42A7 /* RSDScrollingOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C36BCF22389511000E42A7 /* RSDScrollingOverviewStepViewController.swift */; };
+		F8C36BD222389511000E42A7 /* RSDScrollingOverviewStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8C36BD022389511000E42A7 /* RSDScrollingOverviewStepViewController.xib */; };
 		F8D4813E20622896008EF629 /* RSDStatusBarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */; };
 		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
 		FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */; };
@@ -106,6 +108,8 @@
 		F8864AE721642F3B00DF57CF /* RSDResultSummaryStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultSummaryStepViewController.swift; sourceTree = "<group>"; };
 		F8864AE821642F3B00DF57CF /* RSDResultSummaryStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDResultSummaryStepViewController.xib; sourceTree = "<group>"; };
 		F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDButtonCell.swift; sourceTree = "<group>"; };
+		F8C36BCF22389511000E42A7 /* RSDScrollingOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDScrollingOverviewStepViewController.swift; sourceTree = "<group>"; };
+		F8C36BD022389511000E42A7 /* RSDScrollingOverviewStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDScrollingOverviewStepViewController.xib; sourceTree = "<group>"; };
 		F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStatusBarBackgroundView.swift; sourceTree = "<group>"; };
 		FF0472301F7AC4F90023DAD6 /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utilities.swift"; sourceTree = "<group>"; };
@@ -317,6 +321,7 @@
 				F837224C223322D000C9A2EA /* RSDInstructionStepViewController.swift */,
 				FF478D911FD752E800493A49 /* RSDNavigationController.swift */,
 				F880C1B32057182B00ACB4D4 /* RSDOverviewStepViewController.swift */,
+				F8C36BCF22389511000E42A7 /* RSDScrollingOverviewStepViewController.swift */,
 				FF39E5231F972F5200C366FC /* RSDTableStepViewController.swift */,
 				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
 				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
@@ -335,6 +340,7 @@
 				F837224D223322D000C9A2EA /* RSDInstructionStepViewController.xib */,
 				F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */,
 				F8864AE821642F3B00DF57CF /* RSDResultSummaryStepViewController.xib */,
+				F8C36BD022389511000E42A7 /* RSDScrollingOverviewStepViewController.xib */,
 				FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */,
 			);
 			path = "Default NIbs";
@@ -484,6 +490,7 @@
 				F880C1B62057182B00ACB4D4 /* RSDOverviewStepViewController.xib in Resources */,
 				FFF2D9861FCF451C007258F8 /* DebugStepViewController.xib in Resources */,
 				F837224F223322D000C9A2EA /* RSDInstructionStepViewController.xib in Resources */,
+				F8C36BD222389511000E42A7 /* RSDScrollingOverviewStepViewController.xib in Resources */,
 				FFF2D9871FCF451C007258F8 /* RSDActiveStepViewController.xib in Resources */,
 				FFF2D9A41FCF4FC6007258F8 /* DefaultImages.xcassets in Resources */,
 				F802F3DD204DECA80027CB00 /* RSDImagePickerStepViewController.xib in Resources */,
@@ -554,6 +561,7 @@
 				F8A204FC206AD242004E2B5D /* RSDButtonCell.swift in Sources */,
 				FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */,
 				FFF2D9901FCF4530007258F8 /* RSDRoundedButton.swift in Sources */,
+				F8C36BD122389511000E42A7 /* RSDScrollingOverviewStepViewController.swift in Sources */,
 				F82F819B206B49D800F71AA8 /* RSDCheckmarkView.swift in Sources */,
 				FFF2D9831FCF4504007258F8 /* RSDStepViewController.swift in Sources */,
 				FFF2D98B1FCF4527007258F8 /* RSDActiveStepViewController.swift in Sources */,

@@ -43,10 +43,6 @@
                          "body": "lightBackground",
                          "footer": "lightBackground"
                      }
-                 },
-                 "viewTheme":{
-                     "viewIdentifier":"Overview",
-                     "storyboardIdentifier":"ActiveTaskSteps"
                  }
              },
              {
@@ -66,10 +62,6 @@
                         "body": "lightBackground",
                         "footer": "lightBackground"
                     }
-                },
-                "viewTheme":{
-                    "viewIdentifier":"Instruction",
-                    "storyboardIdentifier":"ActiveTaskSteps"
                 },
                 "actions":{
                     "goForward":{
@@ -121,10 +113,6 @@
                          "footer": "lightBackground"
                      }
                 },
-                "viewTheme":{
-                    "viewIdentifier":"Instruction",
-                    "storyboardIdentifier":"ActiveTaskSteps"
-                },
                 "actions":{
                     "goForward":{
                         "type":"default",
@@ -149,10 +137,6 @@
                         "body": "lightBackground",
                         "footer": "lightBackground"
                     }
-                },
-                "viewTheme":{
-                    "viewIdentifier":"Instruction",
-                    "storyboardIdentifier":"ActiveTaskSteps"
                 },
                 "actions":{
                     "goForward":{

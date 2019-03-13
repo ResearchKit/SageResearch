@@ -33,7 +33,6 @@
 		F8E3B82E21BB472B0004284E /* MCTCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82721BB472B0004284E /* MCTCompletionStepViewController.swift */; };
 		F8E3B82F21BB472B0004284E /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82821BB472B0004284E /* MCTCountdownStepViewController.swift */; };
 		F8E3B83021BB472B0004284E /* MCTHandInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82921BB472B0004284E /* MCTHandInstructionStepViewController.swift */; };
-		F8E3B83121BB472B0004284E /* MCTOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82A21BB472B0004284E /* MCTOverviewStepViewController.swift */; };
 		F8E3B83221BB472B0004284E /* MCTActiveStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82B21BB472B0004284E /* MCTActiveStepViewController.swift */; };
 		F8E3B83321BB472B0004284E /* MCTTappingCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82C21BB472B0004284E /* MCTTappingCompletionStepViewController.swift */; };
 		F8E3B83421BB472B0004284E /* MCTTappingStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82D21BB472B0004284E /* MCTTappingStepViewController.swift */; };
@@ -82,7 +81,6 @@
 		F8E3B82721BB472B0004284E /* MCTCompletionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTCompletionStepViewController.swift; sourceTree = "<group>"; };
 		F8E3B82821BB472B0004284E /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
 		F8E3B82921BB472B0004284E /* MCTHandInstructionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTHandInstructionStepViewController.swift; sourceTree = "<group>"; };
-		F8E3B82A21BB472B0004284E /* MCTOverviewStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTOverviewStepViewController.swift; sourceTree = "<group>"; };
 		F8E3B82B21BB472B0004284E /* MCTActiveStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTActiveStepViewController.swift; sourceTree = "<group>"; };
 		F8E3B82C21BB472B0004284E /* MCTTappingCompletionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTappingCompletionStepViewController.swift; sourceTree = "<group>"; };
 		F8E3B82D21BB472B0004284E /* MCTTappingStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTappingStepViewController.swift; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 				F8E3B82721BB472B0004284E /* MCTCompletionStepViewController.swift */,
 				F8E3B82821BB472B0004284E /* MCTCountdownStepViewController.swift */,
 				F8E3B82921BB472B0004284E /* MCTHandInstructionStepViewController.swift */,
-				F8E3B82A21BB472B0004284E /* MCTOverviewStepViewController.swift */,
 				F8E3B82C21BB472B0004284E /* MCTTappingCompletionStepViewController.swift */,
 				F8E3B82D21BB472B0004284E /* MCTTappingStepViewController.swift */,
 			);
@@ -350,7 +347,6 @@
 				F8E3B82421BB46F00004284E /* MCTHandSelectionStepObject.swift in Sources */,
 				F8E3B83221BB472B0004284E /* MCTActiveStepViewController.swift in Sources */,
 				F8E3B83921BB474F0004284E /* MCTCompletionGradient.swift in Sources */,
-				F8E3B83121BB472B0004284E /* MCTOverviewStepViewController.swift in Sources */,
 				F837224B223320B400C9A2EA /* MCTHandInstructionStepObject.swift in Sources */,
 				F8E3B83421BB472B0004284E /* MCTTappingStepViewController.swift in Sources */,
 				F8E3B82E21BB472B0004284E /* MCTCompletionStepViewController.swift in Sources */,
