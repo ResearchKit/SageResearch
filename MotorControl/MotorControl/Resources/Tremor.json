@@ -36,13 +36,13 @@
                         "reminderIdentifier":"Tremor"
                     }
                  },
-                 "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
-                     }
-                 }
+                "colorMapping":{
+                    "colorMapping": {
+                        "header": "primary",
+                        "body": "white",
+                        "footer": "white"
+                    }
+                }
              },
              {
                 "identifier": "handSelection",
@@ -77,11 +77,11 @@
                     "imageName": "F-TremorHoldPhone",
                     "placementType":"topBackground"
                 },
-                "colorTheme":{
-                    "colorStyle": {
-                        "header": "darkBackground",
-                        "body": "lightBackground",
-                        "footer": "lightBackground"
+                "colorMapping":{
+                    "colorMapping": {
+                        "header": "primary",
+                        "body": "white",
+                        "footer": "white"
                     }
                 },
                 "actions":{
@@ -101,12 +101,12 @@
                     "imageName":"F-Sitting",
                     "placementType":"topBackground"
                 },
-                "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
-                     }
+                "colorMapping":{
+                    "colorMapping": {
+                        "header": "primary",
+                        "body": "white",
+                        "footer": "white"
+                    }
                 },
                 "actions":{
                     "goForward":{
@@ -138,6 +138,9 @@
                  "viewTheme":{
                      "viewIdentifier":"Completion",
                      "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "colorMapping":{
+                     "colorStyle": "white"
                  },
                  "spokenInstructions":{
                      "start":"Great job, you are done with the Tremor test."

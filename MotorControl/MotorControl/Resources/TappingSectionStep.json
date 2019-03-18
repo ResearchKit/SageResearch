@@ -20,8 +20,8 @@
                       "imageName":"TapLeft1",
                       "placementType":"fullsizeBackground"
                   },
-                  "colorTheme":{
-                      "usesLightStyle":true
+                  "colorMapping":{
+                      "colorStyle": "primary"
                   },
                   "viewTheme":{
                       "viewIdentifier":"Tapping",

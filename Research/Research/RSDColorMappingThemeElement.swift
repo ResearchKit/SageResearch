@@ -1,8 +1,9 @@
 //
-//  RSDColorThemeElement.swift
+//  RSDColorMappingThemeElement.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Created by Shannon Young on 3/18/19.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -40,19 +41,6 @@ import UIKit
 #endif
 
 
-/// An enum for the type of the color style to use for a given component.
-public enum RSDColorStyle: String, Codable {
-    
-    /// Uses the "light" background color.
-    case lightBackground
-    
-    /// Uses the "dark" background color.
-    case darkBackground
-    
-    /// Uses the custom background color defined by the theme.
-    case customBackground
-}
-
 /// An enum for part of the view to which a given color style should be applied.
 public enum RSDColorPlacement : String, Codable {
     
@@ -66,9 +54,7 @@ public enum RSDColorPlacement : String, Codable {
     case footer
 }
 
-/// `RSDColorThemeElement` tells the UI what the background color and foreground color are for a given view as
-/// well as whether or not the foreground elements should use "light style".
-public protocol RSDColorThemeElement : RSDUIThemeElement {
+public protocol RSDColorMappingThemeElement : RSDUIThemeElement {
     
     #if os(watchOS) || os(macOS)
     /// **Available** for watchOS and macOS.
@@ -76,7 +62,7 @@ public protocol RSDColorThemeElement : RSDUIThemeElement {
     /// The background color for this step. If undefined then the background color will be determined by the
     /// step view controller.
     /// - returns: The color or `nil` if undefined.
-    func backgroundColor() -> RSDColor?
+    func backgroundColor(for placement: RSDColorPlacement, using colorRules: RSDColorRules) -> RSDColorTile?
     #else
     
     /// **Available** for iOS and tvOS.
@@ -84,17 +70,6 @@ public protocol RSDColorThemeElement : RSDUIThemeElement {
     /// The background color for this step. If undefined then the background color will be determined by the
     /// step view controller.
     /// - returns: The color or `nil` if undefined.
-    func backgroundColor(compatibleWith traitCollection: UITraitCollection?) -> RSDColor?
+    func backgroundColor(for placement: RSDColorPlacement, using colorRules: RSDColorRules, compatibleWith traitCollection: UITraitCollection?) -> RSDColorTile?
     #endif
-    
-    /// Hint for whether or not the view uses light style for things like the progress bar and navigation
-    /// buttons. This is used primarily to denote whether or not the custom background color is "light" or
-    /// "dark". It will also be selectively applied if the color styles are undefined.
-    var usesLightStyle: Bool { get }
-    
-    /// The color style to use for the given view component. If `nil` the default that is determined by the
-    /// step view controller will be used.
-    /// - parameter placement: The view placement of the element.
-    /// - returns: The color style (if any) defined for that element.
-    func colorStyle(for placement: RSDColorPlacement) -> RSDColorStyle?
 }

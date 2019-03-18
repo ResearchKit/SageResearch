@@ -206,7 +206,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         if let vc = delegate?.taskViewController?(self, viewControllerForStep: RSDStepViewModel(step: step, parent: parent)) {
             return (vc as! RSDStepController)
         }
-        if let viewTheme = (step as? RSDThemedUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme) {
+        if let viewTheme = (step as? RSDDesignableUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme, for: step, with: parent) {
+            return vc
+        }
+        // TODO: syoung 03/18/2019 Delete this once the themed step has been marked unavailable.
+        if let viewTheme = (step as? RSDThemedUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme, for: step, with: parent) {
             return vc
         }
         if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: parent) {
@@ -219,13 +223,19 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///
     /// - parameter viewTheme: The view theme element with the nib or storyboard identifier.
     /// - returns: A view controller instantiated with the given view theme element.
-    open func instantiateViewController(with viewTheme: RSDViewThemeElement) -> (UIViewController & RSDStepController)? {
+    open func instantiateViewController(with viewTheme: RSDViewThemeElement, for step: RSDStep, with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
         if let storyboardIdentifier = viewTheme.storyboardIdentifier {
             let storyboard = UIStoryboard(name: storyboardIdentifier, bundle: viewTheme.bundle)
-            return storyboard.instantiateViewController(withIdentifier: viewTheme.viewIdentifier) as? (UIViewController & RSDStepController)
+            let vc = storyboard.instantiateViewController(withIdentifier: viewTheme.viewIdentifier) as? (UIViewController & RSDStepController)
+            if let stepVC = vc as? RSDStepViewController {
+                stepVC.stepViewModel = stepVC.instantiateStepViewModel(for: step, with: parent)
+            }
+            return vc
         }
         else {
-            return RSDStepViewController(nibName: viewTheme.viewIdentifier, bundle: viewTheme.bundle)
+            let vc = RSDStepViewController(nibName: viewTheme.viewIdentifier, bundle: viewTheme.bundle)
+            vc.stepViewModel = vc.instantiateStepViewModel(for: step, with: parent)
+            return vc
         }
     }
     

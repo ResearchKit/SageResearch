@@ -39,6 +39,7 @@ import UIKit
 
 /// `RSDColorThemeElementObject` tells the UI what the background color and foreground color are for a
 /// given view as well as whether or not the foreground elements should use "light style".
+@available(*, deprecated)
 public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBundleInfo, Codable {
     let _backgroundColorName: String?
     let _usesLightStyle: Bool?
@@ -126,23 +127,5 @@ public struct RSDColorThemeElementObject : RSDColorThemeElement, RSDDecodableBun
         self._backgroundColorName = backgroundColorName
         self.bundleIdentifier = bundleIdentifier
         self.colorStyle = nil
-    }
-}
-
-extension RSDColorThemeElementObject : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func colorThemeExamples() -> [RSDColorThemeElementObject] {
-        let colorThemeA = RSDColorThemeElementObject(usesLightStyle: true, backgroundColorName: "blueBlack")
-        var colorThemeB = RSDColorThemeElementObject(usesLightStyle: false, backgroundColorName: nil, bundleIdentifier: "org.example.SharedCodeBundle")
-        colorThemeB.colorStyle = ["header" : .lightBackground]
-        return [colorThemeA, colorThemeB]
-    }
-    
-    static func examples() -> [Encodable] {
-        return colorThemeExamples()
     }
 }

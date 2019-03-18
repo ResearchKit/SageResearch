@@ -33,8 +33,8 @@
 
 import Foundation
 
-class MCTTaskObject: RSDTaskObject {
-    
+class MCTTaskObject: RSDTaskObject, RSDTaskDesign {
+
     internal var runCount: Int = 1
     
     /// Override the task setup to allow setting the run count.
@@ -55,5 +55,9 @@ class MCTTaskObject: RSDTaskObject {
         let identifier: String
         let timestampDate: Date?
         let json: RSDJSONSerializable
+    }
+    
+    var designSystem: RSDDesignSystem {
+        return MCTFactory.designSystem
     }
 }

@@ -31,7 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import UIKit
+import Foundation
 
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
 open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep {

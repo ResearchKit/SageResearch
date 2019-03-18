@@ -51,7 +51,7 @@ import Foundation
 ///
 /// - seealso: `RSDTaskController`
 open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
-        
+
     /// A unique identifier for this path component.
     open private(set) var identifier: String
     
@@ -87,6 +87,18 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
     }
     
+    ///
+    lazy open var designSystem : RSDDesignSystem = {
+        guard let taskDesign = (self.taskInfo as? RSDTaskDesign) ?? (self.task as? RSDTaskDesign)
+            else {
+                return (self.parent as? RSDTaskPathComponent)?.designSystem ??
+                    RSDDesignSystem(pallette: RSDStudyConfiguration.shared.colorPallette)
+        }
+        // If getting the design system from the task, then set the color pallette to the system pallette.
+        let designSystem = taskDesign.designSystem
+        designSystem.colorRules.pallette = RSDStudyConfiguration.shared.colorPallette
+        return designSystem
+    }()
     
     // MARK: Lifecycle
     

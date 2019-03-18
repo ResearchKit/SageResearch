@@ -34,6 +34,7 @@
 import Foundation
 
 /// `RSDThemedUIStep` is a UI step that supports theme customization of view, color, and images used.
+@available(*, deprecated)
 public protocol RSDThemedUIStep : RSDUIStep {
     
     /// The view info used to create a custom step.
@@ -46,10 +47,5 @@ public protocol RSDThemedUIStep : RSDUIStep {
     var imageTheme: RSDImageThemeElement? { get }
 }
 
-/// `RSDUIThemeElement` is used to tell the application UI view controllers how to style a given step.
-public protocol RSDUIThemeElement {
-    
-    /// The resource bundle to use for fetching the theme elements.
-    var bundle: Bundle? { get }
-}
+
 

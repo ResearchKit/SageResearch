@@ -71,8 +71,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     
     /// Convenience property for casting the step to a `RSDThemedUIStep`.
+    @available(*, deprecated)
     public var themedStep: RSDThemedUIStep? {
         return step as? RSDThemedUIStep
+    }
+    
+    /// Convenience property for casting the step to a `RSDDesignableUIStep`.
+    public var designableStep: RSDDesignableUIStep? {
+        return step as? RSDDesignableUIStep
     }
     
     /// Convenience property for casting the step to a `RSDActiveUIStep`.
@@ -127,15 +133,22 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     public private(set) var isFirstAppearance: Bool = true
     
     /// Sets whether or not the body of the view uses light style.
+    @available(*, deprecated)
     public private(set) var usesLightStyle: Bool = false
+    
+    /// The design system to use with this step view controller.
+    open var designSystem: RSDDesignSystem!
     
     /// Override `viewWillAppear` to set up the navigation, step details, and background color theme if this
     /// is the first appearance.
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isFirstAppearance {
-            setupViews()
+            if self.designSystem == nil {
+                self.designSystem = self.stepViewModel.parentTaskPath?.designSystem ?? RSDDesignSystem()
+            }
             setupBackgroundColorTheme()
+            setupViews()
         }
     }
     
@@ -252,54 +265,67 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Set up the background color using the `colorTheme` from the step. This method does nothing
     /// if the step does not conform to the `RSDThemedUIStep` protocol.
     open func setupBackgroundColorTheme() {
-        guard let colorTheme = themedStep?.colorTheme else { return }
-        
-        let backgroundColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection)
-        
+        let colorMapping = designableStep?.colorMapping
         let placements: [RSDColorPlacement] = [.header, .body, .footer]
         for placement in placements {
-            guard let colorStyle = self.colorStyle(for: placement, hasCustomBackgroundColor: backgroundColor != nil),
-                (colorStyle != .customBackground || (backgroundColor != nil))
-                else {
-                    continue
-            }
+            let background = colorMapping?.backgroundColor(for: placement,
+                                                           using: self.designSystem.colorRules,
+                                                           compatibleWith: self.traitCollection)
+                ?? self.defaultBackgroundColorTile(for: placement)
             
             // Get the color and foreground element style
-            switch colorStyle {
-            case .customBackground:
-                setColorStyle(for: placement, usesLightStyle: colorTheme.usesLightStyle, backgroundColor: backgroundColor!)
-            case .darkBackground:
-                setColorStyle(for: placement, usesLightStyle: true, backgroundColor: UIColor.appBackgroundDark)
-            case .lightBackground:
-                setColorStyle(for: placement, usesLightStyle: false, backgroundColor: UIColor.appBackgroundLight)
-            }
+            setColorStyle(for: placement, background: background)
         }
+    }
+    
+    open func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
+        if placement == .header {
+            return self.designSystem.colorRules.backgroundPrimary
+        }
+        else {
+            return self.designSystem.colorRules.backgroundLight
+        }
+    }
+    
+    // TODO: syoung 03/18/2019 Remove once rev'd and cleaned up. Not used.
+    @available(*, unavailable)
+    open func setColorStyle(for placement: RSDColorPlacement, usesLightStyle: Bool, backgroundColor: UIColor) {
     }
     
     /// Set the color style for the given placement elements. This allows overriding by subclasses to
     /// customize the view style.
-    open func setColorStyle(for placement: RSDColorPlacement, usesLightStyle: Bool, backgroundColor: UIColor) {
+    open func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        
+        var navigationComponent: RSDStepNavigationView?
+        
         switch placement {
         case .header:
-            self.navigationHeader?.backgroundColor = backgroundColor
-            self.navigationHeader?.usesLightStyle = usesLightStyle
-            if let placement = self.themedStep?.imageTheme?.placementType, placement == .topBackground {
-                self.statusBarBackgroundView?.backgroundColor = UIColor.clear
-            }
-            else {
-                self.statusBarBackgroundView?.backgroundColor = backgroundColor
-            }
-            if let statusView = self.statusBarBackgroundView as? RSDStatusBarBackgroundView {
-                statusView.overlayColor = usesLightStyle ? UIColor.rsd_statusBarOverlayLightStyle : UIColor.rsd_statusBarOverlay
-            }
-            
+            navigationComponent = self.navigationHeader
+            setupStatusBar(with: background)
+
         case .body:
-            self.view.backgroundColor = backgroundColor
-            self.usesLightStyle = usesLightStyle
-            
+            navigationComponent = self.navigationBody
+
         case .footer:
-            self.navigationFooter?.backgroundColor = backgroundColor
-            self.navigationFooter?.usesLightStyle = usesLightStyle
+            navigationComponent = self.navigationFooter
+        }
+        
+        navigationComponent?.setDesignSystem(self.designSystem, with: background)
+    }
+    
+    /// The status bar overlay is a view that is set up to be underneath the status bar.
+    ///
+    /// - Default:
+    ///     If the background uses light style
+    ///         then the overlay is `clear`
+    ///         else `veryDarkGray`
+    ///     If there is a background image
+    ///         then the statusbar background is `clear`
+    ///         else `background.color`
+    open func setupStatusBar(with background: RSDColorTile) {
+        self.statusBarBackgroundView?.backgroundColor = background.color
+        if let statusView = self.statusBarBackgroundView as? RSDStatusBarBackgroundView {
+            statusView.overlayColor = background.usesLightStyle ? UIColor.clear : RSDColor.black.withAlphaComponent(0.1)
         }
     }
     
@@ -359,7 +385,9 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
         setupButton(navigationView.reviewInstructionsButton, for: .navigation(.reviewInstructions), isFooter: isFooter)
         
-        if let imageTheme = self.themedStep?.imageTheme, let imageView = navigationView.imageView {
+        // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
+        if let imageTheme = self.imageTheme,
+            let imageView = navigationView.imageView {
             let imagePlacement = imageTheme.placementType ?? .iconBefore
             let shouldSetImage = shouldSetNavigationImage(for: placement, with: imagePlacement)
             if shouldSetImage {
@@ -391,10 +419,16 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         navigationView.setNeedsUpdateConstraints()
     }
     
+    open var imageTheme: RSDImageThemeElement? {
+        // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
+        return (self.designableStep?.image ?? self.themedStep?.imageTheme)
+    }
+    
     /// By default, this method will return `true` if the image theme uses a placement
     /// of `topBackground` or `topMarginBackground`.
     open func hasTopBackgroundImage() -> Bool {
-        if let imageTheme = self.themedStep?.imageTheme, let placement = imageTheme.placementType {
+        // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
+        if let placement = self.imageTheme?.placementType {
             return placement == .topBackground || placement == .topMarginBackground
         } else {
             return false
@@ -404,22 +438,10 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// What is the color style for the given placement?
     /// - parameter placement: The view placement of the element.
     /// - returns: The color style (if any) defined for that element.
+    @available(*, unavailable)
     open func colorStyle(for placement: RSDColorPlacement, hasCustomBackgroundColor: Bool) -> RSDColorStyle? {
-        guard let colorTheme = themedStep?.colorTheme else { return nil }
-
-        if let colorStyle = colorTheme.colorStyle(for: placement), (colorStyle != .customBackground || hasCustomBackgroundColor) {
-            // Exit early if there is a specific color style defined.
-            return colorStyle
-        }
-        else if placement != .header && hasTopBackgroundImage() {
-            // If this is a footer and the view has a top background image, then the footer should be the
-            // light color background.
-            return .lightBackground
-        }
-        else if hasCustomBackgroundColor {
-            return .customBackground
-        }
-        return colorTheme.usesLightStyle ? .darkBackground : .lightBackground
+        // No longer used.
+        return nil
     }
 
     /// Convenience method for setting up each of the buttons. This will set up color theme, add the

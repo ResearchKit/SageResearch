@@ -65,6 +65,15 @@ public struct RSDImagePlacementType : RawRepresentable, Codable, Hashable {
     /// Top half of the background constraind to the safe area.
     public static let topMarginBackground = StandardTypes.topMarginBackground.imagePlacementType
     
+    public var isBackground : Bool {
+        switch self {
+        case .fullsizeBackground, .topBackground, .topMarginBackground:
+            return true
+        default:
+            return false
+        }
+    }
+    
     public static func allStandardTypes() -> [RSDImagePlacementType] {
         return StandardTypes.allCases.map { $0.imagePlacementType }
     }

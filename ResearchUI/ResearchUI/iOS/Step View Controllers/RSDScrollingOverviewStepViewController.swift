@@ -46,6 +46,10 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     open weak var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
     
+    /// The constraint that sets the distance between the title and the image.
+    @IBOutlet
+    var titleTopConstraint: NSLayoutConstraint!
+    
     /// The image views to display the icons on.
     @IBOutlet
     open var iconImages: [UIImageView]!
@@ -67,7 +71,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     /// or not to show the full task info or an abbreviated screen.
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateImagePlacementConstraints()
         
         // TODO: syoung 03/12/2019 Change to using a collection view.
         // This code assumes that either 1 or 3 icons will be displayed. In order to support
@@ -87,10 +90,13 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
             }
         }
         
-        // It is critical for the view to be entirely layed out before the next code executes,
-        // otherwise the scroll view offset may be computed incorrectly.
-        self.view.layoutIfNeeded()
-        self.statusBarBackgroundView?.layoutIfNeeded()
+        // Update the image placement constraint based on the status bar height.
+        updateImagePlacementConstraints()
+    }
+    
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         let shouldShowInfo = !(self.stepViewModel.rootPathComponent.shouldShowAbbreviatedInstructions ?? false)
         if shouldShowInfo {
             self._scrollToBottom()
@@ -109,8 +115,27 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     /// Sets the height of the scroll views top background view depending on
     /// the image placement type from this step.
     open func updateImagePlacementConstraints() {
-        guard let placementType = self.themedStep?.imageTheme?.placementType else { return }
-        self.scrollViewBackgroundHeightConstraint.constant = placementType == .topMarginBackground ? self.statusBarBackgroundView!.bounds.height : CGFloat(0)
+        guard let placementType = self.imageTheme?.placementType else { return }
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        self.scrollViewBackgroundHeightConstraint.constant = (placementType == .topMarginBackground) ? statusBarHeight : CGFloat(0)
+    }
+    
+    override open func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
+        
+        if placement == .body {
+            
+            iconViewLabel.text = Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
+            iconViewLabel.textColor = self.designSystem.colorRules.textColor(on: background, for: .fieldHeader)
+            iconViewLabel.font = self.designSystem.fontRules.font(for: .fieldHeader)
+            
+            let textColor = self.designSystem.colorRules.textColor(on: background, for: .microHeader)
+            let font = self.designSystem.fontRules.font(for: .microHeader, compatibleWith: traitCollection)
+            iconTitles.forEach {
+                $0.textColor = textColor
+                $0.font = font
+            }
+        }
     }
     
     /// Stops the animation view from animating.
@@ -137,15 +162,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         self.scrollView?.isScrollEnabled = shouldShowInfo
         self.infoButton?.isHidden = shouldShowInfo
         self.navigationFooter?.shouldShowShadow = shouldShowInfo
-    }
-    
-    /// Override view did layout subviews so that whenever the scroll view height changes,
-    /// the content offset is adjusted accordingly.
-    override open func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if _scrollViewHeight != scrollView.frame.height {
-            _scrollViewHeight = scrollView.frame.height
-        }
     }
     
     /// Override goForward to add in requesting permission to access the motion sensors before continuing.
@@ -178,24 +194,8 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         super.goForward()
     }
     
-    // This variable was needed because the iPhone X lays out the subviews twice. The second
-    // time the height of the scroll view changes which messes up the scroll view offset. Storing
-    // the scroll view height is a way to compensate for this.
-    private var _scrollViewHeight: CGFloat = 0 {
-        // 0 is an okay initial value becuase after the first time layoutSubviews() gets called,
-        //  the content offset gets recomputed anyway
-        didSet {
-            let change = _scrollViewHeight - oldValue
-            var contentOffset = scrollView.contentOffset
-            // If the scroll view size decreased the content offset must increase, and vice versa
-            contentOffset.y = contentOffset.y - change
-            scrollView.setContentOffset(contentOffset, animated: false)
-        }
-    }
-    
     /// The function that is called when the info button is tapped.
-    @IBAction
-    private func infoButtonTapped(_ sender: UIButton) {
+    override open func showLearnMore() {
         let textLabel = (self.view as? RSDStepNavigationView)?.textLabel
         textLabel?.alpha = 0
         self.iconViewLabel.alpha = 0

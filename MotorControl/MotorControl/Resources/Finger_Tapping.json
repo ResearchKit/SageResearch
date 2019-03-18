@@ -37,11 +37,11 @@
                         "reminderIdentifier":"Tapping"
                     }
                  },
-                 "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
+                 "colorMapping":{
+                     "colorMapping": {
+                         "header": "primary",
+                         "body": "white",
+                         "footer": "white"
                      }
                  }
              },
@@ -56,11 +56,11 @@
                      "placementType":"topBackground",
                      "animationDuration": 1
                 },
-                "colorTheme":{
-                    "colorStyle": {
-                        "header": "darkBackground",
-                        "body": "lightBackground",
-                        "footer": "lightBackground"
+                "colorMapping":{
+                    "colorMapping": {
+                        "header": "primary",
+                        "body": "white",
+                        "footer": "white"
                     }
                 },
                 "actions":{
@@ -106,12 +106,12 @@
                     "animationDuration": 3.0,
                     "placementType": "topBackground"
                 },
-                "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
-                     }
+                "colorMapping":{
+                    "colorMapping": {
+                        "header": "primary",
+                        "body": "white",
+                        "footer": "white"
+                    }
                 },
                 "actions":{
                     "goForward":{
@@ -131,11 +131,11 @@
                     "animationDuration": 1.0,
                     "placementType": "topBackground"
                 },
-                "colorTheme":{
-                    "colorStyle": {
-                        "header": "darkBackground",
-                        "body": "lightBackground",
-                        "footer": "lightBackground"
+                "colorMapping":{
+                    "colorMapping": {
+                        "header": "primary",
+                        "body": "white",
+                        "footer": "white"
                     }
                 },
                 "actions":{
@@ -168,6 +168,9 @@
                  "viewTheme":{
                      "viewIdentifier":"Completion Tapping",
                      "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "colorMapping":{
+                     "colorStyle": "white"
                  },
                  "actions": {
                      "goForward":{

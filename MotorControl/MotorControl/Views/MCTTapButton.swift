@@ -33,12 +33,11 @@
 
 import Foundation
 
-@IBDesignable open class MCTTapButton : UIButton {
+@IBDesignable public final class MCTTapButton : UIButton, RSDViewDesignable {
 
     /// Override layout subviews to draw a rounded button with a white border around it.
-    override open func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
-        self.backgroundColor = UIColor.secondaryTintColor
         layer.borderWidth = 4
         layer.borderColor = UIColor.white.cgColor
         layer.cornerRadius = self.bounds.height / 2.0
@@ -58,9 +57,27 @@ import Foundation
 
     /// Performs the operations common to all initializers of this class.
     /// Default localizes the button's title.
-    open func commonInit() {
+    private func commonInit() {
         let title = Localization.localizedString("TAP_BUTTON_TITLE")
         self.setTitle(title, for: UIControl.State.normal)
+        updateColors()
     }
-
+    
+    public private(set) var backgroundColorTile: RSDColorTile?
+    
+    public private(set) var designSystem: RSDDesignSystem?
+    
+    public func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.designSystem = designSystem
+        self.backgroundColorTile = background
+        updateColors()
+    }
+    
+    func updateColors() {
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        let colorTile = designSystem.colorRules.pallette.secondary.normal
+        self.backgroundColor = colorTile.color
+        let textColor = designSystem.colorRules.textColor(on: colorTile, for: .heading3)
+        self.setTitleColor(textColor, for: .normal)
+    }
 }

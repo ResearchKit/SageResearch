@@ -42,6 +42,16 @@ fileprivate var _didAddLocalizationBundle: Bool = false
 
 open class MCTFactory : RSDFactory {
     
+    /// The default color pallette for this module is royal500, butterscotch500 without an accent color.
+    /// The design system is set as version 0.
+    public static let designSystem: RSDDesignSystem = {
+        let pallette = RSDColorPallette(version: 0,
+                                        primary: RSDColorMatrix.shared.colorKey(for: .pallette(.royal), version: 0, index: 3),
+                                        secondary: RSDColorMatrix.shared.colorKey(for: .pallette(.butterscotch), version: 0, index: 3),
+                                        accent: RSDColorMatrix.shared.colorKey(for: .pallette(.butterscotch), version: 0, index: 3))
+        return RSDDesignSystem(pallette: pallette)
+    }()
+    
     /// Override initialization to add the strings file to the localization bundles.
     public override init() {
         super.init()

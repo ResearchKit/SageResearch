@@ -75,9 +75,9 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     /// this step. Default behavior is to constrain the scrollview to be under the status bar if the placement
     /// type is `.topMarginBackground`.
     open func updateImagePlacementConstraintsIfNeeded() {
-        guard let placementType = self.themedStep?.imageTheme?.placementType else { return }
-        let constant = (placementType == .topMarginBackground) ?
-            (self.statusBarBackgroundView?.bounds.height ?? CGFloat(0)) : CGFloat(0)
+        guard let placementType = self.imageTheme?.placementType else { return }
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let constant = (placementType == .topMarginBackground) ? statusBarHeight : CGFloat(0)
         if constant != scrollViewBackgroundHeightConstraint.constant {
             scrollViewBackgroundHeightConstraint.constant = constant
             self.view.setNeedsUpdateConstraints()
@@ -112,8 +112,8 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     open class func doesSupport(_ step: RSDStep) -> Bool {
         
         // Must have a top background image.
-        guard let themedStep = step as? RSDThemedUIStep,
-            let imageTheme = themedStep.imageTheme,
+        guard let themedStep = step as? RSDDesignableUIStep,
+            let imageTheme = themedStep.image,
             let placement = imageTheme.placementType
             else {
                 return false

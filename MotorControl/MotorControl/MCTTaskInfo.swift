@@ -61,7 +61,7 @@ public enum MCTTaskIdentifier : String, Codable, CaseIterable {
 }
 
 /// A task info object for the tasks included in this submodule.
-public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
+public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor, RSDTaskDesign {
 
     /// The task identifier for this task.
     public let taskIdentifier: MCTTaskIdentifier
@@ -141,6 +141,10 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
         copy.icon = self.icon
         copy.schemaInfo = self.schemaInfo
         return copy
+    }
+    
+    public var designSystem: RSDDesignSystem {
+        return MCTFactory.designSystem
     }
 }
 

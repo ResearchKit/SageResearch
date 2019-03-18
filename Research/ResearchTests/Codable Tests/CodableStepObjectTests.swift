@@ -91,7 +91,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
-            XCTAssertEqual((object.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "before")
+            XCTAssertEqual((object.image as? RSDFetchableImageThemeElementObject)?.imageName, "before")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
             
             let goForwardAction = object.action(for: .navigation(.goForward), on: object)
@@ -185,7 +185,10 @@ class CodableStepObjectTests: XCTestCase {
                             "placementType" : "topBackground",
                             "animationDuration" : 2,
                                },
-            "colorTheme"     : { "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true },
+            "colorMapping"     : { "customColor" : {
+                                            "color": "sky",
+                                            "usesLightStyle" : true}
+                                },
             "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps" },
             "beforeCohortRules" : [{ "requiredCohorts" : ["boo", "goo"],
@@ -228,7 +231,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
             
-            if let images = object.imageTheme as? RSDAnimatedImageThemeElementObject {
+            if let images = object.image as? RSDAnimatedImageThemeElementObject {
                 XCTAssertEqual(images.animationDuration, 2)
                 XCTAssertEqual(images.imageNames, ["foo1", "foo2", "foo3", "foo4"])
                 XCTAssertEqual(images.placementType, .topBackground)
@@ -236,9 +239,9 @@ class CodableStepObjectTests: XCTestCase {
                 XCTFail("Failed to decode images")
             }
             
-            if let color = object.colorTheme as? RSDColorThemeElementObject {
-                XCTAssertTrue(color.usesLightStyle)
-                XCTAssertEqual(color._backgroundColorName, "sky")
+            if let color = object.colorMapping as? RSDColorMappingThemeElementObject {
+                XCTAssertTrue(color.customColor?.usesLightStyle ?? false)
+                XCTAssertEqual(color.customColor?.color, "sky")
             } else {
                 XCTFail("Failed to decode color theme")
             }
@@ -477,7 +480,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
-            XCTAssertEqual((object.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "before")
+            XCTAssertEqual((object.image as? RSDFetchableImageThemeElementObject)?.imageName, "before")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
             
             let goForwardAction = object.action(for: .navigation(.goForward), on: object)

@@ -86,44 +86,113 @@ open class RSDProgressIndicator: UIView {
 /// `RSDCountdownDial` shows a circular dial indicator.
 /// - seealso: `RSDActiveStepViewController`
 @IBDesignable
-public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable {
+public final class RSDCountdownDial: RSDProgressIndicator, RSDViewDesignable {
+
+    /// Point to the design system.
+    public var customDesignSystem: RSDDesignSystem?
     
     /// The color of the circular ring that shows the track of the progress indicator.
     @IBInspectable
-    public var progressColor: UIColor = UIColor.rsd_dialRing {
+    public var progressColor: UIColor = RSDStudyConfiguration.shared.colorPallette.accent.normal.color {
         didSet {
             dialLayer?.strokeColor = progressColor.cgColor
         }
     }
     
-    /// Should the element display with a light style of progress bar and label for use on a dark
-    /// background, or with a dark style of progress bar for use on a light background?
+    /// The color of the unfilled circular ring.
     @IBInspectable
-    public var usesLightStyle: Bool = false {
+    public var ringColor: UIColor = RSDStudyConfiguration.shared.colorPallette.grayScale.veryLightGray.color {
+        didSet {
+            ringLayer?.strokeColor = ringColor.cgColor
+        }
+    }
+    
+    /// Whether or not this countdown dial's inner color uses light-style UI elements.
+    @IBInspectable
+    public var usesLightStyle: Bool {
+        get {
+            return _usesLightStyle
+        }
+        set {
+            _usesLightStyle = newValue
+            updateColorStyle()
+        }
+    }
+    private var _usesLightStyle: Bool = false
+    
+    /// The color of the inside of the circle.
+    @IBInspectable
+    public var innerColor: UIColor {
+        get {
+            return _innerColor
+        }
+        set {
+            _innerColor = newValue
+            updateColorStyle()
+        }
+    }
+    private var _innerColor: UIColor = UIColor.clear
+    
+    /// If the colorStyle is set, then this will determine the inner color and light style and will
+    /// override any colors set by the storyboard or nib. This value is `nil` by default and can only be set
+    /// programatically.
+    public var colorStyle : RSDColorRules.Style? {
         didSet {
             updateColorStyle()
         }
     }
     
-    private func updateColorStyle() {
-        let ringColor = usesLightStyle ? UIColor.rsd_dialRingBackgroundLightStyle : UIColor.rsd_dialRingBackground
-        ringLayer?.strokeColor = ringColor.cgColor
+    /// The background color mapping that this view should use as its key. Typically, for all but the
+    /// top-level views, this will be the background of the superview.
+    public var backgroundColorTile: RSDColorTile? {
+        return RSDColorTile(_innerColor, usesLightStyle: _usesLightStyle)
+    }
+    
+    /// The design system for this component.
+    public private(set) var designSystem: RSDDesignSystem?
+    
+    /// Views can be used in nibs and storyboards without setting up a design system for them. This allows
+    /// for setting up views to use the same design system and background color mapping as their parent view.
+    public func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.designSystem = designSystem
+        updateColorStyle(designSystem, background)
+    }
+    
+    private func updateColorStyle(_ ds: RSDDesignSystem? = nil, _ bk: RSDColorTile? = nil) {
+        let designSystem = ds ?? RSDDesignSystem()
+        let background = bk ?? RSDColorTile(_innerColor, usesLightStyle: _usesLightStyle)
+        let colorRules = designSystem.colorRules.progressDial(on: background,
+                                                              style: self.colorStyle,
+                                                              innerColor: self.innerColor,
+                                                              usesLightStyle: self.usesLightStyle)
+        if ds != nil {
+            self.ringColor = colorRules.unfilled
+            self.progressColor = colorRules.filled
+            _innerColor = colorRules.inner.color
+            _usesLightStyle = colorRules.inner.usesLightStyle
+            ringLayer?.fillColor = innerColor.cgColor
+        }
         
-        self.backgroundColor = self.usesLightStyle ? UIColor.rsd_dialInnerBackgroundLightStyle : UIColor.rsd_dialInnerBackground
+        self.subviews.forEach {
+            if let label = $0 as? UILabel {
+                label.textColor = designSystem.colorRules.textColor(on: colorRules.inner, for: .counter)
+            }
+        }
+        
+        self.recursiveSetDesignSystem(designSystem, with: colorRules.inner)
     }
     
     /// The width of the circular ring that shows the track of the progress indicator.
     @IBInspectable
-    public var ringWidth: CGFloat = 4 {
+    public var ringWidth: CGFloat = 10 {
         didSet {
             ringLayer?.lineWidth = ringWidth
         }
     }
     
     /// The width of the dial (progress indicator).
-    /// - note: The color of the dial is set using the `tintColor` property.
     @IBInspectable
-    public var dialWidth: CGFloat = 18 {
+    public var dialWidth: CGFloat = 10 {
         didSet {
             dialLayer?.lineWidth = dialWidth
         }
@@ -138,6 +207,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        updateColorStyle()
         commonInit()
     }
     
@@ -186,8 +256,8 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewColorStylable 
         layer.masksToBounds = false
         
         ringLayer?.lineWidth = ringWidth
-        ringLayer?.fillColor = backgroundColor?.cgColor
-        updateColorStyle()
+        ringLayer?.fillColor = innerColor.cgColor
+        ringLayer?.strokeColor = ringColor.cgColor
         
         dialLayer?.strokeEnd = progress
         dialLayer?.lineWidth = dialWidth

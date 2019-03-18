@@ -1,0 +1,402 @@
+[{
+    "version": 0,
+    "grayScale": {
+            "white": {
+                "color": "#FFFFFF",
+                "usesLightStyle": false
+            },
+            "veryLightGray": {
+                "color": "#EAEBEE",
+                "usesLightStyle": false
+            },
+            "lightGray": {
+                "color": "#BBBCBE",
+                "usesLightStyle": false
+            },
+            "gray": {
+                "color": "#757577",
+                "usesLightStyle": true
+            },
+            "darkGray": {
+                "color": "#4A4A4A",
+                "usesLightStyle": true
+            },
+            "veryDarkGray": {
+                "color": "#1A1C29",
+                "usesLightStyle": true
+            },
+            "black": {
+                "color": "#000000",
+                "usesLightStyle": true
+            }
+    },
+    "swatches":
+    [{
+        "name": "royal",
+        "colorTiles": [{
+            "color": "#D5CFE3",
+            "usesLightStyle": false
+        }, {
+            "color": "#B2A5D1",
+            "usesLightStyle": false
+        }, {
+            "color": "#907FBA",
+            "usesLightStyle": false
+        }, {
+            "color": "#5A478F",
+            "usesLightStyle": true
+        }, {
+            "color": "#47337D",
+            "usesLightStyle": true
+        }, {
+            "color": "#332069",
+            "usesLightStyle": true
+        }, {
+            "color": "#251454",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "butterscotch",
+        "colorTiles": [{
+            "color": "#FFE2AD",
+            "usesLightStyle": false
+        }, {
+            "color": "#FAD591",
+            "usesLightStyle": false
+        }, {
+            "color": "#FCCB6F",
+            "usesLightStyle": false
+        }, {
+            "color": "#F5B33C",
+            "usesLightStyle": false
+        }, {
+            "color": "#DE9A1F",
+            "usesLightStyle": false
+        }, {
+            "color": "#CF8C15",
+            "usesLightStyle": false
+        }, {
+            "color": "#BD7900",
+            "usesLightStyle": false
+        }]
+    },
+    {
+        "name": "powder",
+        "colorTiles": [{
+            "color": "#E1F4F5",
+            "usesLightStyle": false
+        }, {
+            "color": "#C5EDF0",
+            "usesLightStyle": false
+        }, {
+            "color": "#A6DDE0",
+            "usesLightStyle": false
+        }, {
+            "color": "#7EC8CC",
+            "usesLightStyle": false
+        }, {
+            "color": "#5BB0B5",
+            "usesLightStyle": false
+        }, {
+            "color": "#2F8E94",
+            "usesLightStyle": false
+        }, {
+            "color": "#0C656B",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "turquoise",
+        "colorTiles": [{
+            "color": "#A9EBE5",
+            "usesLightStyle": false
+        }, {
+            "color": "#63DBD0",
+            "usesLightStyle": false
+        }, {
+            "color": "#42C7BB",
+            "usesLightStyle": false
+        }, {
+            "color": "#24AB9F",
+            "usesLightStyle": false
+        }, {
+            "color": "#109488",
+            "usesLightStyle": false
+        }, {
+            "color": "#10847A",
+            "usesLightStyle": true
+        }, {
+            "color": "#05635B",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "coral",
+        "colorTiles": [{
+            "color": "#F7E2DF",
+            "usesLightStyle": false
+        }, {
+            "color": "#FFC5BD",
+            "usesLightStyle": false
+        }, {
+            "color": "#FCA79A",
+            "usesLightStyle": false
+        }, {
+            "color": "#F47E6C",
+            "usesLightStyle": false
+        }, {
+            "color": "#DA614F",
+            "usesLightStyle": false
+        }, {
+            "color": "#BD422F",
+            "usesLightStyle": true
+        }, {
+            "color": "#8F1D0B",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "apricot",
+        "colorTiles": [{
+            "color": "#FACFAF",
+            "usesLightStyle": false
+        }, {
+            "color": "#F5B584",
+            "usesLightStyle": false
+        }, {
+            "color": "#F89C55",
+            "usesLightStyle": false
+        }, {
+            "color": "#EB8231",
+            "usesLightStyle": false
+        }, {
+            "color": "#D46D1E",
+            "usesLightStyle": false
+        }, {
+            "color": "#C25D10",
+            "usesLightStyle": false
+        }, {
+            "color": "#A84C05",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "blueberry",
+        "colorTiles": [{
+            "color": "#BCE0F7",
+            "usesLightStyle": false
+        }, {
+            "color": "#94C9EB",
+            "usesLightStyle": false
+        }, {
+            "color": "#77AFD4",
+            "usesLightStyle": false
+        }, {
+            "color": "#5B95BA",
+            "usesLightStyle": false
+        }, {
+            "color": "#407BA0",
+            "usesLightStyle": true
+        }, {
+            "color": "#2B688F",
+            "usesLightStyle": true
+        }, {
+            "color": "#164B6E",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "apple",
+        "colorTiles": [{
+            "color": "#FF9CA0",
+            "usesLightStyle": false
+        }, {
+            "color": "#F27277",
+            "usesLightStyle": false
+        }, {
+            "color": "#E0585D",
+            "usesLightStyle": false
+        }, {
+            "color": "#CC3F45",
+            "usesLightStyle": true
+        }, {
+            "color": "#B3242A",
+            "usesLightStyle": true
+        }, {
+            "color": "#9C141A",
+            "usesLightStyle": true
+        }, {
+            "color": "#85070C",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "rose",
+        "colorTiles": [{
+            "color": "#F7C6DD",
+            "usesLightStyle": false
+        }, {
+            "color": "#F7A6CC",
+            "usesLightStyle": false
+        }, {
+            "color": "#F683B9",
+            "usesLightStyle": false
+        }, {
+            "color": "#E566A1",
+            "usesLightStyle": false
+        }, {
+            "color": "#C94281",
+            "usesLightStyle": true
+        }, {
+            "color": "#B22D6B",
+            "usesLightStyle": true
+        }, {
+            "color": "#990E4F",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "lavender",
+        "colorTiles": [{
+            "color": "#C7D6FF",
+            "usesLightStyle": false
+        }, {
+            "color": "#B1C6FA",
+            "usesLightStyle": false
+        }, {
+            "color": "#93ABE8",
+            "usesLightStyle": false
+        }, {
+            "color": "#7692D9",
+            "usesLightStyle": false
+        }, {
+            "color": "#5171C0",
+            "usesLightStyle": true
+        }, {
+            "color": "#3F5EAB",
+            "usesLightStyle": true
+        }, {
+            "color": "#28448A",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "slate",
+        "colorTiles": [{
+            "color": "#ABBEE0",
+            "usesLightStyle": false
+        }, {
+            "color": "#849BC4",
+            "usesLightStyle": false
+        }, {
+            "color": "#6279A1",
+            "usesLightStyle": false
+        }, {
+            "color": "#4A5E81",
+            "usesLightStyle": true
+        }, {
+            "color": "#3C4A63",
+            "usesLightStyle": true
+        }, {
+            "color": "#24334F",
+            "usesLightStyle": true
+        }, {
+            "color": "#0D1C38",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "fern",
+        "colorTiles": [{
+            "color": "#C0EBC0",
+            "usesLightStyle": false
+        }, {
+            "color": "#A7DBA7",
+            "usesLightStyle": false
+        }, {
+            "color": "#87C987",
+            "usesLightStyle": false
+        }, {
+            "color": "#6DB56D",
+            "usesLightStyle": false
+        }, {
+            "color": "#58A158",
+            "usesLightStyle": false
+        }, {
+            "color": "#3F833F",
+            "usesLightStyle": true
+        }, {
+            "color": "#2C692C",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "cloud",
+        "colorTiles": [{
+            "color": "#F5F5F5",
+            "usesLightStyle": false
+        }, {
+            "color": "#EDEDED",
+            "usesLightStyle": false
+        }, {
+            "color": "#E3E1E1",
+            "usesLightStyle": false
+        }, {
+            "color": "#DBD9D9",
+            "usesLightStyle": false
+        }, {
+            "color": "#C7C5C5",
+            "usesLightStyle": false
+        }, {
+            "color": "#A6A6A6",
+            "usesLightStyle": false
+        }, {
+            "color": "#808080",
+            "usesLightStyle": false
+        }]
+    },
+    {
+        "name": "stone",
+        "colorTiles": [{
+            "color": "#E6E6E8",
+            "usesLightStyle": false
+        }, {
+            "color": "#D3D5DB",
+            "usesLightStyle": false
+        }, {
+            "color": "#BCC0CA",
+            "usesLightStyle": false
+        }, {
+            "color": "#9DA3B3",
+            "usesLightStyle": false
+        }, {
+            "color": "#8D919E",
+            "usesLightStyle": false
+        }, {
+            "color": "#6D7078",
+            "usesLightStyle": true
+        }, {
+            "color": "#515359",
+            "usesLightStyle": true
+        }]
+    },
+    {
+        "name": "successGreen",
+        "colorTiles": [{
+            "color": "#91EDC1",
+            "usesLightStyle": false
+        }, {
+            "color": "#63D49E",
+            "usesLightStyle": false
+        }]
+    },
+    {
+        "name": "errorRed",
+        "colorTiles": [{
+            "color": "#EE6070",
+            "usesLightStyle": false
+        }]
+    }
+    ]
+}]
