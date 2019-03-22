@@ -172,15 +172,18 @@ open class RSDColorRules  {
     /// Tinted button color on a given background.
     ///
     /// - Default:
-    ///     If the background uses light style
-    ///         then `white`
-    ///         else `secondary`
+    ///     If the background uses light style then `white`
+    ///     else if the background is the primary pallette color then `secondary`
+    ///     else `veryDarkGray`
     open func tintedButtonColor(on background: RSDColorTile) -> RSDColor {
         if background.usesLightStyle {
             return self.pallette.grayScale.white.color
         }
-        else {
+        else if background == self.pallette.primary.normal {
             return self.pallette.secondary.normal.color
+        }
+        else {
+            return self.pallette.grayScale.veryDarkGray.color
         }
     }
     
@@ -241,7 +244,13 @@ open class RSDColorRules  {
     /// The text color for a rounded button.
     open func roundedButtonText(on background: RSDColorTile, with buttonType: RSDDesignSystem.ButtonType, forState state: RSDControlState) -> RSDColor {
         let tile = self.roundedButton(on: background, buttonType: buttonType)
-        return textColor(on: tile.normal, for: .heading4)
+        let color = textColor(on: tile.normal, for: .heading4)
+        if state == .disabled && !tile.normal.usesLightStyle {
+            return color.withAlphaComponent(0.35)
+        }
+        else {
+            return color
+        }
     }
     
     /// Checkboxes button.
@@ -292,7 +301,7 @@ open class RSDColorRules  {
             return (mapping.light.color, self.pallette.grayScale.veryLightGray.color, mapping.normal)
         }
         else {
-            let filled = self.pallette.primary.light.color
+            let filled = self.pallette.accent.light.color
             let unfilled = self.pallette.grayScale.veryLightGray.color
             let lightStyle = (innerColor == RSDColor.clear) ? background.usesLightStyle : usesLightStyle
             let inner = RSDColorTile(innerColor, usesLightStyle: lightStyle)
