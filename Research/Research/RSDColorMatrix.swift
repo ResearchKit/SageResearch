@@ -64,6 +64,9 @@ public final class RSDColorMatrix {
     }
     
     /// The library for a given version.
+    ///
+    /// - parameter version: The version to return or `nil` to return the most recent.
+    /// - returns: The color library for this version.
     public func library(for version: Int?) -> RSDColorLibrary {
         guard let ver = version,
             let library = self.registeredLibraries.first(where: { $0.version == ver })
@@ -74,17 +77,30 @@ public final class RSDColorMatrix {
     }
     
     /// Get the gray scale to use for a given version of the color library.
+    ///
+    /// - parameter version: The version to return or `nil` to return the most recent.
+    /// - returns: The gray scale for this version.
     public func grayScale(for version: Int?) -> RSDGrayScale {
         return self.library(for: version).grayScale ?? RSDGrayScale()
     }
     
     /// Get the color swatch associated with the given name.
+    ///
+    /// - parameters:
+    ///     - name: The name of the color swatch.
+    ///     - version: The version to return or `nil` to return the most recent.
+    /// - returns: The color swatch for the given name and version.
     public func colorSwatch(for name: String, version: Int?) -> RSDColorSwatch? {
         guard let reserved = RSDReservedColorName(rawValue: name) else { return nil }
         return self.colorSwatch(for: reserved, version: version)
     }
     
     /// Get the color swatch associated with the given name.
+    ///
+    /// - parameters:
+    ///     - name: The name of the color swatch.
+    ///     - version: The version to return or `nil` to return the most recent.
+    /// - returns: The color swatch for the given name and version.
     public func colorSwatch(for name: RSDReservedColorName, version: Int?) -> RSDColorSwatch? {
         let ver = min(name.version ?? Int.max, version ?? Int.max)
         let library = self.library(for: ver)
@@ -92,6 +108,11 @@ public final class RSDColorMatrix {
     }
     
     /// Get the color swatch associated with the given name.
+    ///
+    /// - parameters:
+    ///     - name: The name of the color swatch.
+    ///     - shade: The shade of the color.
+    /// - returns: The color key for the given name and shade.
     public func colorKey(for name: RSDReservedColorName, shade: RSDColorSwatch.Shade) -> RSDColorKey {
         guard let swatch = colorSwatch(for: name, version: nil)
             else {
@@ -103,6 +124,12 @@ public final class RSDColorMatrix {
 
     
     /// Get the most appropriate color key for a given restricted color name.
+    ///
+    /// - parameters:
+    ///     - name: The name of the color swatch.
+    ///     - version: The version to return or `nil` to return the most recent.
+    ///     - index: The index into the color swatch or `nil` to return the `dark` shade.
+    /// - returns: The color key.
     public func colorKey(for name: RSDReservedColorName, version: Int? = nil, index: Int? = nil) -> RSDColorKey {
         guard let swatch = colorSwatch(for: name, version: version)
             else {
@@ -110,15 +137,27 @@ public final class RSDColorMatrix {
         }
         guard let idx = index, idx >= 0, idx < swatch.colorTiles.count
             else {
-                return RSDColorKey(index: swatch.colorTiles.count - 1, swatch: swatch)!
+                let idx = swatch.mapping(for: .dark).index
+                return RSDColorKey(index: idx, swatch: swatch)!
         }
         return RSDColorKey(index: idx, swatch: swatch)!
     }
     
+    /// Get the most appropriate color mappinng for a gray scale color.
+    ///
+    /// - parameters:
+    ///     - shade: The shade of the color.
+    ///     - version: The version to return or `nil` to return the most recent.
+    /// - returns: The color mapping.
     public func colorMapping(for gray: RSDGrayScale.Shade, version: Int? = nil) -> RSDColorMapping {
         return self.grayScale(for: version).mapping(for: gray)
     }
     
+    /// Find a color tile from the color. This will look through the libraries and swatches for a matching
+    /// color.
+    ///
+    /// - parameter color: The color to find.
+    /// - returns: The color tile for this color, if found.
     public func findColorTile(for color: RSDColor) -> RSDColorTile? {
         for colorTile in RSDGrayScale().colorTiles {
             if colorTile.color == color {

@@ -148,7 +148,8 @@ extension RSDColor {
     }
     #endif
     
-    /// Initialize a `UIColor` with a hex string.
+    /// Initialize with a hex string that uses web hex format #rrggbb.
+    ///
     /// - parameter hexString:  An RGB color defined using a hex code.
     /// - returns: A color if the hex is valid.
     public convenience init?(hexString: String) {
@@ -165,6 +166,7 @@ extension RSDColor {
     }
     
     /// Returns a color in the same color space as the receiver with the specified saturation percent.
+    ///
     /// - parameter multiplier: The multiplier for the saturation to either lighten or darken the color.
     public func withSaturationMultiplier(_ multiplier: CGFloat, minimumSaturation: CGFloat = 0.2) -> RSDColor {
         var hue: CGFloat = 0
@@ -177,7 +179,7 @@ extension RSDColor {
         return RSDColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha)
     }
     
-    /// Returns the RGB hex string for this color.
+    /// Returns the RGB hex string for this color web hex format #rrggbb.
     public func toHexString() -> String? {
         
         // special-case black and white colors
@@ -216,20 +218,13 @@ fileprivate func rbgValues(from hexString: String) -> (red: Double, green: Doubl
     let r, g, b: Double
     
     // Look for the start of the hex numbers, stripping out the # or 0x if present
-    var start = hexString.startIndex
-    let prefixes = ["#", "0x"]
-    for prefix in prefixes {
-        if let range = hexString.range(of: prefix) {
-            if range.lowerBound == start {
-                start = range.upperBound
-                break
-            }
-            else {
-                return nil
-            }
-        }
+    let start = hexString.startIndex
+    let prefix = "#"
+    guard let range = hexString.range(of: prefix), range.lowerBound == start
+    else {
+        return nil
     }
-    let hexColor = String(hexString[start...])
+    let hexColor = String(hexString[range.upperBound...])
     
     // If there aren't 6 characters in the hex color then drop through to return nil
     if hexColor.count == 6 {
