@@ -93,9 +93,15 @@ public protocol RSDColorMapping {
 
 extension RSDColorMapping {
     
-    /// The main color within the color swatch.
-    public var normal: RSDColorTile {
-        return self.colorTiles[index]
+    /// The color tile for one shade lighter if available, otherwise returns `normal`.
+    public var veryLight: RSDColorTile {
+        let idx = index - 2
+        if idx >= 0 {
+            return self.colorTiles[idx]
+        }
+        else {
+            return self.light
+        }
     }
     
     /// The color tile for one shade lighter if available, otherwise returns `normal`.
@@ -109,6 +115,11 @@ extension RSDColorMapping {
         }
     }
     
+    /// The main color within the color swatch.
+    public var normal: RSDColorTile {
+        return self.colorTiles[index]
+    }
+    
     /// The color tile for one shade darker if available, otherwise returns `normal`.
     public var dark: RSDColorTile {
         let idx = index + 1
@@ -117,6 +128,17 @@ extension RSDColorMapping {
         }
         else {
             return self.normal
+        }
+    }
+    
+    /// The color tile for one shade darker if available, otherwise returns `normal`.
+    public var veryDark: RSDColorTile {
+        let idx = index + 2
+        if idx < self.colorTiles.count {
+            return self.colorTiles[idx]
+        }
+        else {
+            return self.dark
         }
     }
 }

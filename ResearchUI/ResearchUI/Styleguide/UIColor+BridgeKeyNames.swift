@@ -41,7 +41,7 @@ extension UIColor {
     /// Default = (80, 107, 203).
     @available(*, deprecated)
     @objc open class var primaryTintColor: UIColor {
-        return UIColor(red: 80.0 / 255.0, green: 107.0 / 255.0, blue: 203.0 / 255.0, alpha: 1.0)
+        return RSDStudyConfiguration.shared.colorPalette.primary.normal.color
     }
     
     /// Override to set the "Light" primary tint color which can be used where the shade of the color should
@@ -51,7 +51,7 @@ extension UIColor {
     /// Default = `primaryTintColor.withSaturationMultiplier(0.5)`.
     @available(*, deprecated)
     @objc open class var lightPrimaryTintColor: UIColor {
-        return primaryTintColor.withSaturationMultiplier(0.5)
+        return RSDStudyConfiguration.shared.colorPalette.primary.light.color
     }
     
     /// Override to set the "Dark" primary tint color which can be used where the shade of the color should
@@ -61,7 +61,7 @@ extension UIColor {
     /// Default = `primaryTintColor.withSaturationMultiplier(1.5)`.
     @available(*, deprecated)
     @objc open class var darkPrimaryTintColor: UIColor {
-        return primaryTintColor.withSaturationMultiplier(1.5)
+        return RSDStudyConfiguration.shared.colorPalette.primary.dark.color
     }
     
     /// Override to set the "Very Dark" primary tint color which can be used where the shade of the color
@@ -71,7 +71,7 @@ extension UIColor {
     /// Default = `primaryTintColor.withSaturationMultiplier(2)`.
     @available(*, deprecated)
     @objc open class var veryDarkPrimaryTintColor: UIColor {
-        return primaryTintColor.withSaturationMultiplier(2)
+        return RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
     }
     
     /// Override to set a secondary tint color for the app. This is used for rounded buttons.
@@ -79,7 +79,7 @@ extension UIColor {
     /// Default = (255, 136, 117).
     @available(*, deprecated)
     @objc open class var secondaryTintColor: UIColor {
-        return UIColor(red: 255.0 / 255.0, green: 136.0 / 255.0, blue: 117.0 / 255.0, alpha: 1.0)
+        return RSDStudyConfiguration.shared.colorPalette.secondary.normal.color
     }
     
     /// Override to set a dark secondary tint color for the app. This is used for rounded buttons when
@@ -88,7 +88,7 @@ extension UIColor {
     /// Default = `secondaryTintColor.withSaturationMultiplier(1.2)`.
     @available(*, deprecated)
     @objc open class var darkSecondaryTintColor: UIColor {
-        return secondaryTintColor.withSaturationMultiplier(1.2)
+        return RSDStudyConfiguration.shared.colorPalette.secondary.dark.color
     }
     
     /// Override to set a light secondary tint color for the app. This is used for rounded buttons when
@@ -97,7 +97,7 @@ extension UIColor {
     /// Default = `secondaryTintColor.withSaturationMultiplier(0.5)`.
     @available(*, deprecated)
     @objc open class var lightSecondaryTintColor: UIColor {
-        return secondaryTintColor.withSaturationMultiplier(0.5)
+        return RSDStudyConfiguration.shared.colorPalette.secondary.light.color
     }
     
     
