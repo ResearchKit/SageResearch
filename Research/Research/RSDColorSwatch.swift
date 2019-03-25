@@ -67,6 +67,9 @@ public struct RSDColorSwatch : Codable, Equatable, Hashable, RSDColorFamily  {
         self.colorTiles = colorTiles
     }
     
+    /// Get the mapping for a given shade.
+    /// - parameter shade: The shade of the color.
+    /// - returns: The color mapping for that shade.
     public func mapping(for shade: Shade) -> RSDColorMapping {
         let idx: Int = {
             switch shade {
@@ -95,6 +98,7 @@ extension RSDColorMapping {
         return self.colorTiles[index]
     }
     
+    /// The color tile for one shade lighter if available, otherwise returns `normal`.
     public var light: RSDColorTile {
         let idx = index - 1
         if idx >= 0 {
@@ -105,6 +109,7 @@ extension RSDColorMapping {
         }
     }
     
+    /// The color tile for one shade darker if available, otherwise returns `normal`.
     public var dark: RSDColorTile {
         let idx = index + 1
         if idx < self.colorTiles.count {
@@ -158,6 +163,9 @@ public struct RSDGrayScale : Codable, Equatable, Hashable, RSDColorFamily {
         return [white, veryLightGray, lightGray, gray, darkGray, veryDarkGray, black]
     }
     
+    /// Get the mapping for a given shade.
+    /// - parameter shade: The shade of the color.
+    /// - returns: The color mapping for that shade.
     public func mapping(for shade: Shade) -> RSDColorMapping {
         let index = Shade.allCases.index(of: shade)!
         return ColorMapping(index: index, colorTiles: colorTiles)

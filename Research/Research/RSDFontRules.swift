@@ -41,13 +41,12 @@ import UIKit
 public typealias RSDFont = UIFont
 #endif
 
-/// The font rules object is a concrete implementation of the design rules used for a give version of the
+/// The font rules object is a concrete implementation of the design rules used for a given version of the
 /// SageResearch frameworks. A module can use this class as-is or override the class to enforce a set of rules
 /// pinned to the tasks included within a module. This is important to allow a module to be validated against
 /// a given UI/UX. The frameworks can later change to reflect new devices, OS changes, and design system
 /// updates to incorporate the results of more design studies.
 open class RSDFontRules  {
-    public static let currentVersion: Int = 0
     
     /// The version for the font rules. If the design rules change with future versions of this framework,
     /// then the current version number should be rev'd as well and any changes to this rule set that are not
@@ -55,13 +54,22 @@ open class RSDFontRules  {
     open private(set) var version: Int
     
     public init(version: Int? = nil) {
-        self.version = version ?? RSDFontRules.currentVersion
+        self.version = version ?? RSDColorMatrix.shared.currentVersion
     }
     
     #if os(iOS) || os(tvOS)
     /// On iOS and tvOS, this method allows for using a different font size depending upon the trait
     /// collection. Default implementation calls through to `font(for:)` but a module that is designed to
-    /// run on an iPad or Apple TV could use this method to define a diffent set of fonts for those devices.
+    /// run on an iPad or Apple TV could use this method to define a different set of fonts for those devices.
+    ///
+    /// - note: If future versions of the Sage Design System include a different set of fonts for iPad or
+    /// Apple TV devices, this method should check for version and return the current implementation for
+    /// the version before the version that is being implemented.
+    ///
+    /// - parameters:
+    ///     - textType: The text type for the font.
+    ///     - traitCollection: The trait collection for the label or button.
+    /// - returns: The font to use for this text.
     @available(iOS 10.3, tvOS 10.2, *)
     open func font(for textType: RSDDesignSystem.TextType, compatibleWith traitCollection: UITraitCollection?) -> RSDFont {
         return self.font(for: textType)
@@ -69,6 +77,9 @@ open class RSDFontRules  {
     #endif
     
     /// Returns the font to use for a given text type.
+    ///
+    /// - parameter textType: The text type for the font.
+    /// - returns: The font to use for this text.
     open func font(for textType: RSDDesignSystem.TextType) -> RSDFont {
         switch textType {
         case .heading1:

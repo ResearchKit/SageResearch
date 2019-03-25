@@ -92,7 +92,7 @@ open class RSDStepTextFieldCell: RSDTableViewCell {
         updateColorsAndFonts()
     }
     
-    /// Set the string for the text field placeholder. View controllers should use this methods rather
+    /// Set the string for the text field placeholder. View controllers should use this method rather
     /// than accessing the text field's 'placeholder' directly because some subclasses may not display
     /// the placeholder text.
     open var placeholder: String? {

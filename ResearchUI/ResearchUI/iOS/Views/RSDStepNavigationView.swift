@@ -55,14 +55,23 @@ public protocol RSDViewDesignable : class {
     
     /// Views can be used in nibs and storyboards without setting up a design system for them. This allows
     /// for setting up views to use the same design system and background color mapping as their parent view.
+    ///
+    /// - parameters:
+    ///     - designSystem: The design system that is used to set up this view.
+    ///     - background: The background tile for this view.
     func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile)
 }
 
 extension UIView {
     
     /// Recursively set the design system for subviews of this view.
+    ///
     /// - note: If the subview implements the `RSDViewDesignable` protocol, it is assumed that that view will
     /// call the recursive set on it's subviews should it need to.
+    ///
+    /// - parameters:
+    ///     - designSystem: The design system that is used to set up this view.
+    ///     - background: The background tile for this view.
     func recursiveSetDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
         self.subviews.forEach { (view) in
             if let designable = view as? RSDViewDesignable,
@@ -77,6 +86,8 @@ extension UIView {
     
     /// Get the background color tile for this view. This may be the background color for the view or it may
     /// be that this view has a transparent background and gets its real backgrounnd from the super view.
+    ///
+    /// - returns: The color tile built for this view or `nil` if it could not be determined.
     public func backgroundTile() -> RSDColorTile? {
         var view : UIView? = self
         while let vw = view,
@@ -223,7 +234,6 @@ open class RSDStepNavigationView: UIView, RSDViewDesignable {
             return RSDColorTile(background, usesLightStyle: background != UIColor.white)
         }()
         
-        /// Return all the buttons in this navigation view.
         self.tintColor = designSystem.colorRules.tintedButtonColor(on: colorTile)
         titleLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .heading2)
         textLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .body)

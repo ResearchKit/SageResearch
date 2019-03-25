@@ -52,13 +52,12 @@ public enum RSDControlState : UInt {
 }
 
 
-/// The color rules object is a concrete implementation of the design rules used for a give version of the
+/// The color rules object is a concrete implementation of the design rules used for a given version of the
 /// SageResearch frameworks. A module can use this class as-is or override the class to enforce a set of rules
 /// pinned to the tasks included within a module. This is important to allow a module to be validated against
 /// a given UI/UX. The frameworks can later change to reflect new devices, OS changes, and design system
 /// updates to incorporate the results of more design studies.
 open class RSDColorRules  {
-    public static let currentVersion: Int = 0
     
     /// The version for the color rules. If the design rules change with future versions of this framework,
     /// then the current version number should be rev'd as well and any changes to this rule set that are not
@@ -79,7 +78,7 @@ open class RSDColorRules  {
     
     public init(palette: RSDColorPalette, version: Int? = nil) {
         self._palette = palette
-        self.version = version ?? palette.version ?? RSDColorRules.currentVersion
+        self.version = version ?? palette.version ?? RSDColorMatrix.shared.currentVersion
     }
     
     
@@ -87,10 +86,27 @@ open class RSDColorRules  {
     
     /// The named category or style for a given color.
     public enum Style : String, Codable, CaseIterable {
-        case white, primary, secondary, accent, successGreen, errorRed, custom
+        /// The color "white".
+        case white
+        /// The primary color for the application.
+        case primary
+        /// The secondary color for the application.
+        case secondary
+        /// The accent color for the application.
+        case accent
+        /// The color to use on screens and icons that indicate success.
+        case successGreen
+        /// The color to use on screens and icons that indicate an error or alert.
+        case errorRed
+        /// A custom color should be defined for a given screen or icon. For example, a picture that shows
+        /// someone running outside would have a "sky blue" background color that is defined independantly
+        /// of the branding colors used by an app.
+        case custom
     }
     
     /// The default color to use for a given color style.
+    /// - parameter style: The color style.
+    /// - returns: The color mapping for that style.
     open func mapping(for style: Style) -> RSDColorMapping? {
         switch style {
         case .white:
@@ -110,7 +126,15 @@ open class RSDColorRules  {
         }
     }
     
-    /// Look in the palette for a mapping.
+    /// Look in the palette for a mapping for the given color. This method is used to allow returning a color
+    /// mapping from a background color.
+    ///
+    /// - note: The primary use-case for this is where an app defines a view controller in a storyboard and
+    /// uses @IBDesignable to render the screen in the storyboard. This allows setting colors by using the
+    /// defaults and getting the color mapping from the background.
+    ///
+    /// - parameter style: The color (UIColor or NSColor) that maps to one of the colors defined in the palette.
+    /// - returns: The color mapping if found.
     open func mapping(for color: RSDColor) -> RSDColorMapping? {
         let families: [RSDColorFamily] = [_palette.grayScale, _palette.primary.swatch, _palette.secondary.swatch, _palette.accent.swatch, _palette.successGreen.swatch, _palette.errorRed.swatch]
         for family in families {
@@ -157,6 +181,11 @@ open class RSDColorRules  {
     ///     If the background uses light style
     ///         then `white`
     ///         else `veryDarkGray`
+    ///
+    /// - parameters:
+    ///     - background: The background of the text UI element.
+    ///     - textType: The type size of the UI element.
+    /// - returns: The text color to use.
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
         if background.usesLightStyle {
             return self.palette.grayScale.white.color
@@ -175,6 +204,10 @@ open class RSDColorRules  {
     ///     If the background uses light style then `white`
     ///     else if the background is the primary palette color then `secondary`
     ///     else `veryDarkGray`
+    ///
+    /// - parameters:
+    ///     - background: The background of the text UI element.
+    /// - returns: The color to use for tinted buttons.
     open func tintedButtonColor(on background: RSDColorTile) -> RSDColor {
         if background.usesLightStyle {
             return self.palette.grayScale.white.color
@@ -194,6 +227,11 @@ open class RSDColorRules  {
     ///         then if the primary color uses light style return `primary`
     ///         else `tinted button color`
     ///     else `text color`
+    ///
+    /// - parameters:
+    ///     - background: The background of the text button.
+    ///     - state: The UI control state of the button.
+    /// - returns: The color to use for the underlined text button.
     open func underlinedTextButton(on background: RSDColorTile, state: RSDControlState) -> RSDColor {
         if background == self.palette.grayScale.white || background == self.palette.grayScale.veryLightGray {
             if self.palette.primary.normal.usesLightStyle {
@@ -208,7 +246,17 @@ open class RSDColorRules  {
         }
     }
     
-    /// The color tile to use on a given background for a given button type.
+    /// The color mapping to use on a given background for a given button type.
+    ///
+    /// - Default:
+    ///     If the background is `white` and the button type is `primary`
+    ///         then `secondary` color
+    ///         else `veryLightGray` color
+    ///
+    /// - parameters:
+    ///     - background: The background of the button.
+    ///     - buttonType: The type of button (primary or secondary).
+    /// - returns: The color mapping to use for a rounded button.
     open func roundedButton(on background: RSDColorTile, buttonType: RSDDesignSystem.ButtonType) -> RSDColorMapping {
         if background == self.palette.grayScale.white && buttonType == .primary {
             return self.palette.secondary
@@ -219,6 +267,12 @@ open class RSDColorRules  {
     }
     
     /// The color for a rounded button for a given state and button type.
+    ///
+    /// - parameters:
+    ///     - background: The background of the button.
+    ///     - buttonType: The type of button (primary or secondary).
+    ///     - state: The UI control state of the button.
+    /// - returns: The color to use for the background of a rounded button.
     open func roundedButton(on background: RSDColorTile, with buttonType: RSDDesignSystem.ButtonType, forState state: RSDControlState) -> RSDColor {
         let tile = self.roundedButton(on: background, buttonType: buttonType)
         switch state {
@@ -242,6 +296,12 @@ open class RSDColorRules  {
     }
     
     /// The text color for a rounded button.
+    ///
+    /// - parameters:
+    ///     - background: The background of the button.
+    ///     - buttonType: The type of button (primary or secondary).
+    ///     - state: The UI control state of the button.
+    /// - returns: The color to use for the text of a rounded button.
     open func roundedButtonText(on background: RSDColorTile, with buttonType: RSDDesignSystem.ButtonType, forState state: RSDControlState) -> RSDColor {
         let tile = self.roundedButton(on: background, buttonType: buttonType)
         let color = textColor(on: tile.normal, for: .heading4)
@@ -254,25 +314,42 @@ open class RSDColorRules  {
     }
     
     /// Checkboxes button.
+    ///
+    /// - parameters:
+    ///     - background: The background of the checkbox.
+    ///     - isSelected: Whether or not the checkbox is selected.
+    /// - returns:
+    ///     - checkmark: The checkmark color.
+    //      - background: The background (fill) color.
+    //      - border: The border color.
     open func checkboxButton(on background: RSDColorTile, isSelected: Bool) ->
         (checkmark: RSDColor, background: RSDColor, border: RSDColor) {
-            let check = isSelected ? self.palette.grayScale.white.color : RSDColor.clear
+            
+            let inner: RSDColorTile
+            let border: RSDColor
+            
             if background == self.palette.grayScale.white {
-                let inner = isSelected ? self.palette.primary.dark.color : self.palette.grayScale.white.color
-                let border = isSelected ? self.palette.primary.normal.color : self.palette.grayScale.veryLightGray.color
-                return (check, inner, border)
+                inner = isSelected ? self.palette.primary.dark : self.palette.grayScale.white
+                border = isSelected ? self.palette.primary.normal.color : self.palette.grayScale.veryLightGray.color
             }
             else {
-                let inner = isSelected ? self.palette.secondary.normal.color : self.palette.grayScale.white.color
-                let border = isSelected ? self.palette.secondary.light.color : self.palette.grayScale.veryLightGray.color
-                return (check, inner, border)
+                inner = isSelected ? self.palette.secondary.normal : self.palette.grayScale.white
+                border = isSelected ? self.palette.secondary.light.color : self.palette.grayScale.veryLightGray.color
             }
+            
+            let check = isSelected
+                ? (inner.usesLightStyle ?  self.palette.grayScale.white.color : self.palette.grayScale.veryDarkGray.color)
+                : RSDColor.clear
+            
+            return (check, inner.color, border)
     }
     
     
     /// MARK: Progress indicator colors
     
     /// The colors to use with a progress bar.
+    ///
+    /// - parameter background: The background for the progress bar.
     /// - returns:
     ///     - filled: The fill color for the progress bar which marks progress.
     ///     - unfilled: The unfilled (background) color for the progress bar.
@@ -312,6 +389,13 @@ open class RSDColorRules  {
     
     /// MARK: Completion
     
+    /// Rounded checkmarks are drawn UI elements of a checkmark with a solid background.
+    ///
+    /// - parameter background: The background of the checkbox.
+    /// - returns:
+    ///     - checkmark: The checkmark color.
+    //      - background: The background (fill) color.
+    //      - border: The border color.
     open func roundedCheckmark(on background: RSDColorTile) -> (checkmark: RSDColor, background: RSDColor, border: RSDColor) {
         return (self.palette.grayScale.white.color,
                 self.palette.secondary.normal.color,
@@ -319,6 +403,9 @@ open class RSDColorRules  {
     }
     
     /// For a completion gradient background, what are the min and max colors?
+    /// - returns:
+    ///     - 0: The min color tile.
+    ///     - 1: The max color tile.
     open func completionGradient() -> (RSDColorTile, RSDColorTile) {
         return (self.palette.successGreen.light, self.palette.successGreen.normal)
     }
@@ -326,11 +413,17 @@ open class RSDColorRules  {
     /// MARK: Choice Selection cell
     
     /// The background color tile for the table cell.
+    /// - parameters:
+    ///     - background: The background of the table.
+    ///     - isSelected: Whether or not the cell is selected.
+    /// - returns: The color tile for the background of the cell.
     open func tableCellBackground(on background: RSDColorTile, isSelected: Bool) -> RSDColorTile {
         return isSelected ?  self.palette.primary.colorTiles.first! : self.palette.grayScale.white
     }
     
     /// The background color tile for the table cell.
+    /// - parameter background: The background of the table.
+    /// - returns: The color tile for the background of the section header.
     open func tableSectionBackground(on background: RSDColorTile) -> RSDColorTile {
         return self.palette.grayScale.white
     }
@@ -341,95 +434,9 @@ open class RSDColorRules  {
     }
     
     /// The color of an underline for a text field.
+    /// - parameter background: The background of the table cell.
+    /// - returns: The color of the underline.
     open func textFieldUnderline(on background: RSDColorTile) -> RSDColor {
         return background.usesLightStyle ? self.palette.grayScale.darkGray.color : self.palette.grayScale.white.color
     }
-    
-    
-    /**
-    TODO: syoung 03/18/2019 Continue defining rules in the design system for the components within a step view.
-    
-    /// MARK: Table step view controller - header/footer view
-    
-//    open var headerTitleLabel: RSDColor {
-//        return RSDColor.appDarkGray
-//    }
-//
-//    open var headerTextLabel: RSDColor {
-//        return RSDColor.appDarkGray
-//    }
-//
-//    open var headerDetailLabel: RSDColor {
-//        return RSDColor.appLightGray
-//    }
-//
-//    open var headerTitleLabelLightStyle: RSDColor {
-//        return RSDColor.white
-//    }
-//
-//    open var headerTextLabelLightStyle: RSDColor {
-//        return RSDColor.white
-//    }
-//
-//    open var headerDetailLabelLightStyle: RSDColor {
-//        return RSDColor.white
-//    }
-//
-//    open var footnoteLabel: RSDColor {
-//        return RSDColor.appLightGray
-//    }
-    
-    
-    /// MARK: Textfield cell
-    
-//    open var textFieldCellText: RSDColor {
-//        return RSDColor.appDarkGray
-//    }
-//
-//    open var textFieldCellBorder: RSDColor {
-//        return RSDColor.appDarkGray
-//    }
-//
-//    open var textFieldCellLabel: RSDColor {
-//        return RSDColor.appLightGray
-//    }
-//
-//    open var textFieldCellTextLightStyle: RSDColor {
-//        return RSDColor.white
-//    }
-//
-//    open var textFieldCellBorderLightStyle: RSDColor {
-//        return RSDColor.white
-//    }
-//
-//    open var textFieldCellLabelLightStyle: RSDColor {
-//        return RSDColor.white
-//    }
-    
-    /// MARK: TextView cell
-    
-//    open var textViewCellText: RSDColor {
-//        return RSDColor.appDarkGray
-//    }
-//
-//    open var textViewCellBorder: RSDColor {
-//        return RSDColor.appLightGray
-//    }
-//
-//    open var textViewCellLabel: RSDColor {
-//        return RSDColor.appLightGray
-//    }
-//
-//    open var textViewCellTextLightStyle: RSDColor {
-//        return RSDColor.white
-//    }
-//
-//    open var textViewCellBorderLightStyle: RSDColor {
-//        return RSDColor.white
-//    }
-//
-//    open var textViewCellLabelLightStyle: RSDColor {
-//        return RSDColor.white
-//    }
- */
 }
