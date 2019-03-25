@@ -164,6 +164,9 @@
                 <a href="../Classes/RSDStepViewModel.html">RSDStepViewModel</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDStudyConfiguration.html">RSDStudyConfiguration</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDTableItem.html">RSDTableItem</a>
               </li>
               <li class="nav-group-task">
@@ -248,6 +251,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/RSDFormDataType/MeasurementRange.html">– MeasurementRange</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RSDFrequencyType.html">RSDFrequencyType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums.html#/s:8Research23RSDImagePickerMediaTypeO">RSDImagePickerMediaType</a>
@@ -565,6 +571,9 @@
                 <a href="../Protocols.html#/s:8Research21RSDDataArchiveManagerP">RSDDataArchiveManager</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research21RSDDataStorageManagerP">RSDDataStorageManager</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDDateCoder.html">RSDDateCoder</a>
               </li>
               <li class="nav-group-task">
@@ -637,6 +646,9 @@
                 <a href="../Protocols/RSDInputField.html">RSDInputField</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDInstructionStep.html">RSDInstructionStep</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols.html#/s:8Research13RSDIntEnumSetP">RSDIntEnumSet</a>
               </li>
               <li class="nav-group-task">
@@ -644,6 +656,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDJSONRecorderConfiguration.html">RSDJSONRecorderConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:8Research19RSDJSONSerializableP">RSDJSONSerializable</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDJSONValue.html">RSDJSONValue</a>
@@ -689,6 +704,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDOrderedStepNavigator.html">RSDOrderedStepNavigator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDOverviewStep.html">RSDOverviewStep</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDPathComponent.html">RSDPathComponent</a>
@@ -740,6 +758,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDSchemaInfo.html">RSDSchemaInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDScoringResult.html">RSDScoringResult</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDSectionStep.html">RSDSectionStep</a>
@@ -805,6 +826,9 @@
                 <a href="../Protocols/RSDTaskControllerDelegate.html">RSDTaskControllerDelegate</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskData.html">RSDTaskData</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDTaskGroup.html">RSDTaskGroup</a>
               </li>
               <li class="nav-group-task">
@@ -833,6 +857,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDTrackingRule.html">RSDTrackingRule</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDTrackingTask.html">RSDTrackingTask</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDUIAction.html">RSDUIAction</a>
@@ -964,6 +991,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDGenericStepObject.html">RSDGenericStepObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDIconInfo.html">RSDIconInfo</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/RSDIdentifier.html">RSDIdentifier</a>
@@ -1115,7 +1145,7 @@
             <h1>RSDTaskObject</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDTaskObject</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDUIActionHandlerObject.html">RSDUIActionHandlerObject</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDCopyTask.html">RSDCopyTask</a></span><span class="p">,</span> <span class="kt">Decodable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTaskObject</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDUIActionHandlerObject.html">RSDUIActionHandlerObject</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDCopyTask.html">RSDCopyTask</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDTrackingTask.html">RSDTrackingTask</a></span><span class="p">,</span> <span class="kt">Decodable</span></code></pre>
 
                 </div>
               </div>
@@ -1173,7 +1203,7 @@ validation, and the order of display for the steps.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">copyright</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">copyright</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -1200,7 +1230,7 @@ validation, and the order of display for the steps.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">schemaInfo</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDSchemaInfo.html">RSDSchemaInfo</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">schemaInfo</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDSchemaInfo.html">RSDSchemaInfo</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -1264,9 +1294,36 @@ validation, and the order of display for the steps.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research13RSDTaskObjectC10identifier13stepNavigator10schemaInfo12asyncActionsACSS_AA07RSDStepF0_pAA09RSDSchemaH0_pSgSayAA27RSDAsyncActionConfiguration_pGSgtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(identifier:stepNavigator:schemaInfo:asyncActions:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research13RSDTaskObjectC10identifier13stepNavigator10schemaInfo12asyncActionsACSS_AA07RSDStepF0_pAA09RSDSchemaH0_pSgSayAA27RSDAsyncActionConfiguration_pGSgtcfc">init(identifier:stepNavigator:schemaInfo:asyncActions:)</a>
+                    <a name="/s:8Research13RSDTaskObjectC15usesTrackedDataSbvp"></a>
+                    <a name="//apple_ref/swift/Property/usesTrackedData" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research13RSDTaskObjectC15usesTrackedDataSbvp">usesTrackedData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Does this task use stored data and/or include a scoring at this level?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">usesTrackedData</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research13RSDTaskObjectC10identifier13stepNavigator10schemaInfo12asyncActions15usesTrackedDataACSS_AA07RSDStepF0_pAA09RSDSchemaH0_pSgSayAA27RSDAsyncActionConfiguration_pGSgSbtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(identifier:stepNavigator:schemaInfo:asyncActions:usesTrackedData:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research13RSDTaskObjectC10identifier13stepNavigator10schemaInfo12asyncActions15usesTrackedDataACSS_AA07RSDStepF0_pAA09RSDSchemaH0_pSgSayAA27RSDAsyncActionConfiguration_pGSgSbtcfc">init(identifier:stepNavigator:schemaInfo:asyncActions:usesTrackedData:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1281,7 +1338,7 @@ validation, and the order of display for the steps.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">stepNavigator</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDStepNavigator.html">RSDStepNavigator</a></span><span class="p">,</span> <span class="nv">schemaInfo</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDSchemaInfo.html">RSDSchemaInfo</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">asyncActions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/RSDAsyncActionConfiguration.html">RSDAsyncActionConfiguration</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">stepNavigator</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDStepNavigator.html">RSDStepNavigator</a></span><span class="p">,</span> <span class="nv">schemaInfo</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDSchemaInfo.html">RSDSchemaInfo</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">asyncActions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/RSDAsyncActionConfiguration.html">RSDAsyncActionConfiguration</a></span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">usesTrackedData</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1337,6 +1394,18 @@ validation, and the order of display for the steps.</p>
                                 </div>
                               </td>
                             </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>usesTrackedData</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Does this task use stored data and/or include a scoring at this level?</p>
+                                </div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -1361,6 +1430,7 @@ validation, and the order of display for the steps.</p>
 <pre class="highlight swift"><code>   <span class="k">let</span> <span class="nv">json</span> <span class="o">=</span> <span class="s">"""
        {
        "</span><span class="n">identifier</span><span class="s">" : "</span><span class="n">foo</span><span class="s">",
+       "</span><span class="n">usesTrackedData</span><span class="s">" : false,
        "</span><span class="n">schemaInfo</span><span class="s">" : {
                        "</span><span class="n">identifier</span><span class="s">" : "</span><span class="n">foo</span><span class="o">.</span><span class="mf">1.2</span><span class="s">",
                        "</span><span class="n">revision</span><span class="s">" : 3 },
@@ -1450,7 +1520,7 @@ validation, and the order of display for the steps.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">instantiateTaskResult</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDTaskResult.html">RSDTaskResult</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">instantiateTaskResult</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDTaskResult.html">RSDTaskResult</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1486,7 +1556,114 @@ validation, and the order of display for the steps.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">()</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">validate</span><span class="p">()</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/%20RSDDataTracker%20%7B"></a>
+                <a name="//apple_ref/swift/Section/ RSDDataTracker {" class="dashAnchor"></a>
+                <a href="#/%20RSDDataTracker%20%7B">
+                  <h3 class="section-name"> RSDDataTracker {</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research13RSDTaskObjectC8taskData3forAA0bE0_pSgAA0B6Result_p_tF"></a>
+                    <a name="//apple_ref/swift/Method/taskData(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research13RSDTaskObjectC8taskData3forAA0bE0_pSgAA0B6Result_p_tF">taskData(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the task data for this task result.</p>
+
+<p>The default implementation will first look to see if the <code><a href="../Classes/RSDTaskObject.html#/s:8Research13RSDTaskObjectC13stepNavigatorAA07RSDStepE0_pvp">stepNavigator</a></code> implements <code><a href="../Protocols/RSDTaskData.html">RSDTaskData</a></code>
+and if so, will return the task data from the navigator.</p>
+
+<p>Otherwise, the task will <em>only</em> build a score if this task object has the property <code><a href="../Classes/RSDTaskObject.html#/s:8Research13RSDTaskObjectC15usesTrackedDataSbvp">usesTrackedData</a></code>
+set to true and the method <code><a href="../Classes/RSDTaskObject.html#/s:8Research13RSDTaskObjectC23instantiateScoreBuilderAA08RSDScoreF0_pSgyF">instantiateScoreBuilder()</a></code> returns a score builder.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">taskData</span><span class="p">(</span><span class="k">for</span> <span class="nv">taskResult</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDTaskResult.html">RSDTaskResult</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDTaskData.html">RSDTaskData</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research13RSDTaskObjectC9setupTask4with3foryAA0B4Data_pSg_AA0B13PathComponent_ptF"></a>
+                    <a name="//apple_ref/swift/Method/setupTask(with:for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research13RSDTaskObjectC9setupTask4with3foryAA0B4Data_pSg_AA0B13PathComponent_ptF">setupTask(with:for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Setup the data tracker. In the default implementation, the task object only acts as a pass-through
+for the step navigator if that object implements the protocol.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setupTask</span><span class="p">(</span><span class="n">with</span> <span class="nv">data</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDTaskData.html">RSDTaskData</a></span><span class="p">?,</span> <span class="k">for</span> <span class="nv">path</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDTaskPathComponent.html">RSDTaskPathComponent</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research13RSDTaskObjectC23instantiateScoreBuilderAA08RSDScoreF0_pSgyF"></a>
+                    <a name="//apple_ref/swift/Method/instantiateScoreBuilder()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research13RSDTaskObjectC23instantiateScoreBuilderAA08RSDScoreF0_pSgyF">instantiateScoreBuilder()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instantiate the score builder to use to build the task data for this task result.</p>
+
+<p>The default behavior is to use a simple recursive builder that will look for results that implement
+either <code><a href="../Protocols/RSDScoringResult.html">RSDScoringResult</a></code> or <code><a href="../Protocols/RSDAnswerResult.html">RSDAnswerResult</a></code> and return either a dictionary or array as applicable
+if more than one score is found at any given level of subtask result or collection result. For
+a more detailed description, go code spelunking into the unit tests for <code>RecursiveScoreBuilder</code>.</p>
+
+<p>This method is only called if the step navigator attached to this task does not implement the
+<code><a href="../Protocols/RSDTrackingTask.html">RSDTrackingTask</a></code> protocol.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">instantiateScoreBuilder</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">RSDScoreBuilder</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
