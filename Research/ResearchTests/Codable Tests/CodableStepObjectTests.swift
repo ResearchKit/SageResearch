@@ -91,7 +91,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
-            XCTAssertEqual((object.image as? RSDFetchableImageThemeElementObject)?.imageName, "before")
+            XCTAssertEqual((object.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "before")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
             
             let goForwardAction = object.action(for: .navigation(.goForward), on: object)
@@ -231,7 +231,7 @@ class CodableStepObjectTests: XCTestCase {
             
             XCTAssertTrue(object.shouldHideAction(for: .navigation(.goBackward), on: object) ?? false)
             
-            if let images = object.image as? RSDAnimatedImageThemeElementObject {
+            if let images = object.imageTheme as? RSDAnimatedImageThemeElementObject {
                 XCTAssertEqual(images.animationDuration, 2)
                 XCTAssertEqual(images.imageNames, ["foo1", "foo2", "foo3", "foo4"])
                 XCTAssertEqual(images.placementType, .topBackground)
@@ -480,7 +480,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.detail, "This is a test.")
             XCTAssertEqual(object.footnote, "This is a footnote.")
-            XCTAssertEqual((object.image as? RSDFetchableImageThemeElementObject)?.imageName, "before")
+            XCTAssertEqual((object.imageTheme as? RSDFetchableImageThemeElementObject)?.imageName, "before")
             XCTAssertEqual(object.nextStepIdentifier, "boo")
             
             let goForwardAction = object.action(for: .navigation(.goForward), on: object)
