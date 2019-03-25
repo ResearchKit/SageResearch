@@ -77,6 +77,9 @@
                 <a href="../Classes/RSDImageViewCell.html">RSDImageViewCell</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDInstructionStepViewController.html">RSDInstructionStepViewController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDLoadingView.html">RSDLoadingView</a>
               </li>
               <li class="nav-group-task">
@@ -102,6 +105,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDRoundedButton.html">RSDRoundedButton</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDScrollingOverviewStepViewController.html">RSDScrollingOverviewStepViewController</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDShadowGradient">RSDShadowGradient</a>
@@ -1893,6 +1899,37 @@ and present it modally.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepViewController(im)showReviewInstructions"></a>
+                    <a name="//apple_ref/swift/Method/showReviewInstructions()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepViewController(im)showReviewInstructions">showReviewInstructions()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This method is called when the user taps the <q>review instructions</q> button. The default implementation
+will check if the review action is an <code>RSDNavigationUIAction</code> and if so, will navigate back to that
+instruction, setting a value in the async results, marking that abbreviated instructions should <em>not</em>
+be shown.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBAction</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">showReviewInstructions</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:10ResearchUI21RSDStepViewControllerC12actionTapped4withSb0A015RSDUIActionTypeO_tF"></a>
                     <a name="//apple_ref/swift/Method/actionTapped(with:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:10ResearchUI21RSDStepViewControllerC12actionTapped4withSb0A015RSDUIActionTypeO_tF">actionTapped(with:)</a>
@@ -2101,6 +2138,33 @@ standard actions on a standard navigation are handled.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">requiredPermissions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">RSDStandardPermission</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI21RSDStepViewControllerC18requestPermissionsSay0A021RSDStandardPermissionVGSgyF"></a>
+                    <a name="//apple_ref/swift/Method/requestPermissions()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI21RSDStepViewControllerC18requestPermissionsSay0A021RSDStandardPermissionVGSgyF">requestPermissions()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The permissions that are requested as a part of this step.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">requestPermissions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">RSDStandardPermission</span><span class="p">]?</span></code></pre>
 
                         </div>
                       </div>
