@@ -113,7 +113,7 @@ open class RSDInstructionStepViewController: RSDStepViewController {
         
         // Must have a top background image.
         guard let themedStep = step as? RSDDesignableUIStep,
-            let imageTheme = themedStep.image,
+            let imageTheme = themedStep.imageTheme,
             let placement = imageTheme.placementType
             else {
                 return false

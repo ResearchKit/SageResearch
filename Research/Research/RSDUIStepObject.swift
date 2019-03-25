@@ -108,17 +108,11 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     open var colorMapping: RSDColorMappingThemeElement?
     
     /// The image theme.
-    open var image: RSDImageThemeElement?
+    open var imageTheme: RSDImageThemeElement?
     
     /// The color theme.
     @available(*, deprecated)
     open var colorTheme: RSDColorThemeElement?
-    
-    /// The image theme.
-    @available(*, deprecated)
-    open var imageTheme: RSDImageThemeElement? {
-        return self.image
-    }
     
     /// The next step to jump to. This is used where direct navigation is required. For example, to allow the
     /// task to display information or a question on an alternate path and then exit the task. In that case,
@@ -214,7 +208,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         copy.footnote = self.footnote
         copy.viewTheme = self.viewTheme
         copy.colorMapping = self.colorMapping
-        copy.image = self.image
+        copy.imageTheme = self.imageTheme
         copy.nextStepIdentifier = self.nextStepIdentifier
         copy.actions = self.actions
         copy.shouldHideActions = self.shouldHideActions
@@ -376,7 +370,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         }
         if container.contains(.image) {
             let nestedDecoder = try container.superDecoder(forKey: .image)
-            self.image = try decoder.factory.decodeImageThemeElement(from: nestedDecoder)
+            self.imageTheme = try decoder.factory.decodeImageThemeElement(from: nestedDecoder)
         }
         
         if deviceType == nil {

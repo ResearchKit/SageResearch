@@ -421,7 +421,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     open var imageTheme: RSDImageThemeElement? {
         // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
-        return (self.designableStep?.image ?? self.themedStep?.imageTheme)
+        return (self.designableStep?.imageTheme ?? self.themedStep?.imageTheme)
     }
     
     /// By default, this method will return `true` if the image theme uses a placement

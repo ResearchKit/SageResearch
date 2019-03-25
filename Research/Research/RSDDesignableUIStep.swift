@@ -36,7 +36,7 @@ import Foundation
 public protocol RSDDesignableUIStep : RSDUIStep {
     
     /// The image theme.
-    var image: RSDImageThemeElement? { get }
+    var imageTheme: RSDImageThemeElement? { get }
     
     /// The view theme.
     var viewTheme: RSDViewThemeElement? { get }
