@@ -38,6 +38,7 @@ extension UIView {
     /// Controls whether the ends of a progress bar are rounded.
     /// Default = false
     /// - seealso: `RSDStepProgressView`
+    @available(*, deprecated)
     @objc open class var rsd_progressViewRoundedEnds : Bool {
         return false
     }
@@ -45,6 +46,7 @@ extension UIView {
     /// Controls whether the progess view label is uppercase
     /// Default = false
     /// - seealso: `RSDStepProgressView`
+    @available(*, deprecated)
     @objc open class var rsd_progressViewStepLabelUppercase : Bool {
         return false
     }
@@ -52,6 +54,7 @@ extension UIView {
     /// Controls whether the progess current step value is bolded.
     /// Default = true
     /// - seealso: `RSDStepProgressView`
+    @available(*, deprecated)
     @objc open class var rsd_progressViewCurrentStepBolded : Bool {
         return true
     }
