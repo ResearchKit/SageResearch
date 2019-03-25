@@ -161,7 +161,7 @@ public struct RSDDocumentCreator {
         RSDComparableSurveyRuleObject<RSDFraction>.self,
         RSDColorKey.self,
         RSDColorMappingThemeElementObject.self,
-        RSDColorPallette.self,
+        RSDColorPalette.self,
         RSDMultipleComponentInputFieldObject.self,
         RSDSchemaInfoObject.self,
         RSDConditionalStepNavigatorObject.self,

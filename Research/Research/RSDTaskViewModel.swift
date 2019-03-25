@@ -92,11 +92,11 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         guard let taskDesign = (self.taskInfo as? RSDTaskDesign) ?? (self.task as? RSDTaskDesign)
             else {
                 return (self.parent as? RSDTaskPathComponent)?.designSystem ??
-                    RSDDesignSystem(pallette: RSDStudyConfiguration.shared.colorPallette)
+                    RSDDesignSystem(palette: RSDStudyConfiguration.shared.colorPalette)
         }
-        // If getting the design system from the task, then set the color pallette to the system pallette.
+        // If getting the design system from the task, then set the color palette to the system palette.
         let designSystem = taskDesign.designSystem
-        designSystem.colorRules.pallette = RSDStudyConfiguration.shared.colorPallette
+        designSystem.colorRules.palette = RSDStudyConfiguration.shared.colorPalette
         return designSystem
     }()
     

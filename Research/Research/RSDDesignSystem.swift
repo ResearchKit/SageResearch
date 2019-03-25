@@ -2,7 +2,6 @@
 //  RSDDesignSystem.swift
 //  Research
 //
-//  Created by Shannon Young on 3/15/19.
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
@@ -64,11 +63,11 @@ open class RSDDesignSystem {
         self.fontRules = fontRules
     }
     
-    public init(pallette: RSDColorPallette = RSDStudyConfiguration.shared.colorPallette) {
-        let colorRules = RSDColorRules(pallette: pallette)
+    public init(palette: RSDColorPalette = RSDStudyConfiguration.shared.colorPalette) {
+        let colorRules = RSDColorRules(palette: palette)
         self.version = colorRules.version
         self.colorRules = colorRules
-        self.fontRules = RSDFontRules(version: pallette.version)
+        self.fontRules = RSDFontRules(version: palette.version)
     }
     
     /// The button type for the button. This refers to whether or not the button is used to represent a

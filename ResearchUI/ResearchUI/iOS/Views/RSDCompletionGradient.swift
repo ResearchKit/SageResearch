@@ -38,14 +38,14 @@ import UIKit
 @IBDesignable public final class RSDCompletionGradient : UIView, RSDViewDesignable {
     
     /// The color that the gradient begins with.
-    @IBInspectable public var startColor : UIColor = RSDStudyConfiguration.shared.colorPallette.successGreen.light.color {
+    @IBInspectable public var startColor : UIColor = RSDStudyConfiguration.shared.colorPalette.successGreen.light.color {
         didSet {
             commonInit()
         }
     }
     
     /// The color that the gradient ends with.
-    @IBInspectable public var endColor : UIColor = RSDStudyConfiguration.shared.colorPallette.successGreen.normal.color {
+    @IBInspectable public var endColor : UIColor = RSDStudyConfiguration.shared.colorPalette.successGreen.normal.color {
         didSet {
             commonInit()
         }
@@ -62,7 +62,7 @@ import UIKit
     public func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
         self.designSystem = designSystem
         let gradient = designSystem.colorRules.completionGradient()
-        self.backgroundColorTile = designSystem.colorRules.pallette.successGreen.normal
+        self.backgroundColorTile = designSystem.colorRules.palette.successGreen.normal
         
         startColor = gradient.0.color
         endColor = gradient.1.color

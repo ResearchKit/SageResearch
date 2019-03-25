@@ -33,7 +33,7 @@
 
 import Foundation
 
-/// The color matrix is a shared singleton that allows for accessing the color pallettes using registered
+/// The color matrix is a shared singleton that allows for accessing the color palettes using registered
 /// libraries that are included within the Research framework.
 public final class RSDColorMatrix {
     
@@ -217,8 +217,8 @@ public struct RSDColorLibrary : Codable, Equatable, Hashable, Comparable {
 /// the source file.
 public enum RSDReservedColorName : RawRepresentable, Equatable, Hashable, Codable {
     
-    case pallette(Pallette)
-    public enum Pallette : String, CaseIterable {
+    case palette(Palette)
+    public enum Palette : String, CaseIterable {
         case royal
         case butterscotch
         case powder
@@ -248,8 +248,8 @@ public enum RSDReservedColorName : RawRepresentable, Equatable, Hashable, Codabl
     }
     
     public init?(rawValue: String) {
-        if let pallette = Pallette(rawValue: rawValue) {
-            self = .pallette(pallette)
+        if let palette = Palette(rawValue: rawValue) {
+            self = .palette(palette)
         }
         else if let special = Special(rawValue: rawValue) {
             self = .special(special)
@@ -261,7 +261,7 @@ public enum RSDReservedColorName : RawRepresentable, Equatable, Hashable, Codabl
     
     public var rawValue: String {
         switch self {
-        case .pallette(let value):
+        case .palette(let value):
             return value.rawValue
         case .special(let value):
             return value.rawValue

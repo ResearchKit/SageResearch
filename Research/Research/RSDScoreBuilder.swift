@@ -2,7 +2,6 @@
 //  RSDScoreBuilder.swift
 //  Research
 //
-//  Created by Shannon Young on 3/6/19.
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,

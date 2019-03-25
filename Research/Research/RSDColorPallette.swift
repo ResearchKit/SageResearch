@@ -1,8 +1,7 @@
 //
-//  RSDColorPallette.swift
+//  RSDColorPalette.swift
 //  Research
 //
-//  Created by Shannon Young on 3/14/19.
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
@@ -38,20 +37,20 @@ extension CodingUserInfoKey {
     
     /// The key for the current step identifier to use when decoding a form step input field that should
     /// inherit the step identifier from the parent step.
-    fileprivate static let palletteVersion = CodingUserInfoKey(rawValue: "RSDColorPallette.version")!
+    fileprivate static let paletteVersion = CodingUserInfoKey(rawValue: "RSDColorPalette.version")!
 }
 
 
-/// The color pallette struct is used to describe the color pallette for a given application.
+/// The color palette struct is used to describe the color palette for a given application.
 /// This is intended for applications that use the Sage Design System.
 ///
 /// - seealso: https://github.com/Sage-Bionetworks/DesignSystem
-public struct RSDColorPallette : Codable, Equatable, Hashable {
+public struct RSDColorPalette : Codable, Equatable, Hashable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case version, primary, secondary, accent, successGreen, errorRed, grayScale
     }
     
-    /// The version for this color pallette.
+    /// The version for this color palette.
     public var version: Int?
     
     /// The primary color for the application.
@@ -72,22 +71,22 @@ public struct RSDColorPallette : Codable, Equatable, Hashable {
     /// The gray scale values to use for the application.
     public var grayScale: RSDGrayScale
     
-    /// Wireframe color pallette.
-    public static let wireframe = RSDColorPallette(primaryName: .pallette(.stone), .dark,
-                                                   secondaryName: .pallette(.slate), .dark,
-                                                   accentName: .pallette(.cloud), .dark)
+    /// Wireframe color palette.
+    public static let wireframe = RSDColorPalette(primaryName: .palette(.stone), .dark,
+                                                   secondaryName: .palette(.slate), .dark,
+                                                   accentName: .palette(.cloud), .dark)
     
-    public static let spring = RSDColorPallette(primaryName: .pallette(.royal), .light,
-                                                   secondaryName: .pallette(.rose), .medium,
-                                                   accentName: .pallette(.apricot), .medium)
+    public static let spring = RSDColorPalette(primaryName: .palette(.royal), .light,
+                                                   secondaryName: .palette(.rose), .medium,
+                                                   accentName: .palette(.apricot), .medium)
     
-    public static let beach = RSDColorPallette(primaryName: .pallette(.powder), .light,
-                                                secondaryName: .pallette(.fern), .medium,
-                                                accentName: .pallette(.butterscotch), .medium)
+    public static let beach = RSDColorPalette(primaryName: .palette(.powder), .light,
+                                                secondaryName: .palette(.fern), .medium,
+                                                accentName: .palette(.butterscotch), .medium)
     
-    public static let twilight = RSDColorPallette(primaryName: .pallette(.royal), .dark,
-                                                secondaryName: .pallette(.turquoise), .medium,
-                                                accentName: .pallette(.butterscotch), .medium)
+    public static let twilight = RSDColorPalette(primaryName: .palette(.royal), .dark,
+                                                secondaryName: .palette(.turquoise), .medium,
+                                                accentName: .palette(.butterscotch), .medium)
     
     
     
@@ -123,7 +122,7 @@ public struct RSDColorPallette : Codable, Equatable, Hashable {
         let version = try container.decodeIfPresent(Int.self, forKey: .version)
         
         let codingInfo = decoder.codingInfo
-        codingInfo?.userInfo[.palletteVersion] = version
+        codingInfo?.userInfo[.paletteVersion] = version
         
         self.primary = try container.decode(RSDColorKey.self, forKey: .primary)
         self.secondary = try container.decode(RSDColorKey.self, forKey: .secondary)
@@ -134,7 +133,7 @@ public struct RSDColorPallette : Codable, Equatable, Hashable {
         self.grayScale = try container.decodeIfPresent(RSDGrayScale.self, forKey: .grayScale) ?? RSDGrayScale()
         self.version = version
 
-        codingInfo?.userInfo[.palletteVersion] = nil
+        codingInfo?.userInfo[.paletteVersion] = nil
     }
 }
 
@@ -168,7 +167,7 @@ public struct RSDColorKey : Codable, Equatable, Hashable, RSDColorMapping {
         // Get the swatch using either the swatch name or using the color matrix.
         let swatch: RSDColorSwatch
         if let swatchName = try container.decodeIfPresent(RSDReservedColorName.self, forKey: .swatchName) {
-            let swatchVersion = decoder.codingInfo?.userInfo[.palletteVersion] as? Int
+            let swatchVersion = decoder.codingInfo?.userInfo[.paletteVersion] as? Int
             guard let fm = RSDColorMatrix.shared.colorSwatch(for: swatchName, version: swatchVersion)
                 else {
                     let context = DecodingError.Context(codingPath: decoder.codingPath,
@@ -227,7 +226,7 @@ extension RSDColorKey : RSDDocumentableDecodableObject {
     }
 }
 
-extension RSDColorPallette : RSDDocumentableDecodableObject {
+extension RSDColorPalette : RSDDocumentableDecodableObject {
     
     static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases

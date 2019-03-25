@@ -65,21 +65,21 @@ open class RSDColorRules  {
     /// additive include logic to return the previous rules associated with a previous version.
     open private(set) var version: Int
 
-    /// The color pallette for this color design.
-    open var pallette: RSDColorPallette! {
+    /// The color palette for this color design.
+    open var palette: RSDColorPalette! {
         get {
-            return _pallette
+            return _palette
         }
         set {
             guard newValue != nil else { return }
-            _pallette = newValue
+            _palette = newValue
         }
     }
-    private var _pallette: RSDColorPallette
+    private var _palette: RSDColorPalette
     
-    public init(pallette: RSDColorPallette, version: Int? = nil) {
-        self._pallette = pallette
-        self.version = version ?? pallette.version ?? RSDColorRules.currentVersion
+    public init(palette: RSDColorPalette, version: Int? = nil) {
+        self._palette = palette
+        self.version = version ?? palette.version ?? RSDColorRules.currentVersion
     }
     
     
@@ -94,25 +94,25 @@ open class RSDColorRules  {
     open func mapping(for style: Style) -> RSDColorMapping? {
         switch style {
         case .white:
-            return self.pallette.grayScale.mapping(for: .white)
+            return self.palette.grayScale.mapping(for: .white)
         case .primary:
-            return self.pallette.primary
+            return self.palette.primary
         case .secondary:
-            return self.pallette.secondary
+            return self.palette.secondary
         case .accent:
-            return self.pallette.accent
+            return self.palette.accent
         case .successGreen:
-            return self.pallette.successGreen
+            return self.palette.successGreen
         case .errorRed:
-            return self.pallette.errorRed
+            return self.palette.errorRed
         case .custom:
             return nil
         }
     }
     
-    /// Look in the pallette for a mapping.
+    /// Look in the palette for a mapping.
     open func mapping(for color: RSDColor) -> RSDColorMapping? {
-        let families: [RSDColorFamily] = [_pallette.grayScale, _pallette.primary.swatch, _pallette.secondary.swatch, _pallette.accent.swatch, _pallette.successGreen.swatch, _pallette.errorRed.swatch]
+        let families: [RSDColorFamily] = [_palette.grayScale, _palette.primary.swatch, _palette.secondary.swatch, _palette.accent.swatch, _palette.successGreen.swatch, _palette.errorRed.swatch]
         for family in families {
             if let mapping = family.mapping(for: color) {
                 return mapping
@@ -126,14 +126,14 @@ open class RSDColorRules  {
     ///
     /// - Default: `white`
     open var backgroundLight: RSDColorTile {
-        return self.pallette.grayScale.white
+        return self.palette.grayScale.white
     }
     
     /// Background color for views that should use the primary color tile for the background.
     ///
     /// - Default: `primary`
     open var backgroundPrimary: RSDColorTile {
-        return self.pallette.primary.normal
+        return self.palette.primary.normal
     }
     
     /// Tinted image icon color on a given background. Typically, this is used in a collection or table view.
@@ -144,10 +144,10 @@ open class RSDColorRules  {
     ///         else `accent`
     open func tintedIconColor(on background: RSDColorTile) -> RSDColor {
         if background.usesLightStyle {
-            return self.pallette.grayScale.white.color
+            return self.palette.grayScale.white.color
         }
         else {
-            return self.pallette.accent.normal.color
+            return self.palette.accent.normal.color
         }
     }
 
@@ -159,10 +159,10 @@ open class RSDColorRules  {
     ///         else `veryDarkGray`
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
         if background.usesLightStyle {
-            return self.pallette.grayScale.white.color
+            return self.palette.grayScale.white.color
         }
         else {
-            return self.pallette.grayScale.veryDarkGray.color
+            return self.palette.grayScale.veryDarkGray.color
         }
     }
     
@@ -173,17 +173,17 @@ open class RSDColorRules  {
     ///
     /// - Default:
     ///     If the background uses light style then `white`
-    ///     else if the background is the primary pallette color then `secondary`
+    ///     else if the background is the primary palette color then `secondary`
     ///     else `veryDarkGray`
     open func tintedButtonColor(on background: RSDColorTile) -> RSDColor {
         if background.usesLightStyle {
-            return self.pallette.grayScale.white.color
+            return self.palette.grayScale.white.color
         }
-        else if background == self.pallette.primary.normal {
-            return self.pallette.secondary.normal.color
+        else if background == self.palette.primary.normal {
+            return self.palette.secondary.normal.color
         }
         else {
-            return self.pallette.grayScale.veryDarkGray.color
+            return self.palette.grayScale.veryDarkGray.color
         }
     }
     
@@ -195,9 +195,9 @@ open class RSDColorRules  {
     ///         else `tinted button color`
     ///     else `text color`
     open func underlinedTextButton(on background: RSDColorTile, state: RSDControlState) -> RSDColor {
-        if background == self.pallette.grayScale.white || background == self.pallette.grayScale.veryLightGray {
-            if self.pallette.primary.normal.usesLightStyle {
-                return self.pallette.primary.normal.color
+        if background == self.palette.grayScale.white || background == self.palette.grayScale.veryLightGray {
+            if self.palette.primary.normal.usesLightStyle {
+                return self.palette.primary.normal.color
             }
             else {
                 return self.tintedButtonColor(on: background)
@@ -210,11 +210,11 @@ open class RSDColorRules  {
     
     /// The color tile to use on a given background for a given button type.
     open func roundedButton(on background: RSDColorTile, buttonType: RSDDesignSystem.ButtonType) -> RSDColorMapping {
-        if background == self.pallette.grayScale.white && buttonType == .primary {
-            return self.pallette.secondary
+        if background == self.palette.grayScale.white && buttonType == .primary {
+            return self.palette.secondary
         }
         else {
-            return self.pallette.grayScale.mapping(for: .veryLightGray)
+            return self.palette.grayScale.mapping(for: .veryLightGray)
         }
     }
     
@@ -256,15 +256,15 @@ open class RSDColorRules  {
     /// Checkboxes button.
     open func checkboxButton(on background: RSDColorTile, isSelected: Bool) ->
         (checkmark: RSDColor, background: RSDColor, border: RSDColor) {
-            let check = isSelected ? self.pallette.grayScale.white.color : RSDColor.clear
-            if background == self.pallette.grayScale.white {
-                let inner = isSelected ? self.pallette.primary.dark.color : self.pallette.grayScale.white.color
-                let border = isSelected ? self.pallette.primary.normal.color : self.pallette.grayScale.veryLightGray.color
+            let check = isSelected ? self.palette.grayScale.white.color : RSDColor.clear
+            if background == self.palette.grayScale.white {
+                let inner = isSelected ? self.palette.primary.dark.color : self.palette.grayScale.white.color
+                let border = isSelected ? self.palette.primary.normal.color : self.palette.grayScale.veryLightGray.color
                 return (check, inner, border)
             }
             else {
-                let inner = isSelected ? self.pallette.secondary.normal.color : self.pallette.grayScale.white.color
-                let border = isSelected ? self.pallette.secondary.light.color : self.pallette.grayScale.veryLightGray.color
+                let inner = isSelected ? self.palette.secondary.normal.color : self.palette.grayScale.white.color
+                let border = isSelected ? self.palette.secondary.light.color : self.palette.grayScale.veryLightGray.color
                 return (check, inner, border)
             }
     }
@@ -277,7 +277,7 @@ open class RSDColorRules  {
     ///     - filled: The fill color for the progress bar which marks progress.
     ///     - unfilled: The unfilled (background) color for the progress bar.
     open func progressBar(on background: RSDColorTile) -> (filled: RSDColor, unfilled: RSDColor) {
-        return (self.pallette.accent.light.color, self.pallette.grayScale.veryLightGray.color)
+        return (self.palette.accent.light.color, self.palette.grayScale.veryLightGray.color)
     }
     
     /// The colors to use with a progress dial.
@@ -295,14 +295,14 @@ open class RSDColorRules  {
                            innerColor: RSDColor = RSDColor.clear,
                            usesLightStyle: Bool = false) -> (filled: RSDColor, unfilled: RSDColor, inner: RSDColorTile) {
         if let style = style, let mapping = self.mapping(for: style) {
-            return (mapping.light.color, self.pallette.grayScale.veryLightGray.color, mapping.normal)
+            return (mapping.light.color, self.palette.grayScale.veryLightGray.color, mapping.normal)
         }
         else if let mapping = mapping(for: innerColor) {
-            return (mapping.light.color, self.pallette.grayScale.veryLightGray.color, mapping.normal)
+            return (mapping.light.color, self.palette.grayScale.veryLightGray.color, mapping.normal)
         }
         else {
-            let filled = self.pallette.accent.light.color
-            let unfilled = self.pallette.grayScale.veryLightGray.color
+            let filled = self.palette.accent.light.color
+            let unfilled = self.palette.grayScale.veryLightGray.color
             let lightStyle = (innerColor == RSDColor.clear) ? background.usesLightStyle : usesLightStyle
             let inner = RSDColorTile(innerColor, usesLightStyle: lightStyle)
             return (filled, unfilled, inner)
@@ -313,36 +313,36 @@ open class RSDColorRules  {
     /// MARK: Completion
     
     open func roundedCheckmark(on background: RSDColorTile) -> (checkmark: RSDColor, background: RSDColor, border: RSDColor) {
-        return (self.pallette.grayScale.white.color,
-                self.pallette.secondary.normal.color,
-                self.pallette.secondary.normal.color)
+        return (self.palette.grayScale.white.color,
+                self.palette.secondary.normal.color,
+                self.palette.secondary.normal.color)
     }
     
     /// For a completion gradient background, what are the min and max colors?
     open func completionGradient() -> (RSDColorTile, RSDColorTile) {
-        return (self.pallette.successGreen.light, self.pallette.successGreen.normal)
+        return (self.palette.successGreen.light, self.palette.successGreen.normal)
     }
     
     /// MARK: Choice Selection cell
     
     /// The background color tile for the table cell.
     open func tableCellBackground(on background: RSDColorTile, isSelected: Bool) -> RSDColorTile {
-        return isSelected ?  self.pallette.primary.colorTiles.first! : self.pallette.grayScale.white
+        return isSelected ?  self.palette.primary.colorTiles.first! : self.palette.grayScale.white
     }
     
     /// The background color tile for the table cell.
     open func tableSectionBackground(on background: RSDColorTile) -> RSDColorTile {
-        return self.pallette.grayScale.white
+        return self.palette.grayScale.white
     }
 
     /// The cell separator line for a table cell or other border.
     open var separatorLine: RSDColor {
-        return self.pallette.grayScale.veryLightGray.color
+        return self.palette.grayScale.veryLightGray.color
     }
     
     /// The color of an underline for a text field.
     open func textFieldUnderline(on background: RSDColorTile) -> RSDColor {
-        return background.usesLightStyle ? self.pallette.grayScale.darkGray.color : self.pallette.grayScale.white.color
+        return background.usesLightStyle ? self.palette.grayScale.darkGray.color : self.palette.grayScale.white.color
     }
     
     

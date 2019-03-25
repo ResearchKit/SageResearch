@@ -74,11 +74,11 @@ internal let kTableSectionTopMargin: CGFloat = 40.0
                 return background
             }
             else {
-                return RSDStudyConfiguration.shared.colorPallette.primary.normal
+                return RSDStudyConfiguration.shared.colorPalette.primary.normal
             }
         }
         else {
-            return RSDStudyConfiguration.shared.colorPallette.grayScale.white
+            return RSDStudyConfiguration.shared.colorPalette.grayScale.white
         }
     }
     

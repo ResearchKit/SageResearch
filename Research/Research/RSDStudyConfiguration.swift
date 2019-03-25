@@ -67,6 +67,6 @@ open class RSDStudyConfiguration {
     /// as part of a Phase 1 or Preclinical trial? (Default == `true`)
     open var isParticipantDevice : Bool = true
     
-    /// The default color pallette to use for this app.
-    open var colorPallette: RSDColorPallette = .wireframe
+    /// The default color palette to use for this app.
+    open var colorPalette: RSDColorPalette = .wireframe
 }

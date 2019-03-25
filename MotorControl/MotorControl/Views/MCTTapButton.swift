@@ -75,7 +75,7 @@ import Foundation
     
     func updateColors() {
         let designSystem = self.designSystem ?? RSDDesignSystem()
-        let colorTile = designSystem.colorRules.pallette.secondary.normal
+        let colorTile = designSystem.colorRules.palette.secondary.normal
         self.backgroundColor = colorTile.color
         let textColor = designSystem.colorRules.textColor(on: colorTile, for: .heading3)
         self.setTitleColor(textColor, for: .normal)
