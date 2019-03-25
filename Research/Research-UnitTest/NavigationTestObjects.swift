@@ -116,6 +116,53 @@ public class TestSubtaskStep : RSDSubtaskStep {
     }
 }
 
+public final class TestTaskInfo : RSDTaskInfo, RSDTaskTransformer {
+    
+    public init(task: TestTask, fetchError: Error? = nil) {
+        self.task = task
+        self.fetchError = fetchError
+    }
+    
+    private let task: TestTask
+    private let fetchError: Error?
+    
+    public var identifier: String {
+        return task.identifier
+    }
+    
+    public var title: String?
+    
+    public var subtitle: String?
+    
+    public var detail: String?
+    
+    public var estimatedMinutes: Int = 2
+    
+    public var imageVendor: RSDImageVendor?
+    
+    public var schemaInfo: RSDSchemaInfo? {
+        return self.task.schemaInfo
+    }
+    
+    public let resourceTransformer: RSDTaskTransformer? = nil
+    
+    public func copy(with identifier: String) -> TestTaskInfo {
+        let copy =  TestTaskInfo(task: self.task, fetchError: self.fetchError)
+        copy.title = self.title
+        copy.subtitle = self.subtitle
+        copy.detail = self.detail
+        copy.estimatedMinutes = self.estimatedMinutes
+        copy.imageVendor = self.imageVendor
+        return copy
+    }
+    
+    public let estimatedFetchTime: TimeInterval = 0
+    
+    public func fetchTask(with taskIdentifier: String, schemaInfo: RSDSchemaInfo?, callback: @escaping RSDTaskFetchCompletionHandler) {
+        callback(task, fetchError)
+    }
+}
+
 public struct TestTask : RSDTask, RSDTrackingTask {
     
     public let identifier: String

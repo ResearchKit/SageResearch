@@ -469,14 +469,14 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             if task != nil {
                 strongSelf.task = task
                 let previousResult = strongSelf.taskResult
-                var taskResult = task!.instantiateTaskResult()
+                var newResult = task!.instantiateTaskResult()
                 if previousResult.asyncResults?.count ?? 0 > 0 {
-                    var results = strongSelf.taskResult.asyncResults ?? []
+                    var results = newResult.asyncResults ?? []
                     results.append(contentsOf: previousResult.asyncResults!)
-                    strongSelf.taskResult.asyncResults = results
+                    newResult.asyncResults = results
                 }
-                taskResult.taskRunUUID = previousResult.taskRunUUID
-                strongSelf.taskResult = taskResult
+                newResult.taskRunUUID = previousResult.taskRunUUID
+                strongSelf.taskResult = newResult
             }
             if let err = error {
                 strongSelf.handleTaskFailure(with: err)
