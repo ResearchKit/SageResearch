@@ -167,7 +167,7 @@ public struct RSDColorKey : Codable, Equatable, Hashable, RSDColorMapping {
         let index = try container.decode(Int.self, forKey: .index)
         // Get the swatch using either the swatch name or using the color matrix.
         let swatch: RSDColorSwatch
-        if let swatchName = try container.decodeIfPresent(String.self, forKey: .swatchName) {
+        if let swatchName = try container.decodeIfPresent(RSDReservedColorName.self, forKey: .swatchName) {
             let swatchVersion = decoder.codingInfo?.userInfo[.palletteVersion] as? Int
             guard let fm = RSDColorMatrix.shared.colorSwatch(for: swatchName, version: swatchVersion)
                 else {

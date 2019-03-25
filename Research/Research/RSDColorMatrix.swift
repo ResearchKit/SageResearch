@@ -84,16 +84,16 @@ public final class RSDColorMatrix {
         return self.library(for: version).grayScale ?? RSDGrayScale()
     }
     
-    /// Get the color swatch associated with the given name.
-    ///
-    /// - parameters:
-    ///     - name: The name of the color swatch.
-    ///     - version: The version to return or `nil` to return the most recent.
-    /// - returns: The color swatch for the given name and version.
-    public func colorSwatch(for name: String, version: Int?) -> RSDColorSwatch? {
-        guard let reserved = RSDReservedColorName(rawValue: name) else { return nil }
-        return self.colorSwatch(for: reserved, version: version)
-    }
+//    /// Get the color swatch associated with the given name.
+//    ///
+//    /// - parameters:
+//    ///     - name: The name of the color swatch.
+//    ///     - version: The version to return or `nil` to return the most recent.
+//    /// - returns: The color swatch for the given name and version.
+//    public func colorSwatch(for name: String, version: Int?) -> RSDColorSwatch? {
+//        guard let reserved = RSDReservedColorName(rawValue: name) else { return nil }
+//        return self.colorSwatch(for: reserved, version: version)
+//    }
     
     /// Get the color swatch associated with the given name.
     ///
@@ -123,7 +123,7 @@ public final class RSDColorMatrix {
     }
 
     
-    /// Get the most appropriate color key for a given restricted color name.
+    /// Get the most appropriate color key for a given reserved color name.
     ///
     /// - parameters:
     ///     - name: The name of the color swatch.
