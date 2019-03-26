@@ -212,7 +212,9 @@ open class RSDColorRules  {
         if background.usesLightStyle {
             return self.palette.grayScale.white.color
         }
-        else if background == self.palette.primary.normal {
+        else if background == self.palette.primary.normal ||
+            background == self.palette.grayScale.white ||
+            background == self.palette.grayScale.veryLightGray {
             return self.palette.secondary.normal.color
         }
         else {
@@ -437,6 +439,6 @@ open class RSDColorRules  {
     /// - parameter background: The background of the table cell.
     /// - returns: The color of the underline.
     open func textFieldUnderline(on background: RSDColorTile) -> RSDColor {
-        return background.usesLightStyle ? self.palette.grayScale.darkGray.color : self.palette.grayScale.white.color
+        return background.usesLightStyle ? self.palette.grayScale.white.color : self.palette.grayScale.darkGray.color
     }
 }
