@@ -174,8 +174,11 @@ extension RSDChoiceObject : RSDDocumentableDecodableObject {
             return ["value": 1.2, "text": "one point two"]
         } else if Value.self == RSDFraction.self {
             return ["value": "1/2", "text": "one half"]
+        } else if Value.self == Date.self {
+            return ["value": Date(), "text": "now"]
+        } else {
+            return nil
         }
-        return nil
     }
     
     static func examples() -> [[String : RSDJSONValue]] {

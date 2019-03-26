@@ -134,10 +134,12 @@ public struct RSDDocumentCreator {
     }()
     
     let allDecodableObjects: [RSDDocumentableDecodableObject.Type] = [
-        RSDChoiceObject<String>.self,
-        RSDChoiceObject<Int>.self,
         RSDChoiceObject<Bool>.self,
+        RSDChoiceObject<Date>.self,
         RSDChoiceObject<Double>.self,
+        RSDChoiceObject<Int>.self,
+        RSDChoiceObject<RSDFraction>.self,
+        RSDChoiceObject<String>.self,
         RSDComparableSurveyRuleObject<Bool>.self,
         RSDComparableSurveyRuleObject<String>.self,
         RSDComparableSurveyRuleObject<Date>.self,
@@ -158,7 +160,7 @@ public struct RSDDocumentCreator {
         RSDCodableChoiceInputFieldObject<Date>.self,
         RSDCodableChoiceInputFieldObject<Double>.self,
         RSDCodableChoiceInputFieldObject<Int>.self,
-        RSDComparableSurveyRuleObject<RSDFraction>.self,
+        RSDCodableChoiceInputFieldObject<RSDFraction>.self,
         RSDColorKey.self,
         RSDColorPlacementThemeElementObject.self,
         RSDSingleColorThemeElementObject.self,

@@ -864,6 +864,7 @@ open class RSDFactory {
         decoder.nonConformingFloatDecodingStrategy = .convertFromString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
                                                                         negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
                                                                         nan: nonConformingCodingStrategy.nan)
+        decoder.dataDecodingStrategy = .base64
         return decoder
     }
     
@@ -959,6 +960,11 @@ open class RSDFactory {
         encoder.nonConformingFloatEncodingStrategy = .convertToString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
                                                                         negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
                                                                         nan: nonConformingCodingStrategy.nan)
+        encoder.dataEncodingStrategy = .custom({ (data, encoder) in
+            let string = self.encodeString(from: data, codingPath: encoder.codingPath)
+            var container = encoder.singleValueContainer()
+            try container.encode(string)
+        })
         return encoder
     }
     
@@ -977,6 +983,10 @@ open class RSDFactory {
         return timestampFormatter.string(from: date)
     }
     
+    /// Overridable method for encoding data to a string. By default, this method uses base64 encoding.
+    open func encodeString(from data: Data, codingPath: [CodingKey]) -> String {
+        return data.base64EncodedString()
+    }
 }
 
 /// Extension of CodingUserInfoKey to add keys used by the Codable objects in this framework.
