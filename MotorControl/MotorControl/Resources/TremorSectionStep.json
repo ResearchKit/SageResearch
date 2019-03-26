@@ -21,6 +21,7 @@
                         "placementType":"topMarginBackground"
                     },
                     "colorMapping":{
+                        "type": "placementMapping",
                         "colorMapping": {
                             "header": "primary",
                             "body": "white",
@@ -48,6 +49,7 @@
                       "storyboardIdentifier":"ActiveTaskSteps"
                   },
                   "colorMapping":{
+                      "type": "singleColor",
                       "colorStyle": "primary"
                   },
                   "duration":5,
@@ -63,6 +65,7 @@
                       "placementType":"fullsizeBackground"
                   },
                   "colorMapping":{
+                      "type": "singleColor",
                       "colorStyle": "primary"
                   },
                   "viewTheme":{

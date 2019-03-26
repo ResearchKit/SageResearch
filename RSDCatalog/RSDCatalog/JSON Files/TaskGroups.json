@@ -74,7 +74,7 @@
  "tasks" : [{
             "identifier": "designSystem",
             "title": "Color Mapping",
-            "subtitle": "This example shows the color rules uses by the Design System.",
+            "subtitle": "This example shows the color rules used by the Design System.",
             "detail": "This is an example task for how to set up an activity that expressly defines the colors used for each view.",
             "icon": "activityIcon",
             "taskTransformer" : { "resourceName": "Theme_Color" }

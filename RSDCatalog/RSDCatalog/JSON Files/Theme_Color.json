@@ -26,6 +26,7 @@
             }
         },
         "colorMapping": {
+            "type": "placementMapping",
             "colorMapping": {
                 "header": "primary",
                 "body": "white",
@@ -44,6 +45,7 @@
         "title": "Scrolling instruction screen",
         "text": "Example with the image placed before the text and a dark background. The top of the image is pinned to the margin (below the status bar).",
         "colorMapping": {
+            "type": "placementMapping",
             "customColor": {
                 "color": "darkGreen",
                 "usesLightStyle": true
@@ -66,6 +68,7 @@
         "title": "Scrolling instruction screen",
         "text": "Example with the image placed before the text and a light background. The top of the image is pinned to the top of the screen (under the status bar).",
         "colorMapping": {
+            "type": "placementMapping",
             "customColor": {
                 "color": "lightBlue",
                 "usesLightStyle": false
@@ -84,6 +87,7 @@
         "text": "Example with color styles of a primary header, white body, and a white footer.",
         "detail": "Select a single option",
         "colorMapping": {
+            "type": "placementMapping",
             "colorMapping": {
                 "header": "primary",
                 "body": "white",
@@ -103,6 +107,7 @@
         "text": "Example with an all white background.",
         "detail": "Select a single option",
         "colorMapping": {
+            "type": "singleColor",
             "colorStyle": "white"
         },
         "inputFields": [{
@@ -123,6 +128,7 @@
             "choices": ["Alfa", "Bravo", "Charlie", "Delta", "Echo"]
         }],
         "colorMapping": {
+            "type": "placementMapping",
             "customColor": {
                 "color": "darkGreen",
                 "usesLightStyle": true
@@ -141,6 +147,7 @@
         "text": "Dial with a dark background",
         "commands": ["transitionAutomatically"],
         "colorMapping": {
+            "type": "singleColor",
             "customColor": {
                 "color": "darkGreen",
                 "usesLightStyle": true
@@ -155,6 +162,7 @@
         "text": "Dial with a light background",
         "commands": ["transitionAutomatically"],
         "colorMapping": {
+            "type": "singleColor",
             "colorStyle": "white"
         }
     }

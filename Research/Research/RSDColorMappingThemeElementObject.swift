@@ -38,34 +38,17 @@ import AppKit
 import UIKit
 #endif
 
+struct ColorTile : Codable {
+    let usesLightStyle : Bool
+    let color : String
+}
 
-/// `RSDColorMappingThemeElementObject` tells the UI what the background color and foreground color are for a
-/// given view as well as whether or not the foreground elements should use "light style".
-public struct RSDColorMappingThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo {
-    private enum CodingKeys: String, CodingKey, CaseIterable {
-        case bundleIdentifier, colorMapping, customColor, colorStyle
-    }
-    
-    struct ColorTile : Codable {
-        let usesLightStyle : Bool
-        let color : String
-    }
-    
-    /// The bundle identifier.
-    public let bundleIdentifier: String?
-    
-    /// The default bundle from the factory used to decode this object.
-    public var factoryBundle: Bundle? = nil
-    
-    /// The color placement mapping.
-    let colorMapping: [String : RSDColorRules.Style]?
-    
-    /// The custom color tile to use for a color placement.
-    let customColor: ColorTile?
-    
-    /// A color style defined for all color placements.
-    let colorStyle: RSDColorRules.Style?
-    
+protocol InternalColorMapping : RSDDecodableBundleInfo {
+    var customColor: ColorTile? { get }
+    func style(for placement: RSDColorPlacement) -> RSDColorRules.Style
+}
+
+extension InternalColorMapping {
     #if os(watchOS) || os(macOS)
     /// **Available** for watchOS and macOS.
     ///
@@ -105,33 +88,183 @@ public struct RSDColorMappingThemeElementObject : RSDColorMappingThemeElement, R
         }
     }
     #endif
-    
-    func style(for placement: RSDColorPlacement) -> RSDColorRules.Style {
-        if let mapping = self.colorMapping, let style = mapping[placement.stringValue] {
-            return style
-        }
-        else {
-            return self.colorStyle ?? ((self.customColor != nil) ? .custom : .white)
-        }
+}
+
+/// `RSDColorPlacementThemeElementObject` tells the UI what the background color and foreground color are for
+/// a given view as well as whether or not the foreground elements should use "light style".
+///
+/// The mapping is handled using a dictionary of color placements to the color style for that placement.
+public struct RSDColorPlacementThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
+        case type, bundleIdentifier, placement, customColor
     }
     
+    /// The type for the class
+    public let type: RSDColorMappingThemeElementType
+
+    /// The bundle identifier.
+    public let bundleIdentifier: String?
+    
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
+    
+    /// The color placement mapping.
+    let placement: [String : RSDColorRules.Style]
+    
+    /// The custom color tile to use for a color placement.
+    let customColor: ColorTile?
 
     /// Default initializer.
     ///
     /// - parameters:
-    ///     - colorStyle: The color style for this view.
-    public init(colorStyle: RSDColorRules.Style? = nil,
-                colorMapping: [String : RSDColorRules.Style]? = nil) {
-        self.colorStyle = colorStyle
-        self.colorMapping = nil
-        self.customColor = nil
+    ///     - placement: The placement mapping for the sections of the view.
+    ///     - customColorName: The name of the custom color.
+    ///     - usesLightStyle: If using a custom color, the light style for the custom color.
+    ///     - bundleIdentifier: The bundle identifier if using a color asset file.
+    public init(placement: [String : RSDColorRules.Style],
+                customColorName: String? = nil,
+                usesLightStyle: Bool? = nil,
+                bundleIdentifier: String? = nil) {
+        self.type = .placementMapping
+        self.placement = placement
+        if let name = customColorName {
+            self.customColor = ColorTile(usesLightStyle: usesLightStyle ?? false, color: name)
+        }
+        else {
+            self.customColor = nil
+        }
         self.bundleIdentifier = nil
     }
     
-    @available(*, deprecated)
-    internal init(colorTheme: RSDColorThemeElementObject) {
-        self.colorMapping = colorTheme.colorStyle?.mapValues {
-            switch $0 {
+}
+
+extension RSDColorPlacementThemeElementObject : InternalColorMapping {
+    
+    func style(for placement: RSDColorPlacement) -> RSDColorRules.Style {
+        if let style = self.placement[placement.stringValue] {
+            return style
+        }
+        else {
+            return ((self.customColor != nil) ? .custom : .white)
+        }
+    }
+}
+
+extension RSDColorPlacementThemeElementObject : RSDDocumentableDecodableObject {
+
+    static func codingKeys() -> [CodingKey] {
+        return CodingKeys.allCases
+    }
+
+    static func colorThemeExamples() -> [[String : RSDJSONValue]] {
+        let exA: [String : RSDJSONValue] = [
+            "type" : "placementMapping",
+            "bundleIdentifier" : "FooModule",
+            "customColor" : [ "color" : "sky", "usesLightStyle" : false],
+            "placement" : [
+                "header" : "primary",
+                "body" : "white",
+                "footer" : "white"
+            ]
+        ]
+        return [exA]
+    }
+
+    static func examples() -> [[String : RSDJSONValue]] {
+        return colorThemeExamples()
+    }
+}
+
+/// `RSDSingleColorThemeElementObject` tells the UI what the background color and foreground color are for
+/// a given view as well as whether or not the foreground elements should use "light style".
+///
+/// The mapping is handled using a single style for the entire view.
+public struct RSDSingleColorThemeElementObject : RSDColorMappingThemeElement, RSDDecodableBundleInfo {
+    private enum CodingKeys: String, CodingKey, CaseIterable {
+        case type, bundleIdentifier, colorStyle, customColor
+    }
+    
+    /// The type for the class
+    public let type: RSDColorMappingThemeElementType
+    
+    /// The bundle identifier.
+    public let bundleIdentifier: String?
+    
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
+    
+    /// The color placement mapping.
+    let colorStyle: RSDColorRules.Style?
+    
+    /// The custom color tile to use for a color placement.
+    let customColor: ColorTile?
+    
+    /// Default initializer.
+    ///
+    /// - parameters:
+    ///     - colorStyle: The color style for this mapping.
+    ///     - customColorName: The name of the custom color.
+    ///     - usesLightStyle: If using a custom color, the light style for the custom color.
+    ///     - bundleIdentifier: The bundle identifier if using a color asset file.
+    public init(colorStyle: RSDColorRules.Style?,
+                customColorName: String? = nil,
+                usesLightStyle: Bool? = nil,
+                bundleIdentifier: String? = nil) {
+        self.type = .singleColor
+        self.colorStyle = colorStyle
+        if let name = customColorName {
+            self.customColor = ColorTile(usesLightStyle: usesLightStyle ?? false, color: name)
+        }
+        else {
+            self.customColor = nil
+        }
+        self.bundleIdentifier = nil
+    }
+}
+
+extension RSDSingleColorThemeElementObject : InternalColorMapping {
+    
+    func style(for placement: RSDColorPlacement) -> RSDColorRules.Style {
+        return colorStyle ?? ((self.customColor != nil) ? .custom : .white)
+    }
+}
+
+extension RSDSingleColorThemeElementObject : RSDDocumentableDecodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return CodingKeys.allCases
+    }
+    
+    static func colorThemeExamples() -> [[String : RSDJSONValue]] {
+        let exA: [String : RSDJSONValue] = [
+            "type" : "singleColor",
+            "bundleIdentifier" : "FooModule",
+            "customColor" : [ "color" : "sky", "usesLightStyle" : false]
+        ]
+        let exB: [String : RSDJSONValue] = [
+            "type" : "singleColor",
+            "colorStyle" : "successGreen"
+        ]
+        return [exA, exB]
+    }
+    
+    static func examples() -> [[String : RSDJSONValue]] {
+        return colorThemeExamples()
+    }
+}
+
+// TODO: syoung 03/26/2019 Remove once modules that use this color scheme are converted.
+@available(*, deprecated)
+extension RSDColorThemeElementObject : InternalColorMapping, RSDColorMappingThemeElement {
+    
+    var customColor: ColorTile? {
+        guard let name = _backgroundColorName else { return nil }
+        return ColorTile(usesLightStyle: self.usesLightStyle, color: name)
+    }
+    
+    func style(for placement: RSDColorPlacement) -> RSDColorRules.Style {
+        if let depStyle = self.colorStyle?[placement.stringValue] {
+            switch depStyle {
             case .customBackground:
                 return .custom
             case .lightBackground:
@@ -140,43 +273,11 @@ public struct RSDColorMappingThemeElementObject : RSDColorMappingThemeElement, R
                 return .primary
             }
         }
-        if let colorName = colorTheme._backgroundColorName {
-            self.colorStyle = .custom
-            self.customColor = ColorTile(usesLightStyle: colorTheme.usesLightStyle, color: colorName)
+        if _backgroundColorName != nil {
+            return .custom
         }
         else {
-            self.colorStyle = colorTheme.usesLightStyle ? .primary : .white
-            self.customColor = nil
+            return usesLightStyle ? .primary : .white
         }
-        self.bundleIdentifier = colorTheme.bundleIdentifier
-    }
-}
-
-extension RSDColorMappingThemeElementObject : RSDDocumentableDecodableObject {
-
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-
-    static func colorThemeExamples() -> [[String : RSDJSONValue]] {
-        let exA: [String : RSDJSONValue] = [
-            "bundleIdentifier" : "FooModule",
-            "customColor" : [ "color" : "sky", "usesLightStyle" : false]
-        ]
-        let exB: [String : RSDJSONValue] = [
-            "colorStyle" : "successGreen"
-        ]
-        let exC: [String : RSDJSONValue] = [
-            "colorMapping" : [
-                "header" : "primary",
-                "body" : "white",
-                "footer" : "white"
-            ]
-        ]
-        return [exA, exB, exC]
-    }
-
-    static func examples() -> [[String : RSDJSONValue]] {
-        return colorThemeExamples()
     }
 }

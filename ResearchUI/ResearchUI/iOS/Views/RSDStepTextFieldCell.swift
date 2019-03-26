@@ -324,7 +324,7 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
         return .heading1
     }
     
-    /// Override `setupViews()` to increase the size of the text field.
+    /// Override `setupViews()` to change alignment and set the field label hidden.
     override open func setupViews() {
         
         super.setupViews()

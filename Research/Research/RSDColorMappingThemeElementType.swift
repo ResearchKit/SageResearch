@@ -1,8 +1,8 @@
 //
-//  RSDImageThemeElementType.swift
+//  RSDColorMappingThemeElementType.swift
 //  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,9 +33,9 @@
 
 import Foundation
 
-/// The type of the image theme. This is used to decode a `RSDImageThemeElement` using a `RSDFactory`. It can also be used
-/// to customize the UI.
-public struct RSDImageThemeElementType : RSDFactoryTypeRepresentable, Codable, Equatable, Hashable {
+/// The type of the color mapping theme element. This is used to decode a `RSDColorMappingThemeElement` using
+/// a `RSDFactory`. It can also be used to customize the UI.
+public struct RSDColorMappingThemeElementType : RSDFactoryTypeRepresentable, Codable, Equatable, Hashable {
     public let rawValue: String
     
     public init(rawValue: String) {
@@ -43,23 +43,23 @@ public struct RSDImageThemeElementType : RSDFactoryTypeRepresentable, Codable, E
     }
     
     /// Defaults to creating a `RSDFetchableImageThemeElementObject`.
-    public static let fetchable: RSDImageThemeElementType = "fetchable"
+    public static let placementMapping: RSDColorMappingThemeElementType = "placementMapping"
     
     /// Defaults to creating a `RSDAnimatedImageThemeElementObject`.
-    public static let animated: RSDImageThemeElementType = "animated"
+    public static let singleColor: RSDColorMappingThemeElementType = "singleColor"
     
-    public static func allStandardTypes() -> [RSDImageThemeElementType] {
-        return [.fetchable, .animated]
+    public static func allStandardTypes() -> [RSDColorMappingThemeElementType] {
+        return [.placementMapping, .singleColor]
     }
 }
 
-extension RSDImageThemeElementType : ExpressibleByStringLiteral {
+extension RSDColorMappingThemeElementType : ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(rawValue: value)
     }
 }
 
-extension RSDImageThemeElementType : RSDDocumentableStringEnum {
+extension RSDColorMappingThemeElementType : RSDDocumentableStringEnum {
     static func allCodingKeys() -> [String] {
         return allStandardTypes().map{ $0.rawValue }
     }

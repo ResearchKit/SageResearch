@@ -21,6 +21,7 @@
                       "placementType":"fullsizeBackground"
                   },
                   "colorMapping":{
+                      "type": "singleColor",
                       "colorStyle": "primary"
                   },
                   "viewTheme":{

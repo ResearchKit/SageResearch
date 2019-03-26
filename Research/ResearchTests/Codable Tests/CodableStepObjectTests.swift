@@ -185,7 +185,8 @@ class CodableStepObjectTests: XCTestCase {
                             "placementType" : "topBackground",
                             "animationDuration" : 2,
                                },
-            "colorMapping"     : { "customColor" : {
+            "colorMapping"     : {  "type" : "singleColor",
+                                    "customColor" : {
                                             "color": "sky",
                                             "usesLightStyle" : true}
                                 },
@@ -239,7 +240,7 @@ class CodableStepObjectTests: XCTestCase {
                 XCTFail("Failed to decode images")
             }
             
-            if let color = object.colorMapping as? RSDColorMappingThemeElementObject {
+            if let color = object.colorMapping as? RSDSingleColorThemeElementObject {
                 XCTAssertTrue(color.customColor?.usesLightStyle ?? false)
                 XCTAssertEqual(color.customColor?.color, "sky")
             } else {

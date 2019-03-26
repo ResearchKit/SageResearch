@@ -37,6 +37,7 @@
                     }
                  },
                 "colorMapping":{
+                    "type": "placementMapping",
                     "colorMapping": {
                         "header": "primary",
                         "body": "white",
@@ -78,6 +79,7 @@
                     "placementType":"topBackground"
                 },
                 "colorMapping":{
+                    "type": "placementMapping",
                     "colorMapping": {
                         "header": "primary",
                         "body": "white",
@@ -102,6 +104,7 @@
                     "placementType":"topBackground"
                 },
                 "colorMapping":{
+                    "type": "placementMapping",
                     "colorMapping": {
                         "header": "primary",
                         "body": "white",
@@ -140,6 +143,7 @@
                      "storyboardIdentifier":"ActiveTaskSteps"
                  },
                  "colorMapping":{
+                     "type": "singleColor",
                      "colorStyle": "white"
                  },
                  "spokenInstructions":{

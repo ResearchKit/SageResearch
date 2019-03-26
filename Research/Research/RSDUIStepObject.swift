@@ -365,8 +365,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         else if container.contains(.colorTheme) {
             // TODO: syoung 03/18/2019 delete once the V0 color theme decoding has been marked unavailable.
             debugPrint("WARNING!!! Use of `colorTheme` JSON key is deprecated. Please convert your JSON files to use `colorMapping` instead. \(container.codingPath)")
-            let colorTheme = try container.decode(RSDColorThemeElementObject.self, forKey: .colorTheme)
-            self.colorMapping = RSDColorMappingThemeElementObject(colorTheme: colorTheme)
+            self.colorMapping = try container.decode(RSDColorThemeElementObject.self, forKey: .colorTheme)
         }
         if container.contains(.image) {
             let nestedDecoder = try container.superDecoder(forKey: .image)
@@ -416,7 +415,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
                             "placementType" : "topBackground",
                             "animationDuration" : 2,
             ],
-            "colorMapping"     : [ "customColor" : ["color" : "sky", "usesLightStyle" : true ]],
+            "colorMapping"     : [  "type" : "singleColor",
+                                    "customColor" : ["color" : "sky", "usesLightStyle" : true ]],
             "viewTheme"      : [ "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps",
                                  "bundleIdentifier": "org.example.SharedResources" ],
