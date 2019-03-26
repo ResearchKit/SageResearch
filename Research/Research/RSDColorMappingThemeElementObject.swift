@@ -73,7 +73,7 @@ public struct RSDColorMappingThemeElementObject : RSDColorMappingThemeElement, R
     /// step view controller.
     /// - returns: The color or `nil` if undefined.
     public func backgroundColor(for placement: RSDColorPlacement, using colorRules: RSDColorRules) -> RSDColorTile? {
-        if let tile = colorRules.color(for: self.style(for: placement)) {
+        if let tile = colorRules.mapping(for: self.style(for: placement)) {
             return tile.normal
         }
         else if let custom = self.customColor,

@@ -105,12 +105,27 @@ open class RSDFontRules  {
 }
 
 
+
+
+
+
+#if os(macOS)
+extension NSFont {
+    
+    func rsd_smallCaps() -> RSDFont {
+        return self
+    }
+}
+#else
 extension UIFont {
     
-    func rsd_smallCaps() -> UIFont {
+    func rsd_smallCaps() -> RSDFont {
         let settings: [[UIFontDescriptor.FeatureKey : Int]] = [[.featureIdentifier: kLowerCaseType, .typeIdentifier: kLowerCaseSmallCapsSelector]]
         let attributes: [UIFontDescriptor.AttributeName : Any] = [.featureSettings: settings]
         let fontDescriptor = self.fontDescriptor.addingAttributes(attributes)
         return UIFont(descriptor: fontDescriptor, size: pointSize)
     }
 }
+#endif
+
+
