@@ -56,6 +56,9 @@
                 <a href="Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/RSDCompletionGradient.html">RSDCompletionGradient</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/RSDCountdownDial.html">RSDCountdownDial</a>
               </li>
               <li class="nav-group-task">
@@ -122,9 +125,6 @@
                 <a href="Classes/RSDStepChoiceCell.html">RSDStepChoiceCell</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepChoiceSectionHeader">RSDStepChoiceSectionHeader</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/RSDStepHeaderView.html">RSDStepHeaderView</a>
               </li>
               <li class="nav-group-task">
@@ -150,6 +150,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RSDStepViewController.html">RSDStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RSDTableSectionHeader.html">RSDTableSectionHeader</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RSDTableStepHeaderView.html">RSDTableStepHeaderView</a>
@@ -267,7 +270,7 @@
                 <a href="Protocols.html#/s:10ResearchUI29RSDTaskViewControllerDelegateP">RSDTaskViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a>
+                <a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDVoiceBox.html">RSDVoiceBox</a>
@@ -977,6 +980,39 @@ the property will be set for one of these values.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDCompletionGradient"></a>
+                    <a name="//apple_ref/swift/Class/RSDCompletionGradient" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCompletionGradient">RSDCompletionGradient</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDCompletionGradient</code> is a UI element for adding a shadow gradient to a view.</p>
+
+                        <a href="Classes/RSDCompletionGradient.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCompletionGradient</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@ResearchUI@objc(cs)RSDProgressIndicator"></a>
                     <a name="//apple_ref/swift/Class/RSDProgressIndicator" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDProgressIndicator">RSDProgressIndicator</a>
@@ -1031,7 +1067,7 @@ to show progress using a shape layer. See <code><a href="Classes/RSDCountdownDia
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCountdownDial</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDProgressIndicator.html">RSDProgressIndicator</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a></span></code></pre>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCountdownDial</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDProgressIndicator.html">RSDProgressIndicator</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1063,8 +1099,42 @@ where the split is diagonal.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated)</span>
+<span class="kd">@IBDesignable</span>
 <span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDCrosshatchView</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDImageViewCell"></a>
+                    <a name="//apple_ref/swift/Class/RSDImageViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDImageViewCell">RSDImageViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDImageViewCell</code> can be used to display images amongst the table cells.</p>
+
+                        <a href="Classes/RSDImageViewCell.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDImageViewCell</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDTableViewCell.html">RSDTableViewCell</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1248,7 +1318,7 @@ default accessibility behavior for a button in transition.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDRoundedButton</span> <span class="p">:</span> <span class="kt"><a href="Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a></span></code></pre>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDRoundedButton</span> <span class="p">:</span> <span class="kt"><a href="Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1332,35 +1402,6 @@ default accessibility behavior for a button in transition.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDTableViewCell"></a>
-                    <a name="//apple_ref/swift/Class/RSDTableViewCell" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDTableViewCell">RSDTableViewCell</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDTableViewCell</code> is used to display a table cell that is linked to a <code>RSDTableItem</code>.</p>
-
-                        <a href="Classes/RSDTableViewCell.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableViewCell</span> <span class="p">:</span> <span class="kt">UITableViewCell</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/c:@M@ResearchUI@objc(cs)RSDStepChoiceCell"></a>
                     <a name="//apple_ref/swift/Class/RSDStepChoiceCell" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepChoiceCell">RSDStepChoiceCell</a>
@@ -1387,12 +1428,16 @@ default accessibility behavior for a button in transition.</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepChoiceSectionHeader"></a>
-                    <a name="//apple_ref/swift/Class/RSDStepChoiceSectionHeader" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepChoiceSectionHeader">RSDStepChoiceSectionHeader</a>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepNavigationView"></a>
+                    <a name="//apple_ref/swift/Class/RSDStepNavigationView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepNavigationView">RSDStepNavigationView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1400,21 +1445,239 @@ default accessibility behavior for a button in transition.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><code>RSDStepChoiceSectionHeader</code> is the base implementation for a selection table view section header of a form step.</p>
+                        <p><code>RSDStepNavigationView</code> is a custom <code>UIView</code> to be included in a <code><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></code>.
+It optionally contains references to standard step navigation UI including a next button,
+back button, skip button, learn more button, and cancel button.</p>
 
+                        <a href="Classes/RSDStepNavigationView.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDStepChoiceSectionHeader</span> <span class="p">:</span> <span class="kt">UITableViewHeaderFooterView</span></code></pre>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepNavigationView</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
 
                         </div>
                       </div>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDNavigationHeaderView"></a>
+                    <a name="//apple_ref/swift/Class/RSDNavigationHeaderView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDNavigationHeaderView">RSDNavigationHeaderView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDNavigationHeaderView</code> is a general purpose navigation header view that can be used
+by the step view controller to include UI elements that may typically be shown at the top
+of the step view.</p>
+
+                        <a href="Classes/RSDNavigationHeaderView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDNavigationHeaderView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepNavigationView.html">RSDStepNavigationView</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepHeaderView"></a>
+                    <a name="//apple_ref/swift/Class/RSDStepHeaderView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepHeaderView">RSDStepHeaderView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDStepHeaderView</code> is a custom <code>UIView</code> designed for use as a header view in a table view, such as
+an <code><a href="Classes/RSDTableStepViewController.html">RSDTableStepViewController</a></code>.</p>
+
+                        <a href="Classes/RSDStepHeaderView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepHeaderView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDNavigationHeaderView.html">RSDNavigationHeaderView</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDTableStepHeaderView"></a>
+                    <a name="//apple_ref/swift/Class/RSDTableStepHeaderView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDTableStepHeaderView">RSDTableStepHeaderView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDTableStepHeaderView</code> is a concrete implementation of <code><a href="Classes/RSDStepHeaderView.html">RSDStepHeaderView</a></code> that will automatically
+lay out the UI elements in this order, from top to bottom of the view:</p>
+
+<ol>
+<li>cancelButton: UIButton - allows for cancelling the task</li>
+<li>progressView: RSDStepProgressView - show progress thru the current flow</li>
+<li>imageView: UIImageView - shows an image associated with the current step</li>
+<li>titleLabel: UILabel - generally the Title of the current step</li>
+<li>textLabel: UILabel - generally the Text of the current step</li>
+<li>learnMoreButton: UIButton - a button to call the learnMoreAction</li>
+<li>detailLabel: UILabel - a label intended to prompt the user to enter data or make a selection</li>
+</ol>
+
+<p>Several public properties are provided to configure the view, such has hiding or showing the learnMoreButton
+or progressView, and providing a minimumHeight or customView.</p>
+
+                        <a href="Classes/RSDTableStepHeaderView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableStepHeaderView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepHeaderView.html">RSDStepHeaderView</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDNavigationFooterView"></a>
+                    <a name="//apple_ref/swift/Class/RSDNavigationFooterView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDNavigationFooterView">RSDNavigationFooterView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDNavigationFooterView</code> is an abstract implementation for the <code><a href="Classes/RSDStepNavigationView.html">RSDStepNavigationView</a></code> which can be
+added to a Nib, Storyboard or instantiated using the <code>RSDTableStepUIConfig.instantiatNavigationView()</code>
+method.</p>
+
+                        <a href="Classes/RSDNavigationFooterView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDNavigationFooterView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepNavigationView.html">RSDStepNavigationView</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDGenericNavigationFooterView"></a>
+                    <a name="//apple_ref/swift/Class/RSDGenericNavigationFooterView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDGenericNavigationFooterView">RSDGenericNavigationFooterView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDGenericNavigationFooterView</code> is a concrete implementation of <code><a href="Classes/RSDNavigationFooterView.html">RSDNavigationFooterView</a></code> that will
+automatically lay out the UI elements included in the navigation footer:</p>
+
+<ol>
+<li>nextButton: UIButton - for navigating to the next step</li>
+<li>backButton: UIButton - for navigating to the previous step</li>
+<li>skipButton: UIButton - for skipping the step or task</li>
+<li>shadowView: RSDShadowGradient - shows a shadow to indicate that there is content below the fold</li>
+</ol>
+
+                        <a href="Classes/RSDGenericNavigationFooterView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDGenericNavigationFooterView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDNavigationFooterView.html">RSDNavigationFooterView</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepProgressView"></a>
+                    <a name="//apple_ref/swift/Class/RSDStepProgressView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepProgressView">RSDStepProgressView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDStepProgressView</code> is a UI element that displays a progress bar drawn horizontally
+from left to right.</p>
+
+<p>This view includes an optional pointer to <code>stepCountLabel</code> which is <em>not</em> a subview of
+this view but can be used to display current step and number of steps.</p>
+
+<p>The view controller must set <code>currentStep</code> and <code>totalSteps</code> to cause progress to be
+displayed.</p>
+
+                        <a href="Classes/RSDStepProgressView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepProgressView</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -1556,6 +1819,76 @@ use when there is a single input field on for the step.</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDTableSectionHeader"></a>
+                    <a name="//apple_ref/swift/Class/RSDTableSectionHeader" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDTableSectionHeader">RSDTableSectionHeader</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDStepChoiceSectionHeader</code> is the base implementation for a selection table view section header of a form step.</p>
+
+                        <a href="Classes/RSDTableSectionHeader.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableSectionHeader</span> <span class="p">:</span> <span class="kt">UITableViewHeaderFooterView</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDTableViewCell"></a>
+                    <a name="//apple_ref/swift/Class/RSDTableViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDTableViewCell">RSDTableViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDTableViewCell</code> is used to display a table cell that is linked to a <code>RSDTableItem</code>.</p>
+
+                        <a href="Classes/RSDTableViewCell.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableViewCell</span> <span class="p">:</span> <span class="kt">UITableViewCell</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -1579,282 +1912,6 @@ use when there is a single input field on for the step.</p>
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
 <span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTextLabelCell</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDTableViewCell.html">RSDTableViewCell</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDImageViewCell"></a>
-                    <a name="//apple_ref/swift/Class/RSDImageViewCell" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDImageViewCell">RSDImageViewCell</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDImageViewCell</code> can be used to display images amongst the table cells.</p>
-
-                        <a href="Classes/RSDImageViewCell.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDImageViewCell</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDTableViewCell.html">RSDTableViewCell</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepNavigationView"></a>
-                    <a name="//apple_ref/swift/Class/RSDStepNavigationView" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepNavigationView">RSDStepNavigationView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDStepNavigationView</code> is a custom <code>UIView</code> to be included in a <code><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></code>.
-It optionally contains references to standard step navigation UI including a next button,
-back button, skip button, learn more button, and cancel button.</p>
-
-                        <a href="Classes/RSDStepNavigationView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepNavigationView</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDNavigationHeaderView"></a>
-                    <a name="//apple_ref/swift/Class/RSDNavigationHeaderView" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDNavigationHeaderView">RSDNavigationHeaderView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDNavigationHeaderView</code> is a general purpose navigation header view that can be used
-by the step view controller to include UI elements that may typically be shown at the top
-of the step view.</p>
-
-                        <a href="Classes/RSDNavigationHeaderView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDNavigationHeaderView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepNavigationView.html">RSDStepNavigationView</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepHeaderView"></a>
-                    <a name="//apple_ref/swift/Class/RSDStepHeaderView" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepHeaderView">RSDStepHeaderView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDStepHeaderView</code> is a custom <code>UIView</code> designed for use as a header view in a table view, such as
-an <code><a href="Classes/RSDTableStepViewController.html">RSDTableStepViewController</a></code>.</p>
-
-                        <a href="Classes/RSDStepHeaderView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepHeaderView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDNavigationHeaderView.html">RSDNavigationHeaderView</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDTableStepHeaderView"></a>
-                    <a name="//apple_ref/swift/Class/RSDTableStepHeaderView" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDTableStepHeaderView">RSDTableStepHeaderView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDTableStepHeaderView</code> is a concrete implementation of <code><a href="Classes/RSDStepHeaderView.html">RSDStepHeaderView</a></code> that will automatically
-lay out the UI elements in this order, from top to bottom of the view:</p>
-
-<ol>
-<li>cancelButton: UIButton - allows for cancelling the task</li>
-<li>progressView: RSDStepProgressView - show progress thru the current flow</li>
-<li>imageView: UIImageView - shows an image associated with the current step</li>
-<li>titleLabel: UILabel - generally the Title of the current step</li>
-<li>textLabel: UILabel - generally the Text of the current step</li>
-<li>learnMoreButton: UIButton - a button to call the learnMoreAction</li>
-<li>detailLabel: UILabel - a label intended to prompt the user to enter data or make a selection</li>
-</ol>
-
-<p>Several public properties are provided to configure the view, such has hiding or showing the learnMoreButton
-or progressView, and providing a minimumHeight or customView.</p>
-
-                        <a href="Classes/RSDTableStepHeaderView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableStepHeaderView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepHeaderView.html">RSDStepHeaderView</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDNavigationFooterView"></a>
-                    <a name="//apple_ref/swift/Class/RSDNavigationFooterView" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDNavigationFooterView">RSDNavigationFooterView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDNavigationFooterView</code> is an abstract implementation for the <code><a href="Classes/RSDStepNavigationView.html">RSDStepNavigationView</a></code> which can be
-added to a Nib, Storyboard or instantiated using the <code>RSDTableStepUIConfig.instantiatNavigationView()</code>
-method.</p>
-
-                        <a href="Classes/RSDNavigationFooterView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDNavigationFooterView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepNavigationView.html">RSDStepNavigationView</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDGenericNavigationFooterView"></a>
-                    <a name="//apple_ref/swift/Class/RSDGenericNavigationFooterView" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDGenericNavigationFooterView">RSDGenericNavigationFooterView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDGenericNavigationFooterView</code> is a concrete implementation of <code><a href="Classes/RSDNavigationFooterView.html">RSDNavigationFooterView</a></code> that will
-automatically lay out the UI elements included in the navigation footer:</p>
-
-<ol>
-<li>nextButton: UIButton - for navigating to the next step</li>
-<li>backButton: UIButton - for navigating to the previous step</li>
-<li>skipButton: UIButton - for skipping the step or task</li>
-<li>shadowView: RSDShadowGradient - shows a shadow to indicate that there is content below the fold</li>
-</ol>
-
-                        <a href="Classes/RSDGenericNavigationFooterView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDGenericNavigationFooterView</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDNavigationFooterView.html">RSDNavigationFooterView</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepProgressView"></a>
-                    <a name="//apple_ref/swift/Class/RSDStepProgressView" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepProgressView">RSDStepProgressView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDStepProgressView</code> is a UI element that displays a progress bar drawn horizontally
-from left to right.</p>
-
-<p>This view includes an optional pointer to <code>stepCountLabel</code> which is <em>not</em> a subview of
-this view but can be used to display current step and number of steps.</p>
-
-<p>The view controller must set <code>currentStep</code> and <code>totalSteps</code> to cause progress to be
-displayed.</p>
-
-                        <a href="Classes/RSDStepProgressView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDStepProgressView</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1921,7 +1978,7 @@ the details are expanded.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDUnderlinedButton</span> <span class="p">:</span> <span class="kt"><a href="Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a></span></code></pre>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDUnderlinedButton</span> <span class="p">:</span> <span class="kt"><a href="Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
 
                         </div>
                       </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RSDImagePickerStepObject Extension Reference</title>
+    <title>RSDTableSectionHeader Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/RSDImagePickerStepObject" class="dashAnchor"></a>
-    <a title="RSDImagePickerStepObject Extension Reference"></a>
+    <a name="//apple_ref/swift/Class/RSDTableSectionHeader" class="dashAnchor"></a>
+    <a title="RSDTableSectionHeader Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">ResearchUI Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">ResearchUI Reference</a>
         <img id="carat" src="../img/carat.png" />
-        RSDImagePickerStepObject Extension Reference
+        RSDTableSectionHeader Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -298,14 +298,16 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>RSDImagePickerStepObject</h1>
+            <h1>RSDTableSectionHeader</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">RSDImagePickerStepObject</span> <span class="p">:</span> <span class="kt">RSDImagePickerStep</span><span class="p">,</span> <span class="kt">Codable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableSectionHeader</span> <span class="p">:</span> <span class="kt">UITableViewHeaderFooterView</span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
 
                 </div>
               </div>
-            
+            <p><code>RSDStepChoiceSectionHeader</code> is the base implementation for a selection table view section header of a form step.</p>
+
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -313,9 +315,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10ResearchUI27RSDStepViewControllerVendorP011instantiatedE04with0A00cE0_So06UIViewE0CXcSgAF16RSDPathComponent_pSg_tF"></a>
-                    <a name="//apple_ref/swift/Method/instantiateViewController(with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI27RSDStepViewControllerVendorP011instantiatedE04with0A00cE0_So06UIViewE0CXcSgAF16RSDPathComponent_pSg_tF">instantiateViewController(with:)</a>
+                    <a name="/s:10ResearchUI21RSDTableSectionHeaderC19backgroundColorTile0A008RSDColorH0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/backgroundColorTile" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI21RSDTableSectionHeaderC19backgroundColorTile0A008RSDColorH0VSgvp">backgroundColorTile</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -323,13 +325,69 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>The background color for the table section.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">instantiateViewController</span><span class="p">(</span><span class="n">with</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt">RSDPathComponent</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="kt">UIViewController</span> <span class="o">&amp;</span> <span class="kt">RSDStepController</span><span class="p">)?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">backgroundColorTile</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI21RSDTableSectionHeaderC12designSystem0A009RSDDesignG0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/designSystem" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI21RSDTableSectionHeaderC12designSystem0A009RSDDesignG0CSgvp">designSystem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The design system for this component.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI21RSDTableSectionHeaderC15setDesignSystem_4withy0A009RSDDesignH0C_AF12RSDColorTileVtF"></a>
+                    <a name="//apple_ref/swift/Method/setDesignSystem(_:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI21RSDTableSectionHeaderC15setDesignSystem_4withy0A009RSDDesignH0C_AF12RSDColorTileVtF">setDesignSystem(_:with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Views can be used in nibs and storyboards without setting up a design system for them. This allows
+for setting up views to use the same design system and background color mapping as their parent view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setDesignSystem</span><span class="p">(</span><span class="n">_</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">,</span> <span class="n">with</span> <span class="nv">background</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDCompletionGradient.html">RSDCompletionGradient</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDCountdownDial.html">RSDCountdownDial</a>
               </li>
               <li class="nav-group-task">
@@ -122,9 +125,6 @@
                 <a href="../Classes/RSDStepChoiceCell.html">RSDStepChoiceCell</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepChoiceSectionHeader">RSDStepChoiceSectionHeader</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/RSDStepHeaderView.html">RSDStepHeaderView</a>
               </li>
               <li class="nav-group-task">
@@ -150,6 +150,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDStepViewController.html">RSDStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableSectionHeader.html">RSDTableSectionHeader</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTableStepHeaderView.html">RSDTableStepHeaderView</a>
@@ -267,7 +270,7 @@
                 <a href="../Protocols.html#/s:10ResearchUI29RSDTaskViewControllerDelegateP">RSDTaskViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a>
+                <a href="../Protocols/RSDViewDesignable.html">RSDViewDesignable</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDVoiceBox.html">RSDVoiceBox</a>
@@ -299,7 +302,7 @@
               <div class="declaration">
                 <div class="language">
                   <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDUnderlinedButton</span> <span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a></span></code></pre>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDUnderlinedButton</span> <span class="p">:</span> <span class="kt"><a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
 
                 </div>
               </div>
@@ -358,6 +361,84 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">setTitle</span><span class="p">(</span><span class="n">_</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="k">for</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">UIControl</span><span class="o">.</span><span class="kt">State</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI17RSDViewDesignableP19backgroundColorTile0A008RSDColorG0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/backgroundColorTile" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI17RSDViewDesignableP19backgroundColorTile0A008RSDColorG0VSgvp">backgroundColorTile</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">backgroundColorTile</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI17RSDViewDesignableP12designSystem0A009RSDDesignF0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/designSystem" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI17RSDViewDesignableP12designSystem0A009RSDDesignF0CSgvp">designSystem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI17RSDViewDesignableP15setDesignSystem_4withy0A009RSDDesignG0C_AF12RSDColorTileVtF"></a>
+                    <a name="//apple_ref/swift/Method/setDesignSystem(_:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI17RSDViewDesignableP15setDesignSystem_4withy0A009RSDDesignG0C_AF12RSDColorTileVtF">setDesignSystem(_:with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setDesignSystem</span><span class="p">(</span><span class="n">_</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">,</span> <span class="n">with</span> <span class="nv">background</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

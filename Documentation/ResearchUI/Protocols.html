@@ -56,6 +56,9 @@
                 <a href="Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/RSDCompletionGradient.html">RSDCompletionGradient</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/RSDCountdownDial.html">RSDCountdownDial</a>
               </li>
               <li class="nav-group-task">
@@ -122,9 +125,6 @@
                 <a href="Classes/RSDStepChoiceCell.html">RSDStepChoiceCell</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepChoiceSectionHeader">RSDStepChoiceSectionHeader</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/RSDStepHeaderView.html">RSDStepHeaderView</a>
               </li>
               <li class="nav-group-task">
@@ -150,6 +150,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RSDStepViewController.html">RSDStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RSDTableSectionHeader.html">RSDTableSectionHeader</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RSDTableStepHeaderView.html">RSDTableStepHeaderView</a>
@@ -267,7 +270,7 @@
                 <a href="Protocols.html#/s:10ResearchUI29RSDTaskViewControllerDelegateP">RSDTaskViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a>
+                <a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDVoiceBox.html">RSDVoiceBox</a>
@@ -742,6 +745,92 @@ not inherit from the same subclass to show and hide a loading indicator.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:10ResearchUI17RSDViewDesignableP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDViewDesignable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI17RSDViewDesignableP">RSDViewDesignable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A protocol that UIView subclasses can use to standardize the color of their view properties.</p>
+
+                        <a href="Protocols/RSDViewDesignable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDViewDesignable</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI34RSDNavigationHeaderLayoutConstantsP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDNavigationHeaderLayoutConstants" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI34RSDNavigationHeaderLayoutConstantsP">RSDNavigationHeaderLayoutConstants</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Constants used by the navigation view header to set up standard constraints.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDNavigationHeaderLayoutConstants</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI34RSDNavigationFooterLayoutConstantsP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDNavigationFooterLayoutConstants" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI34RSDNavigationFooterLayoutConstantsP">RSDNavigationFooterLayoutConstants</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Constants used by the navigation view footer to set up standard constraints.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDNavigationFooterLayoutConstants</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:10ResearchUI35RSDStepTextFieldCellLayoutConstantsP"></a>
                     <a name="//apple_ref/swift/Protocol/RSDStepTextFieldCellLayoutConstants" class="dashAnchor"></a>
                     <a class="token" href="#/s:10ResearchUI35RSDStepTextFieldCellLayoutConstantsP">RSDStepTextFieldCellLayoutConstants</a>
@@ -815,92 +904,6 @@ and provides read only access to other common properties.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDStepTextInputView</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI20RSDViewColorStylableP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDViewColorStylable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI20RSDViewColorStylableP">RSDViewColorStylable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A protocol that UIView subclasses can use to standardize the color of foreground elements.</p>
-
-                        <a href="Protocols/RSDViewColorStylable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDViewColorStylable</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI34RSDNavigationHeaderLayoutConstantsP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDNavigationHeaderLayoutConstants" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI34RSDNavigationHeaderLayoutConstantsP">RSDNavigationHeaderLayoutConstants</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Constants used by the navigation view header to set up standard constraints.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDNavigationHeaderLayoutConstants</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI34RSDNavigationFooterLayoutConstantsP"></a>
-                    <a name="//apple_ref/swift/Protocol/RSDNavigationFooterLayoutConstants" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI34RSDNavigationFooterLayoutConstantsP">RSDNavigationFooterLayoutConstants</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Constants used by the navigation view footer to set up standard constraints.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDNavigationFooterLayoutConstants</span></code></pre>
 
                         </div>
                       </div>

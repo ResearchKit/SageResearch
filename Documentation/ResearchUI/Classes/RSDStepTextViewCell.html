@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDCompletionGradient.html">RSDCompletionGradient</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDCountdownDial.html">RSDCountdownDial</a>
               </li>
               <li class="nav-group-task">
@@ -122,9 +125,6 @@
                 <a href="../Classes/RSDStepChoiceCell.html">RSDStepChoiceCell</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepChoiceSectionHeader">RSDStepChoiceSectionHeader</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/RSDStepHeaderView.html">RSDStepHeaderView</a>
               </li>
               <li class="nav-group-task">
@@ -150,6 +150,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDStepViewController.html">RSDStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableSectionHeader.html">RSDTableSectionHeader</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTableStepHeaderView.html">RSDTableStepHeaderView</a>
@@ -267,7 +270,7 @@
                 <a href="../Protocols.html#/s:10ResearchUI29RSDTaskViewControllerDelegateP">RSDTaskViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a>
+                <a href="../Protocols/RSDViewDesignable.html">RSDViewDesignable</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDVoiceBox.html">RSDVoiceBox</a>
@@ -448,9 +451,9 @@ constants are used.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10ResearchUI19RSDStepTextViewCellC20tableBackgroundColorSo7UIColorCSgvp"></a>
-                    <a name="//apple_ref/swift/Property/tableBackgroundColor" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI19RSDStepTextViewCellC20tableBackgroundColorSo7UIColorCSgvp">tableBackgroundColor</a>
+                    <a name="/s:10ResearchUI19RSDStepTextViewCellC24usesTableBackgroundColorSbvp"></a>
+                    <a name="//apple_ref/swift/Property/usesTableBackgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI19RSDStepTextViewCellC24usesTableBackgroundColorSbvp">usesTableBackgroundColor</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -458,14 +461,13 @@ constants are used.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Override to set the content view background color to the color of the table background.</p>
-
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">tableBackgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">usesTableBackgroundColor</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -475,9 +477,9 @@ constants are used.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDStepTextViewCell(py)usesLightStyle"></a>
-                    <a name="//apple_ref/swift/Property/usesLightStyle" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepTextViewCell(py)usesLightStyle">usesLightStyle</a>
+                    <a name="/s:10ResearchUI19RSDStepTextViewCellC15setDesignSystem_4withy0A009RSDDesignI0C_AF12RSDColorTileVtF"></a>
+                    <a name="//apple_ref/swift/Method/setDesignSystem(_:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI19RSDStepTextViewCellC15setDesignSystem_4withy0A009RSDDesignI0C_AF12RSDColorTileVtF">setDesignSystem(_:with:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -485,15 +487,13 @@ constants are used.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Override to set the text element colors based on whether the color style calls for a dark background
-with light elements or a light background with dark elements.</p>
-
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">usesLightStyle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">setDesignSystem</span><span class="p">(</span><span class="n">_</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">,</span> <span class="n">with</span> <span class="nv">background</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

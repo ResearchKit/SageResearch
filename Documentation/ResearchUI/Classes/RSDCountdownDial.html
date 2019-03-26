@@ -56,6 +56,9 @@
                 <a href="../Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDCompletionGradient.html">RSDCompletionGradient</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDCountdownDial.html">RSDCountdownDial</a>
               </li>
               <li class="nav-group-task">
@@ -122,9 +125,6 @@
                 <a href="../Classes/RSDStepChoiceCell.html">RSDStepChoiceCell</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepChoiceSectionHeader">RSDStepChoiceSectionHeader</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/RSDStepHeaderView.html">RSDStepHeaderView</a>
               </li>
               <li class="nav-group-task">
@@ -150,6 +150,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDStepViewController.html">RSDStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableSectionHeader.html">RSDTableSectionHeader</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTableStepHeaderView.html">RSDTableStepHeaderView</a>
@@ -267,7 +270,7 @@
                 <a href="../Protocols.html#/s:10ResearchUI29RSDTaskViewControllerDelegateP">RSDTaskViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a>
+                <a href="../Protocols/RSDViewDesignable.html">RSDViewDesignable</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDVoiceBox.html">RSDVoiceBox</a>
@@ -299,7 +302,7 @@
               <div class="declaration">
                 <div class="language">
                   <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCountdownDial</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDProgressIndicator.html">RSDProgressIndicator</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a></span></code></pre>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCountdownDial</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDProgressIndicator.html">RSDProgressIndicator</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
 
                 </div>
               </div>
@@ -314,6 +317,33 @@
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI16RSDCountdownDialC18customDesignSystem0A009RSDDesignG0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/customDesignSystem" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDCountdownDialC18customDesignSystem0A009RSDDesignG0CSgvp">customDesignSystem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Point to the design system.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">customDesignSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -345,6 +375,34 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)ringColor"></a>
+                    <a name="//apple_ref/swift/Property/ringColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)ringColor">ringColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The color of the unfilled circular ring.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">ringColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)usesLightStyle"></a>
                     <a name="//apple_ref/swift/Property/usesLightStyle" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)usesLightStyle">usesLightStyle</a>
@@ -355,8 +413,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Should the element display with a light style of progress bar and label for use on a dark
-background, or with a dark style of progress bar for use on a light background?</p>
+                        <p>Whether or not this countdown dial&rsquo;s inner color uses light-style UI elements.</p>
 
                       </div>
                       <div class="declaration">
@@ -365,6 +422,146 @@ background, or with a dark style of progress bar for use on a light background?<
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
 <span class="kd">public</span> <span class="k">var</span> <span class="nv">usesLightStyle</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)innerColor"></a>
+                    <a name="//apple_ref/swift/Property/innerColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCountdownDial(py)innerColor">innerColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The color of the inside of the circle.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">innerColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI16RSDCountdownDialC10colorStyle0A013RSDColorRulesC0F0OSgvp"></a>
+                    <a name="//apple_ref/swift/Property/colorStyle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDCountdownDialC10colorStyle0A013RSDColorRulesC0F0OSgvp">colorStyle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If the colorStyle is set, then this will determine the inner color and light style and will
+override any colors set by the storyboard or nib. This value is <code>nil</code> by default and can only be set
+programatically.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">colorStyle</span><span class="p">:</span> <span class="kt">RSDColorRules</span><span class="o">.</span><span class="kt">Style</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI16RSDCountdownDialC19backgroundColorTile0A008RSDColorG0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/backgroundColorTile" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDCountdownDialC19backgroundColorTile0A008RSDColorG0VSgvp">backgroundColorTile</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The background color mapping that this view should use as its key. Typically, for all but the
+top-level views, this will be the background of the superview.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">backgroundColorTile</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI16RSDCountdownDialC12designSystem0A009RSDDesignF0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/designSystem" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDCountdownDialC12designSystem0A009RSDDesignF0CSgvp">designSystem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The design system for this component.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI16RSDCountdownDialC15setDesignSystem_4withy0A009RSDDesignG0C_AF12RSDColorTileVtF"></a>
+                    <a name="//apple_ref/swift/Method/setDesignSystem(_:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDCountdownDialC15setDesignSystem_4withy0A009RSDDesignG0C_AF12RSDColorTileVtF">setDesignSystem(_:with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Views can be used in nibs and storyboards without setting up a design system for them. This allows
+for setting up views to use the same design system and background color mapping as their parent view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setDesignSystem</span><span class="p">(</span><span class="n">_</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">,</span> <span class="n">with</span> <span class="nv">background</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -413,11 +610,6 @@ background, or with a dark style of progress bar for use on a light background?<
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The width of the dial (progress indicator).</p>
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    The color of the dial is set using the <code>tintColor</code> property.
-
-</div>
 
                       </div>
                       <div class="declaration">
