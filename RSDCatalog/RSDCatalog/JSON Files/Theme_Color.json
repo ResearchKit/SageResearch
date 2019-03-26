@@ -27,7 +27,7 @@
         },
         "colorMapping": {
             "type": "placementMapping",
-            "colorMapping": {
+            "placement": {
                 "header": "primary",
                 "body": "white",
                 "footer": "white"
@@ -50,7 +50,7 @@
                 "color": "darkGreen",
                 "usesLightStyle": true
             },
-            "colorMapping": {
+            "placement": {
                 "header": "custom",
                 "body": "white",
                 "footer": "white"
@@ -73,7 +73,7 @@
                 "color": "lightBlue",
                 "usesLightStyle": false
             },
-            "colorMapping": {
+            "placement": {
                 "header": "custom",
                 "body": "white",
                 "footer": "white"
@@ -88,7 +88,7 @@
         "detail": "Select a single option",
         "colorMapping": {
             "type": "placementMapping",
-            "colorMapping": {
+            "placement": {
                 "header": "primary",
                 "body": "white",
                 "footer": "white"
@@ -133,7 +133,7 @@
                 "color": "darkGreen",
                 "usesLightStyle": true
             },
-            "colorMapping": {
+            "placement": {
                 "header": "custom",
                 "body": "custom",
                 "footer": "white"

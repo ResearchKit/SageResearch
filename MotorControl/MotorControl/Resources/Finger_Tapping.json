@@ -39,7 +39,7 @@
                  },
                  "colorMapping":{
                      "type": "placementMapping",
-                     "colorMapping": {
+                     "placement": {
                          "header": "primary",
                          "body": "white",
                          "footer": "white"
@@ -59,7 +59,7 @@
                 },
                 "colorMapping":{
                     "type": "placementMapping",
-                    "colorMapping": {
+                    "placement": {
                         "header": "primary",
                         "body": "white",
                         "footer": "white"
@@ -110,7 +110,7 @@
                 },
                 "colorMapping":{
                     "type": "placementMapping",
-                    "colorMapping": {
+                    "placement": {
                         "header": "primary",
                         "body": "white",
                         "footer": "white"
@@ -136,7 +136,7 @@
                 },
                 "colorMapping":{
                     "type": "placementMapping",
-                    "colorMapping": {
+                    "placement": {
                         "header": "primary",
                         "body": "white",
                         "footer": "white"
