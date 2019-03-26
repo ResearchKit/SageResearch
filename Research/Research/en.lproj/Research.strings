@@ -67,6 +67,7 @@
 /* Task progress */
 "CURRENT_STEP_%@_OF_TOTAL_STEPS_%@" = "Step %1$@ of %2$@";  // Text for marking the current steps
 "MESSAGE_CONFIRM_CANCEL_TASK" = "Are you sure that you want to stop?";  // Message to show when confirming that tapping the close task button was intentional.
+"OVERVIEW_WHAT_YOU_NEED" = "This is what you'll need"; // Text on the overview scroll view for title of list of what you need for the task.
 
 /* Default placeholders to request answers in a questionnaire. */
 "PLACEHOLDER_TEXT_OR_NUMBER" = "Tap to answer";

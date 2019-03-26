@@ -66,12 +66,12 @@ open class RSDCountdownStepViewController: RSDStepViewController {
     /// Toggle the state of the `pauseButton` to pause/resume the countdown.
     @IBAction open func pauseTimer() {
         if self.clock?.isPaused ?? false {
-            self.pauseButton?.setTitle(Localization.buttonResume(), for: .normal)
-            self.pause()
-        }
-        else {
             self.pauseButton?.setTitle(Localization.buttonPause(), for: .normal)
             self.resume()
+        }
+        else {
+            self.pauseButton?.setTitle(Localization.buttonResume(), for: .normal)
+            self.pause()
         }
     }
     

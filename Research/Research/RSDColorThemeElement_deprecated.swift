@@ -41,33 +41,22 @@ import UIKit
 
 
 /// An enum for the type of the color style to use for a given component.
+@available(*, deprecated)
 public enum RSDColorStyle: String, Codable {
     
     /// Uses the "light" background color.
     case lightBackground
     
-    /// Uses the "dark" background color.
-    case darkBackground
-    
     /// Uses the custom background color defined by the theme.
     case customBackground
-}
-
-/// An enum for part of the view to which a given color style should be applied.
-public enum RSDColorPlacement : String, Codable {
     
-    /// The color applies to the header.
-    case header
-    
-    /// The color applies to the body of the view.
-    case body
-    
-    /// The color applies to the footer of the view.
-    case footer
+    /// Uses the "dark" background color.
+    case darkBackground
 }
 
 /// `RSDColorThemeElement` tells the UI what the background color and foreground color are for a given view as
 /// well as whether or not the foreground elements should use "light style".
+@available(*, deprecated)
 public protocol RSDColorThemeElement : RSDUIThemeElement {
     
     #if os(watchOS) || os(macOS)

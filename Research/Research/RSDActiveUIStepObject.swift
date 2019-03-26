@@ -115,21 +115,6 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
         
         /// Speak the instruction at the end of the step.
         case end
-        
-        init?(at timeInterval: TimeInterval, duration:TimeInterval) {
-            if timeInterval == 0 {
-                self = .start
-            }
-            else if timeInterval == Double.infinity || timeInterval >= duration {
-                self = .end
-            }
-            else if timeInterval == duration / 2 {
-                self = .halfway
-            }
-            else {
-                return nil
-            }
-        }
     }
     
     /// Localized text that represents an instructional voice prompt. Instructional speech begins when the step

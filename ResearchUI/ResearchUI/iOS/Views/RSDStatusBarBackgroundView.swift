@@ -41,7 +41,7 @@ open class RSDStatusBarBackgroundView: UIView {
     
     /// The color of the overlay view that is used to normalize the status bar display.
     @IBInspectable
-    open var overlayColor: UIColor = UIColor.rsd_statusBarOverlay {
+    open var overlayColor: UIColor = UIColor(white: 0, alpha: 0.2) {
         didSet {
             foregroundLayer.backgroundColor = overlayColor
         }
@@ -58,7 +58,7 @@ open class RSDStatusBarBackgroundView: UIView {
     
     public init() {
         super.init(frame: CGRect.zero)
-        backgroundColor = UIColor.appBackgroundDark
+        backgroundColor = UIColor.clear
         commonInit()
     }
     

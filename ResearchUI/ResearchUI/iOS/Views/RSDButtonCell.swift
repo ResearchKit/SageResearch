@@ -2,7 +2,7 @@
 //  RSDButtonCell.swift
 //  ResearchUI (iOS)
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -80,21 +80,11 @@ fileprivate struct DefaultRSDButtonCellLayoutConstants {
 extension DefaultRSDButtonCellLayoutConstants : RSDButtonCellLayoutConstants {
 }
 
-@IBDesignable open class RSDModalButtonCell : RSDButtonCell, RSDViewColorStylable {
-    
-    /// Should the subcomponents be displayed with a dark background and light tint on the buttons and text?
-    override open var usesLightStyle: Bool {
-        didSet {
-            guard let button = actionButton as? RSDRoundedButton else { return }
-            button.usesLightStyle = usesLightStyle
-        }
-    }
+@IBDesignable open class RSDModalButtonCell : RSDButtonCell {
     
     /// Override to set the content view background color to the color of the table background.
-    override open var tableBackgroundColor: UIColor! {
-        didSet {
-            self.contentView.backgroundColor = tableBackgroundColor
-        }
+    override open var usesTableBackgroundColor: Bool {
+        return true
     }
     
     /// Override the table item to set up title and icon based on the modal action.

@@ -55,7 +55,7 @@ import UIKit
 }
 
 /// `RSDRoundedButton` is a UI element for displaying navigation buttons in the footer area of a view.
-@IBDesignable open class RSDRoundedButton : RSDButton, RSDViewColorStylable {
+@IBDesignable open class RSDRoundedButton : RSDButton, RSDViewDesignable {
     
     public static let defaultHeight: CGFloat = 52.0
     public static let defaultWidthWith2Buttons: CGFloat = CGFloat(144.0).rsd_proportionalToScreenWidth(max: 160)
@@ -63,22 +63,46 @@ import UIKit
     
     override open var isEnabled: Bool {
         didSet {
-            // show as disabled by lowering opacity unless alpha is used to set hidden
+            // If the alpha component is used to set this as hidden, then don't do anything.
             guard alpha > 0.1 else { return }
-            self.alpha = isEnabled ? CGFloat(1) : CGFloat(0.3)
+
+            guard let colorTile = self.backgroundColorTile,
+                let designSystem = self.designSystem
+                else {
+                    self.alpha = isEnabled ? CGFloat(1) : CGFloat(0.35)
+                    return
+            }
+            
+            self.alpha = 1.0
+            let buttonType: RSDDesignSystem.ButtonType = isSecondaryButton ? .secondary : .primary
+            let state: RSDControlState = isEnabled ? .normal : .disabled
+            self.backgroundColor = designSystem.colorRules.roundedButton(on: colorTile, with: buttonType, forState: state)
         }
     }
     
-    /// Should the button display using the "light" button style? Set this value to `true` for a button
-    /// that is displayed on a dark background (which results in "light" colored elements). By default,
-    /// this value is false, assuming a "light" colored background (white) which will display the "dark" UI
-    /// elements.
-    @IBInspectable
-    open var usesLightStyle: Bool = false {
+    override open var isHighlighted: Bool {
         didSet {
-            updateColorStyle()
+            // If the alpha component is used to set this as hidden, then don't do anything.
+            guard alpha > 0.1 else { return }
+            
+            guard let colorTile = self.backgroundColorTile,
+                let designSystem = self.designSystem
+                else {
+                    // show as highlighted by lowering opacity unless alpha is used to set hidden
+                    self.alpha = isHighlighted ? CGFloat(1) : CGFloat(0.8)
+                    return
+            }
+            
+            self.alpha = 1.0
+            let buttonType: RSDDesignSystem.ButtonType = isSecondaryButton ? .secondary : .primary
+            let state: RSDControlState = isHighlighted ? .highlighted : .normal
+            self.backgroundColor = designSystem.colorRules.roundedButton(on: colorTile, with: buttonType, forState: state)
         }
     }
+    
+    // TODO: syoung 03/19/2019 Remove these properties once the modules that use them have been updated.
+    @available(*, unavailable)
+    open var usesLightStyle: Bool = false
     
     /// Should the button display using the "secondary" button style? This style is used for buttons that
     /// are displayed inline with scrolling views for handling secondary actions.
@@ -87,35 +111,51 @@ import UIKit
     @IBInspectable
     open var isSecondaryButton: Bool = false {
         didSet {
-            updateColorStyle()
+            updateColorsAndFonts()
         }
     }
     
-    private func updateColorStyle() {
-        let titleColor: UIColor
-        if usesLightStyle {
-            if isSecondaryButton {
-                titleColor = UIColor.rsd_secondaryRoundedButtonTextLightStyle
-                self.backgroundColor = UIColor.rsd_secondaryRoundedButtonBackgroundLightStyle
-            } else {
-                titleColor = UIColor.rsd_roundedButtonTextLightStyle
-                self.backgroundColor = UIColor.rsd_roundedButtonBackgroundLightStyle
-            }
-        } else {
-            if isSecondaryButton {
-                titleColor = UIColor.rsd_secondaryRoundedButtonText
-                self.backgroundColor = UIColor.rsd_secondaryRoundedButtonBackground
-            } else {
-                titleColor = UIColor.rsd_roundedButtonText
-                self.backgroundColor = UIColor.rsd_roundedButtonBackground
-            }
-        }
-        setTitleColor(titleColor, for: .normal)
+    /// The background color mapping that this view should use as its key. Typically, for all but the
+    /// top-level views, this will be the background of the superview.
+    open private(set) var backgroundColorTile: RSDColorTile?
+    
+    /// The design system for this component.
+    open private(set) var designSystem: RSDDesignSystem?
+    
+    /// Views can be used in nibs and storyboards without setting up a design system for them. This allows
+    /// for setting up views to use the same design system and background color mapping as their parent view.
+    open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.backgroundColorTile = background
+        self.designSystem = designSystem
+        updateColorsAndFonts()
     }
     
-    open override func tintColorDidChange() {
-        super.tintColorDidChange()
-        updateColorStyle()
+    private func updateColorsAndFonts() {
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        let colorTile: RSDColorTile = self.backgroundTile() ?? designSystem.colorRules.backgroundLight
+
+        // Set the background to the current state. iOS 11 does not support setting the background of the
+        // button based on the button state.
+        let buttonType: RSDDesignSystem.ButtonType = isSecondaryButton ? .secondary : .primary
+        let currentState: RSDControlState = isEnabled ? (isHighlighted ? .highlighted : .normal) : .disabled
+        self.backgroundColor = designSystem.colorRules.roundedButton(on: colorTile, with: buttonType, forState: currentState)
+        
+        // If the alpha component is not being used to hide this button, then reset to 1.0 b/c this
+        // component is *not* used to denote button state but it might have been set up that way in the
+        // initialization because of the override of isEnabled and isHighlighted.
+        if alpha > 0.1 {
+            self.alpha = 1.0
+        }
+        
+        // Set the title color for each of the states used by this button
+        let states: [RSDControlState] = [.normal, .highlighted, .disabled]
+        states.forEach {
+            let titleColor = designSystem.colorRules.roundedButtonText(on: colorTile, with: buttonType, forState: $0)
+            setTitleColor(titleColor, for: $0.controlState)
+        }
+        
+        // Set the title font to the font for a rounded button.
+        titleLabel?.font = designSystem.fontRules.font(for: .heading4)
     }
     
     public required init() {
@@ -146,12 +186,9 @@ import UIKit
         // Set the height to the standard height.
         let heightConstraint = self.heightAnchor.constraint(equalToConstant: RSDRoundedButton.defaultHeight)
         heightConstraint.isActive = true
-        
-        // Set the title font to the font for a rounded button.
-        titleLabel?.font = UIFont.roundedButtonTitle
-        
+
         // Update the color style.
-        updateColorStyle()
+        updateColorsAndFonts()
     }
     
     override open func layoutSubviews() {

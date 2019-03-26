@@ -35,6 +35,7 @@ import UIKit
 
 /// `RSDCrosshatchView` is a UI element for displaying a background that is two colors
 /// where the split is diagonal.
+@available(*, deprecated)
 @IBDesignable open class RSDCrosshatchView: UIView {
 
     /// The color of the shadow that is drawn as the background of this view.

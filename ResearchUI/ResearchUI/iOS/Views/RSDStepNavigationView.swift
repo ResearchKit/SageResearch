@@ -33,18 +33,85 @@
 
 import UIKit
 
-/// A protocol that UIView subclasses can use to standardize the color of foreground elements.
+@available(*, deprecated)
 public protocol RSDViewColorStylable : class {
     
     /// Should the component use a light tint for display on a dark background?
     var usesLightStyle: Bool { get set }
 }
 
+/// A protocol that UIView subclasses can use to standardize the color of their view properties.
+public protocol RSDViewDesignable : class {
+    
+    /// The background color mapping that this view should use as its key. Typically, for all but the
+    /// top-level views, this will be the background of the superview.
+    var backgroundColorTile: RSDColorTile? { get }
+    
+    /// The design system for this component.
+    var designSystem: RSDDesignSystem? { get }
+    
+    /// All views will have a superview property.
+    var superview: UIView? { get }
+    
+    /// Views can be used in nibs and storyboards without setting up a design system for them. This allows
+    /// for setting up views to use the same design system and background color mapping as their parent view.
+    ///
+    /// - parameters:
+    ///     - designSystem: The design system that is used to set up this view.
+    ///     - background: The background tile for this view.
+    func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile)
+}
+
+extension UIView {
+    
+    /// Recursively set the design system for subviews of this view.
+    ///
+    /// - note: If the subview implements the `RSDViewDesignable` protocol, it is assumed that that view will
+    /// call the recursive set on it's subviews should it need to.
+    ///
+    /// - parameters:
+    ///     - designSystem: The design system that is used to set up this view.
+    ///     - background: The background tile for this view.
+    func recursiveSetDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.subviews.forEach { (view) in
+            if let designable = view as? RSDViewDesignable,
+                designable.designSystem == nil {
+                designable.setDesignSystem(designSystem, with: background)
+            }
+            else {
+                view.recursiveSetDesignSystem(designSystem, with: background)
+            }
+        }
+    }
+    
+    /// Get the background color tile for this view. This may be the background color for the view or it may
+    /// be that this view has a transparent background and gets its real backgrounnd from the super view.
+    ///
+    /// - returns: The color tile built for this view or `nil` if it could not be determined.
+    public func backgroundTile() -> RSDColorTile? {
+        var view : UIView? = self
+        while let vw = view,
+            ((vw as? RSDViewDesignable)?.backgroundColorTile == nil),
+            (vw.backgroundColor == nil || vw.backgroundColor == UIColor.clear) {
+            view = vw.superview
+        }
+        if let colorTile = (view as? RSDViewDesignable)?.backgroundColorTile {
+            return colorTile
+        }
+        else if let background = view?.backgroundColor {
+            return RSDColorTile(background, usesLightStyle: (background != UIColor.white))
+        }
+        else {
+            return nil
+        }
+    }
+}
+
 /// `RSDStepNavigationView` is a custom `UIView` to be included in a `RSDStepViewController`.
 /// It optionally contains references to standard step navigation UI including a next button,
 /// back button, skip button, learn more button, and cancel button.
 @IBDesignable
-open class RSDStepNavigationView: UIView, RSDViewColorStylable {
+open class RSDStepNavigationView: UIView, RSDViewDesignable {
     
     /// Button for navigating to the next step.
     @IBOutlet open var nextButton: UIButton?
@@ -121,22 +188,56 @@ open class RSDStepNavigationView: UIView, RSDViewColorStylable {
     
     /// Should the navigation view subcomponents be displayed with a dark background and light tint on the
     /// buttons and text?
-    @IBInspectable open var usesLightStyle: Bool = false {
-        didSet {
-            updateLightStyle()
-        }
-    }
+    @available(*, unavailable)
+    open var usesLightStyle: Bool = false
     
-    fileprivate func updateLightStyle() {
-        tintColor = usesLightStyle ? UIColor.rsd_underlinedButtonTextLightStyle : UIColor.rsd_underlinedButtonText
-        for button in allButtons() {
-            if let roundedButton = button as? RSDRoundedButton {
-                roundedButton.usesLightStyle = usesLightStyle
+    /// The background color mapping that this view should use as its key.
+    open private(set) var backgroundColorTile: RSDColorTile?
+    
+    /// The design system for this component.
+    open private(set) var designSystem: RSDDesignSystem?
+    
+    /// Views can be used in nibs and storyboards without setting up a design system for them. This allows
+    /// for setting up views to use the same design system and background color mapping as their parent view.
+    open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.backgroundColorTile = background
+        self.designSystem = designSystem
+        self.backgroundColor = background.color
+        
+        let buttons = allButtons()
+        let tintColor = designSystem.colorRules.tintedButtonColor(on: background)
+        buttons.forEach {
+            $0.tintColor = tintColor
+            if let designable = $0 as? RSDViewDesignable,
+                designable.designSystem == nil {
+                designable.setDesignSystem(designSystem, with: background)
             }
         }
-        titleLabel?.textColor = usesLightStyle ? UIColor.rsd_headerTitleLabelLightStyle : UIColor.rsd_headerTitleLabel
-        textLabel?.textColor = usesLightStyle ? UIColor.rsd_headerTextLabelLightStyle : UIColor.rsd_headerTextLabel
-        detailLabel?.textColor = usesLightStyle ? UIColor.rsd_headerDetailLabelLightStyle : UIColor.rsd_headerDetailLabel
+        
+        updateColors()
+        
+        self.recursiveSetDesignSystem(designSystem, with: background)
+        
+        // Set the fonts for the labels
+        titleLabel?.font = designSystem.fontRules.font(for: .heading2, compatibleWith: self.traitCollection)
+        textLabel?.font = designSystem.fontRules.font(for: .body, compatibleWith: self.traitCollection)
+        detailLabel?.font = designSystem.fontRules.font(for: .bodyDetail, compatibleWith: self.traitCollection)
+        
+        self.setNeedsUpdateConstraints()
+        self.setNeedsLayout()
+    }
+    
+    fileprivate func updateColors() {
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        let colorTile: RSDColorTile = self.backgroundColorTile ?? {
+            let background = self.backgroundColor ?? UIColor.white
+            return RSDColorTile(background, usesLightStyle: background != UIColor.white)
+        }()
+        
+        self.tintColor = designSystem.colorRules.tintedButtonColor(on: colorTile)
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .heading2)
+        textLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .body)
+        detailLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .bodyDetail)
     }
 }
 
@@ -147,10 +248,18 @@ open class RSDStepNavigationView: UIView, RSDViewColorStylable {
 open class RSDNavigationHeaderView: RSDStepNavigationView {
     
     /// A progress view for showing step progress.
-    @IBOutlet open var progressView: RSDStepProgressView?
+    @IBOutlet open var progressView: RSDStepProgressView? {
+        didSet {
+            hookupStepLabel()
+        }
+    }
     
     /// A label used to display the number of steps. For example, "Step 2 out of 5".
-    @IBOutlet open var stepCountLabel: UILabel?
+    @IBOutlet open var stepCountLabel: UILabel?  {
+        didSet {
+            hookupStepLabel()
+        }
+    }
     
     /// Causes the progress view to be shown or hidden. Default is `true`.
     @IBInspectable open var shouldShowCloseButton = true {
@@ -178,9 +287,23 @@ open class RSDNavigationHeaderView: RSDStepNavigationView {
         }
     }
     
-    fileprivate override func updateLightStyle()  {
-        super.updateLightStyle()
-        progressView?.usesLightStyle = usesLightStyle
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        hookupStepLabel()
+    }
+    
+    fileprivate func hookupStepLabel() {
+        guard let label = self.stepCountLabel else { return }
+        self.progressView?.stepCountLabel = label
     }
     
     /// Layout constants. Subclasses can override to customize; otherwise the default private
@@ -202,9 +325,6 @@ open class RSDNavigationHeaderView: RSDStepNavigationView {
         progressView = RSDStepProgressView()
         progressView!.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(progressView!)
-        
-        // Set the color style
-        progressView?.usesLightStyle = self.usesLightStyle
     }
 }
 
@@ -269,12 +389,11 @@ open class RSDStepHeaderView: RSDNavigationHeaderView {
 /// Several public properties are provided to configure the view, such has hiding or showing the learnMoreButton
 /// or progressView, and providing a minimumHeight or customView.
 ///
-@IBDesignable
 open class RSDTableStepHeaderView: RSDStepHeaderView {
     
     public init() {
         super.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.appBackgroundLight
+        self.backgroundColor = UIColor.white
         commonInit()
     }
     
@@ -296,8 +415,6 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         addTitleLabelIfNeeded()
         addTextLabelIfNeeded()
         addDetailLabelIfNeeded()
-        
-        updateLightStyle()
         setNeedsUpdateConstraints()
     }
     
@@ -331,12 +448,10 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
     }
     
     /// Convenience method for adding a label.
-    open func addLabel(font: UIFont, color: UIColor) -> UILabel {
+    open func addLabel() -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = font
-        label.textColor = color
         label.textAlignment = .center
         label.preferredMaxLayoutWidth = constants.labelMaxLayoutWidth
         self.addSubview(label)
@@ -350,21 +465,21 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
     /// Convenience method for adding the title label if needed.
     open func addTitleLabelIfNeeded() {
         guard titleLabel == nil else { return }
-        titleLabel = addLabel(font: UIFont.rsd_headerTitleLabel, color: UIColor.rsd_headerTitleLabel)
+        titleLabel = addLabel()
         titleLabel!.accessibilityTraits = UIAccessibilityTraits.header
     }
     
     /// Convenience method for adding the text label if needed.
     open func addTextLabelIfNeeded() {
         guard textLabel == nil else { return }
-        textLabel = addLabel(font: UIFont.rsd_headerTextLabel, color: UIColor.rsd_headerTextLabel)
+        textLabel = addLabel()
         textLabel!.accessibilityTraits = UIAccessibilityTraits.summaryElement
     }
     
     /// Convenience method for adding the detail label if needed.
     open func addDetailLabelIfNeeded() {
         guard detailLabel == nil else { return }
-        detailLabel = addLabel(font: UIFont.rsd_headerDetailLabel, color: UIColor.rsd_headerDetailLabel)
+        detailLabel = addLabel()
     }
     
     open override func layoutSubviews() {
@@ -597,7 +712,7 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
     
     public required init() {
         super.init(frame: CGRect.zero)
-        self.backgroundColor = UIColor.appBackgroundLight
+        self.backgroundColor = UIColor.white
         commonInit()
     }
     
@@ -622,7 +737,7 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
         addBackButtonIfNeeded()
         addSkipButtonIfNeeded()
         addShadowIfNeeded()
-        updateLightStyle()
+        updateColors()
     }
     
     /// Layout constants. Subclasses can override to customize; otherwise the default private

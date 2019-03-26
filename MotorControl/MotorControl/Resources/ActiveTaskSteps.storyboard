@@ -23,16 +23,16 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CRK-Yd-4Pa" customClass="RSDCountdownDial" customModule="ResearchUI">
-                                <rect key="frame" x="60" y="179.5" width="200" height="200"/>
+                                <rect key="frame" x="60.5" y="179.5" width="199" height="199"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gl-I3-Byg" userLabel="Unit Label">
-                                        <rect key="frame" x="62" y="157.5" width="76" height="19.5"/>
+                                        <rect key="frame" x="61.5" y="157.5" width="76" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoL-gH-k3I" userLabel="Second Count Label">
-                                        <rect key="frame" x="40" y="30" width="120" height="119.5"/>
+                                        <rect key="frame" x="39.5" y="30" width="120" height="119.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -74,14 +74,14 @@
                                 <state key="normal" image="closeActivity"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9c-PV-TEq" userLabel="Restart Button" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                <rect key="frame" x="28" y="423.5" width="264" height="52"/>
+                                <rect key="frame" x="28" y="422.5" width="264" height="52"/>
                                 <state key="normal" title="Restart Test"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlT-Pj-FXY" userLabel="Review Button" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                                <rect key="frame" x="85.5" y="505.5" width="149" height="32.5"/>
+                                <rect key="frame" x="81" y="504.5" width="158" height="33.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Review Instructions"/>
@@ -161,7 +161,7 @@
                                 <state key="normal" image="closeActivity"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qh-cg-kfP" userLabel="Pause Button" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                <rect key="frame" x="28" y="423.5" width="264" height="52"/>
+                                <rect key="frame" x="28" y="422.5" width="264" height="52"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Pause">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -189,7 +189,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ph-h6-gCc" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                                <rect key="frame" x="85.5" y="505.5" width="149" height="32.5"/>
+                                <rect key="frame" x="81" y="504.5" width="158" height="33.5"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Review Instructions"/>
                             </button>
@@ -244,97 +244,84 @@
         <scene sceneID="IvJ-Vm-kvE">
             <objects>
                 <viewController storyboardIdentifier="Completion" id="bFq-yO-ZE5" userLabel="Completion Step" customClass="MCTCompletionStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="lMD-F9-TLK">
+                    <view key="view" contentMode="scaleToFill" id="lMD-F9-TLK" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIr-ya-mvM" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnw-3v-fHb" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWB-gq-L8p">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="267"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="You just completed a Walk and Balance activity." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTI-qh-bqI">
-                                        <rect key="frame" x="24" y="320" width="272" height="86"/>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2L-Tw-ezM" customClass="RSDCompletionGradient" customModule="ResearchUI">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="267"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="5GL-S5-2w4"/>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="TXv-9n-0P8"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="MBZ-Ss-dgS"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vl9-XW-t8b" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                        <rect key="frame" x="24" y="498" width="272" height="52"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="Button">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Great job!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEL-CV-BRp">
-                                        <rect key="frame" x="24" y="268" width="272" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="UFo-zV-9GU"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                    </label>
+                                    </view>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Completion-WalkAndBalance" translatesAutoresizingMaskIntoConstraints="NO" id="8Ic-xi-B4w">
+                                        <rect key="frame" x="53.5" y="50" width="213" height="178"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="vl9-XW-t8b" firstAttribute="centerX" secondItem="rnw-3v-fHb" secondAttribute="centerX" id="5Sh-p9-CFU"/>
-                                    <constraint firstAttribute="trailing" secondItem="vl9-XW-t8b" secondAttribute="trailing" constant="24" id="78h-BB-X66"/>
-                                    <constraint firstItem="hTI-qh-bqI" firstAttribute="top" secondItem="GEL-CV-BRp" secondAttribute="bottom" constant="20" id="9j5-kl-agt"/>
-                                    <constraint firstItem="GEL-CV-BRp" firstAttribute="leading" secondItem="rnw-3v-fHb" secondAttribute="leading" constant="24" id="Nl2-dP-zNi"/>
-                                    <constraint firstItem="hTI-qh-bqI" firstAttribute="leading" secondItem="rnw-3v-fHb" secondAttribute="leading" constant="24" id="Q6V-55-i2t"/>
-                                    <constraint firstItem="vl9-XW-t8b" firstAttribute="top" secondItem="hTI-qh-bqI" secondAttribute="bottom" constant="92" id="RxF-a4-bhX"/>
-                                    <constraint firstItem="vl9-XW-t8b" firstAttribute="leading" secondItem="rnw-3v-fHb" secondAttribute="leading" constant="24" id="cEo-Nx-bsu"/>
-                                    <constraint firstAttribute="bottom" secondItem="vl9-XW-t8b" secondAttribute="bottom" constant="18" id="iW2-fJ-dWi"/>
-                                    <constraint firstAttribute="trailing" secondItem="GEL-CV-BRp" secondAttribute="trailing" constant="24" id="wfN-6T-jq0"/>
-                                    <constraint firstAttribute="trailing" secondItem="hTI-qh-bqI" secondAttribute="trailing" constant="24" id="zz1-iG-8Vf"/>
+                                    <constraint firstItem="Y2L-Tw-ezM" firstAttribute="top" secondItem="aWB-gq-L8p" secondAttribute="top" id="7MZ-bL-OXy"/>
+                                    <constraint firstItem="Y2L-Tw-ezM" firstAttribute="leading" secondItem="aWB-gq-L8p" secondAttribute="leading" id="G5A-HZ-cQ4"/>
+                                    <constraint firstAttribute="trailing" secondItem="Y2L-Tw-ezM" secondAttribute="trailing" id="Hqs-nE-pHG"/>
+                                    <constraint firstItem="Y2L-Tw-ezM" firstAttribute="height" secondItem="8Ic-xi-B4w" secondAttribute="height" multiplier="1.5" id="Ogy-pR-wla"/>
+                                    <constraint firstAttribute="bottom" secondItem="Y2L-Tw-ezM" secondAttribute="bottom" id="RXD-yD-e0i"/>
+                                    <constraint firstItem="Y2L-Tw-ezM" firstAttribute="width" secondItem="8Ic-xi-B4w" secondAttribute="width" multiplier="1.5" id="Rly-0F-RgG"/>
+                                    <constraint firstAttribute="bottom" secondItem="8Ic-xi-B4w" secondAttribute="bottom" constant="39" id="dva-1P-kj6"/>
+                                    <constraint firstItem="8Ic-xi-B4w" firstAttribute="centerX" secondItem="aWB-gq-L8p" secondAttribute="centerX" id="e5m-mq-nCA"/>
                                 </constraints>
-                                <connections>
-                                    <outlet property="imageView" destination="8Ic-xi-B4w" id="NaB-ND-fIg"/>
-                                    <outlet property="nextButton" destination="vl9-XW-t8b" id="Ied-5C-JQC"/>
-                                    <outlet property="textLabel" destination="hTI-qh-bqI" id="ufY-wZ-QBa"/>
-                                    <outlet property="titleLabel" destination="GEL-CV-BRp" id="LfN-N0-zaq"/>
-                                </connections>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2L-Tw-ezM" customClass="MCTCompletionGradient" customModule="MotorControl" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="248"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="You just completed your 10th Walk and Balance activity." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTI-qh-bqI">
+                                <rect key="frame" x="24" y="354" width="272" height="86"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Great job!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GEL-CV-BRp">
+                                <rect key="frame" x="24" y="298" width="272" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="MBZ-Ss-dgS"/>
+                                    <constraint firstAttribute="height" constant="32" id="UFo-zV-9GU"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="50R-jl-f7k" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
+                                <rect key="frame" x="0.0" y="468" width="320" height="100"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" placeholder="YES" id="ecI-fo-Loc"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Completion-WalkAndBalance" translatesAutoresizingMaskIntoConstraints="NO" id="8Ic-xi-B4w">
-                                <rect key="frame" x="53.5" y="41.5" width="213" height="165"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="8Ic-xi-B4w" firstAttribute="centerX" secondItem="lMD-F9-TLK" secondAttribute="centerX" id="8dB-Fm-AsH"/>
-                            <constraint firstItem="rnw-3v-fHb" firstAttribute="bottom" secondItem="eZQ-X5-yAu" secondAttribute="bottom" id="DhL-MK-Z47"/>
-                            <constraint firstItem="Y2L-Tw-ezM" firstAttribute="height" secondItem="8Ic-xi-B4w" secondAttribute="height" multiplier="1.5" id="US4-hf-ana"/>
-                            <constraint firstItem="Y2L-Tw-ezM" firstAttribute="bottom" secondItem="GEL-CV-BRp" secondAttribute="top" constant="-20" id="Umo-Oo-S7h"/>
-                            <constraint firstItem="rnw-3v-fHb" firstAttribute="trailing" secondItem="eZQ-X5-yAu" secondAttribute="trailing" id="XLn-DH-g9G"/>
-                            <constraint firstItem="Y2L-Tw-ezM" firstAttribute="top" secondItem="lMD-F9-TLK" secondAttribute="top" id="Yxi-uM-QXj"/>
-                            <constraint firstItem="iIr-ya-mvM" firstAttribute="top" secondItem="lMD-F9-TLK" secondAttribute="top" id="ZBj-z0-mfe"/>
-                            <constraint firstItem="rnw-3v-fHb" firstAttribute="top" secondItem="lMD-F9-TLK" secondAttribute="top" id="aVe-dn-Cpv"/>
-                            <constraint firstItem="Y2L-Tw-ezM" firstAttribute="width" secondItem="8Ic-xi-B4w" secondAttribute="width" multiplier="1.5" id="gLB-H8-DAv"/>
-                            <constraint firstItem="iIr-ya-mvM" firstAttribute="trailing" secondItem="eZQ-X5-yAu" secondAttribute="trailing" id="iCO-BP-ElI"/>
-                            <constraint firstItem="eZQ-X5-yAu" firstAttribute="top" secondItem="iIr-ya-mvM" secondAttribute="bottom" id="igA-q8-4ET"/>
-                            <constraint firstItem="Y2L-Tw-ezM" firstAttribute="trailing" secondItem="eZQ-X5-yAu" secondAttribute="trailing" id="knW-nR-Q2U"/>
-                            <constraint firstItem="Y2L-Tw-ezM" firstAttribute="leading" secondItem="eZQ-X5-yAu" secondAttribute="leading" id="rIk-IJ-D0d"/>
-                            <constraint firstItem="iIr-ya-mvM" firstAttribute="leading" secondItem="eZQ-X5-yAu" secondAttribute="leading" id="s8R-Gi-IQE"/>
-                            <constraint firstItem="rnw-3v-fHb" firstAttribute="leading" secondItem="eZQ-X5-yAu" secondAttribute="leading" id="vSl-wF-uJa"/>
-                            <constraint firstItem="8Ic-xi-B4w" firstAttribute="centerY" secondItem="Y2L-Tw-ezM" secondAttribute="centerY" id="wc0-xd-61x"/>
+                            <constraint firstItem="50R-jl-f7k" firstAttribute="trailing" secondItem="eZQ-X5-yAu" secondAttribute="trailing" id="3zd-Kc-w1S"/>
+                            <constraint firstItem="aWB-gq-L8p" firstAttribute="top" secondItem="lMD-F9-TLK" secondAttribute="top" id="4ap-Wj-iUd"/>
+                            <constraint firstItem="aWB-gq-L8p" firstAttribute="leading" secondItem="lMD-F9-TLK" secondAttribute="leading" id="6PF-4z-PZh"/>
+                            <constraint firstItem="eZQ-X5-yAu" firstAttribute="bottom" secondItem="50R-jl-f7k" secondAttribute="bottom" id="CZ0-iF-1qv"/>
+                            <constraint firstItem="hTI-qh-bqI" firstAttribute="leading" secondItem="eZQ-X5-yAu" secondAttribute="leading" constant="24" id="F8D-Qz-aZZ"/>
+                            <constraint firstItem="eZQ-X5-yAu" firstAttribute="trailing" secondItem="GEL-CV-BRp" secondAttribute="trailing" constant="24" id="Ge0-xs-8OR"/>
+                            <constraint firstItem="GEL-CV-BRp" firstAttribute="top" secondItem="aWB-gq-L8p" secondAttribute="bottom" constant="31" id="H72-KX-6U3"/>
+                            <constraint firstItem="hTI-qh-bqI" firstAttribute="top" secondItem="GEL-CV-BRp" secondAttribute="bottom" constant="24" id="HhQ-bD-Po2"/>
+                            <constraint firstAttribute="trailing" secondItem="aWB-gq-L8p" secondAttribute="trailing" id="KCN-W5-K4u"/>
+                            <constraint firstItem="GEL-CV-BRp" firstAttribute="leading" secondItem="eZQ-X5-yAu" secondAttribute="leading" constant="24" id="SdR-NL-B3F"/>
+                            <constraint firstItem="eZQ-X5-yAu" firstAttribute="top" secondItem="8Ic-xi-B4w" secondAttribute="top" constant="-30" id="cH5-iB-ii6"/>
+                            <constraint firstItem="eZQ-X5-yAu" firstAttribute="trailing" secondItem="hTI-qh-bqI" secondAttribute="trailing" constant="24" id="fea-YP-wMA"/>
+                            <constraint firstItem="50R-jl-f7k" firstAttribute="leading" secondItem="eZQ-X5-yAu" secondAttribute="leading" id="ph8-nI-eVj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eZQ-X5-yAu"/>
+                        <connections>
+                            <outlet property="textLabel" destination="hTI-qh-bqI" id="eCX-Op-m2c"/>
+                            <outlet property="titleLabel" destination="GEL-CV-BRp" id="h5H-3g-90e"/>
+                        </connections>
                     </view>
                     <connections>
-                        <outlet property="navigationHeader" destination="rnw-3v-fHb" id="kid-wV-WAu"/>
-                        <outlet property="statusBarBackgroundView" destination="iIr-ya-mvM" id="eEj-q5-HHi"/>
+                        <outlet property="navigationFooter" destination="50R-jl-f7k" id="KsM-va-uk7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pvg-z7-4h5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -505,37 +492,37 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bcx-92-4sa" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WMy-P5-8tT" customClass="MCTCompletionGradient" customModule="MotorControl" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="152"/>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WMy-P5-8tT" customClass="RSDCompletionGradient" customModule="ResearchUI">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="140" id="NnK-4k-7yZ"/>
                                         </constraints>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Completion-FingerTapping" translatesAutoresizingMaskIntoConstraints="NO" id="MnJ-8J-B1y">
-                                        <rect key="frame" x="53.5" y="25.5" width="213" height="101"/>
+                                        <rect key="frame" x="53.5" y="24" width="213" height="96"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="You just completed" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrW-zb-Z6e">
-                                        <rect key="frame" x="24" y="216" width="272" height="24"/>
+                                        <rect key="frame" x="24" y="208" width="272" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="KZx-jl-0qM"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Great job!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHp-hA-WnR">
-                                        <rect key="frame" x="24" y="172" width="272" height="32"/>
+                                        <rect key="frame" x="24" y="164" width="272" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="uPC-vE-QsV"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bl-y4-HOm" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                        <rect key="frame" x="24" y="496" width="272" height="52"/>
+                                        <rect key="frame" x="24" y="488" width="272" height="52"/>
                                         <state key="normal" title="Button"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAV-Ir-h3i">
-                                        <rect key="frame" x="29" y="248" width="142" height="100"/>
+                                        <rect key="frame" x="29" y="240" width="142" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="kJx-UU-Wgq"/>
                                         </constraints>
@@ -544,13 +531,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LEFT TAP COUNT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jiB-cD-iW3">
-                                        <rect key="frame" x="179" y="317" width="101" height="14.5"/>
+                                        <rect key="frame" x="179" y="309" width="101" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="580" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d7g-TN-XiU">
-                                        <rect key="frame" x="29" y="348" width="142" height="100"/>
+                                        <rect key="frame" x="29" y="340" width="142" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="lPJ-6s-YA2"/>
                                         </constraints>
@@ -559,13 +546,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RIGHT TAP COUNT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9W-Ui-w1A">
-                                        <rect key="frame" x="179" y="417" width="109" height="14.5"/>
+                                        <rect key="frame" x="179" y="409" width="109" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="In 30 Seconds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ela-N3-x3X">
-                                        <rect key="frame" x="79.5" y="452" width="161" height="28"/>
+                                        <rect key="frame" x="79.5" y="444" width="161" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="wig-tp-lwY"/>
                                         </constraints>
@@ -588,7 +575,7 @@
                                     <constraint firstAttribute="trailing" secondItem="6bl-y4-HOm" secondAttribute="trailing" constant="24" id="Nqg-mB-oVR"/>
                                     <constraint firstItem="d7g-TN-XiU" firstAttribute="leading" secondItem="VAV-Ir-h3i" secondAttribute="leading" id="Oev-Aw-68f"/>
                                     <constraint firstAttribute="trailing" secondItem="FHp-hA-WnR" secondAttribute="trailing" constant="24" id="P2B-Zd-V8L"/>
-                                    <constraint firstAttribute="bottom" secondItem="6bl-y4-HOm" secondAttribute="bottom" constant="20" id="QQR-z6-kHz"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="6bl-y4-HOm" secondAttribute="bottom" constant="20" id="QQR-z6-kHz"/>
                                     <constraint firstItem="Ela-N3-x3X" firstAttribute="centerX" secondItem="Bcx-92-4sa" secondAttribute="centerX" id="QX7-L1-K9d"/>
                                     <constraint firstAttribute="trailing" secondItem="JrW-zb-Z6e" secondAttribute="trailing" constant="24" id="Za9-JW-KUc"/>
                                     <constraint firstItem="jiB-cD-iW3" firstAttribute="baseline" secondItem="VAV-Ir-h3i" secondAttribute="baseline" id="cBh-8f-GqF"/>

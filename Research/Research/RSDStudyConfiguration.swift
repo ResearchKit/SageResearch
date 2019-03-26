@@ -66,4 +66,7 @@ open class RSDStudyConfiguration {
     /// single mobile device that is being used to run tasks for multiple participants, such as a device used
     /// as part of a Phase 1 or Preclinical trial? (Default == `true`)
     open var isParticipantDevice : Bool = true
+    
+    /// The default color palette to use for this app.
+    open var colorPalette: RSDColorPalette = .wireframe
 }

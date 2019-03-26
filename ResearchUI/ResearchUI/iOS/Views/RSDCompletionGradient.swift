@@ -1,11 +1,8 @@
 //
-//  MCTCompletionGradient.swift
-//  MotorControl
+//  RSDCompletionGradient.swift
+//  ResearchUI (iOS)
 //
-//  Copyright © 2015 Apple Inc.
-//  Ported to Swift from ResearchKit/ResearchKit 1.5
-//
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -37,21 +34,38 @@
 import Foundation
 import UIKit
 
-/// `MCTCompletionGradient` is a UI element for adding a shadow gradient to a view.
-@IBDesignable open class MCTCompletionGradient : UIView {
+/// `RSDCompletionGradient` is a UI element for adding a shadow gradient to a view.
+@IBDesignable public final class RSDCompletionGradient : UIView, RSDViewDesignable {
     
     /// The color that the gradient begins with.
-    @IBInspectable var startColor : UIColor = UIColor.rsd_completionGradientLeft {
+    @IBInspectable public var startColor : UIColor = RSDStudyConfiguration.shared.colorPalette.successGreen.light.color {
         didSet {
             commonInit()
         }
     }
     
     /// The color that the gradient ends with.
-    @IBInspectable var endColor : UIColor = UIColor.rsd_completionGradientRight {
+    @IBInspectable public var endColor : UIColor = RSDStudyConfiguration.shared.colorPalette.successGreen.normal.color {
         didSet {
             commonInit()
         }
+    }
+    
+    /// The background color for the table cell.
+    public private(set) var backgroundColorTile: RSDColorTile?
+    
+    /// The design system for this component.
+    public private(set) var designSystem: RSDDesignSystem?
+    
+    /// Views can be used in nibs and storyboards without setting up a design system for them. This allows
+    /// for setting up views to use the same design system and background color mapping as their parent view.
+    public func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.designSystem = designSystem
+        let gradient = designSystem.colorRules.completionGradient()
+        self.backgroundColorTile = designSystem.colorRules.palette.successGreen.normal
+        
+        startColor = gradient.0.color
+        endColor = gradient.1.color
     }
     
     private let gradientLayer = CAGradientLayer()
@@ -66,7 +80,7 @@ import UIKit
         commonInit()
     }
     
-    override open func prepareForInterfaceBuilder() {
+    override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         commonInit()
     }
@@ -76,7 +90,7 @@ import UIKit
         commonInit()
     }
     
-    override open func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer.frame = _calculateFrame()
     }
@@ -97,7 +111,7 @@ import UIKit
         return CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
     }
     
-    override open func layoutSublayers(of layer: CALayer) {
+    override public func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
         gradientLayer.frame = _calculateFrame()
     }

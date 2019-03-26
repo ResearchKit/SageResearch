@@ -20,11 +20,12 @@
                         "imageName":"HoldPhone-Left",
                         "placementType":"topMarginBackground"
                     },
-                    "colorTheme":{
-                        "colorStyle": {
-                            "header": "darkBackground",
-                            "body": "lightBackground",
-                            "footer": "lightBackground"
+                    "colorMapping":{
+                        "type": "placementMapping",
+                        "placement": {
+                            "header": "primary",
+                            "body": "white",
+                            "footer": "white"
                         }
                     },
                     "actions":{
@@ -47,8 +48,9 @@
                       "viewIdentifier":"Countdown",
                       "storyboardIdentifier":"ActiveTaskSteps"
                   },
-                  "colorTheme":{
-                      "usesLightStyle":true
+                  "colorMapping":{
+                      "type": "singleColor",
+                      "colorStyle": "primary"
                   },
                   "duration":5,
                   "commands":["playSoundOnStart", "transitionAutomatically"]
@@ -62,8 +64,9 @@
                       "imageName":"HoldPhone-Left",
                       "placementType":"fullsizeBackground"
                   },
-                  "colorTheme":{
-                      "usesLightStyle":true
+                  "colorMapping":{
+                      "type": "singleColor",
+                      "colorStyle": "primary"
                   },
                   "viewTheme":{
                       "viewIdentifier":"Action",

@@ -45,13 +45,14 @@
                         "reminderIdentifier":"WalkAndBalance"
                     }
                  },
-                 "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
-                     }
-                 }
+                "colorMapping":{
+                    "type": "placementMapping",
+                    "placement": {
+                        "header": "primary",
+                        "body": "white",
+                        "footer": "white"
+                    }
+                }
              },
              {
                 "identifier":"walkInstructions",
@@ -65,11 +66,12 @@
                     "placementType":"topMarginBackground",
                     "animationDuration":6.0
                 },
-                "colorTheme":{
-                    "colorStyle": {
-                        "header": "darkBackground",
-                        "body": "lightBackground",
-                        "footer": "lightBackground"
+                "colorMapping":{
+                    "type": "placementMapping",
+                    "placement": {
+                        "header": "primary",
+                        "body": "white",
+                        "footer": "white"
                     }
                 },
                 "actions":{
@@ -89,12 +91,13 @@
                     "imageName":"TurnUpVolume",
                     "placementType":"topMarginBackground"
                 },
-                "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
-                     }
+                "colorMapping":{
+                    "type": "placementMapping",
+                    "placement": {
+                        "header": "primary",
+                        "body": "white",
+                        "footer": "white"
+                    }
                 },
                 "actions":{
                     "goForward":{
@@ -113,11 +116,12 @@
                      "imageName":"PantsWPocket",
                      "placementType":"topBackground"
                  },
-                 "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
+                 "colorMapping":{
+                     "type": "placementMapping",
+                     "placement": {
+                         "header": "primary",
+                         "body": "white",
+                         "footer": "white"
                      }
                  },
                  "actions":{
@@ -137,12 +141,9 @@
                      "placementType":"topBackground",
                      "animationDuration":1.5
                  },
-                 "colorTheme":{
-                     "colorStyle": {
-                         "header": "lightBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
-                     }
+                 "colorMapping":{
+                     "type": "singleColor",
+                     "colorStyle": "white"
                  },
                  "text":"This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "actions":{
@@ -165,8 +166,9 @@
                      "viewIdentifier":"Countdown",
                      "storyboardIdentifier":"ActiveTaskSteps"
                  },
-                 "colorTheme":{
-                     "usesLightStyle":true
+                 "colorMapping":{
+                     "type": "singleColor",
+                     "colorStyle": "primary"
                  },
                  "duration":5,
                  "commands":["playSoundOnStart", "transitionAutomatically"],
@@ -196,8 +198,9 @@
                                   "imageName":"Walking-10",
                                   "placementType":"fullsizeBackground"
                               },
-                              "colorTheme":{
-                                  "usesLightStyle":true
+                              "colorMapping":{
+                                  "type": "singleColor",
+                                  "colorStyle": "primary"
                               },
                               "viewTheme":{
                                   "viewIdentifier":"Action",
@@ -237,11 +240,12 @@
                      "animationRepeatCount":1,
                      "animationDuration":6.5
                  },
-                 "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
+                 "colorMapping":{
+                     "type": "placementMapping",
+                     "placement": {
+                         "header": "primary",
+                         "body": "white",
+                         "footer": "white"
                      }
                  },
                  "actions":{
@@ -266,12 +270,9 @@
                      "placementType":"topBackground",
                      "animationDuration":1.5
                  },
-                 "colorTheme":{
-                     "colorStyle": {
-                         "header": "lightBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
-                     }
+                 "colorMapping":{
+                     "type": "singleColor",
+                     "colorStyle": "white"
                  },
                  "actions":{
                      "goForward":{
@@ -294,8 +295,9 @@
                      "viewIdentifier":"Countdown",
                      "storyboardIdentifier":"ActiveTaskSteps"
                  },
-                 "colorTheme":{
-                     "usesLightStyle":true
+                 "colorMapping":{
+                     "type": "singleColor",
+                     "colorStyle": "primary"
                  },
                  "duration":5,
                  "commands":["playSoundOnStart", "transitionAutomatically"],
@@ -325,8 +327,9 @@
                                   "imageName":"Balance-1",
                                   "placementType":"fullsizeBackground"
                               },
-                              "colorTheme":{
-                                  "usesLightStyle":true
+                              "colorMapping":{
+                                  "type": "singleColor",
+                                  "colorStyle": "primary"
                               },
                               "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
                               "viewTheme":{
@@ -366,6 +369,10 @@
                  "viewTheme":{
                      "viewIdentifier":"Completion",
                      "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "colorMapping":{
+                     "type": "singleColor",
+                     "colorStyle": "white"
                  },
                  "actions": {
                      "goForward":{

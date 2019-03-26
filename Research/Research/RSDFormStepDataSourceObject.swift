@@ -249,7 +249,7 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
         
         // add image below and footnote
         var items: [RSDTableItem] = []
-        if let imageTheme = (step as? RSDThemedUIStep)?.imageTheme, imageTheme.placementType == .iconAfter {
+        if let imageTheme = (step as? RSDDesignableUIStep)?.imageTheme, imageTheme.placementType == .iconAfter {
             items.append(RSDImageTableItem(rowIndex: items.count, imageTheme: imageTheme))
         }
         if let footnote = uiStep.footnote {

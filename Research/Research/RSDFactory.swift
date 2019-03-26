@@ -607,8 +607,35 @@ open class RSDFactory {
     /// - returns: The UI color theme created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIStepObject`
+    @available(*, deprecated)
     open func decodeColorThemeElement(from decoder:Decoder) throws -> RSDColorThemeElement? {
         return try _decodeResource(RSDColorThemeElementObject.self, from: decoder)
+    }
+    
+    /// Decode UI color mapping theme from the given decoder.
+    ///
+    /// - parameters:
+    ///     - decoder: The decoder to use to instantiate the object.
+    /// - returns: The UI color theme created from this decoder.
+    /// - throws: `DecodingError` if the object cannot be decoded.
+    /// - seealso: `RSDUIStepObject`
+    open func decodeColorMappingThemeElement(from decoder:Decoder) throws -> RSDColorMappingThemeElement? {
+        guard let typeName = try self.typeName(from: decoder)
+            else {
+                let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support a default decodable for a color theme element. `type` field is required.")
+                throw DecodingError.typeMismatch(RSDColorMappingThemeElement.self, context)
+        }
+        let themeType = RSDColorMappingThemeElementType(rawValue: typeName)
+        switch themeType {
+        case .singleColor:
+            return try _decodeResource(RSDSingleColorThemeElementObject.self, from: decoder)
+        case .placementMapping:
+            return try _decodeResource(RSDSingleColorThemeElementObject.self, from: decoder)
+        default:
+            let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support `\(typeName)` as a decodable class type for a color theme element.")
+            throw DecodingError.typeMismatch(RSDColorMappingThemeElement.self, context)
+        }
+        
     }
     
     /// Decode UI view theme from the given decoder.

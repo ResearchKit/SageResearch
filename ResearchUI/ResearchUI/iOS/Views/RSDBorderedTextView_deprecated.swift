@@ -33,6 +33,7 @@
 
 import Foundation
 
+@available(*, deprecated)
 @IBDesignable
 public final class RSDBorderedTextView : UITextView {
     
@@ -44,7 +45,7 @@ public final class RSDBorderedTextView : UITextView {
     }
     
     /// The border color.
-    @IBInspectable public var borderColor: UIColor = UIColor.rsd_cellSeparatorLine {
+    @IBInspectable public var borderColor: UIColor = UIColor.lightGray {
         didSet {
             self.layer.borderColor = borderColor.cgColor
         }

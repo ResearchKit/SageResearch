@@ -37,7 +37,6 @@
 		F8E3B83321BB472B0004284E /* MCTTappingCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82C21BB472B0004284E /* MCTTappingCompletionStepViewController.swift */; };
 		F8E3B83421BB472B0004284E /* MCTTappingStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B82D21BB472B0004284E /* MCTTappingStepViewController.swift */; };
 		F8E3B83821BB474F0004284E /* MCTTapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B83621BB474F0004284E /* MCTTapButton.swift */; };
-		F8E3B83921BB474F0004284E /* MCTCompletionGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E3B83721BB474F0004284E /* MCTCompletionGradient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +84,6 @@
 		F8E3B82C21BB472B0004284E /* MCTTappingCompletionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTappingCompletionStepViewController.swift; sourceTree = "<group>"; };
 		F8E3B82D21BB472B0004284E /* MCTTappingStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTappingStepViewController.swift; sourceTree = "<group>"; };
 		F8E3B83621BB474F0004284E /* MCTTapButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTapButton.swift; sourceTree = "<group>"; };
-		F8E3B83721BB474F0004284E /* MCTCompletionGradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTCompletionGradient.swift; sourceTree = "<group>"; };
 		F8E3B83A21BB48690004284E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -219,7 +217,6 @@
 		F8E3B83521BB47350004284E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F8E3B83721BB474F0004284E /* MCTCompletionGradient.swift */,
 				F8E3B83621BB474F0004284E /* MCTTapButton.swift */,
 			);
 			path = Views;
@@ -346,7 +343,6 @@
 			files = (
 				F8E3B82421BB46F00004284E /* MCTHandSelectionStepObject.swift in Sources */,
 				F8E3B83221BB472B0004284E /* MCTActiveStepViewController.swift in Sources */,
-				F8E3B83921BB474F0004284E /* MCTCompletionGradient.swift in Sources */,
 				F837224B223320B400C9A2EA /* MCTHandInstructionStepObject.swift in Sources */,
 				F8E3B83421BB472B0004284E /* MCTTappingStepViewController.swift in Sources */,
 				F8E3B82E21BB472B0004284E /* MCTCompletionStepViewController.swift in Sources */,
