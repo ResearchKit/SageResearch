@@ -12,12 +12,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDInstructionStepViewController" customModule="ResearchUI" customModuleProvider="target">
             <connections>
-                <outlet property="imageHeightConstraint" destination="oIF-MI-fFS" id="mOR-Qz-ouG"/>
+                <outlet property="headerHeightConstraint" destination="oIF-MI-fFS" id="mOR-Qz-ouG"/>
+                <outlet property="headerTopConstraint" destination="u8I-PD-141" id="V0U-va-br8"/>
                 <outlet property="instructionTextView" destination="7fs-z9-kjO" id="3fx-2H-1IJ"/>
                 <outlet property="navigationFooter" destination="n0w-EP-nrT" id="ZTd-By-ePC"/>
                 <outlet property="navigationHeader" destination="DCM-dW-bGV" id="VOW-IW-67T"/>
                 <outlet property="scrollView" destination="SBj-Ps-bUq" id="PEE-Za-bEC"/>
-                <outlet property="scrollViewBackgroundHeightConstraint" destination="u8I-PD-141" id="V0U-va-br8"/>
                 <outlet property="view" destination="8Pc-bM-yuV" id="du0-Dc-FlL"/>
             </connections>
         </placeholder>

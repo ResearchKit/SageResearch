@@ -44,16 +44,16 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     }
     
     /// Scrollview for the image and instruction text.
-    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var scrollView: UIScrollView?
     
     /// The constraint that sets the scroll bar's top background view's height.
-    @IBOutlet var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var headerTopConstraint: NSLayoutConstraint?
     
     /// The constraint that sets the image height. This needs to be adjusted for smaller screens.
-    @IBOutlet var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var headerHeightConstraint: NSLayoutConstraint?
     
     /// A view that is used to mark the height of the text instruction area.
-    @IBOutlet var instructionTextView: UIView!
+    @IBOutlet var instructionTextView: UIView?
     
     /// Save the previously calculated instruction height.
     private var _instructionHeight: CGFloat = 0
@@ -75,11 +75,15 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     /// this step. Default behavior is to constrain the scrollview to be under the status bar if the placement
     /// type is `.topMarginBackground`.
     open func updateImagePlacementConstraintsIfNeeded() {
-        guard let placementType = self.imageTheme?.placementType else { return }
+        guard let placementType = self.imageTheme?.placementType,
+            let headerTopConstraint = self.headerTopConstraint
+            else {
+                return
+        }
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        let constant = (placementType == .topMarginBackground) ? statusBarHeight : CGFloat(0)
-        if constant != scrollViewBackgroundHeightConstraint.constant {
-            scrollViewBackgroundHeightConstraint.constant = constant
+        let constant = (placementType == .topBackground) ? CGFloat(0) : statusBarHeight
+        if constant != headerTopConstraint.constant {
+            headerTopConstraint.constant = constant
             self.view.setNeedsUpdateConstraints()
             self.view.setNeedsLayout()
         }
@@ -90,10 +94,17 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     /// up half the space if the text does not fit (iPhone SE) or resize to take the remaining space if the
     /// image is for a longer screen (iPhone X).
     open func updateImageHeightConstraintIfNeeded() {
+        guard let instructionTextView = self.instructionTextView,
+            let scrollView = self.scrollView,
+            let headerTopConstraint = self.headerTopConstraint,
+            let headerHeightConstraint = self.headerHeightConstraint
+            else {
+                return
+        }
         if _instructionHeight != instructionTextView.bounds.height {
             _instructionHeight = instructionTextView.bounds.height
-            let remainingHeight = self.scrollView.bounds.height - _instructionHeight - scrollViewBackgroundHeightConstraint.constant
-            self.imageHeightConstraint.constant = max(remainingHeight, self.view.bounds.height / 2)
+            let remainingHeight = scrollView.bounds.height - _instructionHeight - headerTopConstraint.constant
+            headerHeightConstraint.constant = max(remainingHeight, self.view.bounds.height / 2)
             self.view.setNeedsUpdateConstraints()
             self.view.setNeedsLayout()
         }

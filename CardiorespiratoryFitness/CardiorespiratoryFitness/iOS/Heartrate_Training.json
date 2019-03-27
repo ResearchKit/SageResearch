@@ -82,6 +82,7 @@
     {
         "identifier": "feedback",
         "type": "completion",
+        "resultTitle": "Your heart rate is",
         "title": "Practice makes perfect",
         "text": "This is to make sure you can cover your flash and camera quickly for later tests.",
         "resultIdentifier": "heartRate",

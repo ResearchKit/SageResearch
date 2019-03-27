@@ -37,8 +37,11 @@ import Foundation
 open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case unitText, resultIdentifier, formatter
+        case unitText, resultIdentifier, resultTitle, formatter
     }
+    
+    /// Text to display as the title above the result.
+    open private(set) var resultTitle: String?
     
     /// The localized unit text to display for this step.
     open private(set) var unitText: String?
@@ -77,6 +80,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
+        subclassCopy.resultTitle = self.resultTitle
         subclassCopy.unitText = self.unitText
         subclassCopy.resultIdentifier = self.resultIdentifier
     }
@@ -85,6 +89,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
     open override func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.resultTitle = try container.decodeIfPresent(String.self, forKey: .resultTitle) ?? self.resultTitle
         self.unitText = try container.decodeIfPresent(String.self, forKey: .unitText) ?? self.unitText
         self.resultIdentifier = try container.decodeIfPresent(String.self, forKey: .resultIdentifier) ?? self.resultIdentifier
     }
@@ -104,6 +109,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
             "type": "completion",
             "title": "Hello World!",
             "text": "Some text.",
+            "resultTitle": "This is a title",
             "resultIdentifier" : "boo",
             "unitText" : "lala"
         ]
