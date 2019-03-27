@@ -141,30 +141,12 @@
         }
     },
     {
-        "identifier": "motion_darkBackground",
-        "type": "active",
-        "duration": 10,
-        "text": "Dial with a dark background",
-        "commands": ["transitionAutomatically"],
-        "colorMapping": {
-            "type": "singleColor",
-            "customColor": {
-                "color": "darkGreen",
-                "usesLightStyle": true
-            },
-            "colorStyle": "custom"
-        }
-    },
-    {
-        "identifier": "motion_lightBackground",
-        "type": "active",
-        "duration": 10,
-        "text": "Dial with a light background",
-        "commands": ["transitionAutomatically"],
-        "colorMapping": {
-            "type": "singleColor",
-            "colorStyle": "white"
-        }
+        "identifier": "feedback",
+        "type": "completion",
+        "resultTitle": "Your answer was",
+        "resultIdentifier": "selectOne_green",
+        "title": "More text under the result",
+        "text": "This is additional text shown below the completion result."
     }
     ]
 }

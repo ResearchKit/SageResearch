@@ -107,7 +107,7 @@ public final class RSDColorMatrix {
             else {
                 fatalError("Could not find a color for restricted color \(name).")
         }
-        let mapping = swatch.mapping(for: shade)
+        let mapping = swatch.mapping(forShade: shade)
         return RSDColorKey(index: mapping.index, swatch: swatch)!
     }
 
@@ -126,7 +126,7 @@ public final class RSDColorMatrix {
         }
         guard let idx = index, idx >= 0, idx < swatch.colorTiles.count
             else {
-                let idx = swatch.colorTiles.count > 2 ? swatch.mapping(for: .dark).index : (swatch.colorTiles.count - 1)
+                let idx = swatch.colorTiles.count > 2 ? swatch.mapping(forShade: .dark).index : (swatch.colorTiles.count - 1)
                 return RSDColorKey(index: idx, swatch: swatch)!
         }
         return RSDColorKey(index: idx, swatch: swatch)!
@@ -139,7 +139,7 @@ public final class RSDColorMatrix {
     ///     - version: The version to return or `nil` to return the most recent.
     /// - returns: The color mapping.
     public func colorMapping(for gray: RSDGrayScale.Shade, version: Int? = nil) -> RSDColorMapping {
-        return self.grayScale(for: version).mapping(for: gray)
+        return self.grayScale(for: version).mapping(forShade: gray)
     }
     
     /// Find a color tile from the color. This will look through the libraries and swatches for a matching

@@ -110,7 +110,7 @@ open class RSDColorRules  {
     open func mapping(for style: Style) -> RSDColorMapping? {
         switch style {
         case .white:
-            return self.palette.grayScale.mapping(for: .white)
+            return self.palette.grayScale.mapping(forShade: .white)
         case .primary:
             return self.palette.primary
         case .secondary:
@@ -138,7 +138,7 @@ open class RSDColorRules  {
     open func mapping(for color: RSDColor) -> RSDColorMapping? {
         let families: [RSDColorFamily] = [_palette.grayScale, _palette.primary.swatch, _palette.secondary.swatch, _palette.accent.swatch, _palette.successGreen.swatch, _palette.errorRed.swatch]
         for family in families {
-            if let mapping = family.mapping(for: color) {
+            if let mapping = family.mapping(forColor: color) {
                 return mapping
             }
         }
@@ -264,7 +264,7 @@ open class RSDColorRules  {
             return self.palette.secondary
         }
         else {
-            return self.palette.grayScale.mapping(for: .veryLightGray)
+            return self.palette.grayScale.mapping(forShade: .veryLightGray)
         }
     }
     

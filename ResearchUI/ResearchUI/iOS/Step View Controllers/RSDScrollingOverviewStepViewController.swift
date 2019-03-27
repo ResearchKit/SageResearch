@@ -125,6 +125,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         
         if placement == .body {
             
+            scrollView.backgroundColor = background.color
             iconViewLabel.text = Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
             iconViewLabel.textColor = self.designSystem.colorRules.textColor(on: background, for: .fieldHeader)
             iconViewLabel.font = self.designSystem.fontRules.font(for: .fieldHeader)

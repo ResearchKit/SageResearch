@@ -40,7 +40,7 @@ public protocol RSDColorFamily {
 extension RSDColorFamily {
     
     /// Look at the colors included in this family and return a mapping if found.
-    public func mapping(for color: RSDColor) -> RSDColorMapping? {
+    public func mapping(forColor color: RSDColor) -> RSDColorMapping? {
         guard let idx = self.colorTiles.index(where: { $0.color == color }) else { return nil }
         return ColorMapping(index: idx, colorTiles: self.colorTiles)
     }
@@ -70,7 +70,7 @@ public struct RSDColorSwatch : Codable, Equatable, Hashable, RSDColorFamily  {
     /// Get the mapping for a given shade.
     /// - parameter shade: The shade of the color.
     /// - returns: The color mapping for that shade.
-    public func mapping(for shade: Shade) -> RSDColorMapping {
+    public func mapping(forShade shade: Shade) -> RSDColorMapping {
         let idx: Int = {
             switch shade {
             case .veryLight:
@@ -171,6 +171,25 @@ public struct RSDGrayScale : Codable, Equatable, Hashable, RSDColorFamily {
                 return RSDColorTile("#000000", true)
             }
         }
+        
+        var test : RSDColorTile {
+            switch self {
+            case .white:
+                return RSDColorTile("#ffe0d3", false)
+            case .veryLightGray:
+                return RSDColorTile("#ffb191", false)
+            case .lightGray:
+                return RSDColorTile("#ff834f", false)
+            case .gray:
+                return RSDColorTile("#3bab22", true)
+            case .darkGray:
+                return RSDColorTile("#3bab22", true)
+            case .veryDarkGray:
+                return RSDColorTile("#236614", true)
+            case .black:
+                return RSDColorTile("#17440d", true)
+            }
+        }
     }
 
     public let white: RSDColorTile
@@ -188,7 +207,7 @@ public struct RSDGrayScale : Codable, Equatable, Hashable, RSDColorFamily {
     /// Get the mapping for a given shade.
     /// - parameter shade: The shade of the color.
     /// - returns: The color mapping for that shade.
-    public func mapping(for shade: Shade) -> RSDColorMapping {
+    public func mapping(forShade shade: Shade) -> RSDColorMapping {
         let index = Shade.allCases.index(of: shade)!
         return ColorMapping(index: index, colorTiles: colorTiles)
     }
@@ -208,6 +227,14 @@ public struct RSDGrayScale : Codable, Equatable, Hashable, RSDColorFamily {
         self.veryDarkGray = veryDarkGray
         self.black = black
     }
+    
+    static let test = RSDGrayScale( white: Shade.white.test,
+                                    veryLightGray: Shade.veryLightGray.test,
+                                    lightGray: Shade.lightGray.test,
+                                    gray: Shade.gray.test,
+                                    darkGray: Shade.darkGray.test,
+                                    veryDarkGray: Shade.veryDarkGray.test,
+                                    black: Shade.black.test)
 }
 
 /// A color tile is a single color and whether or not that color uses light style.

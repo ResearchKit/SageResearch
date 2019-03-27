@@ -110,7 +110,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="f8F-hW-WUL" firstAttribute="centerX" secondItem="IdK-0U-hWC" secondAttribute="centerX" id="4W5-zA-un1"/>
                                                         <constraint firstItem="f8F-hW-WUL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IdK-0U-hWC" secondAttribute="leading" constant="5" id="7Y5-mc-O9Z"/>
@@ -144,7 +144,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="DIL-To-LAD" secondAttribute="bottom" id="8jM-RR-HDk"/>
                                                         <constraint firstAttribute="trailing" secondItem="DIL-To-LAD" secondAttribute="trailing" id="G0o-Ce-Vzd"/>
@@ -178,7 +178,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="oC7-Ly-Jym" secondAttribute="bottom" id="6fP-Yn-BtX"/>
                                                         <constraint firstItem="NaD-gW-wQu" firstAttribute="centerX" secondItem="WrC-z2-Lgg" secondAttribute="centerX" id="7ky-UW-A2o"/>
@@ -193,9 +193,10 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </stackView>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="scQ-Ma-nDm" secondAttribute="trailing" id="cll-ks-NcG"/>
                                         <constraint firstAttribute="bottom" secondItem="scQ-Ma-nDm" secondAttribute="bottom" id="dup-K3-aC1"/>
@@ -204,7 +205,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                     </constraints>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="nSM-Mv-mDS" firstAttribute="centerX" secondItem="nCy-4g-nIJ" secondAttribute="centerX" id="3C1-to-DDw"/>
                                 <constraint firstItem="fxA-Tz-ZiS" firstAttribute="top" secondItem="nCy-4g-nIJ" secondAttribute="top" id="8Gj-8R-eaj"/>
@@ -224,6 +225,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                             </constraints>
                         </view>
                     </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="nCy-4g-nIJ" secondAttribute="trailing" id="Fes-2w-imA"/>
                         <constraint firstItem="nCy-4g-nIJ" firstAttribute="top" secondItem="beo-bQ-opC" secondAttribute="top" id="HhV-oe-2fk"/>
@@ -259,6 +261,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="F9g-BT-NE0" firstAttribute="trailing" secondItem="W8i-xX-fUy" secondAttribute="trailing" constant="-20" id="2Rv-nd-dGH"/>

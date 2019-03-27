@@ -213,7 +213,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     @IBOutlet open var statusBarBackgroundView: UIView?
     
     /// A header view that includes navigation elements.
-    @IBOutlet open var navigationHeader: RSDNavigationHeaderView?
+    @IBOutlet open var navigationHeader: RSDStepNavigationView?
     
     /// A footer view that includes navigation elements.
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
@@ -320,6 +320,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             setupStatusBar(with: background)
 
         case .body:
+            self.view.backgroundColor = background.color
             navigationComponent = self.navigationBody
 
         case .footer:
@@ -345,24 +346,30 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
     }
     
+    @available(*, unavailable)
+    open func setupHeader(_ header: RSDNavigationHeaderView) {
+    }
+    
     /// Set up the header. Because this may be used in a table view as the table's header view, this includes
     /// all the step details that are typically at the top of the view such as setting images, text, and progress.
     /// Additionally, this method will set up the navigation buttons included in the header view and any color
     /// themes that are appropriate.
     /// - parameter header: The header view.
-    open func setupHeader(_ header: RSDNavigationHeaderView) {
+    open func setupHeader(_ header: RSDStepNavigationView) {
         setupNavigationView(header, placement: .header)
 
         // setup progress
-        if let (stepIndex, stepCount, isEstimated) = self.stepViewModel.progress() {
-            header.shouldShowProgress = true
-            header.progressView?.totalSteps = stepCount
-            header.progressView?.currentStep = stepIndex
-            header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
-            header.isStepLabelHidden = isEstimated
-        } else {
-            header.shouldShowProgress = false
-            header.isStepLabelHidden = true
+        if let header = header as? RSDNavigationHeaderView {
+            if let (stepIndex, stepCount, isEstimated) = self.stepViewModel.progress() {
+                header.shouldShowProgress = true
+                header.progressView?.totalSteps = stepCount
+                header.progressView?.currentStep = stepIndex
+                header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
+                header.isStepLabelHidden = isEstimated
+            } else {
+                header.shouldShowProgress = false
+                header.isStepLabelHidden = true
+            }
         }
 
         header.setNeedsLayout()

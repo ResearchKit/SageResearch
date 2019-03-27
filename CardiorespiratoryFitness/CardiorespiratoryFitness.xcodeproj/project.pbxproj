@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F82AE7F52064274A00952D74 /* UIColor+CRFDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7F42064274A00952D74 /* UIColor+CRFDefaults.swift */; };
 		F857BAAD224BE2FE0089B150 /* Heart_Snapshot.html in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */; };
+		F857BAAF224BFB3B0089B150 /* Heartrate_Resting.json in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */; };
 		F86B5290224AE8A700BB7354 /* Heartrate_Training.json in Resources */ = {isa = PBXBuildFile; fileRef = F86B528F224AE8A700BB7354 /* Heartrate_Training.json */; };
 		F880C1202051F1E200ACB4D4 /* CRFFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */; };
 		F880C12F2051F2A700ACB4D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F880C12E2051F2A700ACB4D4 /* Images.xcassets */; };
@@ -57,6 +58,7 @@
 /* Begin PBXFileReference section */
 		F82AE7F42064274A00952D74 /* UIColor+CRFDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+CRFDefaults.swift"; sourceTree = "<group>"; };
 		F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Heart_Snapshot.html; sourceTree = "<group>"; };
+		F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Resting.json; sourceTree = "<group>"; };
 		F86B528F224AE8A700BB7354 /* Heartrate_Training.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Training.json; sourceTree = "<group>"; };
 		F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFFactory.swift; sourceTree = "<group>"; };
 		F880C12E2051F2A700ACB4D4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				F880C16E2051FCD400ACB4D4 /* ActiveTaskSteps.storyboard */,
 				F880C16D2051FCD400ACB4D4 /* Cardio_12MT.json */,
 				F880C16A2051FCD400ACB4D4 /* Cardio_Stair_Step.json */,
+				F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */,
 				F86B528F224AE8A700BB7354 /* Heartrate_Training.json */,
 				F880C16C2051FCD400ACB4D4 /* HeartrateStep.json */,
 				F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */,
@@ -383,6 +386,7 @@
 				F880C1312051F49400ACB4D4 /* Colors.xcassets in Resources */,
 				F86B5290224AE8A700BB7354 /* Heartrate_Training.json in Resources */,
 				F880C1752051FCD400ACB4D4 /* ActiveTaskSteps.storyboard in Resources */,
+				F857BAAF224BFB3B0089B150 /* Heartrate_Resting.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

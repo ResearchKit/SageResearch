@@ -128,6 +128,14 @@ open class RSDInstructionStepViewController: RSDStepViewController {
         }
     }
     
+    override open func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
+        
+        if placement == .body {
+            scrollView?.backgroundColor = background.color
+        }
+    }
+    
     
     // MARK: Initialization
     

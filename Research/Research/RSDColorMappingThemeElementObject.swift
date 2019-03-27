@@ -76,7 +76,8 @@ extension InternalColorMapping {
     /// step view controller.
     /// - returns: The color or `nil` if undefined.
     public func backgroundColor(for placement: RSDColorPlacement, using colorRules: RSDColorRules, compatibleWith traitCollection: UITraitCollection?) -> RSDColorTile? {
-        if let tile = colorRules.mapping(for: self.style(for: placement)) {
+        let style = self.style(for: placement)
+        if let tile = colorRules.mapping(for: style) {
             return tile.normal
         }
         else if let custom = self.customColor,

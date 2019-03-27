@@ -630,12 +630,11 @@ open class RSDFactory {
         case .singleColor:
             return try _decodeResource(RSDSingleColorThemeElementObject.self, from: decoder)
         case .placementMapping:
-            return try _decodeResource(RSDSingleColorThemeElementObject.self, from: decoder)
+            return try _decodeResource(RSDColorPlacementThemeElementObject.self, from: decoder)
         default:
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support `\(typeName)` as a decodable class type for a color theme element.")
             throw DecodingError.typeMismatch(RSDColorMappingThemeElement.self, context)
         }
-        
     }
     
     /// Decode UI view theme from the given decoder.

@@ -248,7 +248,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWB-gq-L8p">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWB-gq-L8p" customClass="RSDStepNavigationView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="267"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2L-Tw-ezM" customClass="RSDBackgroundGradient" customModule="ResearchUI">
@@ -274,6 +274,11 @@
                                     <constraint firstAttribute="bottom" secondItem="8Ic-xi-B4w" secondAttribute="bottom" constant="39" id="dva-1P-kj6"/>
                                     <constraint firstItem="8Ic-xi-B4w" firstAttribute="centerX" secondItem="aWB-gq-L8p" secondAttribute="centerX" id="e5m-mq-nCA"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isStepLabelHidden" value="NO"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkipHidden" value="YES"/>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="You just completed your 10th Walk and Balance activity." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTI-qh-bqI">
                                 <rect key="frame" x="24" y="354" width="272" height="86"/>
@@ -322,6 +327,7 @@
                     </view>
                     <connections>
                         <outlet property="navigationFooter" destination="50R-jl-f7k" id="KsM-va-uk7"/>
+                        <outlet property="navigationHeader" destination="aWB-gq-L8p" id="GC4-h6-5Z0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pvg-z7-4h5" userLabel="First Responder" sceneMemberID="firstResponder"/>

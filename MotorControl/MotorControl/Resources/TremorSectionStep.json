@@ -20,14 +20,6 @@
                         "imageName":"HoldPhone-Left",
                         "placementType":"topMarginBackground"
                     },
-                    "colorMapping":{
-                        "type": "placementMapping",
-                        "placement": {
-                            "header": "primary",
-                            "body": "white",
-                            "footer": "white"
-                        }
-                    },
                     "actions":{
                         "goForward":{
                             "type":"default",

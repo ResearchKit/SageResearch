@@ -44,14 +44,6 @@
                     "type":"reminder",
                     "reminderIdentifier":"WalkAndBalance"
                 }
-            },
-            "colorMapping":{
-                "type": "placementMapping",
-                "placement": {
-                    "header": "primary",
-                    "body": "white",
-                    "footer": "white"
-                }
             }
         },
         {
@@ -65,14 +57,6 @@
                 "imageNames":["Walking-1", "Walking-2", "Walking-3", "Walking-4", "Walking-5", "Walking-6", "Walking-7", "Walking-8", "Walking-9", "Walking-10", "Walking-11", "Walking-12"],
                 "placementType":"topMarginBackground",
                 "animationDuration":6.0
-            },
-            "colorMapping":{
-                "type": "placementMapping",
-                "placement": {
-                    "header": "primary",
-                    "body": "white",
-                    "footer": "white"
-                }
             },
             "actions":{
                 "goForward":{
@@ -91,14 +75,6 @@
                 "imageName":"TurnUpVolume",
                 "placementType":"topMarginBackground"
             },
-            "colorMapping":{
-                "type": "placementMapping",
-                "placement": {
-                    "header": "primary",
-                    "body": "white",
-                    "footer": "white"
-                }
-            },
             "actions":{
                 "goForward":{
                     "type":"default",
@@ -115,14 +91,6 @@
                 "type":"fetchable",
                 "imageName":"PantsWPocket",
                 "placementType":"topBackground"
-            },
-            "colorMapping":{
-                "type": "placementMapping",
-                "placement": {
-                    "header": "primary",
-                    "body": "white",
-                    "footer": "white"
-                }
             },
             "actions":{
                 "goForward":{

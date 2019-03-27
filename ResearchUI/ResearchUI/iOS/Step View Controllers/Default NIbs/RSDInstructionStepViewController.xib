@@ -81,19 +81,21 @@
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Walk and Balance" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AC8-jp-YM4" userLabel="Title Label">
                                     <rect key="frame" x="24" y="425" width="327" height="28.666666666666686"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start by going oustide and standing still to measure your resting heart rate before you start moving." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fw-0K-lfV" userLabel="Text Label">
                                     <rect key="frame" x="24" y="473.66666666666669" width="327" height="64.666666666666686"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7fs-z9-kjO" userLabel="Measurement View">
                                     <rect key="frame" x="374" y="405" width="1" height="190.66666666666663"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="1" id="9hz-eO-hIf"/>
                                     </constraints>
@@ -104,7 +106,7 @@
                                     <state key="normal" title="Learn more"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="DCM-dW-bGV" firstAttribute="bottom" secondItem="AC8-jp-YM4" secondAttribute="top" constant="-20" id="4kJ-I1-BP7"/>
                                 <constraint firstAttribute="trailing" secondItem="0fw-0K-lfV" secondAttribute="trailing" constant="24" id="7m5-mh-ISP"/>
@@ -126,6 +128,7 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="d2t-as-jeB" firstAttribute="top" secondItem="SBj-Ps-bUq" secondAttribute="top" id="2Db-p4-UYT"/>
                         <constraint firstItem="d2t-as-jeB" firstAttribute="leading" secondItem="SBj-Ps-bUq" secondAttribute="leading" id="jTh-eS-Nl8"/>
@@ -154,7 +157,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.99006377479999996" green="0.26231237190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="n0w-EP-nrT" firstAttribute="bottom" secondItem="3oj-Zf-dbO" secondAttribute="bottom" id="EV9-pf-M6o"/>
