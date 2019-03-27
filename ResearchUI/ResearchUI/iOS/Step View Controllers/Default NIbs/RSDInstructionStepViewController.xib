@@ -35,7 +35,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCM-dW-bGV" customClass="RSDNavigationHeaderView" customModule="ResearchUI" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Walking-4" translatesAutoresizingMaskIntoConstraints="NO" id="ZY2-ZI-0pw" userLabel="Image View">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="ZY2-ZI-0pw" userLabel="Image View">
                                             <rect key="frame" x="0.0" y="30" width="375" height="375"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
@@ -62,7 +62,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.35294117650000001" green="0.2784313725" blue="0.56078431370000004" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="backgroundColor" red="0.99006377479999996" green="0.26231237190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <constraints>
                                         <constraint firstItem="ZY2-ZI-0pw" firstAttribute="leading" secondItem="DCM-dW-bGV" secondAttribute="leading" id="4Dd-9W-4e2"/>
                                         <constraint firstItem="waE-Q0-rFZ" firstAttribute="leading" secondItem="DCM-dW-bGV" secondAttribute="leading" id="4yF-em-TjU"/>
@@ -145,7 +145,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.34920102359999999" green="0.28064730760000001" blue="0.54699993130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.99006377479999996" green="0.26231237190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="n0w-EP-nrT" firstAttribute="bottom" secondItem="3oj-Zf-dbO" secondAttribute="bottom" id="EV9-pf-M6o"/>
@@ -168,7 +168,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Walking-4" width="1694" height="1334"/>
+        <image name="InstructionPlaceholder" width="1694" height="1334"/>
         <image name="closeActivity" width="32" height="32"/>
     </resources>
 </document>

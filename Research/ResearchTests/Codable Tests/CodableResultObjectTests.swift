@@ -253,7 +253,6 @@ class CodableResultObjectTests: XCTestCase {
             
             let jsonData = try encoder.encode(object)
             
-            let jsonString = String(data: jsonData, encoding: .utf8)
             guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
                 else {
                     XCTFail("Encoded object is not a dictionary")

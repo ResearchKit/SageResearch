@@ -1,5 +1,5 @@
 //
-//  RSDCompletionGradient.swift
+//  RSDBackgroundGradient.swift
 //  ResearchUI (iOS)
 //
 //  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
@@ -34,20 +34,20 @@
 import Foundation
 import UIKit
 
-/// `RSDCompletionGradient` is a UI element for adding a shadow gradient to a view.
-@IBDesignable public final class RSDCompletionGradient : UIView, RSDViewDesignable {
+/// `RSDBackgroundGradient` is a UI element for adding a shadow gradient to a view.
+@IBDesignable public final class RSDBackgroundGradient : UIView, RSDViewDesignable {
     
     /// The color that the gradient begins with.
     @IBInspectable public var startColor : UIColor = RSDStudyConfiguration.shared.colorPalette.successGreen.light.color {
         didSet {
-            commonInit()
+            refreshView()
         }
     }
     
     /// The color that the gradient ends with.
     @IBInspectable public var endColor : UIColor = RSDStudyConfiguration.shared.colorPalette.successGreen.normal.color {
         didSet {
-            commonInit()
+            refreshView()
         }
     }
     
@@ -61,50 +61,51 @@ import UIKit
     /// for setting up views to use the same design system and background color mapping as their parent view.
     public func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
         self.designSystem = designSystem
-        let gradient = designSystem.colorRules.completionGradient()
-        self.backgroundColorTile = designSystem.colorRules.palette.successGreen.normal
-        
-        startColor = gradient.0.color
-        endColor = gradient.1.color
+        let colorMapping = designSystem.colorRules.mapping(for: background.color)
+        self.backgroundColorTile = background
+        startColor = colorMapping?.light.color ?? background.color.withSaturationMultiplier(0.5)
+        endColor = background.color
+        refreshView()
     }
     
-    private let gradientLayer = CAGradientLayer()
+    private var gradientLayer: CAGradientLayer?
     
     public init() {
         super.init(frame: CGRect.zero)
-        commonInit()
+        refreshView()
     }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
+        refreshView()
     }
     
     override public func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
-        commonInit()
+        refreshView()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit()
+        refreshView()
     }
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        gradientLayer.frame = _calculateFrame()
+        gradientLayer?.frame = _calculateFrame()
     }
     
-    func commonInit() {
-        backgroundColor = UIColor.orange
+    func refreshView() {
+        backgroundColor = startColor
+        self.gradientLayer?.removeFromSuperlayer()
+        let gradientLayer = CAGradientLayer()
         gradientLayer.frame = _calculateFrame()
         gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
         gradientLayer.startPoint = CGPoint(x: 0, y: 1)
         gradientLayer.endPoint = CGPoint(x: 1, y: 0)
         gradientLayer.locations = [0.0, 1.0]
-        if layer.sublayers?.count ?? 0 == 0 {
-            layer.addSublayer(gradientLayer)
-        }
+        layer.insertSublayer(gradientLayer, at: 0)
+        self.gradientLayer = gradientLayer
     }
     
     private func _calculateFrame() -> CGRect {
@@ -113,6 +114,6 @@ import UIKit
     
     override public func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
-        gradientLayer.frame = _calculateFrame()
+        gradientLayer?.frame = _calculateFrame()
     }
 }

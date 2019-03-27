@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set the default configuration for the catalog test app
         RSDStudyConfiguration.shared.fullInstructionsFrequency = .daily
-        RSDStudyConfiguration.shared.colorPalette = .beach
+        RSDStudyConfiguration.shared.colorPalette = .twilight
         
         return true
     }

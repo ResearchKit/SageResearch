@@ -34,6 +34,13 @@
 import Foundation
 import AudioToolbox
 
+extension UIViewController {
+    func recursiveSetNeedsStatusBarAppearanceUpdate() {
+        self.setNeedsStatusBarAppearanceUpdate()
+        //self.parent?.recursiveSetNeedsStatusBarAppearanceUpdate()
+    }
+}
+
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
 /// UI architecture.
@@ -84,6 +91,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Convenience property for casting the step to a `RSDActiveUIStep`.
     public var activeStep: RSDActiveUIStep? {
         return step as? RSDActiveUIStep
+    }
+    
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        guard let designSystem = self.designSystem else { return .default }
+        let background = self.designableStep?.colorMapping?.backgroundColor(for: .header, using: designSystem.colorRules, compatibleWith: self.traitCollection)
+            ?? self.defaultBackgroundColorTile(for: .header)
+        print("\(self.step.identifier) \(background.usesLightStyle)")
+        return background.usesLightStyle ? .lightContent : .default
     }
     
     /// Returns the current result associated with this step. This property uses a lazy initializer to instantiate
@@ -149,6 +164,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             }
             setupBackgroundColorTheme()
             setupViews()
+            self.setNeedsStatusBarAppearanceUpdate()
         }
     }
     

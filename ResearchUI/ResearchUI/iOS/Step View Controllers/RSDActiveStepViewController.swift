@@ -189,6 +189,10 @@ open class RSDActiveStepViewController: RSDStepViewController {
         self.unitLabel?.text = nil
     }
     
+    open override func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
+        return self.designSystem.colorRules.backgroundLight
+    }
+    
     // MARK: Initialization
     
     /// The default nib name to use when instantiating the view controller using `init(step:)`.
