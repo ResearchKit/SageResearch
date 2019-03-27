@@ -30,7 +30,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="678"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d2t-as-jeB" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="554.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="579.66666666666663"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCM-dW-bGV" customClass="RSDNavigationHeaderView" customModule="ResearchUI" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
@@ -91,12 +91,17 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7fs-z9-kjO" userLabel="Measurement View">
-                                    <rect key="frame" x="374" y="405" width="1" height="149.33333333333337"/>
+                                    <rect key="frame" x="374" y="405" width="1" height="174.66666666666663"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="1" id="9hz-eO-hIf"/>
                                     </constraints>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npv-dT-kE4" customClass="RSDUnderlinedButton" customModule="ResearchUI" customModuleProvider="target">
+                                    <rect key="frame" x="141.66666666666666" y="534.33333333333337" width="92" height="33.333333333333371"/>
+                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Learn more"/>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -105,15 +110,18 @@
                                 <constraint firstItem="AC8-jp-YM4" firstAttribute="leading" secondItem="d2t-as-jeB" secondAttribute="leading" constant="24" id="AD4-PM-cdU"/>
                                 <constraint firstAttribute="trailing" secondItem="DCM-dW-bGV" secondAttribute="trailing" id="Edo-1L-4WB"/>
                                 <constraint firstItem="7fs-z9-kjO" firstAttribute="top" secondItem="DCM-dW-bGV" secondAttribute="bottom" id="JUg-SQ-DsU"/>
+                                <constraint firstAttribute="bottom" secondItem="Npv-dT-kE4" secondAttribute="bottom" constant="12" id="KmY-oE-zi9"/>
                                 <constraint firstAttribute="bottom" secondItem="7fs-z9-kjO" secondAttribute="bottom" id="TMk-YU-ZaG"/>
                                 <constraint firstItem="DCM-dW-bGV" firstAttribute="leading" secondItem="d2t-as-jeB" secondAttribute="leading" id="Va1-jt-stG"/>
                                 <constraint firstItem="0fw-0K-lfV" firstAttribute="top" secondItem="AC8-jp-YM4" secondAttribute="bottom" constant="12" id="XhT-Ml-YFz"/>
                                 <constraint firstItem="DCM-dW-bGV" firstAttribute="top" secondItem="d2t-as-jeB" secondAttribute="top" id="Xz1-rV-eCh"/>
                                 <constraint firstItem="0fw-0K-lfV" firstAttribute="centerX" secondItem="d2t-as-jeB" secondAttribute="centerX" id="ZDB-2B-4cH"/>
                                 <constraint firstItem="0fw-0K-lfV" firstAttribute="leading" secondItem="d2t-as-jeB" secondAttribute="leading" constant="24" id="ZuE-Ih-0Ts"/>
+                                <constraint firstItem="Npv-dT-kE4" firstAttribute="centerX" secondItem="d2t-as-jeB" secondAttribute="centerX" id="b5m-hR-Fge"/>
+                                <constraint firstItem="Npv-dT-kE4" firstAttribute="top" secondItem="0fw-0K-lfV" secondAttribute="bottom" constant="12" id="g3M-Ga-dn1"/>
                                 <constraint firstAttribute="trailing" secondItem="AC8-jp-YM4" secondAttribute="trailing" constant="24" id="qNE-bO-KCp"/>
                                 <constraint firstAttribute="trailing" secondItem="7fs-z9-kjO" secondAttribute="trailing" id="wiE-bE-HpX"/>
-                                <constraint firstAttribute="bottom" secondItem="0fw-0K-lfV" secondAttribute="bottom" constant="32" id="zlG-87-n1C"/>
+                                <constraint firstAttribute="bottom" secondItem="0fw-0K-lfV" secondAttribute="bottom" priority="700" constant="32" id="zlG-87-n1C"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -161,6 +169,7 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="3oj-Zf-dbO"/>
             <connections>
+                <outlet property="learnMoreButton" destination="Npv-dT-kE4" id="I8b-2u-Seg"/>
                 <outlet property="textLabel" destination="0fw-0K-lfV" id="UQG-uR-OTR"/>
                 <outlet property="titleLabel" destination="AC8-jp-YM4" id="ERE-Ow-rZO"/>
             </connections>

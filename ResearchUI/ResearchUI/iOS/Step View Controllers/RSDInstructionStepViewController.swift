@@ -135,9 +135,8 @@ open class RSDInstructionStepViewController: RSDStepViewController {
             return false
         }
         
-        // Footnotes and custom buttons are not supported.
+        // Footnotes and review instructions buttons are not supported.
         guard (themedStep.footnote == nil),
-            (themedStep.shouldHideAction(for: .navigation(.learnMore), on: step) ?? true),
             (themedStep.shouldHideAction(for: .navigation(.reviewInstructions), on: step) ?? true)
             else {
                 return false

@@ -17,6 +17,11 @@
             "goForward": {
                 "type": "default",
                 "buttonTitle": "Measure"
+            },
+            "learnMore":  {
+                "type":"webView",
+                "buttonTitle": "Learn how and why",
+                "url": "Heart_Snapshot.html"
             }
         }
     },
