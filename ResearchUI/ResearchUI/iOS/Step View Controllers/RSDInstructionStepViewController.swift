@@ -47,16 +47,19 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     @IBOutlet var scrollView: UIScrollView?
     
     /// The constraint that sets the scroll bar's top background view's height.
-    @IBOutlet var headerTopConstraint: NSLayoutConstraint?
+    @IBOutlet var imageTopConstraint: NSLayoutConstraint?
     
     /// The constraint that sets the image height. This needs to be adjusted for smaller screens.
     @IBOutlet var headerHeightConstraint: NSLayoutConstraint?
+    
+    /// The constraint between the learn more button and the bottom of the view.
+    @IBOutlet var learnMoreBottomConstraint: NSLayoutConstraint?
     
     /// A view that is used to mark the height of the text instruction area.
     @IBOutlet var instructionTextView: UIView?
     
     /// Save the previously calculated instruction height.
-    private var _instructionHeight: CGFloat = 0
+    private var _remainingHeight: CGFloat = 0
     
     /// Override `viewDidLayoutSubviews` to set up resizing the image to balance the the space provided to
     /// the image verse the space provided for the text.
@@ -69,6 +72,7 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateImagePlacementConstraintsIfNeeded()
+        self.updateLearnMoreContraints()
     }
     
     /// Sets the height of the scrollview's top background view depending on the image placement type from
@@ -76,7 +80,7 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     /// type is `.topMarginBackground`.
     open func updateImagePlacementConstraintsIfNeeded() {
         guard let placementType = self.imageTheme?.placementType,
-            let headerTopConstraint = self.headerTopConstraint
+            let headerTopConstraint = self.imageTopConstraint
             else {
                 return
         }
@@ -89,6 +93,17 @@ open class RSDInstructionStepViewController: RSDStepViewController {
         }
     }
     
+    /// If the learn more button is hidden, then the constraints for it should be deactivated.
+    open func updateLearnMoreContraints() {
+        guard let button = registeredButtons[.navigation(.learnMore)]?.first,
+            let constraint = self.learnMoreBottomConstraint
+            else {
+                return
+        }
+        constraint.isActive = (!button.isHidden && button.alpha > 0.1)
+        self.view.setNeedsUpdateConstraints()
+    }
+    
     /// Update the image height constraint to balance the the space provided to the image versus the space
     /// provided for the text. The default is to look at the overall screen height and size the image to take
     /// up half the space if the text does not fit (iPhone SE) or resize to take the remaining space if the
@@ -96,15 +111,18 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     open func updateImageHeightConstraintIfNeeded() {
         guard let instructionTextView = self.instructionTextView,
             let scrollView = self.scrollView,
-            let headerTopConstraint = self.headerTopConstraint,
+            let headerTopConstraint = self.imageTopConstraint,
             let headerHeightConstraint = self.headerHeightConstraint
             else {
                 return
         }
-        if _instructionHeight != instructionTextView.bounds.height {
-            _instructionHeight = instructionTextView.bounds.height
-            let remainingHeight = scrollView.bounds.height - _instructionHeight - headerTopConstraint.constant
-            headerHeightConstraint.constant = max(remainingHeight, self.view.bounds.height / 2)
+        
+        let remainingHeight = scrollView.bounds.height - instructionTextView.bounds.height - headerTopConstraint.constant
+        if _remainingHeight != remainingHeight {
+            _remainingHeight = remainingHeight
+            let height = max(remainingHeight, self.view.bounds.height / 2)
+            headerHeightConstraint.constant = height
+            self.navigationFooter?.shouldShowShadow = (height != remainingHeight)
             self.view.setNeedsUpdateConstraints()
             self.view.setNeedsLayout()
         }
