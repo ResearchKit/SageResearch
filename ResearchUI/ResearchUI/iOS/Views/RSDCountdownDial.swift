@@ -236,14 +236,16 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewDesignable {
             ringLayer?.removeFromSuperlayer()
             dialLayer?.removeFromSuperlayer()
             _rect = bounds
+    
+            let path = createCirclePath().cgPath
         
             ringLayer = CAShapeLayer()
-            ringLayer.path = createCirclePath().cgPath
-            layer.addSublayer(ringLayer)
+            ringLayer.path = path
+            layer.insertSublayer(ringLayer, at: 0)
             ringLayer.frame = bounds
             
             dialLayer = CAShapeLayer()
-            dialLayer.path = ringLayer.path
+            dialLayer.path = path
             layer.addSublayer(dialLayer)
             dialLayer.frame = bounds
         }
@@ -258,6 +260,15 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewDesignable {
         ringLayer?.lineWidth = ringWidth
         ringLayer?.fillColor = innerColor.cgColor
         ringLayer?.strokeColor = ringColor.cgColor
+        
+        if innerColor != UIColor.clear, let ringLayer = ringLayer {
+            ringLayer.shadowPath = ringLayer.path
+            ringLayer.shadowColor = UIColor.black.cgColor
+            ringLayer.shadowOpacity = 1
+            ringLayer.shadowRadius = 10
+            ringLayer.shadowOffset = CGSize(width: 0, height: 0)
+            ringLayer.compositingFilter = "multiplyBlendMode"
+        }
         
         dialLayer?.strokeEnd = progress
         dialLayer?.lineWidth = dialWidth

@@ -302,7 +302,7 @@
         <scene sceneID="4cP-Aq-OdA">
             <objects>
                 <viewController storyboardIdentifier="HeartRate" id="8Jc-wF-FNR" customClass="CRFHeartRateStepViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="JaM-On-OUa">
+                    <view key="view" contentMode="scaleToFill" id="JaM-On-OUa" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -351,6 +351,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" name="buttonTintBlue"/>
                                         <constraints>
                                             <constraint firstItem="Pat-FH-ywT" firstAttribute="centerY" secondItem="dXm-uu-q96" secondAttribute="centerY" id="9h1-fh-rmk"/>
@@ -364,6 +365,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="eHk-r0-Aop" secondAttribute="trailing" id="2AE-rE-IhS"/>
                                     <constraint firstAttribute="bottom" secondItem="eHk-r0-Aop" secondAttribute="bottom" id="6ig-2n-21K"/>
@@ -389,7 +391,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="4ov-7f-Yb9" firstAttribute="leading" secondItem="Cme-uq-pyz" secondAttribute="leading" constant="24" id="EED-zs-dmf"/>
                                     <constraint firstItem="4ov-7f-Yb9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Cme-uq-pyz" secondAttribute="top" constant="6" id="Vgj-Hl-Hph"/>
@@ -411,6 +413,11 @@
                                     <constraint firstAttribute="height" priority="500" constant="250" id="1LO-nu-PYL"/>
                                     <constraint firstAttribute="width" secondItem="l1n-cn-Sxa" secondAttribute="height" multiplier="1:1" placeholder="YES" id="JDf-og-9Rv"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="innerColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heartRateIconCapturing" translatesAutoresizingMaskIntoConstraints="NO" id="JGX-wx-uQP">
                                 <rect key="frame" x="128" y="316.5" width="64" height="58"/>
@@ -809,13 +816,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="Your heart rate changed by" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIh-Jl-8y5">
-                                        <rect key="frame" x="24" y="310" width="272" height="86"/>
+                                        <rect key="frame" x="24" y="280" width="272" height="86"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                         <color key="textColor" name="white"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l2w-IM-GMs">
-                                        <rect key="frame" x="82.5" y="414" width="155" height="98"/>
+                                        <rect key="frame" x="82.5" y="384" width="155" height="98"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="65" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAS-tv-vtl">
                                                 <rect key="frame" x="0.0" y="0.0" width="97.5" height="98"/>
@@ -841,7 +848,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOO-0a-utf" customClass="RSDRoundedButton" customModule="ResearchUI">
-                                        <rect key="frame" x="24" y="522" width="272" height="22"/>
+                                        <rect key="frame" x="24" y="492" width="272" height="52"/>
                                         <color key="backgroundColor" name="white"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <color key="tintColor" name="darkPastelGreenTwo"/>

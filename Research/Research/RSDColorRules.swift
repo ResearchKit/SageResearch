@@ -376,7 +376,7 @@ open class RSDColorRules  {
         if let style = style, let mapping = self.mapping(for: style) {
             return (mapping.light.color, self.palette.grayScale.veryLightGray.color, mapping.normal)
         }
-        else if let mapping = mapping(for: innerColor) {
+        else if let mapping = mapping(for: innerColor), mapping.normal != palette.grayScale.white {
             return (mapping.light.color, self.palette.grayScale.veryLightGray.color, mapping.normal)
         }
         else {
