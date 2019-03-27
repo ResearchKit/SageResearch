@@ -2,7 +2,7 @@
 //  CRFHeartRateStep.swift
 //  CardiorespiratoryFitness
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -38,11 +38,8 @@ import UIKit
 open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfiguration {
 
     private enum CodingKeys : String, CodingKey {
-        case shouldSaveBuffer, cameraSettings, isResting, shouldDeletePrevious
+        case cameraSettings, isResting, shouldDeletePrevious
     }
-    
-    /// Should the log file include the full pixel matrix or just the averaged value?
-    public var shouldSaveBuffer: Bool = true    // TODO: syoung 01/08/2019 Turn off default for saving the buffer.
     
     /// The camera settings.
     public var cameraSettings : CRFCameraSettings = CRFCameraSettings()
@@ -76,7 +73,6 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
             assertionFailure("Failed to copy into a class of expected type.")
             return
         }
-        subclassCopy.shouldSaveBuffer = self.shouldSaveBuffer
         subclassCopy.isResting = self.isResting
         subclassCopy.shouldDeletePrevious = self.shouldDeletePrevious
         subclassCopy.cameraSettings = self.cameraSettings
@@ -87,10 +83,21 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
         try super.decode(from: decoder, for: deviceType)
         if deviceType == nil {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.shouldSaveBuffer = try container.decodeIfPresent(Bool.self, forKey: .shouldSaveBuffer) ?? self.shouldSaveBuffer
             self.cameraSettings = try container.decodeIfPresent(CRFCameraSettings.self, forKey: .cameraSettings) ?? self.cameraSettings
             self.isResting = try container.decodeIfPresent(Bool.self, forKey: .isResting) ?? self.isResting
             self.shouldDeletePrevious = try container.decodeIfPresent(Bool.self, forKey: .shouldDeletePrevious) ?? self.shouldDeletePrevious
+            
+            // set up default values
+            if self.shouldHideActions == nil {
+                self.shouldHideActions = [.navigation(.goBackward), .navigation(.goForward)]
+            }
+            if self.duration == 0 {
+                self.duration = 20  // default is 20 seconds
+            }
+            if self.commands.rawValue == 0 {
+                self.commands = [.vibrate, .continueOnFinish, .shouldDisableIdleTimer]
+            }
+            self.requiresBackgroundAudio = true
         }
     }
     

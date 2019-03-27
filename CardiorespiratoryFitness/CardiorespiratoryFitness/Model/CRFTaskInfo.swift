@@ -36,14 +36,7 @@ import Foundation
 /// A list of all the tasks included in this module.
 public enum CRFTaskIdentifier : String, Codable, CaseIterable {
     
-    /// The Cardio 12-minute Distance Test.
-    case cardio12MT = "Cardio 12MT"
-    
-    /// The Cardio Stair Step Test.
-    case cardioStairStep = "Cardio Stair Step"
-    
-    /// The heart rate measurement only.
-    case heartRateOnly = "HeartRate Measurement"
+    case training = "Training"
     
     func task(with factory: CRFFactory) -> RSDTaskObject {
         do {
@@ -86,11 +79,7 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
         
         // Set the default image icon.
         switch taskIdentifier {
-        case .cardio12MT:
-            self.icon = try! RSDImageWrapper(imageName: "active12MinuteRun", bundle: Bundle(for: CRFFactory.self))
-        case .cardioStairStep:
-            self.icon = try! RSDImageWrapper(imageName: "activeStairStep", bundle: Bundle(for: CRFFactory.self))
-        case .heartRateOnly:
+        case .training:
             self.icon = try! RSDImageWrapper(imageName: "captureStartButton", bundle: Bundle(for: CRFFactory.self))
         }
     }
@@ -115,11 +104,7 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
     /// Estimated minutes to perform the task.
     public var estimatedMinutes: Int {
         switch taskIdentifier {
-        case .cardio12MT:
-            return 15
-        case .cardioStairStep:
-            return 5
-        case .heartRateOnly:
+        case .training:
             return 2
         }
     }
@@ -153,12 +138,8 @@ public struct CRFTaskTransformer : RSDResourceTransformer, Decodable {
     
     public init(_ taskIdentifier: CRFTaskIdentifier) {
         switch taskIdentifier {
-        case .cardio12MT:
-            self.resourceName = "Cardio_12MT"
-        case .cardioStairStep:
-            self.resourceName = "Cardio_Stair_Step"
-        case .heartRateOnly:
-            self.resourceName = "HeartRate_Only"
+        case .training:
+            self.resourceName = "Heartrate_Training"
         }
     }
     
@@ -209,24 +190,11 @@ public struct CRFTaskGroup : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
 
 public protocol CRFTask : RSDTask {
     
-    /// For the heart rate steps, should the log file include the full pixel matrix or just the averaged value?
-    var shouldSaveBuffer: Bool { get set }
-    
     /// The camera settings to use for the heart rate steps (nil resettable).
     var cameraSettings : CRFCameraSettings? { get set }
 }
 
 extension RSDTaskObject : CRFTask {
-    
-    /// For the heart rate steps, should the log file include the full pixel matrix or just the averaged value?
-    public var shouldSaveBuffer: Bool {
-        get { return heartRateSteps().first?.shouldSaveBuffer ?? false }
-        set {
-            for step in heartRateSteps() {
-                step.shouldSaveBuffer = newValue
-            }
-        }
-    }
     
     /// The camera settings to use for the heart rate steps (nil resettable).
     public var cameraSettings : CRFCameraSettings? {

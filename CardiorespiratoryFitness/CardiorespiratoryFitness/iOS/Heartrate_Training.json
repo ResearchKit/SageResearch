@@ -1,0 +1,106 @@
+{
+    "identifier": "Training",
+    "schemaInfo": {"identifier": "Heartrate Training", "revision": 1},
+    "shouldHideActions": ["goBackward", "skip"],
+    "progressMarkers": [],
+    "steps": [{
+        "identifier": "introduction",
+        "type": "instruction",
+        "title": "Heart Snapshot",
+        "text": "Your phone's camera can measure your heartbeat.",
+        "image": {
+            "type": "fetchable",
+            "imageName": "trainingIntro",
+            "placementType": "topMarginBackground"
+        },
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Measure"
+            }
+        }
+    },
+    {
+        "identifier": "cameraPermission",
+        "type": "instruction",
+        "image": {
+            "type": "fetchable",
+            "imageName": "phoneBack",
+            "placementType": "topMarginBackground"
+        },
+        "title": "Can we turn on your camera and flash?",
+        "text": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate.",
+        "permissions": [{
+            "permissionType": "camera",
+            "reason": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate."
+        }],
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Next"
+            }
+        }
+    },
+    {
+        "identifier": "findFlash",
+        "type": "instruction",
+        "title": "Find your camera and flash",
+        "text": "Your flash is usually next to your camera on the back of the phone. You will need to cover both.",
+        "image": {
+            "type": "fetchable",
+            "imageName": "handHoldingPhone",
+            "placementType": "topBackground"
+        },
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Found it"
+            }
+        }
+    },
+    {
+        "identifier": "coverFlash",
+        "type": "instruction",
+        "title": "Cover the flash and camera",
+        "text": "Use your finger to cover the camera and flash on the back of your phone. Your finger nail should turn a little red once you cover the flash.",
+        "image": {
+            "type": "fetchable",
+            "imageName": "fingerOverFlash",
+            "placementType": "topMarginBackground"
+        },
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Measure heart rate"
+            }
+        }
+    },
+    {
+        "identifier": "heartRate",
+        "type": "heartRate",
+    },
+    {
+        "identifier": "feedback",
+        "type": "completion",
+        "title": "Practice makes perfect",
+        "text": "This is to make sure you can cover your flash and camera quickly for later tests.",
+        "resultIdentifier": "heartRate",
+        "unitText": "BPM",
+        "viewTheme": {
+            "viewIdentifier": "HeartRateResult",
+            "storyboardIdentifier": "ActiveTaskSteps"
+        },
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Done"
+            },
+            "skip": {
+                "type": "navigation",
+                "skipToIdentifier": "heartRate",
+                "buttonTitle": "Redo"
+            }
+        }
+    }
+    ]
+}
