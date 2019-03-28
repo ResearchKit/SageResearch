@@ -38,13 +38,6 @@ extension RSDStepType {
     static let heartRate: RSDStepType = "heartRate"
 }
 
-extension RSDUIActionObjectType {
-    
-    static let normalHeartRate: RSDUIActionObjectType = "normalHeartRate"
-    
-    static let tipsForMeasuring: RSDUIActionObjectType = "tipsForMeasuring"
-}
-
 fileprivate var _didAddLocalizationBundle: Bool = false
 
 open class CRFFactory: RSDFactory {
@@ -68,17 +61,6 @@ open class CRFFactory: RSDFactory {
             return try CRFHeartRateStep(from: decoder)
         default:
             return try super.decodeStep(from: decoder, with: type)
-        }
-    }
-    
-    open override func decodeUIAction(from decoder: Decoder, with objectType: RSDUIActionObjectType) throws -> RSDUIAction {
-        switch objectType {
-        case .normalHeartRate:
-            return CRFNormalHeartRateAction()
-        case .tipsForMeasuring:
-            return CRFMeasuringTipsAction()
-        default:
-            return try super.decodeUIAction(from: decoder, with: objectType)
         }
     }
 }

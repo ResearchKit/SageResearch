@@ -16,10 +16,9 @@
             "reason": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate."
         }],
         "image": {
-            "type": "animated",
-            "imageNames": ["stairStepLarge1", "stairStepLarge2", "stairStepLarge3", "stairStepLarge4"],
-            "placementType": "topBackground",
-            "animationDuration": 2
+            "type": "fetchable",
+            "imageName": "stairStepSmall1",
+            "placementType": "topBackground"
         },
         "icons": [{
             "icon": "StairsIcon",
@@ -73,25 +72,15 @@
     {
         "identifier": "stairStep",
         "type": "section",
-        "asyncActions": [{
-            "identifier": "motion",
-            "type": "motion",
-            "startStepIdentifier": "countdown",
-            "requiresBackgroundAudio": true,
-            "recorderTypes": ["accelerometer",
-                "gyro"
-            ]
-        }],
         "steps": [{
             "identifier": "bringPhone",
             "type": "instruction",
             "title": "Please step with your phone",
             "text": "You will step up and down for 3 minutes. Try to step with the pace.",
             "image": {
-                "type": "animated",
-                "imageNames": ["stairStepSmall1", "stairStepSmall2", "stairStepSmall3", "stairStepSmall4"],
-                "placementType": "topBackground",
-                "animationDuration": 2
+                "type": "fetchable",
+                "imageName": "stairStepSmall1",
+                "placementType": "topBackground"
             },
             "actions": {
                 "goForward": {
