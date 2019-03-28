@@ -36,3 +36,5 @@
 "HEARTRATE_CAPTURE_CONTINUE_TEXT" = "Please keep your hands and body still";
 "HEARTRATE_CAPTURE_ERROR_TEXT"    = "Please place finger back on the camera and flash";
 "HEARTRATE_CAPTURE_%@_BPM"        = "%@ BPM";
+"HEARTRATE_LEARN_NORMAL_BUTTON"   = "What is a ‘normal’ resting HR?";
+"HEARTRATE_LEARN_TIPS_BUTTON"     = "Tips for measuring";

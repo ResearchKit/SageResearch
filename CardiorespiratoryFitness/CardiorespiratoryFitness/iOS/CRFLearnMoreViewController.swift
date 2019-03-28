@@ -1,8 +1,8 @@
 //
-//  CRFFactory.swift
+//  CRFLearnMoreViewController.swift
 //  CardiorespiratoryFitness
 //
-//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,52 +33,34 @@
 
 import UIKit
 
-extension RSDStepType {
+class CRFLearnMoreViewController: UIViewController {
     
-    static let heartRate: RSDStepType = "heartRate"
-}
+    var stepViewModel: RSDStepViewPathComponent!
 
-extension RSDUIActionObjectType {
+    @IBOutlet var headerView: RSDStepNavigationView!
     
-    static let normalHeartRate: RSDUIActionObjectType = "normalHeartRate"
-    
-    static let tipsForMeasuring: RSDUIActionObjectType = "tipsForMeasuring"
-}
+    @IBOutlet var labels: [UILabel]!
 
-fileprivate var _didAddLocalizationBundle: Bool = false
-
-open class CRFFactory: RSDFactory {
+    @IBAction func backButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true) {
+        }
+    }
     
-    /// Override initialization to add the strings file to the localization bundles.
-    public override init() {
-        super.init()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        // Add the localization bundle if this is a first init()
-        if !_didAddLocalizationBundle {
-            _didAddLocalizationBundle = true
-            let localizationBundle = LocalizationBundle(Bundle(for: CRFFactory.self))
-            Localization.insert(bundle: localizationBundle, at: 1)
+        guard let designSystem = self.stepViewModel.parentTaskPath?.designSystem
+            else {
+                return
         }
-    }
-
-    /// Override the base factory to vend the heart rate step.
-    override open func decodeStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
-        switch type {
-        case .heartRate:
-            return try CRFHeartRateStep(from: decoder)
-        default:
-            return try super.decodeStep(from: decoder, with: type)
-        }
-    }
-    
-    open override func decodeUIAction(from decoder: Decoder, with objectType: RSDUIActionObjectType) throws -> RSDUIAction {
-        switch objectType {
-        case .normalHeartRate:
-            return CRFNormalHeartRateAction()
-        case .tipsForMeasuring:
-            return CRFMeasuringTipsAction()
-        default:
-            return try super.decodeUIAction(from: decoder, with: objectType)
+        
+        let headerColor = designSystem.colorRules.backgroundPrimary
+        self.headerView.setDesignSystem(designSystem, with: headerColor)
+        
+        let whiteColor = designSystem.colorRules.backgroundLight
+        labels.forEach {
+            $0.textColor = designSystem.colorRules.textColor(on: whiteColor, for: .body)
+            $0.font = designSystem.fontRules.font(for: .body, compatibleWith: traitCollection)
         }
     }
 }

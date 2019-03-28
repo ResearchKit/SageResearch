@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "backArrowHeader.pdf"
+      "filename" : "ComfortablePlaceToSit.pdf"
     }
   ],
   "info" : {
@@ -10,7 +10,6 @@
     "author" : "xcode"
   },
   "properties" : {
-    "template-rendering-intent" : "template",
     "preserves-vector-representation" : true
   }
 }
