@@ -1,5 +1,5 @@
 {
-    "identifier": "Training",
+    "identifier": "Heartrate Training",
     "schemaInfo": {"identifier": "Heartrate Training", "revision": 1},
     "shouldHideActions": ["goBackward", "skip"],
     "progressMarkers": [],
@@ -83,6 +83,7 @@
     {
         "identifier": "heartRate",
         "type": "heartRate",
+        "isResting": true
     },
     {
         "identifier": "feedback",

@@ -36,7 +36,9 @@ import Foundation
 /// A list of all the tasks included in this module.
 public enum CRFTaskIdentifier : String, Codable, CaseIterable {
     
-    case training = "Training"
+    case training = "Heartrate Training"
+    
+    case resting = "Resting Heartrate"
     
     func task(with factory: CRFFactory) -> RSDTaskObject {
         do {
@@ -80,7 +82,9 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
         // Set the default image icon.
         switch taskIdentifier {
         case .training:
-            self.icon = try! RSDImageWrapper(imageName: "captureStartButton", bundle: Bundle(for: CRFFactory.self))
+            self.icon = try! RSDImageWrapper(imageName: "heartRateIcon", bundle: Bundle(for: CRFFactory.self))
+        case .resting:
+            self.icon = try! RSDImageWrapper(imageName: "heartRateIcon", bundle: Bundle(for: CRFFactory.self))
         }
     }
     
@@ -106,6 +110,8 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
         switch taskIdentifier {
         case .training:
             return 2
+        case .resting:
+            return 1
         }
     }
     
@@ -140,6 +146,8 @@ public struct CRFTaskTransformer : RSDResourceTransformer, Decodable {
         switch taskIdentifier {
         case .training:
             self.resourceName = "Heartrate_Training"
+        case .resting:
+            self.resourceName = "Heartrate_Resting"
         }
     }
     

@@ -1,6 +1,9 @@
 {
     "identifier": "Resting Heartrate",
-    "schemaInfo": {"identifier": "Resting Heartrate", "revision": 1},
+    "schemaInfo": {
+        "identifier": "Heartrate Measurement",
+        "revision": 9
+    },
     "shouldHideActions": ["goBackward", "skip"],
     "progressMarkers": [],
     "steps": [{
@@ -8,58 +11,47 @@
         "type": "overview",
         "title": "Resting heart rate",
         "text": "Your heart rate while you are at rest is a marker of your health. The more relaxed you are, the better. Let's measure your resting heart rate.",
+        "permissions": [{
+            "permissionType": "camera",
+            "reason": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate."
+        }],
         "image": {
             "type": "fetchable",
-            "imageName": "trainingIntro",
+            "imageName": "restingHoldPhone",
             "placementType": "topMarginBackground"
+        },
+        "icons": [{
+            "icon": "ComfortablePlaceToSit",
+            "title": "COMFORTABLE PLACE TO SIT"
+        }],
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Measure"
+            },
+            "skip": {
+                "type": "reminder",
+                "reminderIdentifier": "Resting Heartrate"
+            }
+        }
+    },
+    {
+        "identifier": "sitDownInstruction",
+        "type": "instruction",
+        "title": "Sit down and relax",
+        "text": "If you don't feel relaxed, take a moment and breathe slowly before starting the measurement.",
+        "image": {
+            "type": "fetchable",
+            "imageName": "sittingDown",
+            "placementType": "topBackground"
         },
         "actions": {
             "goForward": {
                 "type": "default",
                 "buttonTitle": "Measure"
             },
-            "learnMore":  {
-                "type":"webView",
-                "buttonTitle": "Learn how and why",
-                "url": "Heart_Snapshot.html"
-            }
-        }
-    },
-    {
-        "identifier": "cameraPermission",
-        "type": "instruction",
-        "image": {
-            "type": "fetchable",
-            "imageName": "phoneBack",
-            "placementType": "topMarginBackground"
-        },
-        "title": "Can we turn on your camera and flash?",
-        "text": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate.",
-        "permissions": [{
-            "permissionType": "camera",
-            "reason": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate."
-        }],
-        "actions": {
-            "goForward": {
-                "type": "default",
-                "buttonTitle": "Next"
-            }
-        }
-    },
-    {
-        "identifier": "findFlash",
-        "type": "instruction",
-        "title": "Find your camera and flash",
-        "text": "Your flash is usually next to your camera on the back of the phone. You will need to cover both.",
-        "image": {
-            "type": "fetchable",
-            "imageName": "handHoldingPhone",
-            "placementType": "topBackground"
-        },
-        "actions": {
-            "goForward": {
-                "type": "default",
-                "buttonTitle": "Found it"
+            "learnMore": {
+                "type": "tipsForMeasuring"
             }
         }
     },
@@ -81,26 +73,44 @@
         }
     },
     {
+        "identifier": "heartRate1",
+        "type": "heartRate",
+        "isResting": true
+    },
+    {
+        "identifier": "feedback1",
+        "type": "completion",
+        "resultTitle": "Your resting heart rate is",
+        "resultIdentifier": "heartRate1",
+        "unitText": "BPM",
+        "title": "Measure twice",
+        "text": "Many things can influence your measurement. To improve the accuracy, let's meaure it one more time.",
+        "actions": {
+            "learnMore": {
+                "type": "normalHeartRate"
+            }
+        }
+    },
+    {
         "identifier": "heartRate",
         "type": "heartRate",
+        "isResting": true
     },
     {
         "identifier": "feedback",
         "type": "completion",
-        "resultTitle": "Your heart rate is",
+        "resultTitle": "Your resting heart rate is",
         "resultIdentifier": "heartRate",
         "unitText": "BPM",
-        "title": "Practice makes perfect",
-        "text": "This is to make sure you can cover your flash and camera quickly for later tests.",
+        "title": "Resting HR Captured!",
+        "text": "Great job measuring your heart at rest. We've finished the first half of your heart snapshot, so let's continue on to the next step.",
         "actions": {
             "goForward": {
                 "type": "default",
                 "buttonTitle": "Done"
             },
-            "skip": {
-                "type": "navigation",
-                "skipToIdentifier": "heartRate",
-                "buttonTitle": "Redo"
+            "learnMore": {
+                "type": "normalHeartRate"
             }
         }
     }

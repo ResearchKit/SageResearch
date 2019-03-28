@@ -735,6 +735,11 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             self.present(navVC, animated: true, completion: nil)
             return true
         }
+        else if let vcAction = action as? RSDShowViewUIAction {
+            let vc = vcAction.instantiateViewController(for: self.stepViewModel)
+            self.present(vc, animated: true, completion: nil)
+            return true
+        }
         else {
             // No action handler was found for this
             return false

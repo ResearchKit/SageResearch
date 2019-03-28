@@ -51,11 +51,23 @@ class ModelTests: XCTestCase {
 
         let taskInfo = CRFTaskInfo(.training)
 
-        XCTAssertEqual(taskInfo.identifier, "Training")
+        XCTAssertEqual(taskInfo.identifier, "Heartrate Training")
         XCTAssertEqual(taskInfo.title, "Heart Snapshot")
         XCTAssertEqual(taskInfo.subtitle, "Your phone's camera can measure your heartbeat.")
         XCTAssertNil(taskInfo.detail)
         XCTAssertEqual(taskInfo.estimatedMinutes, 2)
+    }
+    
+    func testResting() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let taskInfo = CRFTaskInfo(.resting)
+        
+        XCTAssertEqual(taskInfo.identifier, "Resting Heartrate")
+        XCTAssertEqual(taskInfo.title, "Resting heart rate")
+        XCTAssertEqual(taskInfo.subtitle, "Your heart rate while you are at rest is a marker of your health. The more relaxed you are, the better. Let's measure your resting heart rate.")
+        XCTAssertNil(taskInfo.detail)
+        XCTAssertEqual(taskInfo.estimatedMinutes, 1)
     }
     
     func testDecodeTasks() {

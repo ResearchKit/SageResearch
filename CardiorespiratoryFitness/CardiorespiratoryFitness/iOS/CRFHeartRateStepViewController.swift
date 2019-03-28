@@ -85,9 +85,6 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         self.skipButton?.isHidden = true
         self.heartImageView?.isHidden = true
         
-        let localizationBundle = LocalizationBundle(Bundle(for: CRFHeartRateStepViewController.self))
-        Localization.insert(bundle: localizationBundle, at: 1)
-    
         self.instructionLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_START_TEXT")
     }
     
