@@ -51,7 +51,11 @@
                 "buttonTitle": "Measure"
             },
             "learnMore": {
-                "type": "tipsForMeasuring"
+                "type": "webView",
+                "title": "Tips for measuring resting heart rate",
+                "backButton": true,
+                "url": "rhr-tips.html",
+                "buttonTitle": "Tips for measuring"
             }
         }
     },
@@ -87,7 +91,11 @@
         "text": "Many things can influence your measurement. To improve the accuracy, let's meaure it one more time.",
         "actions": {
             "learnMore": {
-                "type": "normalHeartRate"
+                "type": "webView",
+                "title": "What is a ‘normal’ resting heart rate?",
+                "backButton": true,
+                "url": "Normal_HR.html",
+                "buttonTitle": "What is a ‘normal’ resting HR?"
             }
         }
     },
@@ -110,7 +118,11 @@
                 "buttonTitle": "Done"
             },
             "learnMore": {
-                "type": "normalHeartRate"
+                "type": "webView",
+                "title": "What is a ‘normal’ resting heart rate?",
+                "backButton": true,
+                "url": "Normal_HR.html",
+                "buttonTitle": "What is a ‘normal’ resting HR?"
             }
         }
     }
