@@ -34,13 +34,6 @@
 import Foundation
 import AudioToolbox
 
-extension UIViewController {
-    func recursiveSetNeedsStatusBarAppearanceUpdate() {
-        self.setNeedsStatusBarAppearanceUpdate()
-        //self.parent?.recursiveSetNeedsStatusBarAppearanceUpdate()
-    }
-}
-
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
 /// UI architecture.
