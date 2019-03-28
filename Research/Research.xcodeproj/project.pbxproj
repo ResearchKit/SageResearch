@@ -185,6 +185,9 @@
 		F837224722331DBE00C9A2EA /* RSDOverviewStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F837224522331DBE00C9A2EA /* RSDOverviewStep.swift */; };
 		F837224822331DBE00C9A2EA /* RSDOverviewStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F837224522331DBE00C9A2EA /* RSDOverviewStep.swift */; };
 		F837224922331DBE00C9A2EA /* RSDOverviewStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F837224522331DBE00C9A2EA /* RSDOverviewStep.swift */; };
+		F83E44032249E8EF00E13207 /* ArrayExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83E44022249E8EF00E13207 /* ArrayExtensionTests.swift */; };
+		F83E44052249EA0B00E13207 /* CodableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83E44042249EA0B00E13207 /* CodableExtensionTests.swift */; };
+		F83E44072249F5FA00E13207 /* ResultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83E44062249F5FA00E13207 /* ResultTests.swift */; };
 		F84205A6202BAB6B000614D6 /* RSDMotionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84205A5202BAB6B000614D6 /* RSDMotionRecorder.swift */; };
 		F8458EDD22456CE40094D7B0 /* TaskViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8458EDC22456CE40094D7B0 /* TaskViewModelTests.swift */; };
 		F8475BB62125E5E30031D802 /* RSDUIActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8475BB52125E5E30031D802 /* RSDUIActionHandler.swift */; };
@@ -202,6 +205,7 @@
 		F84E54551FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
 		F84E54561FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
 		F853828E214C447100C3B774 /* StepViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F853828D214C447100C3B774 /* StepViewModelTests.swift */; };
+		F857BAB1224C12860089B150 /* ColorMappingThemeElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F857BAB0224C12860089B150 /* ColorMappingThemeElementTests.swift */; };
 		F8586AE62011697700B2DF65 /* RSDFractionFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8586AE72011697700B2DF65 /* RSDFractionFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8586AE82011697700B2DF65 /* RSDFractionFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1029,6 +1033,9 @@
 		F837223C22322F6F00C9A2EA /* FrequencyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyTests.swift; sourceTree = "<group>"; };
 		F83722402233133100C9A2EA /* RSDStandardPermissionsStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStandardPermissionsStep.swift; sourceTree = "<group>"; };
 		F837224522331DBE00C9A2EA /* RSDOverviewStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDOverviewStep.swift; sourceTree = "<group>"; };
+		F83E44022249E8EF00E13207 /* ArrayExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensionTests.swift; sourceTree = "<group>"; };
+		F83E44042249EA0B00E13207 /* CodableExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableExtensionTests.swift; sourceTree = "<group>"; };
+		F83E44062249F5FA00E13207 /* ResultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultTests.swift; sourceTree = "<group>"; };
 		F84205A5202BAB6B000614D6 /* RSDMotionRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDMotionRecorder.swift; sourceTree = "<group>"; };
 		F8458EDC22456CE40094D7B0 /* TaskViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModelTests.swift; sourceTree = "<group>"; };
 		F8475BB52125E5E30031D802 /* RSDUIActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionHandler.swift; sourceTree = "<group>"; };
@@ -1037,6 +1044,7 @@
 		F84A2F772178FABB0079C92C /* ClockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockTests.swift; sourceTree = "<group>"; };
 		F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
 		F853828D214C447100C3B774 /* StepViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepViewModelTests.swift; sourceTree = "<group>"; };
+		F857BAB0224C12860089B150 /* ColorMappingThemeElementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMappingThemeElementTests.swift; sourceTree = "<group>"; };
 		F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDFractionFormatter.h; sourceTree = "<group>"; };
 		F8586AE52011697700B2DF65 /* RSDFractionFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDFractionFormatter.m; sourceTree = "<group>"; };
 		F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementDurationTests.swift; sourceTree = "<group>"; };
@@ -1438,6 +1446,15 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		F83E44012249E8A300E13207 /* Utility Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F83E44022249E8EF00E13207 /* ArrayExtensionTests.swift */,
+				F83E44042249EA0B00E13207 /* CodableExtensionTests.swift */,
+			);
+			path = "Utility Tests";
+			sourceTree = "<group>";
+		};
 		F8475BB32125E57A0031D802 /* AsyncAction */ = {
 			isa = PBXGroup;
 			children = (
@@ -1464,11 +1481,13 @@
 			isa = PBXGroup;
 			children = (
 				F84A2F772178FABB0079C92C /* ClockTests.swift */,
+				F857BAB0224C12860089B150 /* ColorMappingThemeElementTests.swift */,
 				F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */,
 				F8FCE05E203F46EC00616CE8 /* ScheduleTests.swift */,
 				F89BEA2F202B9550007BD2DD /* CopyStepTests.swift */,
 				F853828D214C447100C3B774 /* StepViewModelTests.swift */,
 				F837223C22322F6F00C9A2EA /* FrequencyTests.swift */,
+				F83E44062249F5FA00E13207 /* ResultTests.swift */,
 			);
 			path = "ModelObject Tests";
 			sourceTree = "<group>";
@@ -1838,6 +1857,7 @@
 				F829F0C41FF71C45001B0680 /* DataSource Tests */,
 				F858D149201BA61A00132325 /* ModelObject Tests */,
 				FF2ACF401FBB86870018D87F /* Navigation Tests */,
+				F83E44012249E8A300E13207 /* Utility Tests */,
 			);
 			path = ResearchTests;
 			sourceTree = "<group>";
@@ -2808,6 +2828,7 @@
 				F8C7D40B2092876B007490BC /* CodableTrackedDataTests.swift in Sources */,
 				F8C7D39D20915E67007490BC /* CodableUIActionObjectTests.swift in Sources */,
 				F8E733482231CE640009F594 /* JSONSerializationTests.swift in Sources */,
+				F83E44032249E8EF00E13207 /* ArrayExtensionTests.swift in Sources */,
 				F858D14B201BA67B00132325 /* MeasurementDurationTests.swift in Sources */,
 				F837223D22322F6F00C9A2EA /* FrequencyTests.swift in Sources */,
 				FF633D751FCE7A6900CF2267 /* CodableResultObjectTests.swift in Sources */,
@@ -2815,6 +2836,7 @@
 				FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */,
 				F853828E214C447100C3B774 /* StepViewModelTests.swift in Sources */,
 				F8D074AE204FAC04006CDABB /* RecordSampleLoggerTests.swift in Sources */,
+				F857BAB1224C12860089B150 /* ColorMappingThemeElementTests.swift in Sources */,
 				F829F0EA1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */,
 				F8D074B1204FBD0D006CDABB /* DataArchiveTests.swift in Sources */,
 				FF633D741FCE7A6900CF2267 /* CodableInputFieldObjectTests.swift in Sources */,
@@ -2822,7 +2844,9 @@
 				F8BAF41320488CCA004B9406 /* FormStepTableDataSourceTests.swift in Sources */,
 				FF633D771FCE7A6900CF2267 /* CodableTaskObjectTests.swift in Sources */,
 				F829F0C61FF71C7B001B0680 /* FormatterTests.swift in Sources */,
+				F83E44072249F5FA00E13207 /* ResultTests.swift in Sources */,
 				F84A2F782178FABB0079C92C /* ClockTests.swift in Sources */,
+				F83E44052249EA0B00E13207 /* CodableExtensionTests.swift in Sources */,
 				F8458EDD22456CE40094D7B0 /* TaskViewModelTests.swift in Sources */,
 				F89BEA30202B9550007BD2DD /* CopyStepTests.swift in Sources */,
 				FF633D781FCE7A6900CF2267 /* FactoryTests.swift in Sources */,

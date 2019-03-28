@@ -36,14 +36,6 @@
                         "type":"reminder",
                         "reminderIdentifier":"Tapping"
                     }
-                 },
-                 "colorMapping":{
-                     "type": "placementMapping",
-                     "placement": {
-                         "header": "primary",
-                         "body": "white",
-                         "footer": "white"
-                     }
                  }
              },
              {
@@ -56,14 +48,6 @@
                      "imageNames":["TapLeft1", "TapLeft2"],
                      "placementType":"topBackground",
                      "animationDuration": 1
-                },
-                "colorMapping":{
-                    "type": "placementMapping",
-                    "placement": {
-                        "header": "primary",
-                        "body": "white",
-                        "footer": "white"
-                    }
                 },
                 "actions":{
                     "goForward":{
@@ -108,14 +92,6 @@
                     "animationDuration": 3.0,
                     "placementType": "topBackground"
                 },
-                "colorMapping":{
-                    "type": "placementMapping",
-                    "placement": {
-                        "header": "primary",
-                        "body": "white",
-                        "footer": "white"
-                    }
-                },
                 "actions":{
                     "goForward":{
                         "type":"default",
@@ -133,14 +109,6 @@
                     "imageNames": ["TapLeft1", "TapLeft2"],
                     "animationDuration": 1.0,
                     "placementType": "topBackground"
-                },
-                "colorMapping":{
-                    "type": "placementMapping",
-                    "placement": {
-                        "header": "primary",
-                        "body": "white",
-                        "footer": "white"
-                    }
                 },
                 "actions":{
                     "goForward":{
@@ -174,8 +142,12 @@
                      "storyboardIdentifier":"ActiveTaskSteps"
                  },
                  "colorMapping":{
-                     "type": "singleColor",
-                     "colorStyle": "white"
+                     "type": "placementMapping",
+                     "placement": {
+                         "header": "successGreen",
+                         "body": "white",
+                         "footer": "white"
+                     }
                  },
                  "actions": {
                      "goForward":{

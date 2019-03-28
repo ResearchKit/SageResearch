@@ -630,12 +630,11 @@ open class RSDFactory {
         case .singleColor:
             return try _decodeResource(RSDSingleColorThemeElementObject.self, from: decoder)
         case .placementMapping:
-            return try _decodeResource(RSDSingleColorThemeElementObject.self, from: decoder)
+            return try _decodeResource(RSDColorPlacementThemeElementObject.self, from: decoder)
         default:
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support `\(typeName)` as a decodable class type for a color theme element.")
             throw DecodingError.typeMismatch(RSDColorMappingThemeElement.self, context)
         }
-        
     }
     
     /// Decode UI view theme from the given decoder.
@@ -864,6 +863,7 @@ open class RSDFactory {
         decoder.nonConformingFloatDecodingStrategy = .convertFromString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
                                                                         negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
                                                                         nan: nonConformingCodingStrategy.nan)
+        decoder.dataDecodingStrategy = .base64
         return decoder
     }
     
@@ -959,6 +959,11 @@ open class RSDFactory {
         encoder.nonConformingFloatEncodingStrategy = .convertToString(positiveInfinity: nonConformingCodingStrategy.positiveInfinity,
                                                                         negativeInfinity: nonConformingCodingStrategy.negativeInfinity,
                                                                         nan: nonConformingCodingStrategy.nan)
+        encoder.dataEncodingStrategy = .custom({ (data, encoder) in
+            let string = self.encodeString(from: data, codingPath: encoder.codingPath)
+            var container = encoder.singleValueContainer()
+            try container.encode(string)
+        })
         return encoder
     }
     
@@ -977,6 +982,10 @@ open class RSDFactory {
         return timestampFormatter.string(from: date)
     }
     
+    /// Overridable method for encoding data to a string. By default, this method uses base64 encoding.
+    open func encodeString(from data: Data, codingPath: [CodingKey]) -> String {
+        return data.base64EncodedString()
+    }
 }
 
 /// Extension of CodingUserInfoKey to add keys used by the Codable objects in this framework.

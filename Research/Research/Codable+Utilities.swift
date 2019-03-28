@@ -133,26 +133,30 @@ public struct AnyCodableDictionary : Codable {
 extension KeyedDecodingContainer {
     
     /// Decode `Dictionary<String, Any>` for the given key.
+    @available(*, deprecated)
     func rsd_decode(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any> {
         let container = try self.nestedContainer(keyedBy: AnyCodingKey.self, forKey: key)
         return try container.rsd_decode(type)
     }
-    
+
     /// Decode `Dictionary<String, Any>` for the given key if the dictionary is present for that key.
+    @available(*, deprecated)
     func rsd_decodeIfPresent(_ type: Dictionary<String, Any>.Type, forKey key: K) throws -> Dictionary<String, Any>? {
         guard contains(key) else {
             return nil
         }
         return try rsd_decode(type, forKey: key)
     }
-    
+
     /// Decode `Array<Any>` for the given key.
+    @available(*, deprecated)
     func rsd_decode(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any> {
         var container = try self.nestedUnkeyedContainer(forKey: key)
         return try container.rsd_decode(type)
     }
-    
+
     /// Decode `Array<Any>` for the given key if the array is present for that key.
+    @available(*, deprecated)
     func rsd_decodeIfPresent(_ type: Array<Any>.Type, forKey key: K) throws -> Array<Any>? {
         guard contains(key) else {
             return nil

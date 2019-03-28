@@ -35,6 +35,12 @@ import Foundation
 
 open class RSDResultSummaryStepViewModel: RSDStepViewModel {
     
+    /// Text to display as the title above the result.
+    open var resultTitle: String? {
+        guard let resultStep = self.step as? RSDResultSummaryStep else { return nil }
+        return resultStep.resultTitle
+    }
+    
     /// Unit (if any) for this result.
     open var unitText: String? {
         guard let resultStep = self.step as? RSDResultSummaryStep else { return nil }

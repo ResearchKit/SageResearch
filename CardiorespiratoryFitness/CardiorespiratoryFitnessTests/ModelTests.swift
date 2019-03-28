@@ -45,29 +45,17 @@ class ModelTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-
-    func test12MT() {
-        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
-        
-        let taskInfo = CRFTaskInfo(.cardio12MT)
-        
-        XCTAssertEqual(taskInfo.identifier, "Cardio 12MT")
-        XCTAssertEqual(taskInfo.title, "12 Minute Distance Test")
-        XCTAssertEqual(taskInfo.subtitle, "15 minutes")
-        XCTAssertNil(taskInfo.detail)
-        XCTAssertEqual(taskInfo.estimatedMinutes, 15)
-    }
     
-    func testStairStep() {
+    func testTraining() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
 
-        let taskInfo = CRFTaskInfo(.cardioStairStep)
-        
-        XCTAssertEqual(taskInfo.identifier, "Cardio Stair Step")
-        XCTAssertEqual(taskInfo.title, "3 Minute Stair Test")
-        XCTAssertEqual(taskInfo.subtitle, "5 minutes")
+        let taskInfo = CRFTaskInfo(.training)
+
+        XCTAssertEqual(taskInfo.identifier, "Training")
+        XCTAssertEqual(taskInfo.title, "Heart Snapshot")
+        XCTAssertEqual(taskInfo.subtitle, "Your phone's camera can measure your heartbeat.")
         XCTAssertNil(taskInfo.detail)
-        XCTAssertEqual(taskInfo.estimatedMinutes, 5)
+        XCTAssertEqual(taskInfo.estimatedMinutes, 2)
     }
     
     func testDecodeTasks() {

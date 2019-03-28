@@ -87,18 +87,21 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
     public static let twilight = RSDColorPalette(primaryName: .palette(.royal), .dark,
                                                 secondaryName: .palette(.turquoise), .medium,
                                                 accentName: .palette(.butterscotch), .medium)
-    
-    
-    
+
+    public static let test = RSDColorPalette(primaryName: .palette(.stone), .dark,
+                                             secondaryName: .palette(.slate), .dark,
+                                             accentName: .palette(.cloud), .dark,
+                                             grayScale: .test)
     
     private init(primaryName: RSDReservedColorName, _ primaryShade: RSDColorSwatch.Shade,
                  secondaryName: RSDReservedColorName, _ secondaryShade: RSDColorSwatch.Shade,
-                 accentName: RSDReservedColorName, _ accentShade: RSDColorSwatch.Shade) {
+                 accentName: RSDReservedColorName, _ accentShade: RSDColorSwatch.Shade,
+                 grayScale: RSDGrayScale? = nil) {
         let version = RSDColorMatrix.shared.currentVersion
         let primary = RSDColorMatrix.shared.colorKey(for: primaryName, shade: primaryShade)
         let secondary = RSDColorMatrix.shared.colorKey(for: secondaryName, shade: secondaryShade)
         let accent = RSDColorMatrix.shared.colorKey(for: accentName, shade: accentShade)
-        self.init(version: version, primary: primary, secondary: secondary, accent: accent)
+        self.init(version: version, primary: primary, secondary: secondary, accent: accent, successGreen: nil, errorRed: nil, grayScale: grayScale)
     }
     
     public init(version: Int,

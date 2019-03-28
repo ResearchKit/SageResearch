@@ -345,7 +345,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     
     /// Override the set up of the header to set the background color for the table view and adjust the
     /// minimum height.
-    open override func setupHeader(_ header: RSDNavigationHeaderView) {
+    open override func setupHeader(_ header: RSDStepNavigationView) {
         super.setupHeader(header)
         guard let stepHeader = header as? RSDStepHeaderView else { return }
         

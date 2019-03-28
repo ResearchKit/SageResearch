@@ -85,11 +85,11 @@ extension RSDCollectionResult {
         return previousResult
     }
     
-    /// Append the result to the end of the input results, replacing the previous instance with the same identifier.
-    /// - parameter result: The result to add to the input results.
+    /// Remove the result with the given identifier.
+    /// - parameter result: The result to remove from the input results.
     /// - returns: The previous result or `nil` if there wasn't one.
     @discardableResult
-    mutating public func removeInputResult(with identified: String) -> RSDResult? {
+    mutating public func removeInputResult(with identifier: String) -> RSDResult? {
         guard let idx = inputResults.index(where: { $0.identifier == identifier }) else {
             return nil
         }

@@ -269,6 +269,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             activeStep.commands.contains(.transitionAutomatically) {
             return RSDActiveStepViewController(step: step, parent: parent)
         }
+        else if RSDResultSummaryStepViewController.doesSupport(step) {
+            return RSDResultSummaryStepViewController(step: step, parent: parent)
+        }
         else if RSDInstructionStepViewController.doesSupport(step) {
             return RSDInstructionStepViewController(step: step, parent: parent)
         }
@@ -406,6 +409,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///     - completion: The completion to call once the navigation animation has completed.
     public func show(_ stepController: RSDStepController, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
         let vc = stepController as! UIViewController
+        _statusBarVC = vc
         pageViewController.setViewControllers([vc], direction: direction, animated: true) { (finished) in
             self.hideLoadingIfNeeded()
             completion?(finished)
@@ -589,6 +593,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     
     // MARK: View management
+    
+    private var _statusBarVC: UIViewController?
+    open override var childForStatusBarStyle: UIViewController? {
+        return _statusBarVC
+    }
     
     /// The page view controller used to control the view controller navigation.
     public private(set) var pageViewController: (UIViewController & RSDPageViewControllerProtocol)!

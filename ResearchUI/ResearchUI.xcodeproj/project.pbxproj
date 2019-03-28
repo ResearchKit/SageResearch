@@ -41,7 +41,7 @@
 		F8A334BC2243172900390601 /* RSDStepTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334BB2243172900390601 /* RSDStepTextFieldCell.swift */; };
 		F8A334BE2243188300390601 /* RSDTextLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334BD2243188300390601 /* RSDTextLabelCell.swift */; };
 		F8A334C02243199C00390601 /* RSDImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334BF2243199C00390601 /* RSDImageViewCell.swift */; };
-		F8A334C22243582A00390601 /* RSDCompletionGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334C12243582A00390601 /* RSDCompletionGradient.swift */; };
+		F8A334C22243582A00390601 /* RSDBackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334C12243582A00390601 /* RSDBackgroundGradient.swift */; };
 		F8C36BD122389511000E42A7 /* RSDScrollingOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C36BCF22389511000E42A7 /* RSDScrollingOverviewStepViewController.swift */; };
 		F8C36BD222389511000E42A7 /* RSDScrollingOverviewStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8C36BD022389511000E42A7 /* RSDScrollingOverviewStepViewController.xib */; };
 		F8D4813E20622896008EF629 /* RSDStatusBarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */; };
@@ -119,7 +119,7 @@
 		F8A334BB2243172900390601 /* RSDStepTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepTextFieldCell.swift; sourceTree = "<group>"; };
 		F8A334BD2243188300390601 /* RSDTextLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextLabelCell.swift; sourceTree = "<group>"; };
 		F8A334BF2243199C00390601 /* RSDImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImageViewCell.swift; sourceTree = "<group>"; };
-		F8A334C12243582A00390601 /* RSDCompletionGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCompletionGradient.swift; sourceTree = "<group>"; };
+		F8A334C12243582A00390601 /* RSDBackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDBackgroundGradient.swift; sourceTree = "<group>"; };
 		F8C36BCF22389511000E42A7 /* RSDScrollingOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDScrollingOverviewStepViewController.swift; sourceTree = "<group>"; };
 		F8C36BD022389511000E42A7 /* RSDScrollingOverviewStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDScrollingOverviewStepViewController.xib; sourceTree = "<group>"; };
 		F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStatusBarBackgroundView.swift; sourceTree = "<group>"; };
@@ -278,7 +278,7 @@
 				F8A334B82242F80500390601 /* Table Cells */,
 				F855A13F20A2503700C762C7 /* RSDBorderedTextView_deprecated.swift */,
 				F82F819A206B49D800F71AA8 /* RSDCheckmarkView.swift */,
-				F8A334C12243582A00390601 /* RSDCompletionGradient.swift */,
+				F8A334C12243582A00390601 /* RSDBackgroundGradient.swift */,
 				FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */,
 				FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView_deprecated.swift */,
 				F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */,
@@ -573,7 +573,7 @@
 				F8A334BC2243172900390601 /* RSDStepTextFieldCell.swift in Sources */,
 				F802F3DC204DECA80027CB00 /* RSDImagePickerStepViewController.swift in Sources */,
 				FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
-				F8A334C22243582A00390601 /* RSDCompletionGradient.swift in Sources */,
+				F8A334C22243582A00390601 /* RSDBackgroundGradient.swift in Sources */,
 				F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */,
 				F880C1B52057182B00ACB4D4 /* RSDOverviewStepViewController.swift in Sources */,
 				B587AC05206D654400542548 /* UIView+BridgeKeyNames.swift in Sources */,

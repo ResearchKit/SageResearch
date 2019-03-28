@@ -34,7 +34,7 @@
 import Foundation
 
 /// A hint as to where the UI should place an image.
-public struct RSDImagePlacementType : RawRepresentable, Codable, Hashable {
+public struct RSDImagePlacementType : RawRepresentable, Codable, Hashable, Equatable {
     
     public let rawValue: String
     

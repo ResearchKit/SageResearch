@@ -35,15 +35,7 @@
                         "type":"reminder",
                         "reminderIdentifier":"Tremor"
                     }
-                 },
-                "colorMapping":{
-                    "type": "placementMapping",
-                    "placement": {
-                        "header": "primary",
-                        "body": "white",
-                        "footer": "white"
-                    }
-                }
+                 }
              },
              {
                 "identifier": "handSelection",
@@ -78,14 +70,6 @@
                     "imageName": "F-TremorHoldPhone",
                     "placementType":"topBackground"
                 },
-                "colorMapping":{
-                    "type": "placementMapping",
-                    "placement": {
-                        "header": "primary",
-                        "body": "white",
-                        "footer": "white"
-                    }
-                },
                 "actions":{
                     "goForward":{
                         "type":"default",
@@ -102,14 +86,6 @@
                     "type":"fetchable",
                     "imageName":"F-Sitting",
                     "placementType":"topBackground"
-                },
-                "colorMapping":{
-                    "type": "placementMapping",
-                    "placement": {
-                        "header": "primary",
-                        "body": "white",
-                        "footer": "white"
-                    }
                 },
                 "actions":{
                     "goForward":{
@@ -143,8 +119,12 @@
                      "storyboardIdentifier":"ActiveTaskSteps"
                  },
                  "colorMapping":{
-                     "type": "singleColor",
-                     "colorStyle": "white"
+                     "type": "placementMapping",
+                     "placement": {
+                         "header": "successGreen",
+                         "body": "white",
+                         "footer": "white"
+                     }
                  },
                  "spokenInstructions":{
                      "start":"Great job, you are done with the Tremor test."

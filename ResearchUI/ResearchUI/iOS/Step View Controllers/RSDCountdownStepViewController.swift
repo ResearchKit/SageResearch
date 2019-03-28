@@ -75,6 +75,13 @@ open class RSDCountdownStepViewController: RSDStepViewController {
         }
     }
     
+    open override func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
+        if placement == .body {
+            countdownLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .counter)
+        }
+    }
+    
     // MARK: Initialization
     
     /// The default nib name to use when instantiating the view controller using `init(step:)`.

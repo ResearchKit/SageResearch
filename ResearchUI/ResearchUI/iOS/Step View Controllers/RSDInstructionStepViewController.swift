@@ -44,19 +44,22 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     }
     
     /// Scrollview for the image and instruction text.
-    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var scrollView: UIScrollView?
     
     /// The constraint that sets the scroll bar's top background view's height.
-    @IBOutlet var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var imageTopConstraint: NSLayoutConstraint?
     
     /// The constraint that sets the image height. This needs to be adjusted for smaller screens.
-    @IBOutlet var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var headerHeightConstraint: NSLayoutConstraint?
+    
+    /// The constraint between the learn more button and the bottom of the view.
+    @IBOutlet var learnMoreBottomConstraint: NSLayoutConstraint?
     
     /// A view that is used to mark the height of the text instruction area.
-    @IBOutlet var instructionTextView: UIView!
+    @IBOutlet var instructionTextView: UIView?
     
     /// Save the previously calculated instruction height.
-    private var _instructionHeight: CGFloat = 0
+    private var _remainingHeight: CGFloat = 0
     
     /// Override `viewDidLayoutSubviews` to set up resizing the image to balance the the space provided to
     /// the image verse the space provided for the text.
@@ -69,20 +72,36 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateImagePlacementConstraintsIfNeeded()
+        self.updateLearnMoreContraints()
     }
     
     /// Sets the height of the scrollview's top background view depending on the image placement type from
     /// this step. Default behavior is to constrain the scrollview to be under the status bar if the placement
     /// type is `.topMarginBackground`.
     open func updateImagePlacementConstraintsIfNeeded() {
-        guard let placementType = self.imageTheme?.placementType else { return }
+        guard let placementType = self.imageTheme?.placementType,
+            let headerTopConstraint = self.imageTopConstraint
+            else {
+                return
+        }
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        let constant = (placementType == .topMarginBackground) ? statusBarHeight : CGFloat(0)
-        if constant != scrollViewBackgroundHeightConstraint.constant {
-            scrollViewBackgroundHeightConstraint.constant = constant
+        let constant = (placementType == .topBackground) ? CGFloat(0) : statusBarHeight
+        if constant != headerTopConstraint.constant {
+            headerTopConstraint.constant = constant
             self.view.setNeedsUpdateConstraints()
             self.view.setNeedsLayout()
         }
+    }
+    
+    /// If the learn more button is hidden, then the constraints for it should be deactivated.
+    open func updateLearnMoreContraints() {
+        guard let button = registeredButtons[.navigation(.learnMore)]?.first,
+            let constraint = self.learnMoreBottomConstraint
+            else {
+                return
+        }
+        constraint.isActive = (!button.isHidden && button.alpha > 0.1)
+        self.view.setNeedsUpdateConstraints()
     }
     
     /// Update the image height constraint to balance the the space provided to the image versus the space
@@ -90,12 +109,30 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     /// up half the space if the text does not fit (iPhone SE) or resize to take the remaining space if the
     /// image is for a longer screen (iPhone X).
     open func updateImageHeightConstraintIfNeeded() {
-        if _instructionHeight != instructionTextView.bounds.height {
-            _instructionHeight = instructionTextView.bounds.height
-            let remainingHeight = self.scrollView.bounds.height - _instructionHeight - scrollViewBackgroundHeightConstraint.constant
-            self.imageHeightConstraint.constant = max(remainingHeight, self.view.bounds.height / 2)
+        guard let instructionTextView = self.instructionTextView,
+            let scrollView = self.scrollView,
+            let headerTopConstraint = self.imageTopConstraint,
+            let headerHeightConstraint = self.headerHeightConstraint
+            else {
+                return
+        }
+        
+        let remainingHeight = scrollView.bounds.height - instructionTextView.bounds.height - headerTopConstraint.constant
+        if _remainingHeight != remainingHeight {
+            _remainingHeight = remainingHeight
+            let height = max(remainingHeight, self.view.bounds.height / 2)
+            headerHeightConstraint.constant = height
+            self.navigationFooter?.shouldShowShadow = (height != remainingHeight)
             self.view.setNeedsUpdateConstraints()
             self.view.setNeedsLayout()
+        }
+    }
+    
+    override open func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
+        
+        if placement == .body {
+            scrollView?.backgroundColor = background.color
         }
     }
     
@@ -124,9 +161,8 @@ open class RSDInstructionStepViewController: RSDStepViewController {
             return false
         }
         
-        // Footnotes and custom buttons are not supported.
+        // Footnotes and review instructions buttons are not supported.
         guard (themedStep.footnote == nil),
-            (themedStep.shouldHideAction(for: .navigation(.learnMore), on: step) ?? true),
             (themedStep.shouldHideAction(for: .navigation(.reviewInstructions), on: step) ?? true)
             else {
                 return false

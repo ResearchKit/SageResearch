@@ -216,16 +216,6 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         return "\(self.sectionIdentifier)rgb"
     }
     
-    private func _setupVideoRecorder(formatDescription: CMFormatDescription) {
-        guard let saveVideo = self.heartRateConfiguration?.shouldSaveBuffer, saveVideo,
-            let url = try? RSDFileResultUtility.createFileURL(identifier: videoIdentifier, ext: "mp4", outputDirectory: outputDirectory)
-            else {
-                return
-        }
-        let time = CMTime(seconds: self.clock.startSystemUptime, preferredTimescale: 1000000000)
-        _videoProcessor.startRecording(to: url, startTime: time, formatDescription: formatDescription)
-    }
-    
     private func _startSampling() throws {
         CRFHeartRateRecorder.current = self
         guard !isSimulator else {
@@ -342,9 +332,6 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         // set up the video output
         videoOutput.videoSettings = [ kCVPixelBufferPixelFormatTypeKey as String : kCVPixelFormatType_32BGRA]
         videoOutput.alwaysDiscardsLateVideoFrames = false
-        
-        // start the video recorder (if there is one)
-        _setupVideoRecorder(formatDescription: currentFormat.formatDescription)
         
         // Check to see if there is a preview window
         if let view = self.crfDelegate?.previewView {
