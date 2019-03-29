@@ -39,22 +39,10 @@
                                                 <state key="normal" image="closeActivity"/>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h4y-3I-qwe" customClass="RSDStepProgressView" customModule="ResearchUI">
-                                                <rect key="frame" x="64" y="12" width="295" height="8"/>
+                                                <rect key="frame" x="64" y="11" width="295" height="10"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="8" placeholder="YES" id="RMf-4j-QKo"/>
-                                                </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="currentStep">
-                                                        <integer key="value" value="1"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="totalSteps">
-                                                        <integer key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="progressLineHeight">
-                                                        <real key="value" value="8"/>
-                                                    </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <outlet property="stepCountLabel" destination="cCV-62-L3J" id="doj-gx-Cmb"/>
@@ -197,23 +185,10 @@
                                                 <state key="normal" image="closeActivity"/>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xtU-RF-RcH" customClass="RSDStepProgressView" customModule="ResearchUI">
-                                                <rect key="frame" x="64" y="12" width="295" height="8"/>
+                                                <rect key="frame" x="64" y="11" width="295" height="10"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="8" placeholder="YES" id="4t8-2Q-SyT"/>
-                                                </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="usesLightStyle" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="currentStep">
-                                                        <integer key="value" value="1"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="totalSteps">
-                                                        <integer key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="progressLineHeight">
-                                                        <real key="value" value="8"/>
-                                                    </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <outlet property="stepCountLabel" destination="ZC5-bR-tbv" id="O4C-9A-iDO"/>
@@ -265,7 +240,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="0H1-a5-wRw" firstAttribute="centerX" secondItem="fGe-04-ucY" secondAttribute="centerX" id="JW9-2f-CJ5"/>
                                     <constraint firstItem="0H1-a5-wRw" firstAttribute="centerY" secondItem="fGe-04-ucY" secondAttribute="centerY" id="w7j-XX-5PG"/>
@@ -295,86 +270,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w9Z-WH-GOU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1804" y="1647"/>
-        </scene>
-        <!--Learn More View Controller-->
-        <scene sceneID="sok-bx-zop">
-            <objects>
-                <viewController storyboardIdentifier="NormalHeartRateLearnMore" id="vZ7-8h-Ng0" customClass="CRFLearnMoreViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="F1c-VA-6vh" customClass="RSDStepNavigationView" customModule="ResearchUI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dzd-QX-gnf" customClass="RSDStepNavigationView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAn-Ua-KCn">
-                                        <rect key="frame" x="20" y="30" width="32" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="32" id="iK3-WI-Lgp"/>
-                                            <constraint firstAttribute="height" constant="32" id="wg2-a2-vZM"/>
-                                        </constraints>
-                                        <state key="normal" image="backArrowHeader"/>
-                                        <connections>
-                                            <action selector="backButtonTapped:" destination="vZ7-8h-Ng0" eventType="touchUpInside" id="MLb-5I-rdp"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is a ‘normal’ resting heart rate?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UbY-EN-uSl">
-                                        <rect key="frame" x="52" y="28" width="271" height="144"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.99006377479999996" green="0.26231237190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstItem="UbY-EN-uSl" firstAttribute="centerX" secondItem="Dzd-QX-gnf" secondAttribute="centerX" id="IKv-Lb-16Q"/>
-                                    <constraint firstItem="UbY-EN-uSl" firstAttribute="leading" secondItem="xAn-Ua-KCn" secondAttribute="trailing" id="NAb-jV-Tp4"/>
-                                    <constraint firstItem="xAn-Ua-KCn" firstAttribute="leading" secondItem="Dzd-QX-gnf" secondAttribute="leadingMargin" constant="12" id="ND3-le-8hG"/>
-                                    <constraint firstItem="xAn-Ua-KCn" firstAttribute="top" secondItem="Dzd-QX-gnf" secondAttribute="topMargin" constant="2" id="TEU-q9-Q10"/>
-                                    <constraint firstItem="UbY-EN-uSl" firstAttribute="top" secondItem="Dzd-QX-gnf" secondAttribute="topMargin" id="h1V-b0-kp5"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="UbY-EN-uSl" secondAttribute="bottom" id="wRi-gK-082"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="cancelButton" destination="xAn-Ua-KCn" id="0Ll-A9-OUJ"/>
-                                    <outlet property="titleLabel" destination="UbY-EN-uSl" id="gW9-Uc-6sl"/>
-                                </connections>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BYh-rT-pcR">
-                                <rect key="frame" x="16" y="204" width="343" height="365.5"/>
-                                <accessibility key="accessibilityConfiguration" identifier="Text"/>
-                                <string key="text">A normal range for an adult resting heart rate is between 60 and 100 beats per minute. However, being outside of this range does not mean you are not heathy. You have your own normal range that is not ‘one size fits all’. This app can help you find your personalized range with repeated measurements over time.
-
-This app and all of these phone-based heart measurements are for research purposes only. We are still learning the best way to understand and interpret these measurements. You should not base any medical decisions on these measurements. Thank you for helping us to do this research!</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="BYh-rT-pcR" firstAttribute="centerX" secondItem="F1c-VA-6vh" secondAttribute="centerX" id="0SJ-q7-VE1"/>
-                            <constraint firstItem="BYh-rT-pcR" firstAttribute="top" secondItem="Dzd-QX-gnf" secondAttribute="bottom" priority="200" constant="24" id="Jk5-DM-faa"/>
-                            <constraint firstItem="Dzd-QX-gnf" firstAttribute="top" secondItem="F1c-VA-6vh" secondAttribute="top" id="PsW-3o-D9C"/>
-                            <constraint firstItem="BYh-rT-pcR" firstAttribute="leading" secondItem="CG4-c2-go9" secondAttribute="leading" priority="700" constant="32" id="UTh-BO-CzT"/>
-                            <constraint firstItem="BYh-rT-pcR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Dzd-QX-gnf" secondAttribute="bottom" constant="12" id="XBE-bB-QV9"/>
-                            <constraint firstItem="Dzd-QX-gnf" firstAttribute="leading" secondItem="CG4-c2-go9" secondAttribute="leading" id="kbs-ms-LCd"/>
-                            <constraint firstItem="BYh-rT-pcR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CG4-c2-go9" secondAttribute="leading" constant="16" id="mEj-Ft-oqf"/>
-                            <constraint firstItem="Dzd-QX-gnf" firstAttribute="trailing" secondItem="CG4-c2-go9" secondAttribute="trailing" id="muy-gm-mB7"/>
-                            <constraint firstItem="CG4-c2-go9" firstAttribute="top" secondItem="Dzd-QX-gnf" secondAttribute="bottom" priority="500" constant="-160" id="oUM-6E-7s6"/>
-                            <constraint firstItem="BYh-rT-pcR" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="CG4-c2-go9" secondAttribute="bottom" constant="-12" id="zn2-25-0Mi"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="CG4-c2-go9"/>
-                    </view>
-                    <connections>
-                        <outlet property="headerView" destination="Dzd-QX-gnf" id="WqX-j7-x68"/>
-                        <outletCollection property="labels" destination="BYh-rT-pcR" collectionClass="NSMutableArray" id="yQm-Zn-dQ6"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="i2F-G6-TCJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1824.8" y="2448.1259370314842"/>
+            <point key="canvasLocation" x="-934" y="206"/>
         </scene>
         <!--Heart Rate Step View Controller-->
         <scene sceneID="4cP-Aq-OdA">
@@ -400,23 +296,10 @@ This app and all of these phone-based heart measurements are for research purpos
                                                 <state key="normal" image="closeActivity"/>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pat-FH-ywT" customClass="RSDStepProgressView" customModule="ResearchUI">
-                                                <rect key="frame" x="64" y="12" width="295" height="8"/>
+                                                <rect key="frame" x="64" y="11" width="295" height="10"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="8" placeholder="YES" id="h0i-GV-WkV"/>
-                                                </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="YES"/>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="usesLightStyle" value="NO"/>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="currentStep">
-                                                        <integer key="value" value="1"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="totalSteps">
-                                                        <integer key="value" value="10"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="progressLineHeight">
-                                                        <real key="value" value="8"/>
-                                                    </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <outlet property="stepCountLabel" destination="7Ug-vB-zh5" id="bxv-kM-b8C"/>
@@ -565,169 +448,11 @@ This app and all of these phone-based heart measurements are for research purpos
             </objects>
             <point key="canvasLocation" x="-1805.625" y="205.98591549295776"/>
         </scene>
-        <!--Tips for measuring-->
-        <scene sceneID="0Y9-g6-Vr1">
-            <objects>
-                <viewController storyboardIdentifier="TipsForMeasuring" title="Tips for measuring" id="GiY-za-Iat" customClass="CRFLearnMoreViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="XRg-6N-v2j" customClass="RSDStepNavigationView" customModule="ResearchUI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSB-PW-F1S" customClass="RSDStepNavigationView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aG4-c2-1eG">
-                                        <rect key="frame" x="16" y="28" width="32" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="3Hu-zE-3oW"/>
-                                            <constraint firstAttribute="width" constant="32" id="rmV-Yj-1S5"/>
-                                        </constraints>
-                                        <state key="normal" image="backArrowHeader"/>
-                                        <connections>
-                                            <action selector="backButtonTapped:" destination="GiY-za-Iat" eventType="touchUpInside" id="yLE-ow-dMp"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tips for measuring resting heart rate" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wH6-0Y-YwI">
-                                        <rect key="frame" x="52" y="28" width="271" height="124"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.99006377479999996" green="0.26231237190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstItem="wH6-0Y-YwI" firstAttribute="leading" secondItem="aG4-c2-1eG" secondAttribute="trailing" constant="4" id="BQg-mI-hAh"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="wH6-0Y-YwI" secondAttribute="bottom" id="F5Q-Ki-5zT"/>
-                                    <constraint firstItem="wH6-0Y-YwI" firstAttribute="top" secondItem="NSB-PW-F1S" secondAttribute="topMargin" id="PlD-w0-ScA"/>
-                                    <constraint firstItem="aG4-c2-1eG" firstAttribute="top" secondItem="NSB-PW-F1S" secondAttribute="topMargin" id="Y8o-7E-OwR"/>
-                                    <constraint firstItem="wH6-0Y-YwI" firstAttribute="centerX" secondItem="NSB-PW-F1S" secondAttribute="centerX" id="fzB-yW-buc"/>
-                                    <constraint firstItem="aG4-c2-1eG" firstAttribute="leading" secondItem="NSB-PW-F1S" secondAttribute="leadingMargin" constant="8" id="soe-am-uiO"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="cancelButton" destination="aG4-c2-1eG" id="M6J-tb-GCZ"/>
-                                    <outlet property="titleLabel" destination="wH6-0Y-YwI" id="CQ7-a1-ZKP"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kH1-lc-3xI" userLabel="First Tip">
-                                <rect key="frame" x="0.0" y="159.5" width="375" height="127.5"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redX" translatesAutoresizingMaskIntoConstraints="NO" id="cjq-0x-QZV">
-                                        <rect key="frame" x="20" y="28" width="20" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="ALT-Sa-l32"/>
-                                            <constraint firstAttribute="height" constant="20" id="Vx0-EQ-0te"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buk-Ly-SVE">
-                                        <rect key="frame" x="52" y="20" width="305" height="107.5"/>
-                                        <string key="text">Do not take your resting heart rate within one to two hours after exercise or a stressful event. Your heart rate can stay elevated after strenuous activities.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="cjq-0x-QZV" firstAttribute="top" secondItem="buk-Ly-SVE" secondAttribute="top" constant="8" id="Qy3-Fi-4m8"/>
-                                    <constraint firstItem="cjq-0x-QZV" firstAttribute="leading" secondItem="kH1-lc-3xI" secondAttribute="leading" constant="20" id="Rsj-Pz-fL4"/>
-                                    <constraint firstItem="buk-Ly-SVE" firstAttribute="leading" secondItem="cjq-0x-QZV" secondAttribute="trailing" constant="12" id="RwW-sR-NV3"/>
-                                    <constraint firstAttribute="trailing" secondItem="buk-Ly-SVE" secondAttribute="trailing" constant="18" id="dEX-CD-b0u"/>
-                                    <constraint firstItem="buk-Ly-SVE" firstAttribute="top" secondItem="kH1-lc-3xI" secondAttribute="top" constant="20" id="tQL-AH-inS"/>
-                                    <constraint firstAttribute="bottom" secondItem="buk-Ly-SVE" secondAttribute="bottom" id="yLQ-P8-ePE"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jmu-TE-vFM" userLabel="Second Tip">
-                                <rect key="frame" x="0.0" y="287" width="375" height="106"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenCheckmark" translatesAutoresizingMaskIntoConstraints="NO" id="R3C-Qm-B1Z">
-                                        <rect key="frame" x="20" y="28" width="20" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="E68-VU-IpH"/>
-                                            <constraint firstAttribute="height" constant="16" id="v6q-pc-nZl"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wait at least an hour after consuming caffeine, which can cause heart palpitations and make your heart rate rise." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AnI-Oi-ffv">
-                                        <rect key="frame" x="52" y="20" width="305" height="86"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="AnI-Oi-ffv" secondAttribute="trailing" constant="18" id="6de-TM-wY5"/>
-                                    <constraint firstItem="AnI-Oi-ffv" firstAttribute="leading" secondItem="R3C-Qm-B1Z" secondAttribute="trailing" constant="12" id="7lu-i0-ekA"/>
-                                    <constraint firstItem="R3C-Qm-B1Z" firstAttribute="leading" secondItem="jmu-TE-vFM" secondAttribute="leading" constant="20" id="Rdo-Wd-O5S"/>
-                                    <constraint firstItem="R3C-Qm-B1Z" firstAttribute="top" secondItem="AnI-Oi-ffv" secondAttribute="top" constant="8" id="TQo-o2-Kuj"/>
-                                    <constraint firstItem="AnI-Oi-ffv" firstAttribute="top" secondItem="jmu-TE-vFM" secondAttribute="top" constant="20" id="Xxm-QS-3Os"/>
-                                    <constraint firstAttribute="bottom" secondItem="AnI-Oi-ffv" secondAttribute="bottom" id="maG-2c-Yy6"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlH-7a-Uuh" userLabel="Third Tip">
-                                <rect key="frame" x="0.0" y="393" width="375" height="106"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redX" translatesAutoresizingMaskIntoConstraints="NO" id="Fr4-aV-EU7">
-                                        <rect key="frame" x="20" y="28" width="20" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="QIy-RS-dJf"/>
-                                            <constraint firstAttribute="width" constant="20" id="zck-4a-hPU"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jzz-YU-9ev">
-                                        <rect key="frame" x="52" y="20" width="305" height="86"/>
-                                        <string key="text">The American Heart Association recommends checking your resting heart rate first thing in the morning (before you get out of bed).</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="jzz-YU-9ev" secondAttribute="trailing" constant="18" id="3bS-7U-ao1"/>
-                                    <constraint firstItem="Fr4-aV-EU7" firstAttribute="top" secondItem="jzz-YU-9ev" secondAttribute="top" constant="8" id="8fT-9p-wX0"/>
-                                    <constraint firstItem="jzz-YU-9ev" firstAttribute="leading" secondItem="Fr4-aV-EU7" secondAttribute="trailing" constant="12" id="BxZ-YQ-Y6F"/>
-                                    <constraint firstAttribute="bottom" secondItem="jzz-YU-9ev" secondAttribute="bottom" id="Mhi-k6-o3x"/>
-                                    <constraint firstAttribute="bottom" secondItem="jzz-YU-9ev" secondAttribute="bottom" id="TXn-ew-DU3"/>
-                                    <constraint firstItem="Fr4-aV-EU7" firstAttribute="leading" secondItem="dlH-7a-Uuh" secondAttribute="leading" constant="20" id="TaT-cc-faG"/>
-                                    <constraint firstItem="jzz-YU-9ev" firstAttribute="top" secondItem="dlH-7a-Uuh" secondAttribute="top" constant="20" id="oZo-rC-rVv"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="dlH-7a-Uuh" firstAttribute="leading" secondItem="IJx-16-vcy" secondAttribute="leading" id="9rn-rN-QAb"/>
-                            <constraint firstItem="jmu-TE-vFM" firstAttribute="leading" secondItem="IJx-16-vcy" secondAttribute="leading" id="PJN-Hg-lP5"/>
-                            <constraint firstItem="kH1-lc-3xI" firstAttribute="leading" secondItem="XRg-6N-v2j" secondAttribute="leading" id="ZFa-kj-uYn"/>
-                            <constraint firstItem="jmu-TE-vFM" firstAttribute="trailing" secondItem="IJx-16-vcy" secondAttribute="trailing" id="chh-Dt-ec0"/>
-                            <constraint firstItem="IJx-16-vcy" firstAttribute="top" secondItem="NSB-PW-F1S" secondAttribute="bottom" constant="-140" id="d0C-3Z-8st"/>
-                            <constraint firstItem="kH1-lc-3xI" firstAttribute="top" secondItem="NSB-PW-F1S" secondAttribute="bottom" constant="-0.5" id="dyn-6l-FX9"/>
-                            <constraint firstItem="dlH-7a-Uuh" firstAttribute="trailing" secondItem="IJx-16-vcy" secondAttribute="trailing" id="fIw-VH-CBX"/>
-                            <constraint firstItem="NSB-PW-F1S" firstAttribute="leading" secondItem="IJx-16-vcy" secondAttribute="leading" id="fVO-hg-T7v"/>
-                            <constraint firstItem="jmu-TE-vFM" firstAttribute="top" secondItem="kH1-lc-3xI" secondAttribute="bottom" id="k4a-2d-EmI"/>
-                            <constraint firstItem="NSB-PW-F1S" firstAttribute="top" secondItem="XRg-6N-v2j" secondAttribute="top" id="lJF-qM-IqY"/>
-                            <constraint firstAttribute="trailing" secondItem="kH1-lc-3xI" secondAttribute="trailing" id="rn3-iw-uGM"/>
-                            <constraint firstItem="NSB-PW-F1S" firstAttribute="trailing" secondItem="IJx-16-vcy" secondAttribute="trailing" id="uOG-ft-lui"/>
-                            <constraint firstItem="dlH-7a-Uuh" firstAttribute="top" secondItem="jmu-TE-vFM" secondAttribute="bottom" id="z2Y-Rh-heB"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="IJx-16-vcy"/>
-                    </view>
-                    <connections>
-                        <outlet property="headerView" destination="NSB-PW-F1S" id="ATh-TR-Nsj"/>
-                        <outletCollection property="labels" destination="buk-Ly-SVE" collectionClass="NSMutableArray" id="Y6n-0U-bYw"/>
-                        <outletCollection property="labels" destination="AnI-Oi-ffv" collectionClass="NSMutableArray" id="QhL-0Q-BDu"/>
-                        <outletCollection property="labels" destination="jzz-YU-9ev" collectionClass="NSMutableArray" id="w8b-5W-o0a"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bD6-oi-mlq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-993.75" y="2448.5915492957747"/>
-        </scene>
         <!--Recovery Step View Controller-->
         <scene sceneID="aKS-n7-egR">
             <objects>
                 <viewController storyboardIdentifier="HRRecovery" id="V0z-xn-GoL" customClass="CRFHRRecoveryStepViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="XFJ-rz-v4I" customClass="RSDStepNavigationView" customModule="ResearchUI" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="XFJ-rz-v4I" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -737,7 +462,7 @@ This app and all of these phone-based heart measurements are for research purpos
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2S2-eZ-Hfp" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="486.5"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qYM-lS-3cz" customClass="RSDNavigationHeaderView" customModule="ResearchUI" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qYM-lS-3cz" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="295.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="200" text="70-40" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Sq-Zw-fx5">
@@ -819,17 +544,12 @@ This app and all of these phone-based heart measurements are for research purpos
                                     <constraint firstItem="2S2-eZ-Hfp" firstAttribute="top" secondItem="P5Z-U5-mm1" secondAttribute="top" id="wCv-CD-yH0"/>
                                 </constraints>
                             </scrollView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rws-4p-DN2" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rws-4p-DN2" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="567" width="375" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" placeholder="YES" id="NVx-Cu-h6D"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkipHidden" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowShadow" value="YES"/>
-                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -862,16 +582,13 @@ This app and all of these phone-based heart measurements are for research purpos
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KdC-8o-3lO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-950" y="1647"/>
+            <point key="canvasLocation" x="-81" y="206"/>
         </scene>
     </scenes>
     <resources>
         <image name="12MinFullScreen" width="375" height="667"/>
-        <image name="backArrowHeader" width="32" height="32"/>
         <image name="closeActivity" width="32" height="32"/>
-        <image name="greenCheckmark" width="20" height="16"/>
         <image name="heartRateIconCapturing" width="64" height="58"/>
-        <image name="redX" width="20" height="20"/>
         <image name="stairStepLarge1" width="375" height="501"/>
         <namedColor name="buttonTintBlue">
             <color red="0.12941176470588237" green="0.58823529411764708" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

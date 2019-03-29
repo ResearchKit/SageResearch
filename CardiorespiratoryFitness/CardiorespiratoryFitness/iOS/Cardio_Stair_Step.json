@@ -127,7 +127,7 @@
     {
         "identifier": "feedback",
         "type": "completion",
-        "resultTitle": "Your recovery heart rate is",
+        "resultTitle": "Your peak heart rate is",
         "resultIdentifier": "heartRate",
         "unitText": "BPM",
         "title": "Recovery HR Captured!",
@@ -136,11 +136,6 @@
             "goForward": {
                 "type": "default",
                 "buttonTitle": "Calculate"
-            },
-            "skip": {
-                "type": "navigation",
-                "skipToIdentifier": "exit",
-                "buttonTitle": "Skip calculation"
             }
         }
     },
@@ -148,7 +143,7 @@
         "identifier": "recoveryScoreIntros",
         "type": "instruction",
         "title": "Recovery HR Questions",
-        "text": "To calculate your Recovery HR score, we first need to know a few things about you like your sex, height, weight, and age.",
+        "text": "To calculate your Recovery HR score, we first need to know a few things about you like your sex and age.",
         "image": {
             "type": "fetchable",
             "imageName": "RecoveryQuestions",
@@ -221,7 +216,7 @@
         "resultTitle": "Your Recovery HR Score is estimated between",
         "resultIdentifier": "heartRate",
         "title": "Recovery HR Score",
-        "text": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate.",
+        "text": "Changing your Recovery HR can take time. You can change it over weeks or months by losing weight or exercising.",
         "actions": {
             "goForward": {
                 "type": "default",
@@ -230,7 +225,7 @@
             "learnMore": {
                 "type": "webView",
                 "title": "What is a Recovery HR Score?",
-                "backButton": true,
+                "usesBackButton": true,
                 "url": "HR_Recovery_Score.html",
                 "buttonTitle": "What is a Recovery HR Score?"
             }

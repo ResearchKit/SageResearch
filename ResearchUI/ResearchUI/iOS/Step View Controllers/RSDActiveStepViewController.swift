@@ -43,7 +43,7 @@ import UIKit
 ///
 /// - seealso: `RSDTaskViewController.vendDefaultViewController(for:)`
 ///
-open class RSDActiveStepViewController: RSDStepViewController {
+open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
 
     /// An instruction label that is updated to show the same text that is spoken as a spoken instruction
     /// to the user.
@@ -187,10 +187,6 @@ open class RSDActiveStepViewController: RSDStepViewController {
         self.countdownDial?.progress = 0.0
         self.progressLabel?.text = nil
         self.unitLabel?.text = nil
-    }
-    
-    open override func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
-        return self.designSystem.colorRules.backgroundLight
     }
     
     // MARK: Initialization

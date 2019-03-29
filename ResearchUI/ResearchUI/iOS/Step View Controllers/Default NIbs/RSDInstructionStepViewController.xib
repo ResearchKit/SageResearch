@@ -12,8 +12,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDInstructionStepViewController" customModule="ResearchUI" customModuleProvider="target">
             <connections>
-                <outlet property="headerHeightConstraint" destination="oIF-MI-fFS" id="mOR-Qz-ouG"/>
-                <outlet property="imageTopConstraint" destination="u8I-PD-141" id="V0U-va-br8"/>
+                <outlet property="headerHeightConstraint" destination="tq0-zu-8li" id="kVU-Ib-tRo"/>
+                <outlet property="imageBackgroundTopConstraint" destination="Yfq-cU-97S" id="DVq-ji-kpe"/>
+                <outlet property="imageLeadingConstraint" destination="4zs-lu-AOg" id="sWq-Kr-Ge3"/>
+                <outlet property="imageTopConstraint" destination="qv2-mI-7l1" id="CHr-4P-kYO"/>
                 <outlet property="instructionTextView" destination="7fs-z9-kjO" id="3fx-2H-1IJ"/>
                 <outlet property="learnMoreBottomConstraint" destination="KmY-oE-zi9" id="55S-9R-5gw"/>
                 <outlet property="navigationFooter" destination="n0w-EP-nrT" id="ZTd-By-ePC"/>
@@ -31,47 +33,35 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="678"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d2t-as-jeB" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="595.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="603.66666666666663"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCM-dW-bGV" customClass="RSDNavigationHeaderView" customModule="ResearchUI" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="ZY2-ZI-0pw" userLabel="Image View">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dt1-cH-X4T" userLabel="Image Background">
                                             <rect key="frame" x="0.0" y="30" width="375" height="375"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InstructionPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="ZY2-ZI-0pw" userLabel="Image View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </imageView>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="375" id="oIF-MI-fFS"/>
+                                                <constraint firstItem="ZY2-ZI-0pw" firstAttribute="leading" secondItem="Dt1-cH-X4T" secondAttribute="leading" id="4zs-lu-AOg"/>
+                                                <constraint firstItem="ZY2-ZI-0pw" firstAttribute="centerY" secondItem="Dt1-cH-X4T" secondAttribute="centerY" id="U71-YT-MCy"/>
+                                                <constraint firstItem="ZY2-ZI-0pw" firstAttribute="centerX" secondItem="Dt1-cH-X4T" secondAttribute="centerX" id="cgT-ke-wIw"/>
+                                                <constraint firstItem="ZY2-ZI-0pw" firstAttribute="top" secondItem="Dt1-cH-X4T" secondAttribute="top" id="qv2-mI-7l1"/>
+                                                <constraint firstAttribute="height" constant="375" id="tq0-zu-8li"/>
                                             </constraints>
-                                        </imageView>
-                                        <view autoresizesSubviews="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="waE-Q0-rFZ" customClass="RSDStepProgressView" customModule="ResearchUI">
-                                            <rect key="frame" x="0.0" y="397" width="375" height="8"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="8" id="b5k-LR-GS8"/>
-                                            </constraints>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="currentStep">
-                                                    <integer key="value" value="1"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="NO"/>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="totalSteps">
-                                                    <integer key="value" value="10"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="progressLineHeight">
-                                                    <real key="value" value="8"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" red="0.99006377479999996" green="0.26231237190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <constraints>
-                                        <constraint firstItem="ZY2-ZI-0pw" firstAttribute="leading" secondItem="DCM-dW-bGV" secondAttribute="leading" id="4Dd-9W-4e2"/>
-                                        <constraint firstItem="waE-Q0-rFZ" firstAttribute="leading" secondItem="DCM-dW-bGV" secondAttribute="leading" id="4yF-em-TjU"/>
-                                        <constraint firstAttribute="bottom" secondItem="ZY2-ZI-0pw" secondAttribute="bottom" id="ARJ-AW-63I"/>
-                                        <constraint firstItem="waE-Q0-rFZ" firstAttribute="bottom" secondItem="ZY2-ZI-0pw" secondAttribute="bottom" id="L47-ki-4N1"/>
-                                        <constraint firstAttribute="trailing" secondItem="ZY2-ZI-0pw" secondAttribute="trailing" id="Ltk-NM-wgK"/>
-                                        <constraint firstAttribute="trailing" secondItem="waE-Q0-rFZ" secondAttribute="trailing" id="lNp-ir-Wf6"/>
-                                        <constraint firstItem="ZY2-ZI-0pw" firstAttribute="top" secondItem="DCM-dW-bGV" secondAttribute="top" constant="30" id="u8I-PD-141"/>
+                                        <constraint firstItem="Dt1-cH-X4T" firstAttribute="top" secondItem="DCM-dW-bGV" secondAttribute="top" constant="30" id="Yfq-cU-97S"/>
+                                        <constraint firstAttribute="trailing" secondItem="Dt1-cH-X4T" secondAttribute="trailing" id="bLe-32-sDW"/>
+                                        <constraint firstItem="Dt1-cH-X4T" firstAttribute="leading" secondItem="DCM-dW-bGV" secondAttribute="leading" id="p8J-ku-5HY"/>
+                                        <constraint firstItem="Dt1-cH-X4T" firstAttribute="bottom" secondItem="DCM-dW-bGV" secondAttribute="bottom" id="sAB-fb-Xtn"/>
                                     </constraints>
                                     <connections>
                                         <outlet property="cancelButton" destination="dJy-5F-5MN" id="Tf1-SA-VNm"/>
@@ -80,35 +70,55 @@
                                     </connections>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Walk and Balance" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AC8-jp-YM4" userLabel="Title Label">
-                                    <rect key="frame" x="24" y="425" width="327" height="28.666666666666686"/>
+                                    <rect key="frame" x="24" y="433" width="327" height="28.666666666666686"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start by going oustide and standing still to measure your resting heart rate before you start moving." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fw-0K-lfV" userLabel="Text Label">
-                                    <rect key="frame" x="24" y="473.66666666666669" width="327" height="64.666666666666686"/>
+                                    <rect key="frame" x="24" y="481.66666666666669" width="327" height="64.666666666666686"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7fs-z9-kjO" userLabel="Measurement View">
-                                    <rect key="frame" x="374" y="405" width="1" height="190.66666666666663"/>
+                                    <rect key="frame" x="374" y="405" width="1" height="198.66666666666663"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="1" id="9hz-eO-hIf"/>
                                     </constraints>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npv-dT-kE4" customClass="RSDUnderlinedButton" customModule="ResearchUI" customModuleProvider="target">
-                                    <rect key="frame" x="141.66666666666666" y="550.33333333333337" width="92" height="33.333333333333371"/>
+                                    <rect key="frame" x="141.66666666666666" y="558.33333333333337" width="92" height="33.333333333333371"/>
                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Learn more"/>
                                 </button>
+                                <view autoresizesSubviews="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="waE-Q0-rFZ" customClass="RSDStepProgressView" customModule="ResearchUI">
+                                    <rect key="frame" x="0.0" y="405" width="375" height="8"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="8" id="b5k-LR-GS8"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="currentStep">
+                                            <integer key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="NO"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="totalSteps">
+                                            <integer key="value" value="10"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="progressLineHeight">
+                                            <real key="value" value="8"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="DCM-dW-bGV" firstAttribute="bottom" secondItem="AC8-jp-YM4" secondAttribute="top" constant="-20" id="4kJ-I1-BP7"/>
+                                <constraint firstItem="waE-Q0-rFZ" firstAttribute="bottom" secondItem="AC8-jp-YM4" secondAttribute="top" constant="-20" id="4kJ-I1-BP7"/>
+                                <constraint firstAttribute="trailing" secondItem="waE-Q0-rFZ" secondAttribute="trailing" id="7Kv-XD-lOe"/>
                                 <constraint firstAttribute="trailing" secondItem="0fw-0K-lfV" secondAttribute="trailing" constant="24" id="7m5-mh-ISP"/>
                                 <constraint firstItem="AC8-jp-YM4" firstAttribute="leading" secondItem="d2t-as-jeB" secondAttribute="leading" constant="24" id="AD4-PM-cdU"/>
                                 <constraint firstAttribute="trailing" secondItem="DCM-dW-bGV" secondAttribute="trailing" id="Edo-1L-4WB"/>
@@ -122,7 +132,9 @@
                                 <constraint firstItem="0fw-0K-lfV" firstAttribute="leading" secondItem="d2t-as-jeB" secondAttribute="leading" constant="24" id="ZuE-Ih-0Ts"/>
                                 <constraint firstItem="Npv-dT-kE4" firstAttribute="centerX" secondItem="d2t-as-jeB" secondAttribute="centerX" id="b5m-hR-Fge"/>
                                 <constraint firstItem="Npv-dT-kE4" firstAttribute="top" secondItem="0fw-0K-lfV" secondAttribute="bottom" constant="12" id="g3M-Ga-dn1"/>
+                                <constraint firstItem="waE-Q0-rFZ" firstAttribute="leading" secondItem="d2t-as-jeB" secondAttribute="leading" id="gmt-PD-Pdw"/>
                                 <constraint firstAttribute="trailing" secondItem="AC8-jp-YM4" secondAttribute="trailing" constant="24" id="qNE-bO-KCp"/>
+                                <constraint firstItem="waE-Q0-rFZ" firstAttribute="top" secondItem="DCM-dW-bGV" secondAttribute="bottom" id="rxb-Lh-0j5"/>
                                 <constraint firstAttribute="trailing" secondItem="7fs-z9-kjO" secondAttribute="trailing" id="wiE-bE-HpX"/>
                                 <constraint firstAttribute="bottom" secondItem="0fw-0K-lfV" secondAttribute="bottom" priority="700" constant="32" id="zlG-87-n1C"/>
                             </constraints>
@@ -177,7 +189,7 @@
                 <outlet property="textLabel" destination="0fw-0K-lfV" id="UQG-uR-OTR"/>
                 <outlet property="titleLabel" destination="AC8-jp-YM4" id="ERE-Ow-rZO"/>
             </connections>
-            <point key="canvasLocation" x="314" y="167"/>
+            <point key="canvasLocation" x="1068" y="147"/>
         </view>
     </objects>
     <resources>

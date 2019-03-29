@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,23 +42,16 @@
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="igH-QR-FOm" customClass="RSDStepProgressView" customModule="ResearchUI" customModuleProvider="target">
                                     <rect key="frame" x="64" y="12" width="295" height="8"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="8" placeholder="YES" id="Zlu-Qf-w36"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="currentStep">
-                                            <integer key="value" value="1"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="totalSteps">
-                                            <integer key="value" value="10"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="progressLineHeight">
-                                            <real key="value" value="8"/>
-                                        </userDefinedRuntimeAttribute>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="usesLightStyle" value="NO"/>
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="YES"/>
                                     </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <outlet property="stepCountLabel" destination="FdT-WA-Sq6" id="Mhh-Iz-g7g"/>
+                                    </connections>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1 of 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FdT-WA-Sq6">
                                     <rect key="frame" x="149.5" y="28" width="76" height="17"/>
@@ -105,15 +97,15 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFQ-JA-Sc8" userLabel="Footer">
                     <rect key="frame" x="0.0" y="587" width="375" height="80"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TqA-Ca-ZKl" customClass="RSDUnderlinedButton" customModule="ResearchSuiteUI">
-                            <rect key="frame" x="166" y="0.0" width="42" height="30"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TqA-Ca-ZKl" customClass="RSDUnderlinedButton" customModule="ResearchUI" customModuleProvider="target">
+                            <rect key="frame" x="166.5" y="0.0" width="42" height="30"/>
                             <state key="normal" title="Pause"/>
                             <connections>
                                 <action selector="pauseTimer" destination="-1" eventType="touchUpInside" id="Hf3-Ox-f5K"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="TqA-Ca-ZKl" firstAttribute="centerX" secondItem="DFQ-JA-Sc8" secondAttribute="centerX" id="Ixb-uO-Gmi"/>
                         <constraint firstAttribute="bottom" secondItem="TqA-Ca-ZKl" secondAttribute="bottom" constant="50" id="Qy6-Qb-na3"/>
@@ -121,18 +113,20 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ye0-7C-vxz">
-                    <rect key="frame" x="0.0" y="411.5" width="375" height="175"/>
+                    <rect key="frame" x="0.0" y="412" width="375" height="175"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n20-fF-k86">
                     <rect key="frame" x="0.0" y="236.5" width="375" height="175.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Af7-QE-ZV6">
-                            <rect key="frame" x="149.5" y="10" width="75.5" height="155.5"/>
+                            <rect key="frame" x="150" y="10" width="75.5" height="155.5"/>
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="130"/>
                             <color key="textColor" red="0.35686274509803922" green="0.6705882352941176" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Af7-QE-ZV6" firstAttribute="centerX" secondItem="n20-fF-k86" secondAttribute="centerX" id="Exb-84-aBW"/>
                         <constraint firstItem="Af7-QE-ZV6" firstAttribute="centerY" secondItem="n20-fF-k86" secondAttribute="centerY" id="fiw-58-kdA"/>

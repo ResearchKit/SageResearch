@@ -54,14 +54,40 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     /// The resource to load into the webview on `viewWillAppear()`.
     open var resourceTransformer: RSDResourceTransformer?
     
-    fileprivate var _webviewLoaded = false
+    /// The design system to use for this controller.
+    open var designSystem: RSDDesignSystem?
+    
+    private var _closeButtonTitle: String?
+    private var _headerTitle: String?
+    private var _usesBackButton: Bool = false
+    private var _webviewLoaded = false
     
     /// Convenience method for instantiating a web view controller that is the root view controller for a
     /// navigation controller.
-    open class func instantiateController() -> (RSDWebViewController, UINavigationController) {
+    open class func instantiateController(using designSystem: RSDDesignSystem = RSDDesignSystem(), action: RSDWebViewUIAction? = nil) -> (RSDWebViewController, UINavigationController) {
         let webVC = RSDWebViewController()
-        webVC.navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localization.buttonClose(), style: .plain, target: webVC, action: #selector(close))
-        return (webVC, UINavigationController(rootViewController: webVC))
+        let navVC = UINavigationController(rootViewController: webVC)
+
+        // Set up the model.
+        webVC.designSystem = designSystem
+        webVC.resourceTransformer = action
+        
+        // Set up the navigation.
+        if (action?.closeButtonTitle != nil) || (action?.usesBackButton != nil) || (action?.title != nil) {
+            navVC.isNavigationBarHidden = true
+            webVC._closeButtonTitle = action?.closeButtonTitle
+            webVC._headerTitle = action?.title
+            // TODO: syoung 03/28/2019 Implement custom animation to show "push on" style of view.
+            webVC._usesBackButton = action?.usesBackButton ?? false
+        }
+        else {
+            webVC.navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localization.buttonClose(),
+                                                                      style: .plain,
+                                                                      target: webVC,
+                                                                      action: #selector(close))
+        }
+
+        return (webVC, navVC)
     }
     
     // MARK: View management
@@ -79,6 +105,88 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
             activityIndicator.hidesWhenStopped = true
             activityIndicator.startAnimating()
         }
+        if webView == nil {
+            let configuration = webViewConfiguration()
+            let subview = WKWebView(frame: self.view.bounds, configuration: configuration)
+            subview.translatesAutoresizingMaskIntoConstraints = false
+            self.view.insertSubview(subview, at: 0)
+            subview.navigationDelegate = self
+            subview.backgroundColor = UIColor.white
+            self.view.backgroundColor = UIColor.white
+            
+            self.webView = subview
+            
+            if let closeTitle = self._closeButtonTitle {
+                layoutForFooterCloseButton(closeTitle)
+            }
+            else if _headerTitle != nil || _usesBackButton {
+                layoutForHeaderCloseButton()
+            }
+            else {
+                // Older web views that should retain the original styling of the view.
+                self.webView.rsd_alignAllToSuperview(padding: 0)
+            }
+        }
+    }
+    
+    func layoutForFooterCloseButton(_ closeTitle: String) {
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        
+        // set up a footer with a close action.
+        let footer = RSDGenericNavigationFooterView(frame: .zero)
+        footer.isBackHidden = true
+        footer.isSkipHidden = true
+        footer.addNextButtonIfNeeded()
+        let button = footer.nextButton!
+        button.addTarget(self, action: #selector(close), for: .touchUpInside)
+        button.setTitle(closeTitle, for: .normal)
+        footer.setDesignSystem(designSystem, with: designSystem.colorRules.backgroundLight)
+        
+        // set up constraints.
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(footer)
+        footer.rsd_alignToSuperview([.leading, .trailing, .bottomMargin], padding: 0.0)
+        self.webView.rsd_alignToSuperview([.leadingMargin, .trailingMargin, .topMargin], padding: 0.0)
+        self.webView.rsd_alignAbove(view: footer, padding: 0)
+    }
+    
+    func layoutForHeaderCloseButton() {
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        
+        let header = RSDTableStepHeaderView(frame: .zero)
+        header.titleLabel?.text = self._headerTitle
+        header.shouldShowProgress = false
+        header.isStepLabelHidden = true
+        if _usesBackButton {
+            let image = UIImage(named: "backArrowHeader", in: Bundle(for: RSDWebViewController.self), compatibleWith: self.view.traitCollection)
+            header.cancelButton?.setImage(image, for: .normal)
+        }
+        header.cancelButton?.addTarget(self, action: #selector(close), for: .touchUpInside)
+        let background = designSystem.colorRules.backgroundPrimary
+        header.setDesignSystem(designSystem, with: background)
+        
+        // set up constraints.
+        header.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(header)
+        let statusBackground = RSDStatusBarBackgroundView(frame: .zero)
+        statusBackground.backgroundColor = background.color
+        statusBackground.overlayColor = background.usesLightStyle ? UIColor.clear : RSDColor.black.withAlphaComponent(0.1)
+        self.view.addSubview(statusBackground)
+        statusBackground.alignToStatusBar()
+        header.rsd_alignBelow(view: statusBackground, padding: 0.0)
+        header.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
+        self.webView.rsd_alignToSuperview([.leadingMargin, .trailingMargin, .bottomMargin], padding: 0.0)
+        self.webView.rsd_alignBelow(view: header, padding: 0)
+    }
+    
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        guard let designSystem = self.designSystem,
+            (self._usesBackButton || self._headerTitle != nil)
+            else {
+                return .default
+        }
+        let background = designSystem.colorRules.backgroundPrimary
+        return background.usesLightStyle ? .lightContent : .default
     }
     
     /// Override `viewDidAppear()` to load the webview on first appearance.
@@ -87,18 +195,7 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
         
         guard !_webviewLoaded else { return }
         _webviewLoaded = true
-        
-        if webView == nil {
-            let configuration = webViewConfiguration()
-            let subview = WKWebView(frame: self.view.bounds, configuration: configuration)
-            subview.translatesAutoresizingMaskIntoConstraints = false
-            self.view.insertSubview(subview, at: 0)
-            subview.rsd_alignAllToSuperview(padding: 0)
-            subview.navigationDelegate = self
-            subview.backgroundColor = UIColor.white
-            self.webView = subview
-        }
-        
+
         if let url = self.url {
             let request = URLRequest(url: url)
             webView.load(request)

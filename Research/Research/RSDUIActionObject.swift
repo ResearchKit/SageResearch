@@ -182,12 +182,25 @@ public struct RSDReminderUIActionObject : RSDEmbeddedResourceUIAction, RSDRemind
 public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebViewUIAction, Codable {
 
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case  url, buttonTitle, iconName, bundleIdentifier
+        case url, usesBackButton, title, closeButtonTitle, buttonTitle, iconName, bundleIdentifier
     }
     
     /// The url to load in the webview. If this is not a fully qualified url string, then it is assumed to
     /// refer to an embedded resource.
     public let url: String
+    
+    /// Should this webview be presented with a "<-" style of closure or a "X" style of closure?
+    /// If nil, then default will assume "X".
+    ///
+    /// - note: This is only applicable to devices that use a back button or close button. Otherwise, it is
+    /// ignored.
+    public var usesBackButton: Bool?
+    
+    /// Optional title for a close button.
+    public var closeButtonTitle: String?
+    
+    /// The title to show in a title bar or header.
+    public var title: String?
     
     /// The title to display on the button associated with this action.
     public var buttonTitle: String?
@@ -240,9 +253,7 @@ extension RSDUIActionObject : RSDDocumentableCodableObject {
     static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
-    
 
-    
     static func actionExamples() -> [RSDUIActionObject] {
         let titleAction = RSDUIActionObject(buttonTitle: "Go, Dogs! Go")
         let imageAction = RSDUIActionObject(iconName: "closeX", bundleIdentifier: "org.example.SharedResources")
@@ -277,7 +288,9 @@ extension RSDWebViewUIActionObject : RSDDocumentableCodableObject {
     }
     
     static func actionExamples() -> [RSDWebViewUIActionObject] {
-        let titleAction = RSDWebViewUIActionObject(url: "About_Dogs.html", buttonTitle: "Go, Dogs! Go")
+        var titleAction = RSDWebViewUIActionObject(url: "About_Dogs.html", buttonTitle: "Go, Dogs! Go")
+        titleAction.usesBackButton = true
+        titleAction.title = "Go, Dogs! Go"
         let imageAction = RSDWebViewUIActionObject(url: "About_Dogs.html", iconName: "iconInfo", bundleIdentifier: "org.example.SharedResources")
         return [titleAction, imageAction]
     }

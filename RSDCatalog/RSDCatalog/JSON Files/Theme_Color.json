@@ -35,6 +35,17 @@
         }
     },
     {
+        "identifier": "image_primaryBackground",
+        "type": "instruction",
+        "image": {
+            "type": "fetchable",
+            "imageName": "moodScale1",
+            "placementType": "iconBefore"
+        },
+        "title": "Scrolling instruction screen",
+        "text": "Example with the image placed before the text and using default colors. The image style is `iconBefore` so it is layed out using aspectFit centered."
+    },
+    {
         "identifier": "image_darkBackground",
         "type": "instruction",
         "image": {
@@ -44,6 +55,7 @@
         },
         "title": "Scrolling instruction screen",
         "text": "Example with the image placed before the text and a dark background. The top of the image is pinned to the margin (below the status bar).",
+        "detail": "A custom background color would be used in a case where the design calls for explicitly setting the background color. For example, showing an image outside with blue skies.",
         "colorMapping": {
             "type": "placementMapping",
             "customColor": {
