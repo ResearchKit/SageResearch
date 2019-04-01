@@ -70,53 +70,48 @@
         }
     },
     {
-        "identifier": "stairStep",
-        "type": "section",
-        "steps": [{
-            "identifier": "bringPhone",
-            "type": "instruction",
-            "title": "Please step with your phone",
-            "text": "You will step up and down for 3 minutes. Try to step with the pace.",
-            "image": {
-                "type": "fetchable",
-                "imageName": "stairStepSmall1",
-                "placementType": "topBackground"
-            },
-            "actions": {
-                "goForward": {
-                    "type": "default",
-                    "buttonTitle": "Start"
-                }
-            }
+        "identifier": "bringPhone",
+        "type": "instruction",
+        "title": "Please step with your phone",
+        "text": "You will step up and down for 3 minutes. Try to step with the pace.",
+        "image": {
+            "type": "fetchable",
+            "imageName": "stairStepSmall1",
+            "placementType": "topBackground"
         },
-        {
-            "identifier": "countdown",
-            "type": "countdown",
-            "text": "Start in",
-            "duration": 10,
-            "commands": ["playSoundOnStart", "transitionAutomatically"]
-        },
-        {
-            "identifier": "motion",
-            "type": "active",
-            "duration": 180,
-            "text": "Stand still",
-            "image": {
-                "type": "animated",
-                "imageNames": ["stairStepLarge1", "stairStepLarge2", "stairStepLarge3", "stairStepLarge4"],
-                "placementType": "topBackground",
-                "animationDuration": 2.5
-            },
-            "commands": ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSoundOnFinish"],
-            "spokenInstructions": {
-                "end": "Done! Now measure your heart rate again."
-            },
-            "viewTheme": {
-                "viewIdentifier": "StairStep",
-                "storyboardIdentifier": "ActiveTaskSteps"
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Start"
             }
         }
-        ]
+    },
+    {
+        "identifier": "countdown",
+        "type": "countdown",
+        "text": "Start in",
+        "duration": 10,
+        "commands": ["playSoundOnStart", "transitionAutomatically"]
+    },
+    {
+        "identifier": "stairStep",
+        "type": "active",
+        "duration": 180,
+        "text": "Stand still",
+        "image": {
+            "type": "animated",
+            "imageNames": ["stairStepLarge1", "stairStepLarge2", "stairStepLarge3", "stairStepLarge4"],
+            "placementType": "topBackground",
+            "animationDuration": 2.5
+        },
+        "commands": ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSoundOnFinish"],
+        "spokenInstructions": {
+            "end": "Done! Now measure your heart rate again."
+        },
+        "viewTheme": {
+            "viewIdentifier": "StairStep",
+            "storyboardIdentifier": "ActiveTaskSteps"
+        }
     },
     {
         "identifier": "heartRate",
