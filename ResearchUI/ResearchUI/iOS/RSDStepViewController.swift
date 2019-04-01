@@ -90,7 +90,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         guard let designSystem = self.designSystem else { return .default }
         let background = self.designableStep?.colorMapping?.backgroundColor(for: .header, using: designSystem.colorRules, compatibleWith: self.traitCollection)
             ?? self.defaultBackgroundColorTile(for: .header)
-        print("\(self.step.identifier) \(background.usesLightStyle)")
         return background.usesLightStyle ? .lightContent : .default
     }
     
@@ -258,7 +257,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         // Set up label text.
         stepTitleLabel?.text = uiStep?.title
         stepTextLabel?.text = uiStep?.text
-        stepDetailLabel?.text = uiStep?.detail
+        if let detail = uiStep?.detail {
+            if let detailLabel = self.stepDetailLabel {
+                detailLabel.text = detail
+            }
+            else {
+                stepTextLabel?.text = (uiStep?.text == nil) ? detail : "\(uiStep!.text!)\n\n\(detail)"
+            }
+        }
         
         if let header = self.navigationHeader {
             setupHeader(header)
@@ -274,19 +280,28 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Set up the background color using the `colorTheme` from the step. This method does nothing
     /// if the step does not conform to the `RSDThemedUIStep` protocol.
     open func setupBackgroundColorTheme() {
-        let colorMapping = designableStep?.colorMapping
         let placements: [RSDColorPlacement] = [.header, .body, .footer]
         for placement in placements {
-            let background = colorMapping?.backgroundColor(for: placement,
-                                                           using: self.designSystem.colorRules,
-                                                           compatibleWith: self.traitCollection)
-                ?? self.defaultBackgroundColorTile(for: placement)
-            
-            // Get the color and foreground element style
+            let background = self.backgroundColor(for: placement)
             setColorStyle(for: placement, background: background)
         }
     }
     
+    /// Returns the background color tile to use for the given placement. This should look to see if there is
+    /// color mapping defined by the designable step, then looks to the default if that is undefined.
+    ///
+    /// - parameter placement: The section of the view to which the color applies.
+    /// - returns: The default color for that placement.
+    open func backgroundColor(for placement: RSDColorPlacement) -> RSDColorTile {
+        return self.designableStep?.colorMapping?.backgroundColor(for: placement,
+                                                                  using: self.designSystem.colorRules,
+                                                                  compatibleWith: self.traitCollection)
+            ?? self.defaultBackgroundColorTile(for: placement)
+    }
+    
+    /// Returns the default background color tile to use for the given placement.
+    /// - parameter placement: The section of the view to which the color applies.
+    /// - returns: The default color for that placement.
     open func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
         if placement == .header {
             return self.designSystem.colorRules.backgroundPrimary
@@ -314,6 +329,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
 
         case .body:
             self.view.backgroundColor = background.color
+            self.view.tintColor = self.designSystem.colorRules.tintedButtonColor(on: background)
             navigationComponent = self.navigationBody
 
         case .footer:
@@ -729,9 +745,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
         else if let webAction = action as? RSDWebViewUIAction {
             // For a webview action, present a web view modally.
-            let (webVC, navVC) = RSDWebViewController.instantiateController()
-            webVC.resourceTransformer = webAction
-
+            let (_, navVC) = RSDWebViewController.instantiateController(using: self.designSystem, action: webAction)
             self.present(navVC, animated: true, completion: nil)
             return true
         }

@@ -40,6 +40,8 @@ public enum CRFTaskIdentifier : String, Codable, CaseIterable {
     
     case resting = "Resting Heartrate"
     
+    case stairStep = "Cardio Stair Step"
+    
     func task(with factory: CRFFactory) -> RSDTaskObject {
         do {
             let transformer = CRFTaskTransformer(self)
@@ -85,6 +87,8 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
             self.icon = try! RSDImageWrapper(imageName: "heartRateIcon", bundle: Bundle(for: CRFFactory.self))
         case .resting:
             self.icon = try! RSDImageWrapper(imageName: "heartRateIcon", bundle: Bundle(for: CRFFactory.self))
+        case .stairStep:
+            self.icon = try! RSDImageWrapper(imageName: "activeStairStep", bundle: Bundle(for: CRFFactory.self))
         }
     }
     
@@ -112,6 +116,8 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
             return 2
         case .resting:
             return 1
+        case .stairStep:
+            return 5
         }
     }
     
@@ -148,6 +154,8 @@ public struct CRFTaskTransformer : RSDResourceTransformer, Decodable {
             self.resourceName = "Heartrate_Training"
         case .resting:
             self.resourceName = "Heartrate_Resting"
+        case .stairStep:
+            self.resourceName = "Cardio_Stair_Step"
         }
     }
     

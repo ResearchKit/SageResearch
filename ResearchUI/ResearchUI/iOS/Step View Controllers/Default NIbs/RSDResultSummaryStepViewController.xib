@@ -48,8 +48,8 @@
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="Ywb-mR-CRP"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your result is" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hH-P0-Pxv">
-                                                    <rect key="frame" x="115.5" y="154" width="144.5" height="29"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your result is" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hH-P0-Pxv">
+                                                    <rect key="frame" x="42" y="154" width="291" height="29"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -89,13 +89,14 @@
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="rbY-mN-Jd1" firstAttribute="top" secondItem="Ria-8U-do4" secondAttribute="topMargin" constant="22" id="2Qs-N3-vzB"/>
+                                                <constraint firstItem="0hH-P0-Pxv" firstAttribute="leading" secondItem="Ria-8U-do4" secondAttribute="leading" constant="42" id="CbS-ux-juG"/>
                                                 <constraint firstItem="0hH-P0-Pxv" firstAttribute="centerX" secondItem="Ria-8U-do4" secondAttribute="centerX" id="Fs1-mD-VVy"/>
                                                 <constraint firstAttribute="bottom" secondItem="hm1-HH-c4C" secondAttribute="bottom" constant="8" id="HNX-Q1-sdW"/>
                                                 <constraint firstItem="2yK-Dp-laR" firstAttribute="centerX" secondItem="Ria-8U-do4" secondAttribute="centerX" id="LZZ-AJ-veI"/>
                                                 <constraint firstItem="rbY-mN-Jd1" firstAttribute="centerX" secondItem="Ria-8U-do4" secondAttribute="centerX" id="WPh-uG-nof"/>
                                                 <constraint firstItem="2yK-Dp-laR" firstAttribute="top" secondItem="0hH-P0-Pxv" secondAttribute="bottom" id="YIU-Wn-aA5"/>
                                                 <constraint firstAttribute="height" priority="500" constant="283" id="YiU-YY-PcS"/>
-                                                <constraint firstAttribute="bottom" secondItem="2yK-Dp-laR" secondAttribute="bottom" priority="250" constant="8" id="aH5-fr-wFo"/>
+                                                <constraint firstAttribute="bottom" secondItem="2yK-Dp-laR" secondAttribute="bottom" priority="501" constant="8" id="aH5-fr-wFo"/>
                                                 <constraint firstItem="hm1-HH-c4C" firstAttribute="centerX" secondItem="Ria-8U-do4" secondAttribute="centerX" id="fgY-IT-JG0"/>
                                                 <constraint firstItem="0hH-P0-Pxv" firstAttribute="top" secondItem="rbY-mN-Jd1" secondAttribute="bottom" constant="24" id="ny7-hG-a4i"/>
                                                 <constraint firstItem="hm1-HH-c4C" firstAttribute="top" secondItem="2yK-Dp-laR" secondAttribute="bottom" constant="8" id="w9q-IP-mRM"/>

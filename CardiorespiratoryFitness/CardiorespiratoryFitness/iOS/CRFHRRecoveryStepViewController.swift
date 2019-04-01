@@ -1,8 +1,8 @@
 //
-//  UIColor+CRFDefaults.swift
+//  CRFHRRecoveryStepViewController.swift
 //  CardiorespiratoryFitness
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,46 +31,9 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
-import ResearchUI
 
-extension UIColor {
-    
-    // MARK: Primary Tint
-    
-    @objc open class var primaryTintColor: UIColor {
-        return UIColor(named: "dodgerBlue", in: Bundle(for: CRFFactory.self), compatibleWith: nil)!
-    }
-    
-    // MARK: Secondary Tint
-    
-    @objc open class var secondaryTintColor: UIColor {
-        return UIColor(named: "salmon", in: Bundle(for: CRFFactory.self), compatibleWith: nil)!
-    }
-    
-    // MARK: Progress indicators
-    
-    @objc open class var rsd_dialRing : UIColor {
-        return UIColor(named: "tealGreen", in: Bundle(for: CRFFactory.self), compatibleWith: nil)!
-    }
-    
-    @objc open class var rsd_dialRingBackgroundLightStyle: UIColor {
-        return UIColor.white
-    }
-    
-    @objc open class var rsd_dialRingBackground: UIColor {
-        return UIColor.appVeryLightGray
-    }
-    
-    @objc open class var rsd_progressBarBackgroundLightStyle: UIColor {
-        return UIColor.white
-    }
-    
-    @objc open class var rsd_progressBarBackground: UIColor {
-        return UIColor.appVeryLightGray
-    }
-    
-    @objc open class var rsd_progressBar: UIColor {
-        return UIColor(named: "softGreen", in: Bundle(for: CRFFactory.self), compatibleWith: nil)!
-    }
+import UIKit
+
+class CRFHRRecoveryStepViewController: RSDResultSummaryStepViewController {
+
 }

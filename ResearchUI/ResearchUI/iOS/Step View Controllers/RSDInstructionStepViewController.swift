@@ -47,7 +47,7 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     @IBOutlet var scrollView: UIScrollView?
     
     /// The constraint that sets the scroll bar's top background view's height.
-    @IBOutlet var imageTopConstraint: NSLayoutConstraint?
+    @IBOutlet var imageBackgroundTopConstraint: NSLayoutConstraint?
     
     /// The constraint that sets the image height. This needs to be adjusted for smaller screens.
     @IBOutlet var headerHeightConstraint: NSLayoutConstraint?
@@ -57,6 +57,14 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     
     /// A view that is used to mark the height of the text instruction area.
     @IBOutlet var instructionTextView: UIView?
+    
+    /// The image leading constraint can be used to set up the image to use different constraints for
+    /// the `iconBefore` image placement type.
+    @IBOutlet var imageLeadingConstraint: NSLayoutConstraint?
+    
+    /// The image top constraint can be used to set up the image to use different constraints for the
+    /// `iconBefore` image placement type.
+    @IBOutlet var imageTopConstraint: NSLayoutConstraint?
     
     /// Save the previously calculated instruction height.
     private var _remainingHeight: CGFloat = 0
@@ -79,17 +87,31 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     /// this step. Default behavior is to constrain the scrollview to be under the status bar if the placement
     /// type is `.topMarginBackground`.
     open func updateImagePlacementConstraintsIfNeeded() {
-        guard let placementType = self.imageTheme?.placementType,
-            let headerTopConstraint = self.imageTopConstraint
-            else {
-                return
+        
+        // Update the image placement for iconBefore.
+        if (self.imageTheme?.placementType == .iconBefore),
+            let leading = self.imageLeadingConstraint,
+            let imageView = self.imageView {
+            imageView.contentMode = .scaleAspectFit
+            let imageSize: CGSize? = self.imageTheme!.size != .zero ? self.imageTheme!.size : self.imageView?.image?.size
+            let desiredWidth = min(imageSize?.width ?? 999999, self.view.bounds.width * 0.5)
+            let constant = floor((self.view.bounds.width - desiredWidth) * 0.5)
+            if constant != leading.constant {
+                leading.constant = constant
+                self.view.setNeedsUpdateConstraints()
+                self.view.setNeedsLayout()
+            }
         }
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        let constant = (placementType == .topBackground) ? CGFloat(0) : statusBarHeight
-        if constant != headerTopConstraint.constant {
-            headerTopConstraint.constant = constant
-            self.view.setNeedsUpdateConstraints()
-            self.view.setNeedsLayout()
+        
+        // Update the image placement for top background.
+        if let headerTopConstraint = self.imageBackgroundTopConstraint {
+            let statusBarHeight = UIApplication.shared.statusBarFrame.height
+            let constant = (self.imageTheme?.placementType == .topBackground) ? CGFloat(0) : statusBarHeight
+            if constant != headerTopConstraint.constant {
+                headerTopConstraint.constant = constant
+                self.view.setNeedsUpdateConstraints()
+                self.view.setNeedsLayout()
+            }
         }
     }
     
@@ -111,16 +133,16 @@ open class RSDInstructionStepViewController: RSDStepViewController {
     open func updateImageHeightConstraintIfNeeded() {
         guard let instructionTextView = self.instructionTextView,
             let scrollView = self.scrollView,
-            let headerTopConstraint = self.imageTopConstraint,
+            let headerTopConstraint = self.imageBackgroundTopConstraint,
             let headerHeightConstraint = self.headerHeightConstraint
             else {
                 return
         }
         
         let remainingHeight = scrollView.bounds.height - instructionTextView.bounds.height - headerTopConstraint.constant
-        if _remainingHeight != remainingHeight {
-            _remainingHeight = remainingHeight
-            let height = max(remainingHeight, self.view.bounds.height / 2)
+        let minHeight = (self.imageTheme?.placementType == .iconBefore) ? self.view.bounds.height / 3 : self.view.bounds.height / 2
+        let height = max(remainingHeight, minHeight)
+        if headerHeightConstraint.constant != height {
             headerHeightConstraint.constant = height
             self.navigationFooter?.shouldShowShadow = (height != remainingHeight)
             self.view.setNeedsUpdateConstraints()
@@ -168,7 +190,7 @@ open class RSDInstructionStepViewController: RSDStepViewController {
                 return false
         }
         
-        return (placement == .topBackground || placement == .topMarginBackground)
+        return (placement == .topBackground || placement == .topMarginBackground || placement == .iconBefore)
     }
     
     /// The default nib name to use when instantiating the view controller using `init(step:)`.
