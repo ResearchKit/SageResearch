@@ -244,15 +244,7 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
         copyInto(copy as RSDTaskObject)
         return copy
     }
-    
-    public func copyAndInsert(_ asyncAction: RSDAsyncActionConfiguration) -> Self {
-        var asyncActions = self.asyncActions ?? []
-        asyncActions.append(asyncAction)
-        let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
-        copyInto(copy as RSDTaskObject)
-        return copy
-    }
-    
+
     public func copy(with identifier: String) -> Self {
         let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
         copyInto(copy as RSDTaskObject)

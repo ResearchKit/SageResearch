@@ -68,5 +68,11 @@ open class RSDStudyConfiguration {
     open var isParticipantDevice : Bool = true
     
     /// The default color palette to use for this app.
-    open var colorPalette: RSDColorPalette = .wireframe
+    open var colorPalette: RSDColorPalette = .wireframe {
+        didSet {
+            self.hasSetColorPallette = true
+        }
+    }
+    
+    public private(set) var hasSetColorPallette: Bool = false
 }

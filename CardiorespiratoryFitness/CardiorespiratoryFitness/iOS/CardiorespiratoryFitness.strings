@@ -38,3 +38,4 @@
 "HEARTRATE_CAPTURE_%@_BPM"        = "%@ BPM";
 "HEARTRATE_LEARN_NORMAL_BUTTON"   = "What is a ‘normal’ resting HR?";
 "HEARTRATE_LEARN_TIPS_BUTTON"     = "Tips for measuring";
+"HEARTRATE_MORNING_TITLE"         = "Morning Resting Heart Rate";

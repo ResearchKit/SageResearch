@@ -36,6 +36,7 @@ import UIKit
 extension RSDStepType {
     
     static let heartRate: RSDStepType = "heartRate"
+    static let heartRateFeedback: RSDStepType = "heartRateFeedback"
 }
 
 fileprivate var _didAddLocalizationBundle: Bool = false
@@ -59,8 +60,27 @@ open class CRFFactory: RSDFactory {
         switch type {
         case .heartRate:
             return try CRFHeartRateStep(from: decoder)
+        case .heartRateFeedback:
+            return try CRFHeartRateFeedbackStep(from: decoder)
         default:
             return try super.decodeStep(from: decoder, with: type)
         }
     }
+    
+    /// Override the task decoder to vend an `CRFTaskObject`.
+    override open func decodeTask(with data: Data, from decoder: RSDFactoryDecoder) throws -> RSDTask {
+        let task = try decoder.decode(CRFTaskObject.self, from: data)
+        try task.validate()
+        return task
+    }
+    
+    /// The default color palette for this module is version 0 with rose600, slate600, and apricot400.
+    /// The design system is set as version 1.
+    public static let designSystem: RSDDesignSystem = {
+        let palette = RSDColorPalette(version: 1,
+                                      primary: RSDColorMatrix.shared.colorKey(for: .palette(.rose), version: 0, index: 4),
+                                      secondary: RSDColorMatrix.shared.colorKey(for: .palette(.slate), version: 0, index: 4),
+                                      accent: RSDColorMatrix.shared.colorKey(for: .palette(.apricot), version: 0, index: 2))
+        return RSDDesignSystem(palette: palette)
+    }()
 }

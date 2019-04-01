@@ -187,7 +187,10 @@ open class RSDColorRules  {
     ///     - textType: The type size of the UI element.
     /// - returns: The text color to use.
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
-        if background.usesLightStyle {
+        if textType == .counter, background == self.palette.grayScale.white {
+            return self.palette.accent.normal.color
+        }
+        else if background.usesLightStyle {
             return self.palette.grayScale.white.color
         }
         else {
@@ -235,15 +238,21 @@ open class RSDColorRules  {
     ///     - state: The UI control state of the button.
     /// - returns: The color to use for the underlined text button.
     open func underlinedTextButton(on background: RSDColorTile, state: RSDControlState) -> RSDColor {
-        if background == self.palette.grayScale.white || background == self.palette.grayScale.veryLightGray {
-            if self.palette.primary.normal.usesLightStyle {
-                return self.palette.primary.normal.color
+        switch self.version {
+        case 0:
+            if background == self.palette.grayScale.white || background == self.palette.grayScale.veryLightGray {
+                if self.palette.primary.normal.usesLightStyle {
+                    return self.palette.primary.normal.color
+                }
+                else {
+                    return self.tintedButtonColor(on: background)
+                }
             }
             else {
-                return self.tintedButtonColor(on: background)
+                return textColor(on: background, for: .body)
             }
-        }
-        else {
+            
+        default:
             return textColor(on: background, for: .body)
         }
     }

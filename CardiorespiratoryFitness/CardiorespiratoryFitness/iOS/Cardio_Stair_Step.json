@@ -75,9 +75,10 @@
         "title": "Please step with your phone",
         "text": "You will step up and down for 3 minutes. Try to step with the pace.",
         "image": {
-            "type": "fetchable",
-            "imageName": "stairStepSmall1",
-            "placementType": "topBackground"
+            "type": "animated",
+            "imageNames": ["stairStepSmall1", "stairStepSmall2", "stairStepSmall3", "stairStepSmall4"],
+            "placementType": "topBackground",
+            "animationDuration": 2.5
         },
         "actions": {
             "goForward": {
@@ -100,7 +101,7 @@
         "text": "Stand still",
         "image": {
             "type": "animated",
-            "imageNames": ["stairStepLarge1", "stairStepLarge2", "stairStepLarge3", "stairStepLarge4"],
+            "imageNames": ["stairStepSmall1", "stairStepSmall2", "stairStepSmall3", "stairStepSmall4"],
             "placementType": "topBackground",
             "animationDuration": 2.5
         },
@@ -114,16 +115,16 @@
         }
     },
     {
-        "identifier": "heartRate",
+        "identifier": "hr",
         "type": "heartRate",
         "duration": 60,
         "isResting": false
     },
     {
         "identifier": "feedback",
-        "type": "completion",
+        "type": "heartRateFeedback",
         "resultTitle": "Your peak heart rate is",
-        "resultIdentifier": "heartRate",
+        "resultIdentifier": "hr_peak",
         "unitText": "BPM",
         "title": "Recovery HR Captured!",
         "text": "Changing your Recovery HR can take time. You can change it over weeks or months by losing weight or exercising.",

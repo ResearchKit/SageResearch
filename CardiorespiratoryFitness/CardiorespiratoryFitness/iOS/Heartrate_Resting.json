@@ -18,7 +18,7 @@
         "image": {
             "type": "fetchable",
             "imageName": "restingHoldPhone",
-            "placementType": "topMarginBackground"
+            "placementType": "topBackground"
         },
         "icons": [{
             "icon": "ComfortablePlaceToSit",
@@ -77,15 +77,15 @@
         }
     },
     {
-        "identifier": "heartRate1",
+        "identifier": "hr1",
         "type": "heartRate",
         "isResting": true
     },
     {
         "identifier": "feedback1",
-        "type": "completion",
+        "type": "heartRateFeedback",
         "resultTitle": "Your resting heart rate is",
-        "resultIdentifier": "heartRate1",
+        "resultIdentifier": "hr1_resting",
         "unitText": "BPM",
         "title": "Measure twice",
         "text": "Many things can influence your measurement. To improve the accuracy, let's meaure it one more time.",
@@ -100,7 +100,7 @@
         }
     },
     {
-        "identifier": "heartRate",
+        "identifier": "hr",
         "type": "heartRate",
         "isResting": true
     },
@@ -108,7 +108,7 @@
         "identifier": "feedback",
         "type": "completion",
         "resultTitle": "Your resting heart rate is",
-        "resultIdentifier": "heartRate",
+        "resultIdentifier": "hr_resting",
         "unitText": "BPM",
         "title": "Resting HR Captured!",
         "text": "Great job measuring your heart at rest. We've finished the first half of your heart snapshot, so let's continue on to the next step.",
