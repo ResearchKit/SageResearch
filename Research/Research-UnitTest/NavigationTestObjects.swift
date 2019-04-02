@@ -453,4 +453,10 @@ public struct TestData : RSDTaskData {
     public let identifier: String
     public let timestampDate: Date?
     public let json: RSDJSONSerializable
+    
+    public init(identifier: String, timestampDate: Date?, json: RSDJSONSerializable) {
+        self.identifier = identifier
+        self.timestampDate = timestampDate
+        self.json = json
+    }
 }
