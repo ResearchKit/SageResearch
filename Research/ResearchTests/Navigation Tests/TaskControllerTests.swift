@@ -667,23 +667,60 @@ class TaskControllerTests: XCTestCase {
         
         RSDStudyConfiguration.shared.fullInstructionsFrequency = .always
     }
-}
-
-class TestDataStoreManager : NSObject, RSDDataStorageManager {
     
-    var previous: [RSDIdentifier : RSDTaskData] = [:]
-    var saveTaskData_called: [(data: RSDTaskData, taskResult: RSDTaskResult?)] = []
-    
-    func previousTaskData(for taskIdentifier: RSDIdentifier) -> RSDTaskData? {
-        return previous[taskIdentifier]
+    func testDataTrackingNavigation_WithSkip_ToCompletion() {
+        let steps: [RSDStep] = TestStep.steps(from: ["introduction", "step1", "step2", "step3", "step4", "step5", "completion"])
+        let navigator = TestConditionalNavigator(steps: steps)
+        let task = TestTask(identifier: "test", stepNavigator: navigator)
+        let taskViewModel = TestTaskViewModel(task: task)
+        taskViewModel.stepToSkip = "step3"
+        
+        let taskController = TestTaskController()
+        taskController.taskViewModel = taskViewModel
+        
+        let _ = taskController.test_stepTo("completion")
+        
+        let order = taskViewModel.taskResult.stepHistory.map { $0.identifier }
+        XCTAssertEqual(order, ["introduction", "step1", "step2", "step4", "step5", "completion"])
     }
     
-    func saveTaskData(_ data: RSDTaskData, from taskResult: RSDTaskResult?) {
-        saveTaskData_called.append((data, taskResult))
+    
+    func testDataTrackingNavigation_WithTrackingSkip_ToCompletion() {
+        let steps: [RSDStep] = TestStep.steps(from: ["introduction", "step1", "step2", "step3", "step4", "step5", "completion"])
+        let navigator = TestConditionalNavigator(steps: steps)
+        var task = TestTask(identifier: "test", stepNavigator: navigator)
+        let tracker = TestTracker()
+        tracker.stepsToSkip = ["step2", "step4"]
+        task.tracker = tracker
+        
+        let taskController = TestTaskController()
+        taskController.task = task
+        
+        let _ = taskController.test_stepTo("completion")
+        
+        let taskResult = taskController.taskViewModel.taskResult
+        let order = taskResult.stepHistory.map { $0.identifier }
+        XCTAssertEqual(order, ["introduction", "step1", "step2", "step3", "step4", "step5", "completion"])
+        
+        if let answer = taskResult.findAnswerResult(with: "step2") {
+            XCTAssertEqual(answer.value as? String, "foo")
+        }
+        else {
+            XCTFail("Failed to set an answer")
+        }
+        
+        if let answer = taskResult.findAnswerResult(with: "step4") {
+            XCTAssertEqual(answer.value as? String, "foo")
+        }
+        else {
+            XCTFail("Failed to set an answer")
+        }
     }
 }
 
 class TestTracker : RSDTrackingTask {
+    
+    var stepsToSkip: [String] = []
 
     var setupTask_called: (data: RSDTaskData?, path: RSDTaskPathComponent)?
     
@@ -696,12 +733,12 @@ class TestTracker : RSDTrackingTask {
     func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
         setupTask_called = (data, path)
     }
-}
-
-struct TestData : RSDTaskData {
-    let identifier: String
-    let timestampDate: Date?
-    let json: RSDJSONSerializable
+    
+    func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
+        guard stepsToSkip.contains(step.identifier) else { return (false, nil) }
+        let stepResult = RSDAnswerResultObject(identifier: step.identifier, answerType: .string, value: "foo")
+        return (true, stepResult)
+    }
 }
 
 class TestTrackingRule : RSDTrackingRule {

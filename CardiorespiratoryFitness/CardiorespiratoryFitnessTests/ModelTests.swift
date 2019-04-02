@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import CardiorespiratoryFitness
+@testable import Research_UnitTest
 
 class ModelTests: XCTestCase {
     
@@ -46,19 +47,21 @@ class ModelTests: XCTestCase {
         super.tearDown()
     }
     
-    func testTraining() {
+    func testTrainingTask() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
-
+        
         let taskInfo = CRFTaskInfo(.training)
-
+        
         XCTAssertEqual(taskInfo.identifier, "Heartrate Training")
         XCTAssertEqual(taskInfo.title, "Heart Snapshot")
         XCTAssertEqual(taskInfo.subtitle, "Your phone's camera can measure your heartbeat.")
         XCTAssertNil(taskInfo.detail)
         XCTAssertEqual(taskInfo.estimatedMinutes, 2)
+        XCTAssertEqual(taskInfo.schemaInfo?.schemaIdentifier, "Heartrate Training")
+        XCTAssertEqual(taskInfo.schemaInfo?.schemaVersion, 1)
     }
     
-    func testResting() {
+    func testRestingTask() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         
         let taskInfo = CRFTaskInfo(.resting)
@@ -68,6 +71,50 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(taskInfo.subtitle, "Your heart rate while you are at rest is a marker of your health. The more relaxed you are, the better. Let's measure your resting heart rate.")
         XCTAssertNil(taskInfo.detail)
         XCTAssertEqual(taskInfo.estimatedMinutes, 1)
+        XCTAssertEqual(taskInfo.schemaInfo?.schemaIdentifier, "Heartrate Measurement")
+        XCTAssertEqual(taskInfo.schemaInfo?.schemaVersion, 9)
+        
+        guard let navigator = taskInfo.task.stepNavigator as? RSDOrderedStepNavigator else {
+            XCTFail("Navigator is not of the expected type")
+            return
+        }
+        
+        let steps = navigator.steps.map { $0.identifier }
+        XCTAssertEqual(steps, ["introduction", "sitDownInstruction", "coverFlash", "hr1", "feedback1", "hr", "feedback"])
+    }
+    
+    func testRestingMorningTask() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let taskInfo = CRFTaskInfo(.restingMorning)
+        
+        XCTAssertEqual(taskInfo.identifier, "Morning Heartrate")
+        XCTAssertEqual(taskInfo.title, "Morning resting heart rate")
+        XCTAssertEqual(taskInfo.subtitle, "Your heart rate while you are at rest is a marker of your health. The more relaxed you are, the better. Let's measure your resting heart rate.")
+        XCTAssertNil(taskInfo.detail)
+        XCTAssertEqual(taskInfo.estimatedMinutes, 1)
+        XCTAssertEqual(taskInfo.schemaInfo?.schemaIdentifier, "Heartrate Measurement")
+        XCTAssertEqual(taskInfo.schemaInfo?.schemaVersion, 9)
+        
+        guard let navigator = taskInfo.task.stepNavigator as? RSDOrderedStepNavigator else {
+            XCTFail("Navigator is not of the expected type")
+            return
+        }
+        
+        let steps = navigator.steps.map { $0.identifier }
+        XCTAssertEqual(steps, ["introduction", "sitDownInstruction", "coverFlash", "hr", "feedback"])
+    }
+    
+    func testStairStepTask() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let taskInfo = CRFTaskInfo(.stairStep)
+        
+        XCTAssertEqual(taskInfo.identifier, "Cardio Stair Step")
+        XCTAssertEqual(taskInfo.title, "Heart Rate Recovery")
+        XCTAssertEqual(taskInfo.subtitle, "You will be stepping up and down a step for 3 minutes to raise your heart rate. Right after you finish stepping, measure your heart rate for 1 minute to see how your heart rate recovers.")
+        XCTAssertNil(taskInfo.detail)
+        XCTAssertEqual(taskInfo.estimatedMinutes, 5)
     }
     
     func testDecodeTasks() {
@@ -82,5 +129,35 @@ class ModelTests: XCTestCase {
             }
         }
     }
-
+    
+    func testTaskInfo_Copy() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let taskInfo = CRFTaskInfo(.training)
+        let copy = taskInfo.copy(with: "Foo")
+        
+        XCTAssertEqual(copy.identifier, "Foo")
+        XCTAssertEqual(copy.title, "Heart Snapshot")
+        XCTAssertEqual(copy.subtitle, "Your phone's camera can measure your heartbeat.")
+        XCTAssertNil(copy.detail)
+        XCTAssertEqual(copy.estimatedMinutes, 2)
+        XCTAssertEqual(copy.schemaInfo?.schemaIdentifier, "Heartrate Training")
+        XCTAssertEqual(copy.schemaInfo?.schemaVersion, 1)
+    }
+    
+    func testHeartRateStep() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let step = CRFHeartRateStep(identifier: "hr")
+        XCTAssertTrue(step.isResting)
+        XCTAssertEqual(step.startStepIdentifier, "hr")
+        XCTAssertEqual(step.stopStepIdentifier, "hr")
+        
+        step.isResting = false
+        let copy = step.copy(with: "hr2")
+        XCTAssertEqual(copy.identifier, "hr2")
+        XCTAssertEqual(copy.cameraSettings, step.cameraSettings)
+        XCTAssertFalse(copy.isResting)
+        XCTAssertTrue(copy.shouldDeletePrevious)
+    }
 }

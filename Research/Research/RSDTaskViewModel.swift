@@ -370,6 +370,16 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     /// step. For all other steps, it will request a step controller for the step from the task controller and
     /// return both the step controller and the loaded step view model as the `node`.
     open func pathComponent(for step: RSDStep) -> (node: RSDNodePathComponent, stepController: RSDStepController?)? {
+        if let tracker = self.task as? RSDTrackingTask {
+            let answer = tracker.shouldSkipStep(step)
+            if answer.shouldSkip {
+                if let result = answer.stepResult {
+                    self.taskResult.stepHistory.append(result)
+                }
+                return nil
+            }
+        }
+        
         if let node = self.instantiateTaskStepNode(for: step) {
             return (node, nil)
         }

@@ -79,9 +79,9 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
     public let taskIdentifier: CRFTaskIdentifier
     
     /// The task build for this info.
-    public let task: RSDTaskObject
+    public let task: CRFTaskObject
     
-    private init(taskIdentifier: CRFTaskIdentifier, task: RSDTaskObject) {
+    private init(taskIdentifier: CRFTaskIdentifier, task: CRFTaskObject) {
         self.taskIdentifier = taskIdentifier
         self.task = task
     }
@@ -92,12 +92,13 @@ public struct CRFTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor {
         
         // Pull the title, subtitle, and detail from the first step in the task resource.
         let factory = (RSDFactory.shared as? CRFFactory) ?? CRFFactory()
-        self.task = taskIdentifier.task(with: factory)
+        self.task = taskIdentifier.task(with: factory) as! CRFTaskObject
         if let step = (task.stepNavigator as? RSDConditionalStepNavigator)?.steps.first as? RSDUIStep {
             self.title = step.title
             self.subtitle = step.text
             self.detail = step.detail
         }
+        self.schemaInfo = self.task.schemaInfo
         
         // Set the default image icon.
         switch taskIdentifier {

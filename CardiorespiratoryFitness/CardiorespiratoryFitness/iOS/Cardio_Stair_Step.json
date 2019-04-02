@@ -4,6 +4,7 @@
         "identifier": "Cardio Stair Step",
         "revision": 2
     },
+    "usesTrackedData": true,
     "shouldHideActions": ["goBackward", "skip"],
     "progressMarkers": [],
     "steps": [{
@@ -122,7 +123,7 @@
     },
     {
         "identifier": "feedback",
-        "type": "heartRateFeedback",
+        "type": "feedback",
         "resultTitle": "Your peak heart rate is",
         "resultIdentifier": "hr_peak",
         "unitText": "BPM",
@@ -154,7 +155,7 @@
     },
     {
         "identifier": "biologicalSex",
-        "type": "form",
+        "type": "demographics",
         "title": "What was your sex at birth?",
         "inputFields": [{
             "uiHint": "list",
@@ -186,7 +187,7 @@
     },
     {
         "identifier": "birthYear",
-        "type": "form",
+        "type": "demographics",
         "title": "What year were you born?",
         "inputFields": [{
             "type": "year",

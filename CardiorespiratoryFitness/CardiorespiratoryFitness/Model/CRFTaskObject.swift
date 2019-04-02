@@ -35,6 +35,64 @@ import Foundation
 
 public final class CRFTaskObject: RSDTaskObject, RSDTaskDesign {
     
+    public enum DemographicsKeys : String, CodingKey, Codable {
+        case birthYear, biologicalSex
+    }
+    
+    /// The birth year of the user who is using this task.
+    public var birthYear: Int? {
+        get {
+            return previousRunData[DemographicsKeys.birthYear.stringValue] as? Int
+        }
+        set {
+            previousRunData[DemographicsKeys.birthYear.stringValue] = newValue
+        }
+    }
+    
+    /// The biological sex of the current user who will be using this task.
+    public var biologicalSex: Sex? {
+        get {
+            guard let sex = previousRunData[DemographicsKeys.biologicalSex.stringValue] as? String
+                else {
+                    return nil
+            }
+            return Sex(rawValue: sex)
+        }
+        set {
+            previousRunData[DemographicsKeys.biologicalSex.stringValue] = newValue?.stringValue
+        }
+    }
+    
+    /// Options for the value of the demographics question about biological sex.
+    public enum Sex : String, Codable {
+        case male, female, other
+    }
+    
+    private var previousRunData: [String : RSDJSONSerializable] = [:]
+
+    /// Override task setup to get the demographics data from a previous run.
+    public override func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
+        if let json = data?.json as? [String : RSDJSONSerializable] {
+            previousRunData[DemographicsKeys.biologicalSex.stringValue] = json[DemographicsKeys.biologicalSex.stringValue]
+            previousRunData[DemographicsKeys.birthYear.stringValue] = json[DemographicsKeys.birthYear.stringValue]
+        }
+        super.setupTask(with: data, for: path)
+    }
+    
+    /// Override to check if this is one of the demographics questions.
+    public override func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
+        guard step.stepType == .demographics,
+            let formStep = step as? RSDFormUIStep,
+            let inputField = formStep.inputFields.first,
+            let value = previousRunData[step.identifier]
+            else {
+                return (false, nil)
+        }
+        let answerResult = RSDAnswerResultObject(identifier: step.identifier, answerType: inputField.dataType.defaultAnswerResultType(), value: value)
+        return (true, answerResult)
+    }
+    
+    /// Return the design system from the factory.
     public var designSystem: RSDDesignSystem {
         return CRFFactory.designSystem
     }

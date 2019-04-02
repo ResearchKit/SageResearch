@@ -36,7 +36,6 @@ import UIKit
 extension RSDStepType {
     
     static let heartRate: RSDStepType = "heartRate"
-    static let heartRateFeedback: RSDStepType = "heartRateFeedback"
 }
 
 fileprivate var _didAddLocalizationBundle: Bool = false
@@ -60,8 +59,6 @@ open class CRFFactory: RSDFactory {
         switch type {
         case .heartRate:
             return try CRFHeartRateStep(from: decoder)
-        case .heartRateFeedback:
-            return try CRFHeartRateFeedbackStep(from: decoder)
         default:
             return try super.decodeStep(from: decoder, with: type)
         }

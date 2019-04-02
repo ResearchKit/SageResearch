@@ -4,6 +4,7 @@
         "identifier": "Heartrate Measurement",
         "revision": 9
     },
+    "usesTrackedData": true,
     "shouldHideActions": ["goBackward", "skip"],
     "progressMarkers": [],
     "steps": [{
@@ -83,7 +84,7 @@
     },
     {
         "identifier": "feedback1",
-        "type": "heartRateFeedback",
+        "type": "feedback",
         "resultTitle": "Your resting heart rate is",
         "resultIdentifier": "hr1_resting",
         "unitText": "BPM",

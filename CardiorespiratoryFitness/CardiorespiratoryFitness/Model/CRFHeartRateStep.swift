@@ -35,7 +35,7 @@ import UIKit
 
 /// Custom subclass of the active step that can decode configuration details specific to the heart rate
 /// recorder used by this step view controller.
-open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfiguration, RSDNavigationSkipRule {
+open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfiguration {
     private enum CodingKeys : String, CodingKey {
         case cameraSettings, isResting, shouldDeletePrevious
     }
@@ -103,15 +103,5 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
     /// This step has multiple results so use a collection result to store them.
     override open func instantiateStepResult() -> RSDResult {
         return RSDCollectionResultObject(identifier: self.identifier)
-    }
-    
-    /// This step should be skipped if this is a "resting morning" task and the identifier is "heartRate1"
-    public func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
-        guard let taskIdentifier = result?.identifier,
-            let crfIdentifier = CRFTaskIdentifier(rawValue: taskIdentifier)
-            else {
-                return false
-        }
-        return (crfIdentifier == .restingMorning) && (self.identifier == "heartRate1")
     }
 }

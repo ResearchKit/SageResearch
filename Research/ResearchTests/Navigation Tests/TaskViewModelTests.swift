@@ -169,6 +169,17 @@ class TestTaskViewModel : RSDTaskViewModel {
     
     var completion_handleTaskLoaded: (() -> Void)?
     var completion_handleTaskFailure: ((Error) -> Void)?
+    var stepToSkip: String?
+    
+    override func pathComponent(for step: RSDStep) -> (node: RSDNodePathComponent, stepController: RSDStepController?)? {
+        if step.identifier == stepToSkip {
+            taskResult.appendAsyncResult(with: RSDAnswerResultObject(identifier: stepToSkip!, answerType: .string, value: "foo"))
+            return nil
+        }
+        else {
+            return super.pathComponent(for: step)
+        }
+    }
     
     override func handleTaskLoaded() {
         completion_handleTaskLoaded?()

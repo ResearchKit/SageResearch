@@ -11,152 +11,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Run Distance Step View Controller-->
-        <scene sceneID="4iU-6i-pqf">
-            <objects>
-                <viewController storyboardIdentifier="RunDistance" id="9tn-dn-sHC" customClass="CRFRunDistanceStepViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="7PO-3V-yb7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="12MinFullScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Jg6-vr-R4W">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" name="sky"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jIG-wX-Fhe" userLabel="Header" customClass="RSDStepHeaderView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="32" width="375" height="45"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HcO-5n-h5l" userLabel="Navigation Header">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87i-Vf-OpR">
-                                                <rect key="frame" x="16" y="0.0" width="32" height="32"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="87i-Vf-OpR" secondAttribute="height" multiplier="1:1" id="Cs1-Qh-Fei"/>
-                                                    <constraint firstAttribute="width" constant="32" id="keB-Ai-p0g"/>
-                                                </constraints>
-                                                <color key="tintColor" name="white"/>
-                                                <state key="normal" image="closeActivity"/>
-                                            </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h4y-3I-qwe" customClass="RSDStepProgressView" customModule="ResearchUI">
-                                                <rect key="frame" x="64" y="11" width="295" height="10"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <outlet property="stepCountLabel" destination="cCV-62-L3J" id="doj-gx-Cmb"/>
-                                                </connections>
-                                            </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1 of 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCV-62-L3J">
-                                                <rect key="frame" x="149.5" y="28" width="76" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" name="white"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="tintColor" name="buttonTintBlue"/>
-                                        <constraints>
-                                            <constraint firstItem="h4y-3I-qwe" firstAttribute="leading" secondItem="87i-Vf-OpR" secondAttribute="trailing" constant="16" id="5EI-Ui-jJv"/>
-                                            <constraint firstItem="cCV-62-L3J" firstAttribute="centerX" secondItem="HcO-5n-h5l" secondAttribute="centerX" id="5LV-Im-8f4"/>
-                                            <constraint firstItem="h4y-3I-qwe" firstAttribute="centerY" secondItem="87i-Vf-OpR" secondAttribute="centerY" id="Olh-Wz-a1W"/>
-                                            <constraint firstItem="87i-Vf-OpR" firstAttribute="top" secondItem="HcO-5n-h5l" secondAttribute="top" id="V4A-EA-FGR"/>
-                                            <constraint firstItem="cCV-62-L3J" firstAttribute="top" secondItem="87i-Vf-OpR" secondAttribute="bottom" constant="-4" id="a40-i2-tz7"/>
-                                            <constraint firstAttribute="trailing" secondItem="h4y-3I-qwe" secondAttribute="trailing" constant="16" id="ez9-7A-m71"/>
-                                            <constraint firstItem="87i-Vf-OpR" firstAttribute="leading" secondItem="HcO-5n-h5l" secondAttribute="leading" constant="16" id="viE-hD-gSq"/>
-                                            <constraint firstAttribute="bottom" secondItem="cCV-62-L3J" secondAttribute="bottom" id="wfA-w1-ARf"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="HcO-5n-h5l" secondAttribute="bottom" id="FI7-Ox-REr"/>
-                                    <constraint firstAttribute="trailing" secondItem="HcO-5n-h5l" secondAttribute="trailing" id="Nqo-b2-fjA"/>
-                                    <constraint firstItem="HcO-5n-h5l" firstAttribute="leading" secondItem="jIG-wX-Fhe" secondAttribute="leading" id="dhD-Ah-ZNv"/>
-                                    <constraint firstItem="HcO-5n-h5l" firstAttribute="top" secondItem="jIG-wX-Fhe" secondAttribute="top" id="pV6-Kw-9Ez"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isStepLabelHidden" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="cancelButton" destination="87i-Vf-OpR" id="mOE-ix-XUR"/>
-                                    <outlet property="progressView" destination="h4y-3I-qwe" id="rKR-VV-kVP"/>
-                                    <outlet property="stepCountLabel" destination="cCV-62-L3J" id="1yQ-Vb-sr2"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CKo-16-3h2">
-                                <rect key="frame" x="0.0" y="77" width="375" height="160"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nll-PU-zj7">
-                                        <rect key="frame" x="163" y="66.5" width="49" height="27"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                                        <color key="textColor" name="white"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="nll-PU-zj7" firstAttribute="centerX" secondItem="CKo-16-3h2" secondAttribute="centerX" id="9al-39-Wl8"/>
-                                    <constraint firstItem="nll-PU-zj7" firstAttribute="centerY" secondItem="CKo-16-3h2" secondAttribute="centerY" id="EsD-n6-sJQ"/>
-                                    <constraint firstAttribute="height" constant="160" id="Gwx-cR-8fM"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0u3-YZ-zDA" customClass="RSDCountdownDial" customModule="ResearchUI">
-                                <rect key="frame" x="48" y="237" width="279" height="279"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1,730" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HYL-va-8cc">
-                                        <rect key="frame" x="41.5" y="70.5" width="196" height="98"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="82"/>
-                                        <color key="textColor" name="white"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FEET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfB-yZ-HV9">
-                                        <rect key="frame" x="112" y="168" width="55" height="29"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                        <color key="textColor" name="white"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" name="tealGreen"/>
-                                <constraints>
-                                    <constraint firstItem="HYL-va-8cc" firstAttribute="centerY" secondItem="0u3-YZ-zDA" secondAttribute="centerY" constant="-20" id="AM0-uF-hBq"/>
-                                    <constraint firstAttribute="width" secondItem="0u3-YZ-zDA" secondAttribute="height" multiplier="1:1" placeholder="YES" id="B2Y-0M-C3c"/>
-                                    <constraint firstItem="ZfB-yZ-HV9" firstAttribute="top" secondItem="HYL-va-8cc" secondAttribute="bottom" constant="-0.5" id="NdZ-4m-ZOp"/>
-                                    <constraint firstAttribute="width" constant="279" id="Sl2-Jt-fib"/>
-                                    <constraint firstItem="ZfB-yZ-HV9" firstAttribute="centerX" secondItem="0u3-YZ-zDA" secondAttribute="centerX" id="euP-zH-HFd"/>
-                                    <constraint firstItem="HYL-va-8cc" firstAttribute="centerX" secondItem="0u3-YZ-zDA" secondAttribute="centerX" id="g2w-c3-hXT"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="0u3-YZ-zDA" firstAttribute="centerX" secondItem="7PO-3V-yb7" secondAttribute="centerX" id="1hj-X5-GTu"/>
-                            <constraint firstItem="Jg6-vr-R4W" firstAttribute="bottom" secondItem="lJ5-0D-35s" secondAttribute="bottom" id="2tR-A8-1yN"/>
-                            <constraint firstItem="Jg6-vr-R4W" firstAttribute="top" secondItem="7PO-3V-yb7" secondAttribute="top" id="Ahh-n5-doo"/>
-                            <constraint firstItem="lJ5-0D-35s" firstAttribute="trailing" secondItem="CKo-16-3h2" secondAttribute="trailing" id="Odc-8W-MVQ"/>
-                            <constraint firstItem="jIG-wX-Fhe" firstAttribute="top" secondItem="7PO-3V-yb7" secondAttribute="topMargin" constant="12" id="Tn9-Fo-BJg"/>
-                            <constraint firstItem="jIG-wX-Fhe" firstAttribute="leading" secondItem="lJ5-0D-35s" secondAttribute="leading" id="XQL-QX-CZd"/>
-                            <constraint firstAttribute="trailing" secondItem="jIG-wX-Fhe" secondAttribute="trailing" id="cIU-I2-vpx"/>
-                            <constraint firstItem="CKo-16-3h2" firstAttribute="top" secondItem="jIG-wX-Fhe" secondAttribute="bottom" id="dWG-tr-APy"/>
-                            <constraint firstItem="Jg6-vr-R4W" firstAttribute="leading" secondItem="lJ5-0D-35s" secondAttribute="leading" id="gML-Lb-FpB"/>
-                            <constraint firstItem="0u3-YZ-zDA" firstAttribute="top" secondItem="CKo-16-3h2" secondAttribute="bottom" id="kBW-90-o3E"/>
-                            <constraint firstItem="Jg6-vr-R4W" firstAttribute="trailing" secondItem="lJ5-0D-35s" secondAttribute="trailing" id="lt3-OU-0xP"/>
-                            <constraint firstItem="CKo-16-3h2" firstAttribute="leading" secondItem="lJ5-0D-35s" secondAttribute="leading" id="ulr-L2-ete"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="lJ5-0D-35s"/>
-                    </view>
-                    <connections>
-                        <outlet property="countdownDial" destination="0u3-YZ-zDA" id="5SZ-6S-GzM"/>
-                        <outlet property="countdownLabel" destination="nll-PU-zj7" id="wZJ-M2-Ecf"/>
-                        <outlet property="navigationHeader" destination="jIG-wX-Fhe" id="xFp-zN-TS3"/>
-                        <outlet property="progressLabel" destination="HYL-va-8cc" id="QEj-Eh-Oym"/>
-                        <outlet property="unitLabel" destination="ZfB-yZ-HV9" id="kDp-xo-bWS"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jnq-UX-9KG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1802" y="922"/>
-        </scene>
         <!--Stair Step View Controller-->
         <scene sceneID="rb0-U5-PVx">
             <objects>
@@ -381,7 +235,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heartRateIconCapturing" translatesAutoresizingMaskIntoConstraints="NO" id="JGX-wx-uQP">
-                                <rect key="frame" x="155.5" y="333" width="64" height="58"/>
+                                <rect key="frame" x="129.5" y="307" width="116" height="110"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I3P-qJ-Ohd">
@@ -460,7 +314,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="567"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2S2-eZ-Hfp" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="486.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="483"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qYM-lS-3cz" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="295.5"/>
@@ -501,14 +355,14 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j4d-g1-HXu" userLabel="Measurement View">
-                                                <rect key="frame" x="374" y="295.5" width="1" height="191"/>
+                                                <rect key="frame" x="374" y="295.5" width="1" height="187.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="1" id="LMa-4j-leM"/>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A0e-Oe-lRJ" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                                                <rect key="frame" x="65.5" y="441" width="244" height="33.5"/>
+                                                <rect key="frame" x="84" y="441" width="207" height="30"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <state key="normal" title="What is a Recovery HR Score?"/>
                                             </button>
@@ -586,9 +440,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="12MinFullScreen" width="375" height="667"/>
         <image name="closeActivity" width="32" height="32"/>
-        <image name="heartRateIconCapturing" width="64" height="58"/>
+        <image name="heartRateIconCapturing" width="116" height="110"/>
         <image name="stairStepLarge1" width="375" height="501"/>
         <namedColor name="buttonTintBlue">
             <color red="0.12941176470588237" green="0.58823529411764708" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -598,9 +451,6 @@
         </namedColor>
         <namedColor name="perrywinkleTwo">
             <color red="0.61960784313725492" green="0.72941176470588232" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="sky">
-            <color red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tealGreen">
             <color red="0.23921568627450981" green="0.74901960784313726" blue="0.63921568627450975" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

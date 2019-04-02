@@ -36,7 +36,7 @@ import Foundation
 /// `RSDTaskObject` is the interface for running a task. It includes information about how to calculate progress,
 /// validation, and the order of display for the steps.
 open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
-    
+
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, copyright, schemaInfo, asyncActions, usesTrackedData
     }
@@ -213,6 +213,17 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     open func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
         if let tracker = self.stepNavigator as? RSDTrackingTask {
             tracker.setupTask(with: data, for: path)
+        }
+    }
+    
+    /// Should this step use a result from a previous run? In the default implementation, the task object
+    /// acts only as a pass-through for the step navigator if that object implements the protocol.
+    open func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
+        if let tracker = self.stepNavigator as? RSDTrackingTask {
+            return tracker.shouldSkipStep(step)
+        }
+        else {
+            return (false, nil)
         }
     }
     

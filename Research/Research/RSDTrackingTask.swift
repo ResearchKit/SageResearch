@@ -50,8 +50,20 @@ public protocol RSDTrackingTask {
     
     /// Called following initialization and before presentation of the task to allow setting up a task
     /// for custom navigation based on the previous stored data.
-    /// - data: The stored task data.
-    /// - path: The task path component that is calling this method. If a pointer is kept, should use a weak reference.
+    /// - parameters:
+    ///     - data: The stored task data.
+    ///     - path: The task path component that is calling this method. If a pointer is kept, should use a weak reference.
     func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent)
+    
+    /// Called before showing a step to conditionally skip the step in favor of instead adding the returned
+    /// result to the step history. This can be used by tracking tasks to check a step for a previous result
+    /// that is not expected to change across different runs, such as demographics data. Then if the app had
+    /// a mechanism for storing the results of a previous run, it can skip this step on subsequent runs.
+    ///
+    /// - parameter step: The step to check for previous run data.
+    /// - returns:
+    ///     - shouldSkip: Whether or not the step should be skipped.
+    ///     - stepResult: The step to add to the task result for this step in lieue of showing it.
+    func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?)
 }
 
