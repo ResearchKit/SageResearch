@@ -83,18 +83,15 @@ const long CRFRedStdDevThreshold = 15.0;
     dispatch_async(_processingQueue, ^{
         @autoreleasepool {
             
-            // TODO: syoung 01/08/2019 Check that the lens is covered and do not record video.
-            
             // Process the sample
-            //BOOL isLensCovered =
-            [self processSampleBuffer:sampleBuffer];
+            BOOL isLensCovered = [self processSampleBuffer:sampleBuffer];
             
             // Now, look to see if this sample should be saved to video
             @synchronized(self) {
                 // From the client's perspective the movie recorder can asynchronously transition to an error state as
                 // the result of an append. Because of this we are lenient when samples are appended and we are no longer recording.
                 // Instead of throwing an exception we just release the sample buffers and return.
-                if (self->_status != MovieRecorderStatusRecording) {
+                if (!isLensCovered || (self->_status != MovieRecorderStatusRecording)) {
                     CFRelease(sampleBuffer);
                     return;
                 }
