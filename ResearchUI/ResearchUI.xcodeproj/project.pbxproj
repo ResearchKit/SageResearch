@@ -279,8 +279,8 @@
 			children = (
 				F8A334B82242F80500390601 /* Table Cells */,
 				F855A13F20A2503700C762C7 /* RSDBorderedTextView_deprecated.swift */,
-				F82F819A206B49D800F71AA8 /* RSDCheckmarkView.swift */,
 				F8A334C12243582A00390601 /* RSDBackgroundGradient.swift */,
+				F82F819A206B49D800F71AA8 /* RSDCheckmarkView.swift */,
 				FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */,
 				FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView_deprecated.swift */,
 				F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */,

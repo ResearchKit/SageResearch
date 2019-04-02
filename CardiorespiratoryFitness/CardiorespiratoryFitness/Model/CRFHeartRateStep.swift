@@ -94,7 +94,7 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
                 self.duration = 20  // default is 20 seconds
             }
             if self.commands.rawValue == 0 {
-                self.commands = [.vibrate, .continueOnFinish, .shouldDisableIdleTimer]
+                self.commands =  [.vibrate, .shouldDisableIdleTimer]
             }
             self.requiresBackgroundAudio = true
         }

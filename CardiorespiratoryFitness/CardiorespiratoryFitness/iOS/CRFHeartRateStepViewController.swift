@@ -2,7 +2,7 @@
 //  CRFHeartRateStepViewController.swift
 //  CardiorespiratoryFitness
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -46,19 +46,30 @@ extension CRFHeartRateStep : RSDStepViewControllerVendor {
 }
 
 /// The view controller to use to record the participant's heart rate.
-public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHeartRateRecorderDelegate {
+public final class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHeartRateRecorderDelegate {
 
     /// The image view for showing the heart image.
-    @IBOutlet public var heartImageView: UIImageView!
+    @IBOutlet public var imageView: UIImageView!
     
     /// The loading indicator to show while starting the camera.
     @IBOutlet public var loadingIndicator: UIActivityIndicatorView!
     
-    /// Button to skip the heart rate measurement if not registering as lens covered.
-    @IBOutlet public var skipButton: UIButton!
-    
     /// The video preview window.
     @IBOutlet public var previewView: UIView!
+    
+    /// The label for displaying the hr once the footer with the next button is displayed.
+    @IBOutlet var hrResultLabel: UILabel!
+    
+    /// The label for the bpm unit to display once the next buttonn is displayed.
+    @IBOutlet var bpmLabel: UILabel!
+    
+    /// A label with a title for the instruction.
+    @IBOutlet var instructionTitleLabel: UILabel!
+    
+    /// A button for handling what to do once heart rate is captured.
+    var continueButton: UIButton! {
+        return self.nextButton
+    }
     
     /// The heart rate recorder.
     public private(set) var bpmRecorder: CRFHeartRateRecorder?
@@ -82,10 +93,7 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         super.viewDidLoad()
         
         self.previewView.layer.masksToBounds = true
-        self.skipButton?.isHidden = true
-        self.heartImageView?.isHidden = true
-        
-        self.instructionLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_START_TEXT")
+        _setupStartUI()
     }
     
     public override func viewDidLayoutSubviews() {
@@ -93,6 +101,22 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         
         // Set the corner radius for the preview window.
         self.previewView.layer.cornerRadius = self.previewView.bounds.width / 2.0
+    }
+    
+    public override func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
+        
+        if placement == .body {
+            self.instructionTitleLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .heading4)
+            self.instructionLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .heading4)
+            self.progressLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .heading2)
+        }
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        (self.countdownDial as! RSDCountdownDial).innerColor = UIColor.clear
     }
     
     public override func viewDidAppear(_ animated: Bool) {
@@ -103,6 +127,9 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
             self?._startCamera()
         }
+        
+        let instruction = Localization.localizedString("HEARTRATE_CAPTURE_CONTINUE_TEXT")
+        self.setInstruction(instruction)
     }
     
     private func _startCamera() {
@@ -142,23 +169,30 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
             self.loadingIndicator?.isHidden = true
         }
     }
-
-    override public func stop() {
-
+    
+    func invalidateObservers() {
+        
         _bpmObserver?.invalidate()
         _bpmObserver = nil
         
         _isCoveredObserver?.invalidate()
         _isCoveredObserver = nil
+    }
+    
+    func compileResults() -> CRFHeartRateBPMSample? {
+        
+        var resultSample: CRFHeartRateBPMSample?
         
         // Record the average or initial heart rate depending upon whether or not the participant is at rest.
         if let recorder = bpmRecorder, recorder.bpmSamples.count >= 2 {
-
+            
             // Get the "most appropriate" heart rate.
+            
             let isResting = (self.step as? CRFHeartRateStep)?.isResting ?? true
             if isResting {
                 if let bpm = recorder.restingHeartRate() {
                     addSample(bpm, "resting")
+                    resultSample = bpm
                 }
             }
             else {
@@ -167,16 +201,23 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
                 }
                 if let vo2 = recorder.vo2MaxHeartRate() {
                     addSample(vo2.start, "start")
-                    addSample(vo2.start, "end")
+                    addSample(vo2.end, "end")
+                    resultSample = vo2.end
                 }
             }
-                        
+            
             // Add all the samples.
             let sectionIdentifier = self.stepViewModel.sectionIdentifier()
             let samplesResult = CRFHeartRateSamplesResult(identifier: "\(sectionIdentifier)samples", samples: recorder.bpmSamples)
             addResult(samplesResult)
         }
         
+        return resultSample
+    }
+
+    override public func stop() {
+        invalidateObservers()
+        _stopAnimatingHeart()
         super.stop()
     }
     
@@ -195,8 +236,66 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         taskController.handleTaskFailure(with: error)
     }
     
+    override public func timerFired() {
+        super.timerFired()
+        if countdown <= 0 {
+            _handleTimerFinished()
+        }
+    }
+    
     private var _bpmObserver: NSKeyValueObservation?
     private var _isCoveredObserver: NSKeyValueObservation?
+    private var _isFinished: Bool = false
+    
+    private func _handleTimerFinished() {
+        self.stop()
+        if let recorder = self.bpmRecorder {
+            // stop the recorder
+            self.taskController?.stopAsyncActions(for: [recorder], showLoading: false) {
+            }
+        }
+        
+        if let sample = self.compileResults(),
+            let bpmString = numberFormatter.string(from: NSNumber(value: sample.bpm)) {
+
+            _isFinished = true
+            self.hrResultLabel.text = bpmString
+            self.hrResultLabel.isHidden = false
+            self.bpmLabel.isHidden = false
+            self.imageView.isHidden = true
+            self.progressLabel?.isHidden = true
+            self.instructionTitleLabel?.isHidden = false
+            self.instructionTitleLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_DONE_TITLE")
+            self.instructionLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_DONE_TEXT")
+            self.continueButton?.setTitle(Localization.buttonNext(), for: .normal)
+            self.continueButton?.isHidden = false
+        }
+        else {
+            
+            self.reset()
+            self.imageView.isHidden = false
+            self.imageView.image = UIImage(named: "AlertIcon",
+                                           in: Bundle(for: CRFHeartRateStepViewController.self),
+                                           compatibleWith: self.traitCollection)
+            self.progressLabel?.isHidden = true
+            self.instructionTitleLabel?.isHidden = false
+            self.instructionTitleLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_REDO_TITLE")
+            self.instructionLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_REDO_TEXT")
+            self.continueButton?.setTitle(Localization.localizedString("HEARTRATE_CAPTURE_REDO_BUTTON"), for: .normal)
+            self.continueButton?.isHidden = false
+        }
+    }
+    
+    // Override the default for go forward to restart if not finished.
+    override public func goForward() {
+        if _isFinished {
+            super.goForward()
+        }
+        else {
+            _setupStartUI()
+            _startCamera()
+        }
+    }
     
     private func _startCountdownIfNeeded() {
         if _markTime == nil {
@@ -208,31 +307,75 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
     }
     
     private func _startAnimatingHeart() {
-        self.heartImageView.alpha = 0.0
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.autoreverse, .repeat],
-                       animations: { self.heartImageView.alpha = 1.0 },
-                       completion: nil)
+        self.imageView.isHidden = false
+        self.imageView.layer.removeAllAnimations()
+        
+        let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+        fadeAnimation.fromValue = 1.0
+        fadeAnimation.toValue = 0.0
+        fadeAnimation.duration = 0.5
+        fadeAnimation.autoreverses = true
+        fadeAnimation.repeatCount = Float.greatestFiniteMagnitude
+        
+        self.imageView.layer.add(fadeAnimation, forKey: "beatingHeart")
+    }
+    
+    private func _stopAnimatingHeart() {
+        print("stopping heart animation.")
+        self.imageView.layer.removeAllAnimations()
+        self.imageView.layer.opacity = 1.0
+    }
+    
+    private let blankText = "---"
+    private func _setupStartUI() {
+        
+        self.progressLabel?.isHidden = false
+        self.hrResultLabel?.isHidden = true
+        self.bpmLabel?.isHidden = true
+        self.instructionTitleLabel?.isHidden = true
+        self.continueButton?.isHidden = true
+        self.imageView?.isHidden = false
+        self.imageView?.image = UIImage(named: "heartRateIconCapturing",
+                                        in: Bundle(for: CRFHeartRateStepViewController.self),
+                                        compatibleWith: self.traitCollection)
+        self.loadingIndicator.isHidden = false
+        self.loadingIndicator.startAnimating()
+        
+        self.progressLabel?.text = self.blankText
+        self.bpmLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_BPM")
+        self.instructionLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_START_TEXT")
     }
     
     private func _handleLensCoveredOnMainQueue(_ isCoveringLens: Bool) {
         DispatchQueue.main.async {
-            self.heartImageView.isHidden = !isCoveringLens
+            self.imageView.isHidden = !isCoveringLens
             self.loadingIndicator?.stopAnimating()
             self.loadingIndicator?.isHidden = true
             if isCoveringLens {
                 self._startCountdownIfNeeded()
+                if self.progressLabel?.text == self.blankText {
+                    self.progressLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_CAPTURING")
+                }
+                self.instructionTitleLabel?.isHidden = true
                 let instruction = Localization.localizedString("HEARTRATE_CAPTURE_CONTINUE_TEXT")
                 self.setInstruction(instruction)
             } else {
                 // zero out the BPM to indicate to the user that they need to cover the flash
                 // and show the initial instruction.
-                self.progressLabel?.text = "--"
+                self.progressLabel?.text = self.blankText
                 self._markTime = nil
                 self.vibrateDevice()
+                self.instructionTitleLabel?.isHidden = false
+                self.instructionTitleLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_ERROR_TITLE")
                 let instruction = Localization.localizedString("HEARTRATE_CAPTURE_ERROR_TEXT")
                 self.setInstruction(instruction)
             }
         }
+    }
+    
+    public override func reset() {
+        super.reset()
+        _markTime = nil
     }
     
     private var _currentLabel: String?
@@ -256,33 +399,19 @@ public class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHea
         return numberFormatter
     }()
     
-    private var _encouragementGiven: Bool = false
     private var _markTime: TimeInterval?
     
     private func updateBPMLabel(_ bpm: Int, _ confidence: Double) {
-        guard confidence >= CRFMinConfidence else {
-            alertUserLowConfidence()
-            return
+        guard confidence >= CRFMinConfidence,
+            let bpmString = numberFormatter.string(from: NSNumber(value: bpm))
+            else {
+                alertUserLowConfidence()
+                return
         }
-        
-        if self.collectionResult?.inputResults.count ?? 0 == 0 {
-            // Add the starting heart rate
-            var bpmResult = RSDAnswerResultObject(identifier: "\(self.step.identifier)_start", answerType: RSDAnswerResultType(baseType: .decimal))
-            bpmResult.value = bpmRecorder?.bpm
-            addResult(bpmResult)
-        }
-        // TODO: syoung 09/28/2018 Save for now in case UX changes again to include spoken "encouragement" text.
-        //    else if !_encouragementGiven, let markTime = _markTime, (ProcessInfo.processInfo.systemUptime - markTime) > 40,
-        //        let continueText = self.uiStep?.detail {
-        //        _encouragementGiven = true
-        //        self.speakInstruction(continueText, at: 40, completion: nil)
-        //    }
-        if let bpmString = numberFormatter.string(from: NSNumber(value: bpm)) {
-            self.progressLabel?.text = Localization.localizedStringWithFormatKey("HEARTRATE_CAPTURE_%@_BPM", bpmString)
-        }
+        self.progressLabel?.text = Localization.localizedStringWithFormatKey("HEARTRATE_CAPTURE_%@_BPM", bpmString)
     }
     
     private func alertUserLowConfidence() {
-        self.progressLabel?.text = "--"
+        self.progressLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_CAPTURING")
     }
 }

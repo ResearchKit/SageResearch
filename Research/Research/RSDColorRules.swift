@@ -187,10 +187,7 @@ open class RSDColorRules  {
     ///     - textType: The type size of the UI element.
     /// - returns: The text color to use.
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
-        if textType == .counter, background == self.palette.grayScale.white {
-            return self.palette.accent.normal.color
-        }
-        else if background.usesLightStyle {
+        if background.usesLightStyle {
             return self.palette.grayScale.white.color
         }
         else {

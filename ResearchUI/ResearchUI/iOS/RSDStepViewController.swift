@@ -1011,6 +1011,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         timer = nil
     }
     
+    // Reset the countdown clock.
+    open func reset() {
+        clock = nil
+        countdown = 0
+    }
+    
     /// Pause the timer.
     open func pause() {
         clock?.pause()

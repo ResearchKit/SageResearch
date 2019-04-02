@@ -101,7 +101,7 @@
             },
             "skip": {
                 "type": "navigation",
-                "skipToIdentifier": "heartRate",
+                "skipToIdentifier": "hr",
                 "buttonTitle": "Redo"
             }
         }

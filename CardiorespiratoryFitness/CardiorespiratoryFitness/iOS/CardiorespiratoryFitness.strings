@@ -33,9 +33,18 @@
 */
 
 "HEARTRATE_CAPTURE_START_TEXT"    = "Gently cover both the camera and flash with your finger";
-"HEARTRATE_CAPTURE_CONTINUE_TEXT" = "Please keep your hands and body still";
-"HEARTRATE_CAPTURE_ERROR_TEXT"    = "Please place finger back on the camera and flash";
-"HEARTRATE_CAPTURE_%@_BPM"        = "%@ BPM";
+"HEARTRATE_CAPTURE_CONTINUE_TEXT" = "Gently cover both the camera and flash with your finger";
+"HEARTRATE_CAPTURE_ERROR_TEXT"    = "Please move your finger back over the flash and camera";
+"HEARTRATE_CAPTURE_DONE_TITLE"    = "Nicely done!";
+"HEARTRATE_CAPTURE_DONE_TEXT"     = "Your heart rate has been calculated.";
+"HEARTRATE_CAPTURE_ERROR_TITLE"   = "Oops!";
+"HEARTRATE_CAPTURE_REDO_TITLE"    = "Sorry!";
+"HEARTRATE_CAPTURE_REDO_TEXT"     = "We’re having trouble seeing your heart rate.";
+"HEARTRATE_CAPTURE_REDO_TIPS"     = "Tips for measuring";
+"HEARTRATE_CAPTURE_REDO_BUTTON"   = "Redo";
+"HEARTRATE_CAPTURE_BPM"           = "bpm";
+"HEARTRATE_CAPTURE_%@_BPM"        = "%@ bpm";
+"HEARTRATE_CAPTURE_CAPTURING"     = "Capturing...";
 "HEARTRATE_LEARN_NORMAL_BUTTON"   = "What is a ‘normal’ resting HR?";
 "HEARTRATE_LEARN_TIPS_BUTTON"     = "Tips for measuring";
 "HEARTRATE_MORNING_TITLE"         = "Morning resting heart rate";

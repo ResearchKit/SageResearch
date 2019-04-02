@@ -76,15 +76,13 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     }
     
     public func restingHeartRate() -> CRFHeartRateBPMSample? {
-        guard self.bpmSamples.count > 0 else { return nil }
-        
-        let highConfidenceSamples = self.bpmSamples.filter { $0.confidence >= CRFMinConfidence }
-        let samples = highConfidenceSamples.count > 0 ? highConfidenceSamples : self.bpmSamples
-        
-        // Just average all and return both average confidence and average bpm
-        let meanBPM = samples.map({ $0.bpm }).mean()
-        let confidence = samples.map({ $0.confidence }).mean()
-        return CRFHeartRateBPMSample(timestamp: self.clock.startSystemUptime, bpm: meanBPM, confidence: confidence)
+        guard self.bpmSamples.count > 0,
+            let sample = self.bpmSamples.sorted(by: { $0.confidence > $1.confidence }).first,
+            sample.confidence >= CRFMinConfidence
+            else {
+                return nil
+        }
+        return sample
     }
     
     public func peakHeartRate() -> CRFHeartRateBPMSample? {
