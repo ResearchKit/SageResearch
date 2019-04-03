@@ -52,7 +52,7 @@ public protocol RSDTrackingTask {
     /// for custom navigation based on the previous stored data.
     /// - parameters:
     ///     - data: The stored task data.
-    ///     - path: The task path component that is calling this method. If a pointer is kept, should use a weak reference.
+    ///     - path: The task path component that is calling this method. If a pointer is kept, it should use a weak reference.
     func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent)
     
     /// Called before showing a step to conditionally skip the step in favor of instead adding the returned
