@@ -35,7 +35,6 @@ import Foundation
 
 /// `RSDConditionalStepNavigatorObject` is a concrete implementation of the `RSDConditionalStepNavigator` protocol.
 public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, RSDCopyStepNavigator, Decodable {
-    
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case steps, conditionalRule, progressMarkers, insertAfterIdentifier
     }
@@ -93,6 +92,14 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
             navigator.progressMarkers = progressMarkers
         }
         
+        return navigator
+    }
+    
+    public func copyAndRemove(_ stepIdentifiers: [String]) -> RSDConditionalStepNavigatorObject {
+        let steps = self.steps.filter { !stepIdentifiers.contains($0.identifier) }
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.progressMarkers = self.progressMarkers?.filter { !stepIdentifiers.contains($0) }
+        navigator.insertAfterIdentifier = self.insertAfterIdentifier
         return navigator
     }
     

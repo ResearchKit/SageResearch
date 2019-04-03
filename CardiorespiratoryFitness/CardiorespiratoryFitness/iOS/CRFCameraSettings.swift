@@ -35,7 +35,7 @@ import Foundation
 import AVFoundation
 
 /// The camera settings to use for the heart rate recorder.
-public struct CRFCameraSettings : Codable, RSDResult, RSDArchivable {
+public struct CRFCameraSettings : Codable, RSDResult, RSDArchivable, Equatable {
     
     /// The identifier associated with these Camera settings.
     public var identifier: String = "cameraSettings"
@@ -78,7 +78,7 @@ public struct CRFCameraSettings : Codable, RSDResult, RSDArchivable {
     public var whiteBalance : WhiteBalance = WhiteBalance()
     
     /// Codable struct that can be converted to `AVCaptureDevice.WhiteBalanceTemperatureAndTintValues`.
-    public struct WhiteBalance : Codable {
+    public struct WhiteBalance : Codable, Equatable {
         
         /// The temperature setting.
         public var temperature: Float = 5200

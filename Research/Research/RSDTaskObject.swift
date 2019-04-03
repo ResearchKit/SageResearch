@@ -36,7 +36,7 @@ import Foundation
 /// `RSDTaskObject` is the interface for running a task. It includes information about how to calculate progress,
 /// validation, and the order of display for the steps.
 open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTask, Decodable {
-    
+
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, copyright, schemaInfo, asyncActions, usesTrackedData
     }
@@ -216,6 +216,17 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
         }
     }
     
+    /// Should this step use a result from a previous run? In the default implementation, the task object
+    /// acts only as a pass-through for the step navigator if that object implements the protocol.
+    open func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
+        if let tracker = self.stepNavigator as? RSDTrackingTask {
+            return tracker.shouldSkipStep(step)
+        }
+        else {
+            return (false, nil)
+        }
+    }
+    
     /// Instantiate the score builder to use to build the task data for this task result.
     ///
     /// The default behavior is to use a simple recursive builder that will look for results that implement
@@ -244,15 +255,7 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
         copyInto(copy as RSDTaskObject)
         return copy
     }
-    
-    public func copyAndInsert(_ asyncAction: RSDAsyncActionConfiguration) -> Self {
-        var asyncActions = self.asyncActions ?? []
-        asyncActions.append(asyncAction)
-        let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
-        copyInto(copy as RSDTaskObject)
-        return copy
-    }
-    
+
     public func copy(with identifier: String) -> Self {
         let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
         copyInto(copy as RSDTaskObject)

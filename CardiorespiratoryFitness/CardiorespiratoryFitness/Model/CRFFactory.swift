@@ -63,4 +63,21 @@ open class CRFFactory: RSDFactory {
             return try super.decodeStep(from: decoder, with: type)
         }
     }
+    
+    /// Override the task decoder to vend a `CRFTaskObject`.
+    override open func decodeTask(with data: Data, from decoder: RSDFactoryDecoder) throws -> RSDTask {
+        let task = try decoder.decode(CRFTaskObject.self, from: data)
+        try task.validate()
+        return task
+    }
+    
+    /// The default color palette for this module is version 0 with rose600, slate600, and apricot400.
+    /// The design system is set as version 1.
+    public static let designSystem: RSDDesignSystem = {
+        let palette = RSDColorPalette(version: 1,
+                                      primary: RSDColorMatrix.shared.colorKey(for: .palette(.rose), version: 0, index: 4),
+                                      secondary: RSDColorMatrix.shared.colorKey(for: .palette(.slate), version: 0, index: 4),
+                                      accent: RSDColorMatrix.shared.colorKey(for: .palette(.apricot), version: 0, index: 2))
+        return RSDDesignSystem(palette: palette)
+    }()
 }

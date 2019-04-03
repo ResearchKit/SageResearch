@@ -96,11 +96,17 @@ open class RSDCountdownStepViewController: RSDFullscreenImageStepViewController 
         }
     }
     
+    /// Override setting the color style to set the color of the label.
     open override func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
         super.setColorStyle(for: placement, background: background)
         if placement == .body {
-            countdownLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .counter)
+            countdownLabel?.textColor = countdownLabelColor(on: background)
         }
+    }
+    
+    /// Returns the color to use for the countdown label
+    open func countdownLabelColor(on background: RSDColorTile) -> UIColor {
+        return self.designSystem.colorRules.textColor(on: background, for: .counter)
     }
     
     // MARK: Initialization

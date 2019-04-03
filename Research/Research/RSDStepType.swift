@@ -48,6 +48,8 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
         case active
         case completion
         case countdown
+        case demographics
+        case feedback
         case form
         case instruction
         case imagePicker
@@ -65,11 +67,17 @@ public struct RSDStepType : RSDFactoryTypeRepresentable, Codable, Hashable {
     /// Defaults to creating a `RSDActiveUIStepObject`.
     public static let active = StandardType.active.type
     
-    /// Defaults to creating a `RSDActiveUIStepObject` used to mark task completion.
+    /// Defaults to creating a `RSDResultSummaryStepObject` used to mark task completion.
     public static let completion = StandardType.completion.type
     
     /// Defaults to creating a `RSDActiveUIStepObject` used as a countdown to an active step.
     public static let countdown = StandardType.countdown.type
+    
+    /// Defaults to creating a `RSDFormUIStep` used to show demographics info if not already included.
+    public static let demographics = StandardType.demographics.type
+    
+    /// Defaults to creating a `RSDResultSummaryStepObject` used show the user results.
+    public static let feedback = StandardType.feedback.type
     
     /// Defaults to creating a `RSDFormUIStep`.
     public static let form = StandardType.form.type

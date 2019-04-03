@@ -508,6 +508,22 @@ class CopyStepTests: XCTestCase {
         }
     }
     
+    func testCopy_ConditionalStepNavigator_RemoveSteps() {
+        let steps = TestStep.steps(from: [1, 2, 3, 4, 5, 6, 7])
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.progressMarkers = steps.map { $0.identifier }
+        
+        let copy = navigator.copyAndRemove(["step2", "step4"])
+        
+        let order = copy.steps.map { $0.identifier }
+        XCTAssertEqual(order, ["step1", "step3", "step5", "step6", "step7"])
+        if let markers = copy.progressMarkers {
+            XCTAssertEqual(markers, ["step1", "step3", "step5", "step6", "step7"])
+        } else {
+            XCTFail("Failed to copy the progress markers")
+        }
+    }
+    
     // MARK: Test decodable copy.
 
     func copy(step: RSDCopyStep, with json: Data) -> RSDCopyStep? {

@@ -36,7 +36,6 @@ import UIKit
 /// Custom subclass of the active step that can decode configuration details specific to the heart rate
 /// recorder used by this step view controller.
 open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfiguration {
-
     private enum CodingKeys : String, CodingKey {
         case cameraSettings, isResting, shouldDeletePrevious
     }

@@ -75,7 +75,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         return self.configuration as? CRFHeartRateStep
     }
     
-    public func meanHeartRate() -> CRFHeartRateBPMSample? {
+    public func restingHeartRate() -> CRFHeartRateBPMSample? {
         guard self.bpmSamples.count > 0 else { return nil }
         
         let highConfidenceSamples = self.bpmSamples.filter { $0.confidence >= CRFMinConfidence }
@@ -85,6 +85,28 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         let meanBPM = samples.map({ $0.bpm }).mean()
         let confidence = samples.map({ $0.confidence }).mean()
         return CRFHeartRateBPMSample(timestamp: self.clock.startSystemUptime, bpm: meanBPM, confidence: confidence)
+    }
+    
+    public func peakHeartRate() -> CRFHeartRateBPMSample? {
+        guard self.bpmSamples.count > 0 else { return nil }
+        let highConfidenceSamples = self.bpmSamples.filter { $0.confidence >= CRFMinConfidence }
+        return highConfidenceSamples.first
+    }
+    
+    public func vo2MaxHeartRate() -> (start: CRFHeartRateBPMSample, end: CRFHeartRateBPMSample)? {
+        guard self.bpmSamples.count > 0 else { return nil }
+        let startTime = self.clock.startSystemUptime + 30
+        let highConfidenceSamples = self.bpmSamples.filter {
+            $0.confidence >= CRFMinConfidence &&
+            ($0.timestamp ?? 0) >= startTime
+        }
+        guard highConfidenceSamples.count > 1,
+            let first = highConfidenceSamples.first,
+            let last = highConfidenceSamples.last
+            else {
+                return nil
+        }
+        return (first, last)
     }
     
     public override func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {

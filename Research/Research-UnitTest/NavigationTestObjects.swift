@@ -164,7 +164,7 @@ public final class TestTaskInfo : RSDTaskInfo, RSDTaskTransformer {
 }
 
 public struct TestTask : RSDTask, RSDTrackingTask {
-    
+
     public let identifier: String
     public let stepNavigator: RSDStepNavigator
     public var copyright: String?
@@ -204,6 +204,10 @@ public struct TestTask : RSDTask, RSDTrackingTask {
     
     public func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
         tracker?.setupTask(with: data, for: path)
+    }
+    
+    public func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
+        return tracker?.shouldSkipStep(step) ?? (false, nil)
     }
 }
 
@@ -428,5 +432,31 @@ public class TestTaskController: NSObject, RSDTaskController {
             self.goForward()
         }
         return self.taskViewModel.currentNode!.step
+    }
+}
+
+public class TestDataStoreManager : NSObject, RSDDataStorageManager {
+    
+    public var previous: [RSDIdentifier : RSDTaskData] = [:]
+    public var saveTaskData_called: [(data: RSDTaskData, taskResult: RSDTaskResult?)] = []
+    
+    public func previousTaskData(for taskIdentifier: RSDIdentifier) -> RSDTaskData? {
+        return previous[taskIdentifier]
+    }
+    
+    public func saveTaskData(_ data: RSDTaskData, from taskResult: RSDTaskResult?) {
+        saveTaskData_called.append((data, taskResult))
+    }
+}
+
+public struct TestData : RSDTaskData {
+    public let identifier: String
+    public let timestampDate: Date?
+    public let json: RSDJSONSerializable
+    
+    public init(identifier: String, timestampDate: Date?, json: RSDJSONSerializable) {
+        self.identifier = identifier
+        self.timestampDate = timestampDate
+        self.json = json
     }
 }
