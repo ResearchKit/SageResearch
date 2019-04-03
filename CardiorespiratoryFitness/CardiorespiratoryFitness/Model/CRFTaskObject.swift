@@ -36,10 +36,10 @@ import Foundation
 public final class CRFTaskObject: RSDTaskObject, RSDTaskDesign {
     
     public enum DemographicsKeys : String, CodingKey, Codable {
-        case birthYear, biologicalSex
+        case birthYear, sex
     }
     
-    /// The birth year of the user who is using this task.
+    /// The birth year of the participant who is doing this task.
     public var birthYear: Int? {
         get {
             return previousRunData[DemographicsKeys.birthYear.stringValue] as? Int
@@ -49,17 +49,17 @@ public final class CRFTaskObject: RSDTaskObject, RSDTaskDesign {
         }
     }
     
-    /// The biological sex of the current user who will be using this task.
-    public var biologicalSex: Sex? {
+    /// The sex of the participant who doing this task.
+    public var sex: Sex? {
         get {
-            guard let sex = previousRunData[DemographicsKeys.biologicalSex.stringValue] as? String
+            guard let sex = previousRunData[DemographicsKeys.sex.stringValue] as? String
                 else {
                     return nil
             }
             return Sex(rawValue: sex)
         }
         set {
-            previousRunData[DemographicsKeys.biologicalSex.stringValue] = newValue?.stringValue
+            previousRunData[DemographicsKeys.sex.stringValue] = newValue?.stringValue
         }
     }
     
@@ -73,7 +73,7 @@ public final class CRFTaskObject: RSDTaskObject, RSDTaskDesign {
     /// Override task setup to get the demographics data from a previous run.
     public override func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
         if let json = data?.json as? [String : RSDJSONSerializable] {
-            previousRunData[DemographicsKeys.biologicalSex.stringValue] = json[DemographicsKeys.biologicalSex.stringValue]
+            previousRunData[DemographicsKeys.sex.stringValue] = json[DemographicsKeys.sex.stringValue]
             previousRunData[DemographicsKeys.birthYear.stringValue] = json[DemographicsKeys.birthYear.stringValue]
         }
         super.setupTask(with: data, for: path)

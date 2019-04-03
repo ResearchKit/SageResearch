@@ -57,7 +57,7 @@ class TaskObjectTests: XCTestCase {
         let dataStore = TestDataStoreManager()
         let previousRunTimestamp = Date(timeIntervalSinceNow: -1 * 60 * 60)
         let json: [String : RSDJSONSerializable] = ["birthYear" : 1956,
-                                         "biologicalSex" : "female",
+                                         "sex" : "female",
                                          "hr_resting" : 62]
         dataStore.previous[RSDIdentifier(rawValue: task.identifier)] =
             TestData(identifier: task.identifier,
@@ -69,7 +69,7 @@ class TaskObjectTests: XCTestCase {
         
         // check that the previous run data is being set properly
         XCTAssertEqual(task.birthYear, 1956)
-        XCTAssertEqual(task.biologicalSex, .female)
+        XCTAssertEqual(task.sex, .female)
         
         taskController.goForward()
         
@@ -94,7 +94,7 @@ class TaskObjectTests: XCTestCase {
         }
         
         XCTAssertEqual(answers["birthYear"] as? Int, 1956)
-        XCTAssertEqual(answers["biologicalSex"] as? String, "female")
+        XCTAssertEqual(answers["sex"] as? String, "female")
     }
     
     func testTaskNavigation_SetDemographics() {
@@ -102,10 +102,10 @@ class TaskObjectTests: XCTestCase {
         
         let task = CRFTaskInfo(.stairStep).task
         task.birthYear = 1956
-        task.biologicalSex = .female
+        task.sex = .female
         
         XCTAssertEqual(task.birthYear, 1956)
-        XCTAssertEqual(task.biologicalSex, .female)
+        XCTAssertEqual(task.sex, .female)
     }
     
     func testTaskNavigation_NoDemographics() {
@@ -119,7 +119,7 @@ class TaskObjectTests: XCTestCase {
         
         // check that the previous run data is being set properly
         XCTAssertNil(task.birthYear)
-        XCTAssertNil(task.biologicalSex)
+        XCTAssertNil(task.sex)
         
         taskController.goForward()
         
@@ -128,7 +128,7 @@ class TaskObjectTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(node.identifier, "biologicalSex")
+        XCTAssertEqual(node.identifier, "sex")
     }
     
     func testTaskCameraSettings() {

@@ -42,7 +42,7 @@ public enum CRFTaskIdentifier : String, Codable, CaseIterable {
     /// Measure your heart rate while resting.
     case resting = "Resting Heartrate"
     
-    /// Measure your heart rate, first thing in the morning before getting out of bed.
+    /// Measure your heart rate first thing in the morning before getting out of bed.
     case restingMorning = "Morning Heartrate"
     
     /// Stair step VO2 max test.

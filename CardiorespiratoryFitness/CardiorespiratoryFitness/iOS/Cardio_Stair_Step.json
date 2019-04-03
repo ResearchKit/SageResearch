@@ -154,7 +154,7 @@
         }
     },
     {
-        "identifier": "biologicalSex",
+        "identifier": "sex",
         "type": "demographics",
         "title": "What was your sex at birth?",
         "inputFields": [{
