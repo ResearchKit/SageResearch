@@ -63,7 +63,7 @@ public protocol RSDTrackingTask {
     /// - parameter step: The step to check for previous run data.
     /// - returns:
     ///     - shouldSkip: Whether or not the step should be skipped.
-    ///     - stepResult: The step to add to the task result for this step in lieue of showing it.
+    ///     - stepResult: The step to add to the task result for this step in lieu of showing it.
     func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?)
 }
 
