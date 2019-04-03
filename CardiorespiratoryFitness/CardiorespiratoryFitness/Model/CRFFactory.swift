@@ -64,7 +64,7 @@ open class CRFFactory: RSDFactory {
         }
     }
     
-    /// Override the task decoder to vend an `CRFTaskObject`.
+    /// Override the task decoder to vend a `CRFTaskObject`.
     override open func decodeTask(with data: Data, from decoder: RSDFactoryDecoder) throws -> RSDTask {
         let task = try decoder.decode(CRFTaskObject.self, from: data)
         try task.validate()
