@@ -83,27 +83,28 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(steps, ["introduction", "sitDownInstruction", "coverFlash", "hr1", "feedback1", "hr", "feedback"])
     }
     
-    func testRestingMorningTask() {
-        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
-        
-        let taskInfo = CRFTaskInfo(.restingMorning)
-        
-        XCTAssertEqual(taskInfo.identifier, "Morning Heartrate")
-        XCTAssertEqual(taskInfo.title, "Morning resting heart rate")
-        XCTAssertEqual(taskInfo.subtitle, "Your heart rate while you are at rest is a marker of your health. The more relaxed you are, the better. Let's measure your resting heart rate.")
-        XCTAssertNil(taskInfo.detail)
-        XCTAssertEqual(taskInfo.estimatedMinutes, 1)
-        XCTAssertEqual(taskInfo.schemaInfo?.schemaIdentifier, "Heartrate Measurement")
-        XCTAssertEqual(taskInfo.schemaInfo?.schemaVersion, 9)
-        
-        guard let navigator = taskInfo.task.stepNavigator as? RSDOrderedStepNavigator else {
-            XCTFail("Navigator is not of the expected type")
-            return
-        }
-        
-        let steps = navigator.steps.map { $0.identifier }
-        XCTAssertEqual(steps, ["introduction", "sitDownInstruction", "coverFlash", "hr", "feedback"])
-    }
+    // TODO: syoung 04/02/2019 Remove commented out code. Leaving for now in case researchers change their mind again.
+//    func testRestingMorningTask() {
+//        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+//        
+//        let taskInfo = CRFTaskInfo(.restingMorning)
+//        
+//        XCTAssertEqual(taskInfo.identifier, "Morning Heartrate")
+//        XCTAssertEqual(taskInfo.title, "Morning resting heart rate")
+//        XCTAssertEqual(taskInfo.subtitle, "Your heart rate while you are at rest is a marker of your health. The more relaxed you are, the better. Let's measure your resting heart rate.")
+//        XCTAssertNil(taskInfo.detail)
+//        XCTAssertEqual(taskInfo.estimatedMinutes, 1)
+//        XCTAssertEqual(taskInfo.schemaInfo?.schemaIdentifier, "Heartrate Measurement")
+//        XCTAssertEqual(taskInfo.schemaInfo?.schemaVersion, 9)
+//        
+//        guard let navigator = taskInfo.task.stepNavigator as? RSDOrderedStepNavigator else {
+//            XCTFail("Navigator is not of the expected type")
+//            return
+//        }
+//        
+//        let steps = navigator.steps.map { $0.identifier }
+//        XCTAssertEqual(steps, ["introduction", "sitDownInstruction", "coverFlash", "hr", "feedback"])
+//    }
     
     func testStairStepTask() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
