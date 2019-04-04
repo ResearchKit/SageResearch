@@ -195,7 +195,11 @@ open class RSDStepViewModel : NSObject, RSDStepViewPathComponent {
         }
         
         // If not in the cache, then find it.
-        let ret = _findAction(for: actionType)
+        var ret = _findAction(for: actionType)
+        // By default, nil out the reminder if this the study configuration does not support it's use.
+        if let _ = ret as? RSDReminderUIAction, !RSDStudyConfiguration.shared.shouldShowRemindMe {
+            ret = nil
+        }
         _mappedActions[actionType] = ret ?? NSNull()
         return ret
     }
