@@ -34,7 +34,6 @@
 import Foundation
 
 import UIKit
-import Accelerate
 
 /// Frame rates supported by this processor, with the preferred framerate listed first.
 public let CRFSupportedFrameRates = [Int(fs)]
@@ -44,6 +43,213 @@ public let CRFHeartRateWindowSeconds = TimeInterval(window)
 
 /// The number of seconds to let the sampler settle before looking at the heart rate.
 public let CRFHeartRateSettleSeconds = TimeInterval(3)
+
+internal class CRFHeartRateSampleProcessor {
+    
+    /// A valid sampling rate has filter coefficients defined for high and low pass.
+    func isValidSamplingRate(_ samplingRate: Int) -> Bool {
+        guard let _ = lowPassParameters.filterParams(for: samplingRate),
+            let _ = highPassParameters.filterParams(for: samplingRate)
+            else {
+                return false
+        }
+        return true
+    }
+
+    // MARK: Code ported from R
+    // - note: R is indexed from 1 so to simplify porting the code, everything is offset by one
+    // in the filters before calculating.
+
+    ///#' Bandpass and sorted mean filter the given signal
+    ///#'
+    ///#' @param x A time series numeric data
+    ///#' @param sampling_rate The sampling rate (fs) of the signal
+    func getFilteredSignal(_ input:[Double], samplingRate: Int) -> [Double]? {
+        //        x[is.na(x)] <- 0
+        //        x <- x[round(3*sampling_rate):length(x)]
+        //        # Ignore the first 3s
+        let x = input.dropFirst(3 * samplingRate).map({ $0.isFinite ? $0 : 0 })
+        //    x <- signal::filter(bf_low, x) # lowpass
+        //    x <- x[round(sampling_rate):length(x)] # 1s
+        let lowpass = Array(passFilter(x, samplingRate: samplingRate, type: .low).dropFirst(samplingRate))
+        //    x <- signal::filter(bf_high, x) # highpass
+        //    x <- x[round(sampling_rate):length(x)] # 1s @ 60Hz
+        let highpass = Array(passFilter(lowpass, samplingRate: samplingRate, type: .high).dropFirst(samplingRate))
+        // filter usinng mean centering
+        let filtered = meanCenteringFilter(highpass, samplingRate: samplingRate)
+        return filtered
+    }
+
+    func autocorrelation(_ input: [Double], lagMax: Int = 80) -> [Double] {
+        //    x_acf <- rep(0, lag.max+1) # the +1 is because, we will have a 0 lag value also
+        //    xl <- length(x) # total no of samples
+        //    mx <- mean(x) # average/mean
+        //    varx <- sum((x-mx)^2) # Unscaled variance
+        //    for(i in seq(0, lag.max)){ # for i=0:lag.max
+        //        x_acf[i+1] <- sum( (x[1:(xl-i)]-mx) * (x[(i+1):xl]-mx))/varx // # (Unscaled Co-variance)/(Unscaled variance)
+        
+        let xl = input.count
+        let mx = input.mean()
+        let varx: Double = input.reduce(Double(0)) { $0 + ($1 - mx) * ($1 - mx) }
+        let x = input.offsetR()
+        let range = Array(0...(lagMax+1))
+        let x_acf: [Double] = range.map { (i) -> Double in
+            let x_left = Array(x[1...(xl-i)])
+            let x_right = Array(x[(i+1)...xl])
+            let sum = x_left.enumerated().reduce(Double(0), {
+                return $0 + ($1.element - mx) * (x_right[$1.offset] - mx)
+            })
+            return sum / varx
+        }
+        return Array(x_acf.dropFirst())
+    }
+
+    func meanCenteringFilter(_ input: [Double], samplingRate: Int) -> [Double] {
+        // insert 0 at the first element to offset the array to the 1 index
+        let x = input.offsetR()
+        
+        let mean_filter_order = meanFilterOrder(for: samplingRate)
+        var y = Array(repeating: Double(0), count: x.count)
+        let lowerBounds = (mean_filter_order + 1) / 2
+        let upperBounds = x.count - (mean_filter_order - 1) / 2
+        
+        for i in lowerBounds..<upperBounds {
+            let tempLower: Int = i - (mean_filter_order - 1) / 2
+            let tempUpper: Int = i + (mean_filter_order - 1) / 2
+            let temp_sequence = x[tempLower..<tempUpper]
+            let temp_sum = temp_sequence.sum()
+            let temp_max = temp_sequence.max()!
+            let temp_min = temp_sequence.min()!
+            let temp_minus = (temp_sum - temp_max + temp_min) / (Double(mean_filter_order) - 2)
+            // # 0.00001 is a small value, ideally this should be machine epsilon
+            y[i] = ((x[i] - temp_minus) / (temp_max - temp_min + 0.00001))
+        }
+        y = Array(y[lowerBounds..<upperBounds])
+        return y
+    }
+
+    func passFilter(_ input: [Double], samplingRate: Int, type: FilterParameters.FilterType) -> [Double] {
+        let paramArray = (type == .low) ? lowPassParameters : highPassParameters
+        guard let params = paramArray.filterParams(for: samplingRate) else {
+            fatalError("WARNING! Failed to get butterworth filter coeffients for \(samplingRate)")
+        }
+        
+        // insert 0 at the first element to offset the array to the 1 index
+        let b = params.b.offsetR()
+        let a = params.a.offsetR()
+        let x = input.offsetR()
+
+        //    y <- rep(0, xl)
+        //    # Create a sequence of 0s of the same length as x
+        var y = Array(repeating: Double(0), count: x.count)
+
+        //    # For index i, less than the length of the filter we have
+        //    # a[1] = 1, always, as the filter coeffs are normalized
+        y[1] = b[1]*x[1]
+        y[2] = b[1]*x[2] + b[2]*x[1] - a[2]*y[1]
+        y[3] = b[1]*x[3] + b[2]*x[2] + b[3]*x[1] - a[2]*y[2] - a[3]*y[1]
+        y[4] = b[1]*x[4] + b[2]*x[3] + b[3]*x[2] + b[4]*x[1] - a[2]*y[3] - a[3]*y[2] - a[4]*y[1]
+        y[5] = b[1]*x[5] + b[2]*x[4] + b[3]*x[3] + b[4]*x[2] + b[5]*x[1] - a[2]*y[4] - a[3]*y[3] -
+        a[4]*y[2] - a[5]*y[1]
+        y[6] = b[1]*x[6] + b[2]*x[5] + b[3]*x[4] + b[4]*x[3] + b[5]*x[2] + b[6]*x[1] - a[2]*y[5] -
+        a[3]*y[4] - a[4]*y[3] - a[5]*y[2] - a[6]*y[1]
+        y[7] = b[1]*x[7] + b[2]*x[6] + b[3]*x[5] + b[4]*x[4] + b[5]*x[3] + b[6]*x[2] + b[7]*x[1] -
+        a[2]*y[6] - a[3]*y[5] - a[4]*y[4] - a[5]*y[3] - a[6]*y[2] - a[7]*y[1]
+
+        //    # For index i, greater than or equal to the length of the filter, we have
+        //    for(i in seq(8,length(x))){
+        for i in 8..<x.count {
+            y[i] = b[1]*x[i] + b[2]*x[i-1] + b[3]*x[i-2] + b[4]*x[i-3] +
+                b[5]*x[i-4] + b[6]*x[i-5] + b[7]*x[i-6] + b[8]*x[i-7] -
+                a[2]*y[i-1] - a[3]*y[i-2] - a[4]*y[i-3] - a[5]*y[i-4] -
+                a[6]*y[i-5] - a[7]*y[i-6] - a[8]*y[i-7]
+        }
+
+        return Array(y.dropFirst())
+    }
+
+    func meanFilterOrder(for samplingRate: Int) -> Int {
+        if (samplingRate <= 32) {
+            return 33
+        }
+        else if (samplingRate <= 18) {
+            return 19
+        }
+        else if (samplingRate <= 15) {
+            return 15
+        }
+        else {
+            return 65
+        }
+    }
+}
+
+protocol FilterParams {
+    var sampling_rate : Int { get }
+}
+
+extension Array where Element : FilterParams {
+    
+    func filterParams(for sampling_rate: Int) -> Element? {
+        return self.first(where: { $0.sampling_rate == sampling_rate })
+    }
+}
+
+let lowPassParameters : [FilterParameters] = {
+    return (try? getParams(FilterParameters.self, from: "lowpass_filter_params")) ?? []
+}()
+
+let highPassParameters : [FilterParameters] = {
+    return (try? getParams(FilterParameters.self, from: "highpass_filter_params")) ?? []
+}()
+
+func getParams<T : Decodable>(_ type: T.Type, from filename: String) throws -> [T] {
+    let bundle = Bundle(for: CRFFactory.self)
+    guard let url = bundle.url(forResource: filename, withExtension: "csv") else {
+        throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [], debugDescription: "\(filename) not found"))
+    }
+    let data = try Data(contentsOf: url)
+    let decoder = CSVDecoder()
+    let params = try decoder.decodeArray(type, from: data)
+    return params
+}
+
+struct FilterParameters : Codable, FilterParams, Equatable {
+    
+    enum FilterType : String, Codable {
+        case low, high
+    }
+    
+    let filter_type: FilterType
+    let sampling_rate: Int
+    
+    let b1 : Double
+    let b2 : Double
+    let b3 : Double
+    let b4 : Double
+    let b5 : Double
+    let b6 : Double
+    let b7 : Double
+    let b8 : Double
+    
+    var b: [Double] {
+        return [b1, b2, b3, b4, b5, b6, b7, b8]
+    }
+    
+    let a1 : Double
+    let a2 : Double
+    let a3 : Double
+    let a4 : Double
+    let a5 : Double
+    let a6 : Double
+    let a7 : Double
+    let a8 : Double
+    
+    var a: [Double] {
+        return [a1, a2, a3, a4, a5, a6, a7, a8]
+    }
+}
+
 
 // --- Code ported from Matlab
 
@@ -169,6 +375,12 @@ extension Sequence where Self.Element : Numeric {
 }
 
 extension Array where Element : BinaryFloatingPoint {
+    
+    func offsetR() -> [Element] {
+        var result = self
+        result.insert(Element(0), at: 0)
+        return result
+    }
     
     /// Returns the mean value of the elements.
     func mean() -> Element {

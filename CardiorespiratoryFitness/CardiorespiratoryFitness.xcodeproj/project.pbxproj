@@ -30,6 +30,11 @@
 		F880C18A205320B800ACB4D4 /* red_input_1d.txt in Resources */ = {isa = PBXBuildFile; fileRef = F880C189205320B800ACB4D4 /* red_input_1d.txt */; };
 		F88725E32051C0F900A4B82F /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; };
 		F88725EA2051C0F900A4B82F /* CardiorespiratoryFitness.h in Headers */ = {isa = PBXBuildFile; fileRef = F88725DC2051C0F800A4B82F /* CardiorespiratoryFitness.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F897CF8F225523320088DFAE /* highpass_filter_params.csv in Resources */ = {isa = PBXBuildFile; fileRef = F897CF8E225523320088DFAE /* highpass_filter_params.csv */; };
+		F897CF912255233D0088DFAE /* lowpass_filter_params.csv in Resources */ = {isa = PBXBuildFile; fileRef = F897CF902255233D0088DFAE /* lowpass_filter_params.csv */; };
+		F897CF95225525040088DFAE /* CSVDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F897CF94225525040088DFAE /* CSVDecoder.swift */; };
+		F897CF97225561680088DFAE /* CSVDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F897CF96225561680088DFAE /* CSVDecoderTests.swift */; };
+		F897CF992255B1C20088DFAE /* io_examples.json in Resources */ = {isa = PBXBuildFile; fileRef = F897CF982255B1C20088DFAE /* io_examples.json */; };
 		F89FFDD920588B5C0089D8A7 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDD820588B5C0089D8A7 /* ModelTests.swift */; };
 		F89FFDDB205890F80089D8A7 /* CRFTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDDA205890F80089D8A7 /* CRFTaskInfo.swift */; };
 		F8A5036D2225E2CD005F1C0C /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5036C2225E2CD005F1C0C /* Research.framework */; };
@@ -84,6 +89,11 @@
 		F88725DD2051C0F800A4B82F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F88725E22051C0F900A4B82F /* CardiorespiratoryFitnessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardiorespiratoryFitnessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F88725E92051C0F900A4B82F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F897CF8E225523320088DFAE /* highpass_filter_params.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = highpass_filter_params.csv; sourceTree = "<group>"; };
+		F897CF902255233D0088DFAE /* lowpass_filter_params.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lowpass_filter_params.csv; sourceTree = "<group>"; };
+		F897CF94225525040088DFAE /* CSVDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDecoder.swift; sourceTree = "<group>"; };
+		F897CF96225561680088DFAE /* CSVDecoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDecoderTests.swift; sourceTree = "<group>"; };
+		F897CF982255B1C20088DFAE /* io_examples.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = io_examples.json; sourceTree = "<group>"; };
 		F89FFDD820588B5C0089D8A7 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		F89FFDDA205890F80089D8A7 /* CRFTaskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTaskInfo.swift; sourceTree = "<group>"; };
 		F89FFDDD2059CF2B0089D8A7 /* CardiorespiratoryFitnessTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CardiorespiratoryFitnessTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -172,6 +182,7 @@
 				F880C15A2051FA5F00ACB4D4 /* CRFHeartRateVideoProcessor.m */,
 				F880C1582051FA5F00ACB4D4 /* CRFHeartRateRecorder.swift */,
 				F880C18220520FBC00ACB4D4 /* CRFHeartRateSampleProcessor.swift */,
+				F897CF94225525040088DFAE /* CSVDecoder.swift */,
 			);
 			name = "HeartRate Recorder";
 			sourceTree = "<group>";
@@ -183,6 +194,7 @@
 				F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */,
 				F8D71AF6224D49EF00DA49BC /* HTML */,
 				F8D71B01224D4E3400DA49BC /* JSON */,
+				F897CF8D225522F80088DFAE /* HR_Parameters */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -190,6 +202,7 @@
 		F880C18820531FBF00ACB4D4 /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
+				F897CF982255B1C20088DFAE /* io_examples.json */,
 				F880C189205320B800ACB4D4 /* red_input_1d.txt */,
 			);
 			path = "Test Files";
@@ -235,8 +248,18 @@
 				F880C18420530D9500ACB4D4 /* HeartRateProcessorTests.swift */,
 				F89FFDD820588B5C0089D8A7 /* ModelTests.swift */,
 				F8E68EF022531E5400CF0811 /* TaskObjectTests.swift */,
+				F897CF96225561680088DFAE /* CSVDecoderTests.swift */,
 			);
 			path = CardiorespiratoryFitnessTests;
+			sourceTree = "<group>";
+		};
+		F897CF8D225522F80088DFAE /* HR_Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				F897CF8E225523320088DFAE /* highpass_filter_params.csv */,
+				F897CF902255233D0088DFAE /* lowpass_filter_params.csv */,
+			);
+			name = HR_Parameters;
 			sourceTree = "<group>";
 		};
 		F89FFDDC2059CF0C0089D8A7 /* Mock Objects */ = {
@@ -381,11 +404,13 @@
 				F8D71B03224D4FA100DA49BC /* HR_Recovery_Score.html in Resources */,
 				F880C12F2051F2A700ACB4D4 /* Images.xcassets in Resources */,
 				F880C1712051FCD400ACB4D4 /* Cardio_Stair_Step.json in Resources */,
+				F897CF8F225523320088DFAE /* highpass_filter_params.csv in Resources */,
 				F880C14D2051F61700ACB4D4 /* stairStepAudio.m4a in Resources */,
 				F857BAAD224BE2FE0089B150 /* Heart_Snapshot.html in Resources */,
 				F8D71AFC224D4A0600DA49BC /* rhr-tips.html in Resources */,
 				F8DA5E0A215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings in Resources */,
 				F880C1312051F49400ACB4D4 /* Colors.xcassets in Resources */,
+				F897CF912255233D0088DFAE /* lowpass_filter_params.csv in Resources */,
 				F86B5290224AE8A700BB7354 /* Heartrate_Training.json in Resources */,
 				F8D71B05224D51B400DA49BC /* Normal_HR.html in Resources */,
 				F880C1752051FCD400ACB4D4 /* ActiveTaskSteps.storyboard in Resources */,
@@ -397,6 +422,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F897CF992255B1C20088DFAE /* io_examples.json in Resources */,
 				F880C18A205320B800ACB4D4 /* red_input_1d.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,6 +447,7 @@
 				F880C15D2051FA5F00ACB4D4 /* CRFHeartRateVideoProcessor.m in Sources */,
 				F8D71AF5224D462F00DA49BC /* CRFHRRecoveryStepViewController.swift in Sources */,
 				F80479E22257E52200E569AC /* CRFTorchInstructionStep.swift in Sources */,
+				F897CF95225525040088DFAE /* CSVDecoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8E68EF122531E5400CF0811 /* TaskObjectTests.swift in Sources */,
+				F897CF97225561680088DFAE /* CSVDecoderTests.swift in Sources */,
 				F880C18520530D9500ACB4D4 /* HeartRateProcessorTests.swift in Sources */,
 				F89FFDD920588B5C0089D8A7 /* ModelTests.swift in Sources */,
 			);
