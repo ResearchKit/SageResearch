@@ -525,6 +525,7 @@ class CodableStepObjectTests: XCTestCase {
             "text": "Some text.",
             "unitText": "foos",
             "resultIdentifier": "bar",
+            "stepResultIdentifier": "goo",
             "formatter" : {"maximumDigits" : 3 }
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -538,6 +539,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.unitText, "foos")
             XCTAssertEqual(object.resultIdentifier, "bar")
+            XCTAssertEqual(object.stepResultIdentifier, "goo")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")

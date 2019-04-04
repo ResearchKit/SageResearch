@@ -267,18 +267,20 @@ class CopyStepTests: XCTestCase {
     }
     
     func testCopy_ResultSummaryStepObject() {
-        let step = RSDResultSummaryStepObject(identifier: "foo", resultIdentifier: "boo", unitText: "lala")
+        let step = RSDResultSummaryStepObject(identifier: "foo", resultIdentifier: "boo", unitText: "lala",
+                                              stepResultIdentifier: "goo")
         step.title = "title"
         
         let copy = step.copy(with: "bar")
         XCTAssertEqual(copy.identifier, "bar")
         XCTAssertEqual(copy.title, "title")
         XCTAssertEqual(copy.resultIdentifier, "boo")
+        XCTAssertEqual(copy.stepResultIdentifier, "goo")
         XCTAssertEqual(copy.unitText, "lala")
     }
     
     func testCopyDefaultDecodable_ResultSummaryStepObject() {
-        let step = RSDResultSummaryStepObject(identifier: "foo", resultIdentifier: "boo", unitText: "lala")
+        let step = RSDResultSummaryStepObject(identifier: "foo", resultIdentifier: "boo", unitText: "lala", stepResultIdentifier: "goo")
         step.title = "title"
         
         let json = """
@@ -295,6 +297,7 @@ class CopyStepTests: XCTestCase {
         XCTAssertEqual(copy.title, "title")
         XCTAssertEqual(copy.resultIdentifier, "boo")
         XCTAssertEqual(copy.unitText, "lala")
+        XCTAssertEqual(copy.stepResultIdentifier, "goo")
     }
     
     func testCopy_SectionStepObject() {
