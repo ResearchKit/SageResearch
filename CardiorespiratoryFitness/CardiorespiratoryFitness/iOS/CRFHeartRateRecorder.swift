@@ -91,7 +91,13 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         return highConfidenceSamples.first
     }
     
-    public func vo2MaxHeartRate() -> (start: CRFHeartRateBPMSample, end: CRFHeartRateBPMSample)? {
+    public func endHeartRate() -> CRFHeartRateBPMSample? {
+        guard self.bpmSamples.count > 0 else { return nil }
+        let highConfidenceSamples = self.bpmSamples.filter { $0.confidence >= CRFMinConfidence }
+        return highConfidenceSamples.last
+    }
+    
+    public func vo2Max() -> (value: Double, confidence: Double)? {
         guard self.bpmSamples.count > 0 else { return nil }
         let startTime = self.clock.startSystemUptime + 30
         let highConfidenceSamples = self.bpmSamples.filter {
@@ -104,7 +110,8 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             else {
                 return nil
         }
-        return (first, last)
+        
+        return (first.bpm - last.bpm, last.confidence)
     }
     
     public override func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
@@ -229,11 +236,11 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     }
     
     private var videoIdentifier: String {
-        return "\(self.sectionIdentifier)video"
+        return "\(self.sectionIdentifier)\(self.configuration.identifier)_video"
     }
     
     override public var defaultLoggerIdentifier: String {
-        return "\(self.sectionIdentifier)rgb"
+        return "\(self.sectionIdentifier)\(self.configuration.identifier)_rgb"
     }
     
     private func _startSampling() throws {
@@ -546,7 +553,7 @@ public struct CRFHeartRateSamplesResult : RSDResult, RSDArchivable {
     
     public func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
         let data = try self.rsd_jsonEncodedData()
-        let filename = RSDFileResultUtility.filename(for: identifier)
+        let filename = "\(RSDFileResultUtility.filename(for: identifier)).json"
         let manifest = RSDFileManifest(filename: filename, timestamp: self.endDate, contentType: "application/json", identifier: identifier, stepPath: stepPath)
         return (manifest, data)
     }

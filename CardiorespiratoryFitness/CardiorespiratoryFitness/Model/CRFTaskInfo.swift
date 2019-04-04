@@ -256,7 +256,7 @@ extension RSDTaskObject : CRFTask {
 
 extension RSDTask {
     
-    fileprivate func findStep(with identifier: String) -> RSDStep? {
+    func findStep(with identifier: String) -> RSDStep? {
         guard let navigator = self.stepNavigator as? RSDConditionalStepNavigator else { return nil }
         for step in navigator.steps {
             if let task = step as? RSDTask, let substep = task.findStep(with: identifier) {

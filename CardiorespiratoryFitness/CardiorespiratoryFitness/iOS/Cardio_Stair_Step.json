@@ -7,6 +7,14 @@
     "usesTrackedData": true,
     "shouldHideActions": ["goBackward", "skip"],
     "progressMarkers": [],
+    "asyncActions":[
+        {
+            "identifier":"motion",
+            "type":"motion",
+            "requiresBackgroundAudio":true,
+            "recorderTypes":["accelerometer"]
+        }
+    ],
     "steps": [{
         "identifier": "introduction",
         "type": "overview",
@@ -50,6 +58,77 @@
             "goForward": {
                 "type": "default",
                 "buttonTitle": "Next"
+            }
+        }
+    },
+    {
+        "identifier": "demographics",
+        "type": "instruction",
+        "title": "Recovery HR Questions",
+        "text": "To calculate your Recovery HR score, we first need to know a few things about you like your sex and age.",
+        "image": {
+            "type": "fetchable",
+            "imageName": "RecoveryQuestions",
+            "placementType": "iconBefore"
+        },
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Start"
+            }
+        }
+    },
+    {
+        "identifier": "sex",
+        "type": "demographics",
+        "title": "What was your sex at birth?",
+        "inputFields": [{
+            "uiHint": "list",
+            "type": "singleChoice.string",
+            "choices": [{
+                "text": "Male",
+                "value": "male"
+            },
+            {
+                "text": "Female",
+                "value": "female"
+            },
+            {
+                "text": "Other",
+                "value": "other"
+            }
+            ]
+        }],
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Next"
+            },
+            "goBackward": {
+                "type": "default",
+                "buttonTitle": "Back"
+            }
+        }
+    },
+    {
+        "identifier": "birthYear",
+        "type": "demographics",
+        "title": "What year were you born?",
+        "inputFields": [{
+            "type": "year",
+            "uiHint": "textfield",
+            "range": {
+                "allowFuture": false
+            }
+        }],
+        "actions": {
+            "goForward": {
+                "type": "default",
+                "buttonTitle": "Next"
+            },
+            "goBackward": {
+                "type": "default",
+                "buttonTitle": "Back"
             }
         }
     },
@@ -123,95 +202,10 @@
     },
     {
         "identifier": "feedback",
-        "type": "feedback",
-        "resultTitle": "Your peak heart rate is",
-        "resultIdentifier": "hr_peak",
-        "unitText": "BPM",
-        "title": "Recovery HR Captured!",
-        "text": "Changing your Recovery HR can take time. You can change it over weeks or months by losing weight or exercising.",
-        "actions": {
-            "goForward": {
-                "type": "default",
-                "buttonTitle": "Calculate"
-            }
-        }
-    },
-    {
-        "identifier": "recoveryScoreIntros",
-        "type": "instruction",
-        "title": "Recovery HR Questions",
-        "text": "To calculate your Recovery HR score, we first need to know a few things about you like your sex and age.",
-        "image": {
-            "type": "fetchable",
-            "imageName": "RecoveryQuestions",
-            "placementType": "iconBefore"
-        },
-        "actions": {
-            "goForward": {
-                "type": "default",
-                "buttonTitle": "Start"
-            }
-        }
-    },
-    {
-        "identifier": "sex",
-        "type": "demographics",
-        "title": "What was your sex at birth?",
-        "inputFields": [{
-            "uiHint": "list",
-            "type": "singleChoice.string",
-            "choices": [{
-                "text": "Male",
-                "value": "Male"
-            },
-            {
-                "text": "Female",
-                "value": "Female"
-            },
-            {
-                "text": "Other",
-                "value": "Other"
-            }
-            ]
-        }],
-        "actions": {
-            "goForward": {
-                "type": "default",
-                "buttonTitle": "Next"
-            },
-            "goBackward": {
-                "type": "default",
-                "buttonTitle": "Back"
-            }
-        }
-    },
-    {
-        "identifier": "birthYear",
-        "type": "demographics",
-        "title": "What year were you born?",
-        "inputFields": [{
-            "type": "year",
-            "uiHint": "textfield",
-            "range": {
-                "allowFuture": false
-            }
-        }],
-        "actions": {
-            "goForward": {
-                "type": "default",
-                "buttonTitle": "Next"
-            },
-            "goBackward": {
-                "type": "default",
-                "buttonTitle": "Back"
-            }
-        }
-    },
-    {
-        "identifier": "completion",
         "type": "completion",
         "resultTitle": "Your Recovery HR Score is estimated between",
-        "resultIdentifier": "heartRate",
+        "stepResultIdentifier": "hr",
+        "resultIdentifier": "vo2Max",
         "title": "Recovery HR Score",
         "text": "Changing your Recovery HR can take time. You can change it over weeks or months by losing weight or exercising.",
         "actions": {
@@ -226,10 +220,6 @@
                 "url": "HR_Recovery_Score.html",
                 "buttonTitle": "What is a Recovery HR Score?"
             }
-        },
-        "viewTheme": {
-            "viewIdentifier": "HRRecovery",
-            "storyboardIdentifier": "ActiveTaskSteps"
         }
     }
     ]

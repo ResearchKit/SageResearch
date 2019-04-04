@@ -170,6 +170,8 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
         print("\n\n=== Ready to Save: \(taskViewModel.description)")
+        
+        taskViewModel.archiveResults(with: ArchiveManager.shared) 
     }
     
     func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {

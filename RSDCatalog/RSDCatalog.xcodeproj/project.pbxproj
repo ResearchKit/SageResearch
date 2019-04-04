@@ -39,6 +39,7 @@
 		F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB52095550C00C6A4BC /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB72095550C00C6A4BC /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42AC0209555C400C6A4BC /* RSDCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A672095518400C6A4BC /* RSDCatalogTests.swift */; };
+		F8DC072E2256DD8A0045D530 /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,7 @@
 		F8D42A9A209552EC00C6A4BC /* Image_Picker.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Image_Picker.json; sourceTree = "<group>"; };
 		F8D42AB52095550C00C6A4BC /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42AB72095550C00C6A4BC /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				F8D42A522095518400C6A4BC /* AppDelegate.swift */,
+				F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */,
 				F8D42A832095529100C6A4BC /* CatalogFactory.swift */,
 				F8D42A852095529100C6A4BC /* FileResultViewController.swift */,
 				F8D42A822095529100C6A4BC /* ResultTableViewController.swift */,
@@ -385,6 +388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8DC072E2256DD8A0045D530 /* ArchiveManager.swift in Sources */,
 				F8D42A892095529100C6A4BC /* TaskTableViewController.swift in Sources */,
 				F8D42A862095529100C6A4BC /* TaskGroupTableViewController.swift in Sources */,
 				F8D42A532095518400C6A4BC /* AppDelegate.swift in Sources */,

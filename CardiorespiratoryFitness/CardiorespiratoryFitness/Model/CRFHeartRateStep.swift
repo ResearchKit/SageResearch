@@ -37,7 +37,7 @@ import UIKit
 /// recorder used by this step view controller.
 open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfiguration {
     private enum CodingKeys : String, CodingKey {
-        case cameraSettings, isResting, shouldDeletePrevious
+        case cameraSettings, isResting, isTraining, shouldDeletePrevious
     }
     
     /// The camera settings.
@@ -45,6 +45,9 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
     
     /// Is this the resting heart rate?
     public var isResting: Bool = true
+    
+    /// Is this the training task?
+    public var isTraining: Bool = false
     
     /// Should the file used in a previous run of a recording be deleted?
     /// Default = `true`.
@@ -73,6 +76,7 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
             return
         }
         subclassCopy.isResting = self.isResting
+        subclassCopy.isTraining = self.isTraining
         subclassCopy.shouldDeletePrevious = self.shouldDeletePrevious
         subclassCopy.cameraSettings = self.cameraSettings
     }
@@ -84,6 +88,7 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.cameraSettings = try container.decodeIfPresent(CRFCameraSettings.self, forKey: .cameraSettings) ?? self.cameraSettings
             self.isResting = try container.decodeIfPresent(Bool.self, forKey: .isResting) ?? self.isResting
+            self.isTraining = try container.decodeIfPresent(Bool.self, forKey: .isTraining) ?? self.isTraining
             self.shouldDeletePrevious = try container.decodeIfPresent(Bool.self, forKey: .shouldDeletePrevious) ?? self.shouldDeletePrevious
             
             // set up default values

@@ -65,7 +65,7 @@ class TaskObjectTests: XCTestCase {
                      json: json )
         taskController.taskViewModel.dataManager = dataStore
         
-        let _ = taskController.test_stepTo("recoveryScoreIntros")
+        let _ = taskController.test_stepTo("heartRisk")
         
         // check that the previous run data is being set properly
         XCTAssertEqual(task.birthYear, 1956)
@@ -78,7 +78,7 @@ class TaskObjectTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(node.identifier, "completion")
+        XCTAssertEqual(node.identifier, "volumeUp")
         
         guard let taskData = task.taskData(for: taskController.taskViewModel.taskResult) else {
             XCTFail("Unexpected null task run data")
@@ -115,7 +115,7 @@ class TaskObjectTests: XCTestCase {
         let taskController = TestTaskController()
         taskController.task = task
         
-        let _ = taskController.test_stepTo("recoveryScoreIntros")
+        let _ = taskController.test_stepTo("heartRisk")
         
         // check that the previous run data is being set properly
         XCTAssertNil(task.birthYear)
@@ -128,7 +128,7 @@ class TaskObjectTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(node.identifier, "sex")
+        XCTAssertEqual(node.identifier, "demographics")
     }
     
     func testTaskCameraSettings() {

@@ -199,10 +199,12 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
                 if let bpm = recorder.peakHeartRate() {
                     addSample(bpm, "peak")
                 }
-                if let vo2 = recorder.vo2MaxHeartRate() {
-                    addSample(vo2.start, "start")
-                    addSample(vo2.end, "end")
-                    resultSample = vo2.end
+                if let bpm = recorder.endHeartRate() {
+                    addSample(bpm, "end")
+                    resultSample = bpm
+                }
+                if let vo2 = recorder.vo2Max() {
+                    addSample(vo2.value, confidence: vo2.confidence, "vo2Max")
                 }
             }
             
@@ -222,12 +224,16 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
     }
     
     private func addSample(_ bpm: CRFHeartRateBPMSample, _ identifier: String) {
-        var bpmResult = RSDAnswerResultObject(identifier: "\(self.step.identifier)_\(identifier)", answerType: RSDAnswerResultType(baseType: .integer))
-        bpmResult.value = bpm.bpm
+        addSample(bpm.bpm, confidence: bpm.confidence, identifier)
+    }
+    
+    private func addSample(_ value: Double, confidence: Double, _ identifier: String) {
+        var bpmResult = RSDAnswerResultObject(identifier: identifier, answerType: RSDAnswerResultType(baseType: .integer))
+        bpmResult.value = value
         addResult(bpmResult)
         
-        var confidenceResult = RSDAnswerResultObject(identifier: "\(self.step.identifier)_\(identifier)_confidence", answerType: RSDAnswerResultType(baseType: .decimal))
-        confidenceResult.value = bpm.confidence
+        var confidenceResult = RSDAnswerResultObject(identifier: "\(identifier)_confidence", answerType: RSDAnswerResultType(baseType: .decimal))
+        confidenceResult.value = confidence
         addResult(confidenceResult)
     }
     

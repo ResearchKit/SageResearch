@@ -15,13 +15,13 @@
         <scene sceneID="rb0-U5-PVx">
             <objects>
                 <viewController storyboardIdentifier="StairStep" id="cJG-FV-7cK" customClass="CRFStairStepViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ozR-fT-mKP">
+                    <view key="view" contentMode="scaleToFill" id="ozR-fT-mKP" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="stairStepSmall1" translatesAutoresizingMaskIntoConstraints="NO" id="bFK-2n-tXR">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="528"/>
-                                <color key="backgroundColor" name="perrywinkleTwo"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS4-Pb-RWv" userLabel="Header" customClass="RSDStepHeaderView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="32" width="320" height="45"/>
@@ -38,36 +38,17 @@
                                                 <color key="tintColor" name="white"/>
                                                 <state key="normal" image="closeActivity"/>
                                             </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xtU-RF-RcH" customClass="RSDStepProgressView" customModule="ResearchUI">
-                                                <rect key="frame" x="64" y="11" width="240" height="10"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <outlet property="stepCountLabel" destination="ZC5-bR-tbv" id="O4C-9A-iDO"/>
-                                                </connections>
-                                            </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1 of 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZC5-bR-tbv">
-                                                <rect key="frame" x="122" y="28" width="76" height="17"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="textColor" name="white"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                         </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" name="buttonTintBlue"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="ZC5-bR-tbv" secondAttribute="bottom" id="0v2-bp-7Ob"/>
                                             <constraint firstItem="2Nh-th-QlZ" firstAttribute="top" secondItem="hRp-75-DnJ" secondAttribute="top" id="8pD-zV-bj3"/>
-                                            <constraint firstItem="ZC5-bR-tbv" firstAttribute="top" secondItem="2Nh-th-QlZ" secondAttribute="bottom" constant="-4" id="Myh-yz-SEW"/>
-                                            <constraint firstAttribute="trailing" secondItem="xtU-RF-RcH" secondAttribute="trailing" constant="16" id="kaq-KZ-dIy"/>
-                                            <constraint firstItem="ZC5-bR-tbv" firstAttribute="centerX" secondItem="hRp-75-DnJ" secondAttribute="centerX" id="mpV-kN-NHM"/>
+                                            <constraint firstAttribute="height" constant="45" id="nqP-xW-qnd"/>
                                             <constraint firstItem="2Nh-th-QlZ" firstAttribute="leading" secondItem="hRp-75-DnJ" secondAttribute="leading" constant="16" id="qf1-6R-BJm"/>
-                                            <constraint firstItem="xtU-RF-RcH" firstAttribute="leading" secondItem="2Nh-th-QlZ" secondAttribute="trailing" constant="16" id="vpA-3L-Wv0"/>
-                                            <constraint firstItem="xtU-RF-RcH" firstAttribute="centerY" secondItem="2Nh-th-QlZ" secondAttribute="centerY" id="y2d-1p-2KB"/>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="hRp-75-DnJ" secondAttribute="trailing" id="SEl-xY-Dgf"/>
                                     <constraint firstAttribute="bottom" secondItem="hRp-75-DnJ" secondAttribute="bottom" id="uIj-5g-PCe"/>
@@ -80,8 +61,6 @@
                                 <connections>
                                     <outlet property="cancelButton" destination="2Nh-th-QlZ" id="Ild-wt-PMj"/>
                                     <outlet property="imageView" destination="bFK-2n-tXR" id="DQr-cb-Y3R"/>
-                                    <outlet property="progressView" destination="xtU-RF-RcH" id="5Rv-P0-9OY"/>
-                                    <outlet property="stepCountLabel" destination="ZC5-bR-tbv" id="nkY-TS-bh6"/>
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fGe-04-ucY">
@@ -102,7 +81,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" name="perrywinkleTwo"/>
+                        <color key="backgroundColor" red="0.99006377479999996" green="0.26231237190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="fS4-Pb-RWv" secondAttribute="trailing" id="6Io-Fu-txe"/>
                             <constraint firstItem="fGe-04-ucY" firstAttribute="top" secondItem="fS4-Pb-RWv" secondAttribute="bottom" id="HnS-4T-lwr"/>
@@ -146,8 +125,8 @@
                                         <state key="normal" image="closeActivity"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Efe-FW-pW7">
-                                        <rect key="frame" x="109.5" y="-0.5" width="101" height="43"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                        <rect key="frame" x="126" y="13.5" width="68" height="29"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -304,142 +283,6 @@
             </objects>
             <point key="canvasLocation" x="-1807.2" y="205.54722638680661"/>
         </scene>
-        <!--Recovery Step View Controller-->
-        <scene sceneID="aKS-n7-egR">
-            <objects>
-                <viewController storyboardIdentifier="HRRecovery" id="V0z-xn-GoL" customClass="CRFHRRecoveryStepViewController" customModule="CardiorespiratoryFitness" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="XFJ-rz-v4I" customClass="RSDStepNavigationView" customModule="ResearchUI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" bounces="NO" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="P5Z-U5-mm1">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="468"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2S2-eZ-Hfp" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="536.5"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qYM-lS-3cz" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="324"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="200" text="70-40" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Sq-Zw-fx5">
-                                                        <rect key="frame" x="50.5" y="196" width="219" height="96"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="80"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Recovery HR Score is estimated between" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hn8-Hm-gXw">
-                                                        <rect key="frame" x="50" y="78" width="220" height="86"/>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" red="0.99006377479999996" green="0.26231237190000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <constraints>
-                                                    <constraint firstItem="4Sq-Zw-fx5" firstAttribute="centerX" secondItem="qYM-lS-3cz" secondAttribute="centerX" id="1jw-Vs-0ny"/>
-                                                    <constraint firstItem="hn8-Hm-gXw" firstAttribute="centerX" secondItem="qYM-lS-3cz" secondAttribute="centerX" id="4EV-Qp-uqU"/>
-                                                    <constraint firstAttribute="bottom" secondItem="4Sq-Zw-fx5" secondAttribute="bottom" constant="32" id="C99-Vr-bUn"/>
-                                                    <constraint firstItem="hn8-Hm-gXw" firstAttribute="top" secondItem="qYM-lS-3cz" secondAttribute="topMargin" constant="50" id="DTG-Uu-Tpg"/>
-                                                    <constraint firstItem="4Sq-Zw-fx5" firstAttribute="top" secondItem="hn8-Hm-gXw" secondAttribute="bottom" constant="32" id="FoQ-Cn-Iqt"/>
-                                                    <constraint firstItem="hn8-Hm-gXw" firstAttribute="leading" secondItem="qYM-lS-3cz" secondAttribute="leadingMargin" constant="42" id="Ylu-1m-AZm"/>
-                                                </constraints>
-                                            </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recovery HR Score" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXL-K2-0gs" userLabel="Title Label">
-                                                <rect key="frame" x="24" y="344" width="272" height="29"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T8L-Dk-bzQ" userLabel="Text Label">
-                                                <rect key="frame" x="24" y="393" width="272" height="86"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j4d-g1-HXu" userLabel="Measurement View">
-                                                <rect key="frame" x="319" y="324" width="1" height="212.5"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="1" id="LMa-4j-leM"/>
-                                                </constraints>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A0e-Oe-lRJ" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                                                <rect key="frame" x="38" y="491" width="244" height="33.5"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                <state key="normal" title="What is a Recovery HR Score?"/>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="qYM-lS-3cz" firstAttribute="leading" secondItem="2S2-eZ-Hfp" secondAttribute="leading" id="1jd-iU-CZe"/>
-                                            <constraint firstItem="T8L-Dk-bzQ" firstAttribute="centerX" secondItem="2S2-eZ-Hfp" secondAttribute="centerX" id="4Am-kU-SXO"/>
-                                            <constraint firstAttribute="bottom" secondItem="j4d-g1-HXu" secondAttribute="bottom" id="53n-D9-foz"/>
-                                            <constraint firstItem="VXL-K2-0gs" firstAttribute="leading" secondItem="2S2-eZ-Hfp" secondAttribute="leading" constant="24" id="6Mk-FN-Ffa"/>
-                                            <constraint firstItem="T8L-Dk-bzQ" firstAttribute="centerX" secondItem="2S2-eZ-Hfp" secondAttribute="centerX" id="Q9n-Mx-MUP"/>
-                                            <constraint firstAttribute="bottom" secondItem="A0e-Oe-lRJ" secondAttribute="bottom" constant="12" id="aoS-uk-x8r"/>
-                                            <constraint firstItem="A0e-Oe-lRJ" firstAttribute="centerX" secondItem="2S2-eZ-Hfp" secondAttribute="centerX" id="bxq-98-Vap"/>
-                                            <constraint firstItem="A0e-Oe-lRJ" firstAttribute="top" secondItem="T8L-Dk-bzQ" secondAttribute="bottom" constant="12" id="eDb-z6-6Wp"/>
-                                            <constraint firstItem="qYM-lS-3cz" firstAttribute="top" secondItem="2S2-eZ-Hfp" secondAttribute="top" id="mJw-zk-qQb"/>
-                                            <constraint firstAttribute="trailing" secondItem="qYM-lS-3cz" secondAttribute="trailing" id="shp-Cy-Txl"/>
-                                            <constraint firstItem="j4d-g1-HXu" firstAttribute="top" secondItem="qYM-lS-3cz" secondAttribute="bottom" id="u9p-fI-NDE"/>
-                                            <constraint firstItem="qYM-lS-3cz" firstAttribute="bottom" secondItem="VXL-K2-0gs" secondAttribute="top" constant="-20" id="uFm-pn-dTk"/>
-                                            <constraint firstAttribute="bottom" secondItem="T8L-Dk-bzQ" secondAttribute="bottom" priority="500" constant="20" id="uaO-M2-sJU"/>
-                                            <constraint firstAttribute="trailing" secondItem="j4d-g1-HXu" secondAttribute="trailing" id="vf6-oo-Iih"/>
-                                            <constraint firstItem="VXL-K2-0gs" firstAttribute="centerX" secondItem="2S2-eZ-Hfp" secondAttribute="centerX" id="wDU-DY-TGJ"/>
-                                            <constraint firstItem="T8L-Dk-bzQ" firstAttribute="top" secondItem="VXL-K2-0gs" secondAttribute="bottom" constant="20" id="wVN-2g-DAV"/>
-                                            <constraint firstItem="T8L-Dk-bzQ" firstAttribute="leading" secondItem="2S2-eZ-Hfp" secondAttribute="leading" constant="24" id="xDJ-HR-YRu"/>
-                                            <constraint firstAttribute="trailing" secondItem="VXL-K2-0gs" secondAttribute="trailing" constant="24" id="zgS-Ja-QGV"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="2S2-eZ-Hfp" firstAttribute="leading" secondItem="P5Z-U5-mm1" secondAttribute="leading" id="AhK-ao-xlY"/>
-                                    <constraint firstAttribute="trailing" secondItem="2S2-eZ-Hfp" secondAttribute="trailing" id="tVc-KL-Dwp"/>
-                                    <constraint firstAttribute="bottom" secondItem="2S2-eZ-Hfp" secondAttribute="bottom" id="tzc-9C-09C"/>
-                                    <constraint firstItem="2S2-eZ-Hfp" firstAttribute="top" secondItem="P5Z-U5-mm1" secondAttribute="top" id="wCv-CD-yH0"/>
-                                </constraints>
-                            </scrollView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rws-4p-DN2" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="468" width="320" height="100"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" placeholder="YES" id="NVx-Cu-h6D"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="qYM-lS-3cz" firstAttribute="width" secondItem="3Vc-1h-afS" secondAttribute="width" id="4YY-tF-SDh"/>
-                            <constraint firstItem="P5Z-U5-mm1" firstAttribute="leading" secondItem="3Vc-1h-afS" secondAttribute="leading" id="CsL-P9-s7z"/>
-                            <constraint firstItem="rws-4p-DN2" firstAttribute="top" secondItem="P5Z-U5-mm1" secondAttribute="bottom" id="EIr-Hc-jNT"/>
-                            <constraint firstItem="rws-4p-DN2" firstAttribute="leading" secondItem="3Vc-1h-afS" secondAttribute="leading" id="Hm7-QF-HGS"/>
-                            <constraint firstItem="rws-4p-DN2" firstAttribute="bottom" secondItem="3Vc-1h-afS" secondAttribute="bottom" id="QFi-ol-Kpf"/>
-                            <constraint firstItem="P5Z-U5-mm1" firstAttribute="top" secondItem="XFJ-rz-v4I" secondAttribute="top" id="i5A-zQ-FVJ"/>
-                            <constraint firstItem="P5Z-U5-mm1" firstAttribute="trailing" secondItem="3Vc-1h-afS" secondAttribute="trailing" id="kZv-4Y-Xzk"/>
-                            <constraint firstItem="3Vc-1h-afS" firstAttribute="trailing" secondItem="rws-4p-DN2" secondAttribute="trailing" id="lyu-xF-9Am"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="3Vc-1h-afS"/>
-                        <connections>
-                            <outlet property="learnMoreButton" destination="A0e-Oe-lRJ" id="KOQ-Nu-deX"/>
-                            <outlet property="textLabel" destination="T8L-Dk-bzQ" id="uHt-hy-7i0"/>
-                            <outlet property="titleLabel" destination="VXL-K2-0gs" id="lcK-bh-xvO"/>
-                        </connections>
-                    </view>
-                    <connections>
-                        <outlet property="instructionTextView" destination="j4d-g1-HXu" id="dg2-eO-k74"/>
-                        <outlet property="learnMoreBottomConstraint" destination="aoS-uk-x8r" id="m49-Te-31d"/>
-                        <outlet property="navigationFooter" destination="rws-4p-DN2" id="ERd-sp-J8W"/>
-                        <outlet property="navigationHeader" destination="qYM-lS-3cz" id="AE0-s6-bCj"/>
-                        <outlet property="resultLabel" destination="4Sq-Zw-fx5" id="Ebg-pi-64J"/>
-                        <outlet property="resultTitleLabel" destination="hn8-Hm-gXw" id="1O2-1l-ZiQ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KdC-8o-3lO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-81" y="206"/>
-        </scene>
     </scenes>
     <resources>
         <image name="closeActivity" width="32" height="32"/>
@@ -447,9 +290,6 @@
         <image name="stairStepSmall1" width="1694" height="1334"/>
         <namedColor name="buttonTintBlue">
             <color red="0.12941176470588237" green="0.58823529411764708" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="perrywinkleTwo">
-            <color red="0.61960784313725492" green="0.72941176470588232" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="white">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
