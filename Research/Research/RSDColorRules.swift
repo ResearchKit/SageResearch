@@ -266,8 +266,9 @@ open class RSDColorRules  {
     ///     - buttonType: The type of button (primary or secondary).
     /// - returns: The color mapping to use for a rounded button.
     open func roundedButton(on background: RSDColorTile, buttonType: RSDDesignSystem.ButtonType) -> RSDColorMapping {
-        if background == self.palette.grayScale.white && buttonType == .primary {
-            return self.palette.secondary
+        if buttonType == .primary {
+            return (background == self.palette.grayScale.white) ? self.palette.secondary :
+                self.palette.grayScale.mapping(forShade: .white)
         }
         else {
             return self.palette.grayScale.mapping(forShade: .veryLightGray)
