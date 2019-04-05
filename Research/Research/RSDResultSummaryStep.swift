@@ -42,6 +42,9 @@ public protocol RSDResultSummaryStep : RSDUIStep {
     /// The identifier for the result to display.
     var resultIdentifier: String? { get }
     
+    /// The step result identifier for the result to display.
+    var stepResultIdentifier: String? { get }
+    
     /// The localized unit to display for this result.
     var unitText: String? { get }
 }

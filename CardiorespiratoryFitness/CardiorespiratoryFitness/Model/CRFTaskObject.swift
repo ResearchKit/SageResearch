@@ -33,6 +33,10 @@
 
 import Foundation
 
+extension RSDIdentifier {
+    static let demographics: RSDIdentifier = "demographics"
+}
+
 public final class CRFTaskObject: RSDTaskObject, RSDTaskDesign {
     
     public enum DemographicsKeys : String, CodingKey, Codable {
@@ -79,17 +83,31 @@ public final class CRFTaskObject: RSDTaskObject, RSDTaskDesign {
         super.setupTask(with: data, for: path)
     }
     
+    func hasDemographics() -> Bool {
+        return self.birthYear != nil && self.sex != nil
+    }
+    
     /// Override to check if this is one of the demographics questions.
     public override func shouldSkipStep(_ step: RSDStep) -> (shouldSkip: Bool, stepResult: RSDResult?) {
-        guard step.stepType == .demographics,
-            let formStep = step as? RSDFormUIStep,
-            let inputField = formStep.inputFields.first,
-            let value = previousRunData[step.identifier]
+        guard hasDemographics(),
+            (step.stepType == .demographics || step.identifier == RSDIdentifier.demographics.stringValue)
             else {
                 return (false, nil)
         }
-        let answerResult = RSDAnswerResultObject(identifier: step.identifier, answerType: inputField.dataType.defaultAnswerResultType(), value: value)
-        return (true, answerResult)
+        if step.stepType == .demographics {
+            guard let formStep = step as? RSDFormUIStep,
+                let inputField = formStep.inputFields.first,
+                let value = previousRunData[step.identifier]
+            else {
+                return (false, nil)
+            }
+            let answerResult = RSDAnswerResultObject(identifier: step.identifier, answerType: inputField.dataType.defaultAnswerResultType(), value: value)
+            return (true, answerResult)
+        }
+        else {
+            let result = step.instantiateStepResult()
+            return (true, result)
+        }
     }
     
     /// Return the design system from the factory.

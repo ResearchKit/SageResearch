@@ -120,9 +120,9 @@ internal class TaskArchiver : NSObject {
     func buildArchives() throws -> [RSDDataArchive] {
         
         // recursively add all the archives to this archiver.
-        try recursiveAddFunc(nil, nil, taskResult.stepHistory)
+        try recursiveAddFunc(nil, nil, nil, taskResult.stepHistory)
         if self.archive != nil, let asyncResults = taskResult.asyncResults {
-            try recursiveAddFunc(nil, nil, asyncResults)
+            try recursiveAddFunc(nil, nil, nil, asyncResults)
         }
         
         // The archives include any child archives
@@ -163,7 +163,7 @@ internal class TaskArchiver : NSObject {
         return archives
     }
     
-    func recursiveAddFunc(_ sectionIdentifier: String?, _ stepPath: String?, _ results: [RSDResult]) throws {
+    func recursiveAddFunc(_ sectionIdentifier: String?, _ collectionIdentifier: String?, _ stepPath: String?, _ results: [RSDResult]) throws {
         for result in results {
             if let taskResult = result as? RSDTaskResult {
                 if let subArchiver = TaskArchiver(manager: manager, taskResult: taskResult, inputArchive: archive) {
@@ -174,19 +174,19 @@ internal class TaskArchiver : NSObject {
                 else {
                     // Otherwise, recurse into the task result and add its results to this archive.
                     let path = (stepPath != nil) ? "\(stepPath!)/\(taskResult.identifier)" : taskResult.identifier
-                    try recursiveAddFunc(taskResult.identifier, path, taskResult.stepHistory)
+                    try recursiveAddFunc(taskResult.identifier, nil, path, taskResult.stepHistory)
                     if let asyncResults = taskResult.asyncResults {
-                        try recursiveAddFunc(taskResult.identifier, path, asyncResults)
+                        try recursiveAddFunc(taskResult.identifier, nil, path, asyncResults)
                     }
                 }
             }
             else {
-                try addToArchive(sectionIdentifier, stepPath, result)
+                try addToArchive(sectionIdentifier, collectionIdentifier, stepPath, result)
             }
         }
     }
     
-    func addToArchive(_ sectionIdentifier: String?, _ stepPath: String?, _ result: RSDResult) throws {
+    func addToArchive(_ sectionIdentifier: String?, _ collectionIdentifier: String?, _ stepPath: String?, _ result: RSDResult) throws {
         // If there is no archive for this level, then all the non-task results are ignored.
         guard let archive = self.archive else { return }
         
@@ -208,7 +208,7 @@ internal class TaskArchiver : NSObject {
         }
         else if let collection = result as? RSDCollectionResult {
             let path = (stepPath != nil) ? "\(stepPath!)/\(collection.identifier)" : collection.identifier
-            try recursiveAddFunc(sectionIdentifier, path, collection.inputResults)
+            try recursiveAddFunc(sectionIdentifier, collection.identifier, path, collection.inputResults)
         }
         
         // If this result conforms to the answer result protocol then add it to the answer map
@@ -218,12 +218,9 @@ internal class TaskArchiver : NSObject {
                     if let key = self.manager.answerKey?(for: answerResult.identifier, with: sectionIdentifier) {
                         return key
                     }
-                    else if let section = sectionIdentifier {
-                        return "\(section).\(result.identifier)"
-                    }
-                    else {
-                        return result.identifier
-                    }
+                    let sectionPrefix = (sectionIdentifier != nil) ? "\(sectionIdentifier!)_" : ""
+                    let collectionPrefix = (collectionIdentifier != nil && collectionIdentifier != result.identifier) ? "\(collectionIdentifier!)_" : ""
+                    return "\(sectionPrefix)\(collectionPrefix)\(result.identifier)"
                 }()
                 answerMap[answerIdentifier] = AnswerResultWrapper(answerResult: answerResult)
             }

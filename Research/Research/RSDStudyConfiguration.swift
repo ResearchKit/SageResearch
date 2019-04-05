@@ -64,7 +64,7 @@ open class RSDStudyConfiguration {
     
     /// Is this device tied to a single participant or is the device being used in a study where there is a
     /// single mobile device that is being used to run tasks for multiple participants, such as a device used
-    /// as part of a Phase 1 or Preclinical trial? (Default == `true`)
+    /// as part of a Phase 1 or Preclinical trial? (Default = `true`)
     open var isParticipantDevice : Bool = true
     
     /// The default color palette to use for this app.
@@ -74,5 +74,9 @@ open class RSDStudyConfiguration {
         }
     }
     
+    /// Has the color palette been set for this app or is it set to the default?
     public private(set) var hasSetColorPallette: Bool = false
+    
+    /// A flag for whether or not tasks that support "remind me later" should show that action. (Default = `false`)
+    open var shouldShowRemindMe: Bool = false
 }

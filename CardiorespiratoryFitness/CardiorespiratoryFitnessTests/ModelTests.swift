@@ -47,6 +47,43 @@ class ModelTests: XCTestCase {
         super.tearDown()
     }
     
+    func checkHeartRate(_ task: CRFTask, _ stepIdentifier: String, _ isResting: Bool,_ isTraining: Bool) -> Bool {
+        guard let step = task.findStep(with: stepIdentifier) as? CRFHeartRateStep else {
+            XCTFail("Failed to find the heart rate step.")
+            return false
+        }
+        XCTAssertEqual(step.isResting, isResting)
+        XCTAssertEqual(step.isTraining, isTraining)
+        return (step.isResting == isResting) && (step.isTraining == isTraining)
+    }
+    
+    func checkFeedback(_ task: CRFTask, _ feedbackIdentifier: String, _ resultIdentifier: String, _ stepIdentifier: String?) -> Bool {
+        
+        guard let feedback = task.findStep(with: feedbackIdentifier) as? RSDResultSummaryStepObject else {
+            XCTFail("Failed to find the feedback step.")
+            return false
+        }
+        
+        if let expectedId = stepIdentifier {
+            if let stepResultId = feedback.stepResultIdentifier {
+                let resultFrom = task.findStep(with: stepResultId)
+                XCTAssertNotNil(resultFrom, "The result step has the wrong step identifier")
+                XCTAssertEqual(stepResultId, expectedId)
+                if resultFrom == nil || stepResultId != expectedId {
+                    return false
+                }
+            }
+            else {
+                XCTFail("Feedback should include the step identifier for the result step.")
+                return false
+            }
+        }
+        
+        XCTAssertEqual(feedback.resultIdentifier, resultIdentifier)
+        
+        return (feedback.resultIdentifier == resultIdentifier)
+    }
+    
     func testTrainingTask() {
         NSLocale.setCurrentTest(Locale(identifier: "en_US"))
         
@@ -59,6 +96,22 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(taskInfo.estimatedMinutes, 2)
         XCTAssertEqual(taskInfo.schemaInfo?.schemaIdentifier, "Heartrate Training")
         XCTAssertEqual(taskInfo.schemaInfo?.schemaVersion, 1)
+        
+        guard let feedback = taskInfo.task.findStep(with: "feedback") as? RSDResultSummaryStepObject else {
+            XCTFail("Failed to find the feedback step.")
+            return
+        }
+        
+        guard let action = feedback.actions?[.navigation(.skip)] as? RSDNavigationUIAction else {
+            XCTFail("Feedback step does not have expected skip action.")
+            return
+        }
+        
+        let skipTo = taskInfo.task.findStep(with: action.skipToIdentifier)
+        XCTAssertNotNil(skipTo, "The skip action has the wrong step identifier")
+        
+        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback", "resting", "hr"))
+        XCTAssertTrue(checkHeartRate(taskInfo.task, "hr", true, true))
     }
     
     func testRestingTask() {
@@ -81,6 +134,11 @@ class ModelTests: XCTestCase {
         
         let steps = navigator.steps.map { $0.identifier }
         XCTAssertEqual(steps, ["introduction", "sitDownInstruction", "coverFlash", "hr1", "feedback1", "hr", "feedback"])
+        
+        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback", "resting", "hr"))
+        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback1", "resting", "hr1"))
+        XCTAssertTrue(checkHeartRate(taskInfo.task, "hr", true, false))
+        XCTAssertTrue(checkHeartRate(taskInfo.task, "hr1", true, false))
     }
     
     // TODO: syoung 04/02/2019 Remove commented out code. Leaving for now in case researchers change their mind again.
@@ -116,6 +174,9 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(taskInfo.subtitle, "You will be stepping up and down a step for 3 minutes to raise your heart rate. Right after you finish stepping, measure your heart rate for 1 minute to see how your heart rate recovers.")
         XCTAssertNil(taskInfo.detail)
         XCTAssertEqual(taskInfo.estimatedMinutes, 5)
+        
+        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback", "vo2Max", "hr"))
+        XCTAssertTrue(checkHeartRate(taskInfo.task, "hr", false, false))
     }
     
     func testDecodeTasks() {

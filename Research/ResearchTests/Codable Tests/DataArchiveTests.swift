@@ -62,12 +62,16 @@ class DataArchiveTests: XCTestCase {
             taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
             taskViewModel.taskResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             taskViewModel.taskResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
+            taskViewModel.taskResult.appendStepHistory(with: buildSingleAnswerResult(identifier: "single", answer: 5))
+            taskViewModel.taskResult.appendStepHistory(with: RSDAnswerResultObject(identifier: "only", answerType: .integer, value: 7))
             
             // add the second collection as a subsection
             var sectionResult = RSDTaskResultObject(identifier: "sectionA")
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step1"))
             sectionResult.appendStepHistory(with: RSDResultObject(identifier: "step2"))
             sectionResult.appendStepHistory(with: buildCollectionResult(identifier: "collection"))
+            sectionResult.appendStepHistory(with: buildSingleAnswerResult(identifier: "single", answer: 3))
+            sectionResult.appendStepHistory(with: RSDAnswerResultObject(identifier: "only", answerType: .integer, value: 9))
             taskViewModel.taskResult.appendStepHistory(with: sectionResult)
 
             let manager = TestArchiveManager()
@@ -105,9 +109,13 @@ class DataArchiveTests: XCTestCase {
                     }
                     let decoder = RSDFactory.shared.createJSONDecoder()
                     let dictionary = try decoder.decode([String : Int].self, from: data)
-                    XCTAssertEqual(dictionary.count, 6)
-                    XCTAssertEqual(dictionary["input1"], 1)
-                    XCTAssertEqual(dictionary["sectionA.input2"], 2)
+                    XCTAssertEqual(dictionary.count, 10)
+                    XCTAssertEqual(dictionary["collection_input1"], 1)
+                    XCTAssertEqual(dictionary["sectionA_collection_input2"], 2)
+                    XCTAssertEqual(dictionary["single"], 5)
+                    XCTAssertEqual(dictionary["sectionA_single"], 3)
+                    XCTAssertEqual(dictionary["only"], 7)
+                    XCTAssertEqual(dictionary["sectionA_only"], 9)
 
                 case "taskResult.json":
                     XCTAssertEqual(manifest.contentType, "application/json")
@@ -187,7 +195,7 @@ class DataArchiveTests: XCTestCase {
                         let decoder = RSDFactory.shared.createJSONDecoder()
                         let dictionary = try decoder.decode([String : Int].self, from: data)
                         XCTAssertEqual(dictionary.count, 3)
-                        XCTAssertEqual(dictionary["input1"], 1)
+                        XCTAssertEqual(dictionary["collection_input1"], 1)
                         
                     case "taskResult.json":
                         XCTAssertEqual(manifest.contentType, "application/json")
@@ -238,6 +246,12 @@ class DataArchiveTests: XCTestCase {
         for ii in 1...3 {
             collectionResult.appendInputResults(with: buildAnswerResult(identifier: "input\(ii)", answerType: .integer, answer: ii))
         }
+        return collectionResult
+    }
+    
+    func buildSingleAnswerResult(identifier: String, answer: Int) -> RSDCollectionResultObject {
+        var collectionResult = RSDCollectionResultObject(identifier: identifier)
+        collectionResult.appendInputResults(with: RSDAnswerResultObject(identifier: identifier, answerType: .integer, value: answer))
         return collectionResult
     }
 }

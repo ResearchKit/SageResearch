@@ -419,6 +419,8 @@ public class TestTaskController: NSObject, RSDTaskController {
         self.taskViewModel.perform(actionType: .navigation(.goBackward))
     }
     
+    /// This is a convenience method that cannot be used to go forward if there are async actions being
+    /// being started because they would end up on the next run loop.
     public func test_stepTo(_ stepIdentifier: String) -> RSDStep {
         var loopCount: Int = 0
         if self.taskViewModel.currentNode == nil {

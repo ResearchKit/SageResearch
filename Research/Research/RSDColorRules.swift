@@ -187,10 +187,7 @@ open class RSDColorRules  {
     ///     - textType: The type size of the UI element.
     /// - returns: The text color to use.
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
-        if textType == .counter, background == self.palette.grayScale.white {
-            return self.palette.accent.normal.color
-        }
-        else if background.usesLightStyle {
+        if background.usesLightStyle {
             return self.palette.grayScale.white.color
         }
         else {
@@ -448,6 +445,6 @@ open class RSDColorRules  {
     /// - parameter background: The background of the table cell.
     /// - returns: The color of the underline.
     open func textFieldUnderline(on background: RSDColorTile) -> RSDColor {
-        return background.usesLightStyle ? self.palette.grayScale.white.color : self.palette.grayScale.darkGray.color
+        return self.palette.accent.normal.color
     }
 }

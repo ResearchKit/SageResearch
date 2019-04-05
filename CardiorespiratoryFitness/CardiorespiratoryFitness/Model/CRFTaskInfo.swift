@@ -2,7 +2,7 @@
 //  CRFTaskInfo.swift
 //  CardiorespiratoryFitness
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -256,7 +256,7 @@ extension RSDTaskObject : CRFTask {
 
 extension RSDTask {
     
-    fileprivate func findStep(with identifier: String) -> RSDStep? {
+    func findStep(with identifier: String) -> RSDStep? {
         guard let navigator = self.stepNavigator as? RSDConditionalStepNavigator else { return nil }
         for step in navigator.steps {
             if let task = step as? RSDTask, let substep = task.findStep(with: identifier) {

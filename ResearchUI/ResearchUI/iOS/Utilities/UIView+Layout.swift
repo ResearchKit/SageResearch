@@ -42,7 +42,7 @@ extension CGFloat {
     /// - parameter max: A maximum size to apply to the returned value.
     public func rsd_proportionalToScreenWidth(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
         let baseline = CGFloat(320.0)
-        let ret = (UIScreen.main.bounds.size.width / baseline) * self
+        let ret = ceil((UIScreen.main.bounds.size.width / baseline) * self)
         return ret < max ? ret : max
     }
     
@@ -53,7 +53,7 @@ extension CGFloat {
     /// - parameter max: A maximum size to apply to the returned value.
     public func rsd_proportionalToScreenHeight(max: CGFloat = CGFloat.greatestFiniteMagnitude) -> CGFloat {
         let baseline = CGFloat(568.0)
-        let ret = (UIScreen.main.bounds.size.height / baseline) * self
+        let ret = ceil((UIScreen.main.bounds.size.height / baseline) * self)
         return ret < max ? ret : max
     }
     

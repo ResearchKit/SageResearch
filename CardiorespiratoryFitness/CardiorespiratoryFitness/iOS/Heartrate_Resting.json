@@ -66,9 +66,10 @@
         "title": "Cover the flash and camera",
         "text": "Use your finger to cover the camera and flash on the back of your phone. Your finger nail should turn a little red once you cover the flash.",
         "image": {
-            "type": "fetchable",
-            "imageName": "fingerOverFlash",
-            "placementType": "topMarginBackground"
+            "type": "animated",
+            "imageNames": ["Cover_Flash_1", "Cover_Flash_2", "Cover_Flash_3"],
+            "placementType": "topMarginBackground",
+            "animationDuration": 1.5
         },
         "actions": {
             "goForward": {
@@ -86,7 +87,8 @@
         "identifier": "feedback1",
         "type": "feedback",
         "resultTitle": "Your resting heart rate is",
-        "resultIdentifier": "hr1_resting",
+        "stepResultIdentifier": "hr1",
+        "resultIdentifier": "resting",
         "unitText": "BPM",
         "title": "Measure twice",
         "text": "Many things can influence your measurement. To improve the accuracy, let's meaure it one more time.",
@@ -109,7 +111,8 @@
         "identifier": "feedback",
         "type": "completion",
         "resultTitle": "Your resting heart rate is",
-        "resultIdentifier": "hr_resting",
+        "stepResultIdentifier": "hr",
+        "resultIdentifier": "resting",
         "unitText": "BPM",
         "title": "Resting HR Captured!",
         "text": "Great job measuring your heart at rest. We've finished the first half of your heart snapshot, so let's continue on to the next step.",

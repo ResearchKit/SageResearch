@@ -120,6 +120,10 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
         _startProgressAnimation()
     }
     
+    override open func reset() {
+        super.reset()
+        self.countdownDial?.progress = 0
+    }
     
     // MARK: Dial progress indicator
     

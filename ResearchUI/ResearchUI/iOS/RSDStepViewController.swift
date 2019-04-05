@@ -639,6 +639,8 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     var hasCalledGoForward = false
     
+    
+    
     /// Navigates backward to the previous step. By default, it calls stop() to stop the timer
     /// and then calls `goBack` on the task controller.
     ///
@@ -849,7 +851,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     
     /// The permissions that are requested as a part of this step.
-    open func requestPermissions() -> [RSDStandardPermission]? {
+    open func requestedPermissions() -> [RSDStandardPermission]? {
         return (self.step as? RSDStandardPermissionsStep)?.standardPermissions?.filter { $0.requestIfNeeded }
     }
     
@@ -1009,6 +1011,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     private func _stopTimer() {
         timer?.invalidate()
         timer = nil
+    }
+    
+    // Reset the countdown clock.
+    open func reset() {
+        clock = nil
+        countdown = 0
     }
     
     /// Pause the timer.

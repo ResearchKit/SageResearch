@@ -65,4 +65,29 @@ public struct RSDAudioVisualAuthorization {
             return .denied
         }
     }
+    
+    public static func requestAuthorization(for permission: RSDStandardPermission, _ completion: @escaping ((RSDAuthorizationStatus, Error?) -> Void)) {
+        switch permission.permissionType {
+        case .camera:
+            _requestAuthorization(for: .video, permission, completion)
+        case .microphone:
+            _requestAuthorization(for: .audio, permission, completion)
+        default:
+            assertionFailure("This is not a recognized audiovisual permission.")
+            let error = RSDPermissionError.notAuthorized(permission, .denied)
+            completion(.denied, error)
+        }
+    }
+    
+    private static func _requestAuthorization(for mediaType : AVMediaType, _ permission:RSDStandardPermission, _ completion: @escaping ((RSDAuthorizationStatus, Error?) -> Void)) {
+
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            if granted {
+                completion(.authorized, nil)
+            } else {
+                let error = RSDPermissionError.notAuthorized(permission, .denied)
+                completion(.denied, error)
+            }
+        }
+    }
 }

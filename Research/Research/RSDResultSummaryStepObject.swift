@@ -37,7 +37,7 @@ import Foundation
 open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case unitText, resultIdentifier, resultTitle, formatter
+        case unitText, resultIdentifier, stepResultIdentifier, resultTitle, formatter
     }
     
     /// Text to display as the title above the result.
@@ -46,7 +46,10 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
     /// The localized unit text to display for this step.
     open private(set) var unitText: String?
     
-    /// the identifier for the answer result.
+    /// The identifier for the step result that contains the answer result.
+    open private(set) var stepResultIdentifier: String?
+    
+    /// The identifier for the answer result.
     open private(set) var resultIdentifier: String?
     
     // MARK: Initializers
@@ -59,10 +62,11 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
         try super.init(from: decoder)
     }
     
-    public init(identifier: String, resultIdentifier: String, unitText: String? = nil) {
+    public init(identifier: String, resultIdentifier: String, unitText: String? = nil, stepResultIdentifier: String? = nil) {
         super.init(identifier: identifier, type: nil)
         self.resultIdentifier = resultIdentifier
         self.unitText = unitText
+        self.stepResultIdentifier = stepResultIdentifier
     }
     
     
@@ -83,6 +87,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
         subclassCopy.resultTitle = self.resultTitle
         subclassCopy.unitText = self.unitText
         subclassCopy.resultIdentifier = self.resultIdentifier
+        subclassCopy.stepResultIdentifier = self.stepResultIdentifier
     }
     
     /// Override the decoder per device type b/c the task may require a different set of permissions depending upon the device.
@@ -92,6 +97,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
         self.resultTitle = try container.decodeIfPresent(String.self, forKey: .resultTitle) ?? self.resultTitle
         self.unitText = try container.decodeIfPresent(String.self, forKey: .unitText) ?? self.unitText
         self.resultIdentifier = try container.decodeIfPresent(String.self, forKey: .resultIdentifier) ?? self.resultIdentifier
+        self.stepResultIdentifier = try container.decodeIfPresent(String.self, forKey: .stepResultIdentifier) ?? self.stepResultIdentifier
     }
     
     // Overrides must be defined in the base implementation

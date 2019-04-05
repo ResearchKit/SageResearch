@@ -118,14 +118,6 @@
                      "viewIdentifier":"Completion",
                      "storyboardIdentifier":"ActiveTaskSteps"
                  },
-                 "colorMapping":{
-                     "type": "placementMapping",
-                     "placement": {
-                         "header": "successGreen",
-                         "body": "white",
-                         "footer": "white"
-                     }
-                 },
                  "spokenInstructions":{
                      "start":"Great job, you are done with the Tremor test."
                  },

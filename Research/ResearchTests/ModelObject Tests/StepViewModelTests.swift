@@ -216,4 +216,28 @@ class StepViewModelTests: XCTestCase {
         XCTAssertNotNil(resultText)
         XCTAssertEqual(resultText, "1")
     }
+    
+    func testResultSummaryStepViewModel_Collection() {
+        let resultStep = RSDResultSummaryStepObject(identifier: "feedback", resultIdentifier: "foo", unitText: nil, stepResultIdentifier: "step2")
+
+        var result1 = RSDCollectionResultObject(identifier: "step1")
+        var answerResult1 = RSDAnswerResultObject(identifier: "foo", answerType: .string)
+        answerResult1.value = "magoo"
+        result1.inputResults = [answerResult1, RSDResultObject(identifier: "roo")]
+        
+        var result2 = RSDCollectionResultObject(identifier: "step2")
+        var answerResult2 = RSDAnswerResultObject(identifier: "foo", answerType: .string)
+        answerResult2.value = "blu"
+        result2.inputResults = [answerResult2, RSDResultObject(identifier: "roo")]
+        
+        var taskResult = RSDTaskResultObject(identifier: "magoo")
+        taskResult.stepHistory = [result1, result2]
+        
+        let stepViewModel = RSDResultSummaryStepViewModel(step: resultStep, parent: nil)
+        stepViewModel.taskResult = taskResult
+        
+        let resultText = stepViewModel.resultText
+        XCTAssertNotNil(resultText)
+        XCTAssertEqual(resultText, "blu")
+    }
 }
