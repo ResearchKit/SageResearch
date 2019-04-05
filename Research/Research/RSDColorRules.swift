@@ -445,6 +445,6 @@ open class RSDColorRules  {
     /// - parameter background: The background of the table cell.
     /// - returns: The color of the underline.
     open func textFieldUnderline(on background: RSDColorTile) -> RSDColor {
-        return background.usesLightStyle ? self.palette.grayScale.white.color : self.palette.grayScale.darkGray.color
+        return self.palette.accent.normal.color
     }
 }

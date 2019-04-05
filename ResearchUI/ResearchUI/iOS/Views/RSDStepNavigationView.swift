@@ -344,14 +344,14 @@ public protocol RSDNavigationHeaderLayoutConstants {
 
 /// Default constants.
 fileprivate struct DefaultNavigationHeaderLayoutConstants {
-    let topMargin: CGFloat = CGFloat(18.0).rsd_iPadMultiplier(1.5)
+    let topMargin: CGFloat = CGFloat(18.0).rsd_proportionalToScreenHeight(max: 28)
     let bottomMargin: CGFloat = CGFloat(18.0).rsd_iPadMultiplier(1.5)
     let sideMargin: CGFloat = CGFloat(30.0).rsd_proportionalToScreenWidth()
     let promptBottomMargin: CGFloat = CGFloat(10.0).rsd_iPadMultiplier(1.5)
     let horizontalSpacing: CGFloat = CGFloat(16.0).rsd_iPadMultiplier(2)
     let verticalSpacing: CGFloat = CGFloat(10.0).rsd_iPadMultiplier(1.5)
     let barButtonHeight: CGFloat = CGFloat(32.0).rsd_iPadMultiplier(1.5)
-    let buttonToTop: CGFloat = CGFloat(12.0).rsd_iPadMultiplier(2)
+    let buttonToTop: CGFloat = CGFloat(20.0).rsd_iPadMultiplier(2)
     let imageViewHeight: CGFloat = CGFloat(100.0).rsd_proportionalToScreenHeight()
     let labelMaxLayoutWidth: CGFloat = {
         return CGFloat(UIScreen.main.bounds.size.width - (2 * CGFloat(30.0).rsd_proportionalToScreenWidth()))
@@ -509,7 +509,7 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
             _interactiveContraints.append(contentsOf:
                 cancelButton.rsd_alignToSuperview([.leading], padding: constants.horizontalSpacing))
             _interactiveContraints.append(contentsOf:
-                cancelButton.rsd_alignToSuperview([.top], padding: constants.buttonToTop))
+                cancelButton.rsd_alignToSuperview([.topMargin], padding: constants.buttonToTop))
             _interactiveContraints.append(contentsOf:
                 cancelButton.rsd_makeHeight(.equal, constants.barButtonHeight))
             topView = cancelButton
@@ -523,7 +523,7 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
                 _interactiveContraints.append(contentsOf:
                     progressView.rsd_align([.leading], .equal, to: cancelButton, [.trailing], padding: constants.horizontalSpacing))
                 _interactiveContraints.append(contentsOf:
-                    progressView.rsd_alignToSuperview([.trailing], padding: constants.horizontalSpacing))
+                    progressView.rsd_alignToSuperview([.trailing], padding: 2*constants.horizontalSpacing))
                 _interactiveContraints.append(contentsOf:
                     progressView.rsd_align([.centerY], .equal, to: cancelButton, [.centerY], padding: 0.0))
             } else {
@@ -615,7 +615,7 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         if lastView != nil {
             // align below last view. If the last view is the progressView, then we want our gap to be
             // the topMargin, otherwise it's verticalSpacing
-            let gap = (lastView == progressView) ? constants.topMargin :
+            let gap = (lastView == progressView || lastView == cancelButton) ? constants.topMargin :
                 ((lastView == imageView) ? 2 * constants.verticalSpacing : constants.verticalSpacing)
             _interactiveContraints.append(contentsOf:
                 view.rsd_alignBelow(view: lastView!, padding: gap))
@@ -812,7 +812,10 @@ open class RSDGenericNavigationFooterView: RSDNavigationFooterView {
         skipButton!.isHidden = isSkipHidden
         
         _interactiveContraints.append(contentsOf:
-            nextButton!.rsd_alignToSuperview([.top], padding: constants.topMargin))
+            nextButton!.rsd_alignToSuperview([.top], padding: constants.topMargin, priority: UILayoutPriority(800.0)))
+        
+        _interactiveContraints.append(contentsOf:
+            nextButton!.rsd_align([.top], .greaterThanOrEqual, to: nextButton!.superview, [.top], padding: constants.topMargin))
         
         if isBackHidden {
             // if we don't have backButton, align left edge of nextButton to superview left

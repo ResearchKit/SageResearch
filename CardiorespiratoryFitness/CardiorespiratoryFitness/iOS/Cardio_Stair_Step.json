@@ -6,7 +6,7 @@
     },
     "usesTrackedData": true,
     "shouldHideActions": ["goBackward", "skip"],
-    "progressMarkers": [],
+    "progressMarkers": ["sex", "birthYear"],
     "asyncActions":[
         {
             "identifier":"motion",

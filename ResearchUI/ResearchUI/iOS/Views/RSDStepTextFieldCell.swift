@@ -278,6 +278,7 @@ open class RSDStepTextViewCell: RSDTableViewCell {
 
 /// `RSDStepTextFieldCellLayoutConstants` defines the layout constants used by a `RSDStepTextFieldCell`.
 public protocol RSDStepTextFieldCellLayoutConstants {
+    var featuredCellVerticalMargin: CGFloat { get }
     var verticalMargin: CGFloat { get }
     var verticalPadding: CGFloat { get }
     var sideMargin: CGFloat { get }
@@ -295,9 +296,10 @@ public protocol RSDStepTextViewCellLayoutConstants {
 
 /// Default constants used by a `RSDStepTextFieldCell`.
 fileprivate struct RSDDefaultStepTextFieldCellLayoutConstants {
+    let featuredCellVerticalMargin: CGFloat = CGFloat(22).rsd_proportionalToScreenHeight()
     let verticalMargin: CGFloat = 10.0
     let verticalPadding: CGFloat = 7.0
-    let sideMargin: CGFloat = 24.0
+    let sideMargin: CGFloat = 42.0
 }
 
 /// Default constants used by a `RSDStepTextViewCell`.
@@ -343,13 +345,15 @@ open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
         ruleView.rsd_removeSiblingAndAncestorConstraints()
         
         textField.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
-        textField.rsd_alignToSuperview([.top], padding: constants.verticalMargin)
+        textField.rsd_alignToSuperview([.top], padding: constants.featuredCellVerticalMargin)
         
         ruleView.rsd_alignBelow(view: textField, padding: constants.verticalPadding)
         ruleView.rsd_makeHeight(.equal, 1.0)
         
         // align left and right edges of ruleView to the textField
         ruleView.rsd_align([.leading, .trailing], .equal, to: textField, [.leading, .trailing], padding: 0.0)
+        
+        ruleView.rsd_alignToSuperview([.bottom], padding: constants.verticalMargin)
     }
 }
 
