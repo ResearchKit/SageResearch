@@ -53,9 +53,10 @@
         "title": "Find your camera and flash",
         "text": "Your flash is usually next to your camera on the back of the phone. You will need to cover both.",
         "image": {
-            "type": "fetchable",
-            "imageName": "handHoldingPhone",
-            "placementType": "topBackground"
+            "type": "animated",
+            "imageNames": ["FindCameraAndFlash_1", "FindCameraAndFlash_2", "FindCameraAndFlash_3"],
+            "placementType": "topMarginBackground",
+            "animationDuration": 1.5
         },
         "actions": {
             "goForward": {
@@ -70,9 +71,10 @@
         "title": "Cover the flash and camera",
         "text": "Use your finger to cover the camera and flash on the back of your phone. Your finger nail should turn a little red once you cover the flash.",
         "image": {
-            "type": "fetchable",
-            "imageName": "fingerOverFlash",
-            "placementType": "topMarginBackground"
+            "type": "animated",
+            "imageNames": ["Cover_Flash_1", "Cover_Flash_2", "Cover_Flash_3"],
+            "placementType": "topMarginBackground",
+            "animationDuration": 1.5
         },
         "actions": {
             "goForward": {

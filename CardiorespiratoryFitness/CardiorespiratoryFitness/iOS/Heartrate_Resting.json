@@ -66,9 +66,10 @@
         "title": "Cover the flash and camera",
         "text": "Use your finger to cover the camera and flash on the back of your phone. Your finger nail should turn a little red once you cover the flash.",
         "image": {
-            "type": "fetchable",
-            "imageName": "fingerOverFlash",
-            "placementType": "topMarginBackground"
+            "type": "animated",
+            "imageNames": ["Cover_Flash_1", "Cover_Flash_2", "Cover_Flash_3"],
+            "placementType": "topMarginBackground",
+            "animationDuration": 1.5
         },
         "actions": {
             "goForward": {

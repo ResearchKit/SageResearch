@@ -140,9 +140,10 @@
         "title": "Volume turned up?",
         "text": "Bring your phone with you and turn up your phone volume so you can hear the instructions while you are stair stepping.",
         "image": {
-            "type": "fetchable",
-            "imageName": "VolumeUp",
-            "placementType": "topBackground"
+            "type": "animated",
+            "imageNames": ["VolumeTurnedUp_1", "VolumeTurnedUp_2", "CVolumeTurnedUp_3"],
+            "placementType": "topBackground",
+            "animationDuration": 1.5
         },
         "actions": {
             "goForward": {
