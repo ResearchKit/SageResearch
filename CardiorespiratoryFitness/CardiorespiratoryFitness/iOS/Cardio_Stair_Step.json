@@ -11,6 +11,8 @@
         {
             "identifier":"motion",
             "type":"motion",
+            "startStepIdentifier": "countdown",
+            "stopStepIdentifier": "stairStep",
             "requiresBackgroundAudio":true,
             "recorderTypes":["accelerometer"]
         }
