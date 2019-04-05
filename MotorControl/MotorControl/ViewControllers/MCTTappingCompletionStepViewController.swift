@@ -113,4 +113,13 @@ open class MCTTappingCompletionStepViewController : RSDStepViewController {
         self.labelHeightEqualityConstraint.isActive = !(shouldHideLeft || shouldHideRight)
         self.view.setNeedsLayout()
     }
+    
+    open override func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
+        if placement == .header {
+            return self.designSystem.colorRules.palette.successGreen.normal
+        }
+        else {
+            return self.designSystem.colorRules.backgroundLight
+        }
+    }
 }

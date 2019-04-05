@@ -61,4 +61,13 @@ public class MCTCompletionStepViewController : RSDStepViewController {
             self.stepTextLabel?.text = defaultText
         }
     }
+    
+    public override func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
+        if placement == .header {
+            return self.designSystem.colorRules.palette.successGreen.normal
+        }
+        else {
+            return self.designSystem.colorRules.backgroundLight
+        }
+    }
 }

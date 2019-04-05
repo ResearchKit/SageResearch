@@ -209,14 +209,6 @@
                 "viewIdentifier":"Completion",
                 "storyboardIdentifier":"ActiveTaskSteps"
             },
-            "colorMapping":{
-                "type": "placementMapping",
-                "placement": {
-                    "header": "successGreen",
-                    "body": "white",
-                    "footer": "white"
-                }
-            },
             "actions": {
                 "goForward":{
                     "type":"default",
