@@ -12,7 +12,8 @@
                 "permissions":[
                                {
                                 "permissionType":"motion",
-                                "reason":"Access to Motion and Fitness sensors is required to measure the phone's orientation."
+                                "reason":"Access to Motion and Fitness sensors is used to measure the phone's orientation.",
+                                "optional":true
                                }
                             ],
                  "image":{

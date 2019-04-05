@@ -36,7 +36,7 @@ import UIKit
 
 /// `RSDInstructionStepViewController` is a custom step view controller that is intended to be used with the
 /// `RSDInstructionStepViewController.nib` file. This is the default view controller for steps that
-open class RSDInstructionStepViewController: RSDStepViewController {
+open class RSDInstructionStepViewController: RSDPermissionStepViewController {
 
     /// Retuns the imageView, in this case the image from the navigationHeader.
     open var imageView: UIImageView? {

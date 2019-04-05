@@ -2,7 +2,7 @@
 //  RSDOverviewStepViewController.swift
 //  ResearchUI (iOS)
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -34,31 +34,14 @@
 import UIKit
 import UserNotifications
 
-open class RSDOverviewStepViewModel: RSDStepViewModel {
-    
-    public fileprivate(set) var authorizationStatus: RSDAuthorizationStatus?
-    
-    /// Override the forward button to disable until the status is checked.
-    override open var isForwardEnabled: Bool {
-        return super.isForwardEnabled && !(authorizationStatus?.isDenied() ?? true)
-    }
-}
-
 /// `RSDOverviewStepViewController` is a customizable view controller that is designed to be the first view
 /// displayed for an active task that may require checking the user's permissions and allows the user to set
 /// a notification reminder to perform the task at a later time.
-open class RSDOverviewStepViewController: RSDStepViewController {
-    
-    override open func instantiateStepViewModel(for step: RSDStep, with parent: RSDPathComponent?) -> RSDStepViewPathComponent {
-        return RSDOverviewStepViewModel(step: step, parent: parent)
-    }
+open class RSDOverviewStepViewController: RSDPermissionStepViewController {
     
     /// Override viewDidAppear to set up notification handling.
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        // Check the authorization status
-        _updateAuthorizationStatus()
         
         // If this is a reminder action then set that and keep a pointer to it.
         self.reminderAction = self.stepViewModel.action(for: .navigation(.skip)) as? RSDReminderUIAction
@@ -68,59 +51,7 @@ open class RSDOverviewStepViewController: RSDStepViewController {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [reminderIdentifier])
         }
     }
-    
-    
-    // MARK: Permission handling
 
-    private var _authStatus: RSDAuthorizationStatus? {
-        get {
-            return (self.stepViewModel as? RSDOverviewStepViewModel)?.authorizationStatus
-        }
-        set {
-            (self.stepViewModel as? RSDOverviewStepViewModel)?.authorizationStatus = newValue
-        }
-    }
-    
-    /// Check authorization status.
-    private func _updateAuthorizationStatus() {
-        
-        // Check the permission status for all required permissions. This will not **request** permission,
-        // but will just check the current status. If permission is required for a step or async action
-        // within this task, that permission should be requested at the appropriate time after explaining
-        // to the participant why the permission is needed. The purpose of this check is to exit the task
-        // early if the task cannot run and requires changing permission state.
-        let (status, permission) = self.checkAuthorizationStatus()
-        
-        _authStatus = status
-        if status.isDenied(), let permission = permission {
-            if (permission.permissionType == .motion) && (status == .previouslyDenied) {
-                // If this is a motion permission which was previously denied, then query the status to see
-                // if this the forward enabled state should be changed.
-                RSDMotionAuthorization.requestAuthorization() { [weak self] (status, _) in
-                    self?._authStatus = status
-                    if status.isDenied() {
-                        self?.handleAuthorizationFailed(status: status, permission: permission)
-                    } else {
-                        self?.didFinishLoading()
-                    }
-                }
-            }
-            else {
-                handleAuthorizationFailed(status: status, permission: permission)
-            }
-        } else {
-            // Fire the did finish method.
-            didFinishLoading()
-        }
-    }
-    
-    /// Present an alert letting the user know that they do not have authorizations that are required to run
-    /// this task.
-    override open func handleAuthorizationFailed(status: RSDAuthorizationStatus, permission: RSDStandardPermission) {
-        _authStatus = status
-        super.handleAuthorizationFailed(status: status, permission: permission)
-    }
-    
 
     // MARK: Reminder notification handling
     

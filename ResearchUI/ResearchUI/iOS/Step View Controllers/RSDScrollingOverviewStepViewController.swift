@@ -165,36 +165,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         self.navigationFooter?.shouldShowShadow = shouldShowInfo
     }
     
-    /// Override goForward to add in requesting permission to access the motion sensors before continuing.
-    /// This is done here b/c the researchers wanted the balance and walk to use separate recorders. This
-    /// means that the recorder isn't turned on (and thus asking for permission) until after the user has
-    /// put the device in their pocket. syoung 07/25/2018
-    override open func goForward() {
-        let (status, permission) = self.checkAuthorizationStatus()
-        
-        switch status {
-        case .authorized:
-            self._super_goForward()
-            
-        case .notDetermined, .previouslyDenied:
-            // Request permission to access the motion sensors **before** continuing.
-            RSDMotionAuthorization.requestAuthorization() { [weak self] (status, _) in
-                if status.isDenied() {
-                    self?.handleAuthorizationFailed(status: status, permission: permission!)
-                } else {
-                    self?._super_goForward()
-                }
-            }
-            
-        default:
-            self.handleAuthorizationFailed(status: status, permission: permission!)
-        }
-    }
-    
-    func _super_goForward() {
-        super.goForward()
-    }
-    
     /// The function that is called when the info button is tapped.
     override open func showLearnMore() {
         let textLabel = (self.view as? RSDStepNavigationView)?.textLabel
