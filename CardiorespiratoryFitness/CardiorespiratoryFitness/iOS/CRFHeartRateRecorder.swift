@@ -97,21 +97,31 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         return highConfidenceSamples.last
     }
     
-    public func vo2Max() -> (value: Double, confidence: Double)? {
-        guard self.bpmSamples.count > 0 else { return nil }
+    public func vo2Max() -> Double? {
+        guard self.bpmSamples.count > 0,
+            let sexValue = self.taskViewModel.taskResult.findAnswerResult(with: CRFDemographicsKeys.sex.stringValue)?.value as? String,
+            let sex = CRFSex(rawValue: sexValue),
+            let birthYear = self.taskViewModel.taskResult.findAnswerResult(with: CRFDemographicsKeys.birthYear.stringValue)?.value as? Int
+            else {
+                return nil
+        }
         let startTime = self.clock.startSystemUptime + 30
         let highConfidenceSamples = self.bpmSamples.filter {
             $0.confidence >= CRFMinConfidence &&
             ($0.timestamp ?? 0) >= startTime
         }
-        guard highConfidenceSamples.count > 1,
-            let first = highConfidenceSamples.first,
-            let last = highConfidenceSamples.last
-            else {
-                return nil
+        guard highConfidenceSamples.count > 1 else { return nil }
+
+        let age = Double(Calendar(identifier: .iso8601).component(.year, from: Date()) - birthYear)
+        let meanHR = highConfidenceSamples.map({ $0.bpm }).mean()
+        switch sex {
+        case .female:
+            return 83.477 - (0.586 * meanHR) - (0.404 * age) - 7.030
+        case .male:
+            return 83.477 - (0.586 * meanHR) - (0.404 * age)
+        default:
+            return 84.687 - (0.722 * meanHR) - (0.383 * age)
         }
-        
-        return (first.bpm - last.bpm, last.confidence)
     }
     
     public override func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {

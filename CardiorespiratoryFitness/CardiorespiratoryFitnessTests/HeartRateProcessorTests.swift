@@ -127,7 +127,44 @@ class HeartRateProcessorTests: XCTestCase {
         XCTAssertTrue(compare(acf, testData.acf, accuracy: 0.0000001))
     }
     
-    // -- MARK: Mathlab tests for old algorithm
+    let testData: ProcessorTestData = {
+        do {
+            let bundle = Bundle(for: HeartRateProcessorTests.self)
+            let url = bundle.url(forResource: "io_examples", withExtension: "json")!
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            let params = try decoder.decode(ProcessorTestData.self, from: data)
+            return params
+        }
+        catch let err {
+            fatalError("Cannot decode test data. \(err)")
+        }
+    }()
+    
+    struct ProcessorTestData : Codable {
+        
+        let input : [Double]
+        let lowpass : [Double]
+        let highpass : [Double]
+        let mcfilter : [Double]
+        let acf : [Double]
+        let b_lowpass : [Double]
+        let a_lowpass : [Double]
+        let b_highpass : [Double]
+        let a_highpass : [Double]
+        let mean_filter_order : [Int]
+        let sampling_rate_round : [Int]
+        
+        var samplingRate: Int {
+            return sampling_rate_round.first!
+        }
+    }
+
+    
+    
+    
+    // -- MARK: Mathlab tests for old algorithm - leaving in b/c some of the array extensions might prove
+    // useful for other projects.
     
     
     func testXCorr() {
@@ -242,23 +279,6 @@ class HeartRateProcessorTests: XCTestCase {
         }
     }
     
-    func testCalculateHR() {
-        let red = getRedInput()
-        let hrValues = findHeartRateValues(with: red)
-        
-        let expectedHR: [Double] = [84, 82, 82, 77, 77, 78, 78, 80, 80, 84, 138]
-        let expectedConfidence: [Double] = [0.7585, 0.8245, 0.7937, 0.8694, 0.8405, 0.8411, 0.8679, 0.8236, 0.8278, 0.8311, 0.1004]
-        
-        if hrValues.count == expectedHR.count {
-            for (ii, value) in hrValues.enumerated() {
-                XCTAssertEqual(value.heartRate, expectedHR[ii], "\(ii)")
-                XCTAssertEqual(value.confidence, expectedConfidence[ii], accuracy: Double(0.0001), "\(ii)")
-            }
-        } else {
-            XCTAssertEqual(hrValues.count, expectedHR.count, "\(hrValues)")
-        }
-    }
-    
     // Helper methods
     
     func getRedInput() -> [Double] {
@@ -288,38 +308,5 @@ class HeartRateProcessorTests: XCTestCase {
     func getZeroReplaceSeek() -> [Double] {
         return [0.000000000000, 0.000000000000, 0.000000000000, 0.000000000000, 0.000000000000, 0.000000000000, 0.000000000000, -0.000000000000, -0.000000000000, -0.000000000000, -0.000000000000, -0.000000000000, -0.000000000000, -0.000000000000, -0.000000000000, -0.000000000000, -0.000000000000, -0.000021318875, -0.000007578384, 0.000001961349, 0.000007123009, 0.000007729462, 0.000003923226, -0.000004397247, -0.000017134897, -0.000033367358, -0.000051415812, -0.000069321632, -0.000085145006, -0.000097056377, -0.000103577381, -0.000103113100, -0.000094359696, -0.000076793811, -0.000050553239, -0.000016823716, 0.000022682615, 0.000065928601, 0.000109693196, 0.000149545042, 0.000180359545, 0.000197942462, 0.000200383461, 0.000187571996, 0.000161614183, 0.000126279468, 0.000085434116, 0.000043518218, 0.000004446817, -0.000029655671, -0.000057424363, -0.000077621046, -0.000089242460, -0.000092378983, -0.000087962438, -0.000077735123, -0.000064414094, -0.000049728904, -0.000034950939, -0.000021720723, -0.000011090810, -0.000004021795, -0.000001024969, -0.000002184646, -0.000007622092, -0.000016831681, -0.000028606039, -0.000041177794, -0.000053010880, -0.000063076545, -0.000070273421, -0.000073615910, -0.000072181898, -0.000065106733, -0.000052076566, -0.000033133134, -0.000008799218, 0.000019755746, 0.000050447813, 0.000079871525, 0.000104235782, 0.000120844970, 0.000128853619, 0.000128902248, 0.000122044346, 0.000109598905, 0.000092968236, 0.000072983332, 0.000050150219, 0.000025663814
         ]
-    }
-}
-
-let testData: ProcessorTestData = {
-    do {
-        let bundle = Bundle(for: HeartRateProcessorTests.self)
-        let url = bundle.url(forResource: "io_examples", withExtension: "json")!
-        let data = try Data(contentsOf: url)
-        let decoder = JSONDecoder()
-        let params = try decoder.decode(ProcessorTestData.self, from: data)
-        return params
-    }
-    catch let err {
-        fatalError("Cannot decode test data. \(err)")
-    }
-}()
-
-struct ProcessorTestData : Codable {
-    
-    let input : [Double]
-    let lowpass : [Double]
-    let highpass : [Double]
-    let mcfilter : [Double]
-    let acf : [Double]
-    let b_lowpass : [Double]
-    let a_lowpass : [Double]
-    let b_highpass : [Double]
-    let a_highpass : [Double]
-    let mean_filter_order : [Int]
-    let sampling_rate_round : [Int]
-    
-    var samplingRate: Int {
-        return sampling_rate_round.first!
     }
 }

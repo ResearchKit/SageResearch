@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F80479E02257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */; };
 		F80479E22257E52200E569AC /* CRFTorchInstructionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */; };
+		F80479E522580A4E00E569AC /* io_examples_whole.json in Resources */ = {isa = PBXBuildFile; fileRef = F80479E422580A4E00E569AC /* io_examples_whole.json */; };
 		F857BAAD224BE2FE0089B150 /* Heart_Snapshot.html in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */; };
 		F857BAAF224BFB3B0089B150 /* Heartrate_Resting.json in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */; };
 		F86B5290224AE8A700BB7354 /* Heartrate_Training.json in Resources */ = {isa = PBXBuildFile; fileRef = F86B528F224AE8A700BB7354 /* Heartrate_Training.json */; };
@@ -62,6 +63,7 @@
 /* Begin PBXFileReference section */
 		F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStepViewController.swift; sourceTree = "<group>"; };
 		F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStep.swift; sourceTree = "<group>"; };
+		F80479E422580A4E00E569AC /* io_examples_whole.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = io_examples_whole.json; sourceTree = "<group>"; };
 		F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Heart_Snapshot.html; sourceTree = "<group>"; };
 		F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Resting.json; sourceTree = "<group>"; };
 		F86B528F224AE8A700BB7354 /* Heartrate_Training.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Training.json; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 		F880C18820531FBF00ACB4D4 /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
+				F80479E422580A4E00E569AC /* io_examples_whole.json */,
 				F897CF982255B1C20088DFAE /* io_examples.json */,
 				F880C189205320B800ACB4D4 /* red_input_1d.txt */,
 			);
@@ -423,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F897CF992255B1C20088DFAE /* io_examples.json in Resources */,
+				F80479E522580A4E00E569AC /* io_examples_whole.json in Resources */,
 				F880C18A205320B800ACB4D4 /* red_input_1d.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
