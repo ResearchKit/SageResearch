@@ -56,7 +56,8 @@
             "type": "animated",
             "imageNames": ["FindCameraAndFlash_1", "FindCameraAndFlash_2", "FindCameraAndFlash_3"],
             "placementType": "topMarginBackground",
-            "animationDuration": 1.5
+            "animationRepeatCount":1,
+            "animationDuration": 3
         },
         "actions": {
             "goForward": {
@@ -74,7 +75,8 @@
             "type": "animated",
             "imageNames": ["Cover_Flash_1", "Cover_Flash_2", "Cover_Flash_3"],
             "placementType": "topMarginBackground",
-            "animationDuration": 1.5
+            "animationRepeatCount":1,
+            "animationDuration": 3
         },
         "actions": {
             "goForward": {

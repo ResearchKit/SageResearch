@@ -36,6 +36,7 @@ import UIKit
 extension RSDStepType {
     
     static let heartRate: RSDStepType = "heartRate"
+    static let torchInstruction: RSDStepType = "torchInstruction"
 }
 
 fileprivate var _didAddLocalizationBundle: Bool = false
@@ -59,6 +60,8 @@ open class CRFFactory: RSDFactory {
         switch type {
         case .heartRate:
             return try CRFHeartRateStep(from: decoder)
+        case .torchInstruction:
+            return try CRFTorchInstructionStep(from: decoder)
         default:
             return try super.decodeStep(from: decoder, with: type)
         }

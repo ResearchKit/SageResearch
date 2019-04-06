@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F80479E02257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */; };
+		F80479E22257E52200E569AC /* CRFTorchInstructionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */; };
 		F857BAAD224BE2FE0089B150 /* Heart_Snapshot.html in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */; };
 		F857BAAF224BFB3B0089B150 /* Heartrate_Resting.json in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */; };
 		F86B5290224AE8A700BB7354 /* Heartrate_Training.json in Resources */ = {isa = PBXBuildFile; fileRef = F86B528F224AE8A700BB7354 /* Heartrate_Training.json */; };
@@ -53,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStepViewController.swift; sourceTree = "<group>"; };
+		F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStep.swift; sourceTree = "<group>"; };
 		F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Heart_Snapshot.html; sourceTree = "<group>"; };
 		F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Resting.json; sourceTree = "<group>"; };
 		F86B528F224AE8A700BB7354 /* Heartrate_Training.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Training.json; sourceTree = "<group>"; };
@@ -121,9 +125,10 @@
 			isa = PBXGroup;
 			children = (
 				F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */,
-				F89FFDDA205890F80089D8A7 /* CRFTaskInfo.swift */,
 				F880C17E2052081600ACB4D4 /* CRFHeartRateStep.swift */,
+				F89FFDDA205890F80089D8A7 /* CRFTaskInfo.swift */,
 				F8E68EE22252A30900CF0811 /* CRFTaskObject.swift */,
+				F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 		F880C14E2051F88400ACB4D4 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */,
 				F880C14F2051F9FD00ACB4D4 /* CRFHeartRateStepViewController.swift */,
 				F880C1502051F9FD00ACB4D4 /* CRFStairStepViewController.swift */,
 				F8D71AF4224D462F00DA49BC /* CRFHRRecoveryStepViewController.swift */,
@@ -402,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F80479E02257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift in Sources */,
 				F880C17F2052081600ACB4D4 /* CRFHeartRateStep.swift in Sources */,
 				F89FFDDB205890F80089D8A7 /* CRFTaskInfo.swift in Sources */,
 				F880C1542051F9FD00ACB4D4 /* CRFStairStepViewController.swift in Sources */,
@@ -413,6 +420,7 @@
 				F880C18120520CF500ACB4D4 /* CRFCameraSettings.swift in Sources */,
 				F880C15D2051FA5F00ACB4D4 /* CRFHeartRateVideoProcessor.m in Sources */,
 				F8D71AF5224D462F00DA49BC /* CRFHRRecoveryStepViewController.swift in Sources */,
+				F80479E22257E52200E569AC /* CRFTorchInstructionStep.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
