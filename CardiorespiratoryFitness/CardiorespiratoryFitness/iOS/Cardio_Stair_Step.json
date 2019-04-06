@@ -141,7 +141,7 @@
         "text": "Bring your phone with you and turn up your phone volume so you can hear the instructions while you are stair stepping.",
         "image": {
             "type": "animated",
-            "imageNames": ["VolumeTurnedUp_1", "VolumeTurnedUp_2", "CVolumeTurnedUp_3"],
+            "imageNames": ["VolumeTurnedUp_1", "VolumeTurnedUp_2", "VolumeTurnedUp_3"],
             "placementType": "topBackground",
             "animationDuration": 1.5
         },
@@ -190,7 +190,7 @@
         },
         "commands": ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSoundOnFinish"],
         "spokenInstructions": {
-            "end": "Done! Now measure your heart rate again."
+            "end": "Done! Now measure your heart rate."
         },
         "viewTheme": {
             "viewIdentifier": "StairStep",
@@ -206,7 +206,7 @@
     {
         "identifier": "feedback",
         "type": "completion",
-        "resultTitle": "Your Recovery HR Score is estimated between",
+        "resultTitle": "Your Recovery HR Score is estimated as",
         "stepResultIdentifier": "hr",
         "resultIdentifier": "vo2Max",
         "title": "Recovery HR Score",
