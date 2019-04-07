@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		F80479E02257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */; };
 		F80479E22257E52200E569AC /* CRFTorchInstructionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */; };
-		F80479E522580A4E00E569AC /* io_examples_whole.json in Resources */ = {isa = PBXBuildFile; fileRef = F80479E422580A4E00E569AC /* io_examples_whole.json */; };
 		F857BAAD224BE2FE0089B150 /* Heart_Snapshot.html in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */; };
 		F857BAAF224BFB3B0089B150 /* Heartrate_Resting.json in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */; };
 		F86B5290224AE8A700BB7354 /* Heartrate_Training.json in Resources */ = {isa = PBXBuildFile; fileRef = F86B528F224AE8A700BB7354 /* Heartrate_Training.json */; };
+		F86CB41D225BD422005FBE7E /* io_examples.json in Resources */ = {isa = PBXBuildFile; fileRef = F86CB41C225BD422005FBE7E /* io_examples.json */; };
+		F86CB41F225BD61A005FBE7E /* ArrayExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86CB41E225BD61A005FBE7E /* ArrayExtensionTests.swift */; };
+		F86CB423225BEF8A005FBE7E /* io_examples_whole.json in Resources */ = {isa = PBXBuildFile; fileRef = F86CB422225BEF8A005FBE7E /* io_examples_whole.json */; };
+		F86CB425225BFD04005FBE7E /* io_examples_whole_12hz.json in Resources */ = {isa = PBXBuildFile; fileRef = F86CB424225BFD04005FBE7E /* io_examples_whole_12hz.json */; };
 		F880C1202051F1E200ACB4D4 /* CRFFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */; };
 		F880C12F2051F2A700ACB4D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F880C12E2051F2A700ACB4D4 /* Images.xcassets */; };
 		F880C1312051F49400ACB4D4 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F880C1302051F49400ACB4D4 /* Colors.xcassets */; };
@@ -35,7 +38,6 @@
 		F897CF912255233D0088DFAE /* lowpass_filter_params.csv in Resources */ = {isa = PBXBuildFile; fileRef = F897CF902255233D0088DFAE /* lowpass_filter_params.csv */; };
 		F897CF95225525040088DFAE /* CSVDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F897CF94225525040088DFAE /* CSVDecoder.swift */; };
 		F897CF97225561680088DFAE /* CSVDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F897CF96225561680088DFAE /* CSVDecoderTests.swift */; };
-		F897CF992255B1C20088DFAE /* io_examples.json in Resources */ = {isa = PBXBuildFile; fileRef = F897CF982255B1C20088DFAE /* io_examples.json */; };
 		F89FFDD920588B5C0089D8A7 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDD820588B5C0089D8A7 /* ModelTests.swift */; };
 		F89FFDDB205890F80089D8A7 /* CRFTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89FFDDA205890F80089D8A7 /* CRFTaskInfo.swift */; };
 		F8A5036D2225E2CD005F1C0C /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5036C2225E2CD005F1C0C /* Research.framework */; };
@@ -63,10 +65,13 @@
 /* Begin PBXFileReference section */
 		F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStepViewController.swift; sourceTree = "<group>"; };
 		F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStep.swift; sourceTree = "<group>"; };
-		F80479E422580A4E00E569AC /* io_examples_whole.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = io_examples_whole.json; sourceTree = "<group>"; };
 		F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Heart_Snapshot.html; sourceTree = "<group>"; };
 		F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Resting.json; sourceTree = "<group>"; };
 		F86B528F224AE8A700BB7354 /* Heartrate_Training.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Training.json; sourceTree = "<group>"; };
+		F86CB41C225BD422005FBE7E /* io_examples.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = io_examples.json; sourceTree = "<group>"; };
+		F86CB41E225BD61A005FBE7E /* ArrayExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensionTests.swift; sourceTree = "<group>"; };
+		F86CB422225BEF8A005FBE7E /* io_examples_whole.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = io_examples_whole.json; sourceTree = "<group>"; };
+		F86CB424225BFD04005FBE7E /* io_examples_whole_12hz.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = io_examples_whole_12hz.json; sourceTree = "<group>"; };
 		F880C11F2051F1E200ACB4D4 /* CRFFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFFactory.swift; sourceTree = "<group>"; };
 		F880C12E2051F2A700ACB4D4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F880C1302051F49400ACB4D4 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -95,7 +100,6 @@
 		F897CF902255233D0088DFAE /* lowpass_filter_params.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lowpass_filter_params.csv; sourceTree = "<group>"; };
 		F897CF94225525040088DFAE /* CSVDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDecoder.swift; sourceTree = "<group>"; };
 		F897CF96225561680088DFAE /* CSVDecoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSVDecoderTests.swift; sourceTree = "<group>"; };
-		F897CF982255B1C20088DFAE /* io_examples.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = io_examples.json; sourceTree = "<group>"; };
 		F89FFDD820588B5C0089D8A7 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		F89FFDDA205890F80089D8A7 /* CRFTaskInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTaskInfo.swift; sourceTree = "<group>"; };
 		F89FFDDD2059CF2B0089D8A7 /* CardiorespiratoryFitnessTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CardiorespiratoryFitnessTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -204,8 +208,9 @@
 		F880C18820531FBF00ACB4D4 /* Test Files */ = {
 			isa = PBXGroup;
 			children = (
-				F80479E422580A4E00E569AC /* io_examples_whole.json */,
-				F897CF982255B1C20088DFAE /* io_examples.json */,
+				F86CB424225BFD04005FBE7E /* io_examples_whole_12hz.json */,
+				F86CB422225BEF8A005FBE7E /* io_examples_whole.json */,
+				F86CB41C225BD422005FBE7E /* io_examples.json */,
 				F880C189205320B800ACB4D4 /* red_input_1d.txt */,
 			);
 			path = "Test Files";
@@ -252,6 +257,7 @@
 				F89FFDD820588B5C0089D8A7 /* ModelTests.swift */,
 				F8E68EF022531E5400CF0811 /* TaskObjectTests.swift */,
 				F897CF96225561680088DFAE /* CSVDecoderTests.swift */,
+				F86CB41E225BD61A005FBE7E /* ArrayExtensionTests.swift */,
 			);
 			path = CardiorespiratoryFitnessTests;
 			sourceTree = "<group>";
@@ -425,9 +431,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F897CF992255B1C20088DFAE /* io_examples.json in Resources */,
-				F80479E522580A4E00E569AC /* io_examples_whole.json in Resources */,
+				F86CB41D225BD422005FBE7E /* io_examples.json in Resources */,
+				F86CB423225BEF8A005FBE7E /* io_examples_whole.json in Resources */,
 				F880C18A205320B800ACB4D4 /* red_input_1d.txt in Resources */,
+				F86CB425225BFD04005FBE7E /* io_examples_whole_12hz.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +469,7 @@
 				F8E68EF122531E5400CF0811 /* TaskObjectTests.swift in Sources */,
 				F897CF97225561680088DFAE /* CSVDecoderTests.swift in Sources */,
 				F880C18520530D9500ACB4D4 /* HeartRateProcessorTests.swift in Sources */,
+				F86CB41F225BD61A005FBE7E /* ArrayExtensionTests.swift in Sources */,
 				F89FFDD920588B5C0089D8A7 /* ModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

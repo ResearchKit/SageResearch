@@ -41,10 +41,49 @@ public let CRFSupportedFrameRates = [Int(fs)]
 /// The number of seconds for the window used to calculate the heart rate.
 public let CRFHeartRateWindowSeconds = TimeInterval(window)
 
+/// The number of seconds for the window used to calculate the heart rate.
+public let CRFHeartRateWindowOverlapSeconds = TimeInterval(1)
+
 /// The number of seconds to let the sampler settle before looking at the heart rate.
 public let CRFHeartRateSettleSeconds = TimeInterval(3)
 
+/// The minimum heart rate calculated with this app.
+public let CRFMinHeartRate = Double(45)
+
+/// The maximum heart rate calculated with this app.
+public let CRFMaxHeartRate = Double(210)
+
+fileprivate let fs: Double = 60                                 // frames / second
+fileprivate let window: Double = 10                             // seconds
+fileprivate let window_len: Int = Int(round(fs * window))       // number of frames in the window
+
+protocol PixelSample {
+    var presentationTimestamp: Double { get }
+    var red: Double { get }
+    var green: Double { get }
+    var blue: Double { get }
+    var isCoveringLens: Bool { get }
+}
+
 internal class CRFHeartRateSampleProcessor {
+    
+    /// Calculate the sampling rate.
+    func calculateSamplingRate(from samples:[PixelSample]) -> Double {
+        guard let start: (Int, PixelSample) = samples.enumerated().first(where: { $1.isCoveringLens }),
+            let endTime = samples.last?.presentationTimestamp
+            else {
+                return 0
+        }
+        
+        let startTime = start.1.presentationTimestamp
+        let diff = endTime - startTime
+        guard diff > 0
+            else {
+                return 0
+        }
+        let count = Double(samples.count - start.0)
+        return count / diff
+    }
     
     /// A valid sampling rate has filter coefficients defined for high and low pass.
     func isValidSamplingRate(_ samplingRate: Int) -> Bool {
@@ -59,22 +98,218 @@ internal class CRFHeartRateSampleProcessor {
     // MARK: Code ported from R
     // - note: R is indexed from 1 so to simplify porting the code, everything is offset by one
     // in the filters before calculating.
+    
+//    #' Given a processed time series find its period using autocorrelation
+//    #' and then convert it to heart rate (bpm)
+//    #'
+//    #' @param x A time series numeric data
+//    #' @param sampling_rate The sampling rate (fs) of the time series data
+//    #' @param method The algorithm used to estimate the heartrate, because the
+//    #' preprocessing steps are different for each. method can be any of
+//    #' 'acf','psd' or 'peak' for algorithms based on autocorrelation,
+//    #' power spectral density and peak picking respectively
+//    #' @param min_hr Minimum expected heart rate
+//    #' @param max_hr Maximum expected heart rate
+//    #' @return A named vector containing heart rate and the confidence of the result
+//    get_hr_from_time_series <- function(x, sampling_rate, method = 'acf', min_hr = 45, max_hr=210) {
+    func getHR(from input: [Double], samplingRate: Double) -> (heartRate: Double, confidence: Double) {
+
+        guard let (x, y, minLag, maxLag) = preprocessSamples(input, samplingRate: samplingRate)
+            else {
+                return (0,0)
+        }
+        
+        let (y_max, y_max_pos, y_min, hr_initial_guess) = getBounds(y: y, samplingRate: samplingRate)
+        guard let aliasedPeak = getAliasingPeakLocation(hr: hr_initial_guess,
+                                                        actualLag: y_max_pos,
+                                                        samplingRate: samplingRate,
+                                                        minLag: minLag,
+                                                        maxLag: maxLag)
+            else {
+                return (0,0)
+        }
+        
+        let hr: Double
+        let confidence: Double
+
+        if aliasedPeak.earlier.count > 0 {
+            //    peak_pos_thresholding_result <- (y[aliasedPeak$earlier_peak]-y_min) > 0.7*(y_max-y_min)
+            //    # Check which of the earlier peak(s) satisfy the threshold
+            let peak_pos = aliasedPeak.earlier.filter {
+                (y[$0] - y_min) > 0.7 * (y_max - y_min)
+            }
+            
+            // peak_pos_thresholding_result <- (y[aliasedPeak$earlier_peak]-y_min) > 0.7*(y_max-y_min)
+            // # Check which of the earlier peak(s) satisfy the threshold
+            // let peak_pos_thresholding_result: [Bool] = aliasedPeak.earlier.map { (y[$0] - y_min) > 0.7 * (y_max - y_min) }
+            
+            // peak_pos <- aliasedPeak$earlier_peak[peak_pos_thresholding_result]
+            // # Subset to those earlier peak(s) that satisfy the thresholding criterion above
+            
+            //    # Subset to those earlier peak(s) that satisfy the thresholding criterion above
+            if peak_pos.count > 0 {
+
+                var hr_vec = peak_pos.map { (60 * samplingRate) / Double($0) }
+                // # Estimate heartrates for each of the peaks that satisfy the thresholding criterion
+                hr_vec.append(
+                    hr_initial_guess * Double(aliasedPeak.nPeaks + 1) / Double(aliasedPeak.nPeaks)
+                )
+                hr = hr_vec.mean()
+                
+                //          # Estimate the heartrate based on our initial guess, Npeaks and the estimated heartrates of the
+                //          # peaks that satisfy the threshold
+                //
+                //          confidence <- mean(y[peak_pos]-y_min)/(max(x)-min(x))
+                confidence = peak_pos.map({ y[$0] - y_min }).mean() / (x.max()! - x.min()!)
+                //          # Estimate the confidence based on the peaks that satisfy the threshold
+                //
+            }
+            else {
+                hr = hr_initial_guess
+                confidence = y_max / x.max()!
+            }
+        }
+        // # Get into this loop if no earlier peak was picked up during getAliasingPeakLocation
+        else if aliasedPeak.later.count > 0, aliasedPeak.later.reduce(true, { $0 && (y[$1] > 0.7 * y_max) }) {
+            hr = hr_initial_guess
+            confidence = y_max / x.max()!
+        }
+        else {
+            return (0, 0)
+        }
+        
+        return (hr, confidence)
+    }
+    
+    func calculateMinLag(samplingRate: Double) -> Int {
+        return Int(round(60 * samplingRate / CRFMaxHeartRate))
+    }
+    
+    func calculateMaxLag(samplingRate: Double) -> Int {
+        return Int(round(60 * samplingRate / CRFMinHeartRate))
+    }
+    
+    func preprocessSamples(_ input: [Double], samplingRate: Double) -> (x: [Double], y: [Double], minLag: Int, maxLag: Int)? {
+        //    max_lag = round(60 * sampling_rate / min_hr) # 4/3 fs is 45BPM
+        let maxLag = calculateMaxLag(samplingRate: samplingRate)
+        //    min_lag = round(60 * sampling_rate / max_hr) # 1/3.5 fs is 210BPM
+        let minLag = calculateMinLag(samplingRate: samplingRate)
+        //    x <- stats::acf(x, lag.max = max_lag, plot = F)$acf
+        let x = autocorrelation(input, lagMax: maxLag).offsetR()
+        
+        // Check that the sampling rate is valid and the max/min are within range.
+        let roundedSamplingRate = Int(round(samplingRate))
+        guard isValidSamplingRate(roundedSamplingRate),
+            maxLag < x.count, minLag < maxLag, minLag > 0
+            else {
+                return nil
+        }
+        
+        //    y <- 0 * x
+        //    y[seq(min_lag, max_lag)] <- x[seq(min_lag, max_lag)]
+        var y = Array(repeating: Double(0), count: x.count)
+        for ii in minLag...maxLag {
+            y[ii] = x[ii]
+        }
+        
+        return (x, y, minLag, maxLag)
+    }
+    
+    func getBounds(y: [Double], samplingRate: Double) -> (y_max: Double, y_max_pos: Int, y_min: Double, hr_initial_guess: Double) {
+        //    y_max_pos <- which.max(y)
+        //    y_max <- max(y)
+        //    y_min <- min(y)
+        let (y_max, y_max_pos) = y.seekMax()
+        let y_min = y.min()!
+        
+        //    hr_initial_guess <- 60 * sampling_rate / (y_max_pos - 1)
+        let hr_initial_guess = (60.0 * samplingRate) / Double(y_max_pos)
+        
+        return (y_max, y_max_pos, y_min, hr_initial_guess)
+    }
+    
+    
+    func getAliasingPeakLocation(hr: Double, actualLag: Int?, samplingRate: Double, minLag: Int, maxLag: Int) -> (nPeaks: Int, earlier:[Int], later: [Int])? {
+        //    # The following ranges are only valid if the minimum hr is 45bpm and
+        //    # maximum hr is less than 240bpm, since for the acf of the ideal hr signal
+        //    # Npeaks = floor(BPM/minHR) - floor(BPM/maxHR)
+        //    # in the search ranges 60*fs/maxHR to 60*fs/minHR samples
+
+        var nPeaks: Int!
+        if (hr < 90) {
+            nPeaks = 1
+        }
+        else if (hr < 135) {
+            nPeaks = 2
+        }
+        else if (hr < 180) {
+            nPeaks = 3
+        }
+        else if (hr < 225) {
+            nPeaks = 4
+        }
+        else if (hr <= 240) {
+            nPeaks = 5
+        }
+        else {
+            return nil
+        }
+        
+        let actualLag = actualLag ?? Int(ceil(Double(samplingRate * 60) / hr + 1.0))
+        
+        var earlier_peak: [Int]
+        if (actualLag % 2 == 0) {
+            earlier_peak = [actualLag / 2]
+        }
+        else {
+            earlier_peak = [Int(floor(Double(actualLag) / 2)), Int(ceil(Double(actualLag) / 2))]
+        }
+        earlier_peak = earlier_peak.filter { $0 >= minLag }
+
+        var later_peak: [Int]
+        if (nPeaks > 1) {
+            later_peak = Array(2...nPeaks).map { $0 * actualLag }.filter { $0 <= maxLag }
+        }
+        else {
+            later_peak = []
+        }
+
+        return (nPeaks, earlier_peak, later_peak)
+    }
+    
+    func chunkSamples(_ input: [Double], samplingRate: Double) -> [[Double]] {
+        //    hr.data.filtered.chunks <- hr.data.filtered %>%
+        //    dplyr::select(red, green, blue) %>%
+        //    na.omit() %>%
+        //    lapply(mhealthtools:::window_signal, window_length, window_overlap, 'rectangle')
+        var output: [[Double]] = []
+        let windowLength = Int(round(CRFHeartRateWindowSeconds * samplingRate))
+        var start: Int = 0
+        var end: Int = windowLength
+        while end < input.count {
+            output.append(Array(input[start..<end]))
+            start += Int(round(samplingRate))
+            end = start + windowLength
+        }
+        return output
+    }
 
     ///#' Bandpass and sorted mean filter the given signal
     ///#'
     ///#' @param x A time series numeric data
     ///#' @param sampling_rate The sampling rate (fs) of the signal
-    func getFilteredSignal(_ input:[Double], samplingRate: Int) -> [Double]? {
+    func getFilteredSignal(_ input:[Double], samplingRate: Int, dropSeconds: Int = 0) -> [Double]? {
         //        x[is.na(x)] <- 0
         //        x <- x[round(3*sampling_rate):length(x)]
         //        # Ignore the first 3s
-        let x = input.dropFirst(3 * samplingRate).map({ $0.isFinite ? $0 : 0 })
+        let drop = dropSeconds > 0 ? dropSeconds * samplingRate - 1 : 0
+        let x = input.dropFirst(drop).map({ $0.isFinite ? $0 : 0 })
         //    x <- signal::filter(bf_low, x) # lowpass
         //    x <- x[round(sampling_rate):length(x)] # 1s
-        let lowpass = Array(passFilter(x, samplingRate: samplingRate, type: .low).dropFirst(samplingRate))
+        let lowpass = Array(passFilter(x, samplingRate: samplingRate, type: .low).dropFirst(samplingRate - 1))
         //    x <- signal::filter(bf_high, x) # highpass
         //    x <- x[round(sampling_rate):length(x)] # 1s @ 60Hz
-        let highpass = Array(passFilter(lowpass, samplingRate: samplingRate, type: .high).dropFirst(samplingRate))
+        let highpass = Array(passFilter(lowpass, samplingRate: samplingRate, type: .high).dropFirst(samplingRate - 1))
         // filter usinng mean centering
         let filtered = meanCenteringFilter(highpass, samplingRate: samplingRate)
         return filtered
@@ -252,10 +487,6 @@ struct FilterParameters : Codable, FilterParams, Equatable {
 
 
 // --- Code ported from Matlab
-
-fileprivate let fs: Double = 60                                 // frames / second
-fileprivate let window: Double = 10                             // seconds
-fileprivate let window_len: Int = Int(round(fs * window))       // number of frames in the window
 
 /// channel, 60fps, 10sec window
 func findHeartRateValues(with channel:[Double]) -> [(heartRate: Double, confidence: Double)] {
