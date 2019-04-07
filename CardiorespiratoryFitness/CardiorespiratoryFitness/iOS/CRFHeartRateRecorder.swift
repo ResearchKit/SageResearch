@@ -114,13 +114,14 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
 
         let age = Double(Calendar(identifier: .iso8601).component(.year, from: Date()) - birthYear)
         let meanHR = highConfidenceSamples.map({ $0.bpm }).mean()
+        let beats30to60 = meanHR / 2
         switch sex {
         case .female:
-            return 83.477 - (0.586 * meanHR) - (0.404 * age) - 7.030
+            return 83.477 - (0.586 * beats30to60) - (0.404 * age) - 7.030
         case .male:
-            return 83.477 - (0.586 * meanHR) - (0.404 * age)
+            return 83.477 - (0.586 * beats30to60) - (0.404 * age)
         default:
-            return 84.687 - (0.722 * meanHR) - (0.383 * age)
+            return 84.687 - (0.722 * beats30to60) - (0.383 * age)
         }
     }
     
