@@ -46,6 +46,127 @@ class HeartRateProcessorTests: XCTestCase {
         super.tearDown()
     }
     
+    func testParams() {
+        XCTAssertEqual(highPassParameters.count, 56)
+        XCTAssertEqual(lowPassParameters.count, 56)
+    }
+    
+    func compare(_ array1: [Double], _ array2: [Double], accuracy: Double) -> Bool {
+        XCTAssertEqual(array1.count, array2.count)
+        guard array1.count == array2.count else { return false }
+        for (idx, value) in array2.enumerated() {
+            XCTAssertEqual(array2[idx], value, accuracy: accuracy)
+            guard abs(array2[idx] - value) <= accuracy else { return false }
+        }
+        return true
+    }
+    
+    func testInvalidSamplingRate() {
+        let processor = CRFHeartRateSampleProcessor()
+        XCTAssertFalse(processor.isValidSamplingRate(2))
+    }
+    
+    func testLowPassFilterParams() {
+        XCTAssertEqual(lowPassParameters.count, 56)
+
+        guard let filter = lowPassParameters.filterParams(for: testData.samplingRate) else {
+            XCTFail("Failed to the the low pass filter parameters")
+            return
+        }
+        
+        let expected = FilterParameters(filter_type: .low,
+                                      sampling_rate: 59,
+                                      b1: 3.32840361934054e-05, b2: 0.000232988253353838, b3: 0.000698964760061513, b4: 0.00116494126676919, b5: 0.00116494126676919, b6: 0.000698964760061513, b7: 0.000232988253353838, b8: 3.32840361934054e-05, a1: 1, a2: -4.61081628156021, a3: 9.40105772801147, a4: -10.9156858910913, a5: 7.76344164949652, a6: -3.37225333124766, a7: 0.826548462867354, a8: -0.0880319798434559)
+        
+        XCTAssertEqual(filter, expected)
+        XCTAssertTrue(compare(filter.a, testData.a_lowpass, accuracy: 0.0000001))
+        XCTAssertTrue(compare(filter.b, testData.b_lowpass, accuracy: 0.0000001))
+    }
+    
+    func testHighPassFilterParams() {
+        XCTAssertEqual(highPassParameters.count, 56)
+        
+        guard let filter = highPassParameters.filterParams(for: testData.samplingRate) else {
+            XCTFail("Failed to the the low pass filter parameters")
+            return
+        }
+
+        XCTAssertTrue(compare(filter.a, testData.a_highpass, accuracy: 0.0000001))
+        XCTAssertTrue(compare(filter.b, testData.b_highpass, accuracy: 0.0000001))
+    }
+    
+    func testLowPassFilter() {
+        let processor = CRFHeartRateSampleProcessor()
+        guard processor.isValidSamplingRate(testData.samplingRate) else {
+            XCTFail("The low pass filter parameters were not parsed. See testLowPassFilterParams()")
+            return
+        }
+        let lowPass = processor.passFilter(testData.input, samplingRate: testData.samplingRate, type: .low)
+        XCTAssertTrue(compare(lowPass, testData.lowpass, accuracy: 0.0000001))
+    }
+    
+    func testHighPassFilter() {
+        let processor = CRFHeartRateSampleProcessor()
+        guard processor.isValidSamplingRate(testData.samplingRate) else {
+            XCTFail("The low pass filter parameters were not parsed. See testHighPassFilterParams()")
+            return
+        }
+        let highPass = processor.passFilter(testData.input, samplingRate: testData.samplingRate, type: .high)
+        XCTAssertTrue(compare(highPass, testData.highpass, accuracy: 0.0000001))
+    }
+    
+    func testMeanCenteringFilter() {
+        let processor = CRFHeartRateSampleProcessor()
+        let mcf = processor.meanCenteringFilter(testData.input, samplingRate: testData.samplingRate)
+        XCTAssertTrue(compare(mcf, testData.mcfilter, accuracy: 0.0000001))
+    }
+    
+    func testAutocorrelation() {
+        let processor = CRFHeartRateSampleProcessor()
+        let acf = processor.autocorrelation(testData.input)
+        XCTAssertTrue(compare(acf, testData.acf, accuracy: 0.0000001))
+    }
+    
+    let testData: ProcessorTestData = {
+        do {
+            let bundle = Bundle(for: HeartRateProcessorTests.self)
+            let url = bundle.url(forResource: "io_examples", withExtension: "json")!
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            let params = try decoder.decode(ProcessorTestData.self, from: data)
+            return params
+        }
+        catch let err {
+            fatalError("Cannot decode test data. \(err)")
+        }
+    }()
+    
+    struct ProcessorTestData : Codable {
+        
+        let input : [Double]
+        let lowpass : [Double]
+        let highpass : [Double]
+        let mcfilter : [Double]
+        let acf : [Double]
+        let b_lowpass : [Double]
+        let a_lowpass : [Double]
+        let b_highpass : [Double]
+        let a_highpass : [Double]
+        let mean_filter_order : [Int]
+        let sampling_rate_round : [Int]
+        
+        var samplingRate: Int {
+            return sampling_rate_round.first!
+        }
+    }
+
+    
+    
+    
+    // -- MARK: Mathlab tests for old algorithm - leaving in b/c some of the array extensions might prove
+    // useful for other projects.
+    
+    
     func testXCorr() {
         let input = Array(1...10).map { Double($0) }
         
@@ -155,23 +276,6 @@ class HeartRateProcessorTests: XCTestCase {
             }
         } else {
             XCTAssertEqual(output.count, expectedOutput.count)
-        }
-    }
-    
-    func testCalculateHR() {
-        let red = getRedInput()
-        let hrValues = findHeartRateValues(with: red)
-        
-        let expectedHR: [Double] = [84, 82, 82, 77, 77, 78, 78, 80, 80, 84, 138]
-        let expectedConfidence: [Double] = [0.7585, 0.8245, 0.7937, 0.8694, 0.8405, 0.8411, 0.8679, 0.8236, 0.8278, 0.8311, 0.1004]
-        
-        if hrValues.count == expectedHR.count {
-            for (ii, value) in hrValues.enumerated() {
-                XCTAssertEqual(value.heartRate, expectedHR[ii], "\(ii)")
-                XCTAssertEqual(value.confidence, expectedConfidence[ii], accuracy: Double(0.0001), "\(ii)")
-            }
-        } else {
-            XCTAssertEqual(hrValues.count, expectedHR.count, "\(hrValues)")
         }
     }
     

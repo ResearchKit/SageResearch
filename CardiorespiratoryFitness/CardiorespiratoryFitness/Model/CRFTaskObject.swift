@@ -37,39 +37,39 @@ extension RSDIdentifier {
     static let demographics: RSDIdentifier = "demographics"
 }
 
+/// Options for the value of the demographics question about biological sex.
+public enum CRFSex : String, Codable {
+    case male, female, other
+}
+
+public enum CRFDemographicsKeys : String, CodingKey, Codable {
+    case birthYear, sex
+}
+
 public final class CRFTaskObject: RSDTaskObject, RSDTaskDesign {
-    
-    public enum DemographicsKeys : String, CodingKey, Codable {
-        case birthYear, sex
-    }
-    
+
     /// The birth year of the participant who is doing this task.
     public var birthYear: Int? {
         get {
-            return previousRunData[DemographicsKeys.birthYear.stringValue] as? Int
+            return previousRunData[CRFDemographicsKeys.birthYear.stringValue] as? Int
         }
         set {
-            previousRunData[DemographicsKeys.birthYear.stringValue] = newValue
+            previousRunData[CRFDemographicsKeys.birthYear.stringValue] = newValue
         }
     }
     
     /// The sex of the participant who doing this task.
-    public var sex: Sex? {
+    public var sex: CRFSex? {
         get {
-            guard let sex = previousRunData[DemographicsKeys.sex.stringValue] as? String
+            guard let sex = previousRunData[CRFDemographicsKeys.sex.stringValue] as? String
                 else {
                     return nil
             }
-            return Sex(rawValue: sex)
+            return CRFSex(rawValue: sex)
         }
         set {
-            previousRunData[DemographicsKeys.sex.stringValue] = newValue?.stringValue
+            previousRunData[CRFDemographicsKeys.sex.stringValue] = newValue?.stringValue
         }
-    }
-    
-    /// Options for the value of the demographics question about biological sex.
-    public enum Sex : String, Codable {
-        case male, female, other
     }
     
     private var previousRunData: [String : RSDJSONSerializable] = [:]
@@ -77,8 +77,8 @@ public final class CRFTaskObject: RSDTaskObject, RSDTaskDesign {
     /// Override task setup to get the demographics data from a previous run.
     public override func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
         if let json = data?.json as? [String : RSDJSONSerializable] {
-            previousRunData[DemographicsKeys.sex.stringValue] = json[DemographicsKeys.sex.stringValue]
-            previousRunData[DemographicsKeys.birthYear.stringValue] = json[DemographicsKeys.birthYear.stringValue]
+            previousRunData[CRFDemographicsKeys.sex.stringValue] = json[CRFDemographicsKeys.sex.stringValue]
+            previousRunData[CRFDemographicsKeys.birthYear.stringValue] = json[CRFDemographicsKeys.birthYear.stringValue]
         }
         super.setupTask(with: data, for: path)
     }
