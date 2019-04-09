@@ -10,7 +10,7 @@
     "steps": [{
         "identifier": "introduction",
         "type": "overview",
-        "title": "Resting heart rate",
+        "title": "Resting Heart Rate",
         "text": "Your heart rate while you are at rest is a marker of your health. The more relaxed you are, the better. Let's measure your resting heart rate.",
         "permissions": [{
             "permissionType": "camera",

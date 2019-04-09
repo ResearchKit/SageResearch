@@ -6,7 +6,7 @@
     "steps": [{
         "identifier": "introduction",
         "type": "instruction",
-        "title": "Heart Snapshot",
+        "title": "Heart Rate Training",
         "text": "Your phone's camera can measure your heartbeat.",
         "image": {
             "type": "fetchable",
