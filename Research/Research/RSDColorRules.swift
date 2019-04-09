@@ -72,6 +72,7 @@ open class RSDColorRules  {
         set {
             guard newValue != nil else { return }
             _palette = newValue
+            self.severityColorScale.grayScale = newValue.grayScale
         }
     }
     private var _palette: RSDColorPalette
@@ -448,4 +449,68 @@ open class RSDColorRules  {
     open func textFieldUnderline(on background: RSDColorTile) -> RSDColor {
         return self.palette.accent.normal.color
     }
+    
+    
+    // MARK: Severity colors used for showing a scale from "normal - severe"
+    
+    /// The severity color scale to use for buttons and graphics in this app.
+    open var severityColorScale : RSDSeverityColorScale = RSDSeverityColorScale()
+}
+
+/// Color rules for defining a scale for a series of colors.
+open class RSDSeverityColorScale {
+    
+    /// A numeric scale of 0-3 for the severity of a symptom or condition.
+    public enum Scale : Int, Codable {
+        case none = 0, mild, moderate, severe
+    }
+    
+    /// The color palette that backs this rule.
+    public var grayScale = RSDStudyConfiguration.shared.colorPalette.grayScale
+    
+    /// The fill color of the button representing this scale value.
+    /// - parameters:
+    ///     - value: The scale value.
+    ///     - isSelected: Whether or not the button is selected.
+    /// - returns: The fill color for the button.
+    open func fill(for value: Int, isSelected: Bool) -> RSDColor {
+        guard isSelected, value >= 0, value < severityFill.count
+            else {
+                return grayScale.white.color
+        }
+        return severityFill[value]
+    }
+    
+    /// The stroke color of the button representing this scale value.
+    /// - parameters:
+    ///     - value: The scale value.
+    ///     - isSelected: Whether or not the button is selected.
+    /// - returns: The stroke color for the button.
+    open func stroke(for value: Int, isSelected: Bool) -> RSDColor {
+        guard isSelected, value >= 0, value < severityFill.count
+            else {
+                return grayScale.veryLightGray.color
+        }
+        return severityStroke[value]
+    }
+    
+    /// The fill colors for the severity toggle.
+    let severityFill: [RSDColor] = {
+        return [
+            RSDColor(red: 232 / 255.0, green: 250.0 / 255.0, blue: 232.0 / 255.0, alpha: 1),
+            RSDColor(red: 255.0 / 255.0, green: 240.0 / 255.0, blue: 212.0 / 255.0, alpha: 1),
+            RSDColor(red: 255.0 / 255.0, green: 232.0 / 255.0, blue: 214.0 / 255.0, alpha: 1),
+            RSDColor(red: 252.0 / 255.0, green: 233.0 / 255.0, blue: 230.0 / 255.0, alpha: 1)
+        ]
+    }()
+    
+    /// The stroke colors for the severity toggle.
+    let severityStroke: [RSDColor] = {
+        return [
+            RSDColor(red: 192.0 / 255.0, green: 235.0 / 255.0, blue: 192.0 / 255.0, alpha: 1),
+            RSDColor(red: 255.0 / 255.0, green: 226.0 / 255.0, blue: 173.0 / 255.0, alpha: 1),
+            RSDColor(red: 250.0 / 255.0, green: 207.0 / 255.0, blue: 175.0 / 255.0, alpha: 1),
+            RSDColor(red: 255.0 / 255.0, green: 197.0 / 255.0, blue: 189.0 / 255.0, alpha: 1)
+        ]
+    }()
 }
