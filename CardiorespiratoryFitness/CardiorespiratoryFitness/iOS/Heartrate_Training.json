@@ -38,7 +38,7 @@
         "text": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate.",
         "permissions": [{
             "permissionType": "camera",
-            "reason": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate."
+            "reason": "We use the camera to see your finger as blood goes through it so we can measure your heart beats."
         }],
         "actions": {
             "goForward": {
