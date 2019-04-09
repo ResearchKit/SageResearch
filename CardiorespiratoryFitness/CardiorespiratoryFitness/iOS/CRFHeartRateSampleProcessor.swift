@@ -53,6 +53,9 @@ public let CRFMinHeartRate = Double(45)
 /// The maximum heart rate calculated with this app.
 public let CRFMaxHeartRate = Double(210)
 
+/// Minimum frame rate supported by this processor.
+public let CRFMinFrameRate = Double(12)
+
 fileprivate let fs: Double = 60                                 // frames / second
 fileprivate let window: Double = 10                             // seconds
 fileprivate let window_len: Int = Int(round(fs * window))       // number of frames in the window
@@ -66,6 +69,154 @@ protocol PixelSample {
 }
 
 internal class CRFHeartRateSampleProcessor {
+    
+    /// The processed samples.
+    internal private(set) var bpmSamples : [CRFHeartRateBPMSample] = []
+    
+    /// Is the heart rate currently being calculated?
+    var isProcessing: Bool = false
+    
+    /// The callback for returning processed bpm and confidence from runnning sample processing.
+    var callback: ((_ bpm: Double, _ confidence: Double) -> Void)?
+    
+    private let arrayMutatingQueue = DispatchQueue(label: "org.sagebase.CRF.sample.mutating")
+    private let sampleProcessingQueue = DispatchQueue(label: "org.sagebase.CRF.sample.processing")
+    
+    /// Samples collector used to store the samples in memory for each half-window.
+    private var pixelSamples : [PixelSample] = []
+    
+    func reset() {
+        self.arrayMutatingQueue.async {
+            self.pixelSamples.removeAll()
+            self.sampleProcessingQueue.async {
+                self.bpmSamples.removeAll()
+                DispatchQueue.main.async {
+                    self.callback?(0, 0)
+                }
+            }
+        }
+    }
+    
+    func restingHeartRate() -> CRFHeartRateBPMSample? {
+        guard self.bpmSamples.count > 0,
+            let sample = self.bpmSamples.sorted(by: { $0.confidence > $1.confidence }).first,
+            sample.confidence >= CRFMinConfidence
+            else {
+                return nil
+        }
+        return sample
+    }
+    
+    func peakHeartRate() -> CRFHeartRateBPMSample? {
+        guard self.bpmSamples.count > 0 else { return nil }
+        let highConfidenceSamples = self.bpmSamples.filter { $0.confidence >= CRFMinConfidence }
+        return highConfidenceSamples.first
+    }
+    
+    func endHeartRate() -> CRFHeartRateBPMSample? {
+        guard self.bpmSamples.count > 0 else { return nil }
+        let highConfidenceSamples = self.bpmSamples.filter { $0.confidence >= CRFMinConfidence }
+        return highConfidenceSamples.last
+    }
+    
+    func vo2Max(sex: CRFSex, age: Double, startTime: TimeInterval) -> (Double, Double)? {
+        let highConfidenceSamples = self.bpmSamples.filter {
+            $0.confidence >= CRFMinConfidence &&
+                ($0.timestamp ?? 0) >= startTime
+        }
+        guard highConfidenceSamples.count > 1 else { return nil }
+        
+        let meanHR = highConfidenceSamples.map({ $0.bpm }).mean()
+        let beats30to60 = meanHR / 2
+        let vo2Center: Double = {
+            switch sex {
+            case .female:
+                return 83.477 - (0.586 * beats30to60) - (0.404 * age) - 7.030
+            case .male:
+                return 83.477 - (0.586 * beats30to60) - (0.404 * age)
+            default:
+                return 84.687 - (0.722 * beats30to60) - (0.383 * age)
+            }
+        }()
+        return (vo2Center, vo2Center)
+    }
+    
+    func simulatorProcessSample(timestamp: TimeInterval) {
+        self.sampleProcessingQueue.async {
+            let bpm: Double = 65
+            let confidence = 0.75
+            let bpmSample = CRFHeartRateBPMSample(timestamp: timestamp, bpm: bpm, confidence: confidence)
+            self.bpmSamples.append(bpmSample)
+            DispatchQueue.main.async {
+                self.callback?(bpm, confidence)
+            }
+        }
+    }
+    
+    /// Add the sample.
+    func processSample(_ sample: PixelSample) {
+        
+        arrayMutatingQueue.async {
+            
+            // Do not start savinng samples if the lens has not yet been covered
+            guard self.pixelSamples.count > 0 || sample.isCoveringLens else { return }
+            
+            // append the samples
+            self.pixelSamples.append(sample)
+            
+            // look to see if we have enough to process a bpm
+            guard let frameRate = self.estimatedSamplingRate(from: self.pixelSamples) else { return }
+            let roundedRate = Int(round(frameRate))
+            
+            // Need to keep 2 extra seconds due to filtering lopping off the first 2 seconds of data.
+            let meanOrder = self.meanFilterOrder(for: roundedRate)
+            let windowLength = Int(CRFHeartRateWindowSeconds + 2) * roundedRate + meanOrder
+            if self.pixelSamples.count >= windowLength {
+                
+                // set flag that the samples are being processed
+                self.isProcessing = true
+                
+                // get the red and green channels and the uptime
+                let samples = self.pixelSamples//.suffix(windowLength)
+                let timestamp = samples.last!.presentationTimestamp
+                // TODO: syoung 04/10/2019 Figure out why this was here, looking at previous confidence window
+                // and removing 5 seconds worth of samples if the confidence is good. My guess is that it is
+                // to reduce fluctuation in the UI between --- and a valid heart rate. (ie. Don't show the
+                // "bad" heart rate values unless they are really bad) But could probably improve smoothing
+                // this out, especially for the case where the heart rate is for recovery and should be going
+                // down.
+                let removeLength = //(self.confidence >= CRFMinConfidence) ? halfLength :
+                    roundedRate
+                self.pixelSamples.removeSubrange(..<removeLength)
+                
+                self.sampleProcessingQueue.async {
+                    
+                    let redChannel = samples.map { $0.red }
+                    let greenChannel = samples.map { $0.green }
+                    let red = self.calculateHeartRate(redChannel, samplingRate: frameRate)
+                    let green = self.calculateHeartRate(greenChannel, samplingRate: frameRate)
+                    let pixelChannel: CRFPixelChannel = (red.confidence > green.confidence) ? .red : .green
+                    let (bpm, confidence) = (red.confidence > green.confidence) ? red : green
+                    
+                    let bpmSample = CRFHeartRateBPMSample(timestamp: timestamp, bpm: bpm, confidence: confidence, channel: pixelChannel)
+                    self.bpmSamples.append(bpmSample)
+                    self.isProcessing = false
+                    print("\(pixelChannel) bpm=\(bpm), confidence=\(confidence)")
+                    
+                    DispatchQueue.main.async {
+                        self.callback?(bpm, confidence)
+                    }
+                }
+            }
+        }
+    }
+    
+    /// Estimated sampling rate will return nil if there are not enough samples to return a rate.
+    func estimatedSamplingRate(from samples:[PixelSample]) -> Double? {
+        // Look to see if the sampling rate can be estimated.
+        guard Double(samples.count) >= CRFHeartRateWindowSeconds * CRFMinFrameRate else { return nil }
+        return calculateSamplingRate(from: samples)
+    }
     
     /// Calculate the sampling rate.
     func calculateSamplingRate(from samples:[PixelSample]) -> Double {
@@ -99,22 +250,34 @@ internal class CRFHeartRateSampleProcessor {
     // - note: R is indexed from 1 so to simplify porting the code, everything is offset by one
     // in the filters before calculating.
     
-//    #' Given a processed time series find its period using autocorrelation
-//    #' and then convert it to heart rate (bpm)
-//    #'
-//    #' @param x A time series numeric data
-//    #' @param sampling_rate The sampling rate (fs) of the time series data
-//    #' @param method The algorithm used to estimate the heartrate, because the
-//    #' preprocessing steps are different for each. method can be any of
-//    #' 'acf','psd' or 'peak' for algorithms based on autocorrelation,
-//    #' power spectral density and peak picking respectively
-//    #' @param min_hr Minimum expected heart rate
-//    #' @param max_hr Maximum expected heart rate
-//    #' @return A named vector containing heart rate and the confidence of the result
-//    get_hr_from_time_series <- function(x, sampling_rate, method = 'acf', min_hr = 45, max_hr=210) {
-    func getHR(from input: [Double], samplingRate: Double) -> (heartRate: Double, confidence: Double) {
+    func calculateHeartRate(_ input: [Double], samplingRate: Double) -> (heartRate: Double, confidence: Double) {
+        let window = Int(ceil(CRFHeartRateWindowSeconds * samplingRate))
+        guard let filtered = getFilteredSignal(input, samplingRate: Int(round(samplingRate))),
+            filtered.count >= window
+            else {
+                return (0, 0)
+        }
+        let chunked = Array(filtered[(filtered.count-window)...])
+        return getHR(from: chunked, samplingRate: samplingRate)
+    }
+    
+    
+    //    #' Given a processed time series find its period using autocorrelation
+    //    #' and then convert it to heart rate (bpm)
+    //    #'
+    //    #' @param x A time series numeric data
+    //    #' @param sampling_rate The sampling rate (fs) of the time series data
+    //    #' @param method The algorithm used to estimate the heartrate, because the
+    //    #' preprocessing steps are different for each. method can be any of
+    //    #' 'acf','psd' or 'peak' for algorithms based on autocorrelation,
+    //    #' power spectral density and peak picking respectively
+    //    #' @param min_hr Minimum expected heart rate
+    //    #' @param max_hr Maximum expected heart rate
+    //    #' @return A named vector containing heart rate and the confidence of the result
+    //    get_hr_from_time_series <- function(x, sampling_rate, method = 'acf', min_hr = 45, max_hr=210) {
+    func getHR(from filteredInput: [Double], samplingRate: Double) -> (heartRate: Double, confidence: Double) {
 
-        guard let (x, y, minLag, maxLag) = preprocessSamples(input, samplingRate: samplingRate)
+        guard let (x, y, minLag, maxLag) = preprocessSamples(filteredInput, samplingRate: samplingRate)
             else {
                 return (0,0)
         }
@@ -133,36 +296,22 @@ internal class CRFHeartRateSampleProcessor {
         let confidence: Double
 
         if aliasedPeak.earlier.count > 0 {
-            //    peak_pos_thresholding_result <- (y[aliasedPeak$earlier_peak]-y_min) > 0.7*(y_max-y_min)
-            //    # Check which of the earlier peak(s) satisfy the threshold
+            // peak_pos_thresholding_result <- (y[aliasedPeak$earlier_peak]-y_min) > 0.7*(y_max-y_min)
+            // # Check which of the earlier peak(s) satisfy the threshold
             let peak_pos = aliasedPeak.earlier.filter {
                 (y[$0] - y_min) > 0.7 * (y_max - y_min)
             }
             
-            // peak_pos_thresholding_result <- (y[aliasedPeak$earlier_peak]-y_min) > 0.7*(y_max-y_min)
-            // # Check which of the earlier peak(s) satisfy the threshold
-            // let peak_pos_thresholding_result: [Bool] = aliasedPeak.earlier.map { (y[$0] - y_min) > 0.7 * (y_max - y_min) }
-            
-            // peak_pos <- aliasedPeak$earlier_peak[peak_pos_thresholding_result]
             // # Subset to those earlier peak(s) that satisfy the thresholding criterion above
-            
-            //    # Subset to those earlier peak(s) that satisfy the thresholding criterion above
             if peak_pos.count > 0 {
 
-                var hr_vec = peak_pos.map { (60 * samplingRate) / Double($0) }
                 // # Estimate heartrates for each of the peaks that satisfy the thresholding criterion
-                hr_vec.append(
-                    hr_initial_guess * Double(aliasedPeak.nPeaks + 1) / Double(aliasedPeak.nPeaks)
-                )
+                let hr_vec = peak_pos.map { (60 * samplingRate) / Double($0 - 1) }
                 hr = hr_vec.mean()
-                
-                //          # Estimate the heartrate based on our initial guess, Npeaks and the estimated heartrates of the
-                //          # peaks that satisfy the threshold
-                //
-                //          confidence <- mean(y[peak_pos]-y_min)/(max(x)-min(x))
+
+                // confidence <- mean(y[peak_pos]-y_min)/(max(x)-min(x))
+                // # Estimate the confidence based on the peaks that satisfy the threshold
                 confidence = peak_pos.map({ y[$0] - y_min }).mean() / (x.max()! - x.min()!)
-                //          # Estimate the confidence based on the peaks that satisfy the threshold
-                //
             }
             else {
                 hr = hr_initial_guess
@@ -223,7 +372,7 @@ internal class CRFHeartRateSampleProcessor {
         let y_min = y.min()!
         
         //    hr_initial_guess <- 60 * sampling_rate / (y_max_pos - 1)
-        let hr_initial_guess = (60.0 * samplingRate) / Double(y_max_pos)
+        let hr_initial_guess = (60.0 * samplingRate) / Double(y_max_pos - 1)
         
         return (y_max, y_max_pos, y_min, hr_initial_guess)
     }
@@ -277,13 +426,13 @@ internal class CRFHeartRateSampleProcessor {
         return (nPeaks, earlier_peak, later_peak)
     }
     
-    func chunkSamples(_ input: [Double], samplingRate: Double) -> [[Double]] {
+    func chunkSamples(_ input: [Double], samplingRate: Double, window: TimeInterval = CRFHeartRateWindowSeconds) -> [[Double]] {
         //    hr.data.filtered.chunks <- hr.data.filtered %>%
         //    dplyr::select(red, green, blue) %>%
         //    na.omit() %>%
         //    lapply(mhealthtools:::window_signal, window_length, window_overlap, 'rectangle')
         var output: [[Double]] = []
-        let windowLength = Int(round(CRFHeartRateWindowSeconds * samplingRate))
+        let windowLength = Int(round(window * samplingRate))
         var start: Int = 0
         var end: Int = windowLength
         while end < input.count {
@@ -327,39 +476,38 @@ internal class CRFHeartRateSampleProcessor {
         let mx = input.mean()
         let varx: Double = input.reduce(Double(0)) { $0 + ($1 - mx) * ($1 - mx) }
         let x = input.offsetR()
-        let range = Array(0...(lagMax+1))
+        let range = Array(0...lagMax)
         let x_acf: [Double] = range.map { (i) -> Double in
             let x_left = Array(x[1...(xl-i)])
             let x_right = Array(x[(i+1)...xl])
-            let sum = x_left.enumerated().reduce(Double(0), {
-                return $0 + ($1.element - mx) * (x_right[$1.offset] - mx)
+            let indexes = Array(0..<x_left.count)
+            let sum = indexes.reduce(Double(0), { (input, idx) -> Double in
+                return input + (x_left[idx] - mx) * (x_right[idx] - mx)
             })
             return sum / varx
         }
-        return Array(x_acf.dropFirst())
+        return Array(x_acf)
     }
-
+    
     func meanCenteringFilter(_ input: [Double], samplingRate: Int) -> [Double] {
-        // insert 0 at the first element to offset the array to the 1 index
+
+        let mean_filter_order = meanFilterOrder(for: samplingRate)
+        let lowerBounds = (mean_filter_order + 1) / 2
+        let upperBounds = input.count - (mean_filter_order - 1) / 2
         let x = input.offsetR()
         
-        let mean_filter_order = meanFilterOrder(for: samplingRate)
-        var y = Array(repeating: Double(0), count: x.count)
-        let lowerBounds = (mean_filter_order + 1) / 2
-        let upperBounds = x.count - (mean_filter_order - 1) / 2
-        
-        for i in lowerBounds..<upperBounds {
+        let range = Array(lowerBounds...upperBounds)
+        let y = range.map { (i) -> Double in
             let tempLower: Int = i - (mean_filter_order - 1) / 2
             let tempUpper: Int = i + (mean_filter_order - 1) / 2
-            let temp_sequence = x[tempLower..<tempUpper]
+            let temp_sequence = x[tempLower...tempUpper]
             let temp_sum = temp_sequence.sum()
             let temp_max = temp_sequence.max()!
             let temp_min = temp_sequence.min()!
             let temp_minus = (temp_sum - temp_max + temp_min) / (Double(mean_filter_order) - 2)
             // # 0.00001 is a small value, ideally this should be machine epsilon
-            y[i] = ((x[i] - temp_minus) / (temp_max - temp_min + 0.00001))
+            return ((x[i] - temp_minus) / (temp_max - temp_min + 0.00001))
         }
-        y = Array(y[lowerBounds..<upperBounds])
         return y
     }
 

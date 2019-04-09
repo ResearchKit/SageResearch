@@ -129,14 +129,6 @@ class CSVDecoderTests: XCTestCase {
             XCTFail("Failed to decode the csv data. \(err)")
         }
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
 
 enum RequiredKeys : String, CodingKey, CaseIterable {

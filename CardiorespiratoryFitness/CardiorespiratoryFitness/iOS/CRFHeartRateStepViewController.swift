@@ -184,7 +184,7 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
         var resultSample: CRFHeartRateBPMSample?
         
         // Record the average or initial heart rate depending upon whether or not the participant is at rest.
-        if let recorder = bpmRecorder, recorder.bpmSamples.count >= 2 {
+        if let recorder = bpmRecorder {
             
             // Get the "most appropriate" heart rate.
             
@@ -210,7 +210,7 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
             
             // Add all the samples.
             let sectionIdentifier = self.stepViewModel.sectionIdentifier()
-            let samplesResult = CRFHeartRateSamplesResult(identifier: "\(sectionIdentifier)samples", samples: recorder.bpmSamples)
+            let samplesResult = CRFHeartRateSamplesResult(identifier: "\(sectionIdentifier)samples", samples: recorder.sampleProcessor.bpmSamples)
             addResult(samplesResult)
         }
         
