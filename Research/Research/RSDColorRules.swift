@@ -340,7 +340,7 @@ open class RSDColorRules  {
             
             if background == self.palette.grayScale.white {
                 inner = isSelected ? self.palette.primary.dark : self.palette.grayScale.white
-                border = isSelected ? self.palette.primary.normal.color : self.palette.grayScale.veryLightGray.color
+                border = isSelected ? self.palette.primary.normal.color : self.palette.grayScale.lightGray.color
             }
             else {
                 inner = isSelected ? self.palette.secondary.normal : self.palette.grayScale.white
@@ -489,7 +489,7 @@ open class RSDSeverityColorScale {
     open func stroke(for value: Int, isSelected: Bool) -> RSDColor {
         guard isSelected, value >= 0, value < severityFill.count
             else {
-                return grayScale.veryLightGray.color
+                return grayScale.lightGray.color
         }
         return severityStroke[value]
     }
