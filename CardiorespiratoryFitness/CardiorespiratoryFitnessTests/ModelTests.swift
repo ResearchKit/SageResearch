@@ -90,7 +90,7 @@ class ModelTests: XCTestCase {
         let taskInfo = CRFTaskInfo(.training)
         
         XCTAssertEqual(taskInfo.identifier, "Heartrate Training")
-        XCTAssertEqual(taskInfo.title, "Heart Snapshot")
+        XCTAssertEqual(taskInfo.title, "Heart Rate Training")
         XCTAssertEqual(taskInfo.subtitle, "Your phone's camera can measure your heartbeat.")
         XCTAssertNil(taskInfo.detail)
         XCTAssertEqual(taskInfo.estimatedMinutes, 2)
@@ -120,7 +120,7 @@ class ModelTests: XCTestCase {
         let taskInfo = CRFTaskInfo(.resting)
         
         XCTAssertEqual(taskInfo.identifier, "Resting Heartrate")
-        XCTAssertEqual(taskInfo.title, "Resting heart rate")
+        XCTAssertEqual(taskInfo.title, "Resting Heart Rate")
         XCTAssertEqual(taskInfo.subtitle, "Your heart rate while you are at rest is a marker of your health. The more relaxed you are, the better. Let's measure your resting heart rate.")
         XCTAssertNil(taskInfo.detail)
         XCTAssertEqual(taskInfo.estimatedMinutes, 1)
@@ -199,7 +199,7 @@ class ModelTests: XCTestCase {
         let copy = taskInfo.copy(with: "Foo")
         
         XCTAssertEqual(copy.identifier, "Foo")
-        XCTAssertEqual(copy.title, "Heart Snapshot")
+        XCTAssertEqual(copy.title, "Heart Rate Training")
         XCTAssertEqual(copy.subtitle, "Your phone's camera can measure your heartbeat.")
         XCTAssertNil(copy.detail)
         XCTAssertEqual(copy.estimatedMinutes, 2)
