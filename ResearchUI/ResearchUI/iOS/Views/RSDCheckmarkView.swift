@@ -465,7 +465,7 @@ fileprivate class RSDCheckboxButtonView : UIView, RSDViewDesignable {
 @IBDesignable
 fileprivate class UncheckedView : UIView {
     
-    fileprivate var borderColor: UIColor = RSDStudyConfiguration.shared.colorPalette.grayScale.veryLightGray.color {
+    fileprivate var borderColor: UIColor = RSDStudyConfiguration.shared.colorPalette.grayScale.lightGray.color {
         didSet {
             self.layer.borderColor = borderColor.cgColor
         }
