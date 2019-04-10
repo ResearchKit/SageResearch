@@ -34,21 +34,12 @@
 import UIKit
 
 
-/// `RSDStepChoiceCell` is the base implementation for a selection table view cell of a form step.
-@IBDesignable public class RSDStepChoiceCell: RSDTableViewCell {
+/// `RSDSelectionTableViewCell` is the base implementation for a selection table view cell.
+@IBDesignable open class RSDSelectionTableViewCell: RSDTableViewCell {
     
-    @IBOutlet public var titleLabel: UILabel!
-    @IBOutlet public var detailLabel: UILabel!
+    @IBOutlet public var titleLabel: UILabel?
+    @IBOutlet public var detailLabel: UILabel?
     @IBOutlet public var separatorLine: UIView?
-    
-    override public var tableItem: RSDTableItem! {
-        didSet {
-            guard let item = tableItem as? RSDChoiceTableItem else { return }
-            titleLabel.text = item.choice.text
-            detailLabel.text = item.choice.detail
-            isSelected = item.selected
-        }
-    }
     
     open override var isSelected: Bool {
         didSet {
@@ -66,13 +57,13 @@ import UIKit
         
         contentView.backgroundColor = contentTile.color
         separatorLine?.backgroundColor = designSystem.colorRules.separatorLine
-        titleLabel.textColor = designSystem.colorRules.textColor(on: contentTile, for: titleTextType)
-        titleLabel.font = designSystem.fontRules.font(for: titleTextType, compatibleWith: traitCollection)
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: titleTextType)
+        titleLabel?.font = designSystem.fontRules.font(for: titleTextType, compatibleWith: traitCollection)
         detailLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: detailTextType)
-        detailLabel.font = designSystem.fontRules.font(for: detailTextType, compatibleWith: traitCollection)
+        detailLabel?.font = designSystem.fontRules.font(for: detailTextType, compatibleWith: traitCollection)
     }
     
-    override public func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+    override open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
         super.setDesignSystem(designSystem, with: background)
         updateColorsAndFonts()
     }
@@ -85,26 +76,26 @@ import UIKit
         
         // Add the title label
         titleLabel = UILabel()
-        contentView.addSubview(titleLabel)
+        contentView.addSubview(titleLabel!)
         
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.numberOfLines = 0
-        titleLabel.textAlignment = .left
-        titleLabel.rsd_alignToSuperview([.leading], padding: kTableSideMargin)
-        titleLabel.rsd_align([.trailing], .lessThanOrEqual, to: contentView, [.trailing], padding: kTableSideMargin, priority: .required)
-        titleLabel.rsd_alignToSuperview([.top], padding: kTableTopMargin, priority: UILayoutPriority(rawValue: 700))
+        titleLabel!.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel!.numberOfLines = 0
+        titleLabel!.textAlignment = .left
+        titleLabel!.rsd_alignToSuperview([.leading], padding: kTableSideMargin)
+        titleLabel!.rsd_align([.trailing], .lessThanOrEqual, to: contentView, [.trailing], padding: kTableSideMargin, priority: .required)
+        titleLabel!.rsd_alignToSuperview([.top], padding: kTableTopMargin, priority: UILayoutPriority(rawValue: 700))
         
         // Add the detail label
         detailLabel = UILabel()
-        contentView.addSubview(detailLabel)
+        contentView.addSubview(detailLabel!)
         
-        detailLabel.translatesAutoresizingMaskIntoConstraints = false
-        detailLabel.numberOfLines = 0
-        detailLabel.textAlignment = .left
-        detailLabel.rsd_alignToSuperview([.leading], padding: kTableSideMargin)
-        detailLabel.rsd_align([.trailing], .lessThanOrEqual, to: contentView, [.trailing], padding: kTableSideMargin, priority: .required)
-        detailLabel.rsd_alignToSuperview([.bottom], padding: kTableBottomMargin)
-        detailLabel.rsd_alignBelow(view: titleLabel, padding: 2.0)
+        detailLabel!.translatesAutoresizingMaskIntoConstraints = false
+        detailLabel!.numberOfLines = 0
+        detailLabel!.textAlignment = .left
+        detailLabel!.rsd_alignToSuperview([.leading], padding: kTableSideMargin)
+        detailLabel!.rsd_align([.trailing], .lessThanOrEqual, to: contentView, [.trailing], padding: kTableSideMargin, priority: .required)
+        detailLabel!.rsd_alignToSuperview([.bottom], padding: kTableBottomMargin)
+        detailLabel!.rsd_alignBelow(view: titleLabel!, padding: 2.0)
         
         // Add the line separator
         separatorLine = UIView()
@@ -127,5 +118,19 @@ import UIKit
     
     open override func awakeFromNib() {
         super.awakeFromNib()
+    }
+}
+
+/// `RSDStepChoiceCell` is a custom implementationn of a selection table cell to use for choice selection
+/// from a list of choices.
+@IBDesignable public class RSDStepChoiceCell: RSDSelectionTableViewCell {
+    
+    override public var tableItem: RSDTableItem! {
+        didSet {
+            guard let item = tableItem as? RSDChoiceTableItem else { return }
+            titleLabel?.text = item.choice.text
+            detailLabel?.text = item.choice.detail
+            isSelected = item.selected
+        }
     }
 }
