@@ -24,7 +24,7 @@
         "text": "You will be stepping up and down a step for 3 minutes to raise your heart rate. Right after you finish stepping, measure your heart rate for 1 minute to see how your heart rate recovers.",
         "permissions": [{
             "permissionType": "camera",
-            "reason": "Heart Snapshot uses the camera and flash on the back of your phone to measure your heart rate."
+            "reason": "We use the camera to see your finger as blood goes through it so we can measure your heart beats."
         }],
         "image": {
             "type": "fetchable",
