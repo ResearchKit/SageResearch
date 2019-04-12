@@ -178,21 +178,37 @@ open class RSDColorRules  {
 
     /// Color for text throughout the app.
     ///
-    /// - Default:
+    /// - Default: (version 1)
     ///     If the background uses light style
-    ///         then `white`
-    ///         else `veryDarkGray`
+    ///         then `text.light`
+    ///         else if detail uses `text.medium` else `text.dark`
     ///
     /// - parameters:
     ///     - background: The background of the text UI element.
     ///     - textType: The type size of the UI element.
     /// - returns: The text color to use.
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
-        if background.usesLightStyle {
-            return self.palette.grayScale.white.color
-        }
-        else {
-            return self.palette.grayScale.veryDarkGray.color
+        switch version {
+        case 0:
+            if background.usesLightStyle {
+                return self.palette.grayScale.white.color
+            }
+            else {
+                return self.palette.grayScale.veryDarkGray.color
+            }
+            
+        default:
+            if background.usesLightStyle {
+                return self.palette.text.light.color
+            }
+            else {
+                switch textType {
+                case .small, .bodyDetail:
+                    return self.palette.text.normal.color
+                default:
+                    return self.palette.text.dark.color
+                }
+            }
         }
     }
     

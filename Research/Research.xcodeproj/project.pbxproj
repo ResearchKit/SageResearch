@@ -28,10 +28,10 @@
 		F800EA802239E3E100EF7B50 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA7E2239E3E100EF7B50 /* RSDColorRules.swift */; };
 		F800EA812239E3E100EF7B50 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA7E2239E3E100EF7B50 /* RSDColorRules.swift */; };
 		F800EA822239E3E100EF7B50 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA7E2239E3E100EF7B50 /* RSDColorRules.swift */; };
-		F800EA84223AFB9400EF7B50 /* RSDColorPallette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA83223AFB9400EF7B50 /* RSDColorPallette.swift */; };
-		F800EA85223AFB9400EF7B50 /* RSDColorPallette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA83223AFB9400EF7B50 /* RSDColorPallette.swift */; };
-		F800EA86223AFB9400EF7B50 /* RSDColorPallette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA83223AFB9400EF7B50 /* RSDColorPallette.swift */; };
-		F800EA87223AFB9400EF7B50 /* RSDColorPallette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA83223AFB9400EF7B50 /* RSDColorPallette.swift */; };
+		F800EA84223AFB9400EF7B50 /* RSDColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA83223AFB9400EF7B50 /* RSDColorPalette.swift */; };
+		F800EA85223AFB9400EF7B50 /* RSDColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA83223AFB9400EF7B50 /* RSDColorPalette.swift */; };
+		F800EA86223AFB9400EF7B50 /* RSDColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA83223AFB9400EF7B50 /* RSDColorPalette.swift */; };
+		F800EA87223AFB9400EF7B50 /* RSDColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA83223AFB9400EF7B50 /* RSDColorPalette.swift */; };
 		F800EA8E223C333D00EF7B50 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA8D223C333D00EF7B50 /* RSDDesignSystem.swift */; };
 		F800EA8F223C333D00EF7B50 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA8D223C333D00EF7B50 /* RSDDesignSystem.swift */; };
 		F800EA90223C333D00EF7B50 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA8D223C333D00EF7B50 /* RSDDesignSystem.swift */; };
@@ -217,6 +217,7 @@
 		F86A5F1421251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */; };
 		F86A5F1521251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */; };
 		F86A5F1621251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */; };
+		F871AA4C2260139500C0F657 /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871AA4A2260136000C0F657 /* ColorPaletteTests.swift */; };
 		F875575A20807E2300235078 /* Research_UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F875575820807E2300235078 /* Research_UnitTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F875575E20807E3900235078 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F829F0F41FFC0B2B001B0680 /* NSLocale+UnitTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F875576020807E8B00235078 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
@@ -977,7 +978,7 @@
 		80242B0D2018012E00FC4F44 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImagePlacementType.swift; sourceTree = "<group>"; };
 		F800EA7E2239E3E100EF7B50 /* RSDColorRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDColorRules.swift; sourceTree = "<group>"; };
-		F800EA83223AFB9400EF7B50 /* RSDColorPallette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDColorPallette.swift; sourceTree = "<group>"; };
+		F800EA83223AFB9400EF7B50 /* RSDColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDColorPalette.swift; sourceTree = "<group>"; };
 		F800EA8D223C333D00EF7B50 /* RSDDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDesignSystem.swift; sourceTree = "<group>"; };
 		F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIStep.swift; sourceTree = "<group>"; };
 		F802F3F2204DF8D40027CB00 /* RSDImagePickerStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImagePickerStep.swift; sourceTree = "<group>"; };
@@ -1050,6 +1051,7 @@
 		F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementDurationTests.swift; sourceTree = "<group>"; };
 		F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMotionRecorderTests.swift; sourceTree = "<group>"; };
 		F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCohortNavigationStep.swift; sourceTree = "<group>"; };
+		F871AA4A2260136000C0F657 /* ColorPaletteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPaletteTests.swift; sourceTree = "<group>"; };
 		F875575620807E2300235078 /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F875575820807E2300235078 /* Research_UnitTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Research_UnitTest.h; sourceTree = "<group>"; };
 		F875575920807E2300235078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1482,6 +1484,7 @@
 			children = (
 				F84A2F772178FABB0079C92C /* ClockTests.swift */,
 				F857BAB0224C12860089B150 /* ColorMappingThemeElementTests.swift */,
+				F871AA4A2260136000C0F657 /* ColorPaletteTests.swift */,
 				F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */,
 				F8FCE05E203F46EC00616CE8 /* ScheduleTests.swift */,
 				F89BEA2F202B9550007BD2DD /* CopyStepTests.swift */,
@@ -1669,7 +1672,7 @@
 				F8C36BD822397DB4000E42A7 /* RSDColorSwatch.swift */,
 				F8C36BE22239AD67000E42A7 /* RSDColorMatrix.swift */,
 				F8C36BE72239AEBD000E42A7 /* ColorMatrix.json */,
-				F800EA83223AFB9400EF7B50 /* RSDColorPallette.swift */,
+				F800EA83223AFB9400EF7B50 /* RSDColorPalette.swift */,
 				F8A334A0224171EF00390601 /* RSDFontRules.swift */,
 				F8A334A62242A80D00390601 /* Colors.xcassets */,
 			);
@@ -2429,7 +2432,7 @@
 				F8BE12B121371A41000AAB1E /* RSDStepNavigatorType.swift in Sources */,
 				F8BE127C213719EC000AAB1E /* RSDDateCoder.swift in Sources */,
 				F8BE12F621371C02000AAB1E /* RSDImage.swift in Sources */,
-				F800EA87223AFB9400EF7B50 /* RSDColorPallette.swift in Sources */,
+				F800EA87223AFB9400EF7B50 /* RSDColorPalette.swift in Sources */,
 				F8BE12DB21371B49000AAB1E /* RSDDetailInputFieldObject.swift in Sources */,
 				F8BE1281213719F4000AAB1E /* RSDAsyncActionConfiguration.swift in Sources */,
 				F8BE12A321371A2B000AAB1E /* RSDTaskInfo.swift in Sources */,
@@ -2776,7 +2779,7 @@
 				FF8B54EA1FCE6D15006B6937 /* Dictionary+Utilities.swift in Sources */,
 				F8BE114921360A94000AAB1E /* RSDInputField.swift in Sources */,
 				F82D11172125EAF300EA1A33 /* RSDCollectionResult.swift in Sources */,
-				F800EA84223AFB9400EF7B50 /* RSDColorPallette.swift in Sources */,
+				F800EA84223AFB9400EF7B50 /* RSDColorPalette.swift in Sources */,
 				F8BE11212136023A000AAB1E /* RSDDecodableReplacement.swift in Sources */,
 				FF8B54251FCE6CA2006B6937 /* RSDGenericStepObject.swift in Sources */,
 				F8E94FF52058602F00752B7B /* RSDMotionAuthorization.swift in Sources */,
@@ -2836,6 +2839,7 @@
 				FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */,
 				F853828E214C447100C3B774 /* StepViewModelTests.swift in Sources */,
 				F8D074AE204FAC04006CDABB /* RecordSampleLoggerTests.swift in Sources */,
+				F871AA4C2260139500C0F657 /* ColorPaletteTests.swift in Sources */,
 				F857BAB1224C12860089B150 /* ColorMappingThemeElementTests.swift in Sources */,
 				F829F0EA1FFB4620001B0680 /* PickerDataSourceTests.swift in Sources */,
 				F8D074B1204FBD0D006CDABB /* DataArchiveTests.swift in Sources */,
@@ -2948,7 +2952,7 @@
 				FF8B53C61FCE6C7B006B6937 /* RSDTaskInfoStep.swift in Sources */,
 				F8BE112F21360358000AAB1E /* RSDTableStep.swift in Sources */,
 				F82D1120212602A700EA1A33 /* RSDNavigationResult.swift in Sources */,
-				F800EA85223AFB9400EF7B50 /* RSDColorPallette.swift in Sources */,
+				F800EA85223AFB9400EF7B50 /* RSDColorPalette.swift in Sources */,
 				F8A334882240574400390601 /* RSDColorMappingThemeElement.swift in Sources */,
 				FF8B548B1FCE6CDD006B6937 /* RSDStepController.swift in Sources */,
 				F82D11142125EA9F00EA1A33 /* RSDFileResult.swift in Sources */,
@@ -3274,7 +3278,7 @@
 				F8F9544420239E8F00347940 /* RSDDateRangeObject.swift in Sources */,
 				F80CA5321FFEBE3200E89C06 /* RSDMeasurementInputTableItem.swift in Sources */,
 				F8C0A8CE20FB045C00EC758A /* RSDUITransitionStyle.swift in Sources */,
-				F800EA86223AFB9400EF7B50 /* RSDColorPallette.swift in Sources */,
+				F800EA86223AFB9400EF7B50 /* RSDColorPalette.swift in Sources */,
 				FF8B54191FCE6C9A006B6937 /* RSDAnswerResultObject.swift in Sources */,
 				F8F72437203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */,
 				F829F0E81FF8AF28001B0680 /* NSUnit+RSDUnitConversion.m in Sources */,

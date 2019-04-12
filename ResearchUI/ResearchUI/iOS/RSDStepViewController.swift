@@ -344,7 +344,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// - Default:
     ///     If the background uses light style
     ///         then the overlay is `clear`
-    ///         else `veryDarkGray`
+    ///         else `RSDColor.black.withAlphaComponent(0.1)`
     ///     If there is a background image
     ///         then the statusbar background is `clear`
     ///         else `background.color`

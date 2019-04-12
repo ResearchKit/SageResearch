@@ -47,7 +47,7 @@ extension CodingUserInfoKey {
 /// - seealso: https://github.com/Sage-Bionetworks/DesignSystem
 public struct RSDColorPalette : Codable, Equatable, Hashable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case version, primary, secondary, accent, successGreen, errorRed, grayScale
+        case version, primary, secondary, accent, successGreen, errorRed, grayScale, text
     }
     
     /// The version for this color palette.
@@ -70,6 +70,9 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
     
     /// The gray scale values to use for the application.
     public var grayScale: RSDGrayScale
+    
+    /// The color family to use for text.
+    public var text: RSDColorKey
     
     /// Wireframe color palette.
     public static let wireframe = RSDColorPalette(primaryName: .palette(.stone), .dark,
@@ -110,14 +113,18 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
                 accent: RSDColorKey,
                 successGreen: RSDColorKey? = nil,
                 errorRed: RSDColorKey? = nil,
-                grayScale: RSDGrayScale? = nil) {
+                grayScale: RSDGrayScale? = nil,
+                text: RSDColorKey? = nil) {
         self.version = version
         self.primary = primary
         self.secondary = secondary
         self.accent = accent
         self.successGreen = successGreen ?? RSDColorMatrix.shared.colorKey(for: .special(.successGreen), version: version)
-        self.errorRed = errorRed  ?? RSDColorMatrix.shared.colorKey(for: .special(.errorRed), version: version)
+        self.errorRed = errorRed  ??
+            RSDColorMatrix.shared.colorKey(for: .special(.errorRed), version: version)
         self.grayScale = grayScale ?? RSDGrayScale()
+        self.text = text ??
+            RSDColorMatrix.shared.colorKey(for: .special(.text), shade: .medium)
     }
     
     public init(from decoder: Decoder) throws {
@@ -130,10 +137,13 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
         self.primary = try container.decode(RSDColorKey.self, forKey: .primary)
         self.secondary = try container.decode(RSDColorKey.self, forKey: .secondary)
         self.accent = try container.decode(RSDColorKey.self, forKey: .accent)
-        self.successGreen = try container.decodeIfPresent(RSDColorKey.self, forKey: .successGreen) ?? RSDColorMatrix.shared.colorKey(for: .special(.successGreen), version: version)
+        self.successGreen = try container.decodeIfPresent(RSDColorKey.self, forKey: .successGreen) ??
+            RSDColorMatrix.shared.colorKey(for: .special(.successGreen), shade: .medium)
         self.errorRed = try container.decodeIfPresent(RSDColorKey.self, forKey: .errorRed) ??
-            RSDColorMatrix.shared.colorKey(for: .special(.errorRed), version: version)
+            RSDColorMatrix.shared.colorKey(for: .special(.errorRed), shade: .medium)
         self.grayScale = try container.decodeIfPresent(RSDGrayScale.self, forKey: .grayScale) ?? RSDGrayScale()
+        self.text = try container.decodeIfPresent(RSDColorKey.self, forKey: .text) ??
+            RSDColorMatrix.shared.colorKey(for: .special(.text), shade: .medium)
         self.version = version
 
         codingInfo?.userInfo[.paletteVersion] = nil

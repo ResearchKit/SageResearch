@@ -153,10 +153,10 @@ extension RSDColor {
     /// - parameter hexString:  An RGB color defined using a hex code.
     /// - returns: A color if the hex is valid.
     public convenience init?(hexString: String) {
-        if hexString == "#FFFFFF" {
+        if hexString == "#FFFFFF" || hexString == "white" {
             self.init(white: 1, alpha: 1)
         }
-        else if hexString == "#000000" {
+        else if hexString == "#000000" || hexString == "black" {
             self.init(white: 0, alpha: 1)
         }
         else {

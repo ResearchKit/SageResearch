@@ -93,7 +93,12 @@ public final class RSDColorMatrix {
     public func colorSwatch(for name: RSDReservedColorName, version: Int?) -> RSDColorSwatch? {
         let ver = min(name.version ?? Int.max, version ?? Int.max)
         let library = self.library(for: ver)
-        return library.swatches.first(where: { $0.name == name.rawValue })
+        if let swatch = library.swatches.first(where: { $0.name == name.rawValue }) {
+            return swatch
+        }
+        else {
+            return self.registeredLibraries.last?.swatches.first(where: { $0.name == name.rawValue })
+        }
     }
     
     /// Get the color swatch associated with the given name.
@@ -228,6 +233,7 @@ public enum RSDReservedColorName : RawRepresentable, Equatable, Hashable, Codabl
     public enum Special : String, CaseIterable {
         case errorRed
         case successGreen
+        case text
     }
     
     /// Maximum version in which a given reserved color name is expected to be included. If `nil` this color

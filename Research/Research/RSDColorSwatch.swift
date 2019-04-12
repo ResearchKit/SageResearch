@@ -77,6 +77,8 @@ public struct RSDColorSwatch : Codable, Equatable, Hashable, RSDColorFamily  {
                 return 0
             case .veryDark:
                 return self.colorTiles.count - 1
+            case .medium:
+                return self.colorTiles.count / 2
             default:
                 return Int((Double(shade.rawValue) / Double(Shade.allCases.count)) * Double(self.colorTiles.count - 1))
             }
@@ -160,15 +162,15 @@ public struct RSDGrayScale : Codable, Equatable, Hashable, RSDColorFamily {
             case .veryLightGray:
                 return RSDColorTile("#EAEBEE", false)
             case .lightGray:
-                return RSDColorTile("#BBBCBE", false)
+                return RSDColorTile("#C3C7D1", false)
             case .gray:
-                return RSDColorTile("#757577", true)
+                return RSDColorTile("#9DA3B3", false)
             case .darkGray:
-                return RSDColorTile("#4A4A4A", true)
+                return RSDColorTile("#777F95", true)
             case .veryDarkGray:
-                return RSDColorTile("#1A1C29", true)
+                return RSDColorTile("#575E71", true)
             case .black:
-                return RSDColorTile("#000000", true)
+                return RSDColorTile("#2A2A2A", true)
             }
         }
         
