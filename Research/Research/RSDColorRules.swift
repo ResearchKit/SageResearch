@@ -40,7 +40,7 @@ import UIKit
 public enum RSDControlState : UInt {
     case normal = 0, highlighted = 1, disabled = 2, selected = 4
     
-    #if os(iOS) || os(tvOS)
+    #if os(iOS)
     public init(controlState: UIControl.State) {
         self = RSDControlState(rawValue: controlState.rawValue) ?? .normal
     }
