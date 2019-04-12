@@ -154,7 +154,7 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
 /// describe the colors associated with a given set of components.
 public struct RSDColorKey : Codable, Equatable, Hashable, RSDColorMapping {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case index, swatch, swatchName
+        case index, swatch, swatchName, colorName
     }
     
     /// The level for the color as described in the design documents for a given app.
@@ -175,28 +175,45 @@ public struct RSDColorKey : Codable, Equatable, Hashable, RSDColorMapping {
     }
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let index = try container.decode(Int.self, forKey: .index)
-        // Get the swatch using either the swatch name or using the color matrix.
+        
         let swatch: RSDColorSwatch
-        if let swatchName = try container.decodeIfPresent(RSDReservedColorName.self, forKey: .swatchName) {
-            let swatchVersion = decoder.codingInfo?.userInfo[.paletteVersion] as? Int
-            guard let fm = RSDColorMatrix.shared.colorSwatch(for: swatchName, version: swatchVersion)
-                else {
-                    let context = DecodingError.Context(codingPath: decoder.codingPath,
-                                                        debugDescription: "The color swatch \(swatchName) was not defined in the shared color matrix.")
-                    throw DecodingError.dataCorrupted(context)
+        let index: Int
+        
+        if let singleValueContainer = try? decoder.singleValueContainer(),
+            let colorName = try? singleValueContainer.decode(String.self) {
+            if let fm = RSDColorMatrix.shared.findColorKey(for: colorName) {
+                swatch = fm.swatch
+                index = fm.index
             }
-            swatch = fm
+            else {
+                let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                    debugDescription: "The color \(colorName) was not defined in the shared color matrix and the swatch cannot be build.")
+                throw DecodingError.dataCorrupted(context)
+            }
         }
         else {
-            swatch = try container.decode(RSDColorSwatch.self, forKey: .swatch)
-        }
-        // Validate the index against the tile count.
-        guard swatch.colorTiles.count > index else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath,
-                                                debugDescription: "The color swatch \(swatch.name) does not have enough tiles to match the color index of \(index)")
-            throw DecodingError.dataCorrupted(context)
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            index = try container.decode(Int.self, forKey: .index)
+            // Get the swatch using either the swatch name or using the color matrix.
+            if let swatchName = try container.decodeIfPresent(RSDReservedColorName.self, forKey: .swatchName) {
+                let swatchVersion = decoder.codingInfo?.userInfo[.paletteVersion] as? Int
+                guard let fm = RSDColorMatrix.shared.colorSwatch(for: swatchName, version: swatchVersion)
+                    else {
+                        let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                            debugDescription: "The color swatch \(swatchName) was not defined in the shared color matrix.")
+                        throw DecodingError.dataCorrupted(context)
+                }
+                swatch = fm
+            }
+            else {
+                swatch = try container.decode(RSDColorSwatch.self, forKey: .swatch)
+            }
+            // Validate the index against the tile count.
+            guard swatch.colorTiles.count > index else {
+                let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                    debugDescription: "The color swatch \(swatch.name) does not have enough tiles to match the color index of \(String(describing: index))")
+                throw DecodingError.dataCorrupted(context)
+            }
         }
         self.index = index
         self.swatch = swatch
@@ -236,6 +253,17 @@ extension RSDColorKey : RSDDocumentableDecodableObject {
             ]
         ]
         return [jsonA, jsonB]
+    }
+}
+
+extension RSDColorKey : RSDDocumentableStringLiteral {
+    
+    var stringValue: String {
+        return self.normal.colorName ?? ""
+    }
+    
+    static func examples() -> [String] {
+        return ["#7B67B3", "#6DB56D"]
     }
 }
 

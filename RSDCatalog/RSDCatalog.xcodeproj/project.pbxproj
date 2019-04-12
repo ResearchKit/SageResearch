@@ -14,6 +14,8 @@
 		F84DDB6E2095567C009CC1B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6B20955628009CC1B8 /* AVFoundation.framework */; };
 		F84DDB6F20955687009CC1B8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6920955628009CC1B8 /* CoreLocation.framework */; };
 		F84DDB7020955690009CC1B8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6A20955628009CC1B8 /* CoreMotion.framework */; };
+		F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */ = {isa = PBXBuildFile; fileRef = F871AA5022610D2F00C0F657 /* ColorPalettes.json */; };
+		F871AA5322610E8900C0F657 /* PaletteSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */; };
 		F8A503712225FE40005F1C0C /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A503702225FE40005F1C0C /* CardiorespiratoryFitness.framework */; };
 		F8A503722225FE40005F1C0C /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A503702225FE40005F1C0C /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42A532095518400C6A4BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A522095518400C6A4BC /* AppDelegate.swift */; };
@@ -83,6 +85,8 @@
 		F84DDB6A20955628009CC1B8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		F84DDB6B20955628009CC1B8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F84DDB6C20955628009CC1B8 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		F871AA5022610D2F00C0F657 /* ColorPalettes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ColorPalettes.json; sourceTree = "<group>"; };
+		F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteSelectionViewController.swift; sourceTree = "<group>"; };
 		F8A503702225FE40005F1C0C /* CardiorespiratoryFitness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardiorespiratoryFitness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42A4F2095518400C6A4BC /* RSDCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42A522095518400C6A4BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 				F8D42A822095529100C6A4BC /* ResultTableViewController.swift */,
 				F8D42A812095529100C6A4BC /* TaskGroupTableViewController.swift */,
 				F8D42A842095529100C6A4BC /* TaskTableViewController.swift */,
+				F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */,
 				F8D42A92209552EC00C6A4BC /* JSON Files */,
 				F8D42A8B209552CB00C6A4BC /* Storyboards */,
 				F8D42A592095518400C6A4BC /* Assets.xcassets */,
@@ -221,6 +226,7 @@
 				F8D42A94209552EC00C6A4BC /* FormStep_List.json */,
 				F8D42A95209552EC00C6A4BC /* FormStep_Textfield.json */,
 				F8D42A96209552EC00C6A4BC /* Theme_Color.json */,
+				F871AA5022610D2F00C0F657 /* ColorPalettes.json */,
 				F8D42A97209552EC00C6A4BC /* Recorder_Distance.json */,
 				F8D42A98209552EC00C6A4BC /* FormStep_Picker.json */,
 				F8D42A99209552EC00C6A4BC /* TaskGroups.json */,
@@ -363,6 +369,7 @@
 				F8D42AA2209552EC00C6A4BC /* Image_Picker.json in Resources */,
 				F8D42A9F209552EC00C6A4BC /* Recorder_Distance.json in Resources */,
 				F8D42A9D209552EC00C6A4BC /* FormStep_Textfield.json in Resources */,
+				F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */,
 				F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,6 +398,7 @@
 				F8DC072E2256DD8A0045D530 /* ArchiveManager.swift in Sources */,
 				F8D42A892095529100C6A4BC /* TaskTableViewController.swift in Sources */,
 				F8D42A862095529100C6A4BC /* TaskGroupTableViewController.swift in Sources */,
+				F871AA5322610E8900C0F657 /* PaletteSelectionViewController.swift in Sources */,
 				F8D42A532095518400C6A4BC /* AppDelegate.swift in Sources */,
 				F8D42A882095529100C6A4BC /* CatalogFactory.swift in Sources */,
 				F8D42A872095529100C6A4BC /* ResultTableViewController.swift in Sources */,

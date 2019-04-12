@@ -248,6 +248,7 @@ public struct RSDColorTile : Codable, Equatable, Hashable {
     fileprivate init(_ hex: String, _ usesLightStyle: Bool) {
         self.color = RSDColor(hexString: hex)!
         self.usesLightStyle = usesLightStyle
+        self.colorName = hex
     }
     
     /// The color defined for this tile.
@@ -259,10 +260,14 @@ public struct RSDColorTile : Codable, Equatable, Hashable {
     /// and a light color showing dark text would set `usesLightStyle = false`.
     public let usesLightStyle: Bool
     
+    /// The color name (hex code, special, or asset) used to decode the color from a color file.
+    public let colorName: String?
+    
     /// Initialize from a color and light style.
     public init(_ color: RSDColor, usesLightStyle: Bool) {
         self.color = color
         self.usesLightStyle = usesLightStyle
+        self.colorName = color.toHexString()
     }
     
     /// Initialize from a decoder.
@@ -288,19 +293,24 @@ public struct RSDColorTile : Codable, Equatable, Hashable {
             throw DecodingError.dataCorrupted(context)
         }
         self.usesLightStyle = try container.decode(Bool.self, forKey: .usesLightStyle)
+        self.colorName = colorName
     }
     
     /// Encode the color tile where the color is encoded as RGB.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.usesLightStyle, forKey: .usesLightStyle)
-        if let hex = self.color.toHexString() {
+        if let hex = self.colorName {
             try container.encode(hex, forKey: .color)
         }
         else {
             let context = EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "Could not convert the color to a HEX color for encoding.")
             throw EncodingError.invalidValue(self.color, context)
         }
+    }
+    
+    public static func == (lhs: RSDColorTile, rhs: RSDColorTile) -> Bool {
+        return lhs.color == rhs.color && lhs.usesLightStyle == rhs.usesLightStyle
     }
 }
 

@@ -179,9 +179,9 @@ open class RSDColorRules  {
     /// Color for text throughout the app.
     ///
     /// - Default: (version 1)
-    ///     If the background uses light style
-    ///         then `text.light`
-    ///         else if detail uses `text.medium` else `text.dark`
+    ///     If the background uses light style then `text.light`
+    ///     else if this is detail text then `text.medium`
+    ///     else `text.dark`
     ///
     /// - parameters:
     ///     - background: The background of the text UI element.
