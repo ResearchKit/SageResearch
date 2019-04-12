@@ -65,8 +65,9 @@ public final class RSDColorMatrix {
         // is built. Under typical circumstances, the matrix will only be used to load palettes on first
         // run of a task within a given module. Ideally, a module that includes a default design system and
         // color palette should use an in-memory singleton to store only the color information for its palette.
-        // If the color matrix library starts to get prohibitively big, we will need to add in a min supported
-        // library version, but for now, this should be fine. syoung 04/12/2019
+        // If the color matrix library starts to get prohibitively big, we may wish to consider adding in a
+        // min supported library version, but for now, the file is only 18kb and this is really a "just in case"
+        // where keeping the whole thing in memory isn't expected to cause problems. syoung 04/12/2019
         NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: self, queue: .main) { (_) in
             self._registeredLibraries = nil
         }
