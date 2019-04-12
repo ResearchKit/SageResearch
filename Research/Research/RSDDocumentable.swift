@@ -107,6 +107,7 @@ public struct RSDDocumentCreator {
             RSDDurationRangeObject.self,
             RSDFetchableImageThemeElementObject.self,
             RSDFileResultObject.self,
+            RSDGrayScale.self,
             RSDNavigationUIActionObject.self,
             RSDNumberRangeObject.self,
             RSDResourceTransformerObject.self,
