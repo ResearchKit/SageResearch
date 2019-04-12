@@ -109,7 +109,7 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
         #if os(watchOS)
             let fetchedImage = RSDImage(named: imageName)
         #elseif os(macOS)
-            let fetchedImage = RSDImage(named: NSImage.Name(imageName))
+            let fetchedImage = RSDImage(named: imageName)
         #else
             let fetchedImage = RSDImage(named: imageName, in: bundle, compatibleWith: nil)
         #endif
@@ -193,7 +193,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// - returns: The images for this step.
     public func images() -> [RSDImage] {
         return imageNames.compactMap {
-            RSDImage(named: NSImage.Name($0))
+            RSDImage(named: $0)
         }
     }
     

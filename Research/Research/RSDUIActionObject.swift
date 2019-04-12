@@ -53,7 +53,7 @@ extension RSDEmbeddedResourceUIAction {
         #if os(watchOS)
             return RSDImage(named: name)
         #elseif os(macOS)
-            return RSDImage(named: NSImage.Name(name))
+            return RSDImage(named: name)
         #else
             return RSDImage(named: name, in: bundle, compatibleWith: nil)
         #endif

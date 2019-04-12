@@ -102,7 +102,7 @@ extension RSDColor {
     open class func rsd_color(named name: String, in bundle: Bundle?) -> RSDColor? {
         if let color = RSDColor(hexString: name) {
             return color
-        } else if let color = RSDColor(named: NSColor.Name(name)) {
+        } else if let color = RSDColor(named: name, bundle: bundle) {
             return color
         } else if let colorHex = ColorInfoPList(name: "ColorInfo", bundle: bundle).colorHex(for: name) {
             return RSDColor(hexString: colorHex)
