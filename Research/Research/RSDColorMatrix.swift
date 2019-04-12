@@ -33,9 +33,7 @@
 
 import Foundation
 
-#if os(macOS)
-import AppKit
-#else
+#if os(iOS)
 import UIKit
 #endif
 
@@ -62,9 +60,7 @@ public final class RSDColorMatrix {
     }
     
     private init() {
-        #if os(macOS)
-        // Mac does not support low memory warnings.
-        #else
+        #if os(iOS)
         // If a low memory warning is sent out, then release the libraries and reload them when/if a palette
         // is built. Under typical circumstances, the matrix will only be used to load palettes on first
         // run of a task within a given module. Ideally, a module that includes a default design system and
