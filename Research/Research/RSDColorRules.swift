@@ -198,26 +198,15 @@ open class RSDColorRules  {
     ///     - textType: The type size of the UI element.
     /// - returns: The text color to use.
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
-        switch version {
-        case 0:
-            if background.usesLightStyle {
-                return self.palette.grayScale.white.color
-            }
-            else {
-                return self.palette.grayScale.veryDarkGray.color
-            }
-            
-        default:
-            if background.usesLightStyle {
-                return self.palette.text.light.color
-            }
-            else {
-                switch textType {
-                case .small, .bodyDetail:
-                    return self.palette.text.normal.color
-                default:
-                    return self.palette.text.dark.color
-                }
+        if background.usesLightStyle {
+            return self.palette.text.light.color
+        }
+        else {
+            switch textType {
+            case .small, .bodyDetail:
+                return self.palette.text.normal.color
+            default:
+                return self.palette.text.dark.color
             }
         }
     }
@@ -255,10 +244,10 @@ open class RSDColorRules  {
     ///
     /// - Default: (version 0)
     /// ```
-    ///     If the background is `white` or `veryLightGray`
-    ///         then if the primary color uses light style return `primary`
-    ///         else `tinted button color`
-    ///     else `text color`
+    ///     If the background is `white` *and* the primary color uses light style then
+    ///         `primary`
+    ///     Else
+    ///         `text color`
     /// ```
     ///
     /// - Default: (version 1)
@@ -275,13 +264,9 @@ open class RSDColorRules  {
     open func underlinedTextButton(on background: RSDColorTile, state: RSDControlState) -> RSDColor {
         switch self.version {
         case 0:
-            if background == self.palette.grayScale.white || background == self.palette.grayScale.veryLightGray {
-                if self.palette.primary.normal.usesLightStyle {
-                    return self.palette.primary.normal.color
-                }
-                else {
-                    return self.tintedButtonColor(on: background)
-                }
+            if (background == self.palette.grayScale.white),
+                self.palette.primary.normal.usesLightStyle {
+                return self.palette.primary.normal.color
             }
             else {
                 return textColor(on: background, for: .body)

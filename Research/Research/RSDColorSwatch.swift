@@ -79,8 +79,10 @@ public struct RSDColorSwatch : Codable, Equatable, Hashable, RSDColorFamily  {
                 return self.colorTiles.count - 1
             case .medium:
                 return self.colorTiles.count / 2
-            default:
-                return Int((Double(shade.rawValue) / Double(Shade.allCases.count)) * Double(self.colorTiles.count - 1))
+            case .dark:
+                return min(self.colorTiles.count / 2 + 1, self.colorTiles.count - 1)
+            case .light:
+                return max(self.colorTiles.count / 2 - 1, 0)
             }
         }()
         return RSDColorKey(index: idx, swatch: self)!

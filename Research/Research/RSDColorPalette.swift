@@ -90,7 +90,11 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
     public static let twilight = RSDColorPalette(primaryName: .palette(.royal), .dark,
                                                 secondaryName: .palette(.turquoise), .medium,
                                                 accentName: .palette(.butterscotch), .medium)
-
+    
+    public static let midnight = RSDColorPalette(primaryName: .palette(.royal), .veryDark,
+                                                 secondaryName: .palette(.lavender), .dark,
+                                                 accentName: .palette(.rose), .veryDark)
+    
     public static let test = RSDColorPalette(primaryName: .palette(.stone), .dark,
                                              secondaryName: .palette(.slate), .dark,
                                              accentName: .palette(.cloud), .dark,
@@ -119,9 +123,9 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
         self.primary = primary
         self.secondary = secondary
         self.accent = accent
-        self.successGreen = successGreen ?? RSDColorMatrix.shared.colorKey(for: .special(.successGreen), version: version)
+        self.successGreen = successGreen ?? RSDColorMatrix.shared.colorKey(for: .special(.successGreen), shade: .medium)
         self.errorRed = errorRed  ??
-            RSDColorMatrix.shared.colorKey(for: .special(.errorRed), version: version)
+            RSDColorMatrix.shared.colorKey(for: .special(.errorRed), shade: .medium)
         self.grayScale = grayScale ?? RSDGrayScale()
         self.text = text ??
             RSDColorMatrix.shared.colorKey(for: .special(.text), shade: .medium)

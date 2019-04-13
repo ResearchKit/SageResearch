@@ -2,7 +2,6 @@
 //  RSDInstructionStepViewController.swift
 //  ResearchUI (iOS)
 //
-//  Created by Shannon Young on 3/8/19.
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
