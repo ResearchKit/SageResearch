@@ -191,7 +191,7 @@ public struct RSDColorKey : Codable, Equatable, Hashable, RSDColorMapping {
             }
             else {
                 let context = DecodingError.Context(codingPath: decoder.codingPath,
-                                                    debugDescription: "The color \(colorName) was not defined in the shared color matrix and the swatch cannot be build.")
+                                                    debugDescription: "The color \(colorName) was not defined in the shared color matrix and the swatch cannot be built.")
                 throw DecodingError.dataCorrupted(context)
             }
         }
