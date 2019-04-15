@@ -38,6 +38,9 @@
                 <a href="../Classes/RSDAudioSoundPlayer.html">RSDAudioSoundPlayer</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDBackgroundGradient.html">RSDBackgroundGradient</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a>
               </li>
               <li class="nav-group-task">
@@ -54,9 +57,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/RSDCompletionGradient.html">RSDCompletionGradient</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDCountdownDial.html">RSDCountdownDial</a>
@@ -101,6 +101,9 @@
                 <a href="../Classes/RSDOverviewStepViewController.html">RSDOverviewStepViewController</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDPermissionStepViewController.html">RSDPermissionStepViewController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDProgressIndicator.html">RSDProgressIndicator</a>
               </li>
               <li class="nav-group-task">
@@ -111,6 +114,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDScrollingOverviewStepViewController.html">RSDScrollingOverviewStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSelectionTableViewCell.html">RSDSelectionTableViewCell</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDShadowGradient">RSDShadowGradient</a>
@@ -249,6 +255,9 @@
                 <a href="../Protocols/RSDPickerViewProtocol.html">RSDPickerViewProtocol</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDShowViewUIAction.html">RSDShowViewUIAction</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDSoundPlayer.html">RSDSoundPlayer</a>
               </li>
               <li class="nav-group-task">
@@ -301,7 +310,7 @@
             <h1>RSDCountdownStepViewController</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDCountdownStepViewController</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDStepViewController.html">RSDStepViewController</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDCountdownStepViewController</span> <span class="p">:</span> <span class="kt">RSDFullscreenImageStepViewController</span></code></pre>
 
                 </div>
               </div>
@@ -424,6 +433,60 @@ that can be used to show a numeric countdown (5-4-3-2-1) and a <code>pauseButton
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@IBAction</span>
 <span class="kd">open</span> <span class="kd">func</span> <span class="nf">pauseTimer</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI30RSDCountdownStepViewControllerC13setColorStyle3for10backgroundy0A017RSDColorPlacementO_AG0L4TileVtF"></a>
+                    <a name="//apple_ref/swift/Method/setColorStyle(for:background:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI30RSDCountdownStepViewControllerC13setColorStyle3for10backgroundy0A017RSDColorPlacementO_AG0L4TileVtF">setColorStyle(for:background:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override setting the color style to set the color of the label.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">setColorStyle</span><span class="p">(</span><span class="k">for</span> <span class="nv">placement</span><span class="p">:</span> <span class="kt">RSDColorPlacement</span><span class="p">,</span> <span class="nv">background</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI30RSDCountdownStepViewControllerC19countdownLabelColor2onSo7UIColorC0A012RSDColorTileV_tF"></a>
+                    <a name="//apple_ref/swift/Method/countdownLabelColor(on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI30RSDCountdownStepViewControllerC19countdownLabelColor2onSo7UIColorC0A012RSDColorTileV_tF">countdownLabelColor(on:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the color to use for the countdown label</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">countdownLabelColor</span><span class="p">(</span><span class="n">on</span> <span class="nv">background</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIColor</span></code></pre>
 
                         </div>
                       </div>

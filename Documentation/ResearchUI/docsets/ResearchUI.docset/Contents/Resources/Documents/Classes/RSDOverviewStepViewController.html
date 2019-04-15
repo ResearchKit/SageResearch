@@ -38,6 +38,9 @@
                 <a href="../Classes/RSDAudioSoundPlayer.html">RSDAudioSoundPlayer</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDBackgroundGradient.html">RSDBackgroundGradient</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a>
               </li>
               <li class="nav-group-task">
@@ -54,9 +57,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/RSDCompletionGradient.html">RSDCompletionGradient</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDCountdownDial.html">RSDCountdownDial</a>
@@ -101,6 +101,9 @@
                 <a href="../Classes/RSDOverviewStepViewController.html">RSDOverviewStepViewController</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDPermissionStepViewController.html">RSDPermissionStepViewController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDProgressIndicator.html">RSDProgressIndicator</a>
               </li>
               <li class="nav-group-task">
@@ -111,6 +114,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDScrollingOverviewStepViewController.html">RSDScrollingOverviewStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSelectionTableViewCell.html">RSDSelectionTableViewCell</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDShadowGradient">RSDShadowGradient</a>
@@ -249,6 +255,9 @@
                 <a href="../Protocols/RSDPickerViewProtocol.html">RSDPickerViewProtocol</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDShowViewUIAction.html">RSDShowViewUIAction</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDSoundPlayer.html">RSDSoundPlayer</a>
               </li>
               <li class="nav-group-task">
@@ -301,7 +310,7 @@
             <h1>RSDOverviewStepViewController</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDOverviewStepViewController</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDStepViewController.html">RSDStepViewController</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDOverviewStepViewController</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDPermissionStepViewController.html">RSDPermissionStepViewController</a></span></code></pre>
 
                 </div>
               </div>
@@ -313,32 +322,6 @@ a notification reminder to perform the task at a later time.</p>
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI29RSDOverviewStepViewControllerC011instantiatedE5Model3for4with0A007RSDStepE13PathComponent_pAG0K0_p_AG07RSDPathM0_pSgtF"></a>
-                    <a name="//apple_ref/swift/Method/instantiateStepViewModel(for:with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI29RSDOverviewStepViewControllerC011instantiatedE5Model3for4with0A007RSDStepE13PathComponent_pAG0K0_p_AG07RSDPathM0_pSgtF">instantiateStepViewModel(for:with:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">instantiateStepViewModel</span><span class="p">(</span><span class="k">for</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">RSDStep</span><span class="p">,</span> <span class="n">with</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt">RSDPathComponent</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">RSDStepViewPathComponent</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -360,45 +343,6 @@ a notification reminder to perform the task at a later time.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidAppear</span><span class="p">(</span><span class="n">_</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Permission%20handling"></a>
-                <a name="//apple_ref/swift/Section/Permission handling" class="dashAnchor"></a>
-                <a href="#/Permission%20handling">
-                  <h3 class="section-name">Permission handling</h3>
-                </a>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI29RSDOverviewStepViewControllerC25handleAuthorizationFailed6status10permissiony0A022RSDAuthorizationStatusO_AG21RSDStandardPermissionVtF"></a>
-                    <a name="//apple_ref/swift/Method/handleAuthorizationFailed(status:permission:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI29RSDOverviewStepViewControllerC25handleAuthorizationFailed6status10permissiony0A022RSDAuthorizationStatusO_AG21RSDStandardPermissionVtF">handleAuthorizationFailed(status:permission:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Present an alert letting the user know that they do not have authorizations that are required to run
-this task.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">handleAuthorizationFailed</span><span class="p">(</span><span class="nv">status</span><span class="p">:</span> <span class="kt">RSDAuthorizationStatus</span><span class="p">,</span> <span class="nv">permission</span><span class="p">:</span> <span class="kt">RSDStandardPermission</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

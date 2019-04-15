@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RSDCompletionGradient Class Reference</title>
+    <title>RSDShowViewUIAction Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/RSDCompletionGradient" class="dashAnchor"></a>
-    <a title="RSDCompletionGradient Class Reference"></a>
+    <a name="//apple_ref/swift/Protocol/RSDShowViewUIAction" class="dashAnchor"></a>
+    <a title="RSDShowViewUIAction Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">ResearchUI Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">ResearchUI Reference</a>
         <img id="carat" src="../img/carat.png" />
-        RSDCompletionGradient Class Reference
+        RSDShowViewUIAction Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -36,6 +36,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDAudioSoundPlayer.html">RSDAudioSoundPlayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDBackgroundGradient.html">RSDBackgroundGradient</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a>
@@ -54,9 +57,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/RSDCompletionGradient.html">RSDCompletionGradient</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDCountdownDial.html">RSDCountdownDial</a>
@@ -101,6 +101,9 @@
                 <a href="../Classes/RSDOverviewStepViewController.html">RSDOverviewStepViewController</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDPermissionStepViewController.html">RSDPermissionStepViewController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDProgressIndicator.html">RSDProgressIndicator</a>
               </li>
               <li class="nav-group-task">
@@ -111,6 +114,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDScrollingOverviewStepViewController.html">RSDScrollingOverviewStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSelectionTableViewCell.html">RSDSelectionTableViewCell</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDShadowGradient">RSDShadowGradient</a>
@@ -249,6 +255,9 @@
                 <a href="../Protocols/RSDPickerViewProtocol.html">RSDPickerViewProtocol</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDShowViewUIAction.html">RSDShowViewUIAction</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDSoundPlayer.html">RSDSoundPlayer</a>
               </li>
               <li class="nav-group-task">
@@ -298,15 +307,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>RSDCompletionGradient</h1>
+            <h1>RSDShowViewUIAction</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCompletionGradient</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDShowViewUIAction</span> <span class="p">:</span> <span class="kt">RSDUIAction</span></code></pre>
 
                 </div>
               </div>
-            <p><code>RSDCompletionGradient</code> is a UI element for adding a shadow gradient to a view.</p>
+            <p>For the case where the learn more action is designed specifically for showing a view controller, this
+allows for vending a custom learn more action without requiring a custom step view.</p>
 
           </section>
           <section class="section task-group-section">
@@ -315,9 +324,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDCompletionGradient(py)startColor"></a>
-                    <a name="//apple_ref/swift/Property/startColor" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCompletionGradient(py)startColor">startColor</a>
+                    <a name="/s:10ResearchUI19RSDShowViewUIActionP011instantiateD10Controller3forSo06UIViewG0C0A007RSDStepD13PathComponent_p_tF"></a>
+                    <a name="//apple_ref/swift/Method/instantiateViewController(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI19RSDShowViewUIActionP011instantiateD10Controller3forSo06UIViewG0C0A007RSDStepD13PathComponent_p_tF">instantiateViewController(for:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -325,125 +334,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The color that the gradient begins with.</p>
+                        <p>The view controller to show.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">startColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDCompletionGradient(py)endColor"></a>
-                    <a name="//apple_ref/swift/Property/endColor" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCompletionGradient(py)endColor">endColor</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The color that the gradient ends with.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
-<span class="kd">public</span> <span class="k">var</span> <span class="nv">endColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI21RSDCompletionGradientC19backgroundColorTile0A008RSDColorG0VSgvp"></a>
-                    <a name="//apple_ref/swift/Property/backgroundColorTile" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI21RSDCompletionGradientC19backgroundColorTile0A008RSDColorG0VSgvp">backgroundColorTile</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The background color for the table cell.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">backgroundColorTile</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI21RSDCompletionGradientC12designSystem0A009RSDDesignF0CSgvp"></a>
-                    <a name="//apple_ref/swift/Property/designSystem" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI21RSDCompletionGradientC12designSystem0A009RSDDesignF0CSgvp">designSystem</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The design system for this component.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:10ResearchUI21RSDCompletionGradientC15setDesignSystem_4withy0A009RSDDesignG0C_AF12RSDColorTileVtF"></a>
-                    <a name="//apple_ref/swift/Method/setDesignSystem(_:with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI21RSDCompletionGradientC15setDesignSystem_4withy0A009RSDDesignG0C_AF12RSDColorTileVtF">setDesignSystem(_:with:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Views can be used in nibs and storyboards without setting up a design system for them. This allows
-for setting up views to use the same design system and background color mapping as their parent view.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setDesignSystem</span><span class="p">(</span><span class="n">_</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">,</span> <span class="n">with</span> <span class="nv">background</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">instantiateViewController</span><span class="p">(</span><span class="k">for</span> <span class="nv">stepViewModel</span><span class="p">:</span> <span class="kt">RSDStepViewPathComponent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span></code></pre>
 
                         </div>
                       </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>RSDStepViewControllerVendor Protocol Reference</title>
+    <title>RSDPermissionStepViewController Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Protocol/RSDStepViewControllerVendor" class="dashAnchor"></a>
-    <a title="RSDStepViewControllerVendor Protocol Reference"></a>
+    <a name="//apple_ref/swift/Class/RSDPermissionStepViewController" class="dashAnchor"></a>
+    <a title="RSDPermissionStepViewController Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">ResearchUI Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">ResearchUI Reference</a>
         <img id="carat" src="../img/carat.png" />
-        RSDStepViewControllerVendor Protocol Reference
+        RSDPermissionStepViewController Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -307,15 +307,15 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>RSDStepViewControllerVendor</h1>
+            <h1>RSDPermissionStepViewController</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDStepViewControllerVendor</span> <span class="p">:</span> <span class="kt">RSDStep</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDPermissionStepViewController</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDStepViewController.html">RSDStepViewController</a></span></code></pre>
 
                 </div>
               </div>
-            <p>Optional protocol that can be used to get the step view controller from the step rather than from the
-task view controller or delegate.</p>
+            <p><code>RSDPermissionStepViewController</code> is a customizable view controller that is designed to be used to
+request and/or check the permission status for this view.</p>
 
           </section>
           <section class="section task-group-section">
@@ -324,9 +324,9 @@ task view controller or delegate.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10ResearchUI27RSDStepViewControllerVendorP011instantiatedE04with0A00cE0_So06UIViewE0CXcSgAF16RSDPathComponent_pSg_tF"></a>
-                    <a name="//apple_ref/swift/Method/instantiateViewController(with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI27RSDStepViewControllerVendorP011instantiatedE04with0A00cE0_So06UIViewE0CXcSgAF16RSDPathComponent_pSg_tF">instantiateViewController(with:)</a>
+                    <a name="/s:10ResearchUI31RSDPermissionStepViewControllerC011instantiatedE5Model3for4with0A007RSDStepE13PathComponent_pAG0K0_p_AG07RSDPathM0_pSgtF"></a>
+                    <a name="//apple_ref/swift/Method/instantiateStepViewModel(for:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI31RSDPermissionStepViewControllerC011instantiatedE5Model3for4with0A007RSDStepE13PathComponent_pAG0K0_p_AG07RSDPathM0_pSgtF">instantiateStepViewModel(for:with:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -334,14 +334,140 @@ task view controller or delegate.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Returns the view controller vended by the step.</p>
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">instantiateStepViewModel</span><span class="p">(</span><span class="k">for</span> <span class="nv">step</span><span class="p">:</span> <span class="kt">RSDStep</span><span class="p">,</span> <span class="n">with</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt">RSDPathComponent</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">RSDStepViewPathComponent</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDPermissionStepViewController(im)viewDidAppear:"></a>
+                    <a name="//apple_ref/swift/Method/viewDidAppear(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDPermissionStepViewController(im)viewDidAppear:">viewDidAppear(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override viewDidAppear to set up notification handling.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">instantiateViewController</span><span class="p">(</span><span class="n">with</span> <span class="nv">parent</span><span class="p">:</span> <span class="kt">RSDPathComponent</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="kt">UIViewController</span> <span class="o">&amp;</span> <span class="kt">RSDStepController</span><span class="p">)?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidAppear</span><span class="p">(</span><span class="n">_</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Permission%20handling"></a>
+                <a name="//apple_ref/swift/Section/Permission handling" class="dashAnchor"></a>
+                <a href="#/Permission%20handling">
+                  <h3 class="section-name">Permission handling</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI31RSDPermissionStepViewControllerC25handleAuthorizationFailed6status10permissiony0A022RSDAuthorizationStatusO_AG21RSDStandardPermissionVtF"></a>
+                    <a name="//apple_ref/swift/Method/handleAuthorizationFailed(status:permission:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI31RSDPermissionStepViewControllerC25handleAuthorizationFailed6status10permissiony0A022RSDAuthorizationStatusO_AG21RSDStandardPermissionVtF">handleAuthorizationFailed(status:permission:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Present an alert letting the user know that they do not have authorizations that are required to run
+this task.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">handleAuthorizationFailed</span><span class="p">(</span><span class="nv">status</span><span class="p">:</span> <span class="kt">RSDAuthorizationStatus</span><span class="p">,</span> <span class="nv">permission</span><span class="p">:</span> <span class="kt">RSDStandardPermission</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDPermissionStepViewController(im)goForward"></a>
+                    <a name="//apple_ref/swift/Method/goForward()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDPermissionStepViewController(im)goForward">goForward()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override goForward to add in requesting permissions before continuing.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">open</span> <span class="kd">func</span> <span class="nf">goForward</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI31RSDPermissionStepViewControllerC18requestPermissionsyySay0A021RSDStandardPermissionVG_yAE22RSDAuthorizationStatusO_AGSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/requestPermissions(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI31RSDPermissionStepViewControllerC18requestPermissionsyySay0A021RSDStandardPermissionVG_yAE22RSDAuthorizationStatusO_AGSgtctF">requestPermissions(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Request the given permissions and then call the completion once <em>all</em> permssions are requested.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>syoung 04/04/2019 This implementation is currently limited to <em>only</em> requesting certain
+permissions using this method. For certain permission types, the requesting flow is complicated
+enough that trying to generalize the handling and the messaging is not appropriate.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">requestPermissions</span><span class="p">(</span><span class="n">_</span> <span class="nv">permissions</span><span class="p">:</span> <span class="p">[</span><span class="kt">RSDStandardPermission</span><span class="p">],</span> <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">RSDAuthorizationStatus</span><span class="p">,</span> <span class="kt">RSDStandardPermission</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
 
                         </div>
                       </div>
@@ -352,21 +478,29 @@ task view controller or delegate.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>taskViewModel</em>
+                                <em>permissions</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The current task path to use to instantiate the view controller</p>
+                                  <p>The permissions to be requested.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The completion handler to call when finished.</p>
                                 </div>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The instantiated view controller or <code>nil</code> if there isn&rsquo;t one.</p>
                       </div>
                     </section>
                   </div>

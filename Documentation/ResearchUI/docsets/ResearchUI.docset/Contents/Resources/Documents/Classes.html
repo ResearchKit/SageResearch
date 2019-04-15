@@ -38,6 +38,9 @@
                 <a href="Classes/RSDAudioSoundPlayer.html">RSDAudioSoundPlayer</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/RSDBackgroundGradient.html">RSDBackgroundGradient</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a>
               </li>
               <li class="nav-group-task">
@@ -54,9 +57,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RSDChoicePickerView.html">RSDChoicePickerView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/RSDCompletionGradient.html">RSDCompletionGradient</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RSDCountdownDial.html">RSDCountdownDial</a>
@@ -101,6 +101,9 @@
                 <a href="Classes/RSDOverviewStepViewController.html">RSDOverviewStepViewController</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/RSDPermissionStepViewController.html">RSDPermissionStepViewController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/RSDProgressIndicator.html">RSDProgressIndicator</a>
               </li>
               <li class="nav-group-task">
@@ -111,6 +114,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/RSDScrollingOverviewStepViewController.html">RSDScrollingOverviewStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RSDSelectionTableViewCell.html">RSDSelectionTableViewCell</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes.html#/c:@M@ResearchUI@objc(cs)RSDShadowGradient">RSDShadowGradient</a>
@@ -247,6 +253,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDPickerViewProtocol.html">RSDPickerViewProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/RSDShowViewUIAction.html">RSDShowViewUIAction</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/RSDSoundPlayer.html">RSDSoundPlayer</a>
@@ -470,7 +479,7 @@ walk before the step is complete.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDActiveStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDActiveStepViewController</span> <span class="p">:</span> <span class="kt">RSDFullscreenImageStepViewController</span></code></pre>
 
                         </div>
                       </div>
@@ -510,7 +519,7 @@ that can be used to show a numeric countdown (5-4-3-2-1) and a <code>pauseButton
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDCountdownStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDCountdownStepViewController</span> <span class="p">:</span> <span class="kt">RSDFullscreenImageStepViewController</span></code></pre>
 
                         </div>
                       </div>
@@ -543,7 +552,7 @@ that can be used to show a numeric countdown (5-4-3-2-1) and a <code>pauseButton
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDInstructionStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDInstructionStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDPermissionStepViewController.html">RSDPermissionStepViewController</a></span></code></pre>
 
                         </div>
                       </div>
@@ -621,7 +630,40 @@ a notification reminder to perform the task at a later time.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDOverviewStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDOverviewStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDPermissionStepViewController.html">RSDPermissionStepViewController</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDPermissionStepViewController"></a>
+                    <a name="//apple_ref/swift/Class/RSDPermissionStepViewController" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDPermissionStepViewController">RSDPermissionStepViewController</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDPermissionStepViewController</code> is a customizable view controller that is designed to be used to
+request and/or check the permission status for this view.</p>
+
+                        <a href="Classes/RSDPermissionStepViewController.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDPermissionStepViewController</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDStepViewController.html">RSDStepViewController</a></span></code></pre>
 
                         </div>
                       </div>
@@ -827,6 +869,39 @@ the property will be set for one of these values.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDBackgroundGradient"></a>
+                    <a name="//apple_ref/swift/Class/RSDBackgroundGradient" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDBackgroundGradient">RSDBackgroundGradient</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDBackgroundGradient</code> is a UI element for adding a shadow gradient to a view.</p>
+
+                        <a href="Classes/RSDBackgroundGradient.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDBackgroundGradient</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@ResearchUI@objc(cs)RSDButtonCell"></a>
                     <a name="//apple_ref/swift/Class/RSDButtonCell" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDButtonCell">RSDButtonCell</a>
@@ -967,39 +1042,6 @@ the property will be set for one of these values.</p>
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
 <span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCheckboxButton</span> <span class="p">:</span> <span class="kt">UIButton</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDCompletionGradient"></a>
-                    <a name="//apple_ref/swift/Class/RSDCompletionGradient" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDCompletionGradient">RSDCompletionGradient</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><code>RSDCompletionGradient</code> is a UI element for adding a shadow gradient to a view.</p>
-
-                        <a href="Classes/RSDCompletionGradient.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">RSDCompletionGradient</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
 
                         </div>
                       </div>
@@ -1402,6 +1444,35 @@ default accessibility behavior for a button in transition.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@M@ResearchUI@objc(cs)RSDSelectionTableViewCell"></a>
+                    <a name="//apple_ref/swift/Class/RSDSelectionTableViewCell" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDSelectionTableViewCell">RSDSelectionTableViewCell</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDSelectionTableViewCell</code> is the base implementation for a selection table view cell.</p>
+
+                        <a href="Classes/RSDSelectionTableViewCell.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDSelectionTableViewCell</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDTableViewCell.html">RSDTableViewCell</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@M@ResearchUI@objc(cs)RSDStepChoiceCell"></a>
                     <a name="//apple_ref/swift/Class/RSDStepChoiceCell" class="dashAnchor"></a>
                     <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDStepChoiceCell">RSDStepChoiceCell</a>
@@ -1412,7 +1483,8 @@ default accessibility behavior for a button in transition.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><code>RSDStepChoiceCell</code> is the base implementation for a selection table view cell of a form step.</p>
+                        <p><code>RSDStepChoiceCell</code> is a custom implementationn of a selection table cell to use for choice selection
+from a list of choices.</p>
 
                         <a href="Classes/RSDStepChoiceCell.html" class="slightly-smaller">See more</a>
                       </div>
@@ -1421,7 +1493,7 @@ default accessibility behavior for a button in transition.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDStepChoiceCell</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDTableViewCell.html">RSDTableViewCell</a></span></code></pre>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDStepChoiceCell</span> <span class="p">:</span> <span class="kt"><a href="Classes/RSDSelectionTableViewCell.html">RSDSelectionTableViewCell</a></span></code></pre>
 
                         </div>
                       </div>
