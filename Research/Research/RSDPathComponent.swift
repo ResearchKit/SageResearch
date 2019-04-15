@@ -113,6 +113,9 @@ public protocol RSDStepViewPathComponent : RSDNodePathComponent {
 /// A history path component defines a method for returning the previous result from a step.
 public protocol RSDHistoryPathComponent : RSDPathComponent {
     
+    /// The data manager should be implemented as a weak reference.
+    var dataManager: RSDDataStorageManager? { get set }
+    
     /// Get the previous result for the given step.
     func previousResult(for step: RSDStep) -> RSDResult?
 }
@@ -123,6 +126,9 @@ public protocol RSDTaskPathComponent : RSDHistoryPathComponent {
     
     /// A pointer to the task controller that is running the task.
     var taskController : RSDTaskController? { get }
+    
+    /// The design system to use with this task path.
+    var designSystem : RSDDesignSystem { get }
     
     /// The task that is currently being run. This can be `nil` if the task has not yet been loaded.
     var task: RSDTask? { get }
@@ -150,7 +156,6 @@ public protocol RSDTaskPathComponent : RSDHistoryPathComponent {
     /// Move to the first step in this task path in the given direction.
     func moveToFirstStep(from direction: RSDStepDirection)
 }
-
 
 extension RSDPathComponent {
     
@@ -197,7 +202,7 @@ extension RSDPathComponent {
     }
     
     /// Create an output directory.
-    func createOutputDirectory() -> URL? {
+    public func createOutputDirectory() -> URL? {
         let tempDir = NSTemporaryDirectory()
         let dir = self.taskResult.taskRunUUID.uuidString
         let path = (tempDir as NSString).appendingPathComponent(dir)

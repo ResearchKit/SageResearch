@@ -15,23 +15,23 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CFBundleVersion</key>
-	<string>19</string>
+	<string>23</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera to take pictures as an example of using the Image Picker.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app uses the GPS sensor to measure relative distance travelled.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app uses the GPS sensor to measure relative distance travelled.</string>
-	<key>NSMotionUsageDescription</key>
-	<string>This app uses the motion sensors to record motion while shaking the phone.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This app uses the camera to take pictures as an example of using the Image Picker.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app selects pictures from the photo library as an example of using the Image Picker.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app uses the camera to take videos as an example of using the Image Picker.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This app uses the motion sensors to record motion while shaking the phone.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app selects pictures from the photo library as an example of using the Image Picker.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

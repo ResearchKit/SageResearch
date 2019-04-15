@@ -57,6 +57,9 @@ public enum RSDUIActionType {
         
         /// Display additional information about the step.
         case learnMore
+        
+        /// Go back in the navigation to review the instructions.
+        case reviewInstructions
     }
     
     /// A custom action on the step. Must be handled by the app.

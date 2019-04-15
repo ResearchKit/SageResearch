@@ -37,12 +37,14 @@ extension UIFont {
 
     // MARK: Rounded button
     
+    @available(*, deprecated)
     @objc open class var roundedButtonTitle: UIFont {
         return UIFont.systemFont(ofSize: 19.0, weight: .semibold)
     }
     
     // MARK: Checkbox button
     
+    @available(*, deprecated)
     @objc open class var rsd_checkboxButtonTitle: UIFont {
         return UIFont.systemFont(ofSize: 16.0, weight: .regular)
     }
@@ -50,68 +52,83 @@ extension UIFont {
     
     // MARK: Generic step view controller - header view labels
 
+    @available(*, deprecated)
     @objc open class var rsd_headerTitleLabel: UIFont {
         return UIFont.systemFont(ofSize: 24.0, weight: .bold)
     }
     
+    @available(*, deprecated)
     @objc open class var rsd_headerTextLabel: UIFont {
         return UIFont.systemFont(ofSize: 18.0, weight: .semibold)
     }
     
+    @available(*, deprecated)
     @objc open class var rsd_headerDetailLabel: UIFont {
         return UIFont.italicSystemFont(ofSize: 16.0)
     }
     
+    @available(*, deprecated)
     @objc open class var rsd_footnoteLabel: UIFont {
         return UIFont.italicSystemFont(ofSize: 16.0)
     }
 
+    @available(*, deprecated)
     @objc open class var rsd_stepCountLabel: UIFont {
         return UIFont.systemFont(ofSize: 12.0, weight: .bold)
     }
     
+    @available(*, deprecated)
     @objc open class var rsd_boldStepCountLabel: UIFont {
         return UIFont.systemFont(ofSize: 14.0, weight: .bold)
     }
     
     // MARK: Generic step view controller - choice cell
 
+    @available(*, deprecated)
     @objc open class var rsd_choiceCellLabel: UIFont {
         return UIFont.systemFont(ofSize: 16.0, weight: .regular)
     }
     
+    @available(*, deprecated)
     @objc open class var rsd_choiceCellDetailLabel: UIFont {
         return UIFont.rsd_choiceCellLabel
     }
     
+    @available(*, deprecated)
     @objc open class var rsd_choiceSectionLabel: UIFont {
         return UIFont.systemFont(ofSize: 18.0, weight: .bold)
     }
     
+    @available(*, deprecated)
     @objc open class var rsd_choiceSectionDetailLabel: UIFont {
         return UIFont.rsd_choiceCellLabel
     }
     
     // MARK: Generic step view controller - text field cell
 
+    @available(*, deprecated)
     @objc open class var rsd_textFieldCellLabel: UIFont {
         return UIFont.systemFont(ofSize: 15.0, weight: .regular)
     }
 
+    @available(*, deprecated)
     @objc open class var rsd_textFieldCellText: UIFont {
         return UIFont.systemFont(ofSize: 19.0, weight: .regular)
     }
 
+    @available(*, deprecated)
     @objc open class var rsd_textFieldFeaturedCellText: UIFont {
         return UIFont.systemFont(ofSize: 33.0, weight: .regular)
     }
     
     // MARK: Generic step view controller - text view cell
     
+    @available(*, deprecated)
     @objc open class var rsd_textViewCellLabel: UIFont {
         return UIFont.systemFont(ofSize: 15.0, weight: .regular)
     }
-    
+
+    @available(*, deprecated)
     @objc open class var rsd_textViewCellText: UIFont {
         return UIFont.systemFont(ofSize: 19.0, weight: .regular)
     }

@@ -106,11 +106,14 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     /// using a storyboard or nib that included setting the `navigationFooter` property.
     open var shouldShowFooter: Bool = true
     
+    /// The background color tile for the table
+    open var tableBackgroundColorTile: RSDColorTile!
+    
     /// Override `viewDidLoad()` to add the table view, navigation header, and navigation footer if needed.
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.appBackgroundLight
+        self.view.backgroundColor = UIColor.white
         
         if tableView == nil {
             tableView = UITableView(frame: view.bounds, style: .plain)
@@ -221,10 +224,12 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
     }
     
     /// Override to set the background color of the table.
-    override open func setColorStyle(for placement: RSDColorPlacement, usesLightStyle: Bool, backgroundColor: UIColor) {
-        super.setColorStyle(for: placement, usesLightStyle: usesLightStyle, backgroundColor: backgroundColor)
+    override open func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
         if placement == .body {
-            self.tableView.backgroundColor = backgroundColor
+            self.tableBackgroundColorTile = background
+            self.view.backgroundColor = background.color
+            self.tableView.backgroundColor = background.color
         }
     }
 
@@ -322,22 +327,27 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         _registeredSectionIdentifiers.insert(reuseIdentifier)
         
         // Currently the only style of section view supported is the choice section header.
-        tableView.register(RSDStepChoiceSectionHeader.self, forHeaderFooterViewReuseIdentifier: reuseIdentifier)
+        tableView.register(RSDTableSectionHeader.self, forHeaderFooterViewReuseIdentifier: reuseIdentifier)
     }
     private var _registeredSectionIdentifiers = Set<String>()
     
     
     // MARK: View setup
     
+    override open func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
+        if placement == .header {
+            return self.designSystem.colorRules.backgroundPrimary
+        }
+        else {
+            return self.designSystem.colorRules.backgroundLight
+        }
+    }
+    
     /// Override the set up of the header to set the background color for the table view and adjust the
     /// minimum height.
-    open override func setupHeader(_ header: RSDNavigationHeaderView) {
+    open override func setupHeader(_ header: RSDStepNavigationView) {
         super.setupHeader(header)
         guard let stepHeader = header as? RSDStepHeaderView else { return }
-        
-        if let colorTheme = (step as? RSDThemedUIStep)?.colorTheme, let backgroundColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection) {
-            self.tableView.backgroundColor = backgroundColor
-        }
         
         if formStep?.inputFields.count ?? 0 > 0 {
             // We have a minimum height for ORKFormSteps because these step usually have just a title and
@@ -441,7 +451,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             let reuseIdentifier = "TableSectionHeader"
             self.registerSectionReuseIdentifierIfNeeded(reuseIdentifier)
             let cell = self.tableView.dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier)
-            if let header = cell as? RSDStepChoiceSectionHeader {
+            if let header = cell as? RSDTableSectionHeader {
                 header.titleLabel.text = title
                 header.detailLabel.text = sectionItem.subtitle
             }
@@ -500,14 +510,13 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         if let tableCell = cell as? RSDTableViewCell {
             tableCell.indexPath = indexPath
             tableCell.tableItem = tableData!.tableItem(at: indexPath)
-            tableCell.tableBackgroundColor = tableView.backgroundColor
-            tableCell.usesLightStyle = self.usesLightStyle
         }
         if let buttonCell = cell as? RSDButtonCell {
             buttonCell.delegate = self
         }
-        if let styleCell = cell as? RSDViewColorStylable {
-            styleCell.usesLightStyle = self.usesLightStyle
+        if let styleCell = cell as? RSDViewDesignable {
+            let colorTile = self.tableBackgroundColorTile ?? self.designSystem.colorRules.backgroundLight
+            styleCell.setDesignSystem(self.designSystem, with: colorTile)
         }
         
         if let textFieldCell = cell as? RSDStepTextFieldCell {
@@ -638,8 +647,12 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
         
         let navView = type(of: footer).init()
         setupFooter(navView)
-        navView.backgroundColor = footer.backgroundColor
-        navView.usesLightStyle = footer.usesLightStyle
+        if let backgroundTile = footer.backgroundTile() {
+            navView.setDesignSystem(designSystem, with: backgroundTile)
+        }
+        else {
+            navView.backgroundColor = footer.backgroundColor
+        }
         
         // using auto layout to constrain the navView to fill its superview after adding it to the textfield
         // as its inputAccessoryView doesn't work for whatever reason. So we get the computed height from the
@@ -1176,10 +1189,7 @@ extension RSDTableStepUIConfig {
     
     /// Instantiate an instance of the header view used by the `RSDTableStepViewController` table view.
     @objc open class func instantiateHeaderView() -> RSDStepHeaderView {
-        let header =  RSDTableStepHeaderView()
-        header.backgroundColor = UIColor.appBackgroundDark
-        header.usesLightStyle = true
-        return header
+        return RSDTableStepHeaderView()
     }
     
     /// Instantiate an instance of the footer view used by the `RSDTableStepViewController` table view.

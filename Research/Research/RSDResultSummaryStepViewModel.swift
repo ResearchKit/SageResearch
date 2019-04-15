@@ -31,9 +31,15 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import UIKit
+import Foundation
 
 open class RSDResultSummaryStepViewModel: RSDStepViewModel {
+    
+    /// Text to display as the title above the result.
+    open var resultTitle: String? {
+        guard let resultStep = self.step as? RSDResultSummaryStep else { return nil }
+        return resultStep.resultTitle
+    }
     
     /// Unit (if any) for this result.
     open var unitText: String? {
@@ -45,11 +51,14 @@ open class RSDResultSummaryStepViewModel: RSDStepViewModel {
     open var resultText: String? {
         guard let resultStep = self.step as? RSDResultSummaryStep,
             let resultIdentifier = resultStep.resultIdentifier,
-            let answerResult = taskResult.findAnswerResult(with: resultIdentifier),
+            let cResult = (resultStep.stepResultIdentifier != nil) ? taskResult.findResult(with: resultStep.stepResultIdentifier!) : taskResult,
+            let collectionResult = cResult as? RSDAnswerResultFinder,
+            let answerResult = collectionResult.findAnswerResult(with: resultIdentifier),
             let answer = answerResult.value
             else {
                 return nil
         }
+        
         if let sequenceType = answerResult.answerType.sequenceType,
             sequenceType == .array,
             let answerArray = answer as? [Any] {

@@ -185,7 +185,11 @@ class CodableStepObjectTests: XCTestCase {
                             "placementType" : "topBackground",
                             "animationDuration" : 2,
                                },
-            "colorTheme"     : { "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true },
+            "colorMapping"     : {  "type" : "singleColor",
+                                    "customColor" : {
+                                            "color": "sky",
+                                            "usesLightStyle" : true}
+                                },
             "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps" },
             "beforeCohortRules" : [{ "requiredCohorts" : ["boo", "goo"],
@@ -236,9 +240,9 @@ class CodableStepObjectTests: XCTestCase {
                 XCTFail("Failed to decode images")
             }
             
-            if let color = object.colorTheme as? RSDColorThemeElementObject {
-                XCTAssertTrue(color.usesLightStyle)
-                XCTAssertEqual(color._backgroundColorName, "sky")
+            if let color = object.colorMapping as? RSDSingleColorThemeElementObject {
+                XCTAssertTrue(color.customColor?.usesLightStyle ?? false)
+                XCTAssertEqual(color.customColor?.color, "sky")
             } else {
                 XCTFail("Failed to decode color theme")
             }
@@ -394,7 +398,7 @@ class CodableStepObjectTests: XCTestCase {
                 XCTAssertEqual(object.inputFields[0].dataType, .base(.date))
                 XCTAssertEqual(object.inputFields[1].dataType, .base(.integer))
                 XCTAssertEqual(object.inputFields[2].dataType, .collection(.multipleChoice, .string))
-                XCTAssertNotNil(object.inputFields[2] as? RSDChoiceInputFieldObject)
+                XCTAssertNotNil(object.inputFields[2] as? RSDCodableChoiceInputFieldObject<String>)
             }
             
             if let detail = object.inputFields.last as? RSDDetailInputFieldObject {
@@ -432,7 +436,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.title, "Step 3")
             XCTAssertEqual(object.inputFields.count, 1)
             XCTAssertEqual(object.inputFields.first?.dataType, .collection(.multipleChoice, .string))
-            XCTAssertNotNil(object.inputFields.first as? RSDChoiceInputFieldObject)
+            XCTAssertNotNil(object.inputFields.first as? RSDCodableChoiceInputFieldObject<String>)
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")
@@ -521,6 +525,7 @@ class CodableStepObjectTests: XCTestCase {
             "text": "Some text.",
             "unitText": "foos",
             "resultIdentifier": "bar",
+            "stepResultIdentifier": "goo",
             "formatter" : {"maximumDigits" : 3 }
         }
         """.data(using: .utf8)! // our data in native (JSON) format
@@ -534,6 +539,7 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertEqual(object.text, "Some text.")
             XCTAssertEqual(object.unitText, "foos")
             XCTAssertEqual(object.resultIdentifier, "bar")
+            XCTAssertEqual(object.stepResultIdentifier, "goo")
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")

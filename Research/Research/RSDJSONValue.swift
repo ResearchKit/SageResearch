@@ -41,18 +41,18 @@ public protocol RSDDictionaryRepresentable {
     func dictionaryRepresentation() -> [AnyHashable : Any]
 }
 
-/// Protocol for converting objects to JSON serializable objects
+/// Protocol for converting objects to JSON serializable objects.
 public protocol RSDJSONValue {
     
-    /// Return a JSON type object. Elements may be any one of the JSON types (NSNull, NSNumber, String, Array, [String : Any]).
-    func jsonObject() -> Any
+    /// Return a JSON-type object. Elements may be any one of the JSON types.
+    func jsonObject() -> RSDJSONSerializable
     
     /// Encode the object.
     func encode(to encoder: Encoder) throws
 }
 
 extension NSString : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return String(self)
     }
     
@@ -62,103 +62,103 @@ extension NSString : RSDJSONValue {
 }
 
 extension String : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return String(self)
     }
 }
 
 extension NSNumber : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return self.copy()
+    public func jsonObject() -> RSDJSONSerializable {
+        return self.copy() as! NSNumber
     }
 }
 
 extension Int : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension Int8 : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension Int16 : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension Int32 : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension Int64 : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension UInt : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension UInt8 : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension UInt16 : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension UInt32 : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension UInt64 : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension Bool : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension Double : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension Float : RSDJSONValue {
-    public func jsonObject() -> Any {
-        return NSNumber(value: self)
+    public func jsonObject() -> RSDJSONSerializable {
+        return self
     }
 }
 
 extension NSNull : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return self
     }
 }
 
 extension NSDate : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return (self as Date).jsonObject()
     }
     
@@ -168,14 +168,14 @@ extension NSDate : RSDJSONValue {
 }
 
 extension Date : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return RSDFactory.shared.timestampFormatter.string(from: self)
     }
 }
 
 extension DateComponents : RSDJSONValue {
     
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         guard let date = self.date ?? Calendar(identifier: .iso8601).date(from: self) else { return NSNull() }
         return defaultFormatter().string(from: date)
     }
@@ -214,7 +214,7 @@ extension DateComponents : RSDJSONValue {
 }
 
 extension NSDateComponents : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return (self as DateComponents).jsonObject()
     }
     
@@ -224,13 +224,13 @@ extension NSDateComponents : RSDJSONValue {
 }
 
 extension Data : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return self.base64EncodedString()
     }
 }
 
 extension NSData : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return (self as Data).jsonObject()
     }
     
@@ -240,7 +240,7 @@ extension NSData : RSDJSONValue {
 }
 
 extension NSUUID : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return self.uuidString
     }
     
@@ -250,13 +250,13 @@ extension NSUUID : RSDJSONValue {
 }
 
 extension UUID : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return self.uuidString
     }
 }
 
 extension NSURL : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return self.absoluteString ?? NSNull()
     }
     
@@ -266,19 +266,20 @@ extension NSURL : RSDJSONValue {
 }
 
 extension URL : RSDJSONValue {
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return self.absoluteString
     }
 }
 
-fileprivate func _convertToJSONValue(from object: Any) -> Any {
+fileprivate func _convertToJSONValue(from object: Any) -> RSDJSONSerializable {
     if let obj = object as? RSDJSONValue {
         return obj.jsonObject()
     }
     else if let obj = object as? RSDDictionaryRepresentable {
         let dictionary = obj.dictionaryRepresentation()
-        if JSONSerialization.isValidJSONObject(dictionary) {
-            return dictionary
+        if JSONSerialization.isValidJSONObject(dictionary),
+            let cast = dictionary as? [String : RSDJSONSerializable] {
+            return cast
         }
         else {
             return dictionary.jsonObject()
@@ -308,7 +309,7 @@ fileprivate func _encode(value: Any, to nestedEncoder:Encoder) throws {
     } else if let nestedDictionary = value as? Dictionary<String, Any> {
         let encodable = AnyCodableDictionary(nestedDictionary)
         try encodable.encode(to: nestedEncoder)
-    }  else if let number = (value as? RSDJSONNumber)?.jsonNumber() {
+    } else if let number = (value as? RSDJSONNumber)?.jsonNumber() {
         var container = nestedEncoder.singleValueContainer()
         try container.encode(number)
     } else if let encodable = value as? RSDJSONValue {
@@ -323,8 +324,8 @@ fileprivate func _encode(value: Any, to nestedEncoder:Encoder) throws {
 
 extension NSDictionary : RSDJSONValue, Encodable {
     
-    public func jsonObject() -> Any {
-        var dictionary : [AnyHashable : Any] = [:]
+    public func jsonObject() -> RSDJSONSerializable {
+        var dictionary : [String : RSDJSONSerializable] = [:]
         for (key, value) in self {
             let strKey = "\(key)"
             dictionary[strKey] = _convertToJSONValue(from: value)
@@ -345,7 +346,7 @@ extension NSDictionary : RSDJSONValue, Encodable {
 
 extension Dictionary : RSDJSONValue {
     
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return (self as NSDictionary).jsonObject()
     }
 }
@@ -359,7 +360,7 @@ extension Dictionary where Value : Any {
 
 extension NSArray : RSDJSONValue {
     
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return self.map { _convertToJSONValue(from: $0) }
     }
     
@@ -374,7 +375,7 @@ extension NSArray : RSDJSONValue {
 
 extension Array : RSDJSONValue {
     
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return (self as NSArray).jsonObject()
     }
 }
@@ -388,7 +389,7 @@ extension Array where Element : Any {
 
 extension Set : RSDJSONValue {
     
-    public func jsonObject() -> Any {
+    public func jsonObject() -> RSDJSONSerializable {
         return Array(self).jsonObject()
     }
 }

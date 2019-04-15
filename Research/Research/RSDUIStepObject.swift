@@ -2,7 +2,7 @@
 //  RSDUIStepObject.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -42,7 +42,7 @@ extension RSDStepType {
 /// example, on an iPad, you may choose to group a set of questions using a `RSDSectionStep`.
 ///
 /// - seealso: `RSDActiveUIStepObject`, `RSDFormUIStepObject`, and `RSDThemedUIStep`
-open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement {
+open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDTableStep, RSDNavigationRule, RSDCohortNavigationStep, Decodable, RSDCopyStep, RSDDecodableReplacement, RSDStandardPermissionsStep, RSDInstructionStep {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier
@@ -51,12 +51,17 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         case text
         case detail
         case footnote
+        case fullInstructionsOnly
         case nextStepIdentifier
+        case permissions
         case viewTheme
-        case colorTheme
-        case imageTheme = "image"
+        case colorMapping
+        case image
         case beforeCohortRules
         case afterCohortRules
+        
+        //@available(*, deprecated)
+        case colorTheme
     }
 
     /// A short string that uniquely identifies the step within the task. The identifier is reproduced in the results
@@ -89,14 +94,25 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     /// but should not distract from the main purpose of the step.
     open var footnote: String?
     
+    /// The permissions used by this task that are described by this step.
+    open var standardPermissions: [RSDStandardPermission]?
+    
+    /// Should this step be displayed if and only if the flag has been set for displaying the full
+    /// instructions?
+    open var fullInstructionsOnly: Bool = false
+    
     /// The view info used to create a custom step.
     open var viewTheme: RSDViewThemeElement?
     
     /// The color theme.
-    open var colorTheme: RSDColorThemeElement?
+    open var colorMapping: RSDColorMappingThemeElement?
     
     /// The image theme.
     open var imageTheme: RSDImageThemeElement?
+    
+    /// The color theme.
+    @available(*, deprecated)
+    open var colorTheme: RSDColorThemeElement?
     
     /// The next step to jump to. This is used where direct navigation is required. For example, to allow the
     /// task to display information or a question on an alternate path and then exit the task. In that case,
@@ -191,13 +207,15 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         copy.detail = self.detail
         copy.footnote = self.footnote
         copy.viewTheme = self.viewTheme
-        copy.colorTheme = self.colorTheme
+        copy.colorMapping = self.colorMapping
         copy.imageTheme = self.imageTheme
         copy.nextStepIdentifier = self.nextStepIdentifier
         copy.actions = self.actions
         copy.shouldHideActions = self.shouldHideActions
         copy.beforeCohortRules = self.beforeCohortRules
         copy.afterCohortRules = self.afterCohortRules
+        copy.standardPermissions = self.standardPermissions
+        copy.fullInstructionsOnly = self.fullInstructionsOnly
     }
 
     // MARK: Result management
@@ -268,7 +286,6 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     ///                                "placementType" : "topBackground",
     ///                                "animationDuration" : 2,
     ///                                   },
-    ///                "colorTheme"     : { "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true },
     ///                "viewTheme"      : { "viewIdentifier": "ActiveInstruction",
     ///                                     "storyboardIdentifier": "ActiveTaskSteps",
     ///                                     "bundleIdentifier": "org.example.SharedResources" },
@@ -290,7 +307,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
     ///                "image"        : {   "type" : "fetchable",
     ///                                     "imageName": "goOutsideIcon",
     ///                                     "placementType": "topBackground" },
-    ///                "colorTheme"   : { "backgroundColor" : "robinsEggBlue", "usesLightStyle" : true },
+    ///                "colorMapping"   : { "customColor": {"backgroundColor" : "robinsEggBlue", "usesLightStyle" : true }},
     ///                "actions"      : { "goForward": { "type": "default", "buttonTitle": "I am outside" }},
     ///            }
     ///            """.data(using: .utf8)! // our data in native (JSON) format
@@ -331,6 +348,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
         self.text = try container.decodeIfPresent(String.self, forKey: .text) ?? self.text
         self.detail = try container.decodeIfPresent(String.self, forKey: .detail) ?? self.detail
         self.footnote = try container.decodeIfPresent(String.self, forKey: .footnote) ?? self.footnote
+        self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
+        self.fullInstructionsOnly = try container.decodeIfPresent(Bool.self, forKey: .fullInstructionsOnly) ?? self.fullInstructionsOnly
     
         self.beforeCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .beforeCohortRules) ?? self.beforeCohortRules
         self.afterCohortRules = try container.decodeIfPresent([RSDCohortNavigationRuleObject].self, forKey: .afterCohortRules) ?? self.afterCohortRules
@@ -339,12 +358,17 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
             let nestedDecoder = try container.superDecoder(forKey: .viewTheme)
             self.viewTheme = try decoder.factory.decodeViewThemeElement(from: nestedDecoder)
         }
-        if container.contains(.colorTheme) {
-            let nestedDecoder = try container.superDecoder(forKey: .colorTheme)
-            self.colorTheme = try decoder.factory.decodeColorThemeElement(from: nestedDecoder)
+        if container.contains(.colorMapping) {
+            let nestedDecoder = try container.superDecoder(forKey: .colorMapping)
+            self.colorMapping = try decoder.factory.decodeColorMappingThemeElement(from: nestedDecoder)
         }
-        if container.contains(.imageTheme) {
-            let nestedDecoder = try container.superDecoder(forKey: .imageTheme)
+        else if container.contains(.colorTheme) {
+            // TODO: syoung 03/18/2019 delete once the V0 color theme decoding has been marked unavailable.
+            debugPrint("WARNING!!! Use of `colorTheme` JSON key is deprecated. Please convert your JSON files to use `colorMapping` instead. \(container.codingPath)")
+            self.colorMapping = try container.decode(RSDColorThemeElementObject.self, forKey: .colorTheme)
+        }
+        if container.contains(.image) {
+            let nestedDecoder = try container.superDecoder(forKey: .image)
             self.imageTheme = try decoder.factory.decodeImageThemeElement(from: nestedDecoder)
         }
         
@@ -391,7 +415,8 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
                             "placementType" : "topBackground",
                             "animationDuration" : 2,
             ],
-            "colorTheme"     : [ "backgroundColor" : "sky", "foregroundColor" : "cream", "usesLightStyle" : true ],
+            "colorMapping"     : [  "type" : "singleColor",
+                                    "customColor" : ["color" : "sky", "usesLightStyle" : true ]],
             "viewTheme"      : [ "viewIdentifier": "ActiveInstruction",
                                  "storyboardIdentifier": "ActiveTaskSteps",
                                  "bundleIdentifier": "org.example.SharedResources" ],
@@ -400,7 +425,9 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
                                     "operator" : "any" ]],
             "afterCohortRules" : [[ "requiredCohorts" : ["boo", "goo"],
                                     "skipToIdentifier" : "blueGu",
-                                    "operator" : "any" ]]
+                                    "operator" : "any" ]],
+            "permissions" : [["permissionType": "location"]],
+            "fullInstructionsOnly" : true
         ]
         
         // Example JSON for a step with an `RSDFetchableImageThemeElement`.
@@ -411,7 +438,6 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDThemedUIStep, RSDTable
             "image"        : [  "type": "fetchable",
                                 "imageName": "goOutsideIcon",
                                 "placementType": "topBackground" ],
-            "colorTheme"   : [ "backgroundColor" : "robinsEggBlue", "usesLightStyle" : true ],
             "actions"      : [ "goForward": [ "type": "default", "buttonTitle": "I am outside" ]],
             ]
         

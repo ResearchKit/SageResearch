@@ -205,14 +205,10 @@ extension RSDAnswerResultType {
                 else {
                     var nestedContainer = encoder.unkeyedContainer()
                     for object in array {
-                        guard let encodable = try _encodableValue(object, encoder: encoder) else {
-                            throw EncodingError.invalidValue(object, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "\(object) cannot be converted to a \(self.baseType) encoded value."))
-                        }
                         let nestedEncoder = nestedContainer.superEncoder()
-                        try encodable.encode(to: nestedEncoder)
+                        try _encode(object, to: nestedEncoder)
                     }
                 }
-                
                 
             case .dictionary:
                 guard let dictionary = obj as? NSDictionary else {
@@ -221,90 +217,113 @@ extension RSDAnswerResultType {
                 
                 var nestedContainer = encoder.container(keyedBy: AnyCodingKey.self)
                 for (key, object) in dictionary {
-                    guard let encodable = try _encodableValue(object, encoder: encoder) else {
-                        throw EncodingError.invalidValue(object, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "\(object) cannot be converted to a \(self.baseType) encoded value."))
-                    }
                     let nestedEncoder = nestedContainer.superEncoder(forKey: AnyCodingKey(stringValue: "\(key)")!)
-                    try encodable.encode(to: nestedEncoder)
+                    try _encode(object, to: nestedEncoder)
                 }
             }
         }
         else {
-            guard let encodable = try _encodableValue(obj, encoder: encoder) else {
-                throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "\(obj) cannot be converted to a \(baseType) encoded value."))
-            }
-            try encodable.encode(to: encoder)
+            try _encode(obj, to: encoder)
         }
     }
     
     private func _encodableString(_ value: Any, encoder: Encoder) throws -> String? {
-        guard let encodable = try _encodableValue(value, encoder: encoder) else {
-            return nil
+        if let date = try _convertDate(value: value, codingPath: encoder.codingPath) {
+            return _convertDateToString(date: date, encoder: encoder)
         }
-        if let date = encodable as? Date {
-            return encoder.factory.encodeString(from: date, codingPath: encoder.codingPath)
+        else if baseType == .data, let data = value as? Data {
+            return RSDFactory.shared.encodeString(from: data, codingPath: encoder.codingPath)
         }
         else {
-            return "\(encodable)"
+            return "\(value)"
         }
     }
     
-    private func _encodableValue(_ value: Any, encoder: Encoder) throws -> Encodable? {
+    private func _encode(_ value: Any, to encoder: Encoder) throws {
+        
         if baseType == .codable {
-            return value as? Encodable
+            guard let encodable = value as? Encodable else {
+                let context = EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "\(value) does not conform to the encodable protocol.")
+                throw EncodingError.invalidValue(value, context)
+            }
+            try encodable.encode(to: encoder)
         }
-        else if let num = value as? NSNumber {
+        else if baseType == .data, let data = value as? Data {
+            var container = encoder.singleValueContainer()
+            try container.encode(data)
+        }
+        else if let obj = value as? NSNumber {
+            var container = encoder.singleValueContainer()
             switch baseType {
             case .boolean:
-                return num.boolValue
+                try container.encode(obj.boolValue)
             case .decimal:
-                return num.doubleValue
+                try container.encode(obj.doubleValue)
             case .integer:
-                return num.intValue
+                try container.encode(obj.intValue)
             case .string:
-                return "\(num)"
+                try container.encode("\(obj)")
             default:
-                return nil
+                let context = EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "\(value) cannot be converted from a number to \(baseType).")
+                throw EncodingError.invalidValue(value, context)
             }
         }
-        else if let string = value as? NSString {
+        else if let obj = value as? NSString {
+            var container = encoder.singleValueContainer()
             switch baseType {
             case .boolean:
-                return string.boolValue
-            case .integer:
-                return string.integerValue
+                try container.encode(obj.boolValue)
             case .decimal:
-                return string.doubleValue
+                try container.encode(obj.doubleValue)
+            case .integer:
+                try container.encode(obj.intValue)
             default:
-                return string as String
+                try container.encode(obj as String)
             }
         }
-        else if (value is Date) || (value is DateComponents),
-            let date = (value as? Date) ?? Calendar(identifier: .iso8601).date(from: (value as! DateComponents)) {
-            guard baseType == .date || baseType == .string else {
-                return nil
-            }
-            if let format = dateFormat {
-                let formatter = DateFormatter()
-                formatter.dateFormat = format
-                return formatter.string(from: date)
-            } else if baseType == .string {
-                return encoder.factory.encodeString(from: date, codingPath: encoder.codingPath)
+        else if let date = try _convertDate(value: value, codingPath: encoder.codingPath) {
+            var container = encoder.singleValueContainer()
+            if dateFormat != nil ||  baseType == .string {
+                let str = _convertDateToString(date: date, encoder: encoder)
+                try container.encode(str)
             } else {
-                return date
+                try container.encode(date)
             }
+        }
+        else if baseType == .string {
+            var container = encoder.singleValueContainer()
+            try container.encode("\(value)")
         }
         else {
-            switch baseType {
-            case .data:
-                return (value as? Data)
-            case .boolean, .decimal, .integer:
-                return (value as? RSDJSONNumber)
-            case .string:
-                return "\(value)"
-            default:
+            let context = EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "\(value) cannot be converted to a codable of \(baseType).")
+            throw EncodingError.invalidValue(value, context)
+        }
+    }
+    
+    func _convertDate(value: Any, codingPath: [CodingKey]) throws -> Date? {
+        // This method is only used to convert dates and date components. Exit early if that does not apply.
+        guard (value is Date) || (value is DateComponents),
+            let date = (value as? Date) ?? Calendar(identifier: .iso8601).date(from: (value as! DateComponents))
+            else {
                 return nil
-            }
+        }
+        
+        // If a date is found, need to convert to a string or date. Otherwise, that is an error.
+        guard baseType == .date || baseType == .string else {
+            let context = EncodingError.Context(codingPath: codingPath, debugDescription: "\(value) cannot be converted from a date to \(baseType).")
+            throw EncodingError.invalidValue(value, context)
+        }
+        
+        return date
+    }
+    
+    func _convertDateToString(date: Date, encoder: Encoder) -> String {
+        if let format = dateFormat {
+            let formatter = DateFormatter()
+            formatter.dateFormat = format
+            return formatter.string(from: date)
+        } else {
+            return RSDFactory.shared.encodeString(from: date, codingPath: encoder.codingPath)
         }
     }
 }

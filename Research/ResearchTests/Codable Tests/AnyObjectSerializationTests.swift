@@ -129,7 +129,7 @@ class AnyObjectSerializationTests: XCTestCase {
         }
     }
     
-    func testArray_Encodable() {
+    func testArray_Codable() {
         
         let now = Date()
         var dateComponents = DateComponents()
@@ -157,6 +157,25 @@ class AnyObjectSerializationTests: XCTestCase {
             XCTAssertEqual(object.uuid, uuid)
             XCTAssertEqual(object.array, ["cat", "dog", "duck"])
             XCTAssertNil(object.null)
+            
+            let encoder = RSDFactory.shared.createJSONEncoder()
+            encoder.dataEncodingStrategy = .base64
+            encoder.nonConformingFloatEncodingStrategy = .convertToString(positiveInfinity: "+inf", negativeInfinity: "-inf", nan: "NaN")
+            let jsonData = try encoder.rsd_encode(input)
+            
+            guard let array = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [[String: Any]],
+                let dictionary = array.first
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["string"] as? String, "String")
+            XCTAssertEqual(dictionary["integer"] as? Int, 34)
+            XCTAssertEqual(dictionary["bool"] as? Bool, true)
+            XCTAssertNotNil(dictionary["date"] as? String)
+            XCTAssertEqual(dictionary["uuid"] as? String, uuid.uuidString)
+            XCTAssertEqual(dictionary["array"] as? [String], ["cat", "dog", "duck"])
             
         } catch let err {
             XCTFail("Failed to decode/encode object: \(err)")

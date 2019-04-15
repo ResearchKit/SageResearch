@@ -2,7 +2,7 @@
 //  RSDOverviewStepObject.swift
 //  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -36,14 +36,14 @@ import Foundation
 /// `RSDOverviewStepObject` extends the `RSDUIStepObject` to include information about an activity including
 /// what permissions are required by this task. Without these preconditions, the task cannot measure or
 /// collect the data needed for this task.
-open class RSDOverviewStepObject : RSDUIStepObject, RSDStandardPermissionsStep {
+open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
 
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case permissions
+        case icons
     }
     
-    /// The permissions used by this task.
-    open var standardPermissions: [RSDStandardPermission]?
+    /// The icons that are used to define the list of things you will need for an active task.
+    open var icons: [RSDIconInfo]?
     
     /// Default type is `.overview`.
     open override class func defaultType() -> RSDStepType {
@@ -57,14 +57,14 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDStandardPermissionsStep {
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
-        subclassCopy.standardPermissions = self.standardPermissions
+        subclassCopy.icons = self.icons
     }
     
     /// Override the decoder per device type b/c the task may require a different set of permissions depending upon the device.
     open override func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.standardPermissions = try container.decodeIfPresent([RSDStandardPermission].self, forKey: .permissions) ?? self.standardPermissions
+        self.icons = try container.decodeIfPresent([RSDIconInfo].self, forKey: .icons) ?? self.icons
     }
     
     // Overrides must be defined in the base implementation
@@ -82,7 +82,8 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDStandardPermissionsStep {
             "type": "active",
             "title": "Hello World!",
             "text": "Some text.",
-            "permissions" : [["permissionType": "location"]]
+            "permissions" : [["permissionType": "location"]],
+            "icons": [ [ "icon":"Foo1", "title": "A SMOOTH SURFACE"] ]
         ]
         
         return [jsonA]

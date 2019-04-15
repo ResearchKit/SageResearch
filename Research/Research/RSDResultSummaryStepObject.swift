@@ -31,19 +31,25 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import UIKit
+import Foundation
 
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
 open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case unitText, resultIdentifier, formatter
+        case unitText, resultIdentifier, stepResultIdentifier, resultTitle, formatter
     }
+    
+    /// Text to display as the title above the result.
+    open private(set) var resultTitle: String?
     
     /// The localized unit text to display for this step.
     open private(set) var unitText: String?
     
-    /// the identifier for the answer result.
+    /// The identifier for the step result that contains the answer result.
+    open private(set) var stepResultIdentifier: String?
+    
+    /// The identifier for the answer result.
     open private(set) var resultIdentifier: String?
     
     // MARK: Initializers
@@ -56,10 +62,11 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
         try super.init(from: decoder)
     }
     
-    public init(identifier: String, resultIdentifier: String, unitText: String? = nil) {
+    public init(identifier: String, resultIdentifier: String, unitText: String? = nil, stepResultIdentifier: String? = nil) {
         super.init(identifier: identifier, type: nil)
         self.resultIdentifier = resultIdentifier
         self.unitText = unitText
+        self.stepResultIdentifier = stepResultIdentifier
     }
     
     
@@ -77,16 +84,20 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
             assertionFailure("Superclass implementation of the `copy(with:)` protocol should return an instance of this class.")
             return
         }
+        subclassCopy.resultTitle = self.resultTitle
         subclassCopy.unitText = self.unitText
         subclassCopy.resultIdentifier = self.resultIdentifier
+        subclassCopy.stepResultIdentifier = self.stepResultIdentifier
     }
     
     /// Override the decoder per device type b/c the task may require a different set of permissions depending upon the device.
     open override func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         try super.decode(from: decoder, for: deviceType)
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.resultTitle = try container.decodeIfPresent(String.self, forKey: .resultTitle) ?? self.resultTitle
         self.unitText = try container.decodeIfPresent(String.self, forKey: .unitText) ?? self.unitText
         self.resultIdentifier = try container.decodeIfPresent(String.self, forKey: .resultIdentifier) ?? self.resultIdentifier
+        self.stepResultIdentifier = try container.decodeIfPresent(String.self, forKey: .stepResultIdentifier) ?? self.stepResultIdentifier
     }
     
     // Overrides must be defined in the base implementation
@@ -104,6 +115,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
             "type": "completion",
             "title": "Hello World!",
             "text": "Some text.",
+            "resultTitle": "This is a title",
             "resultIdentifier" : "boo",
             "unitText" : "lala"
         ]

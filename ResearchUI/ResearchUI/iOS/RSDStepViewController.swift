@@ -71,13 +71,26 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     
     /// Convenience property for casting the step to a `RSDThemedUIStep`.
+    @available(*, deprecated)
     public var themedStep: RSDThemedUIStep? {
         return step as? RSDThemedUIStep
+    }
+    
+    /// Convenience property for casting the step to a `RSDDesignableUIStep`.
+    public var designableStep: RSDDesignableUIStep? {
+        return step as? RSDDesignableUIStep
     }
     
     /// Convenience property for casting the step to a `RSDActiveUIStep`.
     public var activeStep: RSDActiveUIStep? {
         return step as? RSDActiveUIStep
+    }
+    
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        guard let designSystem = self.designSystem else { return .default }
+        let background = self.designableStep?.colorMapping?.backgroundColor(for: .header, using: designSystem.colorRules, compatibleWith: self.traitCollection)
+            ?? self.defaultBackgroundColorTile(for: .header)
+        return background.usesLightStyle ? .lightContent : .default
     }
     
     /// Returns the current result associated with this step. This property uses a lazy initializer to instantiate
@@ -127,15 +140,23 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     public private(set) var isFirstAppearance: Bool = true
     
     /// Sets whether or not the body of the view uses light style.
+    @available(*, deprecated)
     public private(set) var usesLightStyle: Bool = false
+    
+    /// The design system to use with this step view controller.
+    open var designSystem: RSDDesignSystem!
     
     /// Override `viewWillAppear` to set up the navigation, step details, and background color theme if this
     /// is the first appearance.
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isFirstAppearance {
-            setupViews()
+            if self.designSystem == nil {
+                self.designSystem = self.stepViewModel.parentTaskPath?.designSystem ?? RSDDesignSystem()
+            }
             setupBackgroundColorTheme()
+            setupViews()
+            self.setNeedsStatusBarAppearanceUpdate()
         }
     }
     
@@ -184,7 +205,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     @IBOutlet open var statusBarBackgroundView: UIView?
     
     /// A header view that includes navigation elements.
-    @IBOutlet open var navigationHeader: RSDNavigationHeaderView?
+    @IBOutlet open var navigationHeader: RSDStepNavigationView?
     
     /// A footer view that includes navigation elements.
     @IBOutlet open var navigationFooter: RSDNavigationFooterView?
@@ -236,7 +257,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         // Set up label text.
         stepTitleLabel?.text = uiStep?.title
         stepTextLabel?.text = uiStep?.text
-        stepDetailLabel?.text = uiStep?.detail
+        if let detail = uiStep?.detail {
+            if let detailLabel = self.stepDetailLabel {
+                detailLabel.text = detail
+            }
+            else {
+                stepTextLabel?.text = (uiStep?.text == nil) ? detail : "\(uiStep!.text!)\n\n\(detail)"
+            }
+        }
         
         if let header = self.navigationHeader {
             setupHeader(header)
@@ -252,50 +280,83 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Set up the background color using the `colorTheme` from the step. This method does nothing
     /// if the step does not conform to the `RSDThemedUIStep` protocol.
     open func setupBackgroundColorTheme() {
-        guard let colorTheme = themedStep?.colorTheme else { return }
-        
-        let backgroundColor = colorTheme.backgroundColor(compatibleWith: self.traitCollection)
-        
         let placements: [RSDColorPlacement] = [.header, .body, .footer]
         for placement in placements {
-            guard let colorStyle = self.colorStyle(for: placement, hasCustomBackgroundColor: backgroundColor != nil),
-                (colorStyle != .customBackground || (backgroundColor != nil))
-                else {
-                    continue
-            }
-            
-            // Get the color and foreground element style
-            switch colorStyle {
-            case .customBackground:
-                setColorStyle(for: placement, usesLightStyle: colorTheme.usesLightStyle, backgroundColor: backgroundColor!)
-            case .darkBackground:
-                setColorStyle(for: placement, usesLightStyle: true, backgroundColor: UIColor.appBackgroundDark)
-            case .lightBackground:
-                setColorStyle(for: placement, usesLightStyle: false, backgroundColor: UIColor.appBackgroundLight)
-            }
+            let background = self.backgroundColor(for: placement)
+            setColorStyle(for: placement, background: background)
         }
+    }
+    
+    /// Returns the background color tile to use for the given placement. This should look to see if there is
+    /// color mapping defined by the designable step, then looks to the default if that is undefined.
+    ///
+    /// - parameter placement: The section of the view to which the color applies.
+    /// - returns: The default color for that placement.
+    open func backgroundColor(for placement: RSDColorPlacement) -> RSDColorTile {
+        return self.designableStep?.colorMapping?.backgroundColor(for: placement,
+                                                                  using: self.designSystem.colorRules,
+                                                                  compatibleWith: self.traitCollection)
+            ?? self.defaultBackgroundColorTile(for: placement)
+    }
+    
+    /// Returns the default background color tile to use for the given placement.
+    /// - parameter placement: The section of the view to which the color applies.
+    /// - returns: The default color for that placement.
+    open func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
+        if placement == .header {
+            return self.designSystem.colorRules.backgroundPrimary
+        }
+        else {
+            return self.designSystem.colorRules.backgroundLight
+        }
+    }
+    
+    // TODO: syoung 03/18/2019 Remove once rev'd and cleaned up. Not used.
+    @available(*, unavailable)
+    open func setColorStyle(for placement: RSDColorPlacement, usesLightStyle: Bool, backgroundColor: UIColor) {
     }
     
     /// Set the color style for the given placement elements. This allows overriding by subclasses to
     /// customize the view style.
-    open func setColorStyle(for placement: RSDColorPlacement, usesLightStyle: Bool, backgroundColor: UIColor) {
+    open func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        
+        var navigationComponent: RSDStepNavigationView?
+        
         switch placement {
         case .header:
-            self.navigationHeader?.backgroundColor = backgroundColor
-            self.navigationHeader?.usesLightStyle = usesLightStyle
-            self.statusBarBackgroundView?.backgroundColor = backgroundColor
-            if let statusView = self.statusBarBackgroundView as? RSDStatusBarBackgroundView {
-                statusView.overlayColor = usesLightStyle ? UIColor.rsd_statusBarOverlayLightStyle : UIColor.rsd_statusBarOverlay
-            }
-            
+            navigationComponent = self.navigationHeader
+            setupStatusBar(with: background)
+
         case .body:
-            self.view.backgroundColor = backgroundColor
-            self.usesLightStyle = usesLightStyle
-            
+            self.view.backgroundColor = background.color
+            self.view.tintColor = self.designSystem.colorRules.tintedButtonColor(on: background)
+            navigationComponent = self.navigationBody
+
         case .footer:
-            self.navigationFooter?.backgroundColor = backgroundColor
-            self.navigationFooter?.usesLightStyle = usesLightStyle
+            navigationComponent = self.navigationFooter
         }
+        
+        navigationComponent?.setDesignSystem(self.designSystem, with: background)
+    }
+    
+    /// The status bar overlay is a view that is set up to be underneath the status bar.
+    ///
+    /// - Default:
+    ///     If the background uses light style
+    ///         then the overlay is `clear`
+    ///         else `RSDColor.black.withAlphaComponent(0.1)`
+    ///     If there is a background image
+    ///         then the statusbar background is `clear`
+    ///         else `background.color`
+    open func setupStatusBar(with background: RSDColorTile) {
+        self.statusBarBackgroundView?.backgroundColor = background.color
+        if let statusView = self.statusBarBackgroundView as? RSDStatusBarBackgroundView {
+            statusView.overlayColor = background.usesLightStyle ? UIColor.clear : RSDColor.black.withAlphaComponent(0.1)
+        }
+    }
+    
+    @available(*, unavailable)
+    open func setupHeader(_ header: RSDNavigationHeaderView) {
     }
     
     /// Set up the header. Because this may be used in a table view as the table's header view, this includes
@@ -303,19 +364,21 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Additionally, this method will set up the navigation buttons included in the header view and any color
     /// themes that are appropriate.
     /// - parameter header: The header view.
-    open func setupHeader(_ header: RSDNavigationHeaderView) {
+    open func setupHeader(_ header: RSDStepNavigationView) {
         setupNavigationView(header, placement: .header)
 
         // setup progress
-        if let (stepIndex, stepCount, isEstimated) = self.stepViewModel.progress() {
-            header.shouldShowProgress = true
-            header.progressView?.totalSteps = stepCount
-            header.progressView?.currentStep = stepIndex
-            header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
-            header.isStepLabelHidden = isEstimated
-        } else {
-            header.shouldShowProgress = false
-            header.isStepLabelHidden = true
+        if let header = header as? RSDNavigationHeaderView {
+            if let (stepIndex, stepCount, isEstimated) = self.stepViewModel.progress() {
+                header.shouldShowProgress = true
+                header.progressView?.totalSteps = stepCount
+                header.progressView?.currentStep = stepIndex
+                header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
+                header.isStepLabelHidden = isEstimated
+            } else {
+                header.shouldShowProgress = false
+                header.isStepLabelHidden = true
+            }
         }
 
         header.setNeedsLayout()
@@ -352,21 +415,28 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         setupButton(navigationView.nextButton, for: .navigation(.goForward), isFooter: isFooter)
         setupButton(navigationView.backButton, for: .navigation(.goBackward), isFooter: isFooter)
         setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
+        setupButton(navigationView.reviewInstructionsButton, for: .navigation(.reviewInstructions), isFooter: isFooter)
         
-        
-        if let imageTheme = self.themedStep?.imageTheme, let imageView = navigationView.imageView {
+        // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
+        if let imageTheme = self.imageTheme,
+            let imageView = navigationView.imageView {
             let imagePlacement = imageTheme.placementType ?? .iconBefore
             let shouldSetImage = shouldSetNavigationImage(for: placement, with: imagePlacement)
             if shouldSetImage {
                 navigationView.hasImage = true
                 if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
                     let images = animatedImage.images(compatibleWith: self.traitCollection)
+                    // If there is more than one image in the collection, then animate them.
                     if images.count > 1 {
                         navigationView.imageView?.animationDuration = animatedImage.animationDuration
                         navigationView.imageView?.animationImages = images
+                        if let repeatCount = animatedImage.animationRepeatCount {
+                            navigationView.imageView?.animationRepeatCount = repeatCount
+                        }
                         navigationView.imageView?.startAnimating()
                     }
-                    else if let image = images.first {
+                    // Always set the last image as the one to show when/if the animation ends.
+                    if let image = images.last {
                         navigationView.imageView?.image = image
                     }
                 } else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
@@ -381,10 +451,16 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         navigationView.setNeedsUpdateConstraints()
     }
     
+    open var imageTheme: RSDImageThemeElement? {
+        // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
+        return (self.designableStep?.imageTheme ?? self.themedStep?.imageTheme)
+    }
+    
     /// By default, this method will return `true` if the image theme uses a placement
     /// of `topBackground` or `topMarginBackground`.
     open func hasTopBackgroundImage() -> Bool {
-        if let imageTheme = self.themedStep?.imageTheme, let placement = imageTheme.placementType {
+        // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
+        if let placement = self.imageTheme?.placementType {
             return placement == .topBackground || placement == .topMarginBackground
         } else {
             return false
@@ -394,22 +470,10 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// What is the color style for the given placement?
     /// - parameter placement: The view placement of the element.
     /// - returns: The color style (if any) defined for that element.
+    @available(*, unavailable)
     open func colorStyle(for placement: RSDColorPlacement, hasCustomBackgroundColor: Bool) -> RSDColorStyle? {
-        guard let colorTheme = themedStep?.colorTheme else { return nil }
-
-        if let colorStyle = colorTheme.colorStyle(for: placement), (colorStyle != .customBackground || hasCustomBackgroundColor) {
-            // Exit early if there is a specific color style defined.
-            return colorStyle
-        }
-        else if placement != .header && hasTopBackgroundImage() {
-            // If this is a footer and the view has a top background image, then the footer should be the
-            // light color background.
-            return .lightBackground
-        }
-        else if hasCustomBackgroundColor {
-            return .customBackground
-        }
-        return colorTheme.usesLightStyle ? .darkBackground : .lightBackground
+        // No longer used.
+        return nil
     }
 
     /// Convenience method for setting up each of the buttons. This will set up color theme, add the
@@ -440,6 +504,8 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
                 btn.addTarget(self, action: #selector(_cancelTapped), for: .touchUpInside)
             case .navigation(.learnMore):
                 btn.addTarget(self, action: #selector(_learnMoreTapped), for: .touchUpInside)
+            case .navigation(.reviewInstructions):
+                btn.addTarget(self, action: #selector(_reviewInstructionsTapped), for: .touchUpInside)
             default:
                 break
             }
@@ -526,6 +592,11 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         self.showLearnMore()
     }
     
+    @objc private func _reviewInstructionsTapped(_ sender: UIButton) {
+        momentarilyDisableButton(sender)
+        self.showReviewInstructions()
+    }
+    
     /// Momentarily disable the button.  This keeps a double-tap of a navigation button from
     /// triggering more than once. This is required b/c of how the UI handles the call to
     /// go forward/backward by calling a method that just looks at the current step.
@@ -567,6 +638,8 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
     }
     var hasCalledGoForward = false
+    
+    
     
     /// Navigates backward to the previous step. By default, it calls stop() to stop the timer
     /// and then calls `goBack` on the task controller.
@@ -638,6 +711,21 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
     }
     
+    
+    /// This method is called when the user taps the "review instructions" button. The default implementation
+    /// will check if the review action is an `RSDNavigationUIAction` and if so, will navigate back to that
+    /// instruction, setting a value in the async results, marking that abbreviated instructions should *not*
+    /// be shown.
+    @IBAction open func showReviewInstructions() {
+        // Reset the instructions to always be displayed
+        self.stepViewModel.rootPathComponent.shouldShowAbbreviatedInstructions = false
+        guard actionTapped(with: .navigation(.reviewInstructions))
+            else {
+                self.presentAlertWithOk(title: nil, message: "Missing learn more action for this task", actionHandler: nil)
+                return
+        }
+    }
+    
     /// Perform any actions associated with a given action type. By default, this is called *before* any other
     /// standard actions on a standard navigation are handled.
     /// - parameter actionType: The user-invoked action.
@@ -659,10 +747,13 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
         else if let webAction = action as? RSDWebViewUIAction {
             // For a webview action, present a web view modally.
-            let (webVC, navVC) = RSDWebViewController.instantiateController()
-            webVC.resourceTransformer = webAction
-
+            let (_, navVC) = RSDWebViewController.instantiateController(using: self.designSystem, action: webAction)
             self.present(navVC, animated: true, completion: nil)
+            return true
+        }
+        else if let vcAction = action as? RSDShowViewUIAction {
+            let vc = vcAction.instantiateViewController(for: self.stepViewModel)
+            self.present(vc, animated: true, completion: nil)
             return true
         }
         else {
@@ -698,6 +789,34 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     // MARK: Permission handling
     
+    /// Show an alert to the user to let them know that authorization has failed.
+    open func handleAuthorizationFailed(status: RSDAuthorizationStatus, permission: RSDStandardPermission) {
+
+        let settingsMessage = (status == .restricted) ? permission.restrictedMessage : permission.deniedMessage
+        let message: String = {
+            guard let reason = permission.reason else { return settingsMessage }
+            return "\(reason)\n\n\(settingsMessage)"
+        }()
+        let title = Localization.localizedString("NOT_AUTHORIZED")
+        
+        var actions = [UIAlertAction]()
+        
+        if let url = URL(string:UIApplication.openSettingsURLString),
+            UIApplication.shared.canOpenURL(url) {
+            let settingsAction = UIAlertAction(title: Localization.localizedString("GOTO_SETTINGS"), style: .default) { (_) in
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            actions.append(settingsAction)
+        }
+        
+        let okAction = UIAlertAction(title: Localization.buttonOK(), style: .default) { (_) in
+            self.cancelTask(shouldSave: false)
+        }
+        actions.append(okAction)
+        
+        self.presentAlertWithActions(title: title, message: message, preferredStyle: .alert, actions: actions)
+    }
+    
     /// The authorization status for this view controller.
     open func checkAuthorizationStatus() -> (status: RSDAuthorizationStatus, permission: RSDStandardPermission?)  {
         guard let permissions = self.requiredPermissions(), permissions.count > 0 else {
@@ -728,7 +847,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     /// The permissions required for this step.
     open func requiredPermissions() -> [RSDStandardPermission]? {
-        return (self.step as? RSDStandardPermissionsStep)?.standardPermissions
+        return (self.step as? RSDStandardPermissionsStep)?.standardPermissions?.filter { !$0.isOptional }
+    }
+    
+    /// The permissions that are requested as a part of this step.
+    open func requestedPermissions() -> [RSDStandardPermission]? {
+        return (self.step as? RSDStandardPermissionsStep)?.standardPermissions?.filter { $0.requestIfNeeded }
     }
     
     
@@ -887,6 +1011,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     private func _stopTimer() {
         timer?.invalidate()
         timer = nil
+    }
+    
+    // Reset the countdown clock.
+    open func reset() {
+        clock = nil
+        countdown = 0
     }
     
     /// Pause the timer.

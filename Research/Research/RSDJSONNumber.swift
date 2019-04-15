@@ -40,6 +40,12 @@ public protocol RSDJSONNumber : Codable {
     func jsonNumber() -> NSNumber?
 }
 
+extension Bool : RSDJSONNumber {
+    public func jsonNumber() -> NSNumber? {
+        return self as NSNumber
+    }
+}
+
 extension Int : RSDJSONNumber {
     public func jsonNumber() -> NSNumber? {
         return NSNumber(value: self)

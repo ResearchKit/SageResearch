@@ -36,8 +36,14 @@ import Foundation
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
 public protocol RSDResultSummaryStep : RSDUIStep {
     
+    /// Text to display as the title above the result.
+    var resultTitle: String? { get }
+    
     /// The identifier for the result to display.
     var resultIdentifier: String? { get }
+    
+    /// The step result identifier for the result to display.
+    var stepResultIdentifier: String? { get }
     
     /// The localized unit to display for this result.
     var unitText: String? { get }

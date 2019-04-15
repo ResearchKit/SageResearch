@@ -58,4 +58,24 @@ public struct RSDPhotoLibraryAuthorization {
             return .denied
         }
     }
+    
+    /// Request authorization for access to the photo library.
+    static public func requestAuthorization(_ completion: @escaping ((RSDAuthorizationStatus, Error?) -> Void)) {
+        PHPhotoLibrary.requestAuthorization { (status) in
+            let rsd_status: RSDAuthorizationStatus = {
+                switch status {
+                case .authorized:
+                    return .authorized
+                case .notDetermined:
+                    return .notDetermined
+                case .denied:
+                    return .denied
+                case .restricted:
+                    return .restricted
+                }
+            }()
+            let error = (status == .authorized) ? nil : RSDPermissionError.notAuthorized(.photoLibrary, rsd_status)
+            completion(rsd_status, error)
+        }
+    }
 }

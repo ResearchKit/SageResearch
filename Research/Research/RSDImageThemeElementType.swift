@@ -33,7 +33,7 @@
 
 import Foundation
 
-/// The type of the ui action. This is used to decode a `RSDUIAction` using a `RSDFactory`. It can also be used
+/// The type of the image theme. This is used to decode a `RSDImageThemeElement` using a `RSDFactory`. It can also be used
 /// to customize the UI.
 public struct RSDImageThemeElementType : RSDFactoryTypeRepresentable, Codable, Equatable, Hashable {
     public let rawValue: String

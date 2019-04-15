@@ -81,12 +81,6 @@ public struct RSDDocumentCreator {
             RSDWeekday.self,
             ]
         
-        #if os(iOS)
-            let iOSEnums: [RSDDocumentableIntEnum.Type] = [
-                ]
-            allEnums.append(contentsOf: iOSEnums)
-        #endif
-        
         return allEnums
     }()
     
@@ -96,6 +90,7 @@ public struct RSDDocumentCreator {
     
     let allStringLiterals: [RSDDocumentableStringLiteral.Type] = [
         RSDChoiceObject<String>.self,
+        RSDColorKey.self,
         RSDImageWrapper.self,
         RSDRegExValidatorObject.self,
         ]
@@ -107,11 +102,13 @@ public struct RSDDocumentCreator {
             RSDAnswerResultType.self,
             RSDCohortNavigationRuleObject.self,
             RSDCollectionResultObject.self,
-            RSDColorThemeElementObject.self,
+            RSDColorSwatch.self,
+            RSDColorTile.self,
             RSDDateRangeObject.self,
             RSDDurationRangeObject.self,
             RSDFetchableImageThemeElementObject.self,
             RSDFileResultObject.self,
+            RSDGrayScale.self,
             RSDNavigationUIActionObject.self,
             RSDNumberRangeObject.self,
             RSDResourceTransformerObject.self,
@@ -139,15 +136,18 @@ public struct RSDDocumentCreator {
     }()
     
     let allDecodableObjects: [RSDDocumentableDecodableObject.Type] = [
-        RSDChoiceObject<String>.self,
-        RSDChoiceObject<Int>.self,
         RSDChoiceObject<Bool>.self,
+        RSDChoiceObject<Date>.self,
         RSDChoiceObject<Double>.self,
+        RSDChoiceObject<Int>.self,
+        RSDChoiceObject<RSDFraction>.self,
+        RSDChoiceObject<String>.self,
         RSDComparableSurveyRuleObject<Bool>.self,
         RSDComparableSurveyRuleObject<String>.self,
         RSDComparableSurveyRuleObject<Date>.self,
         RSDComparableSurveyRuleObject<Double>.self,
         RSDComparableSurveyRuleObject<Int>.self,
+        RSDComparableSurveyRuleObject<RSDFraction>.self,
         RSDUIStepObject.self,
         RSDActiveUIStepObject.self,
         RSDFormUIStepObject.self,
@@ -157,7 +157,16 @@ public struct RSDDocumentCreator {
         RSDStepTransformerObject.self,
         RSDInputFieldObject.self,
         RSDDetailInputFieldObject.self,
-        RSDChoiceInputFieldObject.self,
+        RSDCodableChoiceInputFieldObject<Bool>.self,
+        RSDCodableChoiceInputFieldObject<String>.self,
+        RSDCodableChoiceInputFieldObject<Date>.self,
+        RSDCodableChoiceInputFieldObject<Double>.self,
+        RSDCodableChoiceInputFieldObject<Int>.self,
+        RSDCodableChoiceInputFieldObject<RSDFraction>.self,
+        RSDColorKey.self,
+        RSDColorPlacementThemeElementObject.self,
+        RSDSingleColorThemeElementObject.self,
+        RSDColorPalette.self,
         RSDMultipleComponentInputFieldObject.self,
         RSDSchemaInfoObject.self,
         RSDConditionalStepNavigatorObject.self,

@@ -34,8 +34,9 @@
 import UIKit
 import Research
 
-open class RSDResultSummaryStepViewController: RSDStepViewController {
+open class RSDResultSummaryStepViewController: RSDInstructionStepViewController {
 
+    @IBOutlet public var resultTitleLabel: UILabel?
     @IBOutlet public var resultLabel: UILabel?
     @IBOutlet public var unitLabel: UILabel?
     
@@ -58,6 +59,7 @@ open class RSDResultSummaryStepViewController: RSDStepViewController {
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        self.resultTitleLabel?.text = self.resultTitle
         self.resultLabel?.text = self.resultText
         self.unitLabel?.text = self.unitText
     }
@@ -69,9 +71,31 @@ open class RSDResultSummaryStepViewController: RSDStepViewController {
         postAccessibilityAnnouncement()
     }
     
+    open override func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
+        
+        self.resultTitleLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .fieldHeader)
+        self.resultLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .counter)
+        self.unitLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .counter)
+    }
+    
+    open override func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
+        if placement == .header {
+            return self.designSystem.colorRules.palette.successGreen.normal
+        }
+        else {
+            return self.designSystem.colorRules.backgroundLight
+        }
+    }
+    
     /// The data source for view controller.
     open var resultData: RSDResultSummaryStepViewModel? {
         return self.stepViewModel as? RSDResultSummaryStepViewModel
+    }
+    
+    /// The title to display above the result.
+    open var resultTitle: String? {
+        return self.resultData?.resultTitle
     }
     
     /// The result text to display.
@@ -86,12 +110,8 @@ open class RSDResultSummaryStepViewController: RSDStepViewController {
 
     func postAccessibilityAnnouncement() {
         var announcement: String = ""
-        if let title = self.stepTitleLabel?.text {
+        if let title = self.resultTitle {
             announcement.append(title)
-        }
-        if let text = self.stepTextLabel?.text {
-            announcement.append(" ")
-            announcement.append(text)
         }
         if let result = self.resultText {
             announcement.append(" ")
@@ -106,5 +126,34 @@ open class RSDResultSummaryStepViewController: RSDStepViewController {
         if message.count > 0 {
             UIAccessibility.post(notification: .announcement, argument: message)
         }
+    }
+    
+    // MARK: Initialization
+    
+    /// Static method to determine if this view controller class supports the provided step.
+    ///
+    /// This view controller is supported for steps that conform to the `RSDResultSummaryStep` protocol
+    /// that have a `resultIdentifier`.
+    open override class func doesSupport(_ step: RSDStep) -> Bool {
+        
+        // Must be a result step
+        guard let resultStep = step as? RSDResultSummaryStep,
+            resultStep.resultIdentifier != nil
+            else {
+                return false
+        }
+        
+        // If there is an image then it must be for placement of icon above the title.
+        if let placement = (step as? RSDDesignableUIStep)?.imageTheme?.placementType,
+            placement != .iconBefore {
+            return false
+        }
+        
+        return true
+    }
+    
+    /// The default nib name to use when instantiating the view controller using `init(step:)`.
+    open override class var nibName: String {
+        return String(describing: RSDResultSummaryStepViewController.self)
     }
 }

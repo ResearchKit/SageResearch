@@ -67,10 +67,11 @@ public struct RSDAnswerResultObject : RSDAnswerResult, Codable {
     /// - parameters:
     ///     - identifier: The identifier string.
     ///     - answerType: The answer type of the answer result.
-    public init(identifier: String, answerType: RSDAnswerResultType) {
+    public init(identifier: String, answerType: RSDAnswerResultType, value: Any? = nil) {
         self.identifier = identifier
         self.answerType = answerType
         self.type = .answer
+        self.value = value
     }
     
     /// Initialize from a `Decoder`.

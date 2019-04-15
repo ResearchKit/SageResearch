@@ -67,6 +67,7 @@
 /* Task progress */
 "CURRENT_STEP_%@_OF_TOTAL_STEPS_%@" = "Step %1$@ of %2$@";  // Text for marking the current steps
 "MESSAGE_CONFIRM_CANCEL_TASK" = "Are you sure that you want to stop?";  // Message to show when confirming that tapping the close task button was intentional.
+"OVERVIEW_WHAT_YOU_NEED" = "This is what you'll need"; // Text on the overview scroll view for title of list of what you need for the task.
 
 /* Default placeholders to request answers in a questionnaire. */
 "PLACEHOLDER_TEXT_OR_NUMBER" = "Tap to answer";
@@ -123,8 +124,10 @@
 "LOCATION_IN_USE_PERMISSION_DENIED" = "You have not given this app permission to use location services (GPS). You can enable access in the Privacy Settings.";
 "LOCATION_BACKGROUND_PERMISSION_DENIED" = "You have not given this app permission to use location services (GPS) in the background. You can enable access in the Privacy Settings.";
 "LOCATION_PERMISSION_RESTRICTED" = "Access to the location services (GPS) is restricted. You must allow permission within 'Settings -> General -> Restrictions'";
-"MOTION_PERMISSION_DENIED" = "You have not given this app permission to use the motion and fitness sensors. You can enable access in the Privacy Settings.";
+"MOTION_PERMISSION_DENIED" = "You have not given this app permission to use the motion and fitness sensors. You can enable access by turning on 'Motion & Fitness' in the Privacy Settings .";
 "GENERAL_PERMISSION_RESTRICTED" = "This activity requires access to permissions or settings that are restricted on this device.";
+"GOTO_SETTINGS" = "Go to Settings";
+"NOT_AUTHORIZED" = "Not Authorized";
 
 /* Reminder Notifications */
 "REMINDER_BUTTON_TITLE" = "Remind me later";

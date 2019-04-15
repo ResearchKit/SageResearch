@@ -73,7 +73,7 @@ fileprivate let defaultSize: CGFloat = 122
         set {
             _backgroundColor = newValue
             _backgroundLayer?.backgroundColor = _backgroundColor?.cgColor
-            super.backgroundColor = UIColor.white
+            super.backgroundColor = UIColor.clear
         }
     }
     private var _backgroundColor: UIColor?
@@ -323,7 +323,7 @@ fileprivate let defaultSize: CGFloat = 122
 fileprivate let borderWidth: CGFloat = 1
 fileprivate let checkboxHeight: CGFloat = 32
 
-fileprivate class RSDCheckboxButtonView : UIView {
+fileprivate class RSDCheckboxButtonView : UIView, RSDViewDesignable {
     
     fileprivate var checkboxContainer: UIView!
     fileprivate var viewChecked: RSDCheckmarkView!
@@ -338,14 +338,14 @@ fileprivate class RSDCheckboxButtonView : UIView {
     }
     
     /// The background color of the checkbox when selected.
-    var selectedColor : UIColor = UIColor.darkPrimaryTintColor {
+    var selectedColor : UIColor = RSDStudyConfiguration.shared.colorPalette.primary.normal.color {
         didSet {
-            viewChecked.backgroundColor = self.tintColor
+            viewChecked.backgroundColor = selectedColor
         }
     }
     
     /// The border color of the checkbox when selected.
-    var selectedBorderColor : UIColor = UIColor.lightPrimaryTintColor {
+    var selectedBorderColor : UIColor = RSDStudyConfiguration.shared.colorPalette.primary.light.color {
         didSet {
             viewChecked.layer.borderColor = selectedBorderColor.cgColor
         }
@@ -356,6 +356,30 @@ fileprivate class RSDCheckboxButtonView : UIView {
         didSet {
             refreshViews()
         }
+    }
+    
+    /// The background color for the table cell.
+    fileprivate var backgroundColorTile: RSDColorTile?
+    
+    /// The design system for this component.
+    fileprivate var designSystem: RSDDesignSystem?
+    
+    /// Views can be used in nibs and storyboards without setting up a design system for them. This allows
+    /// for setting up views to use the same design system and background color mapping as their parent view.
+    open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.designSystem = designSystem
+        self.backgroundColorTile = background
+        
+        let selected = designSystem.colorRules.checkboxButton(on: background, isSelected: true)
+        let notSelected = designSystem.colorRules.checkboxButton(on: background, isSelected: false)
+        
+        self.selectedColor = selected.background
+        self.selectedBorderColor = selected.border
+        self.viewChecked.checkmarkColor = selected.checkmark
+        self.viewUnchecked.borderColor = notSelected.border
+        self.viewUnchecked.backgroundColor = notSelected.background
+        
+        updateColorAndFont()
     }
     
     public override init(frame: CGRect) {
@@ -396,8 +420,7 @@ fileprivate class RSDCheckboxButtonView : UIView {
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         label.rsd_alignToSuperview([.trailing], padding: 10, priority: .required)
         label.rsd_alignRightOf(view: checkboxContainer, padding: 10, priority: .required)
-        label.font = UIFont.rsd_checkboxButtonTitle
-        label.textColor = UIColor.appTextDark
+
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.clipsToBounds = false
@@ -407,12 +430,15 @@ fileprivate class RSDCheckboxButtonView : UIView {
         label.rsd_align([.top], .greaterThanOrEqual, to: checkboxContainer, [.top], padding: 0, priority: .required)
         label.rsd_align([.bottom], .lessThanOrEqual, to: self, [.bottom], padding: 0, priority: .required)
         checkboxContainer.rsd_alignToSuperview([.bottom], padding: 0, priority: .defaultHigh)
-
         
         // hide the title label
         checkboxContainer.isUserInteractionEnabled = false
         
+        viewChecked.backgroundColor = selectedColor
+        viewChecked.layer.borderColor = selectedBorderColor.cgColor
+        
         updateCornerRadius()
+        updateColorAndFont()
         refreshViews()
     }
     
@@ -422,9 +448,15 @@ fileprivate class RSDCheckboxButtonView : UIView {
         self.layer.cornerRadius = self.cornerRadius
     }
     
+    private func updateColorAndFont() {
+        let background = self.backgroundColorTile ?? RSDColorTile(UIColor.white, usesLightStyle: false)
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        
+        label.font = designSystem.fontRules.font(for: .body, compatibleWith: traitCollection)
+        label.textColor = designSystem.colorRules.textColor(on: background, for: .body)
+    }
+    
     private func refreshViews() {
-        viewChecked.backgroundColor = self.tintColor
-        viewChecked.layer.borderColor = selectedBorderColor.cgColor
         viewUnchecked?.isHidden = self.isSelected
         viewChecked?.isHidden = !self.isSelected
     }
@@ -433,7 +465,7 @@ fileprivate class RSDCheckboxButtonView : UIView {
 @IBDesignable
 fileprivate class UncheckedView : UIView {
     
-    fileprivate var borderColor: UIColor = UIColor.rsd_cellSeparatorLine {
+    fileprivate var borderColor: UIColor = RSDStudyConfiguration.shared.colorPalette.grayScale.lightGray.color {
         didSet {
             self.layer.borderColor = borderColor.cgColor
         }

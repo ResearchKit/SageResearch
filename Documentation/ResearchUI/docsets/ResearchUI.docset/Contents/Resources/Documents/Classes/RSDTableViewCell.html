@@ -38,6 +38,9 @@
                 <a href="../Classes/RSDAudioSoundPlayer.html">RSDAudioSoundPlayer</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDBackgroundGradient.html">RSDBackgroundGradient</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDButton">RSDButton</a>
               </li>
               <li class="nav-group-task">
@@ -77,6 +80,9 @@
                 <a href="../Classes/RSDImageViewCell.html">RSDImageViewCell</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDInstructionStepViewController.html">RSDInstructionStepViewController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDLoadingView.html">RSDLoadingView</a>
               </li>
               <li class="nav-group-task">
@@ -95,6 +101,9 @@
                 <a href="../Classes/RSDOverviewStepViewController.html">RSDOverviewStepViewController</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDPermissionStepViewController.html">RSDPermissionStepViewController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDProgressIndicator.html">RSDProgressIndicator</a>
               </li>
               <li class="nav-group-task">
@@ -102,6 +111,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDRoundedButton.html">RSDRoundedButton</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDScrollingOverviewStepViewController.html">RSDScrollingOverviewStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSelectionTableViewCell.html">RSDSelectionTableViewCell</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDShadowGradient">RSDShadowGradient</a>
@@ -114,9 +129,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDStepChoiceCell.html">RSDStepChoiceCell</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes.html#/c:@M@ResearchUI@objc(cs)RSDStepChoiceSectionHeader">RSDStepChoiceSectionHeader</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDStepHeaderView.html">RSDStepHeaderView</a>
@@ -144,6 +156,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDStepViewController.html">RSDStepViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDTableSectionHeader.html">RSDTableSectionHeader</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDTableStepHeaderView.html">RSDTableStepHeaderView</a>
@@ -240,6 +255,9 @@
                 <a href="../Protocols/RSDPickerViewProtocol.html">RSDPickerViewProtocol</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDShowViewUIAction.html">RSDShowViewUIAction</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDSoundPlayer.html">RSDSoundPlayer</a>
               </li>
               <li class="nav-group-task">
@@ -261,7 +279,7 @@
                 <a href="../Protocols.html#/s:10ResearchUI29RSDTaskViewControllerDelegateP">RSDTaskViewControllerDelegate</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/RSDViewColorStylable.html">RSDViewColorStylable</a>
+                <a href="../Protocols/RSDViewDesignable.html">RSDViewDesignable</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Protocols/RSDVoiceBox.html">RSDVoiceBox</a>
@@ -293,7 +311,7 @@
               <div class="declaration">
                 <div class="language">
                   <pre class="highlight swift"><code><span class="kd">@IBDesignable</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableViewCell</span> <span class="p">:</span> <span class="kt">UITableViewCell</span></code></pre>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">RSDTableViewCell</span> <span class="p">:</span> <span class="kt">UITableViewCell</span><span class="p">,</span> <span class="kt"><a href="../Protocols/RSDViewDesignable.html">RSDViewDesignable</a></span></code></pre>
 
                 </div>
               </div>
@@ -360,9 +378,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10ResearchUI16RSDTableViewCellC20tableBackgroundColorSo7UIColorCSgvp"></a>
-                    <a name="//apple_ref/swift/Property/tableBackgroundColor" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI16RSDTableViewCellC20tableBackgroundColorSo7UIColorCSgvp">tableBackgroundColor</a>
+                    <a name="/s:10ResearchUI16RSDTableViewCellC24usesTableBackgroundColorSbvp"></a>
+                    <a name="//apple_ref/swift/Property/usesTableBackgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDTableViewCellC24usesTableBackgroundColorSbvp">usesTableBackgroundColor</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -370,14 +388,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The background color of the containing table.</p>
+                        <p>Does this cell use the table background color to set the color of the content view?</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">tableBackgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="o">!</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">usesTableBackgroundColor</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -387,9 +405,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@ResearchUI@objc(cs)RSDTableViewCell(py)usesLightStyle"></a>
-                    <a name="//apple_ref/swift/Property/usesLightStyle" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@ResearchUI@objc(cs)RSDTableViewCell(py)usesLightStyle">usesLightStyle</a>
+                    <a name="/s:10ResearchUI16RSDTableViewCellC19backgroundColorTile0A008RSDColorH0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/backgroundColorTile" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDTableViewCellC19backgroundColorTile0A008RSDColorH0VSgvp">backgroundColorTile</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -397,15 +415,96 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Whether or not the table uses light style.</p>
+                        <p>The background color for the table cell.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@IBInspectable</span>
-<span class="kd">open</span> <span class="k">var</span> <span class="nv">usesLightStyle</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">backgroundColorTile</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI16RSDTableViewCellC24tableBackgroundColorTile0A008RSDColorI0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/tableBackgroundColorTile" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDTableViewCellC24tableBackgroundColorTile0A008RSDColorI0VSgvp">tableBackgroundColorTile</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The background color tile for the table.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">tableBackgroundColorTile</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI16RSDTableViewCellC12designSystem0A009RSDDesignG0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/designSystem" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDTableViewCellC12designSystem0A009RSDDesignG0CSgvp">designSystem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The design system for this component.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI16RSDTableViewCellC15setDesignSystem_4withy0A009RSDDesignH0C_AF12RSDColorTileVtF"></a>
+                    <a name="//apple_ref/swift/Method/setDesignSystem(_:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI16RSDTableViewCellC15setDesignSystem_4withy0A009RSDDesignH0C_AF12RSDColorTileVtF">setDesignSystem(_:with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Views can be used in nibs and storyboards without setting up a design system for them. This allows
+for setting up views to use the same design system and background color mapping as their parent view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setDesignSystem</span><span class="p">(</span><span class="n">_</span> <span class="nv">designSystem</span><span class="p">:</span> <span class="kt">RSDDesignSystem</span><span class="p">,</span> <span class="n">with</span> <span class="nv">background</span><span class="p">:</span> <span class="kt">RSDColorTile</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

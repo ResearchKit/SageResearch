@@ -64,7 +64,7 @@ class ClockTests: XCTestCase {
         let testTimeExpected = clockTime + offset
         let testTime = systemTime + offset
         let testTimeActual = clock.relativeUptime(to: testTime)
-        XCTAssertEqual(testTimeExpected, testTimeActual)
+        XCTAssertEqual(testTimeExpected, testTimeActual, accuracy:0.0001)
     }
     
     func testSleepOffset_BeforeStart() {
@@ -85,7 +85,7 @@ class ClockTests: XCTestCase {
         let testTimeExpected = clockTime + offset
         let testTime = systemTime + offset
         let testTimeActual = clock.relativeUptime(to: testTime)
-        XCTAssertEqual(testTimeExpected, testTimeActual)
+        XCTAssertEqual(testTimeExpected, testTimeActual, accuracy:0.0001)
     }
     
     func testSleepOffset_AfterSleep() {
@@ -107,6 +107,6 @@ class ClockTests: XCTestCase {
         let testTimeAfterExpected = clockTime + offsetAfter
         let testTimeAfter = systemTime + offsetAfter - sleepOffset
         let testTimeAfterActual = clock.relativeUptime(to: testTimeAfter)
-        XCTAssertEqual(testTimeAfterExpected, testTimeAfterActual)
+        XCTAssertEqual(testTimeAfterExpected, testTimeAfterActual, accuracy:0.0001)
     }
 }

@@ -33,6 +33,27 @@
 
 import UIKit
 
+open class RSDFullscreenImageStepViewController: RSDStepViewController {
+    
+    /// Override to return the primary background color for all placements.
+    open override func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
+        return self.designSystem.colorRules.backgroundPrimary
+    }
+    
+    open override func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
+        // Header and footer may have an image behind them so they need to set up their components for
+        // the background color, but then *not* use that color as their background.
+        if placement == .header {
+            self.navigationHeader?.backgroundColor = UIColor.clear
+        }
+        else if placement == .footer {
+            self.navigationFooter?.backgroundColor = UIColor.clear
+        }
+    }
+    
+}
+
 /// `RSDCountdownStepViewController` is a simple countdown timer for displaying a short duration (5-4-3-2-1) countdown.
 ///
 /// This view controller includes a default nib implementation that is included in this framework. It includes a `countdownLabel`
@@ -40,7 +61,7 @@ import UIKit
 /// 
 /// - seealso: `RSDTaskViewController.vendDefaultViewController(for:)`
 ///
-open class RSDCountdownStepViewController: RSDStepViewController {
+open class RSDCountdownStepViewController: RSDFullscreenImageStepViewController {
     
     /// A label that is updated to show a countdown (5-4-3-2-1).
     @IBOutlet open var countdownLabel: UILabel?
@@ -66,13 +87,26 @@ open class RSDCountdownStepViewController: RSDStepViewController {
     /// Toggle the state of the `pauseButton` to pause/resume the countdown.
     @IBAction open func pauseTimer() {
         if self.clock?.isPaused ?? false {
-            self.pauseButton?.setTitle(Localization.buttonResume(), for: .normal)
-            self.pause()
-        }
-        else {
             self.pauseButton?.setTitle(Localization.buttonPause(), for: .normal)
             self.resume()
         }
+        else {
+            self.pauseButton?.setTitle(Localization.buttonResume(), for: .normal)
+            self.pause()
+        }
+    }
+    
+    /// Override setting the color style to set the color of the label.
+    open override func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
+        if placement == .body {
+            countdownLabel?.textColor = countdownLabelColor(on: background)
+        }
+    }
+    
+    /// Returns the color to use for the countdown label
+    open func countdownLabelColor(on background: RSDColorTile) -> UIColor {
+        return self.designSystem.colorRules.textColor(on: background, for: .counter)
     }
     
     // MARK: Initialization

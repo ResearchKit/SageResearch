@@ -34,7 +34,7 @@
 import Foundation
 
 /// The TaskViewModel is a base class implementation of the presentation layer for managing a task. It uses
-/// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model–view–viewmodel) design pattern to
+/// the [Model–view–viewmodel (MVVM)](https://en.wikipedia.org/wiki/Model-view-viewmodel) design pattern to
 /// separate out the UX functionality of running a task for a given device category from the UI and from the
 /// domain layer.
 ///
@@ -51,7 +51,7 @@ import Foundation
 ///
 /// - seealso: `RSDTaskController`
 open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
-        
+
     /// A unique identifier for this path component.
     open private(set) var identifier: String
     
@@ -60,6 +60,16 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     
     /// The task that is currently being run.
     public private(set) var task: RSDTask?
+    
+    /// The data manager for accessing previous runs of the task.
+    public weak var dataManager: RSDDataStorageManager? {
+        didSet {
+            setupDataTracking()
+        }
+    }
+    
+    /// Should the task only display an abbreviated set of instruction steps?
+    open var shouldShowAbbreviatedInstructions: Bool?
     
     /// A weak pointer to the task controller.
     public var taskController : RSDTaskController? {
@@ -77,6 +87,29 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         return "\(type(of: self)): \(fullPath) steps: [\(stepPath)]"
     }
     
+    /// The design system to use for this task.
+    open var designSystem : RSDDesignSystem {
+        if let ds = _designSystem {
+            return ds
+        }
+        else if let taskDesign = (self.taskInfo as? RSDTaskDesign) ?? (self.task as? RSDTaskDesign) {
+            // If getting the design system from the task, then set the color palette to the system palette.
+            let designSystem = taskDesign.designSystem
+            if RSDStudyConfiguration.shared.hasSetColorPallette {
+                designSystem.colorRules.palette = RSDStudyConfiguration.shared.colorPalette
+            }
+            _designSystem = designSystem
+            return designSystem
+        }
+        else if let ds = (self.parent as? RSDTaskPathComponent)?.designSystem {
+            return ds
+        }
+        else {
+            return RSDDesignSystem()
+        }
+    }
+    private var _designSystem : RSDDesignSystem?
+    
     
     // MARK: Lifecycle
     
@@ -90,6 +123,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         let taskResult = task.instantiateTaskResult()
         super.init(taskResult: taskResult)
         commonInit(identifier: task.identifier, parentPath: parentPath)
+        setupDataTracking()
     }
     
     /// Initialize the task path with a task.
@@ -107,8 +141,12 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     private func commonInit(identifier: String, parentPath: RSDPathComponent?) {
         self.parent = parentPath
         guard let parent = parentPath else { return }
+        self.dataManager = (parent as? RSDHistoryPathComponent)?.dataManager
         self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
         self.taskResult.taskRunUUID = parent.taskResult.taskRunUUID
+        if let _ = self.task as? RSDSectionStep {
+            self.shouldShowAbbreviatedInstructions = (parentPath as? RSDTaskViewModel)?.shouldShowAbbreviatedInstructions
+        }
     }
     
         
@@ -332,6 +370,16 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     /// step. For all other steps, it will request a step controller for the step from the task controller and
     /// return both the step controller and the loaded step view model as the `node`.
     open func pathComponent(for step: RSDStep) -> (node: RSDNodePathComponent, stepController: RSDStepController?)? {
+        if let tracker = self.task as? RSDTrackingTask {
+            let answer = tracker.shouldSkipStep(step)
+            if answer.shouldSkip {
+                if let result = answer.stepResult {
+                    self.taskResult.stepHistory.append(result)
+                }
+                return nil
+            }
+        }
+        
         if let node = self.instantiateTaskStepNode(for: step) {
             return (node, nil)
         }
@@ -454,14 +502,14 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             if task != nil {
                 strongSelf.task = task
                 let previousResult = strongSelf.taskResult
-                var taskResult = task!.instantiateTaskResult()
+                var newResult = task!.instantiateTaskResult()
                 if previousResult.asyncResults?.count ?? 0 > 0 {
-                    var results = strongSelf.taskResult.asyncResults ?? []
+                    var results = newResult.asyncResults ?? []
                     results.append(contentsOf: previousResult.asyncResults!)
-                    strongSelf.taskResult.asyncResults = results
+                    newResult.asyncResults = results
                 }
-                taskResult.taskRunUUID = previousResult.taskRunUUID
-                strongSelf.taskResult = taskResult
+                newResult.taskRunUUID = previousResult.taskRunUUID
+                strongSelf.taskResult = newResult
             }
             if let err = error {
                 strongSelf.handleTaskFailure(with: err)
@@ -478,7 +526,38 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             assertionFailure("The base task view model is expecting a view controller. If none is provided, please use a subclass.")
             return
         }
+        setupDataTracking()
         taskController.handleFinishedLoading()
+    }
+    
+    /// The data tracker (if any) for this task.
+    open var dataTracker: RSDTrackingTask? {
+        return self.task as? RSDTrackingTask
+    }
+    
+    /// Called when the task is loaded and when the`dataManager` is set.
+    open func setupDataTracking() {
+        guard let task = self.task,
+            let taskData = self.dataManager?.previousTaskData(for: RSDIdentifier(rawValue: task.identifier))
+            else {
+                return
+        }
+        self.dataTracker?.setupTask(with: taskData, for: self)
+        if shouldShowAbbreviatedInstructions == nil, let timestamp = taskData.timestampDate {
+            let frequency = RSDStudyConfiguration.shared.fullInstructionsFrequency
+            shouldShowAbbreviatedInstructions = frequency.withinDuration(between: timestamp, and: Date())
+        }
+    }
+    
+    /// Called when the task is finished and ready to move to the next subtask.
+    open func saveDataTracking() {
+        guard let manager = self.dataManager,
+            let tracker = self.dataTracker,
+            let data = tracker.taskData(for: self.taskResult)
+            else {
+                return
+        }
+        manager.saveTaskData(data, from: self.taskResult)
     }
     
     /// Called when the task fails.
@@ -532,29 +611,33 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
     
     // MARK: Task Finalization - The methods included in this section should **not** be called until the task is finished.
     
-    override open func cleanup(_ completion: (() -> Void)? = nil) {
-        self.deleteOutputDirectory(completion)
+    override open func cleanup(error: Error?, completion: ((_ error: Error?) -> Void)? = nil) {
+        self.deleteOutputDirectory(error: error, completion: completion)
     }
     
     /// Delete the output directory on the file management queue. Do *not* call this method until the
     /// files generated by this task have been copied to a new location, unless the results are being
     /// discarded.
-    public func deleteOutputDirectory(_ completion:(() -> Void)? = nil) {
+    public func deleteOutputDirectory(error: Error?, completion:((_ error: Error?) -> Void)? = nil) {
         fileManagementQueue.async {
             
             guard let outputDirectory = self._outputDirectory else { return }
+            var fileError: Error? = nil
             do {
                 try FileManager.default.removeItem(at: outputDirectory)
             } catch let error {
                 print("Error removing output directory: \(error.localizedDescription)")
                 debugPrint("\tat: \(outputDirectory)")
+                fileError = error
             }
-            completion?()
+            let reportedError = error ?? fileError
+            completion?(reportedError)
         }
     }
 
 }
 
+// Private navigation methods.
 extension RSDTaskViewModel {
 
     private func _fetchTaskFromCurrentInfo() {
@@ -596,7 +679,13 @@ extension RSDTaskViewModel {
             return
         }
     
-        let navigation = task.stepNavigator.step(after: previousStep, with: &self.taskResult)
+        var navigation = task.stepNavigator.step(after: previousStep, with: &self.taskResult)
+        while let instruction = navigation.step as? RSDInstructionStep,
+            instruction.fullInstructionsOnly,
+            (shouldShowAbbreviatedInstructions ?? false) {
+            navigation = task.stepNavigator.step(after: navigation.step, with: &self.taskResult)
+        }
+        
         let navDirection = direction ?? navigation.direction
         
         // save the previous step and look for a next step
@@ -840,6 +929,7 @@ extension RSDTaskViewModel {
         // Mark the task end date and isCompleted
         self.taskResult.endDate = Date()
         self.isCompleted = true
+        self.saveDataTracking()
         if self.parent == nil, let taskController = self.taskController {
             // ONLY send the message to save the results if this is the end of the task.
             taskController.handleTaskResultReady(with: self)

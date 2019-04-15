@@ -34,6 +34,24 @@
 import UIKit
 import ResearchUI
 import Research
+import MotorControl
+
+/// The data storage manager in this case is used to show a sample usage. As such, the data will not be
+/// shared to user defaults but only in local memory.
+class DataStorageManager : NSObject, RSDDataStorageManager {
+    
+    static let shared = DataStorageManager()
+    
+    var taskData: [RSDIdentifier : RSDTaskData] = [:]
+    
+    func previousTaskData(for taskIdentifier: RSDIdentifier) -> RSDTaskData? {
+        return taskData[taskIdentifier]
+    }
+    
+    func saveTaskData(_ data: RSDTaskData, from taskResult: RSDTaskResult?) {
+        taskData[RSDIdentifier(rawValue: data.identifier)] = data
+    }
+}
 
 class ResultTableViewController: UITableViewController, RSDTaskViewControllerDelegate {
 
@@ -46,6 +64,7 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
         
         if firstAppearance, (self.result == nil), let taskInfo = self.taskInfo {
             let taskViewModel = RSDTaskViewModel(taskInfo: taskInfo)
+            taskViewModel.dataManager = DataStorageManager.shared
             let taskViewController = RSDTaskViewController(taskViewModel: taskViewModel)
             taskViewController.delegate = self
             self.present(taskViewController, animated: true, completion: nil)
@@ -151,9 +170,12 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
         print("\n\n=== Ready to Save: \(taskViewModel.description)")
+        
+        taskViewModel.archiveResults(with: ArchiveManager.shared) 
     }
     
     func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {
-        return true
+        // TODO: syoung 01/18/2019 clean up JSON and Factory stuff for showing the intro step.
+        return false
     }
 }

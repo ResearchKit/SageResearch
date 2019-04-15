@@ -43,7 +43,7 @@ import UIKit
 /// displayed.
 ///
 @IBDesignable
-open class RSDStepProgressView: UIView, RSDViewColorStylable {
+open class RSDStepProgressView: UIView, RSDViewDesignable {
     
     /// A pointer to the label that should be updated with the current progress.
     @IBOutlet public weak var stepCountLabel: UILabel?
@@ -72,47 +72,48 @@ open class RSDStepProgressView: UIView, RSDViewColorStylable {
         }
     }
     
-    /// Should the progress bar display with a light style of progress bar and label for use
-    /// on a dark background, or with a dark style of progress bar for use on a light background?
-    @IBInspectable
-    open var usesLightStyle: Bool = false {
-        didSet {
-            updateColorStyle()
-        }
-    }
-    
     /// Should the inner progress bar end be rounded on the right side?
-    open var hasRoundedProgressEnd: Bool = UIView.rsd_progressViewRoundedEnds {
+    open var hasRoundedProgressEnd: Bool = false {
         didSet {
             setNeedsUpdateConstraints()
         }
     }
     
-    /// Should the label associated with the progress bar display all capital letters?
-    open var labelIsUppercase: Bool = UIView.rsd_progressViewStepLabelUppercase {
-        didSet {
-            updateLabel()
-        }
-    }
+    // TODO: syoung 03/19/2019 Remove these properties once the modules that use them have been updated.
+    @available(*, unavailable)
+    open var usesLightStyle: Bool = false
     
-    /// Should the label associated with the progress bar display the current step number
-    /// as bolded?
-    open var labelCurrentStepIsBold: Bool = UIView.rsd_progressViewCurrentStepBolded {
-        didSet {
-            updateLabel()
-        }
-    }
+    @available(*, unavailable)
+    open var labelIsUppercase: Bool = false
     
-    private func updateColorStyle() {
-        // Update colors
-        progressView.backgroundColor = UIColor.rsd_progressBar
-        if usesLightStyle {
-            backgroundView.backgroundColor = UIColor.rsd_progressBarBackgroundLightStyle
-            stepCountLabel?.textColor = UIColor.rsd_stepCountLabelLightStyle
-        } else {
-            backgroundView.backgroundColor = UIColor.rsd_progressBarBackground
-            stepCountLabel?.textColor = UIColor.rsd_stepCountLabel
-        }
+    @available(*, unavailable)
+    open var labelCurrentStepIsBold: Bool = false
+    
+    /// The background color mapping that this view should use as its key. Typically, for all but the
+    /// top-level views, this will be the background of the superview.
+    open private(set) var backgroundColorTile: RSDColorTile?
+    
+    /// The design system for this component.
+    open private(set) var designSystem: RSDDesignSystem?
+    
+    /// Views can be used in nibs and storyboards without setting up a design system for them. This allows
+    /// for setting up views to use the same design system and background color mapping as their parent view.
+    open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.backgroundColorTile = background
+        self.designSystem = designSystem
+        updateColorsAndFonts()
+    }
+
+    private func updateColorsAndFonts() {
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        let colorTile: RSDColorTile = self.backgroundTile() ?? designSystem.colorRules.backgroundPrimary
+        
+        // Update colors and fonts
+        let rules = designSystem.colorRules.progressBar(on: colorTile)
+        progressView.backgroundColor = rules.filled
+        backgroundView.backgroundColor = rules.unfilled
+        stepCountLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .small)
+        stepCountLabel?.font = designSystem.fontRules.font(for: .small)
     }
 
     /// The height of the actual progress bar.
@@ -139,27 +140,14 @@ open class RSDStepProgressView: UIView, RSDViewColorStylable {
     
     /// The text of the label that is displayed directly under the progress bar.
     open func attributedStringForLabel() -> NSAttributedString? {
-
         if currentStep > 0 && totalSteps > 0 {
             let formatter = NumberFormatter()
             formatter.numberStyle = .none
             let currentString = formatter.string(for: currentStep)!
             let totalString = formatter.string(for: totalSteps)!
-            let marker = "<CURRENT_STEP>"
-            
             let format = Localization.localizedString("CURRENT_STEP_%@_OF_TOTAL_STEPS_%@")
-            let str = String.localizedStringWithFormat(format, marker, totalString)
-            let mutableString = NSMutableString(string: str)
-            let markerRange = mutableString.range(of: marker)
-            mutableString.replaceCharacters(in: markerRange, with: currentString)
-            let fullStr : String = labelIsUppercase ? (mutableString as String).uppercased() : mutableString as String
-            let range = NSRange(location: markerRange.location, length: (currentString as NSString).length)
-            let attributedString = NSMutableAttributedString(string: fullStr)
-            if labelCurrentStepIsBold {
-                attributedString.addAttribute(.font, value: UIFont.rsd_boldStepCountLabel, range: range)
-            }
-            
-            return attributedString
+            let str = String.localizedStringWithFormat(format, currentString, totalString)
+            return NSAttributedString(string: str)
         }
         else {
             return nil
@@ -187,14 +175,12 @@ open class RSDStepProgressView: UIView, RSDViewColorStylable {
     }
     
     func commonInit() {
-        
         self.addSubview(backgroundView)
         backgroundView.addSubview(progressView)
         backgroundView.clipsToBounds = true
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         progressView.translatesAutoresizingMaskIntoConstraints = false
-
-        updateColorStyle()
+        updateColorsAndFonts()
         setNeedsUpdateConstraints()
     }
     
@@ -236,7 +222,6 @@ open class RSDStepProgressView: UIView, RSDViewColorStylable {
     }
     
     func progressChanged() {
-        
         if currentStep > 0 && totalSteps > 0 {
             
             if let widthConstraint = progressView.rsd_constraint(for: .width, relation: .equal) {
@@ -252,7 +237,6 @@ open class RSDStepProgressView: UIView, RSDViewColorStylable {
     /// Sets the text of the progress view label.
     /// Default = attributedStringForLabel()
     open func updateLabel() {
-        
         stepCountLabel?.attributedText = attributedStringForLabel()
     }
 }

@@ -34,7 +34,7 @@
 import Foundation
 
 /// A hint as to where the UI should place an image.
-public struct RSDImagePlacementType : RawRepresentable, Codable, Hashable {
+public struct RSDImagePlacementType : RawRepresentable, Codable, Hashable, Equatable {
     
     public let rawValue: String
     
@@ -64,6 +64,15 @@ public struct RSDImagePlacementType : RawRepresentable, Codable, Hashable {
     
     /// Top half of the background constraind to the safe area.
     public static let topMarginBackground = StandardTypes.topMarginBackground.imagePlacementType
+    
+    public var isBackground : Bool {
+        switch self {
+        case .fullsizeBackground, .topBackground, .topMarginBackground:
+            return true
+        default:
+            return false
+        }
+    }
     
     public static func allStandardTypes() -> [RSDImagePlacementType] {
         return StandardTypes.allCases.map { $0.imagePlacementType }

@@ -109,7 +109,7 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
         #if os(watchOS)
             let fetchedImage = RSDImage(named: imageName)
         #elseif os(macOS)
-            let fetchedImage = RSDImage(named: NSImage.Name(imageName))
+            let fetchedImage = RSDImage(named: imageName)
         #else
             let fetchedImage = RSDImage(named: imageName, in: bundle, compatibleWith: nil)
         #endif
@@ -123,7 +123,7 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
 public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement, RSDDecodableBundleInfo, Codable {
     
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case imageNames, animationDuration, bundleIdentifier, placementType, _size = "size"
+        case imageNames, animationDuration, animationRepeatCount, bundleIdentifier, placementType, _size = "size"
     }
     
     /// The list of image names for the images to include in this animation.
@@ -131,6 +131,9 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     
     /// The animation duration for the image animation.
     public let animationDuration: TimeInterval
+    
+    /// This is used to set how many times the animation should be repeated where `0` means infinite.
+    public let animationRepeatCount: Int?
     
     /// The preferred placement of the image.
     public let placementType: RSDImagePlacementType?
@@ -161,12 +164,13 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     ///     - animationDuration: The animation duration.
     ///     - placementType: The preferred placement of the image. Default = `nil`.
     ///     - size: The image size. Default = `nil`.
-    public init(imageNames: [String], animationDuration: TimeInterval, bundleIdentifier: String? = nil, placementType: RSDImagePlacementType? = nil, size: CGSize? = nil) {
+    public init(imageNames: [String], animationDuration: TimeInterval, bundleIdentifier: String? = nil, placementType: RSDImagePlacementType? = nil, size: CGSize? = nil, animationRepeatCount: Int = 0) {
         self.imageNames = imageNames
         self.bundleIdentifier = bundleIdentifier
         self.animationDuration = animationDuration
         self._size = RSDSizeWrapper(size)
         self.placementType = placementType
+        self.animationRepeatCount = animationRepeatCount
     }
     
 
@@ -189,7 +193,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     /// - returns: The images for this step.
     public func images() -> [RSDImage] {
         return imageNames.compactMap {
-            RSDImage(named: NSImage.Name($0))
+            RSDImage(named: $0)
         }
     }
     

@@ -102,7 +102,7 @@ public struct RSDImageWrapper {
         // an image with it.
         guard sharedDelegate == nil else { return .zero }
         #if os(macOS)
-        if let image = RSDImage(named: NSImage.Name(imageName)) {
+        if let image = RSDImage(named: imageName) {
             return image.size
         }
         #else
@@ -127,7 +127,7 @@ public struct RSDImageWrapper {
                 return nil
         }
         #if os(macOS)
-            return bundle.image(forResource: NSImage.Name(imageName))
+            return bundle.image(forResource: imageName)
         #elseif os(iOS) || os(tvOS)
             return RSDImage(named: imageName, in: bundle, compatibleWith: nil)
         #else
@@ -170,7 +170,7 @@ public struct RSDImageWrapper {
         #if os(watchOS)
             return RSDImage(named: imageName)
         #elseif os(macOS)
-            return RSDImage(named: NSImage.Name(imageName))
+            return RSDImage(named: imageName)
         #else
             return RSDImage(named: imageName, in: bundle, compatibleWith: nil) 
         #endif

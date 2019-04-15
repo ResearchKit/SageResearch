@@ -2,7 +2,7 @@
 //  RSDTaskResult.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -81,6 +81,13 @@ extension RSDTaskResult  {
         for result in stepHistory {
             if let answerResult = (result as? RSDAnswerResultFinder)?.findAnswerResult(with: identifier) {
                 return answerResult
+            }
+        }
+        if let results = asyncResults {
+            for result in results {
+                if let answerResult = (result as? RSDAnswerResultFinder)?.findAnswerResult(with: identifier) {
+                    return answerResult
+                }
             }
         }
         return nil

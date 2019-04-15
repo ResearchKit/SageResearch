@@ -132,4 +132,9 @@ public protocol RSDCopyStepNavigator : RSDStepNavigator {
     /// - parameter subtask: The task info step to insert.
     /// - returns: A copy of this navigator with the inserted section.
     func copyAndInsert(_ subtask: RSDTaskInfoStep) -> Self
+    
+    /// Return a copy of the step navigator that removes the steps with the given identifiers.
+    /// - parameter stepIdentifiers: The identifiers for the steps to remove.
+    /// - returns: A copy of this navigator without the given steps.
+    func copyAndRemove(_ stepIdentifiers: [String]) -> Self
 }

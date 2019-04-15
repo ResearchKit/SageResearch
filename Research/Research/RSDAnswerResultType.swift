@@ -181,8 +181,6 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
 
     static func examplesWithValues() -> [(answerType: RSDAnswerResultType, value: Any)] {
         var examples: [(RSDAnswerResultType, Any)] = []
-
-        let sequenceTypes = SequenceType.allCases
         
         func addExamples(sequenceType: SequenceType?) {
             let baseTypes = BaseType.allCases
@@ -194,19 +192,34 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
                     }
                     
                 case .data:
-                    let data = Data(base64Encoded: "A4B8")!
-                    examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), data))
+                    if sequenceType == nil {
+                        let data = Data(base64Encoded: "A4B8")!
+                        examples.append((RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType), data))
+                    }
                     
                 case .date:
+                    
+                    func createValue() -> Any {
+                        if sequenceType == nil {
+                            return Date(timeIntervalSince1970: 200000)
+                        } else {
+                            switch sequenceType! {
+                            case .array:
+                                return [Date(timeIntervalSince1970: 200000), Date(timeIntervalSince1970: 230000)]
+                            case .dictionary:
+                                return ["timestamp": Date(timeIntervalSince1970: 200000)]
+                            }
+                        }
+                    }
+                    
                     let dateFormats = [RSDFactory.shared.timestampFormatter.dateFormat,
                                        RSDFactory.shared.timeOnlyFormatter.dateFormat,
                                        RSDFactory.shared.dateOnlyFormatter.dateFormat]
-                    let date = Date(timeIntervalSince1970: 200000)
-                    examples.append((RSDAnswerResultType.date, date))
+                    examples.append((RSDAnswerResultType(baseType: .date, sequenceType: sequenceType), createValue()))
                     for dateFormat in dateFormats {
                         var answerType = RSDAnswerResultType(baseType: baseType, sequenceType: sequenceType, formDataType: nil, dateFormat: dateFormat)
                         answerType.dateLocaleIdentifier = RSDAnswerResultType.defaultDateLocaleIdentifier
-                        examples.append((answerType, date))
+                        examples.append((answerType, createValue()))
                     }
                 
                 case .decimal:
@@ -274,6 +287,9 @@ extension RSDAnswerResultType : RSDDocumentableCodableObject {
                 }
             }
         }
+        
+        addExamples(sequenceType: nil)
+        SequenceType.allCases.forEach { addExamples(sequenceType: $0) }
         
         return examples
     }

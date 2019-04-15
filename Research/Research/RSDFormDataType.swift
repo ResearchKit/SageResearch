@@ -233,6 +233,32 @@ public enum RSDFormDataType {
             return baseType
         }
     }
+    
+    public func defaultAnswerResultType() -> RSDAnswerResultType {
+        let base = self.defaultAnswerResultBaseType()
+        
+        switch self {
+        case .collection(let collectionType, _):
+            switch collectionType {
+            case .multipleChoice, .multipleComponent:
+                return RSDAnswerResultType(baseType: base, sequenceType: .array)
+            case .singleChoice:
+                return RSDAnswerResultType(baseType: base)
+            }
+            
+        case .measurement(let measurementType, _):
+            switch measurementType {
+            case .bloodPressure:
+                return .string
+            case .height, .weight:
+                return .decimal
+            }
+            
+        default:
+            return RSDAnswerResultType(baseType: base)
+        }
+        
+    }
 
     /// Maps the base type of the `RSDFormDataType` to the base type of the `RSDAnswerResultType`.
     ///

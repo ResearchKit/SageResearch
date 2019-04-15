@@ -26,6 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
@@ -66,6 +67,26 @@
                BuildableName = "ResearchUITests_iOS.xctest"
                BlueprintName = "ResearchUITests_iOS"
                ReferencedContainer = "container:../ResearchUI/ResearchUI.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F813D6E921BB40D900795664"
+               BuildableName = "MotorControlTests.xctest"
+               BlueprintName = "MotorControlTests"
+               ReferencedContainer = "container:../MotorControl/MotorControl.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F88725E12051C0F900A4B82F"
+               BuildableName = "CardiorespiratoryFitnessTests.xctest"
+               BlueprintName = "CardiorespiratoryFitnessTests"
+               ReferencedContainer = "container:../CardiorespiratoryFitness/CardiorespiratoryFitness.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

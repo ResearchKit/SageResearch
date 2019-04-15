@@ -64,6 +64,9 @@ public protocol RSDAnimatedImageThemeElement : RSDImageThemeElement {
     /// The animation duration.
     var animationDuration: TimeInterval { get }
     
+    /// This is used to set how many times the animation should be repeated where `0` means infinite.
+    var animationRepeatCount: Int? { get }
+    
     #if os(watchOS) || os(macOS)
     /// **Available** for watchOS and macOS.
     ///

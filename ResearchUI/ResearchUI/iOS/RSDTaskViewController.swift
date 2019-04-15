@@ -206,7 +206,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         if let vc = delegate?.taskViewController?(self, viewControllerForStep: RSDStepViewModel(step: step, parent: parent)) {
             return (vc as! RSDStepController)
         }
-        if let viewTheme = (step as? RSDThemedUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme) {
+        if let viewTheme = (step as? RSDDesignableUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme, for: step, with: parent) {
+            return vc
+        }
+        // TODO: syoung 03/18/2019 Delete this once the themed step has been marked unavailable.
+        if let viewTheme = (step as? RSDThemedUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme, for: step, with: parent) {
             return vc
         }
         if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: parent) {
@@ -219,13 +223,19 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///
     /// - parameter viewTheme: The view theme element with the nib or storyboard identifier.
     /// - returns: A view controller instantiated with the given view theme element.
-    open func instantiateViewController(with viewTheme: RSDViewThemeElement) -> (UIViewController & RSDStepController)? {
+    open func instantiateViewController(with viewTheme: RSDViewThemeElement, for step: RSDStep, with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
         if let storyboardIdentifier = viewTheme.storyboardIdentifier {
             let storyboard = UIStoryboard(name: storyboardIdentifier, bundle: viewTheme.bundle)
-            return storyboard.instantiateViewController(withIdentifier: viewTheme.viewIdentifier) as? (UIViewController & RSDStepController)
+            let vc = storyboard.instantiateViewController(withIdentifier: viewTheme.viewIdentifier) as? (UIViewController & RSDStepController)
+            if let stepVC = vc as? RSDStepViewController {
+                stepVC.stepViewModel = stepVC.instantiateStepViewModel(for: step, with: parent)
+            }
+            return vc
         }
         else {
-            return RSDStepViewController(nibName: viewTheme.viewIdentifier, bundle: viewTheme.bundle)
+            let vc = RSDStepViewController(nibName: viewTheme.viewIdentifier, bundle: viewTheme.bundle)
+            vc.stepViewModel = vc.instantiateStepViewModel(for: step, with: parent)
+            return vc
         }
     }
     
@@ -245,7 +255,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///            if undefined.
     open func vendDefaultViewController(for step: RSDStep, with parent: RSDPathComponent?) -> (UIViewController & RSDStepController) {
         if step.stepType == .overview {
-            return RSDOverviewStepViewController(step: step, parent: parent)
+            return RSDOverviewStepViewController.initializeStepViewController(step: step, parent: parent)
         }
         else if let taskInfo = step as? RSDTaskInfoStep {
             return RSDTaskInfoStepViewController(taskInfo: taskInfo, parent: parent)
@@ -258,6 +268,12 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             activeStep.duration > 0,
             activeStep.commands.contains(.transitionAutomatically) {
             return RSDActiveStepViewController(step: step, parent: parent)
+        }
+        else if RSDResultSummaryStepViewController.doesSupport(step) {
+            return RSDResultSummaryStepViewController(step: step, parent: parent)
+        }
+        else if RSDInstructionStepViewController.doesSupport(step) {
+            return RSDInstructionStepViewController(step: step, parent: parent)
         }
         else if RSDTableStepViewController.doesSupport(step) {
             // If this step *can* be displayed using the generic step view controller, then default to that
@@ -393,6 +409,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///     - completion: The completion to call once the navigation animation has completed.
     public func show(_ stepController: RSDStepController, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
         let vc = stepController as! UIViewController
+        _statusBarVC = vc
         pageViewController.setViewControllers([vc], direction: direction, animated: true) { (finished) in
             self.hideLoadingIfNeeded()
             completion?(finished)
@@ -576,6 +593,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     
     // MARK: View management
+    
+    private var _statusBarVC: UIViewController?
+    open override var childForStatusBarStyle: UIViewController? {
+        return _statusBarVC
+    }
     
     /// The page view controller used to control the view controller navigation.
     public private(set) var pageViewController: (UIViewController & RSDPageViewControllerProtocol)!

@@ -223,6 +223,82 @@ class CodableResultObjectTests: XCTestCase {
         }
     }
     
+    func testAnswerResultObject_Data_Codable() {
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "bar",
+            "startDate": "2017-10-16T22:28:09.000-02:30",
+            "endDate": "2017-10-16T22:30:09.000-02:30",
+            "answerType": {"baseType" : "data"},
+            "value": "abcd"
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDAnswerResultObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.type, "bar")
+            XCTAssertGreaterThan(object.endDate, object.startDate)
+            
+            let expectedAnswerType = RSDAnswerResultType.data
+            XCTAssertEqual(object.answerType, expectedAnswerType)
+            
+            // check assumptions
+            let expectedData = Data(base64Encoded: "abcd")
+            XCTAssertEqual(expectedData?.base64EncodedString().lowercased(), "abcd")
+            XCTAssertEqual(object.value as? Data, expectedData)
+            
+            let jsonData = try encoder.encode(object)
+            
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["type"] as? String, "bar")
+            XCTAssertEqual(dictionary["startDate"] as? String, "2017-10-16T22:28:09.000-02:30")
+            XCTAssertEqual(dictionary["endDate"] as? String, "2017-10-16T22:30:09.000-02:30")
+            XCTAssertNotNil(dictionary["value"])
+            XCTAssertEqual(dictionary["value"] as? String, "abcd")
+            if let answerType = dictionary["answerType"] as? [String:Any] {
+                XCTAssertEqual(answerType["baseType"] as? String, "data")
+            }
+            else {
+                XCTFail("Encoded object does not include the answerType")
+            }
+            
+        } catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+        }
+    }
+    
+    func testEncodedData() {
+    
+        let expectedData = Data(base64Encoded: "abcd")
+        let json = ["value": expectedData]
+        do {
+            let jsonData = try encoder.encode(json)
+            
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not an dictionary")
+                    return
+            }
+            
+            let value = dictionary["value"]
+            XCTAssertNotNil(value)
+            XCTAssertEqual(value as? String, "abcd")
+        }
+        catch let err {
+            XCTFail("Failed to decode/encode object: \(err)")
+        }
+    }
+    
     func testAnswerResultObject_Bool_Codable() {
         let json = """
         {

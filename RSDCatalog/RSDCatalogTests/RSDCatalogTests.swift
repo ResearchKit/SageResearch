@@ -53,9 +53,8 @@ class RSDCatalogTests: XCTestCase {
             return
         }
         let factory = CatalogFactory()
-        let jsonDecoder = factory.createJSONDecoder()
         do {
-            let taskGroups = try jsonDecoder.decode([RSDTaskGroupObject].self, from: jsonData)
+            let taskGroups = try factory.decodeTaskGroups(from: jsonData)
             for taskGroup in taskGroups {
                 for taskInfo in taskGroup.tasks {
                     if let taskTransformer = taskInfo.resourceTransformer {

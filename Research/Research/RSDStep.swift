@@ -2,7 +2,7 @@
 //  RSDStep.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -87,21 +87,4 @@ public protocol RSDGenericStep : RSDStep {
     
     /// The decoded dictionary.
     var userInfo: [String : Any] { get }
-}
-
-/// `RSDPermissionsStep` extends the `RSDUIStep` to include information about an activity including
-/// what permissions are required by this step or task. Without these preconditions, the task cannot
-/// measure or collect the data needed for this task.
-public protocol RSDStandardPermissionsStep : RSDStep, RSDPermissionsConfiguration {
-    
-    /// The permissions used by this task.
-    var standardPermissions: [RSDStandardPermission]? { get }
-}
-
-extension RSDStandardPermissionsStep {
-    
-    /// List of the permissions required for this action.
-    public var permissionTypes: [RSDPermissionType] {
-        return standardPermissions?.map { $0.permissionType } ?? []
-    }
 }

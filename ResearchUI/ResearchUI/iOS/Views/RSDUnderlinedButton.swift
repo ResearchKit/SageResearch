@@ -34,10 +34,10 @@
 import UIKit
 
 /// `RSDUnderlinedButton` is a UI element for displaying an underlined button.
-@IBDesignable open class RSDUnderlinedButton : RSDButton {
-    
+@IBDesignable open class RSDUnderlinedButton : RSDButton, RSDViewDesignable {
+
     /// The font used for the text button.
-    @IBInspectable open var textFont : UIFont = UIFont.systemFont(ofSize: 17) {
+    @IBInspectable open var textFont : UIFont = UIFont.systemFont(ofSize: 18) {
         didSet {
             refreshView()
         }
@@ -77,20 +77,40 @@ import UIKit
     /// Force all titles to be an attributed title.
     override open func setTitle(_ title: String?, for state: UIControl.State) {
         super.setTitle(title, for: state)
-        self.setAttributedTitle(attributedString(title), for: state)
+        let attributedText = attributedString(title, for: state)
+        self.setAttributedTitle(attributedText, for: state)
     }
     
     /// Create an attributed string for this class.
-    private func attributedString(_ title: String?) -> NSAttributedString? {
+    private func attributedString(_ title: String?, for state: UIControl.State) -> NSAttributedString? {
+       
+        let foregroundColor: UIColor = {
+            guard let designSystem = self.designSystem, let background = self.backgroundColorTile
+                else {
+                    return self.tintColor
+            }
+            return designSystem.colorRules.underlinedTextButton(on: background, state: RSDControlState(controlState: state))
+        }()
+        
         if let titleUnwrapped = title {
             let attributes: [NSAttributedString.Key : Any] = [
                 .font : textFont,
-                .foregroundColor : self.tintColor,
+                .foregroundColor : foregroundColor,
                 .underlineStyle : NSUnderlineStyle.single.rawValue
             ]
             return NSAttributedString(string: titleUnwrapped, attributes: attributes)
         } else {
             return nil
         }
+    }
+    
+    public private(set) var backgroundColorTile: RSDColorTile?
+    
+    public private(set) var designSystem: RSDDesignSystem?
+    
+    public func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.designSystem = designSystem
+        self.backgroundColorTile = background
+        refreshView()
     }
 }

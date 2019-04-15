@@ -64,8 +64,8 @@ open class RSDTaskState : NSObject {
     }
     
     /// Cleanup the task following archive and upload.
-    open func cleanup(_ completion: (() -> Void)? = nil) {
-        completion?()
+    open func cleanup(error: Error?, completion: ((_ error: Error?) -> Void)? = nil) {
+        completion?(error)
     }
     
     /// Build an archive from the task result.
@@ -89,17 +89,17 @@ open class RSDTaskState : NSObject {
     /// The file results will be added to the files list in a JSON serialized file named "metadata.json"
     /// that includes information about the device, application, task, and a file manifest.
     ///
-    public func archiveResults(with manager: RSDDataArchiveManager, completion: (() -> Void)? = nil) {
+    public func archiveResults(with manager: RSDDataArchiveManager, completion: ((_ error: Error?) -> Void)? = nil) {
         fileManagementQueue.async {
             do {
                 let taskArchiver = TaskArchiver(manager: manager, taskResult: self.taskResult, scheduleIdentifier: self.scheduleIdentifier)
                 let archives = try taskArchiver.buildArchives()
                 manager.encryptAndUpload(taskResult: self.taskResult, dataArchives: archives) {
-                    self.cleanup(completion)
+                    self.cleanup(error: nil, completion: completion)
                 }
             } catch let error {
                 manager.handleArchiveFailure(taskResult: self.taskResult, error: error) {
-                    self.cleanup(completion)
+                    self.cleanup(error: error, completion: completion)
                 }
             }
         }

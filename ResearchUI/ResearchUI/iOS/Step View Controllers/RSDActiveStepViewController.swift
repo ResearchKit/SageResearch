@@ -43,7 +43,7 @@ import UIKit
 ///
 /// - seealso: `RSDTaskViewController.vendDefaultViewController(for:)`
 ///
-open class RSDActiveStepViewController: RSDStepViewController {
+open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
 
     /// An instruction label that is updated to show the same text that is spoken as a spoken instruction
     /// to the user.
@@ -120,6 +120,10 @@ open class RSDActiveStepViewController: RSDStepViewController {
         _startProgressAnimation()
     }
     
+    override open func reset() {
+        super.reset()
+        self.countdownDial?.progress = 0
+    }
     
     // MARK: Dial progress indicator
     

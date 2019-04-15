@@ -27,13 +27,25 @@
 		F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */; };
 		F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */; };
 		F82F819B206B49D800F71AA8 /* RSDCheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82F819A206B49D800F71AA8 /* RSDCheckmarkView.swift */; };
-		F855A14020A2503700C762C7 /* RSDBorderedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F855A13F20A2503700C762C7 /* RSDBorderedTextView.swift */; };
+		F831570E2256F54400479A98 /* RSDPermissionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F831570D2256F54400479A98 /* RSDPermissionStepViewController.swift */; };
+		F837224E223322D000C9A2EA /* RSDInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F837224C223322D000C9A2EA /* RSDInstructionStepViewController.swift */; };
+		F837224F223322D000C9A2EA /* RSDInstructionStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F837224D223322D000C9A2EA /* RSDInstructionStepViewController.xib */; };
+		F855A14020A2503700C762C7 /* RSDBorderedTextView_deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F855A13F20A2503700C762C7 /* RSDBorderedTextView_deprecated.swift */; };
 		F855A14220A2505900C762C7 /* RSDToggleConstraintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F855A14120A2505900C762C7 /* RSDToggleConstraintView.swift */; };
 		F880C1B52057182B00ACB4D4 /* RSDOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C1B32057182B00ACB4D4 /* RSDOverviewStepViewController.swift */; };
 		F880C1B62057182B00ACB4D4 /* RSDOverviewStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */; };
 		F8864AE921642F3B00DF57CF /* RSDResultSummaryStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8864AE721642F3B00DF57CF /* RSDResultSummaryStepViewController.swift */; };
 		F8864AEA21642F3B00DF57CF /* RSDResultSummaryStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8864AE821642F3B00DF57CF /* RSDResultSummaryStepViewController.xib */; };
 		F8A204FC206AD242004E2B5D /* RSDButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */; };
+		F8A334B72242F1D900390601 /* RSDTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334B62242F1D900390601 /* RSDTableViewCell.swift */; };
+		F8A334BA2243101E00390601 /* RSDTableSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334B92243101E00390601 /* RSDTableSectionHeader.swift */; };
+		F8A334BC2243172900390601 /* RSDStepTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334BB2243172900390601 /* RSDStepTextFieldCell.swift */; };
+		F8A334BE2243188300390601 /* RSDTextLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334BD2243188300390601 /* RSDTextLabelCell.swift */; };
+		F8A334C02243199C00390601 /* RSDImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334BF2243199C00390601 /* RSDImageViewCell.swift */; };
+		F8A334C22243582A00390601 /* RSDBackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334C12243582A00390601 /* RSDBackgroundGradient.swift */; };
+		F8C36BD122389511000E42A7 /* RSDScrollingOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C36BCF22389511000E42A7 /* RSDScrollingOverviewStepViewController.swift */; };
+		F8C36BD222389511000E42A7 /* RSDScrollingOverviewStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8C36BD022389511000E42A7 /* RSDScrollingOverviewStepViewController.xib */; };
+		F8CDB827224C511A009C5AC8 /* RSDShowViewUIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CDB826224C511A009C5AC8 /* RSDShowViewUIAction.swift */; };
 		F8D4813E20622896008EF629 /* RSDStatusBarBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */; };
 		FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF478D911FD752E800493A49 /* RSDNavigationController.swift */; };
 		FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */; };
@@ -53,7 +65,7 @@
 		FFF2D98C1FCF4527007258F8 /* RSDTableStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E5231F972F5200C366FC /* RSDTableStepViewController.swift */; };
 		FFF2D98D1FCF4527007258F8 /* DebugStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */; };
 		FFF2D98E1FCF4527007258F8 /* RSDTaskInfoStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */; };
-		FFF2D98F1FCF4530007258F8 /* RSDCrosshatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */; };
+		FFF2D98F1FCF4530007258F8 /* RSDCrosshatchView_deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView_deprecated.swift */; };
 		FFF2D9901FCF4530007258F8 /* RSDRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */; };
 		FFF2D9911FCF4530007258F8 /* RSDShadowGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */; };
 		FFF2D9921FCF4530007258F8 /* RSDUnderlinedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E8351F96ABD400BC09A8 /* RSDUnderlinedButton.swift */; };
@@ -95,13 +107,25 @@
 		F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPickerViewProtocol.swift; sourceTree = "<group>"; };
 		F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDLoadingView.swift; sourceTree = "<group>"; };
 		F82F819A206B49D800F71AA8 /* RSDCheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCheckmarkView.swift; sourceTree = "<group>"; };
-		F855A13F20A2503700C762C7 /* RSDBorderedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDBorderedTextView.swift; sourceTree = "<group>"; };
+		F831570D2256F54400479A98 /* RSDPermissionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPermissionStepViewController.swift; sourceTree = "<group>"; };
+		F837224C223322D000C9A2EA /* RSDInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDInstructionStepViewController.swift; sourceTree = "<group>"; };
+		F837224D223322D000C9A2EA /* RSDInstructionStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDInstructionStepViewController.xib; sourceTree = "<group>"; };
+		F855A13F20A2503700C762C7 /* RSDBorderedTextView_deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDBorderedTextView_deprecated.swift; sourceTree = "<group>"; };
 		F855A14120A2505900C762C7 /* RSDToggleConstraintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDToggleConstraintView.swift; sourceTree = "<group>"; };
 		F880C1B32057182B00ACB4D4 /* RSDOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDOverviewStepViewController.swift; sourceTree = "<group>"; };
 		F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDOverviewStepViewController.xib; sourceTree = "<group>"; };
 		F8864AE721642F3B00DF57CF /* RSDResultSummaryStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultSummaryStepViewController.swift; sourceTree = "<group>"; };
 		F8864AE821642F3B00DF57CF /* RSDResultSummaryStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDResultSummaryStepViewController.xib; sourceTree = "<group>"; };
 		F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDButtonCell.swift; sourceTree = "<group>"; };
+		F8A334B62242F1D900390601 /* RSDTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableViewCell.swift; sourceTree = "<group>"; };
+		F8A334B92243101E00390601 /* RSDTableSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableSectionHeader.swift; sourceTree = "<group>"; };
+		F8A334BB2243172900390601 /* RSDStepTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepTextFieldCell.swift; sourceTree = "<group>"; };
+		F8A334BD2243188300390601 /* RSDTextLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTextLabelCell.swift; sourceTree = "<group>"; };
+		F8A334BF2243199C00390601 /* RSDImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImageViewCell.swift; sourceTree = "<group>"; };
+		F8A334C12243582A00390601 /* RSDBackgroundGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDBackgroundGradient.swift; sourceTree = "<group>"; };
+		F8C36BCF22389511000E42A7 /* RSDScrollingOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDScrollingOverviewStepViewController.swift; sourceTree = "<group>"; };
+		F8C36BD022389511000E42A7 /* RSDScrollingOverviewStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDScrollingOverviewStepViewController.xib; sourceTree = "<group>"; };
+		F8CDB826224C511A009C5AC8 /* RSDShowViewUIAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDShowViewUIAction.swift; sourceTree = "<group>"; };
 		F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStatusBarBackgroundView.swift; sourceTree = "<group>"; };
 		FF0472301F7AC4F90023DAD6 /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1865B61FA291F600FD0E31 /* UIImage+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Utilities.swift"; sourceTree = "<group>"; };
@@ -130,7 +154,7 @@
 		FF7E1D841F8EA7F000B47587 /* RSDStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDStepViewController.swift; sourceTree = "<group>"; };
 		FF88FD1A1F8D43BB00CADB53 /* NSLayoutConstraint+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Layout.swift"; sourceTree = "<group>"; };
 		FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDWebViewController.swift; sourceTree = "<group>"; };
-		FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCrosshatchView.swift; sourceTree = "<group>"; };
+		FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView_deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCrosshatchView_deprecated.swift; sourceTree = "<group>"; };
 		FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownDial.swift; sourceTree = "<group>"; };
 		FFDD780F1FAE96C70024BDD1 /* RSDCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownStepViewController.swift; sourceTree = "<group>"; };
 		FFDD78101FAE96C70024BDD1 /* RSDCountdownStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDCountdownStepViewController.xib; sourceTree = "<group>"; };
@@ -176,6 +200,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F8A334B82242F80500390601 /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F8A334B62242F1D900390601 /* RSDTableViewCell.swift */,
+				F8A334B92243101E00390601 /* RSDTableSectionHeader.swift */,
+				F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */,
+				F8A334BF2243199C00390601 /* RSDImageViewCell.swift */,
+				FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */,
+				F8A334BB2243172900390601 /* RSDStepTextFieldCell.swift */,
+				F8A334BD2243188300390601 /* RSDTextLabelCell.swift */,
+			);
+			name = "Table Cells";
+			sourceTree = "<group>";
+		};
 		FF04722E1F7AC4F90023DAD6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -241,17 +279,17 @@
 		FF4A2D441F96A90200484338 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F855A13F20A2503700C762C7 /* RSDBorderedTextView.swift */,
-				F8A204FB206AD242004E2B5D /* RSDButtonCell.swift */,
+				F8A334B82242F80500390601 /* Table Cells */,
+				F855A13F20A2503700C762C7 /* RSDBorderedTextView_deprecated.swift */,
+				F8A334C12243582A00390601 /* RSDBackgroundGradient.swift */,
 				F82F819A206B49D800F71AA8 /* RSDCheckmarkView.swift */,
 				FFDD780A1FAE94AC0024BDD1 /* RSDCountdownDial.swift */,
-				FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView.swift */,
+				FFDD77F51FAD24E90024BDD1 /* RSDCrosshatchView_deprecated.swift */,
 				F82F66241FEA4BB600A2258A /* RSDLoadingView.swift */,
 				F81565C21FF58E78006DA208 /* RSDPickerViewProtocol.swift */,
 				FF25E8361F96ABEB00BC09A8 /* RSDRoundedButton.swift */,
 				FF39E52E1F97320200C366FC /* RSDShadowGradient.swift */,
 				F8D4813D20622896008EF629 /* RSDStatusBarBackgroundView.swift */,
-				FF39E5241F972F7D00C366FC /* RSDStepChoiceCell.swift */,
 				FF39E5261F972F9800C366FC /* RSDStepNavigationView.swift */,
 				FF39E5271F972FA500C366FC /* RSDStepProgressView.swift */,
 				F855A14120A2505900C762C7 /* RSDToggleConstraintView.swift */,
@@ -299,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				FFA0E4281FD116C200C36AE7 /* RSDWebViewController.swift */,
+				F8CDB826224C511A009C5AC8 /* RSDShowViewUIAction.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -310,8 +349,11 @@
 				FFDD780F1FAE96C70024BDD1 /* RSDCountdownStepViewController.swift */,
 				FFDD781E1FAE990F0024BDD1 /* RSDActiveStepViewController.swift */,
 				F802F3DA204DECA80027CB00 /* RSDImagePickerStepViewController.swift */,
+				F837224C223322D000C9A2EA /* RSDInstructionStepViewController.swift */,
 				FF478D911FD752E800493A49 /* RSDNavigationController.swift */,
 				F880C1B32057182B00ACB4D4 /* RSDOverviewStepViewController.swift */,
+				F831570D2256F54400479A98 /* RSDPermissionStepViewController.swift */,
+				F8C36BCF22389511000E42A7 /* RSDScrollingOverviewStepViewController.swift */,
 				FF39E5231F972F5200C366FC /* RSDTableStepViewController.swift */,
 				FF4A2D381F96A6ED00484338 /* RSDTaskInfoStepViewController.swift */,
 				FF4A2D321F9679EC00484338 /* DebugStepViewController.swift */,
@@ -327,8 +369,10 @@
 				FFDD781F1FAE990F0024BDD1 /* RSDActiveStepViewController.xib */,
 				FFDD78101FAE96C70024BDD1 /* RSDCountdownStepViewController.xib */,
 				F802F3DB204DECA80027CB00 /* RSDImagePickerStepViewController.xib */,
+				F837224D223322D000C9A2EA /* RSDInstructionStepViewController.xib */,
 				F880C1B42057182B00ACB4D4 /* RSDOverviewStepViewController.xib */,
 				F8864AE821642F3B00DF57CF /* RSDResultSummaryStepViewController.xib */,
+				F8C36BD022389511000E42A7 /* RSDScrollingOverviewStepViewController.xib */,
 				FF4A2D391F96A6ED00484338 /* RSDTaskInfoStepViewController.xib */,
 			);
 			path = "Default NIbs";
@@ -444,6 +488,7 @@
 					};
 					FFF2D96F1FCF41BF007258F8 = {
 						CreatedOnToolsVersion = 9.1;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -477,6 +522,8 @@
 				FFF2D9881FCF451C007258F8 /* RSDCountdownStepViewController.xib in Resources */,
 				F880C1B62057182B00ACB4D4 /* RSDOverviewStepViewController.xib in Resources */,
 				FFF2D9861FCF451C007258F8 /* DebugStepViewController.xib in Resources */,
+				F837224F223322D000C9A2EA /* RSDInstructionStepViewController.xib in Resources */,
+				F8C36BD222389511000E42A7 /* RSDScrollingOverviewStepViewController.xib in Resources */,
 				FFF2D9871FCF451C007258F8 /* RSDActiveStepViewController.xib in Resources */,
 				FFF2D9A41FCF4FC6007258F8 /* DefaultImages.xcassets in Resources */,
 				F802F3DD204DECA80027CB00 /* RSDImagePickerStepViewController.xib in Resources */,
@@ -523,17 +570,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8864AE921642F3B00DF57CF /* RSDResultSummaryStepViewController.swift in Sources */,
-				FFF2D98F1FCF4530007258F8 /* RSDCrosshatchView.swift in Sources */,
+				FFF2D98F1FCF4530007258F8 /* RSDCrosshatchView_deprecated.swift in Sources */,
 				FFF2D9A11FCF4FC6007258F8 /* UIColor+BridgeKeyNames.swift in Sources */,
 				FFF2D9911FCF4530007258F8 /* RSDShadowGradient.swift in Sources */,
+				F837224E223322D000C9A2EA /* RSDInstructionStepViewController.swift in Sources */,
 				FFF2D9931FCF4530007258F8 /* RSDStepChoiceCell.swift in Sources */,
 				FFF2D98D1FCF4527007258F8 /* DebugStepViewController.swift in Sources */,
 				F82F66251FEA4BB600A2258A /* RSDLoadingView.swift in Sources */,
+				F8A334BC2243172900390601 /* RSDStepTextFieldCell.swift in Sources */,
 				F802F3DC204DECA80027CB00 /* RSDImagePickerStepViewController.swift in Sources */,
 				FFF2D9A21FCF4FC6007258F8 /* UIFont+BridgeKeyNames.swift in Sources */,
+				F8A334C22243582A00390601 /* RSDBackgroundGradient.swift in Sources */,
 				F81565C31FF58E78006DA208 /* RSDPickerViewProtocol.swift in Sources */,
 				F880C1B52057182B00ACB4D4 /* RSDOverviewStepViewController.swift in Sources */,
 				B587AC05206D654400542548 /* UIView+BridgeKeyNames.swift in Sources */,
+				F8A334BA2243101E00390601 /* RSDTableSectionHeader.swift in Sources */,
 				FFF2D98C1FCF4527007258F8 /* RSDTableStepViewController.swift in Sources */,
 				FFF2D9981FCF4538007258F8 /* UIImage+Utilities.swift in Sources */,
 				FFF2D9991FCF4538007258F8 /* UIView+Layout.swift in Sources */,
@@ -541,21 +592,27 @@
 				FFF2D98E1FCF4527007258F8 /* RSDTaskInfoStepViewController.swift in Sources */,
 				FFF2D9971FCF4538007258F8 /* NSLayoutConstraint+Layout.swift in Sources */,
 				FFF2D9951FCF4530007258F8 /* RSDStepProgressView.swift in Sources */,
-				F855A14020A2503700C762C7 /* RSDBorderedTextView.swift in Sources */,
+				F855A14020A2503700C762C7 /* RSDBorderedTextView_deprecated.swift in Sources */,
 				FFF2D98A1FCF4527007258F8 /* RSDCountdownStepViewController.swift in Sources */,
 				F8A204FC206AD242004E2B5D /* RSDButtonCell.swift in Sources */,
 				FF478D921FD752E800493A49 /* RSDNavigationController.swift in Sources */,
 				FFF2D9901FCF4530007258F8 /* RSDRoundedButton.swift in Sources */,
+				F8C36BD122389511000E42A7 /* RSDScrollingOverviewStepViewController.swift in Sources */,
+				F8A334B72242F1D900390601 /* RSDTableViewCell.swift in Sources */,
+				F8A334C02243199C00390601 /* RSDImageViewCell.swift in Sources */,
 				F82F819B206B49D800F71AA8 /* RSDCheckmarkView.swift in Sources */,
 				FFF2D9831FCF4504007258F8 /* RSDStepViewController.swift in Sources */,
 				FFF2D98B1FCF4527007258F8 /* RSDActiveStepViewController.swift in Sources */,
 				F855A14220A2505900C762C7 /* RSDToggleConstraintView.swift in Sources */,
+				F8A334BE2243188300390601 /* RSDTextLabelCell.swift in Sources */,
 				FFF2D9821FCF4504007258F8 /* RSDTaskViewController.swift in Sources */,
+				F831570E2256F54400479A98 /* RSDPermissionStepViewController.swift in Sources */,
 				FFF2D9851FCF4509007258F8 /* RSDUISoundPlayer.swift in Sources */,
 				F8D4813E20622896008EF629 /* RSDStatusBarBackgroundView.swift in Sources */,
 				FFA0E4291FD116C700C36AE7 /* RSDWebViewController.swift in Sources */,
 				FFF2D9841FCF4509007258F8 /* RSDVoiceBox.swift in Sources */,
 				FFF2D9961FCF4530007258F8 /* RSDCountdownDial.swift in Sources */,
+				F8CDB827224C511A009C5AC8 /* RSDShowViewUIAction.swift in Sources */,
 				FFF2D9921FCF4530007258F8 /* RSDUnderlinedButton.swift in Sources */,
 				FFF2D99A1FCF4538007258F8 /* UIAlertController+Utilities.swift in Sources */,
 			);
@@ -646,7 +703,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 28;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -708,7 +765,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 28;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -738,7 +795,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 23;
+				DYLIB_CURRENT_VERSION = 28;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "ResearchUI/iOS/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -761,7 +818,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 23;
+				DYLIB_CURRENT_VERSION = 28;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "ResearchUI/iOS/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -817,7 +874,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 23;
+				DYLIB_CURRENT_VERSION = 28;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "ResearchUI/watchOS/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -827,7 +884,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};
@@ -842,7 +899,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 23;
+				DYLIB_CURRENT_VERSION = 28;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "ResearchUI/watchOS/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -852,7 +909,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 4.0;
 			};

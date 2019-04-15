@@ -1,4 +1,5 @@
-[
+{
+"taskGroups" : [
  {
     "identifier": "surveyExamples",
     "title": "Surveys",
@@ -68,15 +69,30 @@
  {
  "identifier": "colorExamples",
  "title": "UI Themes",
- "detail": "This task group includes examples the UI Themes.",
+ "detail": "This task group includes examples the UI/UX Design System.",
  "icon": "activityIcon",
  "tasks" : [{
-            "identifier": "colorThemes",
-            "title": "Colors",
-            "subtitle": "Activity for showing different examples of the use of color themes.",
-            "detail": "This is an example task for how to set up an activity that expressly defines the color themes.",
+            "identifier": "designSystem",
+            "title": "Color Mapping",
+            "subtitle": "This example shows the color rules used by the Design System.",
+            "detail": "This is an example task for how to set up an activity that expressly defines the colors used for each view.",
             "icon": "activityIcon",
             "taskTransformer" : { "resourceName": "Theme_Color" }
             }]
+ },
+ {
+     "identifier": "motorControlTasks",
+     "type":"motorControl",
+     "title": "Motor Control",
+     "detail": "This task group includes the tasks included in the MotorControl module.",
+     "icon": "activityIcon"
+ },
+ {
+     "identifier": "crfTasks",
+     "type":"crf",
+     "title": "Cardiorespiratory Fitness",
+     "detail": "This task group includes the tasks included in the CardiorespiratoryFitness module.",
+     "icon": "activityIcon"
  }
 ]
+}
