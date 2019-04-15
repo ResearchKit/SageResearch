@@ -77,8 +77,12 @@ public struct RSDColorSwatch : Codable, Equatable, Hashable, RSDColorFamily  {
                 return 0
             case .veryDark:
                 return self.colorTiles.count - 1
-            default:
-                return Int((Double(shade.rawValue) / Double(Shade.allCases.count)) * Double(self.colorTiles.count - 1))
+            case .medium:
+                return self.colorTiles.count / 2
+            case .dark:
+                return min(self.colorTiles.count / 2 + 1, self.colorTiles.count - 1)
+            case .light:
+                return max(self.colorTiles.count / 2 - 1, 0)
             }
         }()
         return RSDColorKey(index: idx, swatch: self)!
@@ -160,15 +164,15 @@ public struct RSDGrayScale : Codable, Equatable, Hashable, RSDColorFamily {
             case .veryLightGray:
                 return RSDColorTile("#EAEBEE", false)
             case .lightGray:
-                return RSDColorTile("#BBBCBE", false)
+                return RSDColorTile("#C3C7D1", false)
             case .gray:
-                return RSDColorTile("#757577", true)
+                return RSDColorTile("#9DA3B3", false)
             case .darkGray:
-                return RSDColorTile("#4A4A4A", true)
+                return RSDColorTile("#777F95", true)
             case .veryDarkGray:
-                return RSDColorTile("#1A1C29", true)
+                return RSDColorTile("#575E71", true)
             case .black:
-                return RSDColorTile("#000000", true)
+                return RSDColorTile("#2A2A2A", true)
             }
         }
         
@@ -246,6 +250,7 @@ public struct RSDColorTile : Codable, Equatable, Hashable {
     fileprivate init(_ hex: String, _ usesLightStyle: Bool) {
         self.color = RSDColor(hexString: hex)!
         self.usesLightStyle = usesLightStyle
+        self.colorName = hex
     }
     
     /// The color defined for this tile.
@@ -257,10 +262,14 @@ public struct RSDColorTile : Codable, Equatable, Hashable {
     /// and a light color showing dark text would set `usesLightStyle = false`.
     public let usesLightStyle: Bool
     
+    /// The color name (hex code, special, or asset) used to decode the color from a color file.
+    public let colorName: String?
+    
     /// Initialize from a color and light style.
     public init(_ color: RSDColor, usesLightStyle: Bool) {
         self.color = color
         self.usesLightStyle = usesLightStyle
+        self.colorName = color.toHexString()
     }
     
     /// Initialize from a decoder.
@@ -286,19 +295,24 @@ public struct RSDColorTile : Codable, Equatable, Hashable {
             throw DecodingError.dataCorrupted(context)
         }
         self.usesLightStyle = try container.decode(Bool.self, forKey: .usesLightStyle)
+        self.colorName = colorName
     }
     
     /// Encode the color tile where the color is encoded as RGB.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.usesLightStyle, forKey: .usesLightStyle)
-        if let hex = self.color.toHexString() {
+        if let hex = self.colorName {
             try container.encode(hex, forKey: .color)
         }
         else {
             let context = EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "Could not convert the color to a HEX color for encoding.")
             throw EncodingError.invalidValue(self.color, context)
         }
+    }
+    
+    public static func == (lhs: RSDColorTile, rhs: RSDColorTile) -> Bool {
+        return lhs.color == rhs.color && lhs.usesLightStyle == rhs.usesLightStyle
     }
 }
 

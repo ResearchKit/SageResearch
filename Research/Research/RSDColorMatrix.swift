@@ -33,14 +33,26 @@
 
 import Foundation
 
+#if os(iOS)
+import UIKit
+#endif
+
 /// The color matrix is a shared singleton that allows for accessing the color palettes using registered
 /// libraries that are included within the Research framework.
 public final class RSDColorMatrix {
     
     public static let shared = RSDColorMatrix()
     
-    /// The color libraries that are registered with the Research framework.
-    public let registeredLibraries: [RSDColorLibrary]
+    /// The color libraries that are registered with the Research framework. The libraries are loaded using
+    /// a lazy loading. If the application receives a low memory warning, then the libraries are released
+    /// from memory.
+    public var registeredLibraries: [RSDColorLibrary] {
+        if _registeredLibraries == nil {
+            _decodeLibraries()
+        }
+        return _registeredLibraries!
+    }
+    private var _registeredLibraries: [RSDColorLibrary]?
     
     /// The current version of the default color library.
     public var currentVersion: Int {
@@ -48,6 +60,21 @@ public final class RSDColorMatrix {
     }
     
     private init() {
+        #if os(iOS)
+        // If a low memory warning is sent out, then release the libraries and reload them when/if a palette
+        // is built. Under typical circumstances, the matrix will only be used to load palettes on first
+        // run of a task within a given module. Ideally, a module that includes a default design system and
+        // color palette should use an in-memory singleton to store only the color information for its palette.
+        // If the color matrix library starts to get prohibitively big, we may wish to consider adding in a
+        // min supported library version, but for now, the file is only 18kb and this is really a "just in case"
+        // where keeping the whole thing in memory isn't expected to cause problems. syoung 04/12/2019
+        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: self, queue: .main) { (_) in
+            self._registeredLibraries = nil
+        }
+        #endif
+    }
+    
+    private func _decodeLibraries() {
         guard let url = Bundle(for: RSDColorMatrix.self).url(forResource: "ColorMatrix", withExtension: "json")
             else {
                 fatalError("Could not decode the color matrix. Something is very wrong.")
@@ -56,7 +83,7 @@ public final class RSDColorMatrix {
             let data = try Data(contentsOf: url)
             let jsonDecoder = JSONDecoder()
             let libraries = try jsonDecoder.decode([RSDColorLibrary].self, from: data)
-            self.registeredLibraries = libraries.sorted()
+            self._registeredLibraries = libraries.sorted()
         }
         catch let err {
             fatalError("Could not decode the color matrix. Something is very wrong. \(err)")
@@ -91,7 +118,7 @@ public final class RSDColorMatrix {
     ///     - version: The version to return or `nil` to return the most recent.
     /// - returns: The color swatch for the given name and version.
     public func colorSwatch(for name: RSDReservedColorName, version: Int?) -> RSDColorSwatch? {
-        let ver = min(name.version ?? Int.max, version ?? Int.max)
+        let ver = max(min(name.version ?? Int.max, version ?? Int.max), name.minVersion)
         let library = self.library(for: ver)
         return library.swatches.first(where: { $0.name == name.rawValue })
     }
@@ -140,6 +167,24 @@ public final class RSDColorMatrix {
     /// - returns: The color mapping.
     public func colorMapping(for gray: RSDGrayScale.Shade, version: Int? = nil) -> RSDColorMapping {
         return self.grayScale(for: version).mapping(forShade: gray)
+    }
+    
+    /// Find a color mapping from the color. This will look through the libraries and swatches for a matching
+    /// color.
+    ///
+    /// - parameter color: The color to find.
+    /// - returns: The color tile for this color, if found.
+    public func findColorKey(for colorName: String) -> RSDColorKey? {
+        for library in self.registeredLibraries.reversed() {
+            for swatch in library.swatches {
+                for (ii, colorTile) in swatch.colorTiles.enumerated() {
+                    if colorTile.colorName == colorName {
+                        return RSDColorKey(index: ii, swatch: swatch)
+                    }
+                }
+            }
+        }
+        return nil
     }
     
     /// Find a color tile from the color. This will look through the libraries and swatches for a matching
@@ -228,6 +273,16 @@ public enum RSDReservedColorName : RawRepresentable, Equatable, Hashable, Codabl
     public enum Special : String, CaseIterable {
         case errorRed
         case successGreen
+        case text
+    }
+    
+    public var minVersion: Int {
+        switch self {
+        case .special(.text):
+            return 1
+        default:
+            return 0
+        }
     }
     
     /// Maximum version in which a given reserved color name is expected to be included. If `nil` this color

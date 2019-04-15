@@ -40,7 +40,7 @@ import UIKit
 public enum RSDControlState : UInt {
     case normal = 0, highlighted = 1, disabled = 2, selected = 4
     
-    #if os(iOS) || os(tvOS)
+    #if os(iOS)
     public init(controlState: UIControl.State) {
         self = RSDControlState(rawValue: controlState.rawValue) ?? .normal
     }
@@ -164,9 +164,11 @@ open class RSDColorRules  {
     /// Tinted image icon color on a given background. Typically, this is used in a collection or table view.
     ///
     /// - Default:
+    /// ```
     ///     If the background uses light style
     ///         then `white`
     ///         else `accent`
+    /// ```
     open func tintedIconColor(on background: RSDColorTile) -> RSDColor {
         if background.usesLightStyle {
             return self.palette.grayScale.white.color
@@ -178,10 +180,18 @@ open class RSDColorRules  {
 
     /// Color for text throughout the app.
     ///
-    /// - Default:
-    ///     If the background uses light style
-    ///         then `white`
-    ///         else `veryDarkGray`
+    /// - Default: (version 0)
+    /// ```
+    ///     If the background uses light style then `white`
+    ///     else `veryDarkGray`
+    /// ```
+    ///
+    /// - Default: (version 1)
+    /// ```
+    ///     If the background uses light style then `text.light`
+    ///     else if this is detail text then `text.medium`
+    ///     else `text.dark`
+    /// ```
     ///
     /// - parameters:
     ///     - background: The background of the text UI element.
@@ -189,10 +199,15 @@ open class RSDColorRules  {
     /// - returns: The text color to use.
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
         if background.usesLightStyle {
-            return self.palette.grayScale.white.color
+            return self.palette.text.light.color
         }
         else {
-            return self.palette.grayScale.veryDarkGray.color
+            switch textType {
+            case .small, .bodyDetail:
+                return self.palette.text.normal.color
+            default:
+                return self.palette.text.dark.color
+            }
         }
     }
     
@@ -202,9 +217,11 @@ open class RSDColorRules  {
     /// Tinted button color on a given background.
     ///
     /// - Default:
+    /// ```
     ///     If the background uses light style then `white`
     ///     else if the background is the primary palette color then `secondary`
     ///     else `veryDarkGray`
+    /// ```
     ///
     /// - parameters:
     ///     - background: The background of the text UI element.
@@ -225,11 +242,20 @@ open class RSDColorRules  {
     
     /// Underlined text button.
     ///
-    /// - Default:
-    ///     If the background is `white` or `veryLightGray`
-    ///         then if the primary color uses light style return `primary`
-    ///         else `tinted button color`
-    ///     else `text color`
+    /// - Default: (version 0)
+    /// ```
+    ///     If the background is `white` *and* the primary color uses light style then
+    ///         `primary`
+    ///     Else
+    ///         `text color`
+    /// ```
+    ///
+    /// - Default: (version 1)
+    /// ```
+    ///     The text color for `body` text on the given background.
+    /// ```
+    ///
+    /// - seealso: `textColor(on:, for:)`
     ///
     /// - parameters:
     ///     - background: The background of the text button.
@@ -238,13 +264,9 @@ open class RSDColorRules  {
     open func underlinedTextButton(on background: RSDColorTile, state: RSDControlState) -> RSDColor {
         switch self.version {
         case 0:
-            if background == self.palette.grayScale.white || background == self.palette.grayScale.veryLightGray {
-                if self.palette.primary.normal.usesLightStyle {
-                    return self.palette.primary.normal.color
-                }
-                else {
-                    return self.tintedButtonColor(on: background)
-                }
+            if (background == self.palette.grayScale.white),
+                self.palette.primary.normal.usesLightStyle {
+                return self.palette.primary.normal.color
             }
             else {
                 return textColor(on: background, for: .body)
@@ -258,9 +280,11 @@ open class RSDColorRules  {
     /// The color mapping to use on a given background for a given button type.
     ///
     /// - Default:
-    ///     If the background is `white` and the button type is `primary`
-    ///         then `secondary` color
-    ///         else `veryLightGray` color
+    /// ```
+    ///     If the button type is `primary` then
+    ///         if the background is `white` then `secondary` else `white`
+    ///     else `veryLightGray` color
+    /// ```
     ///
     /// - parameters:
     ///     - background: The background of the button.
@@ -277,6 +301,20 @@ open class RSDColorRules  {
     }
     
     /// The color for a rounded button for a given state and button type.
+    ///
+    /// - Default:
+    /// ```
+    ///     Get the "normal" tile color for the button type. This depends upon whether or not the button is
+    ///     a primary button and whether or not it is displayed on a white background.
+    ///
+    ///     If highlighted
+    ///         then if the tile is `veryLight` then one shade darker
+    ///         else one shade lighter
+    ///     If disabled
+    ///         then 35% opacity
+    ///     Else
+    ///         return the color tile as-is.
+    /// ```
     ///
     /// - parameters:
     ///     - background: The background of the button.
@@ -307,6 +345,19 @@ open class RSDColorRules  {
     
     /// The text color for a rounded button.
     ///
+    /// - Default:
+    /// ```
+    ///     Get the "normal" tile color for the button type. This depends upon whether or not the button is
+    ///     a primary button and whether or not it is displayed on a white background.
+    ///
+    ///     Next, get the text color to use on the returned tile color.
+    ///
+    ///     If state is `disabled` and *not* uses light style
+    ///         then 35% opacity
+    ///     Else
+    ///         return the text color
+    /// ```
+    ///
     /// - parameters:
     ///     - background: The background of the button.
     ///     - buttonType: The type of button (primary or secondary).
@@ -323,7 +374,25 @@ open class RSDColorRules  {
         }
     }
     
-    /// Checkboxes button.
+    /// Checkbox button.
+    ///
+    /// - Default:
+    /// ```
+    ///     First, determine the inner color of the checkmark box using rules where
+    ///     If selected
+    ///         If the background is white then
+    ///             inner = `primary.dark`
+    ///             border = `primary`
+    ///         Else
+    ///             inner = `secondary`
+    ///             border = `secondary.light`
+    ///     Else
+    ///         inner = `white`
+    ///         border = `lightGray`
+    ///
+    ///     Next, the checkmark color is
+    ///     If the inner color uses light style then `white` else `veryDarkGray`
+    /// ```
     ///
     /// - parameters:
     ///     - background: The background of the checkbox.
@@ -338,13 +407,19 @@ open class RSDColorRules  {
             let inner: RSDColorTile
             let border: RSDColor
             
-            if background == self.palette.grayScale.white {
-                inner = isSelected ? self.palette.primary.dark : self.palette.grayScale.white
-                border = isSelected ? self.palette.primary.normal.color : self.palette.grayScale.lightGray.color
+            if isSelected {
+                if background == self.palette.grayScale.white {
+                    inner = self.palette.primary.dark
+                    border = self.palette.primary.normal.color
+                }
+                else {
+                    inner = self.palette.secondary.normal
+                    border = self.palette.secondary.light.color
+                }
             }
             else {
-                inner = isSelected ? self.palette.secondary.normal : self.palette.grayScale.white
-                border = isSelected ? self.palette.secondary.light.color : self.palette.grayScale.veryLightGray.color
+                inner = self.palette.grayScale.white
+                border = self.palette.grayScale.lightGray.color
             }
             
             let check = isSelected
@@ -359,15 +434,42 @@ open class RSDColorRules  {
     
     /// The colors to use with a progress bar.
     ///
+    /// - Default:
+    /// ```
+    ///     filled = `accent`
+    ///     unfilled = `veryLightGray`
+    /// ```
+    ///
     /// - parameter background: The background for the progress bar.
     /// - returns:
     ///     - filled: The fill color for the progress bar which marks progress.
     ///     - unfilled: The unfilled (background) color for the progress bar.
     open func progressBar(on background: RSDColorTile) -> (filled: RSDColor, unfilled: RSDColor) {
-        return (self.palette.accent.light.color, self.palette.grayScale.veryLightGray.color)
+        return (self.palette.accent.normal.color, self.palette.grayScale.veryLightGray.color)
     }
     
     /// The colors to use with a progress dial.
+    ///
+    /// - Default:
+    /// ```
+    ///     `unfilled` is always `veryLightGray`
+    ///
+    ///     If the style is defined then
+    ///         filled = `style.light`
+    ///         inner = `style`
+    ///
+    ///     Else if the inner color is `white`
+    ///         filled = `accent`
+    ///         inner = `white`
+    ///
+    ///     Else if the inner color is `clear`
+    ///         filled = `accent`
+    ///         inner = `clear` with light style of the background
+    ///
+    ///     Else
+    ///         filled = `inner.light`
+    ///         inner = inner
+    /// ```
     ///
     /// - parameters:
     ///     - background: The background color tile for the view that this view "lives" in.
@@ -378,22 +480,29 @@ open class RSDColorRules  {
     ///     - filled: The fill color for the progress bar which marks progress.
     ///     - unfilled: The unfilled (background) color for the progress bar.
     ///     - inner: The inner color to use for the progress bar.
-    open func progressDial(on background: RSDColorTile, style: Style?,
+    open func progressDial(on background: RSDColorTile,
+                           style: Style? = nil,
                            innerColor: RSDColor = RSDColor.clear,
                            usesLightStyle: Bool = false) -> (filled: RSDColor, unfilled: RSDColor, inner: RSDColorTile) {
+        
+        let filled: RSDColor
+        let unfilled: RSDColor = self.palette.grayScale.veryLightGray.color
+        let inner: RSDColorTile
+        
         if let style = style, let mapping = self.mapping(for: style) {
-            return (mapping.light.color, self.palette.grayScale.veryLightGray.color, mapping.normal)
+            filled = mapping.light.color
+            inner = mapping.normal
         }
-        else if let mapping = mapping(for: innerColor), mapping.normal != palette.grayScale.white {
-            return (mapping.light.color, self.palette.grayScale.veryLightGray.color, mapping.normal)
+        else if let mapping = mapping(for: innerColor), mapping.colorTiles != palette.grayScale.colorTiles {
+            filled = mapping.light.color
+            inner = mapping.normal
         }
         else {
-            let filled = self.palette.accent.light.color
-            let unfilled = self.palette.grayScale.veryLightGray.color
+            filled = self.palette.accent.normal.color
             let lightStyle = (innerColor == RSDColor.clear) ? background.usesLightStyle : usesLightStyle
-            let inner = RSDColorTile(innerColor, usesLightStyle: lightStyle)
-            return (filled, unfilled, inner)
+            inner = RSDColorTile(innerColor, usesLightStyle: lightStyle)
         }
+        return (filled, unfilled, inner)
     }
 
     
@@ -401,18 +510,31 @@ open class RSDColorRules  {
     
     /// Rounded checkmarks are drawn UI elements of a checkmark with a solid background.
     ///
+    /// - Default:
+    /// ```
+    ///     The background (fill) and border (stroke) both use `secondary` color
+    ///
+    ///     If `secondary` uses light style then
+    ///         checkmark = `white`
+    ///     Else
+    ///         checkmark = `veryDarkGray`
+    /// ```
+    ///
     /// - parameter background: The background of the checkbox.
     /// - returns:
     ///     - checkmark: The checkmark color.
     //      - background: The background (fill) color.
     //      - border: The border color.
     open func roundedCheckmark(on background: RSDColorTile) -> (checkmark: RSDColor, background: RSDColor, border: RSDColor) {
-        return (self.palette.grayScale.white.color,
-                self.palette.secondary.normal.color,
-                self.palette.secondary.normal.color)
+        let fill = self.palette.secondary.normal
+        let checkmark = fill.usesLightStyle ? self.palette.grayScale.white.color : self.palette.grayScale.veryDarkGray.color
+        return (checkmark, fill.color, fill.color)
     }
     
     /// For a completion gradient background, what are the min and max colors?
+    ///
+    /// - Default: `successGreen.light` and `successGreen`
+    ///
     /// - returns:
     ///     - 0: The min color tile.
     ///     - 1: The max color tile.
@@ -423,6 +545,15 @@ open class RSDColorRules  {
     /// MARK: Choice Selection cell
     
     /// The background color tile for the table cell.
+    ///
+    /// - Default:
+    /// ```
+    ///     If selected
+    ///         then lightest color tile within the same family as the primary color
+    ///     Else
+    ///         `white`
+    /// ```
+    ///
     /// - parameters:
     ///     - background: The background of the table.
     ///     - isSelected: Whether or not the cell is selected.
@@ -431,7 +562,10 @@ open class RSDColorRules  {
         return isSelected ?  self.palette.primary.colorTiles.first! : self.palette.grayScale.white
     }
     
-    /// The background color tile for the table cell.
+    /// The background color tile for the table section header.
+    ///
+    /// - Default: `white`
+    ///
     /// - parameter background: The background of the table.
     /// - returns: The color tile for the background of the section header.
     open func tableSectionBackground(on background: RSDColorTile) -> RSDColorTile {
@@ -439,11 +573,16 @@ open class RSDColorRules  {
     }
 
     /// The cell separator line for a table cell or other border.
+    ///
+    /// - Default: `veryLightGray`
     open var separatorLine: RSDColor {
         return self.palette.grayScale.veryLightGray.color
     }
     
     /// The color of an underline for a text field.
+    ///
+    /// - Default: `accent`
+    ///
     /// - parameter background: The background of the table cell.
     /// - returns: The color of the underline.
     open func textFieldUnderline(on background: RSDColorTile) -> RSDColor {

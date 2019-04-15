@@ -47,7 +47,7 @@ extension CodingUserInfoKey {
 /// - seealso: https://github.com/Sage-Bionetworks/DesignSystem
 public struct RSDColorPalette : Codable, Equatable, Hashable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case version, primary, secondary, accent, successGreen, errorRed, grayScale
+        case version, primary, secondary, accent, successGreen, errorRed, grayScale, text
     }
     
     /// The version for this color palette.
@@ -71,6 +71,9 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
     /// The gray scale values to use for the application.
     public var grayScale: RSDGrayScale
     
+    /// The color family to use for text.
+    public var text: RSDColorKey
+    
     /// Wireframe color palette.
     public static let wireframe = RSDColorPalette(primaryName: .palette(.stone), .dark,
                                                    secondaryName: .palette(.slate), .dark,
@@ -87,7 +90,11 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
     public static let twilight = RSDColorPalette(primaryName: .palette(.royal), .dark,
                                                 secondaryName: .palette(.turquoise), .medium,
                                                 accentName: .palette(.butterscotch), .medium)
-
+    
+    public static let midnight = RSDColorPalette(primaryName: .palette(.royal), .veryDark,
+                                                 secondaryName: .palette(.lavender), .dark,
+                                                 accentName: .palette(.rose), .veryDark)
+    
     public static let test = RSDColorPalette(primaryName: .palette(.stone), .dark,
                                              secondaryName: .palette(.slate), .dark,
                                              accentName: .palette(.cloud), .dark,
@@ -110,14 +117,18 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
                 accent: RSDColorKey,
                 successGreen: RSDColorKey? = nil,
                 errorRed: RSDColorKey? = nil,
-                grayScale: RSDGrayScale? = nil) {
+                grayScale: RSDGrayScale? = nil,
+                text: RSDColorKey? = nil) {
         self.version = version
         self.primary = primary
         self.secondary = secondary
         self.accent = accent
-        self.successGreen = successGreen ?? RSDColorMatrix.shared.colorKey(for: .special(.successGreen), version: version)
-        self.errorRed = errorRed  ?? RSDColorMatrix.shared.colorKey(for: .special(.errorRed), version: version)
+        self.successGreen = successGreen ?? RSDColorMatrix.shared.colorKey(for: .special(.successGreen), shade: .medium)
+        self.errorRed = errorRed  ??
+            RSDColorMatrix.shared.colorKey(for: .special(.errorRed), shade: .medium)
         self.grayScale = grayScale ?? RSDGrayScale()
+        self.text = text ??
+            RSDColorMatrix.shared.colorKey(for: .special(.text), shade: .medium)
     }
     
     public init(from decoder: Decoder) throws {
@@ -130,10 +141,13 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
         self.primary = try container.decode(RSDColorKey.self, forKey: .primary)
         self.secondary = try container.decode(RSDColorKey.self, forKey: .secondary)
         self.accent = try container.decode(RSDColorKey.self, forKey: .accent)
-        self.successGreen = try container.decodeIfPresent(RSDColorKey.self, forKey: .successGreen) ?? RSDColorMatrix.shared.colorKey(for: .special(.successGreen), version: version)
+        self.successGreen = try container.decodeIfPresent(RSDColorKey.self, forKey: .successGreen) ??
+            RSDColorMatrix.shared.colorKey(for: .special(.successGreen), shade: .medium)
         self.errorRed = try container.decodeIfPresent(RSDColorKey.self, forKey: .errorRed) ??
-            RSDColorMatrix.shared.colorKey(for: .special(.errorRed), version: version)
+            RSDColorMatrix.shared.colorKey(for: .special(.errorRed), shade: .medium)
         self.grayScale = try container.decodeIfPresent(RSDGrayScale.self, forKey: .grayScale) ?? RSDGrayScale()
+        self.text = try container.decodeIfPresent(RSDColorKey.self, forKey: .text) ??
+            RSDColorMatrix.shared.colorKey(for: .special(.text), shade: .medium)
         self.version = version
 
         codingInfo?.userInfo[.paletteVersion] = nil
@@ -144,7 +158,7 @@ public struct RSDColorPalette : Codable, Equatable, Hashable {
 /// describe the colors associated with a given set of components.
 public struct RSDColorKey : Codable, Equatable, Hashable, RSDColorMapping {
     private enum CodingKeys : String, CodingKey, CaseIterable {
-        case index, swatch, swatchName
+        case index, swatch, swatchName, colorName
     }
     
     /// The level for the color as described in the design documents for a given app.
@@ -165,28 +179,45 @@ public struct RSDColorKey : Codable, Equatable, Hashable, RSDColorMapping {
     }
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let index = try container.decode(Int.self, forKey: .index)
-        // Get the swatch using either the swatch name or using the color matrix.
+        
         let swatch: RSDColorSwatch
-        if let swatchName = try container.decodeIfPresent(RSDReservedColorName.self, forKey: .swatchName) {
-            let swatchVersion = decoder.codingInfo?.userInfo[.paletteVersion] as? Int
-            guard let fm = RSDColorMatrix.shared.colorSwatch(for: swatchName, version: swatchVersion)
-                else {
-                    let context = DecodingError.Context(codingPath: decoder.codingPath,
-                                                        debugDescription: "The color swatch \(swatchName) was not defined in the shared color matrix.")
-                    throw DecodingError.dataCorrupted(context)
+        let index: Int
+        
+        if let singleValueContainer = try? decoder.singleValueContainer(),
+            let colorName = try? singleValueContainer.decode(String.self) {
+            if let fm = RSDColorMatrix.shared.findColorKey(for: colorName) {
+                swatch = fm.swatch
+                index = fm.index
             }
-            swatch = fm
+            else {
+                let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                    debugDescription: "The color \(colorName) was not defined in the shared color matrix and the swatch cannot be built.")
+                throw DecodingError.dataCorrupted(context)
+            }
         }
         else {
-            swatch = try container.decode(RSDColorSwatch.self, forKey: .swatch)
-        }
-        // Validate the index against the tile count.
-        guard swatch.colorTiles.count > index else {
-            let context = DecodingError.Context(codingPath: decoder.codingPath,
-                                                debugDescription: "The color swatch \(swatch.name) does not have enough tiles to match the color index of \(index)")
-            throw DecodingError.dataCorrupted(context)
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            index = try container.decode(Int.self, forKey: .index)
+            // Get the swatch using either the swatch name or using the color matrix.
+            if let swatchName = try container.decodeIfPresent(RSDReservedColorName.self, forKey: .swatchName) {
+                let swatchVersion = decoder.codingInfo?.userInfo[.paletteVersion] as? Int
+                guard let fm = RSDColorMatrix.shared.colorSwatch(for: swatchName, version: swatchVersion)
+                    else {
+                        let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                            debugDescription: "The color swatch \(swatchName) was not defined in the shared color matrix.")
+                        throw DecodingError.dataCorrupted(context)
+                }
+                swatch = fm
+            }
+            else {
+                swatch = try container.decode(RSDColorSwatch.self, forKey: .swatch)
+            }
+            // Validate the index against the tile count.
+            guard swatch.colorTiles.count > index else {
+                let context = DecodingError.Context(codingPath: decoder.codingPath,
+                                                    debugDescription: "The color swatch \(swatch.name) does not have enough tiles to match the color index of \(String(describing: index))")
+                throw DecodingError.dataCorrupted(context)
+            }
         }
         self.index = index
         self.swatch = swatch
@@ -226,6 +257,17 @@ extension RSDColorKey : RSDDocumentableDecodableObject {
             ]
         ]
         return [jsonA, jsonB]
+    }
+}
+
+extension RSDColorKey : RSDDocumentableStringLiteral {
+    
+    var stringValue: String {
+        return self.normal.colorName ?? ""
+    }
+    
+    static func examples() -> [String] {
+        return ["#7B67B3", "#6DB56D"]
     }
 }
 

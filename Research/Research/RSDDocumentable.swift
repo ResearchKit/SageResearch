@@ -90,6 +90,7 @@ public struct RSDDocumentCreator {
     
     let allStringLiterals: [RSDDocumentableStringLiteral.Type] = [
         RSDChoiceObject<String>.self,
+        RSDColorKey.self,
         RSDImageWrapper.self,
         RSDRegExValidatorObject.self,
         ]
@@ -107,6 +108,7 @@ public struct RSDDocumentCreator {
             RSDDurationRangeObject.self,
             RSDFetchableImageThemeElementObject.self,
             RSDFileResultObject.self,
+            RSDGrayScale.self,
             RSDNavigationUIActionObject.self,
             RSDNumberRangeObject.self,
             RSDResourceTransformerObject.self,
