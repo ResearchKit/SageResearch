@@ -35,9 +35,7 @@ import Foundation
 import Research
 
 public class ArchiveManager : NSObject, RSDDataArchiveManager {
-    
-    static let shared = ArchiveManager()
-    
+        
     public var dataArchives = [DataArchive]()
     
     public func shouldContinueOnFail(for archive: RSDDataArchive, error: Error) -> Bool {
@@ -69,7 +67,7 @@ public class DataArchive : NSObject, RSDDataArchive {
     public let identifier: String
     public var scheduleIdentifier: String?
     
-    public var filenames = [String]()
+    public var files = [URL]()
     public var manifestList = [RSDFileManifest]()
     
     public var outputDirectory: URL! = {
@@ -111,13 +109,15 @@ public class DataArchive : NSObject, RSDDataArchive {
         let filename = manifest.filename
         let url = self.outputDirectory.appendingPathComponent(filename)
         try data.write(to: url)
-        self.manifestList.append(manifest)
-        
         if manifest.filename == "answers.json" {
             let json = String(data: data, encoding: .utf8)
             #if DEBUG
                 print("answers.json:\n\(json!)")
             #endif
+        }
+        DispatchQueue.main.async {
+            self.manifestList.append(manifest)
+            self.files.append(url)
         }
     }
     
