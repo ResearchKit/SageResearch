@@ -445,7 +445,7 @@ open class RSDColorRules  {
     ///     - filled: The fill color for the progress bar which marks progress.
     ///     - unfilled: The unfilled (background) color for the progress bar.
     open func progressBar(on background: RSDColorTile) -> (filled: RSDColor, unfilled: RSDColor) {
-        return (self.palette.accent.light.color, self.palette.grayScale.veryLightGray.color)
+        return (self.palette.accent.normal.color, self.palette.grayScale.veryLightGray.color)
     }
     
     /// The colors to use with a progress dial.
@@ -480,7 +480,8 @@ open class RSDColorRules  {
     ///     - filled: The fill color for the progress bar which marks progress.
     ///     - unfilled: The unfilled (background) color for the progress bar.
     ///     - inner: The inner color to use for the progress bar.
-    open func progressDial(on background: RSDColorTile, style: Style?,
+    open func progressDial(on background: RSDColorTile,
+                           style: Style? = nil,
                            innerColor: RSDColor = RSDColor.clear,
                            usesLightStyle: Bool = false) -> (filled: RSDColor, unfilled: RSDColor, inner: RSDColorTile) {
         
@@ -492,7 +493,7 @@ open class RSDColorRules  {
             filled = mapping.light.color
             inner = mapping.normal
         }
-        else if let mapping = mapping(for: innerColor), mapping.normal != palette.grayScale.white {
+        else if let mapping = mapping(for: innerColor), mapping.colorTiles != palette.grayScale.colorTiles {
             filled = mapping.light.color
             inner = mapping.normal
         }

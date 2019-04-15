@@ -280,227 +280,167 @@ class ColorRulesTests: XCTestCase {
         XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .disabled), palette.text.dark.color.withAlphaComponent(0.35))
     }
     
-    // TODO: syoung 04/12/2019 Write tests for remaining rules
-//
-//        /// Checkbox button.
-//        ///
-//        /// - Default:
-//        /// ```
-//        ///     First, determine the inner color of the checkmark box using rules where
-//        ///     If selected
-//        ///         If the background is white then
-//        ///             inner = `primary.dark`
-//        ///             border = `primary`
-//        ///         Else
-//        ///             inner = `secondary`
-//        ///             border = `secondary.light`
-//        ///     Else
-//        ///         inner = `white`
-//        ///         border = `lightGray`
-//        ///
-//        ///     Next, the checkmark color is
-//        ///     If the inner color uses light style then `white` else `veryDarkGray`
-//        /// ```
-//        ///
-//        /// - parameters:
-//        ///     - background: The background of the checkbox.
-//        ///     - isSelected: Whether or not the checkbox is selected.
-//        /// - returns:
-//        ///     - checkmark: The checkmark color.
-//        //      - background: The background (fill) color.
-//        //      - border: The border color.
-//        open func checkboxButton(on background: RSDColorTile, isSelected: Bool) ->
-//            (checkmark: RSDColor, background: RSDColor, border: RSDColor) {
-//
-//                let inner: RSDColorTile
-//                let border: RSDColor
-//
-//                if isSelected {
-//                    if background == self.palette.grayScale.white {
-//                        inner = self.palette.primary.dark
-//                        border = self.palette.primary.normal.color
-//                    }
-//                    else {
-//                        inner = self.palette.secondary.normal
-//                        border = self.palette.secondary.light.color
-//                    }
-//                }
-//                else {
-//                    inner = self.palette.grayScale.white
-//                    border = self.palette.grayScale.lightGray.color
-//                }
-//
-//                let check = isSelected
-//                    ? (inner.usesLightStyle ?  self.palette.grayScale.white.color : self.palette.grayScale.veryDarkGray.color)
-//                    : RSDColor.clear
-//
-//                return (check, inner.color, border)
-//        }
-//
-//
-//        /// MARK: Progress indicator colors
-//
-//        /// The colors to use with a progress bar.
-//        ///
-//        /// - Default:
-//        /// ```
-//        ///     filled = `accent`
-//        ///     unfilled = `veryLightGray`
-//        /// ```
-//        ///
-//        /// - parameter background: The background for the progress bar.
-//        /// - returns:
-//        ///     - filled: The fill color for the progress bar which marks progress.
-//        ///     - unfilled: The unfilled (background) color for the progress bar.
-//        open func progressBar(on background: RSDColorTile) -> (filled: RSDColor, unfilled: RSDColor) {
-//            return (self.palette.accent.light.color, self.palette.grayScale.veryLightGray.color)
-//        }
-//
-//        /// The colors to use with a progress dial.
-//        ///
-//        /// - Default:
-//        /// ```
-//        ///     `unfilled` is always `veryLightGray`
-//        ///
-//        ///     If the style is defined then
-//        ///         filled = `style.light`
-//        ///         inner = `style`
-//        ///
-//        ///     Else if the inner color is `white`
-//        ///         filled = `accent`
-//        ///         inner = `white`
-//        ///
-//        ///     Else if the inner color is `clear`
-//        ///         filled = `accent`
-//        ///         inner = `clear` with light style of the background
-//        ///
-//        ///     Else
-//        ///         filled = `inner.light`
-//        ///         inner = inner
-//        /// ```
-//        ///
-//        /// - parameters:
-//        ///     - background: The background color tile for the view that this view "lives" in.
-//        ///     - style: The style of the dial. If non-nil, this will be used as the color of the inner circle.
-//        ///     - innerColor: The inner color of the dial set by the nib or storyboard.
-//        ///     - usesLightStyle: The light-style set by the nib or storyboard.
-//        /// - returns:
-//        ///     - filled: The fill color for the progress bar which marks progress.
-//        ///     - unfilled: The unfilled (background) color for the progress bar.
-//        ///     - inner: The inner color to use for the progress bar.
-//        open func progressDial(on background: RSDColorTile, style: Style?,
-//                               innerColor: RSDColor = RSDColor.clear,
-//                               usesLightStyle: Bool = false) -> (filled: RSDColor, unfilled: RSDColor, inner: RSDColorTile) {
-//
-//            let filled: RSDColor
-//            let unfilled: RSDColor = self.palette.grayScale.veryLightGray.color
-//            let inner: RSDColorTile
-//
-//            if let style = style, let mapping = self.mapping(for: style) {
-//                filled = mapping.light.color
-//                inner = mapping.normal
-//            }
-//            else if let mapping = mapping(for: innerColor), mapping.normal != palette.grayScale.white {
-//                filled = mapping.light.color
-//                inner = mapping.normal
-//            }
-//            else {
-//                filled = self.palette.accent.normal.color
-//                let lightStyle = (innerColor == RSDColor.clear) ? background.usesLightStyle : usesLightStyle
-//                inner = RSDColorTile(innerColor, usesLightStyle: lightStyle)
-//            }
-//            return (filled, unfilled, inner)
-//        }
-//
-//
-//        /// MARK: Completion
-//
-//        /// Rounded checkmarks are drawn UI elements of a checkmark with a solid background.
-//        ///
-//        /// - Default:
-//        /// ```
-//        ///     The background (fill) and border (stroke) both use `secondary` color
-//        ///
-//        ///     If `secondary` uses light style then
-//        ///         checkmark = `white`
-//        ///     Else
-//        ///         checkmark = `veryDarkGray`
-//        /// ```
-//        ///
-//        /// - parameter background: The background of the checkbox.
-//        /// - returns:
-//        ///     - checkmark: The checkmark color.
-//        //      - background: The background (fill) color.
-//        //      - border: The border color.
-//        open func roundedCheckmark(on background: RSDColorTile) -> (checkmark: RSDColor, background: RSDColor, border: RSDColor) {
-//            let fill = self.palette.secondary.normal
-//            let checkmark = fill.usesLightStyle ? self.palette.grayScale.white.color : self.palette.grayScale.veryDarkGray.color
-//            return (checkmark, fill.color, fill.color)
-//        }
-//
-//        /// For a completion gradient background, what are the min and max colors?
-//        ///
-//        /// - Default: `successGreen.light` and `successGreen`
-//        ///
-//        /// - returns:
-//        ///     - 0: The min color tile.
-//        ///     - 1: The max color tile.
-//        open func completionGradient() -> (RSDColorTile, RSDColorTile) {
-//            return (self.palette.successGreen.light, self.palette.successGreen.normal)
-//        }
-//
-//        /// MARK: Choice Selection cell
-//
-//        /// The background color tile for the table cell.
-//        ///
-//        /// - Default:
-//        /// ```
-//        ///     If selected
-//        ///         then lightest color tile within the same family as the primary color
-//        ///     Else
-//        ///         `white`
-//        /// ```
-//        ///
-//        /// - parameters:
-//        ///     - background: The background of the table.
-//        ///     - isSelected: Whether or not the cell is selected.
-//        /// - returns: The color tile for the background of the cell.
-//        open func tableCellBackground(on background: RSDColorTile, isSelected: Bool) -> RSDColorTile {
-//            return isSelected ?  self.palette.primary.colorTiles.first! : self.palette.grayScale.white
-//        }
-//
-//        /// The background color tile for the table section header.
-//        ///
-//        /// - Default: `white`
-//        ///
-//        /// - parameter background: The background of the table.
-//        /// - returns: The color tile for the background of the section header.
-//        open func tableSectionBackground(on background: RSDColorTile) -> RSDColorTile {
-//            return self.palette.grayScale.white
-//        }
-//
-//        /// The cell separator line for a table cell or other border.
-//        ///
-//        /// - Default: `veryLightGray`
-//        open var separatorLine: RSDColor {
-//            return self.palette.grayScale.veryLightGray.color
-//        }
-//
-//        /// The color of an underline for a text field.
-//        ///
-//        /// - Default: `accent`
-//        ///
-//        /// - parameter background: The background of the table cell.
-//        /// - returns: The color of the underline.
-//        open func textFieldUnderline(on background: RSDColorTile) -> RSDColor {
-//            return self.palette.accent.normal.color
-//        }
-//
-//
-//        // MARK: Severity colors used for showing a scale from "normal - severe"
-//
-//        /// The severity color scale to use for buttons and graphics in this app.
-//        open var severityColorScale : RSDSeverityColorScale = RSDSeverityColorScale()
-//    }
+    func testCheckboxButton_LightColors() {
+        let palette: RSDColorPalette = .beach
+        let colorRules = RSDColorRules(palette: palette)
+        
+        let checkbox1 = colorRules.checkboxButton(on: palette.grayScale.white, isSelected: false)
+        XCTAssertEqual(checkbox1.checkmark, UIColor.clear)
+        XCTAssertEqual(checkbox1.background, palette.grayScale.white.color)
+        XCTAssertEqual(checkbox1.border, palette.grayScale.lightGray.color)
+        let checkbox2 = colorRules.checkboxButton(on: palette.grayScale.white, isSelected: true)
+        XCTAssertEqual(checkbox2.checkmark, palette.grayScale.veryDarkGray.color)
+        XCTAssertEqual(checkbox2.background, palette.primary.dark.color)
+        XCTAssertEqual(checkbox2.border, palette.primary.normal.color)
+        let checkbox3 = colorRules.checkboxButton(on: palette.primary.normal, isSelected: true)
+        XCTAssertEqual(checkbox3.checkmark, palette.grayScale.veryDarkGray.color)
+        XCTAssertEqual(checkbox3.background, palette.secondary.normal.color)
+        XCTAssertEqual(checkbox3.border, palette.secondary.light.color)
+    }
+    
+    func testCheckboxButton_DarkColors() {
+        let palette: RSDColorPalette = .midnight
+        let colorRules = RSDColorRules(palette: palette)
+        
+        let checkbox1 = colorRules.checkboxButton(on: palette.grayScale.white, isSelected: false)
+        XCTAssertEqual(checkbox1.checkmark, UIColor.clear)
+        XCTAssertEqual(checkbox1.background, palette.grayScale.white.color)
+        XCTAssertEqual(checkbox1.border, palette.grayScale.lightGray.color)
+        let checkbox2 = colorRules.checkboxButton(on: palette.grayScale.white, isSelected: true)
+        XCTAssertEqual(checkbox2.checkmark, palette.grayScale.white.color)
+        XCTAssertEqual(checkbox2.background, palette.primary.dark.color)
+        XCTAssertEqual(checkbox2.border, palette.primary.normal.color)
+        let checkbox3 = colorRules.checkboxButton(on: palette.primary.normal, isSelected: true)
+        XCTAssertEqual(checkbox3.checkmark, palette.grayScale.white.color)
+        XCTAssertEqual(checkbox3.background, palette.secondary.normal.color)
+        XCTAssertEqual(checkbox3.border, palette.secondary.light.color)
+    }
+    
+    
 
+    func testProgressIndicator() {
+        let palette: RSDColorPalette = .wireframe
+        let colorRules = RSDColorRules(palette: palette)
+        
+        let (filled1, unfilled1) = colorRules.progressBar(on: colorRules.backgroundLight)
+        XCTAssertEqual(filled1, palette.accent.normal.color)
+        XCTAssertEqual(unfilled1, palette.grayScale.veryLightGray.color)
+        let (filled2, unfilled2) = colorRules.progressBar(on: colorRules.backgroundLight)
+        XCTAssertEqual(filled2, palette.accent.normal.color)
+        XCTAssertEqual(unfilled2, palette.grayScale.veryLightGray.color)
+    }
+    
+    func testProgressDial() {
+        let palette: RSDColorPalette = .beach
+        let colorRules = RSDColorRules(palette: palette)
+        
+        let dial1 = colorRules.progressDial(on: palette.grayScale.white, style: .primary, innerColor: palette.grayScale.white.color, usesLightStyle: false)
+        XCTAssertEqual(dial1.unfilled, palette.grayScale.veryLightGray.color)
+        XCTAssertEqual(dial1.filled, palette.primary.light.color)
+        XCTAssertEqual(dial1.inner, palette.primary.normal)
+        let dial2 = colorRules.progressDial(on: palette.grayScale.black, style: .primary, innerColor: palette.grayScale.black.color, usesLightStyle: true)
+        XCTAssertEqual(dial2.unfilled, palette.grayScale.veryLightGray.color)
+        XCTAssertEqual(dial2.filled, palette.primary.light.color)
+        XCTAssertEqual(dial2.inner, palette.primary.normal)
+        
+        let dial3 = colorRules.progressDial(on: palette.grayScale.white, style: nil, innerColor: palette.grayScale.white.color, usesLightStyle: false)
+        XCTAssertEqual(dial3.unfilled, palette.grayScale.veryLightGray.color)
+        XCTAssertEqual(dial3.filled, palette.accent.normal.color)
+        XCTAssertEqual(dial3.inner, palette.grayScale.white)
+        let dial4 = colorRules.progressDial(on: palette.grayScale.black, style: nil, innerColor: palette.grayScale.black.color, usesLightStyle: true)
+        XCTAssertEqual(dial4.unfilled, palette.grayScale.veryLightGray.color)
+        XCTAssertEqual(dial4.filled, palette.accent.normal.color)
+        XCTAssertEqual(dial4.inner, palette.grayScale.black)
+        
+        let dial5 = colorRules.progressDial(on: palette.grayScale.white, style: nil, innerColor: palette.primary.normal.color, usesLightStyle: palette.primary.normal.usesLightStyle)
+        XCTAssertEqual(dial5.unfilled, palette.grayScale.veryLightGray.color)
+        XCTAssertEqual(dial5.filled, palette.primary.light.color)
+        XCTAssertEqual(dial5.inner, palette.primary.normal)
+        let dial6 = colorRules.progressDial(on: palette.grayScale.black, style: nil, innerColor: palette.successGreen.normal.color, usesLightStyle: palette.primary.normal.usesLightStyle)
+        XCTAssertEqual(dial6.unfilled, palette.grayScale.veryLightGray.color)
+        XCTAssertEqual(dial6.filled, palette.successGreen.light.color)
+        XCTAssertEqual(dial6.inner, palette.successGreen.normal)
+        
+        let dial7 = colorRules.progressDial(on: palette.grayScale.white)
+        XCTAssertEqual(dial7.unfilled, palette.grayScale.veryLightGray.color)
+        XCTAssertEqual(dial7.filled, palette.accent.normal.color)
+        XCTAssertEqual(dial7.inner.color, UIColor.clear)
+        XCTAssertEqual(dial7.inner.usesLightStyle, false)
+        let dial8 = colorRules.progressDial(on: palette.grayScale.black)
+        XCTAssertEqual(dial8.unfilled, palette.grayScale.veryLightGray.color)
+        XCTAssertEqual(dial8.filled, palette.accent.normal.color)
+        XCTAssertEqual(dial8.inner.color, UIColor.clear)
+        XCTAssertEqual(dial8.inner.usesLightStyle, true)
+    }
+    
+    
+    
+
+    func testRoundedCheckmark_LightColors() {
+        let palette: RSDColorPalette = .beach
+        let colorRules = RSDColorRules(palette: palette)
+        
+        let checkbox1 = colorRules.roundedCheckmark(on: palette.grayScale.white)
+        XCTAssertEqual(checkbox1.checkmark, palette.grayScale.veryDarkGray.color)
+        XCTAssertEqual(checkbox1.background, palette.secondary.normal.color)
+        XCTAssertEqual(checkbox1.border, palette.secondary.normal.color)
+        let checkbox3 = colorRules.roundedCheckmark(on: palette.primary.normal)
+        XCTAssertEqual(checkbox3.checkmark, palette.grayScale.veryDarkGray.color)
+        XCTAssertEqual(checkbox3.background, palette.secondary.normal.color)
+        XCTAssertEqual(checkbox3.border, palette.secondary.normal.color)
+    }
+    
+    func testRoundedCheckmark_DarkColors() {
+        let palette: RSDColorPalette = .midnight
+        let colorRules = RSDColorRules(palette: palette)
+        
+        let checkbox1 = colorRules.roundedCheckmark(on: palette.grayScale.white)
+        XCTAssertEqual(checkbox1.checkmark, palette.grayScale.white.color)
+        XCTAssertEqual(checkbox1.background, palette.secondary.normal.color)
+        XCTAssertEqual(checkbox1.border, palette.secondary.normal.color)
+        let checkbox3 = colorRules.roundedCheckmark(on: palette.primary.normal)
+        XCTAssertEqual(checkbox3.checkmark, palette.grayScale.white.color)
+        XCTAssertEqual(checkbox3.background, palette.secondary.normal.color)
+        XCTAssertEqual(checkbox3.border, palette.secondary.normal.color)
+    }
+    
+    func testCompletionGradient() {
+        let palette: RSDColorPalette = .beach
+        let colorRules = RSDColorRules(palette: palette)
+        
+        let gradient = colorRules.completionGradient()
+        XCTAssertEqual(gradient.0, palette.successGreen.light)
+        XCTAssertEqual(gradient.1, palette.successGreen.normal)
+    }
+
+    func testTableCellBackground() {
+        let palette: RSDColorPalette = .beach
+        let colorRules = RSDColorRules(palette: palette)
+        
+        let background1 = colorRules.tableCellBackground(on: palette.grayScale.white, isSelected: true)
+        XCTAssertEqual(background1, palette.primary.colorTiles.first!)
+        let background2 = colorRules.tableCellBackground(on: palette.grayScale.white, isSelected: false)
+        XCTAssertEqual(background2, palette.grayScale.white)
+        let background3 = colorRules.tableCellBackground(on: palette.primary.normal, isSelected: true)
+        XCTAssertEqual(background3, palette.primary.colorTiles.first!)
+        let background4 = colorRules.tableCellBackground(on: palette.primary.normal, isSelected: false)
+        XCTAssertEqual(background4, palette.grayScale.white)
+    }
+
+    func testTableSectionBackground() {
+        let palette: RSDColorPalette = .beach
+        let colorRules = RSDColorRules(palette: palette)
+        
+        let background2 = colorRules.tableSectionBackground(on: palette.grayScale.white)
+        XCTAssertEqual(background2, palette.grayScale.white)
+        let background4 = colorRules.tableSectionBackground(on: palette.primary.normal)
+        XCTAssertEqual(background4, palette.grayScale.white)
+    }
+
+    func testSeparatorLine() {
+        let palette: RSDColorPalette = .beach
+        let colorRules = RSDColorRules(palette: palette)
+        
+        XCTAssertEqual(colorRules.separatorLine, palette.grayScale.veryLightGray.color)
+    }
 }
