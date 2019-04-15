@@ -64,6 +64,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDAudioVisualAuthorization.swift",
+      "line": 69,
+      "symbol": "RSDAudioVisualAuthorization.requestAuthorization(for:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDChoiceInputFieldObject.swift",
       "line": 113,
       "symbol": "RSDCodableChoiceInputFieldObject.Value",
@@ -128,70 +135,91 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorMatrix.swift",
-      "line": 40,
+      "line": 44,
       "symbol": "RSDColorMatrix.shared",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorMatrix.swift",
-      "line": 220,
+      "line": 254,
       "symbol": "RSDReservedColorName.palette(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorMatrix.swift",
-      "line": 221,
+      "line": 255,
       "symbol": "RSDReservedColorName.Palette",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorMatrix.swift",
-      "line": 238,
+      "line": 272,
       "symbol": "RSDReservedColorName.special(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorMatrix.swift",
-      "line": 239,
+      "line": 273,
       "symbol": "RSDReservedColorName.Special",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPallette.swift",
-      "line": 79,
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorMatrix.swift",
+      "line": 279,
+      "symbol": "RSDReservedColorName.minVersion",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPalette.swift",
+      "line": 82,
       "symbol": "RSDColorPalette.spring",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPallette.swift",
-      "line": 83,
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPalette.swift",
+      "line": 86,
       "symbol": "RSDColorPalette.beach",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPallette.swift",
-      "line": 87,
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPalette.swift",
+      "line": 90,
       "symbol": "RSDColorPalette.twilight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPallette.swift",
-      "line": 104,
-      "symbol": "RSDColorPalette.init(version:primary:secondary:accent:successGreen:errorRed:grayScale:)",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPalette.swift",
+      "line": 94,
+      "symbol": "RSDColorPalette.midnight",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPalette.swift",
+      "line": 98,
+      "symbol": "RSDColorPalette.test",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPalette.swift",
+      "line": 114,
+      "symbol": "RSDColorPalette.init(version:primary:secondary:accent:successGreen:errorRed:grayScale:text:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPallette.swift",
-      "line": 158,
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorPalette.swift",
+      "line": 175,
       "symbol": "RSDColorKey.init(index:swatch:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -205,23 +233,51 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
-      "line": 79,
+      "line": 80,
       "symbol": "RSDColorRules.init(palette:version:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
-      "line": 327,
+      "line": 404,
       "symbol": "RSDColorRules.checkboxButton(on:isSelected:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
-      "line": 401,
+      "line": 528,
       "symbol": "RSDColorRules.roundedCheckmark(on:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
+      "line": 604,
+      "symbol": "RSDSeverityColorScale.Scale.mild",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
+      "line": 604,
+      "symbol": "RSDSeverityColorScale.Scale.moderate",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
+      "line": 604,
+      "symbol": "RSDSeverityColorScale.Scale.none",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
+      "line": 604,
+      "symbol": "RSDSeverityColorScale.Scale.severe",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
@@ -254,84 +310,84 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 90,
+      "line": 94,
       "symbol": "RSDColorMapping.index",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 91,
+      "line": 95,
       "symbol": "RSDColorMapping.colorTiles",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 153,
+      "line": 157,
       "symbol": "RSDGrayScale.Shade",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 176,
+      "line": 199,
       "symbol": "RSDGrayScale.white",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 177,
+      "line": 200,
       "symbol": "RSDGrayScale.veryLightGray",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 178,
+      "line": 201,
       "symbol": "RSDGrayScale.lightGray",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 179,
+      "line": 202,
       "symbol": "RSDGrayScale.gray",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 180,
+      "line": 203,
       "symbol": "RSDGrayScale.darkGray",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 181,
+      "line": 204,
       "symbol": "RSDGrayScale.veryDarkGray",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 182,
+      "line": 205,
       "symbol": "RSDGrayScale.black",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 184,
+      "line": 207,
       "symbol": "RSDGrayScale.colorTiles",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorSwatch.swift",
-      "line": 196,
+      "line": 219,
       "symbol": "RSDGrayScale.init(white:veryLightGray:lightGray:gray:darkGray:veryDarkGray:black:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -513,7 +569,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDocumentable.swift",
-      "line": 243,
+      "line": 247,
       "symbol": "RawRepresentable.stringValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -534,35 +590,35 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDFactory.swift",
-      "line": 1007,
+      "line": 1016,
       "symbol": "RSDFactoryDecoder.decode(_:from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDFactory.swift",
-      "line": 1008,
+      "line": 1017,
       "symbol": "RSDFactoryDecoder.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDFactory.swift",
-      "line": 1050,
+      "line": 1059,
       "symbol": "RSDFactoryEncoder.encode(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDFactory.swift",
-      "line": 1051,
+      "line": 1060,
       "symbol": "RSDFactoryEncoder.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDFactory.swift",
-      "line": 1088,
+      "line": 1097,
       "symbol": "RSDCodingInfo.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -578,6 +634,13 @@
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDFontRules.swift",
       "line": 56,
       "symbol": "RSDFontRules.init(version:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDFormDataType.swift",
+      "line": 237,
+      "symbol": "RSDFormDataType.defaultAnswerResultType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -884,8 +947,8 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDResultSummaryStepObject.swift",
-      "line": 59,
-      "symbol": "RSDResultSummaryStepObject.init(identifier:resultIdentifier:unitText:)",
+      "line": 65,
+      "symbol": "RSDResultSummaryStepObject.init(identifier:resultIdentifier:unitText:stepResultIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -978,13 +1041,6 @@
       "line": 36,
       "symbol": "RSDTaskInfoObject",
       "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDTaskObject.swift",
-      "line": 248,
-      "symbol": "RSDTaskObject.copyAndInsert(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {

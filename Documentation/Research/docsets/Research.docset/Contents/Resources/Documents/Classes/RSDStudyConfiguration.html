@@ -182,6 +182,12 @@
                 <a href="../Classes/RSDSampleRecorder/RecorderError.html">– RecorderError</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDSeverityColorScale.html">RSDSeverityColorScale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSeverityColorScale.html#/s:8Research21RSDSeverityColorScaleC0D0O">– Scale</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDStepViewModel.html">RSDStepViewModel</a>
               </li>
               <li class="nav-group-task">
@@ -1329,7 +1335,7 @@ shown the full instructions once per month.</p>
                       <div class="abstract">
                         <p>Is this device tied to a single participant or is the device being used in a study where there is a
 single mobile device that is being used to run tasks for multiple participants, such as a device used
-as part of a Phase 1 or Preclinical trial? (Default == <code>true</code>)</p>
+as part of a Phase 1 or Preclinical trial? (Default = <code>true</code>)</p>
 
                       </div>
                       <div class="declaration">
@@ -1363,7 +1369,61 @@ as part of a Phase 1 or Preclinical trial? (Default == <code>true</code>)</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">colorPalette</span><span class="p">:</span> <span class="kt"><a href="../Structs/RSDColorPalette.html">RSDColorPalette</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">colorPalette</span><span class="p">:</span> <span class="kt"><a href="../Structs/RSDColorPalette.html">RSDColorPalette</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research21RSDStudyConfigurationC19hasSetColorPalletteSbvp"></a>
+                    <a name="//apple_ref/swift/Property/hasSetColorPallette" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research21RSDStudyConfigurationC19hasSetColorPalletteSbvp">hasSetColorPallette</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Has the color palette been set for this app or is it set to the default?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">hasSetColorPallette</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research21RSDStudyConfigurationC18shouldShowRemindMeSbvp"></a>
+                    <a name="//apple_ref/swift/Property/shouldShowRemindMe" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research21RSDStudyConfigurationC18shouldShowRemindMeSbvp">shouldShowRemindMe</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A flag for whether or not tasks that support <q>remind me later</q> should show that action. (Default = <code>false</code>)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">shouldShowRemindMe</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
