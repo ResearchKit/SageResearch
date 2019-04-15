@@ -10,6 +10,7 @@
 		F80479E02257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */; };
 		F80479E22257E52200E569AC /* CRFTorchInstructionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */; };
 		F80479E522580A4E00E569AC /* io_examples_whole.json in Resources */ = {isa = PBXBuildFile; fileRef = F80479E422580A4E00E569AC /* io_examples_whole.json */; };
+		F836461122653EB700CCA0EF /* Tips_for_measuring.html in Resources */ = {isa = PBXBuildFile; fileRef = F836461022653EB700CCA0EF /* Tips_for_measuring.html */; };
 		F857BAAD224BE2FE0089B150 /* Heart_Snapshot.html in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */; };
 		F857BAAF224BFB3B0089B150 /* Heartrate_Resting.json in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */; };
 		F86B5290224AE8A700BB7354 /* Heartrate_Training.json in Resources */ = {isa = PBXBuildFile; fileRef = F86B528F224AE8A700BB7354 /* Heartrate_Training.json */; };
@@ -41,7 +42,7 @@
 		F8A5036D2225E2CD005F1C0C /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5036C2225E2CD005F1C0C /* Research.framework */; };
 		F8A5036F2225E2D8005F1C0C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5036E2225E2D8005F1C0C /* ResearchUI.framework */; };
 		F8D71AF5224D462F00DA49BC /* CRFHRRecoveryStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D71AF4224D462F00DA49BC /* CRFHRRecoveryStepViewController.swift */; };
-		F8D71AFC224D4A0600DA49BC /* rhr-tips.html in Resources */ = {isa = PBXBuildFile; fileRef = F8D71AF7224D4A0500DA49BC /* rhr-tips.html */; };
+		F8D71AFC224D4A0600DA49BC /* When_to_measure.html in Resources */ = {isa = PBXBuildFile; fileRef = F8D71AF7224D4A0500DA49BC /* When_to_measure.html */; };
 		F8D71B03224D4FA100DA49BC /* HR_Recovery_Score.html in Resources */ = {isa = PBXBuildFile; fileRef = F8D71B02224D4FA100DA49BC /* HR_Recovery_Score.html */; };
 		F8D71B05224D51B400DA49BC /* Normal_HR.html in Resources */ = {isa = PBXBuildFile; fileRef = F8D71B04224D51B400DA49BC /* Normal_HR.html */; };
 		F8DA5E0A215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings in Resources */ = {isa = PBXBuildFile; fileRef = F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */; };
@@ -64,6 +65,7 @@
 		F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStepViewController.swift; sourceTree = "<group>"; };
 		F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStep.swift; sourceTree = "<group>"; };
 		F80479E422580A4E00E569AC /* io_examples_whole.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = io_examples_whole.json; sourceTree = "<group>"; };
+		F836461022653EB700CCA0EF /* Tips_for_measuring.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Tips_for_measuring.html; sourceTree = "<group>"; };
 		F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Heart_Snapshot.html; sourceTree = "<group>"; };
 		F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Resting.json; sourceTree = "<group>"; };
 		F86B528F224AE8A700BB7354 /* Heartrate_Training.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Training.json; sourceTree = "<group>"; };
@@ -102,7 +104,7 @@
 		F8A5036C2225E2CD005F1C0C /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A5036E2225E2D8005F1C0C /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D71AF4224D462F00DA49BC /* CRFHRRecoveryStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFHRRecoveryStepViewController.swift; sourceTree = "<group>"; };
-		F8D71AF7224D4A0500DA49BC /* rhr-tips.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "rhr-tips.html"; sourceTree = "<group>"; };
+		F8D71AF7224D4A0500DA49BC /* When_to_measure.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = When_to_measure.html; sourceTree = "<group>"; };
 		F8D71B02224D4FA100DA49BC /* HR_Recovery_Score.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = HR_Recovery_Score.html; sourceTree = "<group>"; };
 		F8D71B04224D51B400DA49BC /* Normal_HR.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Normal_HR.html; sourceTree = "<group>"; };
 		F8DA5E09215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = CardiorespiratoryFitness.strings; sourceTree = "<group>"; };
@@ -290,7 +292,8 @@
 			isa = PBXGroup;
 			children = (
 				F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */,
-				F8D71AF7224D4A0500DA49BC /* rhr-tips.html */,
+				F836461022653EB700CCA0EF /* Tips_for_measuring.html */,
+				F8D71AF7224D4A0500DA49BC /* When_to_measure.html */,
 				F8D71B04224D51B400DA49BC /* Normal_HR.html */,
 				F8D71B02224D4FA100DA49BC /* HR_Recovery_Score.html */,
 			);
@@ -404,13 +407,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F836461122653EB700CCA0EF /* Tips_for_measuring.html in Resources */,
 				F8D71B03224D4FA100DA49BC /* HR_Recovery_Score.html in Resources */,
 				F880C12F2051F2A700ACB4D4 /* Images.xcassets in Resources */,
 				F880C1712051FCD400ACB4D4 /* Cardio_Stair_Step.json in Resources */,
 				F897CF8F225523320088DFAE /* highpass_filter_params.csv in Resources */,
 				F880C14D2051F61700ACB4D4 /* stairStepAudio.m4a in Resources */,
 				F857BAAD224BE2FE0089B150 /* Heart_Snapshot.html in Resources */,
-				F8D71AFC224D4A0600DA49BC /* rhr-tips.html in Resources */,
+				F8D71AFC224D4A0600DA49BC /* When_to_measure.html in Resources */,
 				F8DA5E0A215EDC0A00F7FF20 /* CardiorespiratoryFitness.strings in Resources */,
 				F880C1312051F49400ACB4D4 /* Colors.xcassets in Resources */,
 				F897CF912255233D0088DFAE /* lowpass_filter_params.csv in Resources */,

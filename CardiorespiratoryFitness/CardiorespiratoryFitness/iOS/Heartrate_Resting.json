@@ -53,10 +53,10 @@
             },
             "learnMore": {
                 "type": "webView",
-                "title": "Tips for measuring resting heart rate",
+                "title": "When to measure",
                 "usesBackButton": true,
-                "url": "rhr-tips.html",
-                "buttonTitle": "Tips for measuring"
+                "url": "When_to_measure.html",
+                "buttonTitle": "When to measure"
             }
         }
     },

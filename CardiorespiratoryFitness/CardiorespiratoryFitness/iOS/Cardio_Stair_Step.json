@@ -206,7 +206,7 @@
     {
         "identifier": "feedback",
         "type": "completion",
-        "resultTitle": "Your Recovery HR Score is estimated as",
+        "resultTitle": "Your estimate Recovery HR score is",
         "stepResultIdentifier": "hr",
         "resultIdentifier": "vo2Max",
         "title": "Recovery HR Score",
@@ -218,7 +218,7 @@
             },
             "learnMore": {
                 "type": "webView",
-                "title": "What is a Recovery HR Score?",
+                "title": "What does this score mean?",
                 "usesBackButton": true,
                 "url": "HR_Recovery_Score.html",
                 "buttonTitle": "What is a Recovery HR Score?"

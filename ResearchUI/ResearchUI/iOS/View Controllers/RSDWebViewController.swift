@@ -161,6 +161,10 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
             let image = UIImage(named: "backArrowHeader", in: Bundle(for: RSDWebViewController.self), compatibleWith: self.view.traitCollection)
             header.cancelButton?.setImage(image, for: .normal)
         }
+        else {
+            let image = UIImage(named: "closeActivity", in: Bundle(for: RSDWebViewController.self), compatibleWith: self.view.traitCollection)
+            header.cancelButton?.setImage(image, for: .normal)
+        }
         header.cancelButton?.addTarget(self, action: #selector(close), for: .touchUpInside)
         let background = designSystem.colorRules.backgroundPrimary
         header.setDesignSystem(designSystem, with: background)

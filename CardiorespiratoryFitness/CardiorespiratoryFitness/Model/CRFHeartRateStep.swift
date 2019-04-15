@@ -102,6 +102,19 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
                 self.commands =  [.vibrate, .shouldDisableIdleTimer]
             }
             self.requiresBackgroundAudio = true
+            
+            if self.isResting {
+                var learnMore = RSDWebViewUIActionObject(url: "Tips_for_measuring.html", buttonTitle: "Tips for measuring")
+                learnMore.title = "Tips for measuring"
+                learnMore.factoryBundle = Bundle(for: CRFHeartRateStep.self)
+                learnMore.usesBackButton = true
+                if self.actions != nil {
+                    self.actions![.navigation(.learnMore)] = learnMore
+                }
+                else {
+                    self.actions = [.navigation(.learnMore): learnMore]
+                }
+            }
         }
     }
     
