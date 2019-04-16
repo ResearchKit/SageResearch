@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		F830840C21F2686C0055F9B8 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F830840B21F2686C0055F9B8 /* MotorControl.framework */; };
 		F830840D21F2686C0055F9B8 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F830840B21F2686C0055F9B8 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F836460B2265281400CCA0EF /* TaskPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */; };
+		F836460D22652E6100CCA0EF /* TaskArchivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */; };
 		F8373C9320964F60004DD4E1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8373C9220964F60004DD4E1 /* README.md */; };
 		F84DDB6D20955672009CC1B8 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6C20955628009CC1B8 /* Photos.framework */; };
 		F84DDB6E2095567C009CC1B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6B20955628009CC1B8 /* AVFoundation.framework */; };
@@ -80,6 +82,8 @@
 
 /* Begin PBXFileReference section */
 		F830840B21F2686C0055F9B8 /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPresentationViewController.swift; sourceTree = "<group>"; };
+		F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskArchivesTableViewController.swift; sourceTree = "<group>"; };
 		F8373C9220964F60004DD4E1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F84DDB6920955628009CC1B8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F84DDB6A20955628009CC1B8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -181,7 +185,9 @@
 				F8D42A832095529100C6A4BC /* CatalogFactory.swift */,
 				F8D42A852095529100C6A4BC /* FileResultViewController.swift */,
 				F8D42A822095529100C6A4BC /* ResultTableViewController.swift */,
+				F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */,
 				F8D42A812095529100C6A4BC /* TaskGroupTableViewController.swift */,
+				F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */,
 				F8D42A842095529100C6A4BC /* TaskTableViewController.swift */,
 				F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */,
 				F8D42A92209552EC00C6A4BC /* JSON Files */,
@@ -398,10 +404,12 @@
 				F8DC072E2256DD8A0045D530 /* ArchiveManager.swift in Sources */,
 				F8D42A892095529100C6A4BC /* TaskTableViewController.swift in Sources */,
 				F8D42A862095529100C6A4BC /* TaskGroupTableViewController.swift in Sources */,
+				F836460D22652E6100CCA0EF /* TaskArchivesTableViewController.swift in Sources */,
 				F871AA5322610E8900C0F657 /* PaletteSelectionViewController.swift in Sources */,
 				F8D42A532095518400C6A4BC /* AppDelegate.swift in Sources */,
 				F8D42A882095529100C6A4BC /* CatalogFactory.swift in Sources */,
 				F8D42A872095529100C6A4BC /* ResultTableViewController.swift in Sources */,
+				F836460B2265281400CCA0EF /* TaskPresentationViewController.swift in Sources */,
 				F8D42A8A2095529100C6A4BC /* FileResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

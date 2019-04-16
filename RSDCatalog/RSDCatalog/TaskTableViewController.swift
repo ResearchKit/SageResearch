@@ -129,7 +129,7 @@ class TaskTableViewController: UITableViewController {
         
         guard let cell = sender as? UITableViewCell,
             let indexPath = self.tableView.indexPath(for: cell),
-            let vc = segue.destination as? ResultTableViewController
+            let vc = segue.destination as? TaskPresentationViewController
             else {
                 return
         }

@@ -2,7 +2,7 @@
 //  ResultTableViewController.swift
 //  RSDCatalog
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -34,43 +34,10 @@
 import UIKit
 import ResearchUI
 import Research
-import MotorControl
 
-/// The data storage manager in this case is used to show a sample usage. As such, the data will not be
-/// shared to user defaults but only in local memory.
-class DataStorageManager : NSObject, RSDDataStorageManager {
-    
-    static let shared = DataStorageManager()
-    
-    var taskData: [RSDIdentifier : RSDTaskData] = [:]
-    
-    func previousTaskData(for taskIdentifier: RSDIdentifier) -> RSDTaskData? {
-        return taskData[taskIdentifier]
-    }
-    
-    func saveTaskData(_ data: RSDTaskData, from taskResult: RSDTaskResult?) {
-        taskData[RSDIdentifier(rawValue: data.identifier)] = data
-    }
-}
+class ResultTableViewController: UITableViewController {
 
-class ResultTableViewController: UITableViewController, RSDTaskViewControllerDelegate {
-
-    var taskInfo: RSDTaskInfo!
-    var result: RSDResult?
-    var firstAppearance: Bool = true
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if firstAppearance, (self.result == nil), let taskInfo = self.taskInfo {
-            let taskViewModel = RSDTaskViewModel(taskInfo: taskInfo)
-            taskViewModel.dataManager = DataStorageManager.shared
-            let taskViewController = RSDTaskViewController(taskViewModel: taskViewModel)
-            taskViewController.delegate = self
-            self.present(taskViewController, animated: true, completion: nil)
-        }
-        firstAppearance = false
-    }
+    var result: RSDResult!
 
     // MARK: - Table view data source
     
@@ -130,6 +97,15 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
         cell.titleLabel?.text = result.identifier
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let _ = result as? RSDCollectionResult {
+            return result.identifier
+        }
+        else {
+            return section == 0 ? "stepHistory" : "asyncResults"
+        }
+    }
 
     // MARK: - Navigation
     
@@ -149,33 +125,5 @@ class ResultTableViewController: UITableViewController, RSDTaskViewControllerDel
             vc.title = vc.result!.identifier
             vc.navigationItem.title = vc.title
         }
-    }
-    
-    // MARK: - RSDTaskControllerDelegate
-    
-    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
-        
-        // populate the results
-        self.result = taskController.taskViewModel.taskResult
-        self.tableView.reloadData()
-        
-        // dismiss the view controller
-        (taskController as? UIViewController)?.dismiss(animated: true) {
-        }
-        
-        var debugResult: String = self.result!.identifier
-        debugResult.append("\n\n=== Completed: \(reason) error:\(String(describing: error))")
-        print(debugResult)
-    }
-    
-    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
-        print("\n\n=== Ready to Save: \(taskViewModel.description)")
-        
-        taskViewModel.archiveResults(with: ArchiveManager.shared) 
-    }
-    
-    func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {
-        // TODO: syoung 01/18/2019 clean up JSON and Factory stuff for showing the intro step.
-        return false
     }
 }
