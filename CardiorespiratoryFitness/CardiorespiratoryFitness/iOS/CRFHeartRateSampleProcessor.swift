@@ -235,7 +235,7 @@ internal class CRFHeartRateSampleProcessor {
         let count = Double(samples.count - start.0)
         return count / diff
     }
-    
+
     /// A valid sampling rate has filter coefficients defined for high and low pass.
     func isValidSamplingRate(_ samplingRate: Int) -> Bool {
         guard let _ = lowPassParameters.filterParams(for: samplingRate),
@@ -260,7 +260,6 @@ internal class CRFHeartRateSampleProcessor {
         let chunked = Array(filtered[(filtered.count-window)...])
         return getHR(from: chunked, samplingRate: samplingRate)
     }
-    
     
     //    #' Given a processed time series find its period using autocorrelation
     //    #' and then convert it to heart rate (bpm)
@@ -404,7 +403,13 @@ internal class CRFHeartRateSampleProcessor {
             return nil
         }
         
-        let actualLag = actualLag ?? Int(ceil(Double(samplingRate * 60) / hr + 1.0))
+        // # the +1 is because of the array indexing issue in R(it starts from 1 vs 0)
+        let lag = actualLag ?? Int(ceil(Double(samplingRate * 60) / hr + 1.0))
+
+        // # Added this step because in R, the indexing of an array starts at 1
+        // # and so our period of the signal is really actual_lag-1, hence
+        // # the correction
+        let actualLag = lag - 1
         
         var earlier_peak: [Int]
         if (actualLag % 2 == 0) {
@@ -415,15 +420,22 @@ internal class CRFHeartRateSampleProcessor {
         }
         earlier_peak = earlier_peak.filter { $0 >= minLag }
 
-        var later_peak: [Int]
+        let later_peak: [Int]
         if (nPeaks > 1) {
+            // later_peak <- actual_lag*seq(2,Npeaks)
+            // later_peak[later_peak>max_lag] <- NA
             later_peak = Array(2...nPeaks).map { $0 * actualLag }.filter { $0 <= maxLag }
         }
         else {
             later_peak = []
         }
-
-        return (nPeaks, earlier_peak, later_peak)
+        
+        // # Correction for R index
+        // earlier_peak <- earlier_peak + 1
+        // later_peak <- later_peak + 1
+        return (nPeaks,
+                earlier_peak.map { $0 + 1 },
+                later_peak.map { $0 + 1 })
     }
     
     func chunkSamples(_ input: [Double], samplingRate: Double, window: TimeInterval = CRFHeartRateWindowSeconds) -> [[Double]] {
@@ -451,14 +463,18 @@ internal class CRFHeartRateSampleProcessor {
         //        x[is.na(x)] <- 0
         //        x <- x[round(3*sampling_rate):length(x)]
         //        # Ignore the first 3s
+        // - note: syoung 04/16/2019 There is a small round-off error in the sample prefiltering code where
+        // the first 3 seconds minus 1 is what should actually be dropped. During task run, this is ignored
+        // (because the 3 seconds is removed by checking for the isLensCovered flag), but to match his output
+        // it is reproduced here for testing purposes.
         let drop = dropSeconds > 0 ? dropSeconds * samplingRate - 1 : 0
         let x = input.dropFirst(drop).map({ $0.isFinite ? $0 : 0 })
         //    x <- signal::filter(bf_low, x) # lowpass
         //    x <- x[round(sampling_rate):length(x)] # 1s
-        let lowpass = Array(passFilter(x, samplingRate: samplingRate, type: .low).dropFirst(samplingRate - 1))
+        let lowpass = Array(passFilter(x, samplingRate: samplingRate, type: .low).dropFirst(samplingRate))
         //    x <- signal::filter(bf_high, x) # highpass
         //    x <- x[round(sampling_rate):length(x)] # 1s @ 60Hz
-        let highpass = Array(passFilter(lowpass, samplingRate: samplingRate, type: .high).dropFirst(samplingRate - 1))
+        let highpass = Array(passFilter(lowpass, samplingRate: samplingRate, type: .high).dropFirst(samplingRate))
         // filter usinng mean centering
         let filtered = meanCenteringFilter(highpass, samplingRate: samplingRate)
         return filtered
@@ -636,74 +652,11 @@ struct FilterParameters : Codable, FilterParams, Equatable {
 
 // --- Code ported from Matlab
 
-/// channel, 60fps, 10sec window
-func findHeartRateValues(with channel:[Double]) -> [(heartRate: Double, confidence: Double)] {
-    let nframes = Int(floor(Double(channel.count) / (Double(window_len)/2)) - 1)
-    guard nframes >= 1 else { return [] }
-    var output: [(Double, Double)] = []
-    for frame_no in 1...nframes {
-        let lower = (1 + ((frame_no - 1) * window_len / 2)) - 1
-        let upper = ((frame_no + 1) * window_len / 2) - 1
-        let currframe = Array(channel[lower...upper])
-        output.append(calculateHeartRate(currframe))
-    }
-    return output
-}
-
-/// For a given window return the calculated heart rate and confidence.
-/// - note: The calculated heart rate is rounded.
-func calculateHeartRate(_ input: [Double]) -> (heartRate: Double, confidence: Double) {
-
-    //% Preprocess and find the autocorrelation function
-    let filteredValues = bandpassFiltered(input)
-    let xCorrValues = xcorr(filteredValues)
-    
-    //% To just remove the repeated part of the autocorr function (since it is even)
-    let (max_val, x) = maxSplice(xCorrValues)
-    
-    //% HR ranges from 40-200 BPM, so consider only that part of the autocorr
-    //% function
-    let lower = Int(round(60 * fs / 200))
-    let upper = Int(round(60 * fs / 40))
-    let (val, pos) = x.zeroReplace(lower-1, upper-1).seekMax()
-    return (round(60 * fs / Double(pos + 1)), val / max_val)
-}
-
-func maxSplice(_ input: [Double]) -> (maxValue: Double, [Double]) {
-    //% To just remove the repeated part of the autocorr function (since it is even)
-    let (max_val, x_start) = input.seekMax()
-    return (max_val, Array(input[x_start...]))
-}
-
-func bandpassFiltered(_ input: [Double]) -> [Double] {
-    
-    // % Setting no. of samples as per a max HR of 220 BPM
-    let nsamples = Int(round(60 * fs / 220))
-    
-    // % b1 = fir1(128,[1/30, 25/30], 'bandpass');
-    let b1: [Double] = [-0.000506610984132016,0.000281340196104213,-0.000453477478785663,0.000175433848479960,5.78571000126717e-19,-0.000200178238070410,0.000588479261901569,-0.000412615808534457,0.000832401037231464,-4.84818239396100e-19,0.000465554741153073,0.00102165166976478,-0.000118534274769341,0.00192609062899124,-2.40024436102973e-18,0.00182952606970045,0.00135480554590726,0.000748599044261129,0.00319643179850945,-2.30788276369201e-19,0.00382994518525259,0.00107470141262219,0.00233017559097417,0.00376919225339987,-8.21109764793137e-18,0.00568709829032464,-0.000418547259970266,0.00430878547299781,0.00234096774958672,-1.06597329751523e-17,0.00589948032626289,-0.00345001874823703,0.00577085280898743,-0.00228532700432350,-3.81044085438483e-18,0.00263801974428747,-0.00769131382422690,0.00531148463293734,-0.0104990208677403,1.62815935886881e-17,-0.00558417076326117,-0.0119241848598587,0.00134611898423683,-0.0212997771796790,-2.07091826506435e-17,-0.0192845505914200,-0.0139952617851127,-0.00760318790070690,-0.0320397640632609,-3.05719612807051e-18,-0.0378997870775431,-0.0106518977344771,-0.0232807805994706,-0.0382418951609459,1.64113172833343e-17,-0.0611787321852445,0.00471988055056295,-0.0517540592057603,-0.0305770938728010,3.42293636763843e-17,-0.100426633129967,0.0729786483544900,-0.170609488045242,0.125861208906484,0.800308136102957,0.125861208906484,-0.170609488045242,0.0729786483544900,-0.100426633129967,3.42293636763843e-17,-0.0305770938728010,-0.0517540592057603,0.00471988055056295,-0.0611787321852445,1.64113172833343e-17,-0.0382418951609459,-0.0232807805994706,-0.0106518977344771,-0.0378997870775431,-3.05719612807051e-18,-0.0320397640632609,-0.00760318790070690,-0.0139952617851127,-0.0192845505914200,-2.07091826506435e-17,-0.0212997771796790,0.00134611898423683,-0.0119241848598587,-0.00558417076326117,1.62815935886881e-17,-0.0104990208677403,0.00531148463293734,-0.00769131382422690,0.00263801974428747,-3.81044085438483e-18,-0.00228532700432350,0.00577085280898743,-0.00345001874823703,0.00589948032626289,-1.06597329751523e-17,0.00234096774958672,0.00430878547299781,-0.000418547259970266,0.00568709829032464,-8.21109764793137e-18,0.00376919225339987,0.00233017559097417,0.00107470141262219,0.00382994518525259,-2.30788276369201e-19,0.00319643179850945,0.000748599044261129,0.00135480554590726,0.00182952606970045,-2.40024436102973e-18,0.00192609062899124,-0.000118534274769341,0.00102165166976478,0.000465554741153073,-4.84818239396100e-19,0.000832401037231464,-0.000412615808534457,0.000588479261901569,-0.000200178238070410,5.78571000126717e-19,0.000175433848479960,-0.000453477478785663,0.000281340196104213,-0.000506610984132016]
-    
-    // Normalize the input
-    let meanValue = input.mean()
-    let normalizedValues = input.map { ($0 - meanValue) }
-    
-    //% Preprocess and find the autocorrelation function
-    return meanfilter(normalizedValues, 2*nsamples+1, b1)
-}
-
-/// Mean filter which emphasizes the maxima in a specified window length (n),
-/// but de-emphasizes everything else in that window
-func meanfilter(_ input: [Double], _ n: Int, _ b1: [Double]) -> [Double] {
-    let x = conv(input, b1, .same).centerSplice(65)
-    var output: [Double] = x
-    for nn in ((n+1)/2)...(x.count-(n-1)/2) {
-        let lower = (nn - (n-1)/2) - 1
-        let upper = (nn + (n-1)/2) - 1
-        let currwin = x[lower...upper].sorted()
-        output[nn-1] = x[nn-1] - ((currwin.sum() - currwin.max()!) / Double(n - 1))
-    }
-    return output
-}
+//func maxSplice(_ input: [Double]) -> (maxValue: Double, [Double]) {
+//    //% To just remove the repeated part of the autocorr function (since it is even)
+//    let (max_val, x_start) = input.seekMax()
+//    return (max_val, Array(input[x_start...]))
+//}
 
 /// autocorrelation
 func xcorr(_ x: [Double]) -> [Double] {
@@ -773,12 +726,12 @@ extension Array where Element : BinaryFloatingPoint {
         return (value, index)
     }
     
-    /// Replace the elements of the array with the given number of zeros on each side.
-    func zeroReplace(_ lowerBounds: Int, _ upperBounds: Int) -> [Element] {
-        var y = Array(repeating: Element(0), count: lowerBounds)
-        y.append(contentsOf: self[lowerBounds...upperBounds])
-        return y
-    }
+//    /// Replace the elements of the array with the given number of zeros on each side.
+//    func zeroReplace(_ lowerBounds: Int, _ upperBounds: Int) -> [Element] {
+//        var y = Array(repeating: Element(0), count: lowerBounds)
+//        y.append(contentsOf: self[lowerBounds...upperBounds])
+//        return y
+//    }
     
     /// Pad the array with zeros before the value.
     func zeroPadBefore(count: Int) -> [Element] {
@@ -793,9 +746,9 @@ extension Array where Element : BinaryFloatingPoint {
         output.append(contentsOf: Array(repeating: Element(0), count: count))
         return output
     }
-    
-    /// Return the center of the range minus the ends to endCount.
-    func centerSplice(_ endCount: Int) -> [Element] {
-        return Array(self[(endCount-1)..<(self.count-endCount)])
-    }
+//
+//    /// Return the center of the range minus the ends to endCount.
+//    func centerSplice(_ endCount: Int) -> [Element] {
+//        return Array(self[(endCount-1)..<(self.count-endCount)])
+//    }
 }
