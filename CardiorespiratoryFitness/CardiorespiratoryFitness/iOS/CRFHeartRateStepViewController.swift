@@ -254,13 +254,21 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
     private var _isFinished: Bool = false
     
     private func _handleTimerFinished() {
-        self.stop()
         if let recorder = self.bpmRecorder {
             // stop the recorder
             self.taskController?.stopAsyncActions(for: [recorder], showLoading: false) {
             }
         }
         
+        // Delay stopping everything else to give the processor time to finish processing the samples.
+        let delay = DispatchTime.now() + .milliseconds(500)
+        DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
+            self?._finishStopping()
+        }
+    }
+    
+    private func _finishStopping() {
+        self.stop()
         if let sample = self.compileResults(),
             let bpmString = numberFormatter.string(from: NSNumber(value: sample.bpm)) {
 
@@ -277,7 +285,6 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
             self.continueButton?.isHidden = false
         }
         else {
-            
             self.reset()
             self.imageView.isHidden = false
             self.imageView.image = UIImage(named: "AlertIcon",
@@ -418,6 +425,7 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
     }
     
     private func alertUserLowConfidence() {
-        self.progressLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_CAPTURING")
+        // syoung 04/16/2019 Do nothing. Just keep the previous result.
+        // self.progressLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_CAPTURING")
     }
 }
