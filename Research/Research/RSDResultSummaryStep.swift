@@ -48,3 +48,20 @@ public protocol RSDResultSummaryStep : RSDUIStep {
     /// The localized unit to display for this result.
     var unitText: String? { get }
 }
+
+extension RSDResultSummaryStep {
+    
+    /// Get the result to display as the answer from the task result.
+    /// - parameter taskResult: The task result for this step.
+    /// - returns: The answer (if any).
+    public func answerResult(from taskResult: RSDTaskResult) -> RSDAnswerResult? {
+        guard let resultIdentifier = self.resultIdentifier,
+            let cResult = (self.stepResultIdentifier != nil) ? taskResult.findResult(with: self.stepResultIdentifier!) : taskResult,
+            let collectionResult = cResult as? RSDAnswerResultFinder,
+            let answerResult = collectionResult.findAnswerResult(with: resultIdentifier)
+            else {
+                return nil
+        }
+        return answerResult
+    }
+}

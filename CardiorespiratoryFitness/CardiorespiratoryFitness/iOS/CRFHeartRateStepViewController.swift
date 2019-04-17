@@ -113,23 +113,33 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
         }
     }
     
+    private var _firstAppearance: Bool = true
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         (self.countdownDial as! RSDCountdownDial).innerColor = UIColor.clear
+        
+        if _firstAppearance {
+            // Make sure the learn more button is hidden
+            self.learnMoreButton?.isHidden = true
+        }
     }
     
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Use a delay to let the page view controller finish its animation.
-        let delay = DispatchTime.now() + .milliseconds(100)
-        DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
-            self?._startCamera()
+        if _firstAppearance {
+            // Use a delay to let the page view controller finish its animation.
+            let delay = DispatchTime.now() + .milliseconds(100)
+            DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
+                self?._startCamera()
+            }
+            
+            let instruction = Localization.localizedString("HEARTRATE_CAPTURE_CONTINUE_TEXT")
+            self.setInstruction(instruction) 
         }
-        
-        let instruction = Localization.localizedString("HEARTRATE_CAPTURE_CONTINUE_TEXT")
-        self.setInstruction(instruction)
+        _firstAppearance = false
     }
     
     private func _startCamera() {
@@ -279,6 +289,7 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
         else {
             
             self.reset()
+            self.learnMoreButton?.isHidden = false
             self.imageView.isHidden = false
             self.imageView.image = UIImage(named: "AlertIcon",
                                            in: Bundle(for: CRFHeartRateStepViewController.self),
@@ -287,7 +298,14 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
             self.instructionTitleLabel?.isHidden = false
             self.instructionTitleLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_REDO_TITLE")
             self.instructionLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_REDO_TEXT")
-            self.continueButton?.setTitle(Localization.localizedString("HEARTRATE_CAPTURE_REDO_BUTTON"), for: .normal)
+            
+            if (self.step as? CRFHeartRateStep)?.isResting ?? false {
+                self.continueButton?.setTitle(Localization.localizedString("HEARTRATE_CAPTURE_REDO_BUTTON"), for: .normal)
+            }
+            else {
+                _isFinished = true
+                self.continueButton?.setTitle(Localization.buttonDone(), for: .normal)
+            }
             self.continueButton?.isHidden = false
         }
     }
@@ -335,6 +353,7 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
     private let blankText = "---"
     private func _setupStartUI() {
         
+        self.learnMoreButton?.isHidden = true
         self.progressLabel?.isHidden = false
         self.hrResultLabel?.isHidden = true
         self.bpmLabel?.isHidden = true
