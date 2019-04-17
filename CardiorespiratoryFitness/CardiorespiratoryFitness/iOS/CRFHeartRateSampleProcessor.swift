@@ -376,10 +376,9 @@ internal class CRFHeartRateSampleProcessor {
         return (y_max, y_max_pos, y_min, hr_initial_guess)
     }
     
-    
     func getAliasingPeakLocation(hr: Double, actualLag: Int, samplingRate: Double, minLag: Int, maxLag: Int) -> (nPeaks: Int, earlier:[Int], later: [Int])? {
         //    # The following ranges are only valid if the minimum hr is 45bpm and
-        //    # maximum hr is less than 240bpm, since for the acf of the ideal hr signal
+        //    # maximum hr is less than 210bpm, since for the acf of the ideal hr signal
         //    # Npeaks = floor(BPM/minHR) - floor(BPM/maxHR)
         //    # in the search ranges 60*fs/maxHR to 60*fs/minHR samples
 
@@ -648,12 +647,6 @@ struct FilterParameters : Codable, FilterParams, Equatable {
 
 
 // --- Code ported from Matlab
-
-//func maxSplice(_ input: [Double]) -> (maxValue: Double, [Double]) {
-//    //% To just remove the repeated part of the autocorr function (since it is even)
-//    let (max_val, x_start) = input.seekMax()
-//    return (max_val, Array(input[x_start...]))
-//}
 
 /// autocorrelation
 func xcorr(_ x: [Double]) -> [Double] {

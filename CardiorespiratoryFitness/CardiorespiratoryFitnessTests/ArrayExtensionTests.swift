@@ -35,7 +35,7 @@ import XCTest
 @testable import CardiorespiratoryFitness
 
 
-/// Mathlab tests for old algorithm - leaving in b/c some of the array extensions might prove
+/// Matlab tests for old algorithm - leaving in b/c some of the array extensions might prove
 /// useful for other projects.
 class ArrayExtensionTests: XCTestCase {
 
