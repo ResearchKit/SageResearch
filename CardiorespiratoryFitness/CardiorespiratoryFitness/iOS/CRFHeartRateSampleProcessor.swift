@@ -377,7 +377,7 @@ internal class CRFHeartRateSampleProcessor {
     }
     
     
-    func getAliasingPeakLocation(hr: Double, actualLag: Int?, samplingRate: Double, minLag: Int, maxLag: Int) -> (nPeaks: Int, earlier:[Int], later: [Int])? {
+    func getAliasingPeakLocation(hr: Double, actualLag: Int, samplingRate: Double, minLag: Int, maxLag: Int) -> (nPeaks: Int, earlier:[Int], later: [Int])? {
         //    # The following ranges are only valid if the minimum hr is 45bpm and
         //    # maximum hr is less than 240bpm, since for the acf of the ideal hr signal
         //    # Npeaks = floor(BPM/minHR) - floor(BPM/maxHR)
@@ -402,14 +402,11 @@ internal class CRFHeartRateSampleProcessor {
         else {
             return nil
         }
-        
-        // # the +1 is because of the array indexing issue in R(it starts from 1 vs 0)
-        let lag = actualLag ?? Int(ceil(Double(samplingRate * 60) / hr + 1.0))
 
         // # Added this step because in R, the indexing of an array starts at 1
         // # and so our period of the signal is really actual_lag-1, hence
         // # the correction
-        let actualLag = lag - 1
+        let actualLag = actualLag - 1
         
         var earlier_peak: [Int]
         if (actualLag % 2 == 0) {
