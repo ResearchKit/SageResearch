@@ -76,53 +76,27 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     }
     
     public func restingHeartRate() -> CRFHeartRateBPMSample? {
-        guard self.bpmSamples.count > 0,
-            let sample = self.bpmSamples.sorted(by: { $0.confidence > $1.confidence }).first,
-            sample.confidence >= CRFMinConfidence
-            else {
-                return nil
-        }
-        return sample
+        return sampleProcessor.restingHeartRate()
     }
     
     public func peakHeartRate() -> CRFHeartRateBPMSample? {
-        guard self.bpmSamples.count > 0 else { return nil }
-        let highConfidenceSamples = self.bpmSamples.filter { $0.confidence >= CRFMinConfidence }
-        return highConfidenceSamples.first
+        return sampleProcessor.peakHeartRate()
     }
     
     public func endHeartRate() -> CRFHeartRateBPMSample? {
-        guard self.bpmSamples.count > 0 else { return nil }
-        let highConfidenceSamples = self.bpmSamples.filter { $0.confidence >= CRFMinConfidence }
-        return highConfidenceSamples.last
+        return sampleProcessor.endHeartRate()
     }
     
-    public func vo2Max() -> Double? {
-        guard self.bpmSamples.count > 0,
-            let sexValue = self.taskViewModel.taskResult.findAnswerResult(with: CRFDemographicsKeys.sex.stringValue)?.value as? String,
+    public func vo2Max() -> (Double, Double)? {
+        guard let sexValue = self.taskViewModel.taskResult.findAnswerResult(with: CRFDemographicsKeys.sex.stringValue)?.value as? String,
             let sex = CRFSex(rawValue: sexValue),
             let birthYear = self.taskViewModel.taskResult.findAnswerResult(with: CRFDemographicsKeys.birthYear.stringValue)?.value as? Int
             else {
                 return nil
         }
         let startTime = self.clock.startSystemUptime + 30
-        let highConfidenceSamples = self.bpmSamples.filter {
-            $0.confidence >= CRFMinConfidence &&
-            ($0.timestamp ?? 0) >= startTime
-        }
-        guard highConfidenceSamples.count > 1 else { return nil }
-
         let age = Double(Calendar(identifier: .iso8601).component(.year, from: Date()) - birthYear)
-        let meanHR = highConfidenceSamples.map({ $0.bpm }).mean()
-        let beats30to60 = meanHR / 2
-        switch sex {
-        case .female:
-            return 83.477 - (0.586 * beats30to60) - (0.404 * age) - 7.030
-        case .male:
-            return 83.477 - (0.586 * beats30to60) - (0.404 * age)
-        default:
-            return 84.687 - (0.722 * beats30to60) - (0.383 * age)
-        }
+        return sampleProcessor.vo2Max(sex: sex, age: age, startTime: startTime)
     }
     
     public override func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
@@ -219,8 +193,9 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     private var _videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var _loggingSamples: [CRFPixelSample] = []
     private var _previousSettings: CRFCameraSettings?
-    
     private var _videoProcessor: CRFHeartRateVideoProcessor!
+    
+    let sampleProcessor = CRFHeartRateSampleProcessor()
     
     deinit {
         if let captureDevice = _captureDevice {
@@ -255,6 +230,13 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     }
     
     private func _startSampling() throws {
+        
+        sampleProcessor.reset()
+        sampleProcessor.callback = { (bpm, confidence) in
+            self.confidence = confidence
+            self.bpm = Int(round(bpm))
+        }
+        
         CRFHeartRateRecorder.current = self
         guard !isSimulator else {
             _simulationTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] (_) in
@@ -394,23 +376,8 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             }
             return
         }
-        if Int(duration) % 5 == 0 {
-            self.sampleProcessingQueue.async {
-                let heartRate: Double = 65
-                let confidence = 0.75
-                
-                let timestamp = self.clock.startSystemUptime + duration
-                let bpmSample = CRFHeartRateBPMSample(timestamp: timestamp, bpm: heartRate, confidence: confidence)
-                self.bpmSamples.append(bpmSample)
-                
-                if confidence > CRFMinConfidence {
-                    DispatchQueue.main.async {
-                        self.confidence = confidence
-                        self.bpm = Int(heartRate)
-                    }
-                }
-            }
-        }
+        let timestamp = self.clock.startSystemUptime + duration
+        sampleProcessor.simulatorProcessSample(timestamp: timestamp)
     }
     
     // MARK: AVCaptureVideoDataOutputSampleBufferDelegate
@@ -468,7 +435,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         }
         
         // Process the pixel sample.
-        _processSample(sample)
+        sampleProcessor.processSample(sample)
         
         // Add the sample to the logging queue and write in 1 second batches.
         _loggingSamples.append(sample)
@@ -481,63 +448,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
     
     // Heart rate processing
     
-    /// The processed samples.
-    public private(set) var bpmSamples : [CRFHeartRateBPMSample] = []
-    
-    /// Is the heart rate currently being calculated?
-    internal var isProcessing: Bool = false
-    
-    private let arrayMutatingQueue = DispatchQueue(label: "org.sagebase.CRF.sample.mutating")
-    private let sampleProcessingQueue = DispatchQueue(label: "org.sagebase.CRF.sample.processing")
-    
-    /// Samples collector used to store the samples in memory for each half-window.
-    private var pixelSamples : [CRFPixelSample] = []
-    
-    /// Add the sample.
-    func _processSample(_ sample: CRFPixelSample) {
-        arrayMutatingQueue.async {
-            
-            // append the samples
-            self.pixelSamples.append(sample)
-            
-            // look to see if we have enough to process a bpm
-            let secondLength = Int(self._videoProcessor.frameRate)
-            let windowLength = Int(CRFHeartRateWindowSeconds) * secondLength
-            if self.pixelSamples.count >= windowLength {
-                
-                // set flag that the samples are being processed
-                self.isProcessing = true
-                
-                // get the red and green channels and the uptime
-                let halfLength = windowLength / 2
-                let samples = self.pixelSamples.suffix(windowLength)
-                let timestamp = samples[Int(halfLength)].presentationTimestamp
-                let removeLength = (self.confidence >= CRFMinConfidence) ? halfLength : secondLength
-                self.pixelSamples.removeSubrange(..<removeLength)
-                
-                self.sampleProcessingQueue.async {
-                    
-                    let redChannel = samples.map { $0.red }
-                    let greenChannel = samples.map { $0.green }
-                    let red = calculateHeartRate(redChannel)
-                    let green = calculateHeartRate(greenChannel)
-                    let pixelChannel: CRFPixelChannel = (red.confidence > green.confidence) ? .red : .green
-                    let (bpm, confidence) = (red.confidence > green.confidence) ? red : green
-                    
-                    let bpmSample = CRFHeartRateBPMSample(timestamp: timestamp, bpm: bpm, confidence: confidence, channel: pixelChannel)
-                    self.bpmSamples.append(bpmSample)
-                    self.isProcessing = false
-                    print("\(pixelChannel) bpm=\(bpm), confidence=\(confidence)")
-                    
-                    DispatchQueue.main.async {
-                        self.confidence = confidence
-                        // Converting the calculated heart rate as an Int will not truncate b/c the Double was already rounded.
-                        self.bpm = Int(bpm)
-                    }
-                }
-            }
-        }
-    }
+
 }
 
 public struct CRFHeartRateSamplesResult : RSDResult, RSDArchivable {
@@ -656,4 +567,7 @@ extension CRFPixelSample : RSDSampleRecord, RSDDelimiterSeparatedEncodable {
     
     public var timestampDate: Date? { return nil }
     public var stepPath: String { return "" }
+}
+
+extension CRFPixelSample : PixelSample {
 }

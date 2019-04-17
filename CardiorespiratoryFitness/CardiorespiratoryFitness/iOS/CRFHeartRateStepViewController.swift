@@ -194,7 +194,7 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
         var resultSample: CRFHeartRateBPMSample?
         
         // Record the average or initial heart rate depending upon whether or not the participant is at rest.
-        if let recorder = bpmRecorder, recorder.bpmSamples.count >= 2 {
+        if let recorder = bpmRecorder {
             
             // Get the "most appropriate" heart rate.
             
@@ -220,7 +220,7 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
             
             // Add all the samples.
             let sectionIdentifier = self.stepViewModel.sectionIdentifier()
-            let samplesResult = CRFHeartRateSamplesResult(identifier: "\(sectionIdentifier)samples", samples: recorder.bpmSamples)
+            let samplesResult = CRFHeartRateSamplesResult(identifier: "\(sectionIdentifier)samples", samples: recorder.sampleProcessor.bpmSamples)
             addResult(samplesResult)
         }
         
@@ -264,13 +264,21 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
     private var _isFinished: Bool = false
     
     private func _handleTimerFinished() {
-        self.stop()
         if let recorder = self.bpmRecorder {
             // stop the recorder
             self.taskController?.stopAsyncActions(for: [recorder], showLoading: false) {
             }
         }
         
+        // Delay stopping everything else to give the processor time to finish processing the samples.
+        let delay = DispatchTime.now() + .milliseconds(500)
+        DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
+            self?._finishStopping()
+        }
+    }
+    
+    private func _finishStopping() {
+        self.stop()
         if let sample = self.compileResults(),
             let bpmString = numberFormatter.string(from: NSNumber(value: sample.bpm)) {
 
@@ -287,7 +295,6 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
             self.continueButton?.isHidden = false
         }
         else {
-            
             self.reset()
             self.learnMoreButton?.isHidden = false
             self.imageView.isHidden = false
@@ -437,6 +444,7 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
     }
     
     private func alertUserLowConfidence() {
-        self.progressLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_CAPTURING")
+        // syoung 04/16/2019 Do nothing. Just keep the previous result.
+        // self.progressLabel?.text = Localization.localizedString("HEARTRATE_CAPTURE_CAPTURING")
     }
 }
