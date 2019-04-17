@@ -158,7 +158,7 @@ internal class CRFHeartRateSampleProcessor {
         
         arrayMutatingQueue.async {
             
-            // Do not start savinng samples if the lens has not yet been covered
+            // Do not start saving samples if the lens has not yet been covered
             guard self.pixelSamples.count > 0 || sample.isCoveringLens else { return }
             
             // append the samples
