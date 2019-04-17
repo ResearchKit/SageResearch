@@ -726,13 +726,6 @@ extension Array where Element : BinaryFloatingPoint {
         return (value, index)
     }
     
-//    /// Replace the elements of the array with the given number of zeros on each side.
-//    func zeroReplace(_ lowerBounds: Int, _ upperBounds: Int) -> [Element] {
-//        var y = Array(repeating: Element(0), count: lowerBounds)
-//        y.append(contentsOf: self[lowerBounds...upperBounds])
-//        return y
-//    }
-    
     /// Pad the array with zeros before the value.
     func zeroPadBefore(count: Int) -> [Element] {
         var output = Array(repeating: Element(0), count: count)
@@ -746,9 +739,4 @@ extension Array where Element : BinaryFloatingPoint {
         output.append(contentsOf: Array(repeating: Element(0), count: count))
         return output
     }
-//
-//    /// Return the center of the range minus the ends to endCount.
-//    func centerSplice(_ endCount: Int) -> [Element] {
-//        return Array(self[(endCount-1)..<(self.count-endCount)])
-//    }
 }

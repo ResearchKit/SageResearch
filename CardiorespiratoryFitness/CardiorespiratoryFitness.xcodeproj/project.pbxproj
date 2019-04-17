@@ -33,7 +33,6 @@
 		F880C18120520CF500ACB4D4 /* CRFCameraSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C18020520CF500ACB4D4 /* CRFCameraSettings.swift */; };
 		F880C18320520FBC00ACB4D4 /* CRFHeartRateSampleProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C18220520FBC00ACB4D4 /* CRFHeartRateSampleProcessor.swift */; };
 		F880C18520530D9500ACB4D4 /* HeartRateProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F880C18420530D9500ACB4D4 /* HeartRateProcessorTests.swift */; };
-		F880C18A205320B800ACB4D4 /* red_input_1d.txt in Resources */ = {isa = PBXBuildFile; fileRef = F880C189205320B800ACB4D4 /* red_input_1d.txt */; };
 		F88725E32051C0F900A4B82F /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */; };
 		F88725EA2051C0F900A4B82F /* CardiorespiratoryFitness.h in Headers */ = {isa = PBXBuildFile; fileRef = F88725DC2051C0F800A4B82F /* CardiorespiratoryFitness.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F897CF8F225523320088DFAE /* highpass_filter_params.csv in Resources */ = {isa = PBXBuildFile; fileRef = F897CF8E225523320088DFAE /* highpass_filter_params.csv */; };
@@ -94,7 +93,6 @@
 		F880C18020520CF500ACB4D4 /* CRFCameraSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFCameraSettings.swift; sourceTree = "<group>"; };
 		F880C18220520FBC00ACB4D4 /* CRFHeartRateSampleProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFHeartRateSampleProcessor.swift; sourceTree = "<group>"; };
 		F880C18420530D9500ACB4D4 /* HeartRateProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateProcessorTests.swift; sourceTree = "<group>"; };
-		F880C189205320B800ACB4D4 /* red_input_1d.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = red_input_1d.txt; sourceTree = "<group>"; };
 		F88725D92051C0F800A4B82F /* CardiorespiratoryFitness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CardiorespiratoryFitness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F88725DC2051C0F800A4B82F /* CardiorespiratoryFitness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardiorespiratoryFitness.h; sourceTree = "<group>"; };
 		F88725DD2051C0F800A4B82F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -217,7 +215,6 @@
 				F86CB424225BFD04005FBE7E /* io_examples_whole_12hz.json */,
 				F86CB422225BEF8A005FBE7E /* io_examples_whole.json */,
 				F86CB41C225BD422005FBE7E /* io_examples.json */,
-				F880C189205320B800ACB4D4 /* red_input_1d.txt */,
 			);
 			path = "Test Files";
 			sourceTree = "<group>";
@@ -441,7 +438,6 @@
 				F86CB41D225BD422005FBE7E /* io_examples.json in Resources */,
 				F877EC56225E96E9007F3731 /* io_example_earlier_peak.json in Resources */,
 				F86CB423225BEF8A005FBE7E /* io_examples_whole.json in Resources */,
-				F880C18A205320B800ACB4D4 /* red_input_1d.txt in Resources */,
 				F86CB425225BFD04005FBE7E /* io_examples_whole_12hz.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
