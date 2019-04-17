@@ -235,6 +235,11 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         return registeredButtons[.navigation(.goForward)]?.first
     }
     
+    /// Convenience method for getting the "Learn More" button.
+    open var learnMoreButton: UIButton? {
+        return self.navigationBody?.learnMoreButton ?? self.navigationHeader?.learnMoreButton ?? self.navigationFooter?.learnMoreButton
+    }
+    
     /// Is forward navigation enabled? The default implementation will check the task controller.
     public var isForwardEnabled: Bool {
         return stepViewModel.isForwardEnabled

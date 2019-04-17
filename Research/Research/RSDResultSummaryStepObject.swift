@@ -34,8 +34,7 @@
 import Foundation
 
 /// A result summary step is used to display a result that is calculated or measured earlier in the task.
-open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep {
-    
+open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummaryStep, RSDNavigationSkipRule {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case unitText, resultIdentifier, stepResultIdentifier, resultTitle, formatter
     }
@@ -51,6 +50,17 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
     
     /// The identifier for the answer result.
     open private(set) var resultIdentifier: String?
+    
+    /// By default, the step should be skipped if the result is not in the result set.
+    open func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
+        guard let taskResult = result,
+            let answerResult = self.answerResult(from: taskResult)
+            else {
+                return true
+        }
+        return (answerResult.value == nil)
+    }
+    
     
     // MARK: Initializers
     

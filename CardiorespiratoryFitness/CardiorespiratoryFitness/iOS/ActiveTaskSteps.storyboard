@@ -125,7 +125,7 @@
                                         <state key="normal" image="closeActivity"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Efe-FW-pW7">
-                                        <rect key="frame" x="126" y="13.5" width="68" height="29"/>
+                                        <rect key="frame" x="126" y="3.5" width="68" height="29"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -145,18 +145,24 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cme-uq-pyz">
                                 <rect key="frame" x="0.0" y="70" width="320" height="135.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gently cover both the camera and flash with your finger." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ov-7f-Yb9">
-                                        <rect key="frame" x="24" y="24.5" width="272" height="86"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gently cover both the camera and flash with your finger." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="4ov-7f-Yb9">
+                                        <rect key="frame" x="24" y="6.5" width="272" height="86"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BHB-iH-bOa" customClass="RSDUnderlinedButton" customModule="ResearchUI">
+                                        <rect key="frame" x="84.5" y="87.5" width="151" height="33.5"/>
+                                        <state key="normal" title="Tips for measuring"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="4ov-7f-Yb9" firstAttribute="leading" secondItem="Cme-uq-pyz" secondAttribute="leading" constant="24" id="EED-zs-dmf"/>
-                                    <constraint firstItem="4ov-7f-Yb9" firstAttribute="centerY" secondItem="Cme-uq-pyz" secondAttribute="centerY" id="WBL-oE-5Xc"/>
+                                    <constraint firstItem="BHB-iH-bOa" firstAttribute="firstBaseline" secondItem="4ov-7f-Yb9" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="JBq-nv-Dy8"/>
+                                    <constraint firstItem="4ov-7f-Yb9" firstAttribute="centerY" secondItem="Cme-uq-pyz" secondAttribute="centerY" constant="-18" id="WBL-oE-5Xc"/>
                                     <constraint firstAttribute="trailing" secondItem="4ov-7f-Yb9" secondAttribute="trailing" constant="24" id="eSl-sI-vh9"/>
+                                    <constraint firstItem="BHB-iH-bOa" firstAttribute="centerX" secondItem="Cme-uq-pyz" secondAttribute="centerX" id="mhx-4I-LoT"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s75-JE-o2a">
@@ -251,7 +257,7 @@
                             <constraint firstItem="nfb-a4-wK2" firstAttribute="trailing" secondItem="Sqy-a9-IDh" secondAttribute="trailing" id="Ey0-0J-IEm"/>
                             <constraint firstItem="Cme-uq-pyz" firstAttribute="height" secondItem="nfb-a4-wK2" secondAttribute="height" multiplier="1.2" id="OFV-aO-aBm"/>
                             <constraint firstItem="l1n-cn-Sxa" firstAttribute="top" relation="greaterThanOrEqual" secondItem="4ov-7f-Yb9" secondAttribute="bottom" constant="18" id="Qb9-kP-c3o"/>
-                            <constraint firstItem="4ov-7f-Yb9" firstAttribute="top" secondItem="Efe-FW-pW7" secondAttribute="bottom" constant="20" id="UMa-LL-CU0"/>
+                            <constraint firstItem="4ov-7f-Yb9" firstAttribute="top" secondItem="Efe-FW-pW7" secondAttribute="bottom" constant="12" id="UMa-LL-CU0"/>
                             <constraint firstItem="nfb-a4-wK2" firstAttribute="top" secondItem="s75-JE-o2a" secondAttribute="bottom" id="VxN-E5-xae"/>
                             <constraint firstItem="s75-JE-o2a" firstAttribute="height" secondItem="l1n-cn-Sxa" secondAttribute="height" id="Xax-FH-PfN"/>
                             <constraint firstAttribute="trailing" secondItem="Ybq-sF-bm4" secondAttribute="trailing" id="bBf-5n-C9E"/>
@@ -264,6 +270,9 @@
                             <constraint firstItem="l1n-cn-Sxa" firstAttribute="centerX" secondItem="JaM-On-OUa" secondAttribute="centerX" id="yic-tI-Msn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Sqy-a9-IDh"/>
+                        <connections>
+                            <outlet property="learnMoreButton" destination="BHB-iH-bOa" id="maM-5d-mgd"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="bpmLabel" destination="t5X-3d-ecv" id="fFR-IA-zAD"/>
