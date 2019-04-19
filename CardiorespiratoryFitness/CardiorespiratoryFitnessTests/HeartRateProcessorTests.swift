@@ -500,6 +500,23 @@ class HeartRateProcessorTests: XCTestCase {
             let expectedConfidence = expectedHRValues[ii].confidence ?? 0
             XCTAssertEqual(confidence[ii], expectedConfidence, accuracy: 0.1, "\(ii)")
         }
+        
+// Uncomment to update the values used for testing Android
+//        processor.bpmSamples.forEach {
+//            print("HeartRateBPM(\($0.timestamp!),\($0.bpm),\($0.confidence),\"\($0.channel!.rawValue)\"),")
+//        }
+    }
+    
+    func testMeanOrderValue() {
+        let processor = CRFHeartRateSampleProcessor()
+        XCTAssertEqual(15, processor.meanFilterOrder(for: 12))
+        XCTAssertEqual(15, processor.meanFilterOrder(for: 15))
+        XCTAssertEqual(19, processor.meanFilterOrder(for: 16))
+        XCTAssertEqual(19, processor.meanFilterOrder(for: 18))
+        XCTAssertEqual(33, processor.meanFilterOrder(for: 19))
+        XCTAssertEqual(33, processor.meanFilterOrder(for: 32))
+        XCTAssertEqual(65, processor.meanFilterOrder(for: 33))
+        XCTAssertEqual(65, processor.meanFilterOrder(for: 60))
     }
 }
     

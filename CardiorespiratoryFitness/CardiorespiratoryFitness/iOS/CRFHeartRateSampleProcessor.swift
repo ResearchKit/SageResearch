@@ -171,23 +171,15 @@ internal class CRFHeartRateSampleProcessor {
             // Need to keep 2 extra seconds due to filtering lopping off the first 2 seconds of data.
             let meanOrder = self.meanFilterOrder(for: roundedRate)
             let windowLength = Int(CRFHeartRateWindowSeconds + 2) * roundedRate + meanOrder
-            if self.pixelSamples.count >= windowLength {
+            if self.pixelSamples.count >= windowLength, self.isValidSamplingRate(roundedRate) {
                 
                 // set flag that the samples are being processed
                 self.isProcessing = true
                 
                 // get the red and green channels and the uptime
-                let samples = self.pixelSamples//.suffix(windowLength)
+                let samples = self.pixelSamples
                 let timestamp = samples.last!.presentationTimestamp
-                // TODO: syoung 04/10/2019 Figure out why this was here, looking at previous confidence window
-                // and removing 5 seconds worth of samples if the confidence is good. My guess is that it is
-                // to reduce fluctuation in the UI between --- and a valid heart rate. (ie. Don't show the
-                // "bad" heart rate values unless they are really bad) But could probably improve smoothing
-                // this out, especially for the case where the heart rate is for recovery and should be going
-                // down.
-                let removeLength = //(self.confidence >= CRFMinConfidence) ? halfLength :
-                    roundedRate
-                self.pixelSamples.removeSubrange(..<removeLength)
+                self.pixelSamples.removeFirst(roundedRate)
                 
                 self.sampleProcessingQueue.async {
                     
@@ -456,6 +448,7 @@ internal class CRFHeartRateSampleProcessor {
     ///#' @param x A time series numeric data
     ///#' @param sampling_rate The sampling rate (fs) of the signal
     func getFilteredSignal(_ input:[Double], samplingRate: Int, dropSeconds: Int = 0) -> [Double]? {
+        guard isValidSamplingRate(samplingRate) else { return nil }
         //        x[is.na(x)] <- 0
         //        x <- x[round(3*sampling_rate):length(x)]
         //        # Ignore the first 3s
@@ -526,7 +519,8 @@ internal class CRFHeartRateSampleProcessor {
     func passFilter(_ input: [Double], samplingRate: Int, type: FilterParameters.FilterType) -> [Double] {
         let paramArray = (type == .low) ? lowPassParameters : highPassParameters
         guard let params = paramArray.filterParams(for: samplingRate) else {
-            fatalError("WARNING! Failed to get butterworth filter coeffients for \(samplingRate)")
+            assertionFailure("WARNING! Failed to get butterworth filter coeffients for \(samplingRate)")
+            return input
         }
         
         // insert 0 at the first element to offset the array to the 1 index
@@ -564,19 +558,20 @@ internal class CRFHeartRateSampleProcessor {
     }
 
     func meanFilterOrder(for samplingRate: Int) -> Int {
-        if (samplingRate <= 32) {
-            return 33
+        if samplingRate <= 15 {
+            return 15
         }
-        else if (samplingRate <= 18) {
+        else if samplingRate <= 18 {
             return 19
         }
-        else if (samplingRate <= 15) {
-            return 15
+        else if samplingRate <= 32 {
+            return 33
         }
         else {
             return 65
         }
     }
+    
 }
 
 protocol FilterParams {
