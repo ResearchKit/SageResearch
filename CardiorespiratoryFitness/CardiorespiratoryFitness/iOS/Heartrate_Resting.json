@@ -1,9 +1,5 @@
 {
-    "identifier": "Resting Heartrate",
-    "schemaInfo": {
-        "identifier": "Heartrate Measurement",
-        "revision": 9
-    },
+    "identifier": "Resting Heart Rate",
     "usesTrackedData": true,
     "shouldHideActions": ["goBackward", "skip"],
     "progressMarkers": [],
