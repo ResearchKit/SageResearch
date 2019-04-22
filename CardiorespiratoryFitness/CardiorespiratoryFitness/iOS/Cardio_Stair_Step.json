@@ -1,9 +1,5 @@
 {
-    "identifier": "Cardio Stair Step",
-    "schemaInfo": {
-        "identifier": "Cardio Stair Step",
-        "revision": 2
-    },
+    "identifier": "Heart Rate Recovery",
     "usesTrackedData": true,
     "shouldHideActions": ["goBackward", "skip"],
     "progressMarkers": ["sex", "birthYear"],
@@ -210,7 +206,7 @@
         "stepResultIdentifier": "hr",
         "resultIdentifier": "vo2Max",
         "title": "Recovery HR Score",
-        "text": "Changing your Recovery HR can take time. You can change it over weeks or months by losing weight or exercising.",
+        "text": "The score above estimates a vital sign called VO2max that is normally measured in a lab or clinic.",
         "actions": {
             "goForward": {
                 "type": "default",

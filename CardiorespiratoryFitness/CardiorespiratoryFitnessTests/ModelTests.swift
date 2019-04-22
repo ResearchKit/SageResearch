@@ -89,13 +89,11 @@ class ModelTests: XCTestCase {
         
         let taskInfo = CRFTaskInfo(.training)
         
-        XCTAssertEqual(taskInfo.identifier, "Heartrate Training")
+        XCTAssertEqual(taskInfo.identifier, "Heart Rate Training")
         XCTAssertEqual(taskInfo.title, "Heart Rate Training")
         XCTAssertEqual(taskInfo.subtitle, "Your phone's camera can measure your heartbeat.")
         XCTAssertNil(taskInfo.detail)
         XCTAssertEqual(taskInfo.estimatedMinutes, 2)
-        XCTAssertEqual(taskInfo.schemaInfo?.schemaIdentifier, "Heartrate Training")
-        XCTAssertEqual(taskInfo.schemaInfo?.schemaVersion, 1)
         
         guard let feedback = taskInfo.task.findStep(with: "feedback") as? RSDResultSummaryStepObject else {
             XCTFail("Failed to find the feedback step.")
@@ -119,13 +117,11 @@ class ModelTests: XCTestCase {
         
         let taskInfo = CRFTaskInfo(.resting)
         
-        XCTAssertEqual(taskInfo.identifier, "Resting Heartrate")
+        XCTAssertEqual(taskInfo.identifier, "Resting Heart Rate")
         XCTAssertEqual(taskInfo.title, "Resting Heart Rate")
         XCTAssertEqual(taskInfo.subtitle, "Your heart rate while you are at rest is a marker of your health. The more relaxed you are, the better. Let's measure your resting heart rate.")
         XCTAssertNil(taskInfo.detail)
         XCTAssertEqual(taskInfo.estimatedMinutes, 1)
-        XCTAssertEqual(taskInfo.schemaInfo?.schemaIdentifier, "Heartrate Measurement")
-        XCTAssertEqual(taskInfo.schemaInfo?.schemaVersion, 9)
         
         guard let navigator = taskInfo.task.stepNavigator as? RSDOrderedStepNavigator else {
             XCTFail("Navigator is not of the expected type")
@@ -169,7 +165,7 @@ class ModelTests: XCTestCase {
         
         let taskInfo = CRFTaskInfo(.stairStep)
         
-        XCTAssertEqual(taskInfo.identifier, "Cardio Stair Step")
+        XCTAssertEqual(taskInfo.identifier, "Heart Rate Recovery")
         XCTAssertEqual(taskInfo.title, "Heart Rate Recovery")
         XCTAssertEqual(taskInfo.subtitle, "You will be stepping up and down a step for 3 minutes to raise your heart rate. Right after you finish stepping, measure your heart rate for 1 minute to see how your heart rate recovers.")
         XCTAssertNil(taskInfo.detail)
@@ -203,8 +199,6 @@ class ModelTests: XCTestCase {
         XCTAssertEqual(copy.subtitle, "Your phone's camera can measure your heartbeat.")
         XCTAssertNil(copy.detail)
         XCTAssertEqual(copy.estimatedMinutes, 2)
-        XCTAssertEqual(copy.schemaInfo?.schemaIdentifier, "Heartrate Training")
-        XCTAssertEqual(copy.schemaInfo?.schemaVersion, 1)
     }
     
     func testHeartRateStep() {

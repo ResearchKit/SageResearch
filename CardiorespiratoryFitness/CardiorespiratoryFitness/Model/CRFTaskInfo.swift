@@ -37,16 +37,16 @@ import Foundation
 public enum CRFTaskIdentifier : String, Codable, CaseIterable {
     
     /// Training task for measuring your heart rate.
-    case training = "Heartrate Training"
+    case training = "Heart Rate Training"
     
     /// Measure your heart rate while resting.
-    case resting = "Resting Heartrate"
+    case resting = "Resting Heart Rate"
     
     // TODO: syoung 04/02/2019 Remove commented out code. Leaving for now in case researchers change their mind again.
     // case restingMorning = "Morning Heartrate"
     
     /// Stair step VO2 max test.
-    case stairStep = "Cardio Stair Step"
+    case stairStep = "Heart Rate Recovery"
     
     func task(with factory: CRFFactory) -> RSDTaskObject {
         do {

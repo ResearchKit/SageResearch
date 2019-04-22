@@ -1,6 +1,5 @@
 {
-    "identifier": "Heartrate Training",
-    "schemaInfo": {"identifier": "Heartrate Training", "revision": 1},
+    "identifier": "Heart Rate Training",
     "shouldHideActions": ["goBackward", "skip"],
     "progressMarkers": [],
     "steps": [{
