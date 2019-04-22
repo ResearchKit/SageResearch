@@ -947,7 +947,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDResultSummaryStepObject.swift",
-      "line": 65,
+      "line": 75,
       "symbol": "RSDResultSummaryStepObject.init(identifier:resultIdentifier:unitText:stepResultIdentifier:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
