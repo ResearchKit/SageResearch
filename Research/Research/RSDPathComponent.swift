@@ -200,26 +200,6 @@ extension RSDPathComponent {
         } while thisPath != nil
         return true
     }
-    
-    /// Create an output directory.
-    public func createOutputDirectory() -> URL? {
-        let tempDir = NSTemporaryDirectory()
-        let dir = self.taskResult.taskRunUUID.uuidString
-        let path = (tempDir as NSString).appendingPathComponent(dir)
-        if !FileManager.default.fileExists(atPath: path) {
-            do {
-                #if os(macOS)
-                try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [:])
-                #else
-                try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [ .protectionKey : FileProtectionType.completeUntilFirstUserAuthentication ])
-                #endif
-            } catch let error as NSError {
-                print ("Error creating file: \(error)")
-                return nil
-            }
-        }
-        return URL(fileURLWithPath: path, isDirectory: true)
-    }
 }
 
 
