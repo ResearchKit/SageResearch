@@ -380,7 +380,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
 					F88725D82051C0F800A4B82F = {
