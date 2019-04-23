@@ -79,7 +79,7 @@
     {
         "identifier": "sex",
         "type": "demographics",
-        "title": "What was your sex at birth?",
+        "title": "What is your sex?",
         "inputFields": [{
             "uiHint": "list",
             "type": "singleChoice.string",
@@ -108,9 +108,9 @@
             },
             "learnMore": {
                 "type": "webView",
-                "title": "Why are we asking about your sex at birth?",
+                "title": "Why are we asking about your sex?",
                 "usesBackButton": true,
-                "url": "Sex_at_birth.html",
+                "url": "Demographics_questions.html",
                 "buttonTitle": "Why are we asking this?"
             }
         }
