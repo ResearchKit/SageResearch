@@ -182,6 +182,8 @@ public class RSDWeeklyScheduleFormatter : Formatter {
                 return "\(times)\n\(days)"
             case .short:
                 return "\(times), \(days)"
+            @unknown default:
+                return "\(times), \(days)"
             }
         } else {
             return days ?? times
@@ -204,6 +206,10 @@ public class RSDWeeklyScheduleFormatter : Formatter {
             let delimiter = Localization.localizedString("LIST_FORMAT_DELIMITER")
             return days.joined(separator: delimiter)
         case .short:
+            let days = daysOfWeek.sorted().map { $0.shortText! }
+            let delimiter = Localization.localizedString("LIST_FORMAT_DELIMITER")
+            return days.joined(separator: delimiter)
+        @unknown default:
             let days = daysOfWeek.sorted().map { $0.shortText! }
             let delimiter = Localization.localizedString("LIST_FORMAT_DELIMITER")
             return days.joined(separator: delimiter)

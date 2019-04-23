@@ -151,6 +151,8 @@ open class RSDOverviewStepViewController: RSDPermissionStepViewController {
                 self?.handleNotificationAuthorizationDenied()
             case .authorized, .provisional:
                 self?.remindMeLater()
+            @unknown default:
+                self?.handleNotificationAuthorizationDenied()
             }
         }
     }

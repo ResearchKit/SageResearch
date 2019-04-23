@@ -319,6 +319,9 @@ extension NSCalendar.Unit {
                 return input.union(.timeZone)
             case .calendar:
                 return input.union(.calendar)
+            @unknown default:
+                assertionFailure("Unknown enum type")
+                return input
             }
         })
     }
