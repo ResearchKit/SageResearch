@@ -45,6 +45,13 @@ extension CRFHeartRateStep : RSDStepViewControllerVendor {
     }
 }
 
+extension RSDIdentifier {
+    static let restingHRResultIdentifier: RSDIdentifier = "resting"
+    static let vo2MaxResultIdentifier: RSDIdentifier = "vo2_max"
+    static let endHRResultIdentifier: RSDIdentifier = "end"
+    static let samplesResultIdentifier: RSDIdentifier = "samples"
+}
+
 /// The view controller to use to record the participant's heart rate.
 public final class CRFHeartRateStepViewController: RSDActiveStepViewController, CRFHeartRateRecorderDelegate {
 
@@ -201,26 +208,21 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
             let isResting = (self.step as? CRFHeartRateStep)?.isResting ?? true
             if isResting {
                 if let bpm = recorder.restingHeartRate() {
-                    addSample(bpm, "resting")
+                    addSample(bpm, RSDIdentifier.restingHRResultIdentifier.stringValue)
                     resultSample = bpm
                 }
             }
             else {
-                if let bpm = recorder.peakHeartRate() {
-                    addSample(bpm, "peak")
-                }
-                if let bpm = recorder.endHeartRate() {
-                    addSample(bpm, "end")
+
+                if let vo2 = recorder.vo2Max(), let bpm = recorder.endHeartRate()  {
+                    addResult(RSDAnswerResultObject(identifier: RSDIdentifier.vo2MaxResultIdentifier.stringValue, answerType: .integer, value: Int(round(vo2))))
+                    addSample(bpm, RSDIdentifier.endHRResultIdentifier.stringValue)
                     resultSample = bpm
-                }
-                if let vo2 = recorder.vo2Max() {
-                    addResult(RSDAnswerResultObject(identifier: "vo2_max", answerType: .integer, value: Int(round(vo2))))
                 }
             }
             
             // Add all the samples.
-            let sectionIdentifier = self.stepViewModel.sectionIdentifier()
-            let samplesResult = CRFHeartRateSamplesResult(identifier: "\(sectionIdentifier)samples", samples: recorder.sampleProcessor.bpmSamples)
+            let samplesResult = CRFHeartRateSamplesResult(identifier: RSDIdentifier.samplesResultIdentifier.stringValue, samples: recorder.sampleProcessor.bpmSamples)
             addResult(samplesResult)
         }
         
@@ -352,7 +354,6 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
     }
     
     private func _stopAnimatingHeart() {
-        print("stopping heart animation.")
         self.imageView.layer.removeAllAnimations()
         self.imageView.layer.opacity = 1.0
     }
