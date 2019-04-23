@@ -57,7 +57,7 @@ open class RSDTaskState : NSObject {
     /// presenting it in order to override the default location.
     ///
     /// Before presenting the view controller, set the `outputDirectory` property to specify a
-    /// path where files should be written when an `ORKFileResult` object must be returned for
+    /// path where files should be written when an `RSDFileResult` object must be returned for
     /// a step.
     ///
     /// - note: The calling application is responsible for deleting this directory once the files
