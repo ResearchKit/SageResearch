@@ -1045,7 +1045,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDTaskState.swift",
-      "line": 48,
+      "line": 80,
       "symbol": "RSDTaskState.init(taskResult:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
