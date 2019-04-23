@@ -211,7 +211,7 @@
         "type": "completion",
         "resultTitle": "Your estimated Recovery HR score is",
         "stepResultIdentifier": "hr",
-        "resultIdentifier": "vo2Max",
+        "resultIdentifier": "vo2_max",
         "title": "Recovery HR Score",
         "text": "The score above estimates a vital sign called VO2max that is normally measured in a lab or clinic.",
         "actions": {
