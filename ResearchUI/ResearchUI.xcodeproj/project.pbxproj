@@ -499,6 +499,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = FF443E0C1F7AC21900F43BE7;
 			productRefGroup = FF443E171F7AC21900F43BE7 /* Products */;
