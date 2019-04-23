@@ -548,21 +548,21 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/View Controllers/RSDWebViewController.swift",
-      "line": 186,
+      "line": 187,
       "symbol": "RSDWebViewController.preferredStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/View Controllers/RSDWebViewController.swift",
-      "line": 266,
+      "line": 274,
       "symbol": "RSDWebViewController.webView(_:didFinish:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/View Controllers/RSDWebViewController.swift",
-      "line": 270,
+      "line": 278,
       "symbol": "RSDWebViewController.webView(_:didFail:withError:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
