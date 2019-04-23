@@ -218,7 +218,7 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
     /// Transform the component into the components for the picker source, or return `nil`
     /// if this is a separator row.
     func transformedComponent(_ component: Int) -> Int? {
-        guard let idx = pickerComponents().index(of: component) else { return nil }
+        guard let idx = pickerComponents().firstIndex(of: component) else { return nil }
         return idx
     }
     

@@ -707,7 +707,7 @@ extension Array where Element : BinaryFloatingPoint {
     /// Returns the max value and index of that value.
     func seekMax() -> (value: Element, index: Int) {
         let value = self.max()!
-        let index = self.index(of: value)!
+        let index = self.firstIndex(of: value)!
         return (value, index)
     }
     

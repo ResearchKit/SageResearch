@@ -99,7 +99,7 @@ extension RSDTaskResult  {
     @discardableResult
     mutating public func appendStepHistory(with result: RSDResult) -> RSDResult? {
         var previousResult: RSDResult?
-        if let idx = stepHistory.index(where: { $0.identifier == result.identifier }) {
+        if let idx = stepHistory.firstIndex(where: { $0.identifier == result.identifier }) {
             previousResult = stepHistory.remove(at: idx)
         }
         stepHistory.append(result)
@@ -111,7 +111,7 @@ extension RSDTaskResult  {
     /// - returns: The previous result or `nil` if there wasn't one.
     @discardableResult
     mutating public func removeStepHistory(from stepIdentifier: String) -> Array<RSDResult>? {
-        guard let idx = stepHistory.index(where: { $0.identifier == stepIdentifier }) else { return nil }
+        guard let idx = stepHistory.firstIndex(where: { $0.identifier == stepIdentifier }) else { return nil }
         let subrange = stepHistory[idx...]
         stepHistory.replaceSubrange(idx..., with: [])
         return Array(subrange)
@@ -122,7 +122,7 @@ extension RSDTaskResult  {
     /// the asynchronous results include any canonical results that are independent of path.
     /// - parameter result:  The result to add to the async results.
     mutating public func appendAsyncResult(with result: RSDResult) {
-        if let idx = asyncResults?.index(where: { $0.identifier == result.identifier }) {
+        if let idx = asyncResults?.firstIndex(where: { $0.identifier == result.identifier }) {
             asyncResults?.remove(at: idx)
         }
         if asyncResults == nil {

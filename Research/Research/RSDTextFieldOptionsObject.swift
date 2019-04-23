@@ -186,7 +186,7 @@ public enum RSDTextAutocapitalizationType : String, Codable, RSDStringEnumSet {
     /// Return the `UITextAutocapitalizationType` that maps to this enum.
     #if os(iOS) || os(tvOS)
     public func textAutocapitalizationType() -> UITextAutocapitalizationType {
-        guard let idx = RSDTextAutocapitalizationType.orderedSet.index(of: self),
+        guard let idx = RSDTextAutocapitalizationType.orderedSet.firstIndex(of: self),
             let type = UITextAutocapitalizationType(rawValue: Int(idx))
             else {
                 return .none
@@ -215,7 +215,7 @@ public enum RSDTextAutocorrectionType : String, Codable, RSDStringEnumSet {
     /// Return the `UITextAutocorrectionType` that maps to this enum.
     #if os(iOS) || os(tvOS)
     public func textAutocorrectionType() -> UITextAutocorrectionType {
-        guard let idx = RSDTextAutocorrectionType.orderedSet.index(of: self),
+        guard let idx = RSDTextAutocorrectionType.orderedSet.firstIndex(of: self),
             let type = UITextAutocorrectionType(rawValue: Int(idx))
             else {
                 return .default
@@ -244,7 +244,7 @@ public enum RSDTextSpellCheckingType  : String, Codable, RSDStringEnumSet {
     /// Return the `UITextSpellCheckingType` that maps to this enum.
     #if os(iOS) || os(tvOS)
     public func textSpellCheckingType() -> UITextSpellCheckingType {
-        guard let idx = RSDTextSpellCheckingType.orderedSet.index(of: self),
+        guard let idx = RSDTextSpellCheckingType.orderedSet.firstIndex(of: self),
             let type = UITextSpellCheckingType(rawValue: Int(idx))
             else {
                 return .default
@@ -275,7 +275,7 @@ public enum RSDKeyboardType  : String, Codable, RSDStringEnumSet {
     /// Return the `UIKeyboardType` that maps to this enum.
     #if os(iOS) || os(tvOS)
     public func keyboardType() -> UIKeyboardType {
-        guard let idx = RSDKeyboardType.orderedSet.index(of: self),
+        guard let idx = RSDKeyboardType.orderedSet.firstIndex(of: self),
             let type = UIKeyboardType(rawValue: Int(idx))
             else {
                 return .default

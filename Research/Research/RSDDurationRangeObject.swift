@@ -213,7 +213,7 @@ extension UnitDuration : Comparable {
     /// Increment up to the next larger unit.
     public func increment() -> UnitDuration? {
         let sizeOrder = UnitDuration.all.sorted(by: <)
-        guard let idx = sizeOrder.index(of: self), idx + 1 < sizeOrder.count else { return nil }
+        guard let idx = sizeOrder.firstIndex(of: self), idx + 1 < sizeOrder.count else { return nil }
         return sizeOrder[idx + 1]
     }
     
