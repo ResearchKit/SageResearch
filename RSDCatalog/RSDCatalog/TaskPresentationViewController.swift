@@ -102,6 +102,17 @@ class TaskPresentationViewController: UITableViewController, RSDTaskViewControll
         var debugResult: String = self.result!.identifier
         debugResult.append("\n\n=== Completed: \(reason) error:\(String(describing: error))")
         print(debugResult)
+        
+        // - note: The calling application is responsible for deleting the output directory once the files
+        // are processed by encrypting them locally. The encrypted files can then be stored for upload
+        // to a server or cloud service. These files are **not** encrypted so depending upon the
+        // application, there is a risk of exposing PII data stored in these files.
+        // For a production app, the cleanup method should be called for for the case where the participant
+        // has exited the task early, cancelled the task, or there was a failure. Additionally, if using the
+        // task result directly rather than the archiving the data using the archiving protocols, the cleanup
+        // method should be called following upload either here or from `readyToSave`. syoung 04/22/2019
+        //
+        // taskController.taskViewModel.cleanup()
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {

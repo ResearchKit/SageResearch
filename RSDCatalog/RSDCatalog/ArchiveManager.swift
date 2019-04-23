@@ -55,7 +55,10 @@ public class ArchiveManager : NSObject, RSDDataArchiveManager {
     public func encryptAndUpload(taskResult: RSDTaskResult, dataArchives: [RSDDataArchive], completion: @escaping (() -> Void)) {
         // Do nothing - this is only to test that archiving doesn't blow up. For an actual app, this archive manager would be
         // replaced with a manager that can handle the upload services.
-        completion()
+        // For a production application (rather than the sample app), the completion handler should be called to hand off
+        // back to the task state to manage cleanup. Because the sample app allows for inspection of the files
+        // used by this app to store data, the completion is not being called here.
+        // completion()
     }
     
     public func handleArchiveFailure(taskResult: RSDTaskResult, error: Error, completion: @escaping (() -> Void)) {
