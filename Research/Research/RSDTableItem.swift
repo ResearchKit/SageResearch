@@ -94,8 +94,9 @@ open class RSDTableItem {
 
 extension RSDTableItem : Hashable {
     
-    public var hashValue: Int {
-        return self.identifier.hashValue ^ (self.sectionIdentifier?.hashValue ?? 0)
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+        hasher.combine(sectionIdentifier ?? "")
     }
     
     public static func ==(lhs: RSDTableItem, rhs: RSDTableItem) -> Bool {

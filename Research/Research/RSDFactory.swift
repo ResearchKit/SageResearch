@@ -797,7 +797,7 @@ open class RSDFactory {
         case .file:
             return try RSDFileResultObject(from: decoder)
         default:
-            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a result.")
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(resultType)` as a decodable class type for a result.")
         }
     }
     

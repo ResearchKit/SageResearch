@@ -107,8 +107,9 @@ public struct RSDWeeklyScheduleObject : Codable, RSDSchedule {
 
 extension RSDWeeklyScheduleObject : Hashable, Comparable {
     
-    public var hashValue: Int {
-        return daysOfWeek.hashValue ^ RSDObjectHash(timeOfDayString)
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(daysOfWeek)
+        hasher.combine(timeOfDayString ?? "")
     }
     
     public static func ==(lhs: RSDWeeklyScheduleObject, rhs: RSDWeeklyScheduleObject) -> Bool {
