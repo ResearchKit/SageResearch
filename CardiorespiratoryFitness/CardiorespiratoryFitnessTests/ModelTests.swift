@@ -108,7 +108,7 @@ class ModelTests: XCTestCase {
         let skipTo = taskInfo.task.findStep(with: action.skipToIdentifier)
         XCTAssertNotNil(skipTo, "The skip action has the wrong step identifier")
         
-        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback", "resting", "hr"))
+        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback", RSDIdentifier.restingHRResultIdentifier.stringValue, "hr"))
         XCTAssertTrue(checkHeartRate(taskInfo.task, "hr", true, true))
     }
     
@@ -131,8 +131,8 @@ class ModelTests: XCTestCase {
         let steps = navigator.steps.map { $0.identifier }
         XCTAssertEqual(steps, ["introduction", "sitDownInstruction", "coverFlash", "hr1", "feedback1", "hr", "feedback"])
         
-        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback", "resting", "hr"))
-        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback1", "resting", "hr1"))
+        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback", RSDIdentifier.restingHRResultIdentifier.stringValue, "hr"))
+        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback1", RSDIdentifier.restingHRResultIdentifier.stringValue, "hr1"))
         XCTAssertTrue(checkHeartRate(taskInfo.task, "hr", true, false))
         XCTAssertTrue(checkHeartRate(taskInfo.task, "hr1", true, false))
     }
@@ -171,7 +171,7 @@ class ModelTests: XCTestCase {
         XCTAssertNil(taskInfo.detail)
         XCTAssertEqual(taskInfo.estimatedMinutes, 5)
         
-        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback", "vo2Max", "hr"))
+        XCTAssertTrue(checkFeedback(taskInfo.task, "feedback", RSDIdentifier.vo2MaxResultIdentifier.stringValue, "hr"))
         XCTAssertTrue(checkHeartRate(taskInfo.task, "hr", false, false))
     }
     

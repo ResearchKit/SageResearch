@@ -79,7 +79,7 @@
     {
         "identifier": "sex",
         "type": "demographics",
-        "title": "What was your sex at birth?",
+        "title": "What is your sex?",
         "inputFields": [{
             "uiHint": "list",
             "type": "singleChoice.string",
@@ -92,7 +92,7 @@
                 "value": "female"
             },
             {
-                "text": "Other",
+                "text": "Other, or prefer not to answer",
                 "value": "other"
             }
             ]
@@ -105,6 +105,13 @@
             "goBackward": {
                 "type": "default",
                 "buttonTitle": "Back"
+            },
+            "learnMore": {
+                "type": "webView",
+                "title": "Why are we asking about your sex?",
+                "usesBackButton": true,
+                "url": "Demographics_questions.html",
+                "buttonTitle": "Why are we asking this?"
             }
         }
     },
@@ -204,7 +211,7 @@
         "type": "completion",
         "resultTitle": "Your estimated Recovery HR score is",
         "stepResultIdentifier": "hr",
-        "resultIdentifier": "vo2Max",
+        "resultIdentifier": "vo2_max",
         "title": "Recovery HR Score",
         "text": "The score above estimates a vital sign called VO2max that is normally measured in a lab or clinic.",
         "actions": {

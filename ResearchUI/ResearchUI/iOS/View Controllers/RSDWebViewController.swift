@@ -127,6 +127,7 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
                 self.webView.rsd_alignAllToSuperview(padding: 0)
             }
         }
+        loadWebview()
     }
     
     func layoutForFooterCloseButton(_ closeTitle: String) {
@@ -196,8 +197,15 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
     /// Override `viewDidAppear()` to load the webview on first appearance.
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        guard !_webviewLoaded else { return }
+        loadWebview()
+    }
+    
+    func loadWebview() {
+        guard !_webviewLoaded &&
+            (self.url != nil || self.html != nil || self.resourceTransformer != nil)
+            else {
+                return
+        }
         _webviewLoaded = true
 
         if let url = self.url {
