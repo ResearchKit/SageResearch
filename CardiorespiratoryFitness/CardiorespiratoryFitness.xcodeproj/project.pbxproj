@@ -10,6 +10,7 @@
 		F80479E02257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */; };
 		F80479E22257E52200E569AC /* CRFTorchInstructionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */; };
 		F836461122653EB700CCA0EF /* Tips_for_measuring.html in Resources */ = {isa = PBXBuildFile; fileRef = F836461022653EB700CCA0EF /* Tips_for_measuring.html */; };
+		F850B58B226EA5050046C905 /* Sex_at_birth.html in Resources */ = {isa = PBXBuildFile; fileRef = F850B58A226EA5050046C905 /* Sex_at_birth.html */; };
 		F857BAAD224BE2FE0089B150 /* Heart_Snapshot.html in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */; };
 		F857BAAF224BFB3B0089B150 /* Heartrate_Resting.json in Resources */ = {isa = PBXBuildFile; fileRef = F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */; };
 		F86B5290224AE8A700BB7354 /* Heartrate_Training.json in Resources */ = {isa = PBXBuildFile; fileRef = F86B528F224AE8A700BB7354 /* Heartrate_Training.json */; };
@@ -68,6 +69,7 @@
 		F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStepViewController.swift; sourceTree = "<group>"; };
 		F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStep.swift; sourceTree = "<group>"; };
 		F836461022653EB700CCA0EF /* Tips_for_measuring.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Tips_for_measuring.html; sourceTree = "<group>"; };
+		F850B58A226EA5050046C905 /* Sex_at_birth.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Sex_at_birth.html; sourceTree = "<group>"; };
 		F857BAAC224BE2FD0089B150 /* Heart_Snapshot.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Heart_Snapshot.html; sourceTree = "<group>"; };
 		F857BAAE224BFB3B0089B150 /* Heartrate_Resting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Resting.json; sourceTree = "<group>"; };
 		F86B528F224AE8A700BB7354 /* Heartrate_Training.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Heartrate_Training.json; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				F836461022653EB700CCA0EF /* Tips_for_measuring.html */,
 				F8D71AF7224D4A0500DA49BC /* When_to_measure.html */,
 				F8D71B04224D51B400DA49BC /* Normal_HR.html */,
+				F850B58A226EA5050046C905 /* Sex_at_birth.html */,
 				F8D71B02224D4FA100DA49BC /* HR_Recovery_Score.html */,
 			);
 			name = HTML;
@@ -416,6 +419,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F850B58B226EA5050046C905 /* Sex_at_birth.html in Resources */,
 				F836461122653EB700CCA0EF /* Tips_for_measuring.html in Resources */,
 				F8D71B03224D4FA100DA49BC /* HR_Recovery_Score.html in Resources */,
 				F880C12F2051F2A700ACB4D4 /* Images.xcassets in Resources */,

@@ -92,7 +92,7 @@
                 "value": "female"
             },
             {
-                "text": "Other",
+                "text": "Other, or prefer not to answer",
                 "value": "other"
             }
             ]
@@ -105,6 +105,13 @@
             "goBackward": {
                 "type": "default",
                 "buttonTitle": "Back"
+            },
+            "learnMore": {
+                "type": "webView",
+                "title": "Why are we asking about your sex at birth?",
+                "usesBackButton": true,
+                "url": "Sex_at_birth.html",
+                "buttonTitle": "Why are we asking this?"
             }
         }
     },

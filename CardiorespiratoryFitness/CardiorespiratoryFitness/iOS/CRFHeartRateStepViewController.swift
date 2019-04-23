@@ -214,7 +214,7 @@ public final class CRFHeartRateStepViewController: RSDActiveStepViewController, 
                     resultSample = bpm
                 }
                 if let vo2 = recorder.vo2Max() {
-                    addResult(RSDAnswerResultObject(identifier: "vo2Max", answerType: .decimal, value: vo2))
+                    addResult(RSDAnswerResultObject(identifier: "vo2Max", answerType: .integer, value: Int(vo2)))
                 }
             }
             

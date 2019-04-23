@@ -87,7 +87,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
         return sampleProcessor.endHeartRate()
     }
     
-    public func vo2Max() -> (Double, Double)? {
+    public func vo2Max() -> Double? {
         guard let sexValue = self.taskViewModel.taskResult.findAnswerResult(with: CRFDemographicsKeys.sex.stringValue)?.value as? String,
             let sex = CRFSex(rawValue: sexValue),
             let birthYear = self.taskViewModel.taskResult.findAnswerResult(with: CRFDemographicsKeys.birthYear.stringValue)?.value as? Int
