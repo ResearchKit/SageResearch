@@ -91,7 +91,8 @@ extension RSDFraction : ExpressibleByFloatLiteral {
 extension RSDFraction : Hashable {
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(doubleValue)
+        hasher.combine(numerator)
+        hasher.combine(denominator)
     }
 
     public static func ==(lhs: RSDFraction, rhs: RSDFraction) -> Bool {

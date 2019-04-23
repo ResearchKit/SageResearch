@@ -193,20 +193,10 @@ extension RSDResourceTransformer {
 /// `RSDResourceType` is an extendable struct for describing the type of a resource.
 /// By default, these values will map to the file extension.
 public struct RSDResourceType : RawRepresentable, Equatable, Hashable, Codable {
-    public typealias RawValue = String
-    
     public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
-    }
-    
-    public var hashValue: Int {
-        return rawValue.hashValue
-    }
-    
-    public static func ==(lhs: RSDResourceType, rhs: RSDResourceType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
     }
     
     /// JSON file.

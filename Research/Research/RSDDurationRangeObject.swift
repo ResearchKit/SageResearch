@@ -36,6 +36,10 @@ import Foundation
 /// `RSDDurationRangeObject` extends the properties of an `RSDInputField` for a `.duration` data type.
 public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, Codable {
     
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case minimumValue, maximumValue, stepInterval, unit, durationUnits
+    }
+    
     /// The minimum allowed duration.
     public let minimumDuration: Measurement<UnitDuration>
     
@@ -74,10 +78,6 @@ public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, 
         self.maximumDuration = maximumDuration
         self.stepInterval = stepInterval
         self.formatter = UnitDuration.defaultFormatter(for: units, baseUnit: baseUnit)
-    }
-
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case minimumValue, maximumValue, stepInterval, unit, durationUnits
     }
     
     /// Initialize from a `Decoder`.

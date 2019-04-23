@@ -41,6 +41,10 @@ import UIKit
 ///
 /// - seealso: `RSDInputField` and `RSDFormStepDataSource`
 public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
+    
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case textValidator, invalidMessage, maximumLength, isSecureTextEntry, autocapitalizationType, autocorrectionType, spellCheckingType, keyboardType
+    }
 
     /// A text validator that can be used to validate a string.
     public var textValidator: RSDTextValidator?
@@ -66,10 +70,6 @@ public struct RSDTextFieldOptionsObject : RSDTextFieldOptions, Codable {
     
     /// Is the text field for password entry?
     public var isSecureTextEntry: Bool
-    
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case textValidator, invalidMessage, maximumLength, isSecureTextEntry, autocapitalizationType, autocorrectionType, spellCheckingType, keyboardType
-    }
     
     /// Default initializer.
     ///

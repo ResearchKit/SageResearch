@@ -62,15 +62,9 @@ extension Sequence {
     ///
     /// - parameter transform: The function used to transform the input sequence into a key/value pair
     /// - returns: A dictionary of key/value pairs.
-    @available(*, deprecated)
+    @available(*, unavailable)
     public func rsd_filteredDictionary<Hashable, T>(_ transform: (Self.Iterator.Element) throws -> (Hashable, T)?) rethrows -> [Hashable: T] {
-        var result = [Hashable:T]()
-        for element in self {
-            if let (key, t) = try transform(element) {
-                result[key] = t
-            }
-        }
-        return result
+        fatalError("This method is unavailable. Use `reduce(into:)` instead.")
     }
     
     /// Find the last element in the `Sequence` that matches the given criterion.
@@ -79,14 +73,9 @@ extension Sequence {
     ///
     /// - parameter evaluate: The function to use to evaluate the search pattern.
     /// - returns: The element that matches the pattern, searching in reverse.
-    @available(*, deprecated)
+    @available(*, unavailable)
     public func rsd_last(where evaluate: (Self.Iterator.Element) throws -> Bool) rethrows -> Self.Iterator.Element? {
-        for element in self.reversed() {
-            if try evaluate(element) {
-                return element
-            }
-        }
-        return nil
+        fatalError("This method is unavailable. Use `last(where:)` instead.")
     }
     
     /// Find the next element in the `Sequence` after the element that matches the given criterion.
