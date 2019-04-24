@@ -779,7 +779,7 @@ open class RSDFactory {
     /// Decode the result from this decoder.
     ///
     /// - parameters:
-    ///     - typeName:     The string representing the class name for this object.
+    ///     - resultType:   The result type for this result.
     ///     - decoder:      The decoder to use to instantiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
