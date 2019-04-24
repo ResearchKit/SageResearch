@@ -47,4 +47,5 @@
 "HEARTRATE_CAPTURE_CAPTURING"     = "Capturing...";
 "HEARTRATE_LEARN_NORMAL_BUTTON"   = "What is a ‘normal’ resting HR?";
 "HEARTRATE_LEARN_TIPS_BUTTON"     = "Tips for measuring";
+"HEARTRATE_LEARN_TIPS_TITLE"      = "Tips for measuring";
 "HEARTRATE_MORNING_TITLE"         = "Morning resting heart rate";

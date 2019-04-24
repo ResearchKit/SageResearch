@@ -104,8 +104,8 @@ open class CRFHeartRateStep : RSDActiveUIStepObject, RSDRestartableRecorderConfi
             self.requiresBackgroundAudio = true
             
             if self.isResting {
-                var learnMore = RSDWebViewUIActionObject(url: "Tips_for_measuring.html", buttonTitle: "Tips for measuring")
-                learnMore.title = "Tips for measuring"
+                var learnMore = RSDWebViewUIActionObject(url: "Tips_for_measuring.html", buttonTitle: Localization.localizedString("HEARTRATE_LEARN_TIPS_TITLE"))
+                learnMore.title = Localization.localizedString("HEARTRATE_LEARN_TIPS_BUTTON")
                 learnMore.factoryBundle = Bundle(for: CRFHeartRateStep.self)
                 learnMore.usesBackButton = true
                 if self.actions != nil {
