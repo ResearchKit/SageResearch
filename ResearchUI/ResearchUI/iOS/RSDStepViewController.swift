@@ -471,15 +471,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             return false
         }
     }
-    
-    /// What is the color style for the given placement?
-    /// - parameter placement: The view placement of the element.
-    /// - returns: The color style (if any) defined for that element.
-    @available(*, unavailable)
-    open func colorStyle(for placement: RSDColorPlacement, hasCustomBackgroundColor: Bool) -> RSDColorStyle? {
-        // No longer used.
-        return nil
-    }
 
     /// Convenience method for setting up each of the buttons. This will set up color theme, add the
     /// selector, and hide the button if indicated by the UI and the task state.

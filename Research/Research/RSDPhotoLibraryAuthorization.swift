@@ -56,6 +56,8 @@ public struct RSDPhotoLibraryAuthorization {
             return .restricted
         case .denied:
             return .denied
+        @unknown default:
+            return .denied
         }
     }
     
@@ -72,6 +74,8 @@ public struct RSDPhotoLibraryAuthorization {
                     return .denied
                 case .restricted:
                     return .restricted
+                @unknown default:
+                    return .denied
                 }
             }()
             let error = (status == .authorized) ? nil : RSDPermissionError.notAuthorized(.photoLibrary, rsd_status)

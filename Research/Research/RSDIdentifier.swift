@@ -38,10 +38,8 @@ import Foundation
 /// `RSDIdentifier` is intended to allow a developer to define constants for the identifiers
 /// that are used to define the tasks, steps, input fields, and async actions associated with
 /// a given task or task group.
-public struct RSDIdentifier : RawRepresentable, Codable, Hashable {
-    public typealias RawValue = String
-    
-    public private(set) var rawValue: String
+public struct RSDIdentifier : RawRepresentable, Codable, Hashable {    
+    public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue

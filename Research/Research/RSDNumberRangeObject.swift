@@ -36,6 +36,10 @@ import Foundation
 /// `RSDNumberRangeObject` extends the properties of an `RSDInputField` for a `decimal` or `integer` data type.
 public struct RSDNumberRangeObject : RSDNumberRange, RSDRangeWithFormatter, Codable {
     
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case minimumValue, maximumValue, stepInterval, unit, formatter
+    }
+    
     /// The minimum allowed number. When the value of this property is `nil`, there is no minimum.
     public let minimumValue: Decimal?
     
@@ -107,10 +111,6 @@ public struct RSDNumberRangeObject : RSDNumberRange, RSDRangeWithFormatter, Coda
         self.stepInterval = (stepInterval == nil) ? nil : Decimal(floatLiteral: stepInterval!)
         self.unit = unit
         self.formatter = formatter
-    }
-    
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case minimumValue, maximumValue, stepInterval, unit, formatter
     }
     
     /// Initialize from a `Decoder`.

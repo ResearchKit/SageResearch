@@ -38,6 +38,10 @@ import Foundation
 public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRule, Codable {
     public typealias Value = T
     
+    private enum CodingKeys: String, CodingKey, CaseIterable {
+        case skipToIdentifier, matchingValue = "matchingAnswer", ruleOperator, cohort
+    }
+    
     /// Optional skip identifier for this rule. If available, this will be used as the skip identifier,
     /// otherwise the `skipToIdentifier` will be assumed to be `RSDIdentifier.exit`
     public let skipToIdentifier: String?
@@ -70,10 +74,6 @@ public struct RSDComparableSurveyRuleObject<T : Codable> : RSDComparableSurveyRu
         self.matchingValue = matchingValue
         self.ruleOperator = ruleOperator
         self.cohort = cohort
-    }
-    
-    private enum CodingKeys: String, CodingKey, CaseIterable {
-        case skipToIdentifier, matchingValue = "matchingAnswer", ruleOperator, cohort
     }
     
     /// Initialize from a `Decoder`. This method will decode the values and also check that the combination of

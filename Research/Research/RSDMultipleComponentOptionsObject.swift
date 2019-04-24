@@ -114,7 +114,7 @@ extension RSDMultipleComponentOptions {
         
         // Filter through and look for the current answer
         let selected: [Int] = answers.enumerated().compactMap { (component, value) -> Int? in
-            return choices[component].index(where: { RSDObjectEquality($0.answerValue, value) })
+            return choices[component].firstIndex(where: { RSDObjectEquality($0.answerValue, value) })
         }
         
         return selected.count == self.numberOfComponents ? selected : nil

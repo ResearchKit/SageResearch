@@ -63,6 +63,8 @@ public struct RSDAudioVisualAuthorization {
             return .restricted
         case .denied:
             return .denied
+        @unknown default:
+            return .denied
         }
     }
     

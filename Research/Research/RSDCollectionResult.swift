@@ -78,7 +78,7 @@ extension RSDCollectionResult {
     @discardableResult
     mutating public func appendInputResults(with result: RSDResult) -> RSDResult? {
         var previousResult: RSDResult?
-        if let idx = inputResults.index(where: { $0.identifier == result.identifier }) {
+        if let idx = inputResults.firstIndex(where: { $0.identifier == result.identifier }) {
             previousResult = inputResults.remove(at: idx)
         }
         inputResults.append(result)
@@ -90,7 +90,7 @@ extension RSDCollectionResult {
     /// - returns: The previous result or `nil` if there wasn't one.
     @discardableResult
     mutating public func removeInputResult(with identifier: String) -> RSDResult? {
-        guard let idx = inputResults.index(where: { $0.identifier == identifier }) else {
+        guard let idx = inputResults.firstIndex(where: { $0.identifier == identifier }) else {
             return nil
         }
         return inputResults.remove(at: idx)

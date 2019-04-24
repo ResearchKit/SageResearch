@@ -57,7 +57,7 @@ public extension RSDAlertPresenter {
     ///     - title:            The title to display in the popup.
     ///     - message:          The message to display in the popup.
     ///     - actionHandler:    The action handler to call when completed.
-    public func presentAlertWithOk(title: String?, message: String, actionHandler: ((UIAlertAction) -> Void)?) {
+    func presentAlertWithOk(title: String?, message: String, actionHandler: ((UIAlertAction) -> Void)?) {
         
         let okAction = UIAlertAction(title:Localization.buttonOK(), style: .default, handler: actionHandler)
         presentAlertWithActions(title: title, message: message, preferredStyle: .alert, actions: [okAction])
@@ -70,7 +70,7 @@ public extension RSDAlertPresenter {
     ///     - title:            The title to display in the popup.
     ///     - message:          The message to display in the popup.
     ///     - actionHandler:    The action handler to call when completed.
-    public func presentAlertWithYesNo(title: String?, message: String, actionHandler: @escaping ((Bool) -> Void)) {
+    func presentAlertWithYesNo(title: String?, message: String, actionHandler: @escaping ((Bool) -> Void)) {
         
         let noAction = UIAlertAction(title: Localization.buttonNo(), style: .default, handler: { _ in
             actionHandler(false)
@@ -89,7 +89,7 @@ public extension RSDAlertPresenter {
     ///     - message:          The message to display in the popup.
     ///     - preferredStyle:   The preferred style of the alert.
     ///     - actions:          The actions to add to the alert controller.
-    public func presentAlertWithActions(title: String?, message: String, preferredStyle: UIAlertController.Style, actions: [UIAlertAction]) {
+    func presentAlertWithActions(title: String?, message: String, preferredStyle: UIAlertController.Style, actions: [UIAlertAction]) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
         for action in actions {
             alert.addAction(action)

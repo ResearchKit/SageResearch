@@ -208,7 +208,7 @@ extension UIView {
         var constraints: [NSLayoutConstraint] = []
         attributes.forEach({
             
-            let toAttribute = toAttributes[attributes.index(of: $0)!]
+            let toAttribute = toAttributes[attributes.firstIndex(of: $0)!]
             let _padding = $0 == .trailing || $0 == .bottom ? -1 * padding : padding
             let constraint = NSLayoutConstraint(item: self,
                                attribute: $0,

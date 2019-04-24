@@ -79,8 +79,9 @@ public struct RSDFileManifest : Codable, Hashable, Equatable {
     }
     
     /// A hash for the manifest.
-    public var hashValue: Int {
-        return filename.hashValue ^ timestamp.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(filename)
+        hasher.combine(timestamp)
     }
     
     /// The file manifest files are equal if the filename, timestamp, and contentType are the same.

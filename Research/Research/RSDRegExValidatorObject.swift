@@ -47,8 +47,7 @@ public struct RSDRegExValidatorObject : RSDCodableRegExMatchValidator {
     }
 }
 
-extension RSDRegExValidatorObject : RawRepresentable {
-    public typealias RawValue = String
+extension RSDRegExValidatorObject : RawRepresentable, Equatable {
     
     /// The `regExPattern` is used to represent the regex.
     public var rawValue: String {
@@ -64,12 +63,6 @@ extension RSDRegExValidatorObject : RawRepresentable {
             assertionFailure("Failed to create reg ex: \(err)")
             return nil
         }
-    }
-}
-
-extension RSDRegExValidatorObject : Equatable {
-    public static func ==(lhs: RSDRegExValidatorObject, rhs: RSDRegExValidatorObject) -> Bool {
-        return lhs.rawValue == rhs.rawValue
     }
 }
 

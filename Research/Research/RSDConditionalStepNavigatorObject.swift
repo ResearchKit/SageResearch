@@ -82,7 +82,7 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
             var progressMarkers = markers
             let searchRange = self.steps[..<idx].map { $0.identifier }
             if let lastIdentifier = searchRange.last(where: { markers.contains($0) }),
-                let progressIndex = markers.index(of: lastIdentifier) {
+                let progressIndex = markers.firstIndex(of: lastIdentifier) {
                 // If the marker is found then insert after it.
                 progressMarkers.insert(step.identifier, at: progressIndex + 1)
             } else {
@@ -106,7 +106,7 @@ public struct RSDConditionalStepNavigatorObject : RSDConditionalStepNavigator, R
     /// Find the index of the step with the given identifier.
     public func index(of identifier: String?) -> Int? {
         guard let identifier = identifier else { return nil }
-        return self.steps.index(where: { $0.identifier == identifier })
+        return self.steps.firstIndex(where: { $0.identifier == identifier })
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated

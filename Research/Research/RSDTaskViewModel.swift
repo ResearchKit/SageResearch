@@ -581,7 +581,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             self.previousResults = [previousResult]
             return
         }
-        if let idx = self.previousResults!.index(where: { $0.identifier == previousResult.identifier }) {
+        if let idx = self.previousResults!.firstIndex(where: { $0.identifier == previousResult.identifier }) {
             self.previousResults!.remove(at: idx)
         }
         self.previousResults!.append(previousResult)

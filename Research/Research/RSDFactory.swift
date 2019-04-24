@@ -545,14 +545,9 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIActionHandlerObject`
     open func decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
-        guard let str = try? self.typeName(from: decoder), let typeName = str else {
-            let obj = try _deprecated_decodeUIAction(from: decoder, for: actionType)
-            #if DEBUG
+        guard let typeName = try self.typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding a UI action without a `type` key defining a value for the the class name.")
             throw DecodingError.keyNotFound(TypeKeys.type, context)
-            #else
-            return obj
-            #endif
         }
         
         let objType: RSDUIActionObjectType = RSDUIActionObjectType(rawValue: typeName)
@@ -577,24 +572,6 @@ open class RSDFactory {
         default:
             return try _decodeResource(RSDUIActionObject.self, from: decoder)
         }
-    }
-    
-    private func _deprecated_decodeUIAction(from decoder:Decoder, for actionType: RSDUIActionType) throws -> RSDUIAction {
-        // check if the decoder can be used to decode a web-based action
-        if actionType == .navigation(.learnMore) || actionType.customAction != nil,
-            let webAction = try? _decodeResource(RSDWebViewUIActionObject.self, from: decoder) {
-            return webAction
-        }
-        // check if the decoder can be used to decode a known action
-        if actionType == .navigation(.skip) || actionType.customAction != nil {
-            if let skipAction = try? _decodeResource(RSDNavigationUIActionObject.self, from: decoder) {
-                return skipAction
-            }
-            else if let skipAction = try? _decodeResource(RSDReminderUIActionObject.self, from: decoder) {
-                return skipAction
-            }
-        }
-        return try _decodeResource(RSDUIActionObject.self, from: decoder)
     }
     
     
@@ -656,16 +633,9 @@ open class RSDFactory {
     /// - throws: `DecodingError` if the object cannot be decoded.
     /// - seealso: `RSDUIStepObject`
     open func decodeImageThemeElement(from decoder:Decoder) throws -> RSDImageThemeElement? {
-        guard let str = try? self.typeName(from: decoder), let typeName = str else {
-            let obj = try _deprecated_decodeImageThemeElement(from: decoder)
-            #if DEBUG
+        guard let typeName = try self.typeName(from: decoder) else {
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support decoding an image theme without a `type` key defining a value for the the class name.")
             throw DecodingError.keyNotFound(TypeKeys.type, context)
-            #else
-                // Do not fail a release build. Instead, attempt to run against the deprecated method of
-                // decoding an image theme.
-                return obj
-            #endif
         }
         
         let type = RSDImageThemeElementType(rawValue: typeName)
@@ -677,16 +647,6 @@ open class RSDFactory {
         default:
             let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "\(self) does not support `\(typeName)` as a decodable class type for a image theme element.")
             throw DecodingError.typeMismatch(RSDImageThemeElement.self, context)
-        }
-    }
-    
-    private func _deprecated_decodeImageThemeElement(from decoder:Decoder) throws -> RSDImageThemeElement {
-        if let image = try? RSDImageWrapper(from: decoder) {
-            return image
-        } else if let image = try? _decodeResource(RSDFetchableImageThemeElementObject.self, from: decoder) {
-            return image
-        } else {
-            return try _decodeResource(RSDAnimatedImageThemeElementObject.self, from: decoder)
         }
     }
     
@@ -779,7 +739,7 @@ open class RSDFactory {
     /// Decode the result from this decoder.
     ///
     /// - parameters:
-    ///     - typeName:     The string representing the class name for this object.
+    ///     - resultType:   The result type for this result.
     ///     - decoder:      The decoder to use to instantiate the object.
     /// - returns: The result (if any) created from this decoder.
     /// - throws: `DecodingError` if the object cannot be decoded.
@@ -797,7 +757,7 @@ open class RSDFactory {
         case .file:
             return try RSDFileResultObject(from: decoder)
         default:
-            throw RSDValidationError.undefinedClassType("\(self) does not support `\(typeName)` as a decodable class type for a result.")
+            throw RSDValidationError.undefinedClassType("\(self) does not support `\(resultType)` as a decodable class type for a result.")
         }
     }
     

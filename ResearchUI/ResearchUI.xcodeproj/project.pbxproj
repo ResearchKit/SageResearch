@@ -479,7 +479,7 @@
 					};
 					FFF2D9371FCF415E007258F8 = {
 						CreatedOnToolsVersion = 9.1;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 					};
 					FFF2D93F1FCF415E007258F8 = {
@@ -499,6 +499,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = FF443E0C1F7AC21900F43BE7;
 			productRefGroup = FF443E171F7AC21900F43BE7 /* Products */;
@@ -805,7 +806,7 @@
 				PRODUCT_NAME = ResearchUI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -828,7 +829,7 @@
 				PRODUCT_NAME = ResearchUI;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
