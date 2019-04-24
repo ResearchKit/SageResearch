@@ -1271,7 +1271,9 @@ device.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">deviceType</span><span class="p">:</span> <span class="kt"><a href="../Structs/RSDDeviceType.html">RSDDeviceType</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">deviceType</span><span class="p">:</span> <span class="kt"><a href="../Structs/RSDDeviceType.html">RSDDeviceType</a></span> <span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -3680,12 +3682,12 @@ The factory method is included here for subclassing purposes. (syoung 10/03/2017
                             <tr>
                               <td>
                                 <code>
-                                <em>typeName</em>
+                                <em>resultType</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The string representing the class name for this object.</p>
+                                  <p>The result type for this result.</p>
                                 </div>
                               </td>
                             </tr>

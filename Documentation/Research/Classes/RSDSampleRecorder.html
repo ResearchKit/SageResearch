@@ -1329,9 +1329,9 @@ a consistent implementation for error handling.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research17RSDSampleRecorderC8delegateAA22RSDAsyncActionDelegate_pSgXwvp"></a>
+                    <a name="/s:8Research17RSDSampleRecorderC8delegateAA22RSDAsyncActionDelegate_pSgvp"></a>
                     <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research17RSDSampleRecorderC8delegateAA22RSDAsyncActionDelegate_pSgXwvp">delegate</a>
+                    <a class="token" href="#/s:8Research17RSDSampleRecorderC8delegateAA22RSDAsyncActionDelegate_pSgvp">delegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1434,7 +1434,9 @@ a consistent implementation for error handling.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">dynamic</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">status</span><span class="p">:</span> <span class="kt"><a href="../Enums/RSDAsyncActionStatus.html">RSDAsyncActionStatus</a></span></code></pre>
+<span class="kd">dynamic</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">status</span><span class="p">:</span> <span class="kt"><a href="../Enums/RSDAsyncActionStatus.html">RSDAsyncActionStatus</a></span> <span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1468,7 +1470,9 @@ a consistent implementation for error handling.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">dynamic</span> <span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isPaused</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+<span class="kd">dynamic</span> <span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isPaused</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1945,7 +1949,9 @@ to point at a different implementation of the <code><a href="../Protocols/RSDCol
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">collectionResult</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDCollectionResult.html">RSDCollectionResult</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">collectionResult</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDCollectionResult.html">RSDCollectionResult</a></span> <span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1972,7 +1978,9 @@ to point at a different implementation of the <code><a href="../Protocols/RSDCol
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">clock</span><span class="p">:</span> <span class="kt"><a href="../Classes/RSDClock.html">RSDClock</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">clock</span><span class="p">:</span> <span class="kt"><a href="../Classes/RSDClock.html">RSDClock</a></span> <span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2026,7 +2034,9 @@ to point at a different implementation of the <code><a href="../Protocols/RSDCol
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">currentStepIdentifier</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">currentStepIdentifier</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2053,7 +2063,9 @@ to point at a different implementation of the <code><a href="../Protocols/RSDCol
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">currentStepPath</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">currentStepPath</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2353,7 +2365,9 @@ open log files.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">loggers</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDDataLogger.html">RSDDataLogger</a></span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">loggers</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDDataLogger.html">RSDDataLogger</a></span><span class="p">]</span> <span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2685,7 +2699,7 @@ The default implementation will instantiate a <code><a href="../Structs/RSDRecor
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">func</span> <span class="nf">writeSample</span><span class="p">(</span><span class="n">_</span> <span class="nv">sample</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a></span><span class="p">,</span> <span class="nv">loggerIdentifier</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">func</span> <span class="nf">writeSample</span><span class="p">(</span><span class="n">_</span> <span class="nv">sample</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a></span><span class="p">,</span> <span class="nv">loggerIdentifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -2744,7 +2758,7 @@ The default implementation will instantiate a <code><a href="../Structs/RSDRecor
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">func</span> <span class="nf">writeSamples</span><span class="p">(</span><span class="n">_</span> <span class="nv">samples</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a></span><span class="p">],</span> <span class="nv">loggerIdentifier</span><span class="p">:</span><span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">func</span> <span class="nf">writeSamples</span><span class="p">(</span><span class="n">_</span> <span class="nv">samples</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a></span><span class="p">],</span> <span class="nv">loggerIdentifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

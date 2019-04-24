@@ -1234,6 +1234,16 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Remove the elements that evaluate to true and return that array.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>At the time when this function was implemented, the function <code>removeAll(where:)</code> had not been
+added to Swift. That said, the <code>removeAll(where:)</code> function follows the <code>removeAll()</code> pattern of
+<em>not</em> returning the elements that were removed unlike the <code>remove(at:)</code> function which has a
+discardable result of the removed element. Because this function is used within this library to remove
+elements conditionally <em>and</em> return the elements that were filtered out, this function will be kept
+in the framework. syoung 04/23/2019</p>
+
+</div>
 
                       </div>
                       <div class="declaration">
