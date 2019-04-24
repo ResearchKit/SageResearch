@@ -60,6 +60,7 @@ struct CRFPixelSample {
 @interface CRFHeartRateVideoProcessor : NSObject
 
 @property (nonatomic, readonly) int frameRate;
+@property (nonatomic, readonly) double startSystemUptime;
 
 @property (nonatomic, nullable, readonly) NSURL *videoURL;
 

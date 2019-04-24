@@ -94,7 +94,14 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
             else {
                 return nil
         }
-        let startTime = self.clock.startSystemUptime + 30
+        let timestampOffset: Double = {
+            guard let videoUptime = self._videoProcessor?.startSystemUptime
+                else {
+                    return 0.0
+            }
+            return videoUptime - self.clock.startSystemUptime
+        }()
+        let startTime = timestampOffset + 30
         let age = Double(Calendar(identifier: .iso8601).component(.year, from: Date()) - birthYear)
         return sampleProcessor.vo2Max(sex: sex, age: age, startTime: startTime)
     }

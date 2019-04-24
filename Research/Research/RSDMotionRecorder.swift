@@ -395,7 +395,7 @@ public struct RSDMotionRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable 
     public init(stepPath: String, data: RSDVectorData, referenceClock: RSDClock? = nil) {
         
         self.uptime = referenceClock?.relativeUptime(to: data.timestamp)
-        self.timestamp = data.timestamp
+        self.timestamp = referenceClock?.zeroRelativeTime(to: data.timestamp) ?? data.timestamp
         self.stepPath = stepPath
         self.timestampDate = nil
         self.heading = nil
@@ -455,7 +455,7 @@ public struct RSDMotionRecord : RSDSampleRecord, RSDDelimiterSeparatedEncodable 
         }
         
         self.uptime = referenceClock?.relativeUptime(to: data.timestamp)
-        self.timestamp = data.timestamp
+        self.timestamp = referenceClock?.zeroRelativeTime(to: data.timestamp) ?? data.timestamp
         self.stepPath = stepPath
         self.timestampDate = nil
         self.sensorType = sensorType
@@ -577,7 +577,7 @@ extension RSDMotionRecord : RSDDocumentableCodableObject {
     static func examples() -> [Encodable] {
         
         let uptime = RSDClock.uptime()
-        let timestamp = ProcessInfo.processInfo.systemUptime
+        let timestamp = 0.0
         
         let gyro = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .gyro, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
         let accelerometer = RSDMotionRecord(uptime: uptime, timestamp: timestamp, stepPath: "step1", timestampDate: nil, sensorType: .accelerometer, eventAccuracy: nil, referenceCoordinate: nil, heading: nil, x: 0.064788818359375, y: -0.1324615478515625, z: -0.9501953125, w: nil)
