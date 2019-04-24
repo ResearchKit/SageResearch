@@ -414,6 +414,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/Audio/RSDVoiceBox.swift",
+      "line": 71,
+      "symbol": "RSDSpeechSynthesizer.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/RSDStepViewController.swift",
       "line": 89,
       "symbol": "RSDStepViewController.preferredStatusBarStyle",
@@ -429,7 +436,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/ResearchUI/ResearchUI/iOS/RSDStepViewController.swift",
-      "line": 1022,
+      "line": 1013,
       "symbol": "RSDStepViewController.reset()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
