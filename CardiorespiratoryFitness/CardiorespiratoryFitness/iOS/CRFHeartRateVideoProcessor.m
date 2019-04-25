@@ -69,6 +69,7 @@ const long CRFRedStdDevThreshold = 15.0;
         _delegateCallbackQueue = queue;
         _processingQueue = dispatch_queue_create("org.sagebase.CRF.heartRateSample.processing", DISPATCH_QUEUE_SERIAL);
         _frameRate = frameRate;
+        _startSystemUptime = [[NSProcessInfo processInfo] systemUptime];
     }
     return self;
 }
@@ -182,7 +183,7 @@ const long CRFRedStdDevThreshold = 15.0;
     
     // Create a struct to return the pixel average
     struct CRFPixelSample sample;
-    sample.presentationTimestamp = (double)(pts.value) / (double)(pts.timescale);
+    sample.presentationTimestamp = (double)(pts.value) / (double)(pts.timescale) - self.startSystemUptime;
     sample.red = r / 255.0;
     sample.green = g / 255.0;
     sample.blue = b / 255.0;

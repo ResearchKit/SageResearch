@@ -63,6 +63,12 @@ public protocol RSDSampleRecord : Codable {
     /// On Apple devices, this is the timestamp used to mark sensors that run in the foreground only such as
     /// video processing and motion sensors.
     ///
+    /// syoung 04/24/2019 Per request from Sage Bionetworks' research scientists, this timestamp is "zeroed"
+    /// to when the recorder is started. It should be calculated by offsetting the
+    /// `ProcessInfo.processInfo.systemUptime` from the monotonic clock time to account for gaps in the
+    /// sampling due to the application becoming inactive. For example, if the participant accepts a phone
+    /// call while the recorder is running.
+    ///
     /// -seealso: `ProcessInfo.processInfo.systemUptime`
     var timestamp: TimeInterval? { get }
 }
@@ -629,7 +635,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
     /// Write a marker to each logging file.
     private func _writeMarkers(step: RSDStep?, taskViewModel: RSDPathComponent) {
         let uptime = RSDClock.uptime()
-        let timestamp = ProcessInfo.processInfo.systemUptime
+        let timestamp = clock.zeroRelativeTime(to: ProcessInfo.processInfo.systemUptime)
         let date = Date()
         self.loggerQueue.async {
             

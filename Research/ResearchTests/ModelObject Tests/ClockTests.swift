@@ -65,6 +65,10 @@ class ClockTests: XCTestCase {
         let testTime = systemTime + offset
         let testTimeActual = clock.relativeUptime(to: testTime)
         XCTAssertEqual(testTimeExpected, testTimeActual, accuracy:0.0001)
+        
+        let zeroTimeActual = clock.zeroRelativeTime(to: testTime)
+        let zeroTimeEspected = testTimeActual - clockTime
+        XCTAssertEqual(zeroTimeEspected, zeroTimeActual, accuracy:0.0001)
     }
     
     func testSleepOffset_BeforeStart() {
@@ -86,6 +90,10 @@ class ClockTests: XCTestCase {
         let testTime = systemTime + offset
         let testTimeActual = clock.relativeUptime(to: testTime)
         XCTAssertEqual(testTimeExpected, testTimeActual, accuracy:0.0001)
+        
+        let zeroTimeActual = clock.zeroRelativeTime(to: testTime)
+        let zeroTimeEspected = testTimeActual - clockTime
+        XCTAssertEqual(zeroTimeEspected, zeroTimeActual, accuracy:0.0001)
     }
     
     func testSleepOffset_AfterSleep() {
@@ -104,9 +112,45 @@ class ClockTests: XCTestCase {
         clock.addTimeMarkers(wakeClock, wakeSystem)
         
         let offsetAfter: TimeInterval = 10 * 60
-        let testTimeAfterExpected = clockTime + offsetAfter
-        let testTimeAfter = systemTime + offsetAfter - sleepOffset
-        let testTimeAfterActual = clock.relativeUptime(to: testTimeAfter)
-        XCTAssertEqual(testTimeAfterExpected, testTimeAfterActual, accuracy:0.0001)
+        let testTimeExpected = clockTime + offsetAfter
+        let testTime = systemTime + offsetAfter - sleepOffset
+        let testTimeActual = clock.relativeUptime(to: testTime)
+        XCTAssertEqual(testTimeExpected, testTimeActual, accuracy:0.0001)
+        
+        let zeroTimeActual = clock.zeroRelativeTime(to: testTime)
+        let zeroTimeEspected = testTimeActual - clockTime
+        XCTAssertEqual(zeroTimeEspected, zeroTimeActual, accuracy:0.0001)
+    }
+    
+    func testSleepOffset_AfterSleepX2() {
+        
+        let start: TimeInterval = -10 * 60
+        let date = Date().addingTimeInterval(start)
+        let clockTime = RSDClock.uptime()
+        let systemTime = ProcessInfo.processInfo.systemUptime
+        
+        let clock = RSDClock(clock: clockTime, system: systemTime, date: date)
+        
+        let sleepOffset1: TimeInterval = 5 * 60
+        let wakeAt1: TimeInterval = 8 * 60
+        let wakeClock1 = clockTime + wakeAt1
+        let wakeSystem1 = systemTime + wakeAt1 - sleepOffset1
+        clock.addTimeMarkers(wakeClock1, wakeSystem1)
+        
+        let sleepOffset2: TimeInterval = 2 * 60
+        let wakeAt2: TimeInterval = 3 * 60
+        let wakeClock2 = wakeClock1 + wakeAt2
+        let wakeSystem2 = wakeSystem1 + wakeAt2 - sleepOffset2
+        clock.addTimeMarkers(wakeClock2, wakeSystem2)
+        
+        let offsetAfter: TimeInterval = 10 * 60
+        let testTimeExpected = wakeClock2 + offsetAfter
+        let testTime = wakeSystem2 + offsetAfter
+        let testTimeActual = clock.relativeUptime(to: testTime)
+        XCTAssertEqual(testTimeExpected, testTimeActual, accuracy:0.0001)
+        
+        let zeroTimeActual = clock.zeroRelativeTime(to: testTime)
+        let zeroTimeEspected = testTimeActual - clockTime
+        XCTAssertEqual(zeroTimeEspected, zeroTimeActual, accuracy:0.0001)
     }
 }
