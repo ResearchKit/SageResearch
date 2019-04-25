@@ -99,7 +99,7 @@ public class CRFHeartRateRecorder : RSDSampleRecorder, CRFHeartRateVideoProcesso
                 else {
                     return 0.0
             }
-            return videoUptime - self.clock.startSystemUptime
+            return self.clock.startSystemUptime - videoUptime
         }()
         let startTime = timestampOffset + 30
         let age = Double(Calendar(identifier: .iso8601).component(.year, from: Date()) - birthYear)
