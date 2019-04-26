@@ -97,7 +97,7 @@ There are two data source protocols included in the core framework which are use
 
 Research is available under the BSD license:
 
-Copyright (c) 2017-2018, Sage Bionetworks
+Copyright (c) 2017-2019, Sage Bionetworks
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

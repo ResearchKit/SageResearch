@@ -1163,6 +1163,7 @@
 		F844963B2273A23100EAA3E0 /* RSDRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDRoundedButton.swift; sourceTree = "<group>"; };
 		F844963C2273A23100EAA3E0 /* RSDCountdownDial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDCountdownDial.swift; sourceTree = "<group>"; };
 		F844963D2273A23100EAA3E0 /* RSDLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDLoadingView.swift; sourceTree = "<group>"; };
+		F84496752273A44100EAA3E0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F8458EDC22456CE40094D7B0 /* TaskViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModelTests.swift; sourceTree = "<group>"; };
 		F8475BB52125E5E30031D802 /* RSDUIActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionHandler.swift; sourceTree = "<group>"; };
 		F8485C48203EA761007CE2B6 /* RSDSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSchedule.swift; sourceTree = "<group>"; };
@@ -1799,6 +1800,7 @@
 			isa = PBXGroup;
 			children = (
 				F875575820807E2300235078 /* Research_UnitTest.h */,
+				F84496752273A44100EAA3E0 /* README.md */,
 				FF2ACF411FBB86870018D87F /* NavigationTestObjects.swift */,
 				F829F0F41FFC0B2B001B0680 /* NSLocale+UnitTest.h */,
 				F829F0F51FFC0B2B001B0680 /* NSLocale+UnitTest.m */,

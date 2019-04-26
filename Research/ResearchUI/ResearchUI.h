@@ -39,6 +39,4 @@ FOUNDATION_EXPORT double ResearchUIVersionNumber;
 //! Project version string for ResearchUI.
 FOUNDATION_EXPORT const unsigned char ResearchUIVersionString[];
 
-// In this header, you should import all the public headers of your framework using statements like #import <ResearchUI/PublicHeader.h>
-
 #import <Research/Research.h>

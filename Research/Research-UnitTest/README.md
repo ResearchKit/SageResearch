@@ -1,9 +1,10 @@
-# ResearchUI
-ResearchUI contains the logic for UI/UX controllers, and reference implementations of controllers and views. It is designed to allow greater flexibility in the design of UI elements and screen layout, and to more strongly decouple the presentation layer from the underlying data model of the app.
+# Research-UnitTest
+Research-UnitTest is a utility framework designed to allow for unit tests that test navigation and/or localization within a dependant
+framework that uses the navigation model supported by Research.
 
 ## License
 
-ResearchUI is available under the BSD license:
+Research-UnitTest is available under the BSD license:
 
 Copyright (c) 2017-2019, Sage Bionetworks
 All rights reserved.
