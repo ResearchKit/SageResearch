@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		F84496762273A66D00EAA3E0 /* Documentation (UI) */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = F84496782273A66D00EAA3E0 /* Build configuration list for PBXAggregateTarget "Documentation (UI)" */;
+			buildPhases = (
+				F84496772273A66D00EAA3E0 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = "Documentation (UI)";
+			productName = Documentation;
+		};
 		FF8DA0571FBBC91500DFABAB /* Documentation */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = FF8DA05A1FBBC91600DFABAB /* Build configuration list for PBXAggregateTarget "Documentation" */;
@@ -2574,6 +2585,10 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
+					F84496762273A66D00EAA3E0 = {
+						DevelopmentTeam = 4B822CZK9N;
+						ProvisioningStyle = Automatic;
+					};
 					F870619F227390110056F70E = {
 						CreatedOnToolsVersion = 10.2;
 						DevelopmentTeam = KA9Z8R6M6K;
@@ -2637,6 +2652,7 @@
 			projectRoot = "";
 			targets = (
 				FF8DA0571FBBC91500DFABAB /* Documentation */,
+				F84496762273A66D00EAA3E0 /* Documentation (UI) */,
 				FF8B53131FCE678E006B6937 /* Research (iOS) */,
 				FF8B532F1FCE67AA006B6937 /* Research (watchOS) */,
 				FF8B533C1FCE67C7006B6937 /* Research (tvOS) */,
@@ -2736,6 +2752,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		F84496772273A66D00EAA3E0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ..\njazzy \\\n--config \"${PROJECT_NAME}/ResearchUI/jazzy_config.yml\" \\\n";
+		};
 		FF8DA05B1FBBC91C00DFABAB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
@@ -3769,6 +3798,24 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F84496792273A66D00EAA3E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F844967A2273A66D00EAA3E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4B822CZK9N;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		F87061B1227390120056F70E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -4334,6 +4381,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F84496782273A66D00EAA3E0 /* Build configuration list for PBXAggregateTarget "Documentation (UI)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F84496792273A66D00EAA3E0 /* Debug */,
+				F844967A2273A66D00EAA3E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F87061B5227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
