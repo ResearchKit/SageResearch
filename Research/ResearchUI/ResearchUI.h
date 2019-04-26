@@ -2,7 +2,7 @@
 //  ResearchUI.h
 //  ResearchUI
 //
-//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,12 +33,12 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for ResearchUI_iOS.
-FOUNDATION_EXPORT double ResearchUI_iOSVersionNumber;
+//! Project version number for ResearchUI.
+FOUNDATION_EXPORT double ResearchUIVersionNumber;
 
-//! Project version string for ResearchUI_iOS.
-FOUNDATION_EXPORT const unsigned char ResearchUI_iOSVersionString[];
+//! Project version string for ResearchUI.
+FOUNDATION_EXPORT const unsigned char ResearchUIVersionString[];
+
+// In this header, you should import all the public headers of your framework using statements like #import <ResearchUI/PublicHeader.h>
 
 #import <Research/Research.h>
-
-
