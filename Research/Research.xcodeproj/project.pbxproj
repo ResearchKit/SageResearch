@@ -217,6 +217,9 @@
 		F86A5F1421251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */; };
 		F86A5F1521251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */; };
 		F86A5F1621251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */; };
+		F87061A9227390120056F70E /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
+		F87061B0227390120056F70E /* ResearchUI.h in Headers */ = {isa = PBXBuildFile; fileRef = F87061A2227390110056F70E /* ResearchUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F87061B82273940D0056F70E /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		F871AA4C2260139500C0F657 /* ColorPaletteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871AA4A2260136000C0F657 /* ColorPaletteTests.swift */; };
 		F871AA612261651500C0F657 /* ColorRulesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871AA602261651500C0F657 /* ColorRulesTests.swift */; };
 		F875575A20807E2300235078 /* Research_UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F875575820807E2300235078 /* Research_UnitTest.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -966,6 +969,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F87061AA227390120056F70E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F870619F227390110056F70E;
+			remoteInfo = "ResearchUI-iOS";
+		};
 		FF8B531E1FCE678E006B6937 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
@@ -1052,6 +1062,11 @@
 		F858D14A201BA67B00132325 /* MeasurementDurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementDurationTests.swift; sourceTree = "<group>"; };
 		F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableMotionRecorderTests.swift; sourceTree = "<group>"; };
 		F86A5F1321251D7500567CC0 /* RSDCohortNavigationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCohortNavigationStep.swift; sourceTree = "<group>"; };
+		F87061A0227390110056F70E /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F87061A2227390110056F70E /* ResearchUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchUI.h; sourceTree = "<group>"; };
+		F87061A3227390110056F70E /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
+		F87061A8227390110056F70E /* ResearchUI-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ResearchUI-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F87061AF227390120056F70E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F871AA4A2260136000C0F657 /* ColorPaletteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPaletteTests.swift; sourceTree = "<group>"; };
 		F871AA602261651500C0F657 /* ColorRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorRulesTests.swift; sourceTree = "<group>"; };
 		F875575620807E2300235078 /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1266,6 +1281,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F870619D227390110056F70E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F87061B82273940D0056F70E /* Research.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F87061A5227390110056F70E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F87061A9227390120056F70E /* ResearchUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F875575220807E2300235078 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1509,6 +1540,23 @@
 				F8FD56332141BD2200BA2FA6 /* Data Archiving */,
 			);
 			name = API;
+			sourceTree = "<group>";
+		};
+		F87061A1227390110056F70E /* ResearchUI */ = {
+			isa = PBXGroup;
+			children = (
+				F87061A2227390110056F70E /* ResearchUI.h */,
+				F87061A3227390110056F70E /* Info-iOS.plist */,
+			);
+			path = ResearchUI;
+			sourceTree = "<group>";
+		};
+		F87061AC227390120056F70E /* ResearchUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F87061AF227390120056F70E /* Info.plist */,
+			);
+			path = ResearchUITests;
 			sourceTree = "<group>";
 		};
 		F875575720807E2300235078 /* Research-UnitTest */ = {
@@ -1812,6 +1860,8 @@
 				FF72B2331F6859D3004C6F15 /* Research */,
 				FF72B23E1F6859D3004C6F15 /* ResearchTests */,
 				F875575720807E2300235078 /* Research-UnitTest */,
+				F87061A1227390110056F70E /* ResearchUI */,
+				F87061AC227390120056F70E /* ResearchUITests */,
 				FF72B2321F6859D3004C6F15 /* Products */,
 				F875575F20807E8B00235078 /* Frameworks */,
 			);
@@ -1826,6 +1876,8 @@
 				FF8B533D1FCE67C7006B6937 /* Research.framework */,
 				F875575620807E2300235078 /* Research_UnitTest.framework */,
 				F8BE123521370931000AAB1E /* Research.framework */,
+				F87061A0227390110056F70E /* ResearchUI.framework */,
+				F87061A8227390110056F70E /* ResearchUI-iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2050,6 +2102,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		F870619B227390110056F70E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F87061B0227390120056F70E /* ResearchUI.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F875575320807E2300235078 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2122,6 +2182,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F870619F227390110056F70E /* ResearchUI (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F87061B5227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI (iOS)" */;
+			buildPhases = (
+				F870619B227390110056F70E /* Headers */,
+				F870619C227390110056F70E /* Sources */,
+				F870619D227390110056F70E /* Frameworks */,
+				F870619E227390110056F70E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ResearchUI (iOS)";
+			productName = "ResearchUI-iOS";
+			productReference = F87061A0227390110056F70E /* ResearchUI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F87061A7227390110056F70E /* ResearchUI-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F87061B6227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI-iOSTests" */;
+			buildPhases = (
+				F87061A4227390110056F70E /* Sources */,
+				F87061A5227390110056F70E /* Frameworks */,
+				F87061A6227390110056F70E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F87061AB227390120056F70E /* PBXTargetDependency */,
+			);
+			name = "ResearchUI-iOSTests";
+			productName = "ResearchUI-iOSTests";
+			productReference = F87061A8227390110056F70E /* ResearchUI-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F875575520807E2300235078 /* Research-UnitTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F875575D20807E2300235078 /* Build configuration list for PBXNativeTarget "Research-UnitTest" */;
@@ -2236,10 +2332,20 @@
 		FF72B2281F6859D2004C6F15 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0910;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
+					F870619F227390110056F70E = {
+						CreatedOnToolsVersion = 10.2;
+						DevelopmentTeam = KA9Z8R6M6K;
+						ProvisioningStyle = Automatic;
+					};
+					F87061A7227390110056F70E = {
+						CreatedOnToolsVersion = 10.2;
+						DevelopmentTeam = KA9Z8R6M6K;
+						ProvisioningStyle = Automatic;
+					};
 					F875575520807E2300235078 = {
 						CreatedOnToolsVersion = 9.3;
 						DevelopmentTeam = KA9Z8R6M6K;
@@ -2299,11 +2405,27 @@
 				F8BE123421370931000AAB1E /* Research (macOS) */,
 				FF8B531B1FCE678E006B6937 /* ResearchTests_iOS */,
 				F875575520807E2300235078 /* Research-UnitTest */,
+				F870619F227390110056F70E /* ResearchUI (iOS) */,
+				F87061A7227390110056F70E /* ResearchUI-iOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F870619E227390110056F70E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F87061A6227390110056F70E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F875575420807E2300235078 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2382,6 +2504,20 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F870619C227390110056F70E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F87061A4227390110056F70E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F875575120807E2300235078 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3315,6 +3451,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F87061AB227390120056F70E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F870619F227390110056F70E /* ResearchUI (iOS) */;
+			targetProxy = F87061AA227390120056F70E /* PBXContainerItemProxy */;
+		};
 		FF8B531F1FCE678E006B6937 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FF8B53131FCE678E006B6937 /* Research (iOS) */;
@@ -3334,6 +3475,106 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F87061B1227390120056F70E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/ResearchUI/Info-iOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchUI-iOS";
+				PRODUCT_NAME = ResearchUI;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F87061B2227390120056F70E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/ResearchUI/Info-iOS.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchUI-iOS";
+				PRODUCT_NAME = ResearchUI;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F87061B3227390120056F70E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "ResearchUI-iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchUI-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F87061B4227390120056F70E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "ResearchUI-iOSTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchUI-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F875575B20807E2300235078 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3797,6 +4038,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F87061B5227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F87061B1227390120056F70E /* Debug */,
+				F87061B2227390120056F70E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F87061B6227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F87061B3227390120056F70E /* Debug */,
+				F87061B4227390120056F70E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F875575D20807E2300235078 /* Build configuration list for PBXNativeTarget "Research-UnitTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
