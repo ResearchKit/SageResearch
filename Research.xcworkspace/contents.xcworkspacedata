@@ -5,12 +5,6 @@
       location = "group:RSDCatalog/RSDCatalog.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:RSDTest/RSDTest.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:ResearchUI/ResearchUI.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Research/Research.xcodeproj">
    </FileRef>
    <FileRef
