@@ -1,8 +1,8 @@
 //
-//  MotorControl.h
-//  MotorControl
+//  ResearchRecorders.h
+//  ResearchRecorders
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,15 +31,14 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-@import UIKit;
-@import Research;
-@import ResearchUI;
-@import ResearchRecorders;
+#import <UIKit/UIKit.h>
 
-//! Project version number for MotorControl.
-FOUNDATION_EXPORT double MotorControlVersionNumber;
+//! Project version number for ResearchRecorders.
+FOUNDATION_EXPORT double ResearchRecordersVersionNumber;
 
-//! Project version string for MotorControl.
-FOUNDATION_EXPORT const unsigned char MotorControlVersionString[];
+//! Project version string for ResearchRecorders.
+FOUNDATION_EXPORT const unsigned char ResearchRecordersVersionString[];
+
+#import <Research/Research.h>
 
 

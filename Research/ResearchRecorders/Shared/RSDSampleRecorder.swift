@@ -886,15 +886,16 @@ public class RSDRecordSampleLogger : RSDDataLogger {
     }
 }
 
-extension RSDRecordMarker : RSDDocumentableCodableObject {
-    
-    static func codingKeys() -> [CodingKey] {
-        return CodingKeys.allCases
-    }
-    
-    static func examples() -> [Encodable] {
-        let date = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
-        return [RSDRecordMarker(uptime: 12344.56, timestamp: 0, date: date, stepPath: "/Foo Task/sectionA/step1")]
-    }
-}
+// TODO: syoung 09/27/2019 Look into whether or not there is a simple way to use the Documentable protocols in other frameworks.
+//extension RSDRecordMarker : RSDDocumentableCodableObject {
+//
+//    static func codingKeys() -> [CodingKey] {
+//        return CodingKeys.allCases
+//    }
+//
+//    static func examples() -> [Encodable] {
+//        let date = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
+//        return [RSDRecordMarker(uptime: 12344.56, timestamp: 0, date: date, stepPath: "/Foo Task/sectionA/step1")]
+//    }
+//}
 

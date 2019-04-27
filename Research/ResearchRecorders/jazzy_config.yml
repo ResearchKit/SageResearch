@@ -4,7 +4,7 @@ xcodebuild_arguments:
 - -workspace
 - Research.xcworkspace
 - -scheme
-- "ResearchUI (iOS)"
+- "ResearchRecorders (iOS)"
 
 author: "Sage Bionetworks"
 author_url: https://developer.sagebridge.org

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F875575520807E2300235078"
-               BuildableName = "Research_UnitTest.framework"
-               BlueprintName = "Research-UnitTest"
+               BlueprintIdentifier = "F814DCE622750435004579EF"
+               BuildableName = "ResearchRecorders.framework"
+               BlueprintName = "ResearchRecorders (iOS)"
                ReferencedContainer = "container:Research.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F814DCEE22750436004579EF"
+               BuildableName = "ResearchRecorders-iOSTests.xctest"
+               BlueprintName = "ResearchRecorders-iOSTests"
+               ReferencedContainer = "container:Research.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F814DCE622750435004579EF"
+            BuildableName = "ResearchRecorders.framework"
+            BlueprintName = "ResearchRecorders (iOS)"
+            ReferencedContainer = "container:Research.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -45,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F875575520807E2300235078"
-            BuildableName = "Research_UnitTest.framework"
-            BlueprintName = "Research-UnitTest"
+            BlueprintIdentifier = "F814DCE622750435004579EF"
+            BuildableName = "ResearchRecorders.framework"
+            BlueprintName = "ResearchRecorders (iOS)"
             ReferencedContainer = "container:Research.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F875575520807E2300235078"
-            BuildableName = "Research_UnitTest.framework"
-            BlueprintName = "Research-UnitTest"
+            BlueprintIdentifier = "F814DCE622750435004579EF"
+            BuildableName = "ResearchRecorders.framework"
+            BlueprintName = "ResearchRecorders (iOS)"
             ReferencedContainer = "container:Research.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

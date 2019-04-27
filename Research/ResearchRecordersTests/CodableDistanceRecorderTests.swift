@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import Research
+@testable import ResearchRecorders
 
 class CodableDistanceRecorderTests: XCTestCase {
     

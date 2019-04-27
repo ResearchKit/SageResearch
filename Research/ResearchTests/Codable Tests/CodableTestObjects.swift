@@ -33,6 +33,7 @@
 
 import XCTest
 import Research
+@testable import ResearchRecorders
 
 class BundleWrapper {
     class var bundleIdentifier: String? {

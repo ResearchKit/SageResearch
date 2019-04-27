@@ -8,7 +8,7 @@ xcodebuild_arguments:
 
 author: "Sage Bionetworks"
 author_url: https://developer.sagebridge.org
-github_url: https://github.com/ResearchKit/SageResearch.git
+github_url: https://github.com/Sage-Bionetworks/SageResearch.git
 copyright: "&copy; 2017-2019 [Sage Bionetworks](https://developer.sagebridge.org). All rights reserved."
 readme: README.md
 min_acl: public
