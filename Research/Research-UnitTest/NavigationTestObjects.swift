@@ -32,7 +32,7 @@
 //
 
 import Foundation
-@testable import Research
+import Research
 import UIKit
 
 public struct TestStep : RSDStep, RSDNavigationRule, RSDNavigationSkipRule, RSDInstructionStep {
