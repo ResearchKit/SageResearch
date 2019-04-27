@@ -1,10 +1,10 @@
 module: ResearchUI
-output: ../../Documentation/ResearchUI
+output: ../../Documentation/ResearchRecorders
 xcodebuild_arguments:
 - -workspace
 - Research.xcworkspace
 - -scheme
-- "ResearchRecorders (iOS)"
+- "ResearchRecorders-iOS"
 
 author: "Sage Bionetworks"
 author_url: https://developer.sagebridge.org
