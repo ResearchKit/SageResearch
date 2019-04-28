@@ -1,47 +1,47 @@
 {
   "warnings": [
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchRecorders/Permissions/RSDAudioVisualAuthorization.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchRecorders/Permissions/RSDAudioVisualAuthorization.swift",
       "line": 71,
       "symbol": "RSDAudioVisualAuthorization.requestAuthorization(for:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchRecorders/Shared/RSDSampleRecorder.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchRecorders/Shared/RSDSampleRecorder.swift",
       "line": 733,
       "symbol": "CSVEncodingFormat.Key",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchRecorders/iOS/RSDDistanceRecorder.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchRecorders/iOS/RSDDistanceRecorder.swift",
       "line": 156,
       "symbol": "RSDDistanceRecorder.locationManager",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchRecorders/iOS/RSDMotionRecorder.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchRecorders/iOS/RSDMotionRecorder.swift",
       "line": 498,
       "symbol": "RSDVector.x",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchRecorders/iOS/RSDMotionRecorder.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchRecorders/iOS/RSDMotionRecorder.swift",
       "line": 499,
       "symbol": "RSDVector.y",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchRecorders/iOS/RSDMotionRecorder.swift",
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchRecorders/iOS/RSDMotionRecorder.swift",
       "line": 500,
       "symbol": "RSDVector.z",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/syoung2/Documents/AppleCode/SageResearch"
+  "source_directory": "/Users/travis/build/Sage-Bionetworks/SageResearch"
 }
