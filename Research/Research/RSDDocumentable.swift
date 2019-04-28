@@ -122,16 +122,6 @@ public struct RSDDocumentCreator {
             RSDWeeklyScheduleObject.self,
             ]
         
-    #if os(iOS)
-        let iOSCodableObjects: [RSDDocumentableCodableObject.Type] = [
-            RSDDistanceRecorderConfiguration.self,
-            RSDDistanceRecord.self,
-            RSDMotionRecorderConfiguration.self,
-            RSDMotionRecord.self,
-            ]
-        allCodableObjects.append(contentsOf: iOSCodableObjects)
-    #endif
-        
         return allCodableObjects
     }()
     

@@ -34,6 +34,7 @@
 @import UIKit;
 @import ResearchUI;
 @import Research;
+@import ResearchRecorders;
 
 //! Project version number for CardiorespiratoryFitness.
 FOUNDATION_EXPORT double CardiorespiratoryFitnessVersionNumber;

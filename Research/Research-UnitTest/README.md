@@ -1,15 +1,12 @@
-# RSDCatalog
-
-RSDCatalog is set up as a catalog of example tasks for all the tasks, steps, async actions, etc. that
-are included in the Research and ResearchUI frameworks. When submitting an addition
-to these frameworks, as a part of your submission, please include an example in the catalog as a
-new task, add the task to the main task group JSON file, and add a UI Test to the UI test framework.
+# Research-UnitTest
+Research-UnitTest is a utility framework designed to allow for unit tests that test navigation and/or localization within a dependant
+framework that uses the navigation model supported by Research.
 
 ## License
 
-ResearchUI is available under the BSD license:
+Research-UnitTest is available under the BSD license:
 
-Copyright (c) 2017-2018, Sage Bionetworks
+Copyright (c) 2017-2019, Sage Bionetworks
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

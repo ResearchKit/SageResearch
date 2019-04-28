@@ -1,6 +1,6 @@
 //
-//  Date+ISO8601.swift
-//  Research
+//  ResearchUI.h
+//  ResearchUI
 //
 //  Copyright © 2017 Sage Bionetworks. All rights reserved.
 //
@@ -31,28 +31,12 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+@import UIKit;
+@import Research;
+@import ResearchRecorders;
 
-/// ISO 8601 timestamp formatter that includes time and date.
-public let rsd_ISO8601TimestampFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    return formatter
-}()
+//! Project version number for ResearchUI.
+FOUNDATION_EXPORT double ResearchUIVersionNumber;
 
-/// ISO 8601 date only formatter.
-public let rsd_ISO8601DateOnlyFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd"
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    return formatter
-}()
-
-/// ISO 8601 time only formatter.
-public let rsd_ISO8601TimeOnlyFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "HH:mm:ss"
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    return formatter
-}()
+//! Project version string for ResearchUI.
+FOUNDATION_EXPORT const unsigned char ResearchUIVersionString[];

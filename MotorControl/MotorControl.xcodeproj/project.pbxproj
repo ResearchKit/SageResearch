@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4498285B21F5216300C1A8C3 /* Walk_30seconds.json in Resources */ = {isa = PBXBuildFile; fileRef = 4498285A21F5216300C1A8C3 /* Walk_30seconds.json */; };
+		F801216E22750FE8003A1A5C /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F801216D22750FE8003A1A5C /* ResearchRecorders.framework */; };
 		F813D6EB21BB40D900795664 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F813D6E121BB40D900795664 /* MotorControl.framework */; };
 		F813D6F221BB40D900795664 /* MotorControl.h in Headers */ = {isa = PBXBuildFile; fileRef = F813D6E421BB40D900795664 /* MotorControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F813D6FE21BB416C00795664 /* MCTTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F813D6FC21BB416C00795664 /* MCTTaskInfo.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		4498285A21F5216300C1A8C3 /* Walk_30seconds.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Walk_30seconds.json; sourceTree = "<group>"; };
+		F801216D22750FE8003A1A5C /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F813D6E121BB40D900795664 /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F813D6E421BB40D900795664 /* MotorControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MotorControl.h; sourceTree = "<group>"; };
 		F813D6E521BB40D900795664 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F801216E22750FE8003A1A5C /* ResearchRecorders.framework in Frameworks */,
 				F8E3B7FC21BB450B0004284E /* ResearchUI.framework in Frameworks */,
 				F8E3B7FA21BB45010004284E /* Research.framework in Frameworks */,
 			);
@@ -160,6 +163,7 @@
 		F8E3B7F821BB45010004284E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F801216D22750FE8003A1A5C /* ResearchRecorders.framework */,
 				F8E3B80721BB45630004284E /* Research_UnitTest.framework */,
 				F8E3B7FB21BB450B0004284E /* ResearchUI.framework */,
 				F8E3B7F921BB45010004284E /* Research.framework */,

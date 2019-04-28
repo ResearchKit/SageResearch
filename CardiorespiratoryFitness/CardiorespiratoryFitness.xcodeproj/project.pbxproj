@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F801216C22750FDB003A1A5C /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F801216B22750FDB003A1A5C /* ResearchRecorders.framework */; };
 		F80479E02257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */; };
 		F80479E22257E52200E569AC /* CRFTorchInstructionStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */; };
 		F836461122653EB700CCA0EF /* Tips_for_measuring.html in Resources */ = {isa = PBXBuildFile; fileRef = F836461022653EB700CCA0EF /* Tips_for_measuring.html */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F801216B22750FDB003A1A5C /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F80479DF2257E4EC00E569AC /* CRFTorchInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStepViewController.swift; sourceTree = "<group>"; };
 		F80479E12257E52200E569AC /* CRFTorchInstructionStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRFTorchInstructionStep.swift; sourceTree = "<group>"; };
 		F836461022653EB700CCA0EF /* Tips_for_measuring.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Tips_for_measuring.html; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F801216C22750FDB003A1A5C /* ResearchRecorders.framework in Frameworks */,
 				F8A5036F2225E2D8005F1C0C /* ResearchUI.framework in Frameworks */,
 				F8A5036D2225E2CD005F1C0C /* Research.framework in Frameworks */,
 			);
@@ -289,6 +292,7 @@
 		F8BA7FA42051D9CC00A5B83A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F801216B22750FDB003A1A5C /* ResearchRecorders.framework */,
 				F8E68EEE22531E2B00CF0811 /* Research_UnitTest.framework */,
 				F8A5036E2225E2D8005F1C0C /* ResearchUI.framework */,
 				F8A5036C2225E2CD005F1C0C /* Research.framework */,
