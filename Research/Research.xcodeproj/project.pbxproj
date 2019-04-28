@@ -30,6 +30,7 @@
 		F801217A22751561003A1A5C /* RSDMotionAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FF42058602F00752B7B /* RSDMotionAuthorization.swift */; };
 		F801217B22751561003A1A5C /* RSDPhotoLibraryAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FFA20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift */; };
 		F801217C2275157D003A1A5C /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F814DCE722750435004579EF /* ResearchRecorders.framework */; };
+		F801218022755516003A1A5C /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		F802F3E3204DF2B80027CB00 /* RSDUIStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */; };
 		F802F3E4204DF2B80027CB00 /* RSDUIStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */; };
 		F802F3E5204DF2B80027CB00 /* RSDUIStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */; };
@@ -1064,7 +1065,7 @@
 		F814DCE722750435004579EF /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F814DCE922750435004579EF /* ResearchRecorders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchRecorders.h; sourceTree = "<group>"; };
 		F814DCEA22750435004579EF /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		F814DCEF22750436004579EF /* ResearchRecorders-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ResearchRecorders-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F814DCEF22750436004579EF /* ResearchRecordersTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchRecordersTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F814DCF622750436004579EF /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		F814DD0222750809004579EF /* RSDFileResultUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileResultUtility.swift; sourceTree = "<group>"; };
 		F814DD0922750899004579EF /* RSDMotionRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDMotionRecorder.swift; sourceTree = "<group>"; };
@@ -1185,7 +1186,7 @@
 		F87061A0227390110056F70E /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87061A2227390110056F70E /* ResearchUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchUI.h; sourceTree = "<group>"; };
 		F87061A3227390110056F70E /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		F87061A8227390110056F70E /* ResearchUI-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ResearchUI-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F87061A8227390110056F70E /* ResearchUITests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchUITests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87061AF227390120056F70E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F871AA4A2260136000C0F657 /* ColorPaletteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPaletteTests.swift; sourceTree = "<group>"; };
 		F871AA602261651500C0F657 /* ColorRulesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorRulesTests.swift; sourceTree = "<group>"; };
@@ -1411,6 +1412,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F801218022755516003A1A5C /* Research.framework in Frameworks */,
 				F814DCF022750436004579EF /* ResearchRecorders.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2170,9 +2172,9 @@
 				F875575620807E2300235078 /* Research_UnitTest.framework */,
 				F8BE123521370931000AAB1E /* Research.framework */,
 				F87061A0227390110056F70E /* ResearchUI.framework */,
-				F87061A8227390110056F70E /* ResearchUI-iOSTests.xctest */,
+				F87061A8227390110056F70E /* ResearchUITests_iOS.xctest */,
 				F814DCE722750435004579EF /* ResearchRecorders.framework */,
-				F814DCEF22750436004579EF /* ResearchRecorders-iOSTests.xctest */,
+				F814DCEF22750436004579EF /* ResearchRecordersTests_iOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2492,9 +2494,9 @@
 			productReference = F814DCE722750435004579EF /* ResearchRecorders.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F814DCEE22750436004579EF /* ResearchRecorders-iOSTests */ = {
+		F814DCEE22750436004579EF /* ResearchRecordersTests_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F814DCFB22750436004579EF /* Build configuration list for PBXNativeTarget "ResearchRecorders-iOSTests" */;
+			buildConfigurationList = F814DCFB22750436004579EF /* Build configuration list for PBXNativeTarget "ResearchRecordersTests_iOS" */;
 			buildPhases = (
 				F814DCEB22750436004579EF /* Sources */,
 				F814DCEC22750436004579EF /* Frameworks */,
@@ -2505,9 +2507,9 @@
 			dependencies = (
 				F814DCF222750436004579EF /* PBXTargetDependency */,
 			);
-			name = "ResearchRecorders-iOSTests";
+			name = ResearchRecordersTests_iOS;
 			productName = "ResearchRecorders-iOSTests";
-			productReference = F814DCEF22750436004579EF /* ResearchRecorders-iOSTests.xctest */;
+			productReference = F814DCEF22750436004579EF /* ResearchRecordersTests_iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F870619F227390110056F70E /* ResearchUI (iOS) */ = {
@@ -2528,9 +2530,9 @@
 			productReference = F87061A0227390110056F70E /* ResearchUI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F87061A7227390110056F70E /* ResearchUI-iOSTests */ = {
+		F87061A7227390110056F70E /* ResearchUITests_iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F87061B6227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI-iOSTests" */;
+			buildConfigurationList = F87061B6227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUITests_iOS" */;
 			buildPhases = (
 				F87061A4227390110056F70E /* Sources */,
 				F87061A5227390110056F70E /* Frameworks */,
@@ -2541,9 +2543,9 @@
 			dependencies = (
 				F87061AB227390120056F70E /* PBXTargetDependency */,
 			);
-			name = "ResearchUI-iOSTests";
+			name = ResearchUITests_iOS;
 			productName = "ResearchUI-iOSTests";
-			productReference = F87061A8227390110056F70E /* ResearchUI-iOSTests.xctest */;
+			productReference = F87061A8227390110056F70E /* ResearchUITests_iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F875575520807E2300235078 /* Research-UnitTest */ = {
@@ -2739,9 +2741,9 @@
 				FF8B531B1FCE678E006B6937 /* ResearchTests_iOS */,
 				F875575520807E2300235078 /* Research-UnitTest */,
 				F870619F227390110056F70E /* ResearchUI (iOS) */,
-				F87061A7227390110056F70E /* ResearchUI-iOSTests */,
+				F87061A7227390110056F70E /* ResearchUITests_iOS */,
 				F814DCE622750435004579EF /* ResearchRecorders (iOS) */,
-				F814DCEE22750436004579EF /* ResearchRecorders-iOSTests */,
+				F814DCEE22750436004579EF /* ResearchRecordersTests_iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -4540,7 +4542,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F814DCFB22750436004579EF /* Build configuration list for PBXNativeTarget "ResearchRecorders-iOSTests" */ = {
+		F814DCFB22750436004579EF /* Build configuration list for PBXNativeTarget "ResearchRecordersTests_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F814DCFC22750436004579EF /* Debug */,
@@ -4558,7 +4560,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F87061B6227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI-iOSTests" */ = {
+		F87061B6227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUITests_iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F87061B3227390120056F70E /* Debug */,

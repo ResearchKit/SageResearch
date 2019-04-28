@@ -89,6 +89,16 @@
                ReferencedContainer = "container:../CardiorespiratoryFitness/CardiorespiratoryFitness.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F814DCEE22750436004579EF"
+               BuildableName = "ResearchRecordersTests_iOS.xctest"
+               BlueprintName = "ResearchRecordersTests_iOS"
+               ReferencedContainer = "container:../Research/Research.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

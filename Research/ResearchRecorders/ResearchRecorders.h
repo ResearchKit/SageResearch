@@ -31,14 +31,13 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+@import Research;
 
 //! Project version number for ResearchRecorders.
 FOUNDATION_EXPORT double ResearchRecordersVersionNumber;
 
 //! Project version string for ResearchRecorders.
 FOUNDATION_EXPORT const unsigned char ResearchRecordersVersionString[];
-
-#import <Research/Research.h>
 
 
