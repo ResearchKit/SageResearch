@@ -64,13 +64,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDAudioVisualAuthorization.swift",
-      "line": 71,
-      "symbol": "RSDAudioVisualAuthorization.requestAuthorization(for:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDChoiceInputFieldObject.swift",
       "line": 113,
       "symbol": "RSDCodableChoiceInputFieldObject.Value",
@@ -554,13 +547,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDistanceRecorder.swift",
-      "line": 156,
-      "symbol": "RSDDistanceRecorder.locationManager",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDocumentable.swift",
       "line": 44,
       "symbol": "RSDDocumentCreator",
@@ -569,7 +555,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDocumentable.swift",
-      "line": 247,
+      "line": 237,
       "symbol": "RawRepresentable.stringValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -848,27 +834,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDMotionRecorder.swift",
-      "line": 498,
-      "symbol": "RSDVector.x",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDMotionRecorder.swift",
-      "line": 499,
-      "symbol": "RSDVector.y",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDMotionRecorder.swift",
-      "line": 500,
-      "symbol": "RSDVector.z",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDPermissionType.swift",
       "line": 138,
       "symbol": "RSDStandardPermission.camera",
@@ -957,13 +922,6 @@
       "line": 36,
       "symbol": "RSDResultSummaryStepViewModel",
       "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDSampleRecorder.swift",
-      "line": 727,
-      "symbol": "CSVEncodingFormat.Key",
-      "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
