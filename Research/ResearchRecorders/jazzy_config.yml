@@ -1,4 +1,4 @@
-module: ResearchUI
+module: ResearchRecorders
 output: ../../Documentation/ResearchRecorders
 xcodebuild_arguments:
 - -workspace

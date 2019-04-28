@@ -19,7 +19,9 @@ The core step/task navigation and results-gathering framework is currently calle
 
 The UI/UX framework is called [ResearchUI](https://researchkit.github.io/SageResearch/Documentation/ResearchUI/index.html).
 
-Our first (transitional) app and task module built with these new frameworks is [CRFModuleValidation](https://github.com/Sage-Bionetworks/CardiorespiratoryFitness-iOS). This work is being used in the [NIH All of Us study](https://allofus.nih.gov/) to clinically validate a smartphone-based measurement of cardiorespiratory fitness based on measuring an individual's heart rate response to exercise.
+The sensor recorders framework is called [ResearchRecordersI](https://researchkit.github.io/SageResearch/Documentation/ResearchRecorders/index.html).
+
+Our first (transitional) app and task module built with these new frameworks is [CardiorespiratoryFitness-iOS](https://github.com/Sage-Bionetworks/CardiorespiratoryFitness-iOS). This work is being used in the [NIH All of Us study](https://allofus.nih.gov/) to clinically validate a smartphone-based measurement of cardiorespiratory fitness based on measuring an individual's heart rate response to exercise.
 
 ## License
 

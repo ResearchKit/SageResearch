@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RSDRecordSampleLogger Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/RSDRecordSampleLogger" class="dashAnchor"></a>
+    <a title="RSDRecordSampleLogger Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ResearchRecorders Docs</a></p>
+        <p class="header-right"><a href="https://github.com/Sage-Bionetworks/SageResearch.git"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ResearchRecorders Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        RSDRecordSampleLogger Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDataLogger.html">RSDDataLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDistanceRecorder.html">RSDDistanceRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDistanceRecorder/CRFResultIdentifier.html">– CRFResultIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMotionAuthorization.html">RSDMotionAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMotionRecorder.html">RSDMotionRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDRecordSampleLogger.html">RSDRecordSampleLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDRecordSampleLogger/RSDRecordSampleLoggerError.html">– RSDRecordSampleLoggerError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSampleRecorder/RecorderError.html">– RecorderError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/RSDAttitudeReferenceFrame.html">RSDAttitudeReferenceFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/CMAccelerometerData.html">CMAccelerometerData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CMGyroData.html">CMGyroData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CMMagnetometerData.html">CMMagnetometerData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Notification.html">Notification</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Notification/Name.html">– Name</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDDistanceRecorderConfiguration.html">RSDDistanceRecorderConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDIdentifier.html">RSDIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDMotionRecorderConfiguration.html">RSDMotionRecorderConfiguration</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStringSeparatedEncodingFormat.html">RSDStringSeparatedEncodingFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:17ResearchRecorders9RSDVectorP">RSDVector</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDVectorData.html">RSDVectorData</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/CSVEncodingFormat.html">CSVEncodingFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAudioVisualAuthorization.html">RSDAudioVisualAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDistanceRecord.html">RSDDistanceRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDLocationAuthorization.html">RSDLocationAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDMotionRecord.html">RSDMotionRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDPhotoLibraryAuthorization.html">RSDPhotoLibraryAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDRecordMarker.html">RSDRecordMarker</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>RSDRecordSampleLogger</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDRecordSampleLogger</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDDataLogger.html">RSDDataLogger</a></span></code></pre>
+
+                </div>
+              </div>
+            <p><code>RSDRecordSampleLogger</code> is used to write samples encoded as json dictionary objects to a logging file.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders21RSDRecordSampleLoggerC0cdE5ErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/RSDRecordSampleLoggerError" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders21RSDRecordSampleLoggerC0cdE5ErrorO">RSDRecordSampleLoggerError</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Errors that can be thrown by the logger.</p>
+
+                        <a href="../Classes/RSDRecordSampleLogger/RSDRecordSampleLoggerError.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">RSDRecordSampleLoggerError</span> <span class="p">:</span> <span class="kt">Error</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders21RSDRecordSampleLoggerC18usesRootDictionarySbvp"></a>
+                    <a name="//apple_ref/swift/Property/usesRootDictionary" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders21RSDRecordSampleLoggerC18usesRootDictionarySbvp">usesRootDictionary</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Is the root element in the json file a dictionary?</p>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <code><a href="../Classes/RSDSampleRecorder.html#/s:17ResearchRecorders17RSDSampleRecorderC18usesRootDictionarySbvp">RSDSampleRecorder.usesRootDictionary</a></code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">usesRootDictionary</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders21RSDRecordSampleLoggerC20stringEncodingFormatAA018RSDStringSeparatedgH0_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/stringEncodingFormat" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders21RSDRecordSampleLoggerC20stringEncodingFormatAA018RSDStringSeparatedgH0_pSgvp">stringEncodingFormat</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Does the recorder use a string-delimited format for saving each sample? If so, this contains the keys
+used to support encoding in that format.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">stringEncodingFormat</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDStringSeparatedEncodingFormat.html">RSDStringSeparatedEncodingFormat</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders21RSDRecordSampleLoggerC11contentTypeSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/contentType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders21RSDRecordSampleLoggerC11contentTypeSSSgvp">contentType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns <q>application/json</q> or the string encoding if applicable.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">contentType</span><span class="p">:</span> <span class="nf">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders21RSDRecordSampleLoggerC10identifier3url18usesRootDictionary20stringEncodingFormatACSS_10Foundation3URLVSbAA018RSDStringSeparatedlM0_pSgtKcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(identifier:url:usesRootDictionary:stringEncodingFormat:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders21RSDRecordSampleLoggerC10identifier3url18usesRootDictionary20stringEncodingFormatACSS_10Foundation3URLVSbAA018RSDStringSeparatedlM0_pSgtKcfc">init(identifier:url:usesRootDictionary:stringEncodingFormat:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Default initializer. The initializer will automatically open the file and write the
+JSON root element and start the sample array.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">usesRootDictionary</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">stringEncodingFormat</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDStringSeparatedEncodingFormat.html">RSDStringSeparatedEncodingFormat</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A unique identifier for the logger.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The url to the file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>usesRootDictionary</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Is the root element in the json file a dictionary?</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders21RSDRecordSampleLoggerC12writeSamplesyySayAA15RSDSampleRecord_pGKF"></a>
+                    <a name="//apple_ref/swift/Method/writeSamples(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders21RSDRecordSampleLoggerC12writeSamplesyySayAA15RSDSampleRecord_pGKF">writeSamples(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Write multiple samples to the logger.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Error if writing the samples fails because the wasn&rsquo;t enough memory on the device.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">writeSamples</span><span class="p">(</span><span class="n">_</span> <span class="nv">samples</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a></span><span class="p">])</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>samples</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The samples to add to the logging file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders21RSDRecordSampleLoggerC05writeD0yyAA15RSDSampleRecord_pKF"></a>
+                    <a name="//apple_ref/swift/Method/writeSample(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders21RSDRecordSampleLoggerC05writeD0yyAA15RSDSampleRecord_pKF">writeSample(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Write a sample to the logger.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Error if writing the sample fails because the wasn&rsquo;t enough memory on the device.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">writeSample</span><span class="p">(</span><span class="n">_</span> <span class="nv">sample</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a></span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sample</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The sample to add to the logging file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders21RSDRecordSampleLoggerC5closeyyKF"></a>
+                    <a name="//apple_ref/swift/Method/close()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders21RSDRecordSampleLoggerC5closeyyKF">close()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Close the file. This will write the end tag for the root element and then close the file handle.
+If there is an error thrown by writing the closing tag, then the file handle will be closed and
+the error will be rethrown.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    Error thrown when attempting to write the closing tag.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">close</span><span class="p">()</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017-2019 <a class="link" href="https://developer.sagebridge.org" target="_blank" rel="external">Sage Bionetworks</a>. All rights reserved.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

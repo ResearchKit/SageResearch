@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RSDMotionRecorder Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/RSDMotionRecorder" class="dashAnchor"></a>
+    <a title="RSDMotionRecorder Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ResearchRecorders Docs</a></p>
+        <p class="header-right"><a href="https://github.com/Sage-Bionetworks/SageResearch.git"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ResearchRecorders Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        RSDMotionRecorder Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDataLogger.html">RSDDataLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDistanceRecorder.html">RSDDistanceRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDistanceRecorder/CRFResultIdentifier.html">– CRFResultIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMotionAuthorization.html">RSDMotionAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMotionRecorder.html">RSDMotionRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDRecordSampleLogger.html">RSDRecordSampleLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDRecordSampleLogger/RSDRecordSampleLoggerError.html">– RSDRecordSampleLoggerError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSampleRecorder/RecorderError.html">– RecorderError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/RSDAttitudeReferenceFrame.html">RSDAttitudeReferenceFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/CMAccelerometerData.html">CMAccelerometerData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CMGyroData.html">CMGyroData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CMMagnetometerData.html">CMMagnetometerData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Notification.html">Notification</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Notification/Name.html">– Name</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDDistanceRecorderConfiguration.html">RSDDistanceRecorderConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDIdentifier.html">RSDIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDMotionRecorderConfiguration.html">RSDMotionRecorderConfiguration</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStringSeparatedEncodingFormat.html">RSDStringSeparatedEncodingFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:17ResearchRecorders9RSDVectorP">RSDVector</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDVectorData.html">RSDVectorData</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/CSVEncodingFormat.html">CSVEncodingFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAudioVisualAuthorization.html">RSDAudioVisualAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDistanceRecord.html">RSDDistanceRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDLocationAuthorization.html">RSDLocationAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDMotionRecord.html">RSDMotionRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDPhotoLibraryAuthorization.html">RSDPhotoLibraryAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDRecordMarker.html">RSDRecordMarker</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>RSDMotionRecorder</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">@available(iOS 10.0, *)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDMotionRecorder</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a></span></code></pre>
+
+                </div>
+              </div>
+            <p><code>RSDMotionRecorder</code> is a subclass of <code><a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a></code> that implements recording core motion
+sensor data.</p>
+
+<p>You will need to add the privacy permission for  motion sensors to the application <code>Info.plist</code>
+file. As of this writing (syoung 02/09/2018), the required key is:</p>
+<li><p><code>Privacy - Motion Usage Description</code></p></li>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>This recorder is only available on iOS devices. CoreMotion is not supported by other
+    platforms.</p>
+
+</div>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><code>RSDMotionRecorderType</code>, <code>RSDMotionRecorderConfiguration</code>, and <code><a href="../Structs/RSDMotionRecord.html">RSDMotionRecord</a></code>.</p>
+
+</div>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders17RSDMotionRecorderC7currentACSgvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/current" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders17RSDMotionRecorderC7currentACSgvpZ">current</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The currently-running instance, if any. You should confirm that this is nil
+(on the main queue) before starting a passive recorder instance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">current</span><span class="p">:</span> <span class="kt">RSDMotionRecorder</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchRecorders@objc(cs)RSDMotionRecorder(py)currentDeviceMotion"></a>
+                    <a name="//apple_ref/swift/Property/currentDeviceMotion" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchRecorders@objc(cs)RSDMotionRecorder(py)currentDeviceMotion">currentDeviceMotion</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The most recent device motion sample. This property is updated on the motion queue.
+This is an <code>@objc dynamic</code> property so that listeners can be set up using KVO to
+observe changes to this property.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">dynamic</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">currentDeviceMotion</span><span class="p">:</span> <span class="kt">CMDeviceMotion</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchRecorders@objc(cs)RSDMotionRecorder(py)currentAccelerometerData"></a>
+                    <a name="//apple_ref/swift/Property/currentAccelerometerData" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchRecorders@objc(cs)RSDMotionRecorder(py)currentAccelerometerData">currentAccelerometerData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The most recent accelerometer data sample. This property is updated on the motion queue.
+This is an <code>@objc dynamic</code> property so that listeners can be set up using KVO to
+observe changes to this property.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">dynamic</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">currentAccelerometerData</span><span class="p">:</span> <span class="kt">CMAccelerometerData</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchRecorders@objc(cs)RSDMotionRecorder(py)currentGyroData"></a>
+                    <a name="//apple_ref/swift/Property/currentGyroData" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchRecorders@objc(cs)RSDMotionRecorder(py)currentGyroData">currentGyroData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The most recent gyro data sample. This property is updated on the motion queue.
+This is an <code>@objc dynamic</code> property so that listeners can be set up using KVO to
+observe changes to this property.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">dynamic</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">currentGyroData</span><span class="p">:</span> <span class="kt">CMGyroData</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchRecorders@objc(cs)RSDMotionRecorder(py)currentMagnetometerData"></a>
+                    <a name="//apple_ref/swift/Property/currentMagnetometerData" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchRecorders@objc(cs)RSDMotionRecorder(py)currentMagnetometerData">currentMagnetometerData</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The most recent magnetometer data sample. This property is updated on the motion queue.
+This is an <code>@objc dynamic</code> property so that listeners can be set up using KVO to
+observe changes to this property.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">dynamic</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">currentMagnetometerData</span><span class="p">:</span> <span class="kt">CMMagnetometerData</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders17RSDMotionRecorderC19motionConfiguration0A00cdF0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/motionConfiguration" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders17RSDMotionRecorderC19motionConfiguration0A00cdF0VSgvp">motionConfiguration</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The motion sensor configuration for this recorder.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">motionConfiguration</span><span class="p">:</span> <span class="nf">RSDMotionRecorderConfiguration</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders17RSDMotionRecorderC13recorderTypesShy0A00cD4TypeOGvp"></a>
+                    <a name="//apple_ref/swift/Property/recorderTypes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders17RSDMotionRecorderC13recorderTypesShy0A00cD4TypeOGvp">recorderTypes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The recorder types to use for this recording. This will be set to the <code>recorderTypes</code>
+from the <code>coreMotionConfiguration</code>. If that value is <code>nil</code>, then the defaults are
+<code>[.accelerometer, .gyro]</code> because all other non-compass measurements can be calculated
+from the accelerometer and gyro.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">lazy</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">recorderTypes</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">RSDMotionRecorderType</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders17RSDMotionRecorderC9frequencySdvp"></a>
+                    <a name="//apple_ref/swift/Property/frequency" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders17RSDMotionRecorderC9frequencySdvp">frequency</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The sampling frequency of the motion sensors. This will be set to the <code>frequency</code>
+from the <code>coreMotionConfiguration</code>. If that value is <code>nil</code>, then the default sampling
+rate is <code>100</code> samples per second.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">lazy</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">frequency</span><span class="p">:</span> <span class="nf">Double</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders17RSDMotionRecorderC13motionManagerSo08CMMotionF0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/motionManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders17RSDMotionRecorderC13motionManagerSo08CMMotionF0CSgvp">motionManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>For best results, only use a single motion manager to handle all motion sensor data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">motionManager</span><span class="p">:</span> <span class="kt">CMMotionManager</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders17RSDMotionRecorderC18requestPermissions2on_ySo16UIViewControllerC_y0A014RSDAsyncAction_p_AH9RSDResult_pSgs5Error_pSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/requestPermissions(on:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders17RSDMotionRecorderC18requestPermissions2on_ySo16UIViewControllerC_y0A014RSDAsyncAction_p_AH9RSDResult_pSgs5Error_pSgtctF">requestPermissions(on:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to implement requesting permission to access the participant&rsquo;s motion sensors.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">requestPermissions</span><span class="p">(</span><span class="n">on</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">RSDAsyncActionCompletionHandler</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders17RSDMotionRecorderC05startD0yyy0A020RSDAsyncActionStatusO_s5Error_pSgtcF"></a>
+                    <a name="//apple_ref/swift/Method/startRecorder(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders17RSDMotionRecorderC05startD0yyy0A020RSDAsyncActionStatusO_s5Error_pSgtcF">startRecorder(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to start the motion sensor updates.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">startRecorder</span><span class="p">(</span><span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">RSDAsyncActionStatus</span><span class="p">,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders17RSDMotionRecorderC04stopD0yyy0A020RSDAsyncActionStatusOcF"></a>
+                    <a name="//apple_ref/swift/Method/stopRecorder(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders17RSDMotionRecorderC04stopD0yyy0A020RSDAsyncActionStatusOcF">stopRecorder(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to stop updating the motion sensors.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopRecorder</span><span class="p">(</span><span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">RSDAsyncActionStatus</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders17RSDMotionRecorderC20stringEncodingFormatAA018RSDStringSeparatedfG0_pSgyF"></a>
+                    <a name="//apple_ref/swift/Method/stringEncodingFormat()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders17RSDMotionRecorderC20stringEncodingFormatAA018RSDStringSeparatedfG0_pSgyF">stringEncodingFormat()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the string encoding format to use for this file. Default is <code>nil</code>. If this is <code>nil</code>
+then the file will be formatted using JSON encoding.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">stringEncodingFormat</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDStringSeparatedEncodingFormat.html">RSDStringSeparatedEncodingFormat</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017-2019 <a class="link" href="https://developer.sagebridge.org" target="_blank" rel="external">Sage Bionetworks</a>. All rights reserved.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

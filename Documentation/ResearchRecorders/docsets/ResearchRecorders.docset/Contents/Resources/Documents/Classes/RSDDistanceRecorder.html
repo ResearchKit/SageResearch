@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RSDDistanceRecorder Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/RSDDistanceRecorder" class="dashAnchor"></a>
+    <a title="RSDDistanceRecorder Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">ResearchRecorders Docs</a></p>
+        <p class="header-right"><a href="https://github.com/Sage-Bionetworks/SageResearch.git"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">ResearchRecorders Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        RSDDistanceRecorder Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDataLogger.html">RSDDataLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDistanceRecorder.html">RSDDistanceRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDDistanceRecorder/CRFResultIdentifier.html">– CRFResultIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMotionAuthorization.html">RSDMotionAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDMotionRecorder.html">RSDMotionRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDRecordSampleLogger.html">RSDRecordSampleLogger</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDRecordSampleLogger/RSDRecordSampleLoggerError.html">– RSDRecordSampleLoggerError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/RSDSampleRecorder/RecorderError.html">– RecorderError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/RSDAttitudeReferenceFrame.html">RSDAttitudeReferenceFrame</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/CMAccelerometerData.html">CMAccelerometerData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CMGyroData.html">CMGyroData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/CMMagnetometerData.html">CMMagnetometerData</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Notification.html">Notification</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Notification/Name.html">– Name</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDDistanceRecorderConfiguration.html">RSDDistanceRecorderConfiguration</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDIdentifier.html">RSDIdentifier</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/RSDMotionRecorderConfiguration.html">RSDMotionRecorderConfiguration</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDSampleRecord.html">RSDSampleRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDStringSeparatedEncodingFormat.html">RSDStringSeparatedEncodingFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:17ResearchRecorders9RSDVectorP">RSDVector</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/RSDVectorData.html">RSDVectorData</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/CSVEncodingFormat.html">CSVEncodingFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDAudioVisualAuthorization.html">RSDAudioVisualAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDDistanceRecord.html">RSDDistanceRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDLocationAuthorization.html">RSDLocationAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDMotionRecord.html">RSDMotionRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDPhotoLibraryAuthorization.html">RSDPhotoLibraryAuthorization</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RSDRecordMarker.html">RSDRecordMarker</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>RSDDistanceRecorder</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">@available(iOS 10.0, *)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDDistanceRecorder</span> <span class="p">:</span> <span class="kt"><a href="../Classes/RSDSampleRecorder.html">RSDSampleRecorder</a></span><span class="p">,</span> <span class="kt">CLLocationManagerDelegate</span></code></pre>
+
+                </div>
+              </div>
+            <p><code>RSDDistanceRecorder</code> is intended to be used for recording location where the participant is walking,
+running, cycling, or other activities <strong>outdoors</strong> where the distance travelled is of interest. By
+default, this recorder <em>only</em> logs the relative distance, altitude, course, and speed travelled by
+the participant. To log GPS coordinates, the configuration file must <em>explicitly</em> be set to do so,
+and it is recommended to <em>only</em> log the coordinates if the user is a tester in order to ensure the
+participant&rsquo;s privacy is respected.</p>
+
+<p>At the end of the motion travelled step, the recorder also uses CoreMotion to query the pedometer
+for the overall distance and step count as measured by the pedometer which are then added to the
+<code>RSDCollectionResult</code> returned by this recorder when it is stopped.</p>
+
+<p>This recorder is only available on iOS devices. CoreMotion is not supported by other platforms.
+Additionally, for a watchOS application that needs to measure distance travelled, creating an
+HKWorkoutSession offers a more efficient use of the device battery with equivalent accuracy
+in determining the distance travelled by the participant while performing a distance measuring
+activity.</p>
+
+<p>This recorder is designed to be run in the background so that the user can lock the screen and place
+the phone in their pocket or bag. This requires setting the capabilities in your app to include
+background audio.</p>
+
+<p>Additionally, you will need to add the privacy permission for location and motion sensors to the
+application <code>Info.plist</code> file. As of this writing (syoung 02/08/2018), those keys are:</p>
+<li><code>Privacy - Motion Usage Description</code></li>
+<li><code>Privacy - Location Always and When In Use Usage Description</code></li>
+<li><p><code>Privacy - Location When In Use Usage Description</code></p></li>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p><strong>Both</strong> location privacy keys are required.</p>
+
+</div>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><code>RSDDistanceRecorderConfiguration</code> and <code><a href="../Structs/RSDDistanceRecord.html">RSDDistanceRecord</a></code></p>
+
+</div>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC19CRFResultIdentifierO"></a>
+                    <a name="//apple_ref/swift/Enum/CRFResultIdentifier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC19CRFResultIdentifierO">CRFResultIdentifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The result identifiers used for the additional results recorded
+by the distance recorder.</p>
+
+                        <a href="../Classes/RSDDistanceRecorder/CRFResultIdentifier.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CRFResultIdentifier</span> <span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kt">CodingKey</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC21locationConfiguration0A00cdF0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/locationConfiguration" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC21locationConfiguration0A00cdF0VSgvp">locationConfiguration</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience property for getting the location configuration.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">locationConfiguration</span><span class="p">:</span> <span class="nf">RSDDistanceRecorderConfiguration</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC20relativeDistanceOnlySbvp"></a>
+                    <a name="//apple_ref/swift/Property/relativeDistanceOnly" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC20relativeDistanceOnlySbvp">relativeDistanceOnly</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Should relative distance only be saved to the log? Default = <code>true</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">relativeDistanceOnly</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC15isStandingStillSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isStandingStill" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC15isStandingStillSbvp">isStandingStill</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Whether or not the user is expected to be standing still or moving. This is used to mark
+when to start calculating distance travelled while moving as a part of a larger overall
+data gathering effort that might include how much a person is moving during other steps
+when they should be standing still (while recording heart rate, for example).</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isStandingStill</span><span class="p">:</span> <span class="nf">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchRecorders@objc(cs)RSDDistanceRecorder(py)totalDistance"></a>
+                    <a name="//apple_ref/swift/Property/totalDistance" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchRecorders@objc(cs)RSDDistanceRecorder(py)totalDistance">totalDistance</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Total distance (measured in meters) from the start of recording.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">dynamic</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">totalDistance</span><span class="p">:</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC18mostRecentLocationSo10CLLocationCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/mostRecentLocation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC18mostRecentLocationSo10CLLocationCSgvp">mostRecentLocation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Most recent location recorded.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">mostRecentLocation</span><span class="p">:</span> <span class="kt">CLLocation</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC10isOutdoorsSbyF"></a>
+                    <a name="//apple_ref/swift/Method/isOutdoors()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC10isOutdoorsSbyF">isOutdoors()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Is the participant outdoors?</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">isOutdoors</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>true</code> if the horizontal accuracy indicates that the participant is outdoors.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Recorder%20state%20management"></a>
+                <a name="//apple_ref/swift/Section/Recorder state management" class="dashAnchor"></a>
+                <a href="#/Recorder%20state%20management">
+                  <h3 class="section-name">Recorder state management</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC18requestPermissions2on_ySo16UIViewControllerC_y0A014RSDAsyncAction_p_AH9RSDResult_pSgs5Error_pSgtctF"></a>
+                    <a name="//apple_ref/swift/Method/requestPermissions(on:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC18requestPermissions2on_ySo16UIViewControllerC_y0A014RSDAsyncAction_p_AH9RSDResult_pSgs5Error_pSgtctF">requestPermissions(on:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to request GPS and motion permissions.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">requestPermissions</span><span class="p">(</span><span class="n">on</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">RSDAsyncActionCompletionHandler</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC05startD0yyy0A020RSDAsyncActionStatusO_s5Error_pSgtcF"></a>
+                    <a name="//apple_ref/swift/Method/startRecorder(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC05startD0yyy0A020RSDAsyncActionStatusO_s5Error_pSgtcF">startRecorder(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to start updating the GPS location.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">startRecorder</span><span class="p">(</span><span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">RSDAsyncActionStatus</span><span class="p">,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC04stopD0yyy0A020RSDAsyncActionStatusOcF"></a>
+                    <a name="//apple_ref/swift/Method/stopRecorder(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC04stopD0yyy0A020RSDAsyncActionStatusOcF">stopRecorder(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to stop updating GPS location.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">stopRecorder</span><span class="p">(</span><span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">RSDAsyncActionStatus</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC5pauseyyF"></a>
+                    <a name="//apple_ref/swift/Method/pause()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC5pauseyyF">pause()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to stop updating GPS location.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">pause</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC6resumeyyF"></a>
+                    <a name="//apple_ref/swift/Method/resume()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC6resumeyyF">resume()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to start updating the GPS location.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">resume</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC6moveTo4step13taskViewModely0A07RSDStep_p_AG16RSDPathComponent_ptF"></a>
+                    <a name="//apple_ref/swift/Method/moveTo(step:taskViewModel:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC6moveTo4step13taskViewModely0A07RSDStep_p_AG16RSDPathComponent_ptF">moveTo(step:taskViewModel:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override to check if the step being moved to is the step when the participant&rsquo;s
+distance should be tracked and to add the pedometer reading once the participant
+is standing still.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">moveTo</span><span class="p">(</span><span class="nv">step</span><span class="p">:</span> <span class="kt">RSDStep</span><span class="p">,</span> <span class="nv">taskViewModel</span><span class="p">:</span> <span class="kt">RSDPathComponent</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/CLLocationManagerDelegate"></a>
+                <a name="//apple_ref/swift/Section/CLLocationManagerDelegate" class="dashAnchor"></a>
+                <a href="#/CLLocationManagerDelegate">
+                  <h3 class="section-name">CLLocationManagerDelegate</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchRecorders@objc(cs)RSDDistanceRecorder(im)locationManager:didFailWithError:"></a>
+                    <a name="//apple_ref/swift/Method/locationManager(_:didFailWithError:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchRecorders@objc(cs)RSDDistanceRecorder(im)locationManager:didFailWithError:">locationManager(_:didFailWithError:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If the location manager failed, then check if the manager was requesting permission
+and call the completion handler if appropriate.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didFailWithError</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchRecorders@objc(cs)RSDDistanceRecorder(im)locationManager:didChangeAuthorizationStatus:"></a>
+                    <a name="//apple_ref/swift/Method/locationManager(_:didChangeAuthorization:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchRecorders@objc(cs)RSDDistanceRecorder(im)locationManager:didChangeAuthorizationStatus:">locationManager(_:didChangeAuthorization:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>If the authorization changes, then check if authorization has been granted.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didChangeAuthorization</span> <span class="nv">status</span><span class="p">:</span> <span class="kt">CLAuthorizationStatus</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchRecorders@objc(cs)RSDDistanceRecorder(im)locationManager:didUpdateLocations:"></a>
+                    <a name="//apple_ref/swift/Method/locationManager(_:didUpdateLocations:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchRecorders@objc(cs)RSDDistanceRecorder(im)locationManager:didUpdateLocations:">locationManager(_:didUpdateLocations:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When location updates are received, process them on the processing queue.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">locationManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt">CLLocationManager</span><span class="p">,</span> <span class="n">didUpdateLocations</span> <span class="nv">locations</span><span class="p">:</span> <span class="p">[</span><span class="kt">CLLocation</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:17ResearchRecorders19RSDDistanceRecorderC20stringEncodingFormatAA018RSDStringSeparatedfG0_pSgyF"></a>
+                    <a name="//apple_ref/swift/Method/stringEncodingFormat()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:17ResearchRecorders19RSDDistanceRecorderC20stringEncodingFormatAA018RSDStringSeparatedfG0_pSgyF">stringEncodingFormat()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the string encoding format to use for this file. Default is <code>nil</code>. If this is <code>nil</code>
+then the file will be formatted using JSON encoding.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">override</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">stringEncodingFormat</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Protocols/RSDStringSeparatedEncodingFormat.html">RSDStringSeparatedEncodingFormat</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017-2019 <a class="link" href="https://developer.sagebridge.org" target="_blank" rel="external">Sage Bionetworks</a>. All rights reserved.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.6</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

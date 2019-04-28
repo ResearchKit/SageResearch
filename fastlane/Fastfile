@@ -126,25 +126,18 @@ platform :ios do
     # bump the build
     framework = "Research"
     project = "Research/Research.xcodeproj"
-    version_number = get_version_number(xcodeproj: "#{project}", target: "Research-iOS")
+    version_number = get_version_number(xcodeproj: "#{project}", target: "Research (iOS)")
     next_build_number = increment_build_number(xcodeproj: "#{project}")
-    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Version Bump Research #{version_number} (#{next_build_number})")
-    add_git_tag(tag: "#{framework}_#{version_number}.#{next_build_number}")
+    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Bump build for Research #{version_number} (#{next_build_number})")
 
     doc_framework(
-      framework:"Research",
-      version_number:"{#version_number}",
-      build_number:"{#next_build_number}"
+      framework:"Research"
     )
     doc_framework(
-      framework:"ResearchUI",
-      version_number:"{#version_number}",
-      build_number:"{#next_build_number}"
+      framework:"ResearchUI"
     )
     doc_framework(
-      framework:"ResearchRecorders",
-      version_number:"{#version_number}",
-      build_number:"{#next_build_number}"
+      framework:"ResearchRecorders"
     )
 
     add_git_tag(tag: "v#{version_number}.#{next_build_number}")
@@ -154,18 +147,14 @@ platform :ios do
   desc "Document Framework Version"
   lane :doc_framework do |options|
     framework = options[:framework]
-    version_number = options[:version_number]
-    build_number = options[:build_number]
     project = "Research/Research.xcodeproj"
-    scheme = "#{framework}-iOS"
 
     ensure_git_status_clean
 
     # Update the documentation
     jazzy(config: "Research/#{framework}/jazzy_config.yml")
     git_add
-    git_commit(path: "Documentation/*", message: "[skip ci] Documentation #{framework} #{version_number} (#{build_number})")
-    add_git_tag(tag: "#{framework}_docs_#{version_number}.#{build_number}")
+    git_commit(path: "Documentation/*", message: "[skip ci] Update #{framework}.framework documentation")
   end
 
   desc "Submit a new Build to appstore"
