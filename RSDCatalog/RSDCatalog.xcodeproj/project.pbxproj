@@ -20,8 +20,6 @@
 		F84DDB7020955690009CC1B8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6A20955628009CC1B8 /* CoreMotion.framework */; };
 		F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */ = {isa = PBXBuildFile; fileRef = F871AA5022610D2F00C0F657 /* ColorPalettes.json */; };
 		F871AA5322610E8900C0F657 /* PaletteSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */; };
-		F8A503712225FE40005F1C0C /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A503702225FE40005F1C0C /* CardiorespiratoryFitness.framework */; };
-		F8A503722225FE40005F1C0C /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A503702225FE40005F1C0C /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42A532095518400C6A4BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A522095518400C6A4BC /* AppDelegate.swift */; };
 		F8D42A5A2095518400C6A4BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A592095518400C6A4BC /* Assets.xcassets */; };
 		F8D42A732095518400C6A4BC /* RSDCatalogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A722095518400C6A4BC /* RSDCatalogUITests.swift */; };
@@ -73,7 +71,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F801218322755548003A1A5C /* ResearchRecorders.framework in Embed Frameworks */,
-				F8A503722225FE40005F1C0C /* CardiorespiratoryFitness.framework in Embed Frameworks */,
 				F830840D21F2686C0055F9B8 /* MotorControl.framework in Embed Frameworks */,
 				F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */,
 				F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */,
@@ -131,7 +128,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8A503712225FE40005F1C0C /* CardiorespiratoryFitness.framework in Frameworks */,
 				F801218222755548003A1A5C /* ResearchRecorders.framework in Frameworks */,
 				F84DDB7020955690009CC1B8 /* CoreMotion.framework in Frameworks */,
 				F84DDB6F20955687009CC1B8 /* CoreLocation.framework in Frameworks */,
