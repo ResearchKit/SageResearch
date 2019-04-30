@@ -82,7 +82,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     
     /// The result identifiers used for the additional results recorded
     /// by the distance recorder.
-    public enum CRFResultIdentifier : String, CodingKey {
+    public enum ResultIdentifier : String, CodingKey {
         
         /// The step count returned by the pedometer.
         case stepCount
@@ -365,15 +365,15 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
     
     private func _recordPedometerData(_ data: CMPedometerData) {
         
-        var stepCountResult = RSDAnswerResultObject(identifier: CRFResultIdentifier.stepCount.stringValue, answerType: RSDAnswerResultType(baseType: .decimal))
+        var stepCountResult = RSDAnswerResultObject(identifier: ResultIdentifier.stepCount.stringValue, answerType: RSDAnswerResultType(baseType: .decimal))
         stepCountResult.value = data.numberOfSteps
         self.appendResults(stepCountResult)
         
-        var pedometerDistanceResult = RSDAnswerResultObject(identifier: CRFResultIdentifier.pedometerDistance.stringValue, answerType: RSDAnswerResultType(baseType: .decimal))
+        var pedometerDistanceResult = RSDAnswerResultObject(identifier: ResultIdentifier.pedometerDistance.stringValue, answerType: RSDAnswerResultType(baseType: .decimal))
         pedometerDistanceResult.value = data.distance
         self.appendResults(pedometerDistanceResult)
         
-        var gpsDistanceResult = RSDAnswerResultObject(identifier: CRFResultIdentifier.gpsDistance.stringValue, answerType: RSDAnswerResultType(baseType: .decimal))
+        var gpsDistanceResult = RSDAnswerResultObject(identifier: ResultIdentifier.gpsDistance.stringValue, answerType: RSDAnswerResultType(baseType: .decimal))
         gpsDistanceResult.value = totalDistance
         self.appendResults(gpsDistanceResult)
         

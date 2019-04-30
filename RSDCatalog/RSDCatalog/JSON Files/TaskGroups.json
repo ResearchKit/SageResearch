@@ -86,13 +86,6 @@
      "title": "Motor Control",
      "detail": "This task group includes the tasks included in the MotorControl module.",
      "icon": "activityIcon"
- },
- {
-     "identifier": "crfTasks",
-     "type":"crf",
-     "title": "Cardiorespiratory Fitness",
-     "detail": "This task group includes the tasks included in the CardiorespiratoryFitness module.",
-     "icon": "activityIcon"
  }
 ]
 }
