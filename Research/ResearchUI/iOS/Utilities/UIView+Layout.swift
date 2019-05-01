@@ -333,6 +333,28 @@ extension UIView {
         return [constraint]
     }
     
+    /// A convenience method to constrain the view's height relative to its superview.
+    /// - parameter multiplier: A `CGFloat` constant for the constraint multiplier.
+    /// - returns: The layout constraints that were added.
+    @discardableResult
+    public func rsd_makeHeightEqualToSuperview(multiplier: CGFloat) -> [NSLayoutConstraint] {
+        
+        guard let superview = self.superview else {
+            assertionFailure("Trying to set constraints without first setting superview")
+            return []
+        }
+        
+        let constraint = NSLayoutConstraint(item: self,
+                                            attribute: .height,
+                                            relatedBy: .equal,
+                                            toItem: superview,
+                                            attribute: .height,
+                                            multiplier: multiplier,
+                                            constant: 0.0)
+        superview.addConstraint(constraint)
+        return [constraint]
+    }
+    
     /// A convenience method to constraint the view's width relative to its superview.
     /// - parameter multiplier: A `CGFloat` constant for the constraint multiplier.
     /// - returns: The layout constraints that were added.
