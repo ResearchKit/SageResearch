@@ -233,42 +233,42 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
-      "line": 404,
+      "line": 430,
       "symbol": "RSDColorRules.checkboxButton(on:isSelected:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
-      "line": 528,
+      "line": 554,
       "symbol": "RSDColorRules.roundedCheckmark(on:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
-      "line": 604,
+      "line": 630,
       "symbol": "RSDSeverityColorScale.Scale.mild",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
-      "line": 604,
+      "line": 630,
       "symbol": "RSDSeverityColorScale.Scale.moderate",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
-      "line": 604,
+      "line": 630,
       "symbol": "RSDSeverityColorScale.Scale.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDColorRules.swift",
-      "line": 604,
+      "line": 630,
       "symbol": "RSDSeverityColorScale.Scale.severe",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"

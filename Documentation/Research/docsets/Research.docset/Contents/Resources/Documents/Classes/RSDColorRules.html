@@ -1825,6 +1825,95 @@ Tinted button color on a given background.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8Research13RSDColorRulesC13coloredButton2on10forMapping0G5StateSo7UIColorCAA0B4TileV_AA0bH0_pAA010RSDControlI0OtF"></a>
+                    <a name="//apple_ref/swift/Method/coloredButton(on:forMapping:forState:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research13RSDColorRulesC13coloredButton2on10forMapping0G5StateSo7UIColorCAA0B4TileV_AA0bH0_pAA010RSDControlI0OtF">coloredButton(on:forMapping:forState:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The color for the background of a colored button for a given state and button type.</p>
+
+<ul>
+<li><p>Default:</p>
+<pre class="highlight swift"><code><span class="kt">Get</span> <span class="n">the</span> <span class="s">"normal"</span> <span class="n">tile</span> <span class="n">color</span> <span class="k">for</span> <span class="n">the</span> <span class="n">button</span> <span class="n">type</span><span class="o">.</span> <span class="kt">This</span> <span class="n">depends</span> <span class="n">upon</span> <span class="n">whether</span> <span class="n">or</span> <span class="n">not</span> <span class="n">the</span> <span class="n">button</span> <span class="k">is</span>
+<span class="n">a</span> <span class="n">primary</span> <span class="n">button</span> <span class="n">and</span> <span class="n">whether</span> <span class="n">or</span> <span class="n">not</span> <span class="n">it</span> <span class="k">is</span> <span class="n">displayed</span> <span class="n">on</span> <span class="n">a</span> <span class="n">white</span> <span class="n">background</span><span class="o">.</span>
+
+<span class="kt">If</span> <span class="n">highlighted</span>
+    <span class="n">then</span> <span class="k">if</span> <span class="n">the</span> <span class="n">tile</span> <span class="k">is</span> <span class="err">`</span><span class="n">veryLight</span><span class="err">`</span> <span class="n">then</span> <span class="n">one</span> <span class="n">shade</span> <span class="n">darker</span>
+    <span class="k">else</span> <span class="n">one</span> <span class="n">shade</span> <span class="n">lighter</span>
+<span class="kt">If</span> <span class="n">disabled</span>
+    <span class="n">then</span> <span class="mi">35</span><span class="o">%</span> <span class="n">opacity</span>
+<span class="kt">Else</span>
+    <span class="k">return</span> <span class="n">the</span> <span class="n">color</span> <span class="n">tile</span> <span class="k">as</span><span class="o">-</span><span class="k">is</span><span class="o">.</span>
+</code></pre></li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">coloredButton</span><span class="p">(</span><span class="n">on</span> <span class="nv">background</span><span class="p">:</span> <span class="kt"><a href="../Structs/RSDColorTile.html">RSDColorTile</a></span><span class="p">,</span> <span class="n">forMapping</span> <span class="nv">tile</span><span class="p">:</span> <span class="kt"><a href="../Protocols/RSDColorMapping.html">RSDColorMapping</a></span><span class="p">,</span> <span class="n">forState</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">RSDControlState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/RSDColor">RSDColor</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>background</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The background of the button.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>tile</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The default color tile for the button background.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The UI control state of the button.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The color to use for the background of a rounded button.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8Research13RSDColorRulesC17roundedButtonText2on4with8forStateSo7UIColorCAA0B4TileV_AA15RSDDesignSystemC0E4TypeOAA010RSDControlJ0OtF"></a>
                     <a name="//apple_ref/swift/Method/roundedButtonText(on:with:forState:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research13RSDColorRulesC17roundedButtonText2on4with8forStateSo7UIColorCAA0B4TileV_AA15RSDDesignSystemC0E4TypeOAA010RSDControlJ0OtF">roundedButtonText(on:with:forState:)</a>
