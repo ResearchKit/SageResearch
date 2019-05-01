@@ -333,7 +333,7 @@ extension UIView {
         return [constraint]
     }
     
-    /// A convenience method to constraint the view's height relative to its superview.
+    /// A convenience method to constrain the view's height relative to its superview.
     /// - parameter multiplier: A `CGFloat` constant for the constraint multiplier.
     /// - returns: The layout constraints that were added.
     @discardableResult
