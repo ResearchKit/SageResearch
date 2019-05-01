@@ -316,6 +316,7 @@
 		F8904D491FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
 		F8904D4A1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
 		F8904D4B1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
+		F8981A4F2279214B008DD5D0 /* RSDTemplateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8981A4E2279214B008DD5D0 /* RSDTemplateImageView.swift */; };
 		F89BEA30202B9550007BD2DD /* CopyStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89BEA2F202B9550007BD2DD /* CopyStepTests.swift */; };
 		F89CA1F12023EF9C00C5EB86 /* RSDDurationFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F89CA1EF2023EF9C00C5EB86 /* RSDDurationFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F89CA1F22023EF9C00C5EB86 /* RSDDurationFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F89CA1EF2023EF9C00C5EB86 /* RSDDurationFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1201,6 +1202,7 @@
 		F8864ADB2163FE3100DF57CF /* RSDResultSummaryStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultSummaryStepObject.swift; sourceTree = "<group>"; };
 		F8864AEB2164406700DF57CF /* RSDResultSummaryStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultSummaryStepViewModel.swift; sourceTree = "<group>"; };
 		F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnitConverter.swift; sourceTree = "<group>"; };
+		F8981A4E2279214B008DD5D0 /* RSDTemplateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTemplateImageView.swift; sourceTree = "<group>"; };
 		F89BEA2F202B9550007BD2DD /* CopyStepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyStepTests.swift; sourceTree = "<group>"; };
 		F89CA1EF2023EF9C00C5EB86 /* RSDDurationFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDDurationFormatter.h; sourceTree = "<group>"; };
 		F89CA1F02023EF9C00C5EB86 /* RSDDurationFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDDurationFormatter.m; sourceTree = "<group>"; };
@@ -1786,6 +1788,7 @@
 				F84496322273A23100EAA3E0 /* RSDCrosshatchView_deprecated.swift */,
 				F84496332273A23100EAA3E0 /* RSDImageViewCell.swift */,
 				F84496342273A23100EAA3E0 /* RSDToggleConstraintView.swift */,
+				F8981A4E2279214B008DD5D0 /* RSDTemplateImageView.swift */,
 				F84496352273A23100EAA3E0 /* RSDTextLabelCell.swift */,
 				F84496362273A23100EAA3E0 /* RSDBackgroundGradient.swift */,
 				F84496372273A23100EAA3E0 /* RSDCheckmarkView.swift */,
@@ -2905,6 +2908,7 @@
 				F84496712273A23100EAA3E0 /* RSDCountdownDial.swift in Sources */,
 				F84496412273A23100EAA3E0 /* RSDShowViewUIAction.swift in Sources */,
 				F84495FE2273A22100EAA3E0 /* UIColor+BridgeKeyNames.swift in Sources */,
+				F8981A4F2279214B008DD5D0 /* RSDTemplateImageView.swift in Sources */,
 				F84496462273A23100EAA3E0 /* RSDOverviewStepViewController.swift in Sources */,
 				F844965F2273A23100EAA3E0 /* RSDTableSectionHeader.swift in Sources */,
 				F84496432273A23100EAA3E0 /* RSDTableStepViewController.swift in Sources */,

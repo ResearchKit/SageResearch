@@ -323,6 +323,32 @@ open class RSDColorRules  {
     /// - returns: The color to use for the background of a rounded button.
     open func roundedButton(on background: RSDColorTile, with buttonType: RSDDesignSystem.ButtonType, forState state: RSDControlState) -> RSDColor {
         let tile = self.roundedButton(on: background, buttonType: buttonType)
+        return coloredButton(on: background, forMapping: tile, forState: state)
+    }
+    
+    /// The color for the background of a colored button for a given state and button type.
+    ///
+    /// - Default:
+    /// ```
+    ///     Get the "normal" tile color for the button type. This depends upon whether or not the button is
+    ///     a primary button and whether or not it is displayed on a white background.
+    ///
+    ///     If highlighted
+    ///         then if the tile is `veryLight` then one shade darker
+    ///         else one shade lighter
+    ///     If disabled
+    ///         then 35% opacity
+    ///     Else
+    ///         return the color tile as-is.
+    /// ```
+    ///
+    /// - parameters:
+    ///     - background: The background of the button.
+    ///     - tile: The default color tile for the button background.
+    ///     - state: The UI control state of the button.
+    /// - returns: The color to use for the background of a rounded button.
+    open func coloredButton(on background: RSDColorTile, forMapping tile:RSDColorMapping, forState state: RSDControlState) -> RSDColor {
+        
         switch state {
         case .highlighted:
             if tile.index > 0, tile.colorTiles[tile.index - 1] != background {
