@@ -90,7 +90,7 @@ open class RSDTemplateImageButton: UIButton, RSDViewDesignable {
                 let background = self.backgroundColorTile
                 else {
                     // show as highlighted by lowering opacity unless alpha is used to set hidden
-                    self.alpha = isHighlighted ? CGFloat(1) : CGFloat(0.8)
+                    self.alpha = isHighlighted ? CGFloat(0.8) : CGFloat(1)
                     return
             }
             
