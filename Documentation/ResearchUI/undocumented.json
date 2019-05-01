@@ -1604,6 +1604,62 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDTemplateImageView.swift",
+      "line": 76,
+      "symbol": "RSDTemplateImageButton.isEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDTemplateImageView.swift",
+      "line": 84,
+      "symbol": "RSDTemplateImageButton.isHighlighted",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDTemplateImageView.swift",
+      "line": 140,
+      "symbol": "RSDTemplateImageButton.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDTemplateImageView.swift",
+      "line": 144,
+      "symbol": "RSDTemplateImageButton.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDTemplateImageView.swift",
+      "line": 156,
+      "symbol": "RSDTemplateImageButton.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDTemplateImageView.swift",
+      "line": 233,
+      "symbol": "RSDTemplateImageView.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDTemplateImageView.swift",
+      "line": 238,
+      "symbol": "RSDTemplateImageView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDTemplateImageView.swift",
+      "line": 268,
+      "symbol": "RSDTemplateImageView.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDTextLabelCell.swift",
       "line": 54,
       "symbol": "RSDTextLabelCell.init(style:reuseIdentifier:)",
