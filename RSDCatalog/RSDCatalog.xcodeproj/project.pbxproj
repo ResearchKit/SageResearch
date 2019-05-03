@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		F801218222755548003A1A5C /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F801218122755548003A1A5C /* ResearchRecorders.framework */; };
 		F801218322755548003A1A5C /* ResearchRecorders.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F801218122755548003A1A5C /* ResearchRecorders.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F830840C21F2686C0055F9B8 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F830840B21F2686C0055F9B8 /* MotorControl.framework */; };
-		F830840D21F2686C0055F9B8 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F830840B21F2686C0055F9B8 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F836460B2265281400CCA0EF /* TaskPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */; };
 		F836460D22652E6100CCA0EF /* TaskArchivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */; };
 		F8373C9320964F60004DD4E1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8373C9220964F60004DD4E1 /* README.md */; };
@@ -71,7 +69,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F801218322755548003A1A5C /* ResearchRecorders.framework in Embed Frameworks */,
-				F830840D21F2686C0055F9B8 /* MotorControl.framework in Embed Frameworks */,
 				F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */,
 				F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */,
 			);
@@ -134,7 +131,6 @@
 				F84DDB6E2095567C009CC1B8 /* AVFoundation.framework in Frameworks */,
 				F84DDB6D20955672009CC1B8 /* Photos.framework in Frameworks */,
 				F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */,
-				F830840C21F2686C0055F9B8 /* MotorControl.framework in Frameworks */,
 				F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

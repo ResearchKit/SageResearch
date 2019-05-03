@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F8087BB0227C068F005BDDEC /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8087BAF227C068F005BDDEC /* ResearchRecorders.framework */; };
 		F8250548202A5B0000AF9B76 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8250549202A5B0000AF9B76 /* Research.framework */; };
 		F8250557202A5BBC00AF9B76 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8250556202A5BBB00AF9B76 /* README.md */; };
 		F8250559202A5E4700AF9B76 /* ORKInstructionStep+Research.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8250558202A5E4700AF9B76 /* ORKInstructionStep+Research.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F8087BAF227C068F005BDDEC /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8250549202A5B0000AF9B76 /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F825054A202A5B3600AF9B76 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = ../../ResearchKit/ResearchKit.xcodeproj; sourceTree = "<group>"; };
 		F8250556202A5BBB00AF9B76 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8087BB0227C068F005BDDEC /* ResearchRecorders.framework in Frameworks */,
 				F844CC71202AD5CA00272FEF /* ResearchUI.framework in Frameworks */,
 				F825055C202A5EC000AF9B76 /* ResearchKit.framework in Frameworks */,
 				F8250548202A5B0000AF9B76 /* Research.framework in Frameworks */,
@@ -70,6 +73,7 @@
 		F8250547202A5B0000AF9B76 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F8087BAF227C068F005BDDEC /* ResearchRecorders.framework */,
 				F844CC72202AD5CA00272FEF /* ResearchUI.framework */,
 				F825054A202A5B3600AF9B76 /* ResearchKit.xcodeproj */,
 				F8250549202A5B0000AF9B76 /* Research.framework */,

@@ -80,12 +80,5 @@
             "taskTransformer" : { "resourceName": "Theme_Color" }
             }]
  },
- {
-     "identifier": "motorControlTasks",
-     "type":"motorControl",
-     "title": "Motor Control",
-     "detail": "This task group includes the tasks included in the MotorControl module.",
-     "icon": "activityIcon"
- }
 ]
 }
