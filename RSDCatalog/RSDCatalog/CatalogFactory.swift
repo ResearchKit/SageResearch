@@ -33,7 +33,6 @@
 
 import Foundation
 import Research
-import MotorControl
 
 /// Stub out a factory for this application. Any factory overrides that are used by the catalog
 /// can be declared here. This stub is intentional so that unit tests will all use this rather
@@ -57,35 +56,15 @@ struct TaskGroupDecoder : Decodable {
         case taskGroups
     }
     
-    enum TaskGroupType: String, Decodable {
-        case motorControl
-    }
-    
     let taskGroups: [RSDTaskGroup]
     
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let factory = decoder.factory
-        
+        let container = try decoder.container(keyedBy: CodingKeys.self)        
         var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .taskGroups)
         var decodedTasks : [RSDTaskGroup] = []
         while !nestedContainer.isAtEnd {
             let taskDecoder = try nestedContainer.superDecoder()
-            let task: RSDTaskGroup
-            if let type = try factory.typeName(from: taskDecoder) {
-                guard let groupType = TaskGroupType(rawValue: type) else {
-                    let context = DecodingError.Context(codingPath: taskDecoder.codingPath, debugDescription: "Group type not recognized")
-                    throw DecodingError.dataCorrupted(context)
-                }
-                switch (groupType) {
-                case .motorControl:
-                    task = try MCTTaskGroup(from: taskDecoder)
-                }
-            }
-            else {
-                task = try RSDTaskGroupObject(from: taskDecoder)
-                
-            }
+            let task: RSDTaskGroup = try RSDTaskGroupObject(from: taskDecoder)
             decodedTasks.append(task)
         }
         self.taskGroups = decodedTasks

@@ -8,9 +8,6 @@
       location = "group:Research/Research.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:MotorControl/MotorControl.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:RK1Translator/RK1Translator.xcodeproj">
    </FileRef>
 </Workspace>
