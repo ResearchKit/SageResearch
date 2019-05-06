@@ -58,7 +58,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDAnswerResultType.swift",
-      "line": 157,
+      "line": 174,
       "symbol": "RSDAnswerResultType.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -555,7 +555,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDocumentable.swift",
-      "line": 237,
+      "line": 231,
       "symbol": "RawRepresentable.stringValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
