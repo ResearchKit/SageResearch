@@ -79,7 +79,6 @@
 
 /* Begin PBXFileReference section */
 		F801218122755548003A1A5C /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F830840B21F2686C0055F9B8 /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPresentationViewController.swift; sourceTree = "<group>"; };
 		F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskArchivesTableViewController.swift; sourceTree = "<group>"; };
 		F8373C9220964F60004DD4E1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -89,7 +88,6 @@
 		F84DDB6C20955628009CC1B8 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		F871AA5022610D2F00C0F657 /* ColorPalettes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ColorPalettes.json; sourceTree = "<group>"; };
 		F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteSelectionViewController.swift; sourceTree = "<group>"; };
-		F8A503702225FE40005F1C0C /* CardiorespiratoryFitness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardiorespiratoryFitness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42A4F2095518400C6A4BC /* RSDCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42A522095518400C6A4BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D42A592095518400C6A4BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -244,8 +242,6 @@
 				F8D42AB52095550C00C6A4BC /* Research.framework */,
 				F8D42AB72095550C00C6A4BC /* ResearchUI.framework */,
 				F801218122755548003A1A5C /* ResearchRecorders.framework */,
-				F8A503702225FE40005F1C0C /* CardiorespiratoryFitness.framework */,
-				F830840B21F2686C0055F9B8 /* MotorControl.framework */,
 				F84DDB6C20955628009CC1B8 /* Photos.framework */,
 				F84DDB6B20955628009CC1B8 /* AVFoundation.framework */,
 				F84DDB6920955628009CC1B8 /* CoreLocation.framework */,

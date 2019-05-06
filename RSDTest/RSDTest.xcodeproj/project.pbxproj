@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		F8373C8920964EC7004DD4E1 /* RSDTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8373C8820964EC7004DD4E1 /* RSDTestTests.swift */; };
 		F8B1777E202CD31700B62416 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8B1777D202CD31700B62416 /* README.md */; };
-		F8B17823202D4E8400B62416 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchUI.framework */; };
-		F8B17824202D4E8400B62416 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8B17827202D4E8C00B62416 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* Research.framework */; };
-		F8B17828202D4E8C00B62416 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8D86F132280B27600897CDF /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* Research.framework */; };
+		F8D86F142280B27600897CDF /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17826202D4E8C00B62416 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8D86F152280B27600897CDF /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchUI.framework */; };
+		F8D86F162280B27600897CDF /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8B17822202D4E8400B62416 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF2415611F7AC31800D0BA5C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2415601F7AC31800D0BA5C /* AppDelegate.swift */; };
 		FF2415631F7AC31800D0BA5C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2415621F7AC31800D0BA5C /* ViewController.swift */; };
 		FF2415661F7AC31800D0BA5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF2415641F7AC31800D0BA5C /* Main.storyboard */; };
@@ -33,14 +33,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		F8B17825202D4E8400B62416 /* Embed Frameworks */ = {
+		F8D86F172280B27600897CDF /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F8B17828202D4E8C00B62416 /* Research.framework in Embed Frameworks */,
-				F8B17824202D4E8400B62416 /* ResearchUI.framework in Embed Frameworks */,
+				F8D86F142280B27600897CDF /* Research.framework in Embed Frameworks */,
+				F8D86F162280B27600897CDF /* ResearchUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,8 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8B17827202D4E8C00B62416 /* Research.framework in Frameworks */,
-				F8B17823202D4E8400B62416 /* ResearchUI.framework in Frameworks */,
+				F8D86F132280B27600897CDF /* Research.framework in Frameworks */,
+				F8D86F152280B27600897CDF /* ResearchUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +98,8 @@
 		F8B177E9202D330D00B62416 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F8B17826202D4E8C00B62416 /* Research.framework */,
+				F8B17822202D4E8400B62416 /* ResearchUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -109,8 +111,6 @@
 				FF24155F1F7AC31800D0BA5C /* RSDTest */,
 				F8373C8720964EC7004DD4E1 /* RSDTestTests */,
 				FF24155E1F7AC31800D0BA5C /* Products */,
-				F8B17826202D4E8C00B62416 /* Research.framework */,
-				F8B17822202D4E8400B62416 /* ResearchUI.framework */,
 				F8B177E9202D330D00B62416 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -184,7 +184,7 @@
 				FF2415591F7AC31800D0BA5C /* Sources */,
 				FF24155A1F7AC31800D0BA5C /* Frameworks */,
 				FF24155B1F7AC31800D0BA5C /* Resources */,
-				F8B17825202D4E8400B62416 /* Embed Frameworks */,
+				F8D86F172280B27600897CDF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -207,13 +207,13 @@
 				TargetAttributes = {
 					F8373C8520964EC7004DD4E1 = {
 						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 						TestTargetID = FF24155C1F7AC31800D0BA5C;
 					};
 					FF24155C1F7AC31800D0BA5C = {
 						CreatedOnToolsVersion = 9.0;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -327,7 +327,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSDTest.app/RSDTest";
 			};
@@ -347,7 +347,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.RSDTestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RSDTest.app/RSDTest";
 			};
@@ -483,7 +483,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "877c46a3-e438-4856-ab71-0df11d8f51c4";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development: org.sagebase.RSDTest";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -506,7 +506,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "84a674c1-10a5-4b79-b2e8-05507424ffec";
 				PROVISIONING_PROFILE_SPECIFIER = "match Distribution: org.sagebase.RSDTest";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
