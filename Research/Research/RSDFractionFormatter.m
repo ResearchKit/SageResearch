@@ -104,7 +104,7 @@
     
     // If the number can be converted then return it.
     NSNumber *num = [self.numberFormatter numberFromString:string];
-    if (num) {
+    if (num != nil) {
         return num;
     }
 

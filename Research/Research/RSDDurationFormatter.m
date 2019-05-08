@@ -149,7 +149,7 @@
             if (idx < components.count) {
                 NSString *numberString = components[idx];
                 NSNumber *number = [self.numberFormatter numberFromString:numberString];
-                if (number) {
+                if (number != nil) {
                     NSMeasurement *part = [[NSMeasurement alloc] initWithDoubleValue:[number doubleValue] unit:unit];
                     measurement = [measurement measurementByAddingMeasurement:part] ? : part;
                 }

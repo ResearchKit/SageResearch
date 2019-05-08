@@ -67,7 +67,7 @@
         NSString *unit = unitMatches.count > idx ? [string substringWithRange:unitMatches[idx].range] : nil;
         NSString *numberString = [string substringWithRange:obj.range];
         NSNumber *number = [formatter.numberFormatter numberFromString:numberString];
-        if (number) {
+        if (number != nil) {
             NSMeasurement *part = [formatter measurementForNumber:number unit:unit];
             measurement = [measurement measurementByAddingMeasurement:part] ? : part;
         }
