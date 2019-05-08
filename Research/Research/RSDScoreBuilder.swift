@@ -41,6 +41,18 @@ public protocol RSDScoreBuilder {
     func getScoringData(from taskResult: RSDTaskResult) -> RSDJSONSerializable?
 }
 
+/// Default implementation for building a task scoring.
+public struct RSDDefaultScoreBuilder : RSDScoreBuilder {
+    public init() {
+    }
+    
+    /// Recursively build the scoring data.
+    public func getScoringData(from taskResult: RSDTaskResult) -> RSDJSONSerializable? {
+        let builder = RecursiveScoreBuilder()
+        return builder.getScoringData(from: taskResult)
+    }
+}
+
 internal struct RecursiveScoreBuilder : RSDScoreBuilder {
     
     /// Build the scoring data from a task result by recursively looking for results that conform to either
