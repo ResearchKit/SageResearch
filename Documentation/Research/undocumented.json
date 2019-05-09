@@ -946,6 +946,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDScoreBuilder.swift",
+      "line": 46,
+      "symbol": "RSDDefaultScoreBuilder.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDStepViewModel.swift",
       "line": 44,
       "symbol": "RSDStepViewModel.init(step:parent:)",
