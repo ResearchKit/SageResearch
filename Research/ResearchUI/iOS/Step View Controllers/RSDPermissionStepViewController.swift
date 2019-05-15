@@ -86,7 +86,7 @@ open class RSDPermissionStepViewController: RSDStepViewController {
             if (permission.permissionType == .motion) && (status == .previouslyDenied) {
                 // If this is a motion permission which was previously denied, then query the status to see
                 // if this the forward enabled state should be changed.
-                RSDMotionAuthorization.requestAuthorization() { [weak self] (status, _) in
+                RSDAuthorizationHandler.requestAuthorization(for: permission) { [weak self] (status, _) in
                     self?._authStatus = status
                     if status.isDenied() {
                         self?.handleAuthorizationFailed(status: status, permission: permission)
@@ -155,23 +155,8 @@ open class RSDPermissionStepViewController: RSDStepViewController {
             return
         }
         
-        switch permission.permissionType {
-        case .camera, .microphone:
-            RSDAudioVisualAuthorization.requestAuthorization(for: permission) { (status, _) in
-                completion(status, permission)
-            }
-        case .motion:
-            RSDMotionAuthorization.requestAuthorization { (status, _) in
-                completion(status, permission)
-            }
-        case .photoLibrary:
-            RSDPhotoLibraryAuthorization.requestAuthorization { (status, _) in
-                completion(status, permission)
-            }
-            
-        default:
-            assertionFailure("\(permission) is not currently handled by this view controller.")
-            completion(.denied, permission)
+        RSDAuthorizationHandler.requestAuthorization(for: permission) { (status, _) in
+            completion(status, permission)
         }
     }
     

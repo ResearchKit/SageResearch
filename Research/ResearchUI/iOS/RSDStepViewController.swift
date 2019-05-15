@@ -2,7 +2,7 @@
 //  RSDStepViewController.swift
 //  ResearchUI
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -829,16 +829,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     /// Check the authorization status for a given permission type.
     open func authorizationStatus(for permissionType: RSDStandardPermissionType) -> RSDAuthorizationStatus {
-        switch permissionType {
-        case .camera, .microphone:
-            return RSDAudioVisualAuthorization.authorizationStatus(for: permissionType)
-        case .photoLibrary:
-            return RSDPhotoLibraryAuthorization.authorizationStatus()
-        case .location, .locationWhenInUse:
-            return RSDLocationAuthorization.authorizationStatus(for: permissionType)
-        case .motion:
-            return RSDMotionAuthorization.authorizationStatus()
-        }
+        return RSDAuthorizationHandler.authorizationStatus(for: permissionType.identifier)
     }
     
     /// The permissions required for this step.
