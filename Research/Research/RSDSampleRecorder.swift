@@ -757,6 +757,9 @@ public struct CSVEncodingFormat<K> : RSDStringSeparatedEncodingFormat where K : 
     public func codingKeys() -> [CodingKey] {
         return Key.codingKeys()
     }
+    
+    public init() {
+    }
 }
 
 /// `RSDRecordSampleLogger` is used to write samples encoded as json dictionary objects to a logging file.

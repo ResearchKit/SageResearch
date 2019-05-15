@@ -42,8 +42,21 @@ public protocol RSDPermissionType {
     var identifier: String { get }
 }
 
+/// An `RSDPermission` can carry additional information about the permission
+@objc public protocol RSDPermission : class {
+    
+    /// An identifier for the permission.
+    var identifier: String { get }
+    
+    /// A title for this permission.
+    var title: String? { get }
+    
+    /// Additional reason for requiring the permission.
+    var reason: String? { get }
+}
+
 /// General-purpose enum for authorization status.
-public enum RSDAuthorizationStatus : Int {
+@objc public enum RSDAuthorizationStatus : Int {
     
     /// Standard mapping of the authorization status.
     case authorized, notDetermined, restricted, denied
@@ -123,7 +136,7 @@ extension RSDStandardPermissionType : RSDDocumentableStringEnum {
 
 /// A Codable struct that can be used to store messaging information specific to the use-case specific to
 /// the associated activity, task, or step.
-public struct RSDStandardPermission : Codable {
+public final class RSDStandardPermission : NSObject, RSDPermission, Codable {
     
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case permissionType
@@ -155,6 +168,10 @@ public struct RSDStandardPermission : Codable {
     
     /// The permission type for this permission.
     public let permissionType : RSDStandardPermissionType
+    
+    public var identifier: String {
+        return permissionType.identifier
+    }
     
     /// A title for this permission.
     public let title: String?
@@ -253,11 +270,16 @@ public enum RSDPermissionError : Error {
     /// Permission denied.
     case notAuthorized(RSDStandardPermission, RSDAuthorizationStatus)
     
+    /// Permission was not handled by this framework.
+    case notHandled(String)
+    
     /// The localized message for this error.
     public var localizedDescription: String {
         switch(self) {
         case .notAuthorized(let permission, let status):
             return permission.message(for: status) ?? "\(permission) : \(status)"
+        case .notHandled(let message):
+            return message
         }
     }
     
@@ -271,6 +293,8 @@ public enum RSDPermissionError : Error {
         switch(self) {
         case .notAuthorized(_, let status):
             return status.rawValue
+        case .notHandled(_):
+            return RSDAuthorizationStatus.notDetermined.rawValue
         }
     }
     
