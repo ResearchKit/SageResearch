@@ -33,6 +33,28 @@
 
 import Foundation
 
+/// General-purpose enum for authorization status.
+@objc public enum RSDAuthorizationStatus : Int {
+    
+    /// Standard mapping of the authorization status.
+    case authorized, notDetermined, restricted, denied
+    
+    /// There is a cached value for the authorization status that was previously denied but the user may
+    /// have since updated the Settings to allow permission.
+    case previouslyDenied
+    
+    /// Is the authorization status blocking the activity that requires it? This will return true if the
+    /// status is restricted, denied, or previously denied.
+    public func isDenied() -> Bool {
+        switch self {
+        case .authorized, .notDetermined:
+            return false
+        default:
+            return true
+        }
+    }
+}
+
 /// An authorization adapter is a class that can manage requesting authorization for a given permission.
 public protocol RSDAuthorizationAdaptor : class {
     
