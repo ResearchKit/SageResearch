@@ -1,0 +1,26 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchMotion/RSDMotionRecorder.swift",
+      "line": 498,
+      "symbol": "RSDVector.x",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchMotion/RSDMotionRecorder.swift",
+      "line": 499,
+      "symbol": "RSDVector.y",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchMotion/RSDMotionRecorder.swift",
+      "line": 500,
+      "symbol": "RSDVector.z",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/syoung2/Documents/AppleCode/SageResearch"
+}
