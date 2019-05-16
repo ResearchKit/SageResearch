@@ -53,20 +53,6 @@
                 }]
  },
  {
- "identifier": "imageExamples",
- "title": "Image/Video",
- "detail": "This task group includes examples of image and video steps that are currently included in the Research and ResearchUI frameworks.",
- "icon": "activityIcon",
- "tasks" : [{
-            "identifier": "imagePicker",
-            "title": "Image Picker",
-            "subtitle": "Activity for selecting images.",
-            "detail": "This is an example task for selecting images either from your photo library or using the camera.",
-            "icon": "activityIcon",
-            "taskTransformer" : { "resourceName": "Image_Picker" }
-            }]
- },
- {
  "identifier": "colorExamples",
  "title": "UI Themes",
  "detail": "This task group includes examples the UI/UX Design System.",

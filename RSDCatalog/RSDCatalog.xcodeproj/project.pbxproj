@@ -35,7 +35,6 @@
 		F8D42A9F209552EC00C6A4BC /* Recorder_Distance.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A97209552EC00C6A4BC /* Recorder_Distance.json */; };
 		F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A98209552EC00C6A4BC /* FormStep_Picker.json */; };
 		F8D42AA1209552EC00C6A4BC /* TaskGroups.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A99209552EC00C6A4BC /* TaskGroups.json */; };
-		F8D42AA2209552EC00C6A4BC /* Image_Picker.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A9A209552EC00C6A4BC /* Image_Picker.json */; };
 		F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB52095550C00C6A4BC /* Research.framework */; };
 		F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB72095550C00C6A4BC /* ResearchUI.framework */; };
 		F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB52095550C00C6A4BC /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -112,7 +111,6 @@
 		F8D42A97209552EC00C6A4BC /* Recorder_Distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Recorder_Distance.json; sourceTree = "<group>"; };
 		F8D42A98209552EC00C6A4BC /* FormStep_Picker.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FormStep_Picker.json; sourceTree = "<group>"; };
 		F8D42A99209552EC00C6A4BC /* TaskGroups.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TaskGroups.json; sourceTree = "<group>"; };
-		F8D42A9A209552EC00C6A4BC /* Image_Picker.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Image_Picker.json; sourceTree = "<group>"; };
 		F8D42AB52095550C00C6A4BC /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42AB72095550C00C6A4BC /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveManager.swift; sourceTree = "<group>"; };
@@ -231,7 +229,6 @@
 				F8D42A97209552EC00C6A4BC /* Recorder_Distance.json */,
 				F8D42A98209552EC00C6A4BC /* FormStep_Picker.json */,
 				F8D42A99209552EC00C6A4BC /* TaskGroups.json */,
-				F8D42A9A209552EC00C6A4BC /* Image_Picker.json */,
 			);
 			path = "JSON Files";
 			sourceTree = "<group>";
@@ -366,7 +363,6 @@
 				F8D42A9B209552EC00C6A4BC /* Recorder_Motion.json in Resources */,
 				F8373C9320964F60004DD4E1 /* README.md in Resources */,
 				F8D42A9E209552EC00C6A4BC /* Theme_Color.json in Resources */,
-				F8D42AA2209552EC00C6A4BC /* Image_Picker.json in Resources */,
 				F8D42A9F209552EC00C6A4BC /* Recorder_Distance.json in Resources */,
 				F8D42A9D209552EC00C6A4BC /* FormStep_Textfield.json in Resources */,
 				F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */,
