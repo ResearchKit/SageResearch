@@ -22,8 +22,6 @@
 		F800EA8F223C333D00EF7B50 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA8D223C333D00EF7B50 /* RSDDesignSystem.swift */; };
 		F800EA90223C333D00EF7B50 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA8D223C333D00EF7B50 /* RSDDesignSystem.swift */; };
 		F800EA91223C333D00EF7B50 /* RSDDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA8D223C333D00EF7B50 /* RSDDesignSystem.swift */; };
-		F801216A22750EDF003A1A5C /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */; };
-		F801218022755516003A1A5C /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		F802F3E3204DF2B80027CB00 /* RSDUIStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */; };
 		F802F3E4204DF2B80027CB00 /* RSDUIStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */; };
 		F802F3E5204DF2B80027CB00 /* RSDUIStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = F802F3E2204DF2B80027CB00 /* RSDUIStep.swift */; };
@@ -90,7 +88,6 @@
 		F8112E722230B4A3005BCC93 /* RSDScoringResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */; };
 		F8112E732230B4A3005BCC93 /* RSDScoringResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8112E6F2230B4A3005BCC93 /* RSDScoringResult.swift */; };
 		F814DCE12274EC4F004579EF /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		F814DCF022750436004579EF /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F814DCE722750435004579EF /* ResearchRecorders.framework */; };
 		F814DCF722750436004579EF /* ResearchRecorders.h in Headers */ = {isa = PBXBuildFile; fileRef = F814DCE922750435004579EF /* ResearchRecorders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F814DCFE227504AE004579EF /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
 		F814DD0322750809004579EF /* RSDFileResultUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0222750809004579EF /* RSDFileResultUtility.swift */; };
@@ -249,11 +246,6 @@
 		F84E54551FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
 		F84E54561FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
 		F84FE393228CFF7D00563F94 /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */; };
-		F84FE394228CFFC300563F94 /* CodableDistanceRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */; };
-		F84FE395228CFFDB00563F94 /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */; };
-		F84FE396228CFFE800563F94 /* RSDLocationAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FF020585ED100752B7B /* RSDLocationAuthorization.swift */; };
-		F84FE397228CFFEF00563F94 /* RSDDistanceRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */; };
-		F84FE398228D000300563F94 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
 		F853828E214C447100C3B774 /* StepViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F853828D214C447100C3B774 /* StepViewModelTests.swift */; };
 		F857BAB1224C12860089B150 /* ColorMappingThemeElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F857BAB0224C12860089B150 /* ColorMappingThemeElementTests.swift */; };
 		F8586AE62011697700B2DF65 /* RSDFractionFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -304,13 +296,6 @@
 		F8904D491FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
 		F8904D4A1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
 		F8904D4B1FF711A7002CE2EB /* RSDUnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */; };
-		F891DCF8228CF9D0001B2A57 /* ResearchToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DCEF228CF9CF001B2A57 /* ResearchToolbox.framework */; };
-		F891DCFF228CF9D0001B2A57 /* ResearchToolbox.h in Headers */ = {isa = PBXBuildFile; fileRef = F891DCF1228CF9D0001B2A57 /* ResearchToolbox.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F891DD08228CFAB0001B2A57 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
-		F891DD09228CFAB0001B2A57 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F87061A0227390110056F70E /* ResearchUI.framework */; };
-		F891DD0B228CFBC4001B2A57 /* RSDImagePickerStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84496122273A23100EAA3E0 /* RSDImagePickerStepViewController.swift */; };
-		F891DD0C228CFBCB001B2A57 /* RSDAudioVisualAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FEB20585BE400752B7B /* RSDAudioVisualAuthorization.swift */; };
-		F891DD0D228CFBCB001B2A57 /* RSDPhotoLibraryAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FFA20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift */; };
 		F891DD1C228CFCD4001B2A57 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
 		F891DD23228CFCD4001B2A57 /* ResearchMotion.h in Headers */ = {isa = PBXBuildFile; fileRef = F891DD15228CFCD3001B2A57 /* ResearchMotion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F891DD2B228CFD57001B2A57 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
@@ -1020,26 +1005,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		F814DCF122750436004579EF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F814DCE622750435004579EF;
-			remoteInfo = "ResearchRecorders-iOS";
-		};
 		F87061AA227390120056F70E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = F870619F227390110056F70E;
 			remoteInfo = "ResearchUI-iOS";
-		};
-		F891DCF9228CF9D0001B2A57 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F891DCEE228CF9CF001B2A57;
-			remoteInfo = ResearchToolbox;
 		};
 		F891DD1D228CFCD4001B2A57 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1087,7 +1058,6 @@
 		F814DCE722750435004579EF /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F814DCE922750435004579EF /* ResearchRecorders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchRecorders.h; sourceTree = "<group>"; };
 		F814DCEA22750435004579EF /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		F814DCEF22750436004579EF /* ResearchRecordersTests_iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchRecordersTests_iOS.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F814DD0222750809004579EF /* RSDFileResultUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileResultUtility.swift; sourceTree = "<group>"; };
 		F814DD0922750899004579EF /* RSDMotionRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDMotionRecorder.swift; sourceTree = "<group>"; };
 		F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDDistanceRecorder.swift; sourceTree = "<group>"; };
@@ -1214,11 +1184,6 @@
 		F8864ADB2163FE3100DF57CF /* RSDResultSummaryStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultSummaryStepObject.swift; sourceTree = "<group>"; };
 		F8864AEB2164406700DF57CF /* RSDResultSummaryStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultSummaryStepViewModel.swift; sourceTree = "<group>"; };
 		F8904D481FF711A7002CE2EB /* RSDUnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUnitConverter.swift; sourceTree = "<group>"; };
-		F891DCEF228CF9CF001B2A57 /* ResearchToolbox.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchToolbox.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F891DCF1228CF9D0001B2A57 /* ResearchToolbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchToolbox.h; sourceTree = "<group>"; };
-		F891DCF2228CF9D0001B2A57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F891DCF7228CF9D0001B2A57 /* ResearchToolboxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchToolboxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F891DCFE228CF9D0001B2A57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F891DD06228CF9F4001B2A57 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchMotion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F891DD15228CFCD3001B2A57 /* ResearchMotion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchMotion.h; sourceTree = "<group>"; };
@@ -1435,15 +1400,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F814DCEC22750436004579EF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F801218022755516003A1A5C /* Research.framework in Frameworks */,
-				F814DCF022750436004579EF /* ResearchRecorders.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F870619D227390110056F70E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1465,24 +1421,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F875576020807E8B00235078 /* Research.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DCEC228CF9CF001B2A57 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F84FE398228D000300563F94 /* ResearchMotion.framework in Frameworks */,
-				F891DD08228CFAB0001B2A57 /* Research.framework in Frameworks */,
-				F891DD09228CFAB0001B2A57 /* ResearchUI.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DCF4228CF9D0001B2A57 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F891DCF8228CF9D0001B2A57 /* ResearchToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1909,9 +1847,7 @@
 		F891DCF0228CF9D0001B2A57 /* ResearchToolbox */ = {
 			isa = PBXGroup;
 			children = (
-				F891DCF1228CF9D0001B2A57 /* ResearchToolbox.h */,
 				F891DD06228CF9F4001B2A57 /* README.md */,
-				F891DCF2228CF9D0001B2A57 /* Info.plist */,
 				F891DD07228CFA7D001B2A57 /* iOS */,
 			);
 			path = ResearchToolbox;
@@ -1921,7 +1857,6 @@
 			isa = PBXGroup;
 			children = (
 				F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */,
-				F891DCFE228CF9D0001B2A57 /* Info.plist */,
 			);
 			path = ResearchToolboxTests;
 			sourceTree = "<group>";
@@ -2261,9 +2196,6 @@
 				F87061A0227390110056F70E /* ResearchUI.framework */,
 				F87061A8227390110056F70E /* ResearchUITests_iOS.xctest */,
 				F814DCE722750435004579EF /* ResearchRecorders.framework */,
-				F814DCEF22750436004579EF /* ResearchRecordersTests_iOS.xctest */,
-				F891DCEF228CF9CF001B2A57 /* ResearchToolbox.framework */,
-				F891DCF7228CF9D0001B2A57 /* ResearchToolboxTests.xctest */,
 				F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */,
 				F891DD1B228CFCD3001B2A57 /* ResearchMotionTests.xctest */,
 			);
@@ -2503,14 +2435,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F891DCEA228CF9CF001B2A57 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F891DCFF228CF9D0001B2A57 /* ResearchToolbox.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F891DD0E228CFCD3001B2A57 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2600,24 +2524,6 @@
 			productReference = F814DCE722750435004579EF /* ResearchRecorders.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		F814DCEE22750436004579EF /* ResearchRecordersTests_iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F814DCFB22750436004579EF /* Build configuration list for PBXNativeTarget "ResearchRecordersTests_iOS" */;
-			buildPhases = (
-				F814DCEB22750436004579EF /* Sources */,
-				F814DCEC22750436004579EF /* Frameworks */,
-				F814DCED22750436004579EF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F814DCF222750436004579EF /* PBXTargetDependency */,
-			);
-			name = ResearchRecordersTests_iOS;
-			productName = "ResearchRecorders-iOSTests";
-			productReference = F814DCEF22750436004579EF /* ResearchRecordersTests_iOS.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		F870619F227390110056F70E /* ResearchUI (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F87061B5227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI (iOS)" */;
@@ -2671,42 +2577,6 @@
 			productName = "Research-UnitTest";
 			productReference = F875575620807E2300235078 /* Research_UnitTest.framework */;
 			productType = "com.apple.product-type.framework";
-		};
-		F891DCEE228CF9CF001B2A57 /* ResearchToolbox */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F891DD04228CF9D0001B2A57 /* Build configuration list for PBXNativeTarget "ResearchToolbox" */;
-			buildPhases = (
-				F891DCEA228CF9CF001B2A57 /* Headers */,
-				F891DCEB228CF9CF001B2A57 /* Sources */,
-				F891DCEC228CF9CF001B2A57 /* Frameworks */,
-				F891DCED228CF9CF001B2A57 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ResearchToolbox;
-			productName = ResearchToolbox;
-			productReference = F891DCEF228CF9CF001B2A57 /* ResearchToolbox.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		F891DCF6228CF9D0001B2A57 /* ResearchToolboxTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F891DD05228CF9D0001B2A57 /* Build configuration list for PBXNativeTarget "ResearchToolboxTests" */;
-			buildPhases = (
-				F891DCF3228CF9D0001B2A57 /* Sources */,
-				F891DCF4228CF9D0001B2A57 /* Frameworks */,
-				F891DCF5228CF9D0001B2A57 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F891DCFA228CF9D0001B2A57 /* PBXTargetDependency */,
-			);
-			name = ResearchToolboxTests;
-			productName = ResearchToolboxTests;
-			productReference = F891DCF7228CF9D0001B2A57 /* ResearchToolboxTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F891DD12228CFCD3001B2A57 /* ResearchMotion */ = {
 			isa = PBXNativeTarget;
@@ -2849,11 +2719,6 @@
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
-					F814DCEE22750436004579EF = {
-						CreatedOnToolsVersion = 10.2;
-						DevelopmentTeam = KA9Z8R6M6K;
-						ProvisioningStyle = Automatic;
-					};
 					F870619F227390110056F70E = {
 						CreatedOnToolsVersion = 10.2;
 						ProvisioningStyle = Automatic;
@@ -2866,15 +2731,6 @@
 					F875575520807E2300235078 = {
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 1020;
-						ProvisioningStyle = Automatic;
-					};
-					F891DCEE228CF9CF001B2A57 = {
-						CreatedOnToolsVersion = 10.2;
-						ProvisioningStyle = Automatic;
-					};
-					F891DCF6228CF9D0001B2A57 = {
-						CreatedOnToolsVersion = 10.2;
-						DevelopmentTeam = KA9Z8R6M6K;
 						ProvisioningStyle = Automatic;
 					};
 					F891DD12228CFCD3001B2A57 = {
@@ -2936,9 +2792,6 @@
 				F870619F227390110056F70E /* ResearchUI (iOS) */,
 				F87061A7227390110056F70E /* ResearchUITests_iOS */,
 				F814DCE622750435004579EF /* ResearchRecorders (iOS) */,
-				F814DCEE22750436004579EF /* ResearchRecordersTests_iOS */,
-				F891DCEE228CF9CF001B2A57 /* ResearchToolbox */,
-				F891DCF6228CF9D0001B2A57 /* ResearchToolboxTests */,
 				F891DD12228CFCD3001B2A57 /* ResearchMotion */,
 				F891DD1A228CFCD3001B2A57 /* ResearchMotionTests */,
 			);
@@ -2947,13 +2800,6 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		F814DCE522750435004579EF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F814DCED22750436004579EF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2985,20 +2831,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F875575420807E2300235078 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DCED228CF9CF001B2A57 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DCF5228CF9D0001B2A57 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3081,14 +2913,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F814DCEB22750436004579EF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F801216A22750EDF003A1A5C /* CodableTestObjects.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		F870619C227390110056F70E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3150,27 +2974,6 @@
 			files = (
 				F875579C2080897400235078 /* NSLocale+UnitTest.m in Sources */,
 				F875576120807F4800235078 /* NavigationTestObjects.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DCEB228CF9CF001B2A57 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F84FE396228CFFE800563F94 /* RSDLocationAuthorization.swift in Sources */,
-				F891DD0C228CFBCB001B2A57 /* RSDAudioVisualAuthorization.swift in Sources */,
-				F891DD0B228CFBC4001B2A57 /* RSDImagePickerStepViewController.swift in Sources */,
-				F84FE397228CFFEF00563F94 /* RSDDistanceRecorder.swift in Sources */,
-				F891DD0D228CFBCB001B2A57 /* RSDPhotoLibraryAuthorization.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F891DCF3228CF9D0001B2A57 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F84FE394228CFFC300563F94 /* CodableDistanceRecorderTests.swift in Sources */,
-				F84FE395228CFFDB00563F94 /* CodableTestObjects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4105,20 +3908,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F814DCF222750436004579EF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F814DCE622750435004579EF /* ResearchRecorders (iOS) */;
-			targetProxy = F814DCF122750436004579EF /* PBXContainerItemProxy */;
-		};
 		F87061AB227390120056F70E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F870619F227390110056F70E /* ResearchUI (iOS) */;
 			targetProxy = F87061AA227390120056F70E /* PBXContainerItemProxy */;
-		};
-		F891DCFA228CF9D0001B2A57 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F891DCEE228CF9CF001B2A57 /* ResearchToolbox */;
-			targetProxy = F891DCF9228CF9D0001B2A57 /* PBXContainerItemProxy */;
 		};
 		F891DD1E228CFCD4001B2A57 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -4202,51 +3995,6 @@
 				PRODUCT_NAME = ResearchRecorders;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		F814DCFC22750436004579EF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "ResearchRecordersTests/Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchRecorders-iOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		F814DCFD22750436004579EF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "ResearchRecordersTests/Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sagebionetworks.ResearchRecorders-iOSTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -4406,106 +4154,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		F891DD00228CF9D0001B2A57 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchToolbox/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchToolbox;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		F891DD01228CF9D0001B2A57 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchToolbox/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchToolbox;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		F891DD02228CF9D0001B2A57 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchToolboxTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchToolboxTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		F891DD03228CF9D0001B2A57 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ResearchToolboxTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchToolboxTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -5019,15 +4667,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F814DCFB22750436004579EF /* Build configuration list for PBXNativeTarget "ResearchRecordersTests_iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F814DCFC22750436004579EF /* Debug */,
-				F814DCFD22750436004579EF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		F87061B5227390120056F70E /* Build configuration list for PBXNativeTarget "ResearchUI (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -5051,24 +4690,6 @@
 			buildConfigurations = (
 				F875575B20807E2300235078 /* Debug */,
 				F875575C20807E2300235078 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F891DD04228CF9D0001B2A57 /* Build configuration list for PBXNativeTarget "ResearchToolbox" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F891DD00228CF9D0001B2A57 /* Debug */,
-				F891DD01228CF9D0001B2A57 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F891DD05228CF9D0001B2A57 /* Build configuration list for PBXNativeTarget "ResearchToolboxTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F891DD02228CF9D0001B2A57 /* Debug */,
-				F891DD03228CF9D0001B2A57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
