@@ -60,7 +60,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
         case beforeCohortRules
         case afterCohortRules
         
-        //@available(*, deprecated)
+        //@available(*, unavailable)
         case colorTheme
     }
 
@@ -109,10 +109,6 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     
     /// The image theme.
     open var imageTheme: RSDImageThemeElement?
-    
-    /// The color theme.
-    @available(*, deprecated)
-    open var colorTheme: RSDColorThemeElement?
     
     /// The next step to jump to. This is used where direct navigation is required. For example, to allow the
     /// task to display information or a question on an alternate path and then exit the task. In that case,
@@ -363,9 +359,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
             self.colorMapping = try decoder.factory.decodeColorMappingThemeElement(from: nestedDecoder)
         }
         else if container.contains(.colorTheme) {
-            // TODO: syoung 03/18/2019 delete once the V0 color theme decoding has been marked unavailable.
-            debugPrint("WARNING!!! Use of `colorTheme` JSON key is deprecated. Please convert your JSON files to use `colorMapping` instead. \(container.codingPath)")
-            self.colorMapping = try container.decode(RSDColorThemeElementObject.self, forKey: .colorTheme)
+            throw DecodingError.dataCorruptedError(forKey: CodingKeys.colorTheme, in: container, debugDescription: "Use of `colorTheme` JSON key is unavailable. Please convert your JSON files to use `colorMapping` instead.")
         }
         if container.contains(.image) {
             let nestedDecoder = try container.superDecoder(forKey: .image)

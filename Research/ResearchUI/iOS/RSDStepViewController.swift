@@ -70,12 +70,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         return step as? RSDUIStep
     }
     
-    /// Convenience property for casting the step to a `RSDThemedUIStep`.
-    @available(*, deprecated)
-    public var themedStep: RSDThemedUIStep? {
-        return step as? RSDThemedUIStep
-    }
-    
     /// Convenience property for casting the step to a `RSDDesignableUIStep`.
     public var designableStep: RSDDesignableUIStep? {
         return step as? RSDDesignableUIStep
@@ -138,10 +132,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Track whether or not this is the first appearance. This flag is set to `true` in
     /// `viewDidAppear`. This flag is used to mark whether or not to call `performStartCommands()`.
     public private(set) var isFirstAppearance: Bool = true
-    
-    /// Sets whether or not the body of the view uses light style.
-    @available(*, deprecated)
-    public private(set) var usesLightStyle: Bool = false
     
     /// The design system to use with this step view controller.
     open var designSystem: RSDDesignSystem!
@@ -316,11 +306,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
     }
     
-    // TODO: syoung 03/18/2019 Remove once rev'd and cleaned up. Not used.
-    @available(*, unavailable)
-    open func setColorStyle(for placement: RSDColorPlacement, usesLightStyle: Bool, backgroundColor: UIColor) {
-    }
-    
     /// Set the color style for the given placement elements. This allows overriding by subclasses to
     /// customize the view style.
     open func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
@@ -358,10 +343,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         if let statusView = self.statusBarBackgroundView as? RSDStatusBarBackgroundView {
             statusView.overlayColor = background.usesLightStyle ? UIColor.clear : RSDColor.black.withAlphaComponent(0.1)
         }
-    }
-    
-    @available(*, unavailable)
-    open func setupHeader(_ header: RSDNavigationHeaderView) {
     }
     
     /// Set up the header. Because this may be used in a table view as the table's header view, this includes
@@ -422,7 +403,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
         setupButton(navigationView.reviewInstructionsButton, for: .navigation(.reviewInstructions), isFooter: isFooter)
         
-        // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
         if let imageTheme = self.imageTheme,
             let imageView = navigationView.imageView {
             let imagePlacement = imageTheme.placementType ?? .iconBefore
@@ -456,15 +436,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         navigationView.setNeedsUpdateConstraints()
     }
     
+    /// Return the image theme for this step view controller.
     open var imageTheme: RSDImageThemeElement? {
-        // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
-        return (self.designableStep?.imageTheme ?? self.themedStep?.imageTheme)
+        return self.designableStep?.imageTheme
     }
     
     /// By default, this method will return `true` if the image theme uses a placement
     /// of `topBackground` or `topMarginBackground`.
     open func hasTopBackgroundImage() -> Bool {
-        // TODO: syoung 03/18/2019 Remove the deprecated themed step once marked unavailable.
         if let placement = self.imageTheme?.placementType {
             return placement == .topBackground || placement == .topMarginBackground
         } else {

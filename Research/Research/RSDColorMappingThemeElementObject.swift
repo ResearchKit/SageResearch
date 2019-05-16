@@ -253,32 +253,3 @@ extension RSDSingleColorThemeElementObject : RSDDocumentableDecodableObject {
         return colorThemeExamples()
     }
 }
-
-// TODO: syoung 03/26/2019 Remove once modules that use this color scheme are converted.
-@available(*, deprecated)
-extension RSDColorThemeElementObject : InternalColorMapping, RSDColorMappingThemeElement {
-    
-    var customColor: ColorTile? {
-        guard let name = _backgroundColorName else { return nil }
-        return ColorTile(usesLightStyle: self.usesLightStyle, color: name)
-    }
-    
-    func style(for placement: RSDColorPlacement) -> RSDColorRules.Style {
-        if let depStyle = self.colorStyle?[placement.stringValue] {
-            switch depStyle {
-            case .customBackground:
-                return .custom
-            case .lightBackground:
-                return .white
-            case .darkBackground:
-                return .primary
-            }
-        }
-        if _backgroundColorName != nil {
-            return .custom
-        }
-        else {
-            return usesLightStyle ? .primary : .white
-        }
-    }
-}
