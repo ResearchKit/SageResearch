@@ -246,6 +246,7 @@
 		F84E54551FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
 		F84E54561FE9BC4B0058F0CD /* StaticUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */; };
 		F84FE393228CFF7D00563F94 /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */; };
+		F84FE3C1228E2A9F00563F94 /* jazzy_config.yml in Resources */ = {isa = PBXBuildFile; fileRef = F84FE3C0228E2A9F00563F94 /* jazzy_config.yml */; };
 		F853828E214C447100C3B774 /* StepViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F853828D214C447100C3B774 /* StepViewModelTests.swift */; };
 		F857BAB1224C12860089B150 /* ColorMappingThemeElementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F857BAB0224C12860089B150 /* ColorMappingThemeElementTests.swift */; };
 		F8586AE62011697700B2DF65 /* RSDFractionFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1159,6 +1160,7 @@
 		F84A2F4421779A640079C92C /* RSDClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDClock.swift; sourceTree = "<group>"; };
 		F84A2F772178FABB0079C92C /* ClockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockTests.swift; sourceTree = "<group>"; };
 		F84E54531FE9BC4B0058F0CD /* StaticUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticUtilities.swift; sourceTree = "<group>"; };
+		F84FE3C0228E2A9F00563F94 /* jazzy_config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jazzy_config.yml; sourceTree = "<group>"; };
 		F853828D214C447100C3B774 /* StepViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepViewModelTests.swift; sourceTree = "<group>"; };
 		F857BAB0224C12860089B150 /* ColorMappingThemeElementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMappingThemeElementTests.swift; sourceTree = "<group>"; };
 		F8586AE42011697700B2DF65 /* RSDFractionFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDFractionFormatter.h; sourceTree = "<group>"; };
@@ -1880,6 +1882,7 @@
 				F891DD2A228CFD21001B2A57 /* README.md */,
 				F8E94FF42058602F00752B7B /* RSDMotionAuthorization.swift */,
 				F814DD0922750899004579EF /* RSDMotionRecorder.swift */,
+				F84FE3C0228E2A9F00563F94 /* jazzy_config.yml */,
 				F891DD16228CFCD3001B2A57 /* Info.plist */,
 			);
 			path = ResearchMotion;
@@ -2841,6 +2844,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F84FE3C1228E2A9F00563F94 /* jazzy_config.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
