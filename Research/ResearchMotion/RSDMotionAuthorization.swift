@@ -41,20 +41,24 @@ fileprivate let _userDefaultsKey = "rsd_MotionAuthorizationStatus"
 /// application.
 ///
 /// - seealso: `RSDPermissionsStepViewController`
-public class RSDMotionAuthorization {
+public class RSDMotionAuthorization : RSDAuthorizationAdaptor {
+    
+    /// This adaptor is intended for checking for motion sensor permissions.
+    public let permissions: [RSDPermissionType] = [RSDStandardPermissionType.motion]
+    
+    /// Returns the authorization status for the motion sensors.
+    public func authorizationStatus(for permission: String) -> RSDAuthorizationStatus {
+        return RSDMotionAuthorization.authorizationStatus()
+    }
+    
+    /// Requests permission to access the motion sensors.
+    public func requestAuthorization(for permission: RSDPermission, _ completion: @escaping ((RSDAuthorizationStatus, Error?) -> Void)) {
+        return RSDMotionAuthorization.requestAuthorization(completion)
+    }
     
     /// Returns authorization status for `.motion` permission.
     public static func authorizationStatus() -> RSDAuthorizationStatus {
         return _cachedAuthorizationStatus()
-    }
-    
-    /// Looks for a cached value and returns that if found.
-    private static func _cachedAuthorizationStatus() -> RSDAuthorizationStatus {
-        if let cachedStatus = UserDefaults.standard.object(forKey: _userDefaultsKey) as? NSNumber {
-            return cachedStatus.boolValue ? .authorized : .previouslyDenied
-        } else {
-            return .notDetermined
-        }
     }
     
     /// Retain the pedometer while it's being queried.
@@ -72,15 +76,24 @@ public class RSDMotionAuthorization {
                 // even if the app has the proper permissions. Ignore it. syoung 03/22/2018
                 if let err = error, (err as NSError).code != 104 {
                     debugPrint("Failed to query pedometer: \(err)")
-                    setCachedAuthorization(false)
+                    self.setCachedAuthorization(false)
                     let error = RSDPermissionError.notAuthorized(.motion, .denied)
                     completion(.denied, error)
                 } else {
-                    pedometer = nil
-                    setCachedAuthorization(true)
+                    self.pedometer = nil
+                    self.setCachedAuthorization(true)
                     completion(.authorized, nil)
                 }
             }
+        }
+    }
+    
+    /// Looks for a cached value and returns that if found.
+    static private func _cachedAuthorizationStatus() -> RSDAuthorizationStatus {
+        if let cachedStatus = UserDefaults.standard.object(forKey: _userDefaultsKey) as? NSNumber {
+            return cachedStatus.boolValue ? .authorized : .previouslyDenied
+        } else {
+            return .notDetermined
         }
     }
     
