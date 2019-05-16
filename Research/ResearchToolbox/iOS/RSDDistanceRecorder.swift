@@ -34,6 +34,7 @@
 import UIKit
 import CoreLocation
 import CoreMotion
+import ResearchMotion
 
 extension RSDDistanceRecorderConfiguration : RSDAsyncActionVendor {
     

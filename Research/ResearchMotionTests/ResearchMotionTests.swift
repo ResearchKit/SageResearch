@@ -1,15 +1,15 @@
 //
-//  ResearchToolboxTests.swift
-//  ResearchToolboxTests
+//  ResearchMotionTests.swift
+//  ResearchMotionTests
 //
 //  Created by Shannon Young on 5/15/19.
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 
 import XCTest
-@testable import ResearchToolbox
+@testable import ResearchMotion
 
-class ResearchToolboxTests: XCTestCase {
+class ResearchMotionTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

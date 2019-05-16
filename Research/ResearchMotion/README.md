@@ -1,9 +1,11 @@
-# ResearchRecorders
-ResearchRecorders contains the logic for recording sensor data to a file stream.
+# ResearchMotion
+ResearchMotion contains the logic for recording CoreMotion sensor data to a file stream. 
+
+These files are separated out into their own framework so that applications that use Research and ResearchUI are not required to set up capabilities and privacy keys in the info.plist that aren't used by the application.
 
 ## License
 
-ResearchRecorders is available under the BSD license:
+ResearchMotion is available under the BSD license:
 
 Copyright (c) 2017-2019, Sage Bionetworks
 All rights reserved.
@@ -29,3 +31,5 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+

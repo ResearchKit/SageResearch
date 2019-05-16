@@ -1,6 +1,6 @@
 //
-//  ResearchRecorders.h
-//  ResearchRecorders
+//  ResearchMotion.h
+//  ResearchMotion
 //
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
@@ -34,13 +34,11 @@
 @import UIKit;
 @import Research;
 
-//! Project version number for ResearchRecorders.
-FOUNDATION_EXPORT double ResearchRecordersVersionNumber;
+//! Project version number for ResearchMotion.
+FOUNDATION_EXPORT double ResearchMotionVersionNumber;
 
-//! Project version string for ResearchRecorders.
-FOUNDATION_EXPORT const unsigned char ResearchRecordersVersionString[];
+//! Project version string for ResearchMotion.
+FOUNDATION_EXPORT const unsigned char ResearchMotionVersionString[];
 
-// DEPRECATED: syoung 05/15/2019 This framework is not used and will be deleted with the next
-// major version
 
 

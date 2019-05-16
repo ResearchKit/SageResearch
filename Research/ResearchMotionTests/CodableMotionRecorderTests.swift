@@ -33,7 +33,7 @@
 
 import XCTest
 import Research
-@testable import ResearchRecorders
+@testable import ResearchMotion
 
 class CodableMotionRecorderTests: XCTestCase {
     
