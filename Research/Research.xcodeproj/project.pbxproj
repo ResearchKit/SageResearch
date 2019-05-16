@@ -105,9 +105,6 @@
 		F814DD0622750809004579EF /* RSDFileResultUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0222750809004579EF /* RSDFileResultUtility.swift */; };
 		F814DD1022750899004579EF /* RSDMotionRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0922750899004579EF /* RSDMotionRecorder.swift */; };
 		F814DD1522750899004579EF /* RSDDistanceRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */; };
-		F814DD1B227508DA004579EF /* RecordSampleLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D074AD204FAC04006CDABB /* RecordSampleLoggerTests.swift */; };
-		F814DD24227509EF004579EF /* RSDDataLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF52BCB21FD8884200DB3322 /* RSDDataLogger.swift */; };
-		F814DD25227509F5004579EF /* RSDSampleRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0B22750899004579EF /* RSDSampleRecorder.swift */; };
 		F815F24F20CB37ED0066801C /* RSDImageThemeElementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F815F24E20CB37ED0066801C /* RSDImageThemeElementType.swift */; };
 		F815F25020CB37ED0066801C /* RSDImageThemeElementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F815F24E20CB37ED0066801C /* RSDImageThemeElementType.swift */; };
 		F815F25120CB37ED0066801C /* RSDImageThemeElementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F815F24E20CB37ED0066801C /* RSDImageThemeElementType.swift */; };
@@ -1087,7 +1084,6 @@
 		F814DD0222750809004579EF /* RSDFileResultUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileResultUtility.swift; sourceTree = "<group>"; };
 		F814DD0922750899004579EF /* RSDMotionRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDMotionRecorder.swift; sourceTree = "<group>"; };
 		F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDDistanceRecorder.swift; sourceTree = "<group>"; };
-		F814DD0B22750899004579EF /* RSDSampleRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDSampleRecorder.swift; sourceTree = "<group>"; };
 		F814DD1C22750998004579EF /* jazzy_config.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = jazzy_config.yml; sourceTree = "<group>"; };
 		F814DD1D22750998004579EF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F814DD1E227509D3004579EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -1282,7 +1278,6 @@
 		F8C7D39820915823007490BC /* RSDUIActionObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionObjectType.swift; sourceTree = "<group>"; };
 		F8C7D39C20915E67007490BC /* CodableUIActionObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableUIActionObjectTests.swift; sourceTree = "<group>"; };
 		F8C7D40A2092876B007490BC /* CodableTrackedDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableTrackedDataTests.swift; sourceTree = "<group>"; };
-		F8D074AD204FAC04006CDABB /* RecordSampleLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordSampleLoggerTests.swift; sourceTree = "<group>"; };
 		F8D074B0204FBD0D006CDABB /* DataArchiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataArchiveTests.swift; sourceTree = "<group>"; };
 		F8E733422231CE460009F594 /* RSDJSONSerializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDJSONSerializable.swift; sourceTree = "<group>"; };
 		F8E733472231CE640009F594 /* JSONSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializationTests.swift; sourceTree = "<group>"; };
@@ -1331,7 +1326,6 @@
 		FF2DD5021FA1101700ECD614 /* RSDResourceTransformerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceTransformerObject.swift; sourceTree = "<group>"; };
 		FF2DD5041FA114F200ECD614 /* RSDTaskTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskTransformer.swift; sourceTree = "<group>"; };
 		FF427CE71FA3B247005A5AD2 /* RSDUIActionHandlerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionHandlerObject.swift; sourceTree = "<group>"; };
-		FF52BCB21FD8884200DB3322 /* RSDDataLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDataLogger.swift; sourceTree = "<group>"; };
 		FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveUIStepObject.swift; sourceTree = "<group>"; };
 		FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FF5C4C1C1F8C872500F311BA /* RSDTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskController.swift; sourceTree = "<group>"; };
@@ -1615,7 +1609,6 @@
 				F814DD1D22750998004579EF /* README.md */,
 				F814DCEA22750435004579EF /* Info-iOS.plist */,
 				F814DD1C22750998004579EF /* jazzy_config.yml */,
-				F814DD0822750855004579EF /* Shared */,
 				F801217222751520003A1A5C /* Permissions */,
 				F814DCFF227505A4004579EF /* iOS */,
 			);
@@ -1626,7 +1619,6 @@
 			isa = PBXGroup;
 			children = (
 				F814DCF622750436004579EF /* Info-iOS.plist */,
-				F8D074AD204FAC04006CDABB /* RecordSampleLoggerTests.swift */,
 				F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */,
 				F85B1AD5202C16D500B89AA4 /* CodableMotionRecorderTests.swift */,
 			);
@@ -1640,15 +1632,6 @@
 				F814DD0922750899004579EF /* RSDMotionRecorder.swift */,
 			);
 			path = iOS;
-			sourceTree = "<group>";
-		};
-		F814DD0822750855004579EF /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				FF52BCB21FD8884200DB3322 /* RSDDataLogger.swift */,
-				F814DD0B22750899004579EF /* RSDSampleRecorder.swift */,
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 		F829F0C41FF71C45001B0680 /* DataSource Tests */ = {
@@ -2895,13 +2878,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F801217922751561003A1A5C /* RSDLocationAuthorization.swift in Sources */,
-				F814DD24227509EF004579EF /* RSDDataLogger.swift in Sources */,
 				F814DD1022750899004579EF /* RSDMotionRecorder.swift in Sources */,
 				F814DD1522750899004579EF /* RSDDistanceRecorder.swift in Sources */,
 				F801217822751561003A1A5C /* RSDAudioVisualAuthorization.swift in Sources */,
 				F801217A22751561003A1A5C /* RSDMotionAuthorization.swift in Sources */,
 				F801217B22751561003A1A5C /* RSDPhotoLibraryAuthorization.swift in Sources */,
-				F814DD25227509F5004579EF /* RSDSampleRecorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2909,7 +2890,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F814DD1B227508DA004579EF /* RecordSampleLoggerTests.swift in Sources */,
 				F801216922750C0E003A1A5C /* CodableMotionRecorderTests.swift in Sources */,
 				F801216822750C0E003A1A5C /* CodableDistanceRecorderTests.swift in Sources */,
 				F801216A22750EDF003A1A5C /* CodableTestObjects.swift in Sources */,
