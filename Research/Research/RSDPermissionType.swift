@@ -53,6 +53,9 @@ public protocol RSDPermissionType {
     
     /// Additional reason for requiring the permission.
     var reason: String? { get }
+    
+    /// The failure message to show for this authorization status.
+    func message(for status: RSDAuthorizationStatus) -> String?
 }
 
 

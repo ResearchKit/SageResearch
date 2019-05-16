@@ -40,6 +40,9 @@ fileprivate let _userDefaultsKey = "rsd_MotionAuthorizationStatus"
 /// step or task to query this library for authorization if and only if that library is required by the
 /// application.
 ///
+/// Before using this adaptor with a permission step, the calling application or framework will need to
+/// register the adaptor using `RSDAuthorizationHandler.registerAdaptorIfNeeded()`.
+///
 /// - seealso: `RSDPermissionsStepViewController`
 public class RSDMotionAuthorization : RSDAuthorizationAdaptor {
     
@@ -77,7 +80,7 @@ public class RSDMotionAuthorization : RSDAuthorizationAdaptor {
                 if let err = error, (err as NSError).code != 104 {
                     debugPrint("Failed to query pedometer: \(err)")
                     self.setCachedAuthorization(false)
-                    let error = RSDPermissionError.notAuthorized(.motion, .denied)
+                    let error = RSDPermissionError.notAuthorized(RSDStandardPermission.motion, .denied)
                     completion(.denied, error)
                 } else {
                     self.pedometer = nil

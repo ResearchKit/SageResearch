@@ -225,7 +225,7 @@ public final class RSDStandardPermission : NSObject, RSDPermission, Codable {
 public enum RSDPermissionError : Error {
     
     /// Permission denied.
-    case notAuthorized(RSDStandardPermission, RSDAuthorizationStatus)
+    case notAuthorized(RSDPermission, RSDAuthorizationStatus)
     
     /// Permission was not handled by this framework.
     case notHandled(String)
