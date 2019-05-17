@@ -78,7 +78,7 @@ public enum RSDStandardPermissionType: String, RSDPermissionType, Codable, CaseI
         return rawValue
     }
     
-    /// The mapped async action type for this permission
+    /// The mapped async action type for this permission.
     public var asyncActionType: RSDAsyncActionType {
         return RSDAsyncActionType(rawValue: self.rawValue)
     }
