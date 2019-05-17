@@ -44,7 +44,9 @@ fileprivate let _userDefaultsKey = "rsd_MotionAuthorizationStatus"
 /// register the adaptor using `RSDAuthorizationHandler.registerAdaptorIfNeeded()`.
 ///
 /// - seealso: `RSDPermissionsStepViewController`
-public class RSDMotionAuthorization : RSDAuthorizationAdaptor {
+public final class RSDMotionAuthorization : RSDAuthorizationAdaptor {
+    
+    public static let shared = RSDMotionAuthorization()
     
     /// This adaptor is intended for checking for motion sensor permissions.
     public let permissions: [RSDPermissionType] = [RSDStandardPermissionType.motion]
