@@ -33,13 +33,6 @@
 
 import UIKit
 
-@available(*, deprecated)
-public protocol RSDViewColorStylable : class {
-    
-    /// Should the component use a light tint for display on a dark background?
-    var usesLightStyle: Bool { get set }
-}
-
 /// A protocol that UIView subclasses can use to standardize the color of their view properties.
 public protocol RSDViewDesignable : class {
     

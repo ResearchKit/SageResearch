@@ -577,18 +577,6 @@ open class RSDFactory {
     
     // MARK: UI theme factory
     
-    /// Decode UI color theme from the given decoder.
-    ///
-    /// - parameters:
-    ///     - decoder: The decoder to use to instantiate the object.
-    /// - returns: The UI color theme created from this decoder.
-    /// - throws: `DecodingError` if the object cannot be decoded.
-    /// - seealso: `RSDUIStepObject`
-    @available(*, deprecated)
-    open func decodeColorThemeElement(from decoder:Decoder) throws -> RSDColorThemeElement? {
-        return try _decodeResource(RSDColorThemeElementObject.self, from: decoder)
-    }
-    
     /// Decode UI color mapping theme from the given decoder.
     ///
     /// - parameters:

@@ -137,7 +137,7 @@ platform :ios do
       framework:"ResearchUI"
     )
     doc_framework(
-      framework:"ResearchRecorders"
+      framework:"ResearchMotion"
     )
 
     add_git_tag(tag: "v#{version_number}.#{next_build_number}")

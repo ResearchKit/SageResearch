@@ -7,17 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F801218222755548003A1A5C /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F801218122755548003A1A5C /* ResearchRecorders.framework */; };
-		F801218322755548003A1A5C /* ResearchRecorders.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F801218122755548003A1A5C /* ResearchRecorders.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F836460B2265281400CCA0EF /* TaskPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */; };
 		F836460D22652E6100CCA0EF /* TaskArchivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */; };
 		F8373C9320964F60004DD4E1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8373C9220964F60004DD4E1 /* README.md */; };
-		F84DDB6D20955672009CC1B8 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6C20955628009CC1B8 /* Photos.framework */; };
-		F84DDB6E2095567C009CC1B8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6B20955628009CC1B8 /* AVFoundation.framework */; };
-		F84DDB6F20955687009CC1B8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6920955628009CC1B8 /* CoreLocation.framework */; };
-		F84DDB7020955690009CC1B8 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F84DDB6A20955628009CC1B8 /* CoreMotion.framework */; };
 		F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */ = {isa = PBXBuildFile; fileRef = F871AA5022610D2F00C0F657 /* ColorPalettes.json */; };
 		F871AA5322610E8900C0F657 /* PaletteSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */; };
+		F891DD32228CFDE2001B2A57 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */; };
+		F891DD33228CFDE2001B2A57 /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42A532095518400C6A4BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A522095518400C6A4BC /* AppDelegate.swift */; };
 		F8D42A5A2095518400C6A4BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A592095518400C6A4BC /* Assets.xcassets */; };
 		F8D42A732095518400C6A4BC /* RSDCatalogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A722095518400C6A4BC /* RSDCatalogUITests.swift */; };
@@ -32,10 +28,8 @@
 		F8D42A9C209552EC00C6A4BC /* FormStep_List.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A94209552EC00C6A4BC /* FormStep_List.json */; };
 		F8D42A9D209552EC00C6A4BC /* FormStep_Textfield.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A95209552EC00C6A4BC /* FormStep_Textfield.json */; };
 		F8D42A9E209552EC00C6A4BC /* Theme_Color.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A96209552EC00C6A4BC /* Theme_Color.json */; };
-		F8D42A9F209552EC00C6A4BC /* Recorder_Distance.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A97209552EC00C6A4BC /* Recorder_Distance.json */; };
 		F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A98209552EC00C6A4BC /* FormStep_Picker.json */; };
 		F8D42AA1209552EC00C6A4BC /* TaskGroups.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A99209552EC00C6A4BC /* TaskGroups.json */; };
-		F8D42AA2209552EC00C6A4BC /* Image_Picker.json in Resources */ = {isa = PBXBuildFile; fileRef = F8D42A9A209552EC00C6A4BC /* Image_Picker.json */; };
 		F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB52095550C00C6A4BC /* Research.framework */; };
 		F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB72095550C00C6A4BC /* ResearchUI.framework */; };
 		F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB52095550C00C6A4BC /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -68,7 +62,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F801218322755548003A1A5C /* ResearchRecorders.framework in Embed Frameworks */,
+				F891DD33228CFDE2001B2A57 /* ResearchMotion.framework in Embed Frameworks */,
 				F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */,
 				F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */,
 			);
@@ -78,16 +72,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		F801218122755548003A1A5C /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPresentationViewController.swift; sourceTree = "<group>"; };
 		F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskArchivesTableViewController.swift; sourceTree = "<group>"; };
 		F8373C9220964F60004DD4E1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		F84DDB6920955628009CC1B8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		F84DDB6A20955628009CC1B8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		F84DDB6B20955628009CC1B8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		F84DDB6C20955628009CC1B8 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		F871AA5022610D2F00C0F657 /* ColorPalettes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ColorPalettes.json; sourceTree = "<group>"; };
 		F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteSelectionViewController.swift; sourceTree = "<group>"; };
+		F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchMotion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42A4F2095518400C6A4BC /* RSDCatalog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSDCatalog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42A522095518400C6A4BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D42A592095518400C6A4BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -109,10 +99,8 @@
 		F8D42A94209552EC00C6A4BC /* FormStep_List.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FormStep_List.json; sourceTree = "<group>"; };
 		F8D42A95209552EC00C6A4BC /* FormStep_Textfield.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FormStep_Textfield.json; sourceTree = "<group>"; };
 		F8D42A96209552EC00C6A4BC /* Theme_Color.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Theme_Color.json; sourceTree = "<group>"; };
-		F8D42A97209552EC00C6A4BC /* Recorder_Distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Recorder_Distance.json; sourceTree = "<group>"; };
 		F8D42A98209552EC00C6A4BC /* FormStep_Picker.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FormStep_Picker.json; sourceTree = "<group>"; };
 		F8D42A99209552EC00C6A4BC /* TaskGroups.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TaskGroups.json; sourceTree = "<group>"; };
-		F8D42A9A209552EC00C6A4BC /* Image_Picker.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Image_Picker.json; sourceTree = "<group>"; };
 		F8D42AB52095550C00C6A4BC /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42AB72095550C00C6A4BC /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveManager.swift; sourceTree = "<group>"; };
@@ -123,11 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F801218222755548003A1A5C /* ResearchRecorders.framework in Frameworks */,
-				F84DDB7020955690009CC1B8 /* CoreMotion.framework in Frameworks */,
-				F84DDB6F20955687009CC1B8 /* CoreLocation.framework in Frameworks */,
-				F84DDB6E2095567C009CC1B8 /* AVFoundation.framework in Frameworks */,
-				F84DDB6D20955672009CC1B8 /* Photos.framework in Frameworks */,
+				F891DD32228CFDE2001B2A57 /* ResearchMotion.framework in Frameworks */,
 				F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */,
 				F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */,
 			);
@@ -228,10 +212,8 @@
 				F8D42A95209552EC00C6A4BC /* FormStep_Textfield.json */,
 				F8D42A96209552EC00C6A4BC /* Theme_Color.json */,
 				F871AA5022610D2F00C0F657 /* ColorPalettes.json */,
-				F8D42A97209552EC00C6A4BC /* Recorder_Distance.json */,
 				F8D42A98209552EC00C6A4BC /* FormStep_Picker.json */,
 				F8D42A99209552EC00C6A4BC /* TaskGroups.json */,
-				F8D42A9A209552EC00C6A4BC /* Image_Picker.json */,
 			);
 			path = "JSON Files";
 			sourceTree = "<group>";
@@ -241,11 +223,7 @@
 			children = (
 				F8D42AB52095550C00C6A4BC /* Research.framework */,
 				F8D42AB72095550C00C6A4BC /* ResearchUI.framework */,
-				F801218122755548003A1A5C /* ResearchRecorders.framework */,
-				F84DDB6C20955628009CC1B8 /* Photos.framework */,
-				F84DDB6B20955628009CC1B8 /* AVFoundation.framework */,
-				F84DDB6920955628009CC1B8 /* CoreLocation.framework */,
-				F84DDB6A20955628009CC1B8 /* CoreMotion.framework */,
+				F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -366,8 +344,6 @@
 				F8D42A9B209552EC00C6A4BC /* Recorder_Motion.json in Resources */,
 				F8373C9320964F60004DD4E1 /* README.md in Resources */,
 				F8D42A9E209552EC00C6A4BC /* Theme_Color.json in Resources */,
-				F8D42AA2209552EC00C6A4BC /* Image_Picker.json in Resources */,
-				F8D42A9F209552EC00C6A4BC /* Recorder_Distance.json in Resources */,
 				F8D42A9D209552EC00C6A4BC /* FormStep_Textfield.json in Resources */,
 				F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */,
 				F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */,
@@ -493,7 +469,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 34;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -554,7 +530,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 34;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

@@ -209,10 +209,6 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         if let viewTheme = (step as? RSDDesignableUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme, for: step, with: parent) {
             return vc
         }
-        // TODO: syoung 03/18/2019 Delete this once the themed step has been marked unavailable.
-        if let viewTheme = (step as? RSDThemedUIStep)?.viewTheme, let vc = instantiateViewController(with: viewTheme, for: step, with: parent) {
-            return vc
-        }
         if let vc = (step as? RSDStepViewControllerVendor)?.instantiateViewController(with: parent) {
             return vc
         }

@@ -48,22 +48,6 @@ internal let kTableSectionTopMargin: CGFloat = 40.0
     /// The table item associated with this cell.
     open var tableItem: RSDTableItem!
     
-    /// The background color of the containing table.
-    // TODO: syoung 03/20/2019 Remove this once the modules that use the `tableBackgroundColor` property are updated.
-    @available(*, deprecated)
-    open var tableBackgroundColor: UIColor! {
-        didSet {
-            if let tile = self.tableBackgroundColorTile, tile.color != tableBackgroundColor {
-                self.tableBackgroundColorTile = nil
-            }
-        }
-    }
-    
-    /// Whether or not the table uses light style. 
-    // TODO: syoung 03/20/2019 Remove this once the modules that use the `tableBackgroundColor` property are updated.
-    @available(*, deprecated)
-    open var usesLightStyle: Bool = false
-    
     /// Does this cell use the table background color to set the color of the content view?
     open private(set) var usesTableBackgroundColor: Bool = false
     
@@ -83,13 +67,7 @@ internal let kTableSectionTopMargin: CGFloat = 40.0
     }
     
     /// The background color tile for the table.
-    public private(set) var tableBackgroundColorTile: RSDColorTile? {
-        didSet {
-            guard let color = tableBackgroundColorTile?.color else { return }
-            // TODO: syoung 03/20/2019 Remove this once the modules that use the `tableBackgroundColor` property are updated.
-            self.tableBackgroundColor = color
-        }
-    }
+    open private(set) var tableBackgroundColorTile: RSDColorTile?
     
     /// The design system for this component.
     open private(set) var designSystem: RSDDesignSystem?

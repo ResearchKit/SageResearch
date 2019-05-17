@@ -40,4 +40,7 @@ FOUNDATION_EXPORT double ResearchRecordersVersionNumber;
 //! Project version string for ResearchRecorders.
 FOUNDATION_EXPORT const unsigned char ResearchRecordersVersionString[];
 
+// DEPRECATED: syoung 05/15/2019 This framework is not used and will be deleted with the next
+// major version
+
 

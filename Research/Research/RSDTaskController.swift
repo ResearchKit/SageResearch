@@ -91,10 +91,6 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel)
 }
 
-@available(*, deprecated)
-public protocol RSDTaskUIController : RSDTaskController {
-}
-
 /// `RSDTaskController` handles a base-level implementation for running a task. This object is expected to
 /// be an appropriate instance of a view controller, depending upon the operating system.
 ///

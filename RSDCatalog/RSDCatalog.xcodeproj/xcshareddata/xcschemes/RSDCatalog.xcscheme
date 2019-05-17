@@ -63,39 +63,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FFF2D93F1FCF415E007258F8"
-               BuildableName = "ResearchUITests_iOS.xctest"
-               BlueprintName = "ResearchUITests_iOS"
-               ReferencedContainer = "container:../ResearchUI/ResearchUI.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F813D6E921BB40D900795664"
-               BuildableName = "MotorControlTests.xctest"
-               BlueprintName = "MotorControlTests"
-               ReferencedContainer = "container:../MotorControl/MotorControl.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F88725E12051C0F900A4B82F"
-               BuildableName = "CardiorespiratoryFitnessTests.xctest"
-               BlueprintName = "CardiorespiratoryFitnessTests"
-               ReferencedContainer = "container:../CardiorespiratoryFitness/CardiorespiratoryFitness.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F814DCEE22750436004579EF"
-               BuildableName = "ResearchRecordersTests_iOS.xctest"
-               BlueprintName = "ResearchRecordersTests_iOS"
+               BlueprintIdentifier = "F891DD1A228CFCD3001B2A57"
+               BuildableName = "ResearchMotionTests.xctest"
+               BlueprintName = "ResearchMotionTests"
                ReferencedContainer = "container:../Research/Research.xcodeproj">
             </BuildableReference>
          </TestableReference>
