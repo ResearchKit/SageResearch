@@ -679,39 +679,16 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     // MARK: Audio session management
     
-    /// The audio session is a shared pointer to the current audio session (if running). This is used to
-    /// allow background audio. Background audio is required in order for an active step to play sound
-    /// such as voice commands to a participant who make not be looking at their screen.
-    ///
-    /// For example, a "Walk and Balance" task that measures gait and balance by having the participant
-    /// walk back and forth followed by having them turn in a circle would require turning on background
-    /// audio in order to play spoken instructions even if the screen is locked before putting the phone
-    /// in the participant's pocket.
-    ///
-    /// - note: The application settings will need to include setting capabilities appropriate for
-    /// background audio if this feature is used.
-    ///
-    public private(set) var audioSession: AVAudioSession?
+    public private(set) var audioSessionController : RSDAudioSessionController?
     
-    /// Start the background audio session if needed. This will look to see if `audioSession` is already started
-    /// and if not, will start a new session.
-    public func startBackgroundAudioSessionIfNeeded() {
-        guard audioSession == nil else { return }
-        
-        // Start the background audio session
-        do {
-            let session = AVAudioSession.sharedInstance()
-            if #available(iOS 12.0, *) {
-                try session.setCategory(.playback, mode: .voicePrompt, options: .interruptSpokenAudioAndMixWithOthers)
-            } else {
-                try session.setCategory(.playback, mode: .default, options: .mixWithOthers)
-            }
-            try session.setActive(true)
-            audioSession = session
+    /// Start the background audio session if needed.
+    public final func startBackgroundAudioSessionIfNeeded() {
+        if audioSessionController == nil {
+            audioSessionController =
+                (self.task as? RSDBackgroundTask)?.audioSessionController ??
+                RSDDefaultAudioSessionController()
         }
-        catch let err {
-            debugPrint("Failed to start AV session. \(err)")
-        }
+        audioSessionController!.startAudioSessionIfNeeded()
     }
     
     /// Start a background audio session.
@@ -725,12 +702,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     /// Stop the audio session.
     private func _stopAudioSession() {
-        do {
-            audioSession = nil
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-        } catch let err {
-            debugPrint("Failed to stop AV session. \(err)")
-        }
+        audioSessionController?.stopAudioSession()
+        audioSessionController = nil
     }
     
     

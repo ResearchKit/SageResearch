@@ -24,12 +24,22 @@
                                                "identifier"   : "instruction",
                                                "type"         : "instruction",
                                                "title"        : "Please hold your phone",
-                                               "text"         : "After the countdown, shake your phone. This will record the calculated gravity vector and the raw gyro data."
+                                               "text"         : "After the countdown, shake your phone. This will record the calculated gravity vector and the raw gyro data.",
+                                               "image": {
+                                                   "type": "fetchable",
+                                                   "imageName": "HoldPhone",
+                                                   "placementType": "topBackground"
+                                               }
                                                },
                                                {
                                                "identifier"     : "countdown",
                                                "type"           : "countdown",
                                                "text"           : "Start in",
+                                               "image": {
+                                                   "type": "fetchable",
+                                                   "imageName": "HoldPhone",
+                                                   "placementType": "fullsizeBackground"
+                                               },
                                                "duration"       : 5,
                                                "commands"       : ["playSoundOnStart", "transitionAutomatically"]
                                                },
@@ -38,10 +48,16 @@
                                                "type"               : "active",
                                                "duration"           : 30,
                                                "text"               : "Shake your phone",
+                                               "image": {
+                                                   "type": "fetchable",
+                                                   "imageName": "HoldPhone",
+                                                   "placementType": "fullsizeBackground"
+                                               },
                                                "commands"           : ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate",
                                                                        "playSound"],
                                                "spokenInstructions" : { "start": "Start shaking your phone",
                                                                         "halfway": "Halfway there. Keep shaking!",
+                                                                        "countdown": "10",
                                                                         "end": "You're done!"}
                                                }
                                                ]
