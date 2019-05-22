@@ -39,7 +39,7 @@ open class RSDMotionTaskObject: RSDTaskObject, RSDBackgroundTask {
     
     /// By default, a motion task that runs in the background should *not* continue if the task is interupted
     /// by a phone call.
-    open var shouldContinueOnInterrupt: Bool = false
+    open var shouldStopOnInterrupt: Bool = true
     
     /// By default, if a motion task is intended to run in the background, then it will return a pointer to
     /// an instance of `RSDMotionAudioSessionController`.

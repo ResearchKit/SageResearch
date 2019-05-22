@@ -39,9 +39,7 @@ import Foundation
 public protocol RSDBackgroundTask : RSDTask {
     
     /// Should the task end early if the task is interrupted by a phone call?
-    ///
-    /// TODO: syoung 05/21/2019 Implement.
-    var shouldContinueOnInterrupt : Bool { get }
+    var shouldStopOnInterrupt : Bool { get }
     
     /// The audio session controller to use when running this task. If `nil` then the default session
     /// controller will be used, which might be `nil` depending upon the platform.
@@ -57,7 +55,3 @@ public protocol RSDAudioSessionController : class {
     /// Stop the audio session.
     func stopAudioSession()
 }
-
-
-
-

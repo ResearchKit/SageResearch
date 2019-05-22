@@ -323,6 +323,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// The default implementation will record an error result to the task results and then remove
     /// the controller from the list of controllers being managed by the task view controller.
     ///
+    /// If this is a background task that should be stopped on interrupt, then that error will stop the task.
+    ///
     /// - parameters:
     ///     - controller: The controller that has failed.
     ///     - error: The failure error.
@@ -330,6 +332,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         DispatchQueue.main.async {
             self._addErrorResult(for: controller, error: error)
             self._removeAsyncActionController(controller)
+            if let recorderError = error as? RSDSampleRecorder.RecorderError, recorderError == .interrupted,
+                (self.backgroundTask?.shouldStopOnInterrupt ?? false) {
+                self.handleTaskFailure(with: error)
+            }
         }
     }
     
@@ -420,7 +426,19 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     open func handleTaskFailure(with error: Error) {
         _stopAudioSession()
         cancelAllAsyncActions()
-        delegate?.taskController(self, didFinishWith: .failed, error: error)
+        
+        // If this is an error because of a phone call interruption, then show the user an alert.
+        let completion: (() -> Void) = {
+            self.delegate?.taskController(self, didFinishWith: .failed, error: error)
+        }
+        if let recorderError = error as? RSDSampleRecorder.RecorderError, recorderError == .interrupted {
+            self.presentAlertWithOk(title: nil, message: Localization.localizedString("TASK_INTERRUPTION_MESSAGE")) { (_) in
+                completion()
+            }
+        }
+        else {
+            completion()
+        }
     }
     
     /// The task has completed, either as a result of all the steps being completed or because of an
@@ -435,6 +453,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// will be called when either (a) the task is ready to dismiss or (b) when the task is displaying
     /// the *last* completion step.
     open func handleTaskResultReady(with taskViewModel: RSDTaskViewModel) {
+        _stopAudioSession()
         delegate?.taskController(self, readyToSave: taskViewModel)
     }
     
@@ -682,12 +701,17 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     public private(set) var audioSessionController : RSDAudioSessionController?
     
+    /// The current background task may be a subtask for the case where a group of tasks are being
+    /// run together as a flow that combines other tasks.
+    public var backgroundTask: RSDBackgroundTask? {
+        return (self.task as? RSDBackgroundTask) ??
+            ((self.taskViewModel.currentChild as? RSDTaskPathComponent)?.task as? RSDBackgroundTask)
+    }
+    
     /// Start the background audio session if needed.
     public final func startBackgroundAudioSessionIfNeeded() {
         if audioSessionController == nil {
-            audioSessionController =
-                (self.task as? RSDBackgroundTask)?.audioSessionController ??
-                RSDDefaultAudioSessionController()
+            audioSessionController = backgroundTask?.audioSessionController ?? RSDDefaultAudioSessionController()
         }
         audioSessionController!.startAudioSessionIfNeeded()
     }

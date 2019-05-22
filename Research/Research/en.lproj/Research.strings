@@ -138,3 +138,6 @@
 "REMINDER_CHOICE_SELECTION_PROMPT" = "When do you want a reminder?";
 "REMINDER_NOTIFICATION_WITH_TITLE_%@" = "Time to do the %@.";
 "REMINDER_NOTIFICATION_WITHOUT_TITLE" = "Time to perform your next task.";
+
+/* Phone interruption */
+"TASK_INTERRUPTION_MESSAGE" = "This activity has been interrupted and cannot continue.";

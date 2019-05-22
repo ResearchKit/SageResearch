@@ -33,6 +33,7 @@
 
 import Foundation
 import AudioToolbox
+import AVFoundation
 
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
@@ -967,6 +968,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Start the timer.
     open func start() {
         _startTimer()
+        _setupInterruptionObserver()
     }
     
     private func _startTimer() {
@@ -984,6 +986,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Stop the timer.
     open func stop() {
         _stopTimer()
+        _stopInterruptionObserver()
     }
 
     private func _stopTimer() {
@@ -1046,6 +1049,47 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         guard completedUptime == nil else { return }
         completedUptime = RSDClock.uptime()
         goForward()
+    }
+    
+    // MARK: Phone interruption
+    
+    private var _audioInterruptObserver: Any?
+    
+    func _setupInterruptionObserver() {
+        
+        // If the task should cancel if interrupted by a phone call, then set up a listener.
+        _audioInterruptObserver = NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
+            guard let rawValue = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+                let type = AVAudioSession.InterruptionType(rawValue: rawValue)
+                else {
+                    return
+            }
+            switch type {
+            case .began:
+                // pause when the interruption starts
+                self?.pause()
+                
+            case .ended:
+                // When the interuption ends, look to see if the task should attempt to resume.
+                if let rawValue = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt,
+                    AVAudioSession.InterruptionOptions(rawValue: rawValue).contains(.shouldResume) {
+                    self?.resume()
+                }
+                else {
+                    self?.taskController?.handleTaskFailure(with: RSDSampleRecorder.RecorderError.interrupted)
+                }
+                
+            @unknown default:
+                break // ignored
+            }
+        })
+    }
+    
+    func _stopInterruptionObserver() {
+        if let observer = _audioInterruptObserver {
+            NotificationCenter.default.removeObserver(observer)
+            _audioInterruptObserver = nil
+        }
     }
     
     // MARK: Alert user to open the app
