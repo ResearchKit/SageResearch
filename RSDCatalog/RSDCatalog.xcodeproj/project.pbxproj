@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F82A4AC022960D2500BEBE3C /* ResearchLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */; };
+		F82A4AC122960D2500BEBE3C /* ResearchLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F82A4AC322960DD400BEBE3C /* Recorder_Distance.json in Resources */ = {isa = PBXBuildFile; fileRef = F82A4AC222960DD400BEBE3C /* Recorder_Distance.json */; };
 		F836460B2265281400CCA0EF /* TaskPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */; };
 		F836460D22652E6100CCA0EF /* TaskArchivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */; };
 		F8373C9320964F60004DD4E1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F8373C9220964F60004DD4E1 /* README.md */; };
@@ -62,6 +65,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F82A4AC122960D2500BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
 				F891DD33228CFDE2001B2A57 /* ResearchMotion.framework in Embed Frameworks */,
 				F8D42ABA2095552100C6A4BC /* Research.framework in Embed Frameworks */,
 				F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */,
@@ -72,6 +76,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F82A4AC222960DD400BEBE3C /* Recorder_Distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Recorder_Distance.json; sourceTree = "<group>"; };
 		F836460A2265281400CCA0EF /* TaskPresentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPresentationViewController.swift; sourceTree = "<group>"; };
 		F836460C22652E6000CCA0EF /* TaskArchivesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskArchivesTableViewController.swift; sourceTree = "<group>"; };
 		F8373C9220964F60004DD4E1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -111,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F82A4AC022960D2500BEBE3C /* ResearchLocation.framework in Frameworks */,
 				F891DD32228CFDE2001B2A57 /* ResearchMotion.framework in Frameworks */,
 				F8D42AB62095550C00C6A4BC /* Research.framework in Frameworks */,
 				F8D42AB82095550C00C6A4BC /* ResearchUI.framework in Frameworks */,
@@ -207,6 +214,7 @@
 		F8D42A92209552EC00C6A4BC /* JSON Files */ = {
 			isa = PBXGroup;
 			children = (
+				F82A4AC222960DD400BEBE3C /* Recorder_Distance.json */,
 				F8D42A93209552EC00C6A4BC /* Recorder_Motion.json */,
 				F8D42A94209552EC00C6A4BC /* FormStep_List.json */,
 				F8D42A95209552EC00C6A4BC /* FormStep_Textfield.json */,
@@ -224,6 +232,7 @@
 				F8D42AB52095550C00C6A4BC /* Research.framework */,
 				F8D42AB72095550C00C6A4BC /* ResearchUI.framework */,
 				F891DD31228CFDE2001B2A57 /* ResearchMotion.framework */,
+				F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -346,6 +355,7 @@
 				F8D42A9E209552EC00C6A4BC /* Theme_Color.json in Resources */,
 				F8D42A9D209552EC00C6A4BC /* FormStep_Textfield.json in Resources */,
 				F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */,
+				F82A4AC322960DD400BEBE3C /* Recorder_Distance.json in Resources */,
 				F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
