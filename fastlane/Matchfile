@@ -8,7 +8,7 @@ app_identifier [
   "org.sagebase.RSDCatalog",
   "org.sagebase.RSDTest"]
 
-username "apple.developer@sagebase.org" # Your Apple Developer Portal username
+username "appleservicer@sagebase.org" # Your Apple Developer Portal username
 
 readonly true
 # For all available options run `fastlane match --help`
