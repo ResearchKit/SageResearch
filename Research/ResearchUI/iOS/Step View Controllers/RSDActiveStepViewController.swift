@@ -105,8 +105,17 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
     /// The start method is overridden to start the countdown dial animation.
     open override func start() {
         super.start()
-        _startProgressAnimation()
+        if UIApplication.shared.applicationState == .active {
+            _startProgressAnimation()
+        }
+        else {
+            _activeObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (_) in
+                self?._startProgressAnimation()
+            })
+        }
     }
+    
+    private var _activeObserver: Any?
     
     /// The pause method is overridden to pause the countdown dial animation.
     override open func pause() {
@@ -123,6 +132,17 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
     override open func reset() {
         super.reset()
         self.countdownDial?.progress = 0
+    }
+    
+    override open func timerFired() {
+        super.timerFired()
+        
+        // If running in the background, do not animate updating the progress.
+        if UIApplication.shared.applicationState != .active,
+            let stepDuration = self.activeStep?.duration,
+            let duration = clock?.runningDuration() {
+            self.countdownDial?.progress = CGFloat(duration / stepDuration)
+        }
     }
     
     // MARK: Dial progress indicator
@@ -164,6 +184,12 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
         // Set the progress to the value at the end of the
         let nextDuration = duration + animationDuration
         let nextProgress = CGFloat(nextDuration / stepDuration)
+        let previousProgress = CGFloat(duration / stepDuration)
+        if let progress = self.countdownDial?.progress, abs(progress - previousProgress) > 0.05 {
+            // If the progress is somehow muddled and the dial isn't set correctly, then offset the
+            // initial value by the previous progress amount before starting the next animation
+            self.countdownDial?.progress = previousProgress
+        }
         self.countdownDial?.setProgressPosition(nextProgress, animationDuration: animationDuration)
         if nextProgress < 1.0 {
             _fireNextProgressAnimation(with: Int(animationDuration * 1000))
@@ -176,6 +202,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
             self?._startProgressAnimation()
         }
     }
+    
     
     // MARK: View appearance
     
@@ -192,6 +219,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
         self.progressLabel?.text = nil
         self.unitLabel?.text = nil
     }
+
     
     // MARK: Initialization
     

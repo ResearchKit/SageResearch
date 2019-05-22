@@ -33,6 +33,7 @@
 
 import Foundation
 import AudioToolbox
+import AVFoundation
 
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
@@ -133,6 +134,17 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// `viewDidAppear`. This flag is used to mark whether or not to call `performStartCommands()`.
     public private(set) var isFirstAppearance: Bool = true
     
+    /// Should this step play an alarm if the phone screen is locked and the app is running in the
+    /// background? If this is `true` then an alert will run (sound and vibration) until the user opens their
+    /// phone. The default is `false`.
+    ///
+    /// This is intended for active tasks where the participant needs to look at their phone as soon as
+    /// possible following a step that was running in the background to alert them to a follow-up action.
+    ///
+    open var playAlarmIfBackgrounded: Bool {
+        return false
+    }
+    
     /// The design system to use with this step view controller.
     open var designSystem: RSDDesignSystem!
     
@@ -165,6 +177,9 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         // If this is the first appearance then perform the start commands
         if isFirstAppearance {
             performStartCommands()
+            if UIApplication.shared.applicationState != .active, playAlarmIfBackgrounded {
+                startBackgroundAlert()
+            }
         }
         isFirstAppearance = false
         
@@ -614,8 +629,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
     var hasCalledGoForward = false
     
-    
-    
     /// Navigates backward to the previous step. By default, it calls stop() to stop the timer
     /// and then calls `goBack` on the task controller.
     ///
@@ -955,6 +968,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Start the timer.
     open func start() {
         _startTimer()
+        _setupInterruptionObserver()
     }
     
     private func _startTimer() {
@@ -972,6 +986,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Stop the timer.
     open func stop() {
         _stopTimer()
+        _stopInterruptionObserver()
     }
 
     private func _stopTimer() {
@@ -999,20 +1014,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     
     /// Method fired when the timer fires. This method will be called when the timer fires.
     /// Should you need to run in the background, you will need to use playing music or GPS
-    /// updates to keep the app from going to sleep in which case the timer will not fire
-    /// automatically. Instead, you will need to call this method directly.
+    /// updates to keep the app from going to sleep.
     ///
     /// The method will first check to see if the step should be transitioned automatically,
     /// based on the `uptime` and the step duration.
     ///
-    /// If the step is completed (countdown == 0), then this method will check if the app
-    /// is running in the background. If not, it will transition to the next step.
-    ///
-    /// If the app **is** running in the background then the app will start calling
-    /// `playCompletedAlert()` using dispatch_async with a delay. By default, that method
-    /// will play an alarm sound and vibrate the device to alert the user to bring the
-    /// app to the foreground. Once the app is active, then it will transition to the next
-    /// step.
+    /// If the step is completed (countdown == 0), it will transition to the next step.
     ///
     /// If the timer fires and the step is still running, it will check to see if there is
     /// a vocal instruction to speak since the last firing of the timer.
@@ -1038,52 +1045,93 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
     }
     
-    /// An alert to play if the step should transition automatically and the user has put the
-    /// app into the background either by locking the screen or else because the system idle
-    /// timer has fired. This is **only** called if the app is running in the background.
-    /// Otherwise, the app will automatically call `goForward`.
-    open func playCompletedAlert() {
-        vibrateDevice()
-        playSound(.alarm)
-    }
-    
-    private var _activeObserver: Any?
-    private var _hasCalledGoForward: Bool = false
-    
     private func stepCompleted() {
         guard completedUptime == nil else { return }
         completedUptime = RSDClock.uptime()
-        if UIApplication.shared.applicationState == .active {
-            _goForwardOnActive()
-        } else {
-            _playAlarm()
-            _activeObserver = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (_) in
-                self?._goForwardOnActive()
-            })
-        }
-    }
-    
-    private func _goForwardOnActive() {
-        guard !_hasCalledGoForward else { return }
-        _hasCalledGoForward = true
-        
-        if let observer = _activeObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
         goForward()
     }
     
+    // MARK: Phone interruption
+    
+    private var _audioInterruptObserver: Any?
+    
+    func _setupInterruptionObserver() {
+        
+        // If the task should cancel if interrupted by a phone call, then set up a listener.
+        _audioInterruptObserver = NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
+            guard let rawValue = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+                let type = AVAudioSession.InterruptionType(rawValue: rawValue)
+                else {
+                    return
+            }
+            switch type {
+            case .began:
+                if self?.activeStep?.shouldEndOnInterrupt ?? false {
+                    self?.taskController?.handleTaskFailure(with: RSDSampleRecorder.RecorderError.interrupted)
+                }
+                else {
+                    // pause when the interruption starts
+                    self?.pause()
+                }
+                
+            case .ended:
+                // When the interuption ends, look to see if the task should attempt to resume.
+                if let rawValue = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt,
+                    AVAudioSession.InterruptionOptions(rawValue: rawValue).contains(.shouldResume) {
+                    self?.resume()
+                }
+                else {
+                    self?.taskController?.handleTaskFailure(with: RSDSampleRecorder.RecorderError.interrupted)
+                }
+                
+            @unknown default:
+                break // ignored
+            }
+        })
+    }
+    
+    func _stopInterruptionObserver() {
+        if let observer = _audioInterruptObserver {
+            NotificationCenter.default.removeObserver(observer)
+            _audioInterruptObserver = nil
+        }
+    }
+    
+    
+    // MARK: Alert user to open the app
+        
+    private var _startedAlarm: Bool = false
+    
+    private func startBackgroundAlert() {
+        guard !_startedAlarm, UIApplication.shared.applicationState != .active else { return }
+        _startedAlarm = true
+        // Play the alarm after a delay.
+        let delay = DispatchTime.now() + .milliseconds(500)
+        DispatchQueue.main.asyncAfter(deadline: delay, execute: { [weak self] in
+            self?._playAlarm()
+        })
+    }
+
     private func _playAlarm() {
-        guard !_hasCalledGoForward, UIApplication.shared.applicationState != .active else { return }
-        
-        // play sound and vibrate to let the user know that the step is over
-        playCompletedAlert()
-        
-        // Fire again after a delay
+        guard UIApplication.shared.applicationState != .active else { return }
+
+        // play sound and vibrate to let the user know that the step is over.
+        playAlert()
+
+        // Fire again after a delay.
         let delay = DispatchTime.now() + .seconds(2)
         DispatchQueue.main.asyncAfter(deadline: delay, execute: { [weak self] in
             self?._playAlarm()
         })
+    }
+    
+    /// If the app is running in the background, and running in the background is not allowed for this step,
+    /// then the app will start calling `playAlert()` using dispatch_async with a delay. By default, that
+    /// method will play an alarm sound and vibrate the device to alert the user to bring the app to the
+    /// foreground in order to continue the task. Once the app is active, then it will start the step.
+    open func playAlert() {
+        vibrateDevice()
+        playSound(.alarm)
     }
 }
 

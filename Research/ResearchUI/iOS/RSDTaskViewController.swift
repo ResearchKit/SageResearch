@@ -323,6 +323,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// The default implementation will record an error result to the task results and then remove
     /// the controller from the list of controllers being managed by the task view controller.
     ///
+    /// If this is a background task that should be stopped on interrupt, then that error will stop the task.
+    ///
     /// - parameters:
     ///     - controller: The controller that has failed.
     ///     - error: The failure error.
@@ -330,6 +332,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         DispatchQueue.main.async {
             self._addErrorResult(for: controller, error: error)
             self._removeAsyncActionController(controller)
+            if let recorderError = error as? RSDSampleRecorder.RecorderError, recorderError == .interrupted,
+                (self.backgroundTask?.shouldEndOnInterrupt ?? false) {
+                self.handleTaskFailure(with: error)
+            }
         }
     }
     
@@ -406,7 +412,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     public func show(_ stepController: RSDStepController, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
         let vc = stepController as! UIViewController
         _statusBarVC = vc
-        pageViewController.setViewControllers([vc], direction: direction, animated: true) { (finished) in
+        let animated = UIApplication.shared.applicationState == .active
+        pageViewController.setViewControllers([vc], direction: direction, animated: animated) { (finished) in
             self.hideLoadingIfNeeded()
             completion?(finished)
         }
@@ -417,10 +424,26 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///
     /// - parameter error:   The error returned by the failed task fetch.
     open func handleTaskFailure(with error: Error) {
+        guard !_hasHandledFailure else { return }
+        _hasHandledFailure = true
+        
         _stopAudioSession()
         cancelAllAsyncActions()
-        delegate?.taskController(self, didFinishWith: .failed, error: error)
+        
+        // If this is an error because of a phone call interruption, then show the user an alert.
+        let completion: (() -> Void) = {
+            self.delegate?.taskController(self, didFinishWith: .failed, error: error)
+        }
+        if let recorderError = error as? RSDSampleRecorder.RecorderError, recorderError == .interrupted {
+            self.presentAlertWithOk(title: nil, message: Localization.localizedString("TASK_INTERRUPTION_MESSAGE")) { (_) in
+                completion()
+            }
+        }
+        else {
+            completion()
+        }
     }
+    private var _hasHandledFailure: Bool = false
     
     /// The task has completed, either as a result of all the steps being completed or because of an
     /// early exit.
@@ -434,6 +457,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// will be called when either (a) the task is ready to dismiss or (b) when the task is displaying
     /// the *last* completion step.
     open func handleTaskResultReady(with taskViewModel: RSDTaskViewModel) {
+        _stopAudioSession()
         delegate?.taskController(self, readyToSave: taskViewModel)
     }
     
@@ -679,39 +703,21 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     // MARK: Audio session management
     
-    /// The audio session is a shared pointer to the current audio session (if running). This is used to
-    /// allow background audio. Background audio is required in order for an active step to play sound
-    /// such as voice commands to a participant who make not be looking at their screen.
-    ///
-    /// For example, a "Walk and Balance" task that measures gait and balance by having the participant
-    /// walk back and forth followed by having them turn in a circle would require turning on background
-    /// audio in order to play spoken instructions even if the screen is locked before putting the phone
-    /// in the participant's pocket.
-    ///
-    /// - note: The application settings will need to include setting capabilities appropriate for
-    /// background audio if this feature is used.
-    ///
-    public private(set) var audioSession: AVAudioSession?
+    public private(set) var audioSessionController : RSDAudioSessionController?
     
-    /// Start the background audio session if needed. This will look to see if `audioSession` is already started
-    /// and if not, will start a new session.
-    public func startBackgroundAudioSessionIfNeeded() {
-        guard audioSession == nil else { return }
-        
-        // Start the background audio session
-        do {
-            let session = AVAudioSession.sharedInstance()
-            if #available(iOS 12.0, *) {
-                try session.setCategory(.playback, mode: .voicePrompt, options: .interruptSpokenAudioAndMixWithOthers)
-            } else {
-                try session.setCategory(.playback, mode: .default, options: .mixWithOthers)
-            }
-            try session.setActive(true)
-            audioSession = session
+    /// The current background task may be a subtask for the case where a group of tasks are being
+    /// run together as a flow that combines other tasks.
+    public var backgroundTask: RSDBackgroundTask? {
+        return (self.task as? RSDBackgroundTask) ??
+            ((self.taskViewModel.currentChild as? RSDTaskPathComponent)?.task as? RSDBackgroundTask)
+    }
+    
+    /// Start the background audio session if needed.
+    public final func startBackgroundAudioSessionIfNeeded() {
+        if audioSessionController == nil {
+            audioSessionController = backgroundTask?.audioSessionController ?? RSDDefaultAudioSessionController()
         }
-        catch let err {
-            debugPrint("Failed to start AV session. \(err)")
-        }
+        audioSessionController!.startAudioSessionIfNeeded()
     }
     
     /// Start a background audio session.
@@ -725,12 +731,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     /// Stop the audio session.
     private func _stopAudioSession() {
-        do {
-            audioSession = nil
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-        } catch let err {
-            debugPrint("Failed to stop AV session. \(err)")
-        }
+        audioSessionController?.stopAudioSession()
+        audioSessionController = nil
     }
     
     

@@ -154,6 +154,9 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
         
         /// Returned when the recorder that has been cancelled, failed, or finished.
         case finished
+        
+        /// Returned when the recorder or task was interrupted.
+        case interrupted
     }
     
     /// Default initializer.

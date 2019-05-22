@@ -39,7 +39,7 @@ import Foundation
 open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     
     private enum CodingKeys: String, CodingKey, CaseIterable {
-        case duration, commands, requiresBackgroundAudio, spokenInstructions
+        case duration, commands, requiresBackgroundAudio, shouldEndOnInterrupt, spokenInstructions
     }
 
     /// The duration of time to run the step. If `0`, then this value is ignored.
@@ -54,6 +54,9 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     /// Whether or not the step uses audio, such as the speech synthesizer, that should play whether or not the user
     /// has the mute switch turned on. Default = `false`.
     open var requiresBackgroundAudio: Bool = false
+    
+    /// Should the task end early if the task is interrupted by a phone call? Default = `false`.
+    open var shouldEndOnInterrupt : Bool = false
     
     // MARK: spoken instruction handling
     
@@ -185,6 +188,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
             stepDuration = duration
         }
         self.requiresBackgroundAudio = try container.decodeIfPresent(Bool.self, forKey: .requiresBackgroundAudio) ?? self.requiresBackgroundAudio
+        self.shouldEndOnInterrupt = try container.decodeIfPresent(Bool.self, forKey: .shouldEndOnInterrupt) ?? self.shouldEndOnInterrupt
         self.commands = try container.decodeIfPresent(RSDActiveUIStepCommand.self, forKey: .commands) ?? self.commands
         if let dictionary = try container.decodeIfPresent([String : String].self, forKey: .spokenInstructions) {
             

@@ -33,6 +33,7 @@
     
 import UIKit
 import CoreMotion
+import AVFoundation
 
 extension RSDMotionRecorderConfiguration : RSDAsyncActionVendor {
     
@@ -183,6 +184,9 @@ public class RSDMotionRecorder : RSDSampleRecorder {
                 }
             }
         }
+        
+        // Set up the interruption observer.
+        self.setupInterruptionObserver()
     }
     
     func startAccelerometer(with motionManager: CMMotionManager, updateInterval: TimeInterval, completion: ((Error?) -> Void)?) {
@@ -263,6 +267,8 @@ public class RSDMotionRecorder : RSDSampleRecorder {
         
         DispatchQueue.main.async {
             
+            self.stopInterruptionObserver()
+            
             // Stop the updates synchronously
             if let motionManager = self.motionManager {
                 for motionType in self.recorderTypes {
@@ -295,6 +301,34 @@ public class RSDMotionRecorder : RSDSampleRecorder {
             return CSVEncodingFormat<RSDMotionRecord>()
         } else {
             return nil
+        }
+    }
+    
+    // MARK: Phone interruption
+    
+    private var _audioInterruptObserver: Any?
+    
+    func setupInterruptionObserver() {
+        
+        // If the task should cancel if interrupted by a phone call, then set up a listener.
+        _audioInterruptObserver = NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: OperationQueue.main, using: { [weak self] (notification) in
+            guard let rawValue = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+                let type = AVAudioSession.InterruptionType(rawValue: rawValue), type == .began
+                else {
+                    return
+            }
+
+            // The motion sensor recorder is not currently designed to handle phone calls and resume. Until
+            // there is a use-case for prioritizing pause/resume of this recorder (not currently implemented),
+            // just stop the recorder. syoung 05/21/2019
+            self?.didFail(with: RSDSampleRecorder.RecorderError.interrupted)
+        })
+    }
+    
+    func stopInterruptionObserver() {
+        if let observer = _audioInterruptObserver {
+            NotificationCenter.default.removeObserver(observer)
+            _audioInterruptObserver = nil
         }
     }
 }

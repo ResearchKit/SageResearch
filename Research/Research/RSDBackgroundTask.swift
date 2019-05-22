@@ -1,8 +1,8 @@
 //
-//  RSDActiveUIStep.swift
+//  RSDBackgroundTask.swift
 //  Research
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,33 +33,25 @@
 
 import Foundation
 
-
-/// `RSDActiveUIStep` extends the `RSDUIStep` to include a duration and commands. This is used for the case
-/// where an `RSDUIStep` has an action such as "start walking" or "stop walking"; the step may also
-/// implement the `RSDActiveUIStep` protocol to allow for spoken instruction.
-public protocol RSDActiveUIStep: RSDUIStep {
-    
-    /// The duration of time to run the step. If `0`, then this value is ignored.
-    var duration: TimeInterval { get }
-    
-    /// The set of commands to apply to this active step. These indicate actions to fire at the beginning
-    /// and end of the step such as playing a sound as well as whether or not to automatically start and
-    /// finish the step.
-    var commands: RSDActiveUIStepCommand { get }
-    
-    /// Whether or not the step uses audio, such as the speech synthesizer, that should play whether or not
-    /// the user has the mute switch turned on.
-    var requiresBackgroundAudio: Bool { get }
+/// A background task is an extension of a task that can run a task without visual steps. This is intended
+/// for use in an active task where the user may need to set down their phone or put it in their pocket but
+/// still have the steps continue to transition if the screen has been locked or the phone has gone to sleep.
+public protocol RSDBackgroundTask : RSDTask {
     
     /// Should the task end early if the task is interrupted by a phone call?
     var shouldEndOnInterrupt : Bool { get }
     
-    /// Localized text that represents an instructional voice prompt. Instructional speech begins when the
-    /// step passes the time indicated by the given time.  If `timeInterval` is greater than or equal to
-    /// `duration` or is equal to `Double.infinity`, then the spoken instruction returned should be for
-    /// when the step is finished.
-    ///
-    /// - parameter timeInterval: The time interval at which to speak the instruction.
-    /// - returns: The localized instruction to speak or `nil` if there isn't an instruction.
-    func spokenInstruction(at timeInterval: TimeInterval) -> String?
+    /// The audio session controller to use when running this task. If `nil` then the default session
+    /// controller will be used, which might be `nil` depending upon the platform.
+    var audioSessionController: RSDAudioSessionController? { get }
+}
+
+/// Custom audio session controller.
+public protocol RSDAudioSessionController : class {
+    
+    /// Start the audio session if needed.
+    func startAudioSessionIfNeeded()
+    
+    /// Stop the audio session.
+    func stopAudioSession()
 }
