@@ -406,7 +406,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     public func show(_ stepController: RSDStepController, from previousStep: RSDStep?, direction: RSDStepDirection, completion: ((Bool) -> Void)?) {
         let vc = stepController as! UIViewController
         _statusBarVC = vc
-        pageViewController.setViewControllers([vc], direction: direction, animated: true) { (finished) in
+        let animated = UIApplication.shared.applicationState == .active
+        pageViewController.setViewControllers([vc], direction: direction, animated: animated) { (finished) in
             self.hideLoadingIfNeeded()
             completion?(finished)
         }
