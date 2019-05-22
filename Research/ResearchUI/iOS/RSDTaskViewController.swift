@@ -457,7 +457,6 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// will be called when either (a) the task is ready to dismiss or (b) when the task is displaying
     /// the *last* completion step.
     open func handleTaskResultReady(with taskViewModel: RSDTaskViewModel) {
-        _stopAudioSession()
         delegate?.taskController(self, readyToSave: taskViewModel)
     }
     
