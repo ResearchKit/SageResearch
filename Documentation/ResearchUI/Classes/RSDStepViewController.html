@@ -68,6 +68,9 @@
                 <a href="../Classes/RSDDatePicker.html">RSDDatePicker</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDDefaultAudioSessionController.html">RSDDefaultAudioSessionController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDDetailsChevronButton.html">RSDDetailsChevronButton</a>
               </li>
               <li class="nav-group-task">
@@ -742,6 +745,38 @@ before anything else is done.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isFirstAppearance</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span>
   <span class="k">get</span>
   <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10ResearchUI21RSDStepViewControllerC23playAlarmIfBackgroundedSbvp"></a>
+                    <a name="//apple_ref/swift/Property/playAlarmIfBackgrounded" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI21RSDStepViewControllerC23playAlarmIfBackgroundedSbvp">playAlarmIfBackgrounded</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Should this step play an alarm if the phone screen is locked and the app is running in the
+background? If this is <code>true</code> then an alert will run (sound and vibration) until the user opens their
+phone. The default is <code>false</code>.</p>
+
+<p>This is intended for active tasks where the participant needs to look at their phone as soon as
+possible following a step that was running in the background to alert them to a follow-up action.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">playAlarmIfBackgrounded</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -2862,20 +2897,12 @@ If the <q>end</q> command was previously spoken, then this will call the complet
                       <div class="abstract">
                         <p>Method fired when the timer fires. This method will be called when the timer fires.
 Should you need to run in the background, you will need to use playing music or GPS
-updates to keep the app from going to sleep in which case the timer will not fire
-automatically. Instead, you will need to call this method directly.</p>
+updates to keep the app from going to sleep.</p>
 
 <p>The method will first check to see if the step should be transitioned automatically,
 based on the <code>uptime</code> and the step duration.</p>
 
-<p>If the step is completed (countdown == 0), then this method will check if the app
-is running in the background. If not, it will transition to the next step.</p>
-
-<p>If the app <strong>is</strong> running in the background then the app will start calling
-<code><a href="../Classes/RSDStepViewController.html#/s:10ResearchUI21RSDStepViewControllerC18playCompletedAlertyyF">playCompletedAlert()</a></code> using dispatch_async with a delay. By default, that method
-will play an alarm sound and vibrate the device to alert the user to bring the
-app to the foreground. Once the app is active, then it will transition to the next
-step.</p>
+<p>If the step is completed (countdown == 0), it will transition to the next step.</p>
 
 <p>If the timer fires and the step is still running, it will check to see if there is
 a vocal instruction to speak since the last firing of the timer.</p>
@@ -2892,12 +2919,23 @@ a vocal instruction to speak since the last firing of the timer.</p>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Alert%20user%20to%20open%20the%20app"></a>
+                <a name="//apple_ref/swift/Section/Alert user to open the app" class="dashAnchor"></a>
+                <a href="#/Alert%20user%20to%20open%20the%20app">
+                  <h3 class="section-name">Alert user to open the app</h3>
+                </a>
+              </div>
+              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:10ResearchUI21RSDStepViewControllerC18playCompletedAlertyyF"></a>
-                    <a name="//apple_ref/swift/Method/playCompletedAlert()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:10ResearchUI21RSDStepViewControllerC18playCompletedAlertyyF">playCompletedAlert()</a>
+                    <a name="/s:10ResearchUI21RSDStepViewControllerC9playAlertyyF"></a>
+                    <a name="//apple_ref/swift/Method/playAlert()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10ResearchUI21RSDStepViewControllerC9playAlertyyF">playAlert()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2905,17 +2943,17 @@ a vocal instruction to speak since the last firing of the timer.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An alert to play if the step should transition automatically and the user has put the
-app into the background either by locking the screen or else because the system idle
-timer has fired. This is <strong>only</strong> called if the app is running in the background.
-Otherwise, the app will automatically call <code>goForward</code>.</p>
+                        <p>If the app is running in the background, and running in the background is not allowed for this step,
+then the app will start calling <code>playAlert()</code> using dispatch_async with a delay. By default, that
+method will play an alarm sound and vibrate the device to alert the user to bring the app to the
+foreground in order to continue the task. Once the app is active, then it will start the step.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">playCompletedAlert</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">playAlert</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>

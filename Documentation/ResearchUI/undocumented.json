@@ -16,28 +16,35 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDStepViewController.swift",
-      "line": 83,
+      "line": 84,
       "symbol": "RSDStepViewController.preferredStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDStepViewController.swift",
-      "line": 983,
+      "line": 998,
       "symbol": "RSDStepViewController.reset()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 594,
+      "line": 618,
       "symbol": "RSDTaskViewController.childForStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
+      "line": 706,
+      "symbol": "RSDTaskViewController.audioSessionController",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
-      "line": 123,
+      "line": 132,
       "symbol": "RSDActiveStepViewController.reset()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
