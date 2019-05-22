@@ -203,6 +203,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
         }
     }
     
+    
     // MARK: View appearance
     
     /// Override `viewDidLoad` to set up initial values for the labels and progress indicators.
@@ -218,10 +219,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
         self.progressLabel?.text = nil
         self.unitLabel?.text = nil
     }
-    
-    
 
-    
     
     // MARK: Initialization
     

@@ -1066,8 +1066,13 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             }
             switch type {
             case .began:
-                // pause when the interruption starts
-                self?.pause()
+                if self?.activeStep?.shouldEndOnInterrupt ?? false {
+                    self?.taskController?.handleTaskFailure(with: RSDSampleRecorder.RecorderError.interrupted)
+                }
+                else {
+                    // pause when the interruption starts
+                    self?.pause()
+                }
                 
             case .ended:
                 // When the interuption ends, look to see if the task should attempt to resume.
@@ -1091,6 +1096,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             _audioInterruptObserver = nil
         }
     }
+    
     
     // MARK: Alert user to open the app
         

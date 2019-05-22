@@ -424,6 +424,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///
     /// - parameter error:   The error returned by the failed task fetch.
     open func handleTaskFailure(with error: Error) {
+        guard !_hasHandledFailure else { return }
+        _hasHandledFailure = true
+        
         _stopAudioSession()
         cancelAllAsyncActions()
         
@@ -440,6 +443,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             completion()
         }
     }
+    private var _hasHandledFailure: Bool = false
     
     /// The task has completed, either as a result of all the steps being completed or because of an
     /// early exit.

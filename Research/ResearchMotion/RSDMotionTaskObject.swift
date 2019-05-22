@@ -33,7 +33,7 @@
 
 import Foundation
 
-/// This background task is a work-around for running task that uses the motion sensors with the screen locked.
+/// This background task is a work-around for a running task that uses the motion sensors with the screen locked.
 /// If using GPS or a streaming audio file, using this object is not required to keep the task active in the
 /// background.
 open class RSDMotionTaskObject: RSDTaskObject, RSDBackgroundTask {
