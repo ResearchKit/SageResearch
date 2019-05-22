@@ -109,14 +109,18 @@ public final class RSDMotionAudioSessionController : NSObject, RSDAudioSessionCo
     public func stopAudioSession() {
         
         // Stop the audio player
-        self.audioPlayer?.stop()
+        if self.audioPlayer?.isPlaying ?? false {
+            self.audioPlayer?.stop()
+        }
         
         // Release the session
-        do {
-            audioSession = nil
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-        } catch let err {
-            debugPrint("Failed to stop AV session. \(err)")
+        if audioSession != nil {
+            do {
+                audioSession = nil
+                try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+            } catch let err {
+                debugPrint("Failed to stop AV session. \(err)")
+            }
         }
     }
 }
