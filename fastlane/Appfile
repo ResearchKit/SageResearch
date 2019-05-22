@@ -1,5 +1,5 @@
 app_identifier "org.sagebase.RSDCatalog" # The bundle identifier of your app
-apple_id "apple.developer@sagebase.org" # Your Apple email address
+apple_id "appleservicer@sagebase.org" # Your Apple email address
 
 team_id "KA9Z8R6M6K"  # Developer Portal Team ID
 
