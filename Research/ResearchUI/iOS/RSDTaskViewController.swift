@@ -333,7 +333,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             self._addErrorResult(for: controller, error: error)
             self._removeAsyncActionController(controller)
             if let recorderError = error as? RSDSampleRecorder.RecorderError, recorderError == .interrupted,
-                (self.backgroundTask?.shouldStopOnInterrupt ?? false) {
+                (self.backgroundTask?.shouldEndOnInterrupt ?? false) {
                 self.handleTaskFailure(with: error)
             }
         }

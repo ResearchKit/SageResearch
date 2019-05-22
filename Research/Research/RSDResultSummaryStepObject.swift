@@ -51,7 +51,7 @@ open class RSDResultSummaryStepObject: RSDActiveUIStepObject, RSDResultSummarySt
     /// The identifier for the answer result.
     open private(set) var resultIdentifier: String?
     
-    /// By default, if the `resultIdentifier` is non-nil, then the step the step should be skipped if
+    /// By default, if the `resultIdentifier` is non-nil, then the step should be skipped if
     /// the result is not in the result set.
     open func shouldSkipStep(with result: RSDTaskResult?, isPeeking: Bool) -> Bool {
         guard resultIdentifier != nil else { return false }

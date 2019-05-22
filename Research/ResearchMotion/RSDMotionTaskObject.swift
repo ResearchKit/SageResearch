@@ -33,13 +33,14 @@
 
 import Foundation
 
-/// This background task controller is a work-around for allowing a task that uses the motion sensors but
-/// does *not* use GPS to continue to run in the background.
+/// This background task is a work-around for running task that uses the motion sensors with the screen locked.
+/// If using GPS or a streaming audio file, using this object is not required to keep the task active in the
+/// background.
 open class RSDMotionTaskObject: RSDTaskObject, RSDBackgroundTask {
     
     /// By default, a motion task that runs in the background should *not* continue if the task is interupted
     /// by a phone call.
-    open var shouldStopOnInterrupt: Bool = true
+    open var shouldEndOnInterrupt: Bool = true
     
     /// By default, if a motion task is intended to run in the background, then it will return a pointer to
     /// an instance of `RSDMotionAudioSessionController`.

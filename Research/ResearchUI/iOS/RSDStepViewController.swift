@@ -134,8 +134,8 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// `viewDidAppear`. This flag is used to mark whether or not to call `performStartCommands()`.
     public private(set) var isFirstAppearance: Bool = true
     
-    /// Should this step play an alarm if it is the phone screen is locked and the app is running in the
-    /// background. If this is `true` then an alert will run (sound and vibration) until the user opens their
+    /// Should this step play an alarm if the phone screen is locked and the app is running in the
+    /// background? If this is `true` then an alert will run (sound and vibration) until the user opens their
     /// phone. The default is `false`.
     ///
     /// This is intended for active tasks where the participant needs to look at their phone as soon as
@@ -1123,11 +1123,6 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// then the app will start calling `playAlert()` using dispatch_async with a delay. By default, that
     /// method will play an alarm sound and vibrate the device to alert the user to bring the app to the
     /// foreground in order to continue the task. Once the app is active, then it will start the step.
-    ///
-    /// An alert to play if the step should transition automatically and the user has put the
-    /// app into the background either by locking the screen or else because the system idle
-    /// timer has fired. This is **only** called if the app is running in the background.
-    /// Otherwise, the app will automatically call `goForward`.
     open func playAlert() {
         vibrateDevice()
         playSound(.alarm)
