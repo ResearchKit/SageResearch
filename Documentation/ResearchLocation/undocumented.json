@@ -1,0 +1,12 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/syoung2/Documents/AppleCode/SageResearch/Research/ResearchLocation/RSDDistanceRecorder.swift",
+      "line": 157,
+      "symbol": "RSDDistanceRecorder.locationManager",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/syoung2/Documents/AppleCode/SageResearch"
+}
