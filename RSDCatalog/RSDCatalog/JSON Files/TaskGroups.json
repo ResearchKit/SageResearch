@@ -36,6 +36,14 @@
      "detail": "This task group includes examples of active tasks that include spoken instructions and recorders that are currently included in the Research and ResearchUI frameworks.",
      "icon": "activityIcon",
      "tasks" : [{
+                     "identifier": "distance",
+                     "title": "Distance Recorder",
+                     "subtitle": "Activity for recording relative GPS location.",
+                     "detail": "This is an example task for recording GPS distance data using the RSDDistanceRecorder. This task also includes using the voice synthesizer to include spoken instructions.",
+                     "icon": "activityIcon",
+                     "taskTransformer" : { "resourceName": "Recorder_Distance" }
+                 },
+                 {
                 "identifier": "motion",
                 "title": "Motion Recorder",
                 "subtitle": "Activity for recording motion sensor data.",

@@ -139,6 +139,17 @@
 		F82A4A1022949B9000BEBE3C /* RSDMotionTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82A4A0F22949B9000BEBE3C /* RSDMotionTaskObject.swift */; };
 		F82A4A132294A37200BEBE3C /* RSDMotionAudioSessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82A4A122294A37100BEBE3C /* RSDMotionAudioSessionController.swift */; };
 		F82A4A192294B35800BEBE3C /* Silence.wav in Resources */ = {isa = PBXBuildFile; fileRef = F82A4A162294B07E00BEBE3C /* Silence.wav */; };
+		F82A4AA922960BF700BEBE3C /* ResearchLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */; };
+		F82A4AB022960BF700BEBE3C /* ResearchLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = F82A4AA222960BF700BEBE3C /* ResearchLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F82A4AB722960C2800BEBE3C /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8B53141FCE678E006B6937 /* Research.framework */; };
+		F82A4AB822960C2800BEBE3C /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */; };
+		F82A4ABB22960C3100BEBE3C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ABA22960C3100BEBE3C /* CoreLocation.framework */; };
+		F82A4ABC22960C7500BEBE3C /* CodableDistanceRecorderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */; };
+		F82A4ABD22960C8000BEBE3C /* RSDDistanceRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */; };
+		F82A4ABE22960C8500BEBE3C /* RSDLocationAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8E94FF020585ED100752B7B /* RSDLocationAuthorization.swift */; };
+		F82A4AC422960EB100BEBE3C /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */; };
+		F82A4AC722960F0C00BEBE3C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F82A4AC522960F0C00BEBE3C /* README.md */; };
+		F82A4AC822960F0C00BEBE3C /* jazzy_config.yml in Resources */ = {isa = PBXBuildFile; fileRef = F82A4AC622960F0C00BEBE3C /* jazzy_config.yml */; };
 		F82B1AC120365D5B00FEA16D /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82B1AC020365D5B00FEA16D /* RSDImageVendor.swift */; };
 		F82B1AC220365D5B00FEA16D /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82B1AC020365D5B00FEA16D /* RSDImageVendor.swift */; };
 		F82B1AC320365D5B00FEA16D /* RSDImageVendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82B1AC020365D5B00FEA16D /* RSDImageVendor.swift */; };
@@ -1014,6 +1025,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F82A4AAA22960BF700BEBE3C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F82A4A9F22960BF700BEBE3C;
+			remoteInfo = ResearchLocation;
+		};
 		F87061AA227390120056F70E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FF72B2281F6859D2004C6F15 /* Project object */;
@@ -1093,6 +1111,14 @@
 		F82A4A0F22949B9000BEBE3C /* RSDMotionTaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDMotionTaskObject.swift; sourceTree = "<group>"; };
 		F82A4A122294A37100BEBE3C /* RSDMotionAudioSessionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDMotionAudioSessionController.swift; sourceTree = "<group>"; };
 		F82A4A162294B07E00BEBE3C /* Silence.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Silence.wav; sourceTree = "<group>"; };
+		F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ResearchLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F82A4AA222960BF700BEBE3C /* ResearchLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResearchLocation.h; sourceTree = "<group>"; };
+		F82A4AA322960BF700BEBE3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F82A4AA822960BF700BEBE3C /* ResearchLocationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResearchLocationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F82A4AAF22960BF700BEBE3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F82A4ABA22960C3100BEBE3C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F82A4AC522960F0C00BEBE3C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F82A4AC622960F0C00BEBE3C /* jazzy_config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jazzy_config.yml; sourceTree = "<group>"; };
 		F82B1AC020365D5B00FEA16D /* RSDImageVendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImageVendor.swift; sourceTree = "<group>"; };
 		F82D110A2125EA1F00EA1A33 /* RSDAnswerResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAnswerResult.swift; sourceTree = "<group>"; };
 		F82D110E2125EA7400EA1A33 /* RSDErrorResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDErrorResult.swift; sourceTree = "<group>"; };
@@ -1415,6 +1441,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F82A4A9D22960BF700BEBE3C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F82A4ABB22960C3100BEBE3C /* CoreLocation.framework in Frameworks */,
+				F82A4AB722960C2800BEBE3C /* Research.framework in Frameworks */,
+				F82A4AB822960C2800BEBE3C /* ResearchMotion.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F82A4AA522960BF700BEBE3C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F82A4AA922960BF700BEBE3C /* ResearchLocation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F870619D227390110056F70E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1649,6 +1693,28 @@
 			name = Background;
 			sourceTree = "<group>";
 		};
+		F82A4AA122960BF700BEBE3C /* ResearchLocation */ = {
+			isa = PBXGroup;
+			children = (
+				F82A4AA222960BF700BEBE3C /* ResearchLocation.h */,
+				F82A4AC522960F0C00BEBE3C /* README.md */,
+				F82A4AC622960F0C00BEBE3C /* jazzy_config.yml */,
+				F8E94FF020585ED100752B7B /* RSDLocationAuthorization.swift */,
+				F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */,
+				F82A4AA322960BF700BEBE3C /* Info.plist */,
+			);
+			path = ResearchLocation;
+			sourceTree = "<group>";
+		};
+		F82A4AAC22960BF700BEBE3C /* ResearchLocationTests */ = {
+			isa = PBXGroup;
+			children = (
+				F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */,
+				F82A4AAF22960BF700BEBE3C /* Info.plist */,
+			);
+			path = ResearchLocationTests;
+			sourceTree = "<group>";
+		};
 		F82D1122212603C800EA1A33 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -1875,6 +1941,7 @@
 		F875575F20807E8B00235078 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F82A4ABA22960C3100BEBE3C /* CoreLocation.framework */,
 				F891DD2C228CFD63001B2A57 /* CoreMotion.framework */,
 			);
 			name = Frameworks;
@@ -1892,7 +1959,6 @@
 		F891DCFB228CF9D0001B2A57 /* ResearchToolboxTests */ = {
 			isa = PBXGroup;
 			children = (
-				F810CF39202E34C6009C49C9 /* CodableDistanceRecorderTests.swift */,
 			);
 			path = ResearchToolboxTests;
 			sourceTree = "<group>";
@@ -1900,10 +1966,8 @@
 		F891DD07228CFA7D001B2A57 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				F8E94FF020585ED100752B7B /* RSDLocationAuthorization.swift */,
 				F8E94FEB20585BE400752B7B /* RSDAudioVisualAuthorization.swift */,
 				F8E94FFA20586D7500752B7B /* RSDPhotoLibraryAuthorization.swift */,
-				F814DD0A22750899004579EF /* RSDDistanceRecorder.swift */,
 				F84496122273A23100EAA3E0 /* RSDImagePickerStepViewController.swift */,
 			);
 			path = iOS;
@@ -2213,6 +2277,8 @@
 				F87061AC227390120056F70E /* ResearchUITests */,
 				F891DD14228CFCD3001B2A57 /* ResearchMotion */,
 				F891DD1F228CFCD4001B2A57 /* ResearchMotionTests */,
+				F82A4AA122960BF700BEBE3C /* ResearchLocation */,
+				F82A4AAC22960BF700BEBE3C /* ResearchLocationTests */,
 				F814DCE822750435004579EF /* ResearchRecorders */,
 				F891DCF0228CF9D0001B2A57 /* ResearchToolbox */,
 				F891DCFB228CF9D0001B2A57 /* ResearchToolboxTests */,
@@ -2235,6 +2301,8 @@
 				F814DCE722750435004579EF /* ResearchRecorders.framework */,
 				F891DD13228CFCD3001B2A57 /* ResearchMotion.framework */,
 				F891DD1B228CFCD3001B2A57 /* ResearchMotionTests.xctest */,
+				F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */,
+				F82A4AA822960BF700BEBE3C /* ResearchLocationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2455,6 +2523,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F82A4A9B22960BF700BEBE3C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F82A4AB022960BF700BEBE3C /* ResearchLocation.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F870619B227390110056F70E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2560,6 +2636,42 @@
 			productName = "ResearchRecorders-iOS";
 			productReference = F814DCE722750435004579EF /* ResearchRecorders.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		F82A4A9F22960BF700BEBE3C /* ResearchLocation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F82A4AB522960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocation" */;
+			buildPhases = (
+				F82A4A9B22960BF700BEBE3C /* Headers */,
+				F82A4A9C22960BF700BEBE3C /* Sources */,
+				F82A4A9D22960BF700BEBE3C /* Frameworks */,
+				F82A4A9E22960BF700BEBE3C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ResearchLocation;
+			productName = ResearchLocation;
+			productReference = F82A4AA022960BF700BEBE3C /* ResearchLocation.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		F82A4AA722960BF700BEBE3C /* ResearchLocationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F82A4AB622960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocationTests" */;
+			buildPhases = (
+				F82A4AA422960BF700BEBE3C /* Sources */,
+				F82A4AA522960BF700BEBE3C /* Frameworks */,
+				F82A4AA622960BF700BEBE3C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F82A4AAB22960BF700BEBE3C /* PBXTargetDependency */,
+			);
+			name = ResearchLocationTests;
+			productName = ResearchLocationTests;
+			productReference = F82A4AA822960BF700BEBE3C /* ResearchLocationTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F870619F227390110056F70E /* ResearchUI (iOS) */ = {
 			isa = PBXNativeTarget;
@@ -2756,6 +2868,16 @@
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
+					F82A4A9F22960BF700BEBE3C = {
+						CreatedOnToolsVersion = 10.2;
+						DevelopmentTeam = KA9Z8R6M6K;
+						ProvisioningStyle = Automatic;
+					};
+					F82A4AA722960BF700BEBE3C = {
+						CreatedOnToolsVersion = 10.2;
+						DevelopmentTeam = KA9Z8R6M6K;
+						ProvisioningStyle = Automatic;
+					};
 					F870619F227390110056F70E = {
 						CreatedOnToolsVersion = 10.2;
 						ProvisioningStyle = Automatic;
@@ -2831,12 +2953,30 @@
 				F814DCE622750435004579EF /* ResearchRecorders (iOS) */,
 				F891DD12228CFCD3001B2A57 /* ResearchMotion */,
 				F891DD1A228CFCD3001B2A57 /* ResearchMotionTests */,
+				F82A4A9F22960BF700BEBE3C /* ResearchLocation */,
+				F82A4AA722960BF700BEBE3C /* ResearchLocationTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F814DCE522750435004579EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F82A4A9E22960BF700BEBE3C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F82A4AC722960F0C00BEBE3C /* README.md in Resources */,
+				F82A4AC822960F0C00BEBE3C /* jazzy_config.yml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F82A4AA622960BF700BEBE3C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2949,6 +3089,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F82A4A9C22960BF700BEBE3C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F82A4ABE22960C8500BEBE3C /* RSDLocationAuthorization.swift in Sources */,
+				F82A4ABD22960C8000BEBE3C /* RSDDistanceRecorder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F82A4AA422960BF700BEBE3C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F82A4ABC22960C7500BEBE3C /* CodableDistanceRecorderTests.swift in Sources */,
+				F82A4AC422960EB100BEBE3C /* CodableTestObjects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3954,6 +4112,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F82A4AAB22960BF700BEBE3C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F82A4A9F22960BF700BEBE3C /* ResearchLocation */;
+			targetProxy = F82A4AAA22960BF700BEBE3C /* PBXContainerItemProxy */;
+		};
 		F87061AB227390120056F70E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F870619F227390110056F70E /* ResearchUI (iOS) */;
@@ -4041,6 +4204,108 @@
 				PRODUCT_NAME = ResearchRecorders;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F82A4AB122960BF700BEBE3C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ResearchLocation/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchLocation;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F82A4AB222960BF700BEBE3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ResearchLocation/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchLocation;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F82A4AB322960BF700BEBE3C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ResearchLocationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchLocationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F82A4AB422960BF700BEBE3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ResearchLocationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.ResearchLocationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -4709,6 +4974,24 @@
 			buildConfigurations = (
 				F814DCF922750436004579EF /* Debug */,
 				F814DCFA22750436004579EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F82A4AB522960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F82A4AB122960BF700BEBE3C /* Debug */,
+				F82A4AB222960BF700BEBE3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F82A4AB622960BF700BEBE3C /* Build configuration list for PBXNativeTarget "ResearchLocationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F82A4AB322960BF700BEBE3C /* Debug */,
+				F82A4AB422960BF700BEBE3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -51,7 +51,7 @@ class CatalogFactory : RSDFactory {
     
     override func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, bundle: Bundle? = nil) throws -> RSDTask {
         let decoder = try createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo, bundle: bundle)
-        if let identifier = taskIdentifier, identifier == "motion" {
+        if let identifier = taskIdentifier, identifier == "motion" || identifier == "distance" {
             return try decoder.decode(RSDMotionTaskObject.self, from: data)
         }
         else {
