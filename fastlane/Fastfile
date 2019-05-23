@@ -139,6 +139,9 @@ platform :ios do
     doc_framework(
       framework:"ResearchMotion"
     )
+    doc_framework(
+      framework:"ResearchLocation"
+    )
 
     add_git_tag(tag: "v#{version_number}.#{next_build_number}")
     push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])

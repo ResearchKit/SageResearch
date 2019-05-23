@@ -166,7 +166,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
         let status = CLLocationManager.authorizationStatus()
         if status == .denied || status == .restricted || status == .authorizedWhenInUse {
             let status: RSDAuthorizationStatus = (status == .restricted) ? .restricted : .denied
-            let error = RSDPermissionError.notAuthorized(.location, status)
+            let error = RSDPermissionError.notAuthorized(RSDStandardPermission.location, status)
             debugPrint("Failed to start the location recorder: \(status)")
             self.updateStatus(to: .failed, error: error)
             completion(self, nil, error)
@@ -223,7 +223,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
         let status = CLLocationManager.authorizationStatus()
         guard status == .authorizedAlways || status == .authorizedWhenInUse else {
             let status: RSDAuthorizationStatus = (status == .restricted) ? .restricted : .denied
-            throw RSDPermissionError.notAuthorized(.location, status)
+            throw RSDPermissionError.notAuthorized(RSDStandardPermission.location, status)
         }
         
         _setupLocationManager()
@@ -299,7 +299,7 @@ public class RSDDistanceRecorder : RSDSampleRecorder, CLLocationManagerDelegate 
         guard status != .notDetermined else { return }
         guard status == .authorizedAlways || status == .authorizedWhenInUse else {
             let status: RSDAuthorizationStatus = (status == .restricted) ? .restricted : .denied
-            let error = RSDPermissionError.notAuthorized(.location, status)
+            let error = RSDPermissionError.notAuthorized(RSDStandardPermission.location, status)
             self.locationManager(manager, didFailWithError: error)
             return
         }
