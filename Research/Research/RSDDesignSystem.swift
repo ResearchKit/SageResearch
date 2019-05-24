@@ -67,7 +67,7 @@ open class RSDDesignSystem {
         let colorRules = RSDColorRules(palette: palette)
         self.version = colorRules.version
         self.colorRules = colorRules
-        self.fontRules = RSDFontRules(version: palette.version)
+        self.fontRules = RSDStudyConfiguration.shared.fontRules
     }
     
     /// The button type for the button. This refers to whether or not the button is used to represent a
