@@ -317,21 +317,28 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 203,
+      "line": 137,
+      "symbol": "RSDCountdownDial.hasShadow",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
+      "line": 210,
       "symbol": "RSDCountdownDial.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 208,
+      "line": 215,
       "symbol": "RSDCountdownDial.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 231,
+      "line": 238,
       "symbol": "RSDCountdownDial.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
