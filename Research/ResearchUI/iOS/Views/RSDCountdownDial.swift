@@ -133,6 +133,13 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewDesignable {
     }
     private var _innerColor: UIColor = UIColor.clear
     
+    @IBInspectable
+    public var hasShadow: Bool = true {
+        didSet {
+            ringLayer?.shadowOpacity = hasShadow ? 1.0 : 0
+        }
+    }
+
     /// If the colorStyle is set, then this will determine the inner color and light style and will
     /// override any colors set by the storyboard or nib. This value is `nil` by default and can only be set
     /// programatically.
@@ -261,7 +268,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewDesignable {
         ringLayer?.fillColor = innerColor.cgColor
         ringLayer?.strokeColor = ringColor.cgColor
         
-        if innerColor != UIColor.clear, let ringLayer = ringLayer {
+        if innerColor != UIColor.clear, let ringLayer = ringLayer, hasShadow {
             ringLayer.shadowPath = ringLayer.path
             ringLayer.shadowColor = UIColor.black.cgColor
             ringLayer.shadowOpacity = 1
