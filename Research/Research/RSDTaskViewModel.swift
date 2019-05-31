@@ -477,6 +477,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         self.taskRepository.fetchTask(for: taskInfo) { [weak self] (_, task, error) in
             guard let strongSelf = self else { return }
             strongSelf.isLoading = false
+            var err = error
             if task != nil {
                 strongSelf.task = task
                 let previousResult = strongSelf.taskResult
@@ -489,7 +490,10 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
                 newResult.taskRunUUID = previousResult.taskRunUUID
                 strongSelf.taskResult = newResult
             }
-            if let err = error {
+            else {
+                err = error ?? RSDValidationError.unexpectedNullObject("Fetched a nil task without an associated error")
+            }
+            if let err = err {
                 strongSelf.handleTaskFailure(with: err)
             }
             else {
