@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,16 +27,16 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d6T-5w-AqF" userLabel="Header" customClass="RSDStepHeaderView" customModule="ResearchUI" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="32" width="375" height="204.5"/>
+                    <rect key="frame" x="0.0" y="32" width="375" height="222.5"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qef-96-GMe" userLabel="Navigation Header">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LaD-KT-cpv">
-                                    <rect key="frame" x="16" y="0.0" width="32" height="32"/>
+                                    <rect key="frame" x="8" y="-9" width="50" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="LaD-KT-cpv" secondAttribute="height" multiplier="1:1" id="CPk-aR-Jfm"/>
-                                        <constraint firstAttribute="width" constant="32" id="uWg-uB-X4t"/>
+                                        <constraint firstAttribute="width" constant="50" id="uWg-uB-X4t"/>
                                     </constraints>
                                     <state key="normal" image="closeActivity"/>
                                     <connections>
@@ -44,10 +44,10 @@
                                     </connections>
                                 </button>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="igH-QR-FOm" customClass="RSDStepProgressView" customModule="ResearchUI" customModuleProvider="target">
-                                    <rect key="frame" x="64" y="12" width="295" height="8"/>
+                                    <rect key="frame" x="74" y="11" width="285" height="10"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="8" placeholder="YES" id="Zlu-Qf-w36"/>
+                                        <constraint firstAttribute="height" constant="10" id="1pI-YG-dE2"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="hasRoundedEnds" value="YES"/>
@@ -57,7 +57,7 @@
                                     </connections>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1 of 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FdT-WA-Sq6">
-                                    <rect key="frame" x="149.5" y="28" width="76" height="17"/>
+                                    <rect key="frame" x="149.5" y="46" width="76" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" red="0.19607843137254902" green="0.21568627450980393" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -65,17 +65,17 @@
                             </subviews>
                             <constraints>
                                 <constraint firstItem="FdT-WA-Sq6" firstAttribute="centerX" secondItem="qef-96-GMe" secondAttribute="centerX" id="3Fu-AY-hxZ"/>
-                                <constraint firstItem="LaD-KT-cpv" firstAttribute="leading" secondItem="qef-96-GMe" secondAttribute="leading" constant="16" id="3MC-VY-Mny"/>
+                                <constraint firstItem="LaD-KT-cpv" firstAttribute="leading" secondItem="qef-96-GMe" secondAttribute="leading" constant="8" id="3MC-VY-Mny"/>
                                 <constraint firstItem="igH-QR-FOm" firstAttribute="leading" secondItem="LaD-KT-cpv" secondAttribute="trailing" constant="16" id="8qs-Be-rFU"/>
                                 <constraint firstAttribute="trailing" secondItem="igH-QR-FOm" secondAttribute="trailing" constant="16" id="FOL-Uy-Vow"/>
                                 <constraint firstItem="igH-QR-FOm" firstAttribute="centerY" secondItem="LaD-KT-cpv" secondAttribute="centerY" id="UC7-IL-d9B"/>
-                                <constraint firstItem="FdT-WA-Sq6" firstAttribute="top" secondItem="LaD-KT-cpv" secondAttribute="bottom" constant="-4" id="cbE-Xo-7oR"/>
+                                <constraint firstItem="FdT-WA-Sq6" firstAttribute="top" secondItem="LaD-KT-cpv" secondAttribute="bottom" constant="5" id="cbE-Xo-7oR"/>
                                 <constraint firstAttribute="bottom" secondItem="FdT-WA-Sq6" secondAttribute="bottom" id="ggZ-6d-zvw"/>
-                                <constraint firstItem="LaD-KT-cpv" firstAttribute="top" secondItem="qef-96-GMe" secondAttribute="top" id="nWb-AP-mCH"/>
+                                <constraint firstItem="LaD-KT-cpv" firstAttribute="top" secondItem="qef-96-GMe" secondAttribute="top" constant="-9" id="nWb-AP-mCH"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start in" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Vo-ap-GH7">
-                            <rect key="frame" x="24" y="101" width="327" height="26.5"/>
+                            <rect key="frame" x="24" y="119" width="327" height="26.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                             <color key="textColor" red="0.47843137254901957" green="0.50196078431372548" blue="0.56470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -98,10 +98,10 @@
                     </connections>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DFQ-JA-Sc8" userLabel="Footer">
-                    <rect key="frame" x="0.0" y="587" width="375" height="80"/>
+                    <rect key="frame" x="0.0" y="583.5" width="375" height="83.5"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TqA-Ca-ZKl" customClass="RSDUnderlinedButton" customModule="ResearchUI" customModuleProvider="target">
-                            <rect key="frame" x="166.5" y="0.0" width="42" height="30"/>
+                            <rect key="frame" x="162.5" y="0.0" width="50" height="33.5"/>
                             <state key="normal" title="Pause"/>
                             <connections>
                                 <action selector="pauseTimer" destination="-1" eventType="touchUpInside" id="Hf3-Ox-f5K"/>
@@ -116,14 +116,14 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ye0-7C-vxz">
-                    <rect key="frame" x="0.0" y="412" width="375" height="175"/>
+                    <rect key="frame" x="0.0" y="419" width="375" height="164.5"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n20-fF-k86">
-                    <rect key="frame" x="0.0" y="236.5" width="375" height="175.5"/>
+                    <rect key="frame" x="0.0" y="254.5" width="375" height="164.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Af7-QE-ZV6">
-                            <rect key="frame" x="150" y="10" width="75.5" height="155.5"/>
+                            <rect key="frame" x="150" y="4.5" width="75.5" height="155.5"/>
                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="130"/>
                             <color key="textColor" red="0.35686274509803922" green="0.6705882352941176" blue="0.33725490196078434" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -166,6 +166,6 @@
         </view>
     </objects>
     <resources>
-        <image name="closeActivity" width="32" height="32"/>
+        <image name="closeActivity" width="50" height="50"/>
     </resources>
 </document>

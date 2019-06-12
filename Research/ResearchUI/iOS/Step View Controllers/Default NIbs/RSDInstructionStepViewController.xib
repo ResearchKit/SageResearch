@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -33,7 +33,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="678"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d2t-as-jeB" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="603.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="600.33333333333337"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCM-dW-bGV" customClass="RSDNavigationHeaderView" customModule="ResearchUI" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
@@ -84,14 +84,14 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7fs-z9-kjO" userLabel="Measurement View">
-                                    <rect key="frame" x="374" y="405" width="1" height="198.66666666666663"/>
+                                    <rect key="frame" x="374" y="405" width="1" height="195.33333333333337"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="1" id="9hz-eO-hIf"/>
                                     </constraints>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npv-dT-kE4" customClass="RSDUnderlinedButton" customModule="ResearchUI" customModuleProvider="target">
-                                    <rect key="frame" x="141.66666666666666" y="558.33333333333337" width="92" height="33.333333333333371"/>
+                                    <rect key="frame" x="148.66666666666666" y="558.33333333333337" width="78" height="30"/>
                                     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Learn more"/>
                                 </button>
@@ -148,10 +148,10 @@
                         <constraint firstAttribute="bottom" secondItem="d2t-as-jeB" secondAttribute="bottom" id="lST-qW-KSX"/>
                     </constraints>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJy-5F-5MN" userLabel="Cancel Button">
-                    <rect key="frame" x="20" y="64" width="32" height="32"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJy-5F-5MN" userLabel="Cancel Button">
+                    <rect key="frame" x="8" y="52" width="50" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="32" id="bFF-yI-xPA"/>
+                        <constraint firstAttribute="width" constant="50" id="bFF-yI-xPA"/>
                         <constraint firstAttribute="width" secondItem="dJy-5F-5MN" secondAttribute="height" multiplier="1:1" id="nPT-hX-rTI"/>
                     </constraints>
                     <state key="normal" image="closeActivity"/>
@@ -173,10 +173,10 @@
             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="n0w-EP-nrT" firstAttribute="bottom" secondItem="3oj-Zf-dbO" secondAttribute="bottom" id="EV9-pf-M6o"/>
-                <constraint firstItem="dJy-5F-5MN" firstAttribute="top" secondItem="3oj-Zf-dbO" secondAttribute="top" constant="20" id="FkU-48-0ef"/>
+                <constraint firstItem="dJy-5F-5MN" firstAttribute="top" secondItem="3oj-Zf-dbO" secondAttribute="top" constant="8" id="FkU-48-0ef"/>
                 <constraint firstItem="DCM-dW-bGV" firstAttribute="width" secondItem="3oj-Zf-dbO" secondAttribute="width" id="NW8-fi-dfD"/>
                 <constraint firstItem="n0w-EP-nrT" firstAttribute="top" secondItem="SBj-Ps-bUq" secondAttribute="bottom" id="TBQ-Br-lZJ"/>
-                <constraint firstItem="dJy-5F-5MN" firstAttribute="leading" secondItem="3oj-Zf-dbO" secondAttribute="leading" constant="20" id="UdY-jx-Hq8"/>
+                <constraint firstItem="dJy-5F-5MN" firstAttribute="leading" secondItem="3oj-Zf-dbO" secondAttribute="leading" constant="8" id="UdY-jx-Hq8"/>
                 <constraint firstItem="SBj-Ps-bUq" firstAttribute="leading" secondItem="3oj-Zf-dbO" secondAttribute="leading" id="Y1w-7A-2gM"/>
                 <constraint firstItem="SBj-Ps-bUq" firstAttribute="trailing" secondItem="3oj-Zf-dbO" secondAttribute="trailing" id="ZzC-th-yYb"/>
                 <constraint firstItem="SBj-Ps-bUq" firstAttribute="top" secondItem="8Pc-bM-yuV" secondAttribute="top" id="g0V-il-8B4"/>
@@ -194,6 +194,6 @@
     </objects>
     <resources>
         <image name="InstructionPlaceholder" width="1694" height="1334"/>
-        <image name="closeActivity" width="32" height="32"/>
+        <image name="closeActivity" width="50" height="50"/>
     </resources>
 </document>
