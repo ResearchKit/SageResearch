@@ -331,6 +331,7 @@ public protocol RSDNavigationHeaderLayoutConstants {
     var verticalSpacing: CGFloat { get }
     var barButtonHeight: CGFloat { get }
     var buttonToTop: CGFloat { get }
+    var buttonLeadng: CGFloat { get }
     var imageViewHeight: CGFloat { get }
     var labelMaxLayoutWidth: CGFloat { get }
 }
@@ -343,8 +344,9 @@ fileprivate struct DefaultNavigationHeaderLayoutConstants {
     let promptBottomMargin: CGFloat = CGFloat(10.0).rsd_iPadMultiplier(1.5)
     let horizontalSpacing: CGFloat = CGFloat(16.0).rsd_iPadMultiplier(2)
     let verticalSpacing: CGFloat = CGFloat(10.0).rsd_iPadMultiplier(1.5)
-    let barButtonHeight: CGFloat = CGFloat(32.0).rsd_iPadMultiplier(1.5)
-    let buttonToTop: CGFloat = CGFloat(20.0).rsd_iPadMultiplier(2)
+    let barButtonHeight: CGFloat = CGFloat(50.0).rsd_iPadMultiplier(1.5)
+    let buttonToTop: CGFloat = CGFloat(8.0).rsd_iPadMultiplier(2)
+    let buttonLeadng: CGFloat = CGFloat(8.0).rsd_iPadMultiplier(2)
     let imageViewHeight: CGFloat = CGFloat(100.0).rsd_proportionalToScreenHeight()
     let labelMaxLayoutWidth: CGFloat = {
         return CGFloat(UIScreen.main.bounds.size.width - (2 * CGFloat(30.0).rsd_proportionalToScreenWidth()))
@@ -500,7 +502,7 @@ open class RSDTableStepHeaderView: RSDStepHeaderView {
         
         if let cancelButton = cancelButton, shouldShowCloseButton, !cancelButton.isHidden {
             _interactiveContraints.append(contentsOf:
-                cancelButton.rsd_alignToSuperview([.leading], padding: constants.horizontalSpacing))
+                cancelButton.rsd_alignToSuperview([.leading], padding: constants.buttonLeadng))
             _interactiveContraints.append(contentsOf:
                 cancelButton.rsd_alignToSuperview([.topMargin], padding: constants.buttonToTop))
             _interactiveContraints.append(contentsOf:

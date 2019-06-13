@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -33,10 +33,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="510.5"/>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojL-ZX-TXF">
-                                    <rect key="frame" x="16" y="16" width="32" height="32"/>
+                                    <rect key="frame" x="8" y="8" width="50" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="ojL-ZX-TXF" secondAttribute="height" multiplier="1:1" id="44E-rD-UVd"/>
-                                        <constraint firstAttribute="width" constant="32" id="BA6-4T-HgU"/>
+                                        <constraint firstAttribute="width" constant="50" id="BA6-4T-HgU"/>
                                     </constraints>
                                     <state key="normal" image="backArrowHeader"/>
                                 </button>
@@ -53,7 +53,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b39-Zc-lfV">
-                                    <rect key="frame" x="327" y="16" width="32" height="32"/>
+                                    <rect key="frame" x="327" y="8" width="32" height="32"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="b39-Zc-lfV" secondAttribute="height" multiplier="1:1" id="bK7-Eg-Wgc"/>
                                         <constraint firstAttribute="height" constant="32" id="zYK-jY-LLn"/>
@@ -69,14 +69,14 @@
                                 <constraint firstItem="0RX-ZO-IQn" firstAttribute="centerX" secondItem="nNr-9w-cB5" secondAttribute="centerX" id="Dxz-ZM-NXt"/>
                                 <constraint firstItem="ICN-1z-1T7" firstAttribute="top" secondItem="nNr-9w-cB5" secondAttribute="top" constant="63" id="Irn-JU-X7G"/>
                                 <constraint firstAttribute="trailing" secondItem="b39-Zc-lfV" secondAttribute="trailing" constant="16" id="MnF-y7-Iy4"/>
-                                <constraint firstItem="ojL-ZX-TXF" firstAttribute="leading" secondItem="nNr-9w-cB5" secondAttribute="leading" constant="16" id="ONy-1f-i8f"/>
+                                <constraint firstItem="ojL-ZX-TXF" firstAttribute="leading" secondItem="nNr-9w-cB5" secondAttribute="leading" constant="8" id="ONy-1f-i8f"/>
                                 <constraint firstItem="b39-Zc-lfV" firstAttribute="top" secondItem="ojL-ZX-TXF" secondAttribute="top" id="PCH-db-cSz"/>
                                 <constraint firstAttribute="bottom" secondItem="Gua-Mv-uIu" secondAttribute="bottom" id="Psg-Yd-go4"/>
                                 <constraint firstAttribute="trailing" secondItem="Gua-Mv-uIu" secondAttribute="trailing" id="V7k-tF-OQU"/>
                                 <constraint firstItem="Gua-Mv-uIu" firstAttribute="leading" secondItem="nNr-9w-cB5" secondAttribute="leading" id="cgR-FW-A2V"/>
                                 <constraint firstAttribute="trailing" secondItem="Gua-Mv-uIu" secondAttribute="trailing" id="fx0-cS-ga0"/>
                                 <constraint firstItem="0RX-ZO-IQn" firstAttribute="top" secondItem="ICN-1z-1T7" secondAttribute="bottom" constant="8" id="oEb-V7-edx"/>
-                                <constraint firstItem="ojL-ZX-TXF" firstAttribute="top" secondItem="nNr-9w-cB5" secondAttribute="top" constant="16" id="vS3-30-CNE"/>
+                                <constraint firstItem="ojL-ZX-TXF" firstAttribute="top" secondItem="nNr-9w-cB5" secondAttribute="top" constant="8" id="vS3-30-CNE"/>
                                 <constraint firstItem="Gua-Mv-uIu" firstAttribute="top" secondItem="nNr-9w-cB5" secondAttribute="top" id="xcQ-Ja-gox"/>
                             </constraints>
                         </view>
@@ -133,7 +133,7 @@
         </view>
     </objects>
     <resources>
-        <image name="backArrowHeader" width="32" height="32"/>
+        <image name="backArrowHeader" width="50" height="50"/>
         <image name="infoIcon" width="32" height="32"/>
     </resources>
 </document>

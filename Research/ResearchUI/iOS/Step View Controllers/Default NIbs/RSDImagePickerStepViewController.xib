@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,18 +34,18 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9VU-My-bDb" userLabel="Navigation Header" customClass="RSDNavigationHeaderView" customModule="ResearchUI" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="32" width="375" height="45"/>
+                    <rect key="frame" x="0.0" y="32" width="375" height="63"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G45-O7-x6Q">
-                            <rect key="frame" x="16" y="0.0" width="32" height="32"/>
+                            <rect key="frame" x="8" y="-9" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="G45-O7-x6Q" secondAttribute="height" multiplier="1:1" id="BuK-VJ-srz"/>
-                                <constraint firstAttribute="width" constant="32" id="Xjb-Zr-u4S"/>
+                                <constraint firstAttribute="width" constant="50" id="Xjb-Zr-u4S"/>
                             </constraints>
                             <state key="normal" image="closeActivity"/>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSI-PZ-jmK" customClass="RSDStepProgressView" customModule="ResearchUI" customModuleProvider="target">
-                            <rect key="frame" x="64" y="12" width="295" height="8"/>
+                            <rect key="frame" x="74" y="12" width="285" height="8"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="8" placeholder="YES" id="lJ0-PL-MhE"/>
@@ -69,7 +68,7 @@
                             </connections>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Step 1 of 10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xS7-Yz-0Ke">
-                            <rect key="frame" x="149.5" y="28" width="76" height="17"/>
+                            <rect key="frame" x="149.5" y="46" width="76" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.1960784314" green="0.2156862745" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -79,11 +78,11 @@
                         <constraint firstItem="KSI-PZ-jmK" firstAttribute="leading" secondItem="G45-O7-x6Q" secondAttribute="trailing" constant="16" id="6PF-a7-gkT"/>
                         <constraint firstAttribute="trailing" secondItem="KSI-PZ-jmK" secondAttribute="trailing" constant="16" id="Fh9-2j-IIk"/>
                         <constraint firstItem="xS7-Yz-0Ke" firstAttribute="centerX" secondItem="9VU-My-bDb" secondAttribute="centerX" id="c8Q-uW-V1I"/>
-                        <constraint firstItem="G45-O7-x6Q" firstAttribute="leading" secondItem="9VU-My-bDb" secondAttribute="leading" constant="16" id="j0u-N0-h6a"/>
+                        <constraint firstItem="G45-O7-x6Q" firstAttribute="leading" secondItem="9VU-My-bDb" secondAttribute="leading" constant="8" id="j0u-N0-h6a"/>
                         <constraint firstAttribute="bottom" secondItem="xS7-Yz-0Ke" secondAttribute="bottom" id="q97-pg-9md"/>
-                        <constraint firstItem="xS7-Yz-0Ke" firstAttribute="top" secondItem="G45-O7-x6Q" secondAttribute="bottom" constant="-4" id="vV3-L9-z6N"/>
+                        <constraint firstItem="xS7-Yz-0Ke" firstAttribute="top" secondItem="G45-O7-x6Q" secondAttribute="bottom" constant="5" id="vV3-L9-z6N"/>
                         <constraint firstItem="KSI-PZ-jmK" firstAttribute="centerY" secondItem="G45-O7-x6Q" secondAttribute="centerY" id="zJ0-M2-pB8"/>
-                        <constraint firstItem="G45-O7-x6Q" firstAttribute="top" secondItem="9VU-My-bDb" secondAttribute="top" id="zen-fR-9RY"/>
+                        <constraint firstItem="G45-O7-x6Q" firstAttribute="top" secondItem="9VU-My-bDb" secondAttribute="top" constant="-9" id="zen-fR-9RY"/>
                     </constraints>
                     <connections>
                         <outlet property="cancelButton" destination="G45-O7-x6Q" id="H4a-1M-Sem"/>
@@ -92,7 +91,7 @@
                     </connections>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Could not open the image picker." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2T-q4-MzI">
-                    <rect key="frame" x="20" y="129" width="335" height="57.5"/>
+                    <rect key="frame" x="20" y="147" width="335" height="57.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -115,6 +114,6 @@
         </view>
     </objects>
     <resources>
-        <image name="closeActivity" width="32" height="32"/>
+        <image name="closeActivity" width="50" height="50"/>
     </resources>
 </document>
