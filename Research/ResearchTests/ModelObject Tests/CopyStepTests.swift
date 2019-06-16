@@ -394,7 +394,7 @@ class CopyStepTests: XCTestCase {
         step.viewTheme = RSDViewThemeElementObject(viewIdentifier: "fooView")
         step.colorMapping = RSDSingleColorThemeElementObject(colorStyle: .primary)
         step.imageTheme = RSDFetchableImageThemeElementObject(imageName: "fooIcon")
-        step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo")]
+        step.actions = [.navigation(.learnMore) : RSDWebViewUIActionObject(url: "fooFile", buttonTitle: "tap foo"), .custom("moreInformation"): RSDVideoViewUIActionObject(url: "video.mp4", buttonTitle: "See this in action")]
         step.shouldHideActions = [.navigation(.skip)]
         
         let json = """
@@ -422,6 +422,12 @@ class CopyStepTests: XCTestCase {
             XCTAssertEqual(learnAction.buttonTitle, "tap foo")
         } else {
             XCTFail("\(String(describing: copy.actions)) does not include expected learn more action")
+        }
+        if let moreInformationAction = copy.actions?[.custom("moreInformation")] as? RSDVideoViewUIActionObject {
+            XCTAssertEqual(moreInformationAction.url, "video.mp4")
+            XCTAssertEqual(moreInformationAction.buttonTitle, "See this in action")
+        } else {
+            XCTFail("\(String(describing: copy.actions)) does not include expected more information action")
         }
         if let shouldHideActions = copy.shouldHideActions {
             XCTAssertEqual(shouldHideActions, [.navigation(.skip)])
