@@ -10,6 +10,11 @@
 		B5581F5420756ABE00F224C6 /* RSDImagePlacementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */; };
 		B5581F5520756ABF00F224C6 /* RSDImagePlacementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */; };
 		B59FC2A82073439F002BFDB9 /* RSDImagePlacementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */; };
+		CB554F6522B40E8D0001D1DA /* RSDVideoViewUIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB554F6422B40E8D0001D1DA /* RSDVideoViewUIAction.swift */; };
+		CB79396122B4931C00DA4FB9 /* RSDVideoViewUIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB554F6422B40E8D0001D1DA /* RSDVideoViewUIAction.swift */; };
+		CB79396222B4931D00DA4FB9 /* RSDVideoViewUIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB554F6422B40E8D0001D1DA /* RSDVideoViewUIAction.swift */; };
+		CB79396322B4931E00DA4FB9 /* RSDVideoViewUIAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB554F6422B40E8D0001D1DA /* RSDVideoViewUIAction.swift */; };
+		CB79396422B4932C00DA4FB9 /* RSDVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB554F6622B4175C0001D1DA /* RSDVideoViewController.swift */; };
 		F800EA7F2239E3E100EF7B50 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA7E2239E3E100EF7B50 /* RSDColorRules.swift */; };
 		F800EA802239E3E100EF7B50 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA7E2239E3E100EF7B50 /* RSDColorRules.swift */; };
 		F800EA812239E3E100EF7B50 /* RSDColorRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F800EA7E2239E3E100EF7B50 /* RSDColorRules.swift */; };
@@ -1058,6 +1063,8 @@
 /* Begin PBXFileReference section */
 		80242B0D2018012E00FC4F44 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Research/README.md; sourceTree = SOURCE_ROOT; };
 		B59FC2A72073439F002BFDB9 /* RSDImagePlacementType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDImagePlacementType.swift; sourceTree = "<group>"; };
+		CB554F6422B40E8D0001D1DA /* RSDVideoViewUIAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDVideoViewUIAction.swift; sourceTree = "<group>"; };
+		CB554F6622B4175C0001D1DA /* RSDVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDVideoViewController.swift; sourceTree = "<group>"; };
 		F800EA7E2239E3E100EF7B50 /* RSDColorRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDColorRules.swift; sourceTree = "<group>"; };
 		F800EA83223AFB9400EF7B50 /* RSDColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDColorPalette.swift; sourceTree = "<group>"; };
 		F800EA8D223C333D00EF7B50 /* RSDDesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDesignSystem.swift; sourceTree = "<group>"; };
@@ -1763,6 +1770,7 @@
 			children = (
 				F84496072273A23100EAA3E0 /* RSDShowViewUIAction.swift */,
 				F84496062273A23100EAA3E0 /* RSDWebViewController.swift */,
+				CB554F6622B4175C0001D1DA /* RSDVideoViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1868,6 +1876,7 @@
 				F8BE11142135FF45000AAB1E /* RSDNavigationUIAction.swift */,
 				F8BE11182135FF6E000AAB1E /* RSDReminderUIAction.swift */,
 				F8BE11102135FF1D000AAB1E /* RSDWebViewUIAction.swift */,
+				CB554F6422B40E8D0001D1DA /* RSDVideoViewUIAction.swift */,
 			);
 			name = UIActions;
 			sourceTree = "<group>";
@@ -3127,6 +3136,7 @@
 				F844966A2273A23100EAA3E0 /* RSDTextLabelCell.swift in Sources */,
 				F844963E2273A23100EAA3E0 /* RSDTaskViewController.swift in Sources */,
 				F84496582273A23100EAA3E0 /* UIView+Layout.swift in Sources */,
+				CB79396422B4932C00DA4FB9 /* RSDVideoViewController.swift in Sources */,
 				F84496452273A23100EAA3E0 /* RSDInstructionStepViewController.swift in Sources */,
 				F84496612273A23100EAA3E0 /* RSDStepNavigationView.swift in Sources */,
 				F844964D2273A23100EAA3E0 /* RSDTaskInfoStepViewController.swift in Sources */,
@@ -3303,6 +3313,7 @@
 				F8BE129921371A1C000AAB1E /* RSDFormUIStep.swift in Sources */,
 				F8BE12A221371A2B000AAB1E /* RSDTask.swift in Sources */,
 				F8BE12D821371B49000AAB1E /* RSDChoiceObject.swift in Sources */,
+				CB79396322B4931E00DA4FB9 /* RSDVideoViewUIAction.swift in Sources */,
 				F8BE12A121371A23000AAB1E /* RSDViewThemeElement.swift in Sources */,
 				F8BE125021370A81000AAB1E /* SequenceType+Utilities.swift in Sources */,
 				F8BE128B213719FB000AAB1E /* RSDSurveyNavigationStep.swift in Sources */,
@@ -3521,6 +3532,7 @@
 				F80CA5301FFEBE3200E89C06 /* RSDMeasurementInputTableItem.swift in Sources */,
 				FF8B53A81FCE6C7A006B6937 /* RSDResult.swift in Sources */,
 				FF8B53821FCE6C6F006B6937 /* RSDFormUIHint.swift in Sources */,
+				CB554F6522B40E8D0001D1DA /* RSDVideoViewUIAction.swift in Sources */,
 				F8F72435203DF20E00AC0E5B /* RSDCohortTrackingRule.swift in Sources */,
 				F8BE11152135FF45000AAB1E /* RSDNavigationUIAction.swift in Sources */,
 				FF8B54241FCE6CA2006B6937 /* RSDFormUIStepObject.swift in Sources */,
@@ -3781,6 +3793,7 @@
 				F8BE11122135FF1D000AAB1E /* RSDWebViewUIAction.swift in Sources */,
 				F837224722331DBE00C9A2EA /* RSDOverviewStep.swift in Sources */,
 				F8112E712230B4A3005BCC93 /* RSDScoringResult.swift in Sources */,
+				CB79396122B4931C00DA4FB9 /* RSDVideoViewUIAction.swift in Sources */,
 				FF8B54701FCE6CC5006B6937 /* RSDConditionalStepNavigatorObject.swift in Sources */,
 				FF8B53CA1FCE6C7B006B6937 /* RSDUIAction.swift in Sources */,
 				F83722422233133100C9A2EA /* RSDStandardPermissionsStep.swift in Sources */,
@@ -3999,6 +4012,7 @@
 				F8475BB82125E5E30031D802 /* RSDUIActionHandler.swift in Sources */,
 				FF8B53941FCE6C71006B6937 /* RSDFormUIHint.swift in Sources */,
 				F8A334892240574400390601 /* RSDColorMappingThemeElement.swift in Sources */,
+				CB79396222B4931D00DA4FB9 /* RSDVideoViewUIAction.swift in Sources */,
 				F8BE113021360358000AAB1E /* RSDTableStep.swift in Sources */,
 				F800EA90223C333D00EF7B50 /* RSDDesignSystem.swift in Sources */,
 				FF8B54301FCE6CA3006B6937 /* RSDFormUIStepObject.swift in Sources */,

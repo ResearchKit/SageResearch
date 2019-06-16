@@ -1,8 +1,8 @@
 //
-//  RSDUIActionObjectType.swift
-//  Research
+//  RSDVideoViewController.swift
+//  ResearchUI
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,47 +31,36 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import UIKit
+import AVKit
+import AVFoundation
 
-/// The type of the ui action. This is used to decode a `RSDUIAction` using a `RSDFactory`. It can also be used
-/// to customize the UI.
-public struct RSDUIActionObjectType : RSDFactoryTypeRepresentable, Codable, Hashable {
+/// `RSDVideoViewController` is a simple view controller for showing a video. The base-class implementation
+/// supports loading a video from a URL, video string, or `RSDResourceTransformer`. It is assumed that
+/// the property will be set for one of these values.
+open class RSDVideoViewController: AVPlayerViewController {
     
-    public let rawValue: String
-    
-    public init(rawValue: String) {
-        self.rawValue = rawValue
-    }
-    
-    /// Defaults to creating a `RSDUIActionObject`.
-    public static let defaultNavigation: RSDUIActionObjectType = "default"
-    
-    /// Defaults to creating a `RSDNavigationUIActionObject`.
-    public static let navigation: RSDUIActionObjectType = "navigation"
-    
-    /// Defaults to creating a `RSDReminderUIActionObject`.
-    public static let reminder: RSDUIActionObjectType = "reminder"
-    
-    /// Defaults to creating a `RSDWebViewUIActionObject`.
-    public static let webView: RSDUIActionObjectType = "webView"
-    
-    /// Defaults to creating a `RSDVideoViewUIActionObject`.
-    public static let videoView: RSDUIActionObjectType = "videoView"
-    
-    public static func allStandardTypes() -> [RSDUIActionObjectType] {
-        return [.defaultNavigation, .webView, .videoView, .navigation, .reminder]
-    }
-}
-
-extension RSDUIActionObjectType : ExpressibleByStringLiteral {    
-    public init(stringLiteral value: String) {
-        self.init(rawValue: value)
+    /// Convenience method for instantiating a RSDVideoViewController and presenting it on top of the presenter UIViewController
+    open class func present(action: RSDVideoViewUIAction, presenter: UIViewController) {
+        
+        var url: URL? = nil
+        if action.isOnlineResourceURL() {
+            url = URL(string: action.resourceName)
+        } else {
+            do {
+                url = try action.resourceURL().url
+            } catch let err {
+                debugPrint("Error decoding video resource \(err)")
+            }
+        }
+        
+        guard let urlUnwrapped = url else { return }
+        
+        let player = AVPlayer(url: urlUnwrapped)
+        let playerController = AVPlayerViewController()
+        playerController.player = player
+        presenter.present(playerController, animated: true) {
+            player.play()
+        }
     }
 }
-
-extension RSDUIActionObjectType : RSDDocumentableStringEnum {
-    static func allCodingKeys() -> [String] {
-        return allStandardTypes().map{ $0.rawValue }
-    }
-}
-

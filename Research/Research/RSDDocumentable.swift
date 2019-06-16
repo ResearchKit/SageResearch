@@ -113,6 +113,7 @@ public struct RSDDocumentCreator {
             RSDUIActionObject.self,
             RSDViewThemeElementObject.self,
             RSDWebViewUIActionObject.self,
+            RSDVideoViewUIActionObject.self,
             RSDWeeklyScheduleObject.self,
             ]
         
