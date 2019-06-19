@@ -16,6 +16,7 @@
                 <outlet property="iconImagesTrailingConstraint" destination="Fmm-Jn-GX1" id="adp-KL-d0p"/>
                 <outlet property="iconViewLabel" destination="nSM-Mv-mDS" id="EtW-Ta-XWR"/>
                 <outlet property="infoButton" destination="F9g-BT-NE0" id="vtv-2e-e5z"/>
+                <outlet property="learnMoreHeightConstraint" destination="RTP-JZ-48i" id="7bL-CB-kbh"/>
                 <outlet property="navigationFooter" destination="2XD-eO-28i" id="jxp-xn-zPa"/>
                 <outlet property="navigationHeader" destination="fxA-Tz-ZiS" id="agX-5m-P7G"/>
                 <outlet property="scrollView" destination="beo-bQ-opC" id="eoq-Wh-m1I"/>

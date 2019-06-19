@@ -72,6 +72,10 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     open var scrollView: UIScrollView!
     
+    /// The constraint that sets the heigh of the learn more button.
+    @IBOutlet
+    var learnMoreHeightConstraint: NSLayoutConstraint!
+    
     /// Overrides viewWillAppear to add an info button, display the icons, to save
     /// the current Date to UserDefaults, and to use the saved date to decide whether
     /// or not to show the full task info or an abbreviated screen.
@@ -113,6 +117,13 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
                     // Then, remove the third icon from the stack view
                     iconImages[removeIdx].superview?.removeFromSuperview()
                 }
+            }
+
+            // Hide learn more action if it is not provided by the step json
+            if (self.step as? RSDOverviewStepObject)?.action(for: .navigation(.learnMore), on: self.step) == nil {
+                self.learnMoreButton?.setTitle(nil, for: .normal)
+                self.learnMoreButton?.isHidden = true
+                self.learnMoreHeightConstraint.constant = 0
             }
             
             self.infoButton.addTarget(self, action: #selector(self.showFullTaskInfo), for: .touchUpInside)
