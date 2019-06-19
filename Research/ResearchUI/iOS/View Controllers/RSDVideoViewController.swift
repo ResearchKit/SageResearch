@@ -41,7 +41,7 @@ import AVFoundation
 open class RSDVideoViewController: AVPlayerViewController {
     
     /// Convenience method for instantiating a RSDVideoViewController and presenting it on top of the presenter UIViewController
-    open class func present(action: RSDVideoViewUIAction, presenter: UIViewController) {
+    open class func instantiateController(action: RSDVideoViewUIAction) -> RSDVideoViewController? {
         
         var url: URL? = nil
         if action.isOnlineResourceURL() {
@@ -50,17 +50,24 @@ open class RSDVideoViewController: AVPlayerViewController {
             do {
                 url = try action.resourceURL().url
             } catch let err {
-                debugPrint("Error decoding video resource \(err)")
+                assertionFailure("Error decoding video resource \(err)")
+                return nil
             }
         }
         
-        guard let urlUnwrapped = url else { return }
+        guard let urlUnwrapped = url else {
+            assertionFailure("Error decoding video resource, URL cannot be nil")
+            return nil
+        }
         
         let player = AVPlayer(url: urlUnwrapped)
-        let playerController = AVPlayerViewController()
+        let playerController = RSDVideoViewController()
         playerController.player = player
-        presenter.present(playerController, animated: true) {
-            player.play()
-        }
+        return playerController
+    }
+    
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        self.player?.play()
     }
 }

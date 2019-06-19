@@ -741,7 +741,9 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         }
         else if let videoAction = action as? RSDVideoViewUIAction {
             // For a videoView action, present an AVPlayerViewController modally.
-            RSDVideoViewController.present(action: videoAction, presenter: self)
+            if let vc = RSDVideoViewController.instantiateController(action: videoAction) {
+                self.present(vc, animated: true, completion: nil)
+            }
             return true
         }
         else if let vcAction = action as? RSDShowViewUIAction {

@@ -72,14 +72,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     open var scrollView: UIScrollView!
     
-    /// The button that displays the more info .
-    @IBOutlet
-    open var moreInformationButton: RSDUnderlinedButton!
-    
-    /// The constraint that sets the height of the more information button.
-    @IBOutlet
-    var moreInformationButtonHeight: NSLayoutConstraint!
-    
     /// Overrides viewWillAppear to add an info button, display the icons, to save
     /// the current Date to UserDefaults, and to use the saved date to decide whether
     /// or not to show the full task info or an abbreviated screen.
@@ -123,14 +115,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
                 }
             }
             
-            if let moreInformationAction = overviewStep.action(for: .custom("moreInformation"), on: overviewStep) {
-                moreInformationButton.setTitle(moreInformationAction.buttonTitle, for: .normal)
-                moreInformationButton.setImage(moreInformationAction.buttonIcon, for: .normal)
-                moreInformationButton.addTarget(self, action: #selector(self.showMoreInformation), for: .touchUpInside)
-            } else {
-                moreInformationButton.setTitle(nil, for: .normal)
-                moreInformationButtonHeight.constant = 0
-            }
+            self.infoButton.addTarget(self, action: #selector(self.showFullTaskInfo), for: .touchUpInside)
         }
         
         // Update the image placement constraint based on the status bar height.
@@ -203,18 +188,14 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         for icon in self.iconImages! {
             icon.isHidden = !shouldShowInfo
         }
+        self.learnMoreButton?.isHidden = !shouldShowInfo
         self.scrollView?.isScrollEnabled = shouldShowInfo
         self.infoButton?.isHidden = shouldShowInfo
         self.navigationFooter?.shouldShowShadow = shouldShowInfo
     }
     
-    /// Function called when more information action button is tapped
-    @objc open func showMoreInformation() {
-        _ = super.actionTapped(with: .custom("moreInformation"))
-    }
-    
-    /// The function that is called when the info button is tapped.
-    override open func showLearnMore() {
+    /// Function called when the upper-right info icon action button is tapped
+    @objc open func showFullTaskInfo() {
         let textLabel = (self.view as? RSDStepNavigationView)?.textLabel
         textLabel?.alpha = 0
         self.iconViewLabel.alpha = 0

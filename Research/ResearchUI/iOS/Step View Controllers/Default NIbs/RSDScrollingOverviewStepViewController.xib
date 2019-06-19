@@ -16,8 +16,6 @@
                 <outlet property="iconImagesTrailingConstraint" destination="Fmm-Jn-GX1" id="adp-KL-d0p"/>
                 <outlet property="iconViewLabel" destination="nSM-Mv-mDS" id="EtW-Ta-XWR"/>
                 <outlet property="infoButton" destination="F9g-BT-NE0" id="vtv-2e-e5z"/>
-                <outlet property="moreInformationButton" destination="0hp-ki-ShH" id="Lnf-mT-j1T"/>
-                <outlet property="moreInformationButtonHeight" destination="RTP-JZ-48i" id="b2I-OR-Sdb"/>
                 <outlet property="navigationFooter" destination="2XD-eO-28i" id="jxp-xn-zPa"/>
                 <outlet property="navigationHeader" destination="fxA-Tz-ZiS" id="agX-5m-P7G"/>
                 <outlet property="scrollView" destination="beo-bQ-opC" id="eoq-Wh-m1I"/>
@@ -64,7 +62,6 @@
                                     <connections>
                                         <outlet property="cancelButton" destination="MAO-q7-fPw" id="XfG-a0-FE9"/>
                                         <outlet property="imageView" destination="8mB-oE-ApD" id="5SP-nU-f2E"/>
-                                        <outlet property="learnMoreButton" destination="F9g-BT-NE0" id="XNy-ma-Hst"/>
                                     </connections>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Walk and Balance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E1k-gO-PDR" userLabel="Title Label">
@@ -294,6 +291,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="W8i-xX-fUy"/>
             <connections>
+                <outlet property="learnMoreButton" destination="0hp-ki-ShH" id="hp1-eW-crc"/>
                 <outlet property="textLabel" destination="6z9-Mw-lOx" id="G0Z-ux-CLL"/>
                 <outlet property="titleLabel" destination="E1k-gO-PDR" id="PJ8-TJ-E0y"/>
             </connections>
