@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDScrollingOverviewStepViewController" customModule="ResearchUI" customModuleProvider="target">
             <connections>
+                <outlet property="iconImagesLeadingConstraint" destination="q6T-i2-fLB" id="tWB-Dh-tQy"/>
+                <outlet property="iconImagesTrailingConstraint" destination="Fmm-Jn-GX1" id="adp-KL-d0p"/>
                 <outlet property="iconViewLabel" destination="nSM-Mv-mDS" id="EtW-Ta-XWR"/>
                 <outlet property="infoButton" destination="F9g-BT-NE0" id="vtv-2e-e5z"/>
+                <outlet property="learnMoreHeightConstraint" destination="RTP-JZ-48i" id="7bL-CB-kbh"/>
                 <outlet property="navigationFooter" destination="2XD-eO-28i" id="jxp-xn-zPa"/>
                 <outlet property="navigationHeader" destination="fxA-Tz-ZiS" id="agX-5m-P7G"/>
                 <outlet property="scrollView" destination="beo-bQ-opC" id="eoq-Wh-m1I"/>
@@ -37,7 +40,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="1084"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCy-4g-nIJ" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="868.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="920.33333333333337"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxA-Tz-ZiS" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
@@ -60,7 +63,6 @@
                                     <connections>
                                         <outlet property="cancelButton" destination="MAO-q7-fPw" id="XfG-a0-FE9"/>
                                         <outlet property="imageView" destination="8mB-oE-ApD" id="5SP-nU-f2E"/>
-                                        <outlet property="learnMoreButton" destination="F9g-BT-NE0" id="XNy-ma-Hst"/>
                                     </connections>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Walk and Balance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E1k-gO-PDR" userLabel="Title Label">
@@ -78,14 +80,21 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0hp-ki-ShH" customClass="RSDUnderlinedButton" customModule="ResearchUI" customModuleProvider="target">
+                                    <rect key="frame" x="32" y="684.66666666666663" width="311" height="48"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="48" id="RTP-JZ-48i"/>
+                                    </constraints>
+                                    <state key="normal" title="See this in action"/>
+                                </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is what you'll need" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSM-Mv-mDS">
-                                    <rect key="frame" x="89.666666666666671" y="692.66666666666663" width="195.66666666666663" height="21.666666666666629"/>
+                                    <rect key="frame" x="89.666666666666671" y="744.66666666666663" width="195.66666666666663" height="21.666666666666629"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sqK-Zj-Een" userLabel="Need Icon View">
-                                    <rect key="frame" x="24" y="726.33333333333337" width="327" height="102"/>
+                                    <rect key="frame" x="24" y="778.33333333333337" width="327" height="102"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="scQ-Ma-nDm">
                                             <rect key="frame" x="0.0" y="0.0" width="327" height="102"/>
@@ -208,18 +217,21 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="nSM-Mv-mDS" firstAttribute="centerX" secondItem="nCy-4g-nIJ" secondAttribute="centerX" id="3C1-to-DDw"/>
+                                <constraint firstItem="0hp-ki-ShH" firstAttribute="top" secondItem="6z9-Mw-lOx" secondAttribute="bottom" constant="12" id="3Fd-Hw-EyC"/>
                                 <constraint firstItem="fxA-Tz-ZiS" firstAttribute="top" secondItem="nCy-4g-nIJ" secondAttribute="top" id="8Gj-8R-eaj"/>
+                                <constraint firstItem="0hp-ki-ShH" firstAttribute="leading" secondItem="nCy-4g-nIJ" secondAttribute="leading" constant="32" id="8zg-cU-WP0"/>
                                 <constraint firstItem="6z9-Mw-lOx" firstAttribute="leading" secondItem="nCy-4g-nIJ" secondAttribute="leading" constant="24" id="91F-vB-JEJ"/>
                                 <constraint firstAttribute="trailing" secondItem="sqK-Zj-Een" secondAttribute="trailing" constant="24" id="Fmm-Jn-GX1"/>
-                                <constraint firstItem="nSM-Mv-mDS" firstAttribute="top" secondItem="6z9-Mw-lOx" secondAttribute="bottom" constant="20" id="Rsg-Zb-D7S"/>
                                 <constraint firstAttribute="trailing" secondItem="6z9-Mw-lOx" secondAttribute="trailing" constant="24" id="aTk-Ie-R80"/>
                                 <constraint firstItem="6z9-Mw-lOx" firstAttribute="centerX" secondItem="nCy-4g-nIJ" secondAttribute="centerX" id="dUv-iH-dor"/>
                                 <constraint firstItem="fxA-Tz-ZiS" firstAttribute="leading" secondItem="nCy-4g-nIJ" secondAttribute="leading" id="dWy-fi-etq"/>
+                                <constraint firstAttribute="trailing" secondItem="0hp-ki-ShH" secondAttribute="trailing" constant="32" id="fYd-YA-eXW"/>
                                 <constraint firstItem="sqK-Zj-Een" firstAttribute="top" secondItem="nSM-Mv-mDS" secondAttribute="bottom" constant="12" id="gFw-Jl-Rjy"/>
                                 <constraint firstAttribute="bottom" secondItem="sqK-Zj-Een" secondAttribute="bottom" constant="40" id="hrM-VV-GbQ"/>
                                 <constraint firstAttribute="trailing" secondItem="fxA-Tz-ZiS" secondAttribute="trailing" id="jff-eH-JOq"/>
                                 <constraint firstItem="E1k-gO-PDR" firstAttribute="centerX" secondItem="nCy-4g-nIJ" secondAttribute="centerX" id="mqj-wR-8Dm"/>
                                 <constraint firstItem="sqK-Zj-Een" firstAttribute="leading" secondItem="nCy-4g-nIJ" secondAttribute="leading" constant="24" id="q6T-i2-fLB"/>
+                                <constraint firstItem="nSM-Mv-mDS" firstAttribute="top" secondItem="0hp-ki-ShH" secondAttribute="bottom" constant="12" id="wde-RA-1TX"/>
                                 <constraint firstItem="6z9-Mw-lOx" firstAttribute="top" secondItem="E1k-gO-PDR" secondAttribute="bottom" constant="12" id="ySZ-0A-qZ1"/>
                                 <constraint firstItem="fxA-Tz-ZiS" firstAttribute="bottom" secondItem="E1k-gO-PDR" secondAttribute="top" constant="-12" id="zbV-Q4-hJ0"/>
                             </constraints>
@@ -280,16 +292,17 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="W8i-xX-fUy"/>
             <connections>
+                <outlet property="learnMoreButton" destination="0hp-ki-ShH" id="hp1-eW-crc"/>
                 <outlet property="textLabel" destination="6z9-Mw-lOx" id="G0Z-ux-CLL"/>
                 <outlet property="titleLabel" destination="E1k-gO-PDR" id="PJ8-TJ-E0y"/>
             </connections>
-            <point key="canvasLocation" x="645.60000000000002" y="560.09852216748766"/>
+            <point key="canvasLocation" x="645.60000000000002" y="559.35960591133005"/>
         </view>
     </objects>
     <resources>
         <image name="IconPlaceholder" width="68" height="68"/>
         <image name="InstructionPlaceholder" width="1694" height="1334"/>
-        <image name="closeActivity" width="32" height="32"/>
+        <image name="closeActivity" width="50" height="50"/>
         <image name="infoIcon" width="32" height="32"/>
     </resources>
 </document>

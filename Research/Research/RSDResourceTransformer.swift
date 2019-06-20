@@ -109,6 +109,23 @@ extension RSDResourceTransformer {
         return resourceName.hasPrefix("http") || RSDResourceConfig.relativeURL(for: self) != nil
     }
     
+    /// Get the full URL for a given resource no matter if it is a local or online resource.
+    ///
+    /// - returns: The URL for this resource.
+    /// - throws: `RSDResourceTransformerError` if the file cannot be found, or
+    ///           `RSDValidationError` if the online resource is not valid.
+    public func fullURL() throws -> URL {
+        if self.isOnlineResourceURL() {
+            guard let url = URL(string: resourceName) else {
+                throw RSDValidationError.unexpectedNullObject("Failed to convert \(resourceName) to a URL.")
+            }
+            return url
+        }
+        else {
+            return try resourceURL().url
+        }
+    }
+    
     /// Get the URL for a given resource. This can return either a URL to an online resource or a URL
     /// for an embedded resource.
     ///

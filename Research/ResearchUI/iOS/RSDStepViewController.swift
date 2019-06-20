@@ -34,7 +34,7 @@
 import Foundation
 import AudioToolbox
 import AVFoundation
-
+import AVKit
 
 /// `RSDStepViewController` is the default base class implementation for the steps presented using this
 /// UI architecture.
@@ -737,6 +737,21 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             // For a webview action, present a web view modally.
             let (_, navVC) = RSDWebViewController.instantiateController(using: self.designSystem, action: webAction)
             self.present(navVC, animated: true, completion: nil)
+            return true
+        }
+        else if let videoAction = action as? RSDVideoViewUIAction {
+            // For a videoView action, present an AVPlayerViewController modally.
+            do {                
+                let url = try videoAction.fullURL()
+                let vc = AVPlayerViewController()
+                vc.player = AVPlayer(url: url)
+                self.present(vc, animated: true) {
+                    vc.player?.play()
+                }
+            }
+            catch let err {
+                assertionFailure("Failed to get a url for this video. \(err)")
+            }
             return true
         }
         else if let vcAction = action as? RSDShowViewUIAction {

@@ -569,6 +569,8 @@ open class RSDFactory {
             return try _decodeResource(RSDReminderUIActionObject.self, from: decoder)
         case .webView:
             return try _decodeResource(RSDWebViewUIActionObject.self, from: decoder)
+        case .videoView:
+            return try _decodeResource(RSDVideoViewUIActionObject.self, from: decoder)
         default:
             return try _decodeResource(RSDUIActionObject.self, from: decoder)
         }

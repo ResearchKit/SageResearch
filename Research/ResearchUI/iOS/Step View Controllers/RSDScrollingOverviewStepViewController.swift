@@ -50,6 +50,12 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     var titleTopConstraint: NSLayoutConstraint!
     
+    /// The constraint that sets the distance between the icon images and their leading/trailing edge.
+    @IBOutlet
+    var iconImagesLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet
+    var iconImagesTrailingConstraint: NSLayoutConstraint!
+    
     /// The image views to display the icons on.
     @IBOutlet
     open var iconImages: [UIImageView]!
@@ -66,13 +72,16 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     open var scrollView: UIScrollView!
     
+    /// The constraint that sets the heigh of the learn more button.
+    @IBOutlet
+    var learnMoreHeightConstraint: NSLayoutConstraint!
+    
     /// Overrides viewWillAppear to add an info button, display the icons, to save
     /// the current Date to UserDefaults, and to use the saved date to decide whether
     /// or not to show the full task info or an abbreviated screen.
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // TODO: syoung 03/12/2019 Change to using a collection view.
         // This code assumes that either 1 or 3 icons will be displayed. In order to support
         // other values other implementations should use a UICollectionView.
         for label in iconTitles! {
@@ -83,11 +92,41 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
             icon.image = nil
         }
         
-        if let icons = (self.step as? RSDOverviewStep)?.icons {
-            for (idx, iconInfo) in icons.enumerated() {
-                iconImages[idx].image = iconInfo.icon?.embeddedImage()
-                iconTitles[idx].text = iconInfo.title
+        if let overviewStep = self.step as? RSDOverviewStep {
+            
+            if let icons = overviewStep.icons {
+                
+                for (idx, iconInfo) in icons.enumerated() {
+                    iconImages[idx].image = iconInfo.icon?.embeddedImage()
+                    iconTitles[idx].text = iconInfo.title
+                }
+                
+                // TODO: syoung 03/12/2019 Change to using a collection view.
+                // When there are only 2 icons, employ this hack to center them evenly
+                if (icons.count == 2) {
+                    let removeIdx = 2
+                    
+                    // Adjust margin factor to give smaller screens more room
+                    let cellWidth = self.view.frame.size.width / CGFloat(iconImages.count)
+                    let marginFactor: CGFloat = (cellWidth < 125) ? 3.0 : 2.0
+                    
+                    // First, Adjust the leading/trailing spacing
+                    iconImagesLeadingConstraint.constant = cellWidth / marginFactor
+                    iconImagesTrailingConstraint.constant = cellWidth / marginFactor
+                    
+                    // Then, remove the third icon from the stack view
+                    iconImages[removeIdx].superview?.removeFromSuperview()
+                }
             }
+
+            // Hide learn more action if it is not provided by the step json
+            if (self.step as? RSDOverviewStepObject)?.action(for: .navigation(.learnMore), on: self.step) == nil {
+                self.learnMoreButton?.setTitle(nil, for: .normal)
+                self.learnMoreButton?.isHidden = true
+                self.learnMoreHeightConstraint.constant = 0
+            }
+            
+            self.infoButton.addTarget(self, action: #selector(self.showFullTaskInfo), for: .touchUpInside)
         }
         
         // Update the image placement constraint based on the status bar height.
@@ -160,13 +199,14 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         for icon in self.iconImages! {
             icon.isHidden = !shouldShowInfo
         }
+        self.learnMoreButton?.isHidden = !shouldShowInfo
         self.scrollView?.isScrollEnabled = shouldShowInfo
         self.infoButton?.isHidden = shouldShowInfo
         self.navigationFooter?.shouldShowShadow = shouldShowInfo
     }
     
-    /// The function that is called when the info button is tapped.
-    override open func showLearnMore() {
+    /// Function called when the upper-right info icon action button is tapped
+    @objc open func showFullTaskInfo() {
         let textLabel = (self.view as? RSDStepNavigationView)?.textLabel
         textLabel?.alpha = 0
         self.iconViewLabel.alpha = 0
