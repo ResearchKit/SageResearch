@@ -109,7 +109,7 @@ extension RSDResourceTransformer {
         return resourceName.hasPrefix("http") || RSDResourceConfig.relativeURL(for: self) != nil
     }
     
-    /// Get the full URL for a given resource no matter if it is a local or online resource
+    /// Get the full URL for a given resource no matter if it is a local or online resource.
     ///
     /// - returns: The URL for this resource.
     /// - throws: `RSDResourceTransformerError` if the file cannot be found, or
