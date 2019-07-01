@@ -258,6 +258,77 @@ fileprivate let defaultSize: CGFloat = 122
     }
 }
 
+@IBDesignable public class RSDRadioButton : UIButton, RSDViewDesignable {
+    fileprivate let buttonView: RSDCheckboxButtonView
+    
+    /// The background color of the checkbox when selected.
+    @IBInspectable public var selectedColor : UIColor {
+        get { return buttonView.selectedColor }
+        set { buttonView.selectedColor = newValue }
+    }
+    
+    /// The border color of the checkbox when selected.
+    @IBInspectable public var selectedBorderColor : UIColor {
+        get { return buttonView.selectedBorderColor }
+        set { buttonView.selectedBorderColor = newValue }
+    }
+    
+    public override init(frame: CGRect) {
+        self.buttonView = RSDCheckboxButtonView(frame: frame)
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        self.buttonView = RSDCheckboxButtonView(frame: .zero)
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        
+        self.addSubview(buttonView)
+        buttonView.translatesAutoresizingMaskIntoConstraints = false
+        buttonView.rsd_alignAllToSuperview(padding: 0)
+        buttonView.isUserInteractionEnabled = false
+        
+        self.setTitleColor(UIColor.clear, for: .normal)
+        self.contentEdgeInsets = .zero
+        buttonView.label?.text = self.currentTitle
+        buttonView.isSelected = self.isSelected
+        
+        buttonView.cornerRadius = checkboxHeight / 2.0
+        buttonView.viewChecked.checkmarkHidden = true
+        buttonView.viewChecked.backgroundInset = 3.0
+        
+        self.imageView?.removeFromSuperview()
+    }
+    
+    override public func setTitle(_ title: String?, for state: UIControl.State) {
+        self.setTitleColor(UIColor.clear, for: .normal)
+        super.setTitle(title, for: state)
+        buttonView.label?.text = self.currentTitle
+    }
+    
+    override public var isSelected: Bool {
+        didSet {
+            buttonView.isSelected = self.isSelected
+        }
+    }
+    
+    public var backgroundColorTile: RSDColorTile? {
+        return self.buttonView.backgroundColorTile
+    }
+    
+    public var designSystem: RSDDesignSystem? {
+        return self.buttonView.designSystem
+    }
+    
+    public func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.buttonView.setDesignSystem(designSystem, with: background)
+    }
+}
+
 
 /// A button that displays using a checkbox.
 @IBDesignable public final class RSDCheckboxButton : UIButton {
@@ -454,6 +525,8 @@ fileprivate class RSDCheckboxButtonView : UIView, RSDViewDesignable {
         
         label.font = designSystem.fontRules.font(for: .body, compatibleWith: traitCollection)
         label.textColor = designSystem.colorRules.textColor(on: background, for: .body)
+        checkboxContainer.backgroundColor = background.color
+        self.backgroundColor = background.color
     }
     
     private func refreshViews() {

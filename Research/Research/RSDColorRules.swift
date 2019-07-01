@@ -304,13 +304,18 @@ open class RSDColorRules  {
     ///
     /// - Default:
     /// ```
+    ///     If selected AND secondary
+    ///         then the primary color at 25% opacity
+    ///
+    ///     Else
+    ///
     ///     Get the "normal" tile color for the button type. This depends upon whether or not the button is
     ///     a primary button and whether or not it is displayed on a white background.
     ///
-    ///     If highlighted
+    ///     If highlighted OR selected
     ///         then if the tile is `veryLight` then one shade darker
     ///         else one shade lighter
-    ///     If disabled
+    ///     Else If disabled
     ///         then 35% opacity
     ///     Else
     ///         return the color tile as-is.
@@ -322,8 +327,13 @@ open class RSDColorRules  {
     ///     - state: The UI control state of the button.
     /// - returns: The color to use for the background of a rounded button.
     open func roundedButton(on background: RSDColorTile, with buttonType: RSDDesignSystem.ButtonType, forState state: RSDControlState) -> RSDColor {
-        let tile = self.roundedButton(on: background, buttonType: buttonType)
-        return coloredButton(on: background, forMapping: tile, forState: state)
+        if state == .selected && buttonType == .secondary {
+            return self.palette.primary.normal.color.withAlphaComponent(0.25)
+        }
+        else {
+            let tile = self.roundedButton(on: background, buttonType: buttonType)
+            return coloredButton(on: background, forMapping: tile, forState: state)
+        }
     }
     
     /// The color for the background of a colored button for a given state and button type.
@@ -333,7 +343,7 @@ open class RSDColorRules  {
     ///     Get the "normal" tile color for the button type. This depends upon whether or not the button is
     ///     a primary button and whether or not it is displayed on a white background.
     ///
-    ///     If highlighted
+    ///     If highlighted OR selected
     ///         then if the tile is `veryLight` then one shade darker
     ///         else one shade lighter
     ///     If disabled
@@ -350,7 +360,7 @@ open class RSDColorRules  {
     open func coloredButton(on background: RSDColorTile, forMapping tile:RSDColorMapping, forState state: RSDControlState) -> RSDColor {
         
         switch state {
-        case .highlighted:
+        case .highlighted, .selected:
             if tile.index > 0, tile.colorTiles[tile.index - 1] != background {
                 return tile.colorTiles[tile.index - 1].color
             }

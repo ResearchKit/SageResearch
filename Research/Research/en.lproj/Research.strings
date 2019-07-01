@@ -95,18 +95,6 @@
 "SCHEDULE_DAYS_PROMPT" = "When do you take it at this time?";
 "ADD_ANOTHER_SCHEDULE_BUTTON" = "＋ Add another schedule";
 
-/* Medication Tracking */
-"OTHER_SECTION_TITLE" = "Other";
-"MEDICATION_SELECTION_TITLE" = "What medications are you taking?";
-"MEDICATION_SELECTION_DETAIL" = "Select all that apply";
-"MEDICATION_ADD_DETAILS_TITLE" = "Add medication details";
-"MEDICATION_ADD_DETAILS_DETAIL" = "Select to add your medication dosing information and schedule(s).";
-"MEDICATION_ADD_MORE_BUTTON" = "＋ Add medications";
-"MEDICATION_DOSAGE_PROMPT" = "Dosage";
-"MEDICATION_DOSAGE_PLACEHOLDER" = "e.g. 10/100 mg";    // Placeholder text for medication dosage.
-"MEDICATION_DAYS_OF_WEEK_TITLE_%1$@_at_%2$@" = "Which days do you take %1$@ at %2$@?"; // ex. "Advil at 7:00 AM"
-"MEDICATION_REVIEW_TITLE" = "Review medications";
-
 /* Logged item tracking */
 "LOG_BUTTON_TITLE" = "Log";
 "LOGGED_LABEL_TITLE" = "Logged";

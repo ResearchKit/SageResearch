@@ -35,6 +35,14 @@ import UIKit
 
 /// `RSDUnderlinedButton` is a UI element for displaying an underlined button.
 @IBDesignable open class RSDUnderlinedButton : RSDButton, RSDViewDesignable {
+    
+    override open var isEnabled: Bool {
+        didSet {
+            // If the alpha component is used to set this as hidden, then don't do anything.
+            guard alpha > 0.1 else { return }
+            self.alpha = isEnabled ? CGFloat(1) : CGFloat(0.35)
+        }
+    }
 
     /// The font used for the text button.
     @IBInspectable open var textFont : UIFont = UIFont.systemFont(ofSize: 18) {
