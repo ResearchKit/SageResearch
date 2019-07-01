@@ -903,6 +903,9 @@
                 <a href="Protocols/RSDUSMeasurementPickerDataSource.html">RSDUSMeasurementPickerDataSource</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/RSDVideoViewUIAction.html">RSDVideoViewUIAction</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/RSDViewThemeElement.html">RSDViewThemeElement</a>
               </li>
               <li class="nav-group-task">
@@ -1137,6 +1140,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/RSDUnitConverter/USCustomaryUnitConverter.html">– USCustomaryUnitConverter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/RSDVideoViewUIActionObject.html">RSDVideoViewUIActionObject</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/RSDViewThemeElementObject.html">RSDViewThemeElementObject</a>
@@ -5479,6 +5485,41 @@ units (multiple component) to metric units.</p>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDUSMeasurementPickerDataSource</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDMultipleComponentPickerDataSource.html">RSDMultipleComponentPickerDataSource</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research20RSDVideoViewUIActionP"></a>
+                    <a name="//apple_ref/swift/Protocol/RSDVideoViewUIAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research20RSDVideoViewUIActionP">RSDVideoViewUIAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDVideoViewUIAction</code> implements an extension of the base protocol where the action includes a pointer
+to a url that can display a video in an <code>AVPlayerViewController</code>. The url can either be fully qualified or optionally point to
+an embedded resource. The resource bundle is assumed to be the main bundle if the <code>bundleIdentifier</code>
+property is <code>nil</code>.</p>
+
+                        <a href="Protocols/RSDVideoViewUIAction.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RSDVideoViewUIAction</span> <span class="p">:</span> <span class="kt"><a href="Protocols/RSDResourceTransformer.html">RSDResourceTransformer</a></span><span class="p">,</span> <span class="kt"><a href="Protocols/RSDUIAction.html">RSDUIAction</a></span></code></pre>
 
                         </div>
                       </div>

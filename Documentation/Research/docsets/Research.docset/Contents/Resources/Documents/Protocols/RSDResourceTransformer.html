@@ -903,6 +903,9 @@
                 <a href="../Protocols/RSDUSMeasurementPickerDataSource.html">RSDUSMeasurementPickerDataSource</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDVideoViewUIAction.html">RSDVideoViewUIAction</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDViewThemeElement.html">RSDViewThemeElement</a>
               </li>
               <li class="nav-group-task">
@@ -1139,6 +1142,9 @@
                 <a href="../Structs/RSDUnitConverter/USCustomaryUnitConverter.html">– USCustomaryUnitConverter</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/RSDVideoViewUIActionObject.html">RSDVideoViewUIActionObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/RSDViewThemeElementObject.html">RSDViewThemeElementObject</a>
               </li>
               <li class="nav-group-task">
@@ -1311,6 +1317,46 @@ a relative URL defined globally by overriding the <code><a href="../Classes/RSDR
                       <div>
                         <h4>Return Value</h4>
                         <p><code>true</code> if the resource is an online URL or <code>false</code> if it is an embedded resource.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research22RSDResourceTransformerPAAE7fullURL10Foundation0E0VyKF"></a>
+                    <a name="//apple_ref/swift/Method/fullURL()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research22RSDResourceTransformerPAAE7fullURL10Foundation0E0VyKF">fullURL()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get the full URL for a given resource no matter if it is a local or online resource.</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    <code><a href="../Enums/RSDResourceTransformerError.html">RSDResourceTransformerError</a></code> if the file cannot be found, or
+      <code><a href="../Enums/RSDValidationError.html">RSDValidationError</a></code> if the online resource is not valid.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fullURL</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">URL</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The URL for this resource.</p>
                       </div>
                     </section>
                   </div>
