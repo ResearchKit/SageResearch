@@ -134,7 +134,8 @@ extension DefaultRSDButtonCellLayoutConstants : RSDButtonCellLayoutConstants {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.rsd_alignToSuperview([.top], padding: constants.topMargin)
         button.rsd_alignToSuperview([.bottom], padding: constants.bottomMargin)
-        button.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin)
+        button.rsd_alignToSuperview([.leading, .trailing], padding: constants.sideMargin, priority: UILayoutPriority(800.0))
+        button.rsd_alignToSuperview([.centerX], padding: 0)
         
         actionButton = button
         actionButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
