@@ -1026,6 +1026,7 @@
 		FF8B54ED1FCE6D15006B6937 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF8B54EE1FCE6D15006B6937 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
 		FFEF95631FCE8D06008C30A6 /* RSDTextFieldOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */; };
+		FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1434,6 +1435,7 @@
 		FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDExceptionHandler.m; sourceTree = "<group>"; };
 		FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
 		FFF53EAC1FBF9562004211D2 /* RSDResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultType.swift; sourceTree = "<group>"; };
+		FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDRoundedToggleButton.swift; sourceTree = "<group>"; };
 		FFFDB9601F99D4A500BA1348 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Research.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1849,6 +1851,7 @@
 				F84496392273A23100EAA3E0 /* RSDStatusBarBackgroundView.swift */,
 				F844963A2273A23100EAA3E0 /* RSDPickerViewProtocol.swift */,
 				F844963B2273A23100EAA3E0 /* RSDRoundedButton.swift */,
+				FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */,
 				F844963C2273A23100EAA3E0 /* RSDCountdownDial.swift */,
 				F844963D2273A23100EAA3E0 /* RSDLoadingView.swift */,
 			);
@@ -3130,6 +3133,7 @@
 				F844965D2273A23100EAA3E0 /* RSDVoiceBox.swift in Sources */,
 				F844966C2273A23100EAA3E0 /* RSDCheckmarkView.swift in Sources */,
 				F84496592273A23100EAA3E0 /* UIAlertController+Utilities.swift in Sources */,
+				FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */,
 				F844966A2273A23100EAA3E0 /* RSDTextLabelCell.swift in Sources */,
 				F844963E2273A23100EAA3E0 /* RSDTaskViewController.swift in Sources */,
 				F84496582273A23100EAA3E0 /* UIView+Layout.swift in Sources */,
