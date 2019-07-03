@@ -74,7 +74,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
     /// Returns the allowed countdown units for the countdown label. Default is to show only seconds
     /// if the duration is less than 90 seconds.
     open var allowedCountdownUnits: NSCalendar.Unit {
-        if self.activeStep?.duration ?? 0 > 90 {
+        if let stepDuration = self.activeStep?.duration, stepDuration > 90 {
             return [.minute, .second]
         }
         else {
@@ -188,7 +188,8 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
         // TODO: syoung 07/02/2019 Update implementation to include *restart* of the step should the step
         // be reset and need the recorders to restart.
 
-        // If the timer duration is more than the step duration, then
+        // If the timer duration is more than the step duration, then call the
+        // timer finished method.
         if duration > stepDuration, !_timerFinishedCalled {
             _timerFinishedCalled = true
             self.timerFinished(duration)

@@ -1057,7 +1057,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             
             // Update the countdown
             if let stepDuration = self.activeStep?.duration {
-                countdown = Int(stepDuration) - Int(floor(duration))
+                countdown = Int(ceil(stepDuration)) - Int(floor(duration))
             }
             
             // Otherwise, look for any spoken instructions since last fire
