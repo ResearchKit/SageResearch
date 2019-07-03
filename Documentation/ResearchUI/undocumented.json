@@ -23,30 +23,37 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDStepViewController.swift",
-      "line": 1013,
+      "line": 1018,
       "symbol": "RSDStepViewController.reset()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 617,
+      "line": 615,
       "symbol": "RSDTaskViewController.childForStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 705,
+      "line": 703,
       "symbol": "RSDTaskViewController.audioSessionController",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
-      "line": 132,
+      "line": 169,
       "symbol": "RSDActiveStepViewController.reset()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
+      "line": 413,
+      "symbol": "RSDActiveStepViewControllerV0",
+      "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
@@ -331,21 +338,21 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 210,
+      "line": 216,
       "symbol": "RSDCountdownDial.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 215,
+      "line": 221,
       "symbol": "RSDCountdownDial.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 238,
+      "line": 244,
       "symbol": "RSDCountdownDial.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
