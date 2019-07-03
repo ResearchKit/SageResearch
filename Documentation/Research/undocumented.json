@@ -436,98 +436,98 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 60,
+      "line": 63,
       "symbol": "RSDDesignSystem.init(version:colorRules:fontRules:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 66,
+      "line": 69,
       "symbol": "RSDDesignSystem.init(palette:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 76,
+      "line": 79,
       "symbol": "RSDDesignSystem.ButtonType.primary",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 76,
+      "line": 79,
       "symbol": "RSDDesignSystem.ButtonType.secondary",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 81,
+      "line": 84,
       "symbol": "RSDDesignSystem.TextType.heading1",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 82,
+      "line": 85,
       "symbol": "RSDDesignSystem.TextType.heading2",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 83,
+      "line": 86,
       "symbol": "RSDDesignSystem.TextType.heading3",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 84,
+      "line": 87,
       "symbol": "RSDDesignSystem.TextType.heading4",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 85,
+      "line": 88,
       "symbol": "RSDDesignSystem.TextType.fieldHeader",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 86,
+      "line": 89,
       "symbol": "RSDDesignSystem.TextType.body",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 87,
+      "line": 90,
       "symbol": "RSDDesignSystem.TextType.bodyDetail",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 88,
+      "line": 91,
       "symbol": "RSDDesignSystem.TextType.small",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 89,
+      "line": 92,
       "symbol": "RSDDesignSystem.TextType.microHeader",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 90,
+      "line": 93,
       "symbol": "RSDDesignSystem.TextType.counter",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
