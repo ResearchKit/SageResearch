@@ -877,7 +877,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     public var clock: RSDClock?
     
     /// The clock uptime for when the step was finished.
-    private var completedUptime: TimeInterval?
+    public private(set) var completedUptime: TimeInterval?
     
     private var timer: Timer?
     private var lastInstruction: Int = -1
@@ -950,7 +950,12 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     /// Speak the instruction that is included at the given time marker (if any).
     open func speakInstruction(at duration: TimeInterval) {
         let nextInstruction = Int(duration)
-        if nextInstruction > lastInstruction {
+        if let stepDuration = self.activeStep?.duration,
+            duration >= stepDuration && stepDuration > 0 {
+            // For the last instruction, speak the end command.
+            speakEndCommand { }
+        }
+        else if nextInstruction > lastInstruction {
             for ii in (lastInstruction + 1)...nextInstruction {
                 let timeInterval = TimeInterval(ii)
                 if let instruction = self.spokenInstruction(at: timeInterval) {
@@ -1052,7 +1057,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             
             // Update the countdown
             if let stepDuration = self.activeStep?.duration {
-                countdown = Int(stepDuration - duration)
+                countdown = Int(ceil(stepDuration)) - Int(floor(duration))
             }
             
             // Otherwise, look for any spoken instructions since last fire

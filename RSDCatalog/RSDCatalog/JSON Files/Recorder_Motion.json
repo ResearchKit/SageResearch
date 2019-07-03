@@ -53,7 +53,7 @@
                                                    "imageName": "HoldPhone",
                                                    "placementType": "fullsizeBackground"
                                                },
-                                               "commands"           : ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate",
+                                               "commands"           : ["startTimerAutomatically", "shouldDisableIdleTimer", "vibrate",
                                                                        "playSound"],
                                                "spokenInstructions" : { "start": "Start shaking your phone",
                                                                         "halfway": "Halfway there. Keep shaking!",

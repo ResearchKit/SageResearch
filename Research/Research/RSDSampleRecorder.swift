@@ -673,7 +673,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
             }
             loggers[identifier] = dataLogger
             if let logger = dataLogger as? RSDRecordSampleLogger {
-                let marker = instantiateMarker(uptime: self.clock.startUptime, timestamp: self.clock.startSystemUptime, date: self.clock.startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
+                let marker = instantiateMarker(uptime: self.clock.startUptime, timestamp: 0, date: self.clock.startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
                 try logger.writeSample(marker)
             }
         }

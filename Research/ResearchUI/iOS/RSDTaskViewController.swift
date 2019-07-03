@@ -260,10 +260,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             // If this is a countdown step then the step type is 
             return RSDCountdownStepViewController(step: step, parent: parent)
         }
-        else if let activeStep = step as? RSDActiveUIStep,
-            activeStep.duration > 0,
-            activeStep.commands.contains(.transitionAutomatically) {
-            return RSDActiveStepViewController(step: step, parent: parent)
+        else if let vc = RSDActiveStepViewController.initializeStepViewController(step: step, parent: parent) {
+            return vc
         }
         else if RSDResultSummaryStepViewController.doesSupport(step) {
             return RSDResultSummaryStepViewController(step: step, parent: parent)
