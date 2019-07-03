@@ -220,7 +220,7 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = .spellOut
                 for ii in 1...countdown {
-                    let timeInterval = stepDuration - TimeInterval(ii) - 1
+                    let timeInterval = stepDuration - TimeInterval(ii)
                     instructions[timeInterval] = numberFormatter.string(from: NSNumber(value: ii))
                 }
             }
