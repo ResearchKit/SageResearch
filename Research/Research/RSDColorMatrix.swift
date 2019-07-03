@@ -265,8 +265,8 @@ public enum RSDReservedColorName : RawRepresentable, Equatable, Hashable, Codabl
         case lavender
         case slate
         case fern
-        case cloud
         case stone
+        case cloud
     }
     
     case special(Special)
@@ -276,6 +276,7 @@ public enum RSDReservedColorName : RawRepresentable, Equatable, Hashable, Codabl
         case text
     }
     
+    /// Minimum version in which a reserved color name was introduced.
     public var minVersion: Int {
         switch self {
         case .special(.text):
@@ -288,7 +289,12 @@ public enum RSDReservedColorName : RawRepresentable, Equatable, Hashable, Codabl
     /// Maximum version in which a given reserved color name is expected to be included. If `nil` this color
     /// name should still be included in the color matrix in the most recent library.
     public var version: Int? {
-        return nil
+        switch self {
+        case .palette(.cloud):
+            return 1
+        default:
+            return nil
+        }
     }
     
     public init?(rawValue: String) {

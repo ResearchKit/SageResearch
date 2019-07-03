@@ -212,7 +212,7 @@ open class RSDStepNavigationView: UIView, RSDViewDesignable {
         self.recursiveSetDesignSystem(designSystem, with: background)
         
         // Set the fonts for the labels
-        titleLabel?.font = designSystem.fontRules.font(for: .heading2, compatibleWith: self.traitCollection)
+        titleLabel?.font = designSystem.fontRules.font(for: .largeHeader, compatibleWith: self.traitCollection)
         textLabel?.font = designSystem.fontRules.font(for: .body, compatibleWith: self.traitCollection)
         detailLabel?.font = designSystem.fontRules.font(for: .bodyDetail, compatibleWith: self.traitCollection)
         
@@ -228,7 +228,7 @@ open class RSDStepNavigationView: UIView, RSDViewDesignable {
         }()
         
         self.tintColor = designSystem.colorRules.tintedButtonColor(on: colorTile)
-        titleLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .heading2)
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .largeHeader)
         textLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .body)
         detailLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .bodyDetail)
     }

@@ -47,7 +47,7 @@
                                                "identifier"         : "motion",
                                                "type"               : "active",
                                                "duration"           : 30,
-                                               "text"               : "Shake your phone",
+                                               "title"              : "Shake your phone",
                                                "image": {
                                                    "type": "fetchable",
                                                    "imageName": "HoldPhone",
@@ -55,6 +55,18 @@
                                                },
                                                "commands"           : ["startTimerAutomatically", "shouldDisableIdleTimer", "vibrate",
                                                                        "playSound"],
+                                               "actions":{
+                                                   "skip":{
+                                                       "type":"navigation",
+                                                       "skipToIdentifier":"countdown",
+                                                       "buttonTitle": "Restart test"
+                                                   },
+                                                   "reviewInstructions":{
+                                                       "type":"navigation",
+                                                       "skipToIdentifier": "instruction",
+                                                       "buttonTitle": "Review instructions"
+                                                   }
+                                               },
                                                "spokenInstructions" : { "start": "Start shaking your phone",
                                                                         "halfway": "Halfway there. Keep shaking!",
                                                                         "countdown": "10",

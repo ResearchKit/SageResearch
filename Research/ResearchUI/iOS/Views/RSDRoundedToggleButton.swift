@@ -93,13 +93,11 @@ open class RSDRoundedToggleButton : UIButton, RSDViewDesignable {
         let designSystem = self.designSystem ?? RSDDesignSystem()
         let colorTile: RSDColorTile = self.backgroundTile() ?? designSystem.colorRules.backgroundLight
         
-        // Set the title font for whether or not the button is selected.
-        titleLabel?.font = isSelected ? UIFont.boldSystemFont(ofSize: 16) : UIFont.systemFont(ofSize: 16)
-        
-        // Set the background to the current state. iOS 11 does not support setting the background of the
-        // button based on the button state.
+        // Set the background and font to the current state.
+        // iOS 11 does not support setting these based on the button state.
         let currentState: RSDControlState = (isHighlighted ? .highlighted : isSelected ? .selected : .normal)
         self.backgroundColor = designSystem.colorRules.roundedButton(on: colorTile, with: .secondary, forState: currentState)
+        titleLabel?.font = designSystem.fontRules.buttonFont(for: .toggle, state: currentState)
     }
     
     public required init() {

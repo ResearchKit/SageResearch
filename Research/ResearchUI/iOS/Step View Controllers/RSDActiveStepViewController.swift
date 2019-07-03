@@ -355,6 +355,22 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
         self.view.setNeedsUpdateConstraints()
     }
     
+    open override func setupViews() {
+        super.setupViews()
+        
+        self.doneLabel?.font = self.designSystem.fontRules.font(for: .largeNumber, compatibleWith: traitCollection)
+        self.unitLabel?.font = self.designSystem.fontRules.baseFont(for: .largeHeader)  // NOT DYNAMIC
+        self.instructionLabel?.font = self.designSystem.fontRules.font(for: .largeHeader, compatibleWith: traitCollection)
+        self.countdownLabel?.font = self.designSystem.fontRules.font(for: .largeNumber, compatibleWith: traitCollection)
+    }
+    
+    override open func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
+        super.setColorStyle(for: placement, background: background)
+        
+        if placement == .body {
+            self.instructionLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .largeHeader)
+        }
+    }
     
     // MARK: Initialization
     

@@ -76,12 +76,101 @@ open class RSDFontRules  {
     }
     #endif
     
+    /// Returns the font to use for the given button type and state.
+    ///
+    /// - parameters:
+    ///     - buttonType: The button type.
+    ///     - state: The button state.
+    /// - returns: The font to use for this text.
+    open func buttonFont(for buttonType: RSDDesignSystem.ButtonType, state: RSDControlState) -> RSDFont {
+        switch buttonType {
+            
+        case .primary, .secondary:
+            return RSDFont.systemFont(ofSize: 20, weight: .bold)
+            
+        case .bodyLink:
+            return baseFont(for: .body)
+            
+        case .headerLink:
+            return baseFont(for: .smallHeader)
+            
+        case .toggle:
+            switch state {
+            case .selected:
+                return RSDFont.systemFont(ofSize: 16, weight: .bold)
+            default:
+                return RSDFont.systemFont(ofSize: 16, weight: .regular)
+            }
+        }
+    }
+    
     /// Returns the font to use for a given text type.
     ///
     /// - parameter textType: The text type for the font.
     /// - returns: The font to use for this text.
     open func font(for textType: RSDDesignSystem.TextType) -> RSDFont {
+        // TODO: syoung 07/03/2019 Implement dynamic text handling.
+        return baseFont(for: textType)
+    }
+    
+    /// Returns a font in the given size and weight in the font family specified for this design.
+    /// Typically, you will want to use `font(for textType: RSDDesignSystem.TextType)` instead for
+    /// copy and dynamic text. This method should only be used where the design calls for a
+    /// specific size to match the graphic design of the view.
+    ///
+    /// - parameters:
+    ///     - fontSize: The font size.
+    ///     - weight: The font weight.
+    /// - returns: The font to use for this size and weight.
+    open func font(ofSize fontSize: CGFloat, weight: RSDFont.Weight) -> RSDFont {
+        return RSDFont.systemFont(ofSize: fontSize, weight: weight)
+    }
+    
+    /// Returns the base font for a given text type. This is the font size defined in the Sage
+    /// Design System table. For dynamic fonts, this can be resized based upon user preferences by
+    /// using the `font(for textType: RSDDesignSystem.TextType)` instead.
+    ///
+    /// This is *only* to be used directly where the text needs to fix within a specific size, but
+    /// match the "style" of a given text type.
+    ///
+    /// - parameter textType: The text type for the font.
+    /// - returns: The *base* font to use for this text.
+    open func baseFont(for textType: RSDDesignSystem.TextType) -> RSDFont {
         switch textType {
+            
+        // Version 2
+        case .largeNumber:
+            return RSDFont.systemFont(ofSize: 72, weight: .light)
+        case .smallNumber:
+            return RSDFont.systemFont(ofSize: 48, weight: .light)
+        case .xSmallNumber:
+            return RSDFont.systemFont(ofSize: 20, weight: .light)
+
+        case .xLargeHeader:
+            return RSDFont.systemFont(ofSize: 30, weight: .bold)
+        case .largeHeader:
+            return RSDFont.systemFont(ofSize: 24, weight: .bold)
+        case .mediumHeader:
+            return RSDFont.systemFont(ofSize: 18, weight: .bold)
+        case .smallHeader:
+            return RSDFont.systemFont(ofSize: 16, weight: .bold)
+        case .microHeader:
+            return RSDFont.systemFont(ofSize: 14).rsd_smallCaps()
+        
+        case .largeBody:
+            return RSDFont.systemFont(ofSize: 24, weight: .light)
+        case .body:
+            return RSDFont.systemFont(ofSize: 18)
+        case .bodyDetail:
+            return RSDFont.systemFont(ofSize: 16)
+        case .italicDetail:
+            return RSDFont.italicSystemFont(ofSize: 16)
+        case .small, .hint:
+            return RSDFont.systemFont(ofSize: 16)
+        case .microDetail:
+            return RSDFont.systemFont(ofSize: 14)
+            
+        // Version 1
         case .heading1:
             return RSDFont.systemFont(ofSize: 30, weight: .bold)
         case .heading2:
@@ -92,14 +181,24 @@ open class RSDFontRules  {
             return RSDFont.systemFont(ofSize: 18, weight: .bold)
         case .fieldHeader:
             return RSDFont.systemFont(ofSize: 16, weight: .heavy)
-        case .body, .bodyDetail:
-            return RSDFont.systemFont(ofSize: 18)
-        case .small:
-            return RSDFont.systemFont(ofSize: 14)
-        case .microHeader:
-            return RSDFont.systemFont(ofSize: 12, weight: .semibold).rsd_smallCaps()
         case .counter:
             return RSDFont.systemFont(ofSize: 80, weight: .light)
+            
+        default:
+            assertionFailure("\(textType) is not defined. Returning `body` type.")
+            return RSDFont.systemFont(ofSize: 18)
+        }
+    }
+    
+    /// Returns whether or not the specified text type is dynamic.
+    /// - parameter textType: The text type for the font.
+    open func isDynamic(_ textType: RSDDesignSystem.TextType) -> Bool {
+        switch textType {
+        case .xLargeHeader, .largeHeader, .mediumHeader, .smallHeader,
+             .body, .bodyDetail, .italicDetail, .small, .hint, .microDetail:
+            return true
+        default:
+            return false
         }
     }
 }

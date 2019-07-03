@@ -81,15 +81,15 @@ class PaletteSelectionViewController: UITableViewController {
         
         cell.primary.backgroundColor = palette.primary.normal.color
         cell.primaryLabel.text = "\(palette.primary.swatch.name) \(palette.primary.index)"
-        cell.primaryLabel.textColor = designSystem.colorRules.textColor(on: palette.primary.normal, for: .heading4)
+        cell.primaryLabel.textColor = designSystem.colorRules.textColor(on: palette.primary.normal, for: .smallHeader)
         
         cell.secondary.backgroundColor = palette.secondary.normal.color
         cell.secondaryLabel.text = "\(palette.secondary.swatch.name) \(palette.secondary.index)"
-        cell.secondaryLabel.textColor = designSystem.colorRules.textColor(on: palette.secondary.normal, for: .heading4)
+        cell.secondaryLabel.textColor = designSystem.colorRules.textColor(on: palette.secondary.normal, for: .smallHeader)
         
         cell.accent.backgroundColor = palette.accent.normal.color
         cell.accentLabel.text = "\(palette.accent.swatch.name) \(palette.accent.index)"
-        cell.accentLabel.textColor = designSystem.colorRules.textColor(on: palette.accent.normal, for: .heading4)
+        cell.accentLabel.textColor = designSystem.colorRules.textColor(on: palette.accent.normal, for: .smallHeader)
         
         return cell
     }
@@ -117,7 +117,7 @@ class PaletteSelectionViewController: UITableViewController {
     func updateHeader(_ header: TableSectionHeader) {
         let palette = RSDStudyConfiguration.shared.colorPalette
         header.contentView.backgroundColor = palette.primary.normal.color
-        header.titleLabel.textColor = designSystem.colorRules.textColor(on: palette.primary.normal, for: .heading4)
+        header.titleLabel.textColor = designSystem.colorRules.textColor(on: palette.primary.normal, for: .smallHeader)
         header.titleLabel.text = "\(palette.primary.swatch.name) \(palette.primary.index)"
         header.secondaryDot.backgroundColor = palette.secondary.normal.color
         header.accentDot.backgroundColor = palette.accent.normal.color

@@ -155,7 +155,7 @@ import UIKit
         }
         
         // Set the title font to the font for a rounded button.
-        titleLabel?.font = designSystem.fontRules.font(for: .heading4)
+        titleLabel?.font = designSystem.fontRules.font(for: .mediumHeader)
     }
     
     public required init() {

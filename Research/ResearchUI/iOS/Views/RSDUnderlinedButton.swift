@@ -44,9 +44,17 @@ import UIKit
         }
     }
 
-    /// The font used for the text button.
-    @IBInspectable open var textFont : UIFont = UIFont.systemFont(ofSize: 18) {
+    @IBInspectable
+    open var isHeaderLink: Bool = false {
         didSet {
+            refreshView()
+        }
+    }
+    
+    @available(*, deprecated)
+    open var textFont : UIFont? {
+        didSet {
+            debugPrint("WARNING! Setting a deprecated property on RSDUnderlinedButton. Likely using a NIB or storyboard.")
             refreshView()
         }
     }
@@ -92,13 +100,19 @@ import UIKit
     /// Create an attributed string for this class.
     private func attributedString(_ title: String?, for state: UIControl.State) -> NSAttributedString? {
        
+        let controlState = RSDControlState(controlState: state)
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        let buttonType: RSDDesignSystem.ButtonType = self.isHeaderLink ? .headerLink : .bodyLink
+        
         let foregroundColor: UIColor = {
-            guard let designSystem = self.designSystem, let background = self.backgroundColorTile
+            guard let background = self.backgroundColorTile
                 else {
                     return self.tintColor
             }
-            return designSystem.colorRules.underlinedTextButton(on: background, state: RSDControlState(controlState: state))
+            return designSystem.colorRules.underlinedTextButton(on: background, state: controlState)
         }()
+        
+        let textFont = self.textFont ?? designSystem.fontRules.buttonFont(for: buttonType, state: controlState)
         
         if let titleUnwrapped = title {
             let attributes: [NSAttributedString.Key : Any] = [

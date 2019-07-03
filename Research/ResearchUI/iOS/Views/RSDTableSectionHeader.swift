@@ -41,8 +41,8 @@ import Foundation
     @IBOutlet open var detailLabel: UILabel!
     @IBOutlet open var separatorLine: UIView?
     
-    open private(set) var titleTextType: RSDDesignSystem.TextType = .fieldHeader
-    open private(set) var detailTextType: RSDDesignSystem.TextType = .small
+    open private(set) var titleTextType: RSDDesignSystem.TextType = .mediumHeader
+    open private(set) var detailTextType: RSDDesignSystem.TextType = .bodyDetail
     
     /// The background color for the table section.
     open private(set) var backgroundColorTile: RSDColorTile?

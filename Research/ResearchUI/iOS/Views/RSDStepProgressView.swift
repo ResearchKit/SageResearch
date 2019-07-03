@@ -112,8 +112,8 @@ open class RSDStepProgressView: UIView, RSDViewDesignable {
         let rules = designSystem.colorRules.progressBar(on: colorTile)
         progressView.backgroundColor = rules.filled
         backgroundView.backgroundColor = rules.unfilled
-        stepCountLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .small)
-        stepCountLabel?.font = designSystem.fontRules.font(for: .small)
+        stepCountLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .microHeader)
+        stepCountLabel?.font = designSystem.fontRules.font(for: .microHeader)
     }
 
     /// The height of the actual progress bar.
@@ -138,16 +138,20 @@ open class RSDStepProgressView: UIView, RSDViewDesignable {
         return self.totalSteps > 0
     }
     
-    /// The text of the label that is displayed directly under the progress bar.
+    @available(*, unavailable)
     open func attributedStringForLabel() -> NSAttributedString? {
+        return nil
+    }
+    
+    /// The text of the label that is displayed directly under the progress bar.
+    open func stringForLabel() -> String? {
         if currentStep > 0 && totalSteps > 0 {
             let formatter = NumberFormatter()
             formatter.numberStyle = .none
             let currentString = formatter.string(for: currentStep)!
             let totalString = formatter.string(for: totalSteps)!
             let format = Localization.localizedString("CURRENT_STEP_%@_OF_TOTAL_STEPS_%@")
-            let str = String.localizedStringWithFormat(format, currentString, totalString)
-            return NSAttributedString(string: str)
+            return String.localizedStringWithFormat(format, currentString, totalString)
         }
         else {
             return nil
@@ -237,6 +241,6 @@ open class RSDStepProgressView: UIView, RSDViewDesignable {
     /// Sets the text of the progress view label.
     /// Default = attributedStringForLabel()
     open func updateLabel() {
-        stepCountLabel?.attributedText = attributedStringForLabel()
+        stepCountLabel?.text = stringForLabel()
     }
 }

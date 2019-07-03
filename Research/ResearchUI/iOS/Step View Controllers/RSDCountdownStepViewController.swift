@@ -106,7 +106,7 @@ open class RSDCountdownStepViewController: RSDFullscreenImageStepViewController 
     
     /// Returns the color to use for the countdown label
     open func countdownLabelColor(on background: RSDColorTile) -> UIColor {
-        return self.designSystem.colorRules.textColor(on: background, for: .counter)
+        return self.designSystem.colorRules.textColor(on: background, for: .largeNumber)
     }
     
     // MARK: Initialization
