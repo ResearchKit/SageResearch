@@ -129,3 +129,8 @@
 
 /* Phone interruption */
 "TASK_INTERRUPTION_MESSAGE" = "This activity has been interrupted and cannot continue.";
+
+/* Unit label for the active step */
+"ACTIVE_STEP_UNIT_LABEL_ZERO" = "";
+"ACTIVE_STEP_UNIT_LABEL_ONE" = "Second";
+"ACTIVE_STEP_UNIT_LABEL_OTHER" = "Seconds";

@@ -45,8 +45,11 @@ public protocol RSDTaskDesign {
 /// The design rules are intended as a way of consolidating UI/UX design system rules in a logical grouping.
 /// A task module can define a design system that should be used for the tasks defined within that module.  
 open class RSDDesignSystem {
+    
+    /// Static marker that should be rev'd to whatever is the latest version for the design system views.
+    public static let currentVersion = 1
 
-    /// The version for the color rules. If the design rules change with future versions of this framework,
+    /// The version for the design system. If the design rules change with future versions of this framework,
     /// then the current version number should be rev'd as well and any changes to this rule set that are not
     /// additive include logic to return the previous rules associated with a previous version.
     open private(set) var version: Int

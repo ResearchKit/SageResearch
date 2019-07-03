@@ -229,7 +229,7 @@
 		F84496512273A23100EAA3E0 /* RSDInstructionStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F84496192273A23100EAA3E0 /* RSDInstructionStepViewController.xib */; };
 		F84496522273A23100EAA3E0 /* RSDResultSummaryStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F844961A2273A23100EAA3E0 /* RSDResultSummaryStepViewController.xib */; };
 		F84496532273A23100EAA3E0 /* RSDScrollingOverviewStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F844961B2273A23100EAA3E0 /* RSDScrollingOverviewStepViewController.xib */; };
-		F84496542273A23100EAA3E0 /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F844961C2273A23100EAA3E0 /* RSDActiveStepViewController.xib */; };
+		F84496542273A23100EAA3E0 /* RSDActiveStepViewControllerV0.xib in Resources */ = {isa = PBXBuildFile; fileRef = F844961C2273A23100EAA3E0 /* RSDActiveStepViewControllerV0.xib */; };
 		F84496552273A23100EAA3E0 /* RSDTaskInfoStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F844961D2273A23100EAA3E0 /* RSDTaskInfoStepViewController.xib */; };
 		F84496562273A23100EAA3E0 /* DebugStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F844961E2273A23100EAA3E0 /* DebugStepViewController.xib */; };
 		F84496572273A23100EAA3E0 /* RSDStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F844961F2273A23100EAA3E0 /* RSDStepViewController.swift */; };
@@ -1026,6 +1026,7 @@
 		FF8B54ED1FCE6D15006B6937 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF8B54EE1FCE6D15006B6937 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
 		FFEF95631FCE8D06008C30A6 /* RSDTextFieldOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */; };
+		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
 		FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -1168,7 +1169,7 @@
 		F84496192273A23100EAA3E0 /* RSDInstructionStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSDInstructionStepViewController.xib; sourceTree = "<group>"; };
 		F844961A2273A23100EAA3E0 /* RSDResultSummaryStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSDResultSummaryStepViewController.xib; sourceTree = "<group>"; };
 		F844961B2273A23100EAA3E0 /* RSDScrollingOverviewStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSDScrollingOverviewStepViewController.xib; sourceTree = "<group>"; };
-		F844961C2273A23100EAA3E0 /* RSDActiveStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSDActiveStepViewController.xib; sourceTree = "<group>"; };
+		F844961C2273A23100EAA3E0 /* RSDActiveStepViewControllerV0.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSDActiveStepViewControllerV0.xib; sourceTree = "<group>"; };
 		F844961D2273A23100EAA3E0 /* RSDTaskInfoStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSDTaskInfoStepViewController.xib; sourceTree = "<group>"; };
 		F844961E2273A23100EAA3E0 /* DebugStepViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugStepViewController.xib; sourceTree = "<group>"; };
 		F844961F2273A23100EAA3E0 /* RSDStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStepViewController.swift; sourceTree = "<group>"; };
@@ -1435,6 +1436,7 @@
 		FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDExceptionHandler.m; sourceTree = "<group>"; };
 		FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
 		FFF53EAC1FBF9562004211D2 /* RSDResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultType.swift; sourceTree = "<group>"; };
+		FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDActiveStepViewController.xib; sourceTree = "<group>"; };
 		FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDRoundedToggleButton.swift; sourceTree = "<group>"; };
 		FFFDB9601F99D4A500BA1348 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Research.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1802,7 +1804,8 @@
 				F84496192273A23100EAA3E0 /* RSDInstructionStepViewController.xib */,
 				F844961A2273A23100EAA3E0 /* RSDResultSummaryStepViewController.xib */,
 				F844961B2273A23100EAA3E0 /* RSDScrollingOverviewStepViewController.xib */,
-				F844961C2273A23100EAA3E0 /* RSDActiveStepViewController.xib */,
+				FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */,
+				F844961C2273A23100EAA3E0 /* RSDActiveStepViewControllerV0.xib */,
 				F844961D2273A23100EAA3E0 /* RSDTaskInfoStepViewController.xib */,
 				F844961E2273A23100EAA3E0 /* DebugStepViewController.xib */,
 			);
@@ -2996,7 +2999,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F84496542273A23100EAA3E0 /* RSDActiveStepViewController.xib in Resources */,
+				FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */,
+				F84496542273A23100EAA3E0 /* RSDActiveStepViewControllerV0.xib in Resources */,
 				F84496512273A23100EAA3E0 /* RSDInstructionStepViewController.xib in Resources */,
 				F84496552273A23100EAA3E0 /* RSDTaskInfoStepViewController.xib in Resources */,
 				F84496002273A22100EAA3E0 /* DefaultImages.xcassets in Resources */,

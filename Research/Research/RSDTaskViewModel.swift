@@ -753,6 +753,63 @@ extension RSDTaskViewModel {
         }
     }
     
+    /// Public method that the step controller can use to stop the async actions prior to moving away
+    /// from the current step.
+    ///
+    /// - note: If the step results will influence what step to move to next, then those results must
+    ///         be added to the step history *before* calling this method.
+    ///
+    /// - parameter step: The current step.
+    public final func stopAsyncActions(after step: RSDStep) {
+        var taskResult = self.taskResult
+        let nextStep = self.task?.stepNavigator.step(after: step, with: &taskResult)
+        let isTaskComplete = self.isTaskComplete(with: nextStep?.step)
+        guard let taskController = self.taskController,
+            let controllers = _asyncActionsToStop(after: step, isTaskComplete: isTaskComplete)
+            else {
+                // If there are no controllers to stop, then continue.
+                return
+        }
+        taskController.stopAsyncActions(for: controllers, showLoading: false) {
+            // Do nothing. Just stop.
+        }
+    }
+    
+    /// Is this the last step in the task? By default, the conditions are met if the step is of type
+    /// `completion`, the navigator does not indicate that there is another step after this one, and
+    /// the skip action is undefined or does not navigate away from the step.
+    ///
+    /// - parameter step: The step to test as the last step, or `nil` if the current step is the last.
+    open func isTaskComplete(with step: RSDStep?) -> Bool {
+        // If this is a loading step then assume that it is not the last step in the task.
+        guard let navigator = self.task?.stepNavigator else { return false }
+        
+        // If there is no next step, then the task is complete.
+        guard let nextStep = step else {
+            return true
+        }
+        
+        // The step type must be the completion step.
+        if nextStep.stepType != .completion {
+            return false
+        }
+        
+        // If the navigator includes logic for a step after this one then it is not the last.
+        if navigator.hasStep(after: nextStep, with: taskResult) {
+            return false
+        }
+        
+        // Look to see if the last step has a navigation on it that could return the participant
+        // back into the task.
+        if let actionHandler = (nextStep as? RSDUIActionHandler) ?? (self.task as? RSDUIActionHandler),
+            let _ = actionHandler.action(for: .navigation(.skip), on: nextStep) as? RSDNavigationUIAction {
+            return false
+        }
+        
+        // If all conditions are met, then return true.
+        return true
+    }
+
     private func _finishMoving(to step: RSDStep, from previousStep: RSDStep?, direction: RSDStepDirection) {
         guard direction != .reverse else {
             _notifyAsyncControllers(to: step, excludingControllers:[])
@@ -760,8 +817,7 @@ extension RSDTaskViewModel {
         }
         
         // Get which controllers should be stopped
-        let isTaskComplete = (step.stepType == .completion) && !self.task!.stepNavigator.hasStep(after: step, with: taskResult)
-        //let path = self.taskViewModel!
+        let isTaskComplete = self.isTaskComplete(with: step)
         var excludedControllers: [RSDAsyncAction] = []
         var controllersToStop: [RSDAsyncAction]?
         if let stopStep = previousStep, let controllers = _asyncActionsToStop(after: stopStep, isTaskComplete: isTaskComplete) {

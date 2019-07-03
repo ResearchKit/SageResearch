@@ -173,9 +173,8 @@ open class RSDOverviewStepViewController: RSDPermissionStepViewController {
     // MARK: Initialization
     
     class func initializeStepViewController(step: RSDStep, parent: RSDPathComponent?) -> RSDOverviewStepViewController {
-        // Must have a top background image.
-        if let uiStep = step as? RSDUIStep,
-            let _ = uiStep.action(for: .navigation(.learnMore), on: step) as? RSDWebViewUIAction {
+        if let designSystem = parent?.rootPathComponent?.designSystem,
+            designSystem.version == 0 {
             return RSDOverviewStepViewController(step: step, parent: parent)
         }
         else {
