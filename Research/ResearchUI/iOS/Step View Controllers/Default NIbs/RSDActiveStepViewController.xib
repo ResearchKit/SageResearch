@@ -18,6 +18,8 @@
                 <outlet property="statusBarBackgroundView" destination="trI-0q-jgS" id="lSt-Df-5Cl"/>
                 <outlet property="unitLabel" destination="8m7-Ke-qYK" id="olM-i9-zrH"/>
                 <outlet property="view" destination="Nxx-tp-UTx" id="Mcf-Sq-MQA"/>
+                <outletCollection property="activeViews" destination="XHx-Hp-YbK" collectionClass="NSMutableArray" id="jq1-P4-1Bf"/>
+                <outletCollection property="activeViews" destination="1ou-tc-eAw" collectionClass="NSMutableArray" id="25l-PP-jrZ"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -96,14 +98,14 @@
                     <state key="normal" image="closeActivity"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ou-tc-eAw" userLabel="Restart Button" customClass="RSDRoundedButton" customModule="ResearchUI">
-                    <rect key="frame" x="28" y="716.5" width="358" height="52"/>
+                    <rect key="frame" x="28" y="742" width="358" height="30"/>
                     <state key="normal" title="Restart Test"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XHx-Hp-YbK" userLabel="Review Button" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                    <rect key="frame" x="128" y="798.5" width="158" height="33.5"/>
+                    <rect key="frame" x="140" y="802" width="134" height="30"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Review Instructions"/>
@@ -114,7 +116,7 @@
                     <viewLayoutGuide key="safeArea" id="T3z-p0-lo4"/>
                 </view>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X2x-5p-IkJ" userLabel="Next Button" customClass="RSDRoundedButton" customModule="ResearchUI">
-                    <rect key="frame" x="28" y="776" width="358" height="52"/>
+                    <rect key="frame" x="28" y="798" width="358" height="30"/>
                     <state key="normal" title="Next"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="NO"/>
@@ -165,6 +167,6 @@
         </view>
     </objects>
     <resources>
-        <image name="closeActivity" width="32" height="32"/>
+        <image name="closeActivity" width="50" height="50"/>
     </resources>
 </document>
