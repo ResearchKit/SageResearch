@@ -164,7 +164,11 @@ open class RSDFontRules  {
         case .bodyDetail:
             return RSDFont.systemFont(ofSize: 16)
         case .italicDetail:
+            #if os(macOS)
+            return RSDFont.systemFont(ofSize: 16)
+            #else
             return RSDFont.italicSystemFont(ofSize: 16)
+            #endif
         case .small, .hint:
             return RSDFont.systemFont(ofSize: 16)
         case .microDetail:
