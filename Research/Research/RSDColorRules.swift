@@ -204,9 +204,9 @@ open class RSDColorRules  {
     ///     - textType: The type size of the UI element.
     /// - returns: The text color to use.
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
-        if version >= 2 {
+        if self.palette.text.colorTiles.count == 5 {
             if background.usesLightStyle {
-                return self.palette.text.light.color
+                return self.palette.text.veryLight.color
             }
             else {
                 switch textType {
@@ -219,18 +219,26 @@ open class RSDColorRules  {
                 }
             }
         }
-        else {
+        else if self.palette.text.colorTiles.count > 0 {
             // Version 0 and 1 only have 3 colors defined, so need to match within that.
             if background.usesLightStyle {
-                return self.palette.text.light.color
+                return self.palette.text.colorTiles.first!.color
             }
             else {
                 switch textType {
                 case .small, .bodyDetail, .hint, .microDetail:
                     return self.palette.text.normal.color
                 default:
-                    return self.palette.text.dark.color
+                    return self.palette.text.colorTiles.last!.color
                 }
+            }
+        }
+        else {
+            if background.usesLightStyle {
+                return self.palette.grayScale.white.color
+            }
+            else {
+                return self.palette.grayScale.black.color
             }
         }
     }

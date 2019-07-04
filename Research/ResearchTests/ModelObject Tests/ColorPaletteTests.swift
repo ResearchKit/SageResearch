@@ -49,10 +49,10 @@ class ColorPaletteTests: XCTestCase {
         
         let palette = RSDColorPalette.wireframe
         
-        XCTAssertEqual(palette.text.index, 1)
+        XCTAssertEqual(palette.text.index, 2)
         
         let textKey = RSDColorMatrix.shared.colorKey(for: .special(.text), shade: .medium)
-        XCTAssertEqual(textKey.index, 1)
+        XCTAssertEqual(textKey.index, 2)
         
         let textSwatch = RSDColorMatrix.shared.colorSwatch(for: .special(.text), version: 0)
         XCTAssertNotNil(textSwatch)
