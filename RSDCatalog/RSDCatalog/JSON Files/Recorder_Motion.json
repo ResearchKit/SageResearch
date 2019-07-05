@@ -23,7 +23,7 @@
                                                {
                                                "identifier"   : "instruction",
                                                "type"         : "instruction",
-                                               "title"        : "Please hold your phone",
+                                               "title"        : "Hold your phone",
                                                "text"         : "After the countdown, shake your phone. This will record the calculated gravity vector and the raw gyro data.",
                                                "image": {
                                                    "type": "fetchable",

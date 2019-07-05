@@ -109,8 +109,10 @@ open class RSDFontRules  {
     /// - parameter textType: The text type for the font.
     /// - returns: The font to use for this text.
     open func font(for textType: RSDDesignSystem.TextType) -> RSDFont {
-        // TODO: syoung 07/03/2019 Implement dynamic text handling.
-        return baseFont(for: textType)
+        let font = baseFont(for: textType)
+        let sizeRatio = self.preferredFontSizeRatio(for: textType)
+        let fontSize = round(font.pointSize * sizeRatio)
+        return font.withSize(fontSize)
     }
     
     /// Returns a font in the given size and weight in the font family specified for this design.
@@ -204,6 +206,73 @@ open class RSDFontRules  {
             return false
         }
     }
+    
+    #if os(macOS) || os(watchOS)
+    
+    /// Preferred font size ratio is undefined for macOS and watchOS.
+    /// - returns: nil
+    open func preferredFontSizeRatio(for textType: RSDDesignSystem.TextType) -> CGFloat {
+        return 1.0
+    }
+    
+    #else
+    
+    /// Using a mapping of the base font size, look for the text style to use for that text type
+    /// and return the font size ratio preferred by the user based on their accessibility settings.
+    open func preferredFontSizeRatio(for textType: RSDDesignSystem.TextType) -> CGFloat {
+        guard let style = textStyle(for: textType),
+            let base = baseSize[style.rawValue]
+            else {
+                return 1.0
+        }
+        let font = UIFont.preferredFont(forTextStyle: style)
+        return font.pointSize / base
+    }
+    
+    func textStyle(for textType: RSDDesignSystem.TextType) -> UIFont.TextStyle? {
+        switch textType {
+        case .xLargeHeader:
+            if #available(iOSApplicationExtension 11.0, *) {
+                return .largeTitle
+            } else {
+                return .title1
+            }
+        case .largeHeader:
+            return .title1
+        case .mediumHeader:
+            return .title2
+        case .smallHeader:
+            return .title3
+        case .body:
+            return .body
+        case .bodyDetail, .italicDetail:
+            return .callout
+        case .small, .hint:
+            return .footnote
+        case .microDetail:
+            return .caption1
+        default:
+            return nil
+        }
+    }
+    
+    #endif
+    
+    /// Mapping of text style to font size on iPhone if the "Large Text" accessibility setting
+    /// is turned off.
+    let baseSize: [String : CGFloat] = [
+        "UICTFontTextStyleBody": 17.0,
+        "UICTFontTextStyleCallout": 16.0,
+        "UICTFontTextStyleCaption1": 12.0,
+        "UICTFontTextStyleCaption2": 11.0,
+        "UICTFontTextStyleFootnote": 13.0,
+        "UICTFontTextStyleHeadline": 17.0,
+        "UICTFontTextStyleSubhead": 15.0,
+        "UICTFontTextStyleTitle0": 34.0,
+        "UICTFontTextStyleTitle1": 28.0,
+        "UICTFontTextStyleTitle2": 22.0,
+        "UICTFontTextStyleTitle3": 20.0,
+    ]
 }
 
 #if os(macOS)
