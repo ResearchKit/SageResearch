@@ -101,6 +101,9 @@ open class RSDCountdownStepViewController: RSDFullscreenImageStepViewController 
         super.setColorStyle(for: placement, background: background)
         if placement == .body {
             countdownLabel?.textColor = countdownLabelColor(on: background)
+            countdownLabel?.font = self.designSystem.fontRules.font(for: .largeNumber, compatibleWith: traitCollection)
+            self.pauseButton?.setTitle(Localization.buttonPause(), for: .normal)
+            (self.pauseButton as? RSDViewDesignable)?.setDesignSystem(self.designSystem, with: background)
         }
     }
     
