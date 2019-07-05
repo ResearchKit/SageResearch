@@ -47,8 +47,8 @@ import UIKit
         }
     }
     
-    open private(set) var titleTextType: RSDDesignSystem.TextType = .body
-    open private(set) var detailTextType: RSDDesignSystem.TextType = .small
+    open private(set) var titleTextType: RSDDesignSystem.TextType = .small
+    open private(set) var detailTextType: RSDDesignSystem.TextType = .bodyDetail
     
     func updateColorsAndFonts() {
         let designSystem = self.designSystem ?? RSDDesignSystem()

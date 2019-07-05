@@ -193,20 +193,52 @@ open class RSDColorRules  {
     ///     else `text.dark`
     /// ```
     ///
+    /// - Default: (version 2)
+    /// ```
+    ///     See the Sage Design System table.
+    ///     https://www.figma.com/file/nvoSigSxbFuWzGXgUZAf8M/DigitalHealth_DesignSystem-Master?node-id=3837%3A16223
+    /// ```
+    ///
     /// - parameters:
     ///     - background: The background of the text UI element.
     ///     - textType: The type size of the UI element.
     /// - returns: The text color to use.
     open func textColor(on background: RSDColorTile, for textType: RSDDesignSystem.TextType) -> RSDColor {
-        if background.usesLightStyle {
-            return self.palette.text.light.color
+        if self.palette.text.colorTiles.count == 5 {
+            if background.usesLightStyle {
+                return self.palette.text.veryLight.color
+            }
+            else {
+                switch textType {
+                case .hint, .microDetail:
+                    return self.palette.text.normal.color
+                case .small, .bodyDetail:
+                    return self.palette.text.dark.color
+                default:
+                    return self.palette.text.veryDark.color
+                }
+            }
+        }
+        else if self.palette.text.colorTiles.count > 0 {
+            // Version 0 and 1 only have 3 colors defined, so need to match within that.
+            if background.usesLightStyle {
+                return self.palette.text.colorTiles.first!.color
+            }
+            else {
+                switch textType {
+                case .small, .bodyDetail, .hint, .microDetail:
+                    return self.palette.text.normal.color
+                default:
+                    return self.palette.text.colorTiles.last!.color
+                }
+            }
         }
         else {
-            switch textType {
-            case .small, .bodyDetail:
-                return self.palette.text.normal.color
-            default:
-                return self.palette.text.dark.color
+            if background.usesLightStyle {
+                return self.palette.grayScale.white.color
+            }
+            else {
+                return self.palette.grayScale.black.color
             }
         }
     }
@@ -401,7 +433,7 @@ open class RSDColorRules  {
     /// - returns: The color to use for the text of a rounded button.
     open func roundedButtonText(on background: RSDColorTile, with buttonType: RSDDesignSystem.ButtonType, forState state: RSDControlState) -> RSDColor {
         let tile = self.roundedButton(on: background, buttonType: buttonType)
-        let color = textColor(on: tile.normal, for: .heading4)
+        let color = textColor(on: tile.normal, for: .body)
         if state == .disabled && !tile.normal.usesLightStyle {
             return color.withAlphaComponent(0.35)
         }

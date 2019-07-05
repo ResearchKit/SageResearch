@@ -119,8 +119,8 @@ extension RSDDatePickerMode {
 
 /// `RSDChoicePickerView` is a `UIPickerView` that can be used to represent a picker with an associated index path.
 /// This picker has a `RSDChoicePickerDataSource` as it's source. This implementation only supports text choices.
-open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerViewDataSource, UIPickerViewDelegate {
-    
+open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerViewDataSource, UIPickerViewDelegate, RSDViewDesignable {
+
     /// The observer of this picker
     public weak var observer: RSDPickerObserver?
     
@@ -310,8 +310,11 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
     
     /// Instantiate a label for the given component.
     open func instantiateLabel(for component: Int) -> UILabel {
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        let background = self.backgroundColorTile ?? designSystem.colorRules.backgroundLight        
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 24)
+        label.font = designSystem.fontRules.font(for: .largeHeader)
+        label.textColor = designSystem.colorRules.textColor(on: background, for: .largeHeader)
         let isFirst = (component == 0)
         let isLast = (component + 1 == numberOfComponents)
         if numberOfComponents == 1 || !(isFirst || isLast) {
@@ -351,6 +354,16 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
     private var _rowWidth: [Int: CGFloat] = [:]
     private var _rowHeight: CGFloat = 0
     
+    // MARK: Design System
+    
+    public private(set) var backgroundColorTile: RSDColorTile?
+    
+    public private(set) var designSystem: RSDDesignSystem?
+    
+    public func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        self.designSystem = designSystem
+        self.backgroundColorTile = background
+    }
 }
 
 /// `RSDNumberPickerView` is a `UIPickerView` that can be used to represent a picker with an associated index path.

@@ -76,20 +76,50 @@ open class RSDDesignSystem {
     /// The button type for the button. This refers to whether or not the button is used to represent a
     /// primary or secondary action.
     public enum ButtonType: String, Codable, CaseIterable {
-        case primary, secondary
+        case primary, secondary, toggle, bodyLink, headerLink
     }
     
     /// The supported text types for the text fields and labels.
-    public enum TextType : String, Codable, CaseIterable {
-        case heading1
-        case heading2       // step title
-        case heading3
-        case heading4
-        case fieldHeader
-        case body           // step text
-        case bodyDetail     // step detail
-        case small          // step footnote
-        case microHeader
-        case counter
+    public struct TextType : RawRepresentable, Codable, ExpressibleByStringLiteral, Hashable {
+        public let rawValue: String
+        
+        public init?(rawValue: String) {
+            self.rawValue = rawValue
+        }
+        
+        public init(stringLiteral value: String) {
+            self.rawValue = value
+        }
+        
+        // Version 2
+        public static let largeNumber: TextType = "largeNumber"
+        public static let smallNumber: TextType = "smallNumber"
+        public static let xLargeHeader: TextType = "xLargeHeader"
+        public static let largeHeader: TextType = "largeHeader"
+        public static let largeBody: TextType = "largeBody"
+        public static let xSmallNumber: TextType = "xSmallNumber"
+        public static let mediumHeader: TextType = "mediumHeader"
+        public static let body: TextType = "body"
+        public static let bodyDetail: TextType = "bodyDetail"
+        public static let italicDetail: TextType = "italicDetail"
+        public static let smallHeader: TextType = "smallHeader"
+        public static let small: TextType = "small"
+        public static let hint: TextType = "hint"    // placeholder
+        public static let microHeader: TextType = "microHeader"
+        public static let microDetail: TextType = "microDetail"
+        
+        // Version 1
+        @available(*,deprecated)
+        public static let heading1: TextType = "heading1"
+        @available(*,deprecated)
+        public static let heading2: TextType = "heading2"
+        @available(*,deprecated)
+        public static let heading3: TextType = "heading3"
+        @available(*,deprecated)
+        public static let heading4: TextType = "heading4"
+        @available(*,deprecated)
+        public static let fieldHeader: TextType = "fieldHeader"
+        @available(*,deprecated)
+        public static let counter: TextType = "counter"
     }
 }

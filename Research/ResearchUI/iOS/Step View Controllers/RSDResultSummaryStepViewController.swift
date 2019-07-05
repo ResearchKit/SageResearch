@@ -71,12 +71,20 @@ open class RSDResultSummaryStepViewController: RSDInstructionStepViewController 
         postAccessibilityAnnouncement()
     }
     
+    open override func setupViews() {
+        super.setupViews()
+        
+        self.resultTitleLabel?.font = self.designSystem.fontRules.baseFont(for: .largeHeader)
+        self.resultLabel?.font = self.designSystem.fontRules.baseFont(for: .largeNumber)
+        self.unitLabel?.font = self.designSystem.fontRules.baseFont(for: .largeHeader)
+    }
+    
     open override func setColorStyle(for placement: RSDColorPlacement, background: RSDColorTile) {
         super.setColorStyle(for: placement, background: background)
         
-        self.resultTitleLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .fieldHeader)
-        self.resultLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .counter)
-        self.unitLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .counter)
+        self.resultTitleLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .largeHeader)
+        self.resultLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .largeNumber)
+        self.unitLabel?.textColor = self.designSystem.colorRules.textColor(on: background, for: .largeHeader)
     }
     
     open override func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {

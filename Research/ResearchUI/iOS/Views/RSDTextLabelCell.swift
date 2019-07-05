@@ -101,7 +101,7 @@ import Foundation
     func updateColorAndFont() {
         guard let colorTile = self.backgroundColorTile else { return }
         let designSystem = self.designSystem ?? RSDDesignSystem()
-        label.font = designSystem.fontRules.font(for: .small, compatibleWith: traitCollection)
-        label.textColor = designSystem.colorRules.textColor(on: colorTile, for: .small)
+        label.font = designSystem.fontRules.font(for: .microDetail, compatibleWith: traitCollection)
+        label.textColor = designSystem.colorRules.textColor(on: colorTile, for: .microDetail)
     }
 }

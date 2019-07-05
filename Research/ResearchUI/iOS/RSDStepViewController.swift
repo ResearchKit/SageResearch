@@ -374,7 +374,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
                 header.shouldShowProgress = true
                 header.progressView?.totalSteps = stepCount
                 header.progressView?.currentStep = stepIndex
-                header.stepCountLabel?.attributedText = header.progressView?.attributedStringForLabel()
+                header.stepCountLabel?.text = header.progressView?.stringForLabel()
                 header.isStepLabelHidden = isEstimated
             } else {
                 header.shouldShowProgress = false

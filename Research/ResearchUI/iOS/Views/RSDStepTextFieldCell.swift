@@ -58,7 +58,7 @@ open class RSDStepTextFieldCell: RSDTableViewCell {
         fieldLabel = UILabel()
     }
     
-    open private(set) var fieldLabelTextType: RSDDesignSystem.TextType = .small
+    open private(set) var fieldLabelTextType: RSDDesignSystem.TextType = .microHeader
     open private(set) var textfieldTextType: RSDDesignSystem.TextType = .body
     
     override open var usesTableBackgroundColor: Bool {
@@ -202,7 +202,7 @@ open class RSDStepTextViewCell: RSDTableViewCell {
         updateColorsAndFonts()
     }
     
-    open private(set) var fieldLabelTextType: RSDDesignSystem.TextType = .small
+    open private(set) var fieldLabelTextType: RSDDesignSystem.TextType = .microHeader
     open private(set) var textViewTextType: RSDDesignSystem.TextType = .body
     
     override open var usesTableBackgroundColor: Bool {
@@ -323,7 +323,7 @@ extension RSDDefaultStepTextViewCellLayoutConstants : RSDStepTextViewCellLayoutC
 open class RSDStepTextFieldFeaturedCell: RSDStepTextFieldCell {
     
     override open var textfieldTextType: RSDDesignSystem.TextType {
-        return .heading1
+        return .largeBody
     }
     
     /// Override `setupViews()` to change alignment and set the field label hidden.

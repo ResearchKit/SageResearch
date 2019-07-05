@@ -119,29 +119,27 @@ class ColorRulesTests: XCTestCase {
 
     func testTextColor() {
         let palette: RSDColorPalette = .wireframe
-        let colorRules = RSDColorRules(palette: palette)
+        let colorRules = RSDColorRules(palette: palette, version: 2)
         
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .heading1), palette.text.dark.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .heading2), palette.text.dark.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .heading3), palette.text.dark.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .heading4), palette.text.dark.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .fieldHeader), palette.text.dark.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .body), palette.text.dark.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .microHeader), palette.text.dark.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .counter), palette.text.dark.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .bodyDetail), palette.text.normal.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .small), palette.text.normal.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .xLargeHeader), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .largeHeader), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .mediumHeader), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .smallHeader), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .body), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .microHeader), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .largeNumber), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .bodyDetail), palette.text.dark.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .small), palette.text.dark.color)
         
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .heading1), palette.text.light.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .heading2), palette.text.light.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .heading3), palette.text.light.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .heading4), palette.text.light.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .fieldHeader), palette.text.light.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .body), palette.text.light.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .microHeader), palette.text.light.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .counter), palette.text.light.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .bodyDetail), palette.text.light.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .small), palette.text.light.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .xLargeHeader), UIColor.white)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .largeHeader), UIColor.white)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .mediumHeader), UIColor.white)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .smallHeader), UIColor.white)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .body), UIColor.white)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .microHeader), UIColor.white)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .largeNumber), UIColor.white)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .bodyDetail), UIColor.white)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .small), UIColor.white)
     }
 
     func testTintedButtonColor_LightPrimary() {
@@ -165,38 +163,16 @@ class ColorRulesTests: XCTestCase {
         XCTAssertEqual(colorRules.tintedButtonColor(on: palette.primary.normal), UIColor.white)
         XCTAssertEqual(colorRules.tintedButtonColor(on: palette.successGreen.veryLight), palette.grayScale.veryDarkGray.color)
     }
-
-    func testUnderlinedTextButton_v0_LightPrimary() {
-        let palette: RSDColorPalette = .beach
-        let colorRules = RSDColorRules(palette: palette, version: 0)
-        
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.black, state: .normal), UIColor.white)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.white, state: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.veryLightGray, state: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.primary.normal, state: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.successGreen.veryLight, state: .normal), palette.text.dark.color)
-    }
-    
-    func testUnderlinedTextButton_v0_DarkPrimary() {
-        let palette: RSDColorPalette = .midnight
-        let colorRules = RSDColorRules(palette: palette, version: 0)
-        
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.black, state: .normal), UIColor.white)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.white, state: .normal), palette.primary.normal.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.veryLightGray, state: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.primary.normal, state: .normal), palette.text.light.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.successGreen.veryLight, state: .normal), palette.text.dark.color)
-    }
     
     func testUnderlinedTextButton_v1_LightPrimary() {
         let palette: RSDColorPalette = .beach
         let colorRules = RSDColorRules(palette: palette, version: 1)
         
         XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.black, state: .normal), UIColor.white)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.white, state: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.veryLightGray, state: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.primary.normal, state: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.successGreen.veryLight, state: .normal), palette.text.dark.color)
+        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.white, state: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.veryLightGray, state: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.primary.normal, state: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.successGreen.veryLight, state: .normal), palette.text.veryDark.color)
     }
     
     func testUnderlinedTextButton_v1_DarkPrimary() {
@@ -204,10 +180,10 @@ class ColorRulesTests: XCTestCase {
         let colorRules = RSDColorRules(palette: palette, version: 1)
         
         XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.black, state: .normal), UIColor.white)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.white, state: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.veryLightGray, state: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.primary.normal, state: .normal), palette.text.light.color)
-        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.successGreen.veryLight, state: .normal), palette.text.dark.color)
+        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.white, state: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.grayScale.veryLightGray, state: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.primary.normal, state: .normal), UIColor.white)
+        XCTAssertEqual(colorRules.underlinedTextButton(on: palette.successGreen.veryLight, state: .normal), palette.text.veryDark.color)
     }
 
     func testRoundedButton() {
@@ -244,40 +220,40 @@ class ColorRulesTests: XCTestCase {
         let palette: RSDColorPalette = .beach
         let colorRules = RSDColorRules(palette: palette)
         
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .normal), palette.text.dark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .normal), palette.text.veryDark.color)
         
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .highlighted), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .highlighted), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .highlighted), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .highlighted), palette.text.dark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .highlighted), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .highlighted), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .highlighted), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .highlighted), palette.text.veryDark.color)
         
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .disabled), palette.text.dark.color.withAlphaComponent(0.35))
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .disabled), palette.text.dark.color.withAlphaComponent(0.35))
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .disabled), palette.text.dark.color.withAlphaComponent(0.35))
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .disabled), palette.text.dark.color.withAlphaComponent(0.35))
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .disabled), palette.text.veryDark.color.withAlphaComponent(0.35))
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .disabled), palette.text.veryDark.color.withAlphaComponent(0.35))
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .disabled), palette.text.veryDark.color.withAlphaComponent(0.35))
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .disabled), palette.text.veryDark.color.withAlphaComponent(0.35))
     }
     
     func testRoundedButtonText_DarkSecondary() {
         let palette: RSDColorPalette = .midnight
         let colorRules = RSDColorRules(palette: palette)
         
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .normal), palette.text.light.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .normal), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .normal), palette.text.dark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .normal), palette.text.veryLight.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .normal), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .normal), palette.text.veryDark.color)
         
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .highlighted), palette.text.light.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .highlighted), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .highlighted), palette.text.dark.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .highlighted), palette.text.dark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .highlighted), palette.text.veryLight.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .highlighted), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .highlighted), palette.text.veryDark.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .highlighted), palette.text.veryDark.color)
         
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .disabled), palette.text.light.color)
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .disabled), palette.text.dark.color.withAlphaComponent(0.35))
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .disabled), palette.text.dark.color.withAlphaComponent(0.35))
-        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .disabled), palette.text.dark.color.withAlphaComponent(0.35))
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .primary, forState: .disabled), palette.text.veryLight.color)
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .primary, forState: .disabled), palette.text.veryDark.color.withAlphaComponent(0.35))
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.grayScale.white, with: .secondary, forState: .disabled), palette.text.veryDark.color.withAlphaComponent(0.35))
+        XCTAssertEqual(colorRules.roundedButtonText(on: palette.primary.normal, with: .secondary, forState: .disabled), palette.text.veryDark.color.withAlphaComponent(0.35))
     }
     
     func testCheckboxButton_LightColors() {
