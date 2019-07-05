@@ -313,7 +313,7 @@ open class RSDChoicePickerView : UIPickerView, RSDPickerViewProtocol, UIPickerVi
         let designSystem = self.designSystem ?? RSDDesignSystem()
         let background = self.backgroundColorTile ?? designSystem.colorRules.backgroundLight        
         let label = UILabel()
-        label.font = designSystem.fontRules.font(for: .largeHeader)
+        label.font = designSystem.fontRules.baseFont(for: .largeHeader)
         label.textColor = designSystem.colorRules.textColor(on: background, for: .largeHeader)
         let isFirst = (component == 0)
         let isLast = (component + 1 == numberOfComponents)

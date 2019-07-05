@@ -113,7 +113,7 @@ open class RSDStepProgressView: UIView, RSDViewDesignable {
         progressView.backgroundColor = rules.filled
         backgroundView.backgroundColor = rules.unfilled
         stepCountLabel?.textColor = designSystem.colorRules.textColor(on: colorTile, for: .microHeader)
-        stepCountLabel?.font = designSystem.fontRules.font(for: .microHeader)
+        stepCountLabel?.font = designSystem.fontRules.font(for: .microHeader, compatibleWith: traitCollection)
     }
 
     /// The height of the actual progress bar.

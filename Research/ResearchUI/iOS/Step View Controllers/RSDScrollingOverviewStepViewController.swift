@@ -167,7 +167,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
             scrollView.backgroundColor = background.color
             iconViewLabel.text = Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
             iconViewLabel.textColor = self.designSystem.colorRules.textColor(on: background, for: .mediumHeader)
-            iconViewLabel.font = self.designSystem.fontRules.font(for: .mediumHeader)
+            iconViewLabel.font = self.designSystem.fontRules.font(for: .mediumHeader, compatibleWith: traitCollection)
             
             let textColor = self.designSystem.colorRules.textColor(on: background, for: .microHeader)
             let font = self.designSystem.fontRules.font(for: .microHeader, compatibleWith: traitCollection)

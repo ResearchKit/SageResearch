@@ -72,7 +72,7 @@ open class RSDFontRules  {
     /// - returns: The font to use for this text.
     @available(iOS 10.3, tvOS 10.2, *)
     open func font(for textType: RSDDesignSystem.TextType, compatibleWith traitCollection: UITraitCollection?) -> RSDFont {
-        return self.font(for: textType)
+        return preferredFont(for: textType, compatibleWith: traitCollection)
     }
     #endif
     
@@ -109,10 +109,7 @@ open class RSDFontRules  {
     /// - parameter textType: The text type for the font.
     /// - returns: The font to use for this text.
     open func font(for textType: RSDDesignSystem.TextType) -> RSDFont {
-        let font = baseFont(for: textType)
-        let sizeRatio = self.preferredFontSizeRatio(for: textType)
-        let fontSize = round(font.pointSize * sizeRatio)
-        return font.withSize(fontSize)
+        return preferredFont(for: textType)
     }
     
     /// Returns a font in the given size and weight in the font family specified for this design.
@@ -195,48 +192,44 @@ open class RSDFontRules  {
         }
     }
     
-    /// Returns whether or not the specified text type is dynamic.
-    /// - parameter textType: The text type for the font.
-    open func isDynamic(_ textType: RSDDesignSystem.TextType) -> Bool {
-        switch textType {
-        case .xLargeHeader, .largeHeader, .mediumHeader, .smallHeader,
-             .body, .bodyDetail, .italicDetail, .small, .hint, .microDetail:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    #if os(macOS) || os(watchOS)
-    
-    /// Preferred font size ratio is undefined for macOS and watchOS.
-    /// - returns: nil
-    open func preferredFontSizeRatio(for textType: RSDDesignSystem.TextType) -> CGFloat {
-        return 1.0
-    }
-    
-    #else
+    #if os(iOS) || os(tvOS)
     
     /// Using a mapping of the base font size, look for the text style to use for that text type
     /// and return the font size ratio preferred by the user based on their accessibility settings.
-    open func preferredFontSizeRatio(for textType: RSDDesignSystem.TextType) -> CGFloat {
+    /// - parameter textType: The text type for the font.
+    /// - returns: The ratio of preferred font size to base font size.
+    open func preferredFontSizeRatio(for textType: RSDDesignSystem.TextType, compatibleWith traitCollection: UITraitCollection? = nil) -> CGFloat {
         guard let style = textStyle(for: textType),
             let base = baseSize[style.rawValue]
             else {
                 return 1.0
         }
-        let font = UIFont.preferredFont(forTextStyle: style)
+        let font = UIFont.preferredFont(forTextStyle: style, compatibleWith: traitCollection)
         return font.pointSize / base
     }
     
-    func textStyle(for textType: RSDDesignSystem.TextType) -> UIFont.TextStyle? {
+    private func preferredFont(for textType: RSDDesignSystem.TextType, compatibleWith traitCollection: UITraitCollection? = nil) -> RSDFont {
+        let font = baseFont(for: textType)
+        let sizeRatio = self.preferredFontSizeRatio(for: textType)
+        let fontSize = round(font.pointSize * sizeRatio)
+        return font.withSize(fontSize)
+    }
+    
+    
+    /// Returns the mapping of the text style that most closely aligns with the design system text type.
+    private func textStyle(for textType: RSDDesignSystem.TextType) -> UIFont.TextStyle? {
         switch textType {
         case .xLargeHeader:
+            #if os(iOS)
             if #available(iOSApplicationExtension 11.0, *) {
                 return .largeTitle
             } else {
                 return .title1
             }
+            #else
+                return .title1
+            #endif
+            
         case .largeHeader:
             return .title1
         case .mediumHeader:
@@ -256,11 +249,9 @@ open class RSDFontRules  {
         }
     }
     
-    #endif
-    
     /// Mapping of text style to font size on iPhone if the "Large Text" accessibility setting
     /// is turned off.
-    let baseSize: [String : CGFloat] = [
+    private let baseSize: [String : CGFloat] = [
         "UICTFontTextStyleBody": 17.0,
         "UICTFontTextStyleCallout": 16.0,
         "UICTFontTextStyleCaption1": 12.0,
@@ -273,6 +264,14 @@ open class RSDFontRules  {
         "UICTFontTextStyleTitle2": 22.0,
         "UICTFontTextStyleTitle3": 20.0,
     ]
+    
+    #else
+    
+    private func preferredFont(for textType: RSDDesignSystem.TextType) -> RSDFont {
+        return baseFont(for: textType)
+    }
+    
+    #endif
 }
 
 #if os(macOS)
