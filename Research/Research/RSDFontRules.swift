@@ -86,7 +86,7 @@ open class RSDFontRules  {
         switch buttonType {
             
         case .primary, .secondary:
-            return RSDFont.systemFont(ofSize: 20, weight: .bold)
+            return font(ofSize: 20, weight: .bold)
             
         case .bodyLink:
             return baseFont(for: .body)
@@ -97,9 +97,9 @@ open class RSDFontRules  {
         case .toggle:
             switch state {
             case .selected:
-                return RSDFont.systemFont(ofSize: 16, weight: .bold)
+                return font(ofSize: 16, weight: .bold)
             default:
-                return RSDFont.systemFont(ofSize: 16, weight: .regular)
+                return font(ofSize: 16, weight: .regular)
             }
         }
     }
@@ -118,11 +118,14 @@ open class RSDFontRules  {
     /// copy and dynamic text. This method should only be used where the design calls for a
     /// specific size to match the graphic design of the view.
     ///
+    /// - note: All other methods on this class will call through to this method, so for custom
+    ///         fonts, you can override this method only if the only change is a custom font.
+    ///
     /// - parameters:
     ///     - fontSize: The font size.
     ///     - weight: The font weight.
     /// - returns: The font to use for this size and weight.
-    open func font(ofSize fontSize: CGFloat, weight: RSDFont.Weight) -> RSDFont {
+    open func font(ofSize fontSize: CGFloat, weight: RSDFont.Weight = .regular) -> RSDFont {
         return RSDFont.systemFont(ofSize: fontSize, weight: weight)
     }
     
@@ -140,57 +143,53 @@ open class RSDFontRules  {
             
         // Version 2
         case .largeNumber:
-            return RSDFont.systemFont(ofSize: 72, weight: .light)
+            return font(ofSize: 72, weight: .light)
         case .smallNumber:
-            return RSDFont.systemFont(ofSize: 48, weight: .light)
+            return font(ofSize: 48, weight: .light)
         case .xSmallNumber:
-            return RSDFont.systemFont(ofSize: 20, weight: .light)
+            return font(ofSize: 20, weight: .light)
 
         case .xLargeHeader:
-            return RSDFont.systemFont(ofSize: 30, weight: .bold)
+            return font(ofSize: 30, weight: .bold)
         case .largeHeader:
-            return RSDFont.systemFont(ofSize: 24, weight: .bold)
+            return font(ofSize: 24, weight: .bold)
         case .mediumHeader:
-            return RSDFont.systemFont(ofSize: 18, weight: .bold)
+            return font(ofSize: 18, weight: .bold)
         case .smallHeader:
-            return RSDFont.systemFont(ofSize: 16, weight: .bold)
+            return font(ofSize: 16, weight: .bold)
         case .microHeader:
-            return RSDFont.systemFont(ofSize: 14).rsd_smallCaps()
+            return font(ofSize: 14).rsd_smallCaps()
         
         case .largeBody:
-            return RSDFont.systemFont(ofSize: 24, weight: .light)
+            return font(ofSize: 24, weight: .light)
         case .body:
-            return RSDFont.systemFont(ofSize: 18)
+            return font(ofSize: 18)
         case .bodyDetail:
-            return RSDFont.systemFont(ofSize: 16)
+            return font(ofSize: 16)
         case .italicDetail:
-            #if os(macOS)
-            return RSDFont.systemFont(ofSize: 16)
-            #else
-            return RSDFont.italicSystemFont(ofSize: 16)
-            #endif
+            return font(ofSize: 16).rsd_italic()
         case .small, .hint:
-            return RSDFont.systemFont(ofSize: 16)
+            return font(ofSize: 16)
         case .microDetail:
-            return RSDFont.systemFont(ofSize: 14)
+            return font(ofSize: 14)
             
         // Version 1
         case .heading1:
-            return RSDFont.systemFont(ofSize: 30, weight: .bold)
+            return font(ofSize: 30, weight: .bold)
         case .heading2:
-            return RSDFont.systemFont(ofSize: 24, weight: .bold)
+            return font(ofSize: 24, weight: .bold)
         case .heading3:
-            return RSDFont.systemFont(ofSize: 20, weight: .heavy)
+            return font(ofSize: 20, weight: .heavy)
         case .heading4:
-            return RSDFont.systemFont(ofSize: 18, weight: .bold)
+            return font(ofSize: 18, weight: .bold)
         case .fieldHeader:
-            return RSDFont.systemFont(ofSize: 16, weight: .heavy)
+            return font(ofSize: 16, weight: .heavy)
         case .counter:
-            return RSDFont.systemFont(ofSize: 80, weight: .light)
+            return font(ofSize: 80, weight: .light)
             
         default:
             assertionFailure("\(textType) is not defined. Returning `body` type.")
-            return RSDFont.systemFont(ofSize: 18)
+            return font(ofSize: 18)
         }
     }
     
@@ -213,15 +212,32 @@ extension NSFont {
     func rsd_smallCaps() -> RSDFont {
         return self
     }
+    
+    func rsd_italic() -> RSDFont {
+        return self
+    }
 }
 #else
 extension UIFont {
+    
+    public func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
+        guard let descriptor = fontDescriptor.withSymbolicTraits(traits)
+            else {
+                debugPrint("WARNING!! Failed to create font with \(traits)")
+                return self
+        }
+        return UIFont(descriptor: descriptor, size: 0)
+    }
     
     func rsd_smallCaps() -> RSDFont {
         let settings: [[UIFontDescriptor.FeatureKey : Int]] = [[.featureIdentifier: kLowerCaseType, .typeIdentifier: kLowerCaseSmallCapsSelector]]
         let attributes: [UIFontDescriptor.AttributeName : Any] = [.featureSettings: settings]
         let fontDescriptor = self.fontDescriptor.addingAttributes(attributes)
         return UIFont(descriptor: fontDescriptor, size: pointSize)
+    }
+    
+    func rsd_italic() -> RSDFont {
+        return self.withTraits(traits: .traitItalic)
     }
 }
 #endif
