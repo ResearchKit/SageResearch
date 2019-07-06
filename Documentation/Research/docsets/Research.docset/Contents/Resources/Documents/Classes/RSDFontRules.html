@@ -89,7 +89,7 @@
                 <a href="../Classes/RSDDesignSystem.html#/s:8Research15RSDDesignSystemC10ButtonTypeO">– ButtonType</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/RSDDesignSystem.html#/s:8Research15RSDDesignSystemC8TextTypeO">– TextType</a>
+                <a href="../Classes/RSDDesignSystem/TextType.html">– TextType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/RSDFactory.html">RSDFactory</a>
@@ -1231,9 +1231,9 @@ additive include logic to return the previous rules associated with a previous v
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research12RSDFontRulesC4font3for14compatibleWithSo6UIFontCAA15RSDDesignSystemC8TextTypeO_So17UITraitCollectionCSgtF"></a>
+                    <a name="/s:8Research12RSDFontRulesC4font3for14compatibleWithSo6UIFontCAA15RSDDesignSystemC8TextTypeV_So17UITraitCollectionCSgtF"></a>
                     <a name="//apple_ref/swift/Method/font(for:compatibleWith:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research12RSDFontRulesC4font3for14compatibleWithSo6UIFontCAA15RSDDesignSystemC8TextTypeO_So17UITraitCollectionCSgtF">font(for:compatibleWith:)</a>
+                    <a class="token" href="#/s:8Research12RSDFontRulesC4font3for14compatibleWithSo6UIFontCAA15RSDDesignSystemC8TextTypeV_So17UITraitCollectionCSgtF">font(for:compatibleWith:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1242,7 +1242,7 @@ additive include logic to return the previous rules associated with a previous v
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>On iOS and tvOS, this method allows for using a different font size depending upon the trait
-collection. Default implementation calls through to <code><a href="../Classes/RSDFontRules.html#/s:8Research12RSDFontRulesC4font3forSo6UIFontCAA15RSDDesignSystemC8TextTypeO_tF">font(for:)</a></code> but a module that is designed to
+collection. Default implementation calls through to <code><a href="../Classes/RSDFontRules.html#/s:8Research12RSDFontRulesC4font3forSo6UIFontCAA15RSDDesignSystemC8TextTypeV_tF">font(for:)</a></code> but a module that is designed to
 run on an iPad or Apple TV could use this method to define a different set of fonts for those devices.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
@@ -1303,9 +1303,71 @@ the version before the version that is being implemented.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research12RSDFontRulesC4font3forSo6UIFontCAA15RSDDesignSystemC8TextTypeO_tF"></a>
+                    <a name="/s:8Research12RSDFontRulesC10buttonFont3for5stateSo6UIFontCAA15RSDDesignSystemC10ButtonTypeO_AA15RSDControlStateOtF"></a>
+                    <a name="//apple_ref/swift/Method/buttonFont(for:state:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research12RSDFontRulesC10buttonFont3for5stateSo6UIFontCAA15RSDDesignSystemC10ButtonTypeO_AA15RSDControlStateOtF">buttonFont(for:state:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the font to use for the given button type and state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">buttonFont</span><span class="p">(</span><span class="k">for</span> <span class="nv">buttonType</span><span class="p">:</span> <span class="kt"><a href="../Classes/RSDDesignSystem.html">RSDDesignSystem</a></span><span class="o">.</span><span class="kt">ButtonType</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">RSDControlState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/RSDFont">RSDFont</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>buttonType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The button type.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The button state.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The font to use for this text.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research12RSDFontRulesC4font3forSo6UIFontCAA15RSDDesignSystemC8TextTypeV_tF"></a>
                     <a name="//apple_ref/swift/Method/font(for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research12RSDFontRulesC4font3forSo6UIFontCAA15RSDDesignSystemC8TextTypeO_tF">font(for:)</a>
+                    <a class="token" href="#/s:8Research12RSDFontRulesC4font3forSo6UIFontCAA15RSDDesignSystemC8TextTypeV_tF">font(for:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1346,6 +1408,183 @@ the version before the version that is being implemented.</p>
                       <div>
                         <h4>Return Value</h4>
                         <p>The font to use for this text.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research12RSDFontRulesC4font6ofSize6weightSo6UIFontC12CoreGraphics7CGFloatV_So0H6WeightatF"></a>
+                    <a name="//apple_ref/swift/Method/font(ofSize:weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research12RSDFontRulesC4font6ofSize6weightSo6UIFontC12CoreGraphics7CGFloatV_So0H6WeightatF">font(ofSize:weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a font in the given size and weight in the font family specified for this design.
+Typically, you will want to use <code>font(for textType: RSDDesignSystem.TextType)</code> instead for
+copy and dynamic text. This method should only be used where the design calls for a
+specific size to match the graphic design of the view.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>All other methods on this class will call through to this method, so for custom
+    fonts, you can override this method only if the only change is a custom font.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">font</span><span class="p">(</span><span class="n">ofSize</span> <span class="nv">fontSize</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">weight</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/RSDFont">RSDFont</a></span><span class="o">.</span><span class="kt">Weight</span> <span class="o">=</span> <span class="o">.</span><span class="n">regular</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/RSDFont">RSDFont</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fontSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The font size.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The font weight.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The font to use for this size and weight.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research12RSDFontRulesC8baseFont3forSo6UIFontCAA15RSDDesignSystemC8TextTypeV_tF"></a>
+                    <a name="//apple_ref/swift/Method/baseFont(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research12RSDFontRulesC8baseFont3forSo6UIFontCAA15RSDDesignSystemC8TextTypeV_tF">baseFont(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the base font for a given text type. This is the font size defined in the Sage
+Design System table. For dynamic fonts, this can be resized based upon user preferences by
+using the <code>font(for textType: RSDDesignSystem.TextType)</code> instead.</p>
+
+<p>This is <em>only</em> to be used directly where the text needs to fix within a specific size, but
+match the <q>style</q> of a given text type.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">baseFont</span><span class="p">(</span><span class="k">for</span> <span class="nv">textType</span><span class="p">:</span> <span class="kt"><a href="../Classes/RSDDesignSystem.html">RSDDesignSystem</a></span><span class="o">.</span><span class="kt">TextType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/RSDFont">RSDFont</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>textType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The text type for the font.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The <em>base</em> font to use for this text.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research12RSDFontRulesC22preferredFontSizeRatio3for14compatibleWith12CoreGraphics7CGFloatVAA15RSDDesignSystemC8TextTypeV_So17UITraitCollectionCSgtF"></a>
+                    <a name="//apple_ref/swift/Method/preferredFontSizeRatio(for:compatibleWith:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research12RSDFontRulesC22preferredFontSizeRatio3for14compatibleWith12CoreGraphics7CGFloatVAA15RSDDesignSystemC8TextTypeV_So17UITraitCollectionCSgtF">preferredFontSizeRatio(for:compatibleWith:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Using a mapping of the base font size, look for the text style to use for that text type
+and return the font size ratio preferred by the user based on their accessibility settings.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">preferredFontSizeRatio</span><span class="p">(</span><span class="k">for</span> <span class="nv">textType</span><span class="p">:</span> <span class="kt"><a href="../Classes/RSDDesignSystem.html">RSDDesignSystem</a></span><span class="o">.</span><span class="kt">TextType</span><span class="p">,</span> <span class="n">compatibleWith</span> <span class="nv">traitCollection</span><span class="p">:</span> <span class="kt">UITraitCollection</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>textType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The text type for the font.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The ratio of preferred font size to base font size.</p>
                       </div>
                     </section>
                   </div>
