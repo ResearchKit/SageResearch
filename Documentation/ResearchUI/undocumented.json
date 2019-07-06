@@ -51,7 +51,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Step View Controllers/RSDActiveStepViewController.swift",
-      "line": 413,
+      "line": 429,
       "symbol": "RSDActiveStepViewControllerV0",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
@@ -338,21 +338,21 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 216,
+      "line": 217,
       "symbol": "RSDCountdownDial.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 221,
+      "line": 222,
       "symbol": "RSDCountdownDial.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDCountdownDial.swift",
-      "line": 244,
+      "line": 245,
       "symbol": "RSDCountdownDial.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -394,35 +394,35 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 409,
+      "line": 422,
       "symbol": "RSDNumberPickerView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 428,
+      "line": 441,
       "symbol": "RSDNumberPickerView.numberOfComponents(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 432,
+      "line": 445,
       "symbol": "RSDNumberPickerView.pickerView(_:numberOfRowsInComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 440,
+      "line": 453,
       "symbol": "RSDNumberPickerView.pickerView(_:titleForRow:forComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDPickerViewProtocol.swift",
-      "line": 445,
+      "line": 458,
       "symbol": "RSDNumberPickerView.pickerView(_:didSelectRow:inComponent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -856,28 +856,28 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDStepProgressView.swift",
-      "line": 162,
+      "line": 166,
       "symbol": "RSDStepProgressView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDStepProgressView.swift",
-      "line": 167,
+      "line": 171,
       "symbol": "RSDStepProgressView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDStepProgressView.swift",
-      "line": 172,
+      "line": 176,
       "symbol": "RSDStepProgressView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDStepProgressView.swift",
-      "line": 189,
+      "line": 193,
       "symbol": "RSDStepProgressView.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1276,35 +1276,49 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
-      "line": 54,
+      "line": 48,
+      "symbol": "RSDUnderlinedButton.isHeaderLink",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
+      "line": 55,
+      "symbol": "RSDUnderlinedButton.textFont",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
+      "line": 62,
       "symbol": "RSDUnderlinedButton.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
-      "line": 59,
+      "line": 67,
       "symbol": "RSDUnderlinedButton.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
-      "line": 64,
+      "line": 72,
       "symbol": "RSDUnderlinedButton.prepareForInterfaceBuilder()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
-      "line": 70,
+      "line": 78,
       "symbol": "RSDUnderlinedButton.commonInit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Views/RSDUnderlinedButton.swift",
-      "line": 75,
+      "line": 83,
       "symbol": "RSDUnderlinedButton.tintColorDidChange()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
