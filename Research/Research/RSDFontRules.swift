@@ -217,6 +217,7 @@ open class RSDFontRules  {
     
     
     /// Returns the mapping of the text style that most closely aligns with the design system text type.
+    @available(iOS 10.0, tvOS 10.2, *)
     private func textStyle(for textType: RSDDesignSystem.TextType) -> UIFont.TextStyle? {
         switch textType {
         case .xLargeHeader:
