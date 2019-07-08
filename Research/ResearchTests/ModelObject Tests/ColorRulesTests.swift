@@ -129,7 +129,7 @@ class ColorRulesTests: XCTestCase {
         XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .microHeader), palette.text.veryDark.color)
         XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .largeNumber), palette.text.veryDark.color)
         XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .bodyDetail), palette.text.dark.color)
-        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .small), palette.text.dark.color)
+        XCTAssertEqual(colorRules.textColor(on: palette.grayScale.white, for: .small), palette.text.veryDark.color)
         
         XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .xLargeHeader), UIColor.white)
         XCTAssertEqual(colorRules.textColor(on: palette.grayScale.black, for: .largeHeader), UIColor.white)
