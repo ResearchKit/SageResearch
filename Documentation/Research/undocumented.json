@@ -723,7 +723,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDFontRules.swift",
-      "line": 291,
+      "line": 292,
       "symbol": "UIFont.withTraits(traits:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
