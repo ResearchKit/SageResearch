@@ -40,7 +40,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="1084"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCy-4g-nIJ" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="920.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="924.33333333333337"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxA-Tz-ZiS" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
@@ -94,13 +94,13 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sqK-Zj-Een" userLabel="Need Icon View">
-                                    <rect key="frame" x="24" y="778.33333333333337" width="327" height="102"/>
+                                    <rect key="frame" x="24" y="778.33333333333337" width="327" height="106"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="scQ-Ma-nDm">
-                                            <rect key="frame" x="0.0" y="0.0" width="327" height="102"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="327" height="106"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IdK-0U-hWC">
-                                                    <rect key="frame" x="0.0" y="0.0" width="89" height="102"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="89" height="106"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IconPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="f8F-hW-WUL" userLabel="LeftIconView">
                                                             <rect key="frame" x="10.666666666666664" y="0.0" width="68" height="68"/>
@@ -110,7 +110,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="PANTS WITH POCKETS" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j7J-Ir-E3m" userLabel="LeftIconTitle">
-                                                            <rect key="frame" x="0.0" y="68" width="89" height="34"/>
+                                                            <rect key="frame" x="0.0" y="72" width="89" height="34"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="6kg-Dk-ESn"/>
                                                             </constraints>
@@ -130,11 +130,11 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                                         <constraint firstItem="f8F-hW-WUL" firstAttribute="top" secondItem="IdK-0U-hWC" secondAttribute="top" id="OCs-f2-SWO"/>
                                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="f8F-hW-WUL" secondAttribute="trailing" constant="20" id="aFQ-7A-wxZ"/>
                                                         <constraint firstItem="j7J-Ir-E3m" firstAttribute="leading" secondItem="IdK-0U-hWC" secondAttribute="leading" id="hBe-gu-73Y"/>
-                                                        <constraint firstItem="j7J-Ir-E3m" firstAttribute="top" secondItem="f8F-hW-WUL" secondAttribute="bottom" id="jsX-pD-3yy"/>
+                                                        <constraint firstItem="j7J-Ir-E3m" firstAttribute="top" secondItem="f8F-hW-WUL" secondAttribute="bottom" constant="4" id="jsX-pD-3yy"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9t-AI-zq8">
-                                                    <rect key="frame" x="109.66666666666666" y="0.0" width="108" height="102"/>
+                                                    <rect key="frame" x="109.66666666666666" y="0.0" width="108" height="106"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IconPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Ge0-qc-1Fb" userLabel="CenterIconView">
                                                             <rect key="frame" x="20" y="0.0" width="68" height="68"/>
@@ -144,7 +144,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMFORTABLE PLACE TO SIT" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DIL-To-LAD" userLabel="CenterIconTitle">
-                                                            <rect key="frame" x="0.0" y="68" width="108" height="34"/>
+                                                            <rect key="frame" x="0.0" y="68" width="108" height="38"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="8he-lf-IXU"/>
                                                             </constraints>
@@ -168,7 +168,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WrC-z2-Lgg">
-                                                    <rect key="frame" x="238" y="0.0" width="89" height="102"/>
+                                                    <rect key="frame" x="238" y="0.0" width="89" height="106"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IconPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="NaD-gW-wQu" userLabel="RightIconView">
                                                             <rect key="frame" x="10.666666666666686" y="0.0" width="68" height="68"/>
@@ -178,7 +178,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PANTS WITH POCKETS" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oC7-Ly-Jym" userLabel="RightIconTitle">
-                                                            <rect key="frame" x="0.0" y="68" width="89" height="34"/>
+                                                            <rect key="frame" x="0.0" y="68" width="89" height="38"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="KbO-5Q-KTT"/>
                                                             </constraints>
@@ -254,10 +254,9 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                     <state key="normal" image="infoIcon"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAO-q7-fPw" userLabel="Cancel Button">
-                    <rect key="frame" x="20" y="64" width="32" height="32"/>
+                    <rect key="frame" x="20" y="64" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="MAO-q7-fPw" secondAttribute="height" multiplier="1:1" id="FQP-6M-XIU"/>
-                        <constraint firstAttribute="width" constant="32" id="oUt-Bl-kZX"/>
                     </constraints>
                     <state key="normal" image="closeActivity"/>
                 </button>
