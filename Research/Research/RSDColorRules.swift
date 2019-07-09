@@ -210,9 +210,9 @@ open class RSDColorRules  {
             }
             else {
                 switch textType {
-                case .hint, .microDetail:
+                case .hint:
                     return self.palette.text.normal.color
-                case .small, .bodyDetail:
+                case .bodyDetail, .microDetail:
                     return self.palette.text.dark.color
                 default:
                     return self.palette.text.veryDark.color
