@@ -590,35 +590,35 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 115,
+      "line": 116,
       "symbol": "RSDDesignSystem.TextType.heading2",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 117,
+      "line": 119,
       "symbol": "RSDDesignSystem.TextType.heading3",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 119,
+      "line": 122,
       "symbol": "RSDDesignSystem.TextType.heading4",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 121,
+      "line": 125,
       "symbol": "RSDDesignSystem.TextType.fieldHeader",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDDesignSystem.swift",
-      "line": 123,
+      "line": 128,
       "symbol": "RSDDesignSystem.TextType.counter",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
