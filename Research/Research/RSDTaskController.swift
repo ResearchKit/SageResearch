@@ -173,7 +173,7 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     ///     - completion: The completion to call with the instantiated controllers.
     func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([RSDAsyncAction]) -> Void))
     
-    /// Request permission for a controllers but do *not* start the controller.
+    /// Request permissions for controllers but do *not* start the controllers.
     ///
     /// - parameters:
     ///     - controllers: The controllers for which to request permissions.
