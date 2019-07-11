@@ -357,7 +357,11 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// Returns a list of the async action controllers that are currently active. This includes controllers
     /// that are requesting permissions, starting, running, *and* stopping.
     public var currentAsyncControllers: [RSDAsyncAction] {
-        return _asyncControllers.allObjects as! [RSDAsyncAction]
+        var ret: [RSDAsyncAction]!
+        controllerQueue.sync {
+            ret = _asyncControllers.map { $0.controller }
+        }
+        return ret
     }
     
     /// Show a loading state while fetching the given task from the task info.
@@ -481,8 +485,45 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             return asyncController
         }
         DispatchQueue.main.async {
-            self._addAsyncActionControllersIfNeeded(controllers)
+            self._addAsyncActionControllersIfNeeded(controllers, requestedState: .idle)
             completion(controllers)
+        }
+    }
+    
+    public func requestPermission(for controllers: [RSDAsyncAction], completion: @escaping (() -> Void)) {
+        _setupAsyncActions(for: controllers, shouldStart: false, showLoading: false, completion: completion)
+    }
+    
+    public func startAsyncActionsIfNeeded() {
+        // Move to background queue.
+        DispatchQueue.global().async {
+            // Filter out controllers to start.
+            var idleControllers = [RSDAsyncAction]()
+            var readyControllers = [RSDAsyncAction]()
+            self.controllerQueue.sync {
+                let controllers = self._asyncControllers
+                controllers.forEach { (inflight) in
+                    guard inflight.requestedState < .starting else { return }
+                    if inflight.controller.status == .idle && inflight.requestedState == .idle {
+                        idleControllers.append(inflight.controller)
+                    }
+                    else if inflight.controller.status == .permissionGranted {
+                        readyControllers.append(inflight.controller)
+                    }
+                    // Change state for all inflight controllers that aren't started.
+                    inflight.requestedState = .starting
+                }
+            }
+            
+            // Request permission for the ones that have been added but not started.
+            idleControllers.forEach {
+                self._requestPermission(for: $0) { }
+            }
+            
+            // Start the ones that have already granted permission.
+            readyControllers.forEach {
+                self._startAsyncActionControllerPart2($0) { }
+            }
         }
     }
 
@@ -493,6 +534,10 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// ready to proceed. Otherwise, the modal popup alert can be swallowed by the step change.
     ///
     public func startAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void)) {
+        _setupAsyncActions(for: controllers, shouldStart: true, showLoading: showLoading, completion: completion)
+    }
+    
+    private func _setupAsyncActions(for controllers:[RSDAsyncAction], shouldStart: Bool, showLoading: Bool, completion: @escaping (() -> Void)) {
 
         // Return if nothing to start
         guard controllers.count > 0 else {
@@ -502,37 +547,37 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             return
         }
         
-        // Add the controllers if needed
-        self._addAsyncActionControllersIfNeeded(controllers)
+        // Add the controllers if needed.
+        let state: RSDAsyncActionStatus = shouldStart ? .starting : .permissionGranted
+        self._addAsyncActionControllersIfNeeded(controllers, requestedState: state)
 
         // Start on the main queue
         DispatchQueue.main.async {
             
-            // Show the loading view while stoping controllers.
+            // Show the loading view while starting controllers.
             if showLoading {
                 self.showLoadingView()
             }
             
-            // After showing a loading view on the main queue, move to a background queue to stop each and wait for all the
-            // results (or a timeout) before continuing.
+            // After showing a loading view on the main queue, move to background to request permissions.
             DispatchQueue.global().async {
                 
-                // Create a dispatch group
+                // Create a dispatch group.
                 let dispatchGroup = DispatchGroup()
                 
-                // Stop each controller and add the result
+                // request permission for each controller.
                 for controller in controllers {
                     guard controller.status == RSDAsyncActionStatus.idle else { continue }
                     dispatchGroup.enter()
-                    self._startAsyncActionControllerPart1(for: controller, completion: {
+                    self._requestPermission(for: controller) {
                         dispatchGroup.leave()
-                    })
+                    }
                 }
                 
                 let timeout = DispatchTime.now() + .milliseconds(2 * 60 * 1000)
                 let waitResult = dispatchGroup.wait(timeout: timeout)
                 if waitResult == .timedOut {
-                    assertionFailure("Failed to stop all recorders.")
+                    assertionFailure("Failed to start all recorders.")
                 }
                 DispatchQueue.main.async {
                     self.hideLoadingIfNeeded()
@@ -736,25 +781,41 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     // MARK: Async action management
     
     private let controllerQueue = DispatchQueue(label: "org.sagebase.Research.Controllers.\(UUID())")
-    private var _asyncControllers = NSMutableSet()
+    private var _asyncControllers = [InflightController]()
+    
+    class InflightController {
+        let controller: RSDAsyncAction
+        var requestedState: RSDAsyncActionStatus
+        init(controller: RSDAsyncAction, requestedState: RSDAsyncActionStatus) {
+            self.controller = controller
+            self.requestedState = requestedState
+        }
+    }
     
     /// Part 1 of starting an async action controller.
-    private func _startAsyncActionControllerPart1(for controller: RSDAsyncAction, completion: @escaping (() -> Void)) {
+    private func _requestPermission(for controller: RSDAsyncAction, completion: @escaping (() -> Void)) {
         DispatchQueue.main.async {
             if controller.delegate == nil {
                 controller.delegate = self
             }
             controller.requestPermissions(on: self, { [weak self] (controller, _, error) in
                 DispatchQueue.main.async {
-                    guard let strongSelf = self, error == nil, controller.status < .starting else {
-                        if error != nil {
-                            self?._addErrorResult(for: controller, error: error!)
-                        }
-                        self?._removeAsyncActionController(controller)
-                        completion()
-                        return
+                    guard let strongSelf = self, error == nil, controller.status < .starting,
+                        let inflight = strongSelf._findInflight(for: controller)
+                        else {
+                            if error != nil {
+                                self?._addErrorResult(for: controller, error: error!)
+                            }
+                            self?._removeAsyncActionController(controller)
+                            completion()
+                            return
                     }
-                    strongSelf._startAsyncActionControllerPart2(controller, completion: completion)
+                    if inflight.requestedState == .starting {
+                        strongSelf._startAsyncActionControllerPart2(controller, completion: completion)
+                    }
+                    else {
+                        completion()
+                    }
                 }
             })
         }
@@ -790,17 +851,32 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         }
     }
     
-    /// Add an async action controller to the controllers list on the controller queue.
-    private func _addAsyncActionControllersIfNeeded(_ controllers: [RSDAsyncAction]) {
+    private func _findInflight(for controller: RSDAsyncAction) -> InflightController? {
+        var ret: InflightController?
         controllerQueue.sync {
-            _asyncControllers.addObjects(from: controllers)
+            ret = self._asyncControllers.first(where: { $0.controller.isEqual(controller) })
+        }
+        return ret
+    }
+    
+    /// Add an async action controller to the controllers list on the controller queue.
+    private func _addAsyncActionControllersIfNeeded(_ controllers: [RSDAsyncAction], requestedState: RSDAsyncActionStatus) {
+        controllerQueue.sync {
+            controllers.forEach { (controller) in
+                if let inflight = self._asyncControllers.first(where: { $0.controller.isEqual(controller) }) {
+                    inflight.requestedState = requestedState
+                }
+                else {
+                    self._asyncControllers.append(InflightController(controller: controller, requestedState: requestedState))
+                }
+            }
         }
     }
     
     /// Remove an async action controller from the managed list on the controller queue.
     private func _removeAsyncActionController(_ controller: RSDAsyncAction) {
         controllerQueue.sync {
-            _asyncControllers.remove(controller)
+            let _ = self._asyncControllers.remove(where: { $0.controller.isEqual(controller) } )
         }
     }
     

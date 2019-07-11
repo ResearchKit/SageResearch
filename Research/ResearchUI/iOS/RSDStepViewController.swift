@@ -989,6 +989,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     open func start() {
         _startTimer()
         _setupInterruptionObserver()
+        self.taskController?.startAsyncActionsIfNeeded()
     }
     
     private func _startTimer() {

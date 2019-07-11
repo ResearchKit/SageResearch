@@ -249,6 +249,10 @@ public class TestAsyncActionController: NSObject, RSDAsyncAction {
         self.taskViewModel = taskViewModel
         super.init()
     }
+    
+    func requestPermission() {
+        status = .permissionGranted
+    }
 
     public func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         status = .permissionGranted
@@ -307,6 +311,8 @@ public class TestTaskController: NSObject, RSDTaskController {
     public var addAsyncActions_calledWith: [RSDAsyncActionConfiguration]?
     public var startAsyncActions_called = false
     public var startAsyncActions_calledWith: [RSDAsyncAction]?
+    public var requestPermissionsForAsyncActions_called = false
+    public var requestPermissionsForAsyncActions_calledWith: [RSDAsyncAction]?
     public var stopAsyncActions_called = false
     public var stopAsyncActions_calledWith: [RSDAsyncAction]?
     
@@ -367,6 +373,24 @@ public class TestTaskController: NSObject, RSDTaskController {
             self.currentAsyncControllers.append(contentsOf: controllers)
             completion(controllers)
         }
+    }
+    
+    public func requestPermission(for controllers: [RSDAsyncAction], completion: @escaping (() -> Void)) {
+        requestPermissionsForAsyncActions_called = true
+        requestPermissionsForAsyncActions_calledWith = controllers
+        DispatchQueue.main.async {
+            for controller in controllers {
+                (controller as? TestAsyncActionController)?.requestPermission()
+            }
+            let set = NSMutableSet(array: self.currentAsyncControllers)
+            set.union(Set(controllers as! [TestAsyncActionController]))
+            self.currentAsyncControllers = set.allObjects as! [TestAsyncActionController]
+            completion()
+        }
+    }
+    
+    public func startAsyncActionsIfNeeded() {
+        assertionFailure("Not implemented")
     }
     
     public func startAsyncActions(for controllers: [RSDAsyncAction], showLoading: Bool, completion: @escaping (() -> Void)) {

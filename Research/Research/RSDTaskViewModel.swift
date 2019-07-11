@@ -826,7 +826,7 @@ extension RSDTaskViewModel {
         }
         
         // Notify the controllers that the task has moved to the given step and start the idle controllers.
-        excludedControllers.append(contentsOf: _startIdleAsyncControllers(excludingControllers: excludedControllers))
+        excludedControllers.append(contentsOf: _requestPermissionForIdleAsyncControllers(excludingControllers: excludedControllers))
         _notifyAsyncControllers(to: step, excludingControllers: excludedControllers)
         
         // Ready to save if this is the completion step and there isn't a back button.
@@ -857,13 +857,13 @@ extension RSDTaskViewModel {
         }
     }
     
-    private func _startIdleAsyncControllers(excludingControllers: [RSDAsyncAction]) -> [RSDAsyncAction] {
+    private func _requestPermissionForIdleAsyncControllers(excludingControllers: [RSDAsyncAction]) -> [RSDAsyncAction] {
         guard let taskController = self.taskController else { return [] }
         let controllers = taskController.currentAsyncControllers.filter { (lhs) -> Bool in
             return (lhs.status == .idle) && !excludingControllers.contains(where: { $0.isEqual(lhs) })
         }
         guard controllers.count > 0 else { return [] }
-        taskController.startAsyncActions(for: controllers, showLoading: false) {
+        taskController.requestPermission(for: controllers) {
             // Do nothing
         }
         return controllers
