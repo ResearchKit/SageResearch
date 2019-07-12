@@ -58,7 +58,6 @@ open class RSDActiveUIStepObject : RSDUIStepObject, RSDActiveUIStep {
     /// Should the task end early if the task is interrupted by a phone call? Default = `false`.
     open var shouldEndOnInterrupt : Bool = false
     
-    
     // MARK: spoken instruction handling
     
     /// A mapping of the localized text that represents an instructional voice prompt to the time marker for speaking
