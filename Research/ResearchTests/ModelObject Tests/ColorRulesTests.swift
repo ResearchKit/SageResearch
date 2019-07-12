@@ -145,23 +145,28 @@ class ColorRulesTests: XCTestCase {
     func testTintedButtonColor_LightPrimary() {
         let palette: RSDColorPalette = .beach
         let colorRules = RSDColorRules(palette: palette)
+        let darkColor = palette.text.colorTiles.last?.color ?? UIColor.black
+        let lightColor = palette.text.colorTiles.first?.color ?? UIColor.white
         
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.black), UIColor.white)
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.white), palette.secondary.normal.color)
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.veryLightGray), palette.secondary.normal.color)
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.primary.normal), palette.secondary.normal.color)
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.successGreen.veryLight), palette.grayScale.veryDarkGray.color)
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.black), lightColor)
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.white), darkColor)
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.veryLightGray), darkColor)
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.primary.normal), darkColor)
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.successGreen.veryLight), darkColor)
     }
     
     func testTintedButtonColor_DarkPrimary() {
         let palette: RSDColorPalette = .midnight
         let colorRules = RSDColorRules(palette: palette)
         
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.black), UIColor.white)
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.white), palette.secondary.normal.color)
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.veryLightGray), palette.secondary.normal.color)
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.primary.normal), UIColor.white)
-        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.successGreen.veryLight), palette.grayScale.veryDarkGray.color)
+        let darkColor = palette.text.colorTiles.last?.color ?? UIColor.black
+        let lightColor = palette.text.colorTiles.first?.color ?? UIColor.white
+        
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.black), lightColor)
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.white), darkColor)
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.grayScale.veryLightGray), darkColor)
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.primary.normal), lightColor)
+        XCTAssertEqual(colorRules.tintedButtonColor(on: palette.successGreen.veryLight), darkColor)
     }
     
     func testUnderlinedTextButton_v1_LightPrimary() {
