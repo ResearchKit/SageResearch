@@ -23,21 +23,21 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDStepViewController.swift",
-      "line": 1018,
+      "line": 1019,
       "symbol": "RSDStepViewController.reset()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 615,
+      "line": 660,
       "symbol": "RSDTaskViewController.childForStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 703,
+      "line": 748,
       "symbol": "RSDTaskViewController.audioSessionController",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
