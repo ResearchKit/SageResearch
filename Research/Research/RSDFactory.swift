@@ -245,10 +245,28 @@ open class RSDFactory {
     public func decodeSteps(from container: UnkeyedDecodingContainer) throws -> [RSDStep] {
         var steps : [RSDStep] = []
         var stepsContainer = container
+        var countdownStep: RSDCountdownUIStepObject?
         while !stepsContainer.isAtEnd {
             let stepDecoder = try stepsContainer.superDecoder()
             if let step = try decodeStep(from: stepDecoder) {
                 steps.append(step)
+                
+                // Special-case handling of a countdown step. Inspect the step to see if this is
+                // a countdown/active step pairing and if so, set the countdown step to include a
+                // pointer to the active step.
+                //
+                // WARNING: This is *not* a weak pointer b/c the `RSDActiveUIStep` protocol does not
+                // require that step to be a class (but it might be) so this will cause a retain
+                // loop if this special-case handling is ever modified to have a pointer from the
+                // countdown step to the active step. syoung 07/12/2019
+                //
+                if let countdown = countdownStep, let activeStep = step as? RSDActiveUIStep {
+                    countdown.activeStep = activeStep
+                    countdownStep = nil
+                }
+                else {
+                    countdownStep = step as? RSDCountdownUIStepObject
+                }
             }
         }
         return steps
@@ -287,8 +305,10 @@ open class RSDFactory {
                 return try RSDGenericStepObject(from: decoder)
         }
         switch (standardType) {
-        case .instruction, .active, .countdown:
+        case .instruction, .active:
             return try RSDActiveUIStepObject(from: decoder)
+        case .countdown:
+            return try RSDCountdownUIStepObject(from: decoder)
         case .completion, .feedback:
             return try RSDResultSummaryStepObject(from: decoder)
         case .overview:
