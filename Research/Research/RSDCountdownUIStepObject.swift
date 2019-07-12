@@ -45,7 +45,7 @@ open class RSDCountdownUIStepObject : RSDActiveUIStepObject {
         return .countdown
     }
     
-    /// Override setting the title to return a value of "Begin in.." if the title is `nil`.
+    /// Override setting the title to return a value of "Begin in..." if the title is `nil`.
     open override var title: String? {
         get {
             return super.title ?? Localization.localizedString("COUNTDOWN_STEP_DEFAULT_TITLE")
