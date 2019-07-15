@@ -36,6 +36,10 @@ import Foundation
 /// `RSDDurationRangeObject` extends the properties of an `RSDInputField` for a `.duration` data type.
 public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, Codable {
     
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case minimumValue, maximumValue, stepInterval, unit, durationUnits
+    }
+    
     /// The minimum allowed duration.
     public let minimumDuration: Measurement<UnitDuration>
     
@@ -74,10 +78,6 @@ public struct RSDDurationRangeObject : RSDDurationRange, RSDRangeWithFormatter, 
         self.maximumDuration = maximumDuration
         self.stepInterval = stepInterval
         self.formatter = UnitDuration.defaultFormatter(for: units, baseUnit: baseUnit)
-    }
-
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case minimumValue, maximumValue, stepInterval, unit, durationUnits
     }
     
     /// Initialize from a `Decoder`.
@@ -213,7 +213,7 @@ extension UnitDuration : Comparable {
     /// Increment up to the next larger unit.
     public func increment() -> UnitDuration? {
         let sizeOrder = UnitDuration.all.sorted(by: <)
-        guard let idx = sizeOrder.index(of: self), idx + 1 < sizeOrder.count else { return nil }
+        guard let idx = sizeOrder.firstIndex(of: self), idx + 1 < sizeOrder.count else { return nil }
         return sizeOrder[idx + 1]
     }
     
@@ -319,6 +319,9 @@ extension NSCalendar.Unit {
                 return input.union(.timeZone)
             case .calendar:
                 return input.union(.calendar)
+            @unknown default:
+                assertionFailure("Unknown enum type")
+                return input
             }
         })
     }

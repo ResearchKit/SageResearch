@@ -109,6 +109,23 @@ extension RSDResourceTransformer {
         return resourceName.hasPrefix("http") || RSDResourceConfig.relativeURL(for: self) != nil
     }
     
+    /// Get the full URL for a given resource no matter if it is a local or online resource.
+    ///
+    /// - returns: The URL for this resource.
+    /// - throws: `RSDResourceTransformerError` if the file cannot be found, or
+    ///           `RSDValidationError` if the online resource is not valid.
+    public func fullURL() throws -> URL {
+        if self.isOnlineResourceURL() {
+            guard let url = URL(string: resourceName) else {
+                throw RSDValidationError.unexpectedNullObject("Failed to convert \(resourceName) to a URL.")
+            }
+            return url
+        }
+        else {
+            return try resourceURL().url
+        }
+    }
+    
     /// Get the URL for a given resource. This can return either a URL to an online resource or a URL
     /// for an embedded resource.
     ///
@@ -193,20 +210,10 @@ extension RSDResourceTransformer {
 /// `RSDResourceType` is an extendable struct for describing the type of a resource.
 /// By default, these values will map to the file extension.
 public struct RSDResourceType : RawRepresentable, Equatable, Hashable, Codable {
-    public typealias RawValue = String
-    
     public let rawValue: String
     
     public init(rawValue: String) {
         self.rawValue = rawValue
-    }
-    
-    public var hashValue: Int {
-        return rawValue.hashValue
-    }
-    
-    public static func ==(lhs: RSDResourceType, rhs: RSDResourceType) -> Bool {
-        return lhs.rawValue == rhs.rawValue
     }
     
     /// JSON file.

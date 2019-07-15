@@ -35,6 +35,11 @@ import Foundation
 
 /// `RSDSchemaInfoObject` is a concrete implementation of the `RSDSchemaInfo` protocol.
 public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable, Hashable {
+    
+    private enum CodingKeys: String, CodingKey, CaseIterable {
+        case identifier, revision
+    }
+    
     private let identifier: String
     private let revision: Int
     
@@ -46,10 +51,6 @@ public struct RSDSchemaInfoObject : RSDSchemaInfo, Codable, Hashable {
     /// A revision number associated with the result schema.
     public var schemaVersion: Int {
         return revision
-    }
-    
-    private enum CodingKeys: String, CodingKey, CaseIterable {
-        case identifier, revision
     }
     
     /// Default initializer.

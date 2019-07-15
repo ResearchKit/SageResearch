@@ -131,7 +131,7 @@ open class Localization: NSObject {
     /// previously in the array, then the previous instance will be moved to the new .
     @objc(insertBundle:atIndex:)
     public static func insert(bundle: LocalizationBundle, at index: UInt) {
-        if let idx = allBundles.index(of: bundle) {
+        if let idx = allBundles.firstIndex(of: bundle) {
             allBundles.remove(at: idx)
         }
         if (index < allBundles.count) {

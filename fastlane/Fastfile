@@ -122,34 +122,42 @@ platform :ios do
 
   desc "Bump both the framework projects"
   lane :bump_all do
-    bump_framework(
+
+    # bump the build
+    framework = "Research"
+    project = "Research/Research.xcodeproj"
+    version_number = get_version_number(xcodeproj: "#{project}", target: "Research (iOS)")
+    next_build_number = increment_build_number(xcodeproj: "#{project}")
+    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Bump build for Research #{version_number} (#{next_build_number})")
+
+    doc_framework(
       framework:"Research"
     )
-    bump_framework(
+    doc_framework(
       framework:"ResearchUI"
     )
+    doc_framework(
+      framework:"ResearchMotion"
+    )
+    doc_framework(
+      framework:"ResearchLocation"
+    )
+
+    add_git_tag(tag: "v#{version_number}.#{next_build_number}")
     push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])
   end
 
-  desc "Bump Framework Version"
-  lane :bump_framework do |options|
+  desc "Document Framework Version"
+  lane :doc_framework do |options|
     framework = options[:framework]
-    project = "#{framework}/#{framework}.xcodeproj"
-    scheme = "#{framework} (iOS)"
+    project = "Research/Research.xcodeproj"
 
     ensure_git_status_clean
 
-    # bump the build
-    version_number = get_version_number(xcodeproj: "#{project}", target: "#{scheme}")
-    next_build_number = increment_build_number(xcodeproj: "#{project}")
-    commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Version Bump #{framework} #{version_number} (#{next_build_number})")
-    add_git_tag(tag: "#{framework}_#{version_number}_#{next_build_number}")
-
     # Update the documentation
-    jazzy(config: "#{framework}/jazzy_config.yml")
+    jazzy(config: "Research/#{framework}/jazzy_config.yml")
     git_add
-    git_commit(path: "Documentation/*", message: "[skip ci] Documentation #{framework} #{version_number} (#{next_build_number})")
-    add_git_tag(tag: "#{framework}_docs_#{version_number}_#{next_build_number}")
+    git_commit(path: "Documentation/*", message: "[skip ci] Update #{framework}.framework documentation")
   end
 
   desc "Submit a new Build to appstore"
@@ -163,7 +171,7 @@ platform :ios do
     next_build_number = increment_build_number(xcodeproj: "#{project}")
     archive(scheme: "#{scheme}", export_method: "#{export_method}")
     commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Version Bump")
-    add_git_tag(tag: "#{scheme}_#{version_number}_#{next_build_number}")
+    add_git_tag(tag: "#{scheme}_#{version_number}.#{next_build_number}")
     push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])
     testflight(ipa: "./build/#{scheme}.ipa", skip_submission: true)
   end

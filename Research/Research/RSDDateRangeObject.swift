@@ -37,6 +37,10 @@ import Foundation
 /// for a `date` data type.
 public struct RSDDateRangeObject : RSDDateRange, Codable {
     
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case minDate = "minimumDate", maxDate = "maximumDate", allowFuture, allowPast, minuteInterval, codingFormat, defaultDate
+    }
+    
     /// The minimum allowed date. When the value of this property is `nil`, then the `allowPast`
     /// property is checked for `nil`, otherwise `allowPast` is ignored.
     public let minDate: Date?
@@ -92,10 +96,6 @@ public struct RSDDateRangeObject : RSDDateRange, Codable {
         let dateCoder = RSDDateCoderObject.hourAndMinutesOnly
         let defaultDate = (defaultTime != nil) ? dateCoder.inputFormatter.date(from: defaultTime!) : nil
         self.init(minimumDate: nil, maximumDate: nil, allowFuture: nil, allowPast: nil, minuteInterval: minuteInterval, dateCoder: dateCoder, defaultDate: defaultDate)
-    }
-    
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case minDate = "minimumDate", maxDate = "maximumDate", allowFuture, allowPast, minuteInterval, codingFormat, defaultDate
     }
     
     /// Initialize from a `Decoder`.

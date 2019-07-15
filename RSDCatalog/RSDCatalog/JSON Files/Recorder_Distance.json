@@ -28,7 +28,6 @@
                                                {
                                                "identifier"     : "countdown",
                                                "type"           : "countdown",
-                                               "text"           : "Start in",
                                                "duration"       : 5,
                                                "commands"       : ["playSoundOnStart", "transitionAutomatically"]
                                                },

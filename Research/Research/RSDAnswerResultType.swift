@@ -42,9 +42,26 @@ import Foundation
 /// - seealso: `RSDAnswerResult` and `RSDFormDataType`
 ///
 public struct RSDAnswerResultType : Codable, Hashable, Equatable {
-    
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case baseType, sequenceType, formDataType, dateFormat, dateLocaleIdentifier, unit, sequenceSeparator
+    }
+    
+    /// Override equality to *not* include the original formDataType.
+    public static func == (lhs: RSDAnswerResultType, rhs: RSDAnswerResultType) -> Bool {
+        return lhs.baseType == rhs.baseType &&
+            lhs.sequenceType == rhs.sequenceType &&
+            lhs.dateFormat == rhs.dateFormat &&
+            lhs.unit == rhs.unit &&
+            lhs.sequenceSeparator == rhs.sequenceSeparator
+    }
+    
+    /// Override the hash into to *not* include the original formDataType.
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(baseType)
+        if let hashV = self.sequenceType { hasher.combine(hashV) }
+        if let hashV = self.dateFormat { hasher.combine(hashV) }
+        if let hashV = self.unit { hasher.combine(hashV) }
+        if let hashV = self.sequenceSeparator { hasher.combine(hashV) }
     }
     
     /// The base type of the answer result. This is used to indicate what the type is of the

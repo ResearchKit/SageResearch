@@ -41,7 +41,7 @@ extension RSDColorFamily {
     
     /// Look at the colors included in this family and return a mapping if found.
     public func mapping(forColor color: RSDColor) -> RSDColorMapping? {
-        guard let idx = self.colorTiles.index(where: { $0.color == color }) else { return nil }
+        guard let idx = self.colorTiles.firstIndex(where: { $0.color == color }) else { return nil }
         return ColorMapping(index: idx, colorTiles: self.colorTiles)
     }
 }
@@ -212,7 +212,7 @@ public struct RSDGrayScale : Codable, Equatable, Hashable, RSDColorFamily {
     /// - parameter shade: The shade of the color.
     /// - returns: The color mapping for that shade.
     public func mapping(forShade shade: Shade) -> RSDColorMapping {
-        let index = Shade.allCases.index(of: shade)!
+        let index = Shade.allCases.firstIndex(of: shade)!
         return ColorMapping(index: index, colorTiles: colorTiles)
     }
 

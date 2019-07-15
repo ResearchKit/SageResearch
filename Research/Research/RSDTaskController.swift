@@ -91,10 +91,6 @@ public protocol RSDTaskControllerDelegate : class, NSObjectProtocol {
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel)
 }
 
-@available(*, deprecated)
-public protocol RSDTaskUIController : RSDTaskController {
-}
-
 /// `RSDTaskController` handles a base-level implementation for running a task. This object is expected to
 /// be an appropriate instance of a view controller, depending upon the operating system.
 ///
@@ -176,6 +172,16 @@ public protocol RSDTaskController : class, NSObjectProtocol {
     ///     - path: The path component that is currently being navigated.
     ///     - completion: The completion to call with the instantiated controllers.
     func addAsyncActions(with configurations: [RSDAsyncActionConfiguration], path: RSDPathComponent, completion: @escaping (([RSDAsyncAction]) -> Void))
+    
+    /// Request permissions for controllers but do *not* start the controllers.
+    ///
+    /// - parameters:
+    ///     - controllers: The controllers for which to request permissions.
+    ///     - completion: The completion to call with the instantiated controllers.
+    func requestPermission(for controllers: [RSDAsyncAction], completion: @escaping (() -> Void))
+    
+    /// Start all async actions that are waiting to be started.
+    func startAsyncActionsIfNeeded()
 
     /// Start the async actions. The protocol extension calls this method when an async action should be
     /// started directly *after* the step is presented.

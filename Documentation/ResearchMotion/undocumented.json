@@ -1,0 +1,40 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchMotion/RSDMotionAudioSessionController.swift",
+      "line": 45,
+      "symbol": "RSDMotionAudioSessionController.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchMotion/RSDMotionAuthorization.swift",
+      "line": 49,
+      "symbol": "RSDMotionAuthorization.shared",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchMotion/RSDMotionRecorder.swift",
+      "line": 532,
+      "symbol": "RSDVector.x",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchMotion/RSDMotionRecorder.swift",
+      "line": 533,
+      "symbol": "RSDVector.y",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchMotion/RSDMotionRecorder.swift",
+      "line": 534,
+      "symbol": "RSDVector.z",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/travis/build/Sage-Bionetworks/SageResearch"
+}

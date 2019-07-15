@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Classes  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/Classes" class="dashAnchor"></a>
+    <a title="Classes  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">ResearchLocation Docs</a></p>
+        <p class="header-right"><a href="https://github.com/Sage-Bionetworks/SageResearch.git"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">ResearchLocation Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Classes  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/RSDDistanceRecorder.html">RSDDistanceRecorder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/RSDDistanceRecorder/ResultIdentifier.html">– ResultIdentifier</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/RSDDistanceRecorderConfiguration.html">RSDDistanceRecorderConfiguration</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/RSDDistanceRecord.html">RSDDistanceRecord</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/RSDLocationAuthorization.html">RSDLocationAuthorization</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Classes</h1>
+            <p>The following classes are available globally.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@ResearchLocation@objc(cs)RSDDistanceRecorder"></a>
+                    <a name="//apple_ref/swift/Class/RSDDistanceRecorder" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@ResearchLocation@objc(cs)RSDDistanceRecorder">RSDDistanceRecorder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>RSDDistanceRecorder</code> is intended to be used for recording location where the participant is walking,
+running, cycling, or other activities <strong>outdoors</strong> where the distance travelled is of interest. By
+default, this recorder <em>only</em> logs the relative distance, altitude, course, and speed travelled by
+the participant. To log GPS coordinates, the configuration file must <em>explicitly</em> be set to do so,
+and it is recommended to <em>only</em> log the coordinates if the user is a tester in order to ensure the
+participant&rsquo;s privacy is respected.</p>
+
+<p>At the end of the motion travelled step, the recorder also uses CoreMotion to query the pedometer
+for the overall distance and step count as measured by the pedometer which are then added to the
+<code>RSDCollectionResult</code> returned by this recorder when it is stopped.</p>
+
+<p>This recorder is only available on iOS devices. CoreMotion is not supported by other platforms.
+Additionally, for a watchOS application that needs to measure distance travelled, creating an
+HKWorkoutSession offers a more efficient use of the device battery with equivalent accuracy
+in determining the distance travelled by the participant while performing a distance measuring
+activity.</p>
+
+<p>This recorder is designed to be run in the background so that the user can lock the screen and place
+the phone in their pocket or bag. This requires setting the capabilities in your app to include
+background audio.</p>
+
+<p>Additionally, you will need to add the privacy permission for location and motion sensors to the
+application <code>Info.plist</code> file. As of this writing (syoung 02/08/2018), those keys are:</p>
+<li><code>Privacy - Motion Usage Description</code></li>
+<li><code>Privacy - Location Always and When In Use Usage Description</code></li>
+<li><p><code>Privacy - Location When In Use Usage Description</code></p></li>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p><strong>Both</strong> location privacy keys are required.</p>
+
+</div>
+<div class="aside aside-seealso">
+    <p class="aside-title">Seealso</p>
+    <p><code>RSDDistanceRecorderConfiguration</code> and <code><a href="Structs/RSDDistanceRecord.html">RSDDistanceRecord</a></code></p>
+
+</div>
+
+                        <a href="Classes/RSDDistanceRecorder.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(iOS 10.0, *)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">RSDDistanceRecorder</span> <span class="p">:</span> <span class="kt">RSDSampleRecorder</span><span class="p">,</span> <span class="kt">CLLocationManagerDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017-2019 <a class="link" href="https://developer.sagebridge.org" target="_blank" rel="external">Sage Bionetworks</a>. All rights reserved.</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

@@ -106,6 +106,12 @@ public class RSDClock {
         return marker.clock + (systemUptime - marker.system)
     }
     
+    /// Get the clock uptime for a system awake time.
+    public func zeroRelativeTime(to systemUptime: TimeInterval) -> TimeInterval {
+        let marker = timeMarkers.last { systemUptime >= $0.system } ?? timeMarkers.first!
+        return (systemUptime - marker.system) + (marker.clock - timeMarkers[0].clock)
+    }
+    
     /// Clock time.
     public static func uptime() -> TimeInterval {
         var uptime = timespec()

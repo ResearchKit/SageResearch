@@ -34,7 +34,7 @@
 import Foundation
 
 /// ISO 8601 timestamp formatter that includes time and date.
-var rsd_ISO8601TimestampFormatter: DateFormatter = {
+public let rsd_ISO8601TimestampFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
     formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -42,7 +42,7 @@ var rsd_ISO8601TimestampFormatter: DateFormatter = {
 }()
 
 /// ISO 8601 date only formatter.
-let rsd_ISO8601DateOnlyFormatter: DateFormatter = {
+public let rsd_ISO8601DateOnlyFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
     formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -50,7 +50,7 @@ let rsd_ISO8601DateOnlyFormatter: DateFormatter = {
 }()
 
 /// ISO 8601 time only formatter.
-let rsd_ISO8601TimeOnlyFormatter: DateFormatter = {
+public let rsd_ISO8601TimeOnlyFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "HH:mm:ss"
     formatter.locale = Locale(identifier: "en_US_POSIX")

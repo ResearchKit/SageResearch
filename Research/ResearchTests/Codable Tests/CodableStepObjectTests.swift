@@ -75,7 +75,11 @@ class CodableStepObjectTests: XCTestCase {
                                         "url" : "fooInfo" },
                          "skip": {  "type": "navigation",
                                     "buttonTitle" : "not applicable",
-                                    "skipToIdentifier": "boo"}
+                                    "skipToIdentifier": "boo"},
+                         "moreInformation": {
+                                    "type": "videoView",
+                                    "buttonTitle" : "See this in action",
+                                    "url": "video.mp4"}
                         },
             "shouldHideActions": ["goBackward", "skip"],
 
@@ -106,6 +110,11 @@ class CodableStepObjectTests: XCTestCase {
             XCTAssertNotNil(learnMoreAction)
             XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.iconName, "infoIcon")
             XCTAssertEqual((learnMoreAction as? RSDWebViewUIActionObject)?.url, "fooInfo")
+            
+            let moreInformationAction = object.action(for: .custom("moreInformation"), on: object)
+            XCTAssertNotNil(moreInformationAction)
+            XCTAssertEqual((moreInformationAction as? RSDVideoViewUIActionObject)?.buttonTitle, "See this in action")
+            XCTAssertEqual((moreInformationAction as? RSDVideoViewUIActionObject)?.url, "video.mp4")
             
             let skipAction = object.action(for: .navigation(.skip), on: object)
             XCTAssertNotNil(skipAction)

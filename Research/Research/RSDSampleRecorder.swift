@@ -63,6 +63,12 @@ public protocol RSDSampleRecord : Codable {
     /// On Apple devices, this is the timestamp used to mark sensors that run in the foreground only such as
     /// video processing and motion sensors.
     ///
+    /// syoung 04/24/2019 Per request from Sage Bionetworks' research scientists, this timestamp is "zeroed"
+    /// to when the recorder is started. It should be calculated by offsetting the
+    /// `ProcessInfo.processInfo.systemUptime` from the monotonic clock time to account for gaps in the
+    /// sampling due to the application becoming inactive. For example, if the participant accepts a phone
+    /// call while the recorder is running.
+    ///
     /// -seealso: `ProcessInfo.processInfo.systemUptime`
     var timestamp: TimeInterval? { get }
 }
@@ -148,6 +154,9 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
         
         /// Returned when the recorder that has been cancelled, failed, or finished.
         case finished
+        
+        /// Returned when the recorder or task was interrupted.
+        case interrupted
     }
     
     /// Default initializer.
@@ -629,7 +638,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
     /// Write a marker to each logging file.
     private func _writeMarkers(step: RSDStep?, taskViewModel: RSDPathComponent) {
         let uptime = RSDClock.uptime()
-        let timestamp = ProcessInfo.processInfo.systemUptime
+        let timestamp = clock.zeroRelativeTime(to: ProcessInfo.processInfo.systemUptime)
         let date = Date()
         self.loggerQueue.async {
             
@@ -664,7 +673,7 @@ open class RSDSampleRecorder : NSObject, RSDAsyncAction {
             }
             loggers[identifier] = dataLogger
             if let logger = dataLogger as? RSDRecordSampleLogger {
-                let marker = instantiateMarker(uptime: self.clock.startUptime, timestamp: self.clock.startSystemUptime, date: self.clock.startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
+                let marker = instantiateMarker(uptime: self.clock.startUptime, timestamp: 0, date: self.clock.startDate, stepPath: currentStepPath, loggerIdentifier: identifier)
                 try logger.writeSample(marker)
             }
         }
@@ -750,6 +759,9 @@ public struct CSVEncodingFormat<K> : RSDStringSeparatedEncodingFormat where K : 
     
     public func codingKeys() -> [CodingKey] {
         return Key.codingKeys()
+    }
+    
+    public init() {
     }
 }
 
@@ -880,12 +892,13 @@ public class RSDRecordSampleLogger : RSDDataLogger {
     }
 }
 
-extension RSDRecordMarker : RSDDocumentableCodableObject {
-    
+// TODO: syoung 09/27/2019 Look into whether or not there is a simple way to use the Documentable protocols in other frameworks.
+extension RSDRecordMarker { //} : RSDDocumentableCodableObject {
+
     static func codingKeys() -> [CodingKey] {
         return CodingKeys.allCases
     }
-    
+
     static func examples() -> [Encodable] {
         let date = rsd_ISO8601TimestampFormatter.date(from: "2017-10-16T22:28:09.000-07:00")!
         return [RSDRecordMarker(uptime: 12344.56, timestamp: 0, date: date, stepPath: "/Foo Task/sectionA/step1")]

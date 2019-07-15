@@ -72,42 +72,208 @@ open class RSDFontRules  {
     /// - returns: The font to use for this text.
     @available(iOS 10.3, tvOS 10.2, *)
     open func font(for textType: RSDDesignSystem.TextType, compatibleWith traitCollection: UITraitCollection?) -> RSDFont {
-        return self.font(for: textType)
+        return preferredFont(for: textType, compatibleWith: traitCollection)
     }
     #endif
+    
+    /// Returns the font to use for the given button type and state.
+    ///
+    /// - parameters:
+    ///     - buttonType: The button type.
+    ///     - state: The button state.
+    /// - returns: The font to use for this text.
+    open func buttonFont(for buttonType: RSDDesignSystem.ButtonType, state: RSDControlState) -> RSDFont {
+        switch buttonType {
+            
+        case .primary, .secondary:
+            return font(ofSize: 20, weight: .bold)
+            
+        case .bodyLink:
+            return baseFont(for: .body)
+            
+        case .headerLink:
+            return baseFont(for: .smallHeader)
+            
+        case .toggle:
+            switch state {
+            case .selected:
+                return font(ofSize: 16, weight: .bold)
+            default:
+                return font(ofSize: 16, weight: .regular)
+            }
+        }
+    }
     
     /// Returns the font to use for a given text type.
     ///
     /// - parameter textType: The text type for the font.
     /// - returns: The font to use for this text.
     open func font(for textType: RSDDesignSystem.TextType) -> RSDFont {
+        return preferredFont(for: textType)
+    }
+    
+    /// Returns a font in the given size and weight in the font family specified for this design.
+    /// Typically, you will want to use `font(for textType: RSDDesignSystem.TextType)` instead for
+    /// copy and dynamic text. This method should only be used where the design calls for a
+    /// specific size to match the graphic design of the view.
+    ///
+    /// - note: All other methods on this class will call through to this method, so for custom
+    ///         fonts, you can override this method only if the only change is a custom font.
+    ///
+    /// - parameters:
+    ///     - fontSize: The font size.
+    ///     - weight: The font weight.
+    /// - returns: The font to use for this size and weight.
+    open func font(ofSize fontSize: CGFloat, weight: RSDFont.Weight = .regular) -> RSDFont {
+        return RSDFont.systemFont(ofSize: fontSize, weight: weight)
+    }
+    
+    /// Returns the base font for a given text type. This is the font size defined in the Sage
+    /// Design System table. For dynamic fonts, this can be resized based upon user preferences by
+    /// using the `font(for textType: RSDDesignSystem.TextType)` instead.
+    ///
+    /// This is *only* to be used directly where the text needs to fix within a specific size, but
+    /// match the "style" of a given text type.
+    ///
+    /// - parameter textType: The text type for the font.
+    /// - returns: The *base* font to use for this text.
+    open func baseFont(for textType: RSDDesignSystem.TextType) -> RSDFont {
         switch textType {
-        case .heading1:
-            return RSDFont.systemFont(ofSize: 30, weight: .bold)
-        case .heading2:
-            return RSDFont.systemFont(ofSize: 24, weight: .bold)
-        case .heading3:
-            return RSDFont.systemFont(ofSize: 20, weight: .heavy)
-        case .heading4:
-            return RSDFont.systemFont(ofSize: 18, weight: .bold)
-        case .fieldHeader:
-            return RSDFont.systemFont(ofSize: 16, weight: .heavy)
-        case .body, .bodyDetail:
-            return RSDFont.systemFont(ofSize: 18)
-        case .small:
-            return RSDFont.systemFont(ofSize: 14)
+            
+        // Version 2
+        case .largeNumber:
+            return font(ofSize: 72, weight: .light)
+        case .smallNumber:
+            return font(ofSize: 48, weight: .light)
+        case .xSmallNumber:
+            return font(ofSize: 20, weight: .light)
+
+        case .xLargeHeader:
+            return font(ofSize: 30, weight: .bold)
+        case .largeHeader:
+            return font(ofSize: 24, weight: .bold)
+        case .mediumHeader:
+            return font(ofSize: 18, weight: .bold)
+        case .smallHeader:
+            return font(ofSize: 16, weight: .bold)
         case .microHeader:
-            return RSDFont.systemFont(ofSize: 12, weight: .semibold).rsd_smallCaps()
+            return font(ofSize: 14).rsd_smallCaps()
+        
+        case .largeBody:
+            return font(ofSize: 24, weight: .light)
+        case .body:
+            return font(ofSize: 18)
+        case .bodyDetail:
+            return font(ofSize: 16)
+        case .italicDetail:
+            return font(ofSize: 16).rsd_italic()
+        case .small, .hint:
+            return font(ofSize: 16)
+        case .microDetail:
+            return font(ofSize: 14)
+            
+        // Version 1
+        case .heading1:
+            return font(ofSize: 30, weight: .bold)
+        case .heading2:
+            return font(ofSize: 24, weight: .bold)
+        case .heading3:
+            return font(ofSize: 20, weight: .heavy)
+        case .heading4:
+            return font(ofSize: 18, weight: .bold)
+        case .fieldHeader:
+            return font(ofSize: 16, weight: .heavy)
         case .counter:
-            return RSDFont.systemFont(ofSize: 80, weight: .light)
+            return font(ofSize: 80, weight: .light)
+            
+        default:
+            assertionFailure("\(textType) is not defined. Returning `body` type.")
+            return font(ofSize: 18)
         }
     }
+    
+    #if os(iOS) || os(tvOS)
+    
+    /// Using a mapping of the base font size, look for the text style to use for that text type
+    /// and return the font size ratio preferred by the user based on their accessibility settings.
+    /// - parameter textType: The text type for the font.
+    /// - returns: The ratio of preferred font size to base font size.
+    open func preferredFontSizeRatio(for textType: RSDDesignSystem.TextType, compatibleWith traitCollection: UITraitCollection? = nil) -> CGFloat {
+        guard let style = textStyle(for: textType),
+            let base = baseSize[style.rawValue]
+            else {
+                return 1.0
+        }
+        let font = UIFont.preferredFont(forTextStyle: style, compatibleWith: traitCollection)
+        return font.pointSize / base
+    }
+    
+    private func preferredFont(for textType: RSDDesignSystem.TextType, compatibleWith traitCollection: UITraitCollection? = nil) -> RSDFont {
+        let font = baseFont(for: textType)
+        let sizeRatio = self.preferredFontSizeRatio(for: textType)
+        let fontSize = round(font.pointSize * sizeRatio)
+        return font.withSize(fontSize)
+    }
+    
+    
+    /// Returns the mapping of the text style that most closely aligns with the design system text type.
+    @available(iOS 10.0, tvOS 10.2, *)
+    private func textStyle(for textType: RSDDesignSystem.TextType) -> UIFont.TextStyle? {
+        switch textType {
+        case .xLargeHeader:
+            #if os(iOS)
+            if #available(iOSApplicationExtension 11.0, *) {
+                return .largeTitle
+            } else {
+                return .title1
+            }
+            #else
+                return .title1
+            #endif
+            
+        case .largeHeader:
+            return .title1
+        case .mediumHeader:
+            return .title2
+        case .smallHeader:
+            return .title3
+        case .body:
+            return .body
+        case .bodyDetail, .italicDetail:
+            return .callout
+        case .small, .hint:
+            return .footnote
+        case .microDetail:
+            return .caption1
+        default:
+            return nil
+        }
+    }
+    
+    /// Mapping of text style to font size on iPhone if the "Large Text" accessibility setting
+    /// is turned off.
+    private let baseSize: [String : CGFloat] = [
+        "UICTFontTextStyleBody": 17.0,
+        "UICTFontTextStyleCallout": 16.0,
+        "UICTFontTextStyleCaption1": 12.0,
+        "UICTFontTextStyleCaption2": 11.0,
+        "UICTFontTextStyleFootnote": 13.0,
+        "UICTFontTextStyleHeadline": 17.0,
+        "UICTFontTextStyleSubhead": 15.0,
+        "UICTFontTextStyleTitle0": 34.0,
+        "UICTFontTextStyleTitle1": 28.0,
+        "UICTFontTextStyleTitle2": 22.0,
+        "UICTFontTextStyleTitle3": 20.0,
+    ]
+    
+    #else
+    
+    private func preferredFont(for textType: RSDDesignSystem.TextType) -> RSDFont {
+        return baseFont(for: textType)
+    }
+    
+    #endif
 }
-
-
-
-
-
 
 #if os(macOS)
 extension NSFont {
@@ -115,15 +281,32 @@ extension NSFont {
     func rsd_smallCaps() -> RSDFont {
         return self
     }
+    
+    func rsd_italic() -> RSDFont {
+        return self
+    }
 }
 #else
 extension UIFont {
+    
+    public func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
+        guard let descriptor = fontDescriptor.withSymbolicTraits(traits)
+            else {
+                debugPrint("WARNING!! Failed to create font with \(traits)")
+                return self
+        }
+        return UIFont(descriptor: descriptor, size: 0)
+    }
     
     func rsd_smallCaps() -> RSDFont {
         let settings: [[UIFontDescriptor.FeatureKey : Int]] = [[.featureIdentifier: kLowerCaseType, .typeIdentifier: kLowerCaseSmallCapsSelector]]
         let attributes: [UIFontDescriptor.AttributeName : Any] = [.featureSettings: settings]
         let fontDescriptor = self.fontDescriptor.addingAttributes(attributes)
         return UIFont(descriptor: fontDescriptor, size: pointSize)
+    }
+    
+    func rsd_italic() -> RSDFont {
+        return self.withTraits(traits: .traitItalic)
     }
 }
 #endif

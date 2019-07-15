@@ -56,6 +56,7 @@ public struct RSDDocumentCreator {
         RSDFormUIHint.self,
         RSDIdentifier.self,
         RSDKeyboardType.self,
+        RSDMotionRecorderType.self,
         RSDResultType.self,
         RSDStandardPermissionType.self,
         RSDStepType.self,
@@ -64,13 +65,6 @@ public struct RSDDocumentCreator {
         RSDTextAutocorrectionType.self,
         RSDTextSpellCheckingType.self,
         ]
-    
-    #if os(iOS)
-        let iOSEnums: [RSDDocumentableStringEnum.Type] = [
-            RSDMotionRecorderType.self,
-            ]
-        allEnums.append(contentsOf: iOSEnums)
-    #endif
         
         return allEnums
     }()
@@ -119,18 +113,9 @@ public struct RSDDocumentCreator {
             RSDUIActionObject.self,
             RSDViewThemeElementObject.self,
             RSDWebViewUIActionObject.self,
+            RSDVideoViewUIActionObject.self,
             RSDWeeklyScheduleObject.self,
             ]
-        
-    #if os(iOS)
-        let iOSCodableObjects: [RSDDocumentableCodableObject.Type] = [
-            RSDDistanceRecorderConfiguration.self,
-            RSDDistanceRecord.self,
-            RSDMotionRecorderConfiguration.self,
-            RSDMotionRecord.self,
-            ]
-        allCodableObjects.append(contentsOf: iOSCodableObjects)
-    #endif
         
         return allCodableObjects
     }()

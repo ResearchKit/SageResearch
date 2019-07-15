@@ -36,6 +36,9 @@ import Foundation
 /// `RSDTaskResultObject` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
 public struct RSDTaskResultObject : RSDTaskResult, Codable {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case identifier, type, startDate, endDate, taskRunUUID, schemaInfo, stepHistory, asyncResults
+    }
     
     /// The identifier associated with the task, step, or asynchronous action.
     public let identifier: String
@@ -72,10 +75,6 @@ public struct RSDTaskResultObject : RSDTaskResult, Codable {
         self.schemaInfo = schemaInfo
         self.taskRunUUID = UUID()
         self.type = .task
-    }
-    
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case identifier, type, startDate, endDate, taskRunUUID, schemaInfo, stepHistory, asyncResults
     }
     
     /// Initialize from a `Decoder`. This decoding method will use the `RSDFactory` instance associated

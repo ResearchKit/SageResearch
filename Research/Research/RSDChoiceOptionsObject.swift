@@ -90,7 +90,7 @@ extension RSDChoiceOptions {
     /// - returns: The selected rows, where there is a selected row for each component, or `nil` if not
     ///            all rows are selected.
     public func selectedRows(from selectedAnswer: Any?) -> [Int]? {
-        guard let index = self.choices.index(where: { RSDObjectEquality($0.answerValue, selectedAnswer) }) else { return nil }
+        guard let index = self.choices.firstIndex(where: { RSDObjectEquality($0.answerValue, selectedAnswer) }) else { return nil }
         return [index]
     }
     

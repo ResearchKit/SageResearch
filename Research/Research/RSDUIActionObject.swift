@@ -248,6 +248,67 @@ public struct RSDWebViewUIActionObject : RSDEmbeddedResourceUIAction, RSDWebView
     }
 }
 
+/// `RSDVideoViewUIActionObject` implements an action that includes a pointer to a url that can display in a
+/// `AVPlayerViewController`. The url can either be fully qualified or optionally point to an embedded resource.
+public struct RSDVideoViewUIActionObject : RSDEmbeddedResourceUIAction, RSDVideoViewUIAction, Codable {
+    
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case url, buttonTitle, iconName, bundleIdentifier
+    }
+    
+    /// The url to load in the webview. If this is not a fully qualified url string, then it is assumed to
+    /// refer to an embedded resource.
+    public let url: String
+    
+    /// The title to show in a title bar or header.
+    public var title: String?
+    
+    /// The title to display on the button associated with this action.
+    public var buttonTitle: String?
+    
+    /// The name of the icon to display on the button associated with this action.
+    public var iconName: String?
+    
+    /// The bundle identifier for the resource bundle that contains the image.
+    public var bundleIdentifier: String?
+    
+    /// The default bundle from the factory used to decode this object.
+    public var factoryBundle: Bundle? = nil
+    
+    /// The `url` is the resource name.
+    public var resourceName: String {
+        return url
+    }
+    
+    /// Returns nil. This value is ignored.
+    public var classType: String? {
+        return nil
+    }
+    
+    /// Default initializer for a button with text.
+    /// - parameters:
+    ///     - url: The url to load in the webview.
+    ///     - buttonTitle: The title to display on the button associated with this action.
+    ///     - bundleIdentifier: The bundle identifier for the url if not fully qualified. Default = `nil`.
+    public init(url: String, buttonTitle: String, bundleIdentifier: String? = nil) {
+        self.url = url
+        self.buttonTitle = buttonTitle
+        self.bundleIdentifier = bundleIdentifier
+    }
+    
+    /// Default initializer for a button with an image.
+    /// - parameters:
+    ///     - url: The url to load in the webview.
+    ///     - iconName: The name of the image to display on the button.
+    ///     - bundleIdentifier: The bundle identifier for the url if not fully qualified. This is also used
+    ///       as the bundle for the image. Default = `nil`.
+    public init(url: String, iconName: String, bundleIdentifier: String? = nil) {
+        self.url = url
+        self.iconName = iconName
+        self.bundleIdentifier = bundleIdentifier
+    }
+}
+
 extension RSDUIActionObject : RSDDocumentableCodableObject {
     
     static func codingKeys() -> [CodingKey] {
@@ -292,6 +353,23 @@ extension RSDWebViewUIActionObject : RSDDocumentableCodableObject {
         titleAction.usesBackButton = true
         titleAction.title = "Go, Dogs! Go"
         let imageAction = RSDWebViewUIActionObject(url: "About_Dogs.html", iconName: "iconInfo", bundleIdentifier: "org.example.SharedResources")
+        return [titleAction, imageAction]
+    }
+    
+    static func examples() -> [Encodable] {
+        return actionExamples()
+    }
+}
+
+extension RSDVideoViewUIActionObject : RSDDocumentableCodableObject {
+    
+    static func codingKeys() -> [CodingKey] {
+        return CodingKeys.allCases
+    }
+    
+    static func actionExamples() -> [RSDVideoViewUIActionObject] {
+        let titleAction = RSDVideoViewUIActionObject(url: "About_Dogs.mp4", buttonTitle: "Go, Dogs! Go")
+        let imageAction = RSDVideoViewUIActionObject(url: "About_Dogs.mp4", iconName: "iconInfo", bundleIdentifier: "org.example.SharedResources")
         return [titleAction, imageAction]
     }
     

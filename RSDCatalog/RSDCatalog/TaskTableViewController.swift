@@ -116,7 +116,7 @@ class TaskTableViewController: UITableViewController {
         cell.titleLabel?.text = taskInfo.title ?? taskInfo.identifier
         cell.subtitleLabel?.text = taskInfo.subtitle
         if let imageView = cell.thumbnailView {
-            taskGroup.imageVendor?.fetchImage(for: imageView.bounds.size) { (_, img) in
+            taskInfo.imageVendor?.fetchImage(for: imageView.bounds.size) { (_, img) in
                 imageView.image = img
             }
         }
@@ -129,7 +129,7 @@ class TaskTableViewController: UITableViewController {
         
         guard let cell = sender as? UITableViewCell,
             let indexPath = self.tableView.indexPath(for: cell),
-            let vc = segue.destination as? ResultTableViewController
+            let vc = segue.destination as? TaskPresentationViewController
             else {
                 return
         }

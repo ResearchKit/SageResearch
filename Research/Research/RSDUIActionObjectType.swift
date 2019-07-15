@@ -55,8 +55,11 @@ public struct RSDUIActionObjectType : RSDFactoryTypeRepresentable, Codable, Hash
     /// Defaults to creating a `RSDWebViewUIActionObject`.
     public static let webView: RSDUIActionObjectType = "webView"
     
+    /// Defaults to creating a `RSDVideoViewUIActionObject`.
+    public static let videoView: RSDUIActionObjectType = "videoView"
+    
     public static func allStandardTypes() -> [RSDUIActionObjectType] {
-        return [.defaultNavigation, .webView, .navigation, .reminder]
+        return [.defaultNavigation, .webView, .videoView, .navigation, .reminder]
     }
 }
 

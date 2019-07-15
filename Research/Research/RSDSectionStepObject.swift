@@ -102,7 +102,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
                     let stepDecoder = try stepsContainer.superDecoder()
                     let nestedContainer = try stepDecoder.container(keyedBy: CodingKeys.self)
                     let identifier = try nestedContainer.decode(String.self, forKey: .identifier)
-                    if let idx = copySteps.index(where: { $0.identifier == identifier }),
+                    if let idx = copySteps.firstIndex(where: { $0.identifier == identifier }),
                         let copyableStep = copySteps[idx] as? RSDCopyStep {
                         let replacementStep = try copyableStep.copy(with: identifier, decoder: stepDecoder)
                         copySteps.replaceSubrange(idx...idx, with: [replacementStep])
@@ -172,7 +172,7 @@ public struct RSDSectionStepObject: RSDSectionStep, RSDConditionalStepNavigator,
         while !nestedContainer.isAtEnd {
             let actionDecoder = try nestedContainer.superDecoder()
             if let action = try factory.decodeAsyncActionConfiguration(from: actionDecoder) {
-                if let idx = decodedActions.index(where: { $0.identifier == action.identifier}) {
+                if let idx = decodedActions.firstIndex(where: { $0.identifier == action.identifier}) {
                     decodedActions.remove(at: idx)
                 }
                 decodedActions.append(action)

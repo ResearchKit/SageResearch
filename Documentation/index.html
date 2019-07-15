@@ -13,8 +13,8 @@
     <a title="SageResearch  Reference Documentation"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">SageResearch Docs</a> (95% documented)</p>
-        <p class="header-right"><a href="https://github.com/ResearchKit/SageResearch.git"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p><a href="index.html">SageResearch Docs</a></p>
+        <p class="header-right"><a href="https://github.com/Sage-Bionetworks/SageResearch.git"><img src="img/gh.png"/>View on GitHub</a></p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -31,10 +31,16 @@
             Modules
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="ResearchSuite/index.html">ResearchSuite</a>
+                <a href="Research/index.html">Research</a>
               </li>
               <li class="nav-group-task">
-                <a href="ResearchSuiteUI/index.html">ResearchSuiteUI</a>
+                <a href="ResearchUI/index.html">ResearchUI</a>
+              </li>
+              <li class="nav-group-task">
+                  <a href="ResearchMotion/index.html">ResearchMotion</a>
+              </li>
+              <li class="nav-group-task">
+                  <a href="ResearchMotion/index.html">ResearchLocation</a>
               </li>
             </ul>
           </li>
@@ -44,15 +50,65 @@
         <section>
           <section class="section">
             
-            <h1 id='researchsuite' class='heading'>SageResearch</h1>
-<h3 id='authors' class='heading'>Authors</h3>
-
-<p>Sage Bionetworks</p>
-
+            <h1 id='sageresearch' class='heading'>SageResearch</h1>
+            
+            <p><a href="http://sagebionetworks.org">Sage Bionetworks</a> has spent four years developing mobile health study apps and played a role in supporting over 20 projects, using Research Kit as the basis for all of our iPhone development. Based on that experience, we have begun to generate a next-generation framework and are looking for the involvement of the broader Research Kit community to provide input on design goals and approaches, and contribute to development. This framework:</p>
+            
+            <ul>
+                <li>Keeps what is good and useful about ResearchKit, provides for a smooth transition from it, and allows ResearchKit 1.x components to be used as modules in Research apps;</li>
+                <li>Is based on modern technology (Swift 5);</li>
+                <li>Allows maximum flexibility in extending the core step/task navigation and results gathering functionality by defining a set of protocols and then providing a set of classes as concrete reference implementations;</li>
+                <li>Allows maximum flexibility in UI/UX design, first by separating generic UX logic control from platform-specific UI implementations, and also again by providing protocols and concrete reference implementations of those protocols;</li>
+                <li>Reduces app size and dependency on unused parts of the underlying OS (e.g., permissions strings required in Info.plist files) by separating specific active tasks or logical groups of tasks into their own modules, in general (but not necessarily) built on these two frameworks;</li>
+                <li>Is designed with parallel development for other (mobile and web) platforms in mind so that the broadest spectrum of study participants can be reached with the minimum coding effort.</li>
+            </ul>
+            
+            <p>Like ResearchKit, this project is independent of any particular back-end service used to collect study data, record consent, or perform other centralized study functions. Sage Bionetworks is also the lead developer of <a href="http://developer.sagebridge.org">Bridge Server</a>, an open source set of services and SDKs for supporting mHealth research.</p>
+            
+            <p>This project represents the results to date and the ongoing implementation of those goals.</p>
+            <h2 id='documentation' class='heading'>Documentation</h2>
+            
+            <p>The core step/task navigation and results-gathering framework is currently called <a href="Research/index.html">Research</a>.</p>
+            
+            <p>The UI/UX framework is called <a href="ResearchUI/index.html">ResearchUI</a>.</p>
+            
+            <p>The sensor recorder framework is called <a href="ResearchRecorders/index.html">ResearchRecorders</a>.</p>
+            
+            <h2 id='license' class='heading'>License</h2>
+            
+            <p>Sage Research SDK is available under the BSD license:</p>
+            
+            <p>Copyright &copy; 2017-2019, Sage Bionetworks
+            All rights reserved.</p>
+            
+            <p>Redistribution and use in source and binary forms, with or without
+            modification, are permitted provided that the following conditions are met:</p>
+            
+            <ul>
+                <li>Redistributions of source code must retain the above copyright
+                    notice, this list of conditions and the following disclaimer.</li>
+                <li>Redistributions in binary form must reproduce the above copyright
+                    notice, this list of conditions and the following disclaimer in the
+                    documentation and/or other materials provided with the distribution.</li>
+                <li>Neither the name of Sage Bionetworks nor the names of BridgeSDk&rsquo;s
+                    contributors may be used to endorse or promote products derived from
+                    this software without specific prior written permission.</li>
+            </ul>
+            
+            <p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS <q>AS IS</q> AND
+            ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+            WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+            DISCLAIMED. IN NO EVENT SHALL SAGE BIONETWORKS BE LIABLE FOR ANY
+                DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+                (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+                LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+                ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+                (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+                SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://developer.sagebridge.org" target="_blank" rel="external">Sage Bionetworks</a>. All rights reserved. (Last updated: 2018-01-22)</p>
+          <p>&copy; 2017-2019 <a class="link" href="https://developer.sagebridge.org" target="_blank" rel="external">Sage Bionetworks</a>. All rights reserved. (Last updated: 2019-04-26)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

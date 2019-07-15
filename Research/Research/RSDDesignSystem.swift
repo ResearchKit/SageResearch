@@ -45,8 +45,11 @@ public protocol RSDTaskDesign {
 /// The design rules are intended as a way of consolidating UI/UX design system rules in a logical grouping.
 /// A task module can define a design system that should be used for the tasks defined within that module.  
 open class RSDDesignSystem {
+    
+    /// Static marker that should be rev'd to whatever is the latest version for the design system views.
+    public static let currentVersion = 1
 
-    /// The version for the color rules. If the design rules change with future versions of this framework,
+    /// The version for the design system. If the design rules change with future versions of this framework,
     /// then the current version number should be rev'd as well and any changes to this rule set that are not
     /// additive include logic to return the previous rules associated with a previous version.
     open private(set) var version: Int
@@ -67,26 +70,61 @@ open class RSDDesignSystem {
         let colorRules = RSDColorRules(palette: palette)
         self.version = colorRules.version
         self.colorRules = colorRules
-        self.fontRules = RSDFontRules(version: palette.version)
+        self.fontRules = RSDStudyConfiguration.shared.fontRules
     }
     
     /// The button type for the button. This refers to whether or not the button is used to represent a
     /// primary or secondary action.
     public enum ButtonType: String, Codable, CaseIterable {
-        case primary, secondary
+        case primary, secondary, toggle, bodyLink, headerLink
     }
     
     /// The supported text types for the text fields and labels.
-    public enum TextType : String, Codable, CaseIterable {
-        case heading1
-        case heading2       // step title
-        case heading3
-        case heading4
-        case fieldHeader
-        case body           // step text
-        case bodyDetail     // step detail
-        case small          // step footnote
-        case microHeader
-        case counter
+    public struct TextType : RawRepresentable, Codable, ExpressibleByStringLiteral, Hashable {
+        public let rawValue: String
+        
+        public init?(rawValue: String) {
+            self.rawValue = rawValue
+        }
+        
+        public init(stringLiteral value: String) {
+            self.rawValue = value
+        }
+        
+        // Version 2
+        public static let largeNumber: TextType = "largeNumber"
+        public static let smallNumber: TextType = "smallNumber"
+        public static let xLargeHeader: TextType = "xLargeHeader"
+        public static let largeHeader: TextType = "largeHeader"
+        public static let largeBody: TextType = "largeBody"
+        public static let xSmallNumber: TextType = "xSmallNumber"
+        public static let mediumHeader: TextType = "mediumHeader"
+        public static let body: TextType = "body"
+        public static let bodyDetail: TextType = "bodyDetail"
+        public static let italicDetail: TextType = "italicDetail"
+        public static let smallHeader: TextType = "smallHeader"
+        public static let small: TextType = "small"
+        public static let hint: TextType = "hint"    // placeholder
+        public static let microHeader: TextType = "microHeader"
+        public static let microDetail: TextType = "microDetail"
+        
+        // Version 1
+        @available(*, deprecated, message: "Use `xLargeHeader`")
+        public static let heading1: TextType = "heading1"
+        
+        @available(*, deprecated, message: "Use `largeHeader`")
+        public static let heading2: TextType = "heading2"
+        
+        @available(*, deprecated, message: "Use `mediumHeader` or `largeHeader`")
+        public static let heading3: TextType = "heading3"
+        
+        @available(*, deprecated, message: "Use `mediumHeader`")
+        public static let heading4: TextType = "heading4"
+        
+        @available(*, deprecated, message: "Use `smallHeader`")
+        public static let fieldHeader: TextType = "fieldHeader"
+        
+        @available(*, deprecated, message: "Use `largeNumber`")
+        public static let counter: TextType = "counter"
     }
 }

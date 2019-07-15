@@ -40,6 +40,11 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
 
     public typealias Value = T
     
+    private enum CodingKeys : String, CodingKey, CaseIterable {
+        case value, text, detail, icon, isExclusive
+    }
+
+    
     /// A JSON encodable object to return as the value when this choice is selected.
     public var answerValue: Codable? {
         return _value
@@ -92,10 +97,6 @@ public struct RSDChoiceObject<T : Codable> : RSDChoice, RSDComparable, RSDEmbedd
     }
     
     // MARK: Codable
-    
-    private enum CodingKeys : String, CodingKey, CaseIterable {
-        case value, text, detail, icon, isExclusive
-    }
 
     /// Initialize from a `Decoder`. This decoding method will first look to see if the decoder contains
     /// a dictionary in which case the coding keys will be decoded from that dictionary. Otherwise, the

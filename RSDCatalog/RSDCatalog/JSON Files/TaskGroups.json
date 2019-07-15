@@ -36,14 +36,14 @@
      "detail": "This task group includes examples of active tasks that include spoken instructions and recorders that are currently included in the Research and ResearchUI frameworks.",
      "icon": "activityIcon",
      "tasks" : [{
-                "identifier": "distance",
-                "title": "Distance Recorder",
-                "subtitle": "Activity for recording relative GPS location.",
-                "detail": "This is an example task for recording GPS distance data using the RSDDistanceRecorder. This task also includes using the voice synthesizer to include spoken instructions.",
-                "icon": "activityIcon",
-                "taskTransformer" : { "resourceName": "Recorder_Distance" }
-                },
-                {
+                     "identifier": "distance",
+                     "title": "Distance Recorder",
+                     "subtitle": "Activity for recording relative GPS location.",
+                     "detail": "This is an example task for recording GPS distance data using the RSDDistanceRecorder. This task also includes using the voice synthesizer to include spoken instructions.",
+                     "icon": "activityIcon",
+                     "taskTransformer" : { "resourceName": "Recorder_Distance" }
+                 },
+                 {
                 "identifier": "motion",
                 "title": "Motion Recorder",
                 "subtitle": "Activity for recording motion sensor data.",
@@ -51,20 +51,6 @@
                 "icon": "activityIcon",
                 "taskTransformer" : { "resourceName": "Recorder_Motion" }
                 }]
- },
- {
- "identifier": "imageExamples",
- "title": "Image/Video",
- "detail": "This task group includes examples of image and video steps that are currently included in the Research and ResearchUI frameworks.",
- "icon": "activityIcon",
- "tasks" : [{
-            "identifier": "imagePicker",
-            "title": "Image Picker",
-            "subtitle": "Activity for selecting images.",
-            "detail": "This is an example task for selecting images either from your photo library or using the camera.",
-            "icon": "activityIcon",
-            "taskTransformer" : { "resourceName": "Image_Picker" }
-            }]
  },
  {
  "identifier": "colorExamples",
@@ -80,19 +66,5 @@
             "taskTransformer" : { "resourceName": "Theme_Color" }
             }]
  },
- {
-     "identifier": "motorControlTasks",
-     "type":"motorControl",
-     "title": "Motor Control",
-     "detail": "This task group includes the tasks included in the MotorControl module.",
-     "icon": "activityIcon"
- },
- {
-     "identifier": "crfTasks",
-     "type":"crf",
-     "title": "Cardiorespiratory Fitness",
-     "detail": "This task group includes the tasks included in the CardiorespiratoryFitness module.",
-     "icon": "activityIcon"
- }
 ]
 }

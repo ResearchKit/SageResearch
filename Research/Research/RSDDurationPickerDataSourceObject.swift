@@ -117,7 +117,7 @@ public struct RSDDurationPickerDataSourceObject : RSDMultipleComponentPickerData
         guard let duration = duration(for: selectedAnswer) else { return nil }
         return componentUnits.enumerated().map { (idx, unit) -> Int in
             let value = duration.component(of: unit)
-            return self.componentChoices[idx].index(where: { ($0.answerValue as! Int) == value }) ?? 0
+            return self.componentChoices[idx].firstIndex(where: { ($0.answerValue as! Int) == value }) ?? 0
         }
     }
     

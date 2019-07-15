@@ -23,25 +23,45 @@
                                                {
                                                "identifier"   : "instruction",
                                                "type"         : "instruction",
-                                               "title"        : "Please hold your phone",
-                                               "text"         : "After the countdown, shake your phone. This will record the calculated gravity vector and the raw gyro data."
+                                               "title"        : "Hold your phone",
+                                               "text"         : "After the countdown, shake your phone. This will record the calculated gravity vector and the raw gyro data.",
+                                               "image": {
+                                                   "type": "fetchable",
+                                                   "imageName": "HoldPhone",
+                                                   "placementType": "topBackground"
+                                               }
                                                },
                                                {
                                                "identifier"     : "countdown",
-                                               "type"           : "countdown",
-                                               "text"           : "Start in",
-                                               "duration"       : 5,
-                                               "commands"       : ["playSoundOnStart", "transitionAutomatically"]
+                                               "type"           : "countdown"
                                                },
                                                {
                                                "identifier"         : "motion",
                                                "type"               : "active",
                                                "duration"           : 30,
-                                               "text"               : "Shake your phone",
-                                               "commands"           : ["transitionAutomatically", "shouldDisableIdleTimer", "vibrate",
+                                               "title"              : "Shake your phone",
+                                               "image": {
+                                                   "type": "fetchable",
+                                                   "imageName": "HoldPhone",
+                                                   "placementType": "fullsizeBackground"
+                                               },
+                                               "commands"           : ["startTimerAutomatically", "shouldDisableIdleTimer", "vibrate",
                                                                        "playSound"],
+                                               "actions":{
+                                                   "skip":{
+                                                       "type":"navigation",
+                                                       "skipToIdentifier":"countdown",
+                                                       "buttonTitle": "Restart test"
+                                                   },
+                                                   "reviewInstructions":{
+                                                       "type":"navigation",
+                                                       "skipToIdentifier": "instruction",
+                                                       "buttonTitle": "Review instructions"
+                                                   }
+                                               },
                                                "spokenInstructions" : { "start": "Start shaking your phone",
                                                                         "halfway": "Halfway there. Keep shaking!",
+                                                                        "countdown": "10",
                                                                         "end": "You're done!"}
                                                }
                                                ]

@@ -51,6 +51,9 @@ public protocol RSDActiveUIStep: RSDUIStep {
     /// the user has the mute switch turned on.
     var requiresBackgroundAudio: Bool { get }
     
+    /// Should the task end early if the task is interrupted by a phone call?
+    var shouldEndOnInterrupt : Bool { get }
+    
     /// Localized text that represents an instructional voice prompt. Instructional speech begins when the
     /// step passes the time indicated by the given time.  If `timeInterval` is greater than or equal to
     /// `duration` or is equal to `Double.infinity`, then the spoken instruction returned should be for

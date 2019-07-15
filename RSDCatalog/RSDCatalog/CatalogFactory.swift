@@ -33,8 +33,7 @@
 
 import Foundation
 import Research
-import MotorControl
-import CardiorespiratoryFitness
+import ResearchMotion
 
 /// Stub out a factory for this application. Any factory overrides that are used by the catalog
 /// can be declared here. This stub is intentional so that unit tests will all use this rather
@@ -49,6 +48,17 @@ class CatalogFactory : RSDFactory {
         let taskGroups = try jsonDecoder.decode(TaskGroupDecoder.self, from: jsonData)
         return taskGroups.taskGroups
     }
+    
+    override func decodeTask(with data: Data, resourceType: RSDResourceType, typeName: String? = nil, taskIdentifier: String? = nil, schemaInfo: RSDSchemaInfo? = nil, bundle: Bundle? = nil) throws -> RSDTask {
+        let decoder = try createDecoder(for: resourceType, taskIdentifier: taskIdentifier, schemaInfo: schemaInfo, bundle: bundle)
+        if let identifier = taskIdentifier, identifier == "motion" || identifier == "distance" {
+            return try decoder.decode(RSDMotionTaskObject.self, from: data)
+        }
+        else {
+            return try decodeTask(with: data, from: decoder)
+        }
+    }
+    
 }
 
 
@@ -58,38 +68,15 @@ struct TaskGroupDecoder : Decodable {
         case taskGroups
     }
     
-    enum TaskGroupType: String, Decodable {
-        case motorControl
-        case crf
-    }
-    
     let taskGroups: [RSDTaskGroup]
     
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let factory = decoder.factory
-        
+        let container = try decoder.container(keyedBy: CodingKeys.self)        
         var nestedContainer: UnkeyedDecodingContainer = try container.nestedUnkeyedContainer(forKey: .taskGroups)
         var decodedTasks : [RSDTaskGroup] = []
         while !nestedContainer.isAtEnd {
             let taskDecoder = try nestedContainer.superDecoder()
-            let task: RSDTaskGroup
-            if let type = try factory.typeName(from: taskDecoder) {
-                guard let groupType = TaskGroupType(rawValue: type) else {
-                    let context = DecodingError.Context(codingPath: taskDecoder.codingPath, debugDescription: "Group type not recognized")
-                    throw DecodingError.dataCorrupted(context)
-                }
-                switch (groupType) {
-                case .motorControl:
-                    task = try MCTTaskGroup(from: taskDecoder)
-                case .crf:
-                    task = try CRFTaskGroup(from: taskDecoder)
-                }
-            }
-            else {
-                task = try RSDTaskGroupObject(from: taskDecoder)
-                
-            }
+            let task: RSDTaskGroup = try RSDTaskGroupObject(from: taskDecoder)
             decodedTasks.append(task)
         }
         self.taskGroups = decodedTasks
