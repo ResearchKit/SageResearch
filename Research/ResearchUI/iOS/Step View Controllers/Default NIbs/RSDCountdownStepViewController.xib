@@ -27,7 +27,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqM-Sh-4ad" userLabel="Cancel Button">
-                    <rect key="frame" x="20" y="40" width="50" height="50"/>
+                    <rect key="frame" x="20" y="40" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="aqM-Sh-4ad" secondAttribute="height" multiplier="1:1" id="J4Z-mB-pHQ"/>
                     </constraints>
@@ -35,7 +35,7 @@
                     <state key="normal" image="closeActivity"/>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0NN-9M-6c6" userLabel="Pause Button" customClass="RSDRoundedButton" customModule="ResearchUI">
-                    <rect key="frame" x="28" y="521.5" width="319" height="52"/>
+                    <rect key="frame" x="28" y="543" width="319" height="34"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <state key="normal" title="Pause">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -63,7 +63,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="td1-5c-r9B" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                    <rect key="frame" x="108.5" y="603.5" width="158" height="33.5"/>
+                    <rect key="frame" x="120.5" y="607" width="134" height="30"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Review Instructions"/>
                 </button>
@@ -101,11 +101,11 @@
                 <outlet property="cancelButton" destination="aqM-Sh-4ad" id="qNK-ik-xvH"/>
                 <outlet property="imageView" destination="Tqa-iw-q7M" id="1lt-Yl-0QT"/>
                 <outlet property="reviewInstructionsButton" destination="td1-5c-r9B" id="mZp-J7-gmo"/>
-                <outlet property="textLabel" destination="wNP-Fq-dc4" id="aCm-sx-7NK"/>
+                <outlet property="titleLabel" destination="wNP-Fq-dc4" id="tYl-dk-hWS"/>
             </connections>
         </view>
     </objects>
     <resources>
-        <image name="closeActivity" width="50" height="50"/>
+        <image name="closeActivity" width="32" height="32"/>
     </resources>
 </document>

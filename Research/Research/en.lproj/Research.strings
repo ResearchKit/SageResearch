@@ -134,3 +134,6 @@
 "ACTIVE_STEP_UNIT_LABEL_ZERO" = "";
 "ACTIVE_STEP_UNIT_LABEL_ONE" = "Second";
 "ACTIVE_STEP_UNIT_LABEL_OTHER" = "Seconds";
+
+/* Default title for a countdown step */
+"COUNTDOWN_STEP_DEFAULT_TITLE" = "Begin in...";

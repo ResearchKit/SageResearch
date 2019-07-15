@@ -220,7 +220,7 @@ open class RSDColorRules  {
             }
         }
         else if self.palette.text.colorTiles.count > 0 {
-            // Version 0 and 1 only have 3 colors defined, so need to match within that.
+            // Version 1 only has 3 colors defined, so need to match within that.
             if background.usesLightStyle {
                 return self.palette.text.colorTiles.first!.color
             }
@@ -234,6 +234,7 @@ open class RSDColorRules  {
             }
         }
         else {
+            // Version 0 does not have a text palette so use the gray scale.
             if background.usesLightStyle {
                 return self.palette.grayScale.white.color
             }
@@ -259,16 +260,21 @@ open class RSDColorRules  {
     ///     - background: The background of the text UI element.
     /// - returns: The color to use for tinted buttons.
     open func tintedButtonColor(on background: RSDColorTile) -> RSDColor {
-        if background.usesLightStyle {
-            return self.palette.grayScale.white.color
-        }
-        else if background == self.palette.primary.normal ||
-            background == self.palette.grayScale.white ||
-            background == self.palette.grayScale.veryLightGray {
-            return self.palette.secondary.normal.color
+        if version == 0 {
+            if background.usesLightStyle {
+                return self.palette.grayScale.white.color
+            }
+            else if background == self.palette.primary.normal ||
+                background == self.palette.grayScale.white ||
+                background == self.palette.grayScale.veryLightGray {
+                return self.palette.secondary.normal.color
+            }
+            else {
+                return self.palette.grayScale.veryDarkGray.color
+            }
         }
         else {
-            return self.palette.grayScale.veryDarkGray.color
+            return background.usesLightStyle ? self.palette.text.veryLight.color : self.palette.text.veryDark.color
         }
     }
     

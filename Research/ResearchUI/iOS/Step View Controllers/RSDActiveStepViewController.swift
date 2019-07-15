@@ -359,7 +359,7 @@ open class RSDActiveStepViewController: RSDFullscreenImageStepViewController {
         super.setupViews()
         
         self.doneLabel?.font = self.designSystem.fontRules.font(for: .largeNumber, compatibleWith: traitCollection)
-        self.unitLabel?.font = self.designSystem.fontRules.baseFont(for: .largeHeader)  // NOT DYNAMIC
+        self.unitLabel?.font = self.designSystem.fontRules.baseFont(for: .mediumHeader)  // NOT DYNAMIC
         self.instructionLabel?.font = self.designSystem.fontRules.font(for: .largeHeader, compatibleWith: traitCollection)
         self.countdownLabel?.font = self.designSystem.fontRules.font(for: .largeNumber, compatibleWith: traitCollection)
     }

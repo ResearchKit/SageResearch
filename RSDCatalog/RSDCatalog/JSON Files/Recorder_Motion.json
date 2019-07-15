@@ -33,15 +33,7 @@
                                                },
                                                {
                                                "identifier"     : "countdown",
-                                               "type"           : "countdown",
-                                               "text"           : "Start in",
-                                               "image": {
-                                                   "type": "fetchable",
-                                                   "imageName": "HoldPhone",
-                                                   "placementType": "fullsizeBackground"
-                                               },
-                                               "duration"       : 5,
-                                               "commands"       : ["playSoundOnStart", "transitionAutomatically"]
+                                               "type"           : "countdown"
                                                },
                                                {
                                                "identifier"         : "motion",
