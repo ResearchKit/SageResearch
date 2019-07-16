@@ -39,6 +39,9 @@
 		F8D42ABC2095552100C6A4BC /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D42AB72095550C00C6A4BC /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D42AC0209555C400C6A4BC /* RSDCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D42A672095518400C6A4BC /* RSDCatalogTests.swift */; };
 		F8DC072E2256DD8A0045D530 /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */; };
+		FF5010BA22DE621E0035E83C /* topMarginBackground.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B722DE621E0035E83C /* topMarginBackground.pdf */; };
+		FF5010BB22DE621E0035E83C /* HoldPhone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B822DE621E0035E83C /* HoldPhone.pdf */; };
+		FF5010BC22DE621E0035E83C /* topBackground.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B922DE621E0035E83C /* topBackground.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +113,9 @@
 		F8D42AB52095550C00C6A4BC /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D42AB72095550C00C6A4BC /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8DC072D2256DD8A0045D530 /* ArchiveManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveManager.swift; sourceTree = "<group>"; };
+		FF5010B722DE621E0035E83C /* topMarginBackground.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = topMarginBackground.pdf; sourceTree = "<group>"; };
+		FF5010B822DE621E0035E83C /* HoldPhone.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = HoldPhone.pdf; sourceTree = "<group>"; };
+		FF5010B922DE621E0035E83C /* topBackground.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = topBackground.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +183,7 @@
 				F8D42A842095529100C6A4BC /* TaskTableViewController.swift */,
 				F871AA5222610E8900C0F657 /* PaletteSelectionViewController.swift */,
 				F8D42A92209552EC00C6A4BC /* JSON Files */,
+				FF5010B022DE60BB0035E83C /* Image Files */,
 				F8D42A8B209552CB00C6A4BC /* Storyboards */,
 				F8D42A592095518400C6A4BC /* Assets.xcassets */,
 				F8D42A5E2095518400C6A4BC /* Info.plist */,
@@ -235,6 +242,16 @@
 				F82A4ABF22960D2500BEBE3C /* ResearchLocation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF5010B022DE60BB0035E83C /* Image Files */ = {
+			isa = PBXGroup;
+			children = (
+				FF5010B822DE621E0035E83C /* HoldPhone.pdf */,
+				FF5010B922DE621E0035E83C /* topBackground.pdf */,
+				FF5010B722DE621E0035E83C /* topMarginBackground.pdf */,
+			);
+			path = "Image Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,10 +370,13 @@
 				F8D42A9B209552EC00C6A4BC /* Recorder_Motion.json in Resources */,
 				F8373C9320964F60004DD4E1 /* README.md in Resources */,
 				F8D42A9E209552EC00C6A4BC /* Theme_Color.json in Resources */,
+				FF5010BB22DE621E0035E83C /* HoldPhone.pdf in Resources */,
 				F8D42A9D209552EC00C6A4BC /* FormStep_Textfield.json in Resources */,
 				F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */,
+				FF5010BC22DE621E0035E83C /* topBackground.pdf in Resources */,
 				F82A4AC322960DD400BEBE3C /* Recorder_Distance.json in Resources */,
 				F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */,
+				FF5010BA22DE621E0035E83C /* topMarginBackground.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
