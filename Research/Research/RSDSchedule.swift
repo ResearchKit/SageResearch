@@ -37,6 +37,9 @@ public protocol RSDScheduleTime {
     
     /// The time of the day as a string with the format "HH:mm:ss" or "HH:mm".
     var timeOfDayString: String? { get }
+    
+    /// The time zone for the time of day.
+    var timeZone: TimeZone { get }
 }
 
 /// The `RSDSchedule` protocol can be used to describe a local notification schedule. This provides a
@@ -63,7 +66,8 @@ extension RSDScheduleTime {
     /// - parameter date: The date for which to set the time.
     public func timeOfDay(on date:Date) -> Date? {
         guard let timeComponents = self.timeComponents else { return nil }
-        let calendar = Calendar.iso8601
+        var calendar = Calendar.iso8601
+        calendar.timeZone = self.timeZone
         var components = calendar.dateComponents([.year, .month, .day], from: date)
         components.hour = timeComponents.hour
         components.minute = timeComponents.minute
