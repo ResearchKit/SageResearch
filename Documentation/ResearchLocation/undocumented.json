@@ -6,6 +6,20 @@
       "symbol": "RSDDistanceRecorder.locationManager",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchLocation/RSDLocationAuthorization.swift",
+      "line": 44,
+      "symbol": "RSDLocationAuthorization.shared",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchLocation/RSDLocationAuthorization.swift",
+      "line": 107,
+      "symbol": "RSDLocationAuthorization.requestAuthorization(for:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
     }
   ],
   "source_directory": "/Users/travis/build/Sage-Bionetworks/SageResearch"
