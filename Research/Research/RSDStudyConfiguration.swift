@@ -78,7 +78,7 @@ open class RSDStudyConfiguration {
     public private(set) var hasSetColorPallette: Bool = false
     
     /// The default font rules for this app.
-    open var fontRules: RSDFontRules = RSDFontRules(version: 0)
+    open var fontRules: RSDFontRules = RSDFontRules(version: 1)
     
     /// A flag for whether or not tasks that support "remind me later" should show that action. (Default = `false`)
     open var shouldShowRemindMe: Bool = false

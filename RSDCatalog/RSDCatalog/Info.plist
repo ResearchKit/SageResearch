@@ -24,6 +24,8 @@
 	<string>This app uses the camera to take pictures as an example of using the Image Picker.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app uses the GPS sensor to measure relative distance travelled.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app uses the GPS sensor to measure relative distance travelled.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app uses the GPS sensor to measure relative distance travelled.</string>
 	<key>NSMicrophoneUsageDescription</key>
