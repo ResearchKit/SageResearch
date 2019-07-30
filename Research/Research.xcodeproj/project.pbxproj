@@ -362,10 +362,6 @@
 		F8A334A2224171EF00390601 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334A0224171EF00390601 /* RSDFontRules.swift */; };
 		F8A334A3224171EF00390601 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334A0224171EF00390601 /* RSDFontRules.swift */; };
 		F8A334A4224171EF00390601 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334A0224171EF00390601 /* RSDFontRules.swift */; };
-		F8A334A72242A80D00390601 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8A334A62242A80D00390601 /* Colors.xcassets */; };
-		F8A334A82242A80D00390601 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8A334A62242A80D00390601 /* Colors.xcassets */; };
-		F8A334A92242A80D00390601 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8A334A62242A80D00390601 /* Colors.xcassets */; };
-		F8A334AA2242A80D00390601 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8A334A62242A80D00390601 /* Colors.xcassets */; };
 		F8A5E15D1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */; };
 		F8A5E15E1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */; };
 		F8A5E15F1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */; };
@@ -1254,7 +1250,6 @@
 		F8A3348B224058C900390601 /* RSDDesignableUIStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDesignableUIStep.swift; sourceTree = "<group>"; };
 		F8A33490224069A700390601 /* RSDColorMappingThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDColorMappingThemeElementObject.swift; sourceTree = "<group>"; };
 		F8A334A0224171EF00390601 /* RSDFontRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFontRules.swift; sourceTree = "<group>"; };
-		F8A334A62242A80D00390601 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDMeasurementWrapper.h; sourceTree = "<group>"; };
 		F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDMeasurementWrapper.m; sourceTree = "<group>"; };
 		F8A694FD2135C3B40052EB82 /* RSDAnswerResultType+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSDAnswerResultType+Codable.swift"; sourceTree = "<group>"; };
@@ -2148,7 +2143,6 @@
 				F8C36BE72239AEBD000E42A7 /* ColorMatrix.json */,
 				F800EA83223AFB9400EF7B50 /* RSDColorPalette.swift */,
 				F8A334A0224171EF00390601 /* RSDFontRules.swift */,
-				F8A334A62242A80D00390601 /* Colors.xcassets */,
 			);
 			name = Design;
 			sourceTree = "<group>";
@@ -3053,7 +3047,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8A334AA2242A80D00390601 /* Colors.xcassets in Resources */,
 				F8C36BEB2239AEBD000E42A7 /* ColorMatrix.json in Resources */,
 				F8BE12C221371A69000AAB1E /* Research.strings in Resources */,
 			);
@@ -3064,7 +3057,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF8B54B71FCE6CFF006B6937 /* Research.strings in Resources */,
-				F8A334A72242A80D00390601 /* Colors.xcassets in Resources */,
 				F8A695022135C4940052EB82 /* README-API.md in Resources */,
 				F8C36BE82239AEBD000E42A7 /* ColorMatrix.json in Resources */,
 			);
@@ -3084,7 +3076,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF8B54B81FCE6D00006B6937 /* Research.strings in Resources */,
-				F8A334A82242A80D00390601 /* Colors.xcassets in Resources */,
 				F8A695032135C4940052EB82 /* README-API.md in Resources */,
 				F8C36BE92239AEBD000E42A7 /* ColorMatrix.json in Resources */,
 			);
@@ -3095,7 +3086,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF8B54B91FCE6D01006B6937 /* Research.strings in Resources */,
-				F8A334A92242A80D00390601 /* Colors.xcassets in Resources */,
 				F8A695042135C4940052EB82 /* README-API.md in Resources */,
 				F8C36BEA2239AEBD000E42A7 /* ColorMatrix.json in Resources */,
 			);
