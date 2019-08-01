@@ -139,6 +139,7 @@ extension RSDFileWrapper {
     
     private func drawImage(from document:CGPDFDocument, at pageIndex: Int) -> UIImage? {
         guard let page = document.page(at: pageIndex) else { return nil }
+        // TODO: syoung 08/01/2019 Look into rendering at the size requested by the view.
         let pageRect = page.getBoxRect(.mediaBox)
         let renderer = UIGraphicsImageRenderer(size: pageRect.size)
         let img = renderer.image { ctx in
@@ -199,43 +200,4 @@ extension RSDFileWrapper {
         }
         return (resource, ext)
     }
-}
-
-//+(UIImage *) imageWithPDFURL:(NSURL *)URL atHeight:(CGFloat)height atPage:(NSUInteger)page
-//{
-//    if ( URL == nil )
-//    return nil;
-//
-//    CGRect mediaRect = [ PDFView mediaRectForURL:URL atPage:page ];
-//    CGFloat aspectRatio = mediaRect.size.width / mediaRect.size.height;
-//
-//    CGSize size = CGSizeMake( ceil( height * aspectRatio ), height );
-//
-//    return [ UIImage imageWithPDFURL:URL atSize:size atPage:page ];
-//}
-//
-//+(UIImage *) imageWithPDFURL:(NSURL *)URL atHeight:(CGFloat)height
-//{
-//    return [ UIImage imageWithPDFURL:URL atHeight:height atPage:1 ];
-//}
-//
-//+(UIImage *) originalSizeImageWithPDFURL:(NSURL *)URL atPage:(NSUInteger)page
-//{
-//    if ( URL == nil )
-//    return nil;
-//
-//    CGRect mediaRect = [ PDFView mediaRectForURL:URL atPage:page];
-//
-//    return [ UIImage imageWithPDFURL:URL atSize:mediaRect.size atPage:page preserveAspectRatio:YES ];
-//}
-//
-//+(UIImage *) originalSizeImageWithPDFURL:(NSURL *)URL
-//{
-//    return [ UIImage originalSizeImageWithPDFURL:URL atPage:1 ];
-//}
-
-extension RSDImage {
-    
-    
-    
 }
