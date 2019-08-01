@@ -80,18 +80,20 @@ extension RSDFileWrapper {
         return rawValue
     }
     
-    /// Assuming that this file is an image, return the image. This will first look in the file
-    /// system for the bundle and *then* check if the image is in the asset catalog. If this method
-    /// is used, it is assumed that the image *should* be in a file directory and *not* be in the
-    /// asset catalog. It will print a warning. The logic for inclusion in the asset catalog may
-    /// change when/if Apple fixes their caching issues. syoung 07/16/2019
+    /// Assuming that this file is an image, return the image. This will first look in the asset
+    /// catalog and *then* check if the image is in the resource bundle. If the image is a PDF,
+    /// it will then attempt to render the image from the PDF to an image of the same size as the
+    /// "media" size of the PDF. The logic for inclusion in the asset catalog may change when/if
+    /// Apple fixes their caching issues. As of this writing, there is a bug in some versions of
+    /// of iOS supported by this framework that causes larger images to crash the application b/c
+    /// of low memory and improper release of the cache. syoung 08/01/2019
     ///
     /// - seealso: https://forums.developer.apple.com/thread/18767
     ///
     /// - parameters:
     ///     - bundle: The default bundle to use.
     ///     - defaultExtension: The default extension for the file.
-    /// - returns: The image (if found)
+    /// - returns: The image (if found).
     public func fetchImages(from bundle: Bundle? = nil, ofSize size: CGSize = .zero, ofType defaultExtension: String? = nil) -> [RSDImage] {
         if let image = namedImage(from: bundle) {
             print("WARNING! Using the image asset catalog can result in a low-memory crash when running on device.")
