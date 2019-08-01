@@ -42,6 +42,10 @@
 		FF5010BA22DE621E0035E83C /* topMarginBackground.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B722DE621E0035E83C /* topMarginBackground.pdf */; };
 		FF5010BB22DE621E0035E83C /* HoldPhone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B822DE621E0035E83C /* HoldPhone.pdf */; };
 		FF5010BC22DE621E0035E83C /* topBackground.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF5010B922DE621E0035E83C /* topBackground.pdf */; };
+		FF8FC21322F3A01800FA6DAF /* PhoneInPocket-1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21222F3A01800FA6DAF /* PhoneInPocket-1.pdf */; };
+		FF8FC21522F3A02300FA6DAF /* PhoneInPocket-2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21422F3A02300FA6DAF /* PhoneInPocket-2.pdf */; };
+		FF8FC21722F3A02D00FA6DAF /* PhoneInPocket-3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21622F3A02D00FA6DAF /* PhoneInPocket-3.pdf */; };
+		FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */ = {isa = PBXBuildFile; fileRef = FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +120,10 @@
 		FF5010B722DE621E0035E83C /* topMarginBackground.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = topMarginBackground.pdf; sourceTree = "<group>"; };
 		FF5010B822DE621E0035E83C /* HoldPhone.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = HoldPhone.pdf; sourceTree = "<group>"; };
 		FF5010B922DE621E0035E83C /* topBackground.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = topBackground.pdf; sourceTree = "<group>"; };
+		FF8FC21222F3A01800FA6DAF /* PhoneInPocket-1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PhoneInPocket-1.pdf"; sourceTree = "<group>"; };
+		FF8FC21422F3A02300FA6DAF /* PhoneInPocket-2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PhoneInPocket-2.pdf"; sourceTree = "<group>"; };
+		FF8FC21622F3A02D00FA6DAF /* PhoneInPocket-3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "PhoneInPocket-3.pdf"; sourceTree = "<group>"; };
+		FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Theme_Image.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +229,7 @@
 		F8D42A92209552EC00C6A4BC /* JSON Files */ = {
 			isa = PBXGroup;
 			children = (
+				FF8FC21822F3A0AF00FA6DAF /* Theme_Image.json */,
 				F82A4AC222960DD400BEBE3C /* Recorder_Distance.json */,
 				F8D42A93209552EC00C6A4BC /* Recorder_Motion.json */,
 				F8D42A94209552EC00C6A4BC /* FormStep_List.json */,
@@ -250,6 +259,9 @@
 				FF5010B822DE621E0035E83C /* HoldPhone.pdf */,
 				FF5010B922DE621E0035E83C /* topBackground.pdf */,
 				FF5010B722DE621E0035E83C /* topMarginBackground.pdf */,
+				FF8FC21222F3A01800FA6DAF /* PhoneInPocket-1.pdf */,
+				FF8FC21422F3A02300FA6DAF /* PhoneInPocket-2.pdf */,
+				FF8FC21622F3A02D00FA6DAF /* PhoneInPocket-3.pdf */,
 			);
 			path = "Image Files";
 			sourceTree = "<group>";
@@ -362,6 +374,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF8FC21522F3A02300FA6DAF /* PhoneInPocket-2.pdf in Resources */,
+				FF8FC21322F3A01800FA6DAF /* PhoneInPocket-1.pdf in Resources */,
+				FF8FC21722F3A02D00FA6DAF /* PhoneInPocket-3.pdf in Resources */,
 				F8D42A91209552CB00C6A4BC /* Main.storyboard in Resources */,
 				F8D42A9C209552EC00C6A4BC /* FormStep_List.json in Resources */,
 				F8D42AA1209552EC00C6A4BC /* TaskGroups.json in Resources */,
@@ -375,6 +390,7 @@
 				F871AA5122610D2F00C0F657 /* ColorPalettes.json in Resources */,
 				FF5010BC22DE621E0035E83C /* topBackground.pdf in Resources */,
 				F82A4AC322960DD400BEBE3C /* Recorder_Distance.json in Resources */,
+				FF8FC21922F3A0AF00FA6DAF /* Theme_Image.json in Resources */,
 				F8D42AA0209552EC00C6A4BC /* FormStep_Picker.json in Resources */,
 				FF5010BA22DE621E0035E83C /* topMarginBackground.pdf in Resources */,
 			);
