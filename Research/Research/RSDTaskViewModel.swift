@@ -143,7 +143,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         guard let parent = parentPath else { return }
         self.dataManager = (parent as? RSDHistoryPathComponent)?.dataManager
         self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
-        self.taskResult.taskRunUUID = parent.taskResult.taskRunUUID
+        var runResult = self.taskResult as? RSDTaskRunResult
+        runResult?.taskRunUUID = parent.taskResult.taskRunUUID
+        self.taskResult = runResult ?? self.taskResult
         if let _ = self.task as? RSDSectionStep {
             self.shouldShowAbbreviatedInstructions = (parentPath as? RSDTaskViewModel)?.shouldShowAbbreviatedInstructions
         }
@@ -487,8 +489,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
                     results.append(contentsOf: previousResult.asyncResults!)
                     newResult.asyncResults = results
                 }
-                newResult.taskRunUUID = previousResult.taskRunUUID
-                strongSelf.taskResult = newResult
+                var runResult = newResult as? RSDTaskRunResult
+                runResult?.taskRunUUID = previousResult.taskRunUUID
+                strongSelf.taskResult = runResult ?? newResult
             }
             else {
                 err = error ?? RSDValidationError.unexpectedNullObject("Fetched a nil task without an associated error")

@@ -35,7 +35,7 @@ import Foundation
 
 /// `RSDTaskResultObject` is a result associated with a task. This object includes a step history, task run UUID,
 /// schema identifier, and asynchronous results.
-public struct RSDTaskResultObject : RSDTaskResult, Codable {
+public struct RSDTaskResultObject : RSDTaskRunResult, Codable {
     private enum CodingKeys : String, CodingKey, CaseIterable {
         case identifier, type, startDate, endDate, taskRunUUID, schemaInfo, stepHistory, asyncResults
     }
