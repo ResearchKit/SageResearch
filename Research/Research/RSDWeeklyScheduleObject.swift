@@ -57,7 +57,7 @@ public struct RSDWeeklyScheduleObject : Codable, RSDSchedule {
     /// The time of the day as a string with the format "HH:mm".
     public var timeOfDayString: String?
     
-    /// Return the current time zone.b
+    /// Return the current time zone.
     public var timeZone: TimeZone {
         return TimeZone.current
     }
