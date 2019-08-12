@@ -1535,7 +1535,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDWeeklyScheduleObject.swift",
-      "line": 102,
+      "line": 107,
       "symbol": "RSDWeeklyScheduleObject.init(timeOfDayString:daysOfWeek:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
