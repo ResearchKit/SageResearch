@@ -38,7 +38,7 @@ public protocol RSDScheduleTime {
     /// The time of the day as a string with the format "HH:mm:ss" or "HH:mm".
     var timeOfDayString: String? { get }
     
-    /// The time zone for the time of day.
+    /// The original time zone for the time of day.
     var timeZone: TimeZone { get }
 }
 
