@@ -150,12 +150,12 @@ public enum RSDFormDataType {
     /// return `.picker` as its preferred hint, whereas `.base(.integer)` will return `.textfield`,
     /// but both support `.textfield` *and* `.picker`.
     ///
-    public var validStandardUIHints: Set<RSDFormUIHint> {
+    public var validStandardUIHints: [RSDFormUIHint] {
         switch self {
         case .base(let baseType):
             switch baseType {
             case .boolean:
-                return [.list, .picker, .checkbox, .radioButton, .toggle]
+                return [.list, .checkbox, .radioButton, .toggle, .picker]
                 
             case .date, .duration:
                 return [.picker, .textfield]
@@ -173,7 +173,7 @@ public enum RSDFormDataType {
         case .collection(let collectionType, _):
             switch collectionType {
             case .multipleChoice, .singleChoice:
-                return [.list, .slider, .checkbox, .combobox, .picker, .radioButton]
+                return [.list, .checkbox, .combobox, .picker, .radioButton, .slider]
                 
             case .multipleComponent:
                 return [.picker, .textfield]
@@ -191,7 +191,7 @@ public enum RSDFormDataType {
             return [.disclosureArrow, .button, .link, .section]
 
         case .custom(_):
-            return RSDFormUIHint.allStandardHints
+            return RSDFormUIHint.StandardHints.allCases.map { $0.hint }
         }
     }
     
