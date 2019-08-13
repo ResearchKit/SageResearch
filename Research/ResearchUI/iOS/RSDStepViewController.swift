@@ -443,15 +443,15 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             DispatchQueue.global().async { [weak navigationView] in
                 let images = animatedImage.images(compatibleWith: self.traitCollection)
                 DispatchQueue.main.async {
-                    guard let navigationView = navigationView, let image = images.last
+                    guard let navigationView = navigationView,
+                        let image = images.first
                         else {
                             return
                     }
                     UIView.transition(with: navigationView,
-                                      duration: 0.5,
+                                      duration: 0.2,
                                       options: .transitionCrossDissolve,
                                       animations: {
-                                        // Always set the last image as the one to show when/if the animation ends.
                                         navigationView.imageView?.image = image },
                                       completion: { (finished) in
                                         // If there is more than one image in the collection, then animate them.
@@ -462,6 +462,8 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
                                                 navigationView.imageView?.animationRepeatCount = repeatCount
                                             }
                                             navigationView.imageView?.startAnimating()
+                                            // Always set the last image as the one to show when/if the animation ends.
+                                            navigationView.imageView?.image = images.last
                                         }
                     })
                 }
