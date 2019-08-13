@@ -140,18 +140,16 @@ extension RSDFileWrapper {
     private func drawImage(from document:CGPDFDocument, at pageIndex: Int) -> UIImage? {
         guard let page = document.page(at: pageIndex) else { return nil }
         // TODO: syoung 08/01/2019 Look into rendering at the size requested by the view.
-        let pageRect = page.getBoxRect(.mediaBox)
+        let scale = UIScreen.main.scale
+        let pageRect = page.getBoxRect(.mediaBox).applying(.init(scaleX: scale, y: scale))
         let renderer = UIGraphicsImageRenderer(size: pageRect.size)
         let img = renderer.image { ctx in
             UIColor.clear.set()
             ctx.fill(pageRect)
-            
             ctx.cgContext.translateBy(x: 0.0, y: pageRect.size.height)
-            ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
-            
+            ctx.cgContext.scaleBy(x: scale, y: -1.0 * scale)
             ctx.cgContext.drawPDFPage(page)
         }
-        
         return img
     }
     
