@@ -42,7 +42,7 @@ import UIKit
 /// with `nil` values for the properties of that protocol. This allows for coding an image on an
 /// `RSDThemedUIStep` using just the image name as oppose to the more complex schema that supports
 /// additional information about the presentation of the image.
-extension RSDImageWrapper : RSDFetchableImageThemeElement {
+extension RSDImageWrapper : RSDFetchableImageThemeElement, RSDAssetImageThemeElement {
 
     /// The unique identifier for the image.
     public var imageIdentifier: String {
