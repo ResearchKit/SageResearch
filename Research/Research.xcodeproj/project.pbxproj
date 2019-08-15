@@ -1025,6 +1025,7 @@
 		FF8B54EC1FCE6D15006B6937 /* RSDColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDFF5CE1FC3EE5C009713E8 /* RSDColor.swift */; };
 		FF8B54ED1FCE6D15006B6937 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF8B54EE1FCE6D15006B6937 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
+		FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */; };
 		FFABCB9422D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9522D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9622D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
@@ -1403,6 +1404,7 @@
 		FF8E5F3E1F8C258200611C23 /* RSDSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSectionStepObject.swift; sourceTree = "<group>"; };
 		FF8E5F441F8C36F400611C23 /* RSDTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewModel.swift; sourceTree = "<group>"; };
 		FF8E5F461F8C3DA000611C23 /* RSDAsyncAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAsyncAction.swift; sourceTree = "<group>"; };
+		FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAppDelegate.swift; sourceTree = "<group>"; };
 		FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDViewThemeElementObject.swift; sourceTree = "<group>"; };
 		FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskControllerTests.swift; sourceTree = "<group>"; };
 		FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownUIStepObject.swift; sourceTree = "<group>"; };
@@ -1761,6 +1763,7 @@
 		F84496022273A23100EAA3E0 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */,
 				F84496032273A23100EAA3E0 /* RSDTaskViewController.swift */,
 				F844961F2273A23100EAA3E0 /* RSDStepViewController.swift */,
 				F84496082273A23100EAA3E0 /* Step View Controllers */,
@@ -3161,6 +3164,7 @@
 				F84496472273A23100EAA3E0 /* DebugStepViewController.swift in Sources */,
 				F84496482273A23100EAA3E0 /* RSDCountdownStepViewController.swift in Sources */,
 				F84496402273A23100EAA3E0 /* RSDWebViewController.swift in Sources */,
+				FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */,
 				F844966B2273A23100EAA3E0 /* RSDBackgroundGradient.swift in Sources */,
 				F84496572273A23100EAA3E0 /* RSDStepViewController.swift in Sources */,
 				F844965C2273A23100EAA3E0 /* RSDUISoundPlayer.swift in Sources */,
