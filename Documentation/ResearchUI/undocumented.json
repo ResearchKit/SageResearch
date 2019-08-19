@@ -15,6 +15,20 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDAppDelegate.swift",
+      "line": 42,
+      "symbol": "RSDAppDelegate.window",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDAppDelegate.swift",
+      "line": 54,
+      "symbol": "RSDAppDelegate.application(_:willFinishLaunchingWithOptions:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDStepViewController.swift",
       "line": 84,
       "symbol": "RSDStepViewController.preferredStatusBarStyle",
@@ -30,7 +44,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDStepViewController.swift",
-      "line": 1043,
+      "line": 1047,
       "symbol": "RSDStepViewController.reset()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
