@@ -468,7 +468,11 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
                     })
                 }
             }
-        } else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
+        }
+        else if let assetLoader = imageTheme as? RSDAssetImageThemeElement {
+            navigationView.image = assetLoader.embeddedImage()
+        }
+        else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
             fetchLoader.fetchImage(for: imageView.bounds.size, callback: { [weak navigationView] (_, img) in
                 navigationView?.image = img
             })

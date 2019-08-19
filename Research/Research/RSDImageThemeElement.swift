@@ -82,3 +82,10 @@ public protocol RSDAnimatedImageThemeElement : RSDImageThemeElement {
     func images(compatibleWith traitCollection: UITraitCollection?) -> [RSDImage]
     #endif
 }
+
+/// An image stored in an asset catalog.
+public protocol RSDAssetImageThemeElement : RSDImageThemeElement {
+    
+    /// The image to return from the asset catalog.
+    func embeddedImage() -> RSDImage?
+}
