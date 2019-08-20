@@ -107,6 +107,10 @@ open class RSDAppDelegate : UIResponder, RSDAppOrientationLock, RSDAlertPresente
     /// - seealso: `defaultOrientationLock`
     open var orientationLock: UIInterfaceOrientationMask?
     
+    /// - returns: The `orientationLock` or the `defaultOrientationLock` if nil.
+    open func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return orientationLock ?? defaultOrientationLock
+    }
 }
 
 /// As of this writing, there is no simple way for an application to allow selectively locking
@@ -134,10 +138,5 @@ extension RSDAppOrientationLock {
     /// this protocol.
     public static var appLock: RSDAppOrientationLock? {
         return UIApplication.shared.delegate as? RSDAppOrientationLock
-    }
-
-    /// - returns: The `orientationLock` or the `defaultOrientationLock` if nil.
-    public func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return orientationLock ?? defaultOrientationLock
     }
 }
