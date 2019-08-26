@@ -46,6 +46,8 @@ public final class RSDLocationAuthorization : RSDAuthorizationAdaptor {
     /// This adaptor is intended for checking for location permissions.
     private static let validPermissions: [RSDPermissionType] = [RSDStandardPermissionType.location, RSDStandardPermissionType.locationWhenInUse]
     public let permissions: [RSDPermissionType] = RSDLocationAuthorization.validPermissions
+    
+    private let locationManager: CLLocationManager = CLLocationManager()
 
     /// Returns the authorization status for the location manager.
     public func authorizationStatus(for permission: String) -> RSDAuthorizationStatus {
@@ -74,7 +76,7 @@ public final class RSDLocationAuthorization : RSDAuthorizationAdaptor {
                 return
         }
         
-        RSDLocationAuthorization.requestAuthorization(for: permissionType, completion)
+        RSDLocationAuthorization.requestAuthorization(for: permissionType, locationManager: self.locationManager, completion)
     }
     
     /// Returns authorization status for `.location` and `.locationWhenInUse` permissions.
@@ -104,7 +106,7 @@ public final class RSDLocationAuthorization : RSDAuthorizationAdaptor {
         }
     }
     
-    public static func requestAuthorization(for permissionType: RSDStandardPermissionType, _ completion:@escaping ((RSDAuthorizationStatus, Error?) -> Void)) {
+    public static func requestAuthorization(for permissionType: RSDStandardPermissionType, locationManager: CLLocationManager, _ completion:@escaping ((RSDAuthorizationStatus, Error?) -> Void)) {
         if !self.validPermissions.contains(where: { $0.identifier == permissionType.identifier }) {
             let errStr = "'\(permissionType.identifier)' is not a valid location permission type."
             let error = RSDPermissionError.notHandled(errStr)
@@ -113,12 +115,11 @@ public final class RSDLocationAuthorization : RSDAuthorizationAdaptor {
             return
         }
         
-        let tempLocationManager = CLLocationManager()
         switch permissionType {
         case RSDStandardPermissionType.location:
-            tempLocationManager.requestAlwaysAuthorization()
+            locationManager.requestAlwaysAuthorization()
         default:
-            tempLocationManager.requestWhenInUseAuthorization()
+            locationManager.requestWhenInUseAuthorization()
         }
         
         completion(self.authorizationStatus(for: permissionType), nil)
