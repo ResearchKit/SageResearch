@@ -748,6 +748,38 @@
 		F8FD56AE21475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */; };
 		F8FD56AF21475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */; };
 		F8FD56B021475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */; };
+		FF01027E231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */; };
+		FF01027F231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */; };
+		FF010280231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */; };
+		FF010281231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */; };
+		FF0102E3231F27A700D7A4A0 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */; };
+		FF0102E4231F27A700D7A4A0 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */; };
+		FF0102E5231F27A700D7A4A0 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */; };
+		FF0102E6231F27A700D7A4A0 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */; };
+		FF0102E7231F27A700D7A4A0 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */; };
+		FF0102E8231F27A700D7A4A0 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */; };
+		FF0102E9231F27A700D7A4A0 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */; };
+		FF0102EA231F27A800D7A4A0 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */; };
+		FF0102EB231F27A800D7A4A0 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */; };
+		FF0102EC231F27A800D7A4A0 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */; };
+		FF0102ED231F27A800D7A4A0 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */; };
+		FF0102EE231F27A800D7A4A0 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */; };
+		FF0102EF231F27A800D7A4A0 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */; };
+		FF0102F0231F27A800D7A4A0 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */; };
+		FF0102F1231F27A900D7A4A0 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */; };
+		FF0102F2231F27A900D7A4A0 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */; };
+		FF0102F3231F27A900D7A4A0 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */; };
+		FF0102F4231F27A900D7A4A0 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */; };
+		FF0102F5231F27A900D7A4A0 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */; };
+		FF0102F6231F27A900D7A4A0 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */; };
+		FF0102F7231F27A900D7A4A0 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */; };
+		FF0102F8231F27A900D7A4A0 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */; };
+		FF0102F9231F27A900D7A4A0 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */; };
+		FF0102FA231F27A900D7A4A0 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */; };
+		FF0102FB231F27A900D7A4A0 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */; };
+		FF0102FC231F27A900D7A4A0 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */; };
+		FF0102FD231F27A900D7A4A0 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */; };
+		FF0102FE231F27A900D7A4A0 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */; };
 		FF5010AC22DE3A090035E83C /* RSDFileWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5010AB22DE3A090035E83C /* RSDFileWrapper.swift */; };
 		FF5010AD22DE3A090035E83C /* RSDFileWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5010AB22DE3A090035E83C /* RSDFileWrapper.swift */; };
 		FF5010AE22DE3A090035E83C /* RSDFileWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5010AB22DE3A090035E83C /* RSDFileWrapper.swift */; };
@@ -1332,6 +1364,14 @@
 		F8FD56392141BDE000BA2FA6 /* RSDFileManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileManifest.swift; sourceTree = "<group>"; };
 		F8FD563E2141BE4700BA2FA6 /* RSDDataArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDataArchive.swift; sourceTree = "<group>"; };
 		F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDModalStepDataSource.swift; sourceTree = "<group>"; };
+		FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSDFont+Lato.swift"; sourceTree = "<group>"; };
+		FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_regular.ttf; sourceTree = "<group>"; };
+		FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_bold.ttf; sourceTree = "<group>"; };
+		FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_lightitalic.ttf; sourceTree = "<group>"; };
+		FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_italic.ttf; sourceTree = "<group>"; };
+		FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_bolditalic.ttf; sourceTree = "<group>"; };
+		FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_black.ttf; sourceTree = "<group>"; };
+		FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_light.ttf; sourceTree = "<group>"; };
 		FF0920BE1FCE310500C9E031 /* RSDTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableSection.swift; sourceTree = "<group>"; };
 		FF0920C01FCE37AD00C9E031 /* RSDTableItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableItemGroup.swift; sourceTree = "<group>"; };
 		FF0920C21FCE3F0300C9E031 /* RSDTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableItem.swift; sourceTree = "<group>"; };
@@ -2212,6 +2252,21 @@
 			name = "Data Archiving";
 			sourceTree = "<group>";
 		};
+		FF010258231F146200D7A4A0 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */,
+				FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */,
+				FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */,
+				FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */,
+				FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */,
+				FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */,
+				FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */,
+				FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		FF2ACF401FBB86870018D87F /* Navigation Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -2342,6 +2397,7 @@
 				FF74A7E81F7DCE630064A634 /* DataSource */,
 				F8EB48BE228CDB56000A2F69 /* Recorders */,
 				FFFDB9591F99802C00BA1348 /* Localization */,
+				FF010258231F146200D7A4A0 /* Fonts */,
 				FF2B54FD1F68AE8000663289 /* Serialization */,
 				F8A695052135C55A0052EB82 /* Documentation */,
 				FF2B55021F69077200663289 /* Utilities */,
@@ -3056,8 +3112,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0102F8231F27A900D7A4A0 /* lato_black.ttf in Resources */,
+				FF0102F9231F27A900D7A4A0 /* lato_bold.ttf in Resources */,
+				FF0102FC231F27A900D7A4A0 /* lato_light.ttf in Resources */,
+				FF0102FB231F27A900D7A4A0 /* lato_italic.ttf in Resources */,
+				FF0102FA231F27A900D7A4A0 /* lato_bolditalic.ttf in Resources */,
+				FF0102FD231F27A900D7A4A0 /* lato_lightitalic.ttf in Resources */,
 				F8C36BEB2239AEBD000E42A7 /* ColorMatrix.json in Resources */,
 				F8BE12C221371A69000AAB1E /* Research.strings in Resources */,
+				FF0102FE231F27A900D7A4A0 /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3065,9 +3128,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0102E6231F27A700D7A4A0 /* lato_italic.ttf in Resources */,
+				FF0102E7231F27A700D7A4A0 /* lato_light.ttf in Resources */,
 				FF8B54B71FCE6CFF006B6937 /* Research.strings in Resources */,
 				F8A695022135C4940052EB82 /* README-API.md in Resources */,
+				FF0102E4231F27A700D7A4A0 /* lato_bold.ttf in Resources */,
+				FF0102E5231F27A700D7A4A0 /* lato_bolditalic.ttf in Resources */,
+				FF0102E8231F27A700D7A4A0 /* lato_lightitalic.ttf in Resources */,
+				FF0102E3231F27A700D7A4A0 /* lato_black.ttf in Resources */,
 				F8C36BE82239AEBD000E42A7 /* ColorMatrix.json in Resources */,
+				FF0102E9231F27A700D7A4A0 /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3084,9 +3154,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0102ED231F27A800D7A4A0 /* lato_italic.ttf in Resources */,
+				FF0102EE231F27A800D7A4A0 /* lato_light.ttf in Resources */,
 				FF8B54B81FCE6D00006B6937 /* Research.strings in Resources */,
 				F8A695032135C4940052EB82 /* README-API.md in Resources */,
+				FF0102EB231F27A800D7A4A0 /* lato_bold.ttf in Resources */,
+				FF0102EC231F27A800D7A4A0 /* lato_bolditalic.ttf in Resources */,
+				FF0102EF231F27A800D7A4A0 /* lato_lightitalic.ttf in Resources */,
+				FF0102EA231F27A800D7A4A0 /* lato_black.ttf in Resources */,
 				F8C36BE92239AEBD000E42A7 /* ColorMatrix.json in Resources */,
+				FF0102F0231F27A800D7A4A0 /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3094,9 +3171,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0102F4231F27A900D7A4A0 /* lato_italic.ttf in Resources */,
+				FF0102F5231F27A900D7A4A0 /* lato_light.ttf in Resources */,
 				FF8B54B91FCE6D01006B6937 /* Research.strings in Resources */,
 				F8A695042135C4940052EB82 /* README-API.md in Resources */,
+				FF0102F2231F27A900D7A4A0 /* lato_bold.ttf in Resources */,
+				FF0102F3231F27A900D7A4A0 /* lato_bolditalic.ttf in Resources */,
+				FF0102F6231F27A900D7A4A0 /* lato_lightitalic.ttf in Resources */,
+				FF0102F1231F27A900D7A4A0 /* lato_black.ttf in Resources */,
 				F8C36BEA2239AEBD000E42A7 /* ColorMatrix.json in Resources */,
+				FF0102F7231F27A900D7A4A0 /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3400,6 +3484,7 @@
 				F8BE12A421371A2B000AAB1E /* RSDSchemaInfo.swift in Sources */,
 				F8BE12BF21371A5C000AAB1E /* RSDStringLiteralOptionSet.swift in Sources */,
 				F8BE12C721371B27000AAB1E /* RSDStandardAsyncActionConfiguration.swift in Sources */,
+				FF010281231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */,
 				F8366D982140677600EBA88D /* RSDTaskStepNode.swift in Sources */,
 				F8BE128C21371A03000AAB1E /* RSDResult.swift in Sources */,
 				F8BE126F213719D1000AAB1E /* RSDDocumentable.swift in Sources */,
@@ -3621,6 +3706,7 @@
 				FF8B53841FCE6C6F006B6937 /* RSDPermissionType.swift in Sources */,
 				FF8B54611FCE6CB8006B6937 /* RSDViewThemeElementObject.swift in Sources */,
 				F8B42BE31FE9ABE200E23783 /* Localization.swift in Sources */,
+				FF01027E231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */,
 				F8BF1323213A3210009505E5 /* RSDTaskRepository.swift in Sources */,
 				FF8B540A1FCE6C97006B6937 /* RSDAnswerResultObject.swift in Sources */,
 				F8366D90214042F800EBA88D /* RSDStepViewModel.swift in Sources */,
@@ -3884,6 +3970,7 @@
 				F8BE113E2136081E000AAB1E /* RSDViewThemeElement.swift in Sources */,
 				F8864AC92163EDFD00DF57CF /* RSDSubtaskStepObject.swift in Sources */,
 				FF8B542B1FCE6CA2006B6937 /* RSDGenericStepObject.swift in Sources */,
+				FF01027F231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */,
 				FF8B545A1FCE6CB2006B6937 /* RSDUIActionHandlerObject.swift in Sources */,
 				F8C723EE2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */,
 				F8BE111A2135FF6E000AAB1E /* RSDReminderUIAction.swift in Sources */,
@@ -4105,6 +4192,7 @@
 				F8FD56412141BE4700BA2FA6 /* RSDDataArchive.swift in Sources */,
 				FF8B54DC1FCE6D14006B6937 /* Dictionary+Utilities.swift in Sources */,
 				FF8B54311FCE6CA3006B6937 /* RSDGenericStepObject.swift in Sources */,
+				FF010280231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */,
 				FF8B545C1FCE6CB2006B6937 /* RSDUIActionHandlerObject.swift in Sources */,
 				F8C723EF2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */,
 				FF8B53961FCE6C71006B6937 /* RSDPermissionType.swift in Sources */,
