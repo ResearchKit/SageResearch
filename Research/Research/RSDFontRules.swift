@@ -125,7 +125,12 @@ open class RSDFontRules  {
     ///     - weight: The font weight.
     /// - returns: The font to use for this size and weight.
     open func font(ofSize fontSize: CGFloat, weight: RSDFont.Weight = .regular) -> RSDFont {
-        return RSDFont.latoFont(ofSize: fontSize, weight: weight)
+        if self.version <= 1 {
+            return RSDFont.systemFont(ofSize: fontSize, weight: weight)
+        }
+        else {
+            return RSDFont.latoFont(ofSize: fontSize, weight: weight)
+        }
     }
     
     /// Returns an italic font in the given size and weight in the font family specified for this design.
@@ -141,7 +146,12 @@ open class RSDFontRules  {
     ///     - weight: The font weight.
     /// - returns: The font to use for this size and weight.
     open func italicFont(ofSize fontSize: CGFloat, weight: RSDFont.Weight = .regular) -> RSDFont {
-        return RSDFont.italicLatoFont(ofSize: fontSize, weight: weight)
+        if version <= 1 {
+            return self.font(ofSize: fontSize, weight: weight).rsd_italic()
+        }
+        else {
+            return RSDFont.italicLatoFont(ofSize: fontSize, weight: weight)
+        }
     }
     
     /// Returns the base font for a given text type. This is the font size defined in the Sage
