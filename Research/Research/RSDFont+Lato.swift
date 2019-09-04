@@ -70,7 +70,13 @@ extension RSDFont {
             RSDFont(name: fontName.fallback, size: fontSize)
         guard let font = registeredFont else {
             print("WARNING! Failed to return font `\(fontName)`. Using system font.")
+            #if os(macOS)
+            // Mac does not have the `italicSystemFont()` method.
+            return RSDFont.systemFont(ofSize: fontSize, weight: weight)
+            #else
+            // System italic does not have weight.
             return RSDFont.italicSystemFont(ofSize: fontSize)
+            #endif
         }
         return font
     }
