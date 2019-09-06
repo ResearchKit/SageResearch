@@ -168,8 +168,12 @@ extension RSDFileWrapper {
     
     public func imagePath(from bundle: Bundle?, ofType defaultExtension: String?) -> String? {
         let (resource, ext) = self.resource(ofType: defaultExtension ?? "png")
+        #if os(iOS) || os(tvOS)
         let scale = Int(UIScreen.main.scale)
         let imageName = "\(resource)@\(scale)x"
+        #else
+        let imageName = resource
+        #endif
         return resourceBundle(bundle).path(forResource: imageName, ofType: ext)
     }
     
