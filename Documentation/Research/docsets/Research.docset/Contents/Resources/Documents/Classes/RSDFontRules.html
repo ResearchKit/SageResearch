@@ -1495,6 +1495,77 @@ specific size to match the graphic design of the view.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:8Research12RSDFontRulesC10italicFont6ofSize6weightSo6UIFontC12CoreGraphics7CGFloatV_So0I6WeightatF"></a>
+                    <a name="//apple_ref/swift/Method/italicFont(ofSize:weight:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research12RSDFontRulesC10italicFont6ofSize6weightSo6UIFontC12CoreGraphics7CGFloatV_So0I6WeightatF">italicFont(ofSize:weight:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an italic font in the given size and weight in the font family specified for this design.
+Typically, you will want to use <code>font(for textType: RSDDesignSystem.TextType)</code> instead for
+copy and dynamic text. This method should only be used where the design calls for a
+specific size to match the graphic design of the view.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>All other methods on this class will call through to this method, so for custom
+    fonts, you can override this method only if the only change is a custom font.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">italicFont</span><span class="p">(</span><span class="n">ofSize</span> <span class="nv">fontSize</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">weight</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/RSDFont">RSDFont</a></span><span class="o">.</span><span class="kt">Weight</span> <span class="o">=</span> <span class="o">.</span><span class="n">regular</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Typealiases.html#/RSDFont">RSDFont</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fontSize</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The font size.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The font weight.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The font to use for this size and weight.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:8Research12RSDFontRulesC8baseFont3forSo6UIFontCAA15RSDDesignSystemC8TextTypeV_tF"></a>
                     <a name="//apple_ref/swift/Method/baseFont(for:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research12RSDFontRulesC8baseFont3forSo6UIFontCAA15RSDDesignSystemC8TextTypeV_tF">baseFont(for:)</a>
