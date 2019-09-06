@@ -95,12 +95,12 @@ extension RSDFileWrapper {
     ///     - defaultExtension: The default extension for the file.
     /// - returns: The image (if found).
     public func fetchImages(from bundle: Bundle? = nil, ofSize size: CGSize = .zero, ofType defaultExtension: String? = nil) -> [RSDImage] {
-        if let image = namedImage(from: bundle) {
-            print("WARNING! Using the image asset catalog can result in a low-memory crash when running on device.")
+        if let path = self.imagePath(from: bundle, ofType: defaultExtension),
+            let image = RSDImage(contentsOfFile: path) {
             return [image]
         }
-        else if let path = self.path(from: bundle, ofType: defaultExtension),
-            let image = RSDImage(contentsOfFile: path) {
+        else if let image = namedImage(from: bundle) {
+            print("WARNING! Using the image asset catalog can result in a low-memory crash when running on device.")
             return [image]
         }
         else {
@@ -164,6 +164,17 @@ extension RSDFileWrapper {
     
     private func resourceBundle(_ bundle: Bundle?) -> Bundle {
         return bundle ?? self.factoryBundle ?? Bundle.main
+    }
+    
+    public func imagePath(from bundle: Bundle?, ofType defaultExtension: String?) -> String? {
+        let (resource, ext) = self.resource(ofType: defaultExtension ?? "png")
+        #if os(iOS) || os(tvOS)
+        let scale = Int(UIScreen.main.scale)
+        let imageName = "\(resource)@\(scale)x"
+        #else
+        let imageName = resource
+        #endif
+        return resourceBundle(bundle).path(forResource: imageName, ofType: ext)
     }
     
     /// Get the path to the resource defined by this file wrapper. This will return `nil` if the
