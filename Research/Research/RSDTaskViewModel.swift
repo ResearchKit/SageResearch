@@ -520,6 +520,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         return self.task as? RSDTrackingTask
     }
     
+    /// The previous data queried during task set up from the data manager.
+    public private(set) var previousTaskData: RSDTaskData?
+    
     /// Called when the task is loaded and when the`dataManager` is set.
     open func setupDataTracking() {
         guard let task = self.task,
@@ -527,6 +530,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             else {
                 return
         }
+        self.previousTaskData = taskData
         self.dataTracker?.setupTask(with: taskData, for: self)
         if shouldShowAbbreviatedInstructions == nil, let timestamp = taskData.timestampDate {
             let frequency = RSDStudyConfiguration.shared.fullInstructionsFrequency

@@ -105,6 +105,11 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
         try textItem.setAnswer(newValue)
     }
     
+    /// Set the answer from a previous run to the given value.
+    open func setPreviousAnswer(from jsonValue: Any?) throws {
+        try setAnswer(jsonValue)
+    }
+    
     /// Set the default answer for the item group. The base class implementation does nothing.
     /// - returns: `true` if the answer was updated and `false` if the answer was unchanged.
     open func setDefaultAnswerIfValid() -> Bool {
