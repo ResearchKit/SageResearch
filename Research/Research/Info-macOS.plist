@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>2.4</string>
 	<key>CFBundleVersion</key>
-	<string>64</string>
+	<string>65</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2018 Sage Bionetworks. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
