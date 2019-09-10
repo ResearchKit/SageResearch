@@ -108,6 +108,27 @@ class SurveyRuleTests: XCTestCase {
         XCTAssertEqual(navigatingIdentifier, "bar")
     }
     
+    // Always survey navigation
+    
+    func testSurveyRule_Always() {
+        
+        let inputField1 = RSDInputFieldObject(identifier: "field1", dataType: .base(.string))
+        let inputField2 = RSDInputFieldObject(identifier: "field2", dataType: .base(.integer))
+        
+        let rule = RSDComparableSurveyRuleObject<Int>(skipToIdentifier: "always", matchingValue: nil, ruleOperator: .always)
+        inputField2.surveyRules = [rule]
+        
+        let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
+        
+        let taskResult = createTaskResult(answerType: .integer, value: 2)
+        
+        let peekingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: true)
+        XCTAssertNil(peekingIdentifier)
+        
+        let navigatingIdentifier = step.nextStepIdentifier(with: taskResult, isPeeking: false)
+        XCTAssertEqual(navigatingIdentifier, "always")
+    }
+    
     // Integer
     
     func testSurveyRule_Integer_Equal() {
@@ -760,7 +781,8 @@ class SurveyRuleTests: XCTestCase {
         let rule1 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "charlie", ruleOperator: .equal, cohort: "c")
         let rule2 = RSDComparableSurveyRuleObject(skipToIdentifier: nil, matchingValue: "delta", ruleOperator: .equal, cohort: "d")
         let rule3 = RSDComparableSurveyRuleObject<String>(skipToIdentifier: nil, matchingValue: nil, ruleOperator: nil, cohort: "skip")
-        inputField2.surveyRules = [rule1, rule2, rule3]
+        let rule4 = RSDComparableSurveyRuleObject<String>(skipToIdentifier: nil, matchingValue: nil, ruleOperator: .always, cohort: "always")
+        inputField2.surveyRules = [rule1, rule2, rule3, rule4]
         
         let step = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField1, inputField2])
         
@@ -773,7 +795,7 @@ class SurveyRuleTests: XCTestCase {
         XCTAssertNil(navigatingIdentifier)
         
         if let cohorts = step.cohortsToApply(with: taskResult) {
-            XCTAssertEqual(cohorts.add, ["c"])
+            XCTAssertEqual(cohorts.add, ["c", "always"])
             XCTAssertEqual(cohorts.remove, ["d", "skip"])
         } else {
             XCTFail("Cohorts for this step should not return nil")
