@@ -65,6 +65,9 @@ public enum RSDSurveyRuleOperator: String, Codable, RSDStringEnumSet {
     /// `[2,4]` then this will evaluate to `true` and return the `skipIdentifier` because neither `2` nor
     /// `4` are in the set defined by the `matchingAnswer`.
     case otherThan          = "ot"
+    
+    /// The rule should always evaluate to true.
+    case always
 }
 
 extension RSDSurveyRuleOperator : RSDDocumentableStringEnum {
