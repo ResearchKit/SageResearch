@@ -241,21 +241,21 @@ public enum RSDFormDataType {
         case .collection(let collectionType, _):
             switch collectionType {
             case .multipleChoice, .multipleComponent:
-                return RSDAnswerResultType(baseType: base, sequenceType: .array)
+                return RSDAnswerResultType(baseType: base, sequenceType: .array, formDataType: self, dateFormat: nil, unit: nil, sequenceSeparator: nil)
             case .singleChoice:
-                return RSDAnswerResultType(baseType: base)
+                return RSDAnswerResultType(baseType: base, sequenceType: nil, formDataType: self, dateFormat: nil, unit: nil, sequenceSeparator: nil)
             }
             
         case .measurement(let measurementType, _):
             switch measurementType {
             case .bloodPressure:
-                return .string
+                return RSDAnswerResultType(baseType: .string, sequenceType: nil, formDataType: self, dateFormat: nil, unit: nil, sequenceSeparator: nil)
             case .height, .weight:
-                return .decimal
+                return RSDAnswerResultType(baseType: .decimal, sequenceType: nil, formDataType: self, dateFormat: nil, unit: nil, sequenceSeparator: nil)
             }
             
         default:
-            return RSDAnswerResultType(baseType: base)
+            return RSDAnswerResultType(baseType: base, sequenceType: nil, formDataType: self, dateFormat: nil, unit: nil, sequenceSeparator: nil)
         }
         
     }
