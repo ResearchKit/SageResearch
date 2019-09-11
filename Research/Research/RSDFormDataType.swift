@@ -55,6 +55,12 @@ public enum RSDFormDataType {
     /// Default range is for an adult.
     case measurement(MeasurementType, MeasurementRange)
     
+    /// A postal code is a custom input field that only stores a part of the participant's postal
+    /// code (zipcode). This is to protect the participant's privacy. Typically, this will mean
+    /// only storing the first 3 characters of the postal code. The base type for a postal code is
+    /// always a string.
+    case postalCode
+    
     /// A "detail" form data type is a data type that represents an input field where the data entry uses a
     /// detail that displays information using one or more input fields. The default base type is `.codable`.
     case detail(BaseType)
@@ -186,6 +192,9 @@ public enum RSDFormDataType {
             case .height, .weight:
                 return [.picker, .textfield]
             }
+        
+        case .postalCode:
+            return [.textfield]
             
         case .detail(_):
             return [.disclosureArrow, .button, .link, .section]
@@ -225,6 +234,9 @@ public enum RSDFormDataType {
             case .bloodPressure:
                 return .integer
             }
+        
+        case .postalCode:
+            return .string
             
         case .detail(let baseType):
             return baseType
@@ -291,11 +303,12 @@ public enum RSDFormDataType {
             return MeasurementRange.allCases.map { .measurement(measurementType, $0) }
         }.flatMap { $0 }
         let allDetail: [RSDFormDataType] = baseTypes.map { .detail($0) }
-        return [allBase, allCollection, allMeasurement, allDetail].flatMap { $0 }
+        return [allBase, allCollection, allMeasurement, allDetail, [.postalCode]].flatMap { $0 }
     }
 }
 
 fileprivate let kDetailCodingKey = "detail"
+fileprivate let kPostalCodeCodingKey = "postalCode"
 
 extension RSDFormDataType: RawRepresentable, Codable, Hashable {
     
@@ -311,6 +324,9 @@ extension RSDFormDataType: RawRepresentable, Codable, Hashable {
         else if split.count <= 2, let measurementType = MeasurementType(rawValue: split[0]) {
             let range: MeasurementRange = ((split.count == 2) ? MeasurementRange(rawValue: split[1]) : nil) ?? .adult
             self = .measurement(measurementType, range)
+        }
+        else if rawValue == kPostalCodeCodingKey {
+            self = .postalCode
         }
         else {
             let subtype: BaseType = {
@@ -348,6 +364,9 @@ extension RSDFormDataType: RawRepresentable, Codable, Hashable {
             else {
                 return "\(kDetailCodingKey).\(baseType.rawValue)"
             }
+        
+        case .postalCode:
+            return kPostalCodeCodingKey
             
         case .custom(let value, let baseType):
             if baseType == .string {

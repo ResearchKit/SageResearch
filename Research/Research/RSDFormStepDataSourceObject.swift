@@ -272,7 +272,11 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
     open func instantiateTableItemGroup(for inputField: RSDInputField, beginningRowIndex: Int) -> RSDTableItemGroup {
         let uiHint = preferredUIHint(for: inputField)
         
-        if case .measurement(_,_) = inputField.dataType {
+        if case .postalCode = inputField.dataType {
+            let tableItem = RSDPostalCodeTableItem(rowIndex: beginningRowIndex, inputField: inputField)
+            return RSDInputFieldTableItemGroup(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
+        }
+        else if case .measurement(_,_) = inputField.dataType {
             return RSDHumanMeasurementTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
         }
         else if let pickerSource = inputField.pickerSource as? RSDChoiceOptions {
