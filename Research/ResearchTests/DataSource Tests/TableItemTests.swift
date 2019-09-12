@@ -340,4 +340,24 @@ class TableItemTests: XCTestCase {
             XCTFail("Threw unexpected error \(error)")
         }
     }
+    
+    func testPostalCode() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let inputField = RSDInputFieldObject(identifier: "postalCode", dataType: .postalCode)
+        let postalCodeItem = RSDPostalCodeTableItem(rowIndex: 0, inputField: inputField)
+        
+        do {
+            try postalCodeItem.setAnswer("98101")
+            let answerA = postalCodeItem.answer as? String
+            XCTAssertEqual(answerA, "981**")
+            
+            try postalCodeItem.setAnswer("89301")
+            let answerB = postalCodeItem.answer as? String
+            XCTAssertEqual(answerB, "*****")
+            
+        } catch let error {
+            XCTFail("Threw unexpected error \(error)")
+        }
+    }
 }
