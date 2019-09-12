@@ -103,7 +103,7 @@ public struct RSDAnswerResultType : Codable, Hashable, Equatable {
     public let sequenceType: SequenceType?
     
     /// The original data type of the form input item.
-    public let formDataType: RSDFormDataType?
+    public var formDataType: RSDFormDataType?
     
     /// The date format that should be used to encode and decode the answer.
     public let dateFormat: String?
