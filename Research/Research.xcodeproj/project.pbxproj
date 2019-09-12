@@ -1063,6 +1063,10 @@
 		FFABCB9622D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9722D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFEF95631FCE8D06008C30A6 /* RSDTextFieldOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */; };
+		FFF20CF3232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
+		FFF20CF4232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
+		FFF20CF5232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
+		FFF20CF6232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
 		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
 		FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */; };
 /* End PBXBuildFile section */
@@ -1481,6 +1485,7 @@
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
 		FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDExceptionHandler.h; sourceTree = "<group>"; };
 		FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDExceptionHandler.m; sourceTree = "<group>"; };
+		FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPostalCodeTableItem.swift; sourceTree = "<group>"; };
 		FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
 		FFF53EAC1FBF9562004211D2 /* RSDResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultType.swift; sourceTree = "<group>"; };
 		FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDActiveStepViewController.xib; sourceTree = "<group>"; };
@@ -1675,6 +1680,7 @@
 				F80CA52B1FFEBDCF00E89C06 /* RSDNumberInputTableItem.swift */,
 				F80CA5271FFEBD7600E89C06 /* RSDTextInputTableItem.swift */,
 				F8A204D320671F4D004E2B5D /* RSDModalStepTableItem.swift */,
+				FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */,
 			);
 			name = TableItem;
 			sourceTree = "<group>";
@@ -3420,6 +3426,7 @@
 				F8FD563D2141BDE000BA2FA6 /* RSDFileManifest.swift in Sources */,
 				F8BE12BB21371A5C000AAB1E /* NumberFormatter+Codable.swift in Sources */,
 				F8BE126D213719B4000AAB1E /* RSDResourceTransformer.swift in Sources */,
+				FFF20CF6232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */,
 				F8EB48D0228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
 				F8A3348A2240574400390601 /* RSDColorMappingThemeElement.swift in Sources */,
 				F8BE124D21370A81000AAB1E /* Array+Utilities.swift in Sources */,
@@ -3642,6 +3649,7 @@
 				FF8B537A1FCE6C62006B6937 /* RSDFactory.swift in Sources */,
 				F86A5F1421251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */,
 				FF8B54BB1FCE6D09006B6937 /* Codable+Utilities.swift in Sources */,
+				FFF20CF3232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */,
 				F8BE10B12135DBD5000AAB1E /* RSDRecorderConfiguration.swift in Sources */,
 				F8EB48CD228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
 				F8366D952140677600EBA88D /* RSDTaskStepNode.swift in Sources */,
@@ -3906,6 +3914,7 @@
 				FF8B54731FCE6CC5006B6937 /* RSDTaskInfoStepObject.swift in Sources */,
 				F82D110C2125EA1F00EA1A33 /* RSDAnswerResult.swift in Sources */,
 				F8586AEA2011697700B2DF65 /* RSDFractionFormatter.m in Sources */,
+				FFF20CF4232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */,
 				F80CA5311FFEBE3200E89C06 /* RSDMeasurementInputTableItem.swift in Sources */,
 				FF8B53BD1FCE6C7B006B6937 /* RSDResult.swift in Sources */,
 				FF8B538B1FCE6C70006B6937 /* RSDFormUIHint.swift in Sources */,
@@ -4128,6 +4137,7 @@
 				F802F3F9204E0A420027CB00 /* RSDImagePickerStepObject.swift in Sources */,
 				FF8B54C71FCE6D0B006B6937 /* Codable+Utilities.swift in Sources */,
 				F8BE10B72135DC0D000AAB1E /* RSDRequestConfiguration.swift in Sources */,
+				FFF20CF5232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */,
 				F8B17853202D978800B62416 /* RSDAsyncActionType.swift in Sources */,
 				F80CA5261FFEBD3700E89C06 /* RSDChoiceTableItem.swift in Sources */,
 				F8EB48CF228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
