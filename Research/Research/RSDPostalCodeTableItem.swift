@@ -35,7 +35,7 @@ import Foundation
 
 open class RSDPostalCodeTableItem : RSDTextInputTableItem {
     
-    /// The number of characters to replace with "*" characters.
+    /// The number of characters after which to replace the rest with "*" characters.
     let characterCount = 3
     
     public init(rowIndex: Int, inputField: RSDInputField) {
