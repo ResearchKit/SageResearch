@@ -748,6 +748,38 @@ class CodableInputFieldObjectTests: XCTestCase {
         }
     }
     
+    func testInputFieldObject_Codable_PostalCode() {
+        
+        let json = """
+        {
+            "identifier": "foo",
+            "type": "postalCode"
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            
+            let object = try decoder.decode(RSDInputFieldObject.self, from: json)
+            
+            XCTAssertEqual(object.identifier, "foo")
+            XCTAssertEqual(object.dataType, .postalCode)
+            
+            let jsonData = try encoder.encode(object)
+            guard let dictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String : Any]
+                else {
+                    XCTFail("Encoded object is not a dictionary")
+                    return
+            }
+            
+            XCTAssertEqual(dictionary["identifier"] as? String, "foo")
+            XCTAssertEqual(dictionary["type"] as? String, "postalCode")
+            
+        } catch let err {
+            XCTFail("Failed to decode object: \(err)")
+            return
+        }
+    }
+    
     func testDetailInputFieldObject_Codable() {
         
         let json = """
