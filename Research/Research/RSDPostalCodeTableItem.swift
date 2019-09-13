@@ -40,7 +40,7 @@ open class RSDPostalCodeTableItem : RSDTextInputTableItem {
     
     /// A list of known sparsely populated postal codes.
     ///
-    /// Currently, the list of postal codes inclues the codes from the US 2010 census and is *only*
+    /// Currently, the list of postal codes includes the codes from the US 2010 census and is *only*
     /// checked for US zipcodes.
     public let sparselyPopulatedCodes: [String : [String]] =
         ["US" : [036,059,102,203,205,369,556,692,821,823,878,879,884,893].map { "\($0)"}]
