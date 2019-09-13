@@ -618,6 +618,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
                             if let asyncResult = result {
                                 controller.taskViewModel.taskResult.appendAsyncResult(with: asyncResult)
                             }
+                            else if error == nil {
+                                print("WARNING! NULL result for async action \(controller.configuration.identifier)")
+                            }
                             if error != nil {
                                 self?._addErrorResult(for: controller, error: error!)
                             }
@@ -785,10 +788,27 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     
     class InflightController {
         let controller: RSDAsyncAction
-        var requestedState: RSDAsyncActionStatus
+        private let stateQueue = DispatchQueue(label: "org.sagebase.Research.InflightState.\(UUID())")
+        var requestedState: RSDAsyncActionStatus {
+            get {
+                var ret: RSDAsyncActionStatus!
+                stateQueue.sync {
+                    ret = self._requestedState
+                }
+                return ret
+            }
+            set {
+                stateQueue.async {
+                    if newValue > self._requestedState {
+                        self._requestedState = newValue
+                    }
+                }
+            }
+        }
+        private var _requestedState: RSDAsyncActionStatus
         init(controller: RSDAsyncAction, requestedState: RSDAsyncActionStatus) {
             self.controller = controller
-            self.requestedState = requestedState
+            self._requestedState = requestedState
         }
     }
     
@@ -827,7 +847,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
             
             if error != nil {
                 // Add the error result if there was an error.
-                debugPrint("Failed to start recorder \(controller.configuration.identifier). status=\(controller.status) error=\(String(describing: error)) ")
+                print("WARNING! Failed to start recorder \(controller.configuration.identifier). status=\(controller.status) error=\(String(describing: error)) ")
                 self?._addErrorResult(for: controller, error: error!)
             }
             else if (controller.status == .finished), let asyncResult = result {
