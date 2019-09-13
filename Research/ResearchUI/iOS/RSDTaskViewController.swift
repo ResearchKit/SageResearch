@@ -798,8 +798,8 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
                 return ret
             }
             set {
-                stateQueue.sync {
-                    if newValue > _requestedState {
+                stateQueue.async {
+                    if newValue > self._requestedState {
                         self._requestedState = newValue
                     }
                 }
