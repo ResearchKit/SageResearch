@@ -51,14 +51,14 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 660,
+      "line": 663,
       "symbol": "RSDTaskViewController.childForStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 748,
+      "line": 751,
       "symbol": "RSDTaskViewController.audioSessionController",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
