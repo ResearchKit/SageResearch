@@ -51,7 +51,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDAnswerResultType+Codable.swift",
-      "line": 162,
+      "line": 203,
       "symbol": "RSDAnswerResultType.decodeDate(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -772,7 +772,7 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDFormDataType.swift",
-      "line": 237,
+      "line": 249,
       "symbol": "RSDFormDataType.defaultAnswerResultType()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -992,6 +992,13 @@
       "line": 100,
       "symbol": "RSDPopoverInputFieldObject.init(inputField:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDPostalCodeTableItem.swift",
+      "line": 36,
+      "symbol": "RSDPostalCodeTableItem",
+      "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
