@@ -104,6 +104,35 @@ extension RSDAsyncActionStatus : Comparable {
     }
 }
 
+extension RSDAsyncActionStatus : CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .idle:
+            return "idle"
+        case .requestingPermission:
+            return "requestingPermission"
+        case .permissionGranted:
+            return "permissionGranted"
+        case .starting:
+            return "starting"
+        case .running:
+            return "running"
+        case .waitingToStop:
+            return "waitingToStop"
+        case .processingResults:
+            return "processingResults"
+        case .stopping:
+            return "stopping"
+        case .finished:
+            return "finished"
+        case .cancelled:
+            return "cancelled"
+        case .failed:
+            return "failed"
+        }
+    }
+}
+
 /// The completion handler for starting and stopping an async action.
 public typealias RSDAsyncActionCompletionHandler = (RSDAsyncAction, RSDResult?, Error?) -> Void
 
