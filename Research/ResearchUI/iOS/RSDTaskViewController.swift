@@ -597,20 +597,25 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
                 // Stop each controller and add the result
                 for controller in controllers {
                     if (controller.status <= RSDAsyncActionStatus.running) {
-                        dispatchGroup.enter()
-                        controller.stop({ [weak self] (controller, result, error) in
-                            self?._removeAsyncActionController(controller)
-                            if let asyncResult = result {
-                                controller.taskViewModel.taskResult.appendAsyncResult(with: asyncResult)
+                        let requestedStatus = self._findInflight(for: controller)?.moveTo(state: .stopping) ?? .running
+                        if requestedStatus < .stopping {
+                            dispatchGroup.enter()
+                            DispatchQueue.main.async {
+                                controller.stop({ [weak self] (controller, result, error) in
+                                    self?._removeAsyncActionController(controller)
+                                    if let asyncResult = result {
+                                        controller.taskViewModel.taskResult.appendAsyncResult(with: asyncResult)
+                                    }
+                                    else if error == nil {
+                                        print("WARNING! NULL result for async action \(controller.configuration.identifier)")
+                                    }
+                                    if error != nil {
+                                        self?._addErrorResult(for: controller, error: error!)
+                                    }
+                                    dispatchGroup.leave()
+                                })
                             }
-                            else if error == nil {
-                                print("WARNING! NULL result for async action \(controller.configuration.identifier)")
-                            }
-                            if error != nil {
-                                self?._addErrorResult(for: controller, error: error!)
-                            }
-                            dispatchGroup.leave()
-                        })
+                        }
                     }
                 }
             
@@ -897,6 +902,9 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     /// Remove an async action controller from the managed list on the controller queue.
     private func _removeAsyncActionController(_ controller: RSDAsyncAction) {
         controllerQueue.async {
+            if controller.status < .stopping {
+                print("WARNING! Removing controller with a status less than finished.")
+            }
             let _ = self._asyncControllers.remove(where: { $0.controller.isEqual(controller) } )
         }
     }
