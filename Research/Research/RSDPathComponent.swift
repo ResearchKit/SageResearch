@@ -118,6 +118,9 @@ public protocol RSDHistoryPathComponent : RSDPathComponent {
     
     /// Get the previous result for the given step.
     func previousResult(for step: RSDStep) -> RSDResult?
+    
+    /// The previous data for this task.
+    var previousTaskData: RSDTaskData? { get }
 }
 
 /// A task path component is a navigational path component that, depending upon the UI/UX, may not have an

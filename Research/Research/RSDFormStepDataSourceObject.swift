@@ -272,7 +272,11 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
     open func instantiateTableItemGroup(for inputField: RSDInputField, beginningRowIndex: Int) -> RSDTableItemGroup {
         let uiHint = preferredUIHint(for: inputField)
         
-        if case .measurement(_,_) = inputField.dataType {
+        if case .postalCode = inputField.dataType {
+            let tableItem = RSDPostalCodeTableItem(rowIndex: beginningRowIndex, inputField: inputField)
+            return RSDInputFieldTableItemGroup(beginningRowIndex: beginningRowIndex, tableItem: tableItem)
+        }
+        else if case .measurement(_,_) = inputField.dataType {
             return RSDHumanMeasurementTableItemGroup(beginningRowIndex: beginningRowIndex, inputField: inputField, uiHint: uiHint)
         }
         else if let pickerSource = inputField.pickerSource as? RSDChoiceOptions {
@@ -323,6 +327,16 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
     /// test should not.
     open func populateInitialResults() {
         
+        let previousAnswers: [String : Any]? = {
+            guard let parentPath = self.parentTaskPath,
+                let dataManager = parentPath.dataManager,
+                (dataManager.shouldUsePreviousAnswers?(for: parentPath.identifier) ?? false)
+                else {
+                    return nil
+            }
+            return parentPath.previousTaskData?.json as? [String : Any]
+        }()
+        
         var stepResult = self.collectionResult()
         var hasChanges: Bool = false
         
@@ -347,8 +361,20 @@ open class RSDFormStepDataSourceObject : RSDStepViewModel, RSDTableDataSource {
         }
         
         itemGroups.forEach {
-            if let itemGroup = $0 as? RSDInputFieldTableItemGroup,
-                itemGroup.setDefaultAnswerIfValid() {
+            guard let itemGroup = $0 as? RSDInputFieldTableItemGroup, itemGroup.answer == nil
+                else {
+                    return
+            }
+            if let jsonAnswer = previousAnswers?[itemGroup.inputField.identifier] {
+                do {
+                    try itemGroup.setPreviousAnswer(from: jsonAnswer)
+                    appendResults(for: itemGroup)
+                } catch let err {
+                    // ignore error but do not save the result
+                    debugPrint("Failed to restore answer for \(itemGroup.identifier) with answer \(jsonAnswer). \(err)")
+                }
+            }
+            if itemGroup.setDefaultAnswerIfValid() {
                 appendResults(for: itemGroup)
             }
         }

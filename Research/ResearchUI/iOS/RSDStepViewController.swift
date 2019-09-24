@@ -418,37 +418,65 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
         setupButton(navigationView.skipButton, for: .navigation(.skip), isFooter: isFooter)
         setupButton(navigationView.reviewInstructionsButton, for: .navigation(.reviewInstructions), isFooter: isFooter)
         
-        if let imageTheme = self.imageTheme,
-            let imageView = navigationView.imageView {
+        if let imageTheme = self.imageTheme {
             let imagePlacement = imageTheme.placementType ?? .iconBefore
             let shouldSetImage = shouldSetNavigationImage(for: placement, with: imagePlacement)
             if shouldSetImage {
+                // Nil out the image that is used during testing and layout of the nib.
+                navigationView.imageView?.image = nil
                 navigationView.hasImage = true
-                if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
-                    let images = animatedImage.images(compatibleWith: self.traitCollection)
-                    // If there is more than one image in the collection, then animate them.
-                    if images.count > 1 {
-                        navigationView.imageView?.animationDuration = animatedImage.animationDuration
-                        navigationView.imageView?.animationImages = images
-                        if let repeatCount = animatedImage.animationRepeatCount {
-                            navigationView.imageView?.animationRepeatCount = repeatCount
-                        }
-                        navigationView.imageView?.startAnimating()
-                    }
-                    // Always set the last image as the one to show when/if the animation ends.
-                    if let image = images.last {
-                        navigationView.imageView?.image = image
-                    }
-                } else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
-                    fetchLoader.fetchImage(for: imageView.bounds.size, callback: { [weak navigationView] (_, img) in
-                        navigationView?.image = img
-                    })
-                }
+                self.loadImages(into: navigationView)
             }
         }
         
         navigationView.setNeedsLayout()
         navigationView.setNeedsUpdateConstraints()
+    }
+    
+    open func loadImages(into navigationView: RSDStepNavigationView) {
+        guard let imageTheme = self.imageTheme,
+            let imageView = navigationView.imageView
+            else {
+                return
+        }
+        if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
+            DispatchQueue.global().async { [weak navigationView] in
+                let images = animatedImage.images(compatibleWith: self.traitCollection)
+                DispatchQueue.main.async {
+                    guard let navigationView = navigationView,
+                        let image = images.first
+                        else {
+                            return
+                    }
+                    UIView.transition(with: navigationView,
+                                      duration: 0.2,
+                                      options: .transitionCrossDissolve,
+                                      animations: {
+                                        navigationView.imageView?.image = image },
+                                      completion: { (finished) in
+                                        // If there is more than one image in the collection, then animate them.
+                                        if finished, images.count > 1 {
+                                            navigationView.imageView?.animationDuration = animatedImage.animationDuration
+                                            navigationView.imageView?.animationImages = images
+                                            if let repeatCount = animatedImage.animationRepeatCount {
+                                                navigationView.imageView?.animationRepeatCount = repeatCount
+                                            }
+                                            navigationView.imageView?.startAnimating()
+                                            // Always set the last image as the one to show when/if the animation ends.
+                                            navigationView.imageView?.image = images.last
+                                        }
+                    })
+                }
+            }
+        }
+        else if let assetLoader = imageTheme as? RSDAssetImageThemeElement {
+            navigationView.image = assetLoader.embeddedImage()
+        }
+        else if let fetchLoader = imageTheme as? RSDFetchableImageThemeElement {
+            fetchLoader.fetchImage(for: imageView.bounds.size, callback: { [weak navigationView] (_, img) in
+                navigationView?.image = img
+            })
+        }
     }
     
     /// Return the image theme for this step view controller.

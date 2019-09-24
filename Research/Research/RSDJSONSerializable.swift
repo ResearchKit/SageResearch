@@ -47,6 +47,9 @@ extension NSNull : RSDJSONSerializable {
 extension String : RSDJSONSerializable {
 }
 
+extension NSString : RSDJSONSerializable {
+}
+
 extension Array : RSDJSONSerializable where Element == RSDJSONSerializable {
 }
 

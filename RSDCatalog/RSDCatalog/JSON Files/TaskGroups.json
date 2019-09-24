@@ -64,7 +64,15 @@
             "detail": "This is an example task for how to set up an activity that expressly defines the colors used for each view.",
             "icon": "activityIcon",
             "taskTransformer" : { "resourceName": "Theme_Color" }
-            }]
+            },
+             {
+                 "identifier": "imageTheme",
+                 "title": "Images",
+                 "subtitle": "This example shows examples of image themes used by the Design System.",
+                 "detail": "This is an example task for how to set up an activity that uses static and animating images for assorted instruction views.",
+                 "icon": "activityIcon",
+                 "taskTransformer" : { "resourceName": "Theme_Image" }
+             }]
  },
 ]
 }

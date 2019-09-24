@@ -143,7 +143,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         guard let parent = parentPath else { return }
         self.dataManager = (parent as? RSDHistoryPathComponent)?.dataManager
         self.previousResults = (parent.taskResult.stepHistory.last(where: { $0.identifier == identifier }) as? RSDTaskResult)?.stepHistory
-        self.taskResult.taskRunUUID = parent.taskResult.taskRunUUID
+        var runResult = self.taskResult as? RSDTaskRunResult
+        runResult?.taskRunUUID = parent.taskResult.taskRunUUID
+        self.taskResult = runResult ?? self.taskResult
         if let _ = self.task as? RSDSectionStep {
             self.shouldShowAbbreviatedInstructions = (parentPath as? RSDTaskViewModel)?.shouldShowAbbreviatedInstructions
         }
@@ -487,8 +489,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
                     results.append(contentsOf: previousResult.asyncResults!)
                     newResult.asyncResults = results
                 }
-                newResult.taskRunUUID = previousResult.taskRunUUID
-                strongSelf.taskResult = newResult
+                var runResult = newResult as? RSDTaskRunResult
+                runResult?.taskRunUUID = previousResult.taskRunUUID
+                strongSelf.taskResult = runResult ?? newResult
             }
             else {
                 err = error ?? RSDValidationError.unexpectedNullObject("Fetched a nil task without an associated error")
@@ -517,6 +520,9 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
         return self.task as? RSDTrackingTask
     }
     
+    /// The previous data queried during task set up from the data manager.
+    public private(set) var previousTaskData: RSDTaskData?
+    
     /// Called when the task is loaded and when the`dataManager` is set.
     open func setupDataTracking() {
         guard let task = self.task,
@@ -524,6 +530,7 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             else {
                 return
         }
+        self.previousTaskData = taskData
         self.dataTracker?.setupTask(with: taskData, for: self)
         if shouldShowAbbreviatedInstructions == nil, let timestamp = taskData.timestampDate {
             let frequency = RSDStudyConfiguration.shared.fullInstructionsFrequency

@@ -54,5 +54,8 @@ public protocol RSDSwiftDataStorageManager : class, NSObjectProtocol {
 }
 
 @objc public protocol RSDObjCDataStorageManager : class, NSObjectProtocol {
-    // Placeholder for future optional protocol methods.
+    
+    /// Optional. Should survey questions be shown in subsequent runs using the results from a
+    /// previous run?
+    @objc optional func shouldUsePreviousAnswers(for taskIdentifier: String) -> Bool
 }

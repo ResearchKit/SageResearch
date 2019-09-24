@@ -39,7 +39,7 @@ import Foundation
 public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder {
     
     /// A unique identifier for this task run.
-    var taskRunUUID: UUID { get set }
+    var taskRunUUID: UUID { get }
     
     /// Schema info associated with this task.
     var schemaInfo: RSDSchemaInfo? { get set }
@@ -52,6 +52,14 @@ public protocol RSDTaskResult : RSDResult, RSDAnswerResultFinder {
     /// The step history is used to describe the path you took to get to where you are going, whereas
     /// the asynchronous results include any canonical results that are independent of path.
     var asyncResults: [RSDResult]? { get set }
+}
+
+/// The `RSDTaskRunResult` is a task result where the task run UUID can be set to allow for nested
+/// results that all use the same run UUID.
+public protocol RSDTaskRunResult : RSDTaskResult {
+    
+    /// A unique identifier for this task run.
+    var taskRunUUID: UUID { get set }
 }
 
 extension RSDTaskResult  {

@@ -15,14 +15,16 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.3</string>
+	<string>2.4</string>
 	<key>CFBundleVersion</key>
-	<string>49</string>
+	<string>60</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses the camera to take pictures as an example of using the Image Picker.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app uses the GPS sensor to measure relative distance travelled.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app uses the GPS sensor to measure relative distance travelled.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app uses the GPS sensor to measure relative distance travelled.</string>

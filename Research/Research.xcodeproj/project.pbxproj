@@ -362,10 +362,6 @@
 		F8A334A2224171EF00390601 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334A0224171EF00390601 /* RSDFontRules.swift */; };
 		F8A334A3224171EF00390601 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334A0224171EF00390601 /* RSDFontRules.swift */; };
 		F8A334A4224171EF00390601 /* RSDFontRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A334A0224171EF00390601 /* RSDFontRules.swift */; };
-		F8A334A72242A80D00390601 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8A334A62242A80D00390601 /* Colors.xcassets */; };
-		F8A334A82242A80D00390601 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8A334A62242A80D00390601 /* Colors.xcassets */; };
-		F8A334A92242A80D00390601 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8A334A62242A80D00390601 /* Colors.xcassets */; };
-		F8A334AA2242A80D00390601 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8A334A62242A80D00390601 /* Colors.xcassets */; };
 		F8A5E15D1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */; };
 		F8A5E15E1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */; };
 		F8A5E15F1FFD6E5700D337A5 /* RSDMeasurementWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */; };
@@ -752,6 +748,42 @@
 		F8FD56AE21475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */; };
 		F8FD56AF21475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */; };
 		F8FD56B021475D2F00BA2FA6 /* RSDModalStepDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */; };
+		FF01027E231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */; };
+		FF01027F231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */; };
+		FF010280231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */; };
+		FF010281231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */; };
+		FF0102E3231F27A700D7A4A0 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */; };
+		FF0102E4231F27A700D7A4A0 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */; };
+		FF0102E5231F27A700D7A4A0 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */; };
+		FF0102E6231F27A700D7A4A0 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */; };
+		FF0102E7231F27A700D7A4A0 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */; };
+		FF0102E8231F27A700D7A4A0 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */; };
+		FF0102E9231F27A700D7A4A0 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */; };
+		FF0102EA231F27A800D7A4A0 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */; };
+		FF0102EB231F27A800D7A4A0 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */; };
+		FF0102EC231F27A800D7A4A0 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */; };
+		FF0102ED231F27A800D7A4A0 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */; };
+		FF0102EE231F27A800D7A4A0 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */; };
+		FF0102EF231F27A800D7A4A0 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */; };
+		FF0102F0231F27A800D7A4A0 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */; };
+		FF0102F1231F27A900D7A4A0 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */; };
+		FF0102F2231F27A900D7A4A0 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */; };
+		FF0102F3231F27A900D7A4A0 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */; };
+		FF0102F4231F27A900D7A4A0 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */; };
+		FF0102F5231F27A900D7A4A0 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */; };
+		FF0102F6231F27A900D7A4A0 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */; };
+		FF0102F7231F27A900D7A4A0 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */; };
+		FF0102F8231F27A900D7A4A0 /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */; };
+		FF0102F9231F27A900D7A4A0 /* lato_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */; };
+		FF0102FA231F27A900D7A4A0 /* lato_bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */; };
+		FF0102FB231F27A900D7A4A0 /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */; };
+		FF0102FC231F27A900D7A4A0 /* lato_light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */; };
+		FF0102FD231F27A900D7A4A0 /* lato_lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */; };
+		FF0102FE231F27A900D7A4A0 /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */; };
+		FF5010AC22DE3A090035E83C /* RSDFileWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5010AB22DE3A090035E83C /* RSDFileWrapper.swift */; };
+		FF5010AD22DE3A090035E83C /* RSDFileWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5010AB22DE3A090035E83C /* RSDFileWrapper.swift */; };
+		FF5010AE22DE3A090035E83C /* RSDFileWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5010AB22DE3A090035E83C /* RSDFileWrapper.swift */; };
+		FF5010AF22DE3A090035E83C /* RSDFileWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5010AB22DE3A090035E83C /* RSDFileWrapper.swift */; };
 		FF633D6D1FCE7A6000CF2267 /* FactoryTest_TaskGroup.json in Resources */ = {isa = PBXBuildFile; fileRef = FF74A7D91F7D8B7F0064A634 /* FactoryTest_TaskGroup.json */; };
 		FF633D6E1FCE7A6000CF2267 /* FactoryTest_TaskFoo.json in Resources */ = {isa = PBXBuildFile; fileRef = FF87CD841F84130400084426 /* FactoryTest_TaskFoo.json */; };
 		FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */; };
@@ -1025,11 +1057,17 @@
 		FF8B54EC1FCE6D15006B6937 /* RSDColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDFF5CE1FC3EE5C009713E8 /* RSDColor.swift */; };
 		FF8B54ED1FCE6D15006B6937 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF8B54EE1FCE6D15006B6937 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
+		FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */; };
 		FFABCB9422D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9522D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9622D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9722D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFEF95631FCE8D06008C30A6 /* RSDTextFieldOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */; };
+		FFF20D002329A59700F501C3 /* AnswerResultTypeJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */; };
+		FFF20CF3232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
+		FFF20CF4232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
+		FFF20CF5232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
+		FFF20CF6232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
 		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
 		FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */; };
 /* End PBXBuildFile section */
@@ -1254,7 +1292,6 @@
 		F8A3348B224058C900390601 /* RSDDesignableUIStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDesignableUIStep.swift; sourceTree = "<group>"; };
 		F8A33490224069A700390601 /* RSDColorMappingThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDColorMappingThemeElementObject.swift; sourceTree = "<group>"; };
 		F8A334A0224171EF00390601 /* RSDFontRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFontRules.swift; sourceTree = "<group>"; };
-		F8A334A62242A80D00390601 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		F8A5E15B1FFD6E5700D337A5 /* RSDMeasurementWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDMeasurementWrapper.h; sourceTree = "<group>"; };
 		F8A5E15C1FFD6E5700D337A5 /* RSDMeasurementWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDMeasurementWrapper.m; sourceTree = "<group>"; };
 		F8A694FD2135C3B40052EB82 /* RSDAnswerResultType+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSDAnswerResultType+Codable.swift"; sourceTree = "<group>"; };
@@ -1332,6 +1369,14 @@
 		F8FD56392141BDE000BA2FA6 /* RSDFileManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileManifest.swift; sourceTree = "<group>"; };
 		F8FD563E2141BE4700BA2FA6 /* RSDDataArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDDataArchive.swift; sourceTree = "<group>"; };
 		F8FD56AC21475D2F00BA2FA6 /* RSDModalStepDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDModalStepDataSource.swift; sourceTree = "<group>"; };
+		FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RSDFont+Lato.swift"; sourceTree = "<group>"; };
+		FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_regular.ttf; sourceTree = "<group>"; };
+		FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_bold.ttf; sourceTree = "<group>"; };
+		FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_lightitalic.ttf; sourceTree = "<group>"; };
+		FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_italic.ttf; sourceTree = "<group>"; };
+		FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_bolditalic.ttf; sourceTree = "<group>"; };
+		FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_black.ttf; sourceTree = "<group>"; };
+		FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_light.ttf; sourceTree = "<group>"; };
 		FF0920BE1FCE310500C9E031 /* RSDTableSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableSection.swift; sourceTree = "<group>"; };
 		FF0920C01FCE37AD00C9E031 /* RSDTableItemGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableItemGroup.swift; sourceTree = "<group>"; };
 		FF0920C21FCE3F0300C9E031 /* RSDTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTableItem.swift; sourceTree = "<group>"; };
@@ -1355,6 +1400,7 @@
 		FF2DD5021FA1101700ECD614 /* RSDResourceTransformerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResourceTransformerObject.swift; sourceTree = "<group>"; };
 		FF2DD5041FA114F200ECD614 /* RSDTaskTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskTransformer.swift; sourceTree = "<group>"; };
 		FF427CE71FA3B247005A5AD2 /* RSDUIActionHandlerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDUIActionHandlerObject.swift; sourceTree = "<group>"; };
+		FF5010AB22DE3A090035E83C /* RSDFileWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFileWrapper.swift; sourceTree = "<group>"; };
 		FF580BF31F7E3764009B3EE9 /* RSDActiveUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDActiveUIStepObject.swift; sourceTree = "<group>"; };
 		FF580BF51F7ED80B009B3EE9 /* Dictionary+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Utilities.swift"; sourceTree = "<group>"; };
 		FF5C4C1C1F8C872500F311BA /* RSDTaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskController.swift; sourceTree = "<group>"; };
@@ -1403,6 +1449,7 @@
 		FF8E5F3E1F8C258200611C23 /* RSDSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDSectionStepObject.swift; sourceTree = "<group>"; };
 		FF8E5F441F8C36F400611C23 /* RSDTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDTaskViewModel.swift; sourceTree = "<group>"; };
 		FF8E5F461F8C3DA000611C23 /* RSDAsyncAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAsyncAction.swift; sourceTree = "<group>"; };
+		FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAppDelegate.swift; sourceTree = "<group>"; };
 		FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDViewThemeElementObject.swift; sourceTree = "<group>"; };
 		FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskControllerTests.swift; sourceTree = "<group>"; };
 		FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownUIStepObject.swift; sourceTree = "<group>"; };
@@ -1439,6 +1486,8 @@
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
 		FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDExceptionHandler.h; sourceTree = "<group>"; };
 		FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDExceptionHandler.m; sourceTree = "<group>"; };
+		FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerResultTypeJSONTests.swift; sourceTree = "<group>"; };
+		FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPostalCodeTableItem.swift; sourceTree = "<group>"; };
 		FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
 		FFF53EAC1FBF9562004211D2 /* RSDResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultType.swift; sourceTree = "<group>"; };
 		FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDActiveStepViewController.xib; sourceTree = "<group>"; };
@@ -1633,6 +1682,7 @@
 				F80CA52B1FFEBDCF00E89C06 /* RSDNumberInputTableItem.swift */,
 				F80CA5271FFEBD7600E89C06 /* RSDTextInputTableItem.swift */,
 				F8A204D320671F4D004E2B5D /* RSDModalStepTableItem.swift */,
+				FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */,
 			);
 			name = TableItem;
 			sourceTree = "<group>";
@@ -1761,6 +1811,7 @@
 		F84496022273A23100EAA3E0 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */,
 				F84496032273A23100EAA3E0 /* RSDTaskViewController.swift */,
 				F844961F2273A23100EAA3E0 /* RSDStepViewController.swift */,
 				F84496082273A23100EAA3E0 /* Step View Controllers */,
@@ -2072,6 +2123,7 @@
 			children = (
 				F8BE11012135F87D000AAB1E /* RSDCopyTask.swift */,
 				F8BE11202136023A000AAB1E /* RSDDecodableReplacement.swift */,
+				FF5010AB22DE3A090035E83C /* RSDFileWrapper.swift */,
 				FF74A7CE1F7D63D40064A634 /* RSDImageWrapper.swift */,
 				FF1D6D311F82FEDF00B05349 /* RSDResourceTransformer.swift */,
 				FF2DD5021FA1101700ECD614 /* RSDResourceTransformerObject.swift */,
@@ -2148,7 +2200,6 @@
 				F8C36BE72239AEBD000E42A7 /* ColorMatrix.json */,
 				F800EA83223AFB9400EF7B50 /* RSDColorPalette.swift */,
 				F8A334A0224171EF00390601 /* RSDFontRules.swift */,
-				F8A334A62242A80D00390601 /* Colors.xcassets */,
 			);
 			name = Design;
 			sourceTree = "<group>";
@@ -2209,6 +2260,21 @@
 			name = "Data Archiving";
 			sourceTree = "<group>";
 		};
+		FF010258231F146200D7A4A0 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FF01027D231F150200D7A4A0 /* RSDFont+Lato.swift */,
+				FF0102E1231F24FB00D7A4A0 /* lato_black.ttf */,
+				FF0102DD231F24FB00D7A4A0 /* lato_bold.ttf */,
+				FF0102E0231F24FB00D7A4A0 /* lato_bolditalic.ttf */,
+				FF0102DF231F24FB00D7A4A0 /* lato_italic.ttf */,
+				FF0102E2231F24FB00D7A4A0 /* lato_light.ttf */,
+				FF0102DE231F24FB00D7A4A0 /* lato_lightitalic.ttf */,
+				FF0102DC231F24FA00D7A4A0 /* lato_regular.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		FF2ACF401FBB86870018D87F /* Navigation Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -2252,8 +2318,9 @@
 		FF2DA6181F96E7C4006F83C4 /* Codable Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F8F72400203BF7BD00AC0E5B /* AnyObjectSerializationTests.swift */,
 				FF1A7A861F6B1174007AB5A6 /* CodableTestObjects.swift */,
+				F8F72400203BF7BD00AC0E5B /* AnyObjectSerializationTests.swift */,
+				FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */,
 				FFDAE9E61F908510001D0CC0 /* CodableInputFieldObjectTests.swift */,
 				FFD243291F9568C70083F458 /* CodableResultObjectTests.swift */,
 				FFDAE9E41F908344001D0CC0 /* CodableStepObjectTests.swift */,
@@ -2339,6 +2406,7 @@
 				FF74A7E81F7DCE630064A634 /* DataSource */,
 				F8EB48BE228CDB56000A2F69 /* Recorders */,
 				FFFDB9591F99802C00BA1348 /* Localization */,
+				FF010258231F146200D7A4A0 /* Fonts */,
 				FF2B54FD1F68AE8000663289 /* Serialization */,
 				F8A695052135C55A0052EB82 /* Documentation */,
 				FF2B55021F69077200663289 /* Utilities */,
@@ -2878,7 +2946,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1030;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
 					F814DCE622750435004579EF = {
@@ -2921,7 +2989,7 @@
 					};
 					F8BE123421370931000AAB1E = {
 						CreatedOnToolsVersion = 9.4.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
 					FF8B53131FCE678E006B6937 = {
@@ -2937,12 +3005,12 @@
 					};
 					FF8B532F1FCE67AA006B6937 = {
 						CreatedOnToolsVersion = 9.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
 					FF8B533C1FCE67C7006B6937 = {
 						CreatedOnToolsVersion = 9.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -3053,9 +3121,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8A334AA2242A80D00390601 /* Colors.xcassets in Resources */,
+				FF0102F8231F27A900D7A4A0 /* lato_black.ttf in Resources */,
+				FF0102F9231F27A900D7A4A0 /* lato_bold.ttf in Resources */,
+				FF0102FC231F27A900D7A4A0 /* lato_light.ttf in Resources */,
+				FF0102FB231F27A900D7A4A0 /* lato_italic.ttf in Resources */,
+				FF0102FA231F27A900D7A4A0 /* lato_bolditalic.ttf in Resources */,
+				FF0102FD231F27A900D7A4A0 /* lato_lightitalic.ttf in Resources */,
 				F8C36BEB2239AEBD000E42A7 /* ColorMatrix.json in Resources */,
 				F8BE12C221371A69000AAB1E /* Research.strings in Resources */,
+				FF0102FE231F27A900D7A4A0 /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3063,10 +3137,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0102E6231F27A700D7A4A0 /* lato_italic.ttf in Resources */,
+				FF0102E7231F27A700D7A4A0 /* lato_light.ttf in Resources */,
 				FF8B54B71FCE6CFF006B6937 /* Research.strings in Resources */,
-				F8A334A72242A80D00390601 /* Colors.xcassets in Resources */,
 				F8A695022135C4940052EB82 /* README-API.md in Resources */,
+				FF0102E4231F27A700D7A4A0 /* lato_bold.ttf in Resources */,
+				FF0102E5231F27A700D7A4A0 /* lato_bolditalic.ttf in Resources */,
+				FF0102E8231F27A700D7A4A0 /* lato_lightitalic.ttf in Resources */,
+				FF0102E3231F27A700D7A4A0 /* lato_black.ttf in Resources */,
 				F8C36BE82239AEBD000E42A7 /* ColorMatrix.json in Resources */,
+				FF0102E9231F27A700D7A4A0 /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3083,10 +3163,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0102ED231F27A800D7A4A0 /* lato_italic.ttf in Resources */,
+				FF0102EE231F27A800D7A4A0 /* lato_light.ttf in Resources */,
 				FF8B54B81FCE6D00006B6937 /* Research.strings in Resources */,
-				F8A334A82242A80D00390601 /* Colors.xcassets in Resources */,
 				F8A695032135C4940052EB82 /* README-API.md in Resources */,
+				FF0102EB231F27A800D7A4A0 /* lato_bold.ttf in Resources */,
+				FF0102EC231F27A800D7A4A0 /* lato_bolditalic.ttf in Resources */,
+				FF0102EF231F27A800D7A4A0 /* lato_lightitalic.ttf in Resources */,
+				FF0102EA231F27A800D7A4A0 /* lato_black.ttf in Resources */,
 				F8C36BE92239AEBD000E42A7 /* ColorMatrix.json in Resources */,
+				FF0102F0231F27A800D7A4A0 /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3094,10 +3180,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0102F4231F27A900D7A4A0 /* lato_italic.ttf in Resources */,
+				FF0102F5231F27A900D7A4A0 /* lato_light.ttf in Resources */,
 				FF8B54B91FCE6D01006B6937 /* Research.strings in Resources */,
-				F8A334A92242A80D00390601 /* Colors.xcassets in Resources */,
 				F8A695042135C4940052EB82 /* README-API.md in Resources */,
+				FF0102F2231F27A900D7A4A0 /* lato_bold.ttf in Resources */,
+				FF0102F3231F27A900D7A4A0 /* lato_bolditalic.ttf in Resources */,
+				FF0102F6231F27A900D7A4A0 /* lato_lightitalic.ttf in Resources */,
+				FF0102F1231F27A900D7A4A0 /* lato_black.ttf in Resources */,
 				F8C36BEA2239AEBD000E42A7 /* ColorMatrix.json in Resources */,
+				FF0102F7231F27A900D7A4A0 /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3165,6 +3257,7 @@
 				F84496472273A23100EAA3E0 /* DebugStepViewController.swift in Sources */,
 				F84496482273A23100EAA3E0 /* RSDCountdownStepViewController.swift in Sources */,
 				F84496402273A23100EAA3E0 /* RSDWebViewController.swift in Sources */,
+				FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */,
 				F844966B2273A23100EAA3E0 /* RSDBackgroundGradient.swift in Sources */,
 				F84496572273A23100EAA3E0 /* RSDStepViewController.swift in Sources */,
 				F844965C2273A23100EAA3E0 /* RSDUISoundPlayer.swift in Sources */,
@@ -3336,6 +3429,7 @@
 				F8FD563D2141BDE000BA2FA6 /* RSDFileManifest.swift in Sources */,
 				F8BE12BB21371A5C000AAB1E /* NumberFormatter+Codable.swift in Sources */,
 				F8BE126D213719B4000AAB1E /* RSDResourceTransformer.swift in Sources */,
+				FFF20CF6232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */,
 				F8EB48D0228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
 				F8A3348A2240574400390601 /* RSDColorMappingThemeElement.swift in Sources */,
 				F8BE124D21370A81000AAB1E /* Array+Utilities.swift in Sources */,
@@ -3368,6 +3462,7 @@
 				F8EB48C8228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
 				F8BE129A21371A1C000AAB1E /* RSDInputField.swift in Sources */,
 				F8BE12BE21371A5C000AAB1E /* RSDJSONValue.swift in Sources */,
+				FF5010AF22DE3A090035E83C /* RSDFileWrapper.swift in Sources */,
 				F8BE130321371F7B000AAB1E /* RSDDatePickerDataSourceObject.swift in Sources */,
 				F837223B22322BA700C9A2EA /* RSDInstructionStep.swift in Sources */,
 				F8BE130021371EED000AAB1E /* RSDTaskResourceTransformer.swift in Sources */,
@@ -3399,6 +3494,7 @@
 				F8BE12A421371A2B000AAB1E /* RSDSchemaInfo.swift in Sources */,
 				F8BE12BF21371A5C000AAB1E /* RSDStringLiteralOptionSet.swift in Sources */,
 				F8BE12C721371B27000AAB1E /* RSDStandardAsyncActionConfiguration.swift in Sources */,
+				FF010281231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */,
 				F8366D982140677600EBA88D /* RSDTaskStepNode.swift in Sources */,
 				F8BE128C21371A03000AAB1E /* RSDResult.swift in Sources */,
 				F8BE126F213719D1000AAB1E /* RSDDocumentable.swift in Sources */,
@@ -3556,6 +3652,7 @@
 				FF8B537A1FCE6C62006B6937 /* RSDFactory.swift in Sources */,
 				F86A5F1421251D7500567CC0 /* RSDCohortNavigationStep.swift in Sources */,
 				FF8B54BB1FCE6D09006B6937 /* Codable+Utilities.swift in Sources */,
+				FFF20CF3232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */,
 				F8BE10B12135DBD5000AAB1E /* RSDRecorderConfiguration.swift in Sources */,
 				F8EB48CD228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
 				F8366D952140677600EBA88D /* RSDTaskStepNode.swift in Sources */,
@@ -3588,6 +3685,7 @@
 				FF8B549F1FCE6CF6006B6937 /* RSDFormStepDataSourceObject.swift in Sources */,
 				F8EB48C5228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
 				F8C0A8CC20FB045C00EC758A /* RSDUITransitionStyle.swift in Sources */,
+				FF5010AC22DE3A090035E83C /* RSDFileWrapper.swift in Sources */,
 				F837224622331DBE00C9A2EA /* RSDOverviewStep.swift in Sources */,
 				B59FC2A82073439F002BFDB9 /* RSDImagePlacementType.swift in Sources */,
 				F829F0D31FF71EE7001B0680 /* RSDLengthFormatter.m in Sources */,
@@ -3619,6 +3717,7 @@
 				FF8B53841FCE6C6F006B6937 /* RSDPermissionType.swift in Sources */,
 				FF8B54611FCE6CB8006B6937 /* RSDViewThemeElementObject.swift in Sources */,
 				F8B42BE31FE9ABE200E23783 /* Localization.swift in Sources */,
+				FF01027E231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */,
 				F8BF1323213A3210009505E5 /* RSDTaskRepository.swift in Sources */,
 				FF8B540A1FCE6C97006B6937 /* RSDAnswerResultObject.swift in Sources */,
 				F8366D90214042F800EBA88D /* RSDStepViewModel.swift in Sources */,
@@ -3663,6 +3762,7 @@
 				F8C7D39D20915E67007490BC /* CodableUIActionObjectTests.swift in Sources */,
 				F8E733482231CE640009F594 /* JSONSerializationTests.swift in Sources */,
 				F83E44032249E8EF00E13207 /* ArrayExtensionTests.swift in Sources */,
+				FFF20D002329A59700F501C3 /* AnswerResultTypeJSONTests.swift in Sources */,
 				F858D14B201BA67B00132325 /* MeasurementDurationTests.swift in Sources */,
 				F837223D22322F6F00C9A2EA /* FrequencyTests.swift in Sources */,
 				FF633D751FCE7A6900CF2267 /* CodableResultObjectTests.swift in Sources */,
@@ -3818,6 +3918,7 @@
 				FF8B54731FCE6CC5006B6937 /* RSDTaskInfoStepObject.swift in Sources */,
 				F82D110C2125EA1F00EA1A33 /* RSDAnswerResult.swift in Sources */,
 				F8586AEA2011697700B2DF65 /* RSDFractionFormatter.m in Sources */,
+				FFF20CF4232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */,
 				F80CA5311FFEBE3200E89C06 /* RSDMeasurementInputTableItem.swift in Sources */,
 				FF8B53BD1FCE6C7B006B6937 /* RSDResult.swift in Sources */,
 				FF8B538B1FCE6C70006B6937 /* RSDFormUIHint.swift in Sources */,
@@ -3850,6 +3951,7 @@
 				F8BE12F421371C02000AAB1E /* RSDImage.swift in Sources */,
 				FF8B542C1FCE6CA2006B6937 /* RSDSectionStepObject.swift in Sources */,
 				F8F561E82023C2A9000EEA8C /* RSDDurationPickerDataSourceObject.swift in Sources */,
+				FF5010AD22DE3A090035E83C /* RSDFileWrapper.swift in Sources */,
 				F8EB48C6228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
 				FF8B53C41FCE6C7B006B6937 /* RSDSurveyRule.swift in Sources */,
 				F8BE11462136088C000AAB1E /* RSDImageThemeElement.swift in Sources */,
@@ -3881,6 +3983,7 @@
 				F8BE113E2136081E000AAB1E /* RSDViewThemeElement.swift in Sources */,
 				F8864AC92163EDFD00DF57CF /* RSDSubtaskStepObject.swift in Sources */,
 				FF8B542B1FCE6CA2006B6937 /* RSDGenericStepObject.swift in Sources */,
+				FF01027F231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */,
 				FF8B545A1FCE6CB2006B6937 /* RSDUIActionHandlerObject.swift in Sources */,
 				F8C723EE2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */,
 				F8BE111A2135FF6E000AAB1E /* RSDReminderUIAction.swift in Sources */,
@@ -4038,6 +4141,7 @@
 				F802F3F9204E0A420027CB00 /* RSDImagePickerStepObject.swift in Sources */,
 				FF8B54C71FCE6D0B006B6937 /* Codable+Utilities.swift in Sources */,
 				F8BE10B72135DC0D000AAB1E /* RSDRequestConfiguration.swift in Sources */,
+				FFF20CF5232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */,
 				F8B17853202D978800B62416 /* RSDAsyncActionType.swift in Sources */,
 				F80CA5261FFEBD3700E89C06 /* RSDChoiceTableItem.swift in Sources */,
 				F8EB48CF228CDC51000A2F69 /* RSDStandardPermission.swift in Sources */,
@@ -4070,6 +4174,7 @@
 				FF8B54AB1FCE6CF8006B6937 /* RSDFormStepDataSourceObject.swift in Sources */,
 				F88051A42011B43800B0FDDD /* RSDFraction.swift in Sources */,
 				F8EB48C7228CDBB3000A2F69 /* RSDSampleRecorder.swift in Sources */,
+				FF5010AE22DE3A090035E83C /* RSDFileWrapper.swift in Sources */,
 				F8FD56372141BD5100BA2FA6 /* RSDTaskMetadata.swift in Sources */,
 				F87F97C720059B100013D2DC /* RSDErrorResultObject.swift in Sources */,
 				FF8B53CF1FCE6C7B006B6937 /* RSDFormUIStep.swift in Sources */,
@@ -4101,6 +4206,7 @@
 				F8FD56412141BE4700BA2FA6 /* RSDDataArchive.swift in Sources */,
 				FF8B54DC1FCE6D14006B6937 /* Dictionary+Utilities.swift in Sources */,
 				FF8B54311FCE6CA3006B6937 /* RSDGenericStepObject.swift in Sources */,
+				FF010280231F150200D7A4A0 /* RSDFont+Lato.swift in Sources */,
 				FF8B545C1FCE6CB2006B6937 /* RSDUIActionHandlerObject.swift in Sources */,
 				F8C723EF2045DD33003DCD42 /* RSDPopoverInputFieldObject.swift in Sources */,
 				FF8B53961FCE6C71006B6937 /* RSDPermissionType.swift in Sources */,
@@ -4181,13 +4287,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "ResearchRecorders/Info-iOS.plist";
@@ -4214,13 +4320,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "ResearchRecorders/Info-iOS.plist";
@@ -4240,16 +4346,17 @@
 		F82A4AB122960BF700BEBE3C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ResearchLocation/Info.plist;
@@ -4269,16 +4376,17 @@
 		F82A4AB222960BF700BEBE3C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ResearchLocation/Info.plist;
@@ -4345,13 +4453,13 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "ResearchUI/Info-iOS.plist";
@@ -4376,13 +4484,13 @@
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "ResearchUI/Info-iOS.plist";
@@ -4450,12 +4558,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Research-UnitTest/Info.plist";
@@ -4477,12 +4585,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Research-UnitTest/Info.plist";
@@ -4505,12 +4613,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ResearchMotion/Info.plist;
@@ -4534,12 +4642,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ResearchMotion/Info.plist;
@@ -4603,17 +4711,18 @@
 		F8BE123B21370931000AAB1E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -4626,25 +4735,26 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		F8BE123C21370931000AAB1E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -4657,7 +4767,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -4694,7 +4804,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -4757,7 +4867,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 67;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -4786,12 +4896,12 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Research/Info-iOS.plist";
@@ -4814,12 +4924,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Research/Info-iOS.plist";
@@ -4886,12 +4996,12 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Research/Info-watchOS.plist";
@@ -4902,7 +5012,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.2;
 			};
@@ -4915,12 +5025,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Research/Info-watchOS.plist";
@@ -4931,7 +5041,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 3.2;
 			};
@@ -4943,12 +5053,12 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Research/Info-tvOS.plist";
@@ -4959,7 +5069,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.2;
 			};
@@ -4972,12 +5082,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 55;
+				DYLIB_CURRENT_VERSION = 67;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "Research/Info-tvOS.plist";
@@ -4988,7 +5098,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.2;
 			};

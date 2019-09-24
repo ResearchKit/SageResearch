@@ -62,6 +62,11 @@ extension RSDComparable {
     
     func isMatching(to result: RSDResult?, op: RSDSurveyRuleOperator) -> Bool {
         
+        // If this is an `.always` operator, it should evaluate as a match.
+        if op == .always {
+            return true
+        }
+        
         // If this is the skip operation then the values aren't equal *unless* it's nil
         guard let answerResult = result as? RSDAnswerResult, let value = answerResult.value
             else {
@@ -94,6 +99,8 @@ extension RSDComparable {
         switch(op) {
         case .skip:
             return NSPredicate(format: "SELF = NULL")
+        case .always:
+            return NSPredicate(value: true)
         case .equal:
             if isArray {
                 return NSPredicate(format: "ANY %@ IN SELF", answerValue)

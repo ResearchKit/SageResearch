@@ -77,6 +77,9 @@
                 <a href="../Classes/RSDColorRules/Style.html">– Style</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/RSDCountdownUIStepObject.html">RSDCountdownUIStepObject</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/RSDDataLogger.html">RSDDataLogger</a>
               </li>
               <li class="nav-group-task">
@@ -519,6 +522,9 @@
                 <a href="../Protocols/RSDArchivable.html">RSDArchivable</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDAssetImageThemeElement.html">RSDAssetImageThemeElement</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDAsyncAction.html">RSDAsyncAction</a>
               </li>
               <li class="nav-group-task">
@@ -876,6 +882,9 @@
                 <a href="../Protocols/RSDTaskResult.html">RSDTaskResult</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/RSDTaskRunResult.html">RSDTaskRunResult</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/RSDTaskTransformer.html">RSDTaskTransformer</a>
               </li>
               <li class="nav-group-task">
@@ -1196,9 +1205,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:8Research34RSDAnimatedImageThemeElementObjectV10imageNamesSaySSGvp"></a>
+                    <a name="/s:8Research34RSDAnimatedImageThemeElementObjectV10imageNamesSayAA14RSDFileWrapperVGvp"></a>
                     <a name="//apple_ref/swift/Property/imageNames" class="dashAnchor"></a>
-                    <a class="token" href="#/s:8Research34RSDAnimatedImageThemeElementObjectV10imageNamesSaySSGvp">imageNames</a>
+                    <a class="token" href="#/s:8Research34RSDAnimatedImageThemeElementObjectV10imageNamesSayAA14RSDFileWrapperVGvp">imageNames</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1213,7 +1222,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">imageNames</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">imageNames</span><span class="p">:</span> <span class="p">[</span><span class="kt">RSDFileWrapper</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -1506,27 +1515,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/"></a>
-                    <a name="//apple_ref/swift/Method/images()" class="dashAnchor"></a>
-                    <a class="token" href="#/">images()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p><strong>Available</strong> for watchOS and macOS.</p>
-
-<p>The animated images to display.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:8Research34RSDAnimatedImageThemeElementObjectV6images14compatibleWithSaySo7UIImageCGSo17UITraitCollectionCSg_tF"></a>
                     <a name="//apple_ref/swift/Method/images(compatibleWith:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:8Research34RSDAnimatedImageThemeElementObjectV6images14compatibleWithSaySo7UIImageCGSo17UITraitCollectionCSg_tF">images(compatibleWith:)</a>
@@ -1546,7 +1534,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">images</span><span class="p">(</span><span class="n">compatibleWith</span> <span class="nv">traitCollection</span><span class="p">:</span> <span class="kt">UITraitCollection</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Typealiases.html#/RSDImage">RSDImage</a></span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">images</span><span class="p">(</span><span class="n">compatibleWith</span> <span class="nv">traitCollection</span><span class="p">:</span> <span class="kt">UITraitCollection</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Typealiases.html#/RSDImage">RSDImage</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -1568,6 +1556,37 @@
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The images for this step.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:8Research34RSDAnimatedImageThemeElementObjectV6imagesSaySo7UIImageCGyF"></a>
+                    <a name="//apple_ref/swift/Method/images()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:8Research34RSDAnimatedImageThemeElementObjectV6imagesSaySo7UIImageCGyF">images()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The animated images to display.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">images</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Typealiases.html#/RSDImage">RSDImage</a></span><span class="p">]</span></code></pre>
+
+                        </div>
                       </div>
                       <div>
                         <h4>Return Value</h4>

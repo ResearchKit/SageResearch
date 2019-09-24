@@ -26,6 +26,15 @@
                               ]
               },
               {
+                  "identifier": "postalCode",
+                  "type": "form",
+                  "text": "Enter your postal code",
+                  "detail": "(Only the first 3 characters will be saved.)",
+                  "inputFields": [{
+                      "type": "postalCode"
+                  }]
+              },
+              {
               "identifier": "heightAndWeight",
               "type": "form",
               "title": "Height and Weight",

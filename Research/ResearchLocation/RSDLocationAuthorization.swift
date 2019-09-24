@@ -2,7 +2,7 @@
 //  RSDLocationAuthorization.swift
 //  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018, 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -39,7 +39,45 @@ import CoreLocation
 /// application.
 ///
 /// - seealso: `RSDPermissionsStepViewController`
-public struct RSDLocationAuthorization {
+public final class RSDLocationAuthorization : RSDAuthorizationAdaptor {
+    
+    public static let shared = RSDLocationAuthorization()
+    
+    /// This adaptor is intended for checking for location permissions.
+    private static let validPermissions: [RSDPermissionType] = [RSDStandardPermissionType.location, RSDStandardPermissionType.locationWhenInUse]
+    public let permissions: [RSDPermissionType] = RSDLocationAuthorization.validPermissions
+    
+    private let locationManager: CLLocationManager = CLLocationManager()
+
+    /// Returns the authorization status for the location manager.
+    public func authorizationStatus(for permission: String) -> RSDAuthorizationStatus {
+        guard let permissionType = RSDStandardPermissionType(rawValue: permission)
+            else {
+                debugPrint("'\(permission)' is not a valid standard permission type.")
+                return .notDetermined
+        }
+        
+        if !self.permissions.contains(where: { $0.identifier == permissionType.identifier }) {
+            debugPrint("'\(permission)' is not a valid location permission type.")
+            return .notDetermined
+        }
+
+        return RSDLocationAuthorization.authorizationStatus(for: permissionType)
+    }
+    
+    /// Requests permission to access the motion sensors.
+    public func requestAuthorization(for permission: RSDPermission, _ completion: @escaping ((RSDAuthorizationStatus, Error?) -> Void)) {
+        guard let permissionType = RSDStandardPermissionType(rawValue: permission.identifier)
+            else {
+                let errStr = "'\(permission.identifier)' is not a valid standard permission type."
+                let error = RSDPermissionError.notHandled(errStr)
+                debugPrint(errStr)
+                completion(.denied, error)
+                return
+        }
+        
+        RSDLocationAuthorization.requestAuthorization(for: permissionType, locationManager: self.locationManager, completion)
+    }
     
     /// Returns authorization status for `.location` and `.locationWhenInUse` permissions.
     public static func authorizationStatus(for permission: RSDStandardPermissionType) -> RSDAuthorizationStatus {
@@ -66,5 +104,24 @@ public struct RSDLocationAuthorization {
         default:
             return .authorized
         }
+    }
+    
+    public static func requestAuthorization(for permissionType: RSDStandardPermissionType, locationManager: CLLocationManager, _ completion:@escaping ((RSDAuthorizationStatus, Error?) -> Void)) {
+        if !self.validPermissions.contains(where: { $0.identifier == permissionType.identifier }) {
+            let errStr = "'\(permissionType.identifier)' is not a valid location permission type."
+            let error = RSDPermissionError.notHandled(errStr)
+            debugPrint(errStr)
+            completion(.denied, error)
+            return
+        }
+        
+        switch permissionType {
+        case RSDStandardPermissionType.location:
+            locationManager.requestAlwaysAuthorization()
+        default:
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
+        completion(self.authorizationStatus(for: permissionType), nil)
     }
 }

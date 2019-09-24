@@ -82,10 +82,22 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         super.init(beginningRowIndex: beginningRowIndex, items: items!, inputField: inputField, uiHint: uiHint, answerType: aType)
     }
     
-    // Override to set the selected items from the result.
+    /// Override to set the selected items.
+    override open func setPreviousAnswer(from jsonValue: Any?) throws {
+        try super.setPreviousAnswer(from: jsonValue)
+        let result = RSDAnswerResultObject(identifier: self.identifier,
+                                                 answerType: self.answerType,
+                                                 value: jsonValue)
+        self.updateSelected(from: result)
+    }
+    
+    /// Override to set the selected items from the result.
     override open func setAnswer(from result: RSDResult) throws {
         try super.setAnswer(from: result)
+        self.updateSelected(from: result)
+    }
         
+    private func updateSelected(from result: RSDResult) {
         // Set all the previously selected items as selected
         guard let selectableItems = self.items as? [RSDChoiceTableItem] else { return }
         for input in selectableItems {

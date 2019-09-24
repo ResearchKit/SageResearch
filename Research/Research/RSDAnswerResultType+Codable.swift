@@ -36,6 +36,22 @@ import Foundation
 // MARK: Value Decoding
 extension RSDAnswerResultType {
     
+    /// Decode a `RSDJSONValue` from the given JSON value.
+    ///
+    /// - parameters:
+    ///     - jsonValue: The JSON value (from an array or dictionary) with the answer.
+    ///     - dataType: The data type to use to hint at the transform.
+    /// - returns: The decoded value or `nil` if the value is not present.
+    /// - throws: `DecodingError` if the encountered stored value cannot be decoded.
+    public func jsonDecode(from jsonValue: RSDJSONSerializable?, with dataType: RSDFormDataType? = nil) throws -> Any? {
+        guard let jsonValue = jsonValue, !(jsonValue is NSNull) else { return nil }
+        var answerType = self
+        if let dataType = dataType {
+            answerType.formDataType = dataType
+        }
+        return try AnswerResultTypeCodingWrapper.value(from: jsonValue, for: answerType)
+    }
+    
     /// Decode a `RSDJSONValue` from the given decoder.
     ///
     /// - parameter decoder: The decoder that holds the value.
@@ -87,6 +103,16 @@ extension RSDAnswerResultType {
     }
     
     private func _decodeStringValue(from string: String, decoder: Decoder) throws -> RSDJSONValue {
+        let value = try _decodeStringValue(from: string, decoder: decoder, baseType: self.baseType)
+        if let dataType = self.formDataType?.baseType, dataType == .fraction {
+            return try _decodeFraction(from: value)
+        }
+        else {
+            return value
+        }
+    }
+    
+    private func _decodeStringValue(from string: String, decoder: Decoder, baseType: RSDAnswerResultType.BaseType) throws -> RSDJSONValue {
         switch baseType {
         case .boolean:
             return (string as NSString).boolValue
@@ -107,11 +133,26 @@ extension RSDAnswerResultType {
             return string
             
         case .date:
-            return try decoder.factory.decodeDate(from: string, formatter: self.dateFormatter, codingPath: decoder.codingPath)
+            if let date = decodeDate(from: string) {
+                return date
+            }
+            else {
+                return try decoder.factory.decodeDate(from: string, formatter: self.dateFormatter, codingPath: decoder.codingPath)
+            }
         }
     }
     
     private func _decodeSingleValue(from decoder: Decoder) throws -> RSDJSONValue {
+        let value = try _decodeSingleValue(from: decoder, baseType: self.baseType)
+        if let dataType = self.formDataType?.baseType, dataType == .fraction {
+            return try _decodeFraction(from: value)
+        }
+        else {
+            return value
+        }
+    }
+    
+    private func _decodeSingleValue(from decoder: Decoder, baseType: RSDAnswerResultType.BaseType) throws -> RSDJSONValue {
         
         // special-case the ".codable" type to return a dictionary
         if baseType == .codable {
@@ -167,10 +208,37 @@ extension RSDAnswerResultType {
         formatter.dateFormat = format
         return formatter.date(from: string)
     }
+    
+    private func _decodeFraction(from jsonValue: RSDJSONValue) throws -> RSDFraction {
+        if let string = jsonValue as? String {
+            let formatter = RSDFractionFormatter()
+            guard let num = formatter.number(from: string) else {
+                let context = DecodingError.Context(codingPath: [], debugDescription: "\(jsonValue) cannot be transformed to a fraction")
+                throw DecodingError.typeMismatch(RSDFraction.self, context)
+            }
+            return num.fractionalValue()
+        }
+        else if let num = (jsonValue as? NSNumber) ?? (jsonValue as? RSDJSONNumber)?.jsonNumber() {
+            return num.fractionalValue()
+        }
+        else {
+            let context = DecodingError.Context(codingPath: [], debugDescription: "Expecting a fraction to be represented by a String or Number. Actual=\(jsonValue)")
+            throw DecodingError.typeMismatch(RSDFraction.self, context)
+        }
+    }
 }
 
 // MARK: Value Encoding
 extension RSDAnswerResultType {
+    
+    /// Returns a JSON serializable object that is encoded for this answer type from the given value.
+    /// - paramenter value: The value to encode.
+    /// - returns: The JSON serializable object for this encodable.
+    public func jsonEncode(from value: Any?) throws -> RSDJSONSerializable? {
+        guard let obj = value else { return nil }
+        let wrapper = AnswerResultTypeCodingWrapper(answerType: self, object: obj)
+        return try wrapper.jsonValue()
+    }
     
     /// Encode a value to the given encoder.
     ///
@@ -188,10 +256,7 @@ extension RSDAnswerResultType {
         if let sType = self.sequenceType {
             switch sType {
             case .array:
-                guard let array = obj as? [Any] else {
-                    throw EncodingError.invalidValue(obj, EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "\(obj) is not expected type. Expecting an Array."))
-                }
-                
+                let array = obj as? [Any] ?? [obj]
                 if let separator = self.sequenceSeparator {
                     let strings = try array.map { (object) -> String in
                         guard let string = try _encodableString(object, encoder: encoder) else {
@@ -251,6 +316,24 @@ extension RSDAnswerResultType {
         else if baseType == .data, let data = value as? Data {
             var container = encoder.singleValueContainer()
             try container.encode(data)
+        }
+        else if let obj = value as? RSDFraction {
+            var container = encoder.singleValueContainer()
+            switch baseType {
+            case .decimal:
+                try container.encode(obj.doubleValue)
+            case .string:
+                let formatter = RSDFractionFormatter()
+                guard let number = obj.jsonNumber() else {
+                    let context = EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "\(value) cannot be converted from a fraction to \(baseType).")
+                    throw EncodingError.invalidValue(value, context)
+                }
+                let string = formatter.string(from: number)
+                try container.encode(string)
+            default:
+                let context = EncodingError.Context(codingPath: encoder.codingPath, debugDescription: "\(value) cannot be converted from a fraction to \(baseType).")
+                throw EncodingError.invalidValue(value, context)
+            }
         }
         else if let obj = value as? NSNumber {
             var container = encoder.singleValueContainer()
@@ -325,5 +408,57 @@ extension RSDAnswerResultType {
         } else {
             return RSDFactory.shared.encodeString(from: date, codingPath: encoder.codingPath)
         }
+    }
+}
+
+/// A wrapper that can be used to encode/decode a single answer value using the answer result type.
+fileprivate struct AnswerResultTypeCodingWrapper : Codable {
+    private enum CodingKeys : String, CodingKey {
+        case object, answerType
+    }
+    
+    let answerType: RSDAnswerResultType
+    let object: Any?
+    
+    init(answerType: RSDAnswerResultType, object: Any) {
+        self.answerType = answerType
+        self.object = object
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let answerType = try container.decode(RSDAnswerResultType.self, forKey: .answerType)
+        let nestedDecoder = try container.superDecoder(forKey: .object)
+        self.object = try answerType.decodeValue(from: nestedDecoder)
+        self.answerType = answerType
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        let nestedEncoder = container.superEncoder(forKey: .object)
+        try answerType.encode(object, to: nestedEncoder)
+    }
+    
+    func jsonValue() throws -> RSDJSONSerializable {
+        let jsonEncoder = RSDFactory.shared.createJSONEncoder()
+        let data = try jsonEncoder.encode(self)
+        let json = try JSONSerialization.jsonObject(with: data, options: [])
+        guard let dictionary = json as? [String : Any],
+            let value = dictionary[CodingKeys.object.rawValue] as? RSDJSONValue
+            else {
+                let context = EncodingError.Context(codingPath: [], debugDescription: "Could not decode the encoded value.")
+                throw EncodingError.invalidValue(object ?? NSNull(), context)
+        }
+        return value.jsonObject()
+    }
+    
+    static func value(from jsonValue: RSDJSONSerializable, for answerType: RSDAnswerResultType) throws -> Any? {
+        let jsonDecoder = JSONDecoder()
+        let encodedAnswerType = try answerType.rsd_jsonEncodedDictionary()
+        let dictionary: [String : Any] = [CodingKeys.object.stringValue : jsonValue,
+                                          CodingKeys.answerType.stringValue : encodedAnswerType]
+        let data = try JSONSerialization.data(withJSONObject: dictionary, options: [])
+        let wrapper = try jsonDecoder.decode(AnswerResultTypeCodingWrapper.self, from: data)
+        return wrapper.object
     }
 }

@@ -125,7 +125,33 @@ open class RSDFontRules  {
     ///     - weight: The font weight.
     /// - returns: The font to use for this size and weight.
     open func font(ofSize fontSize: CGFloat, weight: RSDFont.Weight = .regular) -> RSDFont {
-        return RSDFont.systemFont(ofSize: fontSize, weight: weight)
+        if self.version <= 1 {
+            return RSDFont.systemFont(ofSize: fontSize, weight: weight)
+        }
+        else {
+            return RSDFont.latoFont(ofSize: fontSize, weight: weight)
+        }
+    }
+    
+    /// Returns an italic font in the given size and weight in the font family specified for this design.
+    /// Typically, you will want to use `font(for textType: RSDDesignSystem.TextType)` instead for
+    /// copy and dynamic text. This method should only be used where the design calls for a
+    /// specific size to match the graphic design of the view.
+    ///
+    /// - note: All other methods on this class will call through to this method, so for custom
+    ///         fonts, you can override this method only if the only change is a custom font.
+    ///
+    /// - parameters:
+    ///     - fontSize: The font size.
+    ///     - weight: The font weight.
+    /// - returns: The font to use for this size and weight.
+    open func italicFont(ofSize fontSize: CGFloat, weight: RSDFont.Weight = .regular) -> RSDFont {
+        if version <= 1 {
+            return self.font(ofSize: fontSize, weight: weight).rsd_italic()
+        }
+        else {
+            return RSDFont.italicLatoFont(ofSize: fontSize, weight: weight)
+        }
     }
     
     /// Returns the base font for a given text type. This is the font size defined in the Sage
@@ -166,7 +192,7 @@ open class RSDFontRules  {
         case .bodyDetail:
             return font(ofSize: 16)
         case .italicDetail:
-            return font(ofSize: 16).rsd_italic()
+            return italicFont(ofSize: 16)
         case .small, .hint:
             return font(ofSize: 16)
         case .microDetail:

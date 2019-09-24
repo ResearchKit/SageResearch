@@ -42,7 +42,7 @@ import UIKit
 /// with `nil` values for the properties of that protocol. This allows for coding an image on an
 /// `RSDThemedUIStep` using just the image name as oppose to the more complex schema that supports
 /// additional information about the presentation of the image.
-extension RSDImageWrapper : RSDFetchableImageThemeElement {
+extension RSDImageWrapper : RSDFetchableImageThemeElement, RSDAssetImageThemeElement {
 
     /// The unique identifier for the image.
     public var imageIdentifier: String {
@@ -63,7 +63,7 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     }
 
     /// The name of the image.
-    public let imageName: String
+    public let imageName: RSDFileWrapper
     
     /// The bundle identifier for the image resource bundle.
     public let bundleIdentifier: String?
@@ -82,8 +82,8 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     
     /// The unique identifier for the image
     public var imageIdentifier: String {
-        guard let bundleIdentifier = bundleIdentifier else { return imageName }
-        return "\(bundleIdentifier).\(imageName)"
+        guard let bundleIdentifier = bundleIdentifier else { return imageName.rawValue }
+        return "\(bundleIdentifier).\(imageName.rawValue)"
     }
 
     /// Default initializer.
@@ -94,7 +94,7 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     ///     - placementType: The preferred placement of the image. Default = `nil`.
     ///     - size: The image size. Default = `nil`.
     public init(imageName: String, bundleIdentifier: String? = nil, placementType: RSDImagePlacementType? = nil, size: CGSize? = nil) {
-        self.imageName = imageName
+        self.imageName = RSDFileWrapper(rawValue: imageName)
         self.bundleIdentifier = bundleIdentifier
         self._size = RSDSizeWrapper(size)
         self.placementType = placementType
@@ -106,13 +106,7 @@ public struct RSDFetchableImageThemeElementObject : RSDFetchableImageThemeElemen
     ///     - size:        The size of the image to return.
     ///     - callback:    The callback with the image, run on the main thread.
     public func fetchImage(for size: CGSize, callback: @escaping ((String?, RSDImage?) -> Void)) {
-        #if os(watchOS)
-            let fetchedImage = RSDImage(named: imageName)
-        #elseif os(macOS)
-            let fetchedImage = RSDImage(named: imageName)
-        #else
-            let fetchedImage = RSDImage(named: imageName, in: bundle, compatibleWith: nil)
-        #endif
+        let fetchedImage = imageName.fetchImages(from: self.bundle, ofSize: size).first
         DispatchQueue.main.async {
             callback(self.imageIdentifier, fetchedImage)
         }
@@ -127,7 +121,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     }
     
     /// The list of image names for the images to include in this animation.
-    public let imageNames: [String]
+    public let imageNames: [RSDFileWrapper]
     
     /// The animation duration for the image animation.
     public let animationDuration: TimeInterval
@@ -149,8 +143,8 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     
     /// The unique identifier for the image
     public var imageIdentifier: String {
-        guard let bundleIdentifier = bundleIdentifier else { return imageNames.first! }
-        return "\(bundleIdentifier).\(imageNames.first!)"
+        guard let bundleIdentifier = bundleIdentifier else { return imageNames.first!.rawValue }
+        return "\(bundleIdentifier).\(imageNames.first!.rawValue)"
     }
     
     /// The default bundle from the factory used to decode this object.
@@ -165,7 +159,7 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
     ///     - placementType: The preferred placement of the image. Default = `nil`.
     ///     - size: The image size. Default = `nil`.
     public init(imageNames: [String], animationDuration: TimeInterval, bundleIdentifier: String? = nil, placementType: RSDImagePlacementType? = nil, size: CGSize? = nil, animationRepeatCount: Int = 0) {
-        self.imageNames = imageNames
+        self.imageNames = imageNames.map { RSDFileWrapper(rawValue: $0) }
         self.bundleIdentifier = bundleIdentifier
         self.animationDuration = animationDuration
         self._size = RSDSizeWrapper(size)
@@ -173,43 +167,26 @@ public struct RSDAnimatedImageThemeElementObject : RSDAnimatedImageThemeElement,
         self.animationRepeatCount = animationRepeatCount
     }
     
-
-    #if os(watchOS)
-    /// **Available** for watchOS and macOS.
-    ///
-    /// The animated images to display.
-    /// - returns: The images for this step.
-    public func images() -> [RSDImage] {
-        return imageNames.compactMap {
-            RSDImage(named: $0)
-        }
-    }
-    
-    #elseif os(macOS)
-    
-    /// **Available** for macOS.
-    ///
-    /// The animated images to display.
-    /// - returns: The images for this step.
-    public func images() -> [RSDImage] {
-        return imageNames.compactMap {
-            RSDImage(named: $0)
-        }
-    }
-    
-    #else
+    #if os(iOS) || os(tvOS)
     
     /// **Available** for iOS and tvOS.
     ///
     /// The animated images to display.
     /// - parameter traitCollection: The trait collection.
     /// - returns: The images for this step.
-    public func images(compatibleWith traitCollection: UITraitCollection? = nil) -> [RSDImage] {
-        return imageNames.compactMap {
-            RSDImage(named: $0, in: bundle, compatibleWith: traitCollection)
-        }
+    public func images(compatibleWith traitCollection: UITraitCollection?) -> [RSDImage] {
+        // TODO: syoung 08/01/2019 Look into using the trait collection to return bigger/smaller image.
+        return images()
     }
     #endif
+    
+    /// The animated images to display.
+    /// - returns: The images for this step.
+    public func images() -> [RSDImage] {
+        return imageNames.map ({
+            $0.fetchImages(from: self.bundle, ofSize: self.size)
+        }).flatMap { $0 }
+    }
     
     /// A method for fetching the image.
     ///
