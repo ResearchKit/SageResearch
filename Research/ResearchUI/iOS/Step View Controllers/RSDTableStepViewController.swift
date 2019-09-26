@@ -957,12 +957,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             }
         }()
         
-        // If this is a custom text field then update the text to match the
-        // actual value stored in case it differs from the text entered.
         let success = saveAnswer(newValue: answer ?? NSNull(), at: indexPath)
-        if !success, let tableItem = tableItem(for: textInputView) {
-            textInputView.currentText = tableItem.answerText
-        }
         return success
     }
     
