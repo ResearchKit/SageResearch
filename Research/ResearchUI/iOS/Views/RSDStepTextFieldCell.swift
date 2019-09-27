@@ -373,7 +373,7 @@ open class RSDStepTextField: UITextField, RSDStepTextInputView {
             return self.text
         }
         set {
-            self.text = currentText
+            self.text = newValue
         }
     }
     public var indexPath: IndexPath?
@@ -386,7 +386,7 @@ open class RSDStepTextView: UITextView, RSDStepTextInputView {
             return self.text
         }
         set {
-            self.text = currentText
+            self.text = newValue
         }
     }
     public var indexPath: IndexPath?
