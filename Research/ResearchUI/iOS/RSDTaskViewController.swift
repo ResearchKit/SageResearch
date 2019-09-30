@@ -138,12 +138,14 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
     ///     - nibBundleOrNil: The name of the bundle or `nil`.
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.modalPresentationStyle = .fullScreen
     }
     
     /// Initializer for initializing from a storyboard or restoring from shutdown by the OS.
     /// - parameter aDecoder: The decoder used to create the view controller.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.modalPresentationStyle = .fullScreen
     }
     
     /// Initializer for initializing a view controller that is not associated with a storyboard or nib.
@@ -152,6 +154,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         super.init(nibName: nil, bundle: nil)
         self.task = task
         self.taskViewModel.taskController = self
+        self.modalPresentationStyle = .fullScreen
     }
     
     /// Initializer for initializing a view controller that is not associated with a storyboard or nib.
@@ -160,6 +163,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         super.init(nibName: nil, bundle: nil)
         self.taskInfo = taskInfo
         self.taskViewModel.taskController = self
+        self.modalPresentationStyle = .fullScreen
     }
     
     /// Initializer for initializing a view controller that is not associated with a storyboard or nib.
@@ -168,6 +172,7 @@ open class RSDTaskViewController: UIViewController, RSDTaskController, UIPageVie
         super.init(nibName: nil, bundle: nil)
         self.taskViewModel = taskViewModel
         self.taskViewModel.taskController = self
+        self.modalPresentationStyle = .fullScreen
     }
     
     // MARK: View controller vending
