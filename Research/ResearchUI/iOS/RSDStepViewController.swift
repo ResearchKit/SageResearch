@@ -107,6 +107,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     public init(step: RSDStep, parent: RSDPathComponent?) {
         super.init(nibName: nil, bundle: nil)
         self.stepViewModel = self.instantiateStepViewModel(for: step, with: parent)
+        self.modalPresentationStyle = .fullScreen
     }
     
     /// Initialize the class using the given nib and bundle.
@@ -115,12 +116,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     ///     - nibBundleOrNil: The name of the bundle or `nil`.
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.modalPresentationStyle = .fullScreen
     }
     
     /// Required initializer. This is the initializer used by a `UIStoryboard`.
     /// - parameter aDecoder: The decoder used to initialize this view controller.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.modalPresentationStyle = .fullScreen
     }
     
     // MARK: View appearance handling
