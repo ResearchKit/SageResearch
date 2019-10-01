@@ -1056,6 +1056,13 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     open func pause() {
         clock?.pause()
         _stopTimer()
+        // If this is an active task that requests a spoken warning when the pause
+        // button is tapped, then do so.
+        if let commands = self.activeStep?.commands,
+            commands.contains(.speakWarningOnPause) {
+            let instruction = Localization.localizedString("STEP_PAUSED")
+            RSDSpeechSynthesizer.shared.speak(text: instruction, completion: nil)
+        }
     }
     
     /// Resume the timer.

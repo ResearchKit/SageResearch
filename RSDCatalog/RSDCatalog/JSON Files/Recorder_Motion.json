@@ -33,7 +33,8 @@
                                                },
                                                {
                                                "identifier"     : "countdown",
-                                               "type"           : "countdown"
+                                               "type"           : "countdown",
+                                               "commands"       : ["speakWarningOnPause"]
                                                },
                                                {
                                                "identifier"         : "motion",
