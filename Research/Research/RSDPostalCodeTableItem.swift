@@ -35,15 +35,9 @@ import Foundation
 
 open class RSDPostalCodeTableItem : RSDTextInputTableItem {
     
-    /// The number of characters after which to replace the rest with "*" characters.
-    public let characterCount = 3
-    
-    /// A list of known sparsely populated postal codes.
-    ///
-    /// Currently, the list of postal codes includes the codes from the US 2010 census and is *only*
-    /// checked for US zipcodes.
-    public let sparselyPopulatedCodes: [String : [String]] =
-        ["US" : [036,059,102,203,205,369,556,692,821,823,878,879,884,893].map { "\($0)"}]
+    // TODO: syoung 10/07/2019 Replace this with a more clever form that asks for the user to
+    // enter their country using the supported country codes or "Other" from the list and then
+    // show/hide the postal code based on the answer to the region question.
     
     /// The country code for the participant. By default, this will return the region code for the
     /// participant's locale or "US" if the region code is unknown.
@@ -52,6 +46,20 @@ open class RSDPostalCodeTableItem : RSDTextInputTableItem {
         set { _countryCode = newValue }
     }
     private var _countryCode: String? = Locale.current.regionCode
+    
+    /// Postal range
+    public var postalCodeRange: RSDPostalCodeRange! {
+        get {
+            if _postalCodeRange == nil {
+                _postalCodeRange = InternalPostalCodeRange()
+            }
+            return _postalCodeRange!
+        }
+        set {
+            _postalCodeRange = newValue
+        }
+    }
+    private var _postalCodeRange: RSDPostalCodeRange?
     
     public init(rowIndex: Int, inputField: RSDInputField) {
         
@@ -65,6 +73,9 @@ open class RSDPostalCodeTableItem : RSDTextInputTableItem {
                                       autocorrectionType: .no)
 
         super.init(rowIndex: rowIndex, inputField: inputField, uiHint: .textfield, answerType: .string, textFieldOptions: textFieldOptions, formatter: nil, pickerSource: nil, placeholder: nil)
+        
+        // Set the postal code range
+        self.postalCodeRange = inputField.range as? RSDPostalCodeRange ?? InternalPostalCodeRange()
     }
 
     /// Override to replace the characters after the first 3 with "*".
@@ -74,13 +85,18 @@ open class RSDPostalCodeTableItem : RSDTextInputTableItem {
     }
     
     func deidentifyCode(_ code: String) -> String {
+        let range = self.postalCodeRange!
+        // If the postal code is not a supported region then do not include the postal code.
+        guard range.supportedRegions.contains(self.countryCode) else { return "" }
+        
+        let characterCount = range.savedCharacterCount(for: self.countryCode)
         guard code.count >= characterCount else { return code }
         
         // Determine where to start replacing the characters with "*" characters.
         var start = code.index(code.startIndex, offsetBy: characterCount)
         var repeatCount = code.count - characterCount
         let subcode = String(code[..<start])
-        if let codes = sparselyPopulatedCodes[countryCode], codes.contains(subcode) {
+        if let codes = range.sparselyPopulatedCodes(for: self.countryCode), codes.contains(subcode) {
             start = code.startIndex
             repeatCount = code.count
         }
@@ -91,5 +107,47 @@ open class RSDPostalCodeTableItem : RSDTextInputTableItem {
         value.replaceSubrange(start..., with: replacement)
         
         return value
+    }
+}
+
+/// Default postal code range.
+struct InternalPostalCodeRange : RSDPostalCodeRange {
+    
+    private enum SupportedRegions: String, Codable, CaseIterable {
+        case US, CA
+    }
+    
+    var supportedRegions: [String] {
+        return SupportedRegions.allCases.map { $0.rawValue }
+    }
+    
+    func sparselyPopulatedCodes(for region: String) -> [String]? {
+        guard let region = SupportedRegions(rawValue: region.uppercased()) else { return nil }
+        switch region {
+        case .US:
+            return ["036","059","102","203","205","369","556","692","821","823","878","879","884","893"]
+        default:
+            return nil
+        }
+    }
+    
+    func savedCharacterCount(for region: String) -> Int {
+        guard let region = SupportedRegions(rawValue: region.uppercased()) else { return 1 }
+        switch region {
+        case .US:
+            return 3
+        case .CA:
+            return 1
+        }
+    }
+    
+    func maxCharacterCount(for region: String) -> Int? {
+        guard let region = SupportedRegions(rawValue: region.uppercased()) else { return nil }
+        switch region {
+        case .US:
+            return 5
+        case .CA:
+            return 6
+        }
     }
 }

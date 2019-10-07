@@ -136,3 +136,25 @@ public protocol RSDDurationRange : RSDRange {
     /// `.duration` data type.
     var durationUnits: Set<UnitDuration> { get }
 }
+
+public protocol RSDPostalCodeRange : RSDRange {
+    
+    /// A list of the supported regions for this question. This should include all the regions that
+    /// are supported by this survey question. The question is expected to be phrased in a way that
+    /// is generic to the regions that are supported. For example, use "postal code" rather than
+    /// zipcode if including a region outside of "US".
+    var supportedRegions: [String] { get }
+    
+    /// A list of known sparsely populated postal codes for a given region. If nil, it is assumed
+    /// that there are no sparsely populated postal codes for the given country.
+    func sparselyPopulatedCodes(for region: String) -> [String]?
+    
+    /// The number of characters to include in the answer. All characters beyond this are expected
+    /// to be blanked out. The exception to this is the sparselyPopulatedCodes, where the entire
+    /// string is *not* saved.
+    func savedCharacterCount(for region: String) -> Int
+    
+    /// A maximum character count allowed for a given region. For example, a zipcode is 5 characters
+    /// long whereas a Canadian postal code is 6 characters. If nil, no maximum is assumed.
+    func maxCharacterCount(for region: String) -> Int?
+}
