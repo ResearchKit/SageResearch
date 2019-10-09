@@ -52,7 +52,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
             return super.isOptional || self.choices.count <= 1
         }
         set {
-            super.isOptional = isOptional
+            super.isOptional = newValue
         }
     }
     
@@ -129,7 +129,7 @@ public final class RSDCodableChoiceInputFieldObject<T : Codable> : RSDInputField
             return super.isOptional || self.choices.count <= 1
         }
         set {
-            super.isOptional = isOptional
+            super.isOptional = newValue
         }
     }
     
