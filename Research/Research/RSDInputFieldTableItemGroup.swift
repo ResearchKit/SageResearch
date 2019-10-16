@@ -107,7 +107,15 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     
     /// Set the answer from a previous run to the given value.
     open func setPreviousAnswer(from jsonValue: Any?) throws {
-        try setAnswer(jsonValue)
+        // Only validation at this level is on a single-input field. Otherwise, just set the
+        // answer and return.
+        guard self.items.count == 1, let textItem = self.items.first as? RSDTextInputTableItem
+            else {
+                _answer = jsonValue
+                return
+        }
+        
+        try textItem.setPreviousAnswer(jsonValue)
     }
     
     /// Set the default answer for the item group. The base class implementation does nothing.
