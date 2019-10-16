@@ -1058,16 +1058,17 @@
 		FF8B54ED1FCE6D15006B6937 /* RSDExceptionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF8B54EE1FCE6D15006B6937 /* RSDExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */; };
 		FF9557CC23060F4B00B8D60B /* RSDAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */; };
+		FFA0717F2356B66400EA371F /* DateTableItemGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */; };
 		FFABCB9422D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9522D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9622D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFABCB9722D9275600D11109 /* RSDCountdownUIStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */; };
 		FFEF95631FCE8D06008C30A6 /* RSDTextFieldOptionsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0DE4B1F86E39F00BB1BDF /* RSDTextFieldOptionsObject.swift */; };
-		FFF20D002329A59700F501C3 /* AnswerResultTypeJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */; };
 		FFF20CF3232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
 		FFF20CF4232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
 		FFF20CF5232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
 		FFF20CF6232885CA00F501C3 /* RSDPostalCodeTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */; };
+		FFF20D002329A59700F501C3 /* AnswerResultTypeJSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */; };
 		FFFBD75622CBE9BE004613FC /* RSDActiveStepViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */; };
 		FFFD041222CA93720059E63C /* RSDRoundedToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD041122CA93720059E63C /* RSDRoundedToggleButton.swift */; };
 /* End PBXBuildFile section */
@@ -1451,6 +1452,7 @@
 		FF8E5F461F8C3DA000611C23 /* RSDAsyncAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAsyncAction.swift; sourceTree = "<group>"; };
 		FF9557CB23060F4B00B8D60B /* RSDAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDAppDelegate.swift; sourceTree = "<group>"; };
 		FF9D7F661FA8E0FE008506DB /* RSDViewThemeElementObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDViewThemeElementObject.swift; sourceTree = "<group>"; };
+		FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableItemGroupTests.swift; sourceTree = "<group>"; };
 		FFA973321FBE454F00AA7317 /* TaskControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskControllerTests.swift; sourceTree = "<group>"; };
 		FFABCB9322D9275600D11109 /* RSDCountdownUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDCountdownUIStepObject.swift; sourceTree = "<group>"; };
 		FFB015C91F8BE62E00AC209B /* RSDRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDRange.swift; sourceTree = "<group>"; };
@@ -1486,8 +1488,8 @@
 		FFE0DE4E1F874A8600BB1BDF /* RSDFormUIStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDFormUIStepObject.swift; sourceTree = "<group>"; };
 		FFF159DE1FB4D7A60061BA93 /* RSDExceptionHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSDExceptionHandler.h; sourceTree = "<group>"; };
 		FFF159DF1FB4D7A60061BA93 /* RSDExceptionHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSDExceptionHandler.m; sourceTree = "<group>"; };
-		FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerResultTypeJSONTests.swift; sourceTree = "<group>"; };
 		FFF20CF2232885CA00F501C3 /* RSDPostalCodeTableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDPostalCodeTableItem.swift; sourceTree = "<group>"; };
+		FFF20CFF2329A59700F501C3 /* AnswerResultTypeJSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerResultTypeJSONTests.swift; sourceTree = "<group>"; };
 		FFF53EAA1FBF9495004211D2 /* RSDStringLiteralOptionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSDStringLiteralOptionSet.swift; sourceTree = "<group>"; };
 		FFF53EAC1FBF9562004211D2 /* RSDResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSDResultType.swift; sourceTree = "<group>"; };
 		FFFBD75522CBE9BE004613FC /* RSDActiveStepViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RSDActiveStepViewController.xib; sourceTree = "<group>"; };
@@ -1715,6 +1717,7 @@
 				F829F0DE1FF887C3001B0680 /* UnitConversionTests.swift */,
 				F829F0E91FFB4620001B0680 /* PickerDataSourceTests.swift */,
 				F818EAC5201948D0001C9FE4 /* TableItemTests.swift */,
+				FFA0717E2356B66400EA371F /* DateTableItemGroupTests.swift */,
 			);
 			path = "DataSource Tests";
 			sourceTree = "<group>";
@@ -3765,6 +3768,7 @@
 				FFF20D002329A59700F501C3 /* AnswerResultTypeJSONTests.swift in Sources */,
 				F858D14B201BA67B00132325 /* MeasurementDurationTests.swift in Sources */,
 				F837223D22322F6F00C9A2EA /* FrequencyTests.swift in Sources */,
+				FFA0717F2356B66400EA371F /* DateTableItemGroupTests.swift in Sources */,
 				FF633D751FCE7A6900CF2267 /* CodableResultObjectTests.swift in Sources */,
 				FF633D731FCE7A6900CF2267 /* CodableTestObjects.swift in Sources */,
 				F853828E214C447100C3B774 /* StepViewModelTests.swift in Sources */,

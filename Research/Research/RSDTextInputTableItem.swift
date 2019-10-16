@@ -115,6 +115,18 @@ open class RSDTextInputTableItem : RSDInputFieldTableItem {
         _answer = try validatedAnswer(newValue)
     }
     
+    final func setPreviousAnswer(_ jsonValue: Any?) throws {
+        // If setting a previous answer, then look to see if the answer can be converted from
+        // json *before* validating to see if the answer is still a valid response.
+        if let newValue = jsonValue as? RSDJSONSerializable {
+            let answer = try answerType.jsonDecode(from: newValue)
+            _answer = try validatedAnswer(answer)
+        }
+        else {
+            _answer = try validatedAnswer(jsonValue)
+        }
+    }
+    
     /// Convert the input answer into a validated answer of a supported type, or throw an error if it fails validation.
     /// - parameter newValue: The new value for the answer.
     /// - returns: The converted answer.
