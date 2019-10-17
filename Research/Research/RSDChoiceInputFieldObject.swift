@@ -37,7 +37,7 @@ import Foundation
 /// `RSDInputFieldObject` to include a list of choices for a multiple choice or single choice input field. It
 /// is intended to be instantiated with a list of choices but can be subclassed to decode the choices using
 /// a custom decoder.
-open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
+open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptionsWithDefault {
     
     /// A list of choices for the input field.
     public private(set) var choices : [RSDChoice]
@@ -67,7 +67,7 @@ open class RSDChoiceInputFieldObject : RSDInputFieldObject, RSDChoiceOptions {
     ///               this field.
     public init(identifier: String, choices: [RSDChoice], dataType: RSDFormDataType, uiHint: RSDFormUIHint? = nil, prompt: String? = nil, defaultAnswer: Any? = nil) {
         self.choices = choices
-        self.defaultAnswer = nil
+        self.defaultAnswer = defaultAnswer
         super.init(identifier: identifier, dataType: dataType, uiHint: uiHint, prompt: prompt)
     }
     

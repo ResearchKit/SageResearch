@@ -105,6 +105,32 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         }
     }
     
+    open override func setDefaultAnswerIfValid() -> Bool {
+        guard let selectableItems = self.items as? [RSDChoiceTableItem] else {
+            return super.setDefaultAnswerIfValid()
+        }
+        
+        // Do not select an answer if one is already set or there is no default.
+        guard !selectableItems.reduce(false, { $0 || $1.selected }),
+            let inputField = self.inputField as? RSDChoiceOptionsWithDefault,
+            let defaultAnswer = inputField.defaultAnswer
+            else {
+                return false
+        }
+        
+        do {
+            let result = RSDAnswerResultObject(identifier: self.identifier,
+                                                     answerType: self.answerType,
+                                                     value: defaultAnswer)
+            try self.setAnswer(from: result)
+            return true
+        }
+        catch let err {
+            assertionFailure("Failed to set the answer to the default. \(err)")
+            return false
+        }
+    }
+    
     /// Since the answer can be both `nil` *and* selected, override to check for selection state.
     open override var isAnswerValid: Bool {
         guard let selectableItems = self.items as? [RSDChoiceTableItem] else {
