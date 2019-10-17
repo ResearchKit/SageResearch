@@ -107,6 +107,34 @@
     return [self stringFromTimeInterval:ti];
 }
 
+- (NSString *)stringFromTimeInterval:(NSTimeInterval)ti {
+    NSString * stringValue = [super stringFromTimeInterval:ti];
+    
+    // syoung 10/17/2019 There appears to be a change with iOS 13 that this formatter
+    // no longer conforms to the documentation for US English to read "1:30" versus "01:30".
+    // In considering the "proper" behavior for this formatter, the formatting should respect
+    // the zero padding everywhere if the `zeroFormattingBehavior` including padding.
+    // However, older versions of the OS do *not* format with the 0 padding so check for this
+    // and correct it so that our unit tests will work regardless of the target iOS version.
+    BOOL isZeroPadded = ((self.zeroFormattingBehavior & NSDateComponentsFormatterZeroFormattingBehaviorPad) != 0);
+    if (!isZeroPadded) {
+        // Exit early if not positional style or zero padding.
+        return stringValue;
+    }
+    
+    // Check if the string needs to be zero padded.
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[1-3]:" options:0 error:nil];
+    NSUInteger matches = [regex numberOfMatchesInString:stringValue
+                                                options:(NSMatchingOptions)0
+                                                  range:NSMakeRange(0, [stringValue length])];
+    if (matches > 0) {
+        return [NSString stringWithFormat:@"0%@", stringValue];
+    }
+    else {
+        return stringValue;
+    }
+}
+
 - (BOOL)getObjectValue:(out id  _Nullable __autoreleasing *)obj forString:(NSString *)string errorDescription:(out NSString *__autoreleasing  _Nullable *)error {
     
     // A zero-length string cannot be converted.

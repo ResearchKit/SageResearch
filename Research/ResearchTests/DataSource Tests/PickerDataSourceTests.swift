@@ -217,7 +217,7 @@ class PickerDataSourceTests: XCTestCase {
         let expectedRows = [1, 30]
         let expectedMinutes = 1
         let expectedSeconds = 30
-        let expectedText = "1:30"
+        let expectedText = "01:30"
         
         if let rows = picker.selectedRows(from: inputAnswer) {
             XCTAssertEqual(rows, expectedRows)
@@ -268,7 +268,7 @@ class PickerDataSourceTests: XCTestCase {
         let expectedRows = [1, 30]
         let expectedHours = 1
         let expectedMinutes = 30
-        let expectedText = "1:30"
+        let expectedText = "01:30"
         
         if let rows = picker.selectedRows(from: inputAnswer) {
             XCTAssertEqual(rows, expectedRows)
