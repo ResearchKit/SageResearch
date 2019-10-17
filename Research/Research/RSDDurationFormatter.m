@@ -113,7 +113,7 @@
     // syoung 10/17/2019 There appears to be a change with iOS 13 that this formatter
     // no longer conforms to the documentation for US English to read "1:30" versus "01:30".
     // In considering the "proper" behavior for this formatter, the formatting should respect
-    // the zero padding everywhere if the `zeroFormattingBehavior` including padding.
+    // the zero padding everywhere if the `zeroFormattingBehavior` includes padding.
     // However, older versions of the OS do *not* format with the 0 padding so check for this
     // and correct it so that our unit tests will work regardless of the target iOS version.
     BOOL isZeroPadded = ((self.zeroFormattingBehavior & NSDateComponentsFormatterZeroFormattingBehaviorPad) != 0);
