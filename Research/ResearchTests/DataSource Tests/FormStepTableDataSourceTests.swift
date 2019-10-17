@@ -211,6 +211,123 @@ class FormStepTableDataSourceTests: XCTestCase {
         XCTAssertNil(dataSource.nextItem(after: IndexPath(row: 3, section: 1)))
     }
     
+    func testSelection_SingleChoiceWithNil() {
+        let choices = [try! RSDChoiceObject<Int>(value: 0, text: "one"),
+                       try! RSDChoiceObject<Int>(value: 1, text: "two"),
+                       try! RSDChoiceObject<Int>(value: 2, text: "three"),
+                       try! RSDChoiceObject<Int>(value: nil, text: "none")]
+        let inputField = RSDChoiceInputFieldObject(identifier: "foo", choices: choices, dataType: .collection(.singleChoice, .integer))
+        inputField.isOptional = false
+        let formStep = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField])
+        let dataSource = RSDFormStepDataSourceObject(step: formStep, parent: nil)
+        
+        XCTAssertEqual(dataSource.itemGroups.count, 1)
+        guard let itemGroup = dataSource.itemGroups.first as? RSDChoicePickerTableItemGroup,
+            let tableItem = itemGroup.items.last
+            else {
+                XCTFail("Failed to create expected type. \(dataSource.itemGroups)")
+                return
+        }
+        
+        // Before selecting an answer because the input field is *not* optional, the answer is
+        // not valid.
+        XCTAssertFalse(dataSource.allAnswersValid())
+                
+        do {
+            let _ = try dataSource.selectAnswer(item: tableItem, at: IndexPath(row: 3, section: 0))
+        } catch let err {
+            XCTFail("Failed to select item group. \(err)")
+        }
+        
+        // After an answer has been selected, then the result is valid. This should be true even
+        // if the answer result value is nil.
+        XCTAssertTrue(dataSource.allAnswersValid())
+        
+        guard let aResult = dataSource.collectionResult().inputResults.first as? RSDAnswerResult
+            else {
+                XCTFail("Failed to add answer result")
+                return
+        }
+        
+        // But the answer result should use a nil value.
+        XCTAssertNil(aResult.value)
+    }
+    
+    func testSelection_SingleChoiceWithValueSelected() {
+        let choices = [try! RSDChoiceObject<Int>(value: 0, text: "one"),
+                       try! RSDChoiceObject<Int>(value: 1, text: "two"),
+                       try! RSDChoiceObject<Int>(value: 2, text: "three"),
+                       try! RSDChoiceObject<Int>(value: nil, text: "none")]
+        let inputField = RSDChoiceInputFieldObject(identifier: "foo", choices: choices, dataType: .collection(.singleChoice, .integer))
+        inputField.isOptional = false
+        let formStep = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField])
+        let dataSource = RSDFormStepDataSourceObject(step: formStep, parent: nil)
+        
+        XCTAssertEqual(dataSource.itemGroups.count, 1)
+        guard let itemGroup = dataSource.itemGroups.first as? RSDChoicePickerTableItemGroup,
+            let tableItem = itemGroup.items.first
+            else {
+                XCTFail("Failed to create expected type. \(dataSource.itemGroups)")
+                return
+        }
+        
+        // Before selecting an answer because the input field is *not* optional, the answer is
+        // not valid.
+        XCTAssertFalse(dataSource.allAnswersValid())
+                
+        do {
+            let _ = try dataSource.selectAnswer(item: tableItem, at: IndexPath(row: 0, section: 0))
+        } catch let err {
+            XCTFail("Failed to select item group. \(err)")
+        }
+        
+        // After an answer has been selected, then the result is valid. This should be true even
+        // if the answer result value is nil.
+        XCTAssertTrue(dataSource.allAnswersValid())
+        
+        guard let aResult = dataSource.collectionResult().inputResults.first as? RSDAnswerResult
+            else {
+                XCTFail("Failed to add answer result")
+                return
+        }
+        
+        // But the answer result should use a nil value.
+        XCTAssertEqual(aResult.value as? Int, 0)
+    }
+    
+    func testBuildSections_SingleChoiceWithNil_DefaultValue() {
+        let choices = [try! RSDChoiceObject<Int>(value: 0, text: "one"),
+                       try! RSDChoiceObject<Int>(value: 1, text: "two"),
+                       try! RSDChoiceObject<Int>(value: 2, text: "three"),
+                       try! RSDChoiceObject<Int>(value: nil, text: "none")]
+        let inputField = RSDChoiceInputFieldObject(identifier: "foo", choices: choices, dataType: .collection(.singleChoice, .integer),uiHint: nil, prompt: nil, defaultAnswer: 0)
+        inputField.isOptional = false
+        let formStep = RSDFormUIStepObject(identifier: "foo", inputFields: [inputField])
+        let dataSource = RSDFormStepDataSourceObject(step: formStep, parent: nil)
+        
+        XCTAssertEqual(dataSource.itemGroups.count, 1)
+        guard let itemGroup = dataSource.itemGroups.first as? RSDChoicePickerTableItemGroup,
+            let tableItem = itemGroup.items.first as? RSDChoiceTableItem
+            else {
+                XCTFail("Failed to create expected type. \(dataSource.itemGroups)")
+                return
+        }
+        
+        // Before selecting an answer because there is a default answer that has been set,
+        // it should be valid.
+        XCTAssertTrue(dataSource.allAnswersValid())
+        XCTAssertTrue(tableItem.selected)
+        
+        guard let aResult = dataSource.collectionResult().inputResults.first as? RSDAnswerResult
+            else {
+                XCTFail("Failed to add answer result")
+                return
+        }
+        
+        // But the answer result should use a nil value.
+        XCTAssertEqual(aResult.value as? Int, 0)
+    }
+    
     // Helper methods
     
     func createDataSource(for json: Data, with initialResult: RSDCollectionResult? = nil) -> RSDFormStepDataSourceObject? {

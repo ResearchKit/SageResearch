@@ -206,6 +206,13 @@ public protocol RSDChoiceOptions : RSDChoicePickerDataSource {
     var isOptional: Bool { get }
 }
 
+/// Extend the choice options protocol to allow setting a default value.
+public protocol RSDChoiceOptionsWithDefault : RSDChoiceOptions {
+    
+    /// The default answer (if any) to set for this choice options set.
+    var defaultAnswer: Any? { get }
+}
+
 extension RSDChoiceOptions {
     
     /// Convenience property for whether or not the choice input field has associated images.
