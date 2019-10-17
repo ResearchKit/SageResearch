@@ -159,10 +159,14 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     /// - returns: A `Bool` indicating if answer is valid.
     open override var isAnswerValid: Bool {
         // if answer is NOT optional and it equals Null, then it's invalid
-        let isOptional = self.items.reduce(self.inputField.isOptional) {
+        return self.isOptional || !((self.answer == nil) || (self.answer is NSNull))
+    }
+    
+    /// Whether or not the question is optional.
+    open var isOptional: Bool {
+        return self.items.reduce(self.inputField.isOptional) {
             $0 && (($1 as? RSDInputFieldTableItem)?.inputField.isOptional ?? true)
         }
-        return isOptional || !((self.answer == nil) || (self.answer is NSNull))
     }
 }
 

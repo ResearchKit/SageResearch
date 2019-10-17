@@ -105,6 +105,14 @@ open class RSDChoicePickerTableItemGroup : RSDInputFieldTableItemGroup {
         }
     }
     
+    /// Since the answer can be both `nil` *and* selected, override to check for selection state.
+    open override var isAnswerValid: Bool {
+        guard let selectableItems = self.items as? [RSDChoiceTableItem] else {
+            return super.isAnswerValid
+        }
+        return self.isOptional || selectableItems.reduce(false, { $0 || $1.selected })
+    }
+    
     /// Select or de-select an item (answer) at a specific indexPath. This is used for text choice and boolean
     /// answers.
     /// - parameters:
