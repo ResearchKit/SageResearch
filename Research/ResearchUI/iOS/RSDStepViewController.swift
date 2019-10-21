@@ -711,8 +711,9 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     }
 	
 	/// Hook to let tasks know that user decided not to cancel.
-	open func keepGoing() {
-		//Defaults to do nothing.  Allows tasks to get called back if user decides to keep going instead of canceling.
+	/// Default action is to do nothing, this method is to allow subclasses to override and have an action.
+	open func didNotCancel() {
+		//Defaults to do nothing.
 	}
 
 	/// Finish canceling the task. This is called once the cancel is confirmed by the user.
@@ -1215,7 +1216,7 @@ public protocol RSDCancelActionController : RSDStepController, RSDAlertPresenter
     func cancelTask(shouldSave: Bool)
 
 	/// This is called when the user decides to keep going with the task instead of canceling it
-	func keepGoing()
+	func didNotCancel()
 }
 
 extension RSDCancelActionController {
@@ -1247,7 +1248,7 @@ extension RSDCancelActionController {
         
         // Always add a choice to keep going.
         let keepGoing = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_CONTINUE"), style: .cancel) { (_) in
-            self.keepGoing()
+            self.didNotCancel()
         }
         actions.append(keepGoing)
         
