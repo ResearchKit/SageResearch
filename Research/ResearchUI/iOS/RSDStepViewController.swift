@@ -709,8 +709,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     open func shouldConfirmCancel() -> Bool {
         return self.stepViewModel.rootPathComponent.shouldConfirmCancel()
     }
-    
-    /// Finish canceling the task. This is called once the cancel is confirmed by the user.
+	
+	/// Hook to let tasks know that user decided not to cancel.
+	/// Default action is to do nothing, this method is to allow subclasses to override and have an action.
+	open func didNotCancel() {
+		//Defaults to do nothing.
+	}
+
+	/// Finish canceling the task. This is called once the cancel is confirmed by the user.
     ///
     /// - parameter shouldSave: Should the task progress be saved?
     open func cancelTask(shouldSave: Bool) {
@@ -1208,6 +1214,9 @@ public protocol RSDCancelActionController : RSDStepController, RSDAlertPresenter
     ///
     /// - parameter shouldSave: Should the task progress be saved?
     func cancelTask(shouldSave: Bool)
+
+	/// This is called when the user decides to keep going with the task instead of canceling it
+	func didNotCancel()
 }
 
 extension RSDCancelActionController {
@@ -1239,7 +1248,7 @@ extension RSDCancelActionController {
         
         // Always add a choice to keep going.
         let keepGoing = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_CONTINUE"), style: .cancel) { (_) in
-            // Do nothing, just hide the alert
+            self.didNotCancel()
         }
         actions.append(keepGoing)
         
