@@ -64,10 +64,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     open var iconTitles: [UILabel]!
     
-    /// The button that when pressed displays the full task info.
-    @IBOutlet
-    open var infoButton: UIButton!
-    
     /// The scroll view that contains the elements which scroll.
     @IBOutlet
     open var scrollView: UIScrollView!
@@ -125,8 +121,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
                 self.learnMoreButton?.isHidden = true
                 self.learnMoreHeightConstraint.constant = 0
             }
-            
-            self.infoButton.addTarget(self, action: #selector(self.showFullTaskInfo), for: .touchUpInside)
         }
         
         // Update the image placement constraint based on the status bar height.
@@ -148,7 +142,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
             // expected to do nothing.
             self.scrollView.scrollRectToVisible(frame, animated: false)
         }
-        _setHiddenAndScrollable(shouldShowInfo: shouldShowInfo)
     }
     
     /// Sets the height of the scroll views top background view depending on
@@ -183,55 +176,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         /// The image view that is used to show the animation.
         let animationView = (self.navigationHeader as? RSDStepHeaderView)?.imageView
         animationView?.stopAnimating()
-    }
-    
-    /// Sets whether the components are hidden, and whether scrolling is enabled
-    /// based on whether this view should be showing the full task info or the
-    /// abbreviated version.
-    /// - parameters:
-    ///     - shouldShowInfo     - `true` if the full task info should be shown, `false` otherwise
-    private func _setHiddenAndScrollable(shouldShowInfo: Bool) {
-        (self.view as? RSDStepNavigationView)?.textLabel?.isHidden = !shouldShowInfo
-        self.iconViewLabel.isHidden = !shouldShowInfo
-        for label in self.iconTitles! {
-            label.isHidden = !shouldShowInfo
-        }
-        for icon in self.iconImages! {
-            icon.isHidden = !shouldShowInfo
-        }
-        self.learnMoreButton?.isHidden = !shouldShowInfo
-        self.scrollView?.isScrollEnabled = shouldShowInfo
-        self.infoButton?.isHidden = shouldShowInfo
-        self.navigationFooter?.shouldShowShadow = shouldShowInfo
-    }
-    
-    /// Function called when the upper-right info icon action button is tapped
-    @objc open func showFullTaskInfo() {
-        let textLabel = (self.view as? RSDStepNavigationView)?.textLabel
-        textLabel?.alpha = 0
-        self.iconViewLabel.alpha = 0
-        for label in self.iconTitles! {
-            label.alpha = 0
-        }
-        for icon in self.iconImages! {
-            icon.alpha = 0
-        }
-        _setHiddenAndScrollable(shouldShowInfo: true)
-        UIView.animate(withDuration: 0.3, animations: {
-            textLabel?.alpha = 1
-            self.iconViewLabel.alpha = 1
-            for label in self.iconTitles! {
-                label.alpha = 1
-            }
-            for icon in self.iconImages! {
-                icon.alpha = 1
-            }
-            self._scrollToBottom()
-        }) { (_) in
-            self.navigationFooter?.shouldShowShadow = true
-        }
-        
-        self._stopAnimating()
     }
     
     // Makes the scroll view scroll all the way down.
