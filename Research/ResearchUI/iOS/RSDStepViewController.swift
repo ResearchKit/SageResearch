@@ -442,9 +442,10 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             else {
                 return
         }
+        let traitCollection = self.traitCollection
         if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
             DispatchQueue.global().async { [weak navigationView] in
-                let images = animatedImage.images(compatibleWith: self.traitCollection)
+                let images = animatedImage.images(compatibleWith: traitCollection)
                 DispatchQueue.main.async {
                     guard let navigationView = navigationView,
                         let image = images.first
