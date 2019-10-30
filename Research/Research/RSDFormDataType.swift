@@ -362,8 +362,9 @@ public enum RSDFormDataType {
         let allMeasurement: [RSDFormDataType] = MeasurementType.allCases.map { (measurementType) -> [RSDFormDataType] in
             return MeasurementRange.allCases.map { .measurement(measurementType, $0) }
         }.flatMap { $0 }
+        let allDateRange: [RSDFormDataType] = DateRangeType.allCases.map { .dateRange($0) }
         let allDetail: [RSDFormDataType] = baseTypes.map { .detail($0) }
-        return [allBase, allCollection, allMeasurement, allDetail, [.postalCode]].flatMap { $0 }
+        return [allBase, allCollection, allDateRange, allMeasurement, allDetail, [.postalCode]].flatMap { $0 }
     }
 }
 
