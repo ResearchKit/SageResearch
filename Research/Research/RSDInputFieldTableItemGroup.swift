@@ -204,12 +204,33 @@ public final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
             pickerSource = pickerSource ?? src
             formatter = formatter ?? fmt
             dateFormatter = dateRange.dateCoder?.resultFormatter
-        } else {
+        }
+        else {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .short
+            var datePickerMode: RSDDatePickerMode = .dateAndTime
+            
+            if case .dateRange(let rangeType) = inputField.dataType {
+                switch rangeType {
+                case .timestamp:
+                    dateFormatter.dateStyle = .short
+                    dateFormatter.timeStyle = .short
+                    datePickerMode = .dateAndTime
+                case .dateOnly:
+                    dateFormatter.dateStyle = .short
+                    dateFormatter.timeStyle = .none
+                    datePickerMode = .date
+                case .timeOnly:
+                    dateFormatter.dateStyle = .none
+                    dateFormatter.timeStyle = .short
+                    datePickerMode = .time
+                }
+            }
+            else {
+                dateFormatter.dateStyle = .short
+                dateFormatter.timeStyle = .short
+            }
             formatter = formatter ?? dateFormatter
-            pickerSource = pickerSource ?? RSDDatePickerDataSourceObject(datePickerMode: .dateAndTime, minimumDate: nil, maximumDate: nil, minuteInterval: nil, dateFormatter: dateFormatter, defaultDate: nil)
+            pickerSource = pickerSource ?? RSDDatePickerDataSourceObject(datePickerMode: datePickerMode, minimumDate: nil, maximumDate: nil, minuteInterval: nil, dateFormatter: dateFormatter, defaultDate: nil)
         }
         
         let answerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: inputField.dataType, dateFormat: dateFormatter?.dateFormat, unit: nil, sequenceSeparator: nil)

@@ -47,6 +47,10 @@ public enum RSDFormDataType {
     /// Collection data types are some kind of a collection with a base type.
     case collection(CollectionType, BaseType)
     
+    /// A date that includes encoding information for the portion of the date/time that is
+    /// represented by this data type.
+    case dateRange(DateRangeType)
+    
     /// A measurement is a human-data measurement. The measurement range indicates the expected size
     /// of the human being measured. In US English units, this is required to determine the expected
     /// localization for the measurement.
@@ -149,6 +153,53 @@ public enum RSDFormDataType {
         case infant
     }
     
+    /// The `DateRangeType` is used to simplify transforming classes on Android.
+    ///
+    /// Android has different classes for the common date components that may be of interest when
+    /// asking the participant about a "date". Because of this, for many cases, that platform does
+    /// not need to define an `RSDDateRange` to differentiate between *which* subset of date
+    /// components should be requested. This form data type is used to differentiate between these
+    /// different types. While on iOS, this requires some custom handling in the data source, it
+    /// greatly simplifies decoding on Android and is thus supported here.
+    ///
+    /// The date range type *only* supports those types that are native to Android. Custom date
+    /// components such as year only or year and month only still require defining the supported
+    /// ranges using the `RSDDateRange` protocol.
+    ///
+    /// Additionally, the `rawValue` key of "date" still maps to `.base(.date)` to maintain
+    /// reverse-compatibility to existing JSON-encoded objects.
+    ///
+    public enum DateRangeType: String, CaseIterable {
+        
+        /// Includes time, date, and GMT timezone offset ("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ").
+        case timestamp
+        
+        /// Includes date only ("yyyy-MM-dd").
+        ///
+        /// - note: This framework already maps the `rawValue` of "date" to the `.base(.date)` data
+        /// type which is a generic that can be used to define dates independently of which
+        /// components are displayed to the user.
+        case dateOnly
+        
+        /// Includes time only ("HH:mm:ss").
+        ///
+        /// - note: Use a custom naming key of "time" to match the `rawValue` already defined for
+        /// Android.
+        case timeOnly = "time"
+
+        /// The default coding date format.
+        public var dateFormat: String {
+            switch self {
+            case .timestamp:
+                return RSDDateCoderObject.timestamp.rawValue
+            case .dateOnly:
+                return RSDDateCoderObject.dateOnly.rawValue
+            case .timeOnly:
+                return RSDDateCoderObject.timeOfDay.rawValue
+            }
+        }
+    }
+    
     /// List of the standard UI hints that are valid for this data type.
     ///
     /// The valid hints are returned in priority order such that if the preferred hint is not
@@ -184,6 +235,9 @@ public enum RSDFormDataType {
             case .multipleComponent:
                 return [.picker, .textfield]
             }
+            
+        case .dateRange(_):
+            return [.picker, .textfield]
         
         case .measurement(let measurementType, _):
             switch measurementType {
@@ -226,6 +280,9 @@ public enum RSDFormDataType {
         case .collection(_, let baseType):
             return baseType
             
+        case .dateRange(_):
+            return .date
+            
         case .measurement(let measurement, _):
             switch measurement {
             case .height, .weight:
@@ -257,6 +314,9 @@ public enum RSDFormDataType {
             case .singleChoice:
                 return RSDAnswerResultType(baseType: base, sequenceType: nil, formDataType: self, dateFormat: nil, unit: nil, sequenceSeparator: nil)
             }
+            
+        case .dateRange(let rangeType):
+            return RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: self, dateFormat: rangeType.dateFormat, unit: nil, sequenceSeparator: nil)
             
         case .measurement(let measurementType, _):
             switch measurementType {
@@ -317,6 +377,9 @@ extension RSDFormDataType: RawRepresentable, Codable, Hashable {
         if split.count == 1, let subtype = BaseType(rawValue: rawValue) {
             self = .base(subtype)
         }
+        else if split.count == 1, let rangeType = DateRangeType(rawValue: rawValue) {
+            self = .dateRange(rangeType)
+        }
         else if split.count <= 2, let collectionType = CollectionType(rawValue: split[0]) {
             let baseType: BaseType = ((split.count == 2) ? BaseType(rawValue: split[1]) : nil) ?? .string
             self = .collection(collectionType, baseType)
@@ -353,6 +416,9 @@ extension RSDFormDataType: RawRepresentable, Codable, Hashable {
             
         case .collection(let collectionType, let baseType):
             return "\(collectionType.rawValue).\(baseType.rawValue)"
+            
+        case .dateRange(let rangeType):
+            return rangeType.rawValue
         
         case .measurement(let measurement, let range):
             return "\(measurement.rawValue).\(range.rawValue)"
