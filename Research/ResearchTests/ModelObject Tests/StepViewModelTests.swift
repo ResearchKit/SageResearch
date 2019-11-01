@@ -83,35 +83,6 @@ class StepViewModelTests: XCTestCase {
         XCTAssertEqual(action?.buttonTitle, "Back")
     }
     
-    
-//    
-//    /// Should the action be hidden for the given action type?
-//    ///
-//    /// - The default implementation will first look to see if the step overrides and forces the
-//    /// action to be hidden.
-//    /// - If not, then the delegate will be queried next.
-//    /// - If that does not return a value, then the task path will be checked.
-//    ///
-//    /// Finally, whether or not to hide the action will be determined based on the action type and
-//    /// the state of the task as follows:
-//    /// 1. `.navigation(.cancel)` - Always defaults to `false` (not hidden).
-//    /// 2. `.navigation(.goForward)` - Hidden if the step is an active step that transitions automatically.
-//    /// 3. `.navigation(.goBack)` - Hidden if the step is an active step that transitions automatically,
-//    ///                             or if the task does not allow backward navigation.
-//    /// 4. Others - Hidden if the `action()` is nil.
-//    ///
-//    /// - parameter actionType: The action type to get.
-//    /// - returns: `true` if the action should be hidden.
-//    open func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
-//        if let shouldHide = uiStep?.shouldHideAction(for: actionType, on: step) {
-//            // Allow the step to override the default from the delegate
-//            return shouldHide
-//        }
-//        else if let shouldHide = recursiveTaskShouldHideAction(for: actionType), self.action(for: actionType) == nil {
-//            // Finally check if the task has any global settings
-//            return shouldHide
-//        }
-    
     func testShouldHideAction_NilAction() {
 
         XCTAssertFalse(stepXModel.shouldHideAction(for: .navigation(.cancel)))
@@ -187,6 +158,9 @@ class StepViewModelTests: XCTestCase {
         section3.currentChild = sectionA
         stepXModel = RSDStepViewModel(step: stepX, parent: sectionA)
         sectionA.currentChild = stepXModel
+        
+        top.taskResult.stepHistory = [RSDResultObject(identifier: "step1"),
+                                      RSDResultObject(identifier: "step2")]
     }
     
     func testResultSummaryStepViewModel_String() {
