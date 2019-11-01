@@ -165,8 +165,7 @@ extension RSDOrderedStepNavigator {
     ///     - result:  The current result set for this task.
     /// - returns: `true` if the task view controller should show a back button.
     public func hasStep(before step: RSDStep, with result: RSDTaskResult) -> Bool {
-        var temp = result
-        return self.step(before: step, with: &temp) != nil
+        return _step(before: step, with: result) != nil
     }
     
     /// Return the step to go to after completing the given step.
@@ -241,21 +240,30 @@ extension RSDOrderedStepNavigator {
     ///     - result:  The current result set for this task.
     /// - returns: The previous step or nil if the task does not support backward navigation or this is the first step.
     public func step(before step: RSDStep, with result: inout RSDTaskResult) -> RSDStep? {
+        return _step(before: step, with: result)
+    }
+    
+    private func _step(before step: RSDStep, with result: RSDTaskResult) -> RSDStep? {
         
         // Check if this step does not allow backwards navigation.
         if let navRule = self.navigationBackRule(for: step), !navRule.allowsBackNavigation(with: result) {
             return nil
         }
         
-        // First look in the step history for the step result that matches this one. If not found, then
-        // check the list of steps.
-        guard let beforeResult = result.stepHistory.rsd_previous(before: {$0.identifier == step.identifier}),
-            let beforeStep = self.step(with: beforeResult.identifier)
+        guard let beforeResult: RSDResult = {
+            if let _ = result.stepHistory.last(where: { step.identifier == $0.identifier }) {
+                // Look to see if the step being tested is in the step history and if so, look for the step
+                // before that step.
+                return result.stepHistory.rsd_previous(before: {$0.identifier == step.identifier})
+            }
             else {
-                return self.steps.rsd_previous(before: {$0.identifier == step.identifier})
-        }
+                // Otherwise, the step being tested is the current step and has not yet been added
+                // to the result step so instead return the last result in the history.
+                return result.stepHistory.last
+            }
+        }() else { return nil }
         
-        return beforeStep
+        return self.step(with: beforeResult.identifier)
     }
     
     /// Return the progress through the task for a given step with the current result.

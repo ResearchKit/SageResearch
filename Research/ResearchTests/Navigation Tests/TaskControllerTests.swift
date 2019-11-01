@@ -67,6 +67,19 @@ class TaskControllerTests: XCTestCase {
         
         // set up for the step controller
         let _ = taskController.test_stepTo("stepX")
+        
+        // Check assumptions
+        let topHistory = taskController.taskViewModel.taskResult.stepHistory
+        let topIds = topHistory.map { $0.identifier }
+        XCTAssertEqual(topIds, ["introduction", "step1", "step2", "step3", "step4"])
+        let step4Result = topHistory.first(where: {$0.identifier == "step4"}) as? RSDTaskResult
+        if let step4Ids = step4Result?.stepHistory.map({ $0.identifier }) {
+            XCTAssertEqual(step4Ids, ["stepA", "stepB", "stepC"])
+        }
+        else {
+            XCTFail("Missing step4")
+        }
+        
         taskController.goBack()
         
         let stepTo = taskController.show_calledTo
@@ -716,6 +729,36 @@ class TaskControllerTests: XCTestCase {
         else {
             XCTFail("Failed to set an answer")
         }
+    }
+    
+    
+    func testTrackingRules_SkipFirstStep() {
+        // Discovered an issue where if the first step in a survey is skipped, that step is still
+        // included in the backwards navigation. This test is intended to reproduce that failure
+        // condition so that I can fix it. syoung 11/01/2019
+        
+        let trackingRule = TestTrackingRule(skipTo: ["step1" : "step2"], next: [:], nextAfterNil: nil)
+        RSDFactory.shared.trackingRules = [trackingRule]
+        let steps: [RSDStep] = TestStep.steps(from: ["step1", "step2", "step3", "step4"])
+        let navigator = TestConditionalNavigator(steps: steps)
+        
+        let task = TestTask(identifier: "test", stepNavigator: navigator)
+        let taskViewModel = TestTaskViewModel(task: task)
+        
+        let taskController = TestTaskController()
+        taskController.taskViewModel = taskViewModel
+        taskController.goForward()
+        
+        XCTAssertEqual(taskViewModel.currentStep?.identifier, "step2")
+        XCTAssertFalse(taskViewModel.hasStepBefore)
+        XCTAssertTrue(taskViewModel.hasStepAfter)
+        
+        // Because the first step was skipped, it should *not* be included in the result set.
+        let stepHistory = taskViewModel.taskResult.stepHistory.map { $0.identifier }
+        XCTAssertEqual(stepHistory, ["step2"])
+        
+        // Reset the tracking rules
+        RSDFactory.shared.trackingRules = []
     }
 }
 
