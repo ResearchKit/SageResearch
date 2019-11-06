@@ -52,7 +52,7 @@ public let rsd_ISO8601DateOnlyFormatter: DateFormatter = {
 /// ISO 8601 time only formatter.
 public let rsd_ISO8601TimeOnlyFormatter: DateFormatter = {
     let formatter = DateFormatter()
-    formatter.dateFormat = "HH:mm:ss"
+    formatter.dateFormat = "HH:mm:ss.SSS"
     formatter.locale = Locale(identifier: "en_US_POSIX")
     return formatter
 }()
