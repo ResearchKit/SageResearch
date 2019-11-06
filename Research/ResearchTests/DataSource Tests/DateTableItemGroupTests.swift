@@ -66,6 +66,48 @@ class DateTableItemGroupTests: XCTestCase {
             // Previous answer is encoded using the default "time-only" formatter for the given app.
             // This is based on using a date coding where the input formatter and the result
             // formatter are different.
+            let previousAnswer = "08:30:00.000"
+            try itemGroup.setPreviousAnswer(from: previousAnswer)
+            
+            XCTAssertNotNil(itemGroup.answer)
+            guard let dateAnswer = itemGroup.answer as? Date else {
+                XCTFail("Failed to set the previous answer to the expected type. \(String(describing: itemGroup.answer))")
+                return
+            }
+            
+            let calendar = Calendar.current
+            let dateComponents = calendar.dateComponents([.hour, .minute], from: dateAnswer)
+            XCTAssertEqual(dateComponents.hour, 8)
+            XCTAssertEqual(dateComponents.minute, 30)
+
+        } catch let err {
+            XCTFail("Failed to decode object or set previous answer: \(err)")
+            return
+        }
+    }
+    
+    func testSetPreviousAnswer_TimeOnly_OldFormat() {
+        NSLocale.setCurrentTest(Locale(identifier: "en_US"))
+        
+        let json = """
+        {
+        "identifier": "reminderTime",
+        "type": "date",
+        "prompt": "Set reminder",
+        "range" : {
+           "defaultDate" : "09:00",
+           "minuteInterval" : 15,
+           "codingFormat" : "HH:mm" }
+        }
+        """.data(using: .utf8)! // our data in native (JSON) format
+        
+        do {
+            let inputField = try decoder.decode(RSDInputFieldObject.self, from: json)
+            let itemGroup = RSDDateTableItemGroup(beginningRowIndex: 0, inputField: inputField, uiHint: .picker)
+            
+            // syoung 11/06/2019 The time only format used by Bridge is different from what was
+            // previously encoded for SageResearch. I suspect this is the result of a translation
+            // fail from when we were supporting ResearchKit/AppCore?
             let previousAnswer = "08:30:00"
             try itemGroup.setPreviousAnswer(from: previousAnswer)
             
