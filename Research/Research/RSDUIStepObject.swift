@@ -176,7 +176,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     
     /// Copy the step to a new instance with the given identifier, but otherwise, equal.
     /// - parameter identifier: The new identifier.
-    public func copy(with identifier: String) -> Self {
+    public final func copy(with identifier: String) -> Self {
         return try! copy(with: identifier, decoder: nil)
     }
     
@@ -184,7 +184,7 @@ open class RSDUIStepObject : RSDUIActionHandlerObject, RSDDesignableUIStep, RSDT
     /// - parameters:
     ///     - identifier: The new identifier.
     ///     - decoder: A decoder that can be used to decode properties on this step.
-    public func copy(with identifier: String, decoder: Decoder?) throws -> Self {
+    public final func copy(with identifier: String, decoder: Decoder?) throws -> Self {
         let copy = type(of: self).init(identifier: identifier, type: self.stepType)
         self.copyInto(copy)
         if let decoder = decoder {
