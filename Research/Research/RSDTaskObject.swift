@@ -57,7 +57,7 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     public let asyncActions: [RSDAsyncActionConfiguration]?
     
     /// Does this task use stored data and/or include a scoring at this level?
-    public let usesTrackedData: Bool
+    open private(set) var usesTrackedData: Bool = false
     
     /// Default initializer.
     /// - parameters:
@@ -66,12 +66,11 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     ///     - schemaInfo: Information about the result schema.
     ///     - asyncActions: A list of asynchronous actions to run on the task.
     ///     - usesTrackedData: Does this task use stored data and/or include a scoring at this level?
-    public required init(identifier: String, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil, usesTrackedData: Bool = false) {
+    public required init(identifier: String, stepNavigator: RSDStepNavigator, schemaInfo: RSDSchemaInfo? = nil, asyncActions: [RSDAsyncActionConfiguration]? = nil) {
         self.identifier = identifier
         self.schemaInfo = schemaInfo
         self.stepNavigator = stepNavigator
         self.asyncActions = asyncActions
-        self.usesTrackedData = false
         super.init()
     }
     
@@ -119,9 +118,7 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
         }
         
         self.identifier = identifier
-        self.copyright = try container.decodeIfPresent(String.self, forKey: .copyright)
         self.schemaInfo = try container.decodeIfPresent(RSDSchemaInfoObject.self, forKey: .schemaInfo) ?? decoder.schemaInfo
-        self.usesTrackedData = try container.decodeIfPresent(Bool.self, forKey: .usesTrackedData) ?? false
         
         // Get the step navigator
         let factory = decoder.factory
@@ -143,6 +140,20 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
         }
         
         try super.init(from: decoder)
+        
+        try self.decode(from: decoder)
+    }
+    
+    /// Allow subclasses to decode additional properties without having to override both
+    /// initializers. This method is called by `init(from:)` *after* calling through to super.
+    /// If you add properties to the base class, also override `copy(into:)` to set those properties
+    /// when a copy is made of the task.
+    ///
+    /// - seealso: `copy(into:)`
+    open func decode(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.copyright = try container.decodeIfPresent(String.self, forKey: .copyright)
+        self.usesTrackedData = try container.decodeIfPresent(Bool.self, forKey: .usesTrackedData) ?? self.usesTrackedData
     }
     
     
@@ -250,22 +261,26 @@ open class RSDTaskObject : RSDUIActionHandlerObject, RSDCopyTask, RSDTrackingTas
     
     // MARK: Copy methods
     
-    public func copy(with identifier: String, schemaInfo: RSDSchemaInfo?) -> Self {
+    public final func copy(with identifier: String, schemaInfo: RSDSchemaInfo?) -> Self {
         let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
         copyInto(copy as RSDTaskObject)
         return copy
     }
 
-    public func copy(with identifier: String) -> Self {
+    public final func copy(with identifier: String) -> Self {
         let copy = type(of: self).init(identifier: identifier, stepNavigator: stepNavigator, schemaInfo: schemaInfo, asyncActions: asyncActions)
         copyInto(copy as RSDTaskObject)
         return copy
     }
     
-    private func copyInto(_ copy: RSDTaskObject) {
+    /// Swift subclass override for copying properties from the instantiated class of the `copy(with:)`
+    /// method. Swift does not nicely handle casting from `Self` to a class instance for non-final classes.
+    /// This is a work-around.
+    open func copyInto(_ copy: RSDTaskObject) {
         copy.actions = self.actions
         copy.shouldHideActions = self.shouldHideActions
         copy.copyright = self.copyright
+        copy.usesTrackedData = self.usesTrackedData
     }
     
     // Overrides must be defined in the base implementation
