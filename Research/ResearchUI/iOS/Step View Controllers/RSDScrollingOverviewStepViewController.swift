@@ -80,17 +80,19 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         
         // This code assumes that either 1 or 3 icons will be displayed. In order to support
         // other values other implementations should use a UICollectionView.
+        self.iconViewLabel.isHidden = true
         for label in iconTitles! {
             label.text = nil
         }
-        
         for icon in iconImages! {
             icon.image = nil
         }
         
         if let overviewStep = self.step as? RSDOverviewStep {
             
-            if let icons = overviewStep.icons {
+            if let icons = overviewStep.icons, icons.count > 0 {
+                
+                self.iconViewLabel.isHidden = false
                 
                 for (idx, iconInfo) in icons.enumerated() {
                     iconImages[idx].image = iconInfo.icon?.embeddedImage()
