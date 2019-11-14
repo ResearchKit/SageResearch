@@ -161,7 +161,6 @@ class TaskViewModelTests: XCTestCase {
         let identifiers = Set(asyncResults.map { $0.identifier })
         let expected = Set(["foo", "blu"])
         XCTAssertEqual(identifiers, expected)
-        
     }
 }
 

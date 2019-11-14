@@ -957,12 +957,7 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
             }
         }()
         
-        // If this is a custom text field then update the text to match the
-        // actual value stored in case it differs from the text entered.
         let success = saveAnswer(newValue: answer ?? NSNull(), at: indexPath)
-        if !success, let tableItem = tableItem(for: textInputView) {
-            textInputView.currentText = tableItem.answerText
-        }
         return success
     }
     
@@ -990,20 +985,22 @@ open class RSDTableStepViewController: RSDStepViewController, UITableViewDataSou
                         message = Localization.localizedString("VALIDATION_ERROR_NUMBER")
                     }
                     else if let dateFormatter = formatter as? DateFormatter {
-                        message = Localization.localizedStringWithFormatKey("VALIDATION_ERROR_DATE_%@", dateFormatter.dateFormat)
+                        message = String.localizedStringWithFormat(Localization.localizedString("VALIDATION_ERROR_DATE_%@"), dateFormatter.dateFormat)
                     }
                 case .invalidRegex(let msg, _):
                     message = msg
                 case .exceedsMaxLength(let maxLen, _):
-                    message = Localization.localizedStringWithFormatKey("VALIDATION_ERROR_MAXLEN_%@", maxLen)
+                    message = String.localizedStringWithFormat(Localization.localizedString("VALIDATION_ERROR_MAXLEN_%@"), "\(maxLen)")
                 case .lessThanMinimumDate(let date, _):
-                    message = Localization.localizedStringWithFormatKey("VALIDATION_ERROR_MIN_DATE_%@", date as NSDate)
+                    let dateString = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .none)
+                    message = String.localizedStringWithFormat(Localization.localizedString("VALIDATION_ERROR_MIN_DATE_%@"), dateString)
                 case .greaterThanMaximumDate(let date, _):
-                    message = Localization.localizedStringWithFormatKey("VALIDATION_ERROR_MAX_DATE_%@", date as NSDate)
+                    let dateString = DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .none)
+                    message = String.localizedStringWithFormat(Localization.localizedString("VALIDATION_ERROR_MAX_DATE_%@"), dateString)
                 case .lessThanMinimumValue(let num, _):
-                    message = Localization.localizedStringWithFormatKey("VALIDATION_ERROR_MIN_NUMBER_%@", num as NSNumber)
+                    message = String.localizedStringWithFormat(Localization.localizedString("VALIDATION_ERROR_MIN_NUMBER_%@"), "\(num)")
                 case .greaterThanMaximumValue(let num, _):
-                    message = Localization.localizedStringWithFormatKey("VALIDATION_ERROR_MAX_NUMBER_%@", num as NSNumber)
+                    message = String.localizedStringWithFormat(Localization.localizedString("VALIDATION_ERROR_MAX_NUMBER_%@"), "\(num)")
                 case .invalidType(_):
                     assertionFailure("Unhandled error when saving text entry: \(err)")
                 }

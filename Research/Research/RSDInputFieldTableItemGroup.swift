@@ -107,7 +107,15 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     
     /// Set the answer from a previous run to the given value.
     open func setPreviousAnswer(from jsonValue: Any?) throws {
-        try setAnswer(jsonValue)
+        // Only validation at this level is on a single-input field. Otherwise, just set the
+        // answer and return.
+        guard self.items.count == 1, let textItem = self.items.first as? RSDTextInputTableItem
+            else {
+                _answer = jsonValue
+                return
+        }
+        
+        try textItem.setPreviousAnswer(jsonValue)
     }
     
     /// Set the default answer for the item group. The base class implementation does nothing.
@@ -151,10 +159,14 @@ open class RSDInputFieldTableItemGroup : RSDTableItemGroup {
     /// - returns: A `Bool` indicating if answer is valid.
     open override var isAnswerValid: Bool {
         // if answer is NOT optional and it equals Null, then it's invalid
-        let isOptional = self.items.reduce(self.inputField.isOptional) {
+        return self.isOptional || !((self.answer == nil) || (self.answer is NSNull))
+    }
+    
+    /// Whether or not the question is optional.
+    open var isOptional: Bool {
+        return self.items.reduce(self.inputField.isOptional) {
             $0 && (($1 as? RSDInputFieldTableItem)?.inputField.isOptional ?? true)
         }
-        return isOptional || !((self.answer == nil) || (self.answer is NSNull))
     }
 }
 
@@ -192,12 +204,33 @@ public final class RSDDateTableItemGroup : RSDInputFieldTableItemGroup {
             pickerSource = pickerSource ?? src
             formatter = formatter ?? fmt
             dateFormatter = dateRange.dateCoder?.resultFormatter
-        } else {
+        }
+        else {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .short
+            var datePickerMode: RSDDatePickerMode = .dateAndTime
+            
+            if case .dateRange(let rangeType) = inputField.dataType {
+                switch rangeType {
+                case .timestamp:
+                    dateFormatter.dateStyle = .short
+                    dateFormatter.timeStyle = .short
+                    datePickerMode = .dateAndTime
+                case .dateOnly:
+                    dateFormatter.dateStyle = .short
+                    dateFormatter.timeStyle = .none
+                    datePickerMode = .date
+                case .timeOnly:
+                    dateFormatter.dateStyle = .none
+                    dateFormatter.timeStyle = .short
+                    datePickerMode = .time
+                }
+            }
+            else {
+                dateFormatter.dateStyle = .short
+                dateFormatter.timeStyle = .short
+            }
             formatter = formatter ?? dateFormatter
-            pickerSource = pickerSource ?? RSDDatePickerDataSourceObject(datePickerMode: .dateAndTime, minimumDate: nil, maximumDate: nil, minuteInterval: nil, dateFormatter: dateFormatter, defaultDate: nil)
+            pickerSource = pickerSource ?? RSDDatePickerDataSourceObject(datePickerMode: datePickerMode, minimumDate: nil, maximumDate: nil, minuteInterval: nil, dateFormatter: dateFormatter, defaultDate: nil)
         }
         
         let answerType = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: inputField.dataType, dateFormat: dateFormatter?.dateFormat, unit: nil, sequenceSeparator: nil)

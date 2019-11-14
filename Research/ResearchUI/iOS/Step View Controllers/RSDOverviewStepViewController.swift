@@ -87,16 +87,16 @@ open class RSDOverviewStepViewController: RSDPermissionStepViewController {
         }
         
         let action15min = UIAlertAction(title:
-            Localization.localizedStringWithFormatKey("REMINDER_CHOICE_IN_DURATION_%@", formatter.string(from: 15 * 60)!), style: .default) { (_) in
+            String.localizedStringWithFormat(Localization.localizedString("REMINDER_CHOICE_IN_DURATION_%@"), formatter.string(from: 15 * 60)!), style: .default) { (_) in
             self.addReminder(timeInterval: 15 * 60)
         }
         
         let action1hr = UIAlertAction(title:
-            Localization.localizedStringWithFormatKey("REMINDER_CHOICE_IN_DURATION_%@", formatter.string(from: 60 * 60)!), style: .default) { (_) in
+            String.localizedStringWithFormat(Localization.localizedString("REMINDER_CHOICE_IN_DURATION_%@"), formatter.string(from: 60 * 60)!), style: .default) { (_) in
             self.addReminder(timeInterval: 60 * 60)
         }
         let action2hr = UIAlertAction(title:
-            Localization.localizedStringWithFormatKey("REMINDER_CHOICE_IN_DURATION_%@", formatter.string(from: 2 * 60 * 60)!), style: .default) { (_) in
+            String.localizedStringWithFormat(Localization.localizedString("REMINDER_CHOICE_IN_DURATION_%@"), formatter.string(from: 2 * 60 * 60)!), style: .default) { (_) in
             self.addReminder(timeInterval: 2 * 60 * 60)
         }
         
@@ -111,7 +111,7 @@ open class RSDOverviewStepViewController: RSDPermissionStepViewController {
         
         let content = UNMutableNotificationContent()
         if let title = (self.step as? RSDTaskInfoStep)?.taskInfo.title ?? self.uiStep?.title {
-            content.body = Localization.localizedStringWithFormatKey("REMINDER_NOTIFICATION_WITH_TITLE_%@", title)
+            content.body = String.localizedStringWithFormat(Localization.localizedString("REMINDER_NOTIFICATION_WITH_TITLE_%@"), title)
         } else {
             content.body = Localization.localizedString("REMINDER_NOTIFICATION_WITHOUT_TITLE")
         }

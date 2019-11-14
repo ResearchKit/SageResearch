@@ -182,7 +182,7 @@ public class RSDWeeklyScheduleFormatter : Formatter {
         if let days = days, let times = times {
             switch style {
             case .full, .long:
-                return Localization.localizedStringWithFormatKey("SCHEDULE_FORMAT_%1$@_at_%2$@", days, times)
+                return String.localizedStringWithFormat(Localization.localizedString("SCHEDULE_FORMAT_%1$@_at_%2$@"), days, times)
             case .medium, .none:
                 return "\(times)\n\(days)"
             case .short:

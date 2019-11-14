@@ -42,8 +42,27 @@ open class RSDOverviewStepObject : RSDUIStepObject, RSDOverviewStep {
         case icons
     }
     
+    /// For this implementation of the overview step, the learn more action is included in the
+    /// readwrite dictionary of actions.
+    open var learnMoreAction: RSDUIAction? {
+        get {
+            return self.actions?[.navigation(.learnMore)]
+        }
+        set {
+            guard let action = newValue else {
+                self.actions?[.navigation(.learnMore)] = nil
+                return
+            }
+            var actions = self.actions ?? [:]
+            actions[.navigation(.learnMore)] = action
+            self.actions = actions
+        }
+    }
+    
     /// The icons that are used to define the list of things you will need for an active task.
-    open var icons: [RSDIconInfo]?
+    /// These should *not* be readwrite since "What you will need" should be consistent across
+    /// uses of the activity.
+    open private(set) var icons: [RSDIconInfo]?
     
     /// Default type is `.overview`.
     open override class func defaultType() -> RSDStepType {

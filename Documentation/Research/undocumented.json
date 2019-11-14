@@ -1016,6 +1016,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDRange.swift",
+      "line": 140,
+      "symbol": "RSDPostalCodeRange",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/Research/RSDResultSummaryStepObject.swift",
       "line": 77,
       "symbol": "RSDResultSummaryStepObject.init(identifier:resultIdentifier:unitText:stepResultIdentifier:)",

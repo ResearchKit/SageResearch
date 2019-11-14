@@ -130,18 +130,11 @@ platform :ios do
     next_build_number = increment_build_number(xcodeproj: "#{project}")
     commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Bump build for Research #{version_number} (#{next_build_number})")
 
-    doc_framework(
-      framework:"Research"
-    )
-    doc_framework(
-      framework:"ResearchUI"
-    )
-    doc_framework(
-      framework:"ResearchMotion"
-    )
-    doc_framework(
-      framework:"ResearchLocation"
-    )
+    # TODO: young 10/24/2019 FIXME! Jazzy documentation does not appear to work with Xcode 11
+    #doc_framework(framework: "Research")
+    #doc_framework(framework: "ResearchUI")
+    #doc_framework(framework: "ResearchMotion")
+    #doc_framework(framework: "ResearchLocation")
 
     add_git_tag(tag: "v#{version_number}.#{next_build_number}")
     push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])

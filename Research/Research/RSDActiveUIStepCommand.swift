@@ -93,6 +93,7 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     ///     `continueOnFinish`
     ///     `transitionAutomatically`
     ///     `shouldDisableIdleTimer`
+    ///     `speakWarningOnPause`
     ///
     public private(set) static var stringMapping: [String : Int] = [:]
     
@@ -135,6 +136,9 @@ public struct RSDActiveUIStepCommand : RSDStringLiteralOptionSet {
     /// Disable the idle timer if included.
     public static let shouldDisableIdleTimer = RSDActiveUIStepCommand(1 << 6, codingKey: "shouldDisableIdleTimer")
     
+    /// Speak a warning when the pause button is tapped.
+    public static let speakWarningOnPause = RSDActiveUIStepCommand(1 << 7, codingKey: "speakWarningOnPause")
+
     /// The default commands for a step.
     public static let defaultCommands: RSDActiveUIStepCommand = []
 }
@@ -146,7 +150,8 @@ extension RSDActiveUIStepCommand : RSDDocumentableOptionSet {
         let _: RSDActiveUIStepCommand = [.playSound,
                                          .vibrate,
                                          .transitionAutomatically,
-                                         .shouldDisableIdleTimer]
+                                         .shouldDisableIdleTimer,
+                                         .speakWarningOnPause]
         return self.stringMapping.map{ $0.key }
     }
 }

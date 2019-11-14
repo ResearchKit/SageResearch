@@ -107,6 +107,7 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     public init(step: RSDStep, parent: RSDPathComponent?) {
         super.init(nibName: nil, bundle: nil)
         self.stepViewModel = self.instantiateStepViewModel(for: step, with: parent)
+        self.modalPresentationStyle = .fullScreen
     }
     
     /// Initialize the class using the given nib and bundle.
@@ -115,12 +116,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     ///     - nibBundleOrNil: The name of the bundle or `nil`.
     public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.modalPresentationStyle = .fullScreen
     }
     
     /// Required initializer. This is the initializer used by a `UIStoryboard`.
     /// - parameter aDecoder: The decoder used to initialize this view controller.
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.modalPresentationStyle = .fullScreen
     }
     
     // MARK: View appearance handling
@@ -439,9 +442,10 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
             else {
                 return
         }
+        let traitCollection = self.traitCollection
         if let animatedImage = imageTheme as? RSDAnimatedImageThemeElement {
             DispatchQueue.global().async { [weak navigationView] in
-                let images = animatedImage.images(compatibleWith: self.traitCollection)
+                let images = animatedImage.images(compatibleWith: traitCollection)
                 DispatchQueue.main.async {
                     guard let navigationView = navigationView,
                         let image = images.first
@@ -706,8 +710,14 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     open func shouldConfirmCancel() -> Bool {
         return self.stepViewModel.rootPathComponent.shouldConfirmCancel()
     }
-    
-    /// Finish canceling the task. This is called once the cancel is confirmed by the user.
+	
+	/// Hook to let tasks know that user decided not to cancel.
+	/// Default action is to do nothing, this method is to allow subclasses to override and have an action.
+	open func didNotCancel() {
+		//Defaults to do nothing.
+	}
+
+	/// Finish canceling the task. This is called once the cancel is confirmed by the user.
     ///
     /// - parameter shouldSave: Should the task progress be saved?
     open func cancelTask(shouldSave: Bool) {
@@ -1053,6 +1063,13 @@ open class RSDStepViewController : UIViewController, RSDStepController, RSDCance
     open func pause() {
         clock?.pause()
         _stopTimer()
+        // If this is an active task that requests a spoken warning when the pause
+        // button is tapped, then do so.
+        if let commands = self.activeStep?.commands,
+            commands.contains(.speakWarningOnPause) {
+            let instruction = Localization.localizedString("STEP_PAUSED")
+            RSDSpeechSynthesizer.shared.speak(text: instruction, completion: nil)
+        }
     }
     
     /// Resume the timer.
@@ -1198,6 +1215,9 @@ public protocol RSDCancelActionController : RSDStepController, RSDAlertPresenter
     ///
     /// - parameter shouldSave: Should the task progress be saved?
     func cancelTask(shouldSave: Bool)
+
+	/// This is called when the user decides to keep going with the task instead of canceling it
+	func didNotCancel()
 }
 
 extension RSDCancelActionController {
@@ -1229,7 +1249,7 @@ extension RSDCancelActionController {
         
         // Always add a choice to keep going.
         let keepGoing = UIAlertAction(title: Localization.localizedString("BUTTON_OPTION_CONTINUE"), style: .cancel) { (_) in
-            // Do nothing, just hide the alert
+            self.didNotCancel()
         }
         actions.append(keepGoing)
         

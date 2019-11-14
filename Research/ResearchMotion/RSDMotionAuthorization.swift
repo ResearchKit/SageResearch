@@ -48,6 +48,29 @@ public final class RSDMotionAuthorization : RSDAuthorizationAdaptor {
     
     public static let shared = RSDMotionAuthorization()
     
+    init() {
+        let observer = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] (_) in
+            self?.refreshCachedAuthorization()
+        }
+        self._activeAppObserver = observer
+        refreshCachedAuthorization()
+    }
+    
+    deinit {
+        if let observer = self._activeAppObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        self._activeAppObserver = nil
+    }
+    
+    private var _activeAppObserver: Any?
+    func refreshCachedAuthorization() {
+        if RSDMotionAuthorization._cachedAuthorizationStatus() == .authorized {
+            RSDMotionAuthorization.requestAuthorization { (_, _) in
+            }
+        }
+    }
+    
     /// This adaptor is intended for checking for motion sensor permissions.
     public let permissions: [RSDPermissionType] = [RSDStandardPermissionType.motion]
     

@@ -37,28 +37,28 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDStepViewController.swift",
-      "line": 436,
+      "line": 439,
       "symbol": "RSDStepViewController.loadImages(into:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDStepViewController.swift",
-      "line": 1047,
+      "line": 1050,
       "symbol": "RSDStepViewController.reset()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 653,
+      "line": 658,
       "symbol": "RSDTaskViewController.childForStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/RSDTaskViewController.swift",
-      "line": 741,
+      "line": 746,
       "symbol": "RSDTaskViewController.audioSessionController",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -135,35 +135,35 @@
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 1163,
+      "line": 1158,
       "symbol": "RSDUIRowAnimation.tableAnimation()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 1208,
+      "line": 1203,
       "symbol": "RSDTableStepLayoutConstants.mainViewBottomMargin",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 1209,
+      "line": 1204,
       "symbol": "RSDTableStepLayoutConstants.defaultRowHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 1210,
+      "line": 1205,
       "symbol": "RSDTableStepLayoutConstants.defaultSectionHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/travis/build/Sage-Bionetworks/SageResearch/Research/ResearchUI/iOS/Step View Controllers/RSDTableStepViewController.swift",
-      "line": 1211,
+      "line": 1206,
       "symbol": "RSDTableStepLayoutConstants.formStepMinHeaderHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
