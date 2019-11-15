@@ -64,6 +64,10 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     open var iconTitles: [UILabel]!
     
+    /// The view that holds the icons.
+    @IBOutlet
+    open var iconHolder: UIView!
+    
     /// The scroll view that contains the elements which scroll.
     @IBOutlet
     open var scrollView: UIScrollView!
@@ -78,51 +82,43 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // This code assumes that either 1 or 3 icons will be displayed. In order to support
-        // other values other implementations should use a UICollectionView.
-        self.iconViewLabel.isHidden = true
-        for label in iconTitles! {
-            label.text = nil
+
+        if let overviewStep = self.step as? RSDOverviewStep,
+            let icons = overviewStep.icons, icons.count > 0 {
+        
+            for idx in 0..<iconImages.count {
+                let iconInfo = (idx < icons.count) ? icons[idx] : nil
+                iconImages[idx].image = iconInfo?.icon?.embeddedImage()
+                iconTitles[idx].text = iconInfo?.title
+            }
+            
+            // TODO: syoung 03/12/2019 Change to using a collection view.
+            // When there are only 2 icons, employ this hack to center them evenly
+            if (icons.count == 2) {
+                let removeIdx = 2
+                
+                // Adjust margin factor to give smaller screens more room
+                let cellWidth = self.view.frame.size.width / CGFloat(iconImages.count)
+                let marginFactor: CGFloat = (cellWidth < 125) ? 3.0 : 2.0
+                
+                // First, Adjust the leading/trailing spacing
+                iconImagesLeadingConstraint.constant = cellWidth / marginFactor
+                iconImagesTrailingConstraint.constant = cellWidth / marginFactor
+                
+                // Then, remove the third icon from the stack view
+                iconImages[removeIdx].superview?.removeFromSuperview()
+            }
         }
-        for icon in iconImages! {
-            icon.image = nil
+        else {
+            self.iconViewLabel.removeFromSuperview()
+            self.iconHolder.removeFromSuperview()
         }
         
-        if let overviewStep = self.step as? RSDOverviewStep {
-            
-            if let icons = overviewStep.icons, icons.count > 0 {
-                
-                self.iconViewLabel.isHidden = false
-                
-                for (idx, iconInfo) in icons.enumerated() {
-                    iconImages[idx].image = iconInfo.icon?.embeddedImage()
-                    iconTitles[idx].text = iconInfo.title
-                }
-                
-                // TODO: syoung 03/12/2019 Change to using a collection view.
-                // When there are only 2 icons, employ this hack to center them evenly
-                if (icons.count == 2) {
-                    let removeIdx = 2
-                    
-                    // Adjust margin factor to give smaller screens more room
-                    let cellWidth = self.view.frame.size.width / CGFloat(iconImages.count)
-                    let marginFactor: CGFloat = (cellWidth < 125) ? 3.0 : 2.0
-                    
-                    // First, Adjust the leading/trailing spacing
-                    iconImagesLeadingConstraint.constant = cellWidth / marginFactor
-                    iconImagesTrailingConstraint.constant = cellWidth / marginFactor
-                    
-                    // Then, remove the third icon from the stack view
-                    iconImages[removeIdx].superview?.removeFromSuperview()
-                }
-            }
-
-            // Hide learn more action if it is not provided by the step json
-            if (self.step as? RSDOverviewStepObject)?.action(for: .navigation(.learnMore), on: self.step) == nil {
-                self.learnMoreButton?.setTitle(nil, for: .normal)
-                self.learnMoreButton?.isHidden = true
-                self.learnMoreHeightConstraint.constant = 0
-            }
+        // Hide learn more action if it is not provided by the step json
+        if self.stepViewModel.shouldHideAction(for: .navigation(.learnMore)) {
+            self.learnMoreButton?.setTitle(nil, for: .normal)
+            self.learnMoreButton?.isHidden = true
+            self.learnMoreHeightConstraint.constant = 0
         }
         
         // Update the image placement constraint based on the status bar height.
