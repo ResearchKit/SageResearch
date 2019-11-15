@@ -7,6 +7,23 @@
     "actions"           : { "cancel": { "type": "default", "iconName": "closeActivity" }},
     "shouldHideActions" : ["goBackward", "skip"],
     "steps"             : [
+                            {
+                                "identifier": "introduction",
+                                "type": "overview",
+                                "title": "Motion Recorder",
+                                "text": "This activity shows an example of using the motion sensors.",
+                                "image": {
+                                    "type": "fetchable",
+                                    "imageName": "HoldPhone",
+                                    "placementType": "topBackground"
+                                },
+                                "actions": {
+                                    "goForward": {
+                                        "type": "default",
+                                        "buttonTitle": "Get started"
+                                    }
+                                }
+                            },
                            {
                            "identifier"     : "shaker",
                            "type"           : "section",

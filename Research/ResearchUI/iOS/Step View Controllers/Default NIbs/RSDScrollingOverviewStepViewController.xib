@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDScrollingOverviewStepViewController" customModule="ResearchUI" customModuleProvider="target">
             <connections>
+                <outlet property="iconHolder" destination="scQ-Ma-nDm" id="fdh-pZ-azr"/>
                 <outlet property="iconImagesLeadingConstraint" destination="q6T-i2-fLB" id="tWB-Dh-tQy"/>
                 <outlet property="iconImagesTrailingConstraint" destination="Fmm-Jn-GX1" id="adp-KL-d0p"/>
                 <outlet property="iconViewLabel" destination="nSM-Mv-mDS" id="EtW-Ta-XWR"/>
@@ -227,6 +228,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                 <constraint firstAttribute="bottom" secondItem="sqK-Zj-Een" secondAttribute="bottom" constant="40" id="hrM-VV-GbQ"/>
                                 <constraint firstAttribute="trailing" secondItem="fxA-Tz-ZiS" secondAttribute="trailing" id="jff-eH-JOq"/>
                                 <constraint firstItem="E1k-gO-PDR" firstAttribute="centerX" secondItem="nCy-4g-nIJ" secondAttribute="centerX" id="mqj-wR-8Dm"/>
+                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0hp-ki-ShH" secondAttribute="bottom" constant="14" id="nS1-kq-VRA"/>
                                 <constraint firstItem="sqK-Zj-Een" firstAttribute="leading" secondItem="nCy-4g-nIJ" secondAttribute="leading" constant="24" id="q6T-i2-fLB"/>
                                 <constraint firstItem="nSM-Mv-mDS" firstAttribute="top" secondItem="0hp-ki-ShH" secondAttribute="bottom" constant="12" id="wde-RA-1TX"/>
                                 <constraint firstItem="6z9-Mw-lOx" firstAttribute="top" secondItem="E1k-gO-PDR" secondAttribute="bottom" constant="12" id="ySZ-0A-qZ1"/>
@@ -243,7 +245,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                     </constraints>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAO-q7-fPw" userLabel="Cancel Button">
-                    <rect key="frame" x="20" y="64" width="50" height="50"/>
+                    <rect key="frame" x="20" y="64" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="MAO-q7-fPw" secondAttribute="height" multiplier="1:1" id="FQP-6M-XIU"/>
                     </constraints>
@@ -288,6 +290,6 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
     <resources>
         <image name="IconPlaceholder" width="68" height="68"/>
         <image name="InstructionPlaceholder" width="1694" height="1334"/>
-        <image name="closeActivity" width="50" height="50"/>
+        <image name="closeActivity" width="32" height="32"/>
     </resources>
 </document>
