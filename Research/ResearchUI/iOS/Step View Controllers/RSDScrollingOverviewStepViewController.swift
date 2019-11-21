@@ -114,10 +114,9 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         super.viewWillAppear(animated)
 
 
-        if let overviewStep = self.step as? RSDOverviewStep,
+        if let overviewStep = self.overviewStep,
             let icons = overviewStep.icons, icons.count > 0 {
-
-        if let overviewStep = self.overviewStep {
+        
             for idx in 0..<iconImages.count {
                 let iconInfo = (idx < icons.count) ? icons[idx] : nil
                 iconImages[idx].image = iconInfo?.icon?.embeddedImage()
