@@ -95,8 +95,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     /// The iconCollectionCellSize
     open var iconCollectionCellSize: CGSize {
         let width = ((iconCollectionView.bounds.width - (CGFloat(iconCollectionViewColumns + 1) * iconCollectionViewCellSpacing)) / CGFloat(iconCollectionViewColumns))
-        debugPrint("collection w = \(iconCollectionView.bounds.width), spacing = \(iconCollectionViewCellSpacing), result = \(width)")
-
         // Truncate remainder of width to make sure it fits
         return CGSize(width: CGFloat(Int(width)), height: iconCollectionViewCellHeight)
     }
@@ -113,36 +111,11 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-
         if let overviewStep = self.overviewStep,
-            let icons = overviewStep.icons, icons.count > 0 {
-        
-            for idx in 0..<iconImages.count {
-                let iconInfo = (idx < icons.count) ? icons[idx] : nil
-                iconImages[idx].image = iconInfo?.icon?.embeddedImage()
-                iconTitles[idx].text = iconInfo?.title
-            }
-
-            // TODO: syoung 03/12/2019 Change to using a collection view.
-            // When there are only 2 icons, employ this hack to center them evenly
-            if (icons.count == 2) {
-                let removeIdx = 2
-
-                // Adjust margin factor to give smaller screens more room
-                let cellWidth = self.view.frame.size.width / CGFloat(iconImages.count)
-                let marginFactor: CGFloat = (cellWidth < 125) ? 3.0 : 2.0
-
-                // First, Adjust the leading/trailing spacing
-                iconImagesLeadingConstraint.constant = cellWidth / marginFactor
-                iconImagesTrailingConstraint.constant = cellWidth / marginFactor
-
-                // Then, remove the third icon from the stack view
-                iconImages[removeIdx].superview?.removeFromSuperview()
-            }
-        }
-        else {
+            let icons = overviewStep.icons, icons.count == 0 {
             self.iconViewLabel.removeFromSuperview()
-            self.iconHolder.removeFromSuperview()
+            self.iconCollectionViewHeight.constant = 0.0
+            self.iconCollectionView.removeFromSuperview()
         }
 
         // Hide learn more action if it is not provided by the step json
@@ -196,13 +169,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
             iconViewLabel.text = Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
             iconViewLabel.textColor = self.designSystem.colorRules.textColor(on: background, for: .mediumHeader)
             iconViewLabel.font = self.designSystem.fontRules.font(for: .mediumHeader, compatibleWith: traitCollection)
-
-            let textColor = self.designSystem.colorRules.textColor(on: background, for: .microHeader)
-            let font = self.designSystem.fontRules.font(for: .microHeader, compatibleWith: traitCollection)
-            iconTitles.forEach {
-                $0.textColor = textColor
-                $0.font = font
-            }
         }
     }
 
@@ -215,7 +181,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
     // Makes the scroll view scroll all the way down.
     private func _scrollToBottom() {
-        let frame = self.scrollView.convert(self.iconTitles[0].bounds, from: self.iconTitles[0])
+        let frame = self.scrollView.convert(self.iconCollectionView.bounds, from: self.iconCollectionView)
         let shiftedFrame = frame.offsetBy(dx: 0, dy: 20)
         self.scrollView.scrollRectToVisible(shiftedFrame, animated: false)
     }
@@ -237,10 +203,10 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     }
 
     fileprivate func relayoutCollectionViewSize() {
-        // Invalidating the layout is necessary to get the navigation header height to be correct
-        iconCollectionView.collectionViewLayout.invalidateLayout()
         // Make collectionview the full height of its content
         iconCollectionViewHeight.constant = self.iconCollectionView.collectionViewLayout.collectionViewContentSize.height
+        // Invalidating the layout is necessary to get the navigation header height to be correct
+        iconCollectionView.collectionViewLayout.invalidateLayout()
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
