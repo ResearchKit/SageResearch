@@ -262,20 +262,19 @@ open class RSDTaskViewModel : RSDTaskState, RSDTaskPathComponent {
             return false
         }
         
-        // While this is the first step, look up the path chain for a task that has not reached the end
+        // While this is the first step, look up the path chain for a path to go back to.
         var path: RSDPathComponent? = self
         while let nextPath = path {
             if let taskPath = path as? RSDTaskPathComponent,
                 let task = taskPath.task,
                 let thisStep = taskPath.currentChild?.step,
                 task.stepNavigator.hasStep(before: thisStep, with: nextPath.taskResult) {
-                // If the current task path has more steps then this is not the end
                 return true
             }
             path = nextPath.parent
         }
         
-        // Otherwise, this is the last step
+        // Otherwise, this is the first step.
         return false
     }
     

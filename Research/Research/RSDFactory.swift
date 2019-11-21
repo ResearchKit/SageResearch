@@ -881,28 +881,48 @@ open class RSDFactory {
     }
     
     /// Decode a date from a string. This method is used during object decoding and is defined
-    /// as `open` so that subclass factories can define their own formatters. 
+    /// as `open` so that subclass factories can define their own formatters.
+    ///
+    /// This method uses drop-through to first check the `formatter` (if provided). If the date
+    /// cannot be decoded using the expected *encoding* formatter, then the string will be inspected
+    /// to see if it matches any of the expected formats for date and time, time only, or date only.
     ///
     /// - parameters:
     ///     - string:       The string to use in decoding the date.
-    ///     - formatter:    A formatter to use. If provided, this formatter will be used.
-    ///                     If nil, then the string will be inspected to see if it matches
-    ///                     any of the expected formats for date and time, time only, or
-    ///                     date only.
+    ///     - formatter:    A formatter to use.
     /// - returns: The date created from this string.
     open func decodeDate(from string: String, formatter: DateFormatter? = nil) -> Date? {
-        if formatter != nil {
-            return formatter!.date(from: string)
+        if let dateFormatter = formatter, let date = dateFormatter.date(from: string) {
+            return date
         } else if let date = timestampFormatter.date(from: string) {
             return date
         } else if let date = dateOnlyFormatter.date(from: string) {
             return date
         } else if let date = timeOnlyFormatter.date(from: string) {
             return date
+        } else if let date = _oldTimeOnlyFormatter.date(from: string) {
+            return date
+        } else if let date = _androidTimestampFormatter.date(from: string) {
+            return date
         } else {
             return ISO8601DateFormatter().date(from: string)
         }
     }
+    
+    /// syoung 11/06/2019 Discovered that this format does not match the format being used on Bridge.
+    private lazy var _oldTimeOnlyFormatter: DateFormatter = {
+        var formatter = rsd_ISO8601TimeOnlyFormatter
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter
+    }()
+    
+    /// syoung 11/06/2019 Older Android devices do not support the timestamp formatter that we are
+    /// using on iOS. Therefore, check the formatter for dates decoded from Android.
+    private lazy var _androidTimestampFormatter: DateFormatter = {
+        var formatter = rsd_ISO8601TimeOnlyFormatter
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        return formatter
+    }()
     
     internal func decodeDate(from string: String, formatter: DateFormatter?, codingPath: [CodingKey]) throws -> Date {
         guard let date = decodeDate(from: string, formatter: formatter) else {
