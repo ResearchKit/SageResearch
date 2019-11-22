@@ -10,9 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDScrollingOverviewStepViewController" customModule="ResearchUI" customModuleProvider="target">
             <connections>
-                <outlet property="iconCollectionView" destination="RSd-FZ-bEg" id="1Tk-7w-eXh"/>
+                <outlet property="iconCollectionView" destination="RSd-FZ-bEg" id="ZlK-p2-V12"/>
                 <outlet property="iconCollectionViewHeight" destination="qe3-rS-SUx" id="gIs-jS-1KZ"/>
-                <outlet property="iconViewLabel" destination="nSM-Mv-mDS" id="EtW-Ta-XWR"/>
                 <outlet property="learnMoreHeightConstraint" destination="RTP-JZ-48i" id="7bL-CB-kbh"/>
                 <outlet property="navigationFooter" destination="2XD-eO-28i" id="jxp-xn-zPa"/>
                 <outlet property="navigationHeader" destination="fxA-Tz-ZiS" id="agX-5m-P7G"/>
@@ -31,7 +30,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="1084"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCy-4g-nIJ" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="928.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="895"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxA-Tz-ZiS" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
@@ -78,14 +77,8 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                     </constraints>
                                     <state key="normal" title="See this in action"/>
                                 </button>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is what you'll need" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nSM-Mv-mDS">
-                                    <rect key="frame" x="89.666666666666671" y="744.66666666666663" width="195.66666666666663" height="21.666666666666629"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="RSd-FZ-bEg">
-                                    <rect key="frame" x="0.0" y="778.33333333333337" width="375" height="110"/>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="RSd-FZ-bEg" customClass="RSDVerticalGridCollectionView" customModule="ResearchUI" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="744.66666666666663" width="375" height="110"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="110" id="qe3-rS-SUx"/>
@@ -104,7 +97,6 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="nSM-Mv-mDS" firstAttribute="centerX" secondItem="nCy-4g-nIJ" secondAttribute="centerX" id="3C1-to-DDw"/>
                                 <constraint firstAttribute="trailing" secondItem="RSd-FZ-bEg" secondAttribute="trailing" id="3DE-Kf-sOh"/>
                                 <constraint firstItem="0hp-ki-ShH" firstAttribute="top" secondItem="6z9-Mw-lOx" secondAttribute="bottom" constant="12" id="3Fd-Hw-EyC"/>
                                 <constraint firstItem="fxA-Tz-ZiS" firstAttribute="top" secondItem="nCy-4g-nIJ" secondAttribute="top" id="8Gj-8R-eaj"/>
@@ -119,8 +111,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                 <constraint firstAttribute="trailing" secondItem="fxA-Tz-ZiS" secondAttribute="trailing" id="jff-eH-JOq"/>
                                 <constraint firstItem="E1k-gO-PDR" firstAttribute="centerX" secondItem="nCy-4g-nIJ" secondAttribute="centerX" id="mqj-wR-8Dm"/>
                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0hp-ki-ShH" secondAttribute="bottom" constant="14" id="nS1-kq-VRA"/>
-                                <constraint firstItem="RSd-FZ-bEg" firstAttribute="top" secondItem="nSM-Mv-mDS" secondAttribute="bottom" constant="12" id="qh5-5g-1Ja"/>
-                                <constraint firstItem="nSM-Mv-mDS" firstAttribute="top" secondItem="0hp-ki-ShH" secondAttribute="bottom" constant="12" id="wde-RA-1TX"/>
+                                <constraint firstItem="RSd-FZ-bEg" firstAttribute="top" secondItem="0hp-ki-ShH" secondAttribute="bottom" constant="12" id="qtb-XS-MXS"/>
                                 <constraint firstItem="6z9-Mw-lOx" firstAttribute="top" secondItem="E1k-gO-PDR" secondAttribute="bottom" constant="12" id="ySZ-0A-qZ1"/>
                                 <constraint firstItem="fxA-Tz-ZiS" firstAttribute="bottom" secondItem="E1k-gO-PDR" secondAttribute="top" constant="-12" id="zbV-Q4-hJ0"/>
                             </constraints>

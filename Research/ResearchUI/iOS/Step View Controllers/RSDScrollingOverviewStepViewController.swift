@@ -37,11 +37,6 @@ import UIKit
 /// that uses a scrollview to allow showing detailed overview instructions.
 open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    /// The label which tells the user about the icons. Typically displays
-    /// "This is what you'll need".
-    @IBOutlet
-    open weak var iconViewLabel: UILabel!
-
     /// The constraint that sets the scroll bar's top background view's height.
     @IBOutlet
     open weak var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
@@ -49,35 +44,16 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     /// The constraint that sets the distance between the title and the image.
     @IBOutlet
     var titleTopConstraint: NSLayoutConstraint!
-
-    /// The constraint that sets the distance between the icon images and their leading/trailing edge.
-    @IBOutlet
-    var iconImagesLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet
-    var iconImagesTrailingConstraint: NSLayoutConstraint!
-
-    /// The image views to display the icons on.
-    @IBOutlet
-    open var iconImages: [UIImageView]!
-
-    /// The labels to display the titles of the icons on.
-    @IBOutlet
-    open var iconTitles: [UILabel]!
+    
+    /// The collection view cell re-usable identifiers
+    let iconCollectionHeaderTitleCellResuableCellId = "HeaderTitleCell"
+    let iconCollectionViewCellResuableCellId = "IconCollectionCell"
 
     /// The collection view associated with this view controller.
     @IBOutlet
-    open var iconCollectionView: UICollectionView!
+    open var iconCollectionView: RSDVerticalGridCollectionView!
     @IBOutlet
     open var iconCollectionViewHeight: NSLayoutConstraint!
-
-    let iconCollectionViewColumns = 3
-    let iconCollectionViewCellHeight: CGFloat = 120
-    let iconCollectionViewCellSpacing: CGFloat = 10
-    let iconCollectionViewCellResuableCellId = "IconCollectionCell"
-
-    /// The view that holds the icons.
-    @IBOutlet
-    open var iconHolder: UIView!
 
     /// The scroll view that contains the elements which scroll.
     @IBOutlet
@@ -92,13 +68,23 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         return self.step as? RSDOverviewStep
     }
 
-    /// The iconCollectionCellSize
-    open var iconCollectionCellSize: CGSize {
-        let width = ((iconCollectionView.bounds.width - (CGFloat(iconCollectionViewColumns + 1) * iconCollectionViewCellSpacing)) / CGFloat(iconCollectionViewColumns))
-        // Truncate remainder of width to make sure it fits
-        return CGSize(width: CGFloat(Int(width)), height: iconCollectionViewCellHeight)
+    open var iconCollectionViewHeaderTitle: String {
+         return Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
     }
-
+    
+    open var iconCollectionViewHeaderHeight: CGFloat {
+        // Create the label to size it correctly dynamically
+        let label = RSDTitleHeaderCollectionViewHeader.createTitleLabel()
+        label.frame = CGRect(x: 0, y: 0, width: iconCollectionView.bounds.width, height: CGFloat.greatestFiniteMagnitude)
+        //here, be sure you set the font type and size that matches the one set in the storyboard label
+        if let system = self.designSystem {
+            label.font = RSDTitleHeaderCollectionViewHeader.titleLabelFont(for: system)
+        }
+        label.text = self.iconCollectionViewHeaderTitle
+        label.sizeToFit()
+        return label.frame.height + (RSDTitleHeaderCollectionViewHeader.kCollectionHeaderTopMargin + RSDTitleHeaderCollectionViewHeader.kCollectionHeaderBottomMargin)
+    }
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
 
@@ -113,7 +99,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
         if let overviewStep = self.overviewStep,
             let icons = overviewStep.icons, icons.count == 0 {
-            self.iconViewLabel.removeFromSuperview()
             self.iconCollectionViewHeight.constant = 0.0
             self.iconCollectionView.removeFromSuperview()
         }
@@ -131,8 +116,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
     open override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-
-        self.relayoutCollectionViewSize()
+        self.forceFullHeightForCollectionView()
     }
 
     open override func viewDidLayoutSubviews() {
@@ -164,11 +148,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         super.setColorStyle(for: placement, background: background)
 
         if placement == .body {
-
             scrollView.backgroundColor = background.color
-            iconViewLabel.text = Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
-            iconViewLabel.textColor = self.designSystem.colorRules.textColor(on: background, for: .mediumHeader)
-            iconViewLabel.font = self.designSystem.fontRules.font(for: .mediumHeader, compatibleWith: traitCollection)
         }
     }
 
@@ -189,32 +169,38 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     // MARK: UICollectionView setup and delegates
 
     fileprivate func setupCollectionView() {
+        
+        self.iconCollectionView.gridLayout.columnCount = 3
+        self.iconCollectionView.gridLayout.cellSpacing = 8
+        self.iconCollectionView.gridLayout.cellHeight = 120
+        self.iconCollectionView.gridLayout.itemCount = self.overviewStep?.icons?.count ?? 0
+        
         if let flowLayout = self.iconCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.sectionInset = UIEdgeInsets(top: iconCollectionViewCellSpacing, left: iconCollectionViewCellSpacing, bottom: iconCollectionViewCellSpacing, right: iconCollectionViewCellSpacing)
-            flowLayout.minimumInteritemSpacing = iconCollectionViewCellSpacing
-            flowLayout.minimumLineSpacing = iconCollectionViewCellSpacing
-            flowLayout.itemSize = self.iconCollectionCellSize
+            flowLayout.headerReferenceSize = CGSize(width: iconCollectionView.bounds.width, height: self.iconCollectionViewHeaderHeight)
         }
-
+        
+        self.iconCollectionView.register(RSDTitleHeaderCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: iconCollectionHeaderTitleCellResuableCellId)
+        
         self.iconCollectionView.register(RSDOverviewCollectionViewCell.self, forCellWithReuseIdentifier: iconCollectionViewCellResuableCellId)
+        
+        self.iconCollectionView.reloadData()
+    }
 
+    /// Look at the collection view content height and make the height constraint equal to it
+    fileprivate func forceFullHeightForCollectionView() {
+        // Make collectionview the full height of its content
+        self.iconCollectionViewHeight.constant = self.iconCollectionView.collectionViewLayout.collectionViewContentSize.height
+        self.iconCollectionView.collectionViewLayout.invalidateLayout()
         // Disable user interection so that the scrollview can properly scroll
         self.iconCollectionView.isUserInteractionEnabled = false
     }
 
-    fileprivate func relayoutCollectionViewSize() {
-        // Make collectionview the full height of its content
-        iconCollectionViewHeight.constant = self.iconCollectionView.collectionViewLayout.collectionViewContentSize.height
-        // Invalidating the layout is necessary to get the navigation header height to be correct
-        iconCollectionView.collectionViewLayout.invalidateLayout()
-    }
-
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return self.iconCollectionCellSize
+        return self.iconCollectionView.gridLayout.cellSize(for: indexPath.row)
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.overviewStep?.icons?.count ?? 0
+        return self.iconCollectionView.gridLayout.itemCount
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -222,9 +208,12 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         let cell = self.iconCollectionView.dequeueReusableCell(withReuseIdentifier: iconCollectionViewCellResuableCellId, for: indexPath)
 
         if let overviewCell = cell as? RSDOverviewCollectionViewCell {
-
+                        
+            // Center the content horizontally with layout margins
+            let horizontalOffsets = self.iconCollectionView.gridLayout.horizontalPaddingToCenter(for: indexPath.row)
+            overviewCell.setLeadingTrailingPadding(leadingPadding: horizontalOffsets.leading, trailingPadding: horizontalOffsets.trailing)
+            
             overviewCell.setDesignSystem(self.designSystem, with: self.backgroundColor(for: .body))
-
             if let icons = self.overviewStep?.icons,
                 indexPath.row < icons.count {
                 let icon = icons[indexPath.row]
@@ -234,6 +223,25 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         }
 
         return cell
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize{
+        return CGSize(width: iconCollectionView.bounds.width, height: self.iconCollectionViewHeaderHeight)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            let headerCell = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: iconCollectionHeaderTitleCellResuableCellId, for: indexPath)
+
+            if let rsdCell = headerCell as? RSDTitleHeaderCollectionViewHeader {
+                rsdCell.setDesignSystem(self.designSystem, with: self.backgroundColor(for: .header))
+                rsdCell.titleLabel?.text = self.iconCollectionViewHeaderTitle
+            }
+            
+            return headerCell
+        }
+        return UICollectionReusableView()
     }
 
     // MARK: Initialization
@@ -249,11 +257,74 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     }
 }
 
+public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
+    
+    static let kCollectionHeaderTopMargin: CGFloat = 8.0
+    static let kCollectionHeaderBottomMargin: CGFloat = 8.0
+    
+    @IBOutlet public var titleLabel: UILabel?
+
+    fileprivate static var titleTextType: RSDDesignSystem.TextType = .mediumHeader
+
+    public override init(frame: CGRect) {
+        super.init(frame:frame)
+        commonInit()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder:aDecoder)
+        commonInit()
+    }
+
+    func updateColorsAndFonts() {
+        let designSystem = self.designSystem ?? RSDDesignSystem()
+        let background = self.backgroundColorTile ?? RSDGrayScale().white
+        let contentTile = designSystem.colorRules.tableCellBackground(on: background, isSelected: isSelected)
+
+        contentView.backgroundColor = UIColor.red//contentTile.color
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: RSDTitleHeaderCollectionViewHeader.titleTextType)
+        titleLabel?.font = RSDTitleHeaderCollectionViewHeader.titleLabelFont(for: designSystem)
+    }
+    
+    fileprivate static func titleLabelFont(for designSystem: RSDDesignSystem) -> UIFont {
+        return designSystem.fontRules.font(for: RSDTitleHeaderCollectionViewHeader.titleTextType)
+    }
+
+    override open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
+        super.setDesignSystem(designSystem, with: background)
+        updateColorsAndFonts()
+    }
+
+    private func commonInit() {
+        // Add the title label
+        titleLabel = RSDTitleHeaderCollectionViewHeader.createTitleLabel()
+        contentView.addSubview(titleLabel!)
+
+        titleLabel!.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel!.rsd_alignCenterHorizontal(padding: 0.0)
+        titleLabel!.rsd_alignToSuperview([.top], padding: RSDTitleHeaderCollectionViewHeader.kCollectionHeaderTopMargin)
+        titleLabel!.rsd_alignToSuperview([.bottom], padding: RSDTitleHeaderCollectionViewHeader.kCollectionHeaderBottomMargin)
+
+        updateColorsAndFonts()
+        setNeedsUpdateConstraints()
+    }
+    
+    fileprivate static func createTitleLabel() -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }
+}
+
 /// `RSDSelectionTableViewCell` is the base implementation for a selection collection view cell.
-@IBDesignable open class RSDOverviewCollectionViewCell: RSDCollectionViewCell {
+@IBDesignable open class RSDOverviewCollectionViewCell: RSDCollectionViewCell, RSDGridCollectionViewCell {
 
     @IBOutlet public var titleLabel: UILabel?
     @IBOutlet public var imageView: UIImageView?
+    
+    var titleLeadingTrailingConstraints: [NSLayoutConstraint]!
+    var imageLeadingTrailingConstraints: [NSLayoutConstraint]!
 
     open private(set) var titleTextType: RSDDesignSystem.TextType = .small
 
@@ -272,7 +343,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         let background = self.backgroundColorTile ?? RSDGrayScale().white
         let contentTile = designSystem.colorRules.tableCellBackground(on: background, isSelected: isSelected)
 
-        contentView.backgroundColor = contentTile.color
+        contentView.backgroundColor = UIColor.red// contentTile.color
         titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: titleTextType)
         titleLabel?.font = designSystem.fontRules.font(for: titleTextType, compatibleWith: traitCollection)
     }
@@ -288,12 +359,13 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         // Add the title label
         titleLabel = UILabel()
         contentView.addSubview(titleLabel!)
-
+        
         titleLabel!.translatesAutoresizingMaskIntoConstraints = false
         titleLabel!.numberOfLines = 0
         titleLabel!.textAlignment = .center
-        titleLabel!.rsd_alignToSuperview([.leading, .trailing], padding: kCollectionCellSideMargin)
+        titleLeadingTrailingConstraints = titleLabel!.rsd_alignToSuperview([.leading, .trailing], padding: kCollectionCellSideMargin)
         titleLabel!.rsd_alignToSuperview([.bottom], padding: kCollectionCellBottomMargin)
+        titleLabel?.backgroundColor = UIColor.green
 
         // Add the image view
         imageView = UIImageView()
@@ -301,11 +373,21 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
         imageView!.contentMode = .scaleAspectFit
         imageView!.translatesAutoresizingMaskIntoConstraints = false
-        imageView!.rsd_alignToSuperview([.leading, .trailing], padding: 0)
+        imageLeadingTrailingConstraints = imageView!.rsd_alignToSuperview([.leading, .trailing], padding: 0)
         imageView!.rsd_alignToSuperview([.top], padding: 0)
         imageView!.rsd_alignAbove(view: titleLabel!, padding: 0)
+        imageView?.backgroundColor = UIColor.yellow
 
         updateColorsAndFonts()
+        setNeedsUpdateConstraints()
+    }
+    
+    public func setLeadingTrailingPadding(leadingPadding: CGFloat, trailingPadding: CGFloat) {
+        // Re-assert the leading/trailing constraints to scale the cells all the same
+        titleLeadingTrailingConstraints[0].constant = leadingPadding
+        titleLeadingTrailingConstraints[1].constant = -trailingPadding
+        imageLeadingTrailingConstraints[0].constant = leadingPadding
+        imageLeadingTrailingConstraints[1].constant = -trailingPadding
         setNeedsUpdateConstraints()
     }
 }
