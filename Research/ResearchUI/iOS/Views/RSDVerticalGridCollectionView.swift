@@ -97,61 +97,17 @@ open class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     /// The horizontal spacing between cells
-    open var horizontalCellSpacingAbsolute: CGFloat = 12 {
+    open var horizontalCellSpacing: CGFloat = 0 {
         didSet {
             self.refreshCellSpacing()
         }
-    }
-    /// If non-negative, this will be used  to determine horizontal cell spacing instead of the absolute spacing.
-    /// The ratio is cell width * ratio = horizontal spacing.
-    open var horizontalCellSpacingRatio: CGFloat = -1 {
-        didSet {
-            self.refreshCellSpacing()
-        }
-    }
-    /// If the cellSpacingRatio is non-negative, it will be used  to determine cell spacing instead of absoluteCellSpacing.
-    /// Otherwise, the spacing will be the absoluteCellSpacing.
-    fileprivate var horizontalCellSpacing: CGFloat {
-        if horizontalCellSpacingRatio > 0 {
-            let collectionViewWidth = collectionView?.bounds.width ?? 0
-            if collectionViewWidth == 0 || columnCount == 0 {
-                return 0
-            }
-            let estimatedCellWidth = collectionViewWidth / CGFloat(columnCount)
-            return estimatedCellWidth * horizontalCellSpacingRatio
-        }
-        return horizontalCellSpacingAbsolute
     }
     
     /// The veritcal spacing between each individual cell
-    open var verticalCellSpacingAbsolute: CGFloat = 12 {
+    open var verticalCellSpacing: CGFloat = 0 {
         didSet {
             self.refreshCellSpacing()
         }
-    }
-    /// If non-negative, this will be used  to determine cell spacing instead of the absolute spacing
-    /// Ratio is cell height * ratio = vertical spacing
-    open var verticalCellSpacingRatio: CGFloat = -1 {
-        didSet {
-            self.refreshCellSpacing()
-        }
-    }
-    /// If the vertical ratio is non-negative, it will be used to determine vertical spacing between each cell.
-    /// Otherwise, the vertical spacing will be the absolute value
-    fileprivate var verticalCellSpacing: CGFloat {
-        if verticalCellSpacingRatio > 0 {
-            let collectionViewWidth = collectionView?.bounds.width ?? 0
-            if collectionViewWidth == 0 || columnCount == 0 {
-                return 0
-            }
-            var cellHeight = cellHeightAbsolute
-            if cellHeightRatio > 0 {
-                let estimatedCellWidth = collectionViewWidth / CGFloat(columnCount)
-                cellHeight = estimatedCellWidth * cellHeightRatio
-            }
-            return cellHeight * verticalCellSpacingRatio
-        }
-        return verticalCellSpacingAbsolute
     }
     
     /// The ratio of cellSpacing to cell horizontal border
@@ -209,15 +165,15 @@ open class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
         var bottomInset = CGFloat(0)
         
         // Default insets of the cell spacing
-        var leadingTrailingInset = CGFloat(Int(horizontalCellSpacing * CGFloat(cellHorizontalBorderRatio)))
         // Check for item being in the last row
         if section >= lastRowIndex {
             bottomInset = verticalCellSpacing
-            // Calculate the cells width in the last row and find the section inset to center them
-            let itemsInLastRow = itemCountInSection(section: lastRowIndex)
-            let cellsWidth = (CGFloat(itemsInLastRow - 1) * horizontalCellSpacing) + (cellWidth * CGFloat(itemsInLastRow))
-            leadingTrailingInset = (collectionViewWidth - cellsWidth) * CGFloat(0.5)
         }
+        // Calculate the cells width in the row and find the section inset to center them
+        let itemsInRow = itemCountInSection(section: section)
+        let cellsWidth = (self.cellWidth * CGFloat(itemsInRow)) + (horizontalCellSpacing * CGFloat(itemsInRow - 1))
+        let leadingTrailingInset = CGFloat(Int((collectionViewWidth - cellsWidth) * CGFloat(0.5))) - 1
+        
         return UIEdgeInsets(top: topInset, left: leadingTrailingInset, bottom: bottomInset, right: leadingTrailingInset)
     }
     

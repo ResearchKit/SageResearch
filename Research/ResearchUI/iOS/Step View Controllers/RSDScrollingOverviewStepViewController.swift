@@ -172,10 +172,12 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
     fileprivate func setupCollectionView() {
         
+        self.iconCollectionView.backgroundColor = UIColor.purple
+        
         self.iconCollectionView.gridLayout.columnCount = 3
-        self.iconCollectionView.gridLayout.cellHeightAbsolute = 124
-        self.iconCollectionView.gridLayout.horizontalCellSpacingRatio = 0.25
-        self.iconCollectionView.gridLayout.verticalCellSpacingRatio = 0.1
+        self.iconCollectionView.gridLayout.cellHeightAbsolute = 120
+        self.iconCollectionView.gridLayout.horizontalCellSpacing = 16
+        self.iconCollectionView.gridLayout.verticalCellSpacing = 12
         self.iconCollectionView.gridLayout.itemCount = self.overviewStep?.icons?.count ?? 0
         
         if let flowLayout = self.iconCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -297,7 +299,7 @@ public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
         let background = self.backgroundColorTile ?? RSDGrayScale().white
         let contentTile = designSystem.colorRules.tableCellBackground(on: background, isSelected: isSelected)
 
-        contentView.backgroundColor = contentTile.color
+        contentView.backgroundColor = UIColor.red//contentTile.color
         titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: RSDTitleHeaderCollectionViewHeader.titleTextType)
         titleLabel?.font = RSDTitleHeaderCollectionViewHeader.titleLabelFont(for: designSystem)
     }
@@ -358,7 +360,7 @@ public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
         let background = self.backgroundColorTile ?? RSDGrayScale().white
         let contentTile = designSystem.colorRules.tableCellBackground(on: background, isSelected: isSelected)
 
-        contentView.backgroundColor = contentTile.color
+        contentView.backgroundColor = UIColor.green//contentTile.color
         titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: titleTextType)
         titleLabel?.font = designSystem.fontRules.font(for: titleTextType, compatibleWith: traitCollection)
     }
