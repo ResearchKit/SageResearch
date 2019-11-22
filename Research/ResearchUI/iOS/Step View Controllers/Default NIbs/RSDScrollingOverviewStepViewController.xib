@@ -30,7 +30,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="1084"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCy-4g-nIJ" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="895"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="894.66666666666663"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fxA-Tz-ZiS" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="405"/>
@@ -102,7 +102,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                 <constraint firstItem="fxA-Tz-ZiS" firstAttribute="top" secondItem="nCy-4g-nIJ" secondAttribute="top" id="8Gj-8R-eaj"/>
                                 <constraint firstItem="0hp-ki-ShH" firstAttribute="leading" secondItem="nCy-4g-nIJ" secondAttribute="leading" constant="32" id="8zg-cU-WP0"/>
                                 <constraint firstItem="6z9-Mw-lOx" firstAttribute="leading" secondItem="nCy-4g-nIJ" secondAttribute="leading" constant="24" id="91F-vB-JEJ"/>
-                                <constraint firstAttribute="bottom" secondItem="RSd-FZ-bEg" secondAttribute="bottom" constant="40.333333333333371" id="K2g-cr-CZz"/>
+                                <constraint firstAttribute="bottom" secondItem="RSd-FZ-bEg" secondAttribute="bottom" constant="40" id="K2g-cr-CZz"/>
                                 <constraint firstItem="RSd-FZ-bEg" firstAttribute="leading" secondItem="nCy-4g-nIJ" secondAttribute="leading" id="OOv-NW-43L"/>
                                 <constraint firstAttribute="trailing" secondItem="6z9-Mw-lOx" secondAttribute="trailing" constant="24" id="aTk-Ie-R80"/>
                                 <constraint firstItem="6z9-Mw-lOx" firstAttribute="centerX" secondItem="nCy-4g-nIJ" secondAttribute="centerX" id="dUv-iH-dor"/>

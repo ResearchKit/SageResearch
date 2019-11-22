@@ -33,12 +33,6 @@
 
 import UIKit
 
-internal let kCollectionCellSideMargin: CGFloat = 0.0
-internal let kCollectionCellSeparatorInsetMargin: CGFloat = 0.0
-internal let kCollectionCellTopMargin: CGFloat = 0.0
-internal let kCollectionCellBottomMargin: CGFloat = 0.0
-internal let kCollectionCellSectionTopMargin: CGFloat = 0.0
-
 /// `RSDCollectionViewCell` is used to display a collection cell.
 @IBDesignable open class RSDCollectionViewCell : RSDDesignableCollectionViewCell {
     

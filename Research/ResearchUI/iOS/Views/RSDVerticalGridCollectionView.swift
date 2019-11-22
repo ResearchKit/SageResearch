@@ -33,6 +33,8 @@
 
 import Foundation
 
+/// The 'RSDVerticalGridCollectionView' is a normal collection view that forces a
+/// 'RSDVerticalGridCollectionViewFlowLayout' as the colelction view layout
 open class RSDVerticalGridCollectionView: UICollectionView {
     
     /// Force cast of collectin view layout as a RSDVerticalGridCollectionViewFlowLayout
@@ -67,139 +69,167 @@ open class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
             
     /// The number of columns in each row of the grid
     open var columnCount: Int = 3
+    
+    /// The width of a cell in the row when it is full at the column count
+    fileprivate var cellWidth: CGFloat {
+        let collectionViewWidth = (collectionView?.bounds.width ?? 0)
+        if collectionViewWidth == 0 {
+            return 0
+        }
+        let width = (collectionViewWidth - (CGFloat(columnCount) * horizontalCellSpacing)) / CGFloat(columnCount)
+        // Round down the value so that we make sure the cells fit in the full width
+        return CGFloat(Int(width))
+    }
         
     /// The height of each individual cell
-    open var cellHeight: CGFloat = 120
+    open var cellHeightAbsolute: CGFloat = 120
+    /// If non-negative, this will be used  to determine height instead of the absolute height
+    /// Ratio is width * ratio = height
+    open var cellHeightRatio: CGFloat = -1
     
-    /// The spacing between cells and between each cell and the collection view border
-    open var cellSpacing: CGFloat = 10 {
+    /// If cellHeightRatio is non-negative, it will be used  to determine height instead of the absolute height
+    /// Otherwise the height will be the absolute cellHeight var
+    fileprivate var cellHeight: CGFloat {
+        if cellHeightRatio > 0 {
+            return cellWidth * cellHeightRatio
+        }
+        return cellHeightAbsolute
+    }
+    
+    /// The horizontal spacing between cells
+    open var horizontalCellSpacingAbsolute: CGFloat = 12 {
         didSet {
-            self.sectionInset = UIEdgeInsets(top: cellSpacing, left: cellSpacing, bottom: cellSpacing, right: cellSpacing)
-            self.minimumInteritemSpacing = cellSpacing
-            self.minimumLineSpacing = cellSpacing
+            self.refreshCellSpacing()
         }
     }
+    /// If non-negative, this will be used  to determine horizontal cell spacing instead of the absolute spacing.
+    /// The ratio is cell width * ratio = horizontal spacing.
+    open var horizontalCellSpacingRatio: CGFloat = -1 {
+        didSet {
+            self.refreshCellSpacing()
+        }
+    }
+    /// If the cellSpacingRatio is non-negative, it will be used  to determine cell spacing instead of absoluteCellSpacing.
+    /// Otherwise, the spacing will be the absoluteCellSpacing.
+    fileprivate var horizontalCellSpacing: CGFloat {
+        if horizontalCellSpacingRatio > 0 {
+            let collectionViewWidth = collectionView?.bounds.width ?? 0
+            if collectionViewWidth == 0 || columnCount == 0 {
+                return 0
+            }
+            let estimatedCellWidth = collectionViewWidth / CGFloat(columnCount)
+            return estimatedCellWidth * horizontalCellSpacingRatio
+        }
+        return horizontalCellSpacingAbsolute
+    }
+    
+    /// The veritcal spacing between each individual cell
+    open var verticalCellSpacingAbsolute: CGFloat = 12 {
+        didSet {
+            self.refreshCellSpacing()
+        }
+    }
+    /// If non-negative, this will be used  to determine cell spacing instead of the absolute spacing
+    /// Ratio is cell height * ratio = vertical spacing
+    open var verticalCellSpacingRatio: CGFloat = -1 {
+        didSet {
+            self.refreshCellSpacing()
+        }
+    }
+    /// If the vertical ratio is non-negative, it will be used to determine vertical spacing between each cell.
+    /// Otherwise, the vertical spacing will be the absolute value
+    fileprivate var verticalCellSpacing: CGFloat {
+        if verticalCellSpacingRatio > 0 {
+            let collectionViewWidth = collectionView?.bounds.width ?? 0
+            if collectionViewWidth == 0 || columnCount == 0 {
+                return 0
+            }
+            var cellHeight = cellHeightAbsolute
+            if cellHeightRatio > 0 {
+                let estimatedCellWidth = collectionViewWidth / CGFloat(columnCount)
+                cellHeight = estimatedCellWidth * cellHeightRatio
+            }
+            return cellHeight * verticalCellSpacingRatio
+        }
+        return verticalCellSpacingAbsolute
+    }
+    
+    /// The ratio of cellSpacing to cell horizontal border
+    open var cellHorizontalBorderRatio = 0.5
     
     /// The number of items in the grid
     open var itemCount: Int = 0 {
         didSet {
             if itemCount > 0 {
-                self.itemSize = self.gridCellSize(for: 0)
+                self.itemSize = self.cellSize(for: IndexPath(row: 0, section: 0))
             }
         }
     }
     
-    /// Calculate the row for the item index
-    fileprivate func row(for itemIndex: Int) -> Int {
-        return (itemIndex / columnCount)
+    /// This needs to be used for the collection view delegate section count
+    public var sectionCount: Int {
+        return ((itemCount - 1) / columnCount) + 1
     }
     
-    /// The width of a cell in the row when it is full at the column count
-    fileprivate var maxIconCollectionCellWidth: CGFloat {
-        let collectionViewWidth = (collectionView?.bounds.width ?? 0)
-        if collectionViewWidth == 0 {
-            return 0
-        }
-        return ((collectionViewWidth - (CGFloat(columnCount + 1) * cellSpacing)) / CGFloat(columnCount))
-    }
-    
-    /// The cell size for the items in a particular row. The last row may have different sizes
-    /// then the rest of the rows as it may have less items and they need to fill the full space
-    fileprivate func gridCellSize(for itemIndex: Int) -> CGSize {
-        
-        // Check for valid collection view size
-        var collectionViewWidth = (collectionView?.bounds.width ?? 0)
-        if collectionViewWidth == 0 {
-            // Collection view size cannot be 0, 0
-            return CGSize(width: 1, height: 1)
-        }
-        // Adjust the width to reflect outer leading/trailing padding
-        collectionViewWidth -= (2 * cellSpacing)
-        
-        // The column width of a full row
-        let columnWidth = self.maxIconCollectionCellWidth
-        // See if we are in the last row, the row of interest
+    /// This needs to be used for the collection view delegate section count
+    public func itemCountInSection(section: Int) -> Int {
         let lastRowIndex = itemCount / columnCount
-        let row = self.row(for: itemIndex)
-        
-        // Get the first and last item indexes of the last row
-        let lastItemIndex = itemCount - 1
-        let firstItemIndexOfLastRow = lastRowIndex * columnCount
-        
-        // Check for the special case of there only being one item in the row
-        if row >= lastRowIndex && lastItemIndex == firstItemIndexOfLastRow {
-            return CGSize(width: CGFloat(Int(collectionViewWidth)), height: cellHeight)
-        } // Check to see if we should return the standard cell size, that of a full grid row
-        else if row < lastRowIndex ||
-            (itemIndex != lastItemIndex && itemIndex != firstItemIndexOfLastRow) {
-            // Return the normal cell size of a full grid row
-            return CGSize(width: CGFloat(Int(columnWidth)), height: cellHeight)
+        if section < lastRowIndex {
+            return columnCount
         }
-        
-        // Otherwise, the first and last cell will fill the rest of the width
-        // To force the rest of the standard grid cells of the last row to be centered
-        let middleCellsCount = (lastItemIndex - firstItemIndexOfLastRow - 1)
-        let middleCellsWidth = (CGFloat(middleCellsCount + 1) * cellSpacing) + (CGFloat(middleCellsCount) * columnWidth)
-        let outerCellsWidth = (collectionViewWidth - middleCellsWidth) * CGFloat(0.5)
-
-        // Return an outer cell width for the last row
-        return CGSize(width: CGFloat(Int(outerCellsWidth)), height: cellHeight)
+        return itemCount % columnCount
+    }
+    
+    /// Return the item index from the index path
+    public func itemIndex(for indexPath: IndexPath) -> Int {
+        return (indexPath.section * columnCount) + indexPath.row
     }
     
     /// The leading and trailing padding for a cell to make it centered horizontally
     /// For most items in most rows, this is 0, as they are a full row,
     /// but for the last row where there may be less items than the column count,
     /// this can be used to make those items the same size as the previous items rows
-    public func horizontalPaddingToCenter(for itemIndex: Int) -> (leading: CGFloat, trailing: CGFloat) {
-        // Calculate the horizontal padding to center the content with layout margins
-        let cellSize = self.gridCellSize(for: itemIndex)
-        let horizontalOffset = CGFloat(Int(cellSize.width - self.maxIconCollectionCellWidth))
+    public func seciontInset(for section: Int) -> UIEdgeInsets {
         
-        // Get the first and last item indexes of the last row
-        let lastItemIndex = itemCount - 1
-        let lastRowIndex = itemCount / columnCount
-        let firstItemIndexOfLastRow = lastRowIndex * columnCount
-                
-        if itemIndex == lastItemIndex && lastItemIndex != firstItemIndexOfLastRow {
-            // Have a trailing padding that will forec the last item of the last row centered
-            return (0, horizontalOffset)
-        } else if itemIndex == firstItemIndexOfLastRow && lastItemIndex != firstItemIndexOfLastRow {
-            // Have a leading padding that will forec the first item of the last row centered
-            return (horizontalOffset, 0)
-        } else {
-            // The horizontal offset will be 0 when it is a full row
-            // or it may be non-zero if there is a single item in a row
-            return (horizontalOffset * CGFloat(0.5), horizontalOffset * CGFloat(0.5))
+        // Check for valid collection view size
+        let collectionViewWidth = (collectionView?.bounds.width ?? 0)
+        if collectionViewWidth == 0 {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
-    }
-    
-    /// The cell size for the item index
-    public func cellSize(for itemIndex: Int) -> CGSize {
-        if itemCount == 0 {
-            // Collectionview cannot have a cell of zero size
-            return CGSize(width: 1, height: 1)
-        }
-        return self.gridCellSize(for: itemIndex)
-    }
-    
-    public override init() {
-        super.init()
-    }
-    
-    required public init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    func refreshCellSpacing() {
-        self.sectionInset = UIEdgeInsets(top: cellSpacing, left: cellSpacing, bottom: cellSpacing, right: cellSpacing)
-        self.minimumInteritemSpacing = cellSpacing
-        self.minimumLineSpacing = cellSpacing
-    }
-}
 
-public protocol RSDGridCollectionViewCell {
-    /// The grid collection view flow layout can communicate to a cell what the leading/trailing
-    /// padding for the cell would be to make it the same size as the other smaller cells
-    /// This can be used to make sure the content in all the cells is the same size
-    func setLeadingTrailingPadding(leadingPadding: CGFloat, trailingPadding: CGFloat)
+        // See if we are in the last row, the row of interest
+        let lastRowIndex = itemCount / columnCount
+
+        // Top inset is zero on first row, and cell spacing for every other
+        var topInset = verticalCellSpacing
+        if section == 0 {
+            topInset = 0
+        }
+        // Bottom inset is zero for all row but the last, and may be set again below
+        var bottomInset = CGFloat(0)
+        
+        // Default insets of the cell spacing
+        var leadingTrailingInset = CGFloat(Int(horizontalCellSpacing * CGFloat(cellHorizontalBorderRatio)))
+        // Check for item being in the last row
+        if section >= lastRowIndex {
+            bottomInset = verticalCellSpacing
+            // Calculate the cells width in the last row and find the section inset to center them
+            let itemsInLastRow = itemCountInSection(section: lastRowIndex)
+            let cellsWidth = (CGFloat(itemsInLastRow - 1) * horizontalCellSpacing) + (cellWidth * CGFloat(itemsInLastRow))
+            leadingTrailingInset = (collectionViewWidth - cellsWidth) * CGFloat(0.5)
+        }
+        return UIEdgeInsets(top: topInset, left: leadingTrailingInset, bottom: bottomInset, right: leadingTrailingInset)
+    }
+    
+    /// The cell size for the item
+    public func cellSize(for indexPath: IndexPath) -> CGSize {
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    /// Refresh the cell spacing in the underlying flow layout
+    func refreshCellSpacing() {
+        self.sectionInset = UIEdgeInsets(top: verticalCellSpacing, left: horizontalCellSpacing, bottom: verticalCellSpacing, right: horizontalCellSpacing)
+        self.minimumInteritemSpacing = horizontalCellSpacing
+        self.minimumLineSpacing = verticalCellSpacing
+    }
 }
