@@ -37,6 +37,9 @@ import UIKit
 /// that uses a scrollview to allow showing detailed overview instructions.
 open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
+    /// The iPhone SE width to be used for scaling the UI
+    let smallPhoneWidth = CGFloat(640)
+    
     /// The constraint that sets the scroll bar's top background view's height.
     @IBOutlet
     open weak var scrollViewBackgroundHeightConstraint: NSLayoutConstraint!
@@ -172,13 +175,27 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
     fileprivate func setupCollectionView() {
         
-        self.iconCollectionView.backgroundColor = UIColor.purple
-        
-        self.iconCollectionView.gridLayout.columnCount = 3
-        self.iconCollectionView.gridLayout.cellHeightAbsolute = 120
-        self.iconCollectionView.gridLayout.horizontalCellSpacing = 16
+        // Based on phone screen width, we should set different attributes
+        if UIScreen.main.nativeBounds.width <= smallPhoneWidth {
+            self.iconCollectionView.gridLayout.columnCount = 2
+            self.iconCollectionView.gridLayout.horizontalCellSpacing = 16
+            self.iconCollectionView.gridLayout.cellHeightAbsolute = 110
+        } else {
+            self.iconCollectionView.gridLayout.columnCount = 3
+            self.iconCollectionView.gridLayout.horizontalCellSpacing = 24
+            self.iconCollectionView.gridLayout.cellHeightAbsolute = 140
+        }
         self.iconCollectionView.gridLayout.verticalCellSpacing = 12
-        self.iconCollectionView.gridLayout.itemCount = self.overviewStep?.icons?.count ?? 0
+        
+        let itemCount = self.overviewStep?.icons?.count ?? 0
+        self.iconCollectionView.gridLayout.itemCount = itemCount
+        
+        // When there is only 1 or 2 items, give them extra room
+        if itemCount == 1 {
+            self.iconCollectionView.gridLayout.columnCount = 2
+        } else if itemCount == 2 {
+            self.iconCollectionView.gridLayout.columnCount = 2
+        }
         
         if let flowLayout = self.iconCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.headerReferenceSize = CGSize(width: iconCollectionView.bounds.width, height: self.iconCollectionViewHeaderHeight)
@@ -299,7 +316,7 @@ public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
         let background = self.backgroundColorTile ?? RSDGrayScale().white
         let contentTile = designSystem.colorRules.tableCellBackground(on: background, isSelected: isSelected)
 
-        contentView.backgroundColor = UIColor.red//contentTile.color
+        contentView.backgroundColor = contentTile.color
         titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: RSDTitleHeaderCollectionViewHeader.titleTextType)
         titleLabel?.font = RSDTitleHeaderCollectionViewHeader.titleLabelFont(for: designSystem)
     }
@@ -360,7 +377,7 @@ public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
         let background = self.backgroundColorTile ?? RSDGrayScale().white
         let contentTile = designSystem.colorRules.tableCellBackground(on: background, isSelected: isSelected)
 
-        contentView.backgroundColor = UIColor.green//contentTile.color
+        contentView.backgroundColor = contentTile.color
         titleLabel?.textColor = designSystem.colorRules.textColor(on: contentTile, for: titleTextType)
         titleLabel?.font = designSystem.fontRules.font(for: titleTextType, compatibleWith: traitCollection)
     }
