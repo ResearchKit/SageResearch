@@ -48,7 +48,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     var titleTopConstraint: NSLayoutConstraint!
     
-    /// The collection view cell re-usable identifiers
+    /// The collection view cell re-usable identifiers.
     let iconCollectionHeaderTitleCellResuableCellId = "HeaderTitleCell"
     let iconCollectionViewCellResuableCellId = "IconCollectionCell"
 
@@ -66,7 +66,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     @IBOutlet
     var learnMoreHeightConstraint: NSLayoutConstraint!
 
-    /// The overview step for this view controller
+    /// The overview step for this view controller.
     open var overviewStep: RSDOverviewStep? {
         return self.step as? RSDOverviewStep
     }
@@ -75,14 +75,13 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
          return Localization.localizedString("OVERVIEW_WHAT_YOU_NEED")
     }
     
-    /// The header height for the icon collection view title label
-    /// This is a dynamic height label but section headers for collection views do not support auto-layout
-    /// Therefore we must dynamically calculate the header size
+    /// This function calculates the header height for the icon collection view title label.
+    /// This is a dynamic height label, but section headers for collection views do not support auto-layout.
+    /// Therefore, we must dynamically calculate the header size.
     open var iconCollectionViewHeaderHeight: CGFloat {
-        // Create the label to size it correctly dynamically
+        // Create the label to size it correctly dynamically.
         let label = RSDTitleHeaderCollectionViewHeader.createTitleLabel()
         label.frame = CGRect(x: 0, y: 0, width: iconCollectionView.bounds.width, height: CGFloat.greatestFiniteMagnitude)
-        //here, be sure you set the font type and size that matches the one set in the storyboard label
         if let system = self.designSystem {
             label.font = RSDTitleHeaderCollectionViewHeader.titleLabelFont(for: system)
         }
@@ -175,7 +174,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
     fileprivate func setupCollectionView() {
         
-        // Based on phone screen width, we should set different attributes
+        // Based on phone screen width, we should set different attributes.
         if UIScreen.main.nativeBounds.width <= smallPhoneWidth {
             self.iconCollectionView.gridLayout.columnCount = 2
             self.iconCollectionView.gridLayout.horizontalCellSpacing = 16
@@ -190,7 +189,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         let itemCount = self.overviewStep?.icons?.count ?? 0
         self.iconCollectionView.gridLayout.itemCount = itemCount
         
-        // When there is only 1 or 2 items, give them extra room
+        // When there is only 1 or 2 items, give them extra room.
         if itemCount == 1 {
             self.iconCollectionView.gridLayout.columnCount = 2
         } else if itemCount == 2 {
@@ -208,9 +207,9 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         self.iconCollectionView.reloadData()
     }
 
-    /// Look at the collection view content height and make the height constraint equal to it
+    /// Look at the collection view content height and make the height constraint equal to it.
     fileprivate func forceFullHeightForCollectionView() {
-        // Make collectionview the full height of its content
+        // Make collectionview the full height of its content.
         self.iconCollectionViewHeight.constant = self.iconCollectionView.collectionViewLayout.collectionViewContentSize.height
         self.iconCollectionView.collectionViewLayout.invalidateLayout()
         // Disable user interection so that the scrollview can properly scroll
@@ -237,11 +236,12 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
         let cell = self.iconCollectionView.dequeueReusableCell(withReuseIdentifier: iconCollectionViewCellResuableCellId, for: indexPath)
         
-        // The grid layout stores items as (section, row) so, make sure
-        // we use the grid layout to get the correct item index
+        // The grid layout stores items as (section, row),
+        // so make sure we use the grid layout to get the correct item index.
         let itemIndex = self.iconCollectionView.gridLayout.itemIndex(for: indexPath)
 
         if let overviewCell = cell as? RSDOverviewCollectionViewCell {
+            overviewCell.indexPath = indexPath
             overviewCell.setDesignSystem(self.designSystem, with: self.backgroundColor(for: .body))
             if let icons = self.overviewStep?.icons,
                 indexPath.row < icons.count {
@@ -256,11 +256,11 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     }
     
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        // Only have a section header in the first section
+        // Only have a section header in the first section.
         if section == 0 {
             return CGSize(width: iconCollectionView.bounds.width, height: self.iconCollectionViewHeaderHeight)
         }
-        // Otherwise make the size of the section have no height
+        // Otherwise make the size of the section have no height.
         return CGSize(width: iconCollectionView.bounds.width, height: 0)
     }
     
@@ -292,6 +292,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     }
 }
 
+/// `RSDTitleHeaderCollectionViewHeader` shows a simple title label.
 public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
     
     static let kCollectionHeaderTopMargin: CGFloat = 8.0
@@ -331,7 +332,7 @@ public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
     }
 
     private func commonInit() {
-        // Add the title label
+        // Add the title label.
         titleLabel = RSDTitleHeaderCollectionViewHeader.createTitleLabel()
         contentView.addSubview(titleLabel!)
 
@@ -352,7 +353,7 @@ public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
     }
 }
 
-/// `RSDSelectionTableViewCell` is the base implementation for a selection collection view cell.
+/// `RSDOverviewCollectionViewCell` shows a vertically stacked image icon and title label.
 @IBDesignable open class RSDOverviewCollectionViewCell: RSDCollectionViewCell {
 
     let kCollectionCellVeritcalItemSpacing = CGFloat(6)
@@ -388,7 +389,7 @@ public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
     }
 
     private func commonInit() {
-        // Add the title label
+        // Add the title label.
         titleLabel = UILabel()
         contentView.addSubview(titleLabel!)
         
@@ -396,11 +397,11 @@ public class RSDTitleHeaderCollectionViewHeader: RSDCollectionViewCell {
         titleLabel!.numberOfLines = 0
         titleLabel!.textAlignment = .center
         titleLabel!.rsd_alignToSuperview([.leading, .trailing], padding: 0)
-        // This constraint is needed so the title label takes up only as much height as it needs
+        // This constraint is needed so the title label takes up only as much height as it needs.
         titleLabel!.rsd_align([.top], .greaterThanOrEqual, to: titleLabel!.superview!, [.topMargin], padding: 0)
         titleLabel!.rsd_alignToSuperview([.bottom], padding: 0)
 
-        // Add the image view
+        // Add the image view.
         imageView = UIImageView()
         contentView.addSubview(imageView!)
 

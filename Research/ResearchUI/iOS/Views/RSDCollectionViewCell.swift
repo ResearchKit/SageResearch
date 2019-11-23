@@ -43,12 +43,12 @@ import UIKit
 /// `RSDDesignableCollectionViewCell` is used to display a collection cell that conforms to the `RSDViewDesignable` protocol.
 @IBDesignable open class RSDDesignableCollectionViewCell : UICollectionViewCell, RSDViewDesignable {
     
-    /// Does this cell use the table background color to set the color of the content view?
-    open private(set) var usesTableBackgroundColor: Bool = false
+    /// Does this cell use the colection view background color to set the color of the content view?
+    open private(set) var usesCollectionBackgroundColor: Bool = false
     
     /// The background color for the collection cell.
     open var backgroundColorTile: RSDColorTile? {
-        if usesTableBackgroundColor {
+        if usesCollectionBackgroundColor {
             if let background = collectionViewBackgroundColorTile {
                 return background
             }
@@ -72,7 +72,7 @@ import UIKit
     open func setDesignSystem(_ designSystem: RSDDesignSystem, with background: RSDColorTile) {
         self.designSystem = designSystem
         self.collectionViewBackgroundColorTile = background
-        if usesTableBackgroundColor {
+        if usesCollectionBackgroundColor {
             self.contentView.backgroundColor = background.color
         }
         if let contentTile = self.backgroundColorTile {
