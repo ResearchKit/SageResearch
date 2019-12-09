@@ -1,8 +1,8 @@
 //
-//  RSDVerticalGridCollectionView.swift
+//  RSDVerticalGridCollectionViewFlowLayout.swift
 //  ResearchUI (iOS)
 //
-//  Copyright © 2017 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,62 +33,42 @@
 
 import Foundation
 
-/// The 'RSDVerticalGridCollectionView' is a normal collection view that forces a
-/// 'RSDVerticalGridCollectionViewFlowLayout' as the colelction view layout
-open class RSDVerticalGridCollectionView: UICollectionView {
-    
-    /// Force cast of collectin view layout as a RSDVerticalGridCollectionViewFlowLayout
-    open var gridLayout: RSDVerticalGridCollectionViewFlowLayout {
-        return self.collectionViewLayout as! RSDVerticalGridCollectionViewFlowLayout
-    }
-    
-    public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
-        
-        super.init(frame: frame, collectionViewLayout: layout)
-                        
-        if !layout.isKind(of: RSDVerticalGridCollectionViewFlowLayout.self) {
-            debugPrint("WARNING: UICollectionViewLayout must be RSDVerticalGridCollectionViewFlowLayout, provided one will be overwritten")
-            self.initDefaultFlowLayout()
-        }
-    }
-
-    public required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        self.initDefaultFlowLayout()
-    }
-    
-    fileprivate func initDefaultFlowLayout() {
-        let layout = RSDVerticalGridCollectionViewFlowLayout()
-        self.collectionViewLayout = layout
-    }
-}
-
 /// The 'RSDVerticalGridCollectionViewFlowLayout' creates a centered grid layout in conjunction with
 /// the 'RSDVerticalGridCollectionView'.  As the class name implies, this class only works currently in a vertical orientation.
-open class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
+public class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
             
-    /// The number of columns in each row of the grid
-    open var columnCount: Int = 3
-    
-    /// The width of a cell in the row when it is full at the column count
-    fileprivate var cellWidth: CGFloat {
-        let collectionViewWidth = (collectionView?.bounds.width ?? 0)
-        if collectionViewWidth == 0 {
-            return 0
+    /// The number of columns in each row of the grid.
+    open var columnCount: Int = 3 {
+        didSet {
+            self.invalidateLayout()
         }
+    }
+    
+    /// Set the collection view width so the view can calculate the cell width
+    open var collectionViewWidth: CGFloat = -1.0
+    
+    /// The width of a cell in the row when it is full at the column count.
+    fileprivate var cellWidth: CGFloat {
+        guard collectionViewWidth > 0,
+            columnCount > 0
+            else {
+                return 0
+            }
+        
         let width = (collectionViewWidth - (CGFloat(columnCount) * horizontalCellSpacing)) / CGFloat(columnCount)
         // Round down the value so that we make sure the cells fit in the full width
         return CGFloat(Int(width))
     }
         
-    /// The height of each individual cell
+    /// The height of each individual cell.
     open var cellHeightAbsolute: CGFloat = 120
-    /// If non-negative, this will be used  to determine height instead of the absolute height
-    /// Ratio is width * ratio = height
+    
+    /// If non-negative, this will be used  to determine height instead of the absolute height,
+    /// ratio is width * ratio = height.
     open var cellHeightRatio: CGFloat = -1
     
-    /// If cellHeightRatio is non-negative, it will be used  to determine height instead of the absolute height
-    /// Otherwise the height will be the absolute cellHeight var
+    /// If cellHeightRatio is non-negative, it will be used  to determine height instead of the absolute height.
+    /// Otherwise the height will be the absolute cellHeight var.
     fileprivate var cellHeight: CGFloat {
         if cellHeightRatio > 0 {
             return cellWidth * cellHeightRatio
@@ -96,14 +76,14 @@ open class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return cellHeightAbsolute
     }
     
-    /// The horizontal spacing between cells
+    /// The horizontal spacing between cells.
     open var horizontalCellSpacing: CGFloat = 0 {
         didSet {
             self.refreshCellSpacing()
         }
     }
     
-    /// The veritcal spacing between each individual cell
+    /// The veritcal spacing between each individual cell.
     open var verticalCellSpacing: CGFloat = 0 {
         didSet {
             self.refreshCellSpacing()
@@ -118,19 +98,22 @@ open class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
         didSet {
             if itemCount > 0 {
                 self.itemSize = self.cellSize(for: IndexPath(row: 0, section: 0))
+                self.invalidateLayout()
             }
         }
     }
     
     /// This needs to be used for the collection view delegate section count
     public var sectionCount: Int {
+        guard columnCount > 0 else { return 0 }
         return ((itemCount - 1) / columnCount) + 1
     }
     
     /// This needs to be used for the collection view delegate section count
-    public func itemCountInSection(section: Int) -> Int {
-        let lastRowIndex = itemCount / columnCount
-        if section < lastRowIndex {
+    public func itemCountInGridRow(gridRow: Int) -> Int {
+        guard columnCount > 0 else { return 0 }
+        let lastGridRow = itemCount / columnCount
+        if gridRow < lastGridRow {
             return columnCount
         }
         return itemCount % columnCount
@@ -138,39 +121,31 @@ open class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     /// Return the item index from the index path
     public func itemIndex(for indexPath: IndexPath) -> Int {
-        return (indexPath.section * columnCount) + indexPath.row
+        return (indexPath.gridrow * columnCount) + indexPath.gridcolumn
     }
     
     /// The leading and trailing padding for a cell to make it centered horizontally
     /// For most items in most rows, this is 0, as they are a full row,
     /// but for the last row where there may be less items than the column count,
     /// this can be used to make those items the same size as the previous items rows
-    public func seciontInset(for section: Int) -> UIEdgeInsets {
+    public func secionInset(for gridRow: Int) -> UIEdgeInsets {
         
         // Check for valid collection view size
-        let collectionViewWidth = (collectionView?.bounds.width ?? 0)
-        if collectionViewWidth == 0 {
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        }
+        guard collectionViewWidth > 0,
+            columnCount > 0
+            else {
+                return UIEdgeInsets.zero
+            }
 
         // See if we are in the last row, the row of interest
-        let lastRowIndex = itemCount / columnCount
+        let lastGridRow = itemCount / columnCount
 
         // Top inset is zero on first row, and cell spacing for every other
-        var topInset = verticalCellSpacing
-        if section == 0 {
-            topInset = 0
-        }
-        // Bottom inset is zero for all row but the last, and may be set again below
-        var bottomInset = CGFloat(0)
-        
-        // Default insets of the cell spacing
-        // Check for item being in the last row
-        if section >= lastRowIndex {
-            bottomInset = verticalCellSpacing
-        }
+        let topInset = (gridRow == 0) ? 0 : verticalCellSpacing
+        // Bottom inset is zero for all row but the last
+        let bottomInset: CGFloat = (gridRow >= lastGridRow) ? verticalCellSpacing : 0
         // Calculate the cells width in the row and find the section inset to center them
-        let itemsInRow = itemCountInSection(section: section)
+        let itemsInRow = itemCountInGridRow(gridRow: gridRow)
         let cellsWidth = (self.cellWidth * CGFloat(itemsInRow)) + (horizontalCellSpacing * CGFloat(itemsInRow - 1))
         let leadingTrailingInset = CGFloat(Int((collectionViewWidth - cellsWidth) * CGFloat(0.5))) - 1
         
@@ -178,14 +153,20 @@ open class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     /// The cell size for the item
-    public func cellSize(for indexPath: IndexPath) -> CGSize {
+    public final func cellSize(for indexPath: IndexPath) -> CGSize {
         return CGSize(width: cellWidth, height: cellHeight)
     }
     
     /// Refresh the cell spacing in the underlying flow layout
-    func refreshCellSpacing() {
+    private func refreshCellSpacing() {
         self.sectionInset = UIEdgeInsets(top: verticalCellSpacing, left: horizontalCellSpacing, bottom: verticalCellSpacing, right: horizontalCellSpacing)
         self.minimumInteritemSpacing = horizontalCellSpacing
         self.minimumLineSpacing = verticalCellSpacing
+        self.invalidateLayout()
     }
+}
+
+extension IndexPath {
+   fileprivate var gridrow: Int { return section }
+   fileprivate var gridcolumn: Int { return item }
 }

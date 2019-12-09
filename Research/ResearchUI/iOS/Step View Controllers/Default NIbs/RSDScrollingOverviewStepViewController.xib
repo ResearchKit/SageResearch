@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDScrollingOverviewStepViewController" customModule="ResearchUI" customModuleProvider="target">
             <connections>
-                <outlet property="iconCollectionView" destination="RSd-FZ-bEg" id="ZlK-p2-V12"/>
+                <outlet property="iconCollectionView" destination="RSd-FZ-bEg" id="WNz-ge-a18"/>
                 <outlet property="iconCollectionViewHeight" destination="qe3-rS-SUx" id="gIs-jS-1KZ"/>
                 <outlet property="learnMoreHeightConstraint" destination="RTP-JZ-48i" id="7bL-CB-kbh"/>
                 <outlet property="navigationFooter" destination="2XD-eO-28i" id="jxp-xn-zPa"/>
@@ -77,7 +77,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                     </constraints>
                                     <state key="normal" title="See this in action"/>
                                 </button>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="RSd-FZ-bEg" customClass="RSDVerticalGridCollectionView" customModule="ResearchUI" customModuleProvider="target">
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="RSd-FZ-bEg">
                                     <rect key="frame" x="0.0" y="744.66666666666663" width="375" height="110"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -90,8 +90,8 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </collectionViewFlowLayout>
                                     <connections>
-                                        <outlet property="dataSource" destination="-1" id="rSJ-A0-cEu"/>
-                                        <outlet property="delegate" destination="-1" id="xjG-1v-lXZ"/>
+                                        <outlet property="dataSource" destination="-1" id="kGz-dK-TJf"/>
+                                        <outlet property="delegate" destination="-1" id="6Gz-MS-zOv"/>
                                     </connections>
                                 </collectionView>
                             </subviews>
