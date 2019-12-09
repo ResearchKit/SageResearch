@@ -146,18 +146,16 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         updateImagePlacementConstraints()
     }
 
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         // Set the collection view width for the layout,
         // so it knows how to calculate the cell size.
         self.gridLayout.collectionViewWidth = self.iconCollectionView.bounds.width
+        // Refresh collection view sizes
+        self.setupCollectionViewSizes()
         // Force the collection view to be full height of its content.
         self.forceFullHeightForCollectionView()
-    }
-
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
 
         let shouldShowInfo = !(self.stepViewModel.rootPathComponent.shouldShowAbbreviatedInstructions ?? false)
         if shouldShowInfo {
@@ -209,6 +207,12 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         
         self.gridLayout.itemCount = (self.overviewStep?.icons?.count ?? 0)
         
+        self.iconCollectionView.register(RSDTitleHeaderCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: iconCollectionHeaderTitleCellReusableCellId)
+        
+        self.iconCollectionView.register(RSDOverviewCollectionViewCell.self, forCellWithReuseIdentifier: iconCollectionViewCellReusableCellId)
+    }
+    
+    fileprivate func setupCollectionViewSizes() {
         // Based on phone screen width, we should set different attributes.
         self.gridLayout.columnCount = self.columnCount
         self.gridLayout.horizontalCellSpacing = self.horizontalCellSpacing
@@ -218,10 +222,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         if let flowLayout = self.iconCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.headerReferenceSize = CGSize(width: iconCollectionView.bounds.width, height: self.iconCollectionViewHeaderHeight)
         }
-        
-        self.iconCollectionView.register(RSDTitleHeaderCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: iconCollectionHeaderTitleCellReusableCellId)
-        
-        self.iconCollectionView.register(RSDOverviewCollectionViewCell.self, forCellWithReuseIdentifier: iconCollectionViewCellReusableCellId)
         
         self.iconCollectionView.reloadData()
     }
