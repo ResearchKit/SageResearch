@@ -222,8 +222,6 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
         if let flowLayout = self.iconCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.headerReferenceSize = CGSize(width: iconCollectionView.bounds.width, height: self.iconCollectionViewHeaderHeight)
         }
-        
-        self.iconCollectionView.reloadData()
     }
 
     /// Look at the collection view content height and make the height constraint equal to it.
