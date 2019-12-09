@@ -94,7 +94,7 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
     
     /// The spacing horizontally between icon collection view cells
     var horizontalCellSpacing: CGFloat {
-        return isSmallScreen ? 16 : 24
+        return isSmallScreen ? 16 : 20
     }
     
     /// The height of an icon collection view cells
@@ -148,7 +148,11 @@ open class RSDScrollingOverviewStepViewController: RSDOverviewStepViewController
 
     open override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
+        // Set the collection view width for the layout,
+        // so it knows how to calculate the cell size.
         self.gridLayout.collectionViewWidth = self.iconCollectionView.bounds.width
+        // Force the collection view to be full height of its content.
         self.forceFullHeightForCollectionView()
     }
 

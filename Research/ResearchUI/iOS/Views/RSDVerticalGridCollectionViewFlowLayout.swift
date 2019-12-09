@@ -33,8 +33,14 @@
 
 import Foundation
 
-/// The 'RSDVerticalGridCollectionViewFlowLayout' creates a centered grid layout in conjunction with
-/// the 'RSDVerticalGridCollectionView'.  As the class name implies, this class only works currently in a vertical orientation.
+/// The 'RSDVerticalGridCollectionViewFlowLayout' creates a centered grid layout.
+/// As the class name implies, this class only works currently in a vertical orientation.
+///
+/// 'itemCount' and 'collectionViewWidth' must be set, and the collection view delegate
+/// must use 'sectionCount', 'itemCountInGridRow', and 'sectionInset' functions,
+/// provided by this class to render the collection view grid correctly.
+/// This is because the class works by making each row of the grid be a section.
+///
 public class RSDVerticalGridCollectionViewFlowLayout: UICollectionViewFlowLayout {
             
     /// The number of columns in each row of the grid.
