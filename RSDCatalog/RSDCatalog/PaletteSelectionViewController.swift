@@ -95,7 +95,7 @@ class PaletteSelectionViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        RSDStudyConfiguration.shared.colorPalette = choices[indexPath.item]
+        RSDDesignSystem.shared.colorRules.palette = choices[indexPath.item]
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         if let header = tableView.headerView(forSection: 0) as? TableSectionHeader {
             updateHeader(header)
@@ -115,7 +115,7 @@ class PaletteSelectionViewController: UITableViewController {
     }
     
     func updateHeader(_ header: TableSectionHeader) {
-        let palette = RSDStudyConfiguration.shared.colorPalette
+        let palette = RSDDesignSystem.shared.colorRules.palette!
         header.contentView.backgroundColor = palette.primary.normal.color
         header.titleLabel.textColor = designSystem.colorRules.textColor(on: palette.primary.normal, for: .smallHeader)
         header.titleLabel.text = "\(palette.primary.swatch.name) \(palette.primary.index)"

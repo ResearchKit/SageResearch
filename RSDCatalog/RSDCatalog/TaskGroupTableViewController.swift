@@ -75,7 +75,7 @@ class TaskGroupTableViewController: UITableViewController {
         let taskGroup = self.taskGroups[indexPath.row]
         cell.titleLabel?.text = taskGroup.title ?? taskGroup.identifier
         if let imageView = cell.thumbnailView {
-            taskGroup.imageVendor?.fetchImage(for: imageView.bounds.size) { (_, img) in
+            taskGroup.imageData?.fetchImage(for: imageView.bounds.size) { (_, img) in
                 imageView.image = img
             }
         }

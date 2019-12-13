@@ -116,7 +116,7 @@ class TaskTableViewController: UITableViewController {
         cell.titleLabel?.text = taskInfo.title ?? taskInfo.identifier
         cell.subtitleLabel?.text = taskInfo.subtitle
         if let imageView = cell.thumbnailView {
-            taskInfo.imageVendor?.fetchImage(for: imageView.bounds.size) { (_, img) in
+            taskInfo.imageData?.fetchImage(for: imageView.bounds.size) { (_, img) in
                 imageView.image = img
             }
         }
