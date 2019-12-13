@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RSDScrollingOverviewStepViewController" customModule="ResearchUI" customModuleProvider="target">
             <connections>
+                <outlet property="iconBottomConstraint" destination="hrM-VV-GbQ" id="ks7-vP-FQO"/>
                 <outlet property="iconHolder" destination="scQ-Ma-nDm" id="fdh-pZ-azr"/>
                 <outlet property="iconImagesLeadingConstraint" destination="q6T-i2-fLB" id="tWB-Dh-tQy"/>
                 <outlet property="iconImagesTrailingConstraint" destination="Fmm-Jn-GX1" id="adp-KL-d0p"/>
@@ -245,7 +246,7 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
                     </constraints>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAO-q7-fPw" userLabel="Cancel Button">
-                    <rect key="frame" x="20" y="64" width="32" height="32"/>
+                    <rect key="frame" x="20" y="64" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="MAO-q7-fPw" secondAttribute="height" multiplier="1:1" id="FQP-6M-XIU"/>
                     </constraints>
@@ -290,6 +291,6 @@ Eget gravida cum sociis natoque penatibus et magnis dis parturient. Eget duis at
     <resources>
         <image name="IconPlaceholder" width="68" height="68"/>
         <image name="InstructionPlaceholder" width="1694" height="1334"/>
-        <image name="closeActivity" width="32" height="32"/>
+        <image name="closeActivity" width="50" height="50"/>
     </resources>
 </document>
