@@ -31,11 +31,6 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#if os(macOS)
-import AppKit
-#else
-import UIKit
-#endif
 
 /// `RSDAsyncActionVendor` is an extension of the configuration protocol for configurations that
 /// know how to vend a new controller.
@@ -163,32 +158,6 @@ public protocol RSDAsyncAction : class, NSObjectProtocol {
     /// The associated task path to which the result should be attached.
     var taskViewModel: RSDPathComponent { get }
     
-    #if os(watchOS)
-    
-    /// **Available** for watchOS.
-    ///
-    /// This method should be called on the main thread with the completion handler also called on the main
-    /// thread. This method is intended to allow the controller to request any permissions associated with
-    /// this controller *before* the step change happens.
-    ///
-    /// On an Apple watch, authorization handling is managed by using a handshake request that requires opening
-    /// the paired phone and responding to the authorization on the phone. This is a cumbersome UX that must be
-    /// handled using the app delegate so it is recommended that the architecture for apps that use the watch
-    /// include authorization handling though the iPhone app prior to running a task on the watch.
-    ///
-    /// - remark: The controller should call the completion handler with an `Error` if authorization failed.
-    /// Whether or not the completion handler includes a non-nil result that includes the authorization status,
-    /// is up to the developers and researchers using this controller as a tool for gathering information for
-    /// their study.
-    ///
-    /// - parameters:
-    ///     - completion: The completion handler.
-    func requestPermissions(_ completion: @escaping RSDAsyncActionCompletionHandler)
-    
-    #elseif os(macOS)
-    
-    /// **Available** for macOS.
-    ///
     /// This method should be called on the main thread with the completion handler also called on the main
     /// thread. This method is intended to allow the controller to request any permissions associated with
     /// this controller *before* the step change happens.
@@ -209,33 +178,7 @@ public protocol RSDAsyncAction : class, NSObjectProtocol {
     /// - parameters:
     ///     - viewController: The view controler that should be used to present any modal dialogs.
     ///     - completion: The completion handler.
-    func requestPermissions(on viewController: NSViewController, _ completion: @escaping RSDAsyncActionCompletionHandler)
-    
-    #else
-    /// **Available** for iOS and tvOS.
-    ///
-    /// This method should be called on the main thread with the completion handler also called on the main
-    /// thread. This method is intended to allow the controller to request any permissions associated with
-    /// this controller *before* the step change happens.
-    ///
-    /// It is the responsibility of the controller to manage the display of any alerts that are not controlled
-    /// by the OS. The `viewController` parameter is the view controler that should be used to present any modal
-    /// dialogs.
-    ///
-    /// - note: The calling view controller or application delegate should block any UI presentation changes
-    /// until *after* the completion handler is called to ensure that any modals presented by the async
-    /// controller or the OS aren't swallowed by other UI events.
-    ///
-    /// - remark: The controller should call the completion handler with an `Error` if authorization failed.
-    /// Whether or not the completion handler includes a non-nil result that includes the authorization status,
-    /// is up to the developers and researchers using this controller as a tool for gathering information for
-    /// their study.
-    ///
-    /// - parameters:
-    ///     - viewController: The view controler that should be used to present any modal dialogs.
-    ///     - completion: The completion handler.
-    func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler)
-    #endif
+    func requestPermissions(on viewController: Any, _ completion: @escaping RSDAsyncActionCompletionHandler)
     
     /// Start the asynchronous action with the given completion handler.
     /// - note: The handler may be called on a background thread.

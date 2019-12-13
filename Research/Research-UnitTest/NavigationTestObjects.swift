@@ -254,7 +254,7 @@ public class TestAsyncActionController: NSObject, RSDAsyncAction {
         status = .permissionGranted
     }
 
-    public func requestPermissions(on viewController: UIViewController, _ completion: @escaping RSDAsyncActionCompletionHandler) {
+    public func requestPermissions(on viewController: Any, _ completion: @escaping RSDAsyncActionCompletionHandler) {
         status = .permissionGranted
     }
     
