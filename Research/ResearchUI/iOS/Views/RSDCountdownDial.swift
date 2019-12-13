@@ -93,7 +93,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewDesignable {
     
     /// The color of the circular ring that shows the track of the progress indicator.
     @IBInspectable
-    public var progressColor: UIColor = RSDStudyConfiguration.shared.colorPalette.accent.normal.color {
+    public var progressColor: UIColor = RSDDesignSystem.shared.colorRules.palette.accent.normal.color {
         didSet {
             dialLayer?.strokeColor = progressColor.cgColor
         }
@@ -101,7 +101,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewDesignable {
     
     /// The color of the unfilled circular ring.
     @IBInspectable
-    public var ringColor: UIColor = RSDStudyConfiguration.shared.colorPalette.grayScale.veryLightGray.color {
+    public var ringColor: UIColor = RSDDesignSystem.shared.colorRules.palette.grayScale.veryLightGray.color {
         didSet {
             ringLayer?.strokeColor = ringColor.cgColor
         }
@@ -143,7 +143,7 @@ public final class RSDCountdownDial: RSDProgressIndicator, RSDViewDesignable {
     /// If the colorStyle is set, then this will determine the inner color and light style and will
     /// override any colors set by the storyboard or nib. This value is `nil` by default and can only be set
     /// programatically.
-    public var colorStyle : RSDColorRules.Style? {
+    public var colorStyle : RSDColorStyle? {
         didSet {
             updateColorStyle()
         }

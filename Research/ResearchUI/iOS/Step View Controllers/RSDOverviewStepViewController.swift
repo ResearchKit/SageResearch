@@ -173,13 +173,7 @@ open class RSDOverviewStepViewController: RSDPermissionStepViewController {
     // MARK: Initialization
     
     class func initializeStepViewController(step: RSDStep, parent: RSDPathComponent?) -> RSDOverviewStepViewController {
-        if let designSystem = parent?.rootPathComponent?.designSystem,
-            designSystem.version == 0 {
-            return RSDOverviewStepViewController(step: step, parent: parent)
-        }
-        else {
-            return RSDScrollingOverviewStepViewController(step: step, parent: parent)
-        }
+        return RSDScrollingOverviewStepViewController(step: step, parent: parent)
     }
     
     /// The default nib name to use when instantiating the view controller using `init(step:)`.

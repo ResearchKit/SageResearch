@@ -38,14 +38,14 @@ import UIKit
 @IBDesignable public final class RSDBackgroundGradient : UIView, RSDViewDesignable {
     
     /// The color that the gradient begins with.
-    @IBInspectable public var startColor : UIColor = RSDStudyConfiguration.shared.colorPalette.successGreen.light.color {
+    @IBInspectable public var startColor : UIColor = RSDDesignSystem.shared.colorRules.palette.successGreen.light.color {
         didSet {
             refreshView()
         }
     }
     
     /// The color that the gradient ends with.
-    @IBInspectable public var endColor : UIColor = RSDStudyConfiguration.shared.colorPalette.successGreen.normal.color {
+    @IBInspectable public var endColor : UIColor = RSDDesignSystem.shared.colorRules.palette.successGreen.normal.color {
         didSet {
             refreshView()
         }

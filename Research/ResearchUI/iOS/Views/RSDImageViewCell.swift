@@ -57,25 +57,18 @@ import Foundation
                 return
             }
             _imageIdentifier = imageLoader?.imageIdentifier
-            if let loader = imageLoader {
-                if let animatedVendor = loader as? RSDAnimatedImageThemeElement {
-                    DispatchQueue.main.async {
-                        self.iconView.animationImages = animatedVendor.images(compatibleWith: nil)
-                        self.iconView.animationDuration = animatedVendor.animationDuration
-                        self.iconView.startAnimating()
-                    }
-                } else if let fetchLoader = loader as? RSDFetchableImageThemeElement {
-                    fetchLoader.fetchImage(for: iconView.bounds.size, callback: { [weak self] (loadingIdentifier, img) in
-                        guard self?._imageIdentifier == loadingIdentifier else { return }
-                        self?.iconView.image = img
-                    })
-                } else {
-                    assertionFailure("Unknown image theme class. \(loader)")
-                }
-            } else {
+            guard let loader = imageLoader, let imageView = self.imageView else {
                 // Nil out the image if the identifier is nil
                 iconView.image = nil
+                return
             }
+            let traitCollection = self.traitCollection
+            let designSystem = self.designSystem
+            self.loadImage(withKey: "RSDImageViewCell",
+                           using: loader,
+                           into: imageView,
+                           using: designSystem,
+                           compatibleWith: traitCollection)
         }
     }
     private var _imageIdentifier: String?
@@ -124,4 +117,9 @@ import Foundation
     }
 }
 
+extension RSDImageViewCell : ThemeImageViewOwner {
+    func themeImageIdentifier(withKey key: String) -> String? {
+        return _imageIdentifier
+    }
+}
 

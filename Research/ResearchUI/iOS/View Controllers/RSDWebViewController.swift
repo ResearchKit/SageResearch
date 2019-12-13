@@ -224,7 +224,7 @@ open class RSDWebViewController: UIViewController, WKNavigationDelegate {
             }
             else {
                 do {
-                    let (data, _) = try resource.resourceData(ofType: "html")
+                    let (data, _) = try resource.resourceData(ofType: .html)
                     if let html = String(data: data, encoding: String.Encoding.utf8) {
                         webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
                     } else {
