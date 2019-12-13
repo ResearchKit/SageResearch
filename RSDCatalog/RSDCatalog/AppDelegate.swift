@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         RSDStudyConfiguration.shared.fullInstructionsFrequency = .daily
         
         // Uncomment to look at modules using different color palettes.
-//        RSDStudyConfiguration.shared.colorPalette = .beach
+//        RSDDesignSystem.shared.colorRules.palette = .beach
         
         return true
     }
